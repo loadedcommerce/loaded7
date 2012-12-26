@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>Media Query Test</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+  </head>
+
+<style>
+/* mobile-portrait */
+@media only screen 
+and (max-width : 320px) {
+  .mobile-portrait { display: block; }
+  .mobile-landscape { display: none; }
+  .tablet-portrait { display: none; }
+  .tablet-landscape { display: none; }
+  .desktop { display: none; }
+}
+
+/* mobile-landscape */
+@media only screen 
+and (min-width : 321px) {
+  .mobile-portrait { display: none; }
+  .mobile-landscape { display: block; }
+  .tablet-portrait { display: none; }
+  .tablet-landscape { display: none; }
+  .desktop { display: none; }
+}
+
+/* mobile (portrait and landscape) */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+  .mobile { display: block; }
+  .tablet { display: none; }
+}
+
+/* tablet-portrait */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+  .mobile-portrait { display: none; }
+  .mobile-landscape { display: none; }
+  .tablet-portrait { display: block; }
+  .tablet-landscape { display: none; }
+  .desktop { display: none; }
+}
+
+/* tablet-landscape */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+  .mobile-portrait { display: none; }
+  .mobile-landscape { display: none; }
+  .tablet-portrait { display: none; }
+  .tablet-landscape { display: block; }
+  .desktop { display: none; }
+}
+
+/* tablet (portrait and landscape) */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+  .mobile { display: none; }
+  .tablet { display: block; }
+}
+
+/* Desktops */
+@media only screen 
+and (min-width : 1224px) {
+  .mobile-portrait { display: none; }
+  .mobile-landscape { display: none; }
+  .mobile { display: none; }
+  .tablet-portrait { display: none; }
+  .tablet-landscape { display: none; }
+  .tablet { display: none; }
+  .desktop { display: block; }  
+}
+
+
+</style>
+<body>
+<p align="center">
+  <div class="mobile-portrait">MOBILE-PORTRAIT</div>
+  <div class="mobile-landscape">MOBILE-LANDSCAPE</div>
+  <div class="mobile">MOBILE BOTH</div>
+  <div class="tablet-portrait">TABLET-PORTRAIT</div>
+  <div class="tablet-landscape">TABLET-LANDSCAPE</div>
+  <div class="tablet">TABLET BOTH</div>
+  <div class="desktop">DESKTOP</div>
+</p>
+</body>
+</html>
