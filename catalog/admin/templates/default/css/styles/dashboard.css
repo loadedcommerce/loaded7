@@ -1,0 +1,317 @@
+/**
+ *
+ * Dashboard styles
+ */
+
+/* Main dashboard block */
+.dashboard {
+	padding: 20px;
+	position: relative;
+	zoom: 1;
+	color: white;
+	border-top: 1px solid #666666;
+	border-bottom: 1px solid #666666;
+	background: #33373a url(../../img/old-browsers/style/bg_dashboard.png) repeat-x;
+	-webkit-background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	-o-background-size: 100% 100%;
+	background-size: 100% 100%;
+	background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.25)), to(rgba(0, 0, 0, 0.25)), color-stop(0.4, rgba(0, 0, 0, 0)), color-stop(0.6, rgba(0, 0, 0, 0))), -webkit-gradient(linear, left top, left bottom, from(#5e6165), to(#33373a));
+	background:-webkit-linear-gradient(left, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.25)), -webkit-linear-gradient(top, #5e6165, #33373a);
+	background:-moz-linear-gradient(left, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.25)), -moz-linear-gradient(top, #5e6165, #33373a);
+	background:-ms-linear-gradient(left, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.25)), -ms-linear-gradient(top, #5e6165, #33373a);
+	background:-o-linear-gradient(left, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.25)), -o-linear-gradient(top, #5e6165, #33373a);
+	background:linear-gradient(left, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.25)), linear-gradient(top, #5e6165, #33373a);
+	}
+	.dashboard a {
+		color: white;
+	}
+	.dashboard:before,
+	.dashboard:after {
+		display: block;
+		content: ' ';
+		position: absolute;
+		left: 0;
+		right: 0;
+		}
+		.dashboard:before {
+			top: -10px;
+			height: 20px;
+			background: url(../../img/effects/dashboard-top-shadow.png) no-repeat center top;
+			-webkit-background-size: 100% 100%;
+			-moz-background-size: 100% 100%;
+			-o-background-size: 100% 100%;
+			background-size: 100% 100%;
+		}
+		.dashboard:after {
+			bottom: 0;
+			height: 5px;
+			background: url(../../img/effects/dashboard-bottom-shadow.png) no-repeat center bottom;
+			-webkit-background-size: 100% 100%;
+			-moz-background-size: 100% 100%;
+			-o-background-size: 100% 100%;
+			background-size: 100% 100%;
+		}
+	#main.no-bg-for-mobile .dashboard {
+		border-top-color: #26282a;
+		border-top-color: rgba(0, 0, 0, 0.15);
+		border-bottom-color: #65686a;
+		border-bottom-color: rgba(255, 255, 255, 0.15);
+	}
+	/* IE7 */
+	.dashboard + .with-padding {
+		zoom: 1;
+	}
+
+/*
+ * Stats list
+ */
+.stats {
+	list-style-type: none;
+	margin-left: 0;
+	}
+	.stats > li {
+		padding: 19px 0 20px;
+		border-top: 1px solid #cccccc;
+		border-top: 1px solid rgba(0, 0, 0, 0.25);
+		font-size: 16px;
+		line-height: 16px;
+		}
+		.dashboard .stats {
+			margin-top: -12px;
+			margin-bottom: -10px;
+			}
+			.dashboard .stats > li {
+				border-top: 1px solid #333538;
+				border-top: 1px solid rgba(0, 0, 0, 0.75);
+				/* This effect won't show in Opera: it is rendered under the border (known bug) */
+				-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+				-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+				box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+				-webkit-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
+				-moz-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
+				text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
+			}
+			.no-boxshadow .dashboard .stats > li {
+				border-top-color: #666666;
+			}
+		.stats > li:first-child {
+			border-top: 0;
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			box-shadow: none;
+		}
+		.stats > li > a {
+			display: block;
+			color: inherit;
+			//color:expression(this.parentNode.currentStyle['color']);
+			margin: -19px 0 -20px;
+			padding: 19px 5px 20px 0;
+			}
+			.stats > li > a:hover {
+				padding-right: 0;
+				-webkit-transition: padding-right 100ms;
+				-moz-transition: padding-right 100ms;
+				-ms-transition: padding-right 100ms;
+				-o-transition: padding-right 100ms;
+				transition: padding-right 100ms;
+			}
+		.stats > li > strong,
+		.stats > li > a > strong {
+			display: block;
+			float: left;
+			font-size: 48px;
+			line-height: 48px;
+			height: 48px;
+			font-weight: 100;
+			margin: -7px 10px -5px 0;
+			-webkit-text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+			-moz-text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+			text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+			-webkit-transition: margin-right 100ms;
+			-moz-transition: margin-right 100ms;
+			-ms-transition: margin-right 100ms;
+			-o-transition: margin-right 100ms;
+			transition: margin-right 100ms;
+			}
+			.dashboard .stats > li > strong,
+			.dashboard .stats > li > a > strong {
+				-webkit-text-shadow: 0 1px 4px black;
+				-moz-text-shadow: 0 1px 4px black;
+				text-shadow: 0 1px 4px black;
+			}
+			.stats > li > a:hover > strong {
+				margin-right: 15px;
+			}
+
+		.stats.split-on-mobile {
+			margin-left: -4.5%;
+			}
+			.stats.split-on-mobile > li {
+				float: left;
+				width: 45.5%;
+				margin-left: 4.5%;
+				font-size: 12px;
+				line-height: 12px;
+				}
+				.stats.split-on-mobile > li:nth-child(2) {
+					border-top: 0;
+					-webkit-box-shadow: none;
+					-moz-box-shadow: none;
+					box-shadow: none;
+				}
+				.stats > li > strong,
+				.stats > li > a > strong {
+					font-size: 36px;
+					line-height: 36px;
+					height: 36px;
+					margin: -6px 7px -4px 0;
+				}
+
+/*
+ * Fact numbers
+ */
+.facts {
+	margin-left: -20px;
+	}
+	.fact {
+		color: #bfbfbf;
+		font-size: 12px;
+		line-height: 14px;
+		}
+		.facts > .fact {
+			float: left;
+			margin: 0 0 20px 20px;
+			width: 129px;
+		}
+	.fact-value {
+		float: left;
+		margin: -6px 4px 0 0;
+		font-family: 'Open Sans', sans-serif;
+		font-size: 48px;
+		line-height: 48px;
+		position: relative;
+		color: #666666;
+		letter-spacing: -2px;
+		}
+		.fact-unit {
+			position: absolute;
+			top: 37px;
+			right: -2px;
+			font-size: 11px;
+			line-height: 11px;
+			font-family: Arial, Helvetica, sans-serif;
+			text-transform: uppercase;
+			padding: 2px 3px;
+			background: white;
+			letter-spacing: 0;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			font-weight: bold;
+		}
+	.fact-progress {
+		display: block;
+		padding-top: 4px;
+	}
+
+/*480px __________________________________________________________________________________________________________ */
+@media only screen and (min-width: 480px) {
+
+	/*
+	 * Stats list
+	 */
+	.stats.split-on-mobile > li {
+		font-size: 16px;
+		line-height: 16px;
+		}
+		.stats > li > strong,
+		.stats > li > a > strong {
+			font-size: 48px;
+			line-height: 48px;
+			height: 48px;
+			margin: -7px 10px -5px 0;
+		}
+
+	/*
+	 * Fact numbers
+	 */
+	.facts {
+		margin-left: -30px;
+		}
+		.ie7 .facts {
+			margin-bottom: 30px;
+		}
+		.fact {
+			font-size: 13px;
+			line-height: 16px;
+			}
+			.facts > .fact {
+				margin: 0 0 30px 30px;
+				width: 180px;
+			}
+		.fact-value {
+			margin: -6px 8px 0 0;
+			font-size: 60px;
+			line-height: 60px;
+			letter-spacing: -3px;
+			}
+			.ie7 .fact-value {
+				margin: -17px 8px -13px 0;
+			}
+			.fact-unit {
+				position: static;
+				display: inline-block;
+				top: auto;
+				right: auto;
+				font-size: 12px;
+				line-height: 12px;
+				padding: 0;
+				vertical-align: top;
+				margin: 7px 3px 0 -10px;
+				background: none;
+				-webkit-border-radius: 0;
+				-moz-border-radius: 0;
+				border-radius: 0;
+				}
+				.ie7 .fact-unit {
+					margin-top: 19px;
+				}
+
+}/*/mediaquery*/
+
+/*768px __________________________________________________________________________________________________________ */
+@media only screen and (min-width: 768px) {
+
+	/*
+	 * Stats list
+	 */
+	.stats.split-on-mobile {
+		margin-left: 0;
+		}
+		.stats.split-on-mobile > li {
+			float: none;
+			width: auto;
+			margin-left: 0;
+			}
+			.stats.split-on-mobile > li:nth-child(2) {
+				border-top: 1px solid #cccccc;
+				border-top: 1px solid rgba(0, 0, 0, 0.25);
+				}
+				.dashboard .stats.split-on-mobile > li:nth-child(2) {
+					border-top: 1px solid #333538;
+					border-top: 1px solid rgba(0, 0, 0, 0.75);
+					-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+					-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+					box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+				}
+
+}/*/mediaquery*/
+
+/* The legen - wait for it - dary clearfix */
+.facts:before, .facts:after,
+.fact:before, .fact:after {  content: "\0020"; display: block; height: 0; visibility: hidden;	 }
+.facts:after,
+.fact:after { clear: both; }
+.facts,
+.fact { zoom: 1; }

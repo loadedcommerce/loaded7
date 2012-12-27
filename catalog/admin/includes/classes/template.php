@@ -1,0 +1,164 @@
+<?php
+  /*
+  $Id: template.php v1.0 2011-11-04 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2011 LoadedCommerce.com
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2011 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
+  */
+
+  require('../includes/classes/template.php');
+
+  class lC_Template_Admin extends lC_Template {
+    function &setup($module) {
+      $class = 'lC_Application_' . ucfirst($module);
+
+      if ( isset($_GET['action']) && !empty($_GET['action']) ) {
+        $_action = lc_sanitize_string(basename($_GET['action']));
+
+        if ( file_exists('includes/applications/' . $module . '/actions/' . $_action . '.php') ) {
+          include('includes/applications/' . $module . '/actions/' . $_action . '.php');
+
+          $class = 'lC_Application_' . ucfirst($module) . '_Actions_' . $_action;
+        }
+      }
+
+      $object = new $class();
+
+      return $object;
+    }
+    /*
+    * Load the Dialog DOM Windows
+    *
+    * @access public
+    * @return boolean
+    */
+    public function loadDialog($_module, $_sub = false) {
+      global $lC_Language, $lC_Template;
+
+      if ( is_dir('includes/applications/' . $_module . '/dialog') ) {
+        $pattern = '/(\w*)\.php$/';
+        $dir = opendir('includes/applications/' . $_module . '/dialog');
+        while( $file = readdir( $dir ) ) {
+          if ($file == '.'  || $file == '..') continue;
+          $match = array();
+          if ( preg_match($pattern, $file, $match) > 0 ) {
+            if ($_sub == true && strstr($match[0], '_')) {
+              include('includes/applications/' . $_module . '/dialog/' . $match[0]);
+            } else if ($_sub == false && !strstr($match[0], '_')) {
+              include('includes/applications/' . $_module . '/dialog/' . $match[0]);
+            }
+          }
+        }
+      }
+      return true;
+    }
+    /*
+    * Load the Modal Windows
+    *
+    * @access public
+    * @return boolean
+    */
+    public function loadModal($_module, $_sub = false) {
+      global $lC_Language, $lC_Template;
+
+      if ( is_dir('includes/applications/' . $_module . '/modal') ) {
+        $pattern = '/(\w*)\.php$/';
+        $dir = opendir('includes/applications/' . $_module . '/modal');
+        while( $file = readdir( $dir ) ) {
+          if ($file == '.'  || $file == '..') continue;
+          $match = array();
+          if ( preg_match($pattern, $file, $match) > 0 ) {
+            if ($_sub == true && strstr($match[0], '_')) {
+              include('includes/applications/' . $_module . '/modal/' . $match[0]);
+            } else if ($_sub == false && !strstr($match[0], '_')) {
+              include('includes/applications/' . $_module . '/modal/' . $match[0]);
+            }
+          }
+        }
+      }
+      return true;
+    }
+    /*
+    * Load the page specific javascript
+    *
+    * @access public
+    * @return boolean
+    */
+    public function loadPageScript($_module) {
+      if ( file_exists('includes/applications/' . $_module . '/js/' . $_module . '.js.php') ) {
+        include('includes/applications/' . $_module . '/js/' . $_module . '.js.php');
+      }
+
+      return true;
+    }
+    /*
+    * Load the page specific responsive javascript
+    *
+    * @access public
+    * @return boolean
+    */
+    public function loadPageResponsiveScript($_module) {
+      if ( file_exists('includes/applications/' . $_module . '/js/responsive.js.php') ) {
+        include('includes/applications/' . $_module . '/js/responsive.js.php');
+      }
+
+      return true;
+    }    
+    /*
+    * Load the page specific CSS
+    *
+    * @access public
+    * @return boolean
+    */
+    public function loadPageCSS($_module) {
+
+      $html = '';
+      if ( file_exists('templates/default/css/' . $_module . '.css') ) {
+        $html = '<link rel="stylesheet" href="templates/default/css/' . $_module . '.css">';
+      }
+
+      return $html;
+    }
+    /*
+    * Check to see if page view is authorized
+    *
+    * @access public
+    * @return boolean
+    */
+    public function isAuthorized($_module) {
+      $ok = FALSE;
+
+      if ((int)$_SESSION['admin']['access'][strtolower($_module)] > 0) {
+        $ok = TRUE;
+      } else if ($_module == 'login') {
+        $ok = TRUE;
+      } else if ($_module == 'store' && $_SESSION['admin']['access']['configuration'] > 0) {
+        $ok = TRUE;
+      } else if ($_module == 'index' && $this->getPageContentsFilename() == 'main.php') {
+        $ok = TRUE;
+      } else if ($_module == 'customer_groups' && $_SESSION['admin']['access']['definitions'] > 0) {
+        $ok = TRUE;
+      } else if ($_module == 'orders_status' && $_SESSION['admin']['access']['definitions'] > 0) {
+        $ok = TRUE;
+      } else if ($_module == 'image_groups' && $_SESSION['admin']['access']['definitions'] > 0) {
+        $ok = TRUE;
+      } else if ($_module == 'weight_classes' && $_SESSION['admin']['access']['definitions'] > 0) {
+        $ok = TRUE;
+      } else if (stristr($_module, 'modules_') && $_SESSION['admin']['access']['modules'] > 0) {
+        $ok = TRUE;
+      } else if ($_module == 'services' && $_SESSION['admin']['access']['modules'] > 0) {
+        $ok = TRUE;
+      } else if ($_module == 'product_attributes' && $_SESSION['admin']['access']['modules'] > 0) {
+        $ok = TRUE;
+      }
+
+      return $ok;
+    }
+  }
+?>

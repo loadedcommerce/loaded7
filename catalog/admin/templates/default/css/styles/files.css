@@ -1,0 +1,618 @@
+/**
+ *
+ * Styles for files lists
+ */
+
+/* Basic icon-style list */
+.files-icons {
+	list-style-type: none;
+	margin: 0 0 10px -10px;
+	text-align: center;
+	}
+	.files-icons > li {
+		float: left;
+		width: 85px;
+		height: 32px;
+		padding: 76px 0 0;
+		margin: 0 0 10px 10px;
+		position: relative;
+		color: #808080;
+		text-overflow: ellipsis;
+		word-wrap: break-word;
+		}
+		.files-icons > li > .file-link {
+			display: block;
+			margin: -76px 0 0;
+			padding: 76px 0 0;
+			height: 32px;
+			color: #808080;
+			text-overflow: ellipsis;
+			word-wrap: break-word;
+		}
+		.files-icons > li > a {
+			color: #808080;
+			}
+			.files-icons > li > .file-link:hover,
+			.files-icons > li > a:hover {
+				color: #0099ff;
+			}
+		.files-icons.on-dark > li,
+		.files-icons.on-dark > li > .file-link,
+		.files-icons.on-dark > li > a {
+			color: white;
+			}
+			.files-icons.on-dark > li > .file-link:hover,
+			.files-icons.on-dark > li > a:hover {
+				color: #cccccc;
+			}
+		.files-icons > li > .icon,
+		.files-icons > li > .file-link > .icon {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 70px;
+			line-height: 66px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			}
+			.files-icons > li > .icon > img,
+			.files-icons > li > .file-link > .icon > img {
+				vertical-align: middle;
+				margin: 0;
+				max-width: 64px;
+				max-height: 64px;
+			}
+			.framed {
+				border: 3px solid white;
+				-webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.65), 0 2px 5px rgba(0, 0, 0, 0.25);
+				-moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.65), 0 2px 5px rgba(0, 0, 0, 0.25);
+				box-shadow: 0 0 1px rgba(0, 0, 0, 0.65), 0 2px 5px rgba(0, 0, 0, 0.25);
+				-webkit-border-radius: 2px;
+				-moz-border-radius: 2px;
+				border-radius: 2px;
+				}
+				.no-boxshadow .framed {
+					border-color: #cfcfcf;
+				}
+
+		/* Hover controls */
+		.files-icons > li > .controls {
+			position: absolute;
+			display: block;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 70px;
+			line-height: 70px;
+			text-align: center;
+			background: url(../../img/old-browsers/black45.png);
+			background: rgba(0, 0, 0, 0.45);
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+			filter: alpha(opacity=0);
+			-khtml-opacity: 0;
+			-moz-opacity: 0;
+			opacity: 0;
+			-webkit-transition: opacity 200ms;
+			-moz-transition: opacity 200ms;
+			-ms-transition: opacity 200ms;
+			-o-transition: opacity 200ms;
+			transition: opacity 200ms;
+			}
+			.files-icons > li:hover > .controls {
+				-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+				filter: alpha(opacity=100);
+				-khtml-opacity: 1;
+				-moz-opacity: 1;
+				opacity: 1;
+			}
+			.touch .files-icons > li > .controls {
+				top: auto;
+				bottom: 100%;
+				margin-bottom: -6px;
+				height: auto;
+				padding: 4px 0;
+				line-height: 30px;
+				-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+				-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+				}
+				.touch .files-icons > li > .controls:after {
+					display: block;
+					position: absolute;
+					content: '';
+					left: 50%;
+					top: 100%;
+					width: 0;
+					height: 0;
+					border: 4px solid transparent;
+					margin-left: -4px;
+					border-top-color: rgba(0, 0, 0, 0.45);
+				}
+
+	/* Mini size */
+	.files-icons.mini {
+		margin: 0 0 14px -6px;
+		}
+		.files-icons.mini > li {
+			width: 50px;
+			height: 24px;
+			padding: 40px 0 0;
+			margin: 0 0 6px 6px;
+			font-size: 9px;
+			text-transform: uppercase;
+			line-height: 12px;
+			}
+			.files-icons.mini > li > .file-link {
+				margin: -40px 0 0;
+				padding: 40px 0 0;
+				height: 24px;
+				}
+				.files-icons.mini > li > .icon,
+				.files-icons.mini > li > .file-link > .icon {
+					height: 36px;
+					line-height: 32px;
+					background-position: center center;
+					background-repeat: no-repeat;
+					}
+					.files-icons.mini .framed {
+						border-width: 2px;
+					}
+				.files-icons.mini > li > .icon > img,
+				.files-icons.mini > li > .file-link > .icon > img {
+					max-width: 32px;
+					max-height: 32px;
+				}
+			.files-icons.mini > li > .controls {
+				height: 36px;
+				line-height: 36px;
+			}
+
+/* List style */
+.files-list {
+	list-style-type: none;
+	margin-left: 0;
+	}
+	.files-list > li {
+		padding: 24px 10px 24px 80px;
+		min-height: 32px;
+		position: relative;
+		-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+		-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+		}
+		.no-boxshadow .files-list > li + li {
+			border-top: 1px solid #f0f0f0;
+		}
+		.files-list > li > .file-link {
+			margin: -24px -10px -24px -80px;
+			padding: 24px 10px 24px 80px;
+			display: block;
+			min-height: 32px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			word-wrap: break-word;
+		}
+		.files-list > li > a {
+			color: #808080;
+			}
+			.files-list > li > .file-link:hover,
+			.files-list > li > a:hover {
+				color: #0099ff;
+			}
+		.files-list.on-dark > li,
+		.files-list.on-dark > li > .file-link,
+		.files-list.on-dark > li > a {
+			color: white;
+			}
+			.files-list.on-dark > li > .file-link:hover,
+			.files-list.on-dark > li > a:hover {
+				color: #cccccc;
+			}
+		.files-list > li > .icon,
+		.files-list > li > .file-link > .icon {
+			position: absolute;
+			top: 0;
+			left: 8px;
+			bottom: 0;
+			width: 64px;
+			line-height: 76px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			text-align: center;
+			}
+			.files-list > li > .icon > img,
+			.files-list > li > .file-link > .icon > img {
+				vertical-align: middle;
+				margin: 0;
+				max-width: 64px;
+				max-height: 64px;
+			}
+
+		/* Hover controls */
+		.files-list > li > .controls {
+			position: absolute;
+			display: block;
+			top: 0;
+			right: 12px;
+			bottom: 0;
+			line-height: 76px;
+		}
+
+	/* Mini style */
+	.files-list.mini > li {
+		padding: 16px 10px 16px 48px;
+		min-height: 16px;
+		}
+		.files-list.mini > li > .file-link {
+			margin: -16px -10px -16px -45px;
+			padding: 16px 10px 16px 45px;
+			min-height: 16px;
+		}
+		.files-list.mini > li > .icon,
+		.files-list.mini > li > .file-link > .icon {
+			left: 8px;
+			width: 32px;
+			line-height: 44px;
+			}
+			.files-list.mini > li > .icon > img,
+			.files-list.mini > li > .file-link > .icon > img {
+				max-width: 32px;
+				max-height: 32px;
+			}
+		.files-list.mini > li > .controls {
+			line-height: 44px;
+		}
+
+/* File types */
+.folder-close		{ background-image: url(../../img/fineFiles/64/_close.png); }
+.folder-docs		{ background-image: url(../../img/fineFiles/64/_documents.png); }
+.folder-favs		{ background-image: url(../../img/fineFiles/64/_favorites.png); }
+.folder-image		{ background-image: url(../../img/fineFiles/64/_image.png); }
+.folder-movie		{ background-image: url(../../img/fineFiles/64/_movie.png); }
+.folder-music		{ background-image: url(../../img/fineFiles/64/_music.png); }
+.folder-net			{ background-image: url(../../img/fineFiles/64/_net.png); }
+.folder-open		{ background-image: url(../../img/fineFiles/64/_open.png); }
+.folder-program		{ background-image: url(../../img/fineFiles/64/_programfiles.png); }
+.folder-pen			{ background-image: url(../../img/fineFiles/64/_works.png); }
+
+.file-aac			{ background-image: url(../../img/fineFiles/64/aac.png); }
+.file-access		{ background-image: url(../../img/fineFiles/64/access.png); }
+.file-avi			{ background-image: url(../../img/fineFiles/64/avi.png); }
+.file-bat			{ background-image: url(../../img/fineFiles/64/bat.png); }
+.file-bmp			{ background-image: url(../../img/fineFiles/64/bmp.png); }
+.file-chm			{ background-image: url(../../img/fineFiles/64/chm.png); }
+.file-css			{ background-image: url(../../img/fineFiles/64/css.png); }
+.file-dat			{ background-image: url(../../img/fineFiles/64/dat.png); }
+.file-default		{ background-image: url(../../img/fineFiles/64/default.png); }
+.file-desktop		{ background-image: url(../../img/fineFiles/64/desktop.png); }
+.file-dll			{ background-image: url(../../img/fineFiles/64/dll.png); }
+.file-excel			{ background-image: url(../../img/fineFiles/64/excel.png); }
+.file-exe			{ background-image: url(../../img/fineFiles/64/exe.png); }
+.file-fon			{ background-image: url(../../img/fineFiles/64/fon.png); }
+.file-gif			{ background-image: url(../../img/fineFiles/64/gif.png); }
+.file-html			{ background-image: url(../../img/fineFiles/64/html.png); }
+.file-image			{ background-image: url(../../img/fineFiles/64/other_image.png); }
+.file-ini			{ background-image: url(../../img/fineFiles/64/ini.png); }
+.file-jar			{ background-image: url(../../img/fineFiles/64/jar.png); }
+.file-jpg			{ background-image: url(../../img/fineFiles/64/jpg.png); }
+.file-js			{ background-image: url(../../img/fineFiles/64/js.png); }
+.file-log			{ background-image: url(../../img/fineFiles/64/log.png); }
+.file-mov			{ background-image: url(../../img/fineFiles/64/mov.png); }
+.file-movie			{ background-image: url(../../img/fineFiles/64/other_movie.png); }
+.file-mp			{ background-image: url(../../img/fineFiles/64/mp3.png); }
+.file-mpg			{ background-image: url(../../img/fineFiles/64/mpg.png); }
+.file-music			{ background-image: url(../../img/fineFiles/64/other_music.png); }
+.file-music2		{ background-image: url(../../img/fineFiles/64/other_music2.png); }
+.file-otf			{ background-image: url(../../img/fineFiles/64/otf.png); }
+.file-pdf			{ background-image: url(../../img/fineFiles/64/pdf.png); }
+.file-png			{ background-image: url(../../img/fineFiles/64/png.png); }
+.file-powerpoint	{ background-image: url(../../img/fineFiles/64/powerpoint.png); }
+.file-real			{ background-image: url(../../img/fineFiles/64/real.png); }
+.file-reg			{ background-image: url(../../img/fineFiles/64/reg.png); }
+.file-rtf			{ background-image: url(../../img/fineFiles/64/rtf.png); }
+.file-swf			{ background-image: url(../../img/fineFiles/64/swf.png); }
+.file-sys			{ background-image: url(../../img/fineFiles/64/sys.png); }
+.file-txt			{ background-image: url(../../img/fineFiles/64/text.png); }
+.file-ttc			{ background-image: url(../../img/fineFiles/64/ttc.png); }
+.file-ttf			{ background-image: url(../../img/fineFiles/64/ttf.png); }
+.file-vbs			{ background-image: url(../../img/fineFiles/64/vbs.png); }
+.file-wav			{ background-image: url(../../img/fineFiles/64/wav.png); }
+.file-wma			{ background-image: url(../../img/fineFiles/64/wma.png); }
+.file-wmv			{ background-image: url(../../img/fineFiles/64/wmv.png); }
+.file-word			{ background-image: url(../../img/fineFiles/64/word.png); }
+.file-xml			{ background-image: url(../../img/fineFiles/64/xml.png); }
+.file-xsl			{ background-image: url(../../img/fineFiles/64/xsl.png); }
+
+	/* Mini size */
+	.mini .folder-close		{ background-image: url(../../img/fineFiles/32/_close.png); }
+	.mini .folder-docs		{ background-image: url(../../img/fineFiles/32/_documents.png); }
+	.mini .folder-favs		{ background-image: url(../../img/fineFiles/32/_favorites.png); }
+	.mini .folder-image		{ background-image: url(../../img/fineFiles/32/_image.png); }
+	.mini .folder-movie		{ background-image: url(../../img/fineFiles/32/_movie.png); }
+	.mini .folder-music		{ background-image: url(../../img/fineFiles/32/_music.png); }
+	.mini .folder-net		{ background-image: url(../../img/fineFiles/32/_net.png); }
+	.mini .folder-open		{ background-image: url(../../img/fineFiles/32/_open.png); }
+	.mini .folder-program	{ background-image: url(../../img/fineFiles/32/_programfiles.png); }
+	.mini .folder-pen		{ background-image: url(../../img/fineFiles/32/_works.png); }
+
+	.mini .file-aac			{ background-image: url(../../img/fineFiles/32/aac.png); }
+	.mini .file-access		{ background-image: url(../../img/fineFiles/32/access.png); }
+	.mini .file-avi			{ background-image: url(../../img/fineFiles/32/avi.png); }
+	.mini .file-bat			{ background-image: url(../../img/fineFiles/32/bat.png); }
+	.mini .file-bmp			{ background-image: url(../../img/fineFiles/32/bmp.png); }
+	.mini .file-chm			{ background-image: url(../../img/fineFiles/32/chm.png); }
+	.mini .file-css			{ background-image: url(../../img/fineFiles/32/css.png); }
+	.mini .file-dat			{ background-image: url(../../img/fineFiles/32/dat.png); }
+	.mini .file-default		{ background-image: url(../../img/fineFiles/32/default.png); }
+	.mini .file-desktop		{ background-image: url(../../img/fineFiles/32/desktop.png); }
+	.mini .file-dll			{ background-image: url(../../img/fineFiles/32/dll.png); }
+	.mini .file-excel		{ background-image: url(../../img/fineFiles/32/excel.png); }
+	.mini .file-exe			{ background-image: url(../../img/fineFiles/32/exe.png); }
+	.mini .file-fon			{ background-image: url(../../img/fineFiles/32/fon.png); }
+	.mini .file-gif			{ background-image: url(../../img/fineFiles/32/gif.png); }
+	.mini .file-html		{ background-image: url(../../img/fineFiles/32/html.png); }
+	.mini .file-image		{ background-image: url(../../img/fineFiles/32/other_image.png); }
+	.mini .file-ini			{ background-image: url(../../img/fineFiles/32/ini.png); }
+	.mini .file-jar			{ background-image: url(../../img/fineFiles/32/jar.png); }
+	.mini .file-jpg			{ background-image: url(../../img/fineFiles/32/jpg.png); }
+	.mini .file-js			{ background-image: url(../../img/fineFiles/32/js.png); }
+	.mini .file-log			{ background-image: url(../../img/fineFiles/32/log.png); }
+	.mini .file-mov			{ background-image: url(../../img/fineFiles/32/mov.png); }
+	.mini .file-movie		{ background-image: url(../../img/fineFiles/32/other_movie.png); }
+	.mini .file-mp			{ background-image: url(../../img/fineFiles/32/mp3.png); }
+	.mini .file-mpg			{ background-image: url(../../img/fineFiles/32/mpg.png); }
+	.mini .file-music		{ background-image: url(../../img/fineFiles/32/other_music.png); }
+	.mini .file-music2		{ background-image: url(../../img/fineFiles/32/other_music2.png); }
+	.mini .file-otf			{ background-image: url(../../img/fineFiles/32/otf.png); }
+	.mini .file-pdf			{ background-image: url(../../img/fineFiles/32/pdf.png); }
+	.mini .file-png			{ background-image: url(../../img/fineFiles/32/png.png); }
+	.mini .file-powerpoint	{ background-image: url(../../img/fineFiles/32/powerpoint.png); }
+	.mini .file-real		{ background-image: url(../../img/fineFiles/32/real.png); }
+	.mini .file-reg			{ background-image: url(../../img/fineFiles/32/reg.png); }
+	.mini .file-rtf			{ background-image: url(../../img/fineFiles/32/rtf.png); }
+	.mini .file-swf			{ background-image: url(../../img/fineFiles/32/swf.png); }
+	.mini .file-sys			{ background-image: url(../../img/fineFiles/32/sys.png); }
+	.mini .file-txt			{ background-image: url(../../img/fineFiles/32/text.png); }
+	.mini .file-ttc			{ background-image: url(../../img/fineFiles/32/ttc.png); }
+	.mini .file-ttf			{ background-image: url(../../img/fineFiles/32/ttf.png); }
+	.mini .file-vbs			{ background-image: url(../../img/fineFiles/32/vbs.png); }
+	.mini .file-wav			{ background-image: url(../../img/fineFiles/32/wav.png); }
+	.mini .file-wma			{ background-image: url(../../img/fineFiles/32/wma.png); }
+	.mini .file-wmv			{ background-image: url(../../img/fineFiles/32/wmv.png); }
+	.mini .file-word		{ background-image: url(../../img/fineFiles/32/word.png); }
+	.mini .file-xml			{ background-image: url(../../img/fineFiles/32/xml.png); }
+	.mini .file-xsl			{ background-image: url(../../img/fineFiles/32/xsl.png); }
+
+/* Gallery */
+.gallery {
+	list-style-type: none;
+	margin-left: 0;
+	}
+	.gallery > li {
+		float: left;
+		position: relative;
+		width: 10em;
+		height: 10em;
+		line-height: 10em;
+		text-align: center;
+		}
+		.gallery > li > a {
+			display: block;
+			width: 10em;
+			height: 10em;
+			line-height: 10em;
+		}
+		.gallery > li > img,
+		.gallery > li > .stack > img,
+		.gallery > li > a > img,
+		.gallery > li > a > .stack > img {
+			margin: 0;
+			vertical-align: middle;
+			max-width: 8em;
+			max-height: 8em;
+		}
+		.gallery > li > .controls {
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 10em;
+			height: 10em;
+			line-height: 10em;
+			background: url(../../img/old-browsers/black45.png);
+			background: rgba(0, 0, 0, 0.45);
+			-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+			filter: alpha(opacity=0);
+			-khtml-opacity: 0;
+			-moz-opacity: 0;
+			opacity: 0;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			-webkit-transition: opacity 200ms;
+			-moz-transition: opacity 200ms;
+			-ms-transition: opacity 200ms;
+			-o-transition: opacity 200ms;
+			transition: opacity 200ms;
+			}
+			.gallery > li:hover > .controls {
+				-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+				filter: alpha(opacity=100);
+				-khtml-opacity: 1;
+				-moz-opacity: 1;
+				opacity: 1;
+			}
+			.gallery > li > .controls > * {
+				font-size: 13px;
+			}
+			.touch .gallery > li > .controls {
+				top: auto;
+				bottom: 75%;
+				height: auto;
+				padding: 4px 0;
+				line-height: 30px;
+				-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+				-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+				}
+				.touch .gallery > li > .controls:after {
+					display: block;
+					position: absolute;
+					content: '';
+					left: 50%;
+					top: 100%;
+					width: 0;
+					height: 0;
+					border: 4px solid transparent;
+					margin-left: -4px;
+					border-top-color: rgba(0, 0, 0, 0.45);
+				}
+
+/* Stack styles */
+/* From http://inspectelement.com/demos/css3/stacks/ */
+.stack {
+	display: inline-block;
+	*display: inline;
+	zoom: 1;
+	position: relative;
+	z-index: 10;
+	vertical-align: center;
+	line-height: 1px;
+	}
+	.stack > img {
+		border: 6px solid #fff;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+		-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+		}
+		.no-boxshadow .stack > img {
+			border-color: #cfcfcf;
+		}
+	.stack:before,
+	.stack:after {
+		content: "";
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		background: #808080;
+		border: 6px solid #fff;
+		left: 0;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+		-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+		-webkit-transition: 0.3s all ease-out;
+		-moz-transition: 0.3s all ease-out;
+		-ms-transition: 0.3s all ease-out;
+		-o-transition: 0.3s all ease-out;
+		transition: 0.3s all ease-out;
+		}
+		.stack:before {
+			top: 4px;
+			z-index: -10;
+		}
+		.stack:after {
+			top: 8px;
+			z-index: -20;
+		}
+
+	/* Rotated to the right from the bottom left */
+	.stack.rotated:before {
+		-webkit-transform-origin: bottom left;
+		-moz-transform-origin: bottom left;
+		-ms-transform-origin: bottom left;
+		-o-transform-origin: bottom left;
+		transform-origin: bottom left;
+		-webkit-transform: rotate(2deg);
+		-moz-transform: rotate(2deg);
+		-ms-transform: rotate(2deg);
+		-o-transform: rotate(2deg);
+		transform: rotate(2deg);
+	}
+	.stack.rotated:after {
+		-webkit-transform-origin: bottom left;
+		-moz-transform-origin: bottom left;
+		-ms-transform-origin: bottom left;
+		-o-transform-origin: bottom left;
+		transform-origin: bottom left;
+		-webkit-transform: rotate(4deg);
+		-moz-transform: rotate(4deg);
+		-ms-transform: rotate(4deg);
+		-o-transform: rotate(4deg);
+		transform: rotate(4deg);
+	}
+
+	/* One stack element rotated in the opposite direction */
+	.stack.twisted:before {
+		-webkit-transform: rotate(4deg);
+		-moz-transform: rotate(4deg);
+		-ms-transform: rotate(4deg);
+		-o-transform: rotate(4deg);
+		transform: rotate(4deg);
+	}
+	.stack.twisted:after {
+		-webkit-transform: rotate(-4deg);
+		-moz-transform: rotate(-4deg);
+		-ms-transform: rotate(-4deg);
+		-o-transform: rotate(-4deg);
+		transform: rotate(-4deg);
+	}
+
+	/* Similar to the second but rotated left */
+	.stack.rotated-left:before {
+		-webkit-transform-origin: bottom left;
+		-moz-transform-origin: bottom left;
+		-ms-transform-origin: bottom left;
+		-o-transform-origin: bottom left;
+		transform-origin: bottom left;
+		-webkit-transform: rotate(-3deg);
+		-moz-transform: rotate(-3deg);
+		-ms-transform: rotate(-3deg);
+		-o-transform: rotate(-3deg);
+		transform: rotate(-3deg);
+	}
+	.stack.rotated-left:after {
+		-webkit-transform-origin: bottom left;
+		-moz-transform-origin: bottom left;
+		-ms-transform-origin: bottom left;
+		-o-transform-origin: bottom left;
+		transform-origin: bottom left;
+		-webkit-transform: rotate(-6deg);
+		-moz-transform: rotate(-6deg);
+		-ms-transform: rotate(-6deg);
+		-o-transform: rotate(-6deg);
+		transform: rotate(-6deg);
+	}
+
+	/* Reset all rotations on hover */
+	.stack:hover:before,
+	.stack:hover:after {
+		-webkit-transform: rotate(0deg);
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		-o-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+/* The legen - wait for it - dary clearfix */
+.files-icons:before, .files-icons:after,
+.gallery:before, .gallery:after {  content: "\0020"; display: block; height: 0; visibility: hidden;	 }
+.files-icons:after,
+.gallery:after { clear: both; }
+.files-icons,
+.gallery { zoom: 1; }

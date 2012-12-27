@@ -1,0 +1,23 @@
+<?php
+/*
+  $Id: header.php v1.0 2012-08-08 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2011 LoadedCommerce.com
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2011 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
+*/
+?>
+<!-- Title bar -->
+<header role="banner" id="title-bar">
+  <a id="logoRef" style="" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT); ?>"><img id="logoImg" style="" src="./templates/default/img/logo.png" border="0"></a>
+</header>
+<?php
+if ( $lC_MessageStack->size('header') > 0 ) {
+  echo $lC_MessageStack->get('header');
+}
+?>

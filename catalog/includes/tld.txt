@@ -1,0 +1,28 @@
+# $Id: tld.txt v1.0 2011-11-04 datazen $
+# 
+# LoadedCommerce, Innovative eCommerce Solutions
+# http://www.loadedcommerce.com
+#
+# Copyright (c) 2011 LoadedCommerce.com
+#
+# @author     LoadedCommerce Team
+# @copyright  (c) 2011 LoadedCommerce Team
+# @license    http://loadedcommerce.com/license.html
+#
+# Original 7 TLDs
+com     # all are eligible to register
+edu     # degree-granting educational institutions of higher education
+gov     # United States Government
+int     # organizations established by international treaties
+mil     # United States Military
+net     # all are eligible to register
+org     # noncommercial community, all are eligible to register
+
+# Recent additions
+aero    # members of the air-transport industry
+biz     # businesses
+coop    # cooperative associations
+info    # all are eligible to register
+museum  # museums
+name    # individuals
+pro     # credentialed professionals
