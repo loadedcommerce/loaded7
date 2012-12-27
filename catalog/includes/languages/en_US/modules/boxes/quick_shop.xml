@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>box_quick_shop_heading</key>
+      <value><![CDATA[Quick Shop]]></value>
+      <group>modules-boxes</group>
+    </definition>
+  </definitions>
+</language>

@@ -1,0 +1,262 @@
+/**
+ *
+ * Styles override for 992+ pixels screens
+ */
+
+/* Class used to determine which media queries are on */
+#mediaquery-checker {
+	width: 40px;
+}
+
+/* 7. Title bar */
+#title-bar {
+	height: 34px;
+	line-height: 32px;
+	border-top: 1px solid #666666;
+	}
+	#title-bar h2 {
+		height: 34px;
+		font-size: 14px;
+		line-height: 32px;
+		left: 0;
+		right: 0;
+	}
+
+/* 8. Main columns */
+#title-bar ~ #main {
+	margin-top: 35px;
+	}
+	.with-menu #title-bar {
+		padding-right: 10px;
+	}
+	#title-bar ~ #menu,
+	#title-bar ~ #shortcuts {
+		top: 35px;
+	}
+body.with-menu #main {
+	margin-right: 260px;
+	-webkit-transition: margin-right 200ms;
+	-moz-transition: margin-right 200ms;
+	-o-transition: margin-right 200ms;
+	transition: margin-right 200ms;
+	}
+	body.with-menu.reversed #main {
+		margin-right: 0;
+		margin-left: 260px;
+		-webkit-transition: margin-left 200ms;
+		-moz-transition: margin-left 200ms;
+		-o-transition: margin-left 200ms;
+		transition: margin-left 200ms;
+		}
+		body.with-menu.with-shortcuts.reversed #main {
+			margin-right: 68px;
+		}
+	body.with-menu.menu-hidden #main {
+		margin-right: 0;
+		}
+		body.with-menu.menu-hidden.reversed #main {
+			margin-left: 0;
+			}
+			body.with-menu.with-shortcuts.menu-hidden.reversed #main {
+				margin-right: 68px;
+			}
+
+#open-menu {
+	top: 0;
+	right: 0;
+	padding: 10px 8px 11px;
+	}
+	#title-bar + #open-menu {
+		top: 35px;
+	}
+	body.reversed #open-menu {
+		right: auto;
+		left: 0;
+	}
+	#open-menu > span {
+		display: block;
+		width: 20px;
+		height: 17px;
+		border: 0;
+		padding: 0;
+		overflow: hidden;
+		background: url(../img/standard/sprites.png) no-repeat 0 0;
+		text-indent: 100px;
+		white-space: nowrap;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0;
+		}
+		body.reversed #open-menu > span {
+			background-position: 0 -17px;
+		}
+		#open-menu:hover > span {
+			background-position: -20px 0;
+			}
+			body.reversed #open-menu:hover > span {
+				background-position: -20px -17px;
+			}
+		body.menu-hidden #open-menu > span {
+			background-position: 0 -17px;
+			}
+			body.menu-hidden.reversed #open-menu > span {
+				background-position: 0 0;
+			}
+			body.menu-hidden #open-menu:hover > span {
+				background-position: -20px -17px;
+				}
+				body.menu-hidden.reversed #open-menu:hover > span {
+					background-position: -20px 0;
+				}
+
+#menu {
+	position: fixed;
+	display: block;
+	z-index: 1;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	padding: 0;
+	max-height: none;
+	-webkit-background-size: auto;
+	-moz-background-size: auto;
+	-o-background-size: auto;
+	background-size: auto;
+	background: #3c4044 url(../img/textures/grid.png);
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.4)), to(rgba(0, 0, 0, 0))), #3c4044 url(../img/textures/grid.png);
+	background: -webkit-linear-gradient( top, rgba(0,0,0,0.4), rgba(0,0,0,0)), #3c4044 url(../img/textures/grid.png);
+	background: -moz-linear-gradient( top, rgba(0,0,0,0.4), rgba(0,0,0,0)), #3c4044 url(../img/textures/grid.png);
+	background: -ms-linear-gradient( top, rgba(0,0,0,0.4), rgba(0,0,0,0)), #3c4044 url(../img/textures/grid.png);
+	background: -o-linear-gradient( top, rgba(0,0,0,0.4), rgba(0,0,0,0)), #3c4044 url(../img/textures/grid.png);
+	background: linear-gradient( top, rgba(0,0,0,0.4), rgba(0,0,0,0)), #3c4044 url(../img/textures/grid.png);
+	-webkit-box-shadow: inset 5px 5px 30px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: inset 5px 5px 30px rgba(0, 0, 0, 0.75);
+	box-shadow: inset 5px 5px 30px rgba(0, 0, 0, 0.75);
+	-webkit-transition: margin-right 200ms;
+	-moz-transition: margin-right 200ms;
+	-o-transition: margin-right 200ms;
+	transition: margin-right 200ms;
+	border: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	}
+	.no-boxshadow #menu {
+		width: 260px;
+	}
+	.no-generatedcontent #menu {
+		border-left: 1px solid #666666;
+	}
+	body.reversed #menu {
+		left: 0;
+		right: auto;
+		-webkit-transition: margin-left 200ms;
+		-moz-transition: margin-left 200ms;
+		-o-transition: margin-left 200ms;
+		transition: margin-left 200ms;
+		-webkit-box-shadow: inset -5px 5px 30px rgba(0, 0, 0, 0.75);
+		-moz-box-shadow: inset -5px 5px 30px rgba(0, 0, 0, 0.75);
+		box-shadow: inset -5px 5px 30px rgba(0, 0, 0, 0.75);
+	}
+	body.menu-hidden #menu {
+		margin-right: -260px;
+		}
+		body.menu-hidden.reversed #menu {
+			margin-left: -260px;
+			margin-right: 0;
+		}
+	#menu:before,
+	#menu:after {
+		display: none;
+		}
+		/* IE7 */
+		#menu-before,
+		#menu-after {
+			display: none;
+		}
+	#menu header {
+		padding-right: 36px;
+		}
+		body.reversed #menu header {
+			padding-left: 36px;
+			padding-right: 12px;
+		}
+
+	#menu-content {
+		background: #575d62;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0;
+		}
+		.no-boxshadow #menu-content {
+			border: 0;
+		}
+		#menu-content:before {
+			display: block;
+			content: ' ';
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: auto;
+			width: 5px;
+			z-index: 99;
+			pointer-events: none;
+			background: url(../img/old-browsers/992/bg_menu-content_before.png) repeat-y;
+			-webkit-background-size: 100% 100%;
+			-moz-background-size: 100% 100%;
+			-o-background-size: 100% 100%;
+			background-size: 100% 100%;
+			background: -webkit-gradient(linear, left top, right top, from(rgba(0, 0, 0, 0.75)), to(rgba(0, 0, 0, 0)), color-stop(0.1, rgba(0, 0, 0, 0.5)), color-stop(0.25, rgba(0, 0, 0, 0.3)), color-stop(0.5, rgba(0, 0, 0, 0.2)));
+			background: -webkit-linear-gradient( left, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+			background: -moz-linear-gradient( left, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+			background: -ms-linear-gradient( left, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+			background: -o-linear-gradient( left, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+			background: linear-gradient( left, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+			}
+			body.reversed #menu-content:before {
+				left: auto;
+				right: 0;
+				background: url(../img/old-browsers/992/bg_body_reversed_menu-content_before.png) repeat-y right top;
+				-webkit-background-size: 100% 100%;
+				-moz-background-size: 100% 100%;
+				-o-background-size: 100% 100%;
+				background-size: 100% 100%;
+				background: -webkit-gradient(linear, right top, left top, from(rgba(0, 0, 0, 0.75)), to(rgba(0, 0, 0, 0)), color-stop(0.1, rgba(0, 0, 0, 0.5)), color-stop(0.25, rgba(0, 0, 0, 0.3)), color-stop(0.5, rgba(0, 0, 0, 0.2)));
+				background: -webkit-linear-gradient( right, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+				background: -moz-linear-gradient( right, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+				background: -ms-linear-gradient( right, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+				background: -o-linear-gradient( right, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+				background: linear-gradient( right, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+			}
+		#menu-content:after,
+		.pointerevents #menu-content:after {
+			display: block;
+			top: 100%;
+			bottom: auto;
+			height: 15px;
+			background: url(../img/old-browsers/992/bg_menu-content_after.png) repeat-x;
+			-webkit-background-size: 100% 100%;
+			-moz-background-size: 100% 100%;
+			-o-background-size: 100% 100%;
+			background-size: 100% 100%;
+			background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.75)), to(rgba(0, 0, 0, 0)), color-stop(0.1, rgba(0, 0, 0, 0.5)), color-stop(0.25, rgba(0, 0, 0, 0.3)), color-stop(0.5, rgba(0, 0, 0, 0.2)));
+			background: -webkit-linear-gradient( top, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+			background: -moz-linear-gradient( top, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+			background: -ms-linear-gradient( top, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+			background: -o-linear-gradient( top, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+			background: linear-gradient( top, rgba(0,0,0,0.75), rgba(0,0,0,0.5) 10%, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0));
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			box-shadow: none;
+		}
+	#menu-footer {
+		margin-top: 5px;
+		padding: 10px 15px;
+	}
