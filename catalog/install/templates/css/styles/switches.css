@@ -1,0 +1,712 @@
+/**
+ *
+ * Switches styles
+ */
+
+.switch {
+	display: inline-block;
+	*display: inline;
+	zoom: 1;
+	text-align: center;
+	position: relative;
+	height: 30px;
+	width: 95px;
+	padding: 0;
+	vertical-align: middle;
+	-webkit-background-clip: padding-box;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	overflow: hidden;
+	cursor: pointer;
+	-webkit-transition: all 400ms;
+	-moz-transition: all 400ms;
+	-ms-transition: all 400ms;
+	-o-transition: all 400ms;
+	transition: all 400ms;
+	-webkit-box-shadow: 0 1px 1px rgba(255, 255, 255, 0.5), 0 0 0 rgba(51, 153, 255, 0);
+	-moz-box-shadow: 0 1px 1px rgba(255, 255, 255, 0.5), 0 0 0 rgba(51, 153, 255, 0);
+	box-shadow: 0 1px 1px rgba(255, 255, 255, 0.5), 0 0 0 rgba(51, 153, 255, 0);
+	}
+	.switch > input {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		visibility: hidden;
+	}
+	.switch.wide {
+		width: 125px;
+	}
+	.switch.wider {
+		width: 155px;
+	}
+	.switch.focus {
+		-webkit-box-shadow: 0 1px 1px rgba(255, 255, 255, 0.5), 0 0 5px rgba(51, 153, 255, 0.75);
+		-moz-box-shadow: 0 1px 1px rgba(255, 255, 255, 0.5), 0 0 5px rgba(51, 153, 255, 0.75);
+		box-shadow: 0 1px 1px rgba(255, 255, 255, 0.5), 0 0 5px rgba(51, 153, 255, 0.75);
+	}
+	.button-height .switch {
+		margin-top: -2px;
+		margin-bottom: 2px;
+	}
+	.button-height .switch.float-left,
+	.button-height .switch.float-right {
+		margin-top: 2px;
+	}
+	.switch-on,
+	.switch-off {
+		display: block;
+		position: absolute;
+		line-height: 30px;
+		font-size: 18px;
+		overflow: hidden;
+		padding: 0;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		}
+		.no-boxshadow .switch-on,
+		.no-boxshadow .switch-off {
+			line-height: 26px;
+			border-width: 1px;
+			border-style: solid;
+		}
+		.switch-on {
+			color: white;
+			right: 91px;
+			-webkit-background-clip: padding-box;
+			-webkit-border-top-left-radius: 4px;
+			-webkit-border-bottom-left-radius: 4px;
+			-moz-border-radius: 4px 0 0 4px;
+			border-radius: 4px 0 0 4px;
+			-webkit-transition: right 200ms;
+			-moz-transition: right 200ms;
+			-ms-transition: right 200ms;
+			-o-transition: right 200ms;
+			transition: right 200ms;
+			-webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.75), inset -5px 1px 3px rgba(0, 0, 0, 0.5);
+			-moz-box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.75), inset -5px 1px 3px rgba(0, 0, 0, 0.5);
+			box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.75), inset -5px 1px 3px rgba(0, 0, 0, 0.5);
+			-webkit-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35);
+			-moz-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35);
+			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35);
+			}
+			.wide > .switch-on {
+				right: 121px;
+			}
+			.wider > .switch-on {
+				right: 151px;
+			}
+			.reversed-switches .switch-on {
+				right: 0;
+				left: 91px;
+				padding-left: 4px;
+				padding-right: 0;
+				-webkit-border-radius: 0;
+				-webkit-border-top-right-radius: 4px;
+				-webkit-border-bottom-right-radius: 4px;
+				-moz-border-radius: 0 4px 4px 0;
+				border-radius: 0 4px 4px 0;
+				-webkit-transition: left 200ms;
+				-moz-transition: left 200ms;
+				-ms-transition: left 200ms;
+				-o-transition: left 200ms;
+				transition: left 200ms;
+				-webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.75), inset 5px 1px 3px rgba(0, 0, 0, 0.5);
+				-moz-box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.75), inset 5px 1px 3px rgba(0, 0, 0, 0.5);
+				box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.75), inset 5px 1px 3px rgba(0, 0, 0, 0.5);
+				}
+				.reversed-switches .wide > .switch-on {
+					left: 121px;
+				}
+				.reversed-switches .wider > .switch-on {
+					left: 151px;
+				}
+		.switch-off {
+			color: #999999;
+			left: 36px;
+			padding-left: 4px;
+			-webkit-background-clip: padding-box;
+			-webkit-border-top-right-radius: 4px;
+			-webkit-border-bottom-right-radius: 4px;
+			-moz-border-radius: 0 4px 4px 0;
+			border-radius: 0 4px 4px 0;
+			-webkit-transition: left 200ms;
+			-moz-transition: left 200ms;
+			-ms-transition: left 200ms;
+			-o-transition: left 200ms;
+			transition: left 200ms;
+			-webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.5), inset 5px 1px 3px rgba(0, 0, 0, 0.3);
+			-moz-box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.5), inset 5px 1px 3px rgba(0, 0, 0, 0.3);
+			box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.5), inset 5px 1px 3px rgba(0, 0, 0, 0.3);
+			-webkit-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+			-moz-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+			text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+			}
+			.black-inputs .switch-off,
+			.black-input > .switch-off {
+				color: #505050;
+				-webkit-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+				-moz-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+				text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+			}
+			.reversed-switches .switch-off {
+				left: 0;
+				right: 36px;
+				padding-left: 0;
+				padding-right: 4px;
+				-webkit-border-radius: 0;
+				-webkit-border-top-left-radius: 4px;
+				-webkit-border-bottom-left-radius: 4px;
+				-moz-border-radius: 4px 0 0 4px;
+				border-radius: 4px 0 0 4px;
+				-webkit-transition: right 200ms;
+				-moz-transition: right 200ms;
+				-ms-transition: right 200ms;
+				-o-transition: right 200ms;
+				transition: right 200ms;
+				-webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.5), inset -5px 1px 3px rgba(0, 0, 0, 0.3);
+				-moz-box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.5), inset -5px 1px 3px rgba(0, 0, 0, 0.3);
+				box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.5), inset -5px 1px 3px rgba(0, 0, 0, 0.3);
+			}
+		.switch-on > span,
+		.switch-off > span {
+			display: block;
+			width: 55px;
+			padding-top: 1px;
+			}
+			.wide > .switch-on > span,
+			.wide > .switch-off > span {
+				width: 85px;
+			}
+			.wider > .switch-on > span,
+			.wider > .switch-off > span {
+				width: 115px;
+			}
+			.switch-on > span {
+				margin-left: -55px;
+				-webkit-transition: margin-left 200ms;
+				-moz-transition: margin-left 200ms;
+				-ms-transition: margin-left 200ms;
+				-o-transition: margin-left 200ms;
+				transition: margin-left 200ms;
+				}
+				.wide > .switch-on > span {
+					margin-left: -85px;
+				}
+				.wider > .switch-on > span {
+					margin-left: -115px;
+				}
+				.reversed-switches .switch-on > span {
+					margin-left: 0;
+					-webkit-transition: none;
+					-moz-transition: none;
+					-ms-transition: none;
+					-o-transition: none;
+					transition: none;
+				}
+				.reversed-switches .switch-off > span {
+					-webkit-transition: margin-left 200ms;
+					-moz-transition: margin-left 200ms;
+					-ms-transition: margin-left 200ms;
+					-o-transition: margin-left 200ms;
+					transition: margin-left 200ms;
+				}
+	.switch-button {
+		position: absolute;
+		z-index: 88;
+		display: block;
+		border-width: 1px;
+		border-style: solid;
+		width: 38px;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		padding: 0;
+		margin: 0;
+		-webkit-background-clip: padding-box;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		-webkit-transition: left 200ms, border-color 400ms;
+		-moz-transition: left 200ms, border-color 400ms;
+		-ms-transition: left 200ms, border-color 400ms;
+		-o-transition: left 200ms, border-color 400ms;
+		transition: left 200ms, border-color 400ms;
+		-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+		-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+		}
+		.black-inputs .switch-button,
+		.black-input > .switch-button {
+			-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+			-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+			box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+		}
+		.reversed-switches .switch-button {
+			left: auto;
+			right: 0;
+			-webkit-transition: right 200ms, border-color 400ms;
+			-moz-transition: right 200ms, border-color 400ms;
+			-ms-transition: right 200ms, border-color 400ms;
+			-o-transition: right 200ms, border-color 400ms;
+			transition: right 200ms, border-color 400ms;
+		}
+		.focus > .switch-button {
+			border-color: #3399ff !important;
+		}
+		.switch-button.silver-gradient,
+		.switch-button.white-gradient {
+			-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+			-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+			box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+		}
+		.switch-button.black-gradient,
+		.switch-button.anthracite-gradient,
+		.switch-button.grey-gradient,
+		.switch-button.red-gradient,
+		.switch-button.orange-gradient,
+		.switch-button.green-gradient,
+		.switch-button.blue-gradient {
+			-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+			-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+			box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+		}
+		.medium > .switch-button:after,
+		.tiny > .switch-button:after,
+		.mini > .switch-button:after {
+			display: block;
+			content: ' ';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			background-image: url(../../img/standard/sprites.png);
+		}
+	/* Prevent animation when dragging */
+	.dragging > .switch-on,
+	.dragging > .switch-on > span,
+	.dragging > .switch-off,
+	.dragging > .switch-off > span,
+	.dragging > .switch-button {
+		-webkit-transition: none;
+		-moz-transition: none;
+		-ms-transition: none;
+		-o-transition: none;
+		transition: none;
+	}
+	/* Active style */
+	.switch.checked > .switch-button {
+		left: 55px;
+		}
+		.wide.checked > .switch-button {
+			left: 85px;
+		}
+		.wider.checked > .switch-button {
+			left: 115px;
+		}
+		.reversed-switches .switch.checked > .switch-button {
+			left: auto;
+			right: 55px;
+			}
+			.reversed-switches .wide.checked > .switch-button {
+				right: 85px;
+			}
+			.reversed-switches .wider.checked > .switch-button {
+				right: 115px;
+			}
+		.checked > .switch-on {
+			right: 36px;
+			}
+			.checked > .switch-on > span {
+				margin-left: 0;
+				}
+				.ie7 .checked > .switch-on > span {
+					margin-left: -4px;
+				}
+			.reversed-switches .checked > .switch-on {
+				left: 36px;
+				right: 0;
+				margin-left: 0;
+			}
+		.checked > .switch-off {
+			left: 91px;
+			}
+			.wide.checked > .switch-off {
+				left: 121px;
+			}
+			.wider.checked > .switch-off {
+				left: 151px;
+			}
+			.reversed-switches .checked > .switch-off {
+				left: 0;
+				right: 91px;
+				}
+				.reversed-switches .wide.checked > .switch-off {
+					right: 121px;
+				}
+				.reversed-switches .wider.checked > .switch-off {
+					right: 151px;
+				}
+				.reversed-switches .checked > .switch-off > span {
+					margin-left: -55px;
+					}
+					.reversed-switches .wide.checked > .switch-off > span {
+						margin-left: -85px;
+					}
+					.reversed-switches .wider.checked > .switch-off > span {
+						margin-left: -115px;
+					}
+
+	.switch.medium {
+		width: 70px;
+		height: 24px;
+		*vertical-align: -7px;
+		}
+		.switch.medium.wide {
+			width: 100px;
+		}
+		.switch.medium.wider {
+			width: 130px;
+		}
+		p > .switch.medium {
+			margin-top: -5px;
+			margin-bottom: -3px;
+		}
+		.button-height .switch.medium {
+			margin-top: -2px;
+			margin-bottom: 2px;
+		}
+		.medium > .switch-on,
+		.medium > .switch-off {
+			line-height: 23px;
+			font-size: 14px;
+			font-weight: bold;
+			}
+			.no-boxshadow .medium > .switch-on,
+			.no-boxshadow .medium > .switch-off {
+				line-height: 20px;
+			}
+			.medium > .switch-on {
+				right: 66px;
+				}
+				.medium.wide > .switch-on {
+					right: 96px;
+				}
+				.medium.wider > .switch-on {
+					right: 126px;
+				}
+				.reversed-switches .medium > .switch-on {
+					left: 66px;
+					right: 0;
+					}
+					.reversed-switches .medium.wide > .switch-on {
+						left: 96px;
+					}
+					.reversed-switches .medium.wider > .switch-on {
+						left: 126px;
+					}
+			.medium > .switch-off {
+				left: 26px;
+				}
+				.reversed-switches .medium > .switch-off {
+					left: 0;
+					right: 26px;
+				}
+			.medium > .switch-on > span,
+			.medium > .switch-off > span {
+				width: 40px;
+				}
+				.medium.wide > .switch-on > span,
+				.medium.wide > .switch-off > span {
+					width: 70px;
+				}
+				.medium.wider > .switch-on > span,
+				.medium.wider > .switch-off > span {
+					width: 100px;
+				}
+				.medium > .switch-on > span {
+					margin-left: -40px;
+					}
+					.medium.wide > .switch-on > span {
+						margin-left: -70px;
+					}
+					.medium.wider > .switch-on > span {
+						margin-left: -100px;
+					}
+					.reversed-switches .medium > .switch-on > span {
+						margin-left: 0;
+					}
+		.medium > .switch-button {
+			width: 28px;
+			}
+			.medium > .switch-button:after {
+				width: 7px;
+				height: 8px;
+				margin: -3px 0 0 -3px;
+				background-position: -120px 0;
+				}
+				.black-inputs .medium > .switch-button:after,
+				.black-input.medium > .switch-button:after {
+					background-position: -127px 0;
+					margin-top: -4px;
+				}
+		.checked.medium > .switch-button {
+			left: 40px;
+			}
+			.medium.checked.wide > .switch-button {
+				left: 70px;
+			}
+			.medium.checked.wider > .switch-button {
+				left: 100px;
+			}
+			.reversed-switches .switch.checked.medium > .switch-button {
+				left: auto;
+				right: 40px;
+				}
+				.reversed-switches .medium.checked.wide > .switch-button {
+					right: 70px;
+				}
+				.reversed-switches .medium.checked.wider > .switch-button {
+					right: 100px;
+				}
+			.checked.medium > .switch-on {
+				right: 26px;
+				}
+				.checked.medium > .switch-on > span {
+					margin-left: 0;
+					}
+					.ie7 .checked > .switch-on > span {
+						margin-left: -4px;
+					}
+				.reversed-switches .checked.medium > .switch-on {
+					left: 26px;
+					right: 0;
+					margin-left: 0;
+				}
+			.checked.medium > .switch-off {
+				left: 66px;
+				}
+				.medium.checked.wide > .switch-off {
+					left: 96px;
+				}
+				.medium.checked.wider > .switch-off {
+					left: 126px;
+				}
+				.reversed-switches .checked.medium > .switch-off {
+					left: 0;
+					right: 66px;
+					}
+					.reversed-switches .medium.checked.wide > .switch-off {
+						right: 96px;
+					}
+					.reversed-switches .medium.checked.wider > .switch-off {
+						right: 126px;
+					}
+				.reversed-switches .medium.checked > .switch-off > span {
+					margin-left: -40px;
+					}
+					.reversed-switches .medium.checked > .switch-off > span {
+						margin-left: -70px;
+					}
+					.reversed-switches .medium.checked > .switch-off > span {
+						margin-left: -100px;
+					}
+
+	.switch.tiny,
+	.switch.mini {
+		width: 35px;
+		height: 15px;
+		}
+		.switch.tiny {
+			overflow: visible;
+			margin-left: 2px;
+			margin-right: 2px;
+		}
+		p > .switch.tiny,
+		p > .switch.mini,
+		.button-height .switch.tiny,
+		.button-height .switch.mini {
+			margin-top: -1px;
+			margin-bottom: 1px;
+		}
+		.tiny > .switch-on,
+		.tiny > .switch-off,
+		.mini > .switch-on,
+		.mini > .switch-off {
+			line-height: 15px;
+			}
+			.tiny > .switch-on,
+			.mini > .switch-on {
+				right: 27px;
+				-webkit-border-top-left-radius: 8px;
+				-webkit-border-bottom-left-radius: 8px;
+				-moz-border-radius: 8px 0 0 8px;
+				border-radius: 8px 0 0 8px;
+				}
+				.reversed-switches .tiny > .switch-on,
+				.reversed-switches .mini > .switch-on {
+					left: 27px;
+					right: 0;
+					-webkit-border-radius: 0;
+					-webkit-border-top-right-radius: 8px;
+					-webkit-border-bottom-right-radius: 8px;
+					-moz-border-radius: 0 8px 8px 0;
+					border-radius: 0 8px 8px 0;
+				}
+			.tiny > .switch-off,
+			.mini > .switch-off {
+				left: 8px;
+				-webkit-border-top-right-radius: 8px;
+				-webkit-border-bottom-right-radius: 8px;
+				-moz-border-radius: 0 8px 8px 0;
+				border-radius: 0 8px 8px 0;
+				}
+				.reversed-switches .tiny > .switch-off,
+				.reversed-switches .mini > .switch-off {
+					left: 0;
+					right: 8px;
+					-webkit-border-radius: 0;
+					-webkit-border-top-left-radius: 8px;
+					-webkit-border-bottom-left-radius: 8px;
+					-moz-border-radius: 8px 0 0 8px;
+					border-radius: 8px 0 0 8px;
+				}
+			.tiny > .switch-on > span,
+			.tiny > .switch-off > span,
+			.mini > .switch-on > span,
+			.mini > .switch-off > span {
+				display: none;
+			}
+		.tiny > .switch-button {
+			top: -2px;
+			left: -2px;
+			bottom: -2px;
+			width: 17px;
+			-webkit-border-radius: 10px;
+			-moz-border-radius: 10px;
+			border-radius: 10px;
+			-webkit-box-shadow: inset 0 1px 0 white, 0 1px 3px rgba(0, 0, 0, 0.5);
+			-moz-box-shadow: inset 0 1px 0 white, 0 1px 3px rgba(0, 0, 0, 0.5);
+			box-shadow: inset 0 1px 0 white, 0 1px 3px rgba(0, 0, 0, 0.5);
+			}
+			.black-inputs .tiny > .switch-button,
+			.black-input.tiny > .switch-button {
+				-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 3px rgba(0, 0, 0, 0.5);
+				-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 3px rgba(0, 0, 0, 0.5);
+				box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 3px rgba(0, 0, 0, 0.5);
+			}
+			.reversed-switches .tiny > .switch-button {
+				left: auto;
+				right: -2px;
+			}
+			.tiny > .switch-button:after {
+				width: 5px;
+				height: 7px;
+				margin: -2px 0 0 -2px;
+				background-position: -134px 0;
+				}
+				.black-inputs .tiny > .switch-button:after,
+				.black-input.tiny > .switch-button:after {
+					background-position: -139px 0;
+					margin-top: -3px;
+				}
+		.mini > .switch-button {
+			width: 13px;
+			-webkit-border-radius: 8px;
+			-moz-border-radius: 8px;
+			border-radius: 8px;
+			}
+			.mini > .switch-button:after {
+				width: 5px;
+				height: 6px;
+				margin: -2px 0 0 -2px;
+				background-position: -144px 0;
+				}
+				.black-inputs .mini > .switch-button:after,
+				.black-input.mini > .switch-button:after {
+					background-position: -149px 0;
+				}
+		.switch.checked.tiny > .switch-button {
+			left: 17px;
+			}
+			.reversed-switches .switch.checked.tiny > .switch-button {
+				left: auto;
+				right: 17px;
+			}
+		.switch.checked.mini > .switch-button {
+			left: 20px;
+			}
+			.reversed-switches .switch.checked.mini > .switch-button {
+				left: auto;
+				right: 20px;
+			}
+			.checked.tiny > .switch-on,
+			.checked.mini > .switch-on {
+				right: 8px;
+				}
+				.reversed-switches .checked.tiny > .switch-on,
+				.reversed-switches .checked.mini > .switch-on {
+					left: 8px;
+					right: 0;
+				}
+			.checked.tiny > .switch-off,
+			.checked.mini > .switch-off {
+				left: 27px;
+				}
+				.reversed-switches .checked.tiny > .switch-off,
+				.reversed-switches .checked.mini > .switch-off {
+					left: 0;
+					right: 27px;
+				}
+
+	.switch.disabled, .disabled .switch,
+	.switch.disabled, .disabled .switch {
+		cursor: default;
+		}
+		.disabled .switch-on,
+		.disabled .switch-off {
+			-webkit-box-shadow: none;
+			-moz-box-shadow: none;
+			box-shadow: none;
+			-webkit-text-shadow: none;
+			-moz-text-shadow: none;
+			text-shadow: none;
+			border-width: 1px;
+			border-style: solid;
+			height: 28px;
+			line-height: 28px;
+			}
+			.no-boxshadow .disabled .switch-on,
+			.no-boxshadow .disabled .switch-off {
+				line-height: 26px;
+			}
+			.medium.disabled > .switch-on, .disabled .medium > .switch-on,
+			.medium.disabled > .switch-off, .disabled .medium > .switch-off {
+				height: 22px;
+				line-height: 20px;
+				}
+				.medium.disabled > .switch-on > span, .disabled .medium > .switch-on > span,
+				.medium.disabled > .switch-off > span, .disabled .medium > .switch-off > span {
+					width: 38px;
+				}
+			.tiny.disabled > .switch-on, .disabled .tiny > .switch-on,
+			.tiny.disabled > .switch-off, .disabled .tiny > .switch-off,
+			.mini.disabled > .switch-on, .disabled .mini > .switch-on,
+			.mini.disabled > .switch-off, .disabled .mini > .switch-off {
+				height: 13px;
+				line-height: 13px;
+			}
+			.disabled .switch-button {
+				-webkit-box-shadow: none !important;
+				-moz-box-shadow: none !important;
+				box-shadow: none !important;
+				}
+				.disabled .switch-button:after {
+					-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+					filter: alpha(opacity=50);
+					-khtml-opacity: 0.5;
+					-moz-opacity: 0.5;
+					opacity: 0.5;
+				}
