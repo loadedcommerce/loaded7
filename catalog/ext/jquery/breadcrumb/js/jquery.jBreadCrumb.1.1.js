@@ -3,7 +3,7 @@
  * Thanks to mikejbond for suggested udaptes
  *
  * Version 1.1
- * Copyright (c) 2011 CompareNetworks Inc.
+ * Copyright (c) 2013 CompareNetworks Inc.
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/mit-license.php

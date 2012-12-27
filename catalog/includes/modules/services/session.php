@@ -5,7 +5,7 @@
   LoadedCommerce, Open Source E-Commerce Solutions
   http://www.loadedcommerce.com
 
-  Copyright (c) 2011 LoadedCommerce
+  Copyright (c) 2013 LoadedCommerce
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License v2 (1991)

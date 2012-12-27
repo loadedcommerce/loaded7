@@ -1,14 +1,14 @@
 <?php
   /*
-  $Id: header.php v1.0 2011-11-04 datazen $
+  $Id: header.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
 
-  Copyright (c) 2011 LoadedCommerce.com
+  Copyright (c) 2013 Loaded Commerce, LLC
 
   @author     LoadedCommerce Team
-  @copyright  (c) 2011 LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
 ?>
@@ -73,7 +73,7 @@
   <!--Navigation Starts-->
   <nav>
     <ul id="primaryNav" class="primary_nav">
-      <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_home'); ?></a></li>
+      <li><a id="navHome" href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_home'); ?></a></li>
       <li><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'specials', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_specials'); ?></a></li>
       <li><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_new_products'); ?></a></li>
     </ul>
@@ -81,11 +81,15 @@
     <script>
     $(document).ready(function() {
       var loc = '<?php echo end(explode("/", $_SERVER['REQUEST_URI'])); ?>';
-      $('#primaryNav li a').each(function() {
-        if (this.href.indexOf(loc) != -1) {
-          $(this).addClass('current');
-        }
-      });
+      if (loc == '') {
+        $('#navHome').addClass('current');  
+      } else {
+        $('#primaryNav li a').each(function() {
+          if (this.href.indexOf(loc) != -1) {
+            $(this).addClass('current');
+          }
+        });
+      }
     });      
     </script>    
     
@@ -139,7 +143,4 @@
   </nav>
   <!--Navigation Ends-->
 </div>
-<script>
-
-</script>
 <!--Header Ends-->
