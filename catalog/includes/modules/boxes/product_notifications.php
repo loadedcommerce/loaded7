@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id: product_notifications.php v1.0 2011-11-04 datazen $
+  $Id: product_notifications.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Open Source E-Commerce Solutions
   http://www.loadedcommerce.com
@@ -8,7 +8,7 @@
   Copyright (c) 2006 LoadedCommerce
 
   @author     LoadedCommerce Team
-  @copyright  (c) 2011 LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
 

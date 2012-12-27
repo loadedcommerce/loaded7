@@ -6,7 +6,7 @@ By: Maggie Costello Wachs (maggie@filamentgroup.com) and Scott Jehl (scott@filam
  http://www.filamentgroup.com
  * reference articles: http://www.filamentgroup.com/lab/jquery_ipod_style_drilldown_menu/
   
-Copyright (c) 2011 Filament Group
+Copyright (c) 2013 Filament Group
 Dual licensed under the MIT (filamentgroup.com/examples/mit-license.txt) and GPL (filamentgroup.com/examples/gpl-license.txt) licenses.
 --------------------------------------------------------------------*/
 
