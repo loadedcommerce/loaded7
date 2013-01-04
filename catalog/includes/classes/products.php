@@ -84,7 +84,21 @@
     function &execute() {
       global $lC_Database, $lC_Language, $lC_CategoryTree, $lC_Image;
 
-      $Qlisting = $lC_Database->query('select SQL_CALC_FOUND_ROWS distinct p.products_id from :table_products p left join :table_product_attributes pa on (p.products_id = pa.products_id) left join :table_templates_boxes tb on (pa.id = tb.id and tb.code = "manufacturers"), :table_products_description pd, :table_categories c, :table_products_to_categories p2c where p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id and p.products_id = p2c.products_id and p2c.categories_id = c.categories_id');
+      $Qlisting = $lC_Database->query('select SQL_CALC_FOUND_ROWS distinct p.products_id 
+                                         from :table_products p 
+                                       left join :table_product_attributes pa 
+                                         on (p.products_id = pa.products_id) 
+                                       left join :table_templates_boxes tb 
+                                         on (pa.id = tb.id and tb.code = "manufacturers"), 
+                                       :table_products_description pd, 
+                                       :table_categories c, 
+                                       :table_products_to_categories p2c 
+                                       where p.products_status = 1 
+                                         and p.products_id = pd.products_id 
+                                         and pd.language_id = :language_id 
+                                         and p.products_id = p2c.products_id 
+                                         and p2c.categories_id = c.categories_id');
+                                         
       $Qlisting->bindTable(':table_products', TABLE_PRODUCTS);
       $Qlisting->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
       $Qlisting->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);

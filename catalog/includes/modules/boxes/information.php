@@ -32,7 +32,7 @@
 
       $this->_title_link = lc_href_link(FILENAME_INFO);
      
-      $this->_content = '<ul class="category departments">' . 
+      $this->_content = '<ul class="category">' . 
                         (($lC_Customer->isLoggedOn()) ? '  <li>' . lc_link_object(lc_href_link(FILENAME_ACCOUNT), $lC_Language->get('my_account')) . '</li>' : '') .
                         '  <li>' . lc_link_object(lc_href_link(FILENAME_INFO, 'shipping'), $lC_Language->get('box_information_shipping')) . '</li>' .
                         '  <li>' . lc_link_object(lc_href_link(FILENAME_INFO, 'privacy'), $lC_Language->get('box_information_privacy')) . '</li>' .

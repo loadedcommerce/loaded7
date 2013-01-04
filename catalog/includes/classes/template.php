@@ -99,7 +99,7 @@
  * @access protected
  */
 
-    protected $_javascript_filenames = array('includes/general.js');
+    protected $_javascript_filenames = array();
 
 /**
  * Holds javascript PHP filenames to be included in the page

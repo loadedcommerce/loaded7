@@ -32,9 +32,9 @@
 
       $this->_title_link = lc_href_link(FILENAME_SEARCH);
 
-      $this->_content = '<form name="search" action="' . lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false) . '" method="get">' .
-                        lc_draw_input_field('keywords', null, 'style="width: 80%;" maxlength="30"') . '&nbsp;' . lc_draw_hidden_session_id_field() . lc_draw_image_submit_button('button_quick_find.gif', $lC_Language->get('box_search_heading')) . '<br />' . sprintf($lC_Language->get('box_search_text'), lc_href_link(FILENAME_SEARCH)) .
-                        '</form>';
+      $this->_content = '<ul class="category"><div><form name="search" action="' . lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false) . '" method="get">' .
+                        lc_draw_input_field('keywords', null, 'style="width: 80%;" maxlength="30"') . '&nbsp;<div style="float:right;">' . lc_draw_hidden_session_id_field() . lc_draw_image_submit_button('search_btn.png', $lC_Language->get('box_search_heading')) . '</div><br /><p style="padding-top:10px;">' . sprintf($lC_Language->get('box_search_text'), lc_href_link(FILENAME_SEARCH)) .
+                        '</p></form></div></ul>';
     }
   }
 ?>

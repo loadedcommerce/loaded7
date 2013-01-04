@@ -53,7 +53,7 @@
           $Qproducts->bindInt(':language_id', $lC_Language->getID());
           $Qproducts->execute();
 
-          $this->_content = '<ul class="category departments">';
+          $this->_content = '<ul class="category">';
 
           while ($Qproducts->next()) {
             $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qproducts->value('products_keyword')), $Qproducts->value('products_name')) . '</li>';
