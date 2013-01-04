@@ -79,7 +79,7 @@
       $Qcustomer->bindValue(':customers_ip_address', lc_get_ip_address());
       $Qcustomer->bindValue(':customers_password', lc_encrypt_string($data['password']));
       $Qcustomer->bindValue(':customers_gender', (((ACCOUNT_GENDER > -1) && isset($data['gender']) && (($data['gender'] == 'm') || ($data['gender'] == 'f'))) ? $data['gender'] : ''));
-      $Qcustomer->bindValue(':customers_dob', ((ACCOUNT_DATE_OF_BIRTH == '1') ? @date('Ymd', $data['dob']) : ''));
+      $Qcustomer->bindValue(':customers_dob', ((ACCOUNT_DATE_OF_BIRTH == '1') ? @date('Ymd', $data['dob']) : '0000-00-00 00:00:00'));
       $Qcustomer->bindInt(':number_of_logons', 0);
       $Qcustomer->bindRaw(':date_account_created', 'now()');
       $Qcustomer->execute();

@@ -27,11 +27,10 @@
         }
       }
 
-      $string = '<table border="0" cellspacing="0" cellpadding="2">' .
-                '  <tr>' .
-                '    <td align="right">' . $data['title'] . ': ' . lc_draw_pull_down_menu('variants[' . $data['group_id'] . ']', $data['data'], $default_value, 'onchange="refreshVariants();" id="variants_' . $data['group_id'] . '"') . '</td>' .
-                '  </tr>' .
-                '</table>';
+      $string = '<div class="variant_sel" id="variantsBlockData">' . 
+                '  <label>' . $data['title'] . '</label>' . 
+                lc_draw_pull_down_menu('variants[' . $data['group_id'] . ']', $data['data'], $default_value, 'onchange="refreshVariants();" id="variants_' . $data['group_id'] . '"') .
+                '</div>';
 
       return $string;
     }

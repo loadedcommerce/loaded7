@@ -31,9 +31,9 @@
       global $lC_Language, $lC_Template, $lC_Product;
       
       if (isset($lC_Product) && is_a($lC_Product, 'lC_Product') && ($lC_Template->getModule() != 'tell_a_friend')) {
-        $this->_content = '<form name="tell_a_friend" id="tell_a_friend" action="' . lc_href_link(FILENAME_PRODUCTS, 'tell_a_friend&' . $lC_Product->getKeyword()) . '" method="post">' . "\n" .
-                          lc_draw_input_field('to_email_address', null, 'style="width: 80%;"') . '&nbsp;<a onclick="$(\'#tell_a_friend\').submit();">' . lc_icon('icon_send.png') . '</a><br />' . $lC_Language->get('box_tell_a_friend_text') . "\n" . 
-                          '</form>' . "\n";      
+        $this->_content = '<ul class="category"><form name="tell_a_friend" id="tell_a_friend" action="' . lc_href_link(FILENAME_PRODUCTS, 'tell_a_friend&' . $lC_Product->getKeyword()) . '" method="post">' . "\n" .
+                          lc_draw_input_field('to_email_address', null, 'style="width: 80%;"') . '&nbsp;<a onclick="$(\'#tell_a_friend\').submit();">' . lc_icon('icon_send.png') . '</a><br /><p style="padding-top:5px;">' . $lC_Language->get('box_tell_a_friend_text') . '</p>' . "\n" . 
+                          '</form></ul>' . "\n";      
       }
     }
   }

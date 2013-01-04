@@ -33,17 +33,14 @@
       $this->_title_link = lc_href_link(FILENAME_CHECKOUT, null, 'SSL');
 
       if ($lC_ShoppingCart->hasContents()) {
-        $this->_content = '<table border="0" width="100%" cellspacing="0" cellpadding="0">';
+        $this->_content = '<ul class="category">';
 
         foreach ($lC_ShoppingCart->getProducts() as $products) {
-          $this->_content .= '  <tr>' .
-                             '    <td align="right" valign="top">' . $products['quantity'] . '&nbsp;x&nbsp;</td>' .
-                             '    <td valign="top">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $products['name']) . '</td>' .
-                             '  </tr>';
+          $this->_content .= '    <li><span style="float:left;">' . $products['quantity'] . '&nbsp;x&nbsp;</span>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $products['name']) . '</li>';
         }
 
-        $this->_content .= '</table>' .
-                           '<p style="text-align: right">' . $lC_Language->get('box_shopping_cart_subtotal') . ' ' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</p>';
+        $this->_content .= '</ul>' .
+                           '<p style="text-align:right;">' . $lC_Language->get('box_shopping_cart_subtotal') . ' ' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</p>';
       } else {
         $this->_content = $lC_Language->get('box_shopping_cart_empty');
       }

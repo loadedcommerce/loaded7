@@ -50,7 +50,7 @@
                        'active' => ($lC_Template->getModule() == 'success' ? true : false));
 
 
-      $content = '<ul class="category departments">';
+      $content = '<ul class="category">';
 
       $counter = 0;
       foreach ($steps as $step) {

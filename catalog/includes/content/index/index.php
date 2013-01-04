@@ -42,9 +42,10 @@
 
           $Qcategories->freeResult();
 
-          for ($i=0, $n=sizeof($cPath_array); $i<$n; $i++) {
-            $lC_Breadcrumb->add($categories[$cPath_array[$i]], lc_href_link(FILENAME_DEFAULT, 'cPath=' . implode('_', array_slice($cPath_array, 0, ($i+1)))));
-          }
+          if ($lC_Services->isStarted('breadcrumb')) {
+            $lC_Breadcrumb->add(null, null, $_GET['cPath']);
+          }          
+
         }
 
         $lC_Category = new lC_Category($current_category_id);

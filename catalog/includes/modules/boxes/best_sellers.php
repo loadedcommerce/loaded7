@@ -60,7 +60,7 @@
       }
 
       if ($Qbestsellers->numberOfRows() >= BOX_BEST_SELLERS_MIN_LIST) {
-        $this->_content = '<ul class="category departments">';
+        $this->_content = '<ul class="category">';
 
         while ($Qbestsellers->next()) {
           $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qbestsellers->value('products_keyword')), $Qbestsellers->value('products_name')) . '</li>';
