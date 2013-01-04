@@ -38,9 +38,12 @@
           include_once('includes/classes/products.php');
           $lC_Products = new lC_Products();
           $Qlisting = $lC_Products->execute();
+          $cnt = 0;
           while ($Qlisting->next()) {
             $lC_Product = new lC_Product($Qlisting->valueInt('products_id'));
-            echo '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Product->getTitle()) . '</li>';
+            echo '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), substr($lC_Product->getTitle(), 0, 20)) . '</li>';
+            $cnt++;
+            if ($cnt == 5) break;
           }
         ?>
         </ul>
@@ -84,7 +87,7 @@
       </div>
     </div>
     <address>
-      Copyright &copy; 2012 Leisure. All Rights Reserved. <img src="templates/default/images/payment_info.jpg"/>
+      Copyright &copy; <?php echo @date("Y"); ?> Loaded Commerce <img src="templates/default/images/payment_info.jpg"/>
     </address>
   </footer>
 </div>

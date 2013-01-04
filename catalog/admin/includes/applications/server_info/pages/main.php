@@ -70,7 +70,7 @@
     </div>
     <div class="new-row twelve-columns-tablet">
       <p class="align-center">
-        <span><a href="http://www.loaded7.com" target="_blank"><?php echo lc_image(lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=image'), 'Loaded Commerce'); ?><br /><b><?php echo PROJECT_VERSION; ?></b><br />Installation ID: <?php echo (defined('INSTALLATION_ID') ? INSTALLATION_ID : $lC_Language->get('no_installation_id')); ?></a></span>
+        <span><a href="http://www.loaded7.com" target="_blank"><?php echo lc_image(lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=image'), 'Loaded Commerce'); ?><br /><b><?php echo PROJECT_VERSION; ?></b></a><br />Installation ID: <?php echo (defined('INSTALLATION_ID') ? INSTALLATION_ID : $lC_Language->get('no_installation_id')); ?></span>
       </p>
     </div>
   </div>  

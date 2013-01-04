@@ -349,6 +349,9 @@ class lC_Products_Admin {
       $Qproduct->bindRaw(':products_date_added', 'now()');
     }
 
+    // set parent status to active if has variants
+    if ( isset($data['variants_combo']) && !empty($data['variants_combo']) ) $data['status'] = 1;
+    
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproduct->bindInt(':products_quantity', $data['quantity']);
     $Qproduct->bindFloat(':products_price', $data['price']);

@@ -16,6 +16,10 @@
 $_SESSION['setCategoriesMaximumLevel'] = 2;
 $cPathArr = explode('_', $_GET['cPath']);
 $cPathTop = $cPathArr[0];
+if (isset($_GET['lCsid']) && !empty($_GET['lCsid'])) {
+  lC_Cache::clear('categories');
+  lC_Cache::clear('category_tree');
+}
 ?>
 <!--Side Nav Starts-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>

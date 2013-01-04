@@ -20,9 +20,9 @@ class lC_Api {
   * @return string
   */ 
   public function healthCheck() {
-    if ($this->__timeToCheck()) {
+//    if ($this->__timeToCheck()) {
       return $this->__doRegister();
-    }
+//    }
   }
   /**
   * Register the new install with the LC API
@@ -36,8 +36,8 @@ class lC_Api {
     // register the install with LC API
     $registerArr = array('storeName' => STORE_NAME,
                          'storeEmail' => STORE_OWNER_EMAIL_ADDRESS,
-                         'storeWWW' => HTTP_SERVER,
-                         'storeSSL' => HTTPS_SERVER,
+                         'storeWWW' => HTTP_SERVER . DIR_WS_HTTP_CATALOG,
+                         'storeSSL' => HTTPS_SERVER . DIR_WS_HTTPS_CATALOG,
                          'systemMetaData' => base64_encode(json_encode(lc_get_system_information())),
                          'serverMetaData' => (isset($_SERVER) && is_array($_SERVER)) ? base64_encode(json_encode($_SERVER)) : NULL,
                          'envMetaData' => (isset($_ENV) && is_array($_ENV)) ? base64_encode(json_encode($_ENV)) : NULL);                        
@@ -89,12 +89,12 @@ class lC_Api {
     $Qcheck->bindValue(':configuration_key', 'INSTALLATION_ID');
     $Qcheck->execute();  
     
-    $today = lC_DateTime::getShort(date("Y-m-d H:m:s"));
-    $check = lC_DateTime::getShort($Qcheck->value('last_modified'));
+    $today = substr(lC_DateTime::getShort(date("Y-m-d H:m:s")), 3, 2);
+    $check = substr(lC_DateTime::getShort($Qcheck->value('last_modified')), 3, 2);
     
     $Qcheck->freeResult();
-    
-    return ($today != $check);
+
+    return (((int)$today != (int)$check) ? TRUE : FALSE);   
   }    
   /**
   * Send the data to the host 

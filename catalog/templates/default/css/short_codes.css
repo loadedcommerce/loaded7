@@ -23,6 +23,12 @@
     background:#ffe3e2;
     border: 1px solid #d84646;
 }
+label.error {
+    color: #d84646;
+    border: none;
+    background: transparent;
+    font-style:italic;
+}
 .info {
     background:#d8f4ff;
     border: 1px solid #3c91cb;
@@ -44,6 +50,24 @@
 .bookmark span {
     background: url(../images/shortcodes/bookmark.png) no-repeat scroll left center transparent;
 }
+input:focus { 
+    outline:none;
+    border: 1px solid #c541fc; 
+    /* create a BIG glow
+    box-shadow: 0px 0px 14px #c541fc; 
+    -moz-box-shadow: 0px 0px 14px #c541fc;
+    -webkit-box-shadow: 0px 0px 14px #c541fc; */
+}​
+
+/* margin utility classes */
+.no-margin-top { margin-top:0; }
+.small-margin-top { margin-top:4px !important; }
+.margin-top { margin-top:10px !important; }
+.large-margin-top { margin-top:20px !important; }
+.no-margin-bottom { margin-bottom:0 !important; }
+.small-margin-bottom { margin-bottom:4px !important; }
+.margin-bottom { margin-bottom:10px !important; }
+.large-margin-bottom { margin-bottom:20px !important; }
 
 /*Toggle*/
 .toggle_box{ border:solid 1px #DEDEDE;}
