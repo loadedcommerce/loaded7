@@ -78,7 +78,7 @@ if ( ($Qlisting->numberOfRows() > 0) && ( (PREV_NEXT_BAR_LOCATION == '1') || (PR
     while ($Qlisting->next()) {
       $lC_Product = new lC_Product($Qlisting->valueInt('products_id'));
       $rows++;
-      $grid_string .= '<li style="height:320px;"><div class="product_info">' . "\n";        
+      $grid_string .= '<li><div class="product_info">' . "\n";        
       $list_string .= '<li><div class="product_info">' . "\n";
       for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
         switch ($column_list[$col]) {
@@ -88,17 +88,17 @@ if ( ($Qlisting->numberOfRows() > 0) && ( (PREV_NEXT_BAR_LOCATION == '1') || (PR
             break;
           case 'PRODUCT_LIST_NAME':
             if (isset($_GET['manufacturers'])) {
-              $lc_text = '<div class="product_info"><b>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&manufacturers=' . $_GET['manufacturers']), $lC_Product->getTitle()) . '</b><br />
-                          <small>' . substr(lc_clean_html($lC_Product->getDescription()), 0, 58) . '</small></div>';
+              $lc_text = '<h3>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&manufacturers=' . $_GET['manufacturers']), $lC_Product->getTitle()) . '</h3>
+                          <small>' . substr(lc_clean_html($lC_Product->getDescription()), 0, 58) . '</small>';
             } else {
-              $lc_text = '<div class="product_info"><b>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . ($cPath ? '&cPath=' . $cPath : '')), $lC_Product->getTitle()) . '</b><br />
-                          <small>' . substr(lc_clean_html($lC_Product->getDescription()), 0, 58) . '...</small></div>';
+              $lc_text = '<h3>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . ($cPath ? '&cPath=' . $cPath : '')), $lC_Product->getTitle()) . '</h3>
+                          <small>' . substr(lc_clean_html($lC_Product->getDescription()), 0, 58) . '...</small>';
             }
             if (isset($_GET['manufacturers'])) {
-              $lr_text = '<b>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&manufacturers=' . $_GET['manufacturers']), $lC_Product->getTitle()) . '</b><br />
+              $lr_text = '<h3>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&manufacturers=' . $_GET['manufacturers']), $lC_Product->getTitle()) . '</h3>
                           <small>' . lc_clean_html($lC_Product->getDescription()) . '</small>';
             } else {
-              $lr_text = '<b>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . ($cPath ? '&cPath=' . $cPath : '')), $lC_Product->getTitle()) . '</b><br />
+              $lr_text = '<h3>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . ($cPath ? '&cPath=' . $cPath : '')), $lC_Product->getTitle()) . '</h3>
                           <small>' . lc_clean_html($lC_Product->getDescription()) . '</small>';
             }
             break;

@@ -16,6 +16,12 @@
 <div class="header-container">
   <header class="wrapper clearfix">
     <div class="top_bar clear">
+      <!--Mobile Menu Button Starts-->
+      <div class="mobile-menu" style="display:none;">
+        <img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>mobile-menu.png" id="mobile-menu-button" />
+      </div>
+      <!--Mobile Menu Button Ends-->
+      
       <!--Language Switcher Starts-->
       <div class="language_switch"> 
       <?php 
@@ -25,6 +31,7 @@
       ?>
       </div>
       <!--Language Switcher Ends-->
+    
       <!--Top Links Starts-->
       <ul id="topLinks" class="top_links">
         <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><?php echo $lC_Language->get('text_sign_in'); ?></a></li>
@@ -36,30 +43,37 @@
       </ul>
       <!--Top Links Ends-->
     </div>
+    <!--Mobile Menu Starts-->
+    <div id="mobile-menu" style="display:none;">
+      <ul class="table_view cells">
+        <li><a href="index.php">Home</a></li>
+        <li><a href="products.php?specials">Specials</a></li>
+        <li><a href="products.php?new">New Products</a></li>
+        <li><a href="info.php?contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <!--Mobile Menu Starts-->
     <!--Logo Starts-->
     <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>logo.png" /></a></h1>
     <!--Logo Ends-->
     
-    <!--Mobile Menu Starts-->
-    <div class="mobile-menu" style="display:none;">
-      <img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>mobile-menu.png" />
-    </div>
-    <!--Mobile Menu Ends-->
-    
+    <?php
+      if (!empty($content_left)) {
+    ?>
     <!--Browse Catalog Starts-->
-    <div class="browse-catalog" style="display:none;">
-      <select>
-        <option>Browse Catalog</option>
-        <option>Women</option>
-        <option>Men</option>
-        <option>Kids</option>
-        <option>Accessories</option>
-      </select>    
+    <button class="button brown_btn browse-catalog" style="display:none; padding:10px 10px 25px 10px !important;" type="button" id="browse-catalog">Browse Catalog</button>
+    <div id="browse-catalog-div" style="display:none;">
+      <div id="left_side_nav" class="sideNavBox colLeft" style="display:block;">
+        <?php echo $content_left; ?>
+      </div>
     </div>
     <!--Browse Catalog Ends-->
+    <?php
+      }
+    ?>
 
     <!--Search Starts-->
-    <form class="header_search" method="post" action="search">
+    <form id="liveSearchForm" class="header_search" method="post" action="search">
       <div id="liveSearchContainer" class="form-search">
         <input type="text" class="liveSearchInput" id="search" name="q" value="<?php echo $lC_Language->get('button_search'); ?>..." onfocus="$(this).val('').addClass('liveSearchText');" onblur="$(this).val(' <?php echo $lC_Language->get('button_search'); ?> ...').removeClass('liveSearchText');" autocomplete="off" placeholder="Search">
         <button type="submit" title="Search" disabled="disabled"></button>
