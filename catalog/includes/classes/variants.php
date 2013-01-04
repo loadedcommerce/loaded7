@@ -108,9 +108,10 @@
     static public function defineJavascript($products) {
       global $lC_Currencies;
 
-      $string = '<script language="javascript" type="text/javascript">var combos = new Array();' . "\n";
+      $string = '<script>var combos = new Array();' . "\n";
 
       foreach ( $products as $product_id => $product ) {
+     
         $string .= 'combos[' . $product_id . '] = new Array();' . "\n" .
                    'combos[' . $product_id . '] = { price: "' . addslashes($lC_Currencies->displayPrice($product['data']['price'], $product['data']['tax_class_id'])) . '", model: "' . addslashes($product['data']['model']) . '", availability_shipping: ' . (int)$product['data']['availability_shipping'] . ', values: [] };' . "\n";
 

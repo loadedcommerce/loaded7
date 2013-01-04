@@ -76,13 +76,13 @@
 
         if (empty($data)) {
           if (isset($lC_Product) && is_a($lC_Product, 'lC_Product') && $lC_Product->isValid()) {
-            $this->_content = '<div style="float: left; width: 55px;">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()), lc_image(DIR_WS_TEMPLATE_IMAGES . 'box_write_review.png', $lC_Language->get('button_write_review'))) . '</div>' .
+            $this->_content = '<ul class="category"><div style="float: left; width: 55px;">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()), lc_image(DIR_WS_TEMPLATE_IMAGES . 'box_write_review.png', $lC_Language->get('button_write_review'))) . '</div></ul>' .
                               lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()), $lC_Language->get('box_reviews_write')) .
                               '<div style="clear: both;"></div>';
           }
         } else {
           if (!empty($data['image'])) {
-            $this->_content = '<div align="center">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $data['reviews_id'] . '&' . $data['products_keyword']), $lC_Image->show($data['image'], $data['products_name'])) . '</div>';
+            $this->_content = '<ul class="category"><div align="center">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $data['reviews_id'] . '&' . $data['products_keyword']), $lC_Image->show($data['image'], $data['products_name'])) . '</div><ul class="category">';
           }
 
           $this->_content .= lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $data['reviews_id'] . '&' . $data['products_keyword']), wordwrap(lc_output_string_protected($data['reviews_text']), 15, "\n") . '...') . '<br /><div align="center">' . lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $data['reviews_rating'] . '.png' , sprintf($lC_Language->get('box_reviews_stars_rating'), $data['reviews_rating'])) . '</div>';

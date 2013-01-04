@@ -48,7 +48,7 @@
                                '</div>';
           }
 
-          $this->_content .= '<ul class="category departments">';
+          $this->_content .= '<ul class="category">';
 
           if (!lc_empty($Qmanufacturer->value('manufacturers_url'))) {
             $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_REDIRECT, 'action=manufacturer&manufacturers_id=' . $Qmanufacturer->valueInt('manufacturers_id')), sprintf($lC_Language->get('box_manufacturer_info_website'), $Qmanufacturer->value('manufacturers_name')), 'target="_blank"') . '</li>';

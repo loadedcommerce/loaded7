@@ -49,17 +49,32 @@
 /**
  * Adds an entry to the breadcrumb navigation path
  *
- * @param string $title The title of the breadcrumb navigation entry
- * @param string $link The link of the breadcrumb navigation entry
+ * @param string  $title  The title of the breadcrumb navigation entry
+ * @param string  $link   The link of the breadcrumb navigation entry
+ * @param string  $cPath  The cPath used to prefix the breadcrumb
  * @access public
  */
 
-    public function add($title, $link = null) {
+    public function add($title, $link = null, $cPath = null) {
+      global $lC_Category;
+      
+      if ($cPath != null) {
+        $cPathArr = explode('_', $cPath);
+        $cp = '';
+        foreach ($cPathArr as $id) {
+          $lC_Category = new lC_Category($id);
+          $this->_path[] = lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $cp . $id), $lC_Category->getTitle($id));
+          $cp .= $id . '_';
+        }
+      }
+      
       if ( !empty($link) ) {
         $title = lc_link_object($link, $title);
       }
 
-      $this->_path[] = $title;
+      if ( !empty($title) ) {
+        $this->_path[] = $title;
+      }
     }
 
 /**
@@ -73,8 +88,8 @@
     public function getPath($separator = null) {
       if ( is_null($separator) ) {
         $separator = $this->_separator;
-      }
-
+      }                                                     
+       
       return implode($separator, $this->_path);
     }
 
@@ -87,7 +102,7 @@
  */
 
     public function getPathList() {
-
+                                             
       $path_list = '';
       foreach($this->_path as $path) {
         $path_list .= '<li>' . $path . '</li>';  

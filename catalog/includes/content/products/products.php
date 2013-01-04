@@ -48,12 +48,10 @@
             $this->addPageTags('keywords', $lC_Product->getTags());
           }
 
-          $this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/' . $this->_group . '/info.js');
-
           lC_Services_category_path::process($lC_Product->getCategoryID());
 
           if ($lC_Services->isStarted('breadcrumb')) {
-            $lC_Breadcrumb->add($lC_Product->getTitle(), lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()));
+            $lC_Breadcrumb->add($lC_Product->getTitle(), lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $_GET['cPath']);
           }
 
           $this->_page_title = $lC_Product->getTitle();
