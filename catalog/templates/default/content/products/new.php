@@ -12,6 +12,9 @@
   @license    http://loadedcommerce.com/license.html
 */
 ?>
+<style>
+  .products_list div.price_info button { margin-top:20px; }
+</style>
 <!--NEW PRODUCTS SECTION STARTS-->
   <div class="full_page">
     <!--NEW PRODUCTS CONTENT STARTS-->

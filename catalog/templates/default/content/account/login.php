@@ -1,63 +1,75 @@
-<?php
-  /*
-  $Id: login.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-  */
-  if ($lC_MessageStack->size('login') > 0) {
-    echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('login', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
-  }
-?>
-<!--LOGIN SECTION STARTS-->
-<div class="full_page">
-  <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-  <!--CHECKOUT STEPS STARTS-->
-  <div class="checkout_steps">
-    <div id="checkout-step-login">
-      <form id="login" name="login" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'login=process', 'SSL'); ?>" method="post">
-        <div class="short-code-column one-half">
-          <h3><?php echo $lC_Language->get('login_new_customer_heading'); ?></h3>
-          <p><?php echo $lC_Language->get('login_new_customer_text'); ?></p>
-          <div class="buttons-set">
-            <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create', 'SSL'); ?>">
-              <button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
-            </a>
-          </div>
-        </div>
-        <div class="short-code-column one-half column-last">
-          <fieldset>
-            <h3><?php echo $lC_Language->get('login_returning_customer_heading'); ?></h3>
-            <p><?php echo $lC_Language->get('login_returning_customer_text'); ?></p>
-            <ul class="form-list">
-              <li>
-                <label class="required" for="email_address"><em>*</em><?php echo $lC_Language->get('field_customer_email_address'); ?></label>
-                <div class="input-box">
-                  <input type="text" name="email_address" id="email_address" class="input-text">
-                </div>
-              </li>
-              <li>
-                <label class="required" for="password"><em>*</em><?php echo $lC_Language->get('field_customer_password'); ?></label>
-                <div class="input-box">
-                  <input type="password" name="password" id="password" class="input-text">
-                </div>
-              </li>
-            </ul>
-            <div style="clear: both;">&nbsp;</div>
-            <div class="buttons-set">
-              <span class="buttonLeft"><a onclick="$('#login').submit();" class="noDecoration"><button class="button brown_btn" type="submit"><?php echo $lC_Language->get('button_sign_in'); ?></button></a></span>
-              <span class="buttonRight"><?php echo sprintf($lC_Language->get('login_returning_customer_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, 'password_forgotten', 'SSL')); ?></span>
-            </div>
-          </fieldset>
-        </div>
-      </form>
-    </div>
-  </div>
-  </div>
+<?php
+  /*
+  $Id: login.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
+  */
+  if ($lC_MessageStack->size('login') > 0) {
+    echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('login', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
+  }
+?>
+<style>
+#login_list li { margin: 10px 0; }
+input { height: 26px; padding-left:4px; }
+</style>
+<!--LOGIN SECTION STARTS-->
+<div id="accountLogin" class="full_page">
+  <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+  <form id="login" name="login" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'login=process', 'SSL'); ?>" method="post">
+    <div id="errDiv" class="short-code msg error" style="margin-bottom:10px; display:none;">
+      <span><?php echo $lC_Language->get('form_validation_error'); ?></span>
+    </div>   
+    <div class="single-bg" style="width:38%;">
+      <div class="short-code-column margin-bottom">  
+        <h3><?php echo $lC_Language->get('login_returning_customer_heading'); ?></h3>
+        <ul id="login_list">
+          <li><?php echo lc_draw_label('', 'email_address', '', false) . ' ' . lc_draw_input_field('email_address', ($_POST['email']) ? $_POST['email'] : '', 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_email_address') . '\'" class="txt" style="width:99%;"'); ?></li>
+          <li><?php echo lc_draw_label('', 'password', null, false) . ' ' . lc_draw_password_field('password', 'onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_password') . '\'" class="txt" style="width:99%;" placeholder="' . $lC_Language->get('field_customer_password') . '"'); ?></li>
+          <li><?php echo sprintf($lC_Language->get('login_returning_customer_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, 'password_forgotten', 'SSL')); ?></li>
+        </ul>
+        <div><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_sign_in'); ?></button></div>
+      <!-- /div>
+      <div class="short-code-column one-half column-last" -->
+        <h3 style="margin-top:40px;"><?php echo $lC_Language->get('login_new_customer_heading'); ?></h3>
+        <div class="buttons-set margin-bottom">
+          <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create', 'SSL'); ?>">
+            <button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_create_account'); ?></button>
+          </a>
+        </div>
+        <p><?php echo $lC_Language->get('login_new_customer_text'); ?></p>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+$('#login').submit(function() {
+  jQuery.validator.messages.required = "";
+  var bValid = $("#login").validate({
+    rules: {
+      email_address: { email: true, required: true },
+      password: { required: true },
+    },
+    invalidHandler: function(e, validator) {
+      var errors = validator.numberOfInvalids();
+      if (errors) {
+        $("#errDiv").show().delay(5000).fadeOut('slow');
+      } else {
+        $("#errDiv").hide();
+      }
+      return false;
+    }
+  }).form();
+  if (bValid) {     
+    $('#login').submit();
+  }
+  return false;
+});
+</script>
 <!--LOGIN SECTION ENDS-->

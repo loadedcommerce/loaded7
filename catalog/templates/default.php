@@ -49,7 +49,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       }
     ?>
     <!-- Modernizr is always at top -->
-    <script src="templates/default/js/modernizr-2.6.2-respond-1.1.0.min.js"></script> 
+    <script src="templates/default/javascript/modernizr-2.6.2-respond-1.1.0.min.js"></script> 
     <script src="ext/jquery/jquery-1.8.3.min.js"></script>
   </head>
 
@@ -60,6 +60,29 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
   
     <div class="wrapper">
       <?php
+      //moved here to support mobile browse catalog button
+      $content_left = '';
+      if ($lC_Template->hasPageBoxModules()) {
+        ob_start();
+        foreach ($lC_Template->getBoxModules('left') as $box) {
+          $lC_Box = new $box();
+          $lC_Box->initialize();
+          if ($lC_Box->hasContent()) {
+            if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+              include('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php');
+            } else {
+              if (file_exists('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php')) {
+                include('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php');
+              } else {
+                include('templates/' . DEFAULT_TEMPLATE . '/modules/boxes/' . $lC_Box->getCode() . '.php');
+              }
+            }
+          }
+          unset($lC_Box);
+        }
+        $content_left = ob_get_contents();
+        ob_end_clean();
+      }
       // page header
       if ($lC_Template->hasPageHeader()) {
         if (file_exists('templates/' . $lC_Template->getCode() . '/header.php')) {
@@ -83,28 +106,6 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
           <div class="main_content"> 
             <!--Left Side Nav Starts-->
             <?php
-            $content_left = '';
-            if ($lC_Template->hasPageBoxModules()) {
-              ob_start();
-              foreach ($lC_Template->getBoxModules('left') as $box) {
-                $lC_Box = new $box();
-                $lC_Box->initialize();
-                if ($lC_Box->hasContent()) {
-                  if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
-                    include('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php');
-                  } else {
-                    if (file_exists('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php')) {
-                      include('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php');
-                    } else {
-                      include('templates/' . DEFAULT_TEMPLATE . '/modules/boxes/' . $lC_Box->getCode() . '.php');
-                    }
-                  }
-                }
-                unset($lC_Box);
-              }
-              $content_left = ob_get_contents();
-              ob_end_clean();
-            }
             if (!empty($content_left)) {
               echo '<div id="left_side_nav" class="sideNavBox colLeft">';
               echo $content_left;     
@@ -254,23 +255,27 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="ext/jquery/thickbox/thickbox-compressed.js"></script>
         
     <!-- Template functions -->
-    <script src="templates/default/js/jquery.flexslider.js" ></script>
-    <script src="templates/default/js/jquery.jcarousel.js"></script>
-    <script src="templates/default/js/jquery.jtweetsanywhere-1.3.1.min.js" ></script>
-    <script src="templates/default/js/simpletabs_1.3.js"></script>
-    <script src="templates/default/js/form_elements.js" ></script>
-    <script src="templates/default/js/custom.js"></script>
+    <script src="templates/default/javascript/jquery.flexslider.js" ></script>
+    <script src="templates/default/javascript/jquery.jcarousel.js"></script>
+    <script src="templates/default/javascript/jquery.jtweetsanywhere-1.3.1.min.js" ></script>
+    <script src="templates/default/javascript/jquery.magnify-1.0.2.js"></script>
+    <script src="templates/default/javascript/form_elements.js" ></script>
+    <script src="templates/default/javascript/custom.js"></script>
+    <script src="templates/default/javascript/general.js"></script>
     
-    <!-- Load page specific javascript -->
     <?php
-      if (file_exists('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js.php')) {
-        include('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js.php');
-      }      
+      // add group specific (.js) filenames to the array for hasJavascript function (acount, products, info, search, index etc)
+      if (file_exists('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js')) {
+        $lC_Template->addJavascriptFilename('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js');
+      }
+      // add module specific (.js.php) filenames to the array for hasJavascript function
+      if (file_exists('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '/' . $lC_Template->getModule() . '.js.php')) {
+        $lC_Template->addJavascriptPhpFilename('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '/' . $lC_Template->getModule() . '.js.php');
+      }
       if ($lC_Template->hasJavascript()) {
         $lC_Template->getJavascript();
       }
     ?>
-    <script src="includes/general.js"></script>      
     <script>
       $(document).ready(function(e) {
         var searchUrl = '<?php echo lc_href_link('rpc.php', 'action=search', 'AUTO'); ?>'  
