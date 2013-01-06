@@ -1,4 +1,4 @@
-<script type="text/javascript"><!--
+<script><!--
   // maestro
   function checkForm(form_name) {
     var error = 0;
