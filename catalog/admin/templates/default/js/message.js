@@ -13,7 +13,7 @@
  */
 ;(function($, undefined)
 {
-	/*
+  /*
 	 * undefined is used here as the undefined global variable in ECMAScript 3 is mutable (i.e. it can
 	 * be changed by someone else). undefined isn't really being passed in so we can ensure that its value is
 	 * truly undefined. In ES5, undefined can no longer be modified.
