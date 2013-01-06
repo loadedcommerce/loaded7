@@ -3,13 +3,13 @@ global $lC_Template, $lC_Language;
 ?>
 <script>
 $(document).ready(function() {
-    var gid = '<?php echo (int)$_GET['gID']; ?>';
-    var title = '<?php echo lC_Configuration_Admin::getGroupTitle($_GET['gID']); ?>';
-    if (gid == 0) {
-      gid = 1;
-      title = '<?php echo $lC_Language->get('default_group'); ?>';
-    }
-    showGroup(gid, title);
+  var gid = '<?php echo (int)$_GET['gID']; ?>';
+  var title = '<?php echo lC_Configuration_Admin::getGroupTitle($_GET['gID']); ?>';
+  if (gid == 0) {
+    gid = 1;
+    title = '<?php echo $lC_Language->get('default_group'); ?>';
+  }
+  showGroup(gid, title);
 });
 
 function showGroup(id, name) {
