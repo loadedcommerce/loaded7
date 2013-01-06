@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<language>
-  <definitions>
-    <definition>
-      <key>mainpage_banner_title</key>
-      <value><![CDATA[Banner on Mainpage]]></value>
-      <group>content</group>
-    </definition>
-  </definitions>
-</language>
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>mainpage_banner_title</key>
+      <value><![CDATA[Banner on Mainpage]]></value>
+      <group>content</group>
+    </definition>
+  </definitions>
+</language>
