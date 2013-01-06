@@ -1,75 +1,74 @@
-/**
- *
- * Styles override for 480+ pixels screens
- */
-
-/* Class used to determine which media queries are on */
-#mediaquery-checker {
-	width: 20px;
-}
-
-/* Columns */
-
-/* These styles define the columns size. They must be redefined for each responsive size */
-.column,
-.one-column,
-.one-column-tablet,
-.one-column-mobile,
-.one-column-mobile-landscape		{ width: 6.0833%; }
-.two-columns,
-.two-columns-tablet,
-.two-columns-mobile,
-.two-columns-mobile-landscape		{ width: 14.4167%; }
-.three-columns,
-.three-columns-tablet,
-.three-columns-mobile,
-.three-columns-mobile-landscape		{ width: 22.75%; }
-.four-columns,
-.four-columns-tablet,
-.four-columns-mobile,
-.four-columns-mobile-landscape		{ width: 31.0833%; }
-.five-columns,
-.five-columns-tablet,
-.five-columns-mobile,
-.five-columns-mobile-landscape		{ width: 39.4167%; }
-.six-columns,
-.six-columns-tablet,
-.six-columns-mobile,
-.six-columns-mobile-landscape		{ width: 47.75%; }
-.seven-columns,
-.seven-columns-tablet,
-.seven-columns-mobile,
-.seven-columns-mobile-landscape		{ width: 56.0833%; }
-.eight-columns,
-.eight-columns-tablet,
-.eight-columns-mobile,
-.eight-columns-mobile-landscape		{ width: 64.4167%; }
-.nine-columns,
-.nine-columns-tablet,
-.nine-columns-mobile,
-.nine-columns-mobile-landscape		{ width: 72.72%; }
-.ten-columns,
-.ten-columns-tablet,
-.ten-columns-mobile,
-.ten-columns-mobile-landscape		{ width: 81.0833%; }
-.eleven-columns,
-.eleven-columns-tablet,
-.eleven-columns-mobile,
-.eleven-columns-mobile-landscape	{ width: 89.4167%; }
-.twelve-columns,
-.twelve-columns-tablet,
-.twelve-columns-mobile,
-.twelve-columns-mobile-landscape	{ width: 97.75%; }
-
-/* Line breaks to ensure correct float */
-.new-row-mobile-portrait {
-	clear: none;
-}
-.new-row-mobile-landscape {
-	clear: left;
-}
-
-/* 8. Main columns */
-#shortcuts {
-	width: 400px;
+/**
+ * Styles override for 480+ pixels screens
+ */
+
+/* Class used to determine which media queries are on */
+#mediaquery-checker {
+	width: 20px;
+}
+
+/* Columns */
+
+/* These styles define the columns size. They must be redefined for each responsive size */
+.column,
+.one-column,
+.one-column-tablet,
+.one-column-mobile,
+.one-column-mobile-landscape		{ width: 6.0833%; }
+.two-columns,
+.two-columns-tablet,
+.two-columns-mobile,
+.two-columns-mobile-landscape		{ width: 14.4167%; }
+.three-columns,
+.three-columns-tablet,
+.three-columns-mobile,
+.three-columns-mobile-landscape		{ width: 22.75%; }
+.four-columns,
+.four-columns-tablet,
+.four-columns-mobile,
+.four-columns-mobile-landscape		{ width: 31.0833%; }
+.five-columns,
+.five-columns-tablet,
+.five-columns-mobile,
+.five-columns-mobile-landscape		{ width: 39.4167%; }
+.six-columns,
+.six-columns-tablet,
+.six-columns-mobile,
+.six-columns-mobile-landscape		{ width: 47.75%; }
+.seven-columns,
+.seven-columns-tablet,
+.seven-columns-mobile,
+.seven-columns-mobile-landscape		{ width: 56.0833%; }
+.eight-columns,
+.eight-columns-tablet,
+.eight-columns-mobile,
+.eight-columns-mobile-landscape		{ width: 64.4167%; }
+.nine-columns,
+.nine-columns-tablet,
+.nine-columns-mobile,
+.nine-columns-mobile-landscape		{ width: 72.72%; }
+.ten-columns,
+.ten-columns-tablet,
+.ten-columns-mobile,
+.ten-columns-mobile-landscape		{ width: 81.0833%; }
+.eleven-columns,
+.eleven-columns-tablet,
+.eleven-columns-mobile,
+.eleven-columns-mobile-landscape	{ width: 89.4167%; }
+.twelve-columns,
+.twelve-columns-tablet,
+.twelve-columns-mobile,
+.twelve-columns-mobile-landscape	{ width: 97.75%; }
+
+/* Line breaks to ensure correct float */
+.new-row-mobile-portrait {
+	clear: none;
+}
+.new-row-mobile-landscape {
+	clear: left;
+}
+
+/* 8. Main columns */
+#shortcuts {
+	width: 400px;
 }
