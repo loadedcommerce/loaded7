@@ -1,5 +1,5 @@
 /**
- *
+ * 
  * Content panel plugin
  *
  * Structural good practices from the article from Addy Osmani 'Essential jQuery plugin patterns'
