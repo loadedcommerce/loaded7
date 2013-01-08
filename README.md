@@ -1,7 +1,7 @@
-loaded7
+Loaded7
 =======
 
-An Responsive Ecommerce Web Application.
+An Responsive Ecommerce Web Application
 
 
 Loaded Commerce 7 Public Repository
