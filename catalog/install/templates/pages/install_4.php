@@ -103,7 +103,7 @@ $Qaccess->execute();
         $dir_fs_document_root .= '/';
       }
     }
-
+    
     $http_url = parse_url($_POST['HTTP_WWW_ADDRESS']);
     $https_url = parse_url($_POST['HTTP_WWW_ADDRESS']);
     $enable_ssl = 'false';
@@ -120,7 +120,7 @@ $Qaccess->execute();
       $http_catalog .= '/';
     }
     
-    if (isset($_POST['HTTPS_WEB_ADDRESS']) && !empty($_POST['HTTPS_WEB_ADDRESS'])) {
+    if (isset($_POST['HTTPS_WEB_ADDRESS']) && !empty($_POST['HTTPS_WEB_ADDRESS']) && isset($_POST['web_use_ssl']) && $_POST['web_use_ssl'] == true ) {
       $enable_ssl = 'true';
       $https_url = parse_url($_POST['HTTPS_WEB_ADDRESS']);
       $https_server = $https_url['scheme'] . '://' . $https_url['host'];
