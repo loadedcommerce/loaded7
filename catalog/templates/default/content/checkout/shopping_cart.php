@@ -28,7 +28,7 @@
       <table class="data-table cart-table" id="shopping-cart-table" cellpadding="0" cellspacing="0">
         <tr>
           <th colspan="2"><?php echo $lC_Language->get('listing_products_heading'); ?></th>
-          <th class="align_center" width="12%"><?php echo $lC_Language->get('text_unit_price'); ?></th>
+          <th class="align_center hide-on-320" width="12%"><?php echo $lC_Language->get('text_unit_price'); ?></th>
           <th class="align_center" width="10%"><?php echo $lC_Language->get('text_quantity_abbr'); ?></th>
           <th class="align_center" width="12%"><?php echo $lC_Language->get('text_sub_total'); ?></th>
           <th class="align_center" width="6%"></th>
@@ -44,7 +44,11 @@
           </td>
           <td class="align_left">
           <?php 
+            echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), strtolower($lC_Language->get('button_edit')), 'class="cart-edit hide-on-320"') . '</a>';
             echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $products['name'], 'class="pr_name"') . '</a>';
+            if (!empty($products['model'])) {
+              echo '<small>' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</small>';
+            }
             if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['item_id']) === false) ) {
               echo '<span class="markProductOutOfStock">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>';
             }
@@ -55,7 +59,7 @@
             }              
           ?>
           </td>
-          <td class="align_center vline"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td> 
+          <td class="align_center vline hide-on-320"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td> 
           <td class="align_center vline"><?php echo lc_draw_input_field('products[' . $products['item_id'] . ']', $products['quantity'], 'class="qty_box"'); ?></td>
           <td class="align_center vline"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']); ?></span></td>
           <td class="align_center vline"><a href="javascript://" onclick="$('#shopping_cart').submit();"><?php echo lc_icon('cart_remove.png'); ?></a></td>

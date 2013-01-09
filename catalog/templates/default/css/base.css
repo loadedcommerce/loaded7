@@ -773,3 +773,4 @@ td.sc_sub_total {
   width: 96%;   
 }
 .padding-right-15 { padding-right: 15px; }
+.cart-edit { float:right; padding-right:10px; }
