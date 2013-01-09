@@ -22,24 +22,16 @@
     <!--ADD TO CART SUCCESS MESSAGE STARTS
     <div class="message success">The Product was added to your shopping cart.</div>
     ADD TO CART SUCCESS MESSAGE ENDS-->
-    <!--ACTION BUTTON BAR STARTS-->
-    <div class="action_buttonbar">
-      <a onclick="$('#shopping_cart').submit();"><button type="button" class="continue"><?php echo $lC_Language->get('button_update'); ?></button></a>&nbsp;
-      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new'); ?>" style="text-decoration: none;"><button type="button" title="" class="continue"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button></a>
-      <button type="button" onclick="location='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" title="" class="checkout"><?php echo $lC_Language->get('button_checkout'); ?></button>
-    </div>
-    <!--ACTION BUTTON BAR ENDS-->
     <!--SHOPPING CART TABLE STARTS-->
     <div class="cart_table">
       <form name="shopping_cart" id="shopping_cart" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'action=cart_update', 'SSL'); ?>" method="post">
       <table class="data-table cart-table" id="shopping-cart-table" cellpadding="0" cellspacing="0">
         <tr>
           <th colspan="2"><?php echo $lC_Language->get('listing_products_heading'); ?></th>
-          <th class="align_center hide-mobile-portrait"><?php echo $lC_Language->get('listing_model_heading'); ?></th>
-          <th class="align_center" width="10%"><?php echo $lC_Language->get('text_quantity'); ?></th>
           <th class="align_center" width="12%"><?php echo $lC_Language->get('text_unit_price'); ?></th>
-          <th class="align_center" width="12%"><?php echo $lC_Language->get('text_total'); ?></th>
-          <th class="align_center" width="6%"><?php echo $lC_Language->get('cart_remove'); ?></th>
+          <th class="align_center" width="10%"><?php echo $lC_Language->get('text_quantity_abbr'); ?></th>
+          <th class="align_center" width="12%"><?php echo $lC_Language->get('text_sub_total'); ?></th>
+          <th class="align_center" width="6%"></th>
         </tr>
         <?php 
           foreach ($lC_ShoppingCart->getProducts() as $products) {
@@ -63,11 +55,10 @@
             }              
           ?>
           </td>
-          <td class="align_center vline hide-mobile-portrait"><span class="price"><?php echo $products['model']; ?></span></td>
-          <td class="align_center vline"><?php echo lc_draw_input_field('products[' . $products['item_id'] . ']', $products['quantity'], 'class="qty_box"'); ?></td>
           <td class="align_center vline"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td> 
+          <td class="align_center vline"><?php echo lc_draw_input_field('products[' . $products['item_id'] . ']', $products['quantity'], 'class="qty_box"'); ?></td>
           <td class="align_center vline"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']); ?></span></td>
-          <td class="align_center vline"><?php echo lc_draw_checkbox_field('delete[' . $products['item_id'] . ']'); ?></td>
+          <td class="align_center vline"><a href="javascript://" onclick="$('#shopping_cart').submit();"><?php echo lc_icon('cart_remove.png'); ?></a></td>
         </tr>
         <?php 
           } 
@@ -105,9 +96,8 @@
     </div>
     <!--ACTION BUTTON BAR STARTS-->
     <div class="action_buttonbar">
-      <button type="button" class="continue" onclick="$('#shopping_cart').submit();"><?php echo $lC_Language->get('button_update'); ?></button>&nbsp;
-      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new'); ?>" class="noDecoration hide-mobile-portrait"><button type="button" class="continue"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button></a>
       <button type="button" onclick="location='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="checkout"><?php echo $lC_Language->get('button_checkout'); ?></button>
+      <span class="buttonRight padding-right-15"><button type="button" class="continue" onclick="$('#shopping_cart').submit();"><?php echo $lC_Language->get('button_update'); ?></button></span>
     </div>
     <!--ACTION BUTTON BAR ENDS-->
   </div>
