@@ -87,16 +87,18 @@
       <!--ORDER TOTAL LISTING STARTS-->
       <div class="totals">
         <table id="totals-table">
-          <?php 
-            foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
-            ?>
-            <tr>
-              <td class="align_left<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>" style="padding-right:10px;"><?php echo $module['title']; ?></td>
-              <td class="align_right<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>"><?php echo $module['text']; ?></td>
-            </tr>
-            <?php
-            }
-          ?>            
+          <tbody>
+            <?php 
+              foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
+              ?>
+              <tr>
+                <td class="align_left<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>" style="padding-right:10px;"><?php echo $module['title']; ?></td>
+                <td class="align_right<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>"><?php echo $module['text']; ?></td>
+              </tr>
+              <?php
+              }
+            ?>     
+          </tbody>       
         </table>
       </div>
       <!--ORDER TOTAL LISTING ENDS-->

@@ -25,6 +25,7 @@ function deleteItem(id) {
         return false;
       }
       $('#tr-' + id).remove();
+      $('#totals-table tbody').html(data.otText);
     }
   );
 }
