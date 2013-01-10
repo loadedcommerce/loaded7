@@ -1496,6 +1496,11 @@ li.message-menu {
 				content: '►';
 				padding-right: 5px;
 				}
+        /* added to hide quick set arrow icon, will update later */
+        #quick-set-container > summary:before {
+          content: '';
+          cursor: default;
+        }
 				html.details details.details > summary:before {
 					display: none;
 				}
