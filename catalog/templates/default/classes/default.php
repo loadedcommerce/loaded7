@@ -135,6 +135,7 @@ class lC_Default {
               '<a href="' . lc_href_link(FILENAME_CHECKOUT, null, 'SSL') . '">' . $lC_Language->get('text_checkout') . '</a>' .
             '</div>' .
           '</div>';
+      $result['redirect'] = '0';
     } else {
       $mcText .= $lC_Language->get('box_shopping_cart_empty');
       $result['redirect'] = '1';
