@@ -13,7 +13,11 @@
  
   @method The lC_Default_rpc class is for AJAX remote program control
 */
-require('templates/default/classes/default.php');
+// set the level of error reporting
+error_reporting(E_ALL & ~E_NOTICE);
+ini_set("display_errors", 1);
+
+require_once('templates/default/classes/default.php');
 
 class lC_Default_rpc {
  /*
@@ -28,5 +32,21 @@ class lC_Default_rpc {
 
     echo $result;
   }
+ /*
+  * Delete item from shopping cart page
+  *
+  * @param string $_GET['q'] The search string
+  * @access public
+  * @return json
+  */
+  public static function deleteItem() {
+    $result = array();
+    
+    $response = lC_Default::removeItem($_GET['item']);
+
+    if ($response) $result['rpcStatus'] = '1';
+    
+    echo json_encode($result);
+  }  
 }
 ?>

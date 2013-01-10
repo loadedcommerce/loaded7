@@ -87,5 +87,30 @@ class lC_Default {
 
     return $result;
   }
+  
+  
+  public static function removeItem($item_id) {
+    global $lC_Database, $lC_Customer;
+
+    unset($_SESSION['lC_ShoppingCart_data']['contents'][$item_id]);
+
+    if ( $lC_Customer->isLoggedOn() ) {
+      $Qdelete = $lC_Database->query('delete from :table_shopping_carts where customers_id = :customers_id and item_id = :item_id');
+      $Qdelete->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
+      $Qdelete->bindInt(':customers_id', $lC_Customer->getID());
+      $Qdelete->bindInt(':item_id', $item_id);
+      $Qdelete->execute();
+
+      $Qdelete = $lC_Database->query('delete from :table_shopping_carts_custom_variants_values where customers_id = :customers_id and shopping_carts_item_id = :shopping_carts_item_id');
+      $Qdelete->bindTable(':table_shopping_carts_custom_variants_values', TABLE_SHOPPING_CARTS_CUSTOM_VARIANTS_VALUES);
+      $Qdelete->bindInt(':customers_id', $lC_Customer->getID());
+      $Qdelete->bindInt(':shopping_carts_item_id', $item_id);
+      $Qdelete->execute();
+    }
+
+    return true;
+    //$this->_calculate();
+  }    
+
 }
 ?>
