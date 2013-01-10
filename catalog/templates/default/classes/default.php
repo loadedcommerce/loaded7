@@ -95,12 +95,13 @@ class lC_Default {
   * @return array
   */  
   public static function removeItem($item_id) {
-    global $lC_Database, $lC_Customer, $lC_ShoppingCart;
+    global $lC_Database, $lC_Language, $lC_Currencies, $lC_Customer, $lC_ShoppingCart, $lC_Image;
 
     $result = array();
     
     $lC_ShoppingCart->remove($item_id);
    
+    // crete the new order total text
     $otText = '';
     foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
       $otText .= '<tr>' .
@@ -110,6 +111,37 @@ class lC_Default {
     }
     
     $result['otText'] = $otText;
+    
+    // create the new mini-cart text
+    $mcText = '';
+    if ($lC_ShoppingCart->hasContents()) {
+      $mcText .= '<a href="#" class="minicart_link">' . 
+                  '  <span class="item"><b>' . $lC_ShoppingCart->numberOfItems() . '</b> ' . ($lC_ShoppingCart->numberOfItems() > 1 ? strtoupper($lC_Language->get('text_cart_items')) : strtoupper($lC_Language->get('text_cart_item'))) . ' /</span> <span class="price"><b>' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</b></span>' . 
+                  '</a>' .
+                  '<div class="cart_drop">' .
+                  '  <span class="darw"></span>' .
+                  '  <ul>';
+
+      foreach ($lC_ShoppingCart->getProducts() as $products) {
+        $mcText .= '<li>' . $lC_Image->show($products['image'], $products['name'], null, 'mini') . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), '(' . $products['quantity'] . ') x ' . $products['name']) . ' <span class="price">' . $lC_Currencies->format($products['price']) . '</span></li>';
+      }           
+      
+      $mcText .= '</ul>' .
+            '<div class="cart_bottom">' .
+              '<div class="subtotal_menu">' .
+                '<small>' . $lC_Language->get('box_shopping_cart_subtotal') . '</small>' .
+                '<big>' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</big>' .
+              '</div>' .
+              '<a href="' . lc_href_link(FILENAME_CHECKOUT, null, 'SSL') . '">' . $lC_Language->get('text_checkout') . '</a>' .
+            '</div>' .
+          '</div>';
+    } else {
+      $mcText .= $lC_Language->get('box_shopping_cart_empty');
+      $result['redirect'] = '1';
+    } 
+    
+    $result['mcText'] = $mcText;
+   
     
     return $result;
   }    

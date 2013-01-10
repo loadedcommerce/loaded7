@@ -24,8 +24,12 @@ function deleteItem(id) {
         alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
+      if (data.redirect == '1') {
+        window.location = location.href;
+      }
       $('#tr-' + id).remove();
       $('#totals-table tbody').html(data.otText);
+      $('#mini-cart-container').html(data.mcText);
     }
   );
 }
