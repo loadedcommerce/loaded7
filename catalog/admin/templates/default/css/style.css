@@ -1492,10 +1492,13 @@ li.message-menu {
 				border-bottom-left-radius: 0;
 				border-bottom-right-radius: 0;
 			}
-			details.details > summary:before {
-				content: '►';
-				padding-right: 5px;
-				}
+      details.details > summary:before {
+        content: '►';
+        padding-right: 5px;
+        }
+      #quick-set-container > summary:before {
+        content: '';
+        }
 				html.details details.details > summary:before {
 					display: none;
 				}
