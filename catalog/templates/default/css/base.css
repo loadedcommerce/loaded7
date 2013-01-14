@@ -313,7 +313,7 @@ ul.breadcrumb li img { }
 .checkout_discount .brown_btn{ float:left; margin-top:22px;}
 
 /*Checkout Steps*/
-.checkout_steps{ float:left; line-height:14px; margin-bottom:10px;}
+.checkout_steps{ float:left; line-height:14px; margin-bottom:10px; width:102%; }
 .checkout_steps .step-title{ padding:14px; font-size:15px; text-transform:uppercase; }
 .checkout_steps .step-title h2{font-size:16px; text-transform:uppercase; display:inline-block; }
 .checkout_steps .step-title span{ display:inline-block; width:20px; text-align:center; padding-right:12px;}
