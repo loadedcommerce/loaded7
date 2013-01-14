@@ -154,7 +154,7 @@ if (!empty($_GET['set']) && $_GET['set'] == 'members') { // members
     });
 
     // expand / collapse all details blocks
-    $("#quick-set-container").click(function() {
+    /*$("#quick-set-container").click(function() {
       var isOpen = $('#quick-set-container').is('.open');
       if (isOpen) {
         $('.details').addClass('open');
@@ -166,7 +166,7 @@ if (!empty($_GET['set']) && $_GET['set'] == 'members') { // members
         $('.details-summary').attr('aria-expanded', 'false');
         $('.div-details').hide();
       }
-    });
+    });*/
 
     // main quick set slider
     $("#generalSelect").change(function() {
