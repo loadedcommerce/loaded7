@@ -49,14 +49,14 @@ $gID = (isset($_GET['gid']) && !empty($_GET['gid'])) ? preg_replace('/[^0-9\s]/'
             </p>
           </div>
           <div class="new-row six-columns twelve-columns-tablet small-margin-top no-margin-bottom">
-            <details class="details " id="quick-set-container">
-              <summary title="<?php echo $lC_Language->get('text_click_to_expand'); ?>">
+            <div class="block silver-gradient" id="quick-set-container">
+              <div class="with-padding">
                 <label id="lbl-quick-set">
                   <span class="details-title-text with-tooltip" title="<?php echo $lC_Language->get('tooltip_quick_set_slider'); ?>" data-tooltip-options='{"classes":["orange-gradient full-width"],"position":"top"}'><?php echo $lC_Language->get('field_quick_set'); ?></span>
                   <input type="text" id="generalSelect" class="access-levels-slider" data-slider-options='<?php echo $sliderOptions; ?>'>
                 </label>
-              </summary>
-            </details>
+              </div>
+            </div>
           </div>
           <div class="new-row twelve-columns small-margin-bottom"><p><hr></p></div>
           <?php
