@@ -4,7 +4,7 @@ Loaded7
 A Responsive Ecommerce Web Application
 == 
 
-Based on oscommerce 3 Alpha 5. Completely rewriten template for catalog and admin to be mobile responsive. 
+Based on oscommerce 3 Alpha 5. Completely rewritten template for catalog and admin to be mobile responsive. 
 
 * Product Roadmap here http://www.loaded7.com/blog/loaded-7-roadmap/ 
 * Developer Forums here   http://www.loaded7.com/forums/
@@ -19,7 +19,7 @@ What we currently need:
 
 We currently are working on: 
 * Core Updater
-* Add-on Store broswer and installer
+* Add-on Store browser and installer
 * Content Management
 * Menu System
 
