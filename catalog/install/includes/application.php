@@ -13,8 +13,8 @@
 */
 
 // Set the level of error reporting
-error_reporting(E_ALL & ~E_NOTICE);
-ini_set("display_errors", 1);
+error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
+//ini_set("display_errors", 1);
 
 define('DEFAULT_LANGUAGE', 'en_US');
 define('HTTP_COOKIE_PATH', '');
