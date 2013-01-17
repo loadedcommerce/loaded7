@@ -26,7 +26,7 @@ We currently are working on:
 Loaded Commerce 7 Public Repository - Currently at Alpha 1 release
 
 7.0.0.1.a1 - released 01/05/2013  
-7.0.0.1.a2 - released 01/14/2013
+7.0.0.1.a2 - released 01/14/2013 
 7.0.0.1.a3 - in process
 
 7.0.0.2 - in process
