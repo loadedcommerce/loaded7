@@ -19,8 +19,8 @@ define('LC_IN_ADMIN', true);
 require('../includes/config.php');
 
 // set the level of error reporting to E_ALL
-error_reporting(E_ALL ^ E_NOTICE);
-ini_set("display_errors", 1);
+error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
+//ini_set("display_errors", 1);
 ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
 
