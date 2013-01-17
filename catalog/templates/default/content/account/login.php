@@ -22,31 +22,33 @@ input { height: 26px; padding-left:4px; }
 <!--LOGIN SECTION STARTS-->
 <div id="accountLogin" class="full_page">
   <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-  <form id="login" name="login" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'login=process', 'SSL'); ?>" method="post">
-    <div id="errDiv" class="short-code msg error" style="margin-bottom:10px; display:none;">
-      <span><?php echo $lC_Language->get('form_validation_error'); ?></span>
-    </div>   
-    <div class="single-bg" style="width:38%;">
-      <div class="short-code-column margin-bottom">  
-        <h3><?php echo $lC_Language->get('login_returning_customer_heading'); ?></h3>
-        <ul id="login_list">
-          <li><?php echo lc_draw_label('', 'email_address', '', false) . ' ' . lc_draw_input_field('email_address', ($_POST['email']) ? $_POST['email'] : '', 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_email_address') . '\'" class="txt" style="width:99%;"'); ?></li>
-          <li><?php echo lc_draw_label('', 'password', null, false) . ' ' . lc_draw_password_field('password', 'onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_password') . '\'" class="txt" style="width:99%;" placeholder="' . $lC_Language->get('field_customer_password') . '"'); ?></li>
-          <li><?php echo sprintf($lC_Language->get('login_returning_customer_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, 'password_forgotten', 'SSL')); ?></li>
-        </ul>
-        <div><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_sign_in'); ?></button></div>
-      <!-- /div>
-      <div class="short-code-column one-half column-last" -->
-        <h3 style="margin-top:40px;"><?php echo $lC_Language->get('login_new_customer_heading'); ?></h3>
-        <div class="buttons-set margin-bottom">
-          <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create', 'SSL'); ?>">
-            <button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_create_account'); ?></button>
-          </a>
-        </div>
-        <p><?php echo $lC_Language->get('login_new_customer_text'); ?></p>
+  <div id="errDiv" class="short-code msg error" style="margin-bottom:10px; display:none;">
+    <span><?php echo $lC_Language->get('form_validation_error'); ?></span>
+  </div>   
+  <div class="single-bg" style="width:38%;">
+    <div class="short-code-column margin-bottom">  
+      <h3><?php echo $lC_Language->get('login_returning_customer_heading'); ?></h3>
+      <form id="login" name="login" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'login=process', 'SSL'); ?>" method="post">
+      <ul id="login_list">
+        <li><?php echo lc_draw_label('', 'email_address', '', false) . ' ' . lc_draw_input_field('email_address', ($_POST['email']) ? $_POST['email'] : '', 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_email_address') . '\'" class="txt" style="width:99%;"'); ?></li>
+        <li><?php echo lc_draw_label('', 'password', null, false) . ' ' . lc_draw_password_field('password', 'onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_password') . '\'" class="txt" style="width:99%;" placeholder="' . $lC_Language->get('field_customer_password') . '"'); ?></li>
+        <li><?php echo sprintf($lC_Language->get('login_returning_customer_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, 'password_forgotten', 'SSL')); ?></li>
+      </ul>
+      <div>
+        <button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_sign_in'); ?></button>
       </div>
+      </form>
+    <!-- /div>
+    <div class="short-code-column one-half column-last" -->
+      <h3 style="margin-top:40px;"><?php echo $lC_Language->get('login_new_customer_heading'); ?></h3>
+      <div class="buttons-set margin-bottom">
+        <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create', 'SSL'); ?>">
+          <button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_create_account'); ?></button>
+        </a>
+      </div>
+      <p><?php echo $lC_Language->get('login_new_customer_text'); ?></p>
     </div>
-  </form>
+  </div>
 </div>
 <script>
 $('#login').submit(function() {
