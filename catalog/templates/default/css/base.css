@@ -273,6 +273,7 @@ ul.breadcrumb li img { }
 /*-----------------------------------FULL PAGE*/
 .full_page{}
 .full_page h1{ font-size:24px; color:#312e2b; text-transform:uppercase; padding:22px 0px;}
+.full_page h5{ font-size:20px; color:#312e2b; padding:10px; }
 .full_page h4{ font-size:17px; color:#312e2b; padding:20px 0px; font-weight:bold;}
 .action_buttonbar{ background: none repeat scroll 0 0 #F9F8F6; border: 1px solid #EBE2D9; clear: both; padding: 10px; height:32px; margin-bottom:20px; width: 98.5%;}
 .action_buttonbar button{ color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#544F4B; border:0px; line-height:100%; cursor:pointer;}
@@ -750,66 +751,40 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
   margin-left: 0;
 }
 
+.moduleRow {}
+.moduleRowOver { background-color: #f7f7f7; }
+.moduleRowSelected td { background-color: #e7e7e7; }
+
 /* create account */
 #accountCreate h3 { font-size: 1.3em; font-family: sans-serif !important; }
 #accountLogin h3 { font-size: 1.3em; font-family: sans-serif !important; margin-bottom: 15px; }
-
-.single-bg { 
-  padding:10px 20px 0 15px; 
-  background-color:#f9f8f6;
-  border: 1px solid #ebe2d9;
-  float: left;
-  margin-bottom: 15px;
-  width: 96%;   
-}
-.padding-right-15 { padding-right: 15px; }
-.cart-edit { float:right; padding-right:10px; }
-
-.colorWhite {
-  color: #fff !important; 
-}
-
+.single-bg { padding:10px 20px 0 15px; background-color:#f9f8f6; border: 1px solid #ebe2d9; float: left; margin-bottom: 15px; width: 96%; }
+.colorWhite { color: #fff !important; }
 #mobile-grand-total { display: none; }
 #mobile-order-totals { display: none; }
 #ship-to-span { line-height: 20px; }
-
-#ot-container {
-  border: 1px solid #E7DED5;
-  padding: 10px;
-  width: 200px;
-}
-#ot-container label {
-  padding-top: 4px;
-}
-#ot-container span {
-  padding-top: 4px;
-}
-.ot-block {
-}
-#order-number {
-  font-weight: bold;
-  padding-bottom: 30px;
-} 
-#ot-container #total {
-  color: #873B7A;
-  font-size: 16px;
-  font-weight: bold;
-  border-top:1px solid #ccc;
-  padding-top: 5px;
-}
-.ot-block label {
-  float: left;
-  width: 65%;
-}
-.ot-block span {
-  float: right;
-  text-align: right;
-}
-.moduleRow {
-}
-.moduleRowOver {
-  background-color: #e7e7e7;
-}
-.moduleRowSelected td {
-  background-color: #f7f7f7;
-}
+#bill-to-span { line-height: 20px; }
+#bill-to-address { line-height: 20px; float: left; width: 50%; }
+#bill-to-change { line-height: 20px; float: right; width: 50%; }
+#ot-container { border: 1px solid #E7DED5; padding: 10px; }
+#ot-container label { padding-top: 4px; }
+#ot-container span { padding-top: 4px; }
+.ot-block {}
+#order-number { font-weight: bold; padding-bottom: 30px; } 
+#ot-container #total { color: #873B7A; font-size: 16px; font-weight: bold; border-top: 1px solid #ccc; padding-top: 5px; }
+.ot-block label { float: left; width: 65%; }
+.ot-block span { float: right; text-align: right; }
+#checkoutSteps .first-checkout-li { border-top: 1px solid #E7DED5; }
+#ship-to-address-block { padding: 10px; margin-bottom: 10px; margin-top: -10px; }
+#bill-to-address-block { padding: 10px; margin-bottom: 10px; }
+#shipping-method-block { padding: 10px; margin-bottom: 20px; background-color: #F7F7F7; }
+#shipping-method-block p { padding-top: 10px; }
+#payment-method-block { padding: 10px; margin-bottom: 20px; background-color: #F7F7F7; }
+#payment-method-block p { padding-top: 10px; }
+#confirmation-products-listing { border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
+#confirmation-discount-code { float: left; width: 44%; }
+#confirmation-discount-code-inner { float: left; width: 100%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
+#confirmation-discount-code-button { float: right; margin-right: -25px; }
+#confirmation-order-totals { float: right; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
+#confirmation-order-comment { float: left; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
+#confirmation-grand-total { float: right; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
