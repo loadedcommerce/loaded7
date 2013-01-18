@@ -803,3 +803,11 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
   float: right;
   text-align: right;
 }
+.moduleRow {
+}
+.moduleRowOver {
+  background-color: #e7e7e7;
+}
+.moduleRowSelected td {
+  background-color: #f7f7f7;
+}
