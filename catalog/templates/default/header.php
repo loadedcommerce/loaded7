@@ -36,9 +36,9 @@
       <ul id="topLinks" class="top_links">
         <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><?php echo $lC_Language->get('text_sign_in'); ?></a></li>
         <?php if ($lC_Customer->isLoggedOn()) { ?>
-        <li class="hide-on-320 hide-on-480"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'logoff', 'SSL'); ?>"><?php echo $lC_Language->get('text_sign_out'); ?></a></li>
+        <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'logoff', 'SSL'); ?>"><?php echo $lC_Language->get('text_sign_out'); ?></a></li>
         <?php } ?>
-        <li class="top_links hide-on-320"><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'SSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
+        <li class="top_links hide-on-mobile"><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'SSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
         <li class="highlight"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, null, 'SSL'); ?>"><?php echo $lC_Language->get('text_checkout'); ?></a></li>
       </ul>
       <!--Top Links Ends-->
@@ -107,7 +107,7 @@
     });      
     </script>    
     
-    <div class="minicart">
+    <div id="mini-cart-container" class="minicart">
       <?php
         //print_r($lC_ShoppingCart->getProducts());
         if ($lC_ShoppingCart->hasContents()) {
