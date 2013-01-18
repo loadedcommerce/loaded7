@@ -43,6 +43,16 @@ $(document).ready(function(){
     $("#mobile-menu").slideToggle("slow");
   });
   
+  $("#mobile-grand-total").click(function () {
+    $("#mobile-grand-total").toggle();
+    $("#mobile-order-totals").slideToggle("slow");
+  });
+  
+  $("#mobile-order-totals").click(function () {
+    $("#mobile-order-totals").toggle();
+    $("#mobile-grand-total").slideToggle("slow");
+  });
+  
   $("#browse-catalog").click(function () {
     $("#browse-catalog-div").slideToggle("slow");
   });

@@ -1095,6 +1095,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>checkout</group>
     </definition>
     <definition>
+      <key>ship_to_address</key>
+      <value><![CDATA[Ship To Address]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
       <key>choose_shipping_destination</key>
       <value><![CDATA[Please choose from your address book where you would like the items to be delivered to.]]></value>
       <group>checkout</group>
@@ -1195,6 +1200,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>checkout</group>
     </definition>
     <definition>
+      <key>continue_checkout</key>
+      <value><![CDATA[Continue Checkout]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>continue_checkout_procedure_to_shipping</key>
       <value><![CDATA[to select the preferred shipping method.]]></value>
       <group>checkout</group>
@@ -1221,7 +1231,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>total_title</key>
-      <value><![CDATA[Total:]]></value>
+      <value><![CDATA[Grand Total:]]></value>
       <group>checkout</group>
     </definition>
     <definition>
@@ -1286,8 +1296,13 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>order_total_title</key>
-      <value><![CDATA[Total]]></value>
+      <value><![CDATA[Grand Total]]></value>
       <group>order</group>
+    </definition>
+    <definition>
+      <key>billable_address_checkbox</key>
+      <value><![CDATA[This is also my billable address]]></value>
+      <group>general</group>
     </definition>
     <definition>
       <key>order_billing_address_title</key>
@@ -2372,7 +2387,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>
     <definition>
       <key>text_total</key>
-      <value><![CDATA[Total]]></value>
+      <value><![CDATA[Grand Total]]></value>
       <group>general</group>
     </definition>
     <definition>

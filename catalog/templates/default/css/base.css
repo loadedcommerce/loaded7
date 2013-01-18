@@ -292,10 +292,10 @@ ul.breadcrumb li img { }
 #shopping-cart-table tr td a.edit{color:#544F4B;}
 
 .totals{ float:right; display:inline-block; width:100%; padding:17px 0px; margin-right:20px;}
-#totals-table{ width:4%; float:right; font-size:14px; color:#544f4b; white-space: nowrap;}
-#totals-table td{padding: 8px 0px;}
-#totals-table td strong{ font-weight:bold;}
-#totals-table .total{ font-size:16px; font-weight:bold;}
+#totals-table { width:4%; float:right; font-size:14px; color:#544f4b; white-space: nowrap;}
+#totals-table td { padding: 8px 0px; }
+#totals-table td strong { font-weight:bold; }
+#totals-table .total { font-size:16px; font-weight:bold; }
 
 .checkout_tax{ margin-top:25px; font-size:14px;}
 .checkout_tax .shipping_tax{ width:620px; border:solid 1px #e0e0e0; border-width:2px 0px; float:left; padding:12px 0px 10px;}
@@ -456,7 +456,7 @@ nav .primary_nav > li > .current,
 nav .primary_nav > li > a:hover, 
 nav .primary_nav > li:hover > a, 
 .product_rightcol .add_to_buttons button.add_cart, 
-.action_buttonbar button.checkout, 
+.action_buttonbar button.checkout, button.checkout,  
 #shopping-cart-table tr td a.remove:hover, 
 .sideNavBox > ul.departments > li > a:hover, 
 .sideNavBox > ul.departments > li > a.active, 
@@ -469,10 +469,10 @@ span.highlight_text{ background-color:#873b7a;}
 
 /*-----------------------------------FONTS HERE*/
 ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .price_info, button.price_add, .footer_customblock, .product_rightcol .pr_price big, .product_rightcol .pr_price small, .product_rightcol small.pr_type, .product_rightcol .add_to_buttons button.add_cart, .message, .cart_drop .cart_bottom .subtotal_menu, ul.simpleTabsNavigation, .toggle_box .toggle_title
-{font-family: 'Istok Web', sans-serif; font-weight:400;}
+{font-family: sans-serif; font-weight:400;}
 
 .noDecoration {
-  text-decoration: none; 
+  text-decoration: none !important; 
 }
 
 .buttonRight {
@@ -545,16 +545,6 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
   font-weight: bolder;
 }
 /********** Live Search styling end **********/
-
-td.sc_total {
-  color: #873B7A;
-  font-size: 18px;
-  font-weight: bolder;
-}
-
-td.sc_sub_total {
-  font-weight: bold;
-}
 
 #infoContactForm ol li {
   line-height: 24px;
@@ -771,4 +761,45 @@ td.sc_sub_total {
   float: left;
   margin-bottom: 15px;
   width: 96%;   
+}
+
+.colorWhite {
+  color: #fff !important; 
+}
+
+#mobile-grand-total { display: none; }
+#mobile-order-totals { display: none; }
+#ship-to-span { line-height: 20px; }
+
+#ot-container {
+  border: 1px solid #E7DED5;
+  padding: 10px;
+  width: 200px;
+}
+#ot-container label {
+  padding-top: 4px;
+}
+#ot-container span {
+  padding-top: 4px;
+}
+.ot-block {
+}
+#order-number {
+  font-weight: bold;
+  padding-bottom: 30px;
+} 
+#ot-container #total {
+  color: #873B7A;
+  font-size: 16px;
+  font-weight: bold;
+  border-top:1px solid #ccc;
+  padding-top: 5px;
+}
+.ot-block label {
+  float: left;
+  width: 65%;
+}
+.ot-block span {
+  float: right;
+  text-align: right;
 }

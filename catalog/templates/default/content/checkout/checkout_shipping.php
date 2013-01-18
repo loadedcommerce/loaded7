@@ -24,31 +24,59 @@
           </div>
           <div id="checkout-step-login">
             <div class="col2-set">
-              <div id="checkout_shipping_col1" style="width:30%; float:left;">
-                <h3><?php echo $lC_Language->get('shipping_address_title'); ?></h3>
-                <?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?>
-                <?php echo '<br /><br /><a href="' . lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL')  . '" style="text-decoration:none;"><button class="button brown_btn" type="button">' . $lC_Language->get('button_change_address') . '</button></a>'; ?>
-                <br /><br /><br />
-                <input type="checkbox" name="shipto_as_billable" id="shipto_as_billable" class="checkbox">
-                <label for="shipto_as_billable">This is my Billable Address</label>
-                <br /><br />
-                <div id="checkout_shipping_order_totals" style="border:2px solid #E7DED5; height:130px; padding:8px;">
-                  <b>Order Totals</b>
-                  <!--ORDER TOTAL LISTING STARTS-->
-                  <table id="totals-table">
-                    <?php 
-                      foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
-                    ?>
-                    <tr>
-                      <td class="align_left<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>" style="padding-right:10px;"><?php echo $module['title']; ?></td>
-                      <td class="align_right<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>"><?php echo $module['text']; ?></td>
-                    </tr>
-                    <?php
-                      }
-                    ?>            
-                  </table>
-                  <!--ORDER TOTAL LISTING ENDS-->
+              <div id="mobile-grand-total">
+                <?php 
+                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
+                    if ($module['code'] == 'total') {
+                ?>
+                <div id="mobile-arrow-down"><span class="arrow-down"></span></div>
+                <div class="ot-mobile-block" id="mobile_<?php echo $module['code']; ?>">
+                  <label><?php echo $module['title']; ?></label>
+                  <span><?php echo $module['text']; ?></span>
                 </div>
+                <div style="clear:both;"></div>
+                <?php
+                    }
+                  }
+                ?>
+              </div>
+              <div id="mobile-order-totals">
+                <div id="mobile-arrow-up"><span class="arrow-up"></span></div>
+                <?php 
+                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
+                ?>
+                <div class="ot-mobile-block" id="mobile_<?php echo $module['code']; ?>">
+                  <label><?php echo $module['title']; ?></label>
+                  <span><?php echo $module['text']; ?></span>
+                </div>
+                <div style="clear:both;"></div>
+                <?php
+                  }
+                ?>            
+              </div>
+              <div id="checkout_shipping_col1" style="width:32%; float:left;">
+                <h3><?php echo $lC_Language->get('ship_to_address'); ?></h3>
+                <span style="float:right;"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration">Edit</a></span>
+                <span id="ship-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?></span>
+                <br /><br />
+                <input type="checkbox" name="shipto_as_billable" id="shipto_as_billable" class="checkbox">
+                <label for="shipto_as_billable">&nbsp;<?php echo $lC_Language->get('billable_address_checkbox'); ?></label>
+                <br /><br />
+                <!--ORDER TOTAL LISTING STARTS-->
+                <div id="ot-container">
+                  <div class="ot-block" id="order-number">
+                    <label>Order Number</label>
+                    <span><?php echo $_SESSION['cartID']; ?></span>
+                  </div>
+                  <?php foreach ($lC_ShoppingCart->getOrderTotals() as $module) { ?>
+                  <div class="ot-block" id="<?php echo $module['code']; ?>">
+                    <label><?php echo $module['title']; ?></label>
+                    <span><?php echo $module['text']; ?></span>
+                  </div>
+                  <div style="clear:both;"></div>
+                  <?php } ?>
+                </div>
+                <!--ORDER TOTAL LISTING ENDS-->
               </div>
               <div id="checkout_shipping_col2" style="width:60%; float:right;">
                 <?php
@@ -144,6 +172,13 @@
               </div>
             </div>
             <!--CHECKOUT SHIPPING COMMENTS STARTS-->
+            <br />
+            <!--CHECKOUT SHIPPING ACTIONS STARTS-->
+            <div id="shippingActions">
+              <span class="buttonLeft continueCheckoutActionText"><?php echo '<b>' . $lC_Language->get('continue_checkout_procedure_title') . '</b> ' . $lC_Language->get('continue_checkout_procedure_to_payment'); ?></span>
+              <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
+            </div>
+            <!--CHECKOUT SHIPPING ACTIONS ENDS-->
           </div>
         </li>
         <li>
@@ -163,12 +198,6 @@
         </li>
       </ol>
     </div>
-    <!--CHECKOUT SHIPPING ACTIONS STARTS-->
-    <div id="shippingActions" class="action_buttonbar">
-      <span class="buttonLeft continueCheckoutActionText"><?php echo '<b>' . $lC_Language->get('continue_checkout_procedure_title') . '</b> ' . $lC_Language->get('continue_checkout_procedure_to_payment'); ?></span>
-      <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();"><button class="checkout" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
-    </div>
-    <!--CHECKOUT SHIPPING ACTIONS ENDS-->
   </form>
   <div style="clear:both;"></div>
   <!--CHECKOUT SHIPPING DETAILS ENDS-->
