@@ -15,6 +15,7 @@
 <!--CHECKOUT SHIPPING SECTION STARTS-->
 <div id="checkout_shipping_details" class="full_page">
   <!--CHECKOUT SHIPPING DETAILS STARTS-->
+  <h5><?php echo $lC_Language->get('text_checkout'); ?></h5>
   <form name="checkout_shipping" id="checkout_shipping" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping=process', 'SSL'); ?>" method="post">
     <div class="checkout_steps">
       <ol id="checkoutSteps">
@@ -54,18 +55,21 @@
                   }
                 ?>            
               </div>
-              <div id="checkout_shipping_col1" style="width:32%; float:left;">
-                <h3><?php echo $lC_Language->get('ship_to_address'); ?></h3>
-                <span style="float:right;"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration">Edit</a></span>
-                <span id="ship-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?></span>
-                <br /><br />
-                <input type="checkbox" name="shipto_as_billable" id="shipto_as_billable" class="checkbox">
-                <label for="shipto_as_billable">&nbsp;<?php echo $lC_Language->get('billable_address_checkbox'); ?></label>
-                <br /><br />
+              <div id="checkout_shipping_col1" style="width:35%; float:left;">
+                <!--SHIP TO ADDRESS BLOCK STARTS-->
+                <div id="ship-to-address-block">
+                  <h3><?php echo $lC_Language->get('ship_to_address'); ?></h3>
+                  <span style="float:right;"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span>
+                  <span id="ship-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?></span>
+                  <br /><br />
+                  <input type="checkbox" name="shipto_as_billable" id="shipto_as_billable" class="checkbox">
+                  <label for="shipto_as_billable">&nbsp;<?php echo $lC_Language->get('billable_address_checkbox'); ?></label>
+                </div>
+                <!--SHIP TO ADDRESS BLOCK ENDS-->
                 <!--ORDER TOTAL LISTING STARTS-->
                 <div id="ot-container">
                   <div class="ot-block" id="order-number">
-                    <label>Order Number</label>
+                    <label><?php echo $lC_Language->get('checkout_order_number'); ?></label>
                     <span><?php echo $_SESSION['cartID']; ?></span>
                   </div>
                   <?php foreach ($lC_ShoppingCart->getOrderTotals() as $module) { ?>
@@ -118,6 +122,7 @@
                           </tr>
                           <?php
                           } else {
+                            $counter = 0;
                             foreach ($quotes['methods'] as $methods) {
                               if ($quotes['id'] . '_' . $methods['id'] == $lC_ShoppingCart->getShippingMethod('id')) {
                                 echo '          <tr id="defaultSelected" class="moduleRowSelected" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
@@ -131,7 +136,7 @@
                               if ( ($lC_Shipping->numberOfQuotes() > 1) || (sizeof($quotes['methods']) > 1) ) {
                               ?>
                               <td><?php echo $lC_Currencies->displayPrice($methods['cost'], $quotes['tax_class_id']); ?></td>
-                              <td style="text-align:right;"><?php echo lc_draw_radio_field('shipping_mod_sel', $quotes['id'] . '_' . $methods['id'], $lC_ShoppingCart->getShippingMethod('id')); ?></td>
+                              <td style="text-align:right;"><?php echo lc_draw_radio_field('shipping_mod_sel', $quotes['id'] . '_' . $methods['id'], $lC_ShoppingCart->getShippingMethod('id'), 'id="' . $quotes['id'] . '_' . $counter . '"'); ?></td>
                               <?php
                               } else {
                               ?>
@@ -142,6 +147,7 @@
                             <td width="10">&nbsp;</td>
                           </tr>
                           <?php
+                            $counter++;
                             $radio_buttons++;
                           }
                         }
