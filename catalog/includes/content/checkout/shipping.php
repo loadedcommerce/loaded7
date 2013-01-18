@@ -99,6 +99,10 @@
       if (!empty($_POST['comments'])) {
         $_SESSION['comments'] = lc_sanitize_string($_POST['comments']);
       }
+      // added to carry ship to address as billing address
+      if (!empty($_POST['shipto_as_billable'])) {
+        $_SESSION['shipto_as_billable'] = $_POST['shipto_as_billable'];
+      }
 
       if ($lC_Shipping->hasQuotes()) {
         if (isset($_POST['shipping_mod_sel']) && strpos($_POST['shipping_mod_sel'], '_')) {
