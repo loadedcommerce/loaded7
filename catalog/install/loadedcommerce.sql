@@ -280,7 +280,7 @@ CREATE TABLE IF NOT EXISTS lc_manufacturers_info (
   manufacturers_id int(11) NOT NULL,
   languages_id int(11) NOT NULL,
   manufacturers_url varchar(255) NOT NULL,
-  url_clicked int(11) NOT NULL,
+  url_clicked int(11) NOT NULL DEFAULT '0',
   date_last_click datetime DEFAULT NULL,
   PRIMARY KEY (manufacturers_id,languages_id)
 );
