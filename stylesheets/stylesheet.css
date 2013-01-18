@@ -26,7 +26,7 @@ time, mark, audio, video {
   padding: 0;
   border: 0;
   font: inherit;
-  vertical-align: baseline;
+  vertical-align: baseline;  
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -161,9 +161,6 @@ pre, code {
   border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
-
-
-
 }
 
 pre {
@@ -252,6 +249,82 @@ form {
 img {
   width: 100%;
   max-width: 100%;
+}
+
+/*******************************************************************************
+Accordian Styles
+*******************************************************************************/
+html {
+  overflow-Y: scroll;
+}
+
+.container {
+  font: 10px normal Arial, Helvetica, sans-serif;
+  width: 700px;
+  margin: 20px 0;
+  padding: 0;
+  line-height: 1.7em;
+}
+*, * focus {
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+
+h2.acc_trigger {
+  padding: 0;  margin: 0 0 5px 0;
+  background: url(images/h2_trigger_a.gif) no-repeat;
+  height: 46px;  line-height: 46px;
+  width: 700px;
+  font-size: 2em;
+  font-weight: normal;
+  float: left;
+}
+h2.acc_trigger a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  padding: 0 0 0 50px;
+}
+h2.acc_trigger a:hover {
+  color: #ccc;
+}
+
+h2.active {background-position: left bottom;}
+.acc_container {
+  margin: 0 0 5px; padding: 0;
+  overflow: hidden;
+  font-size: 1.2em;
+  width: 700px;
+  clear: both;
+  background: #f0f0f0;
+  border: 1px solid #d6d6d6;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px; 
+}
+.acc_container .block {
+  padding: 20px;
+}
+.acc_container .block p {
+  padding: 5px 0;
+  margin: 5px 0;
+}
+.acc_container h3 {
+  font: 2.5em normal Georgia, "Times New Roman", Times, serif;
+  margin: 0 0 10px;
+  padding: 0 0 5px 0;
+  border-bottom: 1px dashed #ccc;
+}
+.acc_container img {
+  float: left;
+  margin: 10px 15px 15px 0;
+  padding: 5px;
+  background: #ddd;
+  border: 1px solid #ccc;
 }
 
 /*******************************************************************************
