@@ -105,12 +105,13 @@ p {
 }
 
 footer p {
-  color: #ccc;
+  color: #666666;
+  text-align: center;
+  padding-top: 10px;
 }
 
-footer .inner {
-  text-align: center;
-  margin-top: 10px;
+footer a {
+  color: #ccc;
 }
 
 a {
