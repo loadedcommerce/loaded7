@@ -107,7 +107,7 @@
     });      
     </script>    
     
-    <div class="minicart">
+    <div id="mini-cart-container" class="minicart">
       <?php
         //print_r($lC_ShoppingCart->getProducts());
         if ($lC_ShoppingCart->hasContents()) {

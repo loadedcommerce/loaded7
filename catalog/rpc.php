@@ -33,7 +33,6 @@
 
   if ( file_exists('templates/' . $module . '/classes/' . $class . '.php')) {
     include('templates/' . $module . '/classes/' . $class . '.php');
-
     if ( method_exists('lC_' . ucfirst($module) . '_' . $class, $action) ) {
       call_user_func(array('lC_' . ucfirst($module) . '_' . $class, $action));
       exit;
