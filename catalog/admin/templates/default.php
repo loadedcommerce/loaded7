@@ -205,7 +205,7 @@
           </section>
           <section>
             <div id="versionInfo" class="anthracite-gradient glossy align-center white"><?php echo $lC_Language->get('text_version_info'); ?></div>
-            <p id="versionBg" class="white"><span id="versionText">7.0.0.1 Alpha</span></p>
+            <p id="versionBg" class="white"><span id="versionText"><?php echo utility::getVersion(); ?></span></p>
           </section>
         </div>
         
