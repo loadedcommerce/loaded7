@@ -49,6 +49,10 @@ require('../includes/classes/utility.php');
 require('../includes/classes/cache.php');
 $lC_Cache = new lC_Cache();
 
+// initally set the language and template cache
+if (! file_exists('includes/work/cache/langusges.cache') ) lC_Cache::clear('languages');
+if (! file_exists('includes/work/cache/templates.cache') ) lC_Cache::clear('templates');
+
 // include the administrators log class
 if ( file_exists('includes/applications/administrators_log/classes/administrators_log.php') ) {
   include('includes/applications/administrators_log/classes/administrators_log.php');
