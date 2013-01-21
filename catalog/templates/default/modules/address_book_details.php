@@ -17,8 +17,8 @@ if ($lC_MessageStack->size('address') > 0) {
 ?>
 <style>
 #personal_details li { margin: 10px 0; }
-#login_details li { margin: 10px 0; }
-input { height: 26px; padding-left:4px; }
+#address_details li { margin: 10px 0; }
+.embed-form input { height: 26px; padding-left:4px; }
 </style>
 <!--EDIT ADDRESS BOOK SECTION STARTS-->
 <div id="editAddress" class="full_page">
@@ -26,7 +26,7 @@ input { height: 26px; padding-left:4px; }
     <span><?php echo $lC_Language->get('form_validation_error'); ?></span>
   </div>   
   <div class="single-bg">
-    <div class="short-code-column one-half no-margin-bottom">   
+    <div class="embed-form short-code-column one-half no-margin-bottom">   
       <h3>Personal Details</h3>
       <ul id="personal_details">
         <li><?php echo lc_draw_label('', 'firstname', null, false) . ' ' . lc_draw_input_field('firstname', (isset($Qentry) ? $Qentry->value('entry_firstname') : (!$lC_Customer->hasDefaultAddress() ? $lC_Customer->getFirstName() : null)), 'placeholder="' . $lC_Language->get('field_customer_first_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_first_name') . '\'" class="txt" style="width:99%;"'); ?></li>
@@ -40,10 +40,6 @@ input { height: 26px; padding-left:4px; }
           $gender_array = array(array('id' => 'm', 'text' => $lC_Language->get('gender_male')), array('id' => 'f', 'text' => $lC_Language->get('gender_female')));   
           echo '<li style="font-size:.9em; margin-left:3px;">' . lc_draw_label('', 'gender', (isset($Qentry) ? $Qentry->value('entry_gender') : null), false) . ' ' . lc_draw_radio_field('gender', $gender_array, 'm', 'style="height:12px;"') . '</li>'; 
         }
-        if (ACCOUNT_NEWSLETTER == '1') {
-          echo '<li style="font-size:.9em; margin-left:5px;">' . lc_draw_label($lC_Language->get('field_customer_newsletter'), 'newsletter') . '&nbsp;&nbsp;' . lc_draw_checkbox_field('newsletter', '1', '1', ($_POST['email']) ? 'checked="checked" style="height:12px;"' : 'style="height:12px;"') . '</li>';
-        }
-        
         if (ACCOUNT_TELEPHONE > -1) {
           echo '<li>' . lc_draw_label('', 'telephone', null, '', (ACCOUNT_TELEPHONE > 0)) . ' ' . lc_draw_input_field('telephone', (isset($Qentry) ? $Qentry->value('entry_telephone') : null), 'placeholder="' . $lC_Language->get('field_customer_telephone_number') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_telephone_number') . '\'" class="txt" style="width:99%;"') . '</li>';
         }
@@ -53,7 +49,7 @@ input { height: 26px; padding-left:4px; }
         ?>      
       </ul>     
     </div>
-    <div class="short-code-column one-half column-last no-margin-bottom">
+    <div class="embed-form short-code-column one-half column-last no-margin-bottom">
       <h3>Address</h3>
       <ul id="address_details">
         <?php
