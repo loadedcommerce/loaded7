@@ -11,7 +11,6 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-?>
 if ($lC_MessageStack->size('address') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('address', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
 }
