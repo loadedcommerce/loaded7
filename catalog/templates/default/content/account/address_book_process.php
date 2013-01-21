@@ -33,8 +33,7 @@ if ($lC_MessageStack->size('address_book') > 0) {
         ?>
         <div class="borderPadMe">        
           <form name="address_book" id="address_book" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $_GET['address_book'] . '&' . (isset($_GET['edit']) ? 'edit' : 'new') . '=save', 'SSL'); ?>" method="post" onsubmit="return check_form(address_book);">
-          <div class="moduleBox">
-            <span style="float:right; color:red;"><?php echo $lC_Language->get('form_required_information'); ?></span>
+          <div>
             <p><b><?php echo $lC_Language->get('address_book_edit_entry_heading'); ?></b></p>
             <div>
             <?php

@@ -22,7 +22,6 @@ input { height: 26px; padding-left:4px; }
 </style>
 <!--EDIT ADDRESS BOOK SECTION STARTS-->
 <div id="editAddress" class="full_page">
-  <form name="address" id="address" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address=save', 'SSL'); ?>" method="post">
   <div id="errDiv" class="short-code msg error" style="margin-bottom:10px; display:none;">
     <span><?php echo $lC_Language->get('form_validation_error'); ?></span>
   </div>   
@@ -138,7 +137,6 @@ input { height: 26px; padding-left:4px; }
     <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'login'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
     <span class="buttonRight"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_signup'); ?></button></span>
   </div>    
-  </form>
 </div>
 <script>
 $('#address').submit(function() {
