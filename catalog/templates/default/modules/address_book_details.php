@@ -133,10 +133,7 @@ input { height: 26px; padding-left:4px; }
 
     </div>
   </div>
-  <div class="action_buttonbar clear">
-    <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'login'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
-    <span class="buttonRight"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_signup'); ?></button></span>
-  </div>    
+   
 </div>
 <script>
 $('#address').submit(function() {
