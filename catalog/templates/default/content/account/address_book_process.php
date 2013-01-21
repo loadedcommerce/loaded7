@@ -23,45 +23,42 @@
   }
 ?>
 <!--ADDRESS BOOK PROCESS SECTION STARTS-->
-<div class="full_page">
-  <!--ADDRESS BOOK PROCESS CONTENT STARTS-->
+<div id="addressBookProcess" class="full_page">
   <div class="content">
     <div class="short-code-column">
       <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
       <?php
-        if ( ($lC_Customer->hasDefaultAddress() === false) || (isset($_GET['new']) && (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES)) || (isset($Qentry) && ($Qentry->numberOfRows() === 1)) ) {
-          ?>
-          <form name="address_book" id="address_book" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $_GET['address_book'] . '&' . (isset($_GET['edit']) ? 'edit' : 'new') . '=save', 'SSL'); ?>" method="post" onsubmit="return check_form(address_book);">
+      if ( ($lC_Customer->hasDefaultAddress() === false) || (isset($_GET['new']) && (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES)) || (isset($Qentry) && ($Qentry->numberOfRows() === 1)) ) {
+        ?>
+        <form name="address_book" id="address_book" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $_GET['address_book'] . '&' . (isset($_GET['edit']) ? 'edit' : 'new') . '=save', 'SSL'); ?>" method="post" onsubmit="return check_form(address_book);">
           <?php
-            if (file_exists(DIR_FS_TEMPLATE . 'modules/address_book_details.php')) {
-              require(DIR_FS_TEMPLATE . 'modules/address_book_details.php');
-            } else {
-              require('includes/modules/address_book_details.php');
-            }
+          if (file_exists(DIR_FS_TEMPLATE . 'modules/address_book_details.php')) {
+            require(DIR_FS_TEMPLATE . 'modules/address_book_details.php');
+          } else {
+            require('includes/modules/address_book_details.php');
+          }
           ?>
-
-        <div style="clear:both;">&nbsp;</div>
-        <!--ADDRESS BOOK PROCESS ACTIONS STARTS-->       
-        <div id="addressBookProcessActions" class="action_buttonbar">
-          <?php
-            if ($lC_NavigationHistory->hasSnapshot()) {
-              $back_link = $lC_NavigationHistory->getSnapshotURL();
-            } elseif ($lC_Customer->hasDefaultAddress() === false) {
-              $back_link = lc_href_link(FILENAME_ACCOUNT, null, 'SSL');
-            } else {
-              $back_link = lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL');
-            }
-          ?>
-          <span class="buttonLeft"><a href="<?php echo $back_link; ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
-          <span class="buttonRight"><a onclick="$('#address_book').submit();" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
-          <div style="clear:both;"></div> 
-        </div>
-        <!--ADDRESS BOOK PROCESS ACTIONS ENDS-->
+          
+          <div style="clear:both;">&nbsp;</div>
+          <!--ADDRESS BOOK PROCESS ACTIONS STARTS-->       
+          <div id="addressBookProcessActions" class="action_buttonbar">
+            <?php
+              if ($lC_NavigationHistory->hasSnapshot()) {
+                $back_link = $lC_NavigationHistory->getSnapshotURL();
+              } elseif ($lC_Customer->hasDefaultAddress() === false) {
+                $back_link = lc_href_link(FILENAME_ACCOUNT, null, 'SSL');
+              } else {
+                $back_link = lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL');
+              }
+            ?>
+            <span class="buttonLeft"><a href="<?php echo $back_link; ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+            <span class="buttonRight"><a onclick="$('#address_book').submit();" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
+            <div style="clear:both;"></div> 
+          </div>
+          <!--ADDRESS BOOK PROCESS ACTIONS ENDS-->
         </form>
-
-
         <?php
-        } else {
+      } else {
         ?>
         <!--ADDRESS BOOK PROCESS ACTIONS STARTS-->
         <div id="addressBookProcessActions" class="action_buttonbar">
@@ -70,10 +67,37 @@
         <div style="clear:both;"></div>
         <!--ADDRESS BOOK PROCESS ACTIONS ENDS--> 
         <?php
-        }
+      }
       ?>
     </div>
   </div>
   <!--ADDRESS BOOK PROCESS CONTENT ENDS-->
   </div>
 <!--ADDRESS BOOK PROCESS SECTION ENDS-->
+<script>
+$('#address_book').submit(function() {
+  var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
+  var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
+  jQuery.validator.messages.required = "";
+  var bValid = $("#address").validate({
+    rules: {
+      firstname: { minlength: fnameMin, required: true },
+      lastname: { minlength: lnameMin, required: true },
+    },
+    invalidHandler: function(e, validator) {
+      var errors = validator.numberOfInvalids();
+      if (errors) {
+        $("#errDiv").show().delay(5000).fadeOut('slow');
+      } else {
+        $("#errDiv").hide();
+      }
+      return false;
+    }
+  }).form();
+
+  if (bValid) {      
+    $('#address').submit();
+  }
+  return false;
+});
+</script>

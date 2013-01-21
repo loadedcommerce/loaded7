@@ -21,7 +21,7 @@ if ($lC_MessageStack->size('address') > 0) {
 .embed-form input { height: 26px; padding-left:4px; }
 </style>
 <!--EDIT ADDRESS BOOK SECTION STARTS-->
-<div id="editAddress" class="full_page">
+
   <div id="errDiv" class="short-code msg error" style="margin-bottom:10px; display:none;">
     <span><?php echo $lC_Language->get('form_validation_error'); ?></span>
   </div>   
@@ -38,7 +38,7 @@ if ($lC_MessageStack->size('address') > 0) {
         }
         if (ACCOUNT_GENDER > -1) {
           $gender_array = array(array('id' => 'm', 'text' => $lC_Language->get('gender_male')), array('id' => 'f', 'text' => $lC_Language->get('gender_female')));   
-          echo '<li style="font-size:.9em; margin-left:3px;">' . lc_draw_label('', 'gender', (isset($Qentry) ? $Qentry->value('entry_gender') : null), false) . ' ' . lc_draw_radio_field('gender', $gender_array, 'm', 'style="height:12px;"') . '</li>'; 
+          echo '<li style="font-size:.9em; margin:14px 0 15px 3px;">' . lc_draw_label('', 'gender', (isset($Qentry) ? $Qentry->value('entry_gender') : null), false) . ' ' . lc_draw_radio_field('gender', $gender_array, 'm', 'style="height:12px;"') . '</li>'; 
         }
         if (ACCOUNT_TELEPHONE > -1) {
           echo '<li>' . lc_draw_label('', 'telephone', null, '', (ACCOUNT_TELEPHONE > 0)) . ' ' . lc_draw_input_field('telephone', (isset($Qentry) ? $Qentry->value('entry_telephone') : null), 'placeholder="' . $lC_Language->get('field_customer_telephone_number') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_telephone_number') . '\'" class="txt" style="width:99%;"') . '</li>';
@@ -130,50 +130,6 @@ if ($lC_MessageStack->size('address') > 0) {
     </div>
   </div>
    
-</div>
-<script>
-$('#address').submit(function() {
-  var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
-  var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
-  var emailMin = '<?php echo ACCOUNT_EMAIL_ADDRESS; ?>';
-  var pwMin = '<?php echo ACCOUNT_PASSWORD; ?>';  
-  jQuery.validator.messages.required = "";
-  var bValid = $("#address").validate({
-    rules: {
-      firstname: { minlength: fnameMin, required: true },
-      lastname: { minlength: lnameMin, required: true },
-      email_address: { minlength: emailMin, email: true, required: true },
-      password: { minlength: pwMin, required: true },
-      confirmation: { minlength: pwMin, required: true },
-    },
-    invalidHandler: function(e, validator) {
-      var errors = validator.numberOfInvalids();
-      if (errors) {
-        $("#errDiv").show().delay(5000).fadeOut('slow');
-      } else {
-        $("#errDiv").hide();
-      }
-      return false;
-    }
-  }).form();
-  var passwd = $('#password').val();
-  var confirm = $('#confirmation').val();
-  if (passwd != confirm) {
-    alert('<?php echo $lC_Language->get('field_customer_password_mismatch_with_confirmation'); ?>');
-    return false;
-  }
-  if (bValid) {  
-    var displayConditions  = '<?php echo DISPLAY_PRIVACY_CONDITIONS; ?>';
-    var isChecked = $('#privacy_conditions').is(':checked');
-    if (displayConditions == 1 && isChecked == false) {
-      alert('<?php echo $lC_Language->get('address_account_terms_description'); ?>');
-      return false;
-    }     
-    $('#address').submit();
-  }
-  return false;
-});
-</script>
 <!--EDIT ADDRESS BOOK SECTION ENDS-->
 
 
