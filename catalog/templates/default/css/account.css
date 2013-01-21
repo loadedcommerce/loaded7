@@ -219,13 +219,6 @@
   margin-top: 10px;
 }
 
-/* This is a very basic stylesheet for the date-picker. Feel free to create your own. */
-body
-{
-  font-size:12px;
-  font-family: verdana,arial,sans-serif;
-  color:#545454;
-}
 /* Hide the input by using a className */
 input.fd-hidden-input,
 select.fd-hidden-input

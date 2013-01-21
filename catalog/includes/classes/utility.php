@@ -366,6 +366,15 @@ class utility {
       }
     }
     return $out;
-  }   
+  }
+ /**
+  * Return the product version
+  *
+  * @access public
+  * @return string
+  */
+  public static function getVersion() {
+    return INSTALLED_VERSION_MAJOR . '.' . INSTALLED_VERSION_MINOR . '.' . INSTALLED_VERSION_MAINT . '.' . INSTALLED_VERSION_PATCH . '.' . INSTALLED_VERSION_BUILD;
+  }
 } 
 ?>
