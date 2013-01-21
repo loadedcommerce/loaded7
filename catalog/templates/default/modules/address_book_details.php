@@ -20,9 +20,8 @@ if ($lC_MessageStack->size('address') > 0) {
 #login_details li { margin: 10px 0; }
 input { height: 26px; padding-left:4px; }
 </style>
-<!--CREATE ACCOUNT SECTION STARTS-->
-<div id="accountCreate" class="full_page">
-  <h1><?php echo $lC_Template->getPageTitle(); ?></h1>        
+<!--EDIT ADDRESS BOOK SECTION STARTS-->
+<div id="editAddress" class="full_page">
   <form name="address" id="address" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address=save', 'SSL'); ?>" method="post">
   <div id="errDiv" class="short-code msg error" style="margin-bottom:10px; display:none;">
     <span><?php echo $lC_Language->get('form_validation_error'); ?></span>
@@ -184,7 +183,7 @@ $('#address').submit(function() {
   return false;
 });
 </script>
-<!--CREATE ACCOUNT SECTION ENDS-->
+<!--EDIT ADDRESS BOOK SECTION ENDS-->
 
 
 
