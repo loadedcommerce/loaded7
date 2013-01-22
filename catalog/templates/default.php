@@ -253,7 +253,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="ext/jquery/jquery.liveSearch.js"></script>
     <script src="ext/jquery/breadcrumb/js/jquery.jBreadCrumb.1.1.js"></script>
     <script src="ext/jquery/thickbox/thickbox-compressed.js"></script>
-        
+    <script src="ext/datepicker/datepicker.js"></script>
     <!-- Template functions -->
     <script src="templates/default/javascript/jquery.flexslider.js" ></script>
     <script src="templates/default/javascript/jquery.jcarousel.js"></script>
