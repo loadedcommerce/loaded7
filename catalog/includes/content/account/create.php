@@ -39,6 +39,7 @@
       } else {
         if ($lC_Services->isStarted('breadcrumb')) {
           $lC_Breadcrumb->add($lC_Language->get('breadcrumb_create_account'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
+        }
       }
 
       if ($_GET[$this->_module] == 'save') {
