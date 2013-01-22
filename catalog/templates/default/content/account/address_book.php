@@ -19,7 +19,6 @@ if ($lC_MessageStack->size('address_book') > 0) {
   <div class="full_page">
     <!--ADDRESS BOOK CONTENT STARTS-->
     <div class="content">
-      <form name="account_password" id="account_password" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password=save', 'SSL'); ?>" method="post" onsubmit="return check_form(account_password);">
       <div class="short-code-column">
         <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
         <p><b><?php echo $lC_Language->get('primary_address_title'); ?></b></p>
@@ -55,7 +54,9 @@ if ($lC_MessageStack->size('address_book') > 0) {
               <td>
               <?php 
                 echo '<span class="buttonRight">' . 
-                     '    <button class="button brown_btn" type="submit">' . $lC_Language->get('button_edit') . '</button>' . 
+                     '  <a href="' . lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&edit', 'SSL')  . '" style="text-decoration:none;">' . 
+                     '    <button class="button brown_btn" type="button">' . $lC_Language->get('button_edit') . '</button>' . 
+                     '  </a>' .
                      '  <a href="' . lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&delete', 'SSL')  . '" style="text-decoration:none;">' . 
                      '    <button class="button brown_btn" type="button">' . $lC_Language->get('button_delete') . '</button>' . 
                      '  </a>' . 
@@ -86,7 +87,6 @@ if ($lC_MessageStack->size('address_book') > 0) {
         </div> 
         <div style="clear:both;"></div>
       </div>
-      </form>
     </div>
     <!--ADDRESS BOOK CONTENT STARTS-->
   </div>
