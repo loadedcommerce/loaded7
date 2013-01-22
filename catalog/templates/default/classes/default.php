@@ -170,8 +170,13 @@ class lC_Default {
       $result['zonesHtml'] = lc_draw_label('', null, 'state') . lc_draw_pull_down_menu('state', $zones_array, $zone_name, 'style="padding-top:5px"');
       $result['single'] = '0';
 
-    } else {
+    } else {                      
       $zone_name = (isset($zone_id) && is_numeric($zone_id) && $zone_id != 0) ? lC_Address::getZoneName($zone_id) : NULL;
+
+
+echo '[' . $zone_id . ']<br>';
+echo '[' . $zone_name . ']<br>';
+die('00');
       $result['zonesHtml'] = lc_draw_label('', null, 'state') . ' ' . lc_draw_input_field('state', $zone_name, 'placeholder="' . $lC_Language->get('field_customer_state') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_state') . '\'" style="width:103%;"');
       $result['single'] = '1';
     }
