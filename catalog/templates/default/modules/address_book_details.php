@@ -120,6 +120,8 @@ if ($lC_MessageStack->size('address') > 0) {
       <h3>Address</h3>
       <ul id="address_details">
         <?php
+        echo '[' . ACCOUNT_COMPANY . ']<br>';
+        
           if (ACCOUNT_COMPANY > -1) {
             echo '<li>' . lc_draw_label('', null, 'company', (ACCOUNT_COMPANY > 0)) . ' ' . lc_draw_input_field('company', (isset($Qentry) ? $Qentry->value('entry_company') : null), 'placeholder="' . $lC_Language->get('field_customer_company') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_company') . '\'" class="txt required" style="width:99%;"') . '</li>';
           }
