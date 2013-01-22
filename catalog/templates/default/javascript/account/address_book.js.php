@@ -24,7 +24,7 @@ $(document).ready(function() {
 
 function getZonesDropdown(country, zone) {
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=getZonesDropdown&country=COUNTRY&zone=ZONE'); ?>';   
-  $.getJSON(jsonLink.replace('COUNTRY', country).replace('ZONE', zone).replace('&amp;', '&'),
+  $.getJSON(jsonLink.replace('COUNTRY', country).replace('&amp;', '&').replace('ZONE', zone).replace('&amp;', '&'),
     function (data) {
       if (data.rpcStatus != 1) {
         alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
