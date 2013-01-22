@@ -72,7 +72,7 @@ if ($lC_MessageStack->size('address') > 0) {
           <?php
           }
         ?>
-        <li style="font-size:.9em; margin-left:5px;">
+        <li>
           <?php 
             echo lc_draw_label(null, null, 'country') . lc_draw_pull_down_menu('country', $countries_array, (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY));
           ?>
