@@ -74,30 +74,3 @@
   <!--ADDRESS BOOK PROCESS CONTENT ENDS-->
   </div>
 <!--ADDRESS BOOK PROCESS SECTION ENDS-->
-<script>
-$('#address_book').submit(function() {
-  var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
-  var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
-  jQuery.validator.messages.required = "";
-  var bValid = $("#address_book").validate({
-    rules: {
-      firstname: { minlength: fnameMin, required: true },
-      lastname: { minlength: lnameMin, required: true },
-    },
-    invalidHandler: function(e, validator) {
-      var errors = validator.numberOfInvalids();
-      if (errors) {
-        $("#errDiv").show().delay(5000).fadeOut('slow');
-      } else {
-        $("#errDiv").hide();
-      }
-      return false;
-    }
-  }).form();
-
-  if (bValid) {      
-    $('#address_book').submit();
-  }
-  return false;
-});
-</script>
