@@ -67,6 +67,7 @@ $(document).ready(function() {
     setTimeout("__jquery_placeholder_goTitling()",100);
   }
 });
+
 //change the holding values
 function __jquery_placeholder_goTitling() {
   $("input[type=text],textarea").each(function(){
