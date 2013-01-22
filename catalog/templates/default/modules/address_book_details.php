@@ -21,6 +21,43 @@ if ($lC_MessageStack->size('address') > 0) {
 #personal_details li { margin: 10px 0; }
 #address_details li { margin: 10px 0; }
 .embed-form input { height: 26px; padding-left:4px; }
+
+#uniform-country.selector {
+    background-color: #FFFFFF;
+    border: 1px solid #D7D7D7;
+    float: left;
+    height: 16px;
+    padding: 3px 3px 3px 10px;
+    position: relative;
+    width: 112px;
+}
+#uniform-country select {
+    color: #818181;
+    cursor: pointer;
+    font-size: 11px;
+    height: 22px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 125px;
+}
+#uniform-country select option {
+    border: medium none;
+    padding: 5px;
+}
+#uniform-country span {
+    background: url("../images/arrow.png") no-repeat scroll right -106px transparent;
+    color: #818181;
+    cursor: pointer;
+    font-size: 11px;
+    height: 22px;
+    line-height: 22px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 119px;
+}
+
 </style>
 <!--EDIT ADDRESS BOOK SECTION STARTS-->
 
