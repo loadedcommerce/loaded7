@@ -66,6 +66,7 @@ if ($lC_MessageStack->size('address') > 0) {
     border: medium none;
     padding: 5px;
 }
+/*
 #uniform-zones span {
     color: #000;
     cursor: pointer;
@@ -77,7 +78,7 @@ if ($lC_MessageStack->size('address') > 0) {
     top: 4px;
     width: 99%;
 }
-
+*/
 </style>
 <!--EDIT ADDRESS BOOK SECTION STARTS-->
 
