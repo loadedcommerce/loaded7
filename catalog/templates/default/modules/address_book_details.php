@@ -23,19 +23,11 @@ if ($lC_MessageStack->size('address') > 0) {
 .embed-form input { height: 26px; padding-left:4px; }
 .embed-form h3 { font-family: sans-serif !important; font-size: 1.3em; margin-bottom: 15px; }
 #uniform-country.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
-#uniform-country select {  color: #818181; font-size: 12px; height: 22px; width: 98%; }
-#uniform-country select option {
-    border: medium none;
-    padding: 5px;
-}
+#uniform-country select {  color: #000; font-size: 12px; height: 22px; width: 98%; }
 #uniform-country span {
     color: #000;
-    cursor: pointer;
     font-size: 12px;
     height: 22px;
-    line-height: 22px;
-    position: absolute;
-    right: 0;
     top: 4px;
     width: 99%;
 }
@@ -43,7 +35,7 @@ if ($lC_MessageStack->size('address') > 0) {
 #uniform-zones.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
 
 #uniform-zones select {
-    color: #000;
+    color: #818181;
     cursor: pointer;
     font-size: 12px;
     height: 29px;
