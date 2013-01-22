@@ -153,6 +153,8 @@ class lC_Default {
   * @return json
   */
   public static function getZonesDropdownHtml($countries_id, $zone_id = null) {
+    global $lC_Database, $lC_Language;
+
     $Qzones = $lC_Database->query('select zone_name from :table_zones where zone_country_id = :zone_country_id order by zone_name');
     $Qzones->bindTable(':table_zones', TABLE_ZONES);
     $Qzones->bindInt(':zone_country_id', $countries_id);

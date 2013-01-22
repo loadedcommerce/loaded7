@@ -13,7 +13,7 @@
  
   @function The lC_Default class manages default template functions
 */ 
-global $lC_Language; 
+global $lC_Language, $Qentry; 
 ?>
 <script>
 $(document).ready(function() {
