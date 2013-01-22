@@ -50,33 +50,6 @@ if ($lC_MessageStack->size('address') > 0) {
     width: 99%;
 }
 
-#zonesContainer.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
-
-#zonesContainer select {
-    color: #818181;
-    cursor: pointer;
-    font-size: 12px;
-    height: 22px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 98%;
-}
-#zonesContainer select option {
-    border: medium none;
-    padding: 5px;
-}
-#zonesContainer span {
-    color: #000;
-    cursor: pointer;
-    font-size: 12px;
-    height: 22px;
-    line-height: 22px;
-    position: absolute;
-    right: 0;
-    top: 4px;
-    width: 99%;
-}
 
 </style>
 <!--EDIT ADDRESS BOOK SECTION STARTS-->
