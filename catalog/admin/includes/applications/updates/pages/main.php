@@ -39,43 +39,36 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
  
 <dl class="accordion same-height">
 
-        <dt class="">First section</dt>
-        <dd style="height: 136px; display: block;">
-          <div class="with-padding">
-            <p>First section content</p>
-            <p>The accordion plugin may also equalize the sections' height, just by adding the class <b>same-height</b> - as for this example.</p>
-            <p>Give it a try!</p>
-          </div>
-        </dd>
+            <dt>First section</dt>
+            <dd>
+              <div class="with-padding">
+                <p>First section content</p>
+                <p>The accordion plugin may also equalize the sections' height, just by adding a class - as for this example.</p>
+                <p>Give it a try!</p>
+              </div>
+            </dd>
 
-        <dt class="closed">Second section</dt>
-        <dd style="height: 136px; display: none;">
-          <div class="with-padding">
-            Second section content
-          </div>
-        </dd>
+            <dt>Second section</dt>
+            <dd>
+              <div class="with-padding">
+                Second section content
+              </div>
+            </dd>
 
-        <dt class="closed">Third section</dt>
-        <dd style="height: 136px; display: none;">
-          <div class="with-padding">
-            Third section content
-          </div>
-        </dd>
+            <dt>Third section</dt>
+            <dd>
+              <div class="with-padding">
+                Third section content
+              </div>
+            </dd>
 
-      </dl> 
+          </dl>
     
     </div>
     
     <div class="six-columns twelve-columns-tablet">
 
-<div class="block">
-  <h3 class="block-title">Block title</h3>
-  <div class="with-padding">
-
-    <!-- content here -->
-
-  </div>
-</div>    
+ 
     </div>
     
   </div>
