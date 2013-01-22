@@ -31,7 +31,7 @@ function getZonesDropdown(country, zone) {
         alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
-      $('#zonesContainer').html(data.zonesHtml).change();
+      $('#uniform-zones').html(data.zonesHtml).change();
     }
   );
 }
