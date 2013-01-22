@@ -21,14 +21,13 @@ $(document).ready(function() {
   var zone = '<?php echo (isset($Qentry) ? $Qentry->value('entry_zone_id') : null); ?>'; 
   var zoneName = '<?php echo (isset($Qentry) ? $Qentry->value('entry_state') : null); ?>'; 
   
-  alert(zone);
-  alert(zoneName);
-  
-  if (zone == '') zone = zoneName;
+  if (zone == '0') zone = zoneName;
   getZonesDropdown(country, zone);  
 });
 
 function getZonesDropdown(country, zone) {
+  alert(zone);
+  
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=getZonesDropdown&country=COUNTRY&zone=ZONE'); ?>';   
   $.getJSON(jsonLink.replace('COUNTRY', country).replace('&amp;', '&').replace('ZONE', zone).replace('&amp;', '&'),
     function (data) {
