@@ -27,6 +27,7 @@ if ($lC_MessageStack->size('address') > 0) {
 #uniform-country span { color: #000; font-size: 12px; height: 22px; top: 4px; width: 99%; }
 #uniform-zones.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
 #uniform-zones select { color: #000; font-size: 12px; height: 29px; top: -1px; width: 100%; }
+#uniform-zones span { background: url("templates/default/images/arrow.png") no-repeat scroll right -105px transparent }
 
 
 </style>
@@ -74,7 +75,7 @@ if ($lC_MessageStack->size('address') > 0) {
         if (ACCOUNT_STATE > -1) {
         ?>
         <li>
-          <div id="uniform-zones" class="selector">   
+          <div id="uniform-zones" class="selector"><span></span>   
           </div>
         </li>
         <?php
