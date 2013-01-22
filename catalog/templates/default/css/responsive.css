@@ -175,6 +175,9 @@
   #mobile-arrow-up { float:left;padding:5px 10px 0 10px; }
   #mobile-arrow-down { float:left;padding:8px 10px 0 10px; }
   #bill-to-address { margin-bottom:15px; }
+  #success-order-comment { width: 96% !important; float: left; margin-bottom: 10px; }
+  #success-order-totals { width: 100% !important; float: left; }
+  #success-order-totals #ot-container { display: block; }
 }
 
 /*  #Mobile (Portrait)
@@ -326,4 +329,10 @@
   #mobile-arrow-down { float:left;padding:8px 10px 0 10px; }
   #bill-to-address { clear:both !important; width:auto !important; margin-bottom:15px; }
   #bill-to-change { clear:both !important; width:auto !important; margin-bottom:15px; }
+  #mobile-order-number-id { display: block !important; }
+  #success-order-number { display: none; }
+  #success-order-id { display: none; }
+  #success-order-comment { width: 92.5% !important; float: left; margin-bottom: 10px; }
+  #success-order-totals { width: 100% !important; float: left; }
+  #success-order-totals #ot-container { display: block; }
 }

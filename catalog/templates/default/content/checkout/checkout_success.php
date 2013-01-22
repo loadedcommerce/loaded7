@@ -43,6 +43,10 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
           <div class="col2-set">
             <div class="short-code msg success"><span><h5><?php echo $lC_Language->get('success_heading'); ?></h5></span></div>
             <div style="clear:both;">&nbsp;</div>
+            <div id="mobile-order-number-id">
+              <h3><?php echo $lC_Language->get('checkout_order_number') . '<span class="mobile-order-number-id-span">' . $_SESSION['cartID']; ?></span></h3>
+              <h3><?php echo $lC_Language->get('checkout_order_id') . '<span class="mobile-order-number-id-span">' . $_SESSION['cartID']; ?></span></h3>
+            </div>
             <div id="checkout_shipping_col1" style="width:35%; float:left;">
               <!--SHIP TO ADDRESS BLOCK STARTS-->
               <div id="ship-to-address-block">

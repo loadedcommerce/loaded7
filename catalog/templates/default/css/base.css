@@ -795,4 +795,5 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #success-order-comment { float: left; width: 44%; }
 #success-order-comment-inner { float: left; width: 100%; border: 1px solid #E7DED5; padding: 10px; }
 #success-order-totals { float: right; width: 49%; }
-#success-order-totals #ot-container {  }
+#mobile-order-number-id { display: none; }
+.mobile-order-number-id-span { float: right; border: 1px solid #ccc; padding: 7px; width: 120px; text-align: left; margin-top: -8px; }
