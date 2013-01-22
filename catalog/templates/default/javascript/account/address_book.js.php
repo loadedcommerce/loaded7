@@ -24,10 +24,6 @@ if (isset($_GET['address_book']) && is_numeric($_GET['address_book'])) {
     var zoneName = '<?php echo (isset($Qentry) ? $Qentry->value('entry_state') : null); ?>'; 
     if (zone == '0') zone = zoneName;
     getZonesDropdown(country, zone);  
-    
-    if ($.browser.mozilla) {
-      $('#state').css( "padding-top","6px" ).trigger();
-    }
   });
 
   $('#address_book').submit(function() {
@@ -66,7 +62,13 @@ if (isset($_GET['address_book']) && is_numeric($_GET['address_book'])) {
           alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
           return false;
         }
+        
+        
+        
         $('#uniform-zones').html(data.zonesHtml).change();
+            if ($.browser.mozilla) {
+      $('#uniform-zones select').attr( "style", "padding-top:6px" );
+    }
         if (data.single == '1') {
           $('#uniform-zones').attr('style', 'padding:0 0 5px 0;');
         }
