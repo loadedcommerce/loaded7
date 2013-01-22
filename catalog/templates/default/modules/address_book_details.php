@@ -25,7 +25,7 @@ if ($lC_MessageStack->size('address') > 0) {
 #uniform-country.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
 
 #uniform-country select {
-    color: #818181;
+    color: #000;
     cursor: pointer;
     font-size: 12px;
     height: 22px;
@@ -53,14 +53,14 @@ if ($lC_MessageStack->size('address') > 0) {
 #uniform-zones.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
 
 #uniform-zones select {
-    color: #818181;
+    color: #000;
     cursor: pointer;
     font-size: 12px;
-    height: 22px;
+    height: 29px;
     left: 0;
     position: absolute;
     top: 0;
-    width: 98%;
+    width: 100%;
 }
 #uniform-zones select option {
     border: medium none;
