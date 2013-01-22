@@ -13,9 +13,9 @@
 
   @function The lC_Updater_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/updater/classes/updater.php');    
+require_once('includes/applications/updates/classes/updates.php');    
 
-class lC_Updater_Admin_rpc {
+class lC_Updates_Admin_rpc {
  /*
   * Returns the modules datatable data for listings
   *
@@ -23,7 +23,7 @@ class lC_Updater_Admin_rpc {
   * @return json
   */
   public static function getUpdateData() {
-    $result = lC_Updater_Admin::getUpdateData($_GET['type']);
+    $result = lC_Updates_Admin::getUpdateData($_GET['type']);
     $result['rpcStatus'] = RPC_STATUS_SUCCESS;
 
     echo json_encode($result);

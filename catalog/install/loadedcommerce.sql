@@ -993,7 +993,7 @@ INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(16, 'Regulations', 'Regulation options', 16, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(17, 'Credit Cards', 'Credit card options', 17, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(18, 'Program Locations', 'Locations to certain programs on the server.', 18, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(19, 'Core Updater', 'Core updater settings', 19, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(19, 'Core Updates', 'Core update settings', 19, 1);
 
 INSERT INTO lc_countries (countries_id, countries_name, countries_iso_code_2, countries_iso_code_3, address_format) VALUES(3, 'Algeria', 'DZ', 'DZA', '');
 INSERT INTO lc_countries (countries_id, countries_name, countries_iso_code_2, countries_iso_code_3, address_format) VALUES(4, 'American Samoa', 'AS', 'ASM', '');

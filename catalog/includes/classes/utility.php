@@ -125,7 +125,7 @@ class utility {
   * @access public  
   * @return array
   */ 
-  public static function xml2arr($_xml, $get_attributes = 1, $priority = 'tag', $clean = TRUE) {
+  public static function xml2arr($_xml, $get_attributes = 1, $priority = 'tag') {
     if(!$_xml) return array();
     
     $xml = substr($_xml, strpos($_xml, '<?xml'));
@@ -238,7 +238,7 @@ class utility {
         $current = &$parent[$level-1];
       }
     }
-    
+           
     return $xml_array;
   }     
  /**

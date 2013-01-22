@@ -139,7 +139,7 @@ $Qaccess->execute();
       $http_work_directory .= '/';
     }
 
-    $lC_DirectoryListing = new lC_DirectoryListing($http_work_directory);
+    $lC_DirectoryListing = new lC_DirectoryListing($http_work_directory . 'cache/');
     $lC_DirectoryListing->setIncludeDirectories(false);
     $lC_DirectoryListing->setCheckExtension('cache');
 

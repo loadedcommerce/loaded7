@@ -49,7 +49,7 @@
         $key = $this->_key;
       }
 
-      return ( @file_put_contents(DIR_FS_WORK . $key . '.cache', serialize($data), LOCK_EX) !== false );
+      return ( @file_put_contents(DIR_FS_WORK . 'cache/' . $key . '.cache', serialize($data), LOCK_EX) !== false );
     }
 
 /**
@@ -64,7 +64,7 @@
     public function read($key, $expire = null) {
       $this->_key = $key;
 
-      $filename = DIR_FS_WORK . $key . '.cache';
+      $filename = DIR_FS_WORK . 'cache/' . $key . '.cache';
 
       if ( file_exists($filename) ) {
         $difference = floor((time() - filemtime($filename)) / 60);
@@ -125,11 +125,11 @@
       
       $key_length = strlen($key);
 
-      $d = dir(DIR_FS_WORK);
+      $d = dir(DIR_FS_WORK . 'cache/');
 
       while ( ($entry = $d->read()) !== false ) {
         if ( (strlen($entry) >= $key_length) && (substr($entry, 0, $key_length) == $key) ) {
-          @unlink(DIR_FS_WORK . $entry);
+          @unlink(DIR_FS_WORK . 'cache/' . $entry);
         }
       }
 
