@@ -67,48 +67,19 @@ if ($lC_MessageStack->size('address') > 0) {
           if (ACCOUNT_STATE > -1) {
           ?>
           <li>
-            <?php 
-              if ( (isset($_GET['new']) && ($_GET['new'] == 'save')) || (isset($_GET['edit']) && ($_GET['edit'] == 'save')) || (isset($_GET[$lC_Template->getModule()]) && ($_GET[$lC_Template->getModule()] == 'process')) ) {
-                if ($entry_state_has_zones === true) {
-                  $Qzones = $lC_Database->query('select zone_name from :table_zones where zone_country_id = :zone_country_id order by zone_name');
-                  $Qzones->bindTable(':table_zones', TABLE_ZONES);
-                  $Qzones->bindInt(':zone_country_id', $_POST['country']);
-                  $Qzones->execute();
-
-                  $zones_array = array();
-                  while ($Qzones->next()) {
-                    $zones_array[] = array('id' => $Qzones->value('zone_name'), 'text' => $Qzones->value('zone_name'));
-                  }
-                  echo lc_draw_label($lC_Language->get('field_customer_state'), null, 'state', (ACCOUNT_STATE > 0)) . ' ';
-                  echo lc_draw_pull_down_menu('state', $zones_array);
-                } else {
-                  echo lc_draw_label('', null, 'state') . ' ' . lc_draw_input_field('state', (isset($Qentry) ? $Qentry->value('zone_name') : null), 'placeholder="' . $lC_Language->get('field_customer_state') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_state') . '\'" class="txt" style="width:99%;"');
-                }
-              } else {
-                if (isset($Qentry)) {
-                  $zone = $Qentry->value('entry_state');
-                  if ($Qentry->valueInt('entry_zone_id') > 0) {
-                    $zone = lC_Address::getZoneName($Qentry->valueInt('entry_zone_id'));
-                  }
-                }
-                echo lc_draw_label('', null, 'state') . ' ' . lc_draw_input_field('state', (isset($Qentry) ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_state') . '\'" class="txt" style="width:99%;"');
-              } 
-            ?>
+            <span id="zonesContainer"></span>
           </li>
           <?php
           }
         ?>
         <li style="font-size:.9em; margin-left:5px;">
           <?php 
-            echo lc_draw_label(null, null, 'country') . '<br /> ';
-            echo lc_draw_pull_down_menu('country', $countries_array, (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY));
+            echo lc_draw_label(null, null, 'country') . lc_draw_pull_down_menu('country', $countries_array, (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY));
           ?>
         </li>
         <?php
           if (ACCOUNT_POST_CODE > -1) {
-          ?>
-          <li><?php echo lc_draw_label('', null, 'postcode', (ACCOUNT_POST_CODE > 0)) . ' ' . lc_draw_input_field('postcode', (isset($Qentry) ? $Qentry->value('entry_postcode') : null), 'placeholder="' . $lC_Language->get('field_customer_post_code') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_post_code') . '\'" class="txt" style="width:99%;"'); ?></li>
-          <?php
+            echo '<li>' . lc_draw_label('', null, 'postcode', (ACCOUNT_POST_CODE > 0)) . ' ' . lc_draw_input_field('postcode', (isset($Qentry) ? $Qentry->value('entry_postcode') : null), 'placeholder="' . $lC_Language->get('field_customer_post_code') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_post_code') . '\'" class="txt" style="width:99%;"') . '</li>';
           }
         ?>
 

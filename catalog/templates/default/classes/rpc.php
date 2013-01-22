@@ -42,5 +42,18 @@ class lC_Default_rpc {
     
     echo json_encode($result);
   }  
+ /*
+  * Return the zones dropdown array
+  *
+  * @access public
+  * @return json
+  */
+  public static function getZonesDropdownArray() {
+    $result = array();
+    $result = lC_Default::getZonesDropdownArray($_GET['country'], $_GET['zone']);
+    if (is_array($result)) $result['rpcStatus'] = '1';
+    
+    echo json_encode($result);
+  }  
 }
 ?>
