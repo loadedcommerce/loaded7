@@ -48,9 +48,9 @@ class lC_Default_rpc {
   * @access public
   * @return json
   */
-  public static function getZonesDropdownArray() {
+  public static function getZonesDropdown() {
     $result = array();
-    $result = lC_Default::getZonesDropdownArray($_GET['country'], $_GET['zone']);
+    $result = lC_Default::getZonesDropdownHtml($_GET['country'], $_GET['zone']);
     if (is_array($result)) $result['rpcStatus'] = '1';
     
     echo json_encode($result);
