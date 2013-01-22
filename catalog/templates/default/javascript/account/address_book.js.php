@@ -18,7 +18,7 @@ global $lC_Language, $Qentry;
 <script>
 $(document).ready(function() {
   var country = '<?php echo (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY); ?>';
-  var zone = '<?php echo (isset($Qentry) ? $Qentry->value('zone_name') : null); ?>';
+  var zone = '<?php echo (isset($Qentry) ? $Qentry->value('entry_zone_id') : null); ?>';
   
   alert(country);
   alert(zone);
