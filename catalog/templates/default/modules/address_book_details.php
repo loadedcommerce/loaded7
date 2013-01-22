@@ -61,18 +61,8 @@ if ($lC_MessageStack->size('address') > 0) {
     position: absolute;
     top: -1px;
     width: 100%;
-    
-line-height:normal;
-     padding:3px;
 }
 
-#uniform-zones select option {
-    border: medium none;
-    padding: 5px;
-    
-    line-height:normal;
-     padding:3px;
-}
 
 </style>
 <!--EDIT ADDRESS BOOK SECTION STARTS-->

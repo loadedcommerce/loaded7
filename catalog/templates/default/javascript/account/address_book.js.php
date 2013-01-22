@@ -24,6 +24,10 @@ if (isset($_GET['address_book']) && is_numeric($_GET['address_book'])) {
     var zoneName = '<?php echo (isset($Qentry) ? $Qentry->value('entry_state') : null); ?>'; 
     if (zone == '0') zone = zoneName;
     getZonesDropdown(country, zone);  
+    
+    if ($.browser.mozilla) {
+      $('#uniform-zones select').css( "padding-top","8px" );
+    }
   });
 
   $('#address_book').submit(function() {
