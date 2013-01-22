@@ -51,6 +51,13 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
             content 2
           </div>
         </dd>
+        
+        <dt>Third section</dt>
+        <dd>
+          <div class="with-padding">
+            content 3
+          </div>
+        </dd>        
       </dl>    
     
     </div>
