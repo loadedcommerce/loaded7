@@ -31,7 +31,7 @@ input { height: 26px; padding-left:4px; }
       <form id="login" name="login" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'login=process', 'SSL'); ?>" method="post">
       <ul id="login_list">
         <li><?php echo lc_draw_label('', 'email_address', '', false) . ' ' . lc_draw_input_field('email_address', ($_POST['email']) ? $_POST['email'] : '', 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_email_address') . '\'" holder="' . $lC_Language->get('field_customer_email_address') . '" class="txt" style="width:99%;"'); ?></li>
-        <li><?php echo lc_draw_label('', 'password', null, false) . ' ' . lc_draw_password_field('password', 'onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_password') . '\'" holder="' . $lC_Language->get('field_customer_password') . '" placeholder="' . $lC_Language->get('field_customer_password') . '" class="txt" style="width:99% !important;"'); ?></li>
+        <li><?php echo lc_draw_label('', 'password', null, false) . ' ' . lc_draw_password_field('password', 'onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_password') . '\'" holder="' . $lC_Language->get('field_customer_password') . '" placeholder="' . $lC_Language->get('field_customer_password') . '" class="txt" style="width:99%;"'); ?></li>
         <li><?php echo sprintf($lC_Language->get('login_returning_customer_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, 'password_forgotten', 'SSL')); ?></li>
       </ul>
       <div>
