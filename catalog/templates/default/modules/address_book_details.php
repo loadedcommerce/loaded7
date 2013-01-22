@@ -50,9 +50,9 @@ if ($lC_MessageStack->size('address') > 0) {
     width: 99%;
 }
 
-#zonesContainer.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
+#uniform-zones.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
 
-#zonesContainer select {
+#uniform-zones select {
     color: #818181;
     cursor: pointer;
     font-size: 12px;
@@ -62,11 +62,11 @@ if ($lC_MessageStack->size('address') > 0) {
     top: 0;
     width: 98%;
 }
-#zonesContainer select option {
+#uniform-zones select option {
     border: medium none;
     padding: 5px;
 }
-#zonesContainer span {
+#uniform-zones span {
     color: #000;
     cursor: pointer;
     font-size: 12px;
@@ -124,8 +124,7 @@ if ($lC_MessageStack->size('address') > 0) {
           if (ACCOUNT_STATE > -1) {
           ?>
           <li>
-            <div id="zonesContainer" class="selector">
-            <span style="">Florida</span>
+            <div id="uniform-zones" class="selector">
             </div>
           </li>
           <?php
