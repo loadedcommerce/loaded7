@@ -36,22 +36,11 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
   <div class="columns with-padding">
   
     <div class="six-columns twelve-columns-tablet">
- 
-<dl class="accordion same-height">
+      <fieldset class="fieldset">
+        <legend class="legend">Version Info</legend>
 
-            <dt>First section</dt>
-            <dd>
-            </dd>
+      </fieldset> 
 
-            <dt>Second section</dt>
-            <dd>
-              <div class="with-padding">
-                Second section content
-              </div>
-            </dd>
-
-
-          </dl>
     
     </div>
     
