@@ -62,9 +62,9 @@ if (isset($_GET['address_book']) && is_numeric($_GET['address_book'])) {
           alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
           return false;
         }
-        $('#uniform-zones').html(data.zonesHtml).change();
+        $('#zones-container').html(data.zonesHtml).change();
         if (data.single == '1') {
-          $('#uniform-zones').attr('style', 'padding:0 0 5px 0;');
+          $('#zones-container').attr('style', 'padding:0 0 5px 0;');
         }
       }
     );
