@@ -41,11 +41,6 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
 
             <dt>First section</dt>
             <dd>
-              <div class="with-padding">
-                <p>First section content</p>
-                <p>The accordion plugin may also equalize the sections' height, just by adding a class - as for this example.</p>
-                <p>Give it a try!</p>
-              </div>
             </dd>
 
             <dt>Second section</dt>
@@ -55,12 +50,20 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
               </div>
             </dd>
 
+
           </dl>
     
     </div>
     
     <div class="six-columns twelve-columns-tablet">
 
+      <fieldset class="fieldset">
+        <legend class="legend">Tools</legend>
+        <div id="lastCheckedContainer">
+          <span id="updateCheckText"><?php echo $lC_Language->get('text_last_checked') . ' ' . lC_DateTime::getLong($lastChecked, TRUE); ?></span>
+          <a href="#" class="button silver-gradient glossy icon-cloud-upload small-margin-left"><?php echo $lC_Language->get('text_check_again'); ?></a>
+        </div>
+      </fieldset>    
  
     </div>
     
