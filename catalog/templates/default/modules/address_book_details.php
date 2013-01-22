@@ -22,6 +22,13 @@ if ($lC_MessageStack->size('address') > 0) {
 #address_details li { margin: 10px 0; }
 .embed-form input { height: 26px; padding-left:4px; }
 
+.embed-form h3 {
+    font-family: sans-serif !important;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+}
+
+
 #uniform-country.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
 
 #uniform-country select {
@@ -104,7 +111,7 @@ if ($lC_MessageStack->size('address') > 0) {
           echo '<li>' . lc_draw_label('', 'telephone', null, '', (ACCOUNT_TELEPHONE > 0)) . ' ' . lc_draw_input_field('telephone', (isset($Qentry) ? $Qentry->value('entry_telephone') : null), 'placeholder="' . $lC_Language->get('field_customer_telephone_number') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_telephone_number') . '\'" class="txt required" style="width:99%;"') . '</li>';
         }
         if (ACCOUNT_FAX > -1) {
-          echo '<li>' . lc_draw_label('', 'fax', null, '', (ACCOUNT_FAX > 0)) . ' ' . lc_draw_input_field('fax', (isset($Qentry) ? $Qentry->value('entry_fax') : null), 'placeholder="' . $lC_Language->get('field_customer_fax_number') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_fax_number') . '\'" class="txt required" style="width:99%;"') . '</li>';
+          echo '<li>' . lc_draw_label('', 'fax', null, '', (ACCOUNT_FAX > 0)) . ' ' . lc_draw_input_field('fax', (isset($Qentry) ? $Qentry->value('entry_fax') : null), 'placeholder="' . $lC_Language->get('field_customer_fax_number') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_fax_number') . '\'" class="txt" style="width:99%;"') . '</li>';
         }
         ?>      
       </ul>     
