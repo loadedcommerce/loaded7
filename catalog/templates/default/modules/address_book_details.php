@@ -29,7 +29,7 @@ if ($lC_MessageStack->size('address') > 0) {
     height: 22px;
     padding: 3px 3px 3px 10px;
     position: relative;
-    width: 97%;
+    width: 96%;
     margin: 0 0 10px 0;
 }
 #uniform-country select {
