@@ -132,7 +132,7 @@ if ($lC_MessageStack->size('address') > 0) {
         ?>
         <li>
           <div id="uniform-zones" class="selector">
-            <span id="zones-span" style="-moz-user-select: none;">Florida</span>
+            <span id="zones-span" style="-moz-user-select: none;">Florida Test</span>
           </div>
         </li>
         <?php
