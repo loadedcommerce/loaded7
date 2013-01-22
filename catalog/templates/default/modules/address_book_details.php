@@ -61,13 +61,13 @@ if ($lC_MessageStack->size('address') > 0) {
     position: absolute;
     top: -1px;
     width: 100%;
-    text-align: center;
+    vertical-align: middle;
 }
 
 #uniform-zones select option {
     border: medium none;
     padding: 5px;
-    text-align: center;
+    vertical-align: middle;
 }
 
 </style>
