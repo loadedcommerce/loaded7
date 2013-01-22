@@ -73,7 +73,7 @@ if ($lC_MessageStack->size('address') > 0) {
     border: medium none;
     padding: 5px;
 }
-
+/*
 #uniform-zones span {
     color: #000;
     cursor: pointer;
@@ -85,7 +85,7 @@ if ($lC_MessageStack->size('address') > 0) {
     top: 4px;
     width: 99%;
 }
-
+*/
 </style>
 <!--EDIT ADDRESS BOOK SECTION STARTS-->
 <div id="errDiv" class="short-code msg error" style="margin-bottom:10px; display:none;">
@@ -131,9 +131,7 @@ if ($lC_MessageStack->size('address') > 0) {
         if (ACCOUNT_STATE > -1) {
         ?>
         <li>
-          <div id="uniform-zones" class="selector">
-            <span id="zones-span" style="-moz-user-select: none;">Florida Test</span>
-            <span id="zones-container"></span>
+          <div id="uniform-zones" class="selector">   
           </div>
         </li>
         <?php
