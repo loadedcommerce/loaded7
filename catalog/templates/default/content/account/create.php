@@ -31,8 +31,8 @@ input { height: 26px; padding-left:4px; }
     <div class="short-code-column one-half no-margin-bottom">   
       <h3>Personal Details</h3>
       <ul id="personal_details">
-        <li><?php echo lc_draw_label('', 'firstname', null, false) . ' ' . lc_draw_input_field('firstname', null, 'placeholder="' . $lC_Language->get('field_customer_first_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_first_name') . '\'" holder="' . $lC_Language->get('field_customer_email_address') . '" class="txt" style="width:99%;"'); ?></li>
-        <li><?php echo lc_draw_label('', 'lastname', null, false) . ' ' . lc_draw_input_field('lastname', null, 'placeholder="' . $lC_Language->get('field_customer_last_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_last_name') . '\'" holder="' . $lC_Language->get('field_customer_email_address') . '" class="txt" style="width:99%;"'); ?></li>
+        <li><?php echo lc_draw_label('', 'firstname', null, false) . ' ' . lc_draw_input_field('firstname', null, 'placeholder="' . $lC_Language->get('field_customer_first_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_first_name') . '\'" holder="' . $lC_Language->get('field_customer_first_name') . '" class="txt" style="width:99%;"'); ?></li>
+        <li><?php echo lc_draw_label('', 'lastname', null, false) . ' ' . lc_draw_input_field('lastname', null, 'placeholder="' . $lC_Language->get('field_customer_last_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_last_name') . '\'" holder="' . $lC_Language->get('field_customer_last_name') . '" class="txt" style="width:99%;"'); ?></li>
         <?php
         if (ACCOUNT_DATE_OF_BIRTH == '1') {
           //echo '<li>' . lc_draw_label($lC_Language->get('field_customer_date_of_birth'), 'dob_days', null, true) . lc_draw_date_pull_down_menu('dob', null, false, null, null, @date('Y')-1901, -5) . '</li>';
