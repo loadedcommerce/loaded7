@@ -36,7 +36,6 @@ if (isset($_GET['address_book']) && is_numeric($_GET['address_book'])) {
         lastname: { minlength: lnameMin, required: true },
         street_address: { required: true },
         city: { required: true },
-        postcode: { required: true },
       },
       invalidHandler: function(e, validator) {
         var errors = validator.numberOfInvalids();
