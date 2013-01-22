@@ -11,6 +11,8 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+global $countries_array;
+
 if ($lC_MessageStack->size('address') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('address', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
 }
@@ -98,13 +100,7 @@ if ($lC_MessageStack->size('address') > 0) {
         ?>
         <li style="font-size:.9em; margin-left:5px;">
           <?php 
-            echo lc_draw_label($lC_Language->get('field_customer_country'), null, 'country') . '<br /> ';
-            $countries_array = array(array('id' => '',
-                'text' => $lC_Language->get('pull_down_default')));
-            foreach (lC_Address::getCountries() as $country) {
-              $countries_array[] = array('id' => $country['id'],
-                'text' => $country['name']);
-            }
+            echo lc_draw_label(null, null, 'country') . '<br /> ';
             echo lc_draw_pull_down_menu('country', $countries_array, (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY));
           ?>
         </li>

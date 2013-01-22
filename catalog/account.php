@@ -32,6 +32,12 @@
   }
 
   $lC_Template = lC_Template::setup('account');
+  
+  
+  $countries_array = array(array('id' => '', 'text' => $lC_Language->get('pull_down_default')));
+  foreach (lC_Address::getCountries() as $country) {
+    $countries_array[] = array('id' => $country['id'], 'text' => $country['name']);
+  }
 
   require('templates/' . $lC_Template->getCode() . '.php');
 
