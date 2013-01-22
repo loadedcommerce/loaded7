@@ -79,7 +79,7 @@ $('#address_book').submit(function() {
   var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
   var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
   jQuery.validator.messages.required = "";
-  var bValid = $("#address").validate({
+  var bValid = $("#address_book").validate({
     rules: {
       firstname: { minlength: fnameMin, required: true },
       lastname: { minlength: lnameMin, required: true },
@@ -96,7 +96,7 @@ $('#address_book').submit(function() {
   }).form();
 
   if (bValid) {      
-    $('#address').submit();
+    $('#address_book').submit();
   }
   return false;
 });
