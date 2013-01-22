@@ -10,9 +10,66 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+$(document).ready(function() { 
+  //JCAROUSEL
+  $('.first-and-second-carousel').jcarousel();
+  
+  //SLIDE TOGGLE
+  $(".minicart_link").toggle(function() {
+     $('.cart_drop').slideDown(300);  
+     }, function(){
+     $('.cart_drop').slideUp(300);     
+  });  
 
-// IE9 does not support HTML5 placeholder so we have this fix
-$(document).ready(function() {
+  //SUB MENU
+  $("ul.departments > li.menu_cont > a").toggle(function(){
+    $(this).addClass('active');
+    $(this).siblings('.side_sub_menu').slideDown(300);
+    }, function(){
+    $(this).removeClass('active');
+    $(this).siblings('.side_sub_menu').slideUp(300);
+  });
+  
+  //FORM ELEMENTS
+  $("select").uniform();  
+  
+  //SHORTCODES
+  //Toggle Box
+  $(".toggle_box > li:first-child .toggle_title, .toggle_box > li:first-child .toggle_content").addClass('active');
+  $(".toggle_box > li > a.toggle_title").toggle(function(){
+                            
+    $(this).addClass('active');
+    $(this).siblings('.toggle_content').slideDown(300);
+    }, function(){
+    $(this).removeClass('active');
+    $(this).siblings('.toggle_content').slideUp(300);  
+  });  
+  
+  //TWITTER FEED    //replace "rohithpaul" with your Twitter ID
+  $('.twitter_feed').jTweetsAnywhere({
+    username: 'rohithpaul',
+    count: 1
+  });
+  
+  $("#mobile-menu-button").click(function () {
+    $("#mobile-menu").slideToggle("slow");
+  });
+  
+  $("#mobile-grand-total").click(function () {
+    $("#mobile-grand-total").toggle();
+    $("#mobile-order-totals").slideToggle("slow");
+  });
+  
+  $("#mobile-order-totals").click(function () {
+    $("#mobile-order-totals").toggle();
+    $("#mobile-grand-total").slideToggle("slow");
+  });
+  
+  $("#browse-catalog").click(function () {
+    $("#browse-catalog-div").slideToggle("slow");
+  });  
+  
+  // IE9 does not support HTML5 placeholder so we have this fix
   if ( $.browser.msie ) {  
     $("input[type=text],input[type=password],textarea").each(function(){
       if ($.trim($(this).attr("holder")) != "" && $.trim($(this).val() == "")) {
@@ -78,15 +135,14 @@ function __jquery_placeholder_goTitling() {
   });
 }
 
-$(document).ready(function() {
-  $('#listView').click(function(){
-    $('#viewList').show();
-    $('#viewGrid').hide();
-  });
-  $('#gridView').click(function(){
-    $('#viewGrid').show();
-    $('#viewList').hide();
-  });
+// grid/list product view switch
+$('#listView').click(function(){
+  $('#viewList').show();
+  $('#viewGrid').hide();
+});
+$('#gridView').click(function(){
+  $('#viewGrid').show();
+  $('#viewList').hide();
 });
 
 function rowOverEffect(object) {
@@ -95,12 +151,4 @@ function rowOverEffect(object) {
 
 function rowOutEffect(object) {
   if (object.className == 'moduleRowOver') object.className = 'moduleRow';
-}
-
-function checkBox(object) {
-  document.account_newsletter.elements[object].checked = !document.account_newsletter.elements[object].checked;
-}
-
-function popupWindow(url, name, params) {
-  window.open(url, name, params).focus();
 }
