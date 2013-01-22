@@ -22,8 +22,6 @@ if ($lC_MessageStack->size('address') > 0) {
 #address_details li { margin: 10px 0; }
 .embed-form input { height: 26px; padding-left:4px; }
 .embed-form h3 { font-family: sans-serif !important; font-size: 1.3em; margin-bottom: 15px; }
-
-
 #uniform-country.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
 #uniform-country select {  color: #000;
     cursor: pointer;
