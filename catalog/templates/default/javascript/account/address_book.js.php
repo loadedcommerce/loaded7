@@ -19,6 +19,8 @@ global $lC_Language, $Qentry;
 $(document).ready(function() {
   var country = '<?php echo (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY); ?>';
   var zone = '<?php echo (isset($Qentry) ? $Qentry->value('entry_zone_id') : null); ?>'; 
+  var zoneName = '<?php echo (isset($Qentry) ? $Qentry->value('entry_state') : null); ?>'; 
+  if (zone == '') zone = zoneName;
   getZonesDropdown(country, zone);  
 });
 
