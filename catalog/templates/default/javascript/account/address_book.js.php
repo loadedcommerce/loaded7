@@ -26,7 +26,7 @@ if (isset($_GET['address_book']) && is_numeric($_GET['address_book'])) {
     getZonesDropdown(country, zone);  
     
     if ($.browser.mozilla) {
-      $('#uniform-zones select').css( "padding-top","6px" ).change();
+      $('#uniform-zones select').css( "padding-top","6px" ).trigger();
     }
   });
 
