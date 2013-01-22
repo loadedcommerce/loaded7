@@ -2,7 +2,7 @@
 ================================================== */
 @media only screen and (min-width: 650px) and (max-width: 960px) {
   header, nav, section, footer, ul.sub_menu, .col_left_main {
-    width:650px;
+    width:650px; 
   }
   
   #side_nav { width:150px; }

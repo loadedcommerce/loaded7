@@ -13,7 +13,7 @@
  
   @function The lC_Success class returns data for display on the checkout success page
 */
-class lC_Success {
+class lC_Success { 
  /*
   * Returns the current order_id
   *
