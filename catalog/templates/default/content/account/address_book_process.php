@@ -30,7 +30,7 @@
       <?php
       if ( ($lC_Customer->hasDefaultAddress() === false) || (isset($_GET['new']) && (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES)) || (isset($Qentry) && ($Qentry->numberOfRows() === 1)) ) {
         ?>
-        <form name="address_book" id="address_book" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $_GET['address_book'] . '&' . (isset($_GET['edit']) ? 'edit' : 'new') . '=save', 'SSL'); ?>" method="post" onsubmit="return check_form(address_book);">
+        <form name="address_book" id="address_book" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $_GET['address_book'] . '&' . (isset($_GET['edit']) ? 'edit' : 'new') . '=save', 'SSL'); ?>" method="post">
           <?php
           if (file_exists(DIR_FS_TEMPLATE . 'modules/address_book_details.php')) {
             require(DIR_FS_TEMPLATE . 'modules/address_book_details.php');
