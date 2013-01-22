@@ -64,6 +64,14 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
     
     <div class="six-columns twelve-columns-tablet">
 
+<div class="block">
+  <h3 class="block-title">Block title</h3>
+  <div class="with-padding">
+
+    <!-- content here -->
+
+  </div>
+</div>    
     </div>
     
   </div>
