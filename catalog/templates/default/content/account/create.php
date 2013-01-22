@@ -31,12 +31,12 @@ input { height: 26px; padding-left:4px; }
     <div class="short-code-column one-half no-margin-bottom">   
       <h3>Personal Details</h3>
       <ul id="personal_details">
-        <li><?php echo lc_draw_label('', 'firstname', null, false) . ' ' . lc_draw_input_field('firstname', null, 'placeholder="' . $lC_Language->get('field_customer_first_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_first_name') . '\'" class="txt" style="width:99%;"'); ?></li>
-        <li><?php echo lc_draw_label('', 'lastname', null, false) . ' ' . lc_draw_input_field('lastname', null, 'placeholder="' . $lC_Language->get('field_customer_last_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_last_name') . '\'" class="txt" style="width:99%;"'); ?></li>
+        <li><?php echo lc_draw_label('', 'firstname', null, false) . ' ' . lc_draw_input_field('firstname', null, 'placeholder="' . $lC_Language->get('field_customer_first_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_first_name') . '\'" holder="text" class="txt" style="width:99%;"'); ?></li>
+        <li><?php echo lc_draw_label('', 'lastname', null, false) . ' ' . lc_draw_input_field('lastname', null, 'placeholder="' . $lC_Language->get('field_customer_last_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_last_name') . '\'" holder="text" class="txt" style="width:99%;"'); ?></li>
         <?php
         if (ACCOUNT_DATE_OF_BIRTH == '1') {
           //echo '<li>' . lc_draw_label($lC_Language->get('field_customer_date_of_birth'), 'dob_days', null, true) . lc_draw_date_pull_down_menu('dob', null, false, null, null, @date('Y')-1901, -5) . '</li>';
-          echo '<li>' . lc_draw_label('', 'dob_days', null, false) . ' ' . lc_draw_input_field('dob', null, 'placeholder="' . $lC_Language->get('field_customer_date_of_birth') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_date_of_birth') . '\'" class="txt required date" style="width:86%;"') . '</li>'; 
+          echo '<li>' . lc_draw_label('', 'dob_days', null, false) . ' ' . lc_draw_input_field('dob', null, 'placeholder="' . $lC_Language->get('field_customer_date_of_birth') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_date_of_birth') . '\'" holder="text" class="txt required date" style="width:86%;"') . '</li>'; 
         }
         if (ACCOUNT_GENDER > -1) {
           $gender_array = array(array('id' => 'm', 'text' => $lC_Language->get('gender_male')),
@@ -52,9 +52,9 @@ input { height: 26px; padding-left:4px; }
     <div class="short-code-column one-half column-last no-margin-bottom">
       <h3>Login Details</h3>
       <ul id="login_details">    
-        <li><?php echo lc_draw_label('', 'email_address', '', false) . ' ' . lc_draw_input_field('email_address', ($_POST['email']) ? $_POST['email'] : '', 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_email_address') . '\'" class="txt" style="width:100%;"'); ?></li>
-        <li><?php echo lc_draw_label('', 'password', null, false) . ' ' . lc_draw_password_field('password', 'onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_password') . '\'" class="txt" style="width:100%;" placeholder="' . $lC_Language->get('field_customer_password') . '"'); ?></li>
-        <li><?php echo lc_draw_label('', 'confirmation', null, false) . ' ' . lc_draw_password_field('confirmation', 'placeholder="' .  $lC_Language->get('field_customer_password_confirmation') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_password_confirmation') . '\'" class="txt" style="width:100%;"'); ?></li>
+        <li><?php echo lc_draw_label('', 'email_address', '', false) . ' ' . lc_draw_input_field('email_address', ($_POST['email']) ? $_POST['email'] : '', 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_email_address') . '\'" holder="text" class="txt" style="width:100%;"'); ?></li>
+        <li><?php echo lc_draw_label('', 'password', null, false) . ' ' . lc_draw_password_field('password', 'onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_password') . '\'" class="txt" style="width:100%;" placeholder="' . $lC_Language->get('field_customer_password') . '" holder="text"'); ?></li>
+        <li><?php echo lc_draw_label('', 'confirmation', null, false) . ' ' . lc_draw_password_field('confirmation', 'placeholder="' .  $lC_Language->get('field_customer_password_confirmation') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_password_confirmation') . '\'" holder="text" class="txt" style="width:100%;"'); ?></li>
         <?php
           if (DISPLAY_PRIVACY_CONDITIONS == '1') {
             echo '<div style="margin-top:20px; font-size:.9em;"><ol style="list-style:none;"><li> ' . lc_draw_checkbox_field('privacy_conditions', array(array('id' => 1, 'text' => sprintf($lC_Language->get('create_account_terms_confirm'), lc_href_link(FILENAME_INFO, 'privacy', 'AUTO')))), null, 'style="height:12px; margin-right:2px;"') . '</li></ol></div>';
