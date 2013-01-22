@@ -29,7 +29,7 @@ if ($lC_MessageStack->size('address') > 0) {
     height: 16px;
     padding: 3px 3px 3px 10px;
     position: relative;
-    width: 112px;
+    width: 327px;
 }
 #uniform-country select {
     color: #818181;
@@ -39,14 +39,13 @@ if ($lC_MessageStack->size('address') > 0) {
     left: 0;
     position: absolute;
     top: 0;
-    width: 125px;
+    width: 330px;
 }
 #uniform-country select option {
     border: medium none;
     padding: 5px;
 }
 #uniform-country span {
-    background: url("../images/arrow.png") no-repeat scroll right -106px transparent;
     color: #818181;
     cursor: pointer;
     font-size: 11px;
