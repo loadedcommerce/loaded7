@@ -10,7 +10,9 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-$(function(){
+
+
+$(document).ready(function() {
   $('#listView').click(function(){
     $('#viewList').show();
     $('#viewGrid').hide();
@@ -19,6 +21,24 @@ $(function(){
     $('#viewGrid').show();
     $('#viewList').hide();
   });
+
+  // IE9 does not support HTML5 placeholder so we have this fix
+  if ( $.browser.msie ) {  
+    if(!Modernizr.input.placeholder){
+      $("input").each(
+        function(){
+          if($(this).val()=="" && $(this).attr("placeholder")!=""){
+            $(this).val($(this).attr("placeholder"));
+            $(this).focus(function(){
+                if($(this).val()==$(this).attr("placeholder")) $(this).val("");
+            });
+            $(this).blur(function(){
+                if($(this).val()=="") $(this).val($(this).attr("placeholder"));
+            });
+          }
+      });
+    }  
+  }
 });
 
 function rowOverEffect(object) {

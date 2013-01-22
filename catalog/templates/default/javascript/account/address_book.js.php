@@ -18,30 +18,6 @@ global $lC_Language, $Qentry;
 if (isset($_GET['address_book']) && is_numeric($_GET['address_book'])) {
   ?>
   <script>
-  
-  $(document).ready(function() {
-
-if(!Modernizr.input.placeholder){
-
-
-$("input").each(
-function(){
-if($(this).val()=="" && $(this).attr("placeholder")!=""){
-$(this).val($(this).attr("placeholder"));
-$(this).focus(function(){
-if($(this).val()==$(this).attr("placeholder")) $(this).val("");
-});
-$(this).blur(function(){
-if($(this).val()=="") $(this).val($(this).attr("placeholder"));
-});
-}
-});
-
-}
-
-
-});
-  
   $(document).ready(function() {
     var country = '<?php echo (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY); ?>';
     var zone = '<?php echo (isset($Qentry) ? $Qentry->value('entry_zone_id') : null); ?>'; 
