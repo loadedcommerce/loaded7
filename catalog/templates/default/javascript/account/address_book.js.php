@@ -27,7 +27,7 @@ if (isset($_GET['address_book']) && is_numeric($_GET['address_book'])) {
     
     if ($.browser.mozilla) {
       alert('here');
-      $('#uniform-zones select').css( "padding-top","8px" );
+      $('#uniform-zones select').css( "padding-top","6px" );
     }
   });
 
