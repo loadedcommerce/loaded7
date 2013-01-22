@@ -755,9 +755,6 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 .moduleRowOver { background-color: #f7f7f7; }
 .moduleRowSelected td { background-color: #e7e7e7; }
 
-.cart-edit { float: right; padding-right: 15px; }
-.padding-right-15 { padding-right: 15px; } 
-
 /* create account */
 #accountCreate h3 { font-size: 1.3em; font-family: sans-serif !important; }
 #accountLogin h3 { font-size: 1.3em; font-family: sans-serif !important; margin-bottom: 15px; }
@@ -791,3 +788,11 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #confirmation-order-totals { float: right; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
 #confirmation-order-comment { float: left; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
 #confirmation-grand-total { float: right; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
+#success-products-listing { border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
+#success-products-listing table tr.success-products-listing-row { height: 40px; }
+#success-order-number { float: left; }
+#success-order-id { float: right; }
+#success-order-comment { float: left; width: 44%; }
+#success-order-comment-inner { float: left; width: 100%; border: 1px solid #E7DED5; padding: 10px; }
+#success-order-totals { float: right; width: 49%; }
+#success-order-totals #ot-container {  }
