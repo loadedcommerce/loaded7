@@ -47,7 +47,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
               <!--SHIP TO ADDRESS BLOCK STARTS-->
               <div id="ship-to-address-block">
                 <h3><?php echo $lC_Language->get('ship_to_address'); ?></h3>
-                <span id="ship-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?></span>
+                <span id="ship-to-span"><?php echo lC_Address::format(lC_Success::getShippingAddress($oID, $lC_Customer->getID()), '<br />'); ?></span>
               </div>
               <!--SHIP TO ADDRESS BLOCK ENDS-->
               <!--SHIPPING METHOD BLOCK STARTS-->
@@ -67,7 +67,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
               <!--BILL TO ADDRESS BLOCK STARTS-->
               <div id="bill-to-address-block">
                 <h3><?php echo $lC_Language->get('bill_to_address'); ?></h3>
-                <span id="bill-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?></span>
+                <span id="bill-to-span"><?php echo lC_Address::format(lC_Success::getBillingAddress($oID, $lC_Customer->getID()), '<br />'); ?></span>
               </div>
               <!--BILL TO ADDRESS BLOCK ENDS-->
               <!--PAYMENT METHOD BLOCK STARTS-->
