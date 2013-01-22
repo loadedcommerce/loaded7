@@ -20,7 +20,7 @@ $(document).ready(function() {
         var ffield = $(field).attr("id")+"__jquery_placeholder_passwordFakeField";
         //replace password fields with a fake field
         if ($(field).attr("type") == "password") {
-          var newfield  = $("<input type='text' class='"+$(field).attr("class")+"' id='"+ffield+"' tabindex='"+$(field).attr("tabindex")+"' holder='"+$(field).attr("holder")+"' />").focus(function() {
+          var newfield  = $("<input type='text' style='width:99%;' class='"+$(field).attr("class")+"' id='"+ffield+"' tabindex='"+$(field).attr("tabindex")+"' holder='"+$(field).attr("holder")+"' />").focus(function() {
                     $(this).hide();
                     $(field).show();
                     $(field).focus();
