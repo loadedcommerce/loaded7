@@ -123,7 +123,8 @@ if ($lC_MessageStack->size('address') > 0) {
         echo '[' . ACCOUNT_COMPANY . ']<br>';
         
           if (ACCOUNT_COMPANY > -1) {
-            echo '<li>' . lc_draw_label('', null, 'company', (ACCOUNT_COMPANY > 0)) . ' ' . lc_draw_input_field('company', (isset($Qentry) ? $Qentry->value('entry_company') : null), 'placeholder="' . $lC_Language->get('field_customer_company') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_company') . '\'" class="txt required" style="width:99%;"') . '</li>';
+             
+            echo '<li>' . lc_draw_label('', null, 'company', (ACCOUNT_COMPANY > 0)) . ' ' . lc_draw_input_field('company', (isset($Qentry) ? $Qentry->value('entry_company') : null), 'placeholder="' . $lC_Language->get('field_customer_company') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_company') . '\'" class="txt ' . ((ACCOUNT_COMPANY > 0) ? 'required' : null) . '" style="width:99%;"') . '</li>';
           }
           echo '<li>' . lc_draw_label('', null, 'street_address') . ' ' . lc_draw_input_field('street_address', (isset($Qentry) ? $Qentry->value('entry_street_address') : null), 'placeholder="' . $lC_Language->get('field_customer_street_address') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_street_address') . '\'" class="txt" style="width:99%;"') . '</li>';
           if (ACCOUNT_SUBURB > -1) {
