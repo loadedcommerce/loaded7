@@ -52,7 +52,7 @@
               }
             ?>
             <span class="buttonLeft"><a href="<?php echo $back_link; ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
-            <span class="buttonRight"><a onclick="$('#address_book').submit();" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
+            <span class="buttonRight"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></span>
             <div style="clear:both;"></div> 
           </div>
           <!--ADDRESS BOOK PROCESS ACTIONS ENDS-->
