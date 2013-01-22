@@ -34,31 +34,31 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
   .dataColCheck { text-align: center; }
   </style>
   <div class="columns">
-    <div class="twelve-columns">
-      <div id="pageContainer" class="large-margin-left">
-        <div id="lastCheckedContainer">
-          <span id="updateCheckText"><?php echo $lC_Language->get('text_last_checked') . ' ' . lC_DateTime::getLong($lastChecked, TRUE); ?></span>
-          <a href="#" class="button silver-gradient glossy icon-cloud-upload small-margin-left"><?php echo $lC_Language->get('text_check_again'); ?></a>
-        </div>
-        
-        <p><pre>updatesDataArr<?php print_r($updatesDataArr); ?></pre></p>
-        <p><pre>findDataArr<?php print_r($findDataArr); ?></pre></p>
-        <p><pre>availInfoDataArr<?php print_r($availInfoDataArr); ?></pre></p>
-        <p><pre>downloaded<?php print_r($downloaded); ?></pre></p>
-        <p><pre>localPackageExists<?php print_r($localPackageExists); ?></pre></p>
-        <p><pre>getPackageInfo<?php print_r($getPackageInfo); ?></pre></p>
-        <p><pre>getPackageContents<?php print_r($getPackageContents); ?></pre></p>
-        <p><pre>findPackageContents<?php print_r($findPackageContents); ?></pre></p>
+  
+    <div class="six-columns twelve-columns-tablet">
 
-        <form name="batch" id="batch" action="#" method="post">
+      <dl class="accordion same-height">
+        <dt>First section</dt>
+        <dd>
+          <div class="with-padding">
+            content 1
+          </div>
+        </dd>
 
-
-
-
-
-        </form>
-      </div>
+        <dt>Second section</dt>
+        <dd>
+          <div class="with-padding">
+            content 2
+          </div>
+        </dd>
+      </dl>    
+    
     </div>
+    
+    <div class="six-columns twelve-columns-tablet">
+
+    </div>
+    
   </div>
 </section>
 <?php $lC_Template->loadModal($lC_Template->getModule()); ?>
