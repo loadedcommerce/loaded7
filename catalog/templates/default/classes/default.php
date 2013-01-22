@@ -170,7 +170,7 @@ class lC_Default {
 
     } else {
       $zone = (isset($zone_id) && is_numeric($zone_id) && $zone_id != 0) ? lC_Address::getZoneName($zone_id) : NULL;
-      $result['zonesHtml'] = lc_draw_label('', null, 'state') . ' ' . lc_draw_input_field('state', $zone, 'placeholder="' . $lC_Language->get('field_customer_state') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_state') . '\'" class="txt" style="width:99%;"');
+      $result['zonesHtml'] = lc_draw_label('', null, 'state') . ' ' . lc_draw_input_field('state', $zone, 'placeholder="' . $lC_Language->get('field_customer_state') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_state') . '\'" style="width:103%;"');
     }
     
     return $result;
