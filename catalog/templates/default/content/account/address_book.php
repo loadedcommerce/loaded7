@@ -55,9 +55,7 @@ if ($lC_MessageStack->size('address_book') > 0) {
               <td>
               <?php 
                 echo '<span class="buttonRight">' . 
-                     '  <a href="' . lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&edit', 'SSL')  . '" style="text-decoration:none;">' . 
-                     '    <button class="button brown_btn" type="button">' . $lC_Language->get('button_edit') . '</button>' . 
-                     '  </a>' .
+                     '    <button class="button brown_btn" type="submit">' . $lC_Language->get('button_edit') . '</button>' . 
                      '  <a href="' . lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&delete', 'SSL')  . '" style="text-decoration:none;">' . 
                      '    <button class="button brown_btn" type="button">' . $lC_Language->get('button_delete') . '</button>' . 
                      '  </a>' . 
