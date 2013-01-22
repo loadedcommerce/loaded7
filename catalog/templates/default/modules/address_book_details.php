@@ -26,10 +26,11 @@ if ($lC_MessageStack->size('address') > 0) {
     background-color: #FFFFFF;
     border: 1px solid #D7D7D7;
     float: left;
-    height: 16px;
+    height: 22px;
     padding: 3px 3px 3px 10px;
     position: relative;
     width: 327px;
+    margin: 0 0 10px 0;
 }
 #uniform-country select {
     color: #818181;
@@ -46,15 +47,15 @@ if ($lC_MessageStack->size('address') > 0) {
     padding: 5px;
 }
 #uniform-country span {
-    color: #818181;
+    color: #000;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 12px;
     height: 22px;
     line-height: 22px;
     position: absolute;
     right: 0;
-    top: 0;
-    width: 119px;
+    top: 4px;
+    width: 335px;
 }
 
 </style>
