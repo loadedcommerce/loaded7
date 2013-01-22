@@ -53,18 +53,25 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
           <a href="#" class="button silver-gradient glossy icon-cloud-upload small-margin-left"><?php echo $lC_Language->get('text_check_again'); ?></a>
         </div>
         
-        <a href="javascript:void(0)" class="button">
-          <span class="button-icon orange-gradient glossy"><span class="icon-redo"></span></span>
-          Re-install now
-        </a>
-        <a href="javascript:void(0)" class="button margin-right">
-          <span class="button-icon green-gradient glossy"><span class="icon-download"></span></span>
-          Download 7.0
-        </a>
-        <a href="javascript:void(0)" class="button margin-right">
-          Undo Last Update
-          <span class="button-icon red-gradient glossy"><span class="icon-undo"></span></span>
-        </a>
+        <style>
+        #toolsButtonSet a { margin:20px; }  
+        </style>
+        <div id="toolsButtonSet">
+        
+          <a href="javascript:void(0)" class="button">
+            <span class="button-icon orange-gradient glossy"><span class="icon-redo"></span></span>
+            Re-install now
+          </a>
+          <a href="javascript:void(0)" class="button margin-right">
+            <span class="button-icon green-gradient glossy"><span class="icon-download"></span></span>
+            Download 7.0
+          </a>
+          <a href="javascript:void(0)" class="button margin-right">
+            <span class="button-icon red-gradient glossy"><span class="icon-undo"></span></span>
+            Undo Last Update
+          </a>
+        
+        </div>
       </fieldset>    
  
     </div>
