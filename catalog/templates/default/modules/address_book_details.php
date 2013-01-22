@@ -124,7 +124,7 @@ if ($lC_MessageStack->size('address') > 0) {
           if (ACCOUNT_STATE > -1) {
           ?>
           <li>
-            <div id="zonesContainer">
+            <div id="zonesContainer" class="selector">
             <span style="">Florida</span>
             </div>
           </li>
