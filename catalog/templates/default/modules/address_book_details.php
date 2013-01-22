@@ -35,7 +35,7 @@ if ($lC_MessageStack->size('address') > 0) {
 #uniform-country select {
     color: #818181;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 12px;
     height: 22px;
     left: 0;
     position: absolute;
