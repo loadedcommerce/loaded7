@@ -2896,10 +2896,3 @@
         setDebug:               function(dbg) { debug = !!(dbg); }                                                           
       }; 
   })();
-  // <![CDATA[       
-  var opts = {     
-    formElements:{"dob":"m-sl-d-sl-Y"},                  
-    cursorDate:"19700101"                  
-  };        
-  datePickerController.createDatePicker(opts);
-  // ]]>
