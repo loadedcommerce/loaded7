@@ -33,7 +33,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
   <style>
   .dataColCheck { text-align: center; }
   </style>
-  <div class="columns">
+  <div class="columns with-padding">
   
     <div class="six-columns twelve-columns-tablet">
 
