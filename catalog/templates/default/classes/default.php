@@ -166,7 +166,7 @@ class lC_Default {
       while ($Qzones->next()) {
         $zones_array[] = array('id' => $Qzones->value('zone_name'), 'text' => $Qzones->value('zone_name'));
       }
-      $result['zonesHtml'] = lc_draw_pull_down_menu('state', $zones_array);
+      $result['zonesHtml'] = lc_draw_label('', null, 'state') . lc_draw_pull_down_menu('state', $zones_array);
 
     } else {
       $zone = (isset($zone_id) && is_numeric($zone_id) && $zone_id != 0) ? lC_Address::getZoneName($zone_id) : NULL;
