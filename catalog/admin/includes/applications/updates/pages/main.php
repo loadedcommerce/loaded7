@@ -50,12 +50,12 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
         <legend class="legend">Tools</legend>
         <div id="lastCheckedContainer">
           <span id="updateCheckText"><?php echo $lC_Language->get('text_last_checked') . ' ' . lC_DateTime::getLong($lastChecked, TRUE); ?></span>
-          <a href="#" class="button silver-gradient glossy icon-cloud-upload small-margin-left"><?php echo $lC_Language->get('text_check_again'); ?></a>
+          <a href="#" class="button silver-gradient glossy icon-cloud-upload mid-margin-left"><?php echo $lC_Language->get('text_check_again'); ?></a>
         </div>
         
         <style>
-        #toolsButtonSet a { margin:20px; }  
-        #lastCheckedContainer { margin:0 0 10px 20px; }  
+        #toolsButtonSet a { margin:24px; }  
+        #lastCheckedContainer { margin:0 0 10px 24px; }  
         </style>
         <div id="toolsButtonSet">
         
