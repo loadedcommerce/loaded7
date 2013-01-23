@@ -55,6 +55,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
         
         <style>
         #toolsButtonSet a { margin:20px; }  
+        #lastCheckedContainer { margin:0 0 10px 20px; }  
         </style>
         <div id="toolsButtonSet">
         
