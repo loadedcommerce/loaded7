@@ -770,6 +770,7 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #ot-container label { padding-top: 4px; }
 #ot-container span { padding-top: 4px; }
 .ot-block {}
+.next-li { margin-top: -4px !important; }
 #order-number { font-weight: bold; padding-bottom: 30px; } 
 #ot-container #total { color: #873B7A; font-size: 16px; font-weight: bold; border-top: 1px solid #ccc; padding-top: 5px; }
 .ot-block label { float: left; width: 65%; }

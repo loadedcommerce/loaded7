@@ -84,6 +84,9 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
                   <?php } ?>
                 </div>
                 <!--ORDER TOTAL LISTING ENDS-->
+                <!--APPLY COUPON TIP STARTS-->
+                <div style="padding:10px;" class="hide-on-mobile">You will be able to apply coupons on the confirmation page.</div>
+                <!--APPLY COUPON TIP ENDS-->
               </div>
               <div id="checkout_shipping_col2" style="width:60%; float:right;">
                 <?php
