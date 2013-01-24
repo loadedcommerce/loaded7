@@ -172,23 +172,66 @@
           <li id="li-add"><a onclick="toggleSubMenu('add');" href="#" title="Quick Add"><span class="icon-plus"></span></a></li>
           <li id="li-messages"><a onclick="toggleSubMenu('messages');" href="#" title="Messages"><span class="icon-mail"></span></a></li>
           <li id="li-settings" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="disabled"'); ?>><a href="#" onclick="toggleChildMenu('settings');" title="Settings"><span id="sp-settings" class="icon-gear"><div></div></span></a></li>
-        </ul>
-
-        <div id="messagesContainer" style="display:none;">
+        </ul>  
+        
+        <div id="searchContainer" style="display:none;">
           <section>
-          Messages
+          Search
           </section>
         </div>      
         
         <div id="addContainer" style="display:none;">
           <section>
-          Quick Add
+            <div id="addContainerLinks">
+              <ul class="list spaced">
+                <li>
+                  <a href="index.php" class="list-link white-link-with-pad">
+                    <?php echo $lC_Language->get('quick_add_order') . ' (7.0.0.?)'; ?>
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                    <?php echo $lC_Language->get('quick_add_customer'); ?>
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                    <?php echo $lC_Language->get('quick_add_category'); ?>
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>" class="list-link white-link-with-pad">
+                    <?php echo $lC_Language->get('quick_add_product'); ?>
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                    <?php echo $lC_Language->get('quick_add_special'); ?>
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                    <?php echo $lC_Language->get('quick_add_manufacturer'); ?>
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                    <?php echo $lC_Language->get('quick_add_banner'); ?>
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                    <?php echo $lC_Language->get('quick_add_newsletter'); ?>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </section>
-        </div>  
-        
-        <div id="searchContainer" style="display:none;">
+        </div>
+
+        <div id="messagesContainer" style="display:none;">
           <section>
-          Search
+          Messages
           </section>
         </div> 
                 

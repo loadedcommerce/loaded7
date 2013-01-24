@@ -1,5 +1,4 @@
 /**
-*  *
  * Base stylesheet
  *
  * Content:
@@ -960,6 +959,12 @@ li.message-menu {
 			border-top: 1px dotted #cccccc;
 			border-bottom: 1px dotted #cccccc;
 		}
+    .list > li > .white-link-with-pad {
+      color: white;
+      font-size: 14px !important;
+      font-weight: bold;
+      padding: 18px 0 18px 15px !important;
+    }
 
 /* Blocks list */
 .blocks-list {

@@ -176,3 +176,12 @@ ms_error_nothing_to_move = You have not selected anything to move!
 ms_error_no_access = You do not have the access level required for this operation!
 ms_error_javascript_not_enabled_for_upload = Please enable JavaScript to use ajax file uploader.
 ms_error_javascript_not_enabled_warning = Your browser does not support JavaScript! Some features won't work as expected.
+
+quick_add_order = Orders
+quick_add_customer = Customers
+quick_add_category = Categories
+quick_add_product = Products
+quick_add_special = Specials
+quick_add_manufacturer = Manufacturers
+quick_add_banner = Banners
+quick_add_newsletter = Newsletters
