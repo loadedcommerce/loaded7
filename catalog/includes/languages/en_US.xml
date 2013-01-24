@@ -1096,7 +1096,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>ship_to_address</key>
-      <value><![CDATA[Ship To Address]]></value>
+      <value><![CDATA[Ship To]]></value>
       <group>checkout</group>
     </definition>
     <definition>
