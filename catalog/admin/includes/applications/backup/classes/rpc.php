@@ -52,6 +52,7 @@ class lC_Backup_Admin_rpc {
   */
   public static function restoreEntry() {
 
+    $result = array();
     if (lC_Backup_Admin::restore($_GET['fname'])) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
