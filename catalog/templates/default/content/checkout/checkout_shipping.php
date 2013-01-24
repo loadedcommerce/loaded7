@@ -58,6 +58,9 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
                   }
                 ?>            
               </div>
+              <!--APPLY COUPON TIP STARTS-->
+              <div style="padding:10px; display:hidden;" class="show-on-mobile mobile-coupon-tip">You will be able to apply coupons on the confirmation page.</div>
+              <!--APPLY COUPON TIP ENDS-->
               <div id="checkout_shipping_col1" style="width:35%; float:left;">
                 <!--SHIP TO ADDRESS BLOCK STARTS-->
                 <div id="ship-to-address-block">
