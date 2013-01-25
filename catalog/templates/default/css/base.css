@@ -389,6 +389,8 @@ span.highlight_text{ display:inline-block; color:#fff; font-size:16px; font-styl
 /*GENERAL*/
 input, select, textarea, button{ font-size:12px;}
 input.holder { color: #818181; }
+.lg-input-height input { height: 26px; padding-left:4px; }
+
 .message{ padding:20px 85px; font-size:14px; line-height:100%; margin-bottom:15px;}
 .message.success{ color:#91a158; background:url(../images/message_cart.png) no-repeat 15px center #f9fff1; border:solid 1px #dcedbf;}
 

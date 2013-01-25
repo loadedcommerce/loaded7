@@ -18,7 +18,6 @@ if ($lC_MessageStack->size('create') > 0) {
 <style>
 #personal_details li { margin: 10px 0; }
 #login_details li { margin: 10px 0; }
-.lg-input-height > input { height: 26px; padding-left:4px; }
 </style>
 <!--CREATE ACCOUNT SECTION STARTS-->
 <div id="accountCreate" class="full_page">
