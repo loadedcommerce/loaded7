@@ -1155,6 +1155,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>checkout</group>
     </definition>
     <definition>
+      <key>text_add_comment_to_order</key>
+      <value><![CDATA[Click here to provide comments or special instructions for this order]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
       <key>address_book_entries_title</key>
       <value><![CDATA[Address Book Entries]]></value>
       <group>checkout</group>
@@ -1271,7 +1276,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>order_conditions_acknowledge</key>
-      <value><![CDATA[I have read and agreed to the terms and conditions bound to this order.]]></value>
+      <value><![CDATA[I agree to the <a href="info.php?conditions"><b>terms and conditions</b></a>]]></value>
       <group>checkout</group>
     </definition>
     <definition>
@@ -1312,7 +1317,12 @@ Note: If you did not request this action via our password forgotten page, please
     <definition>
       <key>order_total_title</key>
       <value><![CDATA[Grand Total]]></value>
-      <group>order</group>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>order_totals_title</key>
+      <value><![CDATA[Order Totals]]></value>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>billable_address_checkbox</key>
@@ -1347,6 +1357,16 @@ Note: If you did not request this action via our password forgotten page, please
     <definition>
       <key>email_order_subject</key>
       <value><![CDATA[Order Process]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>order_comment_title</key>
+      <value><![CDATA[Order Comment]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>discount_code_title</key>
+      <value><![CDATA[Discount Code]]></value>
       <group>checkout</group>
     </definition>
     <definition>
@@ -2047,7 +2067,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>
     <definition>
       <key>error_conditions_not_accepted</key>
-      <value><![CDATA[Please confirm the terms and conditions bound to this order by ticking the box below.]]></value>
+      <value><![CDATA[Please confirm the terms and conditions bound to this order.]]></value>
       <group>checkout</group>
     </definition>
     <definition>
@@ -2393,16 +2413,6 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     <definition>
       <key>text_quantity</key>
       <value><![CDATA[Quantity]]></value>
-      <group>general</group>
-    </definition> 
-    <definition>
-      <key>text_quantity_abbr</key>
-      <value><![CDATA[Qty]]></value>
-      <group>general</group>
-    </definition>
-    <definition>
-      <key>text_sub_total</key>
-      <value><![CDATA[Sub Total]]></value>
       <group>general</group>
     </definition>
     <definition>

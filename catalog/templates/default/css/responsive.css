@@ -326,4 +326,10 @@
   #mobile-arrow-down { float:left;padding:8px 10px 0 10px; }
   #bill-to-address { clear:both !important; width:auto !important; margin-bottom:15px; }
   #bill-to-change { clear:both !important; width:auto !important; margin-bottom:15px; }
+  #confirmation-discount-code { float: left; width: 100%;  }
+  #confirmation-order-totals { float: left; width: 100%; }
+  #confirmation-order-comment { float: left; width: 100%; }
+  #confirmation-grand-total { float: left; width: 100%; margin-bottom: 10px; }
+  #confirmation-grand-total-inner #ot-container { display: block; }
+  #confirmation-order-totals #ot-container { display: block; }
 }

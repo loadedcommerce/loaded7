@@ -755,9 +755,6 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 .moduleRowOver { background-color: #f7f7f7; }
 .moduleRowSelected td { background-color: #e7e7e7; }
 
-.cart-edit { float: right; padding-right: 15px; }
-.padding-right-15 { padding-right: 15px; } 
-
 /* create account */
 #accountCreate h3 { font-size: 1.3em; font-family: sans-serif !important; }
 #accountLogin h3 { font-size: 1.3em; font-family: sans-serif !important; margin-bottom: 15px; }
@@ -785,9 +782,20 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #payment-method-block { padding: 10px; margin-bottom: 20px; background-color: #F7F7F7; }
 #payment-method-block p { padding-top: 10px; }
 #confirmation-products-listing { border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
-#confirmation-discount-code { float: left; width: 44%; }
-#confirmation-discount-code-inner { float: left; width: 100%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
-#confirmation-discount-code-button { float: right; margin-right: -25px; }
-#confirmation-order-totals { float: right; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
-#confirmation-order-comment { float: left; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
-#confirmation-grand-total { float: right; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
+#confirmation-discount-code { float: left; width: 49%; }
+#confirmation-discount-code-inner { float: left; width: 100%; /*border: 1px solid #E7DED5;*/ margin-bottom: 10px; }
+#confirmation-discount-code-button { float: right; }
+#confirmation-order-totals { float: right; width: 49%; margin-bottom: 10px; }
+#confirmation-order-totals #ot-container {  }
+#confirmation-order-totals h3 {  }
+#confirmation-order-comment { float: left; width: 48%; margin-bottom: 5px; }
+#confirmation-order-comment-inner { margin-bottom: 10px; }
+#confirmation-grand-total { float: right; width: 49%; }
+#confirmation-grand-total-inner #ot-container #total { border-top: 0 !important; } 
+#confirmation-grand-total-inner #ot-container #total label { margin: -1px 0 -1px 0; }
+#confirmation-grand-total-inner #ot-container #total span { margin: -1px 0 -1px 0; }
+#checkout-step-login h3 { margin-bottom: -10px !important; margin-top: 5px; }
+.next-li { margin-top: -4px !important; }
+#terms-conditions { float: right; padding: 0 10px 10px 0; }
+#checkoutConfirmationDetails table tr.confirmation-products-listing-row { height: 40px; }
+.confirmation-products-listing-model { font-size: 11px; }
