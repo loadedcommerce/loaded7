@@ -52,13 +52,12 @@ function restoreEntry(id) {
                 var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
                 $(location).attr('href',url);
               }
-              $("#status-working").fadeOut('slow');
               if (data.rpcStatus != 1) {
                 $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                 return false;
               }
-              oTable.fnReloadAjax();
-              $("#bRestore").submit();
+              $.modal.alert('<?php echo $lC_Language->get('message_backup_success'); ?>');
+              setTimeout('__reLogin()', 1000);
             }
           );
           win.closeModal();
@@ -68,5 +67,10 @@ function restoreEntry(id) {
     buttonsLowPadding: true
   });
   $("#restoreConfirmMessage").html('<span class="icon-warning icon-red"></span>&nbsp;<?php echo $lC_Language->get('introduction_restore_file'); ?><p class="margin-top"><b>' + decodeURI(id) + '</b></p>');
+}
+
+function __reLogin() {
+  var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'backup'); ?>";
+  $(location).attr('href',url);  
 }
 </script>

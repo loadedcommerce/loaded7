@@ -346,12 +346,12 @@ class lC_Backup_Admin {
         $lC_Database->simpleQuery($sql_array[$i]);
       }
 
-      $lC_Session->close();
+   //   $lC_Session->close();
 
       // empty the sessions table
-      $Qsessions = $lC_Database->query('delete from :table_sessions');
-      $Qsessions->bindTable(':table_sessions', TABLE_SESSIONS);
-      $Qsessions->execute();
+   //   $Qsessions = $lC_Database->query('delete from :table_sessions');
+   //   $Qsessions->bindTable(':table_sessions', TABLE_SESSIONS);
+   //   $Qsessions->execute();
 
       // empty the who's online table
       $Qwho = $lC_Database->query('delete from :table_whos_online');
@@ -375,8 +375,8 @@ class lC_Backup_Admin {
         unlink($restore_from);
       }
 
-      lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, 'login'));
-      //return true;
+      //lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, 'login'));  
+      return true;
     }
 
     return false;
