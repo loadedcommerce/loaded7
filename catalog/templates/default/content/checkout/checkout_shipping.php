@@ -115,7 +115,7 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
                       foreach ($lC_Shipping->getQuotes() as $quotes) {
                       ?>
                       <tr>
-                        <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
+                        <td><table border="0" width="100%" cellspacing="0" cellpadding="2" id="shippingSelect">
                         <tr>
                           <td width="10">&nbsp;</td>
                           <td colspan="3" class="shippingQuotesTitle"><b><?php echo $quotes['module']; ?></b>&nbsp;<?php if (isset($quotes['icon']) && !empty($quotes['icon'])) { echo $quotes['icon']; } ?></td>
