@@ -18,7 +18,7 @@ if ($lC_MessageStack->size('create') > 0) {
 <style>
 #personal_details li { margin: 10px 0; }
 #login_details li { margin: 10px 0; }
-input { height: 26px; padding-left:4px; }
+.lg-input-height > input { height: 26px; padding-left:4px; }
 </style>
 <!--CREATE ACCOUNT SECTION STARTS-->
 <div id="accountCreate" class="full_page">
@@ -28,7 +28,7 @@ input { height: 26px; padding-left:4px; }
     <span><?php echo $lC_Language->get('form_validation_error'); ?></span>
   </div>   
   <div class="single-bg">
-    <div class="short-code-column one-half no-margin-bottom">   
+    <div class="short-code-column one-half no-margin-bottom lg-input-height">   
       <h3>Personal Details</h3>
       <ul id="personal_details">
         <li><?php echo lc_draw_label('', 'firstname', null, false) . ' ' . lc_draw_input_field('firstname', null, 'placeholder="' . $lC_Language->get('field_customer_first_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_first_name') . '\'" holder="' . $lC_Language->get('field_customer_first_name') . '" class="txt" style="width:99%;"'); ?></li>
@@ -49,7 +49,7 @@ input { height: 26px; padding-left:4px; }
         ?>      
       </ul>     
     </div>
-    <div class="short-code-column one-half column-last no-margin-bottom">
+    <div class="short-code-column one-half column-last no-margin-bottom lg-input-height">
       <h3>Login Details</h3>
       <ul id="login_details">    
         <li><?php echo lc_draw_label('', 'email_address', '', false) . ' ' . lc_draw_input_field('email_address', ($_POST['email']) ? $_POST['email'] : '', 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_email_address') . '\'" holder="' . $lC_Language->get('field_customer_email_address') . '" class="txt" style="width:100%;"'); ?></li>
