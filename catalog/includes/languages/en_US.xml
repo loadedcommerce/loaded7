@@ -2416,6 +2416,16 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <group>general</group>
     </definition>
     <definition>
+      <key>text_quantity_abbr</key>
+      <value><![CDATA[Qty]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
+      <key>text_sub_total</key>
+      <value><![CDATA[Sub Total]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>text_unit_price</key>
       <value><![CDATA[Item Price]]></value>
       <group>general</group>

@@ -771,7 +771,8 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #uniform-country span { color: #000; font-size: 12px; height: 22px; top: 4px; width: 99%; }
 #uniform-zones.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
 #uniform-zones select { color: #000; font-size: 12px; height: 29px; top: -1px; width: 100%; }
-
+.padding-right-15 { padding-right: 15px; }
+.cart-edit { float:right; padding-right:10px; }
 .colorWhite { color: #fff !important; }
 #mobile-grand-total { display: none; }
 #mobile-order-totals { display: none; }
