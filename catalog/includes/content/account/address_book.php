@@ -37,7 +37,7 @@
         $this->_page_title = $lC_Language->get('address_book_add_entry_heading');
         $this->_page_contents = 'address_book_process.php';
 
-        $this->addJavascriptPhpFilename('includes/form_check.js.php');
+        //$this->addJavascriptPhpFilename('includes/form_check.js.php');
       } elseif (isset($_GET['new'])) {
         if ($lC_Services->isStarted('breadcrumb')) {
           $lC_Breadcrumb->add($lC_Language->get('breadcrumb_address_book_add_entry'), lc_href_link(FILENAME_ACCOUNT, $this->_module . '&new', 'SSL'));
@@ -46,7 +46,7 @@
         $this->_page_title = $lC_Language->get('address_book_add_entry_heading');
         $this->_page_contents = 'address_book_process.php';
 
-        $this->addJavascriptPhpFilename('includes/form_check.js.php');
+        $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
       } elseif (isset($_GET['edit']) && is_numeric($_GET[$this->_module])) {
         if (!lC_AddressBook::checkEntry($_GET['address_book'])) {
           $lC_MessageStack->add('address_book', $lC_Language->get('error_address_book_entry_non_existing'), 'error');
@@ -60,7 +60,7 @@
           $this->_page_title = $lC_Language->get('address_book_edit_entry_heading');
           $this->_page_contents = 'address_book_process.php';
 
-          $this->addJavascriptPhpFilename('includes/form_check.js.php');
+          $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
         }
       } elseif (isset($_GET['delete']) && is_numeric($_GET[$this->_module])) {
         if ($_GET['address_book'] == $lC_Customer->getDefaultAddressID()) {
