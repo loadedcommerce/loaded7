@@ -785,13 +785,16 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #ot-container { border: 1px solid #E7DED5; padding: 10px; }
 #ot-container label { padding-top: 4px; }
 #ot-container span { padding-top: 4px; }
-.ot-block {}
+.ot-block label { padding: 0 0 10px 0; }
+.next-li { margin-top: -4px; }
 #order-number { font-weight: bold; padding-bottom: 30px; } 
 #ot-container #total { color: #873B7A; font-size: 16px; font-weight: bold; border-top: 1px solid #ccc; padding-top: 5px; }
 .ot-block label { float: left; width: 65%; }
 .ot-block span { float: right; text-align: right; }
 #checkoutSteps .first-checkout-li { border-top: 1px solid #E7DED5; }
-#ship-to-address-block { padding: 10px; margin-bottom: 10px; margin-top: -10px; }
+#ship-to-address-block { padding: 10px; margin-top: -10px; }
+#ship-to-address-block h3 { margin-top: 15px; }
+#checkoutShippingAddressDetails h3 { margin: 15px 0 0 10px; }
 #bill-to-address-block { padding: 10px; margin-bottom: 10px; }
 #shipping-method-block { padding: 10px; margin-bottom: 20px; background-color: #F7F7F7; }
 #shipping-method-block p { padding-top: 10px; }
@@ -819,6 +822,7 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #success-products-listing table tr.success-products-listing-row { height: 40px; }
 #success-order-number { float: left; }
 #success-order-id { float: right; }
+#checkout_coupon_tip { padding: 10px; }
 #success-order-comment { float: left; width: 44%; }
 #success-order-comment-inner { float: left; width: 100%; border: 1px solid #E7DED5; padding: 10px; }
 #success-order-totals { float: right; width: 49%; }
