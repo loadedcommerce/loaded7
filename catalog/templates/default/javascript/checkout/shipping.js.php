@@ -19,10 +19,10 @@ function selectRowEffect(object, buttonSelect) {
   selected = object;
 
 // one button is not an array
-  if (document.checkout_address.shipping[0]) {
-    document.checkout_address.shipping[buttonSelect].checked=true;
+  if (document.checkout_address.shipping_mod_sel[0]) {
+    document.checkout_address.shipping_mod_sel[buttonSelect].checked=true;
   } else {
-    document.checkout_address.shipping.checked=true;
+    document.checkout_address.shipping_mod_sel.checked=true;
   }
 }
 </script>
