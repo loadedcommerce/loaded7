@@ -815,12 +815,6 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #terms-conditions { float: right; padding: 0 10px 10px 0; }
 #checkoutConfirmationDetails table tr.confirmation-products-listing-row { height: 40px; }
 .confirmation-products-listing-model { font-size: 11px; }
-#confirmation-discount-code { float: left; width: 44%; }
-#confirmation-discount-code-inner { float: left; width: 100%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
-#confirmation-discount-code-button { float: right; margin-right: -25px; }
-#confirmation-order-totals { float: right; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
-#confirmation-order-comment { float: left; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
-#confirmation-grand-total { float: right; width: 44%; border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
 #success-products-listing { border: 1px solid #E7DED5; padding: 10px; margin-bottom: 10px; }
 #success-products-listing table tr.success-products-listing-row { height: 40px; }
 #success-order-number { float: left; }
