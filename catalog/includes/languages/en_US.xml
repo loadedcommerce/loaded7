@@ -1170,6 +1170,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>general</group>
     </definition>
     <definition>
+      <key>add_first_address</key>
+      <value><![CDATA[None. Please add an address.]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>order_comment_none</key>
       <value><![CDATA[None.]]></value>
       <group>general</group>
