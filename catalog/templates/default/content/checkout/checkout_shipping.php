@@ -183,14 +183,6 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
               </div>
               <div style="clear:both;"></div>
             </div>
-            <!--CHECKOUT SHIPPING COMMENTS STARTS-->
-            <br />
-            <!--CHECKOUT SHIPPING ACTIONS STARTS-->
-            <div id="shippingActions">
-              <span class="buttonLeft continueCheckoutActionText"><?php echo '<b>' . $lC_Language->get('continue_checkout_procedure_title') . '</b> ' . $lC_Language->get('continue_checkout_procedure_to_payment'); ?></span>
-              <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
-            </div>
-            <!--CHECKOUT SHIPPING ACTIONS ENDS-->
           </div>
         </li>
         <li class="next-li">
