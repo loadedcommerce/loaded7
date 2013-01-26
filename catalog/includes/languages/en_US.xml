@@ -1110,6 +1110,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>checkout</group>
     </definition>
     <definition>
+      <key>checkout_coupon_tip</key>
+      <value><![CDATA[You will be able to apply coupon code on the confirmation page.]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
       <key>ship_to_address</key>
       <value><![CDATA[Ship To]]></value>
       <group>checkout</group>
