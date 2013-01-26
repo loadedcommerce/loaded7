@@ -185,7 +185,7 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
             </div>
           </div>
         </li>
-        <li class="next-li">
+        <li>
           <div class="step-title">
             <h2><?php echo $lC_Language->get('box_ordering_steps_payment'); ?></h2>
           </div>
