@@ -1,8 +1,4 @@
 <script>
-  //$('#shippingSelect tr').click(function() {
-  //  $(this).find('td input:radio').prop('checked', true);
-  //});
-  
 var selected;
 
 function selectRowEffect(object, buttonSelect) {
