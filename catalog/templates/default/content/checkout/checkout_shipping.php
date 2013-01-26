@@ -195,11 +195,6 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
             <h2><?php echo $lC_Language->get('box_ordering_steps_confirmation'); ?></h2>
           </div>
         </li>
-        <li>
-          <div class="step-title">
-            <h2><?php echo $lC_Language->get('box_ordering_steps_complete'); ?></h2>
-          </div>
-        </li>
       </ol>
     </div>
   </form>

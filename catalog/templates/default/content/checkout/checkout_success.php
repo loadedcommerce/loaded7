@@ -20,22 +20,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
   <h5><?php echo $lC_Language->get('text_checkout'); ?></h5>
   <div class="checkout_steps">
     <ol id="checkoutSteps">
-      <li class="first-checkout-li">
-        <div class="step-title">
-          <h2><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h2>
-        </div>
-      </li>
-      <li>
-        <div class="step-title">
-          <h2><?php echo $lC_Language->get('box_ordering_steps_payment'); ?></h2>
-        </div>
-      </li>
-      <li>
-        <div class="step-title">
-          <h2><?php echo $lC_Language->get('box_ordering_steps_confirmation'); ?></h2>
-        </div>
-      </li>  
-      <li class="section allow active">
+      <li class="section allow active first-checkout-li">
         <div class="step-title">
           <h2><?php echo $lC_Language->get('box_ordering_steps_complete'); ?></h2>
         </div> 

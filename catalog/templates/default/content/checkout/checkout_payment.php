@@ -137,6 +137,7 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                     <table border="0" width="100%" cellspacing="0" cellpadding="2">
                       <?php
                       $radio_buttons = 0;
+                      $counter = 0;
                       for ($i=0, $n=sizeof($selection); $i<$n; $i++) {
                         ?>
                         <tr>
@@ -153,7 +154,7 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                             if ($n > 1) {
                               ?>
                               <td colspan="3"><?php echo '<b>' . $selection[$i]['module'] . '</b>'; ?></td>
-                              <td align="right" width="20"><?php echo lc_draw_radio_field('payment_method', $selection[$i]['id'], ($lC_ShoppingCart->hasBillingMethod() ? $lC_ShoppingCart->getBillingMethod('id') : null)); ?></td>
+                              <td align="right" width="20"><?php echo lc_draw_radio_field('payment_method', $selection[$i]['id'], ($lC_ShoppingCart->hasBillingMethod() ? $lC_ShoppingCart->getBillingMethod('id') : null), 'id="pm_' . $counter . '"'); ?></td>
                               <?php
                             } else {
                               ?>
@@ -199,6 +200,7 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                           </table></td>
                         </tr>   
                         <?php
+                        $counter++;
                         $radio_buttons++;
                       }
                       ?>
@@ -222,11 +224,6 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
         <li class="next-li">
           <div class="step-title">
             <h2><?php echo $lC_Language->get('box_ordering_steps_confirmation'); ?></h2>
-          </div>
-        </li>
-        <li>
-          <div class="step-title">
-            <h2><?php echo $lC_Language->get('box_ordering_steps_complete'); ?></h2>
           </div>
         </li>
       </ol>
