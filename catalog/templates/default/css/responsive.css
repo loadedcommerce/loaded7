@@ -72,6 +72,7 @@
   .mobile-menu { display:block !important; float:left; padding:6px 0 0 3px; } 
   .language_switch { display:none; }
   #checkout_shipping_order_totals { width:210px !important; }
+  .next-li { border-top: none !important; margin-top: 4px !important; }
 }
 
 /* #Mobile (Landscape)
@@ -152,6 +153,7 @@
   .subscribe_nl small { width:290px !important; }
   header .header_search { margin-top:-20px; margin-bottom:10px; }
   .hide-on-480 { display:none; }
+  .hide-on-mobile { display:none; }
   .browse-catalog { float:right; display:block !important; height:24px; margin:10px 3px 0 0; padding-top:5px; }
   #browse-catalog-div { width: 240px; left:277px; top:89px; }
 
@@ -170,11 +172,15 @@
   #mobile-grand-total .ot-mobile-block span { float: right; text-align: right;  padding-top: 6px; }
   #mobile-grand-total #mobile_total { color: #873B7A; font-weight: bold; }
   .ot-mobile-block { width: 90%; float:right; }
+  .next-li { border-top: none !important; }
   .arrow-down { width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-top:10px solid black; float:left; }
   .arrow-up { width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:10px solid black; float:left; }
   #mobile-arrow-up { float:left;padding:5px 10px 0 10px; }
   #mobile-arrow-down { float:left;padding:8px 10px 0 10px; }
   #bill-to-address { margin-bottom:15px; }
+  .show-on-mobile { display: block !important; }
+  .mobile-coupon-tip { margin: -10px 0 5px 0; }
+  .next-li { border-top: none !important; margin-top: 4px !important; }
 }
 
 /*  #Mobile (Portrait)

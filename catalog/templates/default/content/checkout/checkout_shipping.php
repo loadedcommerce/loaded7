@@ -11,6 +11,9 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
   */
+if ($lC_MessageStack->size('checkout_shipping') > 0) {
+  echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('checkout_shipping', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
+}
 ?>
 <!--CHECKOUT SHIPPING SECTION STARTS-->
 <div id="checkout_shipping_details" class="full_page">
@@ -55,6 +58,9 @@
                   }
                 ?>            
               </div>
+              <!--APPLY COUPON TIP STARTS-->
+              <div style="padding:10px; display:hidden;" class="show-on-mobile mobile-coupon-tip">You will be able to apply coupons on the confirmation page.</div>
+              <!--APPLY COUPON TIP ENDS-->
               <div id="checkout_shipping_col1" style="width:35%; float:left;">
                 <!--SHIP TO ADDRESS BLOCK STARTS-->
                 <div id="ship-to-address-block">
@@ -81,6 +87,9 @@
                   <?php } ?>
                 </div>
                 <!--ORDER TOTAL LISTING ENDS-->
+                <!--APPLY COUPON TIP STARTS-->
+                <div style="padding:10px;" class="hide-on-mobile">You will be able to apply coupons on the confirmation page.</div>
+                <!--APPLY COUPON TIP ENDS-->
               </div>
               <div id="checkout_shipping_col2" style="width:60%; float:right;">
                 <?php
@@ -106,7 +115,7 @@
                       foreach ($lC_Shipping->getQuotes() as $quotes) {
                       ?>
                       <tr>
-                        <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
+                        <td><table border="0" width="100%" cellspacing="0" cellpadding="2" id="shippingSelect">
                         <tr>
                           <td width="10">&nbsp;</td>
                           <td colspan="3" class="shippingQuotesTitle"><b><?php echo $quotes['module']; ?></b>&nbsp;<?php if (isset($quotes['icon']) && !empty($quotes['icon'])) { echo $quotes['icon']; } ?></td>
@@ -160,22 +169,19 @@
                   ?>
                   </table>
                 </div>
+                <div style="clear:both;">&nbsp;</div>
                 <!--CHECKOUT SHIPPING QUOTES ENDS-->
                 <?php
                   }
                 ?>
+                <!--CHECKOUT SHIPPING ACTIONS STARTS-->
+                <div id="shippingActions">
+                  <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, '', 'SSL'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+                  <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
+                </div>
+                <!--CHECKOUT SHIPPING ACTIONS ENDS-->
               </div>
               <div style="clear:both;"></div>
-              <br /> 
-            </div>
-            <!--CHECKOUT SHIPPING COMMENTS STARTS-->
-            <div id="shippingComments">
-              <h3><?php echo $lC_Language->get('add_comment_to_order_title'); ?></h3>
-              <div>
-                <?php 
-                  echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), null, null, 'style="width: 99%;"'); 
-                ?>
-              </div>
             </div>
             <!--CHECKOUT SHIPPING COMMENTS STARTS-->
             <br />
@@ -187,7 +193,7 @@
             <!--CHECKOUT SHIPPING ACTIONS ENDS-->
           </div>
         </li>
-        <li>
+        <li class="next-li">
           <div class="step-title">
             <h2><?php echo $lC_Language->get('box_ordering_steps_payment'); ?></h2>
           </div>
