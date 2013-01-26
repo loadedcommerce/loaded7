@@ -1170,6 +1170,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>general</group>
     </definition>
     <definition>
+      <key>order_comment_none</key>
+      <value><![CDATA[None.]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>order_totals_title</key>
       <value><![CDATA[Order Totals]]></value>
       <group>general</group>

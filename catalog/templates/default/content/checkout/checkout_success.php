@@ -112,7 +112,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                   <div id="success-order-comment">
                     <h3><?php echo $lC_Language->get('order_comment_title'); ?></h3>
                     <div id="success-order-comment-inner">
-                      <?php echo (lC_Success::getOrderComments($oID) != null) ? lC_Success::getOrderComments($oID) : 'test' . $lC_Language->get('order_comment_none'); ?>
+                      <?php echo (lC_Success::getOrderComments($oID) != null) ? lC_Success::getOrderComments($oID) : $lC_Language->get('order_comment_none'); ?>
                     </div>
                   </div>
                   <div id="success-order-totals">
