@@ -168,39 +168,28 @@ function resetPullDownMenuSelection(field) {
   }
 }
 
-/* open-menu click handler */
-/*
-$("#menu-open").click(function() {
-  // if bg, set floating-menu width depending on whether big-menu is open or closed
-  var menuOpen = $('body').is('.menu-hidden');
-  if (menuOpen) {
-    alert('open');
-  //  $('#floating-menu-div').attr('style', 'right:0;');
-  } else {
-    alert('closed');
-  //  $('#floating-menu-div').attr('style', 'right:0;');
-  }
-});
-
-
-function showLoader() {
-  $.modal({
-    contentBg: false,
-    contentAlign: 'center',
-    content: '<span id="loaderContainer" class="loader huge refreshing on-dark"></span>',
-    resizable: false,
-    actions: {},
-    buttons: {},
-    minWidth: 70
-  });
-
+function mask() {
+  $("body").mask('<span class="loader huge refreshing"></span>');
+  $("body").removeClass("mask");
+  // tweak template depending on view
+  if ($.template.mediaQuery.name === 'mobile-portrait') { 
+    $('.loadmask-msg').css({'top':'180px'});
+  } else if ($.template.mediaQuery.name === 'mobile-landscape') { 
+    $('.loadmask-msg').css({'top':'140px'});
+  } else if ($.template.mediaQuery.name === 'tablet-portrait') {  
+    $('.loadmask-msg').css({'top':'380px'});
+  } else if ($.template.mediaQuery.name === 'tablet-landscape') {  
+    $('.loadmask-msg').css({'top':'260px'});
+  } else { // desktop
+    $('.loadmask-msg').css({'top':'300px'});
+  }  
+  
+}
+ 
+function unmask() {
+  $("body").unmask();
 }
 
-function hideLoader(e) {
-  $(e).closeModal();
-}
-
-/*
 function modalMessage(text) {
   mm = $.modal({
           contentBg: false,
@@ -211,10 +200,9 @@ function modalMessage(text) {
           buttons: {}
         });
   $(mm);
-  setTimeout ("$(mm).closeModal()", 800);
+  setTimeout ("$(mm).closeModal()", 2000);
 }
-*/
-
+ 
 ;function print_r (array, return_val) {
     // http://kevin.vanzonneveld.net
     // +   original by: Michael White (http://getsprink.com)
@@ -291,5 +279,5 @@ function modalMessage(text) {
         return true;
     }
     return output;
-}
+}   
 </script>

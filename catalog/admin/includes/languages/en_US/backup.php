@@ -37,6 +37,7 @@ introduction_restore_local_file = Please select the database backup file to rest
 introduction_delete_backup_file = Please verify the removal of the following database backup file:
 introduction_batch_delete_backup_files = Please verify the removal of the selected database backup files.
 
+message_backup_success = Database Restore SUCCESS!
 ms_error_backup_directory_not_writable = Error: The database backup directory is not writable: %s
 ms_error_backup_directory_non_existant = Error: The database backup directory does not exist: %s
 ms_error_download_link_not_acceptable = Error: The download link is not acceptable.
