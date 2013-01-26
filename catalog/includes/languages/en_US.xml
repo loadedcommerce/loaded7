@@ -423,7 +423,7 @@
         <definition>
       <key>form_validation_error</key>
       <value><![CDATA[Please correct the error(s) with highlighted field(s) and try again.]]></value>
-      <group>account</group>
+      <group>general</group>
     </definition>
     <definition>
       <key>breadcrumb_sign_in</key>
