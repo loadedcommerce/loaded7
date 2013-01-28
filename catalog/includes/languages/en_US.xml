@@ -136,6 +136,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>text_add_comment_to_order</key>
+      <value><![CDATA[Click here to provide comments or special instructions for this order]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
       <key>gender_female</key>
       <value><![CDATA[Female]]></value>
       <group>general</group>
