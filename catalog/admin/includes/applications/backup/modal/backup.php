@@ -61,8 +61,10 @@ function doBackup() {
       '<?php echo $lC_Language->get('button_backup'); ?>': {
         classes:  'blue-gradient glossy',
         click:    function(win) {
+          mask();
           var checked = $("#download_only").attr('checked');
           if (checked == true) {
+            unmask();
             $("#backupContent").dialog('close');
             window.location = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=backup&download_only=yes'); ?>";
           }
@@ -70,6 +72,7 @@ function doBackup() {
           var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doBackup&DATA'); ?>'  
           $.getJSON(jsonLink.replace('DATA', nvp),        
             function (data) {
+              unmask();
               if (data.rpcStatus == -10) { // no session
                 var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";     
                 $(location).attr('href',url);

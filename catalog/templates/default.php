@@ -253,14 +253,13 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="ext/jquery/jquery.liveSearch.js"></script>
     <script src="ext/jquery/breadcrumb/js/jquery.jBreadCrumb.1.1.js"></script>
     <script src="ext/jquery/thickbox/thickbox-compressed.js"></script>
-        
+    <script src="ext/datepicker/datepicker.js"></script>
     <!-- Template functions -->
     <script src="templates/default/javascript/jquery.flexslider.js" ></script>
     <script src="templates/default/javascript/jquery.jcarousel.js"></script>
     <script src="templates/default/javascript/jquery.jtweetsanywhere-1.3.1.min.js" ></script>
     <script src="templates/default/javascript/jquery.magnify-1.0.2.js"></script>
     <script src="templates/default/javascript/form_elements.js" ></script>
-    <script src="templates/default/javascript/custom.js"></script>
     <script src="templates/default/javascript/general.js"></script>
     
     <!-- js loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js'; ?> -->

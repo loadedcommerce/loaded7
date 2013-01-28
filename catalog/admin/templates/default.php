@@ -65,6 +65,8 @@
   <!-- DataTables -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables-tableTools.css?v=1">
+  <!-- loading mask -->
+  <link rel="stylesheet" href="templates/default/css/styles/jquery.loadmask.css?v=1">
   <!-- Google code prettifier -->
   <link rel="stylesheet" href="../ext/jquery/google-code-prettify/sunburst.css?v=1">
 
@@ -250,6 +252,7 @@
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.min.js"></script>
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.reloadAjax.js"></script>
   <script src="../ext/jquery/jquery.details.min.js"></script>
+  <script src="../ext/jquery/jquery.loadmask.js"></script>
   <!-- Template functions -->
   <script src="templates/default/js/setup.js"></script>
   <script src="templates/default/js/float.js"></script>

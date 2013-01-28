@@ -66,15 +66,3 @@ button.price_add {
     <!--Product List Ends-->
   </div>
 </div>
-<script>
-  $(function(){
-    $('#listView').click(function(){
-        $('#viewList').show();
-        $('#viewGrid').hide();
-    });
-    $('#gridView').click(function(){
-        $('#viewGrid').show();
-        $('#viewList').hide();
-    });
-  });
-</script>

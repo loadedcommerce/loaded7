@@ -53,10 +53,10 @@
         $this->_page_title = $lC_Language->get('shipping_address_heading');
         $this->_page_contents = 'checkout_shipping_address.php';
 
-        $this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_shipping_address.js');
-        $this->addJavascriptPhpFilename('includes/form_check.js.php');
+        //$this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_shipping_address.js');
+        $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
       } else {
-        $this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_shipping.js');
+        //$this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_shipping.js');
 
         // if no shipping destination address was selected, use the customers own address as default
         if ($lC_ShoppingCart->hasShippingAddress() === false) {

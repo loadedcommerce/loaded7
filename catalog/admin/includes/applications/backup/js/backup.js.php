@@ -25,7 +25,7 @@ $(document).ready(function() {
     "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataRowCheck hide-on-mobile" },
                   { "sWidth": "40%", "bSortable": true, "sClass": "dataRowBackups" },
                   { "sWidth": "20%", "bSortable": true, "sClass": "dataRowDate hide-on-mobile-portrait" },
-                  { "sWidth": "20%", "bSortable": true, "sClass": "dataRowSize hide-on-mobile-portrait" },
+                  { "sWidth": "20%", "bSortable": true, "sClass": "dataRowSize hide-on-mobile" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataRowAction" }]
   });
   $('#dataTable').responsiveTable();

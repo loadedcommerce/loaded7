@@ -62,12 +62,8 @@
       if ($lC_Customer->hasDefaultAddress() === false) {
         $this->_page_title = $lC_Language->get('payment_address_heading');
         $this->_page_contents = 'checkout_payment_address.php';
-
-        $this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_payment_address.js');
         $this->addJavascriptPhpFilename('includes/form_check.js.php');
       } else {
-        $this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_payment.js');
-
         // if no billing destination address was selected, use the customers own address as default
         if ($lC_ShoppingCart->hasBillingAddress() == false) {
           $lC_ShoppingCart->setBillingAddress($lC_Customer->getDefaultAddressID());

@@ -36,7 +36,7 @@ $lastRestoreDate = ( defined('DB_LAST_RESTORE') ) ? '<table><tr><td>' . $lC_Lang
           <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
           <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_backups'); ?></th>
           <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_date'); ?></th>
-          <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_file_size'); ?></th>
+          <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_file_size'); ?></th>
           <th scope="col" class="align-right">
             <span class="button-group compact" style="white-space:nowrap;">
               <a style="display:none;" href="javascript://" style="cursor:pointer" class="on-mobile button with-tooltip icon-outbox green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="doBackup(); return false;'); ?>" title="<?php echo $lC_Language->get('button_backup'); ?>"></a>

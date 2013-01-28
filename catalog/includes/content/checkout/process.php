@@ -22,7 +22,7 @@
     /* Class constructor */
     function lC_Checkout_Process() {
       global $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_NavigationHistory, $lC_Payment;
-
+      
       if ($lC_Customer->isLoggedOn() === false) {
         $lC_NavigationHistory->setSnapshot();
 
@@ -31,6 +31,11 @@
 
       if ($lC_ShoppingCart->hasContents() === false) {
         lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
+      }
+      
+      // added for removal of order comments from shipping and payment pages and placed on confirmation page only during checkout
+      if (!empty($_POST['comments'])) {
+        $_SESSION['comments'] = lc_sanitize_string($_POST['comments']);
       }
 
       // if no shipping method has been selected, redirect the customer to the shipping method selection page

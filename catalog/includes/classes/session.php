@@ -89,7 +89,8 @@
 
         ini_set('session.gc_maxlifetime', $this->_life_time);
       } else {
-        $this->_life_time = ini_get('session.gc_maxlifetime');
+     //   $this->_life_time = ini_get('session.gc_maxlifetime');
+        $this->_life_time = '9600';
       }
 
       session_set_cookie_params($this->_life_time, (($request_type == 'NONSSL') ? HTTP_COOKIE_PATH : HTTPS_COOKIE_PATH), (($request_type == 'NONSSL') ? HTTP_COOKIE_DOMAIN : HTTPS_COOKIE_DOMAIN));
