@@ -189,20 +189,31 @@ function installUpdate() {
   var loader = '<span class="icon-right icon-blue margin-left margin-right"></span><span class="loader"></span>';
   var done = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-tick icon-green margin-left margin-right"></span>';
   var error = '<span class="icon-cross icon-red"></span>';
-  // clear the li for progress info
+  $('#versionContainer .fieldset').removeClass('orange-gradient');
+  // clear the li for progress info  
   $('#version-ul li:first-child').html('<span class="before" style="padding-right:9px;">Latest Version</span><strong>' + toVersion + '</strong><span class="after">released 01/25/2013</span>'); 
   $('#version-ul li:last-child').html('<span id="updateProgressContainer" style="display:none;"></span>'); 
-  
-  $('#versionContainer .fieldset').removeClass('orange-gradient');
+             
   $('#version-ul').addClass('margin-bottom');
   $('#version-ul li:last-child').removeClass('red').attr('style', 'padding-top:0');
   $('#updateProgressContainer').delay(500).slideDown('slow');
-
+      
+   
+  $('.update-text').html('Initializing Update Engine').attr('style', 'color:red; margin-left:-14px').css("text-decoration", "blink");   
+      
+return false;      
   //step 1
   __showStep(1,0);
   setTimeout(function() { 
     __showStep(2,0); 
-    setTimeout(function() { __showStep(2,1); }, 3000);
+    setTimeout(function() { 
+      __showStep(3,0); 
+      setTimeout(function() { 
+        __showStep(3,1); 
+    
+      }, 3000);
+    
+    }, 3000);
   
   }, 3000);
   
@@ -216,6 +227,7 @@ function __showStep(step, fini) {
 
   var html1 = '<span class="update-text">Backing up Files and Database</span>';
   var html2 = '<span class="update-text">Retrieving Update from Server</span>';
+  var html3 = '<span class="update-text">Installing Update</span>';
 
   if (step == 1) {
     if (fini == 1) {
@@ -230,6 +242,14 @@ function __showStep(step, fini) {
       $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>');
     } else {
       $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + loader + html2 + '</div>');
+    }
+  }   
+  
+  if (step == 3) {
+    if (fini == 1) {
+      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>' + '<div>' + done + html3 + '</div>');
+    } else {
+      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>' + '<div>' + loader + html3 + '</div>');
     }
   }   
   
