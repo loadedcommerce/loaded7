@@ -199,7 +199,8 @@ function installUpdate() {
   $('#updateProgressContainer').delay(500).slideDown('slow');
       
    
-  $('.update-text').html('Initializing Update Engine').attr('style', 'color:red; margin-left:-14px').css("text-decoration", "blink");   
+  $('.update-text').html('Initializing Update Engine').attr('style', 'color:red; margin-left:-14px').blink({ maxBlinks: 60, blinkPeriod: 1000 });
+  
       
 return false;      
   //step 1
