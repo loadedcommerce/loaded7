@@ -86,7 +86,7 @@
         exit;
       }  
     } else {
-      $_module = 'search';
+      $_module = 'general';
       if ( file_exists('templates/default/classes/' . $class . '.php')) {
         include('templates/default/classes/' . $class . '.php');
         if ( method_exists('lC_' . ucfirst($_module) . '_Admin_' . $class, $action) ) {
