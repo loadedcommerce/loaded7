@@ -185,3 +185,11 @@ quick_add_special = Specials
 quick_add_manufacturer = Manufacturers
 quick_add_banner = Banners
 quick_add_newsletter = Newsletters
+
+messaging_compose = Compose
+messaging_inbox = Inbox
+messaging_community_inbox = Community Inbox
+messaging_loaded_messages = Loaded Messages
+messaging_sent = Sent
+messaging_drafts = Drafts
+messaging_trash = Trash

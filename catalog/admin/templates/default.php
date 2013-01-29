@@ -176,7 +176,14 @@
         
         <div id="searchContainer" style="display:none;">
           <section>
-          Search
+            <div id="searchContainerLinks" class="megasearch">
+              <ul class="inputs">
+                <li>
+                  <span class="icon-search mid-margin-left"></span>
+                  <input id="megasearch" class="input-unstyled" type="text" autocomplete="off" placeholder="Search" value="" name="megasearch">
+                </li>
+              </ul>
+            </div>
           </section>
         </div>      
         
@@ -231,7 +238,49 @@
 
         <div id="messagesContainer" style="display:none;">
           <section>
-          Messages
+            <div id="messageContainerLinks">
+              <ul class="list spaced">
+                <li>
+                  <a href="index.php" class="list-link white-link-with-pad">
+                    <span class="icon-pencil icon-white icon-pad-right"></span> <?php echo $lC_Language->get('messaging_compose'); ?>
+                  </a>
+                </li>
+                <li>
+                  <span class="list-count">3</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <span class="icon-folder icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_inbox'); ?>
+                  </a>
+                </li>
+                <li>
+                  <span class="list-count">23</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <span class="icon-users icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_community_inbox'); ?>
+                  </a>
+                </li>
+                <li>
+                  <span class="list-count">4</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <span class="icon-warning icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_loaded_messages'); ?>
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <span class="icon-arrow icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_sent'); ?>
+                  </a>
+                </li>
+                <li>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <span class="icon-folder icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_drafts'); ?>
+                  </a>
+                </li>
+                <li>
+                  <span class="list-count">7</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <span class="icon-trash icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_trash'); ?>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </section>
         </div> 
                 

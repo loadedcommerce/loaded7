@@ -959,12 +959,18 @@ li.message-menu {
 			border-top: 1px dotted #cccccc;
 			border-bottom: 1px dotted #cccccc;
 		}
+    /* added for search, quick add, and messaging menus - start */
     .list > li > .white-link-with-pad {
       color: white;
       font-size: 14px !important;
       font-weight: bold;
       padding: 18px 0 18px 15px !important;
     }
+    .list > li > span { color: white; }
+    .icon-pad-right { padding-right: 8px; }
+    .icon-pad-left { padding-left: 8px; }
+    .megasearch { padding: 15px 10px 15px 10px; border-bottom: 1px dotted #cccccc; }
+    /* added for search, quick add, and messaging menus - end */
 
 /* Blocks list */
 .blocks-list {
