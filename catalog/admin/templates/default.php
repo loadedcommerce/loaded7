@@ -176,14 +176,21 @@
         
         <div id="searchContainer" style="display:none;">
           <section>
-            <div id="searchContainerLinks" class="megasearch">
-              <ul class="inputs">
-                <li>
-                  <span class="icon-search mid-margin-left"></span>
-                  <input id="megasearch" class="input-unstyled" type="text" autocomplete="off" placeholder="Search" value="" name="megasearch">
-                </li>
-              </ul>
-            </div>
+            <div id="searchContainerInput" class="megaSearch">
+              <form name="megaSearch" action="megaSearch" method="post">
+                <ul class="inputs">
+                  <li>
+                    <span class="icon-search mid-margin-left"></span>
+                    <input class="input-unstyled" type="text" onkeyup="search(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q">
+                  </li>
+                </ul>
+              </form>
+            </div>        
+            <div id="searchResults">
+              <?php                                
+                // search class call goes here
+              ?>
+            </div>            
           </section>
         </div>      
         

@@ -193,3 +193,5 @@ messaging_loaded_messages = Loaded Messages
 messaging_sent = Sent
 messaging_drafts = Drafts
 messaging_trash = Trash
+
+search_placeholder = Search

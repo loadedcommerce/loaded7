@@ -969,7 +969,7 @@ li.message-menu {
     .list > li > span { color: white; }
     .icon-pad-right { padding-right: 8px; }
     .icon-pad-left { padding-left: 8px; }
-    .megasearch { padding: 15px 10px 15px 10px; border-bottom: 1px dotted #cccccc; }
+    .megaSearch { padding: 15px 10px 15px 10px; border-bottom: 1px dotted #cccccc; }
     /* added for search, quick add, and messaging menus - end */
 
 /* Blocks list */
