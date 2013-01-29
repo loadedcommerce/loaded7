@@ -25,7 +25,9 @@ $getPackageContents = lC_Updates_Admin::getPackageContents();
 $findPackageContents = lC_Updates_Admin::findPackageContents('osc'); 
 */
 
-$hasUpdate = false;
+$hasUpdate = true;
+$from_version = '7.0.0.1.1';
+$to_version = '7.0.0.1.2';
 ?>
 <!-- Main content -->
 <section role="main" id="main">
@@ -50,11 +52,6 @@ $hasUpdate = false;
 
   </style>
   
-    <?php
-    echo '[' . SERVICE_SESSION_EXPIRATION_TIME . ']<br>';
-    echo '[' . STORE_SESSIONS . ']<br>';
-  ?>
-  
   <div class="columns small-margin-left large-margin-right">
   
     <div id="versionContainer" class="six-columns twelve-columns-tablet">
@@ -66,7 +63,8 @@ $hasUpdate = false;
           </li>
           <li>
             <span class="before" style="padding-right:9px;">Latest Version</span><strong>7.0.0.1.2</strong><span class="after">released 01/25/2013</span>
-          </li>         
+          </li>   
+      
         </ul>        
       </fieldset> 
       <div class="button-set">
@@ -163,6 +161,13 @@ $hasUpdate = false;
  
   </div>
 </section>
+
+<style>
+#updateProgressContainer { margin-left:5%; }
+#updateProgressContainer > div { margin: 0 0 10px 0; }
+#updateProgressContainer .update-text {  margin-left:10px; }
+#updateTitle > span > strong { }
+</style>
 <?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <!-- Main content end -->
 <script>
@@ -179,7 +184,65 @@ function undoUpdate() {
   alert('Derp!');
 }
 function installUpdate() {
-  alert('Yea Yea keep your shirt on!!');
+  var fromVersion = '<?php echo $from_version; ?>';
+  var toVersion = '<?php echo $to_version; ?>';
+  var loader = '<span class="icon-right icon-blue margin-left margin-right"></span><span class="loader"></span>';
+  var done = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-tick icon-green margin-left margin-right"></span>';
+  var error = '<span class="icon-cross icon-red"></span>';
+  // clear the li for progress info
+  $('#version-ul li:first-child').html('<span class="before" style="padding-right:9px;">Latest Version</span><strong>' + toVersion + '</strong><span class="after">released 01/25/2013</span>'); 
+  $('#version-ul li:last-child').html('<span id="updateProgressContainer" style="display:none;"></span>'); 
+  
+  $('#versionContainer .fieldset').removeClass('orange-gradient');
+  $('#version-ul').addClass('margin-bottom');
+  $('#version-ul li:last-child').removeClass('red').attr('style', 'padding-top:0');
+  $('#updateProgressContainer').delay(500).slideDown('slow');
+
+  //step 1
+  __showStep(1,0);
+  setTimeout(function() { 
+    __showStep(2,0); 
+    setTimeout(function() { __showStep(2,1); }, 3000);
+  
+  }, 3000);
+  
+//  alert('Yea Yea keep your shirt on!!');
+}
+
+function __showStep(step, fini) {
+  var loader = '<span class="icon-right icon-blue margin-left margin-right"></span><span class="loader"></span>';
+  var done = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-tick icon-green margin-left margin-right"></span>';
+  var error = '<span class="icon-cross icon-red"></span>';
+
+  var html1 = '<span class="update-text">Backing up Files and Database</span>';
+  var html2 = '<span class="update-text">Retrieving Update from Server</span>';
+
+  if (step == 1) {
+    if (fini == 1) {
+      $('#updateProgressContainer').html('<div>' + done + html1 +  '</div>');
+    } else {
+      $('#updateProgressContainer').html('<div>' + loader + html1 + '</div>');  
+    }
+  }  
+  
+  if (step == 2) {
+    if (fini == 1) {
+      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>');
+    } else {
+      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + loader + html2 + '</div>');
+    }
+  }   
+  
+  return true;
+}
+
+function sleep() {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > 5000){
+      break;
+    }
+  }
 }
 
 $(document).ready(function() {
