@@ -314,6 +314,46 @@
         </div>
       </div>
       
+      <div id="recentContainer">
+        <section>
+          <ul class="title-menu">
+            <li>Recent Events</li>
+          </ul>
+          <ul class="title-menu-2">
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 2 customers created
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 1 new order
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 1 new review
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 3 products created
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;margin:0 3px 0 -3px;">&#128190;</div> 3 products updated
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;margin:0 3px 0 -3px;">&#128190;</div> 2 specials updated
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 1 new coupon created
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 1 page created
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 2 carts created
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;margin:0 3px 0 -3px;">&#128190;</div> 1 page updated
+            </li>
+          </ul>
+        </section>
+      </div>
+      
       <footer id="menu-footer">
         <p class="w-mark"></p>
       </footer>      
