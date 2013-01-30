@@ -311,4 +311,44 @@ function search(q) {
     
   );
 }
+
+$("#li-search").click(function() {
+  var addOpen = $('#addContainer').is(':visible');
+  var msgOpen = $('#messagesContainer').is(':visible');
+  if (addOpen) {
+    $('#li-add').removeClass("current");
+    $('#addContainer').hide();
+  }
+  if(msgOpen) {
+    $('#li-messages').removeClass("current");
+    $('#messagesContainer').hide();
+  }
+});
+
+$("#li-add").click(function() {
+  var srcOpen = $('#searchContainer').is(':visible');
+  var msgOpen = $('#messagesContainer').is(':visible');
+  if (srcOpen) {
+    $('#li-search').removeClass("current");
+    $('#searchContainer').hide();
+  }
+  if (msgOpen) {
+    $('#li-messages').removeClass("current");
+    $('#messagesContainer').hide();
+  }
+});
+
+$("#li-messages").click(function() {
+  var srcOpen = $('#searchContainer').is(':visible');
+  var addOpen = $('#addContainer').is(':visible');
+  if (srcOpen) {
+    $('#li-search').removeClass("current");
+    $('#searchContainer').hide();
+  }
+  if (addOpen) {
+    $('#li-add').removeClass("current");
+    $('#addContainer').hide();
+  }
+});
+
 </script>
