@@ -351,4 +351,22 @@ $("#li-messages").click(function() {
   }
 });
 
+$("#li-settings").click(function() {
+  var srcOpen = $('#searchContainer').is(':visible');
+  var addOpen = $('#addContainer').is(':visible');
+  var msgOpen = $('#messagesContainer').is(':visible');
+  if (srcOpen) {
+    $('#li-search').removeClass("current");
+    $('#searchContainer').hide();
+  }
+  if (addOpen) {
+    $('#li-add').removeClass("current");
+    $('#addContainer').hide();
+  }
+  if (msgOpen) {
+    $('#li-messages').removeClass("current");
+    $('#messagesContainer').hide();
+  }
+});
+
 </script>
