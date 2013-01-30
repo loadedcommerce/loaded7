@@ -2730,7 +2730,7 @@ li.message-menu {
 	}
 	.calendar-menu > li,
 	li.calendar-menu {
-		padding: 10px 10px 10px 50px;
+		padding: 10px 10px 0 50px !important;
 		font-size: 13px;
 		line-height: 16px;
 		font-weight: normal;

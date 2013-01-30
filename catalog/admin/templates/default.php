@@ -186,11 +186,7 @@
                 </ul>
               </form>
             </div>        
-            <div id="searchResults">
-              <?php                                
-                // search class call goes here
-              ?>
-            </div>            
+            <div id="searchResults"></div>            
           </section>
         </div>      
         

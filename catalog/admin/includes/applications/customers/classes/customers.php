@@ -57,6 +57,8 @@ class lC_Customers_Admin {
       $sWhere = " WHERE c.customers_lastname LIKE '%" . $_GET['sSearch'] . "%' OR " .
                        "c.customers_firstname LIKE '%" . $_GET['sSearch'] . "%' OR " .
                        "c.customers_email_address LIKE '%" . $_GET['sSearch'] . "%' ";
+    } else if (isset($_GET['cSearch']) && $_GET['cSearch'] != null) {
+      $sWhere = " WHERE c.customers_id = '" . $_GET['cSearch'] . "' ";
     }
 
     /* Total Filtered Records */
