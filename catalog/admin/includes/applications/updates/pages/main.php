@@ -84,7 +84,7 @@ $to_date = '01/25/2013';
           ?>
           <a id="install-update" href="javascript://" onclick="installUpdate();" class="button">
             <span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span>
-            <?php echo $lC_Language->get('button_install_update'); ?>Install Update
+            <?php echo $lC_Language->get('button_install_update'); ?>
           </a>
           <?php 
         } else {
