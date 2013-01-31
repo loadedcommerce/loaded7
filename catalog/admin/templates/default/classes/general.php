@@ -201,9 +201,8 @@ class lC_General_Admin {
       
     } else {
       
-      // we have nothing being sent from search field, send back empty <ul>
-      $result['html'] = '<ul class="big-menu collapsible as-accoridion black-gradient">' . "\n";      
-      $result['html'] .= '</ul>' . "\n";
+      // we have nothing being sent from search field 
+      $result['html'] = '' . "\n";
       
       return $result;
       

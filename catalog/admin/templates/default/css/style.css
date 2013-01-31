@@ -2753,6 +2753,9 @@ li.message-menu {
       text-overflow: ellipsis;
       position: relative;
     }
+    
+/* Quick Add Container */
+.add-container-icon { width:20px; margin:0 auto 0 auto; float:left; }
 
 /* Calendar events menu */
 .calendar-menu {

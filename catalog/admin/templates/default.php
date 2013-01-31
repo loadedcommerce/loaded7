@@ -196,42 +196,77 @@
               <ul class="list spaced">
                 <li>
                   <a href="index.php" class="list-link white-link-with-pad">
-                    <?php echo $lC_Language->get('quick_add_order'); ?>
+                    <div class="add-container-icon"><i class="icon-price-tag icon-white icon-pad-right"></i></div> <div class="float-left"><?php echo $lC_Language->get('quick_add_order'); ?></div>
                   </a>
                 </li>
                 <li>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad">
-                    <?php echo $lC_Language->get('quick_add_customer'); ?>
+                    <div class="add-container-icon">
+                      <i class="icon-user icon-white icon-pad-right"></i>
+                    </div>
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_customer'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>" class="list-link white-link-with-pad">
-                    <?php echo $lC_Language->get('quick_add_category'); ?>
+                    <div class="add-container-icon">
+                      <i class="icon-list icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_category'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>" class="list-link white-link-with-pad">
-                    <?php echo $lC_Language->get('quick_add_product'); ?>
+                    <div class="add-container-icon">
+                      <i class="icon-bag icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_product'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                    <div class="add-container-icon">
+                    <i class="icon-tag icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
                     <?php echo $lC_Language->get('quick_add_special'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>" class="list-link white-link-with-pad">
-                    <?php echo $lC_Language->get('quick_add_manufacturer'); ?>
+                    <div class="add-container-icon">
+                      <i class="icon-printer icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_manufacturer'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>" class="list-link white-link-with-pad">
-                    <?php echo $lC_Language->get('quick_add_banner'); ?>
+                    <div class="add-container-icon">
+                      <i class="icon-flag icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_banner'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>" class="list-link white-link-with-pad">
-                    <?php echo $lC_Language->get('quick_add_newsletter'); ?>
+                    <div class="add-container-icon">
+                      <i class="icon-read icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_newsletter'); ?>
+                    </div>
                   </a>
                 </li>
               </ul>
@@ -273,7 +308,7 @@
                 </li>
                 <li>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
-                    <span class="icon-folder icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_drafts'); ?>
+                    <span class="icon-drawer icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_drafts'); ?>
                   </a>
                 </li>
                 <li>
