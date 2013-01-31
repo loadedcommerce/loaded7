@@ -26,11 +26,10 @@ text_step_4 = Attempting Full File Backup
 text_step_5 = Installing Update
 text_step_success = Update Installation Success!
 text_step_error = Error Performing Update
-text_update_avail - An update is available!
-text_up_to_date - You are up to date!
+text_update_avail = An update is available!
+text_up_to_date = You are up to date!
 text_initializing = Initializing Update Engine
 text_warning_do_not_interrupt = Interrupting the update process may cause unexpected results.
-
 
 button_ok = Ok
 button_install_update = Install Update
