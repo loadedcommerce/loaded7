@@ -61,17 +61,17 @@ class lC_General_Admin {
       }
       
       // build the orders results <li> html for output
-      // return results <li> only if greater than 0 results from orders query  
+      // return <li> only if greater than 0 results from orders query 
       if ($QorderResults > 0) {
         $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="orderSearchResults">' . "\n";
-        $result['html'] .= '    <span><span class="list-count">' . $Qorders->numberOfRows() . '</span><span class="icon-price-tag icon-white icon-pad-right"></span> Orders</span>' . "\n";
+        $result['html'] .= '    <span><span class="list-count">' . $Qorders->numberOfRows() . '</span><span class="icon-price-tag icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_orders') . '</span>' . "\n";
       
         $result['html'] .= '    <ul class="calendar-menu">' . "\n";
         foreach ($QorderResults as $key => $value) { 
           $result['html'] .= '      <li>' . "\n" . 
                              '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'orders&oID=' . (int)$value['orders_id']) . '">' . "\n" .
                              '          <span class="green float-right"><h4>' . $value['text'] . '</h4></span>' . "\n" . 
-                             '          <time class="green" title="Order ID"><b>' . $value['orders_id'] . '</b></time>' . "\n" . 
+                             '          <time class="green" title="[oID]"><b>' . $value['orders_id'] . '</b></time>' . "\n" . 
                              '          ' . $value['customers_name'] . '<small>'  . $value['customers_email_address'] . '</small>' . "\n" . 
                              '        </a>' . "\n" .
                              '      </li>';
@@ -106,10 +106,10 @@ class lC_General_Admin {
       }   
        
       // build the customers results <li> html for output
-      // return results <li> only if greater than 0 results from customers query  
+      // return <li> only if greater than 0 results from customers query  
       if ($QcustomerResults > 0) {
         $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="customerSearchResults">' . "\n";
-        $result['html'] .= '    <span><span class="list-count">' . $Qcustomers->numberOfRows() . '</span><span class="icon-user icon-white icon-pad-right"></span> Customers</span>' . "\n";
+        $result['html'] .= '    <span><span class="list-count">' . $Qcustomers->numberOfRows() . '</span><span class="icon-user icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_customers') . '</span>' . "\n";
       
         $result['html'] .= '    <ul class="calendar-menu">' . "\n";
         foreach ($QcustomerResults as $key => $value) { 
@@ -154,10 +154,10 @@ class lC_General_Admin {
       }
       
       // build the products results <li> html for output
-      // return results <ul> only if greater than 0 results from orders query  
+      // return <li> only if greater than 0 results from products query  
       if ($QproductResults > 0) {
         $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="orderSearchResults">' . "\n";
-        $result['html'] .= '    <span><span class="list-count">' . $Qproducts->numberOfRows() . '</span><span class="icon-price-tag icon-white icon-pad-right"></span> Products</span>' . "\n";
+        $result['html'] .= '    <span><span class="list-count">' . $Qproducts->numberOfRows() . '</span><span class="icon-bag icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_products') . '</span>' . "\n";
       
         $result['html'] .= '    <ul class="calendar-menu">' . "\n";
         foreach ($QproductResults as $key => $value) {
@@ -176,7 +176,7 @@ class lC_General_Admin {
           $result['html'] .= '      <li>' . "\n" . 
                              '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'products=' . (int)$value['products_id'] . '&action=save') . '">' . "\n" .
                              '          <span class="green float-right">' . ($value['has_children'] != 0 ? '<b>(' . $Qvariants[0]['variants'] . ') Variants</b>' : '<h4>' . $lC_Currencies->format($value['products_price']) . '</h4>') . '</span>' . "\n" . 
-                             '          <time class="green" title="Product ID"><h4>' . $value['products_id'] . '</h4></time>' . "\n" . 
+                             '          <time class="green" title="[pID]"><h4>' . $value['products_id'] . '</h4></time>' . "\n" . 
                              '          <span title="' . $value['products_name'] . '">' . substr($value['products_name'], 0, 16) . '...</span>' . ($value['has_children'] != 0 ? '' : '<small>Model: '  . $value['products_model'] . '</small>') . "\n" . 
                              '        </a>' . "\n" .
                              '      </li>';
@@ -186,11 +186,7 @@ class lC_General_Admin {
         $result['html'] .= '  </li>' . "\n";
       } else {
         $result['html'] .= '';
-      }                                                                          
-      
-      //$price = $lC_Currencies->format($Qproducts->value('products_price'));
-      //$products_status = ($Qproducts->valueInt('products_status') === 1);
-      // build products <li>    
+      } 
       
       $result['html'] .= '</ul>' . "\n";
        
@@ -203,6 +199,7 @@ class lC_General_Admin {
       $result['html'] .= '</ul>' . "\n";
       
       return $result;
+      
     }
   }
 }
