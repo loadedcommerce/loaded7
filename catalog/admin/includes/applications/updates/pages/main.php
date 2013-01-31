@@ -28,6 +28,8 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
 $hasUpdate = true;
 $from_version = '7.0.0.1.1';
 $to_version = '7.0.0.1.2';
+$from_date = '01/15/2013';
+$to_date = '01/25/2013';
 ?>
 <!-- Main content -->
 <section role="main" id="main">
@@ -36,53 +38,60 @@ $to_version = '7.0.0.1.2';
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   </hgroup>
   <style>
-  #versionContainer .stats > li { padding: 0 1%; }
-  #versionContainer .stats > li:first-child { margin-top: -5px; }
-  #versionContainer .stats > li:last-child { padding-top: 25px; }
-  #versionContainer .stats > li > strong { display: inline; float:none; position:relative; top:-13px; left:14%; }
-  #versionContainer .stats .before { float:left; }
-  #versionContainer .stats .after { float:right; }
   #versionContainer .fieldset { padding-bottom:1px; }
-  #version-ul > span .green { color:#009900; }
-  #version-ul > span .red { color:#CC0000; }  
-  #versionContainer .update-text { text-align:center; }
   #versionContainer .legend { font-weight:bold; font-size: 1.1em; }
+  #versionContainer .update-text { text-align:center; }
   #versionContainer .cancel-text { text-align:center; margin-top:20px; font-size:.9em; }
-  
-  #versionContainer .buttonset { text-align:center; }
-
+  #versionContainer .buttonset { text-align:center; padding-top:5px; padding-bottom:10px; }
+  #versionContainer table { width:100%; margin-top:-14px; margin-bottom:19px; }
+  #versionContainer table th { width:33%; padding:5px; font-weight:normal; font-size:1.1em; }
+  #versionContainer table td { width:33%; padding:5px; font-size:1.1em; }
+  #versionContainer table .before { text-align:left; }
+  #versionContainer table .version { font-size:16px; text-align:center; font-weight:bold; font-size:2em; }
+  #versionContainer table .after { text-align:right; }
+  #versionContainer table .green { color:#009900; }
+  #versionContainer table .red { color:#CC0000; } 
+  #versionContainer table .hr{ background-color:#ccc; height:1px; border:0px; margin:10px 0 12px 0;} 
   </style>
   
-  <div class="columns small-margin-left large-margin-right">
-  
+  <div id="blockContainer" class="columns small-margin-left large-margin-right">
+
     <div id="versionContainer" class="six-columns twelve-columns-tablet">
       <fieldset class="fieldset <?php echo ($hasUpdate) ? 'orange-gradient' : ''; ?>">
-        <legend class="legend">Version Info</legend>
-        <ul id="version-ul" class="stats">
-          <li>
-            <span class="before">Current Version</span><strong>7.0.0.1.1</strong><span class="after">released 01/15/2013</span>
-          </li>
-          <li>
-            <span class="before" style="padding-right:9px;">Latest Version</span><strong>7.0.0.1.2</strong><span class="after">released 01/25/2013</span>
-          </li>   
-      
-        </ul>        
+        <legend class="legend"><?php echo $lC_Language->get('heading_legend_version_info'); ?></legend>
+        <table id="version-table">
+          <thead>
+            <tr>
+              <th class="before"><?php echo $lC_Language->get('text_current_version'); ?></th>
+              <th class="version"><?php echo $from_version; ?></th>
+              <th class="after"><?php echo sprintf($lC_Language->get('text_released'), $from_date); ?></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="3"><div class="hr"></div></td></tr>
+            <tr>
+              <td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td>
+              <td class="version"><?php echo $to_version; ?></td>
+              <td class="after"><?php echo sprintf($lC_Language->get('text_released'), $to_date); ?></td>
+            </tr>  
+          </tbody>            
+        </table>
       </fieldset> 
-      <p id="updateText" class="update-text big-text"><?php echo ($hasUpdate) ? 'An update is available!' : 'You are up to date!'; ?></p>
+      <p id="updateText" class="update-text big-text"><?php echo ($hasUpdate) ? $lC_Language->get('text_update_avail') : $lC_Language->get('text_up_to_date'); ?></p>
       <p id="updateButtonset" class="buttonset">
         <?php 
         if ($hasUpdate) {
           ?>
           <a id="install-update" href="javascript://" onclick="installUpdate();" class="button">
             <span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span>
-            Install Update
+            <?php echo $lC_Language->get('button_install_update'); ?>Install Update
           </a>
           <?php 
         } else {
           ?>
           <a id="check-again" href="javascript://" onclick="checkForUpdates();" class="button">
             <span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span>
-            <?php echo $lC_Language->get('text_check_again'); ?>
+            <?php echo $lC_Language->get('button_check_again'); ?>
           </a>
           <?php
         }
@@ -90,59 +99,59 @@ $to_version = '7.0.0.1.2';
       </p>
     </div>
 
-
     <style>
-    #toolsButtonSet { margin: 21px 0 7px 30px; }  
-    #toolsButtonSet .re-install{ margin: 0 20px 0 0; }  
-    #toolsButtonSet .download-zip { margin:0px 20px 0 20px; }  
-    #toolsButtonSet .undo-last { margin:0 20px; }  
-    #lastCheckedContainer { margin:0 0 0 30px; }  
-    #lastCheckedContainer a { margin:0 10px 10px 10px; }  
     #toolsContainer .legend { font-weight:bold; font-size: 1.1em; }
+    #toolsContainer table { width:100%; margin-top:-14px; }
     </style>    
     <div id="toolsContainer" class="six-columns twelve-columns-tablet">
       <fieldset class="fieldset">
-        <legend class="legend">Tools</legend>
-        <div id="lastCheckedContainer">
-          <span id="updateCheckText"><?php echo $lC_Language->get('text_last_checked') . ' ' . lC_DateTime::getLong($lastChecked, TRUE); ?></span>
-        </div>
-        <div id="toolsButtonSet">
-          <a id="reinstall" href="javascript://" onclick="reinstallUpdate();" class="button re-install">
-            <span class="button-icon orange-gradient glossy"><span class="icon-redo"></span></span>
-            Re-install Now
-          </a>               
-          <a id="download" href="javascript://" onclick="downloadZip();" class="button download-zip">
-            <span class="button-icon green-gradient glossy"><span class="icon-download"></span></span>
-            Download ZIP
-          </a>
-          <a id="undo" href="javascript://" onclick="undoUpdate();" class="button undo-last">
-            <span class="button-icon red-gradient glossy"><span class="icon-undo"></span></span>
-            Undo Last Update
-          </a>
-        </div>
+        <legend class="legend"><?php echo $lC_Language->get('heading_legend_tools'); ?></legend>
+        <table id="toolsButtonSet">
+          <tr><td colspan="3"><?php echo $lC_Language->get('text_last_checked') . ' ' . lC_DateTime::getLong($lastChecked, TRUE); ?></td></tr>
+          <tr><td>&nbsp;</td></tr>
+          <tr>
+            <td align="left">
+              <a id="reinstall" href="javascript://" onclick="reinstallUpdate();" class="button re-install">
+                <span class="button-icon orange-gradient glossy"><span class="icon-redo"></span></span>
+                <?php echo $lC_Language->get('button_reinstall_update'); ?>
+              </a>               
+            </td>
+            <td align="center">
+              <a id="download" href="javascript://" onclick="downloadZip();" class="button download-zip">
+                <span class="button-icon blue-gradient glossy"><span class="icon-download"></span></span>
+                <?php echo $lC_Language->get('button_download_zip'); ?>
+              </a>
+            </td>
+            <td align="right">
+              <a id="undo" href="javascript://" onclick="undoUpdate();" class="button undo-last">
+                <span class="button-icon red-gradient glossy"><span class="icon-undo"></span></span>
+                <?php echo $lC_Language->get('button_undo_last_update'); ?>
+              </a>
+            </td>
+          </tr>
+        </table>
       </fieldset>    
     </div>
-  
-
 
     <style>
+    #historyContainer .legend { font-weight:bold; font-size: 1.1em; }
+
     .dataColAction { text-align: left; }
     .dataColResult { text-align: left; }
     .dataColUser { text-align: left; }
     .dataColTime { text-align: left; }
-    #historyContainer .legend { font-weight:bold; font-size: 1.1em; }
     </style>  
     <div id="historyContainer" class="twelve-columns-tablet">
       <fieldset class="fieldset">
-        <legend class="legend no-margin-bottom">History</legend>
+        <legend class="legend no-margin-bottom"><?php echo $lC_Language->get('heading_legend_history'); ?></legend>
         <form name="batch" id="batch" action="#" method="post">
           <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
             <thead>
               <tr>
-                <th scope="col" class="align-left">Action</th>
-                <th scope="col" class="align-left">Result</th>
-                <th scope="col" class="align-left">User</th>
-                <th scope="col" class="align-left">Time Stamp</th>
+                <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_action'); ?></th>
+                <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_result'); ?></th>
+                <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_user'); ?></th>
+                <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_timestamp'); ?></th>
               </tr>
             </thead>
             <tbody>
@@ -165,7 +174,6 @@ $to_version = '7.0.0.1.2';
 #updateProgressContainer { margin-left:5%; }
 #updateProgressContainer > div { margin: 0 0 10px 0; }
 #updateProgressContainer .update-text {  margin-left:10px; }
-#updateTitle > span > strong { }
 </style>
 <?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <!-- Main content end -->
@@ -189,18 +197,16 @@ function installUpdate() {
   var done = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-tick icon-green margin-left margin-right"></span>';
   var error = '<span class="icon-cross icon-red"></span>';
   $('#versionContainer .fieldset').removeClass('orange-gradient');
-  // clear the li for progress info  
-  $('#version-ul li:first-child').html('<span class="before" style="padding-right:9px;">Latest Version</span><strong>' + toVersion + '</strong><span class="after">released 01/25/2013</span>'); 
-  $('#version-ul li:last-child').html('<span id="updateProgressContainer" style="display:none;"></span>');             
-  $('#version-ul li:last-child').removeClass('red').attr('style', 'padding-top:0');
+  $('#version-table > tbody').empty();
+  $('#version-table').css("margin-bottom", "10px");
+  $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td><td class="version">' + toVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_latest_version'), $to_version); ?></td></tr>').addClass('red'); 
+  $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
   // start the update process
-  $('.update-text').html('Initializing Update Engine').attr('style', 'margin-left:-24px').blink({ maxBlinks: 5, blinkPeriod: 1000 });
   $('#updateButtonset').slideUp();
+  $('.update-text').html('<p><?php echo $lC_Language->get('text_initializing'); ?></p>').attr('style', 'text-align:center').blink({ maxBlinks: 5, blinkPeriod: 1000 });
 
   setTimeout(function() { 
     __setup(); 
-      
-      
 
     __showStep(1,0);
     setTimeout(function() { 
@@ -211,15 +217,10 @@ function installUpdate() {
           __showStep(3,1);
       
         }, 3000);
-      
       }, 3000);
-    
     }, 3000);
-    
-    
   }, 3000);
   
-//  alert('Yea Yea keep your shirt on!!');
 }
 
 function __showStep(step, fini) {
@@ -227,10 +228,13 @@ function __showStep(step, fini) {
   var done = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-tick icon-green margin-left margin-right"></span>';
   var error = '<span class="icon-cross icon-red"></span>';
 
-  var html1 = '<span class="update-text">Backing up Files and Database</span>';
-  var html2 = '<span class="update-text">Retrieving Update from Server</span>';
-  var html3 = '<span class="update-text">Installing Update</span>';
-  var html4 = '<span class="update-text">Update Installation Success!</span>';
+  var html1 = '<span class="update-text"><?php echo $lC_Language->get('text_step_1'); ?></span>';
+  var html2 = '<span class="update-text"><?php echo $lC_Language->get('text_step_2'); ?></span>';
+  var html3 = '<span class="update-text"><?php echo $lC_Language->get('text_step_3'); ?></span>';
+  var html4 = '<span class="update-text"><?php echo $lC_Language->get('text_step_4'); ?></span>';
+  var html4 = '<span class="update-text"><?php echo $lC_Language->get('text_step_5'); ?></span>';
+  var html4 = '<span class="update-text"><?php echo $lC_Language->get('text_step_success'); ?></span>';
+  var html4 = '<span class="update-text"><?php echo $lC_Language->get('text_step_error'); ?></span>';
         
   if (step == 1) {
     if (fini == 1) {
@@ -262,34 +266,24 @@ function __showStep(step, fini) {
 function __setup() {
   $('.update-text').empty();
   $('#version-ul').addClass('margin-bottom');
-  //$('#updateProgressContainer').html(__cancelBlock());
   $('#updateProgressContainer').delay(500).slideDown('slow');
 }
 
 function __cancelBlock() {
-  return '<p class="cancel-text intro">Canceling may cause unexpected results</p><p class="buttonset"><a id="cancel" href="javascript://" onclick="cancelUpdate();" class="button cancel"><span class="button-icon red-gradient glossy"><span class="icon-cross"></span></span>Cancel</a></p>';
+  return '<p class="cancel-text intro"><?php echo $lC_Language->get('text_warning_do_not_interrupt'); ?></p>';
 }
 
 function __okBlock() {
-  return '<p class="buttonset large-margin-top"><a id="ok" href="javascript://" onclick="location.reload(true);" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span>Ok</a></p>';
-}
-
-function sleep() {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > 5000){
-      break;
-    }
-  }
+  return '<p class="buttonset large-margin-top"><a id="ok" href="javascript://" onclick="location.reload(true);" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span><?php echo $lC_Language->get('button_ok'); ?></a></p>';
 }
 
 $(document).ready(function() {
   var hasUpdate = '<?php echo ($hasUpdate) ? true : false; ?>';
   if (hasUpdate) {
-    $('#version-ul > li').addClass('red');
-    $('.update-button').attr('style', 'padding-left:3%;');
+    $('#version-table td').addClass('red');
+    $('#version-table th').addClass('red');
   } else {
-    $('#version-ul > li').addClass('green');
+    $('.version').addClass('green');
   }  
 });
 </script>

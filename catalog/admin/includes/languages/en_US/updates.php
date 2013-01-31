@@ -11,11 +11,39 @@
 
 heading_title = Core Updates
 
-button_update_now = Update Now
-button_download = Download
+heading_legend_version_info = Version Info
+heading_legend_tools = Tools
+heading_legend_history = History
 
+text_latest_version = Latest Version
+text_current_version = Current Version
+text_released = released %s
 text_last_checked = Last checked on
-text_check_again = Check Again
+text_step_1 = Retrieving Update Package
+text_step_2 = Verifying Writeable Permissions 
+text_step_3 = Creating Database Backup
+text_step_4 = Attempting Full File Backup
+text_step_5 = Installing Update
+text_step_success = Update Installation Success!
+text_step_error = Error Performing Update
+text_update_avail - An update is available!
+text_up_to_date - You are up to date!
+text_initializing = Initializing Update Engine
+text_warning_do_not_interrupt = Interrupting the update process may cause unexpected results.
+
+
+button_ok = Ok
+button_install_update = Install Update
+button_reinstall_update = Re-install Update
+button_download_zip = Download ZIP
+button_undo_last_update = Undo Last Update
+button_check_again = Check Again
+
+table_heading_action = Action
+table_heading_result = Result
+table_heading_user = User
+table_heading_timestamp = Time Stamp
+
 text_updated_version_available = An updated version of Loaded Commerce is available.
 text_backup_warning = <b>Important:</b> If updating manually, please make sure to backup your database and files beforehand.  Automatic updates already include database and file backups. 
 text_update to = You can update to %s automatically or download the package and install it manually.
