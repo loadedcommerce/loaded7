@@ -23,7 +23,7 @@ class lC_General_Admin {
   * @return array
   */
   public static function find($search) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Currencies;
     
     if ($search) {
       // start building the main <ul>
@@ -48,7 +48,8 @@ class lC_General_Admin {
                                           or convert(`customers_state` using utf8) regexp '" . $search . "' 
                                           or convert(`customers_country` using utf8) regexp '" . $search . "' 
                                           or convert(`customers_email_address` using utf8) regexp '" . $search . "' 
-                                          or convert(`customers_telephone` using utf8) regexp '" . $search . "') group by orders_id;");
+                                          or convert(`customers_telephone` using utf8) regexp '" . $search . "') 
+                                    group by orders_id;");
                                                                             
       $Qorders->bindTable(':table_orders', TABLE_ORDERS);
       $Qorders->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
@@ -59,12 +60,12 @@ class lC_General_Admin {
         $QorderResults[] = $Qorders->toArray();
       }
       
-      // build orders results <li>
-      $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="orderSearchResults">' . "\n";
-      $result['html'] .= '    <span><span class="list-count">' . $Qorders->numberOfRows() . '</span><span class="icon-price-tag icon-white icon-pad-right"></span> Orders</span>' . "\n";
-      
-      // return results <ul> only if greater than 0 results from orders query  
+      // build the orders results <li> html for output
+      // return results <li> only if greater than 0 results from orders query  
       if ($QorderResults > 0) {
+        $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="orderSearchResults">' . "\n";
+        $result['html'] .= '    <span><span class="list-count">' . $Qorders->numberOfRows() . '</span><span class="icon-price-tag icon-white icon-pad-right"></span> Orders</span>' . "\n";
+      
         $result['html'] .= '    <ul class="calendar-menu">' . "\n";
         foreach ($QorderResults as $key => $value) { 
           $result['html'] .= '      <li>' . "\n" . 
@@ -75,10 +76,12 @@ class lC_General_Admin {
                              '        </a>' . "\n" .
                              '      </li>';
         }
+        
         $result['html'] .= '    </ul>' . "\n";
+        $result['html'] .= '  </li>' . "\n";
+      } else {
+        $result['html'] .= '';
       }
-      
-      $result['html'] .= '  </li>' . "\n";
         
       // return customer data
       $Qcustomers = array();    
@@ -102,12 +105,12 @@ class lC_General_Admin {
         $QcustomerResults[] = $Qcustomers->toArray();
       }   
        
-      // build customers results <li> 
-      $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="customerSearchResults">' . "\n";
-      $result['html'] .= '    <span><span class="list-count">' . $Qcustomers->numberOfRows() . '</span><span class="icon-user icon-white icon-pad-right"></span> Customers</span>' . "\n";
-      
-      // return results <ul> only if greater than 0 results from customers query  
+      // build the customers results <li> html for output
+      // return results <li> only if greater than 0 results from customers query  
       if ($QcustomerResults > 0) {
+        $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="customerSearchResults">' . "\n";
+        $result['html'] .= '    <span><span class="list-count">' . $Qcustomers->numberOfRows() . '</span><span class="icon-user icon-white icon-pad-right"></span> Customers</span>' . "\n";
+      
         $result['html'] .= '    <ul class="calendar-menu">' . "\n";
         foreach ($QcustomerResults as $key => $value) { 
           $result['html'] .= '      <li>' . "\n" . 
@@ -117,13 +120,76 @@ class lC_General_Admin {
                              '        </a>' . "\n" .
                              '      </li>';
         }
+        
         $result['html'] .= '    </ul>' . "\n";
-      }      
+        $result['html'] .= '  </li>' . "\n";
+      } else {
+        $result['html'] .= '';
+      }
       
-      $result['html'] .= '  </li>' . "\n";
+      // return products data
+      $Qproducts = $lC_Database->query("select p.products_id, 
+                                               p.parent_id, 
+                                               p.products_price, 
+                                               p.products_model, 
+                                               p.has_children, 
+                                               pd.products_name, 
+                                               pd.products_keyword 
+                                          from :table_products p  
+                                     left join :table_products_description pd 
+                                            on (p.products_id = pd.products_id) 
+                                         where (convert(`products_name` using utf8) regexp '" . $search . "' 
+                                            or convert(`products_model` using utf8) regexp '" . $search . "' 
+                                            or convert(`products_keyword` using utf8) regexp '" . $search . "') 
+                                      order by pd.products_name;");
+
+      $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
+      $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+      $Qproducts->bindInt(':language_id', $lC_Language->getID());
+      $Qproducts->execute();
+
+      // set the products data results as an array
+      while ($Qproducts->next()) {
+        $QproductResults[] = $Qproducts->toArray();
+      }
       
-      // return products data and create the array                                                                          
+      // build the products results <li> html for output
+      // return results <ul> only if greater than 0 results from orders query  
+      if ($QproductResults > 0) {
+        $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="orderSearchResults">' . "\n";
+        $result['html'] .= '    <span><span class="list-count">' . $Qproducts->numberOfRows() . '</span><span class="icon-price-tag icon-white icon-pad-right"></span> Products</span>' . "\n";
       
+        $result['html'] .= '    <ul class="calendar-menu">' . "\n";
+        foreach ($QproductResults as $key => $value) {
+          // check for product variants if product has children
+          if ($value['has_children'] > 0) {
+            $QvariantsCount = $lC_Database->query("select count(products_id) as variants from :table_products where parent_id = '" . (int)$value['products_id'] . "'");
+            $QvariantsCount->bindTable(':table_products', TABLE_PRODUCTS);
+            $QvariantsCount->execute();
+            
+            // set the variants count results as an array
+            while ($QvariantsCount->next()) {
+              $Qvariants[] = $QvariantsCount->toArray();
+            }
+          }
+          
+          $result['html'] .= '      <li>' . "\n" . 
+                             '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'products=' . (int)$value['products_id'] . '&action=save') . '">' . "\n" .
+                             '          <span class="green float-right">' . ($value['has_children'] != 0 ? '<b>(' . $Qvariants[0]['variants'] . ') Variants</b>' : '<h4>' . $lC_Currencies->format($value['products_price']) . '</h4>') . '</span>' . "\n" . 
+                             '          <time class="green" title="Product ID"><h4>' . $value['products_id'] . '</h4></time>' . "\n" . 
+                             '          <span title="' . $value['products_name'] . '">' . substr($value['products_name'], 0, 16) . '...</span>' . ($value['has_children'] != 0 ? '' : '<small>Model: '  . $value['products_model'] . '</small>') . "\n" . 
+                             '        </a>' . "\n" .
+                             '      </li>';
+        }
+        
+        $result['html'] .= '    </ul>' . "\n";
+        $result['html'] .= '  </li>' . "\n";
+      } else {
+        $result['html'] .= '';
+      }                                                                          
+      
+      //$price = $lC_Currencies->format($Qproducts->value('products_price'));
+      //$products_status = ($Qproducts->valueInt('products_status') === 1);
       // build products <li>    
       
       $result['html'] .= '</ul>' . "\n";
