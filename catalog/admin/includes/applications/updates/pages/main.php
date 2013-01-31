@@ -45,10 +45,11 @@ $to_version = '7.0.0.1.2';
   #versionContainer .fieldset { padding-bottom:1px; }
   #version-ul > span .green { color:#009900; }
   #version-ul > span .red { color:#CC0000; }  
-  #versionContainer .button-set { margin-left:37%; }
-  #versionContainer .update-text { padding:0 0 5% 0; }
-  #versionContainer .update-button { padding-left:1%; }
+  #versionContainer .update-text { text-align:center; }
   #versionContainer .legend { font-weight:bold; font-size: 1.1em; }
+  #versionContainer .cancel-text { text-align:center; margin-top:20px; font-size:.9em; }
+  
+  #versionContainer .buttonset { text-align:center; }
 
   </style>
   
@@ -67,28 +68,26 @@ $to_version = '7.0.0.1.2';
       
         </ul>        
       </fieldset> 
-      <div class="button-set">
-        <div class="update-text big-text"><?php echo ($hasUpdate) ? 'An update is available!' : 'You are up to date!'; ?></div>
-        <div class="update-button">
+      <p id="updateText" class="update-text big-text"><?php echo ($hasUpdate) ? 'An update is available!' : 'You are up to date!'; ?></p>
+      <p id="updateButtonset" class="buttonset">
+        <?php 
+        if ($hasUpdate) {
+          ?>
+          <a id="install-update" href="javascript://" onclick="installUpdate();" class="button">
+            <span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span>
+            Install Update
+          </a>
           <?php 
-          if ($hasUpdate) {
-            ?>
-            <a id="install-update" href="javascript://" onclick="installUpdate();" class="button">
-              <span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span>
-              Install Update
-            </a>
-            <?php 
-          } else {
-            ?>
-            <a id="check-again" href="javascript://" onclick="checkForUpdates();" class="button">
-              <span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span>
-              <?php echo $lC_Language->get('text_check_again'); ?>
-            </a>
-            <?php
-          }
-          ?>      
-        </div>
-      </div>
+        } else {
+          ?>
+          <a id="check-again" href="javascript://" onclick="checkForUpdates();" class="button">
+            <span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span>
+            <?php echo $lC_Language->get('text_check_again'); ?>
+          </a>
+          <?php
+        }
+        ?>      
+      </p>
     </div>
 
 
@@ -192,30 +191,32 @@ function installUpdate() {
   $('#versionContainer .fieldset').removeClass('orange-gradient');
   // clear the li for progress info  
   $('#version-ul li:first-child').html('<span class="before" style="padding-right:9px;">Latest Version</span><strong>' + toVersion + '</strong><span class="after">released 01/25/2013</span>'); 
-  $('#version-ul li:last-child').html('<span id="updateProgressContainer" style="display:none;"></span>'); 
-             
-  $('#version-ul').addClass('margin-bottom');
+  $('#version-ul li:last-child').html('<span id="updateProgressContainer" style="display:none;"></span>');             
   $('#version-ul li:last-child').removeClass('red').attr('style', 'padding-top:0');
-  $('#updateProgressContainer').delay(500).slideDown('slow');
-      
-   
-  $('.update-text').html('Initializing Update Engine').attr('style', 'color:red; margin-left:-14px').blink({ maxBlinks: 60, blinkPeriod: 1000 });
-  
-      
-return false;      
-  //step 1
-  __showStep(1,0);
+  // start the update process
+  $('.update-text').html('Initializing Update Engine').attr('style', 'margin-left:-24px').blink({ maxBlinks: 5, blinkPeriod: 1000 });
+  $('#updateButtonset').slideUp();
+
   setTimeout(function() { 
-    __showStep(2,0); 
+    __setup(); 
+      
+      
+
+    __showStep(1,0);
     setTimeout(function() { 
-      __showStep(3,0); 
+      __showStep(2,0); 
       setTimeout(function() { 
-        __showStep(3,1); 
-    
+        __showStep(3,0); 
+        setTimeout(function() { 
+          __showStep(3,1);
+      
+        }, 3000);
+      
       }, 3000);
     
     }, 3000);
-  
+    
+    
   }, 3000);
   
 //  alert('Yea Yea keep your shirt on!!');
@@ -229,32 +230,48 @@ function __showStep(step, fini) {
   var html1 = '<span class="update-text">Backing up Files and Database</span>';
   var html2 = '<span class="update-text">Retrieving Update from Server</span>';
   var html3 = '<span class="update-text">Installing Update</span>';
-
+  var html4 = '<span class="update-text">Update Installation Success!</span>';
+        
   if (step == 1) {
     if (fini == 1) {
-      $('#updateProgressContainer').html('<div>' + done + html1 +  '</div>');
+      $('#updateProgressContainer').html('<div>' + done + html1 +  '</div>' + __cancelBlock());
     } else {
-      $('#updateProgressContainer').html('<div>' + loader + html1 + '</div>');  
+      $('#updateProgressContainer').html('<div>' + loader + html1 + '</div>' + __cancelBlock());  
     }
   }  
   
   if (step == 2) {
     if (fini == 1) {
-      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>');
+      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>' + __cancelBlock());
     } else {
-      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + loader + html2 + '</div>');
+      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + loader + html2 + '</div>' + __cancelBlock());
     }
   }   
   
   if (step == 3) {
     if (fini == 1) {
-      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>' + '<div>' + done + html3 + '</div>');
+      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>' + '<div>' + done + html3 + '</div><div>' + done + html4 + '</div>' + __okBlock());
     } else {
-      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>' + '<div>' + loader + html3 + '</div>');
+      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>' + '<div>' + loader + html3 + '</div>' + __cancelBlock());
     }
   }   
   
   return true;
+}
+
+function __setup() {
+  $('.update-text').empty();
+  $('#version-ul').addClass('margin-bottom');
+  //$('#updateProgressContainer').html(__cancelBlock());
+  $('#updateProgressContainer').delay(500).slideDown('slow');
+}
+
+function __cancelBlock() {
+  return '<p class="cancel-text intro">Canceling may cause unexpected results</p><p class="buttonset"><a id="cancel" href="javascript://" onclick="cancelUpdate();" class="button cancel"><span class="button-icon red-gradient glossy"><span class="icon-cross"></span></span>Cancel</a></p>';
+}
+
+function __okBlock() {
+  return '<p class="buttonset large-margin-top"><a id="ok" href="javascript://" onclick="location.reload(true);" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span>Ok</a></p>';
 }
 
 function sleep() {

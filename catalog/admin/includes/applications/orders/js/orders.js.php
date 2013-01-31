@@ -11,7 +11,8 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-global $lC_Template, $lC_Language;
+global $lC_Template, $lC_Language, $cSearch;
+$cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '&cSearch=' . $_SESSION['cIDFilter'] : '';
 ?>
 <script>
   $(document).ready(function() {
