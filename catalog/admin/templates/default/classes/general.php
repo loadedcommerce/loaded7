@@ -66,13 +66,15 @@ class lC_General_Admin {
         $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="orderSearchResults">' . "\n";
         $result['html'] .= '    <span><span class="list-count">' . $Qorders->numberOfRows() . '</span><span class="icon-price-tag icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_orders') . '</span>' . "\n";
       
-        $result['html'] .= '    <ul class="calendar-menu">' . "\n";
+        $result['html'] .= '    <ul class="orders-menu">' . "\n";
         foreach ($QorderResults as $key => $value) { 
-          $result['html'] .= '      <li>' . "\n" . 
-                             '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'orders&oID=' . (int)$value['orders_id']) . '">' . "\n" .
-                             '          <span class="green float-right"><h4>' . $value['text'] . '</h4></span>' . "\n" . 
-                             '          <time class="green" title="[oID]"><b>' . $value['orders_id'] . '</b></time>' . "\n" . 
-                             '          ' . $value['customers_name'] . '<small>'  . $value['customers_email_address'] . '</small>' . "\n" . 
+          $result['html'] .= '      <li title="' . $lC_Language->get('order_view_details') . ' ' . $value['orders_id'] . '">' . "\n" . 
+                             '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'orders&oID=' . $value['orders_id']) . '">' . "\n" .
+                             '          <span class="float-right align-right" style="">' . "\n" . 
+                             '            <b class="green">' . $value['orders_id'] . '</b><br />' . "\n" . 
+                             '            ' . $value['text'] . "\n" . 
+                             '          </span>' . "\n" . 
+                             '          <span>' . $value['customers_name'] . '</span><small>'  . $value['customers_email_address'] . '</small>' . "\n" . 
                              '        </a>' . "\n" .
                              '      </li>';
         }
@@ -111,12 +113,12 @@ class lC_General_Admin {
         $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="customerSearchResults">' . "\n";
         $result['html'] .= '    <span><span class="list-count">' . $Qcustomers->numberOfRows() . '</span><span class="icon-user icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_customers') . '</span>' . "\n";
       
-        $result['html'] .= '    <ul class="calendar-menu">' . "\n";
+        $result['html'] .= '    <ul class="customers-menu">' . "\n";
         foreach ($QcustomerResults as $key => $value) { 
-          $result['html'] .= '      <li>' . "\n" . 
-                             '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'customers&cID=' . (int)$value['customers_id']) . '">' . "\n" .
-                             '          <time class="green" title="[cID]"><b>' . $value['customers_id'] . '</b></time>' . "\n" . 
-                             '          ' . $value['customers_firstname'] . ' '  . $value['customers_lastname'] . '<small>'  . $value['customers_email_address'] . '</small>' . "\n" . 
+          $result['html'] .= '      <li title="' . $lC_Language->get('customer_view_details') . ' ' . $value['customers_firstname'] . ' '  . $value['customers_lastname'] . '">' . "\n" . 
+                             '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'customers&cID=' . $value['customers_id']) . '">' . "\n" .
+                             '          <span class="float-right">' . $value['customers_id'] . '</span>' . "\n" . 
+                             '          <span class="green"><b>' . $value['customers_firstname'] . ' '  . $value['customers_lastname'] . '</b></span><small>'  . $value['customers_email_address'] . '</small>' . "\n" . 
                              '        </a>' . "\n" .
                              '      </li>';
         }
@@ -159,11 +161,12 @@ class lC_General_Admin {
         $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="orderSearchResults">' . "\n";
         $result['html'] .= '    <span><span class="list-count">' . $Qproducts->numberOfRows() . '</span><span class="icon-bag icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_products') . '</span>' . "\n";
       
-        $result['html'] .= '    <ul class="calendar-menu">' . "\n";
+        $result['html'] .= '    <ul class="products-menu">' . "\n";
         foreach ($QproductResults as $key => $value) {
           // check for product variants if product has children
           if ($value['has_children'] > 0) {
-            $QvariantsCount = $lC_Database->query("select count(products_id) as variants from :table_products where parent_id = '" . (int)$value['products_id'] . "'");
+            $Qvariants = array();
+            $QvariantsCount = $lC_Database->query("select count(products_id) as variants from :table_products where parent_id = '" . $value['products_id'] . "'");
             $QvariantsCount->bindTable(':table_products', TABLE_PRODUCTS);
             $QvariantsCount->execute();
             
@@ -173,13 +176,17 @@ class lC_General_Admin {
             }
           }
           
-          $result['html'] .= '      <li>' . "\n" . 
-                             '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'products=' . (int)$value['products_id'] . '&action=save') . '">' . "\n" .
-                             '          <span class="green float-right">' . ($value['has_children'] != 0 ? '<b>(' . $Qvariants[0]['variants'] . ') Variants</b>' : '<h4>' . $lC_Currencies->format($value['products_price']) . '</h4>') . '</span>' . "\n" . 
-                             '          <time class="green" title="[pID]"><h4>' . $value['products_id'] . '</h4></time>' . "\n" . 
-                             '          <span title="' . $value['products_name'] . '">' . substr($value['products_name'], 0, 16) . '...</span>' . ($value['has_children'] != 0 ? '' : '<small>Model: '  . $value['products_model'] . '</small>') . "\n" . 
+          $result['html'] .= '      <li title="' . $lC_Language->get('product_view_details') . ' ' . $value['products_name'] . '">' . "\n" . 
+                             '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'products=' . $value['products_id'] . '&action=save') . '">' . "\n" .
+                             '          <span class="float-right">' . "\n" . 
+                             '            ' . ($value['has_children'] != 0 ? '<span title="This product has ' . $Qvariants[0]['variants'] . ' variants">(' . $Qvariants[0]['variants'] . ') <span class="icon-path"></span></span>' : $lC_Currencies->format($value['products_price'])) . '<br />' . "\n" . 
+                             '          </span>' . "\n" . 
+                             '          <time><span class="icon-bag icon-grey icon-pad-left"></span></time>' . "\n" . 
+                             '          <span class="green" title="' . $value['products_name'] . '"><b>' . substr($value['products_name'], 0, 20) . '</b>...</span>' . ($value['has_children'] != 0 ? '' : '<small>Model: '  . $value['products_model'] . '</small>') . "\n" . 
                              '        </a>' . "\n" .
                              '      </li>';
+                             
+          $Qvariants = null;
         }
         
         $result['html'] .= '    </ul>' . "\n";

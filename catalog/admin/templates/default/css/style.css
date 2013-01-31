@@ -2804,6 +2804,161 @@ li.message-menu {
 		li.calendar-menu small {
 			display: block;
 		}
+    
+/* Orders menu */
+.orders-menu {
+  margin: 0;
+  min-height: 0;
+  list-style-type: none;
+  -webkit-text-shadow: none;
+  -moz-text-shadow: none;
+  text-shadow: none;
+  }
+  .orders-menu > li,
+  li.orders-menu {
+    padding: 10px 10px 0 50px !important;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: normal;
+    min-height: 40px;
+    line-height: 14px;
+    }
+    .orders-menu > li > a,
+    li.orders-menu > a {
+      display: block;
+      margin: -10px -10px -10px -50px;
+      padding: 10px 14px 10px 14px;
+      min-height: 40px;
+      color: inherit;
+    }
+    .orders-menu > li time,
+    li.orders-menu time {
+      float: left;
+      display: block;
+      width: 30px;
+      margin-left: -40px;
+      color: #CCCCCC;
+      color: rgba(0, 0, 0, 0.2);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 12px;
+      }
+      .orders-menu > li time > b,
+      li.orders-menu time > b {
+        display: block;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 26px;
+        line-height: 28px;
+        margin-bottom: -3px;
+      }
+    .orders-menu > li small,
+    li.orders-menu small {
+      display: block;
+    }
+        
+/* Customers menu */
+.customers-menu {
+  margin: 0;
+  min-height: 0;
+  list-style-type: none;
+  -webkit-text-shadow: none;
+  -moz-text-shadow: none;
+  text-shadow: none;
+  }
+  .customers-menu > li,
+  li.customers-menu {
+    padding: 10px 10px 0 50px !important;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: normal;
+    min-height: 40px;
+    line-height: 14px;
+    }
+    .customers-menu > li > a,
+    li.customers-menu > a {
+      display: block;
+      margin: -10px -10px -10px -50px;
+      padding: 10px 14px 10px 14px;
+      min-height: 40px;
+      color: inherit;
+    }
+    .customers-menu > li time,
+    li.customers-menu time {
+      float: left;
+      display: block;
+      width: 30px;
+      margin-left: -40px;
+      color: #CCCCCC;
+      color: rgba(0, 0, 0, 0.2);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 12px;
+      }
+      .customers-menu > li time > b,
+      li.customers-menu time > b {
+        display: block;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 26px;
+        line-height: 28px;
+        margin-bottom: -3px;
+      }
+    .customers-menu > li small,
+    li.customers-menu small {
+      display: block;
+    }
+    
+/* Products menu */
+.products-menu {
+  margin: 0;
+  min-height: 0;
+  list-style-type: none;
+  -webkit-text-shadow: none;
+  -moz-text-shadow: none;
+  text-shadow: none;
+  }
+  .products-menu > li,
+  li.products-menu {
+    padding: 10px 10px 0 50px !important;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: normal;
+    min-height: 40px;
+    line-height: 14px;
+    }
+    .products-menu > li > a,
+    li.products-menu > a {
+      display: block;
+      margin: -10px -10px -10px -46px;
+      padding: 10px 14px 10px 24px;
+      min-height: 40px;
+      color: inherit;
+    }
+    .products-menu > li time,
+    li.products-menu time {
+      float: left;
+      display: block;
+      margin-left: -20px;
+      margin-right: 10px;
+      height: 30px;
+      vertical-align: top;
+      color: #CCCCCC;
+      color: rgba(0, 0, 0, 0.2);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 12px;
+      }
+      .products-menu > li time > b,
+      li.products-menu time > b {
+        display: block;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 26px;
+        line-height: 28px;
+        margin-bottom: -3px;
+      }
+    .products-menu > li small,
+    li.products-menu small {
+      display: block;
+    }
 
 /* Messages menu */
 .message-menu {
@@ -2979,7 +3134,7 @@ li.message-menu {
 	.collapsible.big-menu > li > .load,
 	.collapsible li.big-menu > .load,
 	.collapsible .big-menu > li > .load {
-		margin: 16px -15px -16px;
+		margin: 16px -15px -26px;
 		-webkit-box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 		-moz-box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 		box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);

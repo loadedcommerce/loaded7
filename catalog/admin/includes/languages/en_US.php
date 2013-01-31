@@ -195,3 +195,7 @@ messaging_drafts = Drafts
 messaging_trash = Trash
 
 search_placeholder = Search
+
+order_view_details = View details for order number
+customer_view_details = View details for
+product_view_details = View details for
