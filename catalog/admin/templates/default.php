@@ -196,7 +196,7 @@
               <ul class="list spaced">
                 <li>
                   <a href="index.php" class="list-link white-link-with-pad">
-                    <?php echo $lC_Language->get('quick_add_order') . ' (7.0.0.?)'; ?>
+                    <?php echo $lC_Language->get('quick_add_order'); ?>
                   </a>
                 </li>
                 <li>
