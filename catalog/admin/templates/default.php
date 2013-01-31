@@ -280,41 +280,76 @@
               <ul class="list spaced">
                 <li>
                   <a href="index.php" class="list-link white-link-with-pad">
-                    <span class="icon-pencil icon-white icon-pad-right"></span> <?php echo $lC_Language->get('messaging_compose'); ?>
+                    <div class="add-container-icon">
+                      <span class="icon-pencil icon-white icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('messaging_compose'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <span class="list-count">3</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
-                    <span class="icon-folder icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_inbox'); ?>
+                    <div class="add-container-icon">
+                      <span class="icon-folder icon-white icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('messaging_inbox'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <span class="list-count">23</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
-                    <span class="icon-users icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_community_inbox'); ?>
+                    <div class="add-container-icon">
+                      <span class="icon-users icon-white icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('messaging_community_inbox'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <span class="list-count">4</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
-                    <span class="icon-warning icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_loaded_messages'); ?>
+                    <div class="add-container-icon">
+                      <span class="icon-warning icon-white icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('messaging_loaded_messages'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
-                    <span class="icon-arrow icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_sent'); ?>
+                    <div class="add-container-icon">
+                      <span class="icon-arrow icon-white icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('messaging_sent'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
-                    <span class="icon-drawer icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_drafts'); ?>
+                    <div class="add-container-icon">
+                      <span class="icon-drawer icon-white icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('messaging_drafts'); ?>
+                    </div>
                   </a>
                 </li>
                 <li>
                   <span class="list-count">7</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
-                    <span class="icon-trash icon-white icon-pad-right"></span><?php echo $lC_Language->get('messaging_trash'); ?>
+                    <div class="add-container-icon">
+                      <span class="icon-trash icon-white icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('messaging_trash'); ?>
+                    </div>
                   </a>
                 </li>
               </ul>

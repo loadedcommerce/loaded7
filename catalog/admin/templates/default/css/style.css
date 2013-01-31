@@ -2755,7 +2755,7 @@ li.message-menu {
     }
     
 /* Quick Add Container */
-.add-container-icon { width:20px; margin:0 auto 0 auto; float:left; }
+.add-container-icon { width:25px; margin:0 auto 0 auto; float:left; }
 
 /* Calendar events menu */
 .calendar-menu {
