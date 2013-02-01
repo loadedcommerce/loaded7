@@ -2524,6 +2524,40 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>feature_not_available</key>
       <value><![CDATA[Feature not yet available.]]></value>
       <group>general</group>
+    </definition> 
+    
+    <definition>
+      <key>debug_error_log_not_writeable</key>
+      <value><![CDATA[Error: Execution time log file not writeable: %s]]></value>
+      <group>general</group>
+    </definition>     
+    
+    <definition>
+      <key>debug_customer_group</key>
+      <value><![CDATA[Customer Group: [%s] %s]]></value>
+      <group>general</group>
+    </definition>      
+    <definition>
+      <key>debug_current_template</key>
+      <value><![CDATA[Current Template: %s]]></value>
+      <group>general</group>
+    </definition>     
+    <definition>
+      <key>debug_number_of_queries</key>
+      <value><![CDATA[Number of Queries: %s [%ss]]]></value>
+      <group>general</group>
+    </definition>     
+    <definition>
+      <key>debug_exection_time</key>
+      <value><![CDATA[Execution Time: %ss]]></value>
+      <group>general</group>
+    </definition>     
+    <definition>
+      <key>debug_notice</key>
+      <value><![CDATA[You can turn off this debug display in Admin->Settings->Modules->Services->Debug.]]></value>
+      <group>general</group>
     </definition>    
+    
+       
   </definitions>
 </language>
