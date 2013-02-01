@@ -94,7 +94,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         <section>
           <?php
           if ( $lC_Template->showDebugMessages() && ($lC_MessageStack->size('debug') > 0) ) {
-            echo '<style>#debugInfoContainer{ margin-top:10px; }.messageStack{ margin-left:15px } .messageStack > ul > li{ font-size:.9em; } </style><div id="debugInfoContainer" class="short-code msg info"><span></span></div>';
+            echo '<style>#debugInfoContainer{ margin-top:10px; }.messageStack{ margin-left:15px } .messageStack > ul > li{ font-size:.9em; } </style><div id="debugInfoContainer" style="display:none;" class="short-code msg info"><span></span></div>';
           }          
           if ($lC_Services->isStarted('breadcrumb')) {
             ?>
