@@ -38,9 +38,6 @@ box_server_on = On
 box_server_off = Off
 box_server_writeable = Writeable
 box_server_not_writeable = Not-Writeable
-box_server_permissions_admin_backups = catalog/admin/backups/
-box_server_permissions_admin_graphs = catalog/admin/includes/graphs/
-box_server_permissions_images = catalog/includes/images/
 
 error_configuration_file_not_writeable = The webserver does not seem to be able to write the online store parameters to its configuration file due to file permission problems.  The configuration file is located at: %s
 error_configuration_file_alternate_method = Alternatively you can copy the configuration parameters to the configuration file by hand.  This process will attempt to update the configuration file automatically at the end of the installation.
