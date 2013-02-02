@@ -2553,7 +2553,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>     
     <definition>
       <key>debug_notice</key>
-      <value><![CDATA[You can turn off this debug display in Admin->Settings->Modules->Services->Debug]]></value>
+      <value><![CDATA[You can turn off this debug display in Admin-> Settings -> Modules -> Services -> Debug]]></value>
       <group>general</group>
     </definition>    
   </definitions>
