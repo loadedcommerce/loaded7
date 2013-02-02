@@ -245,14 +245,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         }     
       }  
       if ( $lC_Template->showDebugMessages() && ($lC_MessageStack->size('debug') > 0) ) {
-        ?>
-        <style>
-        #debugInfoContainer{ margin-top:10px; }
-        #debugInfoContainer.messageStack{ margin-left:15px } 
-        #debugInfoContainer.messageStack > ul > li{ font-size:.9em; } 
-        </style>
-        <div id="debugInfoContainer" style="display:none;" class="short-code msg info"><span></span></div>
-        <?php
+        echo '<div id="debugInfoContainer" style="display:none;" class="short-code msg info"><span></span></div>';
       }         
       ?>       
     </div>  
