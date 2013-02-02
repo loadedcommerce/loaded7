@@ -73,7 +73,6 @@
         $lC_MessageStack->add('debug', sprintf($lC_Language->get('debug_exection_time'), $_SESSION['lC_Customer_data']['customers_group_id'], $_SESSION['lC_Customer_data']['customers_group_name']), 'warning'); 
       }    
       $lC_MessageStack->add('debug', sprintf($lC_Language->get('debug_current_template'), $_SESSION['template']['code']), 'info');
-      $lC_MessageStack->add('debug', sprintf($lC_Language->get('debug_exection_time'), $lC_Database->numberOfQueries(), $lC_Database->timeOfQueries()), 'info');      
                    
       if (SERVICE_DEBUG_EXECUTION_DISPLAY == '1') {
         $lC_MessageStack->add('debug', sprintf($lC_Language->get('debug_exection_time'), $parse_time), 'info');
