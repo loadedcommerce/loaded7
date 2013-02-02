@@ -248,8 +248,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         ?>
         <style>
         #debugInfoContainer{ margin-top:10px; }
-        .messageStack{ margin-left:15px } 
-        .messageStack > ul > li{ font-size:.9em; } 
+        #debugInfoContainer.messageStack{ margin-left:15px } 
+        #debugInfoContainer.messageStack > ul > li{ font-size:.9em; } 
         </style>
         <div id="debugInfoContainer" style="display:none;" class="short-code msg info"><span></span></div>
         <?php
