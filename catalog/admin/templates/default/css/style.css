@@ -924,7 +924,7 @@ li.message-menu {
 			padding: 12px 0;
 		}
 		.list > li {
-			border-top: 1px dotted #cccccc;
+			/*border-top: 1px dotted #cccccc;*/
 			position: relative;
 			}
 			.list  > li:first-child {
@@ -934,6 +934,9 @@ li.message-menu {
 			display: block;
 			margin: -4px 0;
 			}
+      .list.spaced > li {
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 -1px 0 rgba(0, 0, 0, 0.25) inset;
+      }
 			.list.spaced > li > .list-link {
 				margin: -12px 0;
 			}

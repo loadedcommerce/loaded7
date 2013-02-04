@@ -63,7 +63,7 @@ class lC_General_Admin {
       // build the orders results <li> html for output
       // return <li> only if greater than 0 results from orders query 
       if ($QorderResults > 0) {
-        $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="orderSearchResults">' . "\n";
+        $result['html'] .= '  <li class="with-right-arrow anthracite-gradient" id="orderSearchResults">' . "\n";
         $result['html'] .= '    <span><span class="list-count">' . $Qorders->numberOfRows() . '</span><span class="icon-price-tag icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_orders') . '</span>' . "\n";
       
         $result['html'] .= '    <ul class="orders-menu">' . "\n";
@@ -110,7 +110,7 @@ class lC_General_Admin {
       // build the customers results <li> html for output
       // return <li> only if greater than 0 results from customers query  
       if ($QcustomerResults > 0) {
-        $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="customerSearchResults">' . "\n";
+        $result['html'] .= '  <li class="with-right-arrow anthracite-gradient" id="customerSearchResults">' . "\n";
         $result['html'] .= '    <span><span class="list-count">' . $Qcustomers->numberOfRows() . '</span><span class="icon-user icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_customers') . '</span>' . "\n";
       
         $result['html'] .= '    <ul class="customers-menu">' . "\n";
@@ -158,7 +158,7 @@ class lC_General_Admin {
       // build the products results <li> html for output
       // return <li> only if greater than 0 results from products query  
       if ($QproductResults > 0) {
-        $result['html'] .= '  <li class="with-right-arrow black-gradient glossy" id="orderSearchResults">' . "\n";
+        $result['html'] .= '  <li class="with-right-arrow anthracite-gradient" id="orderSearchResults">' . "\n";
         $result['html'] .= '    <span><span class="list-count">' . $Qproducts->numberOfRows() . '</span><span class="icon-bag icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_products') . '</span>' . "\n";
       
         $result['html'] .= '    <ul class="products-menu">' . "\n";

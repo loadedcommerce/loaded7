@@ -176,7 +176,7 @@
         
         <div id="searchContainer" style="display:none;">
           <section>
-            <div id="searchContainerInput" class="megaSearch">
+            <div id="searchContainerInput" class="megaSearch black-gradient">
               <form name="megaSearch" action="megaSearch" method="post">
                 <ul class="inputs">
                   <li>
@@ -194,12 +194,12 @@
           <section>
             <div id="addContainerLinks">
               <ul class="list spaced">
-                <li>
+                <li class="anthracite-gradient">
                   <a href="index.php" class="list-link white-link-with-pad">
                     <div class="add-container-icon"><i class="icon-price-tag icon-white icon-pad-right"></i></div> <div class="float-left"><?php echo $lC_Language->get('quick_add_order'); ?></div>
                   </a>
                 </li>
-                <li>
+                <li class="anthracite-gradient">
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-user icon-white icon-pad-right"></i>
@@ -209,7 +209,7 @@
                     </div>
                   </a>
                 </li>
-                <li>
+                <li class="anthracite-gradient">
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-list icon-white icon-pad-right"></i>
@@ -219,7 +219,7 @@
                     </div>
                   </a>
                 </li>
-                <li>
+                <li class="anthracite-gradient">
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-bag icon-white icon-pad-right"></i>
@@ -229,7 +229,7 @@
                     </div>
                   </a>
                 </li>
-                <li>
+                <li class="anthracite-gradient">
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                     <i class="icon-tag icon-white icon-pad-right"></i>
@@ -239,7 +239,7 @@
                     </div>
                   </a>
                 </li>
-                <li>
+                <li class="anthracite-gradient">
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-printer icon-white icon-pad-right"></i>
@@ -249,7 +249,7 @@
                     </div>
                   </a>
                 </li>
-                <li>
+                <li class="anthracite-gradient">
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-flag icon-white icon-pad-right"></i>
@@ -259,7 +259,7 @@
                     </div>
                   </a>
                 </li>
-                <li>
+                <li class="anthracite-gradient">
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-read icon-white icon-pad-right"></i>

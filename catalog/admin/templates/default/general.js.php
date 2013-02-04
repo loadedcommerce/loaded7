@@ -315,6 +315,8 @@ function search(q) {
 $("#li-search").click(function() {
   var addOpen = $('#addContainer').is(':visible');
   var msgOpen = $('#messagesContainer').is(':visible');
+  var mainOpen = $('#mainMenuContainer').is(':visible');
+  var setOpen = $('#settingsContainer').is(':visible');
   if (addOpen) {
     $('#li-add').removeClass("current");
     $('#addContainer').hide();
@@ -323,11 +325,23 @@ $("#li-search").click(function() {
     $('#li-messages').removeClass("current");
     $('#messagesContainer').hide();
   }
+  if(mainOpen) {
+    $('#li-settings').removeClass("current");
+    $('#mainMenuContainer').hide();
+    $('#recentContainer').hide();
+  }
+  if(setOpen) {
+    $('#li-settings').removeClass("current");
+    $('#settingsContainer').hide();
+    $('#recentContainer').hide();
+  }
 });
 
 $("#li-add").click(function() {
   var srcOpen = $('#searchContainer').is(':visible');
   var msgOpen = $('#messagesContainer').is(':visible');
+  var mainOpen = $('#mainMenuContainer').is(':visible');
+  var setOpen = $('#settingsContainer').is(':visible');
   if (srcOpen) {
     $('#li-search').removeClass("current");
     $('#searchContainer').hide();
@@ -336,11 +350,23 @@ $("#li-add").click(function() {
     $('#li-messages').removeClass("current");
     $('#messagesContainer').hide();
   }
+  if(mainOpen) {
+    $('#li-settings').removeClass("current");
+    $('#mainMenuContainer').hide();
+    $('#recentContainer').hide();
+  }
+  if(setOpen) {
+    $('#li-settings').removeClass("current");
+    $('#settingsContainer').hide();
+    $('#recentContainer').hide();
+  }
 });
 
 $("#li-messages").click(function() {
   var srcOpen = $('#searchContainer').is(':visible');
   var addOpen = $('#addContainer').is(':visible');
+  var mainOpen = $('#mainMenuContainer').is(':visible');
+  var setOpen = $('#settingsContainer').is(':visible');
   if (srcOpen) {
     $('#li-search').removeClass("current");
     $('#searchContainer').hide();
@@ -348,6 +374,16 @@ $("#li-messages").click(function() {
   if (addOpen) {
     $('#li-add').removeClass("current");
     $('#addContainer').hide();
+  }
+  if(mainOpen) {
+    $('#li-settings').removeClass("current");
+    $('#mainMenuContainer').hide();
+    $('#recentContainer').hide();
+  }
+  if(setOpen) {
+    $('#li-settings').removeClass("current");
+    $('#settingsContainer').hide();
+    $('#recentContainer').hide();
   }
 });
 
@@ -355,6 +391,8 @@ $("#li-settings").click(function() {
   var srcOpen = $('#searchContainer').is(':visible');
   var addOpen = $('#addContainer').is(':visible');
   var msgOpen = $('#messagesContainer').is(':visible');
+  var setDisplay = $('#settingsContainer').css('display');
+  var mainDisplay = $('#mainMenuContainer').css('display');  
   if (srcOpen) {
     $('#li-search').removeClass("current");
     $('#searchContainer').hide();
@@ -367,6 +405,7 @@ $("#li-settings").click(function() {
     $('#li-messages').removeClass("current");
     $('#messagesContainer').hide();
   }
+  $('#recentContainer').toggle();
 });
 
 </script>
