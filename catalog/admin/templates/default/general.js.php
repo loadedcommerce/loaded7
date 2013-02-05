@@ -448,7 +448,7 @@ $("#li-search").click(function() {
   var msgOpen = $('#messagesContainer').is(':visible');
   var mainOpen = $('#mainMenuContainer').is(':visible');
   var setOpen = $('#settingsContainer').is(':visible');
-  var srcOpen = $('#searchContainer').is(':visible');
+  var srcClass = $('#li-search').attr('class');
   if (addOpen) {
     $('#li-add').removeClass("current");
     $('#addContainer').hide();
@@ -467,6 +467,11 @@ $("#li-search").click(function() {
     $('#settingsContainer').hide();
     $('#recentContainer').hide();
   }
+  if (srcClass == 'tracked') {
+    $('#li-settings').addClass("current");
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
+  }
 });
 
 $("#li-add").click(function() {
@@ -474,6 +479,7 @@ $("#li-add").click(function() {
   var msgOpen = $('#messagesContainer').is(':visible');
   var mainOpen = $('#mainMenuContainer').is(':visible');
   var setOpen = $('#settingsContainer').is(':visible');
+  var addClass = $('#li-add').attr('class');
   if (srcOpen) {
     $('#li-search').removeClass("current");
     $('#searchContainer').hide();
@@ -492,6 +498,11 @@ $("#li-add").click(function() {
     $('#settingsContainer').hide();
     $('#recentContainer').hide();
   }
+  if (addClass == 'tracked') {
+    $('#li-settings').addClass("current");
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
+  }
 });
 
 $("#li-messages").click(function() {
@@ -499,6 +510,7 @@ $("#li-messages").click(function() {
   var addOpen = $('#addContainer').is(':visible');
   var mainOpen = $('#mainMenuContainer').is(':visible');
   var setOpen = $('#settingsContainer').is(':visible');
+  var msgClass = $('#li-messages').attr('class');
   if (srcOpen) {
     $('#li-search').removeClass("current");
     $('#searchContainer').hide();
@@ -516,6 +528,11 @@ $("#li-messages").click(function() {
     $('#li-settings').removeClass("current");
     $('#settingsContainer').hide();
     $('#recentContainer').hide();
+  }
+  if (msgClass == 'tracked') {
+    $('#li-settings').addClass("current");
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
   }
 });
 
