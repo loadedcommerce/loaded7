@@ -473,7 +473,7 @@ class lC_Administrators_Admin {
     } else {
        // values not same
       $tagBlock .= '<small class="tag blue-gradient"">' . $lC_Language->get('icon_limited') . '</small>&nbsp;';
-      $maxValue = max($checkArr);
+      $maxValue = @max($checkArr);
     }
     switch ($maxValue) {
       case 1 :
