@@ -196,7 +196,7 @@
               <ul class="list spaced">
                 <li class="anthracite-gradient">
                   <span class="list-count grey with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_order'); ?>">o</span>
-                  <a href="index.php" class="list-link white-link-with-pad">
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_order_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-price-tag icon-grey icon-pad-right"></i>
                     </div> 
@@ -206,8 +206,8 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>">c</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>">c</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_customer_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-user icon-white icon-pad-right"></i>
                     </div>
@@ -217,8 +217,8 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_category'); ?>">g</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_category'); ?>">g</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_category_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-list icon-white icon-pad-right"></i>
                     </div> 
@@ -228,8 +228,8 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_'); ?>">p</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>" class="list-link white-link-with-pad">
+                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_product'); ?>">p</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_product_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-bag icon-white icon-pad-right"></i>
                     </div> 
@@ -239,8 +239,8 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_special'); ?>">l</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_special'); ?>">l</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_special_title'); ?>">
                     <div class="add-container-icon">
                     <i class="icon-tag icon-white icon-pad-right"></i>
                     </div> 
@@ -250,8 +250,8 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_manufacturer'); ?>">t</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_manufacturer'); ?>">t</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_manufacturer_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-printer icon-white icon-pad-right"></i>
                     </div> 
@@ -261,8 +261,8 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_banner'); ?>">b</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_banner'); ?>">b</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_banner_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-flag icon-white icon-pad-right"></i>
                     </div> 
@@ -272,8 +272,8 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_newsletter'); ?>">n</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>" class="list-link white-link-with-pad">
+                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_newsletter'); ?>">n</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_newsletter_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-read icon-white icon-pad-right"></i>
                     </div> 
@@ -292,75 +292,75 @@
             <div id="messageContainerLinks">
               <ul class="list spaced">
                 <li>
-                  <a href="index.php" class="list-link white-link-with-pad">
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
-                      <span class="icon-pencil icon-white icon-pad-right"></span>
+                      <span class="icon-pencil icon-grey icon-pad-right"></span>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left grey">
                       <?php echo $lC_Language->get('messaging_compose'); ?>
                     </div>
                   </a>
                 </li>
                 <li>
-                  <span class="list-count">3</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                  <span class="list-count grey">3</span>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
-                      <span class="icon-folder icon-white icon-pad-right"></span>
+                      <span class="icon-folder icon-grey icon-pad-right"></span>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left grey">
                       <?php echo $lC_Language->get('messaging_inbox'); ?>
                     </div>
                   </a>
                 </li>
                 <li>
-                  <span class="list-count">23</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                  <span class="list-count grey">23</span>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
-                      <span class="icon-users icon-white icon-pad-right"></span>
+                      <span class="icon-users icon-grey icon-pad-right"></span>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left grey">
                       <?php echo $lC_Language->get('messaging_community_inbox'); ?>
                     </div>
                   </a>
                 </li>
                 <li>
-                  <span class="list-count">4</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                  <span class="list-count grey">4</span>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
-                      <span class="icon-warning icon-white icon-pad-right"></span>
+                      <span class="icon-warning icon-grey icon-pad-right"></span>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left grey">
                       <?php echo $lC_Language->get('messaging_loaded_messages'); ?>
                     </div>
                   </a>
                 </li>
                 <li>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
-                      <span class="icon-arrow icon-white icon-pad-right"></span>
+                      <span class="icon-arrow icon-grey icon-pad-right"></span>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left grey">
                       <?php echo $lC_Language->get('messaging_sent'); ?>
                     </div>
                   </a>
                 </li>
                 <li>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
-                      <span class="icon-drawer icon-white icon-pad-right"></span>
+                      <span class="icon-drawer icon-grey icon-pad-right"></span>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left grey">
                       <?php echo $lC_Language->get('messaging_drafts'); ?>
                     </div>
                   </a>
                 </li>
                 <li>
-                  <span class="list-count">7</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                  <span class="list-count grey">7</span>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
-                      <span class="icon-trash icon-white icon-pad-right"></span>
+                      <span class="icon-trash icon-grey icon-pad-right"></span>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left grey">
                       <?php echo $lC_Language->get('messaging_trash'); ?>
                     </div>
                   </a>

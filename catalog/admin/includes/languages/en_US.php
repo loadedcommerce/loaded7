@@ -186,14 +186,23 @@ quick_add_manufacturer = Manufacturer
 quick_add_banner = Banner
 quick_add_newsletter = Newsletter
 
-quick_add_new_order = Typing the lowercase letter o while the Quick Add menu is active will redirect you to the New Order page
-quick_add_new_customer = Typing the lowercase letter c while the Quick Add menu is active will redirect you to the New Customer page 
-quick_add_new_category = Typing the lowercase letter g while the Quick Add menu is active will redirect you to the New Category page 
-quick_add_new_product = Typing the lowercase letter p while the Quick Add menu is active will redirect you to the New Product page 
-quick_add_new_special = Typing the lowercase letter l while the Quick Add menu is active will redirect you to the New Special page 
-quick_add_new_manufacturer = Typing the lowercase letter t while the Quick Add menu is active will redirect you to the New Manufacturer page 
-quick_add_new_banner = Typing the lowercase letter b while the Quick Add menu is active will redirect you to the New Banner page 
-quick_add_new_newsletter = Typing the lowercase letter n while the Quick Add menu is active will redirect you to the New Newsletter page 
+quick_add_order_title = Add new Order
+quick_add_customer_title = Add new Customer
+quick_add_category_title = Add new Category
+quick_add_product_title = Add new Product
+quick_add_special_title = Add new Special
+quick_add_manufacturer_title = Add new Manufacturer
+quick_add_banner_title = Add new Banner
+quick_add_newsletter_title = Add new Newsletter
+
+quick_add_new_order = Typing lowercase o while the Quick Add menu is active will redirect you to the New Order page
+quick_add_new_customer = Typing lowercase c while the Quick Add menu is active will redirect you to the New Customer page 
+quick_add_new_category = Typing lowercase g while the Quick Add menu is active will redirect you to the New Category page 
+quick_add_new_product = Typing lowercase p while the Quick Add menu is active will redirect you to the New Product page 
+quick_add_new_special = Typing lowercase l while the Quick Add menu is active will redirect you to the New Special page 
+quick_add_new_manufacturer = Typing lowercase t while the Quick Add menu is active will redirect you to the New Manufacturer page 
+quick_add_new_banner = Typing lowercase b while the Quick Add menu is active will redirect you to the New Banner page 
+quick_add_new_newsletter = Typing lowercase n while the Quick Add menu is active will redirect you to the New Newsletter page 
 
 messaging_compose = Compose
 messaging_inbox = Inbox
