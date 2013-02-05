@@ -49,18 +49,8 @@ class lC_Updates_Admin {
     global $lC_Api;
       
     $result = array('entries' => array());
-    $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/updates/available/?referer=' . urlencode($_SERVER['DOCUMENT_ROOT']), 'method' => 'get'));
+    $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/updates/available/?referer=' . urlencode($_SERVER['HTTP_REFERER']), 'method' => 'get'));
     $versions_array = utility::xml2arr($versions); 
-    
-echo "<pre>";
-print_r($_SERVER);
-echo "</pre>";
-
-echo '[https://api.loadedcommerce.com/1_0/updates/available/?referer=' . urlencode($_SERVER['DOCUMENT_ROOT']) . ']<br>';
-echo "<pre>";
-print_r($versions_array);
-echo "</pre>";
-die('11');       
 
     $counter = 0;
     foreach ( $versions_array['data'] as $l => $v ) {
