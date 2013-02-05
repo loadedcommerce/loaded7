@@ -68,7 +68,7 @@ class lC_General_Admin {
       
         $result['html'] .= '    <ul class="orders-menu">' . "\n";
         foreach ($QorderResults as $key => $value) { 
-          $result['html'] .= '      <li title="' . $lC_Language->get('order_view_details') . ' ' . $value['orders_id'] . '">' . "\n" . 
+          $result['html'] .= '      <li class="bevel" title="' . $lC_Language->get('order_view_details') . ' ' . $value['orders_id'] . '">' . "\n" . 
                              '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'orders&oID=' . $value['orders_id']) . '">' . "\n" .
                              '          <span class="float-right align-right" style="">' . "\n" . 
                              '            <b class="green">' . $value['orders_id'] . '</b><br />' . "\n" . 
@@ -115,7 +115,7 @@ class lC_General_Admin {
       
         $result['html'] .= '    <ul class="customers-menu">' . "\n";
         foreach ($QcustomerResults as $key => $value) { 
-          $result['html'] .= '      <li title="' . $lC_Language->get('customer_view_details') . ' ' . $value['customers_firstname'] . ' '  . $value['customers_lastname'] . '">' . "\n" . 
+          $result['html'] .= '      <li class="bevel" title="' . $lC_Language->get('customer_view_details') . ' ' . $value['customers_firstname'] . ' '  . $value['customers_lastname'] . '">' . "\n" . 
                              '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'customers&cID=' . $value['customers_id']) . '">' . "\n" .
                              '          <span class="float-right">' . $value['customers_id'] . '</span>' . "\n" . 
                              '          <span class="green"><b>' . $value['customers_firstname'] . ' '  . $value['customers_lastname'] . '</b></span><small>'  . $value['customers_email_address'] . '</small>' . "\n" . 
@@ -176,7 +176,7 @@ class lC_General_Admin {
             }
           }
           
-          $result['html'] .= '      <li title="' . $lC_Language->get('product_view_details') . ' ' . $value['products_name'] . '">' . "\n" . 
+          $result['html'] .= '      <li class="bevel" title="' . $lC_Language->get('product_view_details') . ' ' . $value['products_name'] . '">' . "\n" . 
                              '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'products=' . $value['products_id'] . '&action=save') . '">' . "\n" .
                              '          <span class="float-right">' . "\n" . 
                              '            ' . ($value['has_children'] != 0 ? '<span title="This product has ' . $Qvariants[0]['variants'] . ' variants">(' . $Qvariants[0]['variants'] . ') <span class="icon-path"></span></span>' : $lC_Currencies->format($value['products_price'])) . '<br />' . "\n" . 

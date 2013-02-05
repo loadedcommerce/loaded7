@@ -161,6 +161,11 @@ label {
 		box-shadow: none;
 		background: none;
 		}
+    .mega-search-border {
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    border-radius: 18px;
+    }
 		.input-unstyled.full-width {
 			padding: 0;
 			width: 100%;

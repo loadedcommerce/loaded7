@@ -178,10 +178,10 @@
           <section>
             <div id="searchContainerInput" class="megaSearch black-gradient">
               <form name="megaSearch" action="megaSearch" method="post">
-                <ul class="inputs">
+                <ul class="inputs mega-search-border">
                   <li>
                     <span class="icon-search mid-margin-left"></span>
-                    <input class="input-unstyled" type="text" onkeyup="search(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q">
+                    <input class="input-unstyled" type="text" onkeyup="search(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q" id="megaSearch">
                   </li>
                 </ul>
               </form>

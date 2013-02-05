@@ -2813,7 +2813,7 @@ li.message-menu {
     
 /* Orders menu */
 .orders-menu {
-  margin: 0;
+  margin: 20px -32px -15px -15px !important;
   min-height: 0;
   list-style-type: none;
   -webkit-text-shadow: none;
@@ -2834,7 +2834,6 @@ li.message-menu {
       display: block;
       margin: -10px -10px -10px -50px;
       padding: 10px 14px 10px 14px;
-      min-height: 40px;
       color: inherit;
     }
     .orders-menu > li time,
@@ -2864,7 +2863,7 @@ li.message-menu {
         
 /* Customers menu */
 .customers-menu {
-  margin: 0;
+  margin: 20px -32px -15px -15px !important;
   min-height: 0;
   list-style-type: none;
   -webkit-text-shadow: none;
@@ -2885,7 +2884,6 @@ li.message-menu {
       display: block;
       margin: -10px -10px -10px -50px;
       padding: 10px 14px 10px 14px;
-      min-height: 40px;
       color: inherit;
     }
     .customers-menu > li time,
@@ -2915,7 +2913,7 @@ li.message-menu {
     
 /* Products menu */
 .products-menu {
-  margin: 0;
+  margin: 20px -32px -15px -15px !important;
   min-height: 0;
   list-style-type: none;
   -webkit-text-shadow: none;
@@ -2936,7 +2934,6 @@ li.message-menu {
       display: block;
       margin: -10px -10px -10px -46px;
       padding: 10px 14px 10px 24px;
-      min-height: 40px;
       color: inherit;
     }
     .products-menu > li time,
