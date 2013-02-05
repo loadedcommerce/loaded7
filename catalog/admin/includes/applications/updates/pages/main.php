@@ -14,8 +14,10 @@
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 ini_set("display_errors", 1);
 require_once('includes/applications/updates/classes/updates.php');  
-/*
+
 $updatesDataArr = lC_Updates_Admin::getAvailablePackages(); 
+
+/*
 $findDataArr = lC_Updates_Admin::findAvailablePackages('7.0'); 
 $availInfoDataArr = lC_Updates_Admin::getAvailablePackageInfo('0'); 
 $downloaded = lC_Updates_Admin::downloadPackage(); 
