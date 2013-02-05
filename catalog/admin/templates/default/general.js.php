@@ -98,7 +98,137 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
   } else { // desktop
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
-  }   
+  }
+  
+  // begin shortcut key additions
+  $(window).bind("load", function() {
+    // set the disable var to false to begin
+    var disableKeyCombo = false; 
+    // if any inputs on the page are clicked into then set the disable var to true
+    $(":input").focus(function(){
+      disableKeyCombo = true;
+    }); 
+    // when the input fields are blurred set the disable var back to false
+    $(":input").blur(function(){
+      disableKeyCombo = false;
+    });
+    // when a key is pressed 
+    $("*").keypress(function(e){
+      // first check if the escape key has been presed
+      $(document).keydown(function(e){
+        var escCode = e.keyCode ? e.keyCode : e.which;
+        if (escCode == 27) {
+          disableKeyCombo = false; 
+          $('#li-search').removeClass("current");
+          $('#li-messages').removeClass("current");
+          $('#li-add').removeClass("current");
+          $('#addContainer').hide();
+          $('#searchContainer').hide();
+          $('#messagesContainer').hide();
+          $('#settingsContainer').hide();
+          $('#mainMenuContainer').show();
+          $('#recentContainer').show();
+          $('#li-settings').addClass("current");
+          $('body').focus();
+        }
+      });
+      // if the disable var is false we continue
+      if (!disableKeyCombo == true) {
+        // check to see if a modal is open currently by it's class attribute
+        var modalClass = $('#modals').attr('class');
+        // if the modal's class is not with-blocker we can continue
+        if (modalClass != 'with-blocker') {
+          // escape = 27
+          if (e.which == 32) { // space for mega search menu
+            $('#li-add').removeClass("current");
+            $('#li-messages').removeClass("current");
+            $('#li-settings').removeClass("current");
+            $('#messagesContainer').hide();
+            $('#addContainer').hide();
+            $('#mainMenuContainer').hide();
+            $('#recentContainer').hide();
+            $('#settingsContainer').hide();
+            $('#li-search').addClass("current");
+            $('#searchContainer').show();
+            $('#searchContainerInput').find('input').focus();
+          };
+          if (e.which == 97) { // a for quick add menu
+            $('#li-search').removeClass("current");
+            $('#li-messages').removeClass("current");
+            $('#li-settings').removeClass("current");
+            $('#messagesContainer').hide();
+            $('#searchContainer').hide();
+            $('#mainMenuContainer').hide();
+            $('#recentContainer').hide();
+            $('#settingsContainer').hide();
+            $('#li-add').addClass("current");
+            $('#addContainer').show();
+          };
+          if (e.which == 109) { // m for messages menu
+            $('#li-search').removeClass("current");
+            $('#li-settings').removeClass("current");
+            $('#li-add').removeClass("current");
+            $('#addContainer').hide();
+            $('#searchContainer').hide();
+            $('#mainMenuContainer').hide();
+            $('#recentContainer').hide();
+            $('#settingsContainer').hide();
+            $('#li-messages').addClass("current");
+            $('#messagesContainer').show();
+          };
+          if (e.which == 115) { // s for settings menu
+            $('#li-search').removeClass("current");
+            $('#li-messages').removeClass("current");
+            $('#li-add').removeClass("current");
+            $('#addContainer').hide();
+            $('#searchContainer').hide();
+            $('#messagesContainer').hide();
+            $('#recentContainer').hide();
+            $('#settingsContainer').show();
+            $('#li-settings').addClass("current");
+            $('#mainMenuContainer').hide();
+          };
+          var liAddClass = $('#li-add').attr("class");
+          if (liAddClass == 'current') {
+            if (e.which == 111) { // o for new (O)rder
+              //alert('new order');
+              //window.location.href = '';
+            };
+            if (e.which == 99) { // c for new (C)ustomer
+              //alert('new customer');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>';
+            };
+            if (e.which == 103) { // g for new cate(G)ory
+              //alert('new category');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>';
+            };
+            if (e.which == 112) { // p for new (P)roduct
+              //alert('new product');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>';
+            };
+            if (e.which == 108) { // l for new specia(L)
+              //alert('new special');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>';
+            };
+            if (e.which == 116) { // t for new manufac(T)urer
+              //alert('new manufacturer');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>';
+            };
+            if (e.which == 98) { // b for new (B)anner
+              //alert('new banner');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>';
+            };
+            if (e.which == 110) { // n for new (N)ewsletter
+              //alert('new newsletter');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>';
+            };
+          }
+        }
+      }
+    });
+  });
+  // end shortcut key additions
+    
 });
 
 /* toggle checkboxes on table listings */
@@ -334,6 +464,11 @@ $("#li-search").click(function() {
     $('#li-settings').removeClass("current");
     $('#settingsContainer').hide();
     $('#recentContainer').hide();
+  }
+  if(!mainOpen) {
+    $('#li-settings').addClass("current");
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
   }
 });
 

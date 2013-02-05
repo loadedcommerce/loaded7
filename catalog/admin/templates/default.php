@@ -168,10 +168,10 @@
 
         <!-- Big menu small navigation -->
         <ul id="access" class="children-tooltip">
-          <li id="li-search"><a onclick="toggleSubMenu('search');" href="#" title="Search"><span class="icon-search"></span></a></li>
-          <li id="li-add"><a onclick="toggleSubMenu('add');" href="#" title="Quick Add"><span class="icon-plus"></span></a></li>
-          <li id="li-messages"><a onclick="toggleSubMenu('messages');" href="#" title="Messages"><span class="icon-mail"></span></a></li>
-          <li id="li-settings" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="disabled"'); ?>><a href="#" onclick="toggleChildMenu('settings');" title="Settings"><span id="sp-settings" class="icon-gear"><div></div></span></a></li>
+          <li id="li-search"><a onclick="toggleSubMenu('search');" href="#" title="<?php echo $lC_Language->get('tooltip_search'); ?>"><span class="icon-search"></span></a></li>
+          <li id="li-add"><a onclick="toggleSubMenu('add');" href="#" title="<?php echo $lC_Language->get('tooltip_quick_add'); ?>"><span class="icon-plus icon-size2"></span></a></li>
+          <li id="li-messages"><a onclick="toggleSubMenu('messages');" href="#" title="<?php echo $lC_Language->get('tooltip_messages'); ?>"><span class="icon-mail"></span></a></li>
+          <li id="li-settings" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="disabled"'); ?>><a href="#" onclick="toggleChildMenu('settings');" title="<?php echo $lC_Language->get('tooltip_settings'); ?>"><span id="sp-settings" class="icon-gear"></span></a></li>
         </ul>  
         
         <div id="searchContainer" style="display:none;">
@@ -195,11 +195,18 @@
             <div id="addContainerLinks">
               <ul class="list spaced">
                 <li class="anthracite-gradient">
+                  <span class="list-count grey with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_order'); ?>">o</span>
                   <a href="index.php" class="list-link white-link-with-pad">
-                    <div class="add-container-icon"><i class="icon-price-tag icon-white icon-pad-right"></i></div> <div class="float-left"><?php echo $lC_Language->get('quick_add_order'); ?></div>
+                    <div class="add-container-icon">
+                      <i class="icon-price-tag icon-grey icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left grey">
+                      <?php echo $lC_Language->get('quick_add_order'); ?>
+                    </div>
                   </a>
                 </li>
                 <li class="anthracite-gradient">
+                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>">c</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-user icon-white icon-pad-right"></i>
@@ -210,6 +217,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
+                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_category'); ?>">g</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-list icon-white icon-pad-right"></i>
@@ -220,6 +228,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
+                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_'); ?>">p</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-bag icon-white icon-pad-right"></i>
@@ -230,6 +239,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
+                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_special'); ?>">l</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                     <i class="icon-tag icon-white icon-pad-right"></i>
@@ -240,6 +250,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
+                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_manufacturer'); ?>">t</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-printer icon-white icon-pad-right"></i>
@@ -250,6 +261,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
+                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_banner'); ?>">b</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-flag icon-white icon-pad-right"></i>
@@ -260,6 +272,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
+                  <span class="list-count" title="<?php echo $lC_Language->get('quick_add_new_newsletter'); ?>">n</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>" class="list-link white-link-with-pad">
                     <div class="add-container-icon">
                       <i class="icon-read icon-white icon-pad-right"></i>

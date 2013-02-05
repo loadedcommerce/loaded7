@@ -177,14 +177,23 @@ ms_error_no_access = You do not have the access level required for this operatio
 ms_error_javascript_not_enabled_for_upload = Please enable JavaScript to use ajax file uploader.
 ms_error_javascript_not_enabled_warning = Your browser does not support JavaScript! Some features won't work as expected.
 
-quick_add_order = Orders
-quick_add_customer = Customers
-quick_add_category = Categories
-quick_add_product = Products
-quick_add_special = Specials
-quick_add_manufacturer = Manufacturers
-quick_add_banner = Banners
-quick_add_newsletter = Newsletters
+quick_add_order = Order
+quick_add_customer = Customer
+quick_add_category = Category
+quick_add_product = Product
+quick_add_special = Special
+quick_add_manufacturer = Manufacturer
+quick_add_banner = Banner
+quick_add_newsletter = Newsletter
+
+quick_add_new_order = Typing the lowercase letter o while the Quick Add menu is active will redirect you to the New Order page
+quick_add_new_customer = Typing the lowercase letter c while the Quick Add menu is active will redirect you to the New Customer page 
+quick_add_new_category = Typing the lowercase letter g while the Quick Add menu is active will redirect you to the New Category page 
+quick_add_new_product = Typing the lowercase letter p while the Quick Add menu is active will redirect you to the New Product page 
+quick_add_new_special = Typing the lowercase letter l while the Quick Add menu is active will redirect you to the New Special page 
+quick_add_new_manufacturer = Typing the lowercase letter t while the Quick Add menu is active will redirect you to the New Manufacturer page 
+quick_add_new_banner = Typing the lowercase letter b while the Quick Add menu is active will redirect you to the New Banner page 
+quick_add_new_newsletter = Typing the lowercase letter n while the Quick Add menu is active will redirect you to the New Newsletter page 
 
 messaging_compose = Compose
 messaging_inbox = Inbox
@@ -199,3 +208,8 @@ search_placeholder = Search
 order_view_details = View details for order number
 customer_view_details = View details for
 product_view_details = View details for
+
+tooltip_search = Search (space bar)
+tooltip_quick_add = Quick Add (a)
+tooltip_messages = Messages (m)
+tooltip_settings = Settings (s) / Main Menu (escape)
