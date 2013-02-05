@@ -122,13 +122,13 @@ $(document).ready(function() {
           $('#li-search').removeClass("current");
           $('#li-messages').removeClass("current");
           $('#li-add').removeClass("current");
+          $('#li-settings').removeClass("current");
           $('#addContainer').hide();
           $('#searchContainer').hide();
           $('#messagesContainer').hide();
           $('#settingsContainer').hide();
           $('#mainMenuContainer').show();
           $('#recentContainer').show();
-          $('#li-settings').addClass("current");
           $('body').focus();
         }
       });
@@ -468,7 +468,6 @@ $("#li-search").click(function() {
     $('#recentContainer').hide();
   }
   if (srcClass == 'tracked') {
-    $('#li-settings').addClass("current");
     $('#mainMenuContainer').show();
     $('#recentContainer').show();
   }
@@ -499,7 +498,6 @@ $("#li-add").click(function() {
     $('#recentContainer').hide();
   }
   if (addClass == 'tracked') {
-    $('#li-settings').addClass("current");
     $('#mainMenuContainer').show();
     $('#recentContainer').show();
   }
@@ -530,7 +528,6 @@ $("#li-messages").click(function() {
     $('#recentContainer').hide();
   }
   if (msgClass == 'tracked') {
-    $('#li-settings').addClass("current");
     $('#mainMenuContainer').show();
     $('#recentContainer').show();
   }
