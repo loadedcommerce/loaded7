@@ -53,7 +53,7 @@ class lC_Updates_Admin {
     $versions_array = utility::xml2arr($versions); 
     
 echo "<pre>";
-print_r($versions);
+print_r($_SERVER);
 echo "</pre>";
 
 echo '[https://api.loadedcommerce.com/1_0/updates/available/?referer=' . urlencode($_SERVER['DOCUMENT_ROOT']) . ']<br>';
