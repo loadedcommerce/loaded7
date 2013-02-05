@@ -50,7 +50,12 @@ class lC_Updates_Admin {
       
     $result = array('entries' => array());
     $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/updates/available/', 'method' => 'get'));
-    $versions_array = utility::xml2arr($versions);    
+    $versions_array = utility::xml2arr($versions); 
+    
+echo "<pre>";
+print_r($versions_array);
+echo "</pre>";
+die('11');       
 
     $counter = 0;
     foreach ( $versions_array['data'] as $l => $v ) {
