@@ -161,7 +161,7 @@ TD { height:19px; }
             <tr>
               <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes')) || is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes'))) ? TRUE : FALSE; ?>
               <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
-              <td style="padding-left:5px;">includes/</td>
+              <td style="padding-left:5px;"><?php echo lc_realpath(dirname(__FILE__) . '/../../../includes'; ?></td>
               <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
               <?php if (!$writeable) $ok = FALSE; ?>
             </tr>           
