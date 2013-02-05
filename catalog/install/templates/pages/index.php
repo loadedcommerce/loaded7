@@ -159,7 +159,7 @@ TD { height:19px; }
           <h4 class="no-margin-top mid-margin-bottom"><?php echo $lC_Language->get('page_heading_permissions'); ?></h4>
           <table id="permissionsTable" border="0" width="100%" cellspacing="0" cellpadding="2">
             <tr>
-              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes')) || is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes'))) ? TRUE : FALSE; 
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/')) || is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/'))) ? TRUE : FALSE; 
               echo '[' . $writeable . ']<br>';  
               ?>
               <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
