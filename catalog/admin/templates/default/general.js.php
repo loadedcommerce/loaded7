@@ -495,6 +495,11 @@ $("#li-add").click(function() {
     $('#settingsContainer').hide();
     $('#recentContainer').hide();
   }
+  if(!mainOpen) {
+    $('#li-settings').addClass("current");
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
+  }
 });
 
 $("#li-messages").click(function() {
@@ -519,6 +524,11 @@ $("#li-messages").click(function() {
     $('#li-settings').removeClass("current");
     $('#settingsContainer').hide();
     $('#recentContainer').hide();
+  }
+  if(!mainOpen) {
+    $('#li-settings').addClass("current");
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
   }
 });
 
