@@ -2531,6 +2531,14 @@ li.message-menu {
 				color: #707070;
 				color: rgba(255, 255, 255, 0.5);
 				}
+        #access > li.current {
+          background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.37)), to(rgba(255, 255, 255, 0)), color-stop(0.04, rgba(255, 255, 255, 0.31)), color-stop(0.44, rgba(255, 255, 255, 0.15)), color-stop(0.49, rgba(255, 255, 255, 0.11)), color-stop(0.5, rgba(255, 255, 255, 0.02)));
+          background: -webkit-linear-gradient( top, rgba(255,255,255,0.37), rgba(255,255,255,0.31) 4%, rgba(255,255,255,0.15) 44%, rgba(255,255,255,0.11) 49%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0));
+          background: -moz-linear-gradient( top, rgba(255,255,255,0.37), rgba(255,255,255,0.31) 4%, rgba(255,255,255,0.15) 44%, rgba(255,255,255,0.11) 49%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0));
+          background: -ms-linear-gradient( top, rgba(255,255,255,0.37), rgba(255,255,255,0.31) 4%, rgba(255,255,255,0.15) 44%, rgba(255,255,255,0.11) 49%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0));
+          background: -o-linear-gradient( top, rgba(255,255,255,0.37), rgba(255,255,255,0.31) 4%, rgba(255,255,255,0.15) 44%, rgba(255,255,255,0.11) 49%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0));
+          background: linear-gradient( top, rgba(255,255,255,0.37), rgba(255,255,255,0.31) 4%, rgba(255,255,255,0.15) 44%, rgba(255,255,255,0.11) 49%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0));
+        }
 				#access > li.disabled {
 					-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 					filter: alpha(opacity=50);
