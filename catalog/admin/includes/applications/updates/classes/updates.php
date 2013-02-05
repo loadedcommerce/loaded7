@@ -55,6 +55,8 @@ class lC_Updates_Admin {
 echo "<pre>";
 print_r($versions);
 echo "</pre>";
+
+echo '[https://api.loadedcommerce.com/1_0/updates/available/?referer=' . urlencode($_SERVER['SERVER_NAME']) . ']<br>';
 echo "<pre>";
 print_r($versions_array);
 echo "</pre>";
