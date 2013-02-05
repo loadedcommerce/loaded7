@@ -195,7 +195,7 @@
             <div id="addContainerLinks">
               <ul class="list spaced">
                 <li class="anthracite-gradient">
-                  <span class="list-count grey with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_order'); ?>">o</span>
+                  <span class="list-count grey with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_order'); ?>">o</span>
                   <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_order_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-price-tag icon-grey icon-pad-right"></i>
@@ -206,7 +206,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>">c</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>">c</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_customer_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-user icon-white icon-pad-right"></i>
@@ -217,7 +217,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_category'); ?>">g</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_category'); ?>">g</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_category_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-list icon-white icon-pad-right"></i>
@@ -228,7 +228,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_product'); ?>">p</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_product'); ?>">p</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_product_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-bag icon-white icon-pad-right"></i>
@@ -239,7 +239,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_special'); ?>">l</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_special'); ?>">l</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_special_title'); ?>">
                     <div class="add-container-icon">
                     <i class="icon-tag icon-white icon-pad-right"></i>
@@ -250,7 +250,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_manufacturer'); ?>">t</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_manufacturer'); ?>">t</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_manufacturer_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-printer icon-white icon-pad-right"></i>
@@ -261,7 +261,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_banner'); ?>">b</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_banner'); ?>">b</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_banner_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-flag icon-white icon-pad-right"></i>
@@ -272,7 +272,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left" title="<?php echo $lC_Language->get('quick_add_new_newsletter'); ?>">n</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_newsletter'); ?>">n</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_newsletter_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-read icon-white icon-pad-right"></i>

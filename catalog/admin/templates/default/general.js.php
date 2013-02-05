@@ -116,8 +116,8 @@ $(document).ready(function() {
     $("*").keypress(function(e){
       // first check if the escape key has been presed
       $(document).keydown(function(e){
-        var escCode = e.keyCode ? e.keyCode : e.which;
-        if (escCode == 27) {
+        var code = e.keyCode ? e.keyCode : e.which;
+        if (code == 27) {
           disableKeyCombo = false; 
           $('#li-search').removeClass("current");
           $('#li-messages').removeClass("current");
@@ -138,8 +138,8 @@ $(document).ready(function() {
         var modalClass = $('#modals').attr('class');
         // if the modal's class is not with-blocker we can continue
         if (modalClass != 'with-blocker') {
-          // escape = 27
-          if (e.which == 32) { // space for mega search menu
+          var code = e.keyCode ? e.keyCode : e.which;
+          if (code == 32) { // space for mega search menu
             $('#li-add').removeClass("current");
             $('#li-messages').removeClass("current");
             $('#li-settings').removeClass("current");
@@ -150,9 +150,10 @@ $(document).ready(function() {
             $('#settingsContainer').hide();
             $('#li-search').addClass("current");
             $('#searchContainer').show();
-            $('#searchContainerInput').find('input').focus();
+            $('#searchContainerInput').find('input').focus(); 
+            return false;
           };
-          if (e.which == 97) { // a for quick add menu
+          if (code == 97) { // a for quick add menu
             $('#li-search').removeClass("current");
             $('#li-messages').removeClass("current");
             $('#li-settings').removeClass("current");
@@ -164,7 +165,7 @@ $(document).ready(function() {
             $('#li-add').addClass("current");
             $('#addContainer').show();
           };
-          if (e.which == 109) { // m for messages menu
+          if (code == 109) { // m for messages menu
             $('#li-search').removeClass("current");
             $('#li-settings').removeClass("current");
             $('#li-add').removeClass("current");
@@ -176,7 +177,7 @@ $(document).ready(function() {
             $('#li-messages').addClass("current");
             $('#messagesContainer').show();
           };
-          if (e.which == 115) { // s for settings menu
+          if (code == 115) { // s for settings menu
             $('#li-search').removeClass("current");
             $('#li-messages').removeClass("current");
             $('#li-add').removeClass("current");
@@ -190,35 +191,35 @@ $(document).ready(function() {
           };
           var liAddClass = $('#li-add').attr("class");
           if (liAddClass == 'current') {
-            if (e.which == 111) { // o for new (O)rder
+            if (code == 111) { // o for new (O)rder
               //alert('new order');
               //window.location.href = '';
             };
-            if (e.which == 99) { // c for new (C)ustomer
+            if (code == 99) { // c for new (C)ustomer
               //alert('new customer');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>';
             };
-            if (e.which == 103) { // g for new cate(G)ory
+            if (code == 103) { // g for new cate(G)ory
               //alert('new category');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>';
             };
-            if (e.which == 112) { // p for new (P)roduct
+            if (code == 112) { // p for new (P)roduct
               //alert('new product');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>';
             };
-            if (e.which == 108) { // l for new specia(L)
+            if (code == 108) { // l for new specia(L)
               //alert('new special');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>';
             };
-            if (e.which == 116) { // t for new manufac(T)urer
+            if (code == 116) { // t for new manufac(T)urer
               //alert('new manufacturer');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>';
             };
-            if (e.which == 98) { // b for new (B)anner
+            if (code == 98) { // b for new (B)anner
               //alert('new banner');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>';
             };
-            if (e.which == 110) { // n for new (N)ewsletter
+            if (code == 110) { // n for new (N)ewsletter
               //alert('new newsletter');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>';
             };
@@ -447,6 +448,7 @@ $("#li-search").click(function() {
   var msgOpen = $('#messagesContainer').is(':visible');
   var mainOpen = $('#mainMenuContainer').is(':visible');
   var setOpen = $('#settingsContainer').is(':visible');
+  var srcOpen = $('#searchContainer').is(':visible');
   if (addOpen) {
     $('#li-add').removeClass("current");
     $('#addContainer').hide();
@@ -464,11 +466,6 @@ $("#li-search").click(function() {
     $('#li-settings').removeClass("current");
     $('#settingsContainer').hide();
     $('#recentContainer').hide();
-  }
-  if(!mainOpen) {
-    $('#li-settings').addClass("current");
-    $('#mainMenuContainer').show();
-    $('#recentContainer').show();
   }
 });
 
@@ -495,11 +492,6 @@ $("#li-add").click(function() {
     $('#settingsContainer').hide();
     $('#recentContainer').hide();
   }
-  if(!mainOpen) {
-    $('#li-settings').addClass("current");
-    $('#mainMenuContainer').show();
-    $('#recentContainer').show();
-  }
 });
 
 $("#li-messages").click(function() {
@@ -524,11 +516,6 @@ $("#li-messages").click(function() {
     $('#li-settings').removeClass("current");
     $('#settingsContainer').hide();
     $('#recentContainer').hide();
-  }
-  if(!mainOpen) {
-    $('#li-settings').addClass("current");
-    $('#mainMenuContainer').show();
-    $('#recentContainer').show();
   }
 });
 
