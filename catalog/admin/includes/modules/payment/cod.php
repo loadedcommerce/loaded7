@@ -19,35 +19,35 @@ class lC_Payment_cod extends lC_Payment_Admin {
   * @var string
   * @access public
   */
-  public $_title;
+  var $_title;
  /**
   * The code of the payment module
   *
   * @var string
   * @access public
   */
-  public $_code = 'cod';
+  var $_code = 'cod';
  /**
   * The developers name
   *
   * @var string
   * @access public
   */
-  public $_author_name = 'Loaded Commerce';
+  var $_author_name = 'Loaded Commerce';
  /**
   * The developers address
   *
   * @var string
   * @access public
   */
-  public $_author_www = 'http://www.loadedcommerce.com';
+  var $_author_www = 'http://www.loadedcommerce.com';
  /**
   * The status of the module
   *
   * @var boolean
   * @access public
   */
-  public $_status = false;
+  var $_status = false;
  /**
   * Constructor
   */
