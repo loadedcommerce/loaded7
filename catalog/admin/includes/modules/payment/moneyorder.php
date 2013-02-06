@@ -19,35 +19,35 @@ class lC_Payment_moneyorder extends lC_Payment_Admin {
   * @var string
   * @access private
   */
-  protected $_title;
+  public $_title;
  /**
   * The code of the payment module
   *
   * @var string
-  * @access private
+  * @access public
   */
-  protected $_code = 'moneyorder';
+  public $_code = 'moneyorder';
  /**
   * The developers name
   *
   * @var string
-  * @access private
+  * @access public
   */
-  protected $_author_name = 'Loaded Commerce';
+  public $_author_name = 'Loaded Commerce';
  /**
   * The developers address
   *
   * @var string
-  * @access private
+  * @access public
   */
-  protected $_author_www = 'http://www.loadedcommerce.com';
+  public $_author_www = 'http://www.loadedcommerce.com';
  /**
   * The status of the module
   *
   * @var boolean
-  * @access private
+  * @access public
   */
-  protected $_status = false;
+  public $_status = false;
  /**
   * Constructor
   */
