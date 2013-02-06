@@ -171,6 +171,10 @@ class lC_Payment_cresecure extends lC_Payment {
     $selection = array('id' => $this->_code,
                        'module' => $this->_title . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . '<br>' . MODULE_PAYMENT_CRESECURE_BUTTON_DESCRIPTION);
     
+echo "<pre>";
+print_r($selection);
+echo "</pre>";
+die('00');    
     
     return $selection;
   }
