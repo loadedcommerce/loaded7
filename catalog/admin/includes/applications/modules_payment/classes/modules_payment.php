@@ -32,7 +32,7 @@ class lC_Modules_payment_Admin {
     $installed_modules = array();
     $result = array('aaData' => array());
     foreach ( $files as $file ) {
-      include_once('includes/modules/payment/' . $file['name']);
+      include('includes/modules/payment/' . $file['name']);
       $class = substr($file['name'], 0, strrpos($file['name'], '.'));
       if ( class_exists('lC_Payment_' . $class) ) {
         $lC_Language->injectDefinitions('modules/payment/' . $class . '.xml');
