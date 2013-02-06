@@ -20,6 +20,17 @@ class lC_Updates_Admin {
   protected static $_to_version;  
   
   /**
+  * Check to see if there are updates availablw
+  *  
+  * @access public      
+  * @return boolean
+  */ 
+  public static function hasUpdatesAvailable() {
+    $result = self::getAvailablePackages();
+
+    return ($result['total'] > 0);
+  }  
+  /**
   * Find available update packages based on $search 
   *  
   * @param array  $search The version to search for
@@ -51,7 +62,6 @@ class lC_Updates_Admin {
     $result = array('entries' => array());
     $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/updates/available/?ref=' . urlencode($_SERVER['SCRIPT_FILENAME']), 'method' => 'get'));
     $versions_array = utility::xml2arr($versions); 
-
     $counter = 0;
     foreach ( $versions_array['data'] as $l => $v ) {
       if ( version_compare(utility::getVersion(), $v['version'], '<') ) {

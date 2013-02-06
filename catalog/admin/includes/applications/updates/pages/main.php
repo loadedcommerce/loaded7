@@ -15,7 +15,14 @@ error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 ini_set("display_errors", 1);
 require_once('includes/applications/updates/classes/updates.php');  
 
+$hasUpdates = lC_Updates_Admin::hasUpdatesAvailable(); 
 $updatesDataArr = lC_Updates_Admin::getAvailablePackages(); 
+
+echo "<pre style='margin:30px; padding-left:100px;'>";
+print_r($updatesDataArr);
+echo "</pre>";
+echo 'hasUpdates[' . $hasUpdates . ']<br>';
+
 
 /*
 $findDataArr = lC_Updates_Admin::findAvailablePackages('7.0'); 
