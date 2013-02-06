@@ -62,7 +62,7 @@ class lC_Payment_cresecure extends lC_Payment {
 
     $this->_title = $lC_Language->get('payment_cresecure_title');
     $this->_description = $lC_Language->get('payment_cresecure_description');
-    $this->_status = (defined('MODULE_PAYMENT_CRESECURE_STATUS') && (MODULE_PAYMENT_CRESECURE_STATUS == 'True') ? true : false);
+    $this->_status = (defined('MODULE_PAYMENT_CRESECURE_STATUS') && (MODULE_PAYMENT_CRESECURE_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('MODULE_PAYMENT_CRESECURE_SORT_ORDER') ? MODULE_PAYMENT_CRESECURE_SORT_ORDER : null);
 
     if (defined('MODULE_PAYMENT_CRESECURE_STATUS')) {
@@ -155,7 +155,7 @@ class lC_Payment_cresecure extends lC_Payment {
     } 
     */       
 
-    $Qcredit_cards = $lC_Database->query('select credit_card_name, credit_card_code from :table_credit_cards where credit_card_status = :credit_card_status');
+    $Qcredit_cards = $lC_Database->query('select id, credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
 
     $Qcredit_cards->bindRaw(':table_credit_cards', TABLE_CREDIT_CARDS);
     $Qcredit_cards->bindInt(':credit_card_status', '1');
@@ -163,18 +163,13 @@ class lC_Payment_cresecure extends lC_Payment {
     $Qcredit_cards->execute();
 
     while ($Qcredit_cards->next()) {
-      $credit_cards[] = array('id' => $Qcredit_cards->value('credit_card_code'), 'text' => $Qcredit_cards->value('credit_card_name'));
+      $credit_cards[] = array('id' => $Qcredit_cards->value('id'), 'text' => $Qcredit_cards->value('credit_card_name'));
     }
 
     $Qcredit_cards->freeResult();
 
     $selection = array('id' => $this->_code,
-                       'module' => $this->_title . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . '<br>' . MODULE_PAYMENT_CRESECURE_BUTTON_DESCRIPTION);
-    
-echo "<pre>";
-print_r($selection);
-echo "</pre>";
-die('00');    
+                       'module' => $this->_title . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . '<br>' . MODULE_PAYMENT_CRESECURE_BUTTON_DESCRIPTION);    
     
     return $selection;
   }
