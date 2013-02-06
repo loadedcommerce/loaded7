@@ -11,8 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-  global $lC_Template, $lC_Language; 
-*/ 
+global $lC_Template, $lC_Language; 
 ?>
 <script>
 $(document).ready(function() {
