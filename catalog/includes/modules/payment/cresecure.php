@@ -57,7 +57,7 @@ class lC_Payment_cresecure extends lC_Payment {
  /**
   * Constructor
   */      
-  public function __constructor() {
+  public function lC_Payment_cresecure() {
     global $lC_Language;
 
     $this->_title = $lC_Language->get('payment_cresecure_title');
