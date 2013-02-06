@@ -117,7 +117,7 @@ class lC_Payment_cresecure extends lC_Payment_Admin {
       $this->_keys = array('MODULE_PAYMENT_CRESECURE_STATUS',
                            'MODULE_PAYMENT_CRESECURE_LOGIN',
                            'MODULE_PAYMENT_CRESECURE_TEST_MODE',
-                         //  'MODULE_PAYMENT_CRESECURE_SHOW_INCOMPLETE',
+                         //   'MODULE_PAYMENT_CRESECURE_SHOW_INCOMPLETE',
                            'MODULE_PAYMENT_CRESECURE_ACCEPTED_TYPES',
                            'MODULE_PAYMENT_CRESECURE_ZONE',
                            'MODULE_PAYMENT_CRESECURE_ORDER_STATUS_ID',
