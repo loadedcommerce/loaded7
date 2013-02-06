@@ -1,4 +1,13 @@
-# $Id$
+#  $Id: .htaccess.php v1.0 2013-01-01 datazen $
+#
+#  LoadedCommerce, Innovative eCommerce Solutions
+#  http://www.loadedcommerce.com
+#
+#  Copyright (c) 2013 Loaded Commerce, LLC
+#
+#  @author     Loaded Commerce Team
+#  @copyright  (c) 2013 Loaded Commerce Team
+#  @license    http://loadedcommerce.com/license.html
 #
 # This is used with Apache WebServers
 #
@@ -28,8 +37,6 @@
 # Fix certain PHP values
 # (commented out by default to prevent errors occuring on certain
 # servers)
-
-php_flag register_globals Off
 
 #<IfModule mod_php4.c>
 #  php_value session.use_trans_sid 0

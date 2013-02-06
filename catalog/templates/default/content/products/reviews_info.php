@@ -1,24 +1,23 @@
 <?php
-  /*
-  $Id: reviews_info.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-  */
-  $Qreviews = lC_Reviews::getEntry($_GET[$lC_Template->getModule()]);
-  if ($lC_MessageStack->size('reviews') > 0) {
-    echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('reviews', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
-  }
+/**  
+*  $Id: reviews_info.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
+*/
+$Qreviews = lC_Reviews::getEntry($_GET[$lC_Template->getModule()]);
+if ($lC_MessageStack->size('reviews') > 0) {
+  echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('reviews', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
+}
 ?>
-<!--PRODUCT REVIEWS SECTION STARTS-->
+<!--content/products/reviews_info.php start-->
 <div class="full_page">
-  <!--PRODUCT REVIEWS CONTENT STARTS-->
   <div class="content">
     <div class="short-code-column">
       <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
@@ -52,3 +51,4 @@
     <div style="clear:both;"></div>
   </div>
 </div>
+<!--content/products/reviews_info.php end-->

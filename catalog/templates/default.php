@@ -1,15 +1,15 @@
 <?php
-/*
-  $Id: default.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: default.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 if (!defined('DIR_WS_TEMPLATE')) define('DIR_WS_TEMPLATE', DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/');
 if (!defined('DIR_FS_TEMPLATE')) define('DIR_FS_TEMPLATE', DIR_FS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/');

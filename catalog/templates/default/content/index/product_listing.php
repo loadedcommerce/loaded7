@@ -1,29 +1,28 @@
 <?php
-/*
-  $Id: product_listing.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-*/ 
+/**  
+*  $Id: product_listing.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
+*/
 ?>
+<!--content/index/product_listing.php start-->
 <style>
 button.price_add {
   margin-top: 20px;
 }
 </style>
 <div class="full_page">
-  <!--PRODUCTS CONTENT STARTS-->
   <div class="content">
     <!-- h1><?php echo $lC_Template->getPageTitle(); ?></h1 --> 
-    <!--PRODUCTS LISTING STARTS-->
     <div class="products_list products_slider">
-    <?php 
+      <?php 
       // optional Product List Filter
       if (PRODUCT_LIST_FILTER > 0) {
         if (isset($_GET['manufacturers']) && !empty($_GET['manufacturers'])) {
@@ -63,6 +62,6 @@ button.price_add {
       }
     ?>
     </div>
-    <!--Product List Ends-->
   </div>
 </div>
+<!--content/index/product_listing.php end-->

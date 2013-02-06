@@ -1,27 +1,21 @@
 <?php
-/*
-  $Id: categories.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: categories.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
-
-// added to control template categories level in box :: maestro
-$_SESSION['setCategoriesMaximumLevel'] = 2;
+$_SESSION['setCategoriesMaximumLevel'] = 2; // set max levels = 2
 $cPathArr = explode('_', $_GET['cPath']);
 $cPathTop = $cPathArr[0];
-if (isset($_GET['lCsid']) && !empty($_GET['lCsid'])) {
-  lC_Cache::clear('categories');
-  lC_Cache::clear('category_tree');
-}
 ?>
-<!--Side Nav Starts-->
+<!--modules/boxes/categories.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
 <?php echo $lC_Box->getContent(); ?>
 <script>
@@ -40,4 +34,4 @@ $(document).ready(function() {
   });
 });      
 </script>  
-<!--Side Nav Ends-->
+<!--modules/boxes/categories.php end-->

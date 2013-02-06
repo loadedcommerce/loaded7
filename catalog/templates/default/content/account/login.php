@@ -1,16 +1,16 @@
 <?php
-  /*
-  $Id: login.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-  */
+/**  
+*  $Id: login.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
+*/
 if ($lC_MessageStack->size('login') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('login', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
 }
@@ -18,7 +18,7 @@ if ($lC_MessageStack->size('login') > 0) {
 <style>
 #login_list li { margin: 10px 0; }
 </style>
-<!--LOGIN SECTION STARTS-->
+<!--content/account/login.php start-->
 <div id="accountLogin" class="full_page">
   <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   <div id="errDiv" class="short-code msg error" style="margin-bottom:10px; display:none;">
@@ -73,4 +73,4 @@ $('#login').submit(function() {
   return false;
 });
 </script>
-<!--LOGIN SECTION ENDS-->
+<!--content/account/login.php end-->

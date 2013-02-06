@@ -1,36 +1,30 @@
 <?php
-/*
-  $Id: info_privacy.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: info_privacy.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 ?>
-<!--INFO PRIVACY SECTION STARTS-->
-  <div id="infoPrivacy" class="full_page">
-    <!--INFO PRIVACY DETAILS STARTS-->
-    <div class="content">
-      <!--INFO PRIVACY CONTENT STARTS-->
-      <div class="short-code-column">
-        <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-        <div><?php echo $lC_Language->get('text_information_privacy'); ?></div>
-      </div>
-      <div style="clear:both;">&nbsp;</div>
-      <!--INFO PRIVACY CONTENT ENDS-->
-      <!--INFO PRIVACY ACTIONS STARTS-->
-      <div id="infoPrivacyActions" class="action_buttonbar">
-        <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
-        <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
-      </div>
-      <div style="clear:both;"></div>
-      <!--INFO PRIVACY ACTIONS ENDS-->
+<!--content/info/info_privacy.php start-->
+<div id="infoPrivacy" class="full_page">
+  <div class="content">
+    <div class="short-code-column">
+      <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+      <div><?php echo $lC_Language->get('text_information_privacy'); ?></div>
     </div>
+    <div style="clear:both;">&nbsp;</div>
+    <div id="infoPrivacyActions" class="action_buttonbar">
+      <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+      <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
+    </div>
+    <div style="clear:both;"></div>
   </div>
-  <!--INFO PRIVACY DETAILS ENDS-->
-<!--INFO PRIVACY SECTION ENDS-->
+</div>
+<!--content/info/info_privacy.php end-->

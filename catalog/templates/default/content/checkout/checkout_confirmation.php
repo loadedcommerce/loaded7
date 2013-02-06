@@ -1,35 +1,34 @@
 <?php
-/*
-  $Id: checkout_confirmation.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: checkout_confirmation.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 ?>
-<!--CHECKOUT PAYMENT SECTION STARTS-->
+<!--content/checkout/checkout_confirmation.php start-->
 <div id="checkout_confirmation_details" class="full_page">
-  <!--CHECKOUT PAYMENT DETAILS STARTS-->
   <h5><?php echo $lC_Language->get('text_checkout'); ?></h5>
   <div class="checkout_steps">
     <ol id="checkoutSteps">
       <li class="first-checkout-li">
         <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>">
-        <div class="step-title">
-          <h2><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h2>
-        </div>
+          <div class="step-title">
+            <h2><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h2>
+          </div>
         </a>
       </li>
       <li>
         <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>">
-        <div class="step-title">
-          <h2><?php echo $lC_Language->get('box_ordering_steps_payment'); ?></h2>
-        </div>
+          <div class="step-title">
+            <h2><?php echo $lC_Language->get('box_ordering_steps_payment'); ?></h2>
+          </div>
         </a>
       </li>
       <li class="section allow active">
@@ -39,34 +38,26 @@
         <div id="checkout-step-login">
           <div class="col2-set">
             <div id="checkout_shipping_col1" style="width:35%; float:left;">
-              <!--SHIP TO ADDRESS BLOCK STARTS-->
               <div id="ship-to-address-block">
                 <h3><?php echo $lC_Language->get('ship_to_address'); ?></h3>
                 <span style="float:right;"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span>
                 <span id="ship-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?></span>
               </div>
-              <!--SHIP TO ADDRESS BLOCK ENDS-->
-              <!--SHIPPING METHOD BLOCK STARTS-->
               <div id="shipping-method-block">  
                 <h3><?php echo $lC_Language->get('shipping_method_heading'); ?></h3>
                 <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span>
                 <p><?php echo $lC_ShoppingCart->getShippingMethod('title'); ?></p>
               </div>
-              <!--SHIPPING METHOD BLOCK ENDS-->
-              <!--BILL TO ADDRESS BLOCK STARTS-->
               <div id="bill-to-address-block">
                 <h3><?php echo $lC_Language->get('bill_to_address'); ?></h3>
                 <span style="float:right;"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span>
                 <span id="bill-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?></span>
               </div>
-              <!--BILL TO ADDRESS BLOCK ENDS-->
-              <!--PAYMENT METHOD BLOCK STARTS-->
               <div id="payment-method-block">  
                 <h3><?php echo $lC_Language->get('payment_method_heading'); ?></h3>
                 <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span>
                 <p><?php echo $lC_ShoppingCart->getBillingMethod('title'); ?></p>
               </div>
-              <!--PAYMENT METHOD BLOCK ENDS-->
             </div>
             <div id="checkout_shipping_col2" style="width:60%; float:right;">
               <!-- placement for order reference number later <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span> -->
@@ -76,24 +67,24 @@
                   <table border="0" width="100%" cellspacing="0" cellpadding="2">
                     <?php
                       if ($lC_ShoppingCart->numberOfTaxGroups() > 1) {
-                    ?>
-                    <tr>
-                      <td colspan="2"><?php echo '<b>' . $lC_Language->get('order_products_title') . '</b>'; ?></td>
-                      <td align="right"><b><?php echo $lC_Language->get('order_tax_title'); ?></b></td>
-                      <td align="right"><b><?php echo $lC_Language->get('order_total_title'); ?></b></td>
-                    </tr>
-                    <?php
+                      ?>
+                      <tr>
+                        <td colspan="2"><?php echo '<b>' . $lC_Language->get('order_products_title') . '</b>'; ?></td>
+                        <td align="right"><b><?php echo $lC_Language->get('order_tax_title'); ?></b></td>
+                        <td align="right"><b><?php echo $lC_Language->get('order_total_title'); ?></b></td>
+                      </tr>
+                      <?php
                       } else {
-                    ?>
-                    <tr>
-                      <td colspan="4"><?php echo '<b>' . $lC_Language->get('order_products_title') . '</b>'; ?></td>
-                    </tr>
-                    <?php
+                      ?>
+                      <tr>
+                        <td colspan="4"><?php echo '<b>' . $lC_Language->get('order_products_title') . '</b>'; ?></td>
+                      </tr>
+                      <?php
                       }
                       foreach ($lC_ShoppingCart->getProducts() as $products) {
                         echo '              <tr class="confirmation-products-listing-row">' . "\n" .
-                             '                <td width="30"><b>' . $products['quantity'] . '&nbsp;x&nbsp;</b></td>' . "\n" .
-                             '                <td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
+                        '                <td width="30"><b>' . $products['quantity'] . '&nbsp;x&nbsp;</b></td>' . "\n" .
+                        '                <td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
                         if ( (STOCK_CHECK == '1') && !$lC_ShoppingCart->isInStock($products['item_id']) ) {
                           echo '<span class="markProductOutOfStock">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>';
                         }
@@ -107,7 +98,7 @@
                           echo '                <td style="float:right;"><b>' . lC_Tax::displayTaxRateValue($products['tax']) . '</b></td>' . "\n";
                         }
                         echo '                <td style="float:right;"><b>' . $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']) . '</b></td>' . "\n" .
-                             '              </tr>' . "\n";
+                        '              </tr>' . "\n";
                       }
                     ?>
                   </table>
@@ -123,7 +114,7 @@
                   <div id="confirmation-discount-code-button">
                     <!-- Discount button goes here
                     <a href="#" class="sc-button small grey colorWhite noDecoration buttonRight">
-                      <?php echo $lC_Language->get('apply_discount_code'); ?>
+                    <?php echo $lC_Language->get('apply_discount_code'); ?>
                     </a>
                     -->
                   </div>
@@ -135,57 +126,56 @@
                     <?php 
                       foreach ($lC_ShoppingCart->getOrderTotals() as $module) { 
                         if ($module['code'] != 'total') {
-                    ?>
-                    <div class="ot-block" id="<?php echo $module['code']; ?>">
-                      <label><?php echo $module['title']; ?></label>
-                      <span><?php echo $module['text']; ?></span>
-                    </div>
-                    <div style="clear:both;"></div>
-                    <?php 
+                        ?>
+                        <div class="ot-block" id="<?php echo $module['code']; ?>">
+                          <label><?php echo $module['title']; ?></label>
+                          <span><?php echo $module['text']; ?></span>
+                        </div>
+                        <div style="clear:both;"></div>
+                        <?php 
                         }
                       } 
                     ?>
                   </div>
                   <div style="clear:both;"></div>
-                  <!--ORDER TOTAL LISTING ENDS-->
                 </div>
               </div>
               <?php
                 if ($lC_Payment->hasActive()) {
                   if ($confirmation = $lC_Payment->confirmation()) {
-              ?>
-              <div id="checkoutConfirmationPaymentInformation">
-                <h6><?php echo $lC_Language->get('order_payment_information_title'); ?></h6>
-                <div>
-                  <p><?php echo $confirmation['title']; ?></p>
-                  <?php
-                  if (isset($confirmation['fields'])) {
-                    ?>
-                    <table border="0" cellspacing="0" cellpadding="2">
-                      <?php
-                      for ($i=0, $n=sizeof($confirmation['fields']); $i<$n; $i++) {
-                        ?>
-                        <tr>
-                          <td width="10">&nbsp;</td>
-                          <td><?php echo $confirmation['fields'][$i]['title']; ?></td>
-                          <td width="10">&nbsp;</td>
-                          <td><?php echo $confirmation['fields'][$i]['field']; ?></td>
-                        </tr>
-                        <?php
-                      }
-                      ?>
-                    </table>
-                    <?php
-                  }
-                  if (isset($confirmation['text'])) {
-                    ?>
-                    <p><?php echo $confirmation['text']; ?></p>
-                    <?php
-                  }
                   ?>
-                </div>
-              </div>
-              <?php
+                  <div id="checkoutConfirmationPaymentInformation">
+                    <h6><?php echo $lC_Language->get('order_payment_information_title'); ?></h6>
+                    <div>
+                      <p><?php echo $confirmation['title']; ?></p>
+                      <?php
+                        if (isset($confirmation['fields'])) {
+                        ?>
+                        <table border="0" cellspacing="0" cellpadding="2">
+                          <?php
+                            for ($i=0, $n=sizeof($confirmation['fields']); $i<$n; $i++) {
+                            ?>
+                            <tr>
+                              <td width="10">&nbsp;</td>
+                              <td><?php echo $confirmation['fields'][$i]['title']; ?></td>
+                              <td width="10">&nbsp;</td>
+                              <td><?php echo $confirmation['fields'][$i]['field']; ?></td>
+                            </tr>
+                            <?php
+                            }
+                          ?>
+                        </table>
+                        <?php
+                        }
+                        if (isset($confirmation['text'])) {
+                        ?>
+                        <p><?php echo $confirmation['text']; ?></p>
+                        <?php
+                        }
+                      ?>
+                    </div>
+                  </div>
+                  <?php
                   }
                 }
               ?>
@@ -205,9 +195,7 @@
                 <div id="confirmation-order-comment">
                   <h3><?php echo $lC_Language->get('order_comment_title'); ?></h3>
                   <div id="confirmation-order-comment-inner">
-                    <!--CHECKOUT PAYMENT COMMENTS STARTS-->
                     <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), 34, 3, 'placeholder="' . $lC_Language->get('text_add_comment_to_order') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('text_add_comment_to_order') . '\'" style="height:47px;"'); ?>
-                    <!--CHECKOUT PAYMENT COMMENTS ENDS-->
                   </div>
                 </div>
                 <div id="confirmation-grand-total">
@@ -217,13 +205,13 @@
                       <?php 
                         foreach ($lC_ShoppingCart->getOrderTotals() as $module) { 
                           if ($module['code'] == 'total') {
-                      ?>
-                      <div class="ot-block" id="<?php echo $module['code']; ?>">
-                        <label><?php echo $module['title']; ?></label>
-                        <span><?php echo $module['text']; ?></span>
-                      </div>
-                      <div style="clear:both;"></div>
-                      <?php 
+                          ?>
+                          <div class="ot-block" id="<?php echo $module['code']; ?>">
+                            <label><?php echo $module['title']; ?></label>
+                            <span><?php echo $module['text']; ?></span>
+                          </div>
+                          <div style="clear:both;"></div>
+                          <?php 
                           }
                         } 
                       ?>
@@ -234,31 +222,29 @@
               <div style="clear:both;"></div>
               <?php
                 if (DISPLAY_CONDITIONS_ON_CHECKOUT == '1') {
-              ?>              
-              <div id="terms-conditions">
-                <?php echo lc_draw_checkbox_field('conditions', array(array('id' => 1, 'text' => $lC_Language->get('order_conditions_acknowledge'))), false); ?>
-              </div>
-              <script>
-                $("#checkout_confirmation").submit(function() {
-                  if($('#conditions').is(':checked')){
-                  } else {
-                    alert('<?php echo $lC_Language->get('error_conditions_not_accepted'); ?>');
-                    return false;
-                  }
-                });
-              </script>
-              <div style="clear:both;"></div>
-              <?php
+                ?>              
+                <div id="terms-conditions">
+                  <?php echo lc_draw_checkbox_field('conditions', array(array('id' => 1, 'text' => $lC_Language->get('order_conditions_acknowledge'))), false); ?>
+                </div>
+                <script>
+                  $("#checkout_confirmation").submit(function() {
+                      if($('#conditions').is(':checked')){
+                      } else {
+                        alert('<?php echo $lC_Language->get('error_conditions_not_accepted'); ?>');
+                        return false;
+                      }
+                  });
+                </script>
+                <div style="clear:both;"></div>
+                <?php
                 }
               ?>
-              <!--CHECKOUT PAYMENT ACTIONS STARTS-->
               <div style="clear:both;"></div>
               <div id="checkoutConfirmationActions">
                 <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
                 <span class="buttonRight"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_confirm_order'); ?></button></span>
               </div>
               <div style="clear:both;"></div>
-              <!--CHECKOUT PAYMENT ACTIONS ENDS-->
             </div>
             </form>
           </div>
@@ -268,4 +254,4 @@
   </div>
 </div>
 <div style="clear:both;"></div>
-<!--CHECKOUT PAYMENT DETAILS ENDS-->
+<!--content/checkout/checkout_confirmation.php end-->

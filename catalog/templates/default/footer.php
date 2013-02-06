@@ -1,21 +1,20 @@
 <?php
-  /*
-  $Id: footer.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: footer.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 ?>
-<!--Footer Starts-->
+<!--footer.php start-->
 <div class="footer-container">
   <footer class="wrapper">
-    <!--Newsletter_subscribe Starts-->
     <div class="subscribe_block">
       <div class="find_us">
         <h3>Find us on</h3>
@@ -30,7 +29,6 @@
         </form>
       </div>
     </div>
-    <!--Newsletter_subscribe Ends-->
     <ul class="footer_links">
       <li><span>New Arrivals</span>
         <ul>
@@ -91,4 +89,4 @@
     </address>
   </footer>
 </div>
-<!--Footer Ends-->
+<!--footer.php end-->

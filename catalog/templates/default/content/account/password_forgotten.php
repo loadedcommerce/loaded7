@@ -1,26 +1,25 @@
 <?php
-/*
-  $Id: password_forgotten.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: password_forgotten.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 if ($lC_MessageStack->size('password_forgotten') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('password_forgotten', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
 }
 ?>
-<!--PASSWORD FORGOTTEN SECTION STARTS-->
-  <div class="full_page">
-    <!--PASSWORD FORGOTTEN CONTENT STARTS-->
-    <div class="short-code-column">
-      <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-      <form name="password_forgotten" id="password_forgotten" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password_forgotten=process', 'SSL'); ?>" method="post" onsubmit="return check_form(password_forgotten);">
+<!--content/account/password_forgotten.php start-->
+<div class="full_page">
+  <div class="short-code-column">
+    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <form name="password_forgotten" id="password_forgotten" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password_forgotten=process', 'SSL'); ?>" method="post" onsubmit="return check_form(password_forgotten);">
       <div class="borderPadMe">
         <div id="passwordForgottenForm">
           <p><?php echo $lC_Language->get('password_forgotten'); ?></p><br />
@@ -30,15 +29,12 @@ if ($lC_MessageStack->size('password_forgotten') > 0) {
         </div>
       </div> 
       <div style="clear:both;">&nbsp;</div>
-      <!--PASSWORD FORGOTTEN CONTENT ENDS-->
-      <!--PASSWORD FORGOTTEN ACTIONS STARTS-->    
       <div id="accountPasswordForgottentActions" class="action_buttonbar">
         <span class="buttonLeft"><a href="javascript: history.go(-1)" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span> 
         <span class="buttonRight"><a onclick="$('#password_forgotten').submit();" class="noDecoration"><button class="button brown_btn" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
       </div> 
       <div style="clear:both;"></div>
-      <!--PASSWORD FORGOTTEN ACTIONS ENDS-->
-      </form>
-    </div>
+    </form>
   </div>
-<!--PASSWORD FORGOTTEN SECTION ENDS-->
+</div>
+<!--content/account/password_forgotten.php end-->

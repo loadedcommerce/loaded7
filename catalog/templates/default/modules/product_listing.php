@@ -1,19 +1,19 @@
 <?php
-/*
-  $Id: products_listing.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: product_listing.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 if ($Qlisting->numberOfRows() > 0) {
 ?>
-<!--Listing Toolbar Starts-->
+<!--modules/product_listing.php start-->
 <div id="toolbarContainer">
 <div class="toolbar">
   <!-- will add back later :: maestro
@@ -185,3 +185,4 @@ if ( ($Qlisting->numberOfRows() > 0) && ((PREV_NEXT_BAR_LOCATION == '2') || (PRE
   <?php
 }
 ?>
+<!--modules/product_listing.php end-->

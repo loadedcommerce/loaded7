@@ -1,15 +1,15 @@
 <?php
-/*
-  $Id: create.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: create.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 if ($lC_MessageStack->size('create') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('create', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
@@ -19,7 +19,7 @@ if ($lC_MessageStack->size('create') > 0) {
 #personal_details li { margin: 10px 0; }
 #login_details li { margin: 10px 0; }
 </style>
-<!--CREATE ACCOUNT SECTION STARTS-->
+<!--content/account/create.php start-->
 <div id="accountCreate" class="full_page">
   <h1><?php echo $lC_Template->getPageTitle(); ?></h1>        
   <form name="create" id="create" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create=save', 'SSL'); ?>" method="post">
@@ -111,4 +111,4 @@ $('#create').submit(function() {
   return false;
 });
 </script>
-<!--CREATE ACCOUNT SECTION ENDS-->
+<!--content/account/create.php end-->
