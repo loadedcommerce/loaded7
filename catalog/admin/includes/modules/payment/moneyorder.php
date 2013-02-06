@@ -51,7 +51,7 @@ class lC_Payment_moneyorder extends lC_Payment_Admin {
  /**
   * Constructor
   */
-  public function __constructor() {
+  public function lC_Payment_moneyorder() {
     global $lC_Language;
 
     $this->_title = $lC_Language->get('payment_moneyorder_title');
