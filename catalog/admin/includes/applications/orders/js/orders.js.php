@@ -12,11 +12,12 @@
   @license    http://loadedcommerce.com/license.html
 */
 global $lC_Template, $lC_Language;
+$oSearch = (isset($_GET['oID']) && $_GET['oID'] != null ? '&oSearch=' . $_GET['oID'] : null);
 ?>
 <script>
   $(document).ready(function() {
     var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';            
-    var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA' . $cSearch); ?>';
+    var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA' . $oSearch); ?>';
     oTable = $('#dataTable').dataTable({
       "bProcessing": true,
       "bServerSide": true,

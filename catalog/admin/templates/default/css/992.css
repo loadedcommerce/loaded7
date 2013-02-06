@@ -239,7 +239,7 @@ body.with-menu #main {
 			display: block;
 			top: 100%;
 			bottom: auto;
-			height: 15px;
+			height: 2px;
 			background: url(../img/old-browsers/992/bg_menu-content_after.png) repeat-x;
 			-webkit-background-size: 100% 100%;
 			-moz-background-size: 100% 100%;

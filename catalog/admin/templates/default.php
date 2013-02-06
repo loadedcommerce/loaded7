@@ -65,8 +65,6 @@
   <!-- DataTables -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables-tableTools.css?v=1">
-  <!-- loading mask -->
-  <link rel="stylesheet" href="templates/default/css/styles/jquery.loadmask.css?v=1">
   <!-- Google code prettifier -->
   <link rel="stylesheet" href="../ext/jquery/google-code-prettify/sunburst.css?v=1">
 
@@ -170,27 +168,205 @@
 
         <!-- Big menu small navigation -->
         <ul id="access" class="children-tooltip">
-          <li id="li-search"><a onclick="toggleSubMenu('search');" href="#" title="Search"><span class="icon-search"></span></a></li>
-          <li id="li-add"><a onclick="toggleSubMenu('add');" href="#" title="Quick Add"><span class="icon-plus"></span></a></li>
-          <li id="li-messages"><a onclick="toggleSubMenu('messages');" href="#" title="Messages"><span class="icon-mail"></span></a></li>
-          <li id="li-settings" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="disabled"'); ?>><a href="#" onclick="toggleChildMenu('settings');" title="Settings"><span id="sp-settings" class="icon-gear"><div></div></span></a></li>
-        </ul>
-
-        <div id="messagesContainer" style="display:none;">
+          <li id="li-search"><a onclick="toggleSubMenu('search');" href="#" title="<?php echo $lC_Language->get('tooltip_search'); ?>"><span class="icon-search"></span></a></li>
+          <li id="li-add"><a onclick="toggleSubMenu('add');" href="#" title="<?php echo $lC_Language->get('tooltip_quick_add'); ?>"><span class="icon-plus icon-size2"></span></a></li>
+          <li id="li-messages"><a onclick="toggleSubMenu('messages');" href="#" title="<?php echo $lC_Language->get('tooltip_messages'); ?>"><span class="icon-mail"></span></a></li>
+          <li id="li-settings" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="disabled"'); ?>><a href="#" onclick="toggleChildMenu('settings');" title="<?php echo $lC_Language->get('tooltip_settings'); ?>"><span id="sp-settings" class="icon-gear"></span></a></li>
+        </ul>  
+        
+        <div id="searchContainer" style="display:none;">
           <section>
-          Messages
+            <div id="searchContainerInput" class="megaSearch black-gradient">
+              <form name="megaSearch" action="megaSearch" method="post">
+                <ul class="inputs mega-search-border">
+                  <li>
+                    <span class="icon-search mid-margin-left"></span>
+                    <input class="input-unstyled" type="text" onkeyup="search(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q" id="megaSearch">
+                  </li>
+                </ul>
+              </form>
+            </div>        
+            <div id="searchResults"></div>            
           </section>
         </div>      
         
         <div id="addContainer" style="display:none;">
           <section>
-          Quick Add
+            <div id="addContainerLinks">
+              <ul class="list spaced">
+                <li class="anthracite-gradient">
+                  <span class="list-count grey with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_order'); ?>">o</span>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_order_title'); ?>">
+                    <div class="add-container-icon">
+                      <i class="icon-price-tag icon-grey icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left grey">
+                      <?php echo $lC_Language->get('quick_add_order'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li class="anthracite-gradient">
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>">c</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_customer_title'); ?>">
+                    <div class="add-container-icon">
+                      <i class="icon-user icon-white icon-pad-right"></i>
+                    </div>
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_customer'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li class="anthracite-gradient">
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_category'); ?>">g</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_category_title'); ?>">
+                    <div class="add-container-icon">
+                      <i class="icon-list icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_category'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li class="anthracite-gradient">
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_product'); ?>">p</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_product_title'); ?>">
+                    <div class="add-container-icon">
+                      <i class="icon-bag icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_product'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li class="anthracite-gradient">
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_special'); ?>">l</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_special_title'); ?>">
+                    <div class="add-container-icon">
+                    <i class="icon-tag icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                    <?php echo $lC_Language->get('quick_add_special'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li class="anthracite-gradient">
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_manufacturer'); ?>">t</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_manufacturer_title'); ?>">
+                    <div class="add-container-icon">
+                      <i class="icon-printer icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_manufacturer'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li class="anthracite-gradient">
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_banner'); ?>">b</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_banner_title'); ?>">
+                    <div class="add-container-icon">
+                      <i class="icon-flag icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_banner'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li class="anthracite-gradient">
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_newsletter'); ?>">n</span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_newsletter_title'); ?>">
+                    <div class="add-container-icon">
+                      <i class="icon-read icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_newsletter'); ?>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </section>
-        </div>  
-        
-        <div id="searchContainer" style="display:none;">
+        </div>
+
+        <div id="messagesContainer" style="display:none;">
           <section>
-          Search
+            <div id="messageContainerLinks">
+              <ul class="list spaced">
+                <li>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <div class="add-container-icon">
+                      <span class="icon-pencil icon-grey icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left grey">
+                      <?php echo $lC_Language->get('messaging_compose'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <span class="list-count grey">3</span>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <div class="add-container-icon">
+                      <span class="icon-folder icon-grey icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left grey">
+                      <?php echo $lC_Language->get('messaging_inbox'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <span class="list-count grey">23</span>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <div class="add-container-icon">
+                      <span class="icon-users icon-grey icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left grey">
+                      <?php echo $lC_Language->get('messaging_community_inbox'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <span class="list-count grey">4</span>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <div class="add-container-icon">
+                      <span class="icon-warning icon-grey icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left grey">
+                      <?php echo $lC_Language->get('messaging_loaded_messages'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <div class="add-container-icon">
+                      <span class="icon-arrow icon-grey icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left grey">
+                      <?php echo $lC_Language->get('messaging_sent'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <div class="add-container-icon">
+                      <span class="icon-drawer icon-grey icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left grey">
+                      <?php echo $lC_Language->get('messaging_drafts'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <span class="list-count grey">7</span>
+                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>" class="list-link white-link-with-pad">
+                    <div class="add-container-icon">
+                      <span class="icon-trash icon-grey icon-pad-right"></span>
+                    </div> 
+                    <div class="float-left grey">
+                      <?php echo $lC_Language->get('messaging_trash'); ?>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </section>
         </div> 
                 
@@ -219,6 +395,46 @@
             </ul>
           </section>
         </div>
+      </div>
+      
+      <div id="recentContainer">
+        <section>
+          <ul class="title-menu">
+            <li>Recent Events</li>
+          </ul>
+          <ul class="title-menu-2">
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 2 customers created
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 1 new order
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 1 new review
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 3 products created
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;margin:0 3px 0 -3px;">&#128190;</div> 3 products updated
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;margin:0 3px 0 -3px;">&#128190;</div> 2 specials updated
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 1 new coupon created
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 1 page created
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;"><span class="icon-lightning icon-pad-right"></span></div> 2 carts created
+            </li>
+            <li>
+              <div style="width:20px;float:left;text-align:center;margin:0 3px 0 -3px;">&#128190;</div> 1 page updated
+            </li>
+          </ul>
+        </section>
       </div>
       
       <footer id="menu-footer">
@@ -252,7 +468,6 @@
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.min.js"></script>
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.reloadAjax.js"></script>
   <script src="../ext/jquery/jquery.details.min.js"></script>
-  <script src="../ext/jquery/jquery.loadmask.js"></script>
   <!-- Template functions -->
   <script src="templates/default/js/setup.js"></script>
   <script src="templates/default/js/float.js"></script>

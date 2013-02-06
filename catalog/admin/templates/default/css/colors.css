@@ -415,6 +415,12 @@
 /* White */
 .calendar-menu > li,
 li.calendar-menu,
+.orders-menu > li,
+li.orders-menu,
+.customers-menu > li,
+li.customers-menu,
+.products-menu > li,
+li.products-menu,
 .message-menu > li,
 li.message-menu,
 .message, .big-message,
