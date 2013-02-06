@@ -169,7 +169,8 @@ class lC_Payment_cresecure extends lC_Payment {
     $Qcredit_cards->freeResult();
 
     $selection = array('id' => $this->_code,
-                       'module' => $this->_title . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . print_r($credit_cards) . '<br>' . MODULE_PAYMENT_CRESECURE_BUTTON_DESCRIPTION);
+                       'module' => $this->_title . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . '<br>' . MODULE_PAYMENT_CRESECURE_BUTTON_DESCRIPTION);
+    
     
     return $selection;
   }
