@@ -51,7 +51,7 @@ class lC_Payment_cod extends lC_Payment_Admin {
  /**
   * Constructor
   */
-  public function __constructor() {
+  public function lC_Payment_cod() {
     global $lC_Language;
 
     $this->_title = $lC_Language->get('payment_cod_title');
