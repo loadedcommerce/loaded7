@@ -16,44 +16,44 @@ class lC_Payment_cresecure extends lC_Payment {
   * The public title of the payment module
   *
   * @var string
-  * @access private
+  * @access public
   */  
-  private $_title;
+  public $_title;
  /**
   * The code of the payment module
   *
   * @var string
-  * @access private
+  * @access public
   */  
-  private $_code = 'cresecure';
+  public $_code = 'cresecure';
  /**
   * The developers name
   *
   * @var string
-  * @access private
+  * @access public
   */  
-  private $_author_name = 'Loaded Commerce';
+  public $_author_name = 'Loaded Commerce';
  /**
   * The developers address
   *
   * @var string
-  * @access private
+  * @access public
   */  
-  private $_author_www = 'http://www.loadedcommerce.com';
+  public $_author_www = 'http://www.loadedcommerce.com';
  /**
   * The status of the module
   *
   * @var boolean
-  * @access private
+  * @access public
   */  
-  private $_status = false;
+  public $_status = false;
  /**
   * The sort order of the module
   *
   * @var integer
-  * @access private
+  * @access public
   */  
-  private $_sort_order;
+  public $_sort_order;
  /**
   * Constructor
   */      
