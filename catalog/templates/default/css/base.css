@@ -750,6 +750,9 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 .moduleRowOver { background-color: #f7f7f7; }
 .moduleRowSelected td { background-color: #e7e7e7; }
 
+/* checkout payment */
+.payment-selection-title { font-weight:normal; font-style:italic; margin-top:5px; }
+
 /* debug display */
 #debugInfoContainer { margin-top:10px; }
 #debugInfoContainer .messageStack { margin-left:15px } 

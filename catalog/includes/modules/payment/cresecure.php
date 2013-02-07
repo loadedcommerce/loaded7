@@ -155,21 +155,22 @@ class lC_Payment_cresecure extends lC_Payment {
     } 
     */       
 
-    $Qcredit_cards = $lC_Database->query('select id, credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
+    $Qcredit_cards = $lC_Database->query('select credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
 
     $Qcredit_cards->bindRaw(':table_credit_cards', TABLE_CREDIT_CARDS);
     $Qcredit_cards->bindInt(':credit_card_status', '1');
     $Qcredit_cards->setCache('credit-cards');
     $Qcredit_cards->execute();
 
+    $credit_card_images = '';
     while ($Qcredit_cards->next()) {
-      $credit_cards[] = array('id' => $Qcredit_cards->value('id'), 'text' => $Qcredit_cards->value('credit_card_name'));
+      $credit_card_images .= lc_image('images/cards/cc_' . strtolower(str_replace(" ", "_", $Qcredit_cards->value('credit_card_name'))) . '.png');
     }
 
     $Qcredit_cards->freeResult();
 
     $selection = array('id' => $this->_code,
-                       'module' => $this->_title . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . '<br>' . MODULE_PAYMENT_CRESECURE_BUTTON_DESCRIPTION);    
+                       'module' => $this->_title . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $credit_card_images . '<div class="payment-selection-title">' . $lC_Language->get('payment_cresecure_button_description') . '</div>');    
     
     return $selection;
   }
