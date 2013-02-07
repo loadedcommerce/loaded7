@@ -209,5 +209,18 @@ class lC_Default {
     
     return $manufacturers_array;    
   }
+  
+  public static function getCategoriesDropdownArray() {
+    global $lC_CategoryTree, $lC_Language;
+    
+    $lC_CategoryTree->setSpacerString('&nbsp;', 2);                                                                      
+    $categories_array = array(array('id' => '', 'text' => $lC_Language->get('filter_all_categories')));
+    foreach ($lC_CategoryTree->buildBranchArray(0) as $category) {
+      $categories_array[] = array('id' => $category['id'],
+                                  'text' => $category['title']);
+    }
+    
+    return $categories_array;    
+  }  
 }
 ?>
