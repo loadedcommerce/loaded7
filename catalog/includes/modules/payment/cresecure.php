@@ -11,49 +11,77 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-class lC_Payment_cresecure extends lC_Payment {
+class lC_Payment_cresecure extends lC_Payment {     
  /**
   * The public title of the payment module
   *
   * @var string
-  * @access public
+  * @access protected
   */  
-  public $_title;
+  protected $_title;
  /**
   * The code of the payment module
   *
   * @var string
-  * @access public
+  * @access protected
   */  
-  public $_code = 'cresecure';
+  protected $_code = 'cresecure';
  /**
   * The developers name
   *
   * @var string
-  * @access public
+  * @access protected
   */  
-  public $_author_name = 'Loaded Commerce';
+  protected $_author_name = 'Loaded Commerce';
  /**
   * The developers address
   *
   * @var string
-  * @access public
+  * @access protected
   */  
-  public $_author_www = 'http://www.loadedcommerce.com';
+  protected $_author_www = 'http://www.loadedcommerce.com';
  /**
   * The status of the module
   *
   * @var boolean
-  * @access public
+  * @access protected
   */  
-  public $_status = false;
+  protected $_status = false;
  /**
   * The sort order of the module
   *
   * @var integer
-  * @access public
+  * @access protected
   */  
-  public $_sort_order;
+  protected $_sort_order;  
+ /**
+  * The allowed credit card types (pipe separated)
+  *
+  * @var string
+  * @access protected
+  */ 
+  protected $_allowed_types;  
+ /**
+  * The order id
+  *
+  * @var integer
+  * @access protected
+  */ 
+  protected $_order_id;
+ /**
+  * The completed order status ID
+  *
+  * @var integer
+  * @access protected
+  */   
+  protected $_order_status_complete;
+ /**
+  * The credit card image string
+  *
+  * @var string
+  * @access protected
+  */   
+  protected $_card_images;  
  /**
   * Constructor
   */      
@@ -61,7 +89,7 @@ class lC_Payment_cresecure extends lC_Payment {
     global $lC_Language;
 
     $this->_title = $lC_Language->get('payment_cresecure_title');
-    $this->_description = $lC_Language->get('payment_cresecure_description');
+    $this->_method_title = $lC_Language->get('payment_cresecure_title');
     $this->_status = (defined('MODULE_PAYMENT_CRESECURE_STATUS') && (MODULE_PAYMENT_CRESECURE_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('MODULE_PAYMENT_CRESECURE_SORT_ORDER') ? MODULE_PAYMENT_CRESECURE_SORT_ORDER : null);
 
@@ -76,15 +104,40 @@ class lC_Payment_cresecure extends lC_Payment {
   * @return void
   */
   public function initialize() {
-    global $order;
+    global $lC_Database, $lC_Language, $order;
 
     if ((int)MODULE_PAYMENT_CRESECURE_ORDER_STATUS_ID > 0) {
       $this->order_status = MODULE_PAYMENT_CRESECURE_ORDER_STATUS_ID;
     }
+    
+    if ((int)MODULE_PAYMENT_CRESECURE_ORDER_STATUS_COMPLETE_ID > 0) {
+      $this->_order_status_complete = MODULE_PAYMENT_CRESECURE_ORDER_STATUS_COMPLETE_ID;
+    }    
 
     if (is_object($order)) $this->update_status();
+    
+    if (defined('MODULE_PAYMENT_CRESECURE_TEST_MODE') && MODULE_PAYMENT_CRESECURE_TEST_MODE == '1') {
+      $this->form_action_url = 'https://sandbox-cresecure.net/securepayments/a1/cc_collection.php';  // sandbox url
+    } else {
+      $this->form_action_url = 'https://cresecure.net/securepayments/a1/cc_collection.php';  // production url
+    }  
+    
+    $Qcredit_cards = $lC_Database->query('select credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
+    $Qcredit_cards->bindRaw(':table_credit_cards', TABLE_CREDIT_CARDS);
+    $Qcredit_cards->bindInt(':credit_card_status', '1');
+    $Qcredit_cards->setCache('credit-cards');
+    $Qcredit_cards->execute();
 
-    $this->form_action_url = 'https://www.cresecure.com/cgi-bin/Abuyers/purchase.2c';
+    while ($Qcredit_cards->next()) {
+      $this->_card_images .= lc_image('images/cards/cc_' . strtolower(str_replace(" ", "_", $Qcredit_cards->value('credit_card_name'))) . '.png');
+      $name = strtolower($Qcredit_cards->value('credit_card_name'));
+      if (stristr($Qcredit_cards->value('credit_card_name'), 'discover')) $name = 'Discover';
+      if (stristr($Qcredit_cards->value('credit_card_name'), 'jcb')) $name = 'JCB';
+      $this->_allowed_types .= ucwords($name) . '|';
+    }
+    if (substr($this->_allowed_types, -1) == '|') $this->_allowed_types = substr($this->_allowed_types, 0, strlen($this->_allowed_types) - 1);
+    
+    $Qcredit_cards->freeResult();      
   }
  /**
   * Disable module if zone selected does not match billing zone  
@@ -135,142 +188,116 @@ class lC_Payment_cresecure extends lC_Payment {
   * @return array
   */   
   public function selection() {
-    global $lC_Database, $lC_Language, $order, $cart_cresecure_ID;
-
-    /*
-    if (isset($_SESSION['cart_cresecure_ID'])) {
-      $cart_cresecure_ID = $_SESSION['cart_cresecure_ID'];
-      $order_id = substr($cart_cresecure_ID, strpos($cart_cresecure_ID, '-')+1);
-      $check_query = tep_db_query('select orders_id from ' . TABLE_ORDERS_STATUS_HISTORY . ' where orders_id = "' . (int)$order_id . '" limit 1');
-      if (tep_db_num_rows($check_query) < 1) {
-        tep_db_query('delete from ' . TABLE_ORDERS . ' where orders_id = "' . (int)$order_id . '"');
-        tep_db_query('delete from ' . TABLE_ORDERS_TOTAL . ' where orders_id = "' . (int)$order_id . '"');
-        tep_db_query('delete from ' . TABLE_ORDERS_STATUS_HISTORY . ' where orders_id = "' . (int)$order_id . '"');
-        tep_db_query('delete from ' . TABLE_ORDERS_PRODUCTS . ' where orders_id = "' . (int)$order_id . '"');
-        tep_db_query('delete from ' . TABLE_ORDERS_PRODUCTS_ATTRIBUTES . ' where orders_id = "' . (int)$order_id . '"');
-        tep_db_query('delete from ' . TABLE_ORDERS_PRODUCTS_DOWNLOAD . ' where orders_id = "' . (int)$order_id . '"');
-
-        unset($_SESSION['cart_cresecure_ID']);
-      }
-    } 
-    */       
-
-    $Qcredit_cards = $lC_Database->query('select credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
-
-    $Qcredit_cards->bindRaw(':table_credit_cards', TABLE_CREDIT_CARDS);
-    $Qcredit_cards->bindInt(':credit_card_status', '1');
-    $Qcredit_cards->setCache('credit-cards');
-    $Qcredit_cards->execute();
-
-    $credit_card_images = '';
-    while ($Qcredit_cards->next()) {
-      $credit_card_images .= lc_image('images/cards/cc_' . strtolower(str_replace(" ", "_", $Qcredit_cards->value('credit_card_name'))) . '.png');
-    }
-
-    $Qcredit_cards->freeResult();
+    global $lC_Language;
 
     $selection = array('id' => $this->_code,
-                       'module' => $this->_title . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $credit_card_images . '<div class="payment-selection-title">' . $lC_Language->get('payment_cresecure_button_description') . '</div>');    
+                       'module' => '<div class="payment-selection">' . $this->_title . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_cresecure_button_description') . '</div>');    
     
     return $selection;
   }
-
-  function pre_confirmation_check() {
-  //  global $lC_Language, $lC_MessageStack;
-
-//    $this->_verifyData();
+ /**
+  * Perform any pre-confirmation logic
+  *
+  * @access public
+  * @return boolean
+  */ 
+  public function pre_confirmation_check() {
     return false;
   }
-
-  function confirmation() {
-    global $lC_Language;
-
-    $confirmation = array('title' => $this->_title . ': ' . $this->cc_card_type,
-                          'fields' => array(array('title' => $lC_Language->get('payment_cresecure_credit_card_owner'),
-                                                  'field' => $_POST['pm_cresecure_cc_owner_firstname'] . ' ' . $_POST['pm_cresecure_cc_owner_lastname']),
-                                            array('title' => $lC_Language->get('payment_cresecure_credit_card_number'),
-                                                  'field' => substr($this->cc_card_number, 0, 4) . str_repeat('X', (strlen($this->cc_card_number) - 8)) . substr($this->cc_card_number, -4)),
-                                            array('title' => $lC_Language->get('payment_cresecure_credit_card_expiry_date'),
-                                                  'field' => @strftime('%B, %Y', @mktime(0,0,0,$this->cc_expiry_month, 1, '20' . $this->cc_expiry_year)))));
-
-    if (!empty($this->cc_checkcode)) {
-      $confirmation['fields'][] = array('title' => $lC_Language->get('payment_cresecure_credit_card_checknumber'),
-                                        'field' => $this->cc_checkcode);
-    }
-
-    return $confirmation;
+ /**
+  * Perform any post-confirmation logic
+  *
+  * @access public
+  * @return integer
+  */ 
+  public function confirmation() {
+    $this->_order_id = lC_Order::insert();
   }
-
-  function process_button() {
-    global $order;
-
-    $process_button_string = lc_draw_hidden_field('x_login', MODULE_PAYMENT_CRESECURE_LOGIN) .
-                             lc_draw_hidden_field('x_amount', number_format($order->info['total'], 2)) .
-                             lc_draw_hidden_field('x_invoice_num', @date('YmdHis')) .
-                             lc_draw_hidden_field('x_test_request', ((MODULE_PAYMENT_CRESECURE_TESTMODE == 'Test') ? 'Y' : 'N')) .
-                             lc_draw_hidden_field('x_card_num', $this->cc_card_number) .
-                             lc_draw_hidden_field('cvv', $this->cc_checkcode) .
-                             lc_draw_hidden_field('x_exp_date', $this->cc_expiry_month . substr($this->cc_expiry_year, -2)) .
-                             lc_draw_hidden_field('x_first_name', $_POST['pm_cresecure_cc_owner_firstname']) .
-                             lc_draw_hidden_field('x_last_name', $_POST['pm_cresecure_cc_owner_lastname']) .
-                             lc_draw_hidden_field('x_address', $order->customer['street_address']) .
-                             lc_draw_hidden_field('x_city', $order->customer['city']) .
-                             lc_draw_hidden_field('x_state', $order->customer['state']) .
-                             lc_draw_hidden_field('x_zip', $order->customer['postcode']) .
-                             lc_draw_hidden_field('x_country', $order->customer['country']['title']) .
-                             lc_draw_hidden_field('x_email', $order->customer['email_address']) .
-                             lc_draw_hidden_field('x_phone', $order->customer['telephone']) .
-                             lc_draw_hidden_field('x_ship_to_first_name', $order->delivery['firstname']) .
-                             lc_draw_hidden_field('x_ship_to_last_name', $order->delivery['lastname']) .
-                             lc_draw_hidden_field('x_ship_to_address', $order->delivery['street_address']) .
-                             lc_draw_hidden_field('x_ship_to_city', $order->delivery['city']) .
-                             lc_draw_hidden_field('x_ship_to_state', $order->delivery['state']) .
-                             lc_draw_hidden_field('x_ship_to_zip', $order->delivery['postcode']) .
-                             lc_draw_hidden_field('x_ship_to_country', $order->delivery['country']['title']) .
-                             lc_draw_hidden_field('x_receipt_link_url', lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL')) .
-                             lc_draw_hidden_field('x_email_merchant', ((MODULE_PAYMENT_CRESECURE_EMAIL_MERCHANT == 'True') ? 'TRUE' : 'FALSE'));
+ /**
+  * Return the confirmation button logic
+  *
+  * @access public
+  * @return string
+  */ 
+  public function process_button() {
+    global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer;
+    
+    $process_button_string = lc_draw_hidden_field('CRESecureID', MODULE_PAYMENT_CRESECURE_LOGIN) . "\n" . 
+                             lc_draw_hidden_field('total_amt', $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode())) . "\n" .
+                             lc_draw_hidden_field('order_id', $this->_order_id) . "\n" .
+                             lc_draw_hidden_field('customer_id', $lC_Customer->getID()) . "\n" .
+                             lc_draw_hidden_field('currency_code', $_SESSION['currency']) . "\n" .
+                             lc_draw_hidden_field('lang', $lC_Language->getCode()) . "\n" .
+                             lc_draw_hidden_field('allowed_types', $this->_allowed_types) . "\n" .
+                             lc_draw_hidden_field('sess_id', session_id()) . "\n" .
+                             lc_draw_hidden_field('sess_name', session_name()) . "\n" .
+                             lc_draw_hidden_field('ip_address', $_SERVER["REMOTE_ADDR"]) . "\n" .
+                             lc_draw_hidden_field('return_url', lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true)) . "\n" .
+                             lc_draw_hidden_field('content_template_url', (getenv('HTTPS') == 'on') ? lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) : null) . "\n" .
+                             lc_draw_hidden_field('customer_company', $lC_ShoppingCart->getBillingAddress('company')) . "\n" .
+                             lc_draw_hidden_field('customer_firstname', $lC_ShoppingCart->getBillingAddress('firstname')) . "\n" .
+                             lc_draw_hidden_field('customer_lastname', $lC_ShoppingCart->getBillingAddress('lastname')) . "\n" .
+                             lc_draw_hidden_field('customer_address', $lC_ShoppingCart->getBillingAddress('street_address')) . "\n" .
+                             lc_draw_hidden_field('customer_email', $lC_Customer->getEmailAddress()) . "\n" .
+                             lc_draw_hidden_field('customer_phone', $lC_Customer->getTelephone()) . "\n" .
+                             lc_draw_hidden_field('customer_city', $lC_ShoppingCart->getBillingAddress('city')) . "\n" . 
+                             lc_draw_hidden_field('customer_state', $lC_ShoppingCart->getBillingAddress('state')) . "\n" . 
+                             lc_draw_hidden_field('customer_postal_code', $lC_ShoppingCart->getBillingAddress('postcode')) . "\n" .
+                             lc_draw_hidden_field('customer_country', $lC_ShoppingCart->getBillingAddress('country_iso_code_3')) . "\n" .
+                             lc_draw_hidden_field('delivery_company', $lC_ShoppingCart->getShippingAddress('company')) . "\n" .
+                             lc_draw_hidden_field('delivery_firstname', $lC_ShoppingCart->getShippingAddress('firstname')) . "\n" .
+                             lc_draw_hidden_field('delivery_lastname', $lC_ShoppingCart->getShippingAddress('lastname')) . "\n" .
+                             lc_draw_hidden_field('delivery_address', $lC_ShoppingCart->getShippingAddress('street_address')) . "\n" .
+                             lc_draw_hidden_field('delivery_email', $lC_Customer->getEmailAddress()) . "\n" .
+                             lc_draw_hidden_field('delivery_phone', $lC_Customer->getTelephone()) . "\n" .
+                             lc_draw_hidden_field('delivery_city', $lC_ShoppingCart->getShippingAddress('city')) . "\n" . 
+                             lc_draw_hidden_field('delivery_state',  $lC_ShoppingCart->getShippingAddress('state')) . "\n" .
+                             lc_draw_hidden_field('delivery_postal_code', $lC_ShoppingCart->getShippingAddress('postcode')) . "\n" .
+                             lc_draw_hidden_field('delivery_country', $lC_ShoppingCart->getShippingAddress('country_iso_code_3')) . "\n"; 
 
     return $process_button_string;
   }
-
-  function before_process() {
-    global $lC_Language, $lC_MessageStack;
-
-    if ($_POST['x_response_code'] != '1') {
-      $lC_MessageStack->add('checkout_payment', $lC_Language->get('payment_cresecure_error_message'), 'error');
-
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+ /**
+  * Parse the response from the processor
+  *
+  * @access public
+  * @return string
+  */ 
+  public function process() {
+    global $lC_Language;
+    
+    switch (strtolower(preg_replace('/[^a-zA-Z]/', '', $_GET['action']))) {
+      case 'cancel' :
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
+        break;
+        
+      default :
+        switch (preg_replace('/[^0-9]/', '', $_GET['code'])) {
+          case '000' :
+            // update order status
+            lC_Order::process($_GET['order_id'], $this->_order_status_complete);
+            break;
+            
+          default :
+            // there was an error
+            $error_msg = preg_replace('/[^0-9]/', '', $_GET['code']) . ' - ' . preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_GET['msg']);
+            $lC_MessageStack->add('checkout_payment', $error_msg);
+            lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+        }
     }
-  }
-
-  function after_process() {
-    return false;
-  }
-
-  function get_error() {
-    return false;
-  }
-
-  function check() {
+  } 
+ /**
+  * Check the status of the pasyment module
+  *
+  * @access public
+  * @return boolean
+  */ 
+  public function check() {
     if (!isset($this->_check)) {
       $this->_check = defined('MODULE_PAYMENT_CRESECURE_STATUS');
     }
 
     return $this->_check;
-  }
-
-
-  function _verifyData() {
-    global $lC_Language, $lC_MessageStack, $lC_CreditCard;
-
-    $lC_CreditCard = new lC_CreditCard($_POST['pm_cresecure_cc_number'], $_POST['pm_cresecure_cc_expires_month'], $_POST['pm_cresecure_cc_expires_year']);
-    $lC_CreditCard->setOwner($_POST['pm_cresecure_cc_owner']);
-
-    if ($result = $lC_CreditCard->isValid() !== true) {
-      $lC_MessageStack->add('checkout_payment', $lC_Language->get('credit_card_number_error'), 'error');
-
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&pm_cresecure_cc_owner=' . $lC_CreditCard->getOwner() . '&pm_cresecure_cc_expires_month=' . $lC_CreditCard->getExpiryMonth() . '&pm_cresecure_cc_expires_year=' . $lC_CreditCard->getExpiryYear(), 'SSL'));
-    }
   }
 }
 ?>

@@ -110,6 +110,18 @@
 
       return $email_address;
     }
+    
+    function getTelephone() {
+      static $telephone = null;
+
+      if (is_null($telephone)) {
+        if (isset($this->_data['telephone'])) {
+          $telephone = $this->_data['telephone'];
+        }
+      }
+
+      return $telephone;
+    }    
 
     function getCountryID() {
       static $country_id = null;
@@ -153,7 +165,7 @@
       $this->_data = array();
 
       if (is_numeric($customer_id) && ($customer_id > 0)) {
-        $Qcustomer = $lC_Database->query('select customers_group_id, customers_gender, customers_firstname, customers_lastname, customers_email_address, customers_default_address_id from :table_customers where customers_id = :customers_id');
+        $Qcustomer = $lC_Database->query('select customers_group_id, customers_gender, customers_firstname, customers_lastname, customers_email_address, customers_telephone, customers_default_address_id from :table_customers where customers_id = :customers_id');
         $Qcustomer->bindTable(':table_customers', TABLE_CUSTOMERS);
         $Qcustomer->bindInt(':customers_id', $customer_id);
         $Qcustomer->execute();
@@ -166,6 +178,7 @@
           $this->setFirstName($Qcustomer->value('customers_firstname'));
           $this->setLastName($Qcustomer->value('customers_lastname'));
           $this->setEmailAddress($Qcustomer->value('customers_email_address'));
+          $this->setTelephone($Qcustomer->value('customers_telephone'));
 
           if (is_numeric($Qcustomer->value('customers_default_address_id')) && ($Qcustomer->value('customers_default_address_id') > 0)) {
             $Qab = $lC_Database->query('select entry_country_id, entry_zone_id from :table_address_book where address_book_id = :address_book_id and customers_id = :customers_id');
@@ -280,6 +293,10 @@
     function setEmailAddress($email_address) {
       $this->_data['email_address'] = $email_address;
     }
+    
+    function setTelephone($telephone) {
+      $this->_data['telephone'] = $telephone;
+    }    
 
     function setCountryID($id) {
       $this->_data['country_id'] = $id;
