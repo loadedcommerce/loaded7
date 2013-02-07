@@ -171,16 +171,7 @@ class lC_Payment_cresecure extends lC_Payment {
         $this->_status = false;
       }
     }
-  }
- /**
-  * Get the javascript block for this module  
-  *
-  * @access public
-  * @return mixed
-  */ 
-  public function getJavascriptBlock() {
-    return false;
-  }  
+  } 
  /**
   * Return the payment selections array
   *

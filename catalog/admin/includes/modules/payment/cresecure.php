@@ -31,23 +31,23 @@ class lC_Payment_cresecure extends lC_Payment_Admin {
   * The developers name
   *
   * @var string
-  * @access public
+  * @access protected
   */
-  public $_author_name = 'Loaded Commerce';
+  protected $_author_name = 'Loaded Commerce';
  /**
   * The developers address
   *
   * @var string
-  * @access public
+  * @access protected
   */
-  public $_author_www = 'http://www.loadedcommerce.com';
+  protected $_author_www = 'http://www.loadedcommerce.com';
  /**
   * The status of the module
   *
   * @var boolean
-  * @access public
+  * @access protected
   */
-  public $_status = false;
+  protected $_status = false;
  /**
   * Constructor
   */
@@ -70,7 +70,7 @@ class lC_Payment_cresecure extends lC_Payment_Admin {
     return (bool)defined('MODULE_PAYMENT_CRESECURE_STATUS');
   }
  /**
-  * Installs the module
+  * Install the module
   *
   * @access public
   * @return void
@@ -100,8 +100,8 @@ class lC_Payment_cresecure extends lC_Payment_Admin {
     //$lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Show Incomplete Orders', 'MODULE_PAYMENT_CRESECURE_SHOW_INCOMPLETE', '-1', 'Set to \'Yes\' to show incomplete orders on shopping cart page and customer order history page.', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");           
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('Credit Cards', 'MODULE_PAYMENT_CRESECURE_ACCEPTED_TYPES', '', 'Accept these credit card types for this payment method.', '6', '0', 'lc_cfg_set_credit_cards_checkbox_field', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Payment Zone', 'MODULE_PAYMENT_CRESECURE_ZONE', '0', 'If a zone is selected, only enable this payment method for that zone.', '6', '2', 'lc_cfg_use_get_zone_class_title', 'lc_cfg_set_zone_classes_pull_down_menu', now())");
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, use_function, date_added) values ('Set Pending Order Status', 'MODULE_PAYMENT_CRESECURE_ORDER_STATUS_ID', '0', 'For Pending orders, set the status of orders made with this payment module to this value. Default is \'Preparing [CRE Secure]\'', '6', '0', 'lc_cfg_set_order_statuses_pull_down_menu', 'lc_cfg_use_get_order_status_title', now())");
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, use_function, date_added) values ('Set Complete Order Status', 'MODULE_PAYMENT_CRESECURE_ORDER_STATUS_COMPLETE_ID', '0', 'For Completed orders, set the status of orders made with this payment module to this value', '6', '0', 'lc_cfg_set_order_statuses_pull_down_menu', 'lc_cfg_use_get_order_status_title', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, use_function, date_added) values ('Set Pending Order Status', 'MODULE_PAYMENT_CRESECURE_ORDER_STATUS_ID', '1', 'For Pending orders, set the status of orders made with this payment module to this value. Default is \'Preparing [CRE Secure]\'', '6', '0', 'lc_cfg_set_order_statuses_pull_down_menu', 'lc_cfg_use_get_order_status_title', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, use_function, date_added) values ('Set Complete Order Status', 'MODULE_PAYMENT_CRESECURE_ORDER_STATUS_COMPLETE_ID', '4', 'For Completed orders, set the status of orders made with this payment module to this value', '6', '0', 'lc_cfg_set_order_statuses_pull_down_menu', 'lc_cfg_use_get_order_status_title', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Sort order of display.', 'MODULE_PAYMENT_CRESECURE_SORT_ORDER', '0', 'Sort order of display. Lowest is displayed first.', '6', '0' , now())");
     
     $Qcheck->freeResult();

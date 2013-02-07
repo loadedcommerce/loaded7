@@ -17,7 +17,7 @@ class lC_Payment_moneyorder extends lC_Payment_Admin {
   * The administrative title of the payment module
   *
   * @var string
-  * @access private
+  * @access public
   */
   public $_title;
  /**
@@ -31,23 +31,23 @@ class lC_Payment_moneyorder extends lC_Payment_Admin {
   * The developers name
   *
   * @var string
-  * @access public
+  * @access protected
   */
-  public $_author_name = 'Loaded Commerce';
+  protected $_author_name = 'Loaded Commerce';
  /**
   * The developers address
   *
   * @var string
-  * @access public
+  * @access protected
   */
-  public $_author_www = 'http://www.loadedcommerce.com';
+  protected $_author_www = 'http://www.loadedcommerce.com';
  /**
   * The status of the module
   *
   * @var boolean
-  * @access public
+  * @access protected
   */
-  public $_status = false;
+  protected $_status = false;
  /**
   * Constructor
   */
@@ -81,9 +81,10 @@ class lC_Payment_moneyorder extends lC_Payment_Admin {
     parent::install();
 
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable Money Order Module', 'MODULE_PAYMENT_MONEYORDER_STATUS', '-1', 'Do you want to accept Money Order payments?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Make Payable to:', 'MODULE_PAYMENT_MONEYORDER_PAYTO', '', 'Who should payments be made payable to?', '6', '1', now());");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Payment Zone', 'MODULE_PAYMENT_MONEYORDER_ZONE', '0', 'If a zone is selected, only enable this payment method for that zone.', '6', '0', 'lc_cfg_use_get_zone_class_title', 'lc_cfg_set_zone_classes_pull_down_menu', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Sort order of display.', 'MODULE_PAYMENT_MONEYORDER_SORT_ORDER', '0', 'Sort order of display. Lowest is displayed first.', '6', '0', now())");
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, use_function, date_added) values ('Set Order Status', 'MODULE_PAYMENT_MONEYORDER_ORDER_STATUS_ID', '0', 'Set the status of orders made with this payment module to this value', '6', '0', 'lc_cfg_set_order_statuses_pull_down_menu', 'lc_cfg_use_get_order_status_title', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, use_function, date_added) values ('Set Order Status', 'MODULE_PAYMENT_MONEYORDER_ORDER_STATUS_ID', '1', 'Set the status of orders made with this payment module to this value', '6', '0', 'lc_cfg_set_order_statuses_pull_down_menu', 'lc_cfg_use_get_order_status_title', now())");
   }
  /**
   * Return the configuration parameter keys in an array
@@ -94,6 +95,7 @@ class lC_Payment_moneyorder extends lC_Payment_Admin {
   public function getKeys() {
     if (!isset($this->_keys)) {
       $this->_keys = array('MODULE_PAYMENT_MONEYORDER_STATUS',
+                           'MODULE_PAYMENT_MONEYORDER_PAYTO',
                            'MODULE_PAYMENT_MONEYORDER_ZONE',
                            'MODULE_PAYMENT_MONEYORDER_ORDER_STATUS_ID',
                            'MODULE_PAYMENT_MONEYORDER_SORT_ORDER');

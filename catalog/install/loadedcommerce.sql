@@ -1964,8 +1964,8 @@ INSERT INTO lc_languages_definitions (id, languages_id, content_group, definitio
 
 INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(1, 1, 'Pending');
 INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(2, 1, 'Processing');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(3, 1, 'Delivered');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(4, 1, 'Preparing');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(3, 1, 'Preparing');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(4, 1, 'Delivered');
 
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(1, 1, 'Authorize');
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(2, 1, 'Cancel');
