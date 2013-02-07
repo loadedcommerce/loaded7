@@ -29,7 +29,8 @@
 
       $this->_page_title = $lC_Language->get('account_edit_heading');
 
-      $this->addJavascriptPhpFilename('includes/form_check.js.php');
+      //$this->addJavascriptPhpFilename('includes/form_check.js.php');
+       $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/account/account_edit.js.php');
 
       if ($lC_Services->isStarted('breadcrumb')) {
         $lC_Breadcrumb->add($lC_Language->get('breadcrumb_edit_account'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
