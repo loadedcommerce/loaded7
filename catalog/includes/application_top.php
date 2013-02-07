@@ -55,7 +55,7 @@
   require('includes/database_tables.php');
 
   // include the utility class
-  require('includes/classes/utility.php');
+  require('includes/classes/utility.php');     
 
   // initialize the message stack for output messages
   require('includes/classes/message_stack.php');

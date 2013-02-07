@@ -32,18 +32,7 @@
     <ul class="footer_links">
       <li><span>New Arrivals</span>
         <ul>
-        <?php
-          include_once('includes/classes/products.php');
-          $lC_Products = new lC_Products();
-          $Qlisting = $lC_Products->execute();
-          $cnt = 0;
-          while ($Qlisting->next()) {
-            $lC_Product = new lC_Product($Qlisting->valueInt('products_id'));
-            echo '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), substr($lC_Product->getTitle(), 0, 20)) . '</li>';
-            $cnt++;
-            if ($cnt == 5) break;
-          }
-        ?>
+          <?php echo lC_Default::newArrivalsListing(); ?>
         </ul>
       </li>
       <li class="seperator"><span>Brands we sell</span>
