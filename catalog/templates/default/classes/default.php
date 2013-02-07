@@ -286,6 +286,55 @@ class lC_Default {
     return $output;
   } 
   
+  public static function getZonesField(){
+    global $lC_Database, $lC_Language, $lC_Template, $entry_state_has_zones;
+
+    if ( (isset($_GET['new']) && ($_GET['new'] == 'save')) || (isset($_GET['edit']) && ($_GET['edit'] == 'save')) || (isset($_GET[$lC_Template->getModule()]) && ($_GET[$lC_Template->getModule()] == 'process')) ) {
+      if ($entry_state_has_zones === true) {
+        $Qzones = $lC_Database->query('select zone_name from :table_zones where zone_country_id = :zone_country_id order by zone_name');
+        $Qzones->bindTable(':table_zones', TABLE_ZONES);
+        $Qzones->bindInt(':zone_country_id', $_POST['country']);
+        $Qzones->execute();
+
+        $zones_array = array();
+        while ($Qzones->next()) {
+          $zones_array[] = array('id' => $Qzones->value('zone_name'), 'text' => $Qzones->value('zone_name'));
+        }
+        $output = lc_draw_pull_down_menu('state', $zones_array);
+      } else {
+        $output = lc_draw_input_field('state');
+      }
+    } else {
+      if (isset($Qentry)) {
+        $zone = $Qentry->value('entry_state');
+        if ($Qentry->valueInt('entry_zone_id') > 0) {
+          $zone = lC_Address::getZoneName($Qentry->valueInt('entry_zone_id'));
+        }
+      }
+      $output = lc_draw_input_field('state', (isset($Qentry) ? $zone : null));
+    }    
+
+    return $output;    
+  }  
+  
+  public static function getGenderArray() {
+      return array(array('id' => 'm', 'text' => $lC_Language->get('gender_male')),
+                   array('id' => 'f', 'text' => $lC_Language->get('gender_female')));
+  }
+  
+  public static function getCountriesDropdownArray() {
+    global $lC_Language;
+    
+    $countries_array = array(array('id' => '',
+                                   'text' => $lC_Language->get('pull_down_default')));
+    foreach (lC_Address::getCountries() as $country) {
+      $countries_array[] = array('id' => $country['id'],
+                                 'text' => $country['name']);
+    } 
+    
+    return $countries_array;   
+  }
+  
   private static function __getProductsListingData() {
     global $lC_Database, $lC_Language, $lC_Products;
     
@@ -329,5 +378,6 @@ class lC_Default {
     
     return $result;
   }
+  
 }
 ?>
