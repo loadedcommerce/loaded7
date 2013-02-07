@@ -121,7 +121,7 @@ $(document).ready(function() {
     return false;
   });
   // profile right is clicked
-  $("#profileRight").click(function(){
+  $("#profileBack").click(function(){
     // get the current menu width in case screen size has changed
     var menuWidth = $("#menu").width();
     // slide to the right

@@ -178,3 +178,6 @@ ms_error_javascript_not_enabled_for_upload = Please enable JavaScript to use aja
 ms_error_javascript_not_enabled_warning = Your browser does not support JavaScript! Some features won't work as expected.
 
 profile_slate_edit_logout = edit or logout
+profile_slate_edit_profile = edit<br />profile
+profile_slate_change_password = change<br />password
+profile_slate_logout = log out
