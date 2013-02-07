@@ -110,7 +110,7 @@
 </head>
 
 <body class="clearfix with-menu with-shortcuts">
-
+  
   <!-- Prompt IE 6 users to install Chrome Frame -->
   <!--[if lt IE 7]><p class="message red-gradient simpler">Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
@@ -180,13 +180,13 @@
             <div class="profile50">
               <div id="profileRight">
                 <div class="profile-right-fourth">
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>">
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'administrators&aID=' . $_SESSION['admin']['id']); ?>">
                     <img src="templates/default/img/user.png" width="32" height="32"><br />
                     <small><?php echo $lC_Language->get('profile_slate_edit_profile'); ?></small>
                   </a>
                 </div>
                 <div class="profile-right-fourth">
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, ''); ?>">
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'administrators&aID=' . $_SESSION['admin']['id']); ?>">
                     <div style="height:8px;"></div>
                     <span class="icon icon-lock icon-size3"></span>
                     <div style="height:12px;"></div>
