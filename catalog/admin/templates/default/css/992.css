@@ -179,6 +179,11 @@ body.with-menu #main {
 	#menu header {
 		padding-right: 36px;
 		}
+    #menu header .inner {
+      -webkit-box-shadow: 0 0 0 0 #BBBBBB inset, 0 0 0 0 #BBBBBB inset, -2px 0 0 -1px #BBBBBB inset;
+      -moz-box-shadow: 0 0 0 0 #BBBBBB inset, 0 0 0 0 #BBBBBB inset, -2px 0 0 -1px #BBBBBB inset;
+      box-shadow: 0 0 0 0 #BBBBBB inset, 0 0 0 0 #BBBBBB inset, -2px 0 0 -1px #BBBBBB inset;
+    }
 		body.reversed #menu header {
 			padding-left: 36px;
 			padding-right: 12px;

@@ -97,7 +97,31 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
   } else { // desktop
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
-  }   
+  }
+  
+  var menuWidth = $("#menu").width();
+  $("#profileInner").css({'width':menuWidth * 2});
+  $(window).resize(function() {
+    var menuWidthResized = $("#menu").width();
+    $("#profileInner").css({'width':menuWidthResized * 2});
+  });
+  
+  $("#profileLeft").click(function(){
+    var menuWidth = $("#menu").width();
+    $('#profileInner').animate({
+      "marginLeft" : "-=" + menuWidth
+    });
+    return false;
+  });
+  
+  $("#profileRight").click(function(){
+    var menuWidth = $("#menu").width();
+    $('#profileInner').animate({
+      "marginLeft" : "+=" + menuWidth
+    });
+    return false;
+  });
+     
 });
 
 /* toggle checkboxes on table listings */

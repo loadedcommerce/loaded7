@@ -159,13 +159,28 @@
 
       <!-- This wrapper is used by several responsive layouts -->
       <div id="menu-content">
-
-        <header><?php echo $lC_Language->get('header_title_admin_menu'); ?></header>
-
+        
+        <header>
+          <div class="inner">
+            <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>" title="View The Store" class="with-tooltip tooltip-bottom grey" target="_blank"><?php echo substr(HTTP_SERVER, 7, 29); ?></a>
+          </div>  
+        </header>
+        
         <div id="profile">
-          <img src="templates/default/img/user.png" width="64" height="64" alt="User name" class="user-icon"><?php echo $lC_Language->get('text_hello'); ?>
-          <span class="name"><?php echo $_SESSION['admin']['firstname']; ?> <b><?php echo $_SESSION['admin']['lastname']; ?></b></span>
-          <div style="position:absolute; right:7px; top:50px;"><div style="float:right; margin-right:6px;"><a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>" target="_blank"><span title="Catalog" class="with-tooltip icon-bag icon-orange"></span></a>&nbsp;&nbsp;<a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login&action=logoff'); ?>"><span title="Log Off" class="with-tooltip icon-cross-round"></span></a></div></div>
+          <div id="profileInner">
+            <div class="profile50">
+              <div id="profileLeft">
+                <img src="templates/default/img/user.png" width="64" height="64" alt="User name" class="user-icon"><?php echo $lC_Language->get('text_hello'); ?>
+                <span class="name"><?php echo $_SESSION['admin']['firstname']; ?><br /><?php echo $_SESSION['admin']['lastname']; ?></span>
+                <!--<div style="position:absolute; right:7px; top:50px;"><div style="float:right; margin-right:6px;"><a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>" target="_blank"><span title="Catalog" class="with-tooltip icon-bag icon-orange"></span></a>&nbsp;&nbsp;<a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login&action=logoff'); ?>"><span title="Log Off" class="with-tooltip icon-cross-round"></span></a></div></div>-->
+              </div>
+            </div>
+            <div class="profile50">
+              <div id="profileRight">
+                <a href="#" id="profileBack">Back</a>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Big menu small navigation -->
