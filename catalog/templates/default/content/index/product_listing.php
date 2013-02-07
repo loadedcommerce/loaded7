@@ -23,11 +23,8 @@ button.price_add {
     <!-- h1><?php echo $lC_Template->getPageTitle(); ?></h1 --> 
     <div class="products_list products_slider">
       <?php 
-      echo '[' . PRODUCT_LIST_FILTER . ']<br>';
       if (PRODUCT_LIST_FILTER == '1') echo lC_Default::getManufacturerFilter();
-      
       $Qlisting = lC_Default::getProductsListingSql();
-      
       if (file_exists(DIR_FS_TEMPLATE . 'modules/product_listing.php')) {
         require(DIR_FS_TEMPLATE . 'modules/product_listing.php');
       } else {
