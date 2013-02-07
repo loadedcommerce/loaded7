@@ -108,6 +108,7 @@ $(document).ready(function() {
   $(window).resize(function() {
     var menuWidthResized = $("#menu").width();
     $("#profileInner").css({'width':menuWidthResized * 2});
+    $('#profileInner').css({"margin-left":"0px"});
   });
   // profile left is clicked
   $("#profileLeft").click(function(){
