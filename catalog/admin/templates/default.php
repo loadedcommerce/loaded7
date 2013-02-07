@@ -161,17 +161,20 @@
       <div id="menu-content">
         
         <header>
-          <div class="inner">
+          <div class="headerInner">
             <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>" title="View The Store" class="with-tooltip tooltip-bottom grey" target="_blank"><?php echo substr(HTTP_SERVER, 7, 29); ?></a>
           </div>  
         </header>
         
         <div id="profile">
-          <div id="profileInner">
+          <div id="profileInner">                
             <div class="profile50">
               <div id="profileLeft">
-                <img src="templates/default/img/user.png" width="64" height="64" alt="User name" class="user-icon"><?php echo $lC_Language->get('text_hello'); ?>
-                <span class="name"><?php echo $_SESSION['admin']['firstname']; ?><br /><?php echo $_SESSION['admin']['lastname']; ?></span>
+                <img src="templates/default/img/user.png" width="64" height="64" alt="User name" class="user-icon">
+                <?php echo $lC_Language->get('text_hello'); ?>
+                <span class="name"><?php echo $_SESSION['admin']['firstname']; ?><br />
+                <?php echo $_SESSION['admin']['lastname']; ?></span>
+                <small class="margin-left"><?php echo $lC_Language->get('profile_slate_edit_logout'); ?></small>
                 <!--<div style="position:absolute; right:7px; top:50px;"><div style="float:right; margin-right:6px;"><a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>" target="_blank"><span title="Catalog" class="with-tooltip icon-bag icon-orange"></span></a>&nbsp;&nbsp;<a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login&action=logoff'); ?>"><span title="Log Off" class="with-tooltip icon-cross-round"></span></a></div></div>-->
               </div>
             </div>

@@ -99,23 +99,31 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
   }
   
+  // profile slate addition
+  // get the menu width
   var menuWidth = $("#menu").width();
+  // apply twice the menu width to the inner div
   $("#profileInner").css({'width':menuWidth * 2});
+  // on screen resize get the new menu width and apply it for click functions
   $(window).resize(function() {
     var menuWidthResized = $("#menu").width();
     $("#profileInner").css({'width':menuWidthResized * 2});
   });
-  
+  // profile left is clicked
   $("#profileLeft").click(function(){
+    // get the current menu width in case screen size has changed
     var menuWidth = $("#menu").width();
+    // slide to the left
     $('#profileInner').animate({
       "marginLeft" : "-=" + menuWidth
     });
     return false;
   });
-  
+  // profile right is clicked
   $("#profileRight").click(function(){
+    // get the current menu width in case screen size has changed
     var menuWidth = $("#menu").width();
+    // slide to the right
     $('#profileInner').animate({
       "marginLeft" : "+=" + menuWidth
     });

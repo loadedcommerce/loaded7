@@ -2494,10 +2494,10 @@ li.message-menu {
       float:left; width:50%; 
     }
     #profileLeft {
-      padding:20px 10px 20px 10px;
+      padding:20px 10px 10px 10px;
     }
     #profileRight {
-      padding:20px 10px 20px 10px;
+      padding:20px 10px 10px 10px;
     }
 		#profile .user-icon {
 			float: left;
