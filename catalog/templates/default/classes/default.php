@@ -190,7 +190,7 @@ class lC_Default {
       $lC_Product = new lC_Product($Qlisting->valueInt('products_id'));
       $listing .= '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), substr($lC_Product->getTitle(), 0, 20)) . '</li>';
       $cnt++;
-      if ($cnt == 5) break;
+      if ($cnt > 5) break;
     }    
        
     return $listing;
