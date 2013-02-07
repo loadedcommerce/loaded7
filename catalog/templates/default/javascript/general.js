@@ -1,27 +1,31 @@
-/*
-  $Id: general.js v1.0 2011-11-04  datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+*  $Id: general.js v1.0 2011-11-04  datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     LoadedCommerce Team
+*  @copyright  (c) 2013 LoadedCommerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
-$(document).ready(function() { 
-  //JCAROUSEL
+$(document).ready(function() {
+
+  // jBreadcrumb
+  $("#breadCrumb").jBreadCrumb();     
+   
+  //jCarousel
   $('.first-and-second-carousel').jcarousel();
   
-  //SLIDE TOGGLE
+  //mini cart slide toggle
   $(".minicart_link").toggle(function() {
      $('.cart_drop').slideDown(300);  
      }, function(){
      $('.cart_drop').slideUp(300);     
   });  
 
-  //SUB MENU
+  //sub menu
   $("ul.departments > li.menu_cont > a").toggle(function(){
     $(this).addClass('active');
     $(this).siblings('.side_sub_menu').slideDown(300);
@@ -30,11 +34,10 @@ $(document).ready(function() {
     $(this).siblings('.side_sub_menu').slideUp(300);
   });
   
-  //FORM ELEMENTS
+  //style form select elements
   $("select").uniform();  
   
-  //SHORTCODES
-  //Toggle Box
+  //toggle box
   $(".toggle_box > li:first-child .toggle_title, .toggle_box > li:first-child .toggle_content").addClass('active');
   $(".toggle_box > li > a.toggle_title").toggle(function(){
                             
@@ -45,7 +48,7 @@ $(document).ready(function() {
     $(this).siblings('.toggle_content').slideUp(300);  
   });  
   
-  //TWITTER FEED    //replace "rohithpaul" with your Twitter ID
+  //twitter feed   //replace "rohithpaul" with your Twitter ID
   $('.twitter_feed').jTweetsAnywhere({
     username: 'rohithpaul',
     count: 1

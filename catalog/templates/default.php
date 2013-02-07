@@ -284,7 +284,6 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       $(document).ready(function(e) {
         var searchUrl = '<?php echo lc_href_link('rpc.php', 'action=search', 'AUTO'); ?>'  
         $('#liveSearchContainer input[name="q"]').liveSearch({url: searchUrl + '&q='});
-        $("#breadCrumb").jBreadCrumb();     
       }); 
     </script>
   </body>
