@@ -13,6 +13,8 @@
  
   @function The lC_Default class manages default template functions
 */
+include_once('includes/classes/products.php');
+
 class lC_Default {
  /*
   * Returns the live search data
@@ -176,6 +178,22 @@ class lC_Default {
     }
     
     return $result;
+  }
+  
+  public static function newArrivalsListing() {
+    global $lC_Products;
+    
+    $Qlisting = $lC_Products->execute();
+    $cnt = 0;
+    $listing = '';
+    while ($Qlisting->next()) {
+      $lC_Product = new lC_Product($Qlisting->valueInt('products_id'));
+      $listing .= '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), substr($lC_Product->getTitle(), 0, 20)) . '</li>';
+      $cnt++;
+      if ($cnt == 5) break;
+    }    
+    
+    return $listing;
   }
 }
 ?>
