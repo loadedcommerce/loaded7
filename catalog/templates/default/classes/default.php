@@ -224,6 +224,18 @@ class lC_Default {
   }  
   
   public static function getProductsListingSql() {
+    $pArr = self::__getProductsListingData();
+    
+    return $pArr['Qlisting'];    
+  }
+  
+  public static function getManufacturerFilter() {
+    $pArr = self::__getProductsListingData();
+    
+    return $pArr['mfgFilter'];
+  }  
+  
+  private static function __getProductsListingData() {
     global $lC_Database, $lC_Language, $lC_Products;
     
     // optional Product List Filter
@@ -261,7 +273,7 @@ class lC_Default {
     }
     $Qlisting = $lC_Products->execute();    
     
-    $result['output'] = $output;
+    $result['mfgFilter'] = $output;
     $result['Qlisting'] = $Qlisting;
     
     return $result;
