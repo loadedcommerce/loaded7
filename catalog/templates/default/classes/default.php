@@ -181,8 +181,8 @@ class lC_Default {
   }
   
   public static function newArrivalsListing() {
-    global $lC_Products;
-    
+
+    $lC_Products = new lC_Products();
     $Qlisting = $lC_Products->execute();
     $cnt = 0;
     $listing = '';
@@ -192,7 +192,7 @@ class lC_Default {
       $cnt++;
       if ($cnt == 5) break;
     }    
-    
+       
     return $listing;
   }
 }
