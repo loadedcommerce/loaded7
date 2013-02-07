@@ -20,6 +20,7 @@ if (!empty($_GET['set']) && $_GET['set'] == 'members') { // members
       // set responsive elements
       var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';      
       var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA' . $aSearch); ?>';
+      var aID = '<?php echo (isset($_GET['aID']) && $_GET['aID'] != '') ? true : false; ?>';
       oTable = $('#dataTable').dataTable({
         "bProcessing": true,
         "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
@@ -44,6 +45,10 @@ if (!empty($_GET['set']) && $_GET['set'] == 'members') { // members
       } else {
         // instantiate floating menu
         $('#floating-menu-div-listing').fixFloat();
+      } 
+  
+      if (aID) {
+        editAdmin('<?php echo $_GET['aID']; ?>');
       }     
     });
   </script>
