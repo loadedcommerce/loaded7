@@ -236,7 +236,7 @@ class lC_Default {
   } 
   
   public static function getCategoryListing() {
-    global $lC_Database, $lC_Language, $lC_Products, $cPath, $cPath_array;
+    global $lC_Database, $lC_Language, $lC_Products, $lC_CategoryTree, $cPath, $cPath_array;
     
     if (isset($cPath) && strpos($cPath, '_')) {
       // check to see if there are deeper categories within the current category
