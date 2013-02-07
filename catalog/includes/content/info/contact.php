@@ -26,6 +26,7 @@
       global $lC_Services, $lC_Language, $lC_Breadcrumb;
 
       $this->_page_title = $lC_Language->get('info_contact_heading');
+      $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/info_contact.js.php'); 
 
       if ($lC_Services->isStarted('breadcrumb')) {
         $lC_Breadcrumb->add($lC_Language->get('breadcrumb_contact'), lc_href_link(FILENAME_INFO, $this->_module));
@@ -42,10 +43,10 @@
 
       $name = lc_sanitize_string($_POST['name']);
       $email_address = lc_sanitize_string($_POST['email']);
-      $enquiry = lc_sanitize_string($_POST['enquiry']);
+      $inquiry = lc_sanitize_string($_POST['inquiry']);
 
       if (lc_validate_email_address($email_address)) {
-        lc_email(STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS, $lC_Language->get('contact_email_subject'), $enquiry, $name, $email_address);
+        lc_email(STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS, $lC_Language->get('contact_email_subject'), $inquiry, $name, $email_address);
 
         lc_redirect(lc_href_link(FILENAME_INFO, 'contact=success', 'AUTO'));
       } else {
