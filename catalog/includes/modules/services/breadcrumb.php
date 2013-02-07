@@ -20,7 +20,8 @@ class lC_Services_breadcrumb {
     $lC_Breadcrumb = new lC_Breadcrumb();
 
     //$lC_Breadcrumb->add($lC_Language->get('breadcrumb_top'), HTTP_SERVER);
-    $lC_Breadcrumb->add('<span id="breadcrumbImg">' . lc_image(DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/iconHome.png'), lc_href_link(FILENAME_DEFAULT)) . '</span>';
+    $template = (isset($_SESSION['template']['code'])) ? $_SESSION['template']['code'] : 'default';
+    $lC_Breadcrumb->add('<span id="breadcrumbImg">' . lc_image(DIR_WS_CATALOG . 'templates/' . $template . '/images/iconHome.png'), lc_href_link(FILENAME_DEFAULT)) . '</span>';
 
     return true;
   }
