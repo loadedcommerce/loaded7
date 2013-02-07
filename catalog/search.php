@@ -22,7 +22,7 @@ if ($lC_Services->isStarted('breadcrumb')) {
 }
 
 $lC_Template = lC_Template::setup('search');
-
+         
 require('templates/' . $lC_Template->getCode() . '.php');
 
 require('includes/application_bottom.php');

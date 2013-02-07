@@ -181,7 +181,6 @@ class lC_Default {
   }
   
   public static function newArrivalsListing() {
-
     $lC_Products = new lC_Products();
     $Qlisting = $lC_Products->execute();
     $cnt = 0;
@@ -190,10 +189,25 @@ class lC_Default {
       $lC_Product = new lC_Product($Qlisting->valueInt('products_id'));
       $listing .= '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), substr($lC_Product->getTitle(), 0, 20)) . '</li>';
       $cnt++;
-      if ($cnt > 5) break;
+      if ($cnt == 5) break;
     }    
        
     return $listing;
+  }
+  
+  public static function getManufacturerDropdownArray() {
+    global $lC_Database, $lC_Language;
+    
+    $manufacturers_array = array(array('id' => '', 'text' => $lC_Language->get('filter_all_manufacturers')));
+    $Qmanufacturers = $lC_Database->query('select manufacturers_id, manufacturers_name from :table_manufacturers order by manufacturers_name');
+    $Qmanufacturers->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
+    $Qmanufacturers->execute();
+    while ($Qmanufacturers->next()) {
+      $manufacturers_array[] = array('id' => $Qmanufacturers->valueInt('manufacturers_id'),
+                                     'text' => $Qmanufacturers->value('manufacturers_name'));
+    }
+    
+    return $manufacturers_array;    
   }
 }
 ?>

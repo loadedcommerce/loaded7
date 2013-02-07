@@ -66,19 +66,7 @@ if ($lC_MessageStack->size('search') > 0) {
               ?>
               </li>
               <li><?php echo lc_draw_checkbox_field('recursive'); ?></li>
-              <li>
-              <?php
-                $manufacturers_array = array(array('id' => '', 'text' => $lC_Language->get('filter_all_manufacturers')));
-                $Qmanufacturers = $lC_Database->query('select manufacturers_id, manufacturers_name from :table_manufacturers order by manufacturers_name');
-                $Qmanufacturers->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
-                $Qmanufacturers->execute();
-                while ($Qmanufacturers->next()) {
-                  $manufacturers_array[] = array('id' => $Qmanufacturers->valueInt('manufacturers_id'),
-                                                 'text' => $Qmanufacturers->value('manufacturers_name'));
-                }
-                echo lc_draw_pull_down_menu('manufacturer', $manufacturers_array);
-              ?>
-              </li>
+              <li><?php echo lc_draw_pull_down_menu('manufacturer', lC_Default::getManufacturerDropdownArray()); ?></li>
               <li><?php echo lc_draw_input_field('pfrom'); ?></li>
               <li><?php echo lc_draw_input_field('pto'); ?></li>
               <li><?php echo lc_draw_date_pull_down_menu('datefrom', null, false, null, null, @date('Y') - $lC_Search->getMinYear(), 0); ?></li>
