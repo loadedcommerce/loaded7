@@ -1,17 +1,15 @@
 <?php
-/*
-  $Id: default.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
- 
-  @function The lC_Default class manages default template functions
+/**  
+*  $Id: default.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 include_once('includes/classes/products.php');
 
@@ -179,7 +177,12 @@ class lC_Default {
     
     return $result;
   }
-  
+ /*
+  * Returns the new arrival listing data
+  *
+  * @access public
+  * @return string
+  */  
   public static function newArrivalsListing() {
     $lC_Products = new lC_Products();
     $Qlisting = $lC_Products->execute();
@@ -194,7 +197,12 @@ class lC_Default {
        
     return $listing;
   }
-  
+ /*
+  * Returns the manufacturer dropdown array
+  *
+  * @access public
+  * @return array
+  */  
   public static function getManufacturerDropdownArray() {
     global $lC_Database, $lC_Language;
     
@@ -209,7 +217,12 @@ class lC_Default {
     
     return $manufacturers_array;    
   }
-  
+ /*
+  * Returns the categories dropdown array
+  *
+  * @access public
+  * @return array
+  */
   public static function getCategoriesDropdownArray() {
     global $lC_CategoryTree, $lC_Language;
     
@@ -222,19 +235,35 @@ class lC_Default {
     
     return $categories_array;    
   }  
-  
+ /*
+  * Returns the product listing SQL
+  *
+  * @param string $search The search string 
+  * @access public
+  * @return resource
+  */  
   public static function getProductsListingSql() {
     $pArr = self::__getProductsListingData();
     
     return $pArr['Qlisting'];    
   }
-  
+ /*
+  * Returns the manufacturer filter Html
+  *
+  * @access public
+  * @return array
+  */  
   public static function getManufacturerFilter() {
     $pArr = self::__getProductsListingData();
     
     return $pArr['mfgFilter'];
   } 
-  
+ /*
+  * Returns the category listing Html
+  *
+  * @access public
+  * @return array
+  */  
   public static function getCategoryListing() {
     global $lC_Database, $lC_Language, $lC_Products, $lC_CategoryTree, $cPath, $cPath_array;
     
@@ -285,7 +314,12 @@ class lC_Default {
     
     return $output;
   } 
-  
+ /*
+  * Returns the zones dropdown field
+  *
+  * @access public
+  * @return string
+  */
   public static function getZonesField(){
     global $lC_Database, $lC_Language, $lC_Template, $entry_state_has_zones;
 
@@ -316,12 +350,22 @@ class lC_Default {
 
     return $output;    
   }  
-  
+ /*
+  * Returns the gender array
+  *
+  * @access public
+  * @return array
+  */
   public static function getGenderArray() {
       return array(array('id' => 'm', 'text' => $lC_Language->get('gender_male')),
                    array('id' => 'f', 'text' => $lC_Language->get('gender_female')));
   }
-  
+ /*
+  * Returns the countries dropdown array
+  *
+  * @access public
+  * @return array
+  */
   public static function getCountriesDropdownArray() {
     global $lC_Language;
     
@@ -334,7 +378,12 @@ class lC_Default {
     
     return $countries_array;   
   }
-  
+ /*
+  * Returns the product listing data
+  *
+  * @access private
+  * @return array
+  */  
   private static function __getProductsListingData() {
     global $lC_Database, $lC_Language, $lC_Products;
     
@@ -378,6 +427,5 @@ class lC_Default {
     
     return $result;
   }
-  
 }
 ?>
