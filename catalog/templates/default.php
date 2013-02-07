@@ -254,7 +254,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="ext/jquery/jquery.easing.1.3.js"></script>
     <script src="ext/jquery/jquery.hoverIntent.min.js"></script>
     <script src="ext/jquery/jquery.liveSearch.js"></script>
-    <script src="ext/jquery/breadcrumb/js/jquery.jBreadCrumb.1.1.js"></script>
+    <script src="ext/jquery/jquery.jBreadCrumb.1.1.js"></script>
     <script src="ext/jquery/thickbox/thickbox-compressed.js"></script>
     <script src="ext/datepicker/datepicker.js"></script>
     <!-- Template functions -->
