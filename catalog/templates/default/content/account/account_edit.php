@@ -50,11 +50,10 @@ if ($lC_MessageStack->size('account_edit') > 0) {
         </div>
       </div>
       <div style="clear:both;"></div>
-      <div id="accountEditActions" class="action_buttonbar"  style="margin-top:10px;"> <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>" class="noDecoration">
-            <button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
-          </a></span> <span class="buttonRight"><a onclick="$('#account_edit').submit();" class="noDecoration">
-            <button class="button brown_btn" type="submit"><?php echo $lC_Language->get('button_update'); ?></button>
-        </a></span> </div>
+      <div id="accountEditActions" class="action_buttonbar"  style="margin-top:10px;"> 
+        <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span> 
+        <span class="buttonRight"><a onclick="$('#account_edit').submit();" class="noDecoration"><button class="button brown_btn" type="submit"><?php echo $lC_Language->get('button_update'); ?></button></a></span> 
+      </div>
       <div style="clear:both;"></div>
     </div>
   </form>

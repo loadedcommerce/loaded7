@@ -13,6 +13,7 @@
  
 */ 
 ?>
+<!-- Account Edit Validations -->
 <script>
 $('#account_edit').submit(function() {
   var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
@@ -50,3 +51,4 @@ $('#account_edit').submit(function() {
   datePickerController.createDatePicker(opts);
   // ]]>
 </script>
+<!-- Account Edit Validations end -->
