@@ -26,8 +26,14 @@ class lC_Administrators_Admin {
     $lC_Language->loadIniFile('administrators.php');
     
     $media = $_GET['media'];
+    
+    /* Filtering */
+    $aWhere = "";
+    if ($_GET['aSearch'] != "") {
+      $aWhere = "where id = '" . (int)$_GET['aSearch'] . "'";
+    } 
 
-    $Qadmins = $lC_Database->query('select * from :table_administrators order by user_name');
+    $Qadmins = $lC_Database->query('select * from :table_administrators ' . $aWhere . ' order by user_name');
     $Qadmins->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
     $Qadmins->execute();
 

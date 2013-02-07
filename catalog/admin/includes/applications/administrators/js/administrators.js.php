@@ -11,14 +11,15 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-global $lC_Template, $lC_Language, $modulesArr, $accessArr;  
+global $lC_Template, $lC_Language, $modulesArr, $accessArr;
+$aSearch = (isset($_GET['aID']) && $_GET['aID'] != null ? '&aSearch=' . $_GET['aID'] : null);  
 if (!empty($_GET['set']) && $_GET['set'] == 'members') { // members
   ?>
   <script>
     $(document).ready(function() {
       // set responsive elements
       var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';      
-      var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA'); ?>';
+      var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA' . $aSearch); ?>';
       oTable = $('#dataTable').dataTable({
         "bProcessing": true,
         "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
