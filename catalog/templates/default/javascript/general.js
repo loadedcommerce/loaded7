@@ -13,7 +13,7 @@
 $(document).ready(function() {
 
   // jBreadcrumb
-  $("#breadCrumb").jBreadCrumb();     
+  $("#breadCrumbContainer").jBreadCrumb();     
    
   //jCarousel
   $('.first-and-second-carousel').jcarousel();
