@@ -69,7 +69,7 @@ class lC_Updates_Admin {
                                      'version' => $v['version'],
                                      'date' => lC_DateTime::getShort(lC_DateTime::fromUnixTimestamp(lC_DateTime::getTimestamp($v['dateCreated'], 'Ymd'))),
                                      'announcement' => $v['newsLink'],
-                                     'update_package' => (isset($v['pharLink']) ? $v['pharLink'] : null));
+                                     'update_package' => (isset($v['pharLink']) ? $v['pharLink'] . '?ref=' . urlencode($_SERVER['SCRIPT_FILENAME']) : null));
         $counter++;
       }
     }
