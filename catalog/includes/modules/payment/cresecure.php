@@ -255,7 +255,7 @@ class lC_Payment_cresecure extends lC_Payment {
   * @return string
   */ 
   public function process() {
-    global $lC_Language;
+    global $lC_Language, $lC_Database;
     
     $action = (isset($_GET['action']) && !empty($_GET['action'])) ? preg_replace('/[^a-zA-Z]/', '', $_GET['action']) : NULL;
     $code = (isset($_GET['code']) && !empty($_GET['code'])) ? preg_replace('/[^0-9]/', '', $_GET['code']) : NULL;
