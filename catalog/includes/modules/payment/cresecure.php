@@ -255,8 +255,9 @@ class lC_Payment_cresecure extends lC_Payment {
   * @return string
   */ 
   public function process() {
-    global $lC_Language, $lC_Database;
+    global $lC_Language, $lC_Database, $lC_MessageStack;
     
+    $error = false;
     $action = (isset($_GET['action']) && !empty($_GET['action'])) ? preg_replace('/[^a-zA-Z]/', '', $_GET['action']) : NULL;
     $code = (isset($_GET['code']) && !empty($_GET['code'])) ? preg_replace('/[^0-9]/', '', $_GET['code']) : NULL;
     $msg = (isset($_GET['msg']) && !empty($_GET['msg'])) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_GET['msg']) : NULL;
@@ -277,7 +278,7 @@ class lC_Payment_cresecure extends lC_Payment {
           default :
             // there was an error
             $lC_MessageStack->add('checkout_payment', $code . ' - ' . $msg);
-            lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+            $error = true;
         }
         // insert into transaction history
         $this->_transaction_response = $code;
@@ -292,7 +293,9 @@ class lC_Payment_cresecure extends lC_Payment {
         $Qtransaction->bindInt(':transaction_code', $code);
         $Qtransaction->bindValue(':transaction_return_value', $lC_XML->toXML());
         $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '000') ? 1 : 0);
-        $Qtransaction->execute();        
+        $Qtransaction->execute();
+        
+        if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
     }
   } 
  /**
