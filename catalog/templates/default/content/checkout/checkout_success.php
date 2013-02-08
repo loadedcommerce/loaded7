@@ -29,7 +29,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
             <div style="clear:both;">&nbsp;</div>
             <div id="mobile-order-number-id"> 
               <h3><?php echo $lC_Language->get('checkout_order_number') . '<span class="mobile-order-number-id-span">' . $_SESSION['cartID']; ?></span></h3>
-              <h3><?php echo $lC_Language->get('checkout_order_id') . '<span class="mobile-order-number-id-span">' . $_SESSION['cartID']; ?></span></h3>
+              <h3><?php echo $lC_Language->get('checkout_order_id') . '<span class="mobile-order-number-id-span">' . $oID; ?></span></h3>
             </div>
             <div id="checkout_shipping_col1" style="width:35%; float:left;">
               <div id="ship-to-address-block">
@@ -61,7 +61,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
               <form name="order" id="order" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'success=update', 'SSL'); ?>" method="post">
                 <div id="success-products-listing-heading">
                   <h3 id="success-order-number"><?php echo $lC_Language->get('checkout_order_number') . '&nbsp;' . $_SESSION['cartID']; ?></h3>
-                  <h3 id="success-order-id"><?php echo $lC_Language->get('checkout_order_id') . '&nbsp;' . $_SESSION['cartID']; ?></h3>
+                  <h3 id="success-order-id"><?php echo $lC_Language->get('checkout_order_id') . '&nbsp;' . $oID; ?></h3>
                 </div>
                 <div style="clear:both;"></div>
                 <div id="success-products-listing">
