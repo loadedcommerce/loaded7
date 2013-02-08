@@ -60,7 +60,7 @@ class lC_Api {
     $Qupdate->bindValue(':configuration_key', 'INSTALLATION_ID');
     $Qupdate->bindValue(':configuration_value', $newInstallationID);
     $Qupdate->bindValue(':configuration_description', 'Installation ID');      
-    $Qupdate->bindValue(':configuration_group_id', '0');      
+    $Qupdate->bindValue(':configuration_group_id', '6');      
     $Qupdate->bindValue(':last_modified', date("Y-m-d H:m:s"));   
     $Qupdate->execute();  
 

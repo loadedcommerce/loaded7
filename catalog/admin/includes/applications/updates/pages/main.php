@@ -15,14 +15,26 @@ error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 ini_set("display_errors", 1);
 require_once('includes/applications/updates/classes/updates.php');  
 
-$hasUpdates = lC_Updates_Admin::hasUpdatesAvailable(); 
-$updatesDataArr = lC_Updates_Admin::getAvailablePackages(); 
+$from_version = utility::getVersion();
+$from_version_date = utility::getVersionDate();
 
-echo "<pre style='margin:30px; padding-left:100px;'>";
-print_r($updatesDataArr);
-echo "</pre>";
-echo 'hasUpdates[' . $hasUpdates . ']<br>';
+$checkArr = lC_Updates_Admin::hasUpdatesAvailable();
+$hasUpdate = (isset($checkArr['hasUpdates']) && (int)$checkArr['hasUpdates'] > 0) ? true : false;
 
+if ($hasUpdate) {
+  $updatesDataArr = lC_Updates_Admin::getAvailablePackages();
+  $to_version = 0;
+  $to_version_date = '';
+  foreach ($updatesDataArr['entries'] as $k => $v) {
+    if (version_compare($to_version, $v['version'], '<')) { 
+      $to_version = $v['version'];
+      $to_version_date = $v['date'];
+    }
+  }
+} else {
+  $to_version = $from_version;
+  $to_version_date = $from_version_date;
+}
 
 /*
 $findDataArr = lC_Updates_Admin::findAvailablePackages('7.0'); 
@@ -34,11 +46,6 @@ $getPackageContents = lC_Updates_Admin::getPackageContents();
 $findPackageContents = lC_Updates_Admin::findPackageContents('osc'); 
 */
 
-$hasUpdate = true;
-$from_version = '7.0.0.1.1';
-$to_version = '7.0.0.1.2';
-$from_date = '01/15/2013';
-$to_date = '01/25/2013';
 ?>
 <!-- Main content -->
 <section role="main" id="main">
@@ -66,14 +73,14 @@ $to_date = '01/25/2013';
   <div id="blockContainer" class="columns small-margin-left large-margin-right">
 
     <div id="versionContainer" class="six-columns twelve-columns-tablet">
-      <fieldset class="fieldset <?php echo ($hasUpdate) ? 'orange-gradient' : ''; ?>">
+      <fieldset class="fieldset <?php echo ($hasUpdates) ? 'orange-gradient' : null; ?>">
         <legend class="legend"><?php echo $lC_Language->get('heading_legend_version_info'); ?></legend>
         <table id="version-table">
           <thead>
             <tr>
               <th class="before"><?php echo $lC_Language->get('text_current_version'); ?></th>
               <th class="version"><?php echo $from_version; ?></th>
-              <th class="after"><?php echo sprintf($lC_Language->get('text_released'), $from_date); ?></th>
+              <th class="after"><?php echo sprintf($lC_Language->get('text_released'), $from_version_date); ?></th>
             </tr>
           </thead>
           <tbody>
@@ -81,7 +88,7 @@ $to_date = '01/25/2013';
             <tr>
               <td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td>
               <td class="version"><?php echo $to_version; ?></td>
-              <td class="after"><?php echo sprintf($lC_Language->get('text_released'), $to_date); ?></td>
+              <td class="after"><?php echo sprintf($lC_Language->get('text_released'), $to_version_date); ?></td>
             </tr>  
           </tbody>            
         </table>
@@ -116,7 +123,7 @@ $to_date = '01/25/2013';
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('heading_legend_tools'); ?></legend>
         <table id="toolsButtonSet">
-          <tr><td colspan="3"><?php echo $lC_Language->get('text_last_checked') . ' ' . lC_DateTime::getLong($lastChecked, TRUE); ?></td></tr>
+          <tr><td colspan="3"><span class="loader"></span><span id="lastCheckedContainer"></span></td></tr>
           <tr><td>&nbsp;</td></tr>
           <tr>
             <td align="left">
@@ -126,7 +133,7 @@ $to_date = '01/25/2013';
               </a>               
             </td>
             <td align="center">
-              <a id="download" href="javascript://" onclick="downloadZip();" class="button download-zip">
+              <a id="download" href="https://github.com/loadedcommerce/loaded7/archive/<?php echo $to_version; ?>.zip" class="button download-zip">
                 <span class="button-icon blue-gradient glossy"><span class="icon-download"></span></span>
                 <?php echo $lC_Language->get('button_download_zip'); ?>
               </a>
@@ -187,18 +194,67 @@ $to_date = '01/25/2013';
 <?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <!-- Main content end -->
 <script>
+$(document).ready(function() {
+  checkForUpdates();  
+});
+
+
 function checkForUpdates() {
-  alert('If I only had a brain!');
+  $('#lastCheckedContainer').empty();
+  $('.loader').show();
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=hasUpdates'); ?>'
+  $.getJSON(jsonLink,
+    function (data) {
+      $('.loader').hide();
+      if (data.rpcStatus == -10) { // no session
+        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+        $(location).attr('href',url);
+      }
+      if (data.rpcStatus != 1) {
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
+      // update last checked
+      $('#lastCheckedContainer').html(data.lastChecked);
+      var fromVersion = '<?php echo $from_version; ?>';
+      var fromVersionDate = '<?php echo sprintf($lC_Language->get('text_released'), $from_version_date); ?>';
+      var toVersion = '<?php echo $to_version; ?>';
+      var toVersionDate = '<?php echo sprintf($lC_Language->get('text_released'), $to_version_date); ?>'; 
+  //    var updateMsg = '<?php echo ($hasUpdate) ? $lC_Language->get('text_update_avail') : $lC_Language->get('text_up_to_date'); ?>';   
+      var updateButton = '<a id="install-update" href="javascript://" onclick="installUpdate();" class="button"><span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span><?php echo $lC_Language->get('button_install_update'); ?></a>';
+      var recheckButton = '<a id="check-again" href="javascript://" onclick="checkForUpdates();" class="button"><span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span><?php echo $lC_Language->get('button_check_again'); ?></a>';
+      $('#version-table th.version').html(fromVersion);
+      $('#version-table th.after').html(fromVersionDate);
+      $('#version-table td.version').html(toVersion);
+      $('#version-table td.after').html(toVersionDate);  
+//      $('#updateText').html(updateMsg);  
+          
+      if (data.hasUpdates == true) {
+        $('#versionContainer .fieldset').addClass('orange-gradient');
+        $('.version').removeClass('green');
+        $('#version-table td').addClass('red');
+        $('#version-table th').addClass('red');
+        $('#updateText').html('<?php echo $lC_Language->get('text_update_avail'); ?>');
+        $('#updateButtonset').html(updateButton);
+      } else {
+        $('#versionContainer .fieldset').removeClass('orange-gradient');
+        $('.version').addClass('green');
+        $('#updateText').html('<?php echo $lC_Language->get('text_up_to_date'); ?>');
+        $('#updateButtonset').html(recheckButton);
+      }      
+    }
+  );  
 }
+
+
 function reinstallUpdate() {
   alert('Rome wasn\'t built in a day!');
 }
-function downloadZip() {
-  alert('Today is not the day!');
-}
+
 function undoUpdate() {
   alert('Derp!');
 }
+
 function installUpdate() {
   var fromVersion = '<?php echo $from_version; ?>';
   var toVersion = '<?php echo $to_version; ?>';
@@ -286,13 +342,16 @@ function __okBlock() {
   return '<p class="buttonset large-margin-top"><a id="ok" href="javascript://" onclick="location.reload(true);" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span><?php echo $lC_Language->get('button_ok'); ?></a></p>';
 }
 
-$(document).ready(function() {
-  var hasUpdate = '<?php echo ($hasUpdate) ? true : false; ?>';
-  if (hasUpdate) {
-    $('#version-table td').addClass('red');
-    $('#version-table th').addClass('red');
-  } else {
-    $('.version').addClass('green');
-  }  
-});
 </script>
+<?php
+echo "<pre style='margin:30px; padding-left:100px;'>";
+print_r($updatesDataArr);
+
+echo 'hasUpdates[' . $hasUpdate . ']<br>';
+echo 'from[' . $from_version . ']<br>';
+echo 'fromDate[' . $from_version_date . ']<br>';
+echo 'to[' . $to_version . ']<br>';
+echo 'toDate[' . $to_version_date . ']<br>';
+
+echo "</pre>";
+?>

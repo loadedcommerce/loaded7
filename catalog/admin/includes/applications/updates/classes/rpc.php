@@ -22,9 +22,8 @@ class lC_Updates_Admin_rpc {
   * @access public
   * @return json
   */
-  public static function getUpdateData() {
-    $result = lC_Updates_Admin::getUpdateData($_GET['type']);
-    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+  public static function hasUpdates() {
+    $result = lC_Updates_Admin::hasUpdatesAvailable();
 
     echo json_encode($result);
   }

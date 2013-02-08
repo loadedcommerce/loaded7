@@ -26,9 +26,46 @@ class lC_Updates_Admin {
   * @return boolean
   */ 
   public static function hasUpdatesAvailable() {
-    $result = self::getAvailablePackages();
+    global $lC_Database, $lC_Language;
+    
+    $lC_Language->loadIniFile('updates.php');
 
-    return ($result['total'] > 0);
+    $result = array();
+    $available = self::getAvailablePackages();
+    
+    $result['hasUpdates'] = ($available['total'] > 0);
+    $lastChecked = date("Y-m-d H:i:s");
+    $result['lastChecked'] = $lC_Language->get('text_last_checked') . ' ' . lC_DateTime::getLong($lastChecked, TRUE);
+    
+    // update last checked value
+    $lC_Database->startTransaction();
+
+    if (!defined('UPDATE_LAST_CHECKED')) {
+      $Qupdate = $lC_Database->query('insert into :table_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, last_modified) values (:configuration_title, :configuration_key, :configuration_value, :configuration_description, :configuration_group_id, :last_modified)');
+      $Qupdate->bindValue(':configuration_title', 'Update Last Checked');
+      $Qupdate->bindValue(':configuration_key', 'UPDATE_LAST_CHECKED');
+      $Qupdate->bindValue(':configuration_value', 'See Last Modified');
+      $Qupdate->bindValue(':configuration_description', 'Update Last Checked');      
+      $Qupdate->bindValue(':configuration_group_id', '6');      
+    } else {
+      $Qupdate = $lC_Database->query("update :table_configuration set last_modified = :last_modified where configuration_key = 'UPDATE_LAST_CHECKED'");
+    }    
+    $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qupdate->bindValue(':last_modified', $lastChecked);  
+    $Qupdate->setLogging($_SESSION['module']); 
+    $Qupdate->execute();  
+
+    if (!$lC_Database->isError()) {
+      $lC_Database->commitTransaction();
+      $result['rpcStatus'] = 1;
+    } else {
+      $lC_Database->rollbackTransaction();
+      $result['rpcStatus'] = -1;
+    }
+    
+ //   lC_Cache::clear('configuration'); 
+
+    return $result;
   }  
   /**
   * Find available update packages based on $search 
