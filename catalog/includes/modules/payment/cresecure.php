@@ -257,24 +257,42 @@ class lC_Payment_cresecure extends lC_Payment {
   public function process() {
     global $lC_Language;
     
-    switch (strtolower(preg_replace('/[^a-zA-Z]/', '', $_GET['action']))) {
+    $action = (isset($_GET['action']) && !empty($_GET['action'])) ? preg_replace('/[^a-zA-Z]/', '', $_GET['action']) : NULL;
+    $code = (isset($_GET['code']) && !empty($_GET['code'])) ? preg_replace('/[^0-9]/', '', $_GET['code']) : NULL;
+    $msg = (isset($_GET['msg']) && !empty($_GET['msg'])) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_GET['msg']) : NULL;
+    $order_id = (isset($_GET['order_id']) && !empty($_GET['order_id'])) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]\-/', '', $_GET['order_id']) : NULL;
+    
+    switch (strtolower($action)) {
       case 'cancel' :
         lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
         break;
         
       default :
-        switch (preg_replace('/[^0-9]/', '', $_GET['code'])) {
+        switch ($code) {
           case '000' :
             // update order status
-            lC_Order::process($_GET['order_id'], $this->_order_status_complete);
+            lC_Order::process($order_id, $this->_order_status_complete);
             break;
             
           default :
             // there was an error
-            $error_msg = preg_replace('/[^0-9]/', '', $_GET['code']) . ' - ' . preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_GET['msg']);
-            $lC_MessageStack->add('checkout_payment', $error_msg);
+            $lC_MessageStack->add('checkout_payment', $code . ' - ' . $msg);
             lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
         }
+        // insert into transaction history
+        $this->_transaction_response = $code;
+
+        $response_array = array('root' => $_GET);
+        $response_array['root']['transaction_response'] = trim($this->_transaction_response);
+        $lC_XML = new lC_XML($response_array);
+        
+        $Qtransaction = $lC_Database->query('insert into :table_orders_transactions_history (orders_id, transaction_code, transaction_return_value, transaction_return_status, date_added) values (:orders_id, :transaction_code, :transaction_return_value, :transaction_return_status, now())');
+        $Qtransaction->bindTable(':table_orders_transactions_history', TABLE_ORDERS_TRANSACTIONS_HISTORY);
+        $Qtransaction->bindInt(':orders_id', preg_replace('/[^a-zA-Z0-9]\:\|\[\]\-/', '', $_GET['order_id']));
+        $Qtransaction->bindInt(':transaction_code', preg_replace('/[^0-9]/', '', $_GET['code']));
+        $Qtransaction->bindValue(':transaction_return_value', $lC_XML->toXML());
+        $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == 'VERIFIED') ? 1 : 0);
+        $Qtransaction->execute();        
     }
   } 
  /**
