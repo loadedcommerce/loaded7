@@ -18,11 +18,11 @@ $lC_CategoryTree->setShowCategoryProductCount(false);
 <div id="infoSitemap" class="full_page">
   <h1><?php echo $lC_Template->getPageTitle(); ?></h1>        
   <div class="content">
-    <div class="short-code-column">
-      <div id="sitemapLeft">
+    <div>
+      <div class="short-code-column one-half" id="sitemapLeft">
         <?php echo $lC_CategoryTree->getTree(); ?>
       </div>
-      <div id="sitemapRight">
+      <div class="short-code-column one-half column-last" id="sitemapRight">
         <ul>
           <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, null, 'SSL'), $lC_Language->get('sitemap_account')); ?>
             <ul>
