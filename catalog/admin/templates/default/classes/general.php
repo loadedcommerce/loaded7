@@ -27,7 +27,7 @@ class lC_General_Admin {
     
     if ($search) {
       // start building the main <ul>
-      $result['html'] = '<ul class="big-menu collapsible as-accoridion black-gradient">' . "\n";
+      $result['html'] = '' . "\n";
       
       // return order data
       $Qorders = array();    
@@ -63,9 +63,9 @@ class lC_General_Admin {
       // build the orders results <li> html for output
       // return <li> only if greater than 0 results from orders query 
       if ($QorderResults > 0) {
-        $result['html'] .= '  <li class="with-right-arrow anthracite-gradient" id="orderSearchResults">' . "\n";
-        $result['html'] .= '    <span><span class="list-count">' . $Qorders->numberOfRows() . '</span><span class="icon-price-tag icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_orders') . '</span>' . "\n";
-      
+        $result['html'] .= '    <ul class="title-menu">
+                                  <li>Orders</li>
+                                </ul>' . "\n";
         $result['html'] .= '    <ul class="orders-menu">' . "\n";
         function unique_id() {
           return substr(md5(uniqid(mt_rand(), true)), 0, 4);
@@ -84,7 +84,6 @@ class lC_General_Admin {
         }
         
         $result['html'] .= '    </ul>' . "\n";
-        $result['html'] .= '  </li>' . "\n";
       } else {
         $result['html'] .= '';
       }
@@ -114,9 +113,9 @@ class lC_General_Admin {
       // build the customers results <li> html for output
       // return <li> only if greater than 0 results from customers query  
       if ($QcustomerResults > 0) {
-        $result['html'] .= '  <li class="with-right-arrow anthracite-gradient" id="customerSearchResults">' . "\n";
-        $result['html'] .= '    <span><span class="list-count">' . $Qcustomers->numberOfRows() . '</span><span class="icon-user icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_customers') . '</span>' . "\n";
-      
+        $result['html'] .= '    <ul class="title-menu">
+                                  <li>Customers</li>
+                                </ul>' . "\n";
         $result['html'] .= '    <ul class="customers-menu">' . "\n";
         foreach ($QcustomerResults as $key => $value) { 
           $result['html'] .= '      <li class="bevel" title="' . $lC_Language->get('customer_view_details') . ' ' . $value['customers_firstname'] . ' '  . $value['customers_lastname'] . '">' . "\n" . 
@@ -128,7 +127,6 @@ class lC_General_Admin {
         }
         
         $result['html'] .= '    </ul>' . "\n";
-        $result['html'] .= '  </li>' . "\n";
       } else {
         $result['html'] .= '';
       }
@@ -162,9 +160,9 @@ class lC_General_Admin {
       // build the products results <li> html for output
       // return <li> only if greater than 0 results from products query  
       if ($QproductResults > 0) {
-        $result['html'] .= '  <li class="with-right-arrow anthracite-gradient" id="orderSearchResults">' . "\n";
-        $result['html'] .= '    <span><span class="list-count">' . $Qproducts->numberOfRows() . '</span><span class="icon-bag icon-white icon-pad-right"></span> ' . $lC_Language->get('icon_products') . '</span>' . "\n";
-      
+        $result['html'] .= '    <ul class="title-menu">
+                                  <li>Products</li>
+                                </ul>' . "\n";
         $result['html'] .= '    <ul class="products-menu">' . "\n";
         foreach ($QproductResults as $key => $value) {
           // check for product variants if product has children
@@ -185,7 +183,7 @@ class lC_General_Admin {
                              '          <span class="float-right">' . "\n" . 
                              '            ' . ($value['has_children'] != 0 ? '<span title="This product has ' . $Qvariants[0]['variants'] . ' variants">(' . $Qvariants[0]['variants'] . ') <span class="icon-path"></span></span>' : $lC_Currencies->format($value['products_price'])) . '<br />' . "\n" . 
                              '          </span>' . "\n" . 
-                             '          <time><span class="icon-bag icon-grey icon-pad-left"></span></time>' . "\n" . 
+                             '          <time><span class="icon-bag icon-size2 icon-grey icon-pad-left"></span></time>' . "\n" . 
                              '          <span class="green" title="' . $value['products_name'] . '"><b>' . substr($value['products_name'], 0, 20) . '</b>...</span>' . ($value['has_children'] != 0 ? '' : '<small>Model: '  . $value['products_model'] . '</small>') . "\n" . 
                              '        </a>' . "\n" .
                              '      </li>';
@@ -194,12 +192,9 @@ class lC_General_Admin {
         }
         
         $result['html'] .= '    </ul>' . "\n";
-        $result['html'] .= '  </li>' . "\n";
       } else {
         $result['html'] .= '';
-      } 
-      
-      $result['html'] .= '</ul>' . "\n";
+      }
        
       return $result;
       

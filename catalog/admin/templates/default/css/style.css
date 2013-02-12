@@ -2705,7 +2705,7 @@ li.message-menu {
 
 /* Thin grey menu */
 .title-menu {
-  margin: 0;
+  margin: -2px;
   min-height: 0;
   list-style-type: none;
   }
@@ -2821,7 +2821,7 @@ li.message-menu {
     
 /* Orders menu */
 .orders-menu {
-  margin: 20px -32px -15px -15px !important;
+  margin: 0;
   min-height: 0;
   list-style-type: none;
   -webkit-text-shadow: none;
@@ -2871,7 +2871,7 @@ li.message-menu {
         
 /* Customers menu */
 .customers-menu {
-  margin: 20px -32px -15px -15px !important;
+  margin: 0;
   min-height: 0;
   list-style-type: none;
   -webkit-text-shadow: none;
@@ -2921,7 +2921,7 @@ li.message-menu {
     
 /* Products menu */
 .products-menu {
-  margin: 20px -32px -15px -15px !important;
+  margin: 0;
   min-height: 0;
   list-style-type: none;
   -webkit-text-shadow: none;
@@ -2948,8 +2948,7 @@ li.message-menu {
     li.products-menu time {
       float: left;
       display: block;
-      margin-left: -20px;
-      margin-right: 10px;
+      margin: 6px 10px 0 -26px;
       height: 30px;
       vertical-align: top;
       color: #CCCCCC;
