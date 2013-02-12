@@ -746,9 +746,14 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
   margin-left: 0;
 }
 
-.moduleRow {}
-.moduleRowOver { background-color: #f7f7f7; }
+.moduleRow { }
+.moduleRowOver { background-color: #f7f7f7; cursor:pointer; }
 .moduleRowSelected td { background-color: #e7e7e7; }
+
+/* checkout payment */
+.payment-selection { margin-top:5px; }
+.payment-selection span { margin-left:10px; }
+.payment-selection-title { font-weight:normal; font-style:italic; margin:5px 0; }
 
 /* debug display */
 #debugInfoContainer { margin-top:10px; }
