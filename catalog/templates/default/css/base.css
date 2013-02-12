@@ -561,6 +561,11 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
   margin-left: 40px;
 }
 
+#sitemapLeft ul li ul li {
+  margin-left: 20px;
+  list-style: circle;
+}
+
 #sitemapRight ul li {
   list-style: disc;
 }
