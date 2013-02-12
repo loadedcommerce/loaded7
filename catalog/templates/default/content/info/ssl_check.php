@@ -18,13 +18,13 @@
     <div class="short-code-column">
       <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
       <div class="contentBorder">
-        <div style="width:40%; float:right; margin:0 0 3px 10px;"> 
-          <div style="background:#FFFFFF; border:1px solid #DDDDDD; padding: 10px;"> 
-            <div><b><?php echo $lC_Language->get('ssl_check_box_heading'); ?></b></div>
-            <div><?php echo $lC_Language->get('ssl_check_box_contents'); ?></div>
-          </div>
-        </div>   
-        <p><?php echo $lC_Language->get('text_information_ssl_check'); ?></p>
+        <div class="single-bg" style="width:40%; margin-right:15px; padding:15px;">
+          <b><?php echo $lC_Language->get('ssl_check_box_heading'); ?></b><br />
+          <?php echo $lC_Language->get('ssl_check_box_contents'); ?>
+        </div>
+        <div>
+          <?php echo $lC_Language->get('text_information_ssl_check'); ?>
+        </div>
       </div>
       <div style="clear:both;">&nbsp;</div>
       <div id="infoSslCheckActions" class="action_buttonbar">
