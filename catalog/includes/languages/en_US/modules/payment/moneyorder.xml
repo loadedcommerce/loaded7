@@ -12,11 +12,16 @@
       <group>modules-payment</group>
     </definition>
     <definition>
+      <key>payment_moneyorder_method_title</key>
+      <value><![CDATA[Check or Money Order]]></value>
+      <group>modules-payment</group>
+    </definition>    
+    <definition>
       <key>payment_moneyorder_email_footer</key>
       <value><![CDATA[Make Payable To: %s
 
 Send To:
-%
+%s
 
 Your order will not ship until we receive payment.]]></value>
       <group>modules-payment</group>
