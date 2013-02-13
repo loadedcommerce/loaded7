@@ -232,13 +232,13 @@ function installUpdate() {
   $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td><td class="version">' + toVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), $from_version_date); ?></td></tr>').addClass('red'); 
   $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
   // start the update process
-  $('#updateButtonset').slideUp();
+  $('#updateButtonset').slideUp().empty();
   $('.update-text').html('<p><?php echo $lC_Language->get('text_initializing'); ?></p>').attr('style', 'text-align:center').blink({ maxBlinks: 5, blinkPeriod: 1000 });
   
   setTimeout(function() { 
     __setup(); 
     __showStep(1,0);
-    $('#updateProgressContainer').append(__cancelBlock());
+    $('#updateButtonset').html(__cancelBlock()).slideDown();
     
     // backup the database
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBBackup'); ?>';
@@ -299,7 +299,7 @@ function installUpdate() {
                         return false;
                       }
                       __showStep(5,1);
-                      $('.cancel-text').hide();
+                      $('#updateButtonset').html(__okBlock());
                       __showStep(99,1);
                       
 
@@ -389,7 +389,7 @@ function __showStep(step, fini) {
   } 
   
   if (step == 99) {  // success
-    $('#updateProgressContainer div:last').append(done + successHtml + __okBlock());
+    $('#updateProgressContainer div:last').append(done + successHtml);
   } 
   
   if (step == -1) {  // error
