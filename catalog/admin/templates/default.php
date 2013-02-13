@@ -196,88 +196,88 @@
               <ul class="list spaced">
                 <li class="anthracite-gradient">
                   <span class="list-count grey with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_order'); ?>">o</span>
-                  <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_order_title'); ?>">
+                  <a href="#<?php //echo ((int)$_SESSION['admin']['access']['orders'] < 2 ? lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add') : '#'); ?>" class="list-link white-link-with-pad with-tooltip disabled<?php //echo ((int)$_SESSION['admin']['access']['orders'] < 2 ? ' disabled' : ''); ?>" title="<?php echo $lC_Language->get('quick_add_order_title'); ?>">
                     <div class="add-container-icon">
-                      <i class="icon-price-tag icon-grey icon-pad-right"></i>
+                      <i class="icon-price-tag icon-pad-right icon-grey<?php //echo ((int)$_SESSION['admin']['access']['orders'] < 2 ? ' icon-grey' : ' icon-white'); ?>"></i>
                     </div> 
-                    <div class="float-left grey">
+                    <div class="float-left grey<?php //echo ((int)$_SESSION['admin']['access']['orders'] < 2 ? ' grey' : ''); ?>">
                       <?php echo $lC_Language->get('quick_add_order'); ?>
                     </div>
                   </a>
                 </li>
                 <li class="anthracite-gradient">
                   <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>">c</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_customer_title'); ?>">
+                  <a href="<?php echo ((int)$_SESSION['admin']['access']['customers'] < 2 ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add')); ?>" class="list-link white-link-with-pad with-tooltip<?php echo ((int)$_SESSION['admin']['access']['customers'] < 2 ? ' disabled' : ''); ?>" title="<?php echo $lC_Language->get('quick_add_customer_title'); ?>">
                     <div class="add-container-icon">
-                      <i class="icon-user icon-white icon-pad-right"></i>
+                      <i class="icon-user icon-pad-right<?php echo ((int)$_SESSION['admin']['access']['customers'] < 2 ? ' icon-grey' : ' icon-white'); ?>"></i>
                     </div>
-                    <div class="float-left">
+                    <div class="float-left<?php echo ((int)$_SESSION['admin']['access']['customers'] < 2 ? ' grey' : ''); ?>">
                       <?php echo $lC_Language->get('quick_add_customer'); ?>
                     </div>
                   </a>
                 </li>
                 <li class="anthracite-gradient">
                   <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_category'); ?>">g</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_category_title'); ?>">
+                  <a href="<?php echo ((int)$_SESSION['admin']['access']['categories'] < 2 ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add')); ?>" class="list-link white-link-with-pad with-tooltip<?php echo ((int)$_SESSION['admin']['access']['customers'] < 2 ? ' disabled' : ''); ?>" title="<?php echo $lC_Language->get('quick_add_category_title'); ?>">
                     <div class="add-container-icon">
-                      <i class="icon-list icon-white icon-pad-right"></i>
+                      <i class="icon-list icon-pad-right<?php echo ((int)$_SESSION['admin']['access']['categories'] < 2 ? ' icon-grey' : ' icon-white'); ?>"></i>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left<?php echo ((int)$_SESSION['admin']['access']['categories'] < 2 ? ' grey' : ''); ?>">
                       <?php echo $lC_Language->get('quick_add_category'); ?>
                     </div>
                   </a>
                 </li>
                 <li class="anthracite-gradient">
                   <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_product'); ?>">p</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_product_title'); ?>">
+                  <a href="<?php echo ((int)$_SESSION['admin']['access']['products'] < 2 ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save')); ?>" class="list-link white-link-with-pad with-tooltip<?php echo ((int)$_SESSION['admin']['access']['customers'] < 2 ? ' disabled' : ''); ?>" title="<?php echo $lC_Language->get('quick_add_product_title'); ?>">
                     <div class="add-container-icon">
-                      <i class="icon-bag icon-white icon-pad-right"></i>
+                      <i class="icon-bag icon-pad-right<?php echo ((int)$_SESSION['admin']['access']['products'] < 2 ? ' icon-grey' : ' icon-white'); ?>"></i>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left<?php echo ((int)$_SESSION['admin']['access']['products'] < 2 ? ' grey' : ''); ?>">
                       <?php echo $lC_Language->get('quick_add_product'); ?>
                     </div>
                   </a>
                 </li>
                 <li class="anthracite-gradient">
                   <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_special'); ?>">l</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_special_title'); ?>">
+                  <a href="<?php echo ((int)$_SESSION['admin']['access']['specials'] < 2 ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add')); ?>" class="list-link white-link-with-pad with-tooltip<?php echo ((int)$_SESSION['admin']['access']['customers'] < 2 ? ' disabled' : ''); ?>" title="<?php echo $lC_Language->get('quick_add_special_title'); ?>">
                     <div class="add-container-icon">
-                    <i class="icon-tag icon-white icon-pad-right"></i>
+                    <i class="icon-tag icon-pad-right<?php echo ((int)$_SESSION['admin']['access']['specials'] < 2 ? ' icon-grey' : ' icon-white'); ?>"></i>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left<?php echo ((int)$_SESSION['admin']['access']['specials'] < 2 ? ' grey' : ''); ?>">
                     <?php echo $lC_Language->get('quick_add_special'); ?>
                     </div>
                   </a>
                 </li>
                 <li class="anthracite-gradient">
                   <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_manufacturer'); ?>">t</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_manufacturer_title'); ?>">
+                  <a href="<?php echo ((int)$_SESSION['admin']['access']['manufacturers'] < 2 ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add')); ?>" class="list-link white-link-with-pad with-tooltip<?php echo ((int)$_SESSION['admin']['access']['customers'] < 2 ? ' disabled' : ''); ?>" title="<?php echo $lC_Language->get('quick_add_manufacturer_title'); ?>">
                     <div class="add-container-icon">
-                      <i class="icon-printer icon-white icon-pad-right"></i>
+                      <i class="icon-printer icon-pad-right<?php echo ((int)$_SESSION['admin']['access']['manufacturers'] < 2 ? ' icon-grey' : ' icon-white'); ?>"></i>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left<?php echo ((int)$_SESSION['admin']['access']['manufacturers'] < 2 ? ' grey' : ''); ?>">
                       <?php echo $lC_Language->get('quick_add_manufacturer'); ?>
                     </div>
                   </a>
                 </li>
                 <li class="anthracite-gradient">
                   <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_banner'); ?>">b</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_banner_title'); ?>">
+                  <a href="<?php echo ((int)$_SESSION['admin']['access']['banner_manager'] < 2 ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add')); ?>" class="list-link white-link-with-pad with-tooltip<?php echo ((int)$_SESSION['admin']['access']['customers'] < 2 ? ' disabled' : ''); ?>" title="<?php echo $lC_Language->get('quick_add_banner_title'); ?>">
                     <div class="add-container-icon">
-                      <i class="icon-flag icon-white icon-pad-right"></i>
+                      <i class="icon-flag icon-pad-right<?php echo ((int)$_SESSION['admin']['access']['banner_manager'] < 2 ? ' icon-grey' : ' icon-white'); ?>"></i>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left<?php echo ((int)$_SESSION['admin']['access']['banner_manager'] < 2 ? ' grey' : ''); ?>">
                       <?php echo $lC_Language->get('quick_add_banner'); ?>
                     </div>
                   </a>
                 </li>
                 <li class="anthracite-gradient">
                   <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_newsletter'); ?>">n</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_newsletter_title'); ?>">
+                  <a href="<?php echo ((int)$_SESSION['admin']['access']['newsletters'] < 2 ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add')); ?>" class="list-link white-link-with-pad with-tooltip<?php echo ((int)$_SESSION['admin']['access']['customers'] < 2 ? ' disabled' : ''); ?>" title="<?php echo $lC_Language->get('quick_add_newsletter_title'); ?>">
                     <div class="add-container-icon">
-                      <i class="icon-read icon-white icon-pad-right"></i>
+                      <i class="icon-read icon-pad-right<?php echo ((int)$_SESSION['admin']['access']['newsletters'] < 2 ? ' icon-grey' : ' icon-white'); ?>"></i>
                     </div> 
-                    <div class="float-left">
+                    <div class="float-left<?php echo ((int)$_SESSION['admin']['access']['newsletters'] < 2 ? ' grey' : ''); ?>">
                       <?php echo $lC_Language->get('quick_add_newsletter'); ?>
                     </div>
                   </a>
