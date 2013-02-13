@@ -13,16 +13,20 @@
 */
 $lC_CategoryTree->reset();
 $lC_CategoryTree->setShowCategoryProductCount(false);
+$lC_CategoryTree->setParentGroupStringTop('<ul>', '</ul>');
+$lC_CategoryTree->setParentGroupString('<ul>', '</ul>');
+$lC_CategoryTree->setChildStringWithChildren('<li>', '');
+$lC_CategoryTree->setUseAria(true);
 ?>
 <!--content/info/info_sitemap.php start-->
 <div id="infoSitemap" class="full_page">
   <h1><?php echo $lC_Template->getPageTitle(); ?></h1>        
   <div class="content">
-    <div class="short-code-column">
-      <div id="sitemapLeft">
+    <div>
+      <div class="short-code-column one-half" id="sitemapLeft" style="margin-right:0;">
         <?php echo $lC_CategoryTree->getTree(); ?>
       </div>
-      <div id="sitemapRight">
+      <div class="short-code-column one-half column-last" id="sitemapRight" style="padding-left:20px;">
         <ul>
           <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, null, 'SSL'), $lC_Language->get('sitemap_account')); ?>
             <ul>
