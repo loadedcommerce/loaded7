@@ -298,6 +298,8 @@ function installUpdate() {
                         return false;
                       }
                       __showStep(5,1);
+                      __showStep(99,1);
+                      
 
                     
                     }
@@ -384,15 +386,13 @@ function __showStep(step, fini) {
     }
   } 
   
-  if (step == 6) {
-    if (fini == 1) {
-      $('#updateProgressContainer div:last').html(done + html6);
-    } else if (fini == 2) {
-      $('#updateProgressContainer div:last').html(error + html6);
-    } else { 
-      $('#updateProgressContainer').append('<div>' + loader + html6+ '</div>');
-    }
+  if (step == 99) {  // success
+    $('#updateProgressContainer div:last').html(done + successHtml);
   } 
+  
+  if (step == -1) {  // error
+    $('#updateProgressContainer div:last').html(done + errorHtml);
+  }   
   
   return true;
 }   
