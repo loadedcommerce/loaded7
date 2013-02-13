@@ -174,7 +174,6 @@ class lC_Updates_Admin {
         }
       }
     }
-    //$response = transport::getResponse(array('url' => $link, 'parameters' => 'check=true'));
     $response = file_get_contents($link);
 
     return file_put_contents(DIR_FS_WORK . 'updates/update.phar', $response);
@@ -456,7 +455,7 @@ class lC_Updates_Admin {
           }
         }
       }
-    } catch ( \Exception $e ) {
+    } catch ( Exception $e ) {
       $phar_can_open = false;
 
       self::log('##### ERROR: ' . $e->getMessage());

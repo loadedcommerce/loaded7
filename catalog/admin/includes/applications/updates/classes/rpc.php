@@ -14,6 +14,7 @@
   @function The lC_Updater_Admin_rpc class is for AJAX remote program control
 */
 require_once('includes/applications/updates/classes/updates.php');    
+require_once('includes/applications/backup/classes/backup.php');    
 
 class lC_Updates_Admin_rpc {
  /*
@@ -27,5 +28,46 @@ class lC_Updates_Admin_rpc {
 
     echo json_encode($result);
   }
+ /*
+  * Download the update package
+  *
+  * @access public
+  * @return json
+  */
+  public static function getUpdatePackage() {
+    $result = array();
+    if (lC_Updates_Admin::downloadPackage($_GET['version'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }  
+ /*
+  * Get the update package contents
+  *
+  * @access public
+  * @return json
+  */
+  public static function getContents() {
+    $result = lC_Updates_Admin::getPackageContents();
+    if (isset($result['total'])) $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    
+    echo json_encode($result);
+  } 
+ /*
+  * Perform a database backup
+  *
+  * @param boolean $_GET['compression'] True = create backup using compression
+  * @param boolean false Turn off local only backup
+  * @access public
+  * @return json
+  */
+  public static function doDBBackup() {
+    if ( lC_Backup_Admin::backup($_GET['compression'], false)) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }  
 }
 ?>

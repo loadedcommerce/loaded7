@@ -198,7 +198,6 @@ $(document).ready(function() {
   checkForUpdates();  
 });
 
-
 function checkForUpdates() {
   $('#lastCheckedContainer').empty();
   $('.loader').show();
@@ -214,36 +213,92 @@ function checkForUpdates() {
         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
-      // update last checked
       $('#lastCheckedContainer').html(data.lastChecked);
-      var fromVersion = '<?php echo $from_version; ?>';
-      var fromVersionDate = '<?php echo sprintf($lC_Language->get('text_released'), $from_version_date); ?>';
-      var toVersion = '<?php echo $to_version; ?>';
-      var toVersionDate = '<?php echo sprintf($lC_Language->get('text_released'), $to_version_date); ?>'; 
-  //    var updateMsg = '<?php echo ($hasUpdate) ? $lC_Language->get('text_update_avail') : $lC_Language->get('text_up_to_date'); ?>';   
-      var updateButton = '<a id="install-update" href="javascript://" onclick="installUpdate();" class="button"><span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span><?php echo $lC_Language->get('button_install_update'); ?></a>';
-      var recheckButton = '<a id="check-again" href="javascript://" onclick="checkForUpdates();" class="button"><span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span><?php echo $lC_Language->get('button_check_again'); ?></a>';
-      $('#version-table th.version').html(fromVersion);
-      $('#version-table th.after').html(fromVersionDate);
-      $('#version-table td.version').html(toVersion);
-      $('#version-table td.after').html(toVersionDate);  
-//      $('#updateText').html(updateMsg);  
-          
+      $('#version-table th.version').html('<?php echo $from_version; ?>');
+      $('#version-table th.after').html('<?php echo sprintf($lC_Language->get('text_released'), $from_version_date); ?>');
+      $('#version-table td.version').html('<?php echo $to_version; ?>');
+      $('#version-table td.after').html('<?php echo sprintf($lC_Language->get('text_released'), $to_version_date); ?>');  
       if (data.hasUpdates == true) {
         $('#versionContainer .fieldset').addClass('orange-gradient');
         $('.version').removeClass('green');
         $('#version-table td').addClass('red');
         $('#version-table th').addClass('red');
         $('#updateText').html('<?php echo $lC_Language->get('text_update_avail'); ?>');
-        $('#updateButtonset').html(updateButton);
+        $('#updateButtonset').html('<a id="install-update" href="javascript://" onclick="installUpdate();" class="button"><span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span><?php echo $lC_Language->get('button_install_update'); ?></a>');
       } else {
         $('#versionContainer .fieldset').removeClass('orange-gradient');
         $('.version').addClass('green');
         $('#updateText').html('<?php echo $lC_Language->get('text_up_to_date'); ?>');
-        $('#updateButtonset').html(recheckButton);
+        $('#updateButtonset').html('<a id="check-again" href="javascript://" onclick="checkForUpdates();" class="button"><span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span><?php echo $lC_Language->get('button_check_again'); ?></a>');
       }      
     }
   );  
+}
+
+function installUpdate() {
+  var cData;
+  var fromVersion = '<?php echo $from_version; ?>';
+  var toVersion = '<?php echo $to_version; ?>';
+  $('#versionContainer .fieldset').removeClass('orange-gradient');
+  $('#version-table > tbody').empty();
+  $('#version-table').css("margin-bottom", "10px");
+  $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td><td class="version">' + toVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), $from_version_date); ?></td></tr>').addClass('red'); 
+  $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
+  // start the update process
+  $('#updateButtonset').slideUp();
+  $('.update-text').html('<p><?php echo $lC_Language->get('text_initializing'); ?></p>').attr('style', 'text-align:center').blink({ maxBlinks: 5, blinkPeriod: 1000 });
+  
+  setTimeout(function() { 
+    __setup(); 
+    __showStep(1,0);
+    // download the update package
+    var version = '<?php echo $to_version; ?>';
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getUpdatePackage&version=VERSION'); ?>'
+    $.getJSON(jsonLink.replace('VERSION', version),
+      function (data) {
+        if (data.rpcStatus != 1) {
+          __showStep(1,2);
+          $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+          return false;
+        }
+        __showStep(1,1);
+        __showStep(2,0);
+        // prepare the contents
+        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getContents'); ?>'
+        $.getJSON(jsonLink,
+          function (cData) {
+            if (cData.rpcStatus != 1) {
+              __showStep(2,2);
+              $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+              return false;
+            }
+           // alert(print_r(data, true));
+            
+            __showStep(2,1);
+            __showStep(3,0);
+            // backup the database
+            var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBBackup'); ?>'
+            $.getJSON(jsonLink,
+              function (dData) {
+                if (dData.rpcStatus != 1) {
+                  __showStep(3,2);
+                  $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+                  return false;
+                }
+                __showStep(3,1);
+                
+                
+                
+              }
+            );             
+            
+          }
+        );        
+        
+      }
+    );     
+    
+  }, 3000);  
 }
 
 
@@ -255,73 +310,47 @@ function undoUpdate() {
   alert('Derp!');
 }
 
-function installUpdate() {
-  var fromVersion = '<?php echo $from_version; ?>';
-  var toVersion = '<?php echo $to_version; ?>';
-  var loader = '<span class="icon-right icon-blue margin-left margin-right"></span><span class="loader"></span>';
-  var done = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-tick icon-green margin-left margin-right"></span>';
-  var error = '<span class="icon-cross icon-red"></span>';
-  $('#versionContainer .fieldset').removeClass('orange-gradient');
-  $('#version-table > tbody').empty();
-  $('#version-table').css("margin-bottom", "10px");
-  $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td><td class="version">' + toVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_latest_version'), $to_version); ?></td></tr>').addClass('red'); 
-  $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
-  // start the update process
-  $('#updateButtonset').slideUp();
-  $('.update-text').html('<p><?php echo $lC_Language->get('text_initializing'); ?></p>').attr('style', 'text-align:center').blink({ maxBlinks: 5, blinkPeriod: 1000 });
-
-  setTimeout(function() { 
-    __setup(); 
-
-    __showStep(1,0);
-    setTimeout(function() { 
-      __showStep(2,0); 
-      setTimeout(function() { 
-        __showStep(3,0); 
-        setTimeout(function() { 
-          __showStep(3,1);
-      
-        }, 3000);
-      }, 3000);
-    }, 3000);
-  }, 3000);
-  
-}
 
 function __showStep(step, fini) {
   var loader = '<span class="icon-right icon-blue margin-left margin-right"></span><span class="loader"></span>';
   var done = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-tick icon-green margin-left margin-right"></span>';
-  var error = '<span class="icon-cross icon-red"></span>';
+  var error = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-cross icon-red margin-left margin-right"></span>';
 
   var html1 = '<span class="update-text"><?php echo $lC_Language->get('text_step_1'); ?></span>';
   var html2 = '<span class="update-text"><?php echo $lC_Language->get('text_step_2'); ?></span>';
   var html3 = '<span class="update-text"><?php echo $lC_Language->get('text_step_3'); ?></span>';
   var html4 = '<span class="update-text"><?php echo $lC_Language->get('text_step_4'); ?></span>';
-  var html4 = '<span class="update-text"><?php echo $lC_Language->get('text_step_5'); ?></span>';
-  var html4 = '<span class="update-text"><?php echo $lC_Language->get('text_step_success'); ?></span>';
-  var html4 = '<span class="update-text"><?php echo $lC_Language->get('text_step_error'); ?></span>';
+  var html5 = '<span class="update-text"><?php echo $lC_Language->get('text_step_5'); ?></span>';
+  var successHtml = '<span class="update-text"><?php echo $lC_Language->get('text_step_success'); ?></span>';
+  var errorHtml = '<span class="update-text"><?php echo $lC_Language->get('text_step_error'); ?></span>';
         
   if (step == 1) {
     if (fini == 1) {
-      $('#updateProgressContainer').html('<div>' + done + html1 +  '</div>' + __cancelBlock());
+      $('#updateProgressContainer').html('<div>' + done + html1 +  '</div>');
+    } else if (fini == 2) {
+      $('#updateProgressContainer').html('<div>' + error + html1 +  '</div>');
     } else {
-      $('#updateProgressContainer').html('<div>' + loader + html1 + '</div>' + __cancelBlock());  
+      $('#updateProgressContainer').html('<div>' + loader + html1 + '</div>');  
     }
   }  
   
   if (step == 2) {
     if (fini == 1) {
-      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>' + __cancelBlock());
+      $('#updateProgressContainer div:last').html(done + html2);
+    } else if (fini == 2) { 
+      $('#updateProgressContainer div:last').html(error + html2);
     } else {
-      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + loader + html2 + '</div>' + __cancelBlock());
+      $('#updateProgressContainer').append('<div>' + loader + html2 + '</div>');
     }
   }   
   
   if (step == 3) {
     if (fini == 1) {
-      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>' + '<div>' + done + html3 + '</div><div>' + done + html4 + '</div>' + __okBlock());
-    } else {
-      $('#updateProgressContainer').html('<div>' + done + html1 + '</div><div>' + done + html2 + '</div>' + '<div>' + loader + html3 + '</div>' + __cancelBlock());
+      $('#updateProgressContainer div:last').html(done + html3);
+    } else if (fini == 2) {
+      $('#updateProgressContainer div:last').html(error + html3);
+    } else { 
+      $('#updateProgressContainer').append('<div>' + loader + html3 + '</div>');
     }
   }   
   
