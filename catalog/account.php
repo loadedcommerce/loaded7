@@ -10,7 +10,7 @@
 *  @author     Loaded Commerce Team
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
-*/
+*/ 
 $_SERVER['SCRIPT_FILENAME'] = __FILE__;
 
 require('includes/application_top.php');
