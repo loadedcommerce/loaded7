@@ -238,6 +238,7 @@ function installUpdate() {
   setTimeout(function() { 
     __setup(); 
     __showStep(1,0);
+    $('#updateProgressContainer').append(__cancelBlock());
     
     // backup the database
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBBackup'); ?>';
@@ -298,6 +299,7 @@ function installUpdate() {
                         return false;
                       }
                       __showStep(5,1);
+                      $('.cancel-text').hide();
                       __showStep(99,1);
                       
 
@@ -388,11 +390,11 @@ function __showStep(step, fini) {
   
   if (step == 99) {  // success
     $('#updateProgressContainer div:last').append(done + successHtml + __okBlock());
-  } else if (step == -1) {  // error
+  } 
+  
+  if (step == -1) {  // error
     $('#updateProgressContainer div:last').append(done + errorHtml);
-  } else {
-    $('#updateProgressContainer').append(__cancelBlock());
-  }  
+  }   
   
   return true;
 }   
