@@ -39,15 +39,19 @@ class lC_Updates_Admin {
     
     if ($result['hasUpdates']) {
       $to_version = 0;
+      $to_version_date = '';
       foreach ($available['entries'] as $k => $v) {
         if (version_compare($to_version, $v['version'], '<')) { 
           $to_version = $v['version'];
+          $to_version_date = $v['date'];
         }
       }
     } else {
-      $to_version = utility::getVersion();;
+      $to_version = utility::getVersion();
+      $to_version_date = utility::getVersionDate();
     } 
     $result['toVersion'] = $to_version;   
+    $result['toVersionDate'] = $to_version_date;   
     
     // update last checked value
     $lC_Database->startTransaction();
@@ -373,6 +377,9 @@ class lC_Updates_Admin {
   * @return boolean
   */    
   public static function applyPackage() {
+error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
+ini_set("display_errors", 1);    
+    
     $phar_can_open = true;
 
     $meta = array();
@@ -381,7 +388,7 @@ class lC_Updates_Admin {
     try {
       $phar = $phar = new Phar(DIR_FS_WORK . 'updates/update.phar', 0);
 
-      $meta = $phar->getMetadata();
+      $meta = $phar->getMetadata();     
 
       self::$_to_version = $meta['version_to'];
 
@@ -423,8 +430,8 @@ class lC_Updates_Admin {
         if ( ($pos = strpos($iteration->getPathName(), 'update.phar')) !== false ) {
           
           $file = substr($iteration->getPathName(), $pos+12);
-          $directory = realpath(DIR_FS_CATALOG . '../../');
-
+          $directory = realpath(DIR_FS_CATALOG) . '/';
+          
           if ( file_exists($directory . $file) ) {
             if ( rename($directory . $file, $directory . dirname($file) . '/.CU_' . basename($file)) ) {
               $pro_hart[] = array('type' => 'file',
@@ -534,7 +541,7 @@ class lC_Updates_Admin {
   */ 
   protected static function log($message) {
     if ( is_writable(DIR_FS_WORK . 'logs') ) {
-      file_put_contents(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt', '[' . DateTime::getNow('d-M-Y H:i:s') . '] ' . $message . "\n", FILE_APPEND);
+      file_put_contents(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt', '[' . lC_DateTime::getNow('d-M-Y H:i:s') . '] ' . $message . "\n", FILE_APPEND);
     }
   }
  /**
@@ -608,7 +615,7 @@ class lC_Updates_Admin {
 
     foreach ( file(DIR_FS_WORK . 'logs/' . $log) as $l ) {
       if ( preg_match('/^\[([0-9]{2})-([A-Za-z]{3})-([0-9]{4}) ([0-9]{2}):([0-5][0-9]):([0-5][0-9])\] (.*)$/', $l) ) {
-        $result['entries'][] = array('date' => DateTime::getShort(DateTime::fromUnixTimestamp(DateTime::getTimestamp(substr($l, 1, 20), 'd-M-Y H:i:s')), true),
+        $result['entries'][] = array('date' => lC_DateTime::getShort(lC_DateTime::fromUnixTimestamp(lC_DateTime::getTimestamp(substr($l, 1, 20), 'd-M-Y H:i:s')), true),
                                      'message' => substr($l, 23));
       }
     }

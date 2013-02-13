@@ -15,26 +15,13 @@ error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 ini_set("display_errors", 1);
 require_once('includes/applications/updates/classes/updates.php');  
 
-$from_version = utility::getVersion();
-$from_version_date = utility::getVersionDate();
-
 $checkArr = lC_Updates_Admin::hasUpdatesAvailable();
 $hasUpdate = (isset($checkArr['hasUpdates']) && (int)$checkArr['hasUpdates'] > 0) ? true : false;
 
-if ($hasUpdate) {
-  $updatesDataArr = lC_Updates_Admin::getAvailablePackages();
-  $to_version = 0;
-  $to_version_date = '';
-  foreach ($updatesDataArr['entries'] as $k => $v) {
-    if (version_compare($to_version, $v['version'], '<')) { 
-      $to_version = $v['version'];
-      $to_version_date = $v['date'];
-    }
-  }
-} else {
-  $to_version = $from_version;
-  $to_version_date = $from_version_date;
-}
+$from_version = utility::getVersion();
+$from_version_date = utility::getVersionDate();
+$to_version = $checkArr['toVersion'];
+$to_version_date = $checkArr['toVersionDate'];
 
 /*
 $findDataArr = lC_Updates_Admin::findAvailablePackages('7.0'); 
@@ -299,9 +286,22 @@ function installUpdate() {
                     return false;
                   }
                   __showStep(4,1);
+                  __showStep(5,0);
                   
+                  // apply the update
+                  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=installUpdate'); ?>';
+                  $.getJSON(jsonLink,                
+                    function (dData) {
+                      if (dData.rpcStatus != 1) {
+                        __showStep(5,2);
+                        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+                        return false;
+                      }
+                      __showStep(5,1);
+
                     
-                    
+                    }
+                  );                  
                 }
               );                
             }
@@ -326,12 +326,11 @@ function __showStep(step, fini) {
   var loader = '<span class="icon-right icon-blue margin-left margin-right"></span><span class="loader"></span>';
   var done = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-tick icon-green margin-left margin-right"></span>';
   var error = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-cross icon-red margin-left margin-right"></span>';
-
   var html1 = '<span class="update-text"><?php echo $lC_Language->get('text_step_1'); ?></span>';
   var html2 = '<span class="update-text"><?php echo $lC_Language->get('text_step_2'); ?></span>';
   var html3 = '<span class="update-text"><?php echo $lC_Language->get('text_step_3'); ?></span>';
   var html4 = '<span class="update-text"><?php echo $lC_Language->get('text_step_4'); ?></span>';
-  var html5 = '<span class="update-text"><?php echo $lC_Language->get('text_step_5'); ?></span>';
+  var html5 = '<span class="update-text"><?php echo sprintf($lC_Language->get('text_step_5'), $to_version); ?></span>';
   var successHtml = '<span class="update-text"><?php echo $lC_Language->get('text_step_success'); ?></span>';
   var errorHtml = '<span class="update-text"><?php echo $lC_Language->get('text_step_error'); ?></span>';
                 
@@ -411,17 +410,4 @@ function __cancelBlock() {
 function __okBlock() {
   return '<p class="buttonset large-margin-top"><a id="ok" href="javascript://" onclick="location.reload(true);" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span><?php echo $lC_Language->get('button_ok'); ?></a></p>';
 }
-
 </script>
-<?php
-echo "<pre style='margin:30px; padding-left:100px;'>";
-print_r($updatesDataArr);
-
-echo 'hasUpdates[' . $hasUpdate . ']<br>';
-echo 'from[' . $from_version . ']<br>';
-echo 'fromDate[' . $from_version_date . ']<br>';
-echo 'to[' . $to_version . ']<br>';
-echo 'toDate[' . $to_version_date . ']<br>';
-
-echo "</pre>";
-?>
