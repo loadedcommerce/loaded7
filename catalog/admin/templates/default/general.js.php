@@ -525,8 +525,8 @@ $("#li-settings").click(function() {
   var srcOpen = $('#searchContainer').is(':visible');
   var addOpen = $('#addContainer').is(':visible');
   var msgOpen = $('#messagesContainer').is(':visible');
-  var setDisplay = $('#settingsContainer').css('display');
-  var mainDisplay = $('#mainMenuContainer').css('display');  
+  var setOpen = $('#settingsContainer').is(':visible');  
+  var mainOpen = $('#mainMenuContainer').is(':visible');  
   if (srcOpen) {
     $('#li-search').removeClass("current");
     $('#searchContainer').hide();
@@ -539,6 +539,17 @@ $("#li-settings").click(function() {
     $('#li-messages').removeClass("current");
     $('#messagesContainer').hide();
   }
-  $('#recentContainer').toggle();
+  $('#li-settings').addClass("current");
+  $('#settingsContainer').show();
+  if (setOpen) {
+    $('#li-settings').removeClass("current");
+    $('#settingsContainer').hide();
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
+  }
+  if (mainOpen) {
+    $('#mainMenuContainer').hide();
+    $('#recentContainer').hide();
+  }
 });
 </script>

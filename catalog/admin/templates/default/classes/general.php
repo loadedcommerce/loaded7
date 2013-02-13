@@ -64,7 +64,7 @@ class lC_General_Admin {
       // build the orders results <li> html for output
       // return <li> only if greater than 0 results from orders query 
       if ($QorderResults > 0) {
-        if ((int)($_SESSION['admin']['access']['orders'] >= 1)) {
+        if ((int)($_SESSION['admin']['access']['orders'] > 0)) {
           $result['html'] .= '    <ul class="title-menu">
                                     <li>Orders</li>
                                   </ul>' . "\n";
@@ -115,7 +115,7 @@ class lC_General_Admin {
       // build the customers results <li> html for output
       // return <li> only if greater than 0 results from customers query  
       if ($QcustomerResults > 0) {
-        if ((int)($_SESSION['admin']['access']['customers'] >= 1)) {
+        if ((int)($_SESSION['admin']['access']['customers'] > 0)) {
           $result['html'] .= '    <ul class="title-menu">
                                     <li>Customers</li>
                                   </ul>' . "\n";
@@ -164,7 +164,7 @@ class lC_General_Admin {
       // build the products results <li> html for output
       // return <li> only if greater than 0 results from products query  
       if ($QproductResults > 0) {
-        if ((int)($_SESSION['admin']['access']['products'] >= 1)) {
+        if ((int)($_SESSION['admin']['access']['products'] > 0)) {
           $result['html'] .= '    <ul class="title-menu">
                                     <li>Products</li>
                                   </ul>' . "\n";

@@ -171,7 +171,7 @@
           <li id="li-search"><a onclick="toggleSubMenu('search');" href="#" title="<?php echo $lC_Language->get('tooltip_search'); ?>"><span class="icon-search"></span></a></li>
           <li id="li-add"><a onclick="toggleSubMenu('add');" href="#" title="<?php echo $lC_Language->get('tooltip_quick_add'); ?>"><span class="icon-plus icon-size2"></span></a></li>
           <li id="li-messages"><a onclick="toggleSubMenu('messages');" href="#" title="<?php echo $lC_Language->get('tooltip_messages'); ?>"><span class="icon-mail"></span></a></li>
-          <li id="li-settings" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="disabled"'); ?>><a href="#" onclick="toggleChildMenu('settings');" title="<?php echo $lC_Language->get('tooltip_settings'); ?>"><span id="sp-settings" class="icon-gear"></span></a></li>
+          <li id="li-settings" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="disabled"'); ?>><a href="#" title="<?php echo $lC_Language->get('tooltip_settings'); ?>"><span id="sp-settings" class="icon-gear"></span></a></li>
         </ul>  
         
         <div id="searchContainer" style="display:none;">
