@@ -2819,7 +2819,7 @@ li.message-menu {
 			display: block;
 		}
     
-/* Orders menu */
+/* Orders menu */ 
 .orders-menu {
   margin: 0;
   min-height: 0;
@@ -2830,7 +2830,7 @@ li.message-menu {
   }
   .orders-menu > li,
   li.orders-menu {
-    padding: 10px 10px 0 50px !important;
+    padding: 10px 10px 0 57px !important;
     font-size: 13px;
     line-height: 16px;
     font-weight: normal;
@@ -2840,16 +2840,17 @@ li.message-menu {
     .orders-menu > li > a,
     li.orders-menu > a {
       display: block;
-      margin: -10px -10px -10px -50px;
-      padding: 10px 14px 10px 14px;
+      margin: -10px -10px -10px -46px;
+      padding: 10px 14px 10px 24px;
       color: inherit;
     }
     .orders-menu > li time,
     li.orders-menu time {
       float: left;
       display: block;
-      width: 30px;
-      margin-left: -40px;
+      margin: 6px 1px 0 -26px;
+      height: 30px;
+      vertical-align: top;
       color: #CCCCCC;
       color: rgba(0, 0, 0, 0.2);
       text-transform: uppercase;
@@ -2880,7 +2881,7 @@ li.message-menu {
   }
   .customers-menu > li,
   li.customers-menu {
-    padding: 10px 10px 0 50px !important;
+    padding: 10px 10px 0 57px !important;
     font-size: 13px;
     line-height: 16px;
     font-weight: normal;
@@ -2890,16 +2891,17 @@ li.message-menu {
     .customers-menu > li > a,
     li.customers-menu > a {
       display: block;
-      margin: -10px -10px -10px -50px;
-      padding: 10px 14px 10px 14px;
+      margin: -10px -10px -10px -46px;
+      padding: 10px 14px 10px 24px;
       color: inherit;
     }
     .customers-menu > li time,
     li.customers-menu time {
       float: left;
       display: block;
-      width: 30px;
-      margin-left: -40px;
+      margin: 6px 10px 0 -26px;
+      height: 30px;
+      vertical-align: top;
       color: #CCCCCC;
       color: rgba(0, 0, 0, 0.2);
       text-transform: uppercase;
