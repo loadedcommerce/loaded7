@@ -469,6 +469,7 @@
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.reloadAjax.js"></script>
   <script src="../ext/jquery/jquery.details.min.js"></script>
   <script src="../ext/jquery/jquery.blink.js"></script>
+  <script src="../ext/jquery/jquery.loadmask.js"></script>
   <!-- Template functions -->
   <script src="templates/default/js/setup.js"></script>
   <script src="templates/default/js/float.js"></script>

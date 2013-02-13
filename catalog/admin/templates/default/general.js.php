@@ -103,10 +103,10 @@ $(document).ready(function() {
   }
   
   // check for updates and show notification if necessary
-  var hasUpdates = '<?php echo lC_Updates_Admin::hasUpdatesAvailable(); ?>';
-  if (hasUpdates) {
-    notify('Updates are Available!', 'New version 7.0.0.2 released.', {
-      icon: 'img/smiley.png',
+  var hasUpdates = <?php echo json_encode(lC_Updates_Admin::hasUpdatesAvailable()); ?>;
+  if (hasUpdates && module == 'index') {
+    notify('<?php echo $lC_Language->get('update_message_title'); ?>', '<?php echo $lC_Language->get('update_message_text1'); ?> ' + hasUpdates.toVersion + ' <?php echo $lC_Language->get('update_message_text2'); ?>', {
+      icon: 'templates/default/img/smiley.png',
       showCloseOnHover: false
     });    
   }

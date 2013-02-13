@@ -37,6 +37,18 @@ class lC_Updates_Admin {
     $lastChecked = date("Y-m-d H:i:s");
     $result['lastChecked'] = $lC_Language->get('text_last_checked') . ' ' . lC_DateTime::getLong($lastChecked, TRUE);
     
+    if ($result['hasUpdates']) {
+      $to_version = 0;
+      foreach ($available['entries'] as $k => $v) {
+        if (version_compare($to_version, $v['version'], '<')) { 
+          $to_version = $v['version'];
+        }
+      }
+    } else {
+      $to_version = utility::getVersion();;
+    } 
+    $result['toVersion'] = $to_version;   
+    
     // update last checked value
     $lC_Database->startTransaction();
 
