@@ -11,6 +11,8 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+require_once('includes/applications/updates/classes/updates.php');    
+
 global $lC_Template, $lC_Language; 
 ?>
 <script>
@@ -98,6 +100,15 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
   } else { // desktop
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
+  }
+  
+  // check for updates and show notification if necessary
+  var hasUpdates = '<?php echo lC_Updates_Admin::hasUpdatesAvailable(); ?>';
+  if (hasUpdates) {
+    notify('Updates are Available!', 'New version 7.0.0.2 released.', {
+      icon: 'img/smiley.png',
+      showCloseOnHover: false
+    });    
   }
   
   // begin shortcut key additions
