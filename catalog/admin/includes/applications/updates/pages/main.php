@@ -208,14 +208,14 @@ function checkForUpdates() {
       $('#version-table td.after').html('<?php echo sprintf($lC_Language->get('text_released'), $to_version_date); ?>');  
       if (data.hasUpdates == true) {
         $('#versionContainer .fieldset').addClass('orange-gradient');
-        $('.version').removeClass('green');
-        $('#version-table td').addClass('red');
-        $('#version-table th').addClass('red');
+        $('#version-table thead').removeClass('green').addClass('red');
+        $('#version-table tbody').removeClass('green').addClass('red');
         $('#updateText').html('<?php echo $lC_Language->get('text_update_avail'); ?>');
         $('#updateButtonset').html('<a id="install-update" href="javascript://" onclick="installUpdate();" class="button"><span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span><?php echo $lC_Language->get('button_install_update'); ?></a>');
       } else {
         $('#versionContainer .fieldset').removeClass('orange-gradient');
-        $('.version').addClass('green');
+        $('#version-table thead').removeClass('red').addClass('green');
+        $('#version-table tbody').removeClass('red').addClass('green');
         $('#updateText').html('<?php echo $lC_Language->get('text_up_to_date'); ?>');
         $('#updateButtonset').html('<a id="check-again" href="javascript://" onclick="checkForUpdates();" class="button"><span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span><?php echo $lC_Language->get('button_check_again'); ?></a>');
       }      
@@ -228,6 +228,7 @@ function installUpdate() {
   var fromVersion = '<?php echo $from_version; ?>';
   var toVersion = '<?php echo $to_version; ?>';
   $('#versionContainer .fieldset').removeClass('orange-gradient');
+  $('#version-table tbody').removeClass('green').removeClass('red');
   $('#version-table > tbody').empty();
   $('#version-table').css("margin-bottom", "10px");
   $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td><td class="version">' + toVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), $from_version_date); ?></td></tr>').addClass('red'); 
@@ -322,11 +323,18 @@ function reinstallUpdate() {
 }
 
 function undoUpdate() {
+  var fromVersion = '<?php echo $from_version; ?>';
+  var toVersion = '<?php echo $to_version; ?>';  
+  $('#versionContainer .fieldset').removeClass('orange-gradient');
+  $('#version-table tbody').removeClass('green').removeClass('red');
+  $('#version-table > tbody').empty();  
   $('#version-table > tbody').empty();
   $('#version-table').css("margin-bottom", "10px");
-//  $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td><td class="version">' + toVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), $from_version_date); ?></td></tr>').addClass('red'); 
+  $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td><td class="version">' + toVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), $from_version_date); ?></td></tr>').addClass('red'); 
   $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
-  
+  $('#updateButtonset').slideUp();
+  $('.update-text').html('<p><?php echo $lC_Language->get('text_initializing'); ?></p>').attr('style', 'text-align:center').blink({ maxBlinks: 5, blinkPeriod: 1000 });
+    
 
   setTimeout(function() { 
     __setup(); 
@@ -356,6 +364,8 @@ function undoUpdate() {
           }
           __showUndoStep(2,1);
           __showUndoStep(99,1);
+          $('#vFooterText').html(__okBlock());
+          $('#version-table thead').removeClass('red').addClass('green');          
             
         }
       );        
