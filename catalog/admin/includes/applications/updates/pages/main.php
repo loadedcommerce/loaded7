@@ -387,12 +387,12 @@ function __showStep(step, fini) {
   } 
   
   if (step == 99) {  // success
-    $('#updateProgressContainer div:last').html(done + successHtml);
-  } 
-  
-  if (step == -1) {  // error
-    $('#updateProgressContainer div:last').html(done + errorHtml);
-  }   
+    $('#updateProgressContainer div:last').append(done + successHtml + __okBlock());
+  } else if (step == -1) {  // error
+    $('#updateProgressContainer div:last').append(done + errorHtml);
+  } else {
+    $('#updateProgressContainer').append(__cancelBlock());
+  }  
   
   return true;
 }   
