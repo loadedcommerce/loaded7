@@ -224,7 +224,7 @@ function checkForUpdates() {
 }
 
 function installUpdate() {
-  var cData;
+  //var cData;
   var fromVersion = '<?php echo $from_version; ?>';
   var toVersion = '<?php echo $to_version; ?>';
   $('#versionContainer .fieldset').removeClass('orange-gradient');
@@ -322,7 +322,40 @@ function reinstallUpdate() {
 }
 
 function undoUpdate() {
-  alert('Derp!');
+
+  setTimeout(function() { 
+    __setup(); 
+    __showStep(1,0);
+    $('#vFooterText').html(__cancelBlock()).show();
+    
+    // restore files
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doFullFileRestore'); ?>';
+    $.getJSON(jsonLink,   
+    function (data) {
+      if (data.rpcStatus != 1) {
+        __showStep(1,2);
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
+      __showStep(1,1);
+      __showStep(2,0);
+
+      // restore DB
+      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBRestore'); ?>'
+      $.getJSON(jsonLink,        
+        function (cData) {
+          if (cData.rpcStatus != 1) {
+            __showStep(2,2);
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+            return false;
+          }
+          __showStep(2,1);
+          __showStep(99,1);
+            
+        }
+      );        
+    });     
+  }, 3000);    
 }
 
 
@@ -398,6 +431,46 @@ function __showStep(step, fini) {
   
   return true;
 }   
+
+function __showUndoStep(step, fini) {
+  var loader = '<span class="icon-right icon-blue margin-left margin-right"></span><span class="loader"></span>';
+  var done = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-tick icon-green margin-left margin-right"></span>';
+  var error = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-cross icon-red margin-left margin-right"></span>';
+  var html1 = '<span class="update-text"><?php echo $lC_Language->get('text_undo_step_1'); ?></span>';
+  var html2 = '<span class="update-text"><?php echo $lC_Language->get('text_undo_step_2'); ?></span>';
+  var successHtml = '<span class="update-text"><?php echo $lC_Language->get('text_undo_step_success'); ?></span>';
+  var errorHtml = '<span class="update-text"><?php echo $lC_Language->get('text_undo_step_error'); ?></span>';
+                
+  if (step == 1) {
+    if (fini == 1) {
+      $('#updateProgressContainer').html('<div>' + done + html1 +  '</div>');
+    } else if (fini == 2) {
+      $('#updateProgressContainer').html('<div>' + error + html1 +  '</div>');
+    } else {
+      $('#updateProgressContainer').html('<div>' + loader + html1 + '</div>');  
+    }
+  }  
+  
+  if (step == 2) {
+    if (fini == 1) {
+      $('#updateProgressContainer div:last').html(done + html2);
+    } else if (fini == 2) { 
+      $('#updateProgressContainer div:last').html(error + html2);
+    } else {
+      $('#updateProgressContainer').append('<div>' + loader + html2 + '</div>');
+    }
+  }   
+  
+  if (step == 99) {  // success
+    $('#updateProgressContainer').append('<div>' + done + successHtml + '</div>');
+  } 
+  
+  if (step == -1) {  // error
+    $('#updateProgressContainer').append('<div>' + done + errorHtml + '</div>');
+  }   
+  
+  return true;
+}  
 
 function __setup() {
   $('.update-text').empty();

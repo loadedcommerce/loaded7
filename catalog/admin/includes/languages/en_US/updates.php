@@ -29,6 +29,13 @@ text_step_success = Update Success!
 text_step_success_text = The update was successful.  View the %s
 text_step_error = Error Performing Update!
 text_step_error_text = An error has occured and the update cannot continue.  Please correct the error(s) and try again.
+text_undo_step_1 = Creating Database Backup
+text_undo_step_2 = Creating Full File Backup
+text_undo_step_success = Undo Last Update Success!
+text_undo_step_error = Undo Last Update Error!
+text_undo_step_error_text = An error has occured and the undo process cannot continue.  Please correct the error(s) and try again.
+
+
 text_update_avail = An update is available!
 text_up_to_date = You are up to date!
 text_initializing = Initializing Update Engine

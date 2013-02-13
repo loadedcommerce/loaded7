@@ -82,7 +82,20 @@ class lC_Updates_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
+  * Deploy the update package
+  *
+  * @access public
+  * @return json
+  */
+  public static function installUpdate() {
+    if ( lC_Updates_Admin::applyPackage()) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }    
+ /**
   * Perform a full file restore
   *
   * @access public
@@ -94,15 +107,15 @@ class lC_Updates_Admin_rpc {
     }
 
     echo json_encode($result);
-  }  
- /*
-  * Deploy the update package
+  } 
+ /**
+  * Perform a DB restore
   *
   * @access public
   * @return json
   */
-  public static function installUpdate() {
-    if ( lC_Updates_Admin::applyPackage()) {
+  public static function doDBRestore() {
+    if ( lC_Updates_Admin::lastDBRestore()) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
 

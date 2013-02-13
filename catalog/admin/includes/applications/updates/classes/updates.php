@@ -692,5 +692,15 @@ ini_set("display_errors", 1);
       return false;
     }
   }  
+ /**
+  * Restore from last DB backup
+  *  
+  * @access public      
+  * @return boolean
+  */
+  public static function lastDBRestore() {
+    return true;
+
+  }   
 }
 ?>
