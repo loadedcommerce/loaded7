@@ -31,6 +31,9 @@ if (function_exists('exec')) {
 </style>
 <script>
 function doBackup() {
+  mask();
+  return false;
+  
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 2) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
