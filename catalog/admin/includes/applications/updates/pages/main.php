@@ -79,7 +79,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
             </tr>  
           </tbody>            
         </table>
-        <p id="vFooterText" style="display:none; text-align:center;"></p>
+        <p id="vFooterText" style="display:none; text-align:center; margin-bottom:20px; margin-top:-10px"></p>
       </fieldset> 
       <p id="updateText" class="update-text big-text"><?php echo ($hasUpdate) ? $lC_Language->get('text_update_avail') : $lC_Language->get('text_up_to_date'); ?></p>
       <p id="updateButtonset" class="buttonset">
@@ -389,11 +389,11 @@ function __showStep(step, fini) {
   } 
   
   if (step == 99) {  // success
-    $('#updateProgressContainer div:last').append(done + successHtml);
+    $('#updateProgressContainer div:last').append('<div>' + done + successHtml + '</div>');
   } 
   
   if (step == -1) {  // error
-    $('#updateProgressContainer div:last').append(done + errorHtml);
+    $('#updateProgressContainer div:last').append('<div>' + done + errorHtml + '</div>');
   }   
   
   return true;
@@ -406,10 +406,10 @@ function __setup() {
 }
 
 function __cancelBlock() {
-  return '<p class="cancel-text intro"><?php echo $lC_Language->get('text_warning_do_not_interrupt'); ?></p>';
+  return '<span class="cancel-text intro"><?php echo $lC_Language->get('text_warning_do_not_interrupt'); ?></span>';
 }
 
 function __okBlock() {
-  return '<p class="buttonset large-margin-top"><a id="ok" href="javascript://" onclick="location.reload(true);" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span><?php echo $lC_Language->get('button_ok'); ?></a></p>';
+  return '<span class="buttonset large-margin-top"><a id="ok" href="javascript://" onclick="location.reload(true);" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span><?php echo $lC_Language->get('button_ok'); ?></a></span>';
 }
 </script>
