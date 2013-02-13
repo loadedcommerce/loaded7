@@ -325,7 +325,7 @@ function undoUpdate() {
 
   setTimeout(function() { 
     __setup(); 
-    __showStep(1,0);
+    __showUndoStep(1,0);
     $('#vFooterText').html(__cancelBlock()).show();
     
     // restore files
@@ -333,24 +333,24 @@ function undoUpdate() {
     $.getJSON(jsonLink,   
     function (data) {
       if (data.rpcStatus != 1) {
-        __showStep(1,2);
+        __showUndoStep(1,2);
         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
-      __showStep(1,1);
-      __showStep(2,0);
+      __showUndoStep(1,1);
+      __showUndoStep(2,0);
 
       // restore DB
       var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBRestore'); ?>'
       $.getJSON(jsonLink,        
         function (cData) {
           if (cData.rpcStatus != 1) {
-            __showStep(2,2);
+            __showUndoStep(2,2);
             $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
             return false;
           }
-          __showStep(2,1);
-          __showStep(99,1);
+          __showUndoStep(2,1);
+          __showUndoStep(99,1);
             
         }
       );        
