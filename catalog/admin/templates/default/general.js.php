@@ -101,7 +101,7 @@ $(document).ready(function() {
   }
   
   // begin shortcut key additions
-  $(window).bind("load", function() {
+  //$(window).bind("load", function() {
     // set the disable var to false to begin
     var disableKeyCombo = false; 
     // if any inputs on the page are clicked into then set the disable var to true
@@ -227,7 +227,7 @@ $(document).ready(function() {
         }
       }
     });
-  });
+  //});
   // end shortcut key additions
     
 });
