@@ -251,53 +251,64 @@ function installUpdate() {
   setTimeout(function() { 
     __setup(); 
     __showStep(1,0);
-    // download the update package
-    var version = '<?php echo $to_version; ?>';
-    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getUpdatePackage&version=VERSION'); ?>'
-    $.getJSON(jsonLink.replace('VERSION', version),
-      function (data) {
-        if (data.rpcStatus != 1) {
-          __showStep(1,2);
-          $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-          return false;
-        }
-        __showStep(1,1);
-        __showStep(2,0);
-        // prepare the contents
-        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getContents'); ?>'
-        $.getJSON(jsonLink,
-          function (cData) {
-            if (cData.rpcStatus != 1) {
-              __showStep(2,2);
-              $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-              return false;
-            }
-           // alert(print_r(data, true));
-            
-            __showStep(2,1);
-            __showStep(3,0);
-            // backup the database
-            var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBBackup'); ?>'
-            $.getJSON(jsonLink,
-              function (dData) {
-                if (dData.rpcStatus != 1) {
-                  __showStep(3,2);
-                  $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-                  return false;
-                }
-                __showStep(3,1);
-                
-                
-                
-              }
-            );             
-            
-          }
-        );        
-        
-      }
-    );     
     
+    // backup the database
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBBackup'); ?>';
+    $.getJSON(jsonLink,   
+    function (data) {
+      if (data.rpcStatus != 1) {
+        __showStep(1,2);
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
+      __showStep(1,1);
+      __showStep(2,0);
+
+      // full file backup
+      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doFullFileBackup'); ?>'
+      $.getJSON(jsonLink,        
+        function (cData) {
+          if (cData.rpcStatus != 1) {
+            __showStep(2,2);
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+            return false;
+          }
+          __showStep(2,1);
+          __showStep(3,0);
+
+            // download the update package
+          var version = '<?php echo $to_version; ?>';
+          var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getUpdatePackage&version=VERSION'); ?>';
+          $.getJSON(jsonLink.replace('VERSION', version),            
+            function (dData) {
+              if (dData.rpcStatus != 1) {
+                __showStep(3,2);
+                $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+                return false;
+              }
+              __showStep(3,1);
+              __showStep(4,0);
+                
+              // prepare the contents
+              var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getContents'); ?>';
+              $.getJSON(jsonLink,                
+                function (dData) {
+                  if (dData.rpcStatus != 1) {
+                    __showStep(4,2);
+                    $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+                    return false;
+                  }
+                  __showStep(4,1);
+                  
+                    
+                    
+                }
+              );                
+            }
+          );             
+        }
+      );        
+    });     
   }, 3000);  
 }
 
@@ -323,7 +334,7 @@ function __showStep(step, fini) {
   var html5 = '<span class="update-text"><?php echo $lC_Language->get('text_step_5'); ?></span>';
   var successHtml = '<span class="update-text"><?php echo $lC_Language->get('text_step_success'); ?></span>';
   var errorHtml = '<span class="update-text"><?php echo $lC_Language->get('text_step_error'); ?></span>';
-        
+                
   if (step == 1) {
     if (fini == 1) {
       $('#updateProgressContainer').html('<div>' + done + html1 +  '</div>');
@@ -354,8 +365,38 @@ function __showStep(step, fini) {
     }
   }   
   
+  if (step == 4) {
+    if (fini == 1) {
+      $('#updateProgressContainer div:last').html(done + html4);
+    } else if (fini == 2) {
+      $('#updateProgressContainer div:last').html(error + html4);
+    } else { 
+      $('#updateProgressContainer').append('<div>' + loader + html4 + '</div>');
+    }
+  }    
+  
+  if (step == 5) {
+    if (fini == 1) {
+      $('#updateProgressContainer div:last').html(done + html5);
+    } else if (fini == 2) {
+      $('#updateProgressContainer div:last').html(error + html5);
+    } else { 
+      $('#updateProgressContainer').append('<div>' + loader + html5+ '</div>');
+    }
+  } 
+  
+  if (step == 6) {
+    if (fini == 1) {
+      $('#updateProgressContainer div:last').html(done + html6);
+    } else if (fini == 2) {
+      $('#updateProgressContainer div:last').html(error + html6);
+    } else { 
+      $('#updateProgressContainer').append('<div>' + loader + html6+ '</div>');
+    }
+  } 
+  
   return true;
-}
+}   
 
 function __setup() {
   $('.update-text').empty();

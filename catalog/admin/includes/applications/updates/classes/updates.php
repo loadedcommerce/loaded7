@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: updates.php v1.0 2011-11-04 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -627,6 +627,51 @@ class lC_Updates_Admin {
     $result['total'] = count($result['entries']);
 
     return $result;
+  } 
+ /**
+  * Create a zip archive of the entire fileset
+  *  
+  * @access public      
+  * @return boolean
+  */
+  public static function fullBackup() {
+
+    $backup_file = 'full-file-backup.zip';
+    
+    // remove the old backup
+    if (file_exists(DIR_FS_WORK . 'updates/' . $backup_file)) unlink(DIR_FS_WORK . 'updates/' . $backup_file);
+
+    // create full file backup
+    try {
+      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '*');
+    } catch ( Exception $e ) {  
+      return false;
+    }
+    return true;
+  }
+ /**
+  * Restore from full file backup zip
+  *  
+  * @access public      
+  * @return boolean
+  */
+  public static function fullFileRestore() {
+
+    $restore_file = 'full-file-backup.zip';
+    
+    // remove the old backup
+    if (file_exists(DIR_FS_WORK . 'updates/' . $restore_file)) {
+
+      // restore full file backup
+      try {
+        exec(CFG_APP_UNZIP . ' ' . DIR_FS_WORK . 'updates/' . $restore_file .  ' -d ' . DIR_FS_CATALOG);
+      } catch ( Exception $e ) {  
+        return false;
+      }
+      return true;
+    } else {
+      return false;
+    }
   }  
 }
 ?>

@@ -69,5 +69,32 @@ class lC_Updates_Admin_rpc {
 
     echo json_encode($result);
   }  
+ /*
+  * Perform a full file backup
+  *
+  * @access public
+  * @return json
+  */
+  public static function doFullFileBackup() {
+    if ( lC_Updates_Admin::fullBackup()) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }
+ /*
+  * Perform a full file restore
+  *
+  * @access public
+  * @return json
+  */
+  public static function doFullFileRestore() {
+    if ( lC_Updates_Admin::fullFileRestore()) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }      
+  
 }
 ?>
