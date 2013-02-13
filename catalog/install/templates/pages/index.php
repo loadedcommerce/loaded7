@@ -158,26 +158,33 @@ TD { height:19px; }
           </ul>
           <h4 class="no-margin-top mid-margin-bottom"><?php echo $lC_Language->get('page_heading_permissions'); ?></h4>
           <table id="permissionsTable" border="0" width="100%" cellspacing="0" cellpadding="2">
-
-            
             <tr>
-              <td width="23px" align="right"><img src="templates/img/icons/<?php echo (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images')) ? 'tick.gif' : 'cross.gif'); ?>" border="0" width="16" height="16"></td>
-              <td style="padding-left:5px;"><?php echo $lC_Language->get('box_server_permissions_images'); ?></td>
-              <td align="left"><?php echo (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images')) ? 'tick.gif' : 'cross.gif') ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
-              <?php if (!is_dir(lc_realpath(dirname(__FILE__) . '/../../../images')) || !is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images'))) $ok = FALSE; ?>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/'))) ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">includes/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>           
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images'))) ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
             </tr>            
-            
             <tr>
-              <td width="23px" align="right"><img src="templates/img/icons/<?php echo (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/backups')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/backups')) ? 'tick.gif' : 'cross.gif'); ?>" border="0" width="16" height="16"></td>
-              <td style="padding-left:5px;"><?php echo $lC_Language->get('box_server_permissions_admin_backups'); ?></td>
-              <td align="left"><?php echo (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/backups')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/backups')) ? 'tick.gif' : 'cross.gif') ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
-              <?php if (!is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/backups')) || !is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/backups'))) $ok = FALSE; ?>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/backups')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/backups'))) ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">admin/backups/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
             </tr>  
             <tr>
-              <td width="23px" align="right"><img src="templates/img/icons/<?php echo (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs')) ? 'tick.gif' : 'cross.gif'); ?>" border="0" width="16" height="16"></td>
-              <td style="padding-left:5px;"><?php echo $lC_Language->get('box_server_permissions_admin_graphs'); ?></td>
-              <td align="left"><?php echo (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs')) ? 'tick.gif' : 'cross.gif') ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
-              <?php if (!is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs')) || !is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs'))) $ok = FALSE; ?>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs'))) ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">admin/includes/graphs</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
             </tr>                           
           </table>
           <p class="message icon-warning margin-top margin-right" style="color:#c09853; background:#fcf8e3; border-color:#fbeed5;">   
@@ -205,8 +212,6 @@ TD { height:19px; }
         }
         ?>
       </div>      
-
     </div>    
-     
   </fieldset>  
 </form>
