@@ -10,19 +10,18 @@
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
-*/
-// show the current template name
-//if (isset($_SESSION['lC_Customer_data'])) {
-//  echo "<pre>";
-//  print_r($_SESSION['lC_Customer_data']);
-//  echo "</pre>";
-//}
-
-if (isset($_SESSION['lC_Customer_data'])) {
-  $lC_MessageStack->add('debug', 'Customer Group: [' . $_SESSION['lC_Customer_data']['customers_group_id'] . '] ' . $_SESSION['lC_Customer_data']['customers_group_name'] , 'warning'); 
-}    
-$lC_MessageStack->add('debug', 'Template: ' . $_SESSION['template']['code'], 'warning');
-$lC_MessageStack->add('debug', 'Number of queries: ' . $lC_Database->numberOfQueries() . ' [' . $lC_Database->timeOfQueries() . 's]', 'warning');
+*/    
 $lC_Services->stopServices();
-
 ?>
+<script>
+$(document).ready(function() {
+  var showDebug = '<?php echo $lC_Template->showDebugMessages(); ?>';
+  if (showDebug) {
+    var debugOutput = <?php echo (isset($_SESSION['debugStack']) && !empty($_SESSION['debugStack'])) ? $_SESSION['debugStack'] : "''" ?>;
+    $('#debugInfoContainer > span').html(debugOutput);
+    $('#debugInfoContainer').show();
+  } else {
+    $('#debugInfoContainer').hide();
+  }
+}); 
+</script>

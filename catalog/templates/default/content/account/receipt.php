@@ -1,45 +1,40 @@
 <?php
-  /*
-  $Id: receipt.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-  */
-  require_once('includes/classes/order.php');
-  $order = new lC_Order($_GET['receipt']); 
+/**  
+*  $Id: receipt.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
+*/
+require_once('includes/classes/order.php');
+$order = new lC_Order($_GET['receipt']); 
 ?>
+<!--content/account/receipt.php start-->
 <div class="invoiceScreen">
   <div id="invoice">
     <div id="invoice-header"><?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'logo.png'); ?>
-      <!-- Store Name -->
       <div class="vcard" id="company-address">
         <div class="fn org"><strong><?php echo STORE_NAME;?></strong></div>
         <div class="adr">
           <div class="street-address"><?php echo nl2br(STORE_NAME_ADDRESS); ?></div>
         </div>
       </div>
-      <!-- Store Name EOF -->
     </div>
-    <!-- #invoice-header -->
     <div id="invoice-info">
       <h2><?php echo $lC_Language->get('receipt_order_number_title'); ?> <?php echo $order->_id; ?></h2>
       <p id="payment-terms"><?php echo $lC_Language->get('receipt_order_date_title'); ?> <?php echo lC_DateTime::getShort($order->info['date_purchased']); ?></p>
       <p id="payment-terms"><?php echo $lC_Language->get('receipt_order_status_title'); ?> <?php echo  $order->info['orders_status']; ?></p>
       <p id="payment-terms"><?php echo $lC_Language->get('receipt_payment_method_title'); ?> <?php echo $order->info['payment_method']; ?></p>
     </div>
-    <!-- #invoice-info -->
     <div class="vcard" id="client-details"> <b><?php echo $lC_Language->get('receipt_billing_address_title'); ?></b><br/>
       <?php echo lC_Address::format($order->billing, '<br />'); ?>
-      <!-- adr -->
     </div>
     <div style="clear:both;">&nbsp;</div>
-    <!-- #client-details vcard -->
     <div id="invoice-amount">
       <table border="0" cellspacing="0" cellpadding="0" width="100%">
         <?php
@@ -104,13 +99,11 @@
         ?>
       </table>
     </div>
-    <!-- invoice-amount -->
     <div style="clear:both;">&nbsp;</div>
     <div id="invoice-other">
       <!--<h2>Other Information</h2> 
       Use it for some additional information-->
     </div>
-    <!-- invoice-other -->
     <div id="payment-details">
       <h2><?php echo $lC_Language->get('receipt_delivery_address_title'); ?></h2>
       <div id="bank_name"><?php echo lC_Address::format($order->delivery, '<br />'); ?></div>
@@ -122,6 +115,6 @@
         <span class="buttonRight"><a href="javascript:window.print();" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('text_print'); ?></button></a></span>
       </div>
     </div>
-    <!-- payment-details -->
   </div>
 </div>
+<!--content/account/receipt.php end-->

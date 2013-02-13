@@ -61,6 +61,8 @@ class lC_Orders_Admin {
                        "s.orders_status_name LIKE '%" . $_GET['sSearch'] . "%' ";
     } else if (isset($_GET['cSearch']) && $_GET['cSearch'] != null) {
       $sWhere = " WHERE o.customers_id = '" . $_GET['cSearch'] . "' ";
+    } else if (isset($_GET['oSearch']) && $_GET['oSearch'] != null) {
+      $sWhere = " WHERE o.orders_id = '" . $_GET['oSearch'] . "' ";
     }
 
     /* Total Filtered Records */

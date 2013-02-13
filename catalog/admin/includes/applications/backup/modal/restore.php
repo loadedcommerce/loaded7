@@ -16,7 +16,7 @@
 #restoreConfirm { padding-bottom:20px; }
 </style>
 <script>
-function restoreEntry(id) {     
+function restoreEntry(id) {  
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -45,9 +45,11 @@ function restoreEntry(id) {
       '<?php echo $lC_Language->get('button_restore'); ?>': {
         classes:  'blue-gradient glossy',
         click:    function(win) {
+          mask();
           var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=restoreEntry&fname=FNAME'); ?>';   
           $.getJSON(jsonLink.replace('FNAME', id),
             function (data) {
+              unmask();
               if (data.rpcStatus == -10) { // no session
                 var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
                 $(location).attr('href',url);
@@ -56,8 +58,8 @@ function restoreEntry(id) {
                 $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                 return false;
               }
-              $.modal.alert('<?php echo $lC_Language->get('message_backup_success'); ?>');
-              setTimeout('__reLogin()', 1000);
+              modalMessage('<?php echo $lC_Language->get('message_backup_success'); ?>');
+              setTimeout('__redirect()', 1000);
             }
           );
           win.closeModal();
@@ -69,8 +71,9 @@ function restoreEntry(id) {
   $("#restoreConfirmMessage").html('<span class="icon-warning icon-red"></span>&nbsp;<?php echo $lC_Language->get('introduction_restore_file'); ?><p class="margin-top"><b>' + decodeURI(id) + '</b></p>');
 }
 
-function __reLogin() {
+function __redirect() {
   var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'backup'); ?>";
   $(location).attr('href',url);  
 }
+
 </script>

@@ -1,19 +1,19 @@
 <?php
-/*
-  $Id: mainpage_banner.php v1.0 2011-11-04 maestro $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: mainpage_banner.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 ?>
-<!--mainpage_banner start-->
+<!--modules/content/mainpage_banner.php start-->
 <div class="category_banner">
   <?php echo $lC_Box->getContent(); ?>
 </div>
-<!--mainpage_banner end-->
+<!--modules/content/mainpage_banner.php end-->

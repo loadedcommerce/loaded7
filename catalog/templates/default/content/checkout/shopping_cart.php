@@ -1,27 +1,24 @@
 <?php
-/*
-  $Id: shopping_cart.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: shopping_cart.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 ?>
-<!--SHOPPING CART SECTION STARTS-->
+<!--content/checkout/shopping_cart.php start-->
 <div id="shopping_cart_content" class="full_page">
   <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   <?php 
-    if ($lC_ShoppingCart->hasContents()) { 
+  if ($lC_ShoppingCart->hasContents()) { 
     ?>
-    <!--ADD TO CART SUCCESS MESSAGE STARTS
-    <div class="message success">The Product was added to your shopping cart.</div>
-    ADD TO CART SUCCESS MESSAGE ENDS-->
-    <!--SHOPPING CART TABLE STARTS-->
+    <!-- <div class="message success">The Product was added to your shopping cart.</div> -->
     <div class="cart_table">
       <form name="shopping_cart" id="shopping_cart" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'action=cart_update', 'SSL'); ?>" method="post">
         <table class="data-table cart-table" id="shopping-cart-table" cellpadding="0" cellspacing="0">
@@ -71,8 +68,6 @@
           ?>
           </tbody>
         </table>
-        <!--SHOPPING CART TABLE ENDS-->
-        <!--OUT OF STOCK STARTS-->
         <?php
           if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->hasStock() === false) ) {
             if (STOCK_ALLOW_CHECKOUT == '1') {
@@ -82,9 +77,7 @@
             }
           }
         ?>
-        <!--OUT OF STOCK ENDS-->
       </form>
-      <!--ORDER TOTAL LISTING STARTS-->
       <div class="totals">
         <table id="totals-table">
           <tbody>
@@ -101,56 +94,49 @@
           </tbody>       
         </table>
       </div>
-      <!--ORDER TOTAL LISTING ENDS-->
     </div>
-    <!--ACTION BUTTON BAR STARTS-->
     <div class="action_buttonbar">
       <button type="button" onclick="location='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="checkout"><?php echo $lC_Language->get('button_checkout'); ?></button>
       <span class="buttonRight padding-right-15"><button type="button" class="continue" onclick="$('#shopping_cart').submit();"><?php echo $lC_Language->get('button_update'); ?></button></span>
     </div>
-    <!--ACTION BUTTON BAR ENDS-->
-  </div>
-  <!--SHOPPING CART DETAILS ENDS-->
-  <!--ADDITIONAL CART DETAILS STARTS
-  <div class="checkout_tax">
-  <!--SHIPPING ESTIMATION STARTS
-  <div class="shipping_tax">
-  <h4>Estimate Shipping and Tax</h4>
-  <p>Enter your destination to get a shipping estimate.</p>
-  <label>Country</label><select><option>Canada</option></select><label>Postal code</label><input type="text">
-  <br class="clear"/>
-  <label>State</label><select><option>Vancouver</option></select>
-  <button type="button" title="" class="brown_btn">Get a Quote</button>
-  </div>
-  <!--SHIPPING ESTIMATION ENDS
-  <!--VOUCHER/COUPON STARTS
-  <div class="checkout_discount">
-  <h4>Discount codes</h4>
-  <p>Enter your coupon code if you have one.</p>
-  <input type="text">
-  <button type="button" title="" class="brown_btn">Apply Coupon</button>
-  </div>
-  <!--VOUCHER COUPON ENDS
-  </div>
-  ADDITIONAL CART DETAILS ENDS-->
-  <?php
+    <!--
+    <div class="checkout_tax">
+      <div class="shipping_tax">
+        <h4>Estimate Shipping and Tax</h4>
+        <p>Enter your destination to get a shipping estimate.</p>
+        <label>Country</label>
+        <select><option>Canada</option></select>
+        <label>Postal Code</label>
+        <input type="text">
+        <br class="clear"/>
+        <label>State</label>
+        <select><option>Vancouver</option></select>
+        <button type="button" title="" class="brown_btn">Get a Quote</button>
+      </div>
+      <div class="checkout_discount">
+        <h4>Discount codes</h4>
+        <p>Enter your coupon code if you have one.</p>
+        <input type="text">
+        <button type="button" title="" class="brown_btn">Apply Coupon</button>
+      </div>
+    </div>
+     -->
+    <?php
   } else {  
-  ?>
-  <!--SHOPPING CART TABLE STARTS-->
-  <div class="cart_table">
-    <p align="center">
-      <?php echo $lC_Language->get('shopping_cart_empty'); ?>
-      <br />&nbsp;<br />&nbsp;<br />&nbsp;<br />
-    </p>
-  </div>
-  <!--SHOPPING CART TABLE ENDS-->
-  <!--ACTION BUTTON BAR STARTS-->
-  <div class="action_buttonbar" align="right">
-    <form name="shopping_cart" id="shopping_cart" action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>" method="post">
-      <button type="submit" class="continue"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button>
-    </form>
-  </div>
-  <!--ACTION BUTTON BAR ENDS-->
-  <?php 
+    ?>
+    <div class="cart_table">
+      <p align="center">
+        <?php echo $lC_Language->get('shopping_cart_empty'); ?>
+        <br />&nbsp;<br />&nbsp;<br />&nbsp;<br />
+      </p>
+    </div>
+    <div class="action_buttonbar" align="right">
+      <form name="shopping_cart" id="shopping_cart" action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>" method="post">
+        <button type="submit" class="continue"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button>
+      </form>
+    </div>
+    <?php 
   } 
-?>
+  ?>
+</div>
+<!--content/checkout/shopping_cart.php end-->

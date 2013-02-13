@@ -1,18 +1,19 @@
 <?php
-/*
-  $Id: account_history_info.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: account_history_info.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 $order = new lC_Order($_GET['orders']);
 ?>
+<!--content/account/account_history_info.php start-->
 <div class="moduleBox">
   <div class="top">
     <div class="icon"><?php echo lc_icon('icon_orders.png', $lC_Template->getPageTitle()); ?></div>
@@ -139,3 +140,4 @@ $order = new lC_Order($_GET['orders']);
   </div>
   <div class="bottom"><?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'content_bottom.png'); ?></div>
 </div>
+<!--content/account/account_history_info.php end-->

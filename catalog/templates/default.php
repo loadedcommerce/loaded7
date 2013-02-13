@@ -1,16 +1,17 @@
 <?php
-/*
-  $Id: default.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: default.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
+require('templates/default/classes/default.php');
 if (!defined('DIR_WS_TEMPLATE')) define('DIR_WS_TEMPLATE', DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/');
 if (!defined('DIR_FS_TEMPLATE')) define('DIR_FS_TEMPLATE', DIR_FS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/');
 if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/');  
@@ -243,7 +244,10 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         if ($lC_Services->isStarted('banner') && $lC_Banner->exists('468x60')) {
           echo '<p align="center">' . $lC_Banner->display() . '</p>';
         }     
-      }          
+      }  
+      if ( $lC_Template->showDebugMessages() && ($lC_MessageStack->size('debug') > 0) ) {
+        echo '<div id="debugInfoContainer" style="display:none;" class="short-code msg info"><span></span></div>';
+      }         
       ?>       
     </div>  
     <!-- JavaScript at the bottom for fast page loading -->
@@ -251,16 +255,15 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="ext/jquery/jquery.easing.1.3.js"></script>
     <script src="ext/jquery/jquery.hoverIntent.min.js"></script>
     <script src="ext/jquery/jquery.liveSearch.js"></script>
-    <script src="ext/jquery/breadcrumb/js/jquery.jBreadCrumb.1.1.js"></script>
+    <script src="ext/jquery/jquery.jBreadCrumb.1.1.js"></script>
     <script src="ext/jquery/thickbox/thickbox-compressed.js"></script>
-        
+    <script src="ext/datepicker/datepicker.js"></script>
     <!-- Template functions -->
     <script src="templates/default/javascript/jquery.flexslider.js" ></script>
     <script src="templates/default/javascript/jquery.jcarousel.js"></script>
     <script src="templates/default/javascript/jquery.jtweetsanywhere-1.3.1.min.js" ></script>
     <script src="templates/default/javascript/jquery.magnify-1.0.2.js"></script>
     <script src="templates/default/javascript/form_elements.js" ></script>
-    <script src="templates/default/javascript/custom.js"></script>
     <script src="templates/default/javascript/general.js"></script>
     
     <!-- js loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js'; ?> -->
@@ -282,7 +285,6 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       $(document).ready(function(e) {
         var searchUrl = '<?php echo lc_href_link('rpc.php', 'action=search', 'AUTO'); ?>'  
         $('#liveSearchContainer input[name="q"]').liveSearch({url: searchUrl + '&q='});
-        $("#breadCrumb").jBreadCrumb();     
       }); 
     </script>
   </body>

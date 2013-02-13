@@ -58,12 +58,6 @@
         $_SESSION['comments'] = lc_sanitize_string($_POST['comments']);
       }
 
-      if (DISPLAY_CONDITIONS_ON_CHECKOUT == '1') {
-        if (!isset($_POST['conditions']) || ($_POST['conditions'] != '1')) {
-          $lC_MessageStack->add('checkout_payment', $lC_Language->get('error_conditions_not_accepted'), 'error');
-        }
-      }
-
       // load the selected payment module
       include('includes/classes/payment.php');
       $lC_Payment = new lC_Payment((isset($_POST['payment_method']) ? $_POST['payment_method'] : $lC_ShoppingCart->getBillingMethod('id')));

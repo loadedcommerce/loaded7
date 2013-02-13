@@ -2388,6 +2388,7 @@
 	// If there's a hash, stop here
 	if (!location.hash)
 	{
+    
 		// Scroll to 1
 		window.scrollTo(0, 1);
 		var scrollTop = 1,
@@ -2417,7 +2418,7 @@
 					// Reset to hide addr bar at onload
 					window.scrollTo(0, scrollTop === 1 ? 0 : 1);
 				}
-			}, 0);
+			}, 500);
 		});
 	}
 

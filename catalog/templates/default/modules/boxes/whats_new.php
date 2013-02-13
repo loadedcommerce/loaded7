@@ -1,18 +1,18 @@
 <?php
-/*
-  $Id: whats_new.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**  
+*  $Id: whats_new.php v1.0 2013-01-01 datazen $
+*
+*  LoadedCommerce, Innovative eCommerce Solutions
+*  http://www.loadedcommerce.com
+*
+*  Copyright (c) 2013 Loaded Commerce, LLC
+*
+*  @author     Loaded Commerce Team
+*  @copyright  (c) 2013 Loaded Commerce Team
+*  @license    http://loadedcommerce.com/license.html
 */
 ?>
-<!--What's New Starts-->
+<!--modules/boxes/whats_new.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
 <?php echo $lC_Box->getContent(); ?>
-<!--What's New Ends-->
+<!--modules/boxes/whats_new.php end-->

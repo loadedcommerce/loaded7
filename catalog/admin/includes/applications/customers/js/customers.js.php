@@ -12,12 +12,15 @@
   @license    http://loadedcommerce.com/license.html
 */
 global $lC_Template;
+$cSearch = (isset($_GET['cID']) && $_GET['cID'] != null ? '&cSearch=' . $_GET['cID'] : null);
 ?>
 <script>
   $(document).ready(function() {
     var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';            
-    var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA'); ?>';
-    oTable = $('#dataTable').dataTable({
+    var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA' . $cSearch); ?>';
+    var quickAdd = '<?php echo (isset($_GET['action']) && $_GET['action'] == 'quick_add') ? true : false; ?>';
+    
+  oTable = $('#dataTable').dataTable({
       "bProcessing": true,
       "bServerSide": true,
       "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
@@ -53,6 +56,10 @@ global $lC_Template;
     if (error) {
       var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
       $.modal.alert(errmsg);
+    } 
+  
+    if (quickAdd) {
+      newCustomer();
     }
   });
   
@@ -72,5 +79,6 @@ global $lC_Template;
       $('.hide-on-tablet-landscape').hide();      
       $('.hide-on-tablet').hide();      
     }    
-  }     
+  }
+      
 </script>

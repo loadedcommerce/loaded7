@@ -17,7 +17,7 @@ global $lC_Language;
 ?>
 <script>
 function deleteItem(id) {
-  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=deleteItem&item=ITEM'); ?>';   
+  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=deleteItem&item=ITEM', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('ITEM', id).replace('&amp;', '&'),
     function (data) {
       if (data.rpcStatus != 1) {
