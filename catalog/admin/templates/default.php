@@ -376,7 +376,7 @@
               <?php echo $output->drawBigMenu('configuration', 'blue-gradient'); ?>
               <!-- li><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'store'); ?>"><?php echo $lC_Language->get('menu_title_addons'); ?></a></li>
               <li><a href="http://www.loadedcommerce.com/additional-serials-p-360.html?CDpath=216_295" target="_blank"><?php echo $lC_Language->get('menu_title_license_management'); ?></a></li>
-              <li><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'updater'); ?>"><?php echo $lC_Language->get('menu_title_core_update'); ?></a></li -->
+              <li><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'updates'); ?>"><?php echo $lC_Language->get('menu_title_core_update'); ?></a></li -->
               <li><a href="http://support.loadedcommerce.com" target="_blank"><?php echo $lC_Language->get('menu_title_report_issues'); ?></a></li>
               <li><a href="http://www.loadedcommerce.com/support-memberships-pc-175_198.html" target="_blank"><?php echo $lC_Language->get('menu_title_get_help'); ?></a></li>
             </ul>
@@ -468,6 +468,7 @@
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.min.js"></script>
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.reloadAjax.js"></script>
   <script src="../ext/jquery/jquery.details.min.js"></script>
+  <script src="../ext/jquery/jquery.blink.js"></script>
   <!-- Template functions -->
   <script src="templates/default/js/setup.js"></script>
   <script src="templates/default/js/float.js"></script>
