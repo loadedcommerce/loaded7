@@ -239,7 +239,7 @@ function installUpdate() {
   setTimeout(function() { 
     __setup(); 
     __showStep(1,0);
-    $('#vFooterText').html(__cancelBlock()).slideDown();
+    $('#vFooterText').html(__cancelBlock()).show();
     
     // backup the database
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBBackup'); ?>';
@@ -389,11 +389,11 @@ function __showStep(step, fini) {
   } 
   
   if (step == 99) {  // success
-    $('#updateProgressContainer div:last').append('<div>' + done + successHtml + '</div>');
+    $('#updateProgressContainer').append('<div>' + done + successHtml + '</div>');
   } 
   
   if (step == -1) {  // error
-    $('#updateProgressContainer div:last').append('<div>' + done + errorHtml + '</div>');
+    $('#updateProgressContainer').append('<div>' + done + errorHtml + '</div>');
   }   
   
   return true;
