@@ -302,9 +302,7 @@ function installUpdate() {
                       __showStep(5,1);
                       __showStep(99,1);
                       $('#vFooterText').html(__okBlock());
-                      $('.version').removeClass('red').addClass('green');
-                      $('#version-table td').removeClass('red').addClass('green');
-                      $('#version-table th').removeClass('red').addClass('green');
+                      $('#version-table thead').removeClass('red').addClass('green');
 
                     }
                   );                  
