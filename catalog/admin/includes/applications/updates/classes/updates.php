@@ -662,7 +662,7 @@ ini_set("display_errors", 1);
 
     // create full file backup
     try {
-      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '*');
+      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_WS_HTTP_CATALOG . '*');
     } catch ( Exception $e ) {  
       return false;
     }
@@ -678,9 +678,11 @@ ini_set("display_errors", 1);
 
     $restore_file = 'full-file-backup.zip';
     
+echo CFG_APP_UNZIP . ' ' . DIR_FS_WORK . 'updates/' . $restore_file .  ' -d ' . DIR_FS_CATALOG;
+die();
     // remove the old backup
     if (file_exists(DIR_FS_WORK . 'updates/' . $restore_file)) {
-
+             
       // restore full file backup
       try {
         exec(CFG_APP_UNZIP . ' ' . DIR_FS_WORK . 'updates/' . $restore_file .  ' -d ' . DIR_FS_CATALOG);
