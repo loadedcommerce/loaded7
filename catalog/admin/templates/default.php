@@ -194,7 +194,7 @@
                   </a>
                 </div>
                 <div class="profile-right-fourth">
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login&action=logoff'); ?>">
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login&action=logoff'); ?>" class="confirm">
                     <div style="height:8px;"></div>
                     <span class="icon icon-cross-round icon-size3"></span>
                     <div style="height:12px;"></div>
