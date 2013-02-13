@@ -322,6 +322,11 @@ function reinstallUpdate() {
 }
 
 function undoUpdate() {
+  $('#version-table > tbody').empty();
+  $('#version-table').css("margin-bottom", "10px");
+//  $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td><td class="version">' + toVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), $from_version_date); ?></td></tr>').addClass('red'); 
+  $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
+  
 
   setTimeout(function() { 
     __setup(); 
