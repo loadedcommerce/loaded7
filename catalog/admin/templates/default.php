@@ -179,35 +179,35 @@
             </div>
             <div class="profile50">
               <div id="profileRight">
-                <div class="profile-right-fourth">
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'administrators&aID=' . $_SESSION['admin']['id']); ?>">
+                <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'administrators&aID=' . $_SESSION['admin']['id']); ?>">
+                  <div class="profile-right-fourth">
                     <img src="templates/default/img/user.png" width="32" height="32"><br />
                     <small><?php echo $lC_Language->get('profile_slate_edit_profile'); ?></small>
-                  </a>
-                </div>
-                <div class="profile-right-fourth">
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'administrators&aID=' . $_SESSION['admin']['id']); ?>">
+                  </div>
+                </a>
+                <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'administrators&aID=' . $_SESSION['admin']['id']); ?>">
+                  <div class="profile-right-fourth">
                     <div style="height:8px;"></div>
                     <span class="icon icon-lock icon-size3"></span>
                     <div style="height:12px;"></div>
                     <small><?php echo $lC_Language->get('profile_slate_change_password'); ?></small>
-                  </a>
-                </div>
-                <div class="profile-right-fourth">
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login&action=logoff'); ?>" class="confirm">
+                  </div>
+                </a>
+                <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login&action=logoff'); ?>" class="confirm">
+                  <div class="profile-right-fourth">
                     <div style="height:8px;"></div>
                     <span class="icon icon-cross-round icon-size3"></span>
                     <div style="height:12px;"></div>
                     <small><?php echo $lC_Language->get('profile_slate_logout'); ?></small>
-                  </a>
-                </div>
-                <div class="profile-right-fourth prf-bottom">
-                  <a href="#" id="profileBack">
+                  </div>
+                </a>
+                <a href="#" id="profileBack">
+                  <div class="profile-right-fourth prf-bottom">
                     <span class="icon icon-reply icon-size3"></span>
                     <div style="height:5px;"></div>
                     <small><?php echo $lC_Language->get('button_back'); ?></small>
-                  </a>
-                </div>                
+                  </div>
+                </a>                
               </div>
             </div>
           </div>
