@@ -79,6 +79,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
             </tr>  
           </tbody>            
         </table>
+        <p id="vFooterText" style="display:none; text-align:center;"></p>
       </fieldset> 
       <p id="updateText" class="update-text big-text"><?php echo ($hasUpdate) ? $lC_Language->get('text_update_avail') : $lC_Language->get('text_up_to_date'); ?></p>
       <p id="updateButtonset" class="buttonset">
@@ -232,13 +233,13 @@ function installUpdate() {
   $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td><td class="version">' + toVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), $from_version_date); ?></td></tr>').addClass('red'); 
   $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
   // start the update process
-  $('#updateButtonset').slideUp().empty();
+  $('#updateButtonset').slideUp();
   $('.update-text').html('<p><?php echo $lC_Language->get('text_initializing'); ?></p>').attr('style', 'text-align:center').blink({ maxBlinks: 5, blinkPeriod: 1000 });
   
   setTimeout(function() { 
     __setup(); 
     __showStep(1,0);
-    $('#updateButtonset').html(__cancelBlock()).slideDown();
+    $('#vFooterText').html(__cancelBlock()).slideDown();
     
     // backup the database
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBBackup'); ?>';
@@ -299,7 +300,6 @@ function installUpdate() {
                         return false;
                       }
                       __showStep(5,1);
-                      $('#updateButtonset').html(__okBlock());
                       __showStep(99,1);
                       
 
