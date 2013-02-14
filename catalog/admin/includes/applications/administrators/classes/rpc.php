@@ -134,5 +134,20 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
+ /*
+  * Validate the password
+  *
+  * @param string $_GET['encrypted']  Password hash from DB
+  * @param string $_GET['plain']  Plain Password 
+  * @access public
+  * @return json
+  */
+  public static function validatePassword() {
+    $result = array();
+
+    $result = lC_Administrators_Admin::validatePassword($_GET['plain'], $_GET['encrypted']);
+
+    echo json_encode($result);
+  }  
 }
 ?>

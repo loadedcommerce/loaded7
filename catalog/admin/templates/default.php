@@ -162,7 +162,7 @@
         
         <header>
           <div class="headerInner">
-            <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>" title="View The Store" class="with-tooltip tooltip-bottom grey" target="_blank"><?php echo substr(HTTP_SERVER, 7, 29); ?></a>
+            <a href="<?php echo HTTP_SERVER . DIR_WS_CATALOG; ?>" title="View The Store" class="with-tooltip tooltip-bottom grey" target="_blank"><?php echo substr(HTTP_SERVER, 7, 29); ?></a>
           </div>  
         </header>
         
@@ -179,13 +179,13 @@
             </div>
             <div class="profile50">
               <div id="profileRight">
-                <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'administrators&aID=' . $_SESSION['admin']['id']); ?>">
+                <a href="javascript://" onclick="profileEdit('<?php echo $_SESSION['admin']['id']; ?>')">
                   <div class="profile-right-fourth">
                     <img src="templates/default/img/user.png" width="32" height="32"><br />
                     <small><?php echo $lC_Language->get('profile_slate_edit_profile'); ?></small>
                   </div>
                 </a>
-                <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'administrators&aID=' . $_SESSION['admin']['id']); ?>">
+                <a href="javascript://" onclick="profilePassChange('<?php echo $_SESSION['admin']['id']; ?>')">
                   <div class="profile-right-fourth">
                     <div style="height:8px;"></div>
                     <span class="icon icon-lock icon-size3"></span>
