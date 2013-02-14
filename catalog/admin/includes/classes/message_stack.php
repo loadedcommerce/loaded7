@@ -29,46 +29,34 @@ class lC_MessageStack_Admin extends lC_MessageStack {
   * @param string $group The name of the group to get the messages from
   * @access public
   */
-  public function get($group, $imgLoc = '', $ext = '') {
+  public function output($group, $imgLoc = '', $ext = '') {
     $result = false;
 
     if ( $this->exists($group) ) {
-      $result = '<div class="messageStack"><ul>';
+      $result = '<p class="big-message white-gradient">';
 
       foreach ( $this->_data[$group] as $message ) {
         switch ( $message['type'] ) {
           case 'error':
-            if ($imgLoc != null) {
-              $bullet_image = $imgLoc . 'error' . $ext;
-            } else {
-              $bullet_image = DIR_WS_IMAGES . 'icons/error.gif';
-            }
+            $bullet = '<span class="icon-size3 icon-cross icon-red small-margin-right"></span>';
             break;
 
           case 'warning':
-            if ($imgLoc != null) {
-              $bullet_image = $imgLoc . 'warning' . $ext;
-            } else {
-              $bullet_image = DIR_WS_IMAGES . 'icons/warning.gif';
-            }
+            $bullet = '<span class="icon-size3 icon-warning icon-orange small-margin-right"></span>';
             break;
 
           case 'success':
-            if ($imgLoc != null) {
-              $bullet_image = $imgLoc . 'success' . $ext;
-            } else {
-              $bullet_image = DIR_WS_IMAGES . 'icons/success.gif';
-            }
+            $bullet = '<span class="icon-size3 icon-tick icon-green small-margin-right"></span>';
             break;
 
           default:
-            $bullet_image = DIR_WS_IMAGES . 'icons/bullet_default.gif';
+            $bullet = '<span class="icon-size3 icon-thumbs small-margin-right"></span>';
         }
 
-        $result .= '<li style="list-style-image: url(\'' . $bullet_image . '\')">' . lc_output_string($message['text']) . '</li>';
+        $result .= $bullet . ' ' . lc_output_string($message['text']) . '<br />';
       }
 
-      $result .= '</ul></div>';
+      $result .= '</p>';
 
       unset($this->_data[$group]);
     }

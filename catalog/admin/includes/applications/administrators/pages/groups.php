@@ -11,15 +11,16 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+ini_set('display_errors', 1);
 ?>
 <!-- Main content -->
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
-  <hgroup id="main-title" class="thin">
+  <hgroup id="main-title" class="thin">                 
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
     <?php
     if ( $lC_MessageStack->exists($lC_Template->getModule()) ) {
-      echo $lC_MessageStack->get($lC_Template->getModule());
+      echo '<div class="messageStack">' . $lC_MessageStack->output($lC_Template->getModule()) . '</div>';
     }
     ?>    
   </hgroup>

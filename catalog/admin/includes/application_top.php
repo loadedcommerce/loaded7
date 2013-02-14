@@ -131,7 +131,7 @@ require('includes/functions/localization.php');
 
 // initialize the message stack for output messages
 require('includes/classes/message_stack.php');
-$lC_MessageStack = new lC_MessageStack();
+$lC_MessageStack = new lC_MessageStack_Admin();
 
 // entry/item info classes
 require('includes/classes/object_info.php');
