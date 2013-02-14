@@ -20,7 +20,7 @@ require('../includes/config.php');
 
 // set the level of error reporting to E_ALL
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
-//ini_set("display_errors", 1);
+ini_set("display_errors", 1);
 ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
 
@@ -131,7 +131,7 @@ require('includes/functions/localization.php');
 
 // initialize the message stack for output messages
 require('includes/classes/message_stack.php');
-$lC_MessageStack = new lC_MessageStack_Admin();
+$lC_MessageStack = new lC_MessageStack();
 
 // entry/item info classes
 require('includes/classes/object_info.php');

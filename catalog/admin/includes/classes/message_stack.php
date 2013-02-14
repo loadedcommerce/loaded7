@@ -30,48 +30,6 @@ class lC_MessageStack_Admin extends lC_MessageStack {
   public function get($group, $imgLoc = '', $ext = '') {
     $result = false;
 
-    if ( $this->exists($group) ) {
-      $result = '<div class="messageStack"><ul>';
-
-      foreach ( $this->_data[$group] as $message ) {
-        switch ( $message['type'] ) {
-          case 'error':
-            if ($imgLoc != null) {
-              $bullet_image = $imgLoc . 'error' . $ext;
-            } else {
-              $bullet_image = DIR_WS_IMAGES . 'icons/error.gif';
-            }
-            break;
-
-          case 'warning':
-            if ($imgLoc != null) {
-              $bullet_image = $imgLoc . 'warning' . $ext;
-            } else {
-              $bullet_image = DIR_WS_IMAGES . 'icons/warning.gif';
-            }
-            break;
-
-          case 'success':
-            if ($imgLoc != null) {
-              $bullet_image = $imgLoc . 'success' . $ext;
-            } else {
-              $bullet_image = DIR_WS_IMAGES . 'icons/success.gif';
-            }
-            break;
-
-          default:
-            $bullet_image = DIR_WS_IMAGES . 'icons/bullet_default.gif';
-        }
-
-        $result .= '<li style="list-style-image: url(\'' . $bullet_image . '\')">' . lc_output_string($message['text']) . '</li>';
-      }
-
-      $result .= '</ul></div>';
-
-      unset($this->_data[$group]);
-    }
-
-    return $result;
   }
 }
 ?>
