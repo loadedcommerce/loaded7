@@ -12,6 +12,8 @@
 *  @license    http://loadedcommerce.com/license.html
 */
 
+require('includes/classes/message_stack.php');
+
 /**
 * The lC_MessageStack class manages information messages to be displayed.
 * Messages that are shown are automatically removed from the stack.
