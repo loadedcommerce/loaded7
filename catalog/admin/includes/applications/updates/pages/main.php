@@ -84,14 +84,14 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
         <?php 
         if ($hasUpdate) {
           ?>
-          <a id="install-update" href="javascript://" onclick="installUpdate();" class="button">
+          <a id="install-update" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installUpdate();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
             <span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span>
             <?php echo $lC_Language->get('button_install_update'); ?>
           </a>
           <?php 
         } else {
           ?>
-          <a id="check-again" href="javascript://" onclick="checkForUpdates();" class="button">
+          <a id="check-again" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? NULL : 'onclick="checkForUpdates();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? ' disabled' : NULL); ?>">
             <span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span>
             <?php echo $lC_Language->get('button_check_again'); ?>
           </a>
@@ -113,19 +113,19 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
           <tr><td>&nbsp;</td></tr>
           <tr>
             <td align="left">
-              <a id="reinstall" href="javascript://" onclick="reinstallUpdate();" class="button re-install">
+              <a id="reinstall" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="reinstallUpdate();"'); ?> class="button re-install<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
                 <span class="button-icon orange-gradient glossy"><span class="icon-redo"></span></span>
                 <?php echo $lC_Language->get('button_reinstall_update'); ?>
               </a>               
             </td>
             <td align="center">
-              <a id="download" href="https://github.com/loadedcommerce/loaded7/archive/<?php echo $to_version; ?>.zip" class="button download-zip">
+              <a id="download" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? 'href="#"' : 'href="https://github.com/loadedcommerce/loaded7/archive/' . $to_version . '.zip"'); ?>href="https://github.com/loadedcommerce/loaded7/archive/<?php echo $to_version; ?>.zip" class="button download-zip<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>">
                 <span class="button-icon blue-gradient glossy"><span class="icon-download"></span></span>
                 <?php echo $lC_Language->get('button_download_zip'); ?>
               </a>
             </td>
             <td align="right">
-              <a id="undo" href="javascript://" onclick="undoUpdate();" class="button undo-last">
+              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="undoUpdate();"'); ?> class="button undo-last<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
                 <span class="button-icon red-gradient glossy"><span class="icon-undo"></span></span>
                 <?php echo $lC_Language->get('button_undo_last_update'); ?>
               </a>
@@ -186,7 +186,7 @@ $(document).ready(function() {
 
 function checkForUpdates() {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
-  if (parseInt(accessLevel) < 2) {
+  if (parseInt(accessLevel) < 1) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }  
@@ -214,13 +214,13 @@ function checkForUpdates() {
         $('#version-table thead').removeClass('green').addClass('red');
         $('#version-table tbody').removeClass('green').addClass('red');
         $('#updateText').html('<?php echo $lC_Language->get('text_update_avail'); ?>');
-        $('#updateButtonset').html('<a id="install-update" href="javascript://" onclick="installUpdate();" class="button"><span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span><?php echo $lC_Language->get('button_install_update'); ?></a>');
+        $('#updateButtonset').html('<a id="install-update" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installUpdate();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>"><span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span><?php echo $lC_Language->get('button_install_update'); ?></a>');
       } else {
         $('#versionContainer .fieldset').removeClass('orange-gradient');
         $('#version-table thead').removeClass('red').addClass('green');
         $('#version-table tbody').removeClass('red').addClass('green');
         $('#updateText').html('<?php echo $lC_Language->get('text_up_to_date'); ?>');
-        $('#updateButtonset').html('<a id="check-again" href="javascript://" onclick="checkForUpdates();" class="button"><span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span><?php echo $lC_Language->get('button_check_again'); ?></a>');
+        $('#updateButtonset').html('<a id="check-again" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? NULL : 'onclick="checkForUpdates();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? ' disabled' : NULL); ?>"><span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span><?php echo $lC_Language->get('button_check_again'); ?></a>');
       }      
     }
   );  
