@@ -17,6 +17,11 @@
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
   <hgroup id="main-title" class="thin">
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <?php
+    if ( $lC_MessageStack->exists($lC_Template->getModule()) ) {
+      echo $lC_MessageStack->get($lC_Template->getModule());
+    }
+    ?>    
   </hgroup>
   <style>
   .dataColGroup { text-align: left; }

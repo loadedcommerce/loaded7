@@ -187,6 +187,11 @@ $(document).ready(function() {
 });
 
 function checkForUpdates() {
+  var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+  if (parseInt(accessLevel) < 2) {
+    $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+    return false;
+  }  
   $('#lastCheckedContainer').empty();
   $('.loader').show();
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=hasUpdates'); ?>'
@@ -224,7 +229,11 @@ function checkForUpdates() {
 }
 
 function installUpdate() {
-  //var cData;
+  var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+  if (parseInt(accessLevel) < 4) {
+    $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+    return false;
+  }
   var fromVersion = '<?php echo $from_version; ?>';
   var toVersion = '<?php echo $to_version; ?>';
   $('#versionContainer .fieldset').removeClass('orange-gradient');
@@ -246,6 +255,11 @@ function installUpdate() {
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBBackup'); ?>';
     $.getJSON(jsonLink,   
     function (data) {
+      if (data.rpcStatus == -10) { // no session
+        __showStep(1,2);
+        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";     
+        $(location).attr('href',url);
+      }       
       if (data.rpcStatus != 1) {
         __showStep(1,2);
         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
@@ -323,6 +337,11 @@ function reinstallUpdate() {
 }
 
 function undoUpdate() {
+  var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+  if (parseInt(accessLevel) < 4) {
+    $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+    return false;
+  }  
   var fromVersion = '<?php echo $from_version; ?>';
   var toVersion = '<?php echo $to_version; ?>';  
   $('#versionContainer .fieldset').removeClass('orange-gradient');
@@ -334,7 +353,6 @@ function undoUpdate() {
   $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
   $('#updateButtonset').slideUp();
   $('.update-text').html('<p><?php echo $lC_Language->get('text_initializing'); ?></p>').attr('style', 'text-align:center').blink({ maxBlinks: 5, blinkPeriod: 1000 });
-    
 
   setTimeout(function() { 
     __setup(); 
@@ -345,6 +363,11 @@ function undoUpdate() {
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doFullFileRestore'); ?>';
     $.getJSON(jsonLink,   
     function (data) {
+      if (data.rpcStatus == -10) { // no session
+        __showUndoStep(1,2);
+        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";     
+        $(location).attr('href',url);
+      }      
       if (data.rpcStatus != 1) {
         __showUndoStep(1,2);
         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');

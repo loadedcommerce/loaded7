@@ -136,7 +136,7 @@ class lC_Administrators_Admin {
         $Qadmin = $lC_Database->query('insert into :table_administrators (first_name, last_name, user_name, user_password, access_group_id) values (:first_name, :last_name, :user_name, :user_password, :access_group_id)');
         $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($data['user_password'])));
       }
-
+      
       $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
       $Qadmin->bindValue(':first_name', $data['first_name']);
       $Qadmin->bindValue(':last_name', $data['last_name']);
