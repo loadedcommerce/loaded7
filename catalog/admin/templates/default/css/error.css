@@ -93,4 +93,4 @@
 		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
 	}
   
-  #messageStack { margin-bottom:-10px; padding-top:24px }
+  .messageStack { margin-bottom:-10px; padding-top:24px }
