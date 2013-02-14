@@ -266,7 +266,6 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="templates/default/javascript/jquery.jtweetsanywhere-1.3.1.min.js" ></script>
     <script src="templates/default/javascript/jquery.magnify-1.0.2.js"></script>
     <script src="templates/default/javascript/form_elements.js" ></script>
-    <script src="templates/default/javascript/general.js"></script>
     
     <!-- js loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js'; ?> -->
     <!-- js.php loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '/' . $lC_Template->getModule() . '.js.php'; ?> -->

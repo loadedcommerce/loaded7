@@ -1,5 +1,6 @@
+<?php
 /**
-*  $Id: general.js v1.0 2011-11-04  datazen $
+*  $Id: index.js v1.0 2011-11-04  datazen $
 *
 *  LoadedCommerce, Innovative eCommerce Solutions
 *  http://www.loadedcommerce.com
@@ -10,9 +11,12 @@
 *  @copyright  (c) 2013 LoadedCommerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+global $lC_Language; 
+?>
+<script>
 $(document).ready(function() {
 
-  setMaintenanceMode('true');
+  setMaintenanceMode('on');
   
   // jBreadcrumb
   $("#breadCrumbContainer").jBreadCrumb();     
@@ -142,8 +146,8 @@ function __jquery_placeholder_goTitling() {
 
 function setMaintenanceMode(s) {
   if (s == 'on') {
-    $("body").mask('<span class="loader huge refreshing"></span>');
-    $("body").removeClass("mask");
+    $("body").mask('<span class="loader huge refreshing"><?php echo $lC_Language->get('update_message_text1'); ?></span>');
+  //  $("body").removeClass("mask");
     // tweak template depending on view
     if ($.template.mediaQuery.name === 'mobile-portrait') { 
       $('.loadmask-msg').css({'top':'180px'});
@@ -178,3 +182,4 @@ function rowOverEffect(object) {
 function rowOutEffect(object) {
   if (object.className == 'moduleRowOver') object.className = 'moduleRow';
 }
+</script>
