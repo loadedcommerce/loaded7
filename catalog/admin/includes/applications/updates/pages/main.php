@@ -11,8 +11,6 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
-ini_set("display_errors", 1);
 require_once('includes/applications/updates/classes/updates.php');  
 
 $checkArr = lC_Updates_Admin::hasUpdatesAvailable();

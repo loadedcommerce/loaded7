@@ -377,8 +377,6 @@ class lC_Updates_Admin {
   * @return boolean
   */    
   public static function applyPackage() {
-error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
-ini_set("display_errors", 1);    
     
     $phar_can_open = true;
 
