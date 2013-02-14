@@ -659,13 +659,14 @@ ini_set("display_errors", 1);
     
     // remove the old backup
     if (file_exists(DIR_FS_WORK . 'updates/' . $backup_file)) unlink(DIR_FS_WORK . 'updates/' . $backup_file);
-
+         
     // create full file backup
     try {
-      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_WS_HTTP_CATALOG . '*');
+      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '*');
     } catch ( Exception $e ) {  
       return false;
-    }
+    } 
+
     return true;
   }
  /**
@@ -678,14 +679,19 @@ ini_set("display_errors", 1);
 
     $restore_file = 'full-file-backup.zip';
     
-echo CFG_APP_UNZIP . ' ' . DIR_FS_WORK . 'updates/' . $restore_file .  ' -d ' . DIR_FS_CATALOG;
-die();
-    // remove the old backup
     if (file_exists(DIR_FS_WORK . 'updates/' . $restore_file)) {
-             
+      // remove old zip extraction  if any
+      $parent_dir = explode('/', DIR_FS_CATALOG);
+      if (is_dir(DIR_FS_WORK . 'updates/' . $parent_dir[1])) self::rmdir_r(DIR_FS_WORK . 'updates/' . $parent_dir[1]);
+
       // restore full file backup
       try {
-        exec(CFG_APP_UNZIP . ' ' . DIR_FS_WORK . 'updates/' . $restore_file .  ' -d ' . DIR_FS_CATALOG);
+        // unzip the archive into work/updates/
+        exec(CFG_APP_UNZIP . ' ' . DIR_FS_WORK . 'updates/' . $restore_file .  ' -d ' . DIR_FS_WORK . 'updates/');
+        //copy the files
+        exec('\cp -fr ' . DIR_FS_WORK . 'updates' . DIR_FS_CATALOG . '* ' . DIR_FS_CATALOG); 
+        // cleanup
+        if (is_dir(DIR_FS_WORK . 'updates/' . $parent_dir[1])) self::rmdir_r(DIR_FS_WORK . 'updates/' . $parent_dir[1]);
       } catch ( Exception $e ) {  
         return false;
       }
