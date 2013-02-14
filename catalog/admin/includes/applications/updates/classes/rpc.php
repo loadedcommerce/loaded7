@@ -121,6 +121,17 @@ class lC_Updates_Admin_rpc {
 
     echo json_encode($result);
   }      
-  
+ /*
+  * Returns the update history datatable data for listings
+  *
+  * @access public
+  * @return json
+  */
+  public static function getHistory() {
+    $result = lC_Updates_Admin::getHistory();
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+
+    echo json_encode($result);
+  }  
 }
 ?>

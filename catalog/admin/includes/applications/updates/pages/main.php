@@ -147,7 +147,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
       <fieldset class="fieldset">
         <legend class="legend no-margin-bottom"><?php echo $lC_Language->get('heading_legend_history'); ?></legend>
         <form name="batch" id="batch" action="#" method="post">
-          <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
+          <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table" id="dataTable">
             <thead>
               <tr>
                 <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_action'); ?></th>
@@ -165,6 +165,34 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
             </tfoot>
           </table>
         </form>
+        <style>
+        .dataTables_wrapper { background:none; box-shadow: 0 0 0 0 #fff inset, 0 0 0 rgba(255, 255, 255, 0.35) inset; }
+        .dataTables_paginate { position: absolute; right:0; bottom:-6px; }
+        .paginate_disabled_previous, .paginate_enabled_previous, .paginate_disabled_next, .paginate_enabled_next { background-image: none; border: none; box-shadow: none; color: #0059a0; text-shadow: none; }
+        .paginate_enabled_previous:hover, .paginate_enabled_next:hover { background: none; color: #0689f1; }
+        .paginate_disabled_previous, .paginate_disabled_next { color: #999 !important }   
+        </style>
+        <script>
+        $(document).ready(function() {
+          var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getHistory&media=MEDIA'); ?>';   
+          oTable = $('#dataTable').dataTable({
+            "bProcessing": true,
+            "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
+            "bPaginate": true,
+          //  "sPaginationType": 'two_button',
+            "bLengthChange": false,
+            "bFilter": false,
+            "bSort": false,
+            "bInfo": false,
+            "aoColumns": [{ "sWidth": "20%", "bSortable": true, "sClass": "dataColAction" },
+                          { "sWidth": "40%", "bSortable": true, "sClass": "dataColResult hide-on-mobile-portrait" },
+                          { "sWidth": "15%", "bSortable": true, "sClass": "dataColUser" },
+                          { "sWidth": "25%", "bSortable": true, "sClass": "dataColTime hide-on-mobile-portrait" }]
+          });
+          $('#dataTable').responsiveTable();
+        });        
+        
+        </script>
 
       </fieldset>    
     </div>

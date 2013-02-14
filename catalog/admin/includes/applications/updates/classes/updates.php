@@ -707,6 +707,45 @@ class lC_Updates_Admin {
   public static function lastDBRestore() {
     return true;
 
-  }   
+  }  
+  
+ /*
+  * Returns the update history datatable data
+  *
+  * @access public
+  * @return array
+  */
+  public static function getHistory() { 
+    ini_set('display_errors', 1);
+    global $lC_Language, $lC_Database, $_module;
+
+    $media = $_GET['media'];
+    
+    $Qhistory = $lC_Database->query('select * from :table_updates_log order by dateCreated');
+    $Qhistory->bindTable(':table_updates_log', TABLE_UPDATES_LOG);
+    $Qhistory->execute();
+
+    $result = array('aaData' => array());
+    while ( $Qhistory->next() ) {
+      
+      $uAction = '<th scope"row">' .  $Qhistory->value('action') . '</th>';
+      $uResult = '<td>' . $Qhistory->value('result') . '</td>';
+      $uUser = '<td>' . $Qhistory->value('user') . '</td>';
+      $uDate = '<td>' . lC_DateTime::getShort($Qhistory->value('dateCreated'), true) . '</td>';
+      
+  //    $log = '<td class="align-right vertical-center"><span class="button-group compact">
+  //                 <a href="' . ((int)($_SESSION['admin']['access']['definitions'] < 3) ? '#' : 'javascript://" onclick="editGroup(\'' . $Qgroups->valueInt('customers_group_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['definitions'] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+  //                 <a href="' . ((int)($_SESSION['admin']['access']['definitions'] < 4 || $Qgroups->valueInt('customers_group_id') == DEFAULT_CUSTOMERS_GROUP_ID) ? '#' : 'javascript://" onclick="deleteGroup(\'' . $Qgroups->valueInt('customers_group_id') . '\', \'' . urlencode($Qgroups->valueProtected('title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['definitions'] < 4 || $Qgroups->valueInt('customers_group_id') == DEFAULT_CUSTOMERS_GROUP_ID ) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+  //               </span></td>';
+  
+      $result['aaData'][] = array("$uAction", "$uResult", "$uUser", "$uDate");
+      $result['entries'][] = $Qhistory->toArray();
+    }
+
+    $Qhistory->freeResult();
+
+    return $result;
+  }  
+   
 }
 ?>
