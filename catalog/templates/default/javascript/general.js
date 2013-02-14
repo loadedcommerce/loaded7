@@ -12,6 +12,8 @@
 */
 $(document).ready(function() {
 
+  setMaintenanceMode('true');
+  
   // jBreadcrumb
   $("#breadCrumbContainer").jBreadCrumb();     
    
@@ -138,6 +140,27 @@ function __jquery_placeholder_goTitling() {
   });
 }
 
+function setMaintenanceMode(s) {
+  if (s == 'on') {
+    $("body").mask('<span class="loader huge refreshing"></span>');
+    $("body").removeClass("mask");
+    // tweak template depending on view
+    if ($.template.mediaQuery.name === 'mobile-portrait') { 
+      $('.loadmask-msg').css({'top':'180px'});
+    } else if ($.template.mediaQuery.name === 'mobile-landscape') { 
+      $('.loadmask-msg').css({'top':'140px'});
+    } else if ($.template.mediaQuery.name === 'tablet-portrait') {  
+      $('.loadmask-msg').css({'top':'380px'});
+    } else if ($.template.mediaQuery.name === 'tablet-landscape') {  
+      $('.loadmask-msg').css({'top':'260px'});
+    } else { // desktop
+      $('.loadmask-msg').css({'top':'300px'});
+    }  
+  } else {
+    $("body").unmask();
+  }
+}
+ 
 // grid/list product view switch
 $('#listView').click(function(){
   $('#viewList').show();
