@@ -146,6 +146,9 @@ require('includes/classes/upload.php');
 require('includes/classes/api.php');
 $lC_Api = new lC_Api();
 
+// templates general class
+require('templates/default/classes/general.php');
+
 // check if a default currency is set
 if (!defined('DEFAULT_CURRENCY')) {
   $lC_MessageStack->add('header', $lC_Language->get('ms_error_no_default_currency'), 'error');

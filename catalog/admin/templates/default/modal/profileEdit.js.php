@@ -42,7 +42,7 @@ function profileEdit(id) {
       $.modal({
           content: '<div id="profileEdit" style="padding-bottom:10px;">'+
                    '  <div id="profileEditForm">'+
-                   '    <form name="pEdit" id="pEdit" autocomplete="off" action="" method="post">'+
+                   '    <form name="pEdit" id="pEdit" autocomplete="off" action="" method="post" enctype="multipart/form-data">'+
                    '      <p><?php echo $lC_Language->get('introduction_edit_administrator'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="first_name" class="label"><?php echo $lC_Language->get('field_first_name'); ?></label>'+
@@ -55,6 +55,15 @@ function profileEdit(id) {
                    '      <p class="button-height inline-label">'+
                    '        <label for="user_name" class="label"><?php echo $lC_Language->get('field_username'); ?></label>'+
                    '        <?php echo lc_draw_input_field('user_name', null, 'id="edit-user_name" class="input full-width"'); ?>'+
+                   '      </p>'+
+                   '      <p class="button-height inline-label" id="pImage">'+
+                   '        <label for="profile_image" class="label"><?php echo $lC_Language->get('profile_image'); ?></label>'+
+                   '        <img alt="<?php echo $lC_Language->get('profile_image'); ?>" />'+
+                   '      </p>'+
+                   '      <p class="inline-label small-margin-top" id="profileUploaderContainer">'+ 
+                   '        <noscript>'+
+                   '          <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>'+
+                   '        </noscript>'+
                    '      </p>'+
                    '      <input type="hidden" id="edit-access_group_id" name="access_group_id" />'+
                    '    </form>'+
@@ -104,7 +113,6 @@ function profileEdit(id) {
                         }
                         return false;
                       }
-                      //oTable.fnReloadAjax();
                     }
                   );
                   win.closeModal();
@@ -117,7 +125,15 @@ function profileEdit(id) {
       $('#edit-first_name').val(data.first_name);
       $('#edit-last_name').val(data.last_name);
       $('#edit-user_name').val(data.user_name);
+      $('#pImage').children('img').attr("src", "<?php echo DIR_WS_HTTPS_CATALOG . DIR_WS_IMAGES; ?>" + data.image).attr("width", 64);
       $('#edit-access_group_id').val(data.access_group_id);
+      function createProfileUploader(){
+        var uploader = new qq.FileUploader({
+          element: document.getElementById('profileUploaderContainer'),
+          action: '<?php echo lc_href_link_admin('rpc.php', 'administrators=' . $_SESSION['admin']['id'] . '&action=fileUpload'); ?>',
+        });
+      }
+      createProfileUploader();
     }
   );
 }
