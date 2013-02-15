@@ -2525,7 +2525,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Feature not yet available.]]></value>
       <group>general</group>
     </definition> 
-    
+    <definition>
+      <key>update_message_text1</key>
+      <value><![CDATA[Please pardon our dust.  The store is temporarily offline for routine maintenance.  Please check back soon!]]></value>
+      <group>general</group>
+    </definition> 
     <definition>
       <key>debug_error_log_not_writeable</key>
       <value><![CDATA[Error: Execution time log file not writeable: %s]]></value>

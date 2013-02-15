@@ -527,7 +527,7 @@ class lC_Updates_Admin {
 
       self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
     }
-
+    
     return $phar_can_open;
   }
  /**
@@ -745,7 +745,23 @@ class lC_Updates_Admin {
     $Qhistory->freeResult();
 
     return $result;
-  }  
-   
+  } 
+ /**
+  * Set Maintenance Mode
+  *  
+  * @access private      
+  * @return boolean
+  */
+  public static function setMaintenanceMode($mode) {
+    global $lC_Database;
+    
+    if ($mode == 'on') {
+      $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '1' where configuration_key = 'STORE_DOWN_FOR_MAINTENANCE'");
+    } else {
+      $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '-1' where configuration_key = 'STORE_DOWN_FOR_MAINTENANCE'");
+    }
+    
+    return true;
+  }   
 }
 ?>

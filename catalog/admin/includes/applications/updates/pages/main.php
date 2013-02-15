@@ -260,6 +260,9 @@ function installUpdate() {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
+  // set maint mode=on
+  __setMaintenanceMode('on');
+  
   var fromVersion = '<?php echo $from_version; ?>';
   var toVersion = '<?php echo $to_version; ?>';
   $('#versionContainer .fieldset').removeClass('orange-gradient');
@@ -548,5 +551,21 @@ function __cancelBlock() {
 
 function __okBlock() {
   return '<span class="buttonset large-margin-top"><a id="ok" href="javascript://" onclick="location.reload(true);" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span><?php echo $lC_Language->get('button_ok'); ?></a></span>';
+}
+
+function __setMaintenanceMode(s) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=setMaintMode&s=MODE'); ?>'
+  $.getJSON(jsonLink.replace('MODE', s),
+    function (data) {
+      if (data.rpcStatus == -10) { // no session
+        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+        $(location).attr('href',url);
+      }
+      if (data.rpcStatus != 1) {
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
+    }
+  );  
 }
 </script>
