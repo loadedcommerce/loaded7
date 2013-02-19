@@ -233,8 +233,14 @@ class lC_General_Admin {
       $QimageResults[] = $Qimage->toArray();
     }
     
+    if ($QimageResults[0]['image'] != null) {
+      $result = DIR_WS_IMAGES . 'avatar/' . $QimageResults[0]['image'];
+    } else {
+      $result = 'templates/default/img/user.png';
+    }
+    
     // return the image name      
-    return $QimageResults[0]['image'];
+    return $result;
   }
 }
 ?>
