@@ -21,9 +21,9 @@ class lC_Checkout_Payment_template extends lC_Template {
 
   /* Class constructor */
   function lC_Checkout_Payment_template() {
-    global $lC_Language;
+      global $lC_Database, $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Payment;
 
-    $this->_page_title = $lC_Language->get('heading_title');
+      $this->_page_title = $lC_Language->get('heading_title') . ' ' . session_name() . '=' . session_id();
   }
 }
 ?>
