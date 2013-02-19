@@ -11,6 +11,15 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+
+echo "<pre>cart";
+print_r($lC_ShoppingCart);
+echo "</pre>";
+
+echo "<pre>session ";
+print_r($_SESSION);
+echo "</pre>";
+
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <div id="checkout_payment_template_details" class="full_page">
