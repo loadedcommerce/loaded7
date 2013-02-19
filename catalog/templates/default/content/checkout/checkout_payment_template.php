@@ -18,7 +18,7 @@ echo $lC_ShoppingCart->getCartID();
 
 // shipping address
 echo "<pre>";
-$lC_ShoppingCart->getShippingAddress();
+echo $lC_ShoppingCart->getShippingAddress();
 echo "</pre>";
 
 // grand total
