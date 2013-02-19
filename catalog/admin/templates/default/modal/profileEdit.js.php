@@ -61,7 +61,7 @@ function profileEdit(id) {
                    '        <img alt="<?php echo $lC_Language->get('profile_image'); ?>" />'+
                    '        <input type="hidden" name="avatar" id="generalAvatar" />'+
                    '      </p>'+
-                   '      <p class="inline-label small-margin-top" id="profileUploaderContainer">'+ 
+                   '      <p class="inline-label small-margin-top" id="profileUploaderContainerGeneral">'+ 
                    '        <noscript>'+
                    '          <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>'+
                    '        </noscript>'+

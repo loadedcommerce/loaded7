@@ -2518,6 +2518,8 @@ li.message-menu {
 			line-height: 22px;
 			color: white;
 			margin-bottom: 4px;
+      overflow:hidden; 
+      text-overflow: ellipsis;
 		}
     .profile-right-fourth {
       float: left;
