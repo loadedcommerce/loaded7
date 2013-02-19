@@ -12,13 +12,15 @@
 *  @license    http://loadedcommerce.com/license.html
 */
 
-echo "<pre>cart";
-print_r($lC_ShoppingCart);
-echo "</pre>";
 
-echo "<pre>session ";
-print_r($_SESSION);
-echo "</pre>";
+// cart ID
+echo $lC_ShoppingCart->getCartID();
+
+// shipping address
+echo $lC_ShoppingCart->getShippingAddress();
+
+// grand total
+echo $lC_ShoppingCart->getTotal();
 
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
