@@ -14,6 +14,7 @@
   @function The lC_Updater_Admin class manages zM services
 */
 require_once('../includes/classes/transport.php');  
+require_once('includes/applications/backup/classes/backup.php'); 
 
 class lC_Updates_Admin { 
   
@@ -705,10 +706,17 @@ class lC_Updates_Admin {
   * @return boolean
   */
   public static function lastDBRestore() {
+    
+    $lastBackup = self::__getLastDBBackup();
+    
+    try {
+      lC_Backup_Admin::restore($lastBackup['name']);
+    } catch ( Exception $e ) {
+      return false;
+    }
+    
     return true;
-
   }  
-  
  /*
   * Returns the update history datatable data
   *
@@ -749,7 +757,7 @@ class lC_Updates_Admin {
  /**
   * Set Maintenance Mode
   *  
-  * @access private      
+  * @access public      
   * @return boolean
   */
   public static function setMaintenanceMode($mode) {
@@ -761,7 +769,30 @@ class lC_Updates_Admin {
       $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '-1' where configuration_key = 'STORE_DOWN_FOR_MAINTENANCE'");
     }
     
+    lC_Cache::clear('configuration');
+    
     return true;
-  }   
+  }  
+ /**
+  * Set Maintenance Mode
+  *  
+  * @access public      
+  * @return boolean
+  */
+  private static function __getLastDBBackup() {
+    $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_BACKUP);
+    $lC_DirectoryListing->setIncludeDirectories(false);
+    $lC_DirectoryListing->setStats(true);
+    $lC_DirectoryListing->setCheckExtension('zip');
+    $lC_DirectoryListing->setCheckExtension('sql');
+    $lC_DirectoryListing->setCheckExtension('gz');
+   
+    $latest = 0;   
+    foreach ( $lC_DirectoryListing->getFiles() as $file ) {
+      if ((int)$latest < (int)$file['last_modified']) $latest = $file;
+    }
+
+    return $file;
+  } 
 }
 ?>

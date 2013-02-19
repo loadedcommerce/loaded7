@@ -53,6 +53,7 @@ table_heading_result = Result
 table_heading_user = User
 table_heading_timestamp = Time Stamp
 
+text_confirm_to_proceed = Press Confirm to Proceed
 text_updated_version_available = An updated version of Loaded Commerce is available.
 text_backup_warning = <b>Important:</b> If updating manually, please make sure to backup your database and files beforehand.  Automatic updates already include database and file backups. 
 text_update to = You can update to %s automatically or download the package and install it manually.
