@@ -104,7 +104,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
           <tr><td>&nbsp;</td></tr>
           <tr>
             <td align="left">
-              <a id="reinstall" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installFullUpdate();"'); ?> class="button re-install<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
+              <a id="reinstall" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="reinstallUpdate();"'); ?> class="button re-install<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
                 <span class="button-icon orange-gradient glossy"><span class="icon-redo"></span></span>
                 <?php echo $lC_Language->get('button_reinstall_update'); ?>
               </a>               
@@ -116,7 +116,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
               </a>
             </td>
             <td align="right">
-              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="undoUpdate();"'); ?> class="button undo-last<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
+              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? NULL : 'onclick="undoUpdate();"')); ?> class="button undo-last<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? ' disabled' : NULL)); ?>">
                 <span class="button-icon red-gradient glossy"><span class="icon-undo"></span></span>
                 <?php echo $lC_Language->get('button_undo_last_update'); ?>
               </a>
@@ -125,10 +125,8 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
         </table>
       </fieldset>    
     </div>
-
     <style>
     #historyContainer .legend { font-weight:bold; font-size: 1.1em; }
-
     .dataColAction { text-align: left; }
     .dataColResult { text-align: left; }
     .dataColUser { text-align: left; }
@@ -437,7 +435,9 @@ function undoUpdate() {
             $('#version-table thead').removeClass('red').addClass('green'); 
             
             // set maint mode=off
-            __setMaintenanceMode('off');         
+            __setMaintenanceMode('off');   
+            
+            window.location = $(this.href);      
           }
         );        
       });     

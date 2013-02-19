@@ -39,7 +39,7 @@ text_undo_step_error_text = An error has occured and the undo process cannot con
 text_update_avail = An update is available!
 text_up_to_date = You are up to date!
 text_initializing = Initializing Update Engine
-text_warning_do_not_interrupt = Interrupting the update process may cause unexpected results.
+text_warning_do_not_interrupt = Interrupting the process may cause unexpected results.
 
 button_ok = Ok
 button_install_update = Install Update
@@ -53,8 +53,8 @@ table_heading_result = Result
 table_heading_user = User
 table_heading_timestamp = Time Stamp
 
-text_confirm_update = This action will update your core files and database to the latest version.  Press `Confirm` to proceed.
-text_confirm_undo = This action will roll back your core files and database to the state prior to the last update.  Press `Confirm` to proceed.
+text_confirm_update = This action will update your core files and database to the latest version.<br />Press `Confirm` to proceed.
+text_confirm_undo = This action will roll back your core files and database to the state prior to the last update.<br />Press `Confirm` to proceed.
 
 text_updated_version_available = An updated version of Loaded Commerce is available.
 text_backup_warning = <b>Important:</b> If updating manually, please make sure to backup your database and files beforehand.  Automatic updates already include database and file backups. 
