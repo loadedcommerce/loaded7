@@ -706,7 +706,7 @@ class lC_Updates_Admin {
   * @return boolean
   */
   public static function lastDBRestore() {
-    
+ /*   
     $lastBackup = self::__getLastDBBackup();
     
     try {
@@ -714,7 +714,7 @@ class lC_Updates_Admin {
     } catch ( Exception $e ) {
       return false;
     }
-    
+ */   
     return true;
   }  
  /*

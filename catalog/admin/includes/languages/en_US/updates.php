@@ -53,8 +53,9 @@ table_heading_result = Result
 table_heading_user = User
 table_heading_timestamp = Time Stamp
 
-text_confirm_update = This action will update your core files and database to the latest version.<br />Press `Confirm` to proceed.
-text_confirm_undo = This action will roll back your core files and database to the state prior to the last update.<br />Press `Confirm` to proceed.
+text_confirm_update = This action will update your core files and database to the latest version. Press `Confirm` to proceed.
+text_confirm_full_update = This action will update your core files and database to the latest version using the FULL update package which contains all files in the current release. Press `Confirm` to proceed.
+text_confirm_undo = This action will roll back your core files and database to the state prior to the last update. Press `Confirm` to proceed.
 
 text_updated_version_available = An updated version of Loaded Commerce is available.
 text_backup_warning = <b>Important:</b> If updating manually, please make sure to backup your database and files beforehand.  Automatic updates already include database and file backups. 

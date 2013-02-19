@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS lc_administrators (
   user_password varchar(40) NOT NULL,
   first_name varchar(64) NOT NULL DEFAULT '',
   last_name varchar(64) NOT NULL DEFAULT '',
+  image varchar(255) NOT NULL DEFAULT '',
   access_group_id int NOT NULL DEFAULT '0',
   PRIMARY KEY (id)
 );

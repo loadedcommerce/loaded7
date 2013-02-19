@@ -104,7 +104,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
           <tr><td>&nbsp;</td></tr>
           <tr>
             <td align="left">
-              <a id="reinstall" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="reinstallUpdate();"'); ?> class="button re-install<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
+              <a id="reinstall" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installUpdate(\'full\');"'); ?> class="button re-install<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
                 <span class="button-icon orange-gradient glossy"><span class="icon-redo"></span></span>
                 <?php echo $lC_Language->get('button_reinstall_update'); ?>
               </a>               
@@ -242,13 +242,14 @@ function checkForUpdates() {
   );  
 }
 
-function installUpdate() {
+function installUpdate(t) {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 4) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
-  $.modal.confirm('<?php echo $lC_Language->get('text_confirm_update');?>', function() {
+  var confirmText = (t != undefined && t == 'full') ? '<?php echo $lC_Language->get('text_confirm_full_update');?>' : '<?php echo $lC_Language->get('text_confirm_update');?>';
+  $.modal.confirm(confirmText, function() {
     // set maint mode=on
     __setMaintenanceMode('on');
     
@@ -303,8 +304,9 @@ function installUpdate() {
 
               // download the update package
             var version = '<?php echo $checkArr['toVersion']; ?>';
-            var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getUpdatePackage&version=VERSION'); ?>';
-            $.getJSON(jsonLink.replace('VERSION', version),            
+            var type = (t != undefined) ? t : null;
+            var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getUpdatePackage&version=VERSION&type=TYPE'); ?>';
+            $.getJSON(jsonLink.replace('VERSION', version).replace('TYPE', type),            
               function (dData) {
                 if (dData.rpcStatus != 1) {
                   __showStep(3,2);
@@ -358,19 +360,6 @@ function installUpdate() {
   }, function() {
     return false;
   });  
-}
-
-function installFullUpdate() {
-  var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
-  if (parseInt(accessLevel) < 4) {
-    $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
-    return false;
-  }   
-  $.modal.confirm('<?php echo $lC_Language->get('text_confirm_to_proceed');?>', function() {
-    alert('Rome wasn\'t built in a day!');
-  }, function() {
-    return false;
-  });    
 }
 
 function undoUpdate() {
@@ -437,7 +426,7 @@ function undoUpdate() {
             // set maint mode=off
             __setMaintenanceMode('off');   
             
-            window.location = $(this.href);      
+            location.reload(true);     
           }
         );        
       });     
@@ -446,7 +435,6 @@ function undoUpdate() {
     return false;
   });      
 }
-
 
 function __showStep(step, fini) {
   var loader = '<span class="icon-right icon-blue margin-left margin-right"></span><span class="loader"></span>';
