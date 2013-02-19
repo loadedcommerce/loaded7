@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: rpc.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -16,7 +16,7 @@
 require('includes/applications/administrators/classes/administrators.php');
 
 class lC_Administrators_Admin_rpc {
- /*
+ /**
   * Returns the administrators datatable data for listings
   *
   * @access public
@@ -28,7 +28,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Returns the administrator data
   *
   * @param integer $_GET['aid'] The administrator id
@@ -43,7 +43,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Saves the administrator information
   *
   * @param integer  $_GET['aid']  The administrator id used on update, null on insert
@@ -59,7 +59,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Delete the administrator record
   *
   * @param integer $_GET['aid'] The administrator id to delete
@@ -75,7 +75,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Returns all the administrator groups data
   *
   * @access public
@@ -87,7 +87,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Returns the individual administrators groups data
   *
   * @param integer $_GET['gid'] The administrators group id
@@ -102,7 +102,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Saves the administrators groups data
   *
   * @param integer  $_GET['gid'] The administrators group id used on update, null on insert
@@ -118,7 +118,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Delete the administrators groups record
   *
   * @param integer $_GET['aid'] The administrators group id to delete
@@ -134,7 +134,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Validate the password
   *
   * @param string $_GET['encrypted']  Password hash from DB
@@ -147,6 +147,38 @@ class lC_Administrators_Admin_rpc {
 
     $result = lC_Administrators_Admin::validatePassword($_GET['plain'], $_GET['encrypted']);
 
+    echo json_encode($result);
+  }
+ /**
+  * upload the profile image
+  *
+  * @access public
+  * @return json
+  */
+  public static function fileUpload() {
+    global $lC_Database;
+    
+    require_once('includes/classes/ajax_upload.php');
+
+    // list of valid extensions, ex. array("jpeg", "jpg", "gif")
+    $allowedExtensions = array('gif', 'jpg', 'jpeg', 'png');
+    // max file size in bytes
+    $sizeLimit = 10 * 1024 * 1024;
+
+    $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+    
+    $profile_image = $uploader->handleUpload('images/avatar/');
+    
+    if (isset($profile_image['filename']) && $profile_image['filename'] != null) {
+      $Qimage = $lC_Database->query('update :table_administrators set image = "' . $profile_image['pathinfo']['basename'] . '" where id = ' . (int)$_GET['administrators']);
+      $Qimage->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+      $Qimage->bindValue(':image', $profile_image['pathinfo']['basename']);
+      $Qimage->execute();
+      $result = array('result' => 1,
+                      'success' => false,
+                      'rpcStatus' => RPC_STATUS_SUCCESS,
+                      'filename' => $profile_image['pathinfo']['basename']);
+    }
     echo json_encode($result);
   }  
 }

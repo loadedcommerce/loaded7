@@ -170,7 +170,7 @@
           <div id="profileInner">                
             <div class="profile50">
               <div id="profileLeft">
-                <img src="<?php echo DIR_WS_HTTPS_CATALOG . DIR_WS_IMAGES . lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="64" height="64" alt="User name" class="user-icon" style="box-shadow: 0px 0px 3px #ffffff;margin-left:2px;">
+                <img src="<?php echo DIR_WS_IMAGES . 'avatar/' . lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="64" height="64" alt="User name" class="user-icon" style="box-shadow: 0px 0px 3px #ffffff;margin-left:2px;">
                 <?php echo $lC_Language->get('text_hello'); ?>
                 <span class="name"><?php echo $_SESSION['admin']['firstname']; ?><br />
                 <?php echo $_SESSION['admin']['lastname']; ?></span>

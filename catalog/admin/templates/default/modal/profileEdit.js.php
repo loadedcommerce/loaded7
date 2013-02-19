@@ -115,7 +115,7 @@ function profileEdit(id) {
                       }
                     }
                   );
-                  win.closeModal();
+                  window.location.reload();
                 }
               }
             }
@@ -125,12 +125,15 @@ function profileEdit(id) {
       $('#edit-first_name').val(data.first_name);
       $('#edit-last_name').val(data.last_name);
       $('#edit-user_name').val(data.user_name);
-      $('#pImage').children('img').attr("src", "<?php echo DIR_WS_HTTPS_CATALOG . DIR_WS_IMAGES; ?>" + data.image).attr("width", 64);
+      $('#pImage').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + data.image).attr("width", 64);
       $('#edit-access_group_id').val(data.access_group_id);
       function createProfileUploader(){
         var uploader = new qq.FileUploader({
           element: document.getElementById('profileUploaderContainer'),
           action: '<?php echo lc_href_link_admin('rpc.php', 'administrators=' . $_SESSION['admin']['id'] . '&action=fileUpload'); ?>',
+          onComplete: function(id, fileName, responseJSON){
+            $('#pImage').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName).attr("width", 64);
+          },
         });
       }
       createProfileUploader();
