@@ -115,7 +115,7 @@ function profileEdit(id) {
                       }
                     }
                   );
-                  window.location.reload();
+                  win.closeModal();
                 }
               }
             }
@@ -133,6 +133,7 @@ function profileEdit(id) {
           action: '<?php echo lc_href_link_admin('rpc.php', 'administrators=' . $_SESSION['admin']['id'] . '&action=fileUpload'); ?>',
           onComplete: function(id, fileName, responseJSON){
             $('#pImage').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName).attr("width", 64);
+            $('#profileLeft').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName).attr("width", 64);
           },
         });
       }

@@ -156,29 +156,10 @@ class lC_Administrators_Admin_rpc {
   * @return json
   */
   public static function fileUpload() {
-    global $lC_Database;
-    
-    require_once('includes/classes/ajax_upload.php');
+    $result = array();
 
-    // list of valid extensions, ex. array("jpeg", "jpg", "gif")
-    $allowedExtensions = array('gif', 'jpg', 'jpeg', 'png');
-    // max file size in bytes
-    $sizeLimit = 10 * 1024 * 1024;
+    $result = lC_Administrators_Admin::profileImageUpload($_GET['administrators']);
 
-    $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
-    
-    $profile_image = $uploader->handleUpload('images/avatar/');
-    
-    if (isset($profile_image['filename']) && $profile_image['filename'] != null) {
-      $Qimage = $lC_Database->query('update :table_administrators set image = "' . $profile_image['pathinfo']['basename'] . '" where id = ' . (int)$_GET['administrators']);
-      $Qimage->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
-      $Qimage->bindValue(':image', $profile_image['pathinfo']['basename']);
-      $Qimage->execute();
-      $result = array('result' => 1,
-                      'success' => false,
-                      'rpcStatus' => RPC_STATUS_SUCCESS,
-                      'filename' => $profile_image['pathinfo']['basename']);
-    }
     echo json_encode($result);
   }  
 }
