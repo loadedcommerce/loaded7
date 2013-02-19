@@ -104,7 +104,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
           <tr><td>&nbsp;</td></tr>
           <tr>
             <td align="left">
-              <a id="reinstall" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : ((isset($checkArr['hasUpdates']) && (int)$checkArr['hasUpdates'] > 0) ? NULL : 'onclick="reinstallUpdate();"')); ?> class="button re-install<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : ((isset($checkArr['hasUpdates']) && (int)$checkArr['hasUpdates'] > 0) ? ' disabled' : NULL)); ?>">
+              <a id="reinstall" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installFullUpdate();"'); ?> class="button re-install<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
                 <span class="button-icon orange-gradient glossy"><span class="icon-redo"></span></span>
                 <?php echo $lC_Language->get('button_reinstall_update'); ?>
               </a>               
@@ -250,7 +250,7 @@ function installUpdate() {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
-  $.modal.confirm('<?php echo $lC_Language->get('text_confirm_to_proceed');?>', function() {
+  $.modal.confirm('<?php echo $lC_Language->get('text_confirm_update');?>', function() {
     // set maint mode=on
     __setMaintenanceMode('on');
     
@@ -381,7 +381,7 @@ function undoUpdate() {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }  
-  $.modal.confirm('<?php echo $lC_Language->get('text_confirm_to_proceed');?>', function() {
+  $.modal.confirm('<?php echo $lC_Language->get('text_confirm_undo');?>', function() {
     // set maint mode=on
     __setMaintenanceMode('on');
     

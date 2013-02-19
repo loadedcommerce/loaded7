@@ -43,7 +43,7 @@ text_warning_do_not_interrupt = Interrupting the update process may cause unexpe
 
 button_ok = Ok
 button_install_update = Install Update
-button_reinstall_update = Re-install Update
+button_reinstall_update = Full Re-install
 button_download_zip = Download ZIP
 button_undo_last_update = Undo Last Update
 button_check_again = Check Again
@@ -53,7 +53,9 @@ table_heading_result = Result
 table_heading_user = User
 table_heading_timestamp = Time Stamp
 
-text_confirm_to_proceed = Press Confirm to Proceed
+text_confirm_update = This action will update your core files and database to the latest version.  Press `Confirm` to proceed.
+text_confirm_undo = This action will roll back your core files and database to the state prior to the last update.  Press `Confirm` to proceed.
+
 text_updated_version_available = An updated version of Loaded Commerce is available.
 text_backup_warning = <b>Important:</b> If updating manually, please make sure to backup your database and files beforehand.  Automatic updates already include database and file backups. 
 text_update to = You can update to %s automatically or download the package and install it manually.
