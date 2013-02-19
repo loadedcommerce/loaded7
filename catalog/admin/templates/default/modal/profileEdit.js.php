@@ -59,6 +59,7 @@ function profileEdit(id) {
                    '      <p class="button-height inline-label" id="pImage">'+
                    '        <label for="profile_image" class="label"><?php echo $lC_Language->get('profile_image'); ?></label>'+
                    '        <img alt="<?php echo $lC_Language->get('profile_image'); ?>" />'+
+                   '        <input type="hidden" name="avatar" id="generalAvatar" />'+
                    '      </p>'+
                    '      <p class="inline-label small-margin-top" id="profileUploaderContainer">'+ 
                    '        <noscript>'+
@@ -125,20 +126,21 @@ function profileEdit(id) {
       $('#edit-first_name').val(data.first_name);
       $('#edit-last_name').val(data.last_name);
       $('#edit-user_name').val(data.user_name);
-      $('#pImage').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + data.image).attr("width", 64).attr("height", 64);
+      $('#pImage').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + data.image).attr("width", 64).attr("height", 64).attr("name", "avatar").attr("id", "avatar");
       $('#edit-access_group_id').val(data.access_group_id);
-      function createProfileUploader(){
+      function createProfileUploaderGeneral(){
         var uploader = new qq.FileUploader({
-          element: document.getElementById('profileUploaderContainer'),
+          element: document.getElementById('profileUploaderContainerGeneral'),
           action: '<?php echo lc_href_link_admin('rpc.php', 'administrators=' . $_SESSION['admin']['id'] . '&action=fileUpload'); ?>',
           onComplete: function(id, fileName, responseJSON){
+            $('#generalAvatar').attr("value", fileName);
             $('#pImage').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName).attr("width", 64).attr("height", 64);
             $('#profileLeft').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName);
             $('.profile-right-fourth').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName);
           },
         });
       }
-      createProfileUploader();
+      createProfileUploaderGeneral();
     }
   );
 }

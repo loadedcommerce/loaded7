@@ -129,7 +129,7 @@ class lC_Administrators_Admin {
       $lC_Database->startTransaction();
 
       if ( isset($id) && $id != null ) {
-        $Qadmin = $lC_Database->query('update :table_administrators set first_name = :first_name, last_name = :last_name, user_name = :user_name, access_group_id = :access_group_id ');
+        $Qadmin = $lC_Database->query('update :table_administrators set user_name = :user_name, first_name = :first_name, last_name = :last_name, image = :image, access_group_id = :access_group_id ');
 
         if ( isset($data['user_password']) && !empty($data['user_password']) ) {
           $Qadmin->appendQuery(', user_password = :user_password');
@@ -139,14 +139,15 @@ class lC_Administrators_Admin {
         $Qadmin->appendQuery('where id = :id');
         $Qadmin->bindInt(':id', $id);
       } else {
-        $Qadmin = $lC_Database->query('insert into :table_administrators (first_name, last_name, user_name, user_password, access_group_id) values (:first_name, :last_name, :user_name, :user_password, :access_group_id)');
+        $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, image, access_group_id) values (:user_name, :user_password, :first_name, :last_name, :image, :access_group_id)');
         $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($data['user_password'])));
       }
 
       $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+      $Qadmin->bindValue(':user_name', $data['user_name']);
       $Qadmin->bindValue(':first_name', $data['first_name']);
       $Qadmin->bindValue(':last_name', $data['last_name']);
-      $Qadmin->bindValue(':user_name', $data['user_name']);
+      $Qadmin->bindValue(':image', $data['avatar']);
       $Qadmin->bindInt(':access_group_id', $data['access_group_id']);
       $Qadmin->setLogging($_SESSION['module'], $id);
       $Qadmin->execute();
@@ -549,16 +550,25 @@ class lC_Administrators_Admin {
     
     $profile_image = $uploader->handleUpload('images/avatar/');
     
-    if (isset($profile_image['filename']) && $profile_image['filename'] != null) {
-      $Qimage = $lC_Database->query('update :table_administrators set image = "' . $profile_image['pathinfo']['basename'] . '" where id = ' . (int)$id);
-      $Qimage->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
-      $Qimage->bindValue(':image', $profile_image['pathinfo']['basename']);
-      $Qimage->execute();
-      $result = array('result' => 1,
-                      'success' => true,
-                      'rpcStatus' => RPC_STATUS_SUCCESS,
-                      'filename' => $profile_image['pathinfo']['basename']);
-    }
+    /*$Qcheck = $lC_Database->query('select user_name from :table_administrators where id = ' . (int)$id);
+    $Qcheck->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+    $Qcheck->execute();
+    
+    if ($Qcheck->numberOfRows() > 0) {  
+      if (isset($profile_image['filename']) && $profile_image['filename'] != null) {
+        $lC_Database->startTransaction();
+        $Qimage = $lC_Database->query('update :table_administrators set image = "' . $profile_image['pathinfo']['basename'] . '" where id = ' . (int)$id);
+        $Qimage->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+        $Qimage->bindValue(':image', $profile_image['pathinfo']['basename']);
+        $Qimage->execute();
+      }
+    } */
+    
+    $result = array('result' => 1,
+                    'success' => true,
+                    'rpcStatus' => RPC_STATUS_SUCCESS,
+                    'filename' => $profile_image['pathinfo']['basename']);
+
     return $result;
   }
 }

@@ -161,6 +161,6 @@ class lC_Administrators_Admin_rpc {
     $result = lC_Administrators_Admin::profileImageUpload($_GET['administrators']);
 
     echo json_encode($result);
-  }  
+  }
 }
 ?>
