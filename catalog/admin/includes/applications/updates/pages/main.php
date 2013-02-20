@@ -420,13 +420,14 @@ function undoUpdate() {
             }
             __showUndoStep(2,1);
             __showUndoStep(99,1);
+
             $('#vFooterText').html(__okBlock());
-            $('#version-table thead').removeClass('red').addClass('green'); 
-            
+            $('#version-table thead').removeClass('green').addClass('red');                
+            $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_current_version'); ?></td><td class="version">' + fromVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), utility::getVersionDate()); ?></td></tr>').addClass('red'); 
+                  
             // set maint mode=off
-            __setMaintenanceMode('off');   
-            
-            location.reload(true);     
+            __setMaintenanceMode('off');  
+   
           }
         );        
       });     
@@ -560,7 +561,7 @@ function __cancelBlock() {
 }
 
 function __okBlock() {
-  return '<span class="buttonset large-margin-top"><a id="ok" href="javascript://" onclick="location.reload(true);" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span><?php echo $lC_Language->get('button_ok'); ?></a></span>';
+  return '<span class="buttonset large-margin-top"><a id="ok" href="javascript://" onclick="location.reload(true); mask();" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span><?php echo $lC_Language->get('button_ok'); ?></a></span>';
 }
 
 function __setMaintenanceMode(s) {

@@ -36,7 +36,7 @@ class lC_Updates_Admin_rpc {
   */
   public static function getUpdatePackage() {
     $result = array();
-    if (lC_Updates_Admin::downloadPackage($_GET['version'])) {
+    if (lC_Updates_Admin::downloadPackage($_GET['version'], $_GET['type'])) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
 

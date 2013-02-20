@@ -178,7 +178,7 @@ class lC_Updates_Admin {
   * @access public      
   * @return mixed
   */
-  public static function downloadPackage($version = null) {
+  public static function downloadPackage($version = null, $type= null) {
     if ( empty($version) ) {
       $link = self::getAvailablePackageInfo('update_package');
     } else {
