@@ -110,7 +110,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
               </a>               
             </td>
             <td align="center">
-              <a id="download" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? 'href="#"' : 'href="https://github.com/loadedcommerce/loaded7/archive/' . $checkArr['toVersion'] . '.zip"'); ?>href="https://github.com/loadedcommerce/loaded7/archive/<?php echo $checkArr['toVersion']; ?>.zip" class="button download-zip<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>">
+              <a id="download" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? 'href="#"' : 'onclick="updateHistoryLog();" href="https://github.com/loadedcommerce/loaded7/archive/' . $checkArr['toVersion'] . '.zip"'); ?>href="https://github.com/loadedcommerce/loaded7/archive/<?php echo $checkArr['toVersion']; ?>.zip" class="button download-zip<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>">
                 <span class="button-icon blue-gradient glossy"><span class="icon-download"></span></span>
                 <?php echo $lC_Language->get('button_download_zip'); ?>
               </a>
@@ -170,8 +170,9 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
             "bPaginate": true,
             "bLengthChange": false,
             "bFilter": false,
-            "bSort": false,
+            "bSort": true,
             "bInfo": false,
+            "aaSorting": [[3,'desc']],
             "aoColumns": [{ "sWidth": "20%", "bSortable": true, "sClass": "dataColAction" },
                           { "sWidth": "40%", "bSortable": true, "sClass": "dataColResult hide-on-mobile-portrait" },
                           { "sWidth": "15%", "bSortable": true, "sClass": "dataColUser" },
@@ -199,6 +200,14 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
 $(document).ready(function() {
   checkForUpdates();  
 });
+
+function updateHistoryLog() {
+  // write to the update history log
+  __writeHistory('<?php echo $lC_Language->get('text_history_action_backup'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_download'), $to_version); ?>');
+  oTable.fnReloadAjax(); 
+  
+  return true; 
+}
 
 function checkForUpdates() {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
@@ -239,7 +248,8 @@ function checkForUpdates() {
         $('#updateButtonset').html('<a id="check-again" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? NULL : 'onclick="checkForUpdates();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? ' disabled' : NULL); ?>"><span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span><?php echo $lC_Language->get('button_check_again'); ?></a>');
       }
       // write to the update history log
-      __writeHistory('<?php echo $lC_Language->get('text_history_action_version_check'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_version_check'), utility::getVersion()); ?>');      
+      __writeHistory('<?php echo $lC_Language->get('text_history_action_version_check'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_version_check'), utility::getVersion()); ?>');
+      oTable.fnReloadAjax();      
     }
   );  
 }

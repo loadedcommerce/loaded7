@@ -541,24 +541,24 @@ class lC_Updates_Admin {
   */ 
   public static function writeHistory($action = 'update', $result = null) {
     global $lC_Database;
-
+    
     $lC_Database->startTransaction();
         
-    $Qhistory = $lC_Database->query('insert into :table_updates_log (action, result, user, dateCreated) values (:action, :result, :user, :dateCreated');
+    $Qhistory = $lC_Database->query('insert into :table_updates_log (action, result, user, dateCreated) values (:action, :result, :user, :dateCreated)');
     $Qhistory->bindTable(':table_updates_log', TABLE_UPDATES_LOG);
     $Qhistory->bindValue(':action', ucwords($action));
     $Qhistory->bindValue(':result', $result);
-    $Qhistory->bindValue(':user', $_SESSION['admin']['username']);
+    $Qhistory->bindValue(':user', $_SESSION['admin']['firstname'] . ' ' . $_SESSION['admin']['lastname']);
     $Qhistory->bindValue(':dateCreated', date("Y-m-d H:i:s"));      
     $Qhistory->setLogging($_SESSION['module']); 
     $Qhistory->execute();  
 
     if (!$lC_Database->isError()) {
       $lC_Database->commitTransaction();
-      return false;
+      return true;
     } else {
       $lC_Database->rollbackTransaction();
-      return true;
+      return false;
     }  
   }  
  /**
