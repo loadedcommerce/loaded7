@@ -144,7 +144,7 @@
       } else if (isset($_GET['lCsid']) && $_GET['lCsid'] != NULL) {
         $this->_is_started = true;
         $this->_id = $_GET['lCsid'];
-        session_id() = $_GET['lCsid'];
+        session_id($_GET['lCsid']);
         session_start();
         
         return true;
