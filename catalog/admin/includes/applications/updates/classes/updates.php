@@ -532,6 +532,36 @@ class lC_Updates_Admin {
     return $phar_can_open;
   }
  /**
+  * Make an update-log history entry
+  *  
+  * @param string $action The update action
+  * @param string $result The update result
+  * @access public      
+  * @return boolean
+  */ 
+  public static function writeHistory($action = 'update', $result = null) {
+    global $lC_Database;
+
+    $lC_Database->startTransaction();
+        
+    $Qhistory = $lC_Database->query('insert into :table_updates_log (action, result, user, dateCreated) values (:action, :result, :user, :dateCreated');
+    $Qhistory->bindTable(':table_updates_log', TABLE_UPDATES_LOG);
+    $Qhistory->bindValue(':action', ucwords($action));
+    $Qhistory->bindValue(':result', $result);
+    $Qhistory->bindValue(':user', $_SESSION['admin']['username']);
+    $Qhistory->bindValue(':dateCreated', date("Y-m-d H:i:s"));      
+    $Qhistory->setLogging($_SESSION['module']); 
+    $Qhistory->execute();  
+
+    if (!$lC_Database->isError()) {
+      $lC_Database->commitTransaction();
+      return false;
+    } else {
+      $lC_Database->rollbackTransaction();
+      return true;
+    }  
+  }  
+ /**
   * Make a log entry
   *  
   * @param string $message  The message to log
@@ -724,7 +754,6 @@ class lC_Updates_Admin {
   * @return array
   */
   public static function getHistory() { 
-    ini_set('display_errors', 1);
     global $lC_Language, $lC_Database, $_module;
 
     $media = $_GET['media'];

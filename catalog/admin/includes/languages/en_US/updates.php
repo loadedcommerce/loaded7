@@ -57,7 +57,17 @@ text_confirm_update = This action will update your core files and database to th
 text_confirm_full_update = This action will update your core files and database to the latest version using the FULL update package which contains all files in the current release. Press `Confirm` to proceed.
 text_confirm_undo = This action will roll back your core files and database to the state prior to the last update. Press `Confirm` to proceed.
 
-text_updated_version_available = An updated version of Loaded Commerce is available.
-text_backup_warning = <b>Important:</b> If updating manually, please make sure to backup your database and files beforehand.  Automatic updates already include database and file backups. 
-text_update to = You can update to %s automatically or download the package and install it manually.
-text_while_being_updated = While your site is being updated, it will be in maintenance mode.  As soon as your updates are complete, your site will return to normal.
+text_history_action_update = Update
+text_history_action_backup = Download
+text_history_action_undo = Undo Last
+text_history_action_reinstall = Re-install
+text_history_action_version_check = Version Check
+
+text_history_result_update_success = Success updated to %s
+text_history_result_update_error = Error updating to %s
+text_history_result_download = Downloaded %s
+text_history_result_undo_success = Undo Last Update Success
+text_history_result_undo_error = Undo Last Update Error
+text_history_result_reinstall_success = Success Re-installing to %s
+text_history_result_reinstall_error = Error Re-installing to %s
+text_history_result_version_check = Version %s

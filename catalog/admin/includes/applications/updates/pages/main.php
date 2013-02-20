@@ -237,7 +237,9 @@ function checkForUpdates() {
         $('#version-table tbody').removeClass('red').addClass('green');
         $('#updateText').html('<?php echo $lC_Language->get('text_up_to_date'); ?>');
         $('#updateButtonset').html('<a id="check-again" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? NULL : 'onclick="checkForUpdates();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? ' disabled' : NULL); ?>"><span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span><?php echo $lC_Language->get('button_check_again'); ?></a>');
-      }      
+      }
+      // write to the update history log
+      __writeHistory('<?php echo $lC_Language->get('text_history_action_version_check'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_version_check'), utility::getVersion()); ?>');      
     }
   );  
 }
@@ -576,6 +578,15 @@ function __setMaintenanceMode(s) {
         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
+    }
+  );  
+}
+
+function __writeHistory(ua, ur) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=writeHistory&ua=ACTION&ur=RESULT'); ?>'
+  $.getJSON(jsonLink.replace('ACTION', ua).replace('RESULT', ur),
+    function (data) {
+
     }
   );  
 }

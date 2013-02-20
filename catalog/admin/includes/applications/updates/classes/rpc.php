@@ -147,5 +147,19 @@ class lC_Updates_Admin_rpc {
 
     echo json_encode($result);
   }
+ /*
+  * Write to updates history log
+  *
+  * @access public
+  * @return json
+  */
+  public static function writeHistory() {
+    $result = array();
+    if (lC_Updates_Admin::writeHistory($_GET['ua'], $_GET['ur'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }  
 }
 ?>
