@@ -32,15 +32,15 @@
           <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'logoff', 'SSL'); ?>"><?php echo $lC_Language->get('text_sign_out'); ?></a></li>
           <?php } ?>
         <li class="top_links hide-on-mobile"><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'SSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
-        <li class="highlight"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, null, 'SSL'); ?>"><?php echo $lC_Language->get('text_checkout'); ?></a></li>
+        <li class="highlight"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>"><?php echo $lC_Language->get('text_checkout'); ?></a></li>
       </ul>
     </div>
     <div id="mobile-menu" style="display:none;">
       <ul class="table_view cells">
-        <li><a href="index.php">Home</a></li>
-        <li><a href="products.php?specials">Specials</a></li>
-        <li><a href="products.php?new">New Products</a></li>
-        <li><a href="info.php?contact">Contact Us</a></li>
+        <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL'); ?>">Home</a></li>
+        <li><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'specials', 'NONSSL'); ?>">Specials</a></li>
+        <li><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'NONSSL'); ?>">New Products</a></li>
+        <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'NONSSL'); ?>">Contact Us</a></li>
       </ul>
     </div>
     <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>logo.png" /></a></h1>
@@ -106,7 +106,7 @@
           <small>' . $lC_Language->get('box_shopping_cart_subtotal') . '</small>
           <big>' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</big>
           </div>
-          <a href="' . lc_href_link(FILENAME_CHECKOUT, null, 'SSL') . '">' . $lC_Language->get('text_checkout') . '</a>
+          <a href="' . lc_href_link(FILENAME_CHECKOUT, 'shopping_cart', 'SSL') . '">' . $lC_Language->get('button_view_cart') . '</a>
           </div>
           </div>';
         } else {

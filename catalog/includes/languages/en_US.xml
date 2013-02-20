@@ -1080,6 +1080,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>checkout</group>
     </definition>
     <definition>
+      <key>button_view_cart</key>
+      <value><![CDATA[View Cart]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>shipping_method_heading</key>
       <value><![CDATA[Shipping Method]]></value>
       <group>checkout</group>
