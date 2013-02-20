@@ -141,7 +141,11 @@
         }
 
         lc_redirect(lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false));
-      } elseif ( session_start() ) {
+      } else if (isset($_GET['lCsid']) && $_GET['lCsid'] != NULL) {
+        session_start($_GET['lCsid']);
+        $this->_is_started = true;
+        $this->_id = $_GET['lCsid'];
+      } else if ( session_start() ) {
         $this->_is_started = true;
         $this->_id = session_id();
 
