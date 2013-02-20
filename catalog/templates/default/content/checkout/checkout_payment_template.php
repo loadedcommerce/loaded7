@@ -22,7 +22,7 @@ print_r($lC_ShoppingCart->getShippingAddress());
 echo "</pre>";
 
 // grand total
-echo $lC_Currencies->format($lC_ShoppingCart->getTotal())
+echo $lC_Currencies->format($lC_ShoppingCart->getTotal());
 
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
