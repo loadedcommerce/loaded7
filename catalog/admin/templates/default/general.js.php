@@ -445,6 +445,135 @@ function modalMessage(text) {
     return output;
 }
 
+function search(q) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=search&q=SEARCH'); ?>'
+  $.getJSON(jsonLink.replace('SEARCH', q),
+    function (data) {
+      if (data.rpcStatus == -10) { // no session
+        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+        $(location).attr('href',url);
+      }
+      if (data.rpcStatus != 1) {
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      } 
+      $('#searchResults').html(data.html);
+    }
+    
+  );
+}
+
+$("#li-search").click(function() {
+  var addOpen = $('#addContainer').is(':visible');
+  var msgOpen = $('#messagesContainer').is(':visible');
+  var mainOpen = $('#mainMenuContainer').is(':visible');
+  var setOpen = $('#settingsContainer').is(':visible');
+  var srcClass = $('#li-search').attr('class');
+  if (addOpen) {
+    $('#li-add').removeClass("current");
+    $('#addContainer').hide();
+  }
+  if(msgOpen) {
+    $('#li-messages').removeClass("current");
+    $('#messagesContainer').hide();
+  }
+  if(mainOpen) {
+    $('#li-settings').removeClass("current");
+    $('#mainMenuContainer').hide();
+    $('#recentContainer').hide();
+  }
+  if(setOpen) {
+    $('#li-settings').removeClass("current");
+    $('#settingsContainer').hide();
+    $('#recentContainer').hide();
+  }
+  if (srcClass == 'tracked') {
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
+  }
+});
+
+$("#li-add").click(function() {
+  var srcOpen = $('#searchContainer').is(':visible');
+  var msgOpen = $('#messagesContainer').is(':visible');
+  var mainOpen = $('#mainMenuContainer').is(':visible');
+  var setOpen = $('#settingsContainer').is(':visible');
+  var addClass = $('#li-add').attr('class');
+  if (srcOpen) {
+    $('#li-search').removeClass("current");
+    $('#searchContainer').hide();
+  }
+  if (msgOpen) {
+    $('#li-messages').removeClass("current");
+    $('#messagesContainer').hide();
+  }
+  if(mainOpen) {
+    $('#li-settings').removeClass("current");
+    $('#mainMenuContainer').hide();
+    $('#recentContainer').hide();
+  }
+  if(setOpen) {
+    $('#li-settings').removeClass("current");
+    $('#settingsContainer').hide();
+    $('#recentContainer').hide();
+  }
+  if (addClass == 'tracked') {
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
+  }
+});
+
+$("#li-messages").click(function() {
+  var srcOpen = $('#searchContainer').is(':visible');
+  var addOpen = $('#addContainer').is(':visible');
+  var mainOpen = $('#mainMenuContainer').is(':visible');
+  var setOpen = $('#settingsContainer').is(':visible');
+  var msgClass = $('#li-messages').attr('class');
+  if (srcOpen) {
+    $('#li-search').removeClass("current");
+    $('#searchContainer').hide();
+  }
+  if (addOpen) {
+    $('#li-add').removeClass("current");
+    $('#addContainer').hide();
+  }
+  if(mainOpen) {
+    $('#li-settings').removeClass("current");
+    $('#mainMenuContainer').hide();
+    $('#recentContainer').hide();
+  }
+  if(setOpen) {
+    $('#li-settings').removeClass("current");
+    $('#settingsContainer').hide();
+    $('#recentContainer').hide();
+  }
+  if (msgClass == 'tracked') {
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
+  }
+});
+
+$("#li-settings").click(function() {
+  var srcOpen = $('#searchContainer').is(':visible');
+  var addOpen = $('#addContainer').is(':visible');
+  var msgOpen = $('#messagesContainer').is(':visible');
+  var setDisplay = $('#settingsContainer').css('display');
+  var mainDisplay = $('#mainMenuContainer').css('display');  
+  if (srcOpen) {
+    $('#li-search').removeClass("current");
+    $('#searchContainer').hide();
+  }
+  if (addOpen) {
+    $('#li-add').removeClass("current");
+    $('#addContainer').hide();
+  }
+  if (msgOpen) {
+    $('#li-messages').removeClass("current");
+    $('#messagesContainer').hide();
+  }
+  $('#recentContainer').toggle();
+});
+
 // added to pull in any added modals used across all admin pages
 <?php
 $generalModalDir = 'templates/' . $lC_Template->getCode() . '/modal/';
