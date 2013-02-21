@@ -575,6 +575,8 @@ $("#li-settings").click(function() {
   if (setOpen) {
     $('#li-settings').removeClass("current");
     $('#settingsContainer').hide();
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
   } else {
     $('#li-settings').addClass("current");
     $('#settingsContainer').show();
