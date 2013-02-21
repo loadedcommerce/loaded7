@@ -100,6 +100,136 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
   }
   
+  // begin shortcut key additions
+  $(window).bind("load", function() {
+    // set the disable var to false to begin
+    var disableKeyCombo = false; 
+    // if any inputs on the page are clicked into then set the disable var to true
+    $(":input").focus(function(){
+      disableKeyCombo = true;
+    }); 
+    // when the input fields are blurred set the disable var back to false
+    $(":input").blur(function(){
+      disableKeyCombo = false;
+    });
+    // when a key is pressed 
+    $("*").keypress(function(e){
+      // first check if the escape key has been presed
+      $(document).keydown(function(e){
+        var code = e.keyCode ? e.keyCode : e.which;
+        if (code == 27) {
+          disableKeyCombo = false; 
+          $('#li-search').removeClass("current");
+          $('#li-messages').removeClass("current");
+          $('#li-add').removeClass("current");
+          $('#li-settings').removeClass("current");
+          $('#addContainer').hide();
+          $('#searchContainer').hide();
+          $('#messagesContainer').hide();
+          $('#settingsContainer').hide();
+          $('#mainMenuContainer').show();
+          $('#recentContainer').show();
+          $('body').focus();
+        }
+      });
+      // if the disable var is false we continue
+      if (!disableKeyCombo == true) {
+        // check to see if a modal is open currently by it's class attribute
+        var modalClass = $('#modals').attr('class');
+        // if the modal's class is not with-blocker we can continue
+        if (modalClass != 'with-blocker') {
+          var code = e.keyCode ? e.keyCode : e.which;
+          if (code == 32) { // space for mega search menu
+            $('#li-add').removeClass("current");
+            $('#li-messages').removeClass("current");
+            $('#li-settings').removeClass("current");
+            $('#messagesContainer').hide();
+            $('#addContainer').hide();
+            $('#mainMenuContainer').hide();
+            $('#recentContainer').hide();
+            $('#settingsContainer').hide();
+            $('#li-search').addClass("current");
+            $('#searchContainer').show();
+            $('#searchContainerInput').find('input').focus(); 
+            return false;
+          };
+          if (code == 97) { // a for quick add menu
+            $('#li-search').removeClass("current");
+            $('#li-messages').removeClass("current");
+            $('#li-settings').removeClass("current");
+            $('#messagesContainer').hide();
+            $('#searchContainer').hide();
+            $('#mainMenuContainer').hide();
+            $('#recentContainer').hide();
+            $('#settingsContainer').hide();
+            $('#li-add').addClass("current");
+            $('#addContainer').show();
+          };
+          if (code == 109) { // m for messages menu
+            $('#li-search').removeClass("current");
+            $('#li-settings').removeClass("current");
+            $('#li-add').removeClass("current");
+            $('#addContainer').hide();
+            $('#searchContainer').hide();
+            $('#mainMenuContainer').hide();
+            $('#recentContainer').hide();
+            $('#settingsContainer').hide();
+            $('#li-messages').addClass("current");
+            $('#messagesContainer').show();
+          };
+          if (code == 115) { // s for settings menu
+            $('#li-search').removeClass("current");
+            $('#li-messages').removeClass("current");
+            $('#li-add').removeClass("current");
+            $('#addContainer').hide();
+            $('#searchContainer').hide();
+            $('#messagesContainer').hide();
+            $('#recentContainer').hide();
+            $('#settingsContainer').show();
+            $('#li-settings').addClass("current");
+            $('#mainMenuContainer').hide();
+          };
+          var liAddClass = $('#li-add').attr("class");
+          if (liAddClass == 'current') {
+            if (code == 111) { // o for new (O)rder
+              //alert('new order');
+              //window.location.href = '';
+            };
+            if (code == 99) { // c for new (C)ustomer
+              //alert('new customer');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>';
+            };
+            if (code == 103) { // g for new cate(G)ory
+              //alert('new category');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>';
+            };
+            if (code == 112) { // p for new (P)roduct
+              //alert('new product');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>';
+            };
+            if (code == 108) { // l for new specia(L)
+              //alert('new special');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>';
+            };
+            if (code == 116) { // t for new manufac(T)urer
+              //alert('new manufacturer');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>';
+            };
+            if (code == 98) { // b for new (B)anner
+              //alert('new banner');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>';
+            };
+            if (code == 110) { // n for new (N)ewsletter
+              //alert('new newsletter');
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>';
+            };
+          }
+        }
+      }
+    });
+  });
+  // end shortcut key additions
+  
   // profile slate addition
   // get the menu width
   var menuWidth = $("#menu").width();
