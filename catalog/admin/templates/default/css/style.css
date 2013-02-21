@@ -2735,7 +2735,7 @@ li.message-menu {
 
 /* Thin grey menu */
 .title-menu {
-  margin: 0;
+  margin: -2px;
   min-height: 0;
   list-style-type: none;
   }
@@ -2851,7 +2851,7 @@ li.message-menu {
     
 /* Orders menu */
 .orders-menu {
-  margin: 20px -32px -15px -15px !important;
+  margin: 0;
   min-height: 0;
   list-style-type: none;
   -webkit-text-shadow: none;
@@ -2860,7 +2860,7 @@ li.message-menu {
   }
   .orders-menu > li,
   li.orders-menu {
-    padding: 10px 10px 0 50px !important;
+    padding: 10px 10px 0 57px !important;
     font-size: 13px;
     line-height: 16px;
     font-weight: normal;
@@ -2870,16 +2870,17 @@ li.message-menu {
     .orders-menu > li > a,
     li.orders-menu > a {
       display: block;
-      margin: -10px -10px -10px -50px;
-      padding: 10px 14px 10px 14px;
+      margin: -10px -10px -10px -46px;
+      padding: 10px 14px 10px 24px;
       color: inherit;
     }
     .orders-menu > li time,
     li.orders-menu time {
       float: left;
       display: block;
-      width: 30px;
-      margin-left: -40px;
+      margin: 6px 1px 0 -26px;
+      height: 30px;
+      vertical-align: top;
       color: #CCCCCC;
       color: rgba(0, 0, 0, 0.2);
       text-transform: uppercase;
@@ -2901,7 +2902,7 @@ li.message-menu {
         
 /* Customers menu */
 .customers-menu {
-  margin: 20px -32px -15px -15px !important;
+  margin: 0;
   min-height: 0;
   list-style-type: none;
   -webkit-text-shadow: none;
@@ -2910,7 +2911,7 @@ li.message-menu {
   }
   .customers-menu > li,
   li.customers-menu {
-    padding: 10px 10px 0 50px !important;
+    padding: 10px 10px 0 57px !important;
     font-size: 13px;
     line-height: 16px;
     font-weight: normal;
@@ -2920,16 +2921,17 @@ li.message-menu {
     .customers-menu > li > a,
     li.customers-menu > a {
       display: block;
-      margin: -10px -10px -10px -50px;
-      padding: 10px 14px 10px 14px;
+      margin: -10px -10px -10px -46px;
+      padding: 10px 14px 10px 24px;
       color: inherit;
     }
     .customers-menu > li time,
     li.customers-menu time {
       float: left;
       display: block;
-      width: 30px;
-      margin-left: -40px;
+      margin: 6px 10px 0 -26px;
+      height: 30px;
+      vertical-align: top;
       color: #CCCCCC;
       color: rgba(0, 0, 0, 0.2);
       text-transform: uppercase;
@@ -2951,7 +2953,7 @@ li.message-menu {
     
 /* Products menu */
 .products-menu {
-  margin: 20px -32px -15px -15px !important;
+  margin: 0;
   min-height: 0;
   list-style-type: none;
   -webkit-text-shadow: none;
@@ -2978,8 +2980,7 @@ li.message-menu {
     li.products-menu time {
       float: left;
       display: block;
-      margin-left: -20px;
-      margin-right: 10px;
+      margin: 6px 10px 0 -26px;
       height: 30px;
       vertical-align: top;
       color: #CCCCCC;
