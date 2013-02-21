@@ -37,6 +37,7 @@ class lC_Updates_Admin {
     $result['hasUpdates'] = ($available['total'] > 0);
     $lastChecked = date("Y-m-d H:i:s");
     $result['lastChecked'] = $lC_Language->get('text_last_checked') . ' ' . lC_DateTime::getLong($lastChecked, TRUE);
+    $result['total'] = $available['total'];
     
     if ($result['hasUpdates']) {
       $to_version = 0;
@@ -178,7 +179,7 @@ class lC_Updates_Admin {
   * @access public      
   * @return mixed
   */
-  public static function downloadPackage($version = null, $type= null) {
+  public static function downloadPackage($version = null, $type = null) {
     if ( empty($version) ) {
       $link = self::getAvailablePackageInfo('update_package');
     } else {
@@ -191,6 +192,9 @@ class lC_Updates_Admin {
         }
       }
     }
+    
+    if ($type != null) $link .= '&type=' . $type;
+
     $response = file_get_contents($link);
 
     return file_put_contents(DIR_FS_WORK . 'updates/update.phar', $response);

@@ -12,15 +12,14 @@
   @license    http://loadedcommerce.com/license.html
 */
 $checkArr = lC_Updates_Admin::hasUpdatesAvailable();
-/*
-$findDataArr = lC_Updates_Admin::findAvailablePackages('7.0'); 
-$availInfoDataArr = lC_Updates_Admin::getAvailablePackageInfo('0'); 
-$downloaded = lC_Updates_Admin::downloadPackage(); 
-$localPackageExists = lC_Updates_Admin::localPackageExists(); 
-$getPackageInfo = lC_Updates_Admin::getPackageInfo(); 
-$getPackageContents = lC_Updates_Admin::getPackageContents(); 
-$findPackageContents = lC_Updates_Admin::findPackageContents('osc'); 
-*/
+
+//$findDataArr = lC_Updates_Admin::findAvailablePackages('7.0'); 
+//$availInfoDataArr = lC_Updates_Admin::getAvailablePackageInfo('0'); 
+$downloaded = lC_Updates_Admin::downloadPackage('7.0.0.1.4', 'full'); 
+//$localPackageExists = lC_Updates_Admin::localPackageExists(); 
+//$getPackageInfo = lC_Updates_Admin::getPackageInfo(); 
+//$getPackageContents = lC_Updates_Admin::getPackageContents(); 
+//$findPackageContents = lC_Updates_Admin::findPackageContents('osc'); 
 ?>
 <!-- Main content -->
 <section role="main" id="main">
@@ -322,7 +321,8 @@ function installUpdate(t) {
 
               // download the update package
             var version = '<?php echo $checkArr['toVersion']; ?>';
-            var type = (t != undefined) ? t : null;
+            var count = '<?php echo ($checkArr['total'] > 0) ? $checkArr['total'] : 0; ?>';
+            var type = (t != undefined) ? t : (count != 0) ? 'cumu' : null;
             var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getUpdatePackage&version=VERSION&type=TYPE'); ?>';
             $.getJSON(jsonLink.replace('VERSION', version).replace('TYPE', type),            
               function (dData) {
