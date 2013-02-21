@@ -23,11 +23,14 @@
 .form-list label.required em { float:right; font-style:normal; color:#eb340a; position:absolute; top:10; right:-18px; }
 .form-list .input-box { display:block; clear:both; width:250px; }
 .form-list .field { float:left; width:275px; }
-.form-list input.input-text { width:254px; height:20px;}
-.form-list select { width:260px; height:20px;}
-/*button style*/
-#payment-button{ color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#873b7a !important; border:0px; line-height:100%; cursor:pointer; vertical-align:middle; margin-left:20px;}
-#payment-button:hover { background-color: #bf58ad !important; box-shadow: 0 0 0 #FFFFFF inset, 0 2px 1px rgba(204, 204, 204, 0.9); }
+.form-list input.input-text { width:254px; height:20px; }
+.form-list select { width:260px; height:25px; padding:5px }
+#payment-button { color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#873b7a !important; border:0px; line-height:100%; cursor:pointer; vertical-align:middle; float:left; }
+#cancel { float:left; width:168px; }
+#checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding: 13px 20px 35px 25px; width: 266px; }
+.v-fix { padding-bottom:15px; }
+#payment_form_ccsave u { padding-left: 93px; }
+#payment-processing { margin-left: -83px; margin-top: -6px; }
 </style>
 <div class="full_page">
   <h5><?php echo $lC_Language->get('text_checkout'); ?></h5>
@@ -70,7 +73,7 @@
                </div>
             </div>
             <div id="checkout_shipping_col2" style="width:60%; float:right;">
-                <div id="checkoutConfirmationDetails"> [[FORM INSERT]] </div>
+              <div id="checkoutConfirmationDetails"> [[FORM INSERT]] </div>
             </div>
           </div>
         </div>

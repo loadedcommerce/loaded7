@@ -23,9 +23,7 @@ class lC_Checkout_Payment_template extends lC_Template {
   function lC_Checkout_Payment_template() {
       global $lC_ShoppingCart, $lC_Language;
 
-      $this->_page_title = $lC_Language->get('heading_title') . ' ' . session_name() . '=' . session_id();
-      
-      echo $this->_page_title;
+      $this->_page_title = $lC_Language->get('heading_title');
   }
 }
 ?>
