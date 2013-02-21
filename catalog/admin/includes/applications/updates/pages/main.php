@@ -108,7 +108,7 @@ $downloaded = lC_Updates_Admin::downloadPackage('7.0.0.1.4', 'full');
               </a>               
             </td>
             <td align="center">
-              <a id="download" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? 'href="#"' : 'href="https://github.com/loadedcommerce/loaded7/archive/' . $checkArr['toVersion'] . '.zip" '); ?> class="button download-zip<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>">
+              <a id="download" href="#" class="button download-zip<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>">
                 <span class="button-icon blue-gradient glossy"><span class="icon-download"></span></span>
                 <?php echo $lC_Language->get('button_download_zip'); ?>
               </a>
@@ -199,13 +199,21 @@ $(document).ready(function() {
   checkForUpdates();  
 });
 
-function updateHistoryLog() {
+
+$('#download').click(function(e) {
+  var access = '<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? 0 : 1); ?>';
+  if (access == 0) return false;
+  
+  var file = '<?php echo 'https://github.com/loadedcommerce/loaded7/archive/' . $checkArr['toVersion'] . '.zip' ?>';
+  e.preventDefault();
+  window.location.href = file;
+    
   // write to the update history log
   __writeHistory('<?php echo $lC_Language->get('text_history_action_backup'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_download'), $checkArr['toVersion']); ?>');
   oTable.fnReloadAjax(); 
   
-  return true; 
-}
+  return false;
+});
 
 function checkForUpdates() {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
@@ -374,11 +382,12 @@ function installUpdate(t) {
                         }
                         __showStep(5,1);
                         __showStep(99,1);
-                        $('#vFooterText').html(__okBlock());
-                        $('#version-table thead').removeClass('red').addClass('green');
                         
                         // write to the update history log
-                        __writeHistory('<?php echo $lC_Language->get('text_history_action_update'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_update_success'), $checkArr['toVersion']); ?>' + ((type != null) ? ('-' + type) : null));
+                        __writeHistory('<?php echo $lC_Language->get('text_history_action_update'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_update_success'), $checkArr['toVersion']); ?>' + ((type != null) ? ('-' + type) : ''));
+
+                        $('#vFooterText').html(__okBlock());
+                        $('#version-table thead').removeClass('red').addClass('green');
                         oTable.fnReloadAjax(); 
                               
                         // set maint mode=off
@@ -414,7 +423,7 @@ function undoUpdate() {
     $('#version-table > tbody').empty();  
     $('#version-table > tbody').empty();
     $('#version-table').css("margin-bottom", "10px");
-    $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_latest_version'); ?></td><td class="version">' + toVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), utility::getVersionDate()); ?></td></tr>').addClass('red'); 
+    $('#version-table > thead').html('<tr><td class="before">&nbsp;</td><td class="version">Undo Update</td><td class="after">&nbsp;</td></tr>').addClass('red'); 
     $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
     $('#updateButtonset').slideUp();
     $('.update-text').html('<p><?php echo $lC_Language->get('text_initializing'); ?></p>').attr('style', 'text-align:center').blink({ maxBlinks: 5, blinkPeriod: 1000 });
@@ -464,14 +473,14 @@ function undoUpdate() {
               return false;
             }
             __showUndoStep(2,1);
-            __showUndoStep(99,1);
-
-            $('#vFooterText').html(__okBlock());
-            $('#version-table thead').removeClass('green').addClass('red');                
-            $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_current_version'); ?></td><td class="version"><?php echo utility::getVersion(); ?></td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), utility::getVersionDate()); ?></td></tr>').addClass('red'); 
+            __showUndoStep(99,1); 
                   
             // write to the update history log
             __writeHistory('<?php echo $lC_Language->get('text_history_action_undo'); ?>', '<?php echo $lC_Language->get('text_history_result_undo_success'); ?>');
+            
+            $('#vFooterText').html(__okBlock());
+            $('#version-table thead').removeClass('green').addClass('red');                
+            $('#version-table > thead').html('<tr><td class="before">&nbsp;</td><td class="version">Undo Update</td><td class="after">&nbsp;</td></tr>').addClass('red');            
             oTable.fnReloadAjax(); 
                                           
             // set maint mode=off
@@ -484,7 +493,7 @@ function undoUpdate() {
   }, function() {
     return false;
   });      
-}
+} 
 
 function __showStep(step, fini) {
   var loader = '<span class="icon-right icon-blue margin-left margin-right"></span><span class="loader"></span>';
