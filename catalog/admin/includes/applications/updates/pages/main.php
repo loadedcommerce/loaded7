@@ -12,7 +12,7 @@
   @license    http://loadedcommerce.com/license.html
 */
 $checkArr = lC_Updates_Admin::hasUpdatesAvailable();
-
+$from_version = utility::getVersion();
 /*
 $findDataArr = lC_Updates_Admin::findAvailablePackages('7.0'); 
 $availInfoDataArr = lC_Updates_Admin::getAvailablePackageInfo('0'); 
@@ -110,7 +110,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
               </a>               
             </td>
             <td align="center">
-              <a id="download" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? 'href="#"' : 'onclick="updateHistoryLog();" href="https://github.com/loadedcommerce/loaded7/archive/' . $checkArr['toVersion'] . '.zip"'); ?>href="https://github.com/loadedcommerce/loaded7/archive/<?php echo $checkArr['toVersion']; ?>.zip" class="button download-zip<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>">
+              <a id="download" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? 'href="#"' : 'href="https://github.com/loadedcommerce/loaded7/archive/' . $checkArr['toVersion'] . '.zip" '); ?> class="button download-zip<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>">
                 <span class="button-icon blue-gradient glossy"><span class="icon-download"></span></span>
                 <?php echo $lC_Language->get('button_download_zip'); ?>
               </a>
@@ -119,7 +119,7 @@ $findPackageContents = lC_Updates_Admin::findPackageContents('osc');
               <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? NULL : 'onclick="undoUpdate();"')); ?> class="button undo-last<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? ' disabled' : NULL)); ?>">
                 <span class="button-icon red-gradient glossy"><span class="icon-undo"></span></span>
                 <?php echo $lC_Language->get('button_undo_last_update'); ?>
-              </a>
+              </a>                                                                                                                                                
             </td>
           </tr>
         </table>
@@ -203,7 +203,7 @@ $(document).ready(function() {
 
 function updateHistoryLog() {
   // write to the update history log
-  __writeHistory('<?php echo $lC_Language->get('text_history_action_backup'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_download'), $to_version); ?>');
+  __writeHistory('<?php echo $lC_Language->get('text_history_action_backup'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_download'), $checkArr['toVersion']); ?>');
   oTable.fnReloadAjax(); 
   
   return true; 
@@ -247,9 +247,6 @@ function checkForUpdates() {
         $('#updateText').html('<?php echo $lC_Language->get('text_up_to_date'); ?>');
         $('#updateButtonset').html('<a id="check-again" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? NULL : 'onclick="checkForUpdates();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? ' disabled' : NULL); ?>"><span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span><?php echo $lC_Language->get('button_check_again'); ?></a>');
       }
-      // write to the update history log
-      __writeHistory('<?php echo $lC_Language->get('text_history_action_version_check'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_version_check'), utility::getVersion()); ?>');
-      oTable.fnReloadAjax();      
     }
   );  
 }
@@ -294,6 +291,11 @@ function installUpdate(t) {
         }       
         if (data.rpcStatus != 1) {
           __showStep(1,2);
+          
+          // write to the update history log
+          __writeHistory('<?php echo $lC_Language->get('text_history_action_update'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_update_error'), $checkArr['toVersion']); ?>');
+          oTable.fnReloadAjax();
+                                    
           __setMaintenanceMode('off');
           $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
           return false;
@@ -307,6 +309,11 @@ function installUpdate(t) {
           function (cData) {
             if (cData.rpcStatus != 1) {
               __showStep(2,2);
+              
+              // write to the update history log
+              __writeHistory('<?php echo $lC_Language->get('text_history_action_update'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_update_error'), $checkArr['toVersion']); ?>');
+              oTable.fnReloadAjax();
+                                        
               __setMaintenanceMode('off');
               $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
               return false;
@@ -322,6 +329,11 @@ function installUpdate(t) {
               function (dData) {
                 if (dData.rpcStatus != 1) {
                   __showStep(3,2);
+                  
+                  // write to the update history log
+                  __writeHistory('<?php echo $lC_Language->get('text_history_action_update'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_update_error'), $checkArr['toVersion']); ?>');
+                  oTable.fnReloadAjax();
+                                            
                   __setMaintenanceMode('off');
                   $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                   return false;
@@ -335,6 +347,11 @@ function installUpdate(t) {
                   function (dData) {
                     if (dData.rpcStatus != 1) {
                       __showStep(4,2);
+                      
+                      // write to the update history log
+                      __writeHistory('<?php echo $lC_Language->get('text_history_action_update'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_update_error'), $checkArr['toVersion']); ?>');
+                      oTable.fnReloadAjax();
+                                                
                       __setMaintenanceMode('off');
                       $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                       return false;
@@ -348,6 +365,11 @@ function installUpdate(t) {
                       function (dData) {
                         if (dData.rpcStatus != 1) {
                           __showStep(5,2);
+
+                          // write to the update history log
+                          __writeHistory('<?php echo $lC_Language->get('text_history_action_update'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_update_error'), $checkArr['toVersion']); ?>');
+                          oTable.fnReloadAjax();                          
+
                           __setMaintenanceMode('off');
                           $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                           return false;
@@ -357,6 +379,10 @@ function installUpdate(t) {
                         $('#vFooterText').html(__okBlock());
                         $('#version-table thead').removeClass('red').addClass('green');
                         
+                        // write to the update history log
+                        __writeHistory('<?php echo $lC_Language->get('text_history_action_update'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_update_success'), $checkArr['toVersion']); ?>');
+                        oTable.fnReloadAjax(); 
+                              
                         // set maint mode=off
                         __setMaintenanceMode('off');                      
                       }
@@ -384,7 +410,7 @@ function undoUpdate() {
     // set maint mode=on
     __setMaintenanceMode('on');
     
-    var fromVersion = '<?php echo utility::getVersion(); ?>';
+    var fromVersion = '<?php echo $from_version; ?>';
     var toVersion = '<?php echo $checkArr['toVersion']; ?>';  
     $('#versionContainer .fieldset').removeClass('orange-gradient');
     $('#version-table tbody').removeClass('green').removeClass('red');
@@ -413,6 +439,11 @@ function undoUpdate() {
         }      
         if (data.rpcStatus != 1) {
           __showUndoStep(1,2);
+          
+          // write to the update history log
+          __writeHistory('<?php echo $lC_Language->get('text_history_action_undo'); ?>', '<?php echo $lC_Language->get('text_history_result_undo_error'); ?>');
+          oTable.fnReloadAjax();
+                        
           __setMaintenanceMode('off');
           $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
           return false;
@@ -426,6 +457,11 @@ function undoUpdate() {
           function (cData) {
             if (cData.rpcStatus != 1) {
               __showUndoStep(2,2);
+              
+              // write to the update history log
+              __writeHistory('<?php echo $lC_Language->get('text_history_action_undo'); ?>', '<?php echo $lC_Language->get('text_history_result_undo_error'); ?>');
+              oTable.fnReloadAjax();
+                          
               __setMaintenanceMode('off');
               $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
               return false;
@@ -437,6 +473,10 @@ function undoUpdate() {
             $('#version-table thead').removeClass('green').addClass('red');                
             $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_current_version'); ?></td><td class="version">' + fromVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), utility::getVersionDate()); ?></td></tr>').addClass('red'); 
                   
+            // write to the update history log
+            __writeHistory('<?php echo $lC_Language->get('text_history_action_undo'); ?>', '<?php echo $lC_Language->get('text_history_result_undo_success'); ?>');
+            oTable.fnReloadAjax(); 
+                                          
             // set maint mode=off
             __setMaintenanceMode('off');  
    
