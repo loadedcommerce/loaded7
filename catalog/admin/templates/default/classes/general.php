@@ -233,7 +233,7 @@ class lC_General_Admin {
       $QimageResults[] = $Qimage->toArray();
     }
     
-    if ($QimageResults[0]['image'] != null) {
+    if ($QimageResults[0]['image'] != null && is_file(DIR_WS_IMAGES . 'avatar/' . $QimageResults[0]['image'])) {
       $result = DIR_WS_IMAGES . 'avatar/' . $QimageResults[0]['image'];
     } else {
       $result = 'templates/default/img/user.png';
