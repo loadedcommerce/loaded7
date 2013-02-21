@@ -12,7 +12,6 @@
   @license    http://loadedcommerce.com/license.html
 */
 $checkArr = lC_Updates_Admin::hasUpdatesAvailable();
-$from_version = utility::getVersion();
 /*
 $findDataArr = lC_Updates_Admin::findAvailablePackages('7.0'); 
 $availInfoDataArr = lC_Updates_Admin::getAvailablePackageInfo('0'); 
@@ -410,7 +409,7 @@ function undoUpdate() {
     // set maint mode=on
     __setMaintenanceMode('on');
     
-    var fromVersion = '<?php echo $from_version; ?>';
+    var fromVersion = '<?php echo utility::getVersion(); ?>';
     var toVersion = '<?php echo $checkArr['toVersion']; ?>';  
     $('#versionContainer .fieldset').removeClass('orange-gradient');
     $('#version-table tbody').removeClass('green').removeClass('red');

@@ -374,7 +374,10 @@ class utility {
   * @return string
   */
   public static function getVersion() {
-    return INSTALLED_VERSION_MAJOR . '.' . INSTALLED_VERSION_MINOR . '.' . INSTALLED_VERSION_MAINT . '.' . INSTALLED_VERSION_PATCH . '.' . INSTALLED_VERSION_BUILD;
+    
+    $vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents(DIR_FS_CATALOG . 'includes/version.txt'), 2))));
+
+    return $vInfo[0];
   }
  /**
   * Return the version date
@@ -383,7 +386,9 @@ class utility {
   * @return string
   */
   public static function getVersionDate() {
-    return INSTALLED_RELEASE_DATE;
+    $vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents(DIR_FS_CATALOG . 'includes/version.txt'), 2))));
+
+    return $vInfo[1];  
   }  
 } 
 ?>

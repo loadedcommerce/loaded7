@@ -25,6 +25,4 @@
   define('DB_TABLE_PREFIX', 'lc_');
   define('USE_PCONNECT', 'false');
   define('STORE_SESSIONS', 'database');
-
-  if (file_exists(DIR_FS_CATALOG . 'includes/version.php')) include_once(DIR_FS_CATALOG . 'includes/version.php');
 ?>
