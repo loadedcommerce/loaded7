@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS lc_administrators (
   user_password varchar(40) NOT NULL,
   first_name varchar(64) NOT NULL DEFAULT '',
   last_name varchar(64) NOT NULL DEFAULT '',
+  image varchar(255) NOT NULL DEFAULT '',
   access_group_id int NOT NULL DEFAULT '0',
   PRIMARY KEY (id)
 );
@@ -706,13 +707,23 @@ CREATE TABLE IF NOT EXISTS lc_templates_boxes_to_pages (
   KEY templates_boxes_id (templates_boxes_id,templates_id,content_page,boxes_group)
 );
 
+DROP TABLE IF EXISTS lc_updates_log;
+CREATE TABLE IF NOT EXISTS lc_updates_log (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  action varchar(32) NOT NULL DEFAULT '',
+  result varchar(128) NOT NULL DEFAULT '',
+  `user` varchar(64) NOT NULL DEFAULT '',
+  dateCreated datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (weight_class_id,language_id)
+);
+
 DROP TABLE IF EXISTS lc_weight_classes;
 CREATE TABLE IF NOT EXISTS lc_weight_classes (
   weight_class_id int(11) NOT NULL,
   weight_class_key varchar(4) NOT NULL,
   language_id int(11) NOT NULL,
   weight_class_title varchar(255) NOT NULL,
-  PRIMARY KEY (weight_class_id,language_id)
+  PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS lc_weight_classes_rules;
@@ -978,6 +989,7 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(376, 'Sort order of display.', 'MODULE_PAYMENT_OGONE_DIRECTLINK_CC_SORT_ORDER', '0', 'Sort order of display. Lowest is displayed first.', 6, 0, NULL, '2012-12-01 14:18:35', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(377, 'Payment Zone', 'MODULE_PAYMENT_OGONE_DIRECTLINK_CC_ZONE', '0', 'If a zone is selected, only enable this payment method for that zone.', 6, 2, NULL, '2012-12-01 14:18:35', 'lc_cfg_use_get_zone_class_title', 'lc_cfg_set_zone_classes_pull_down_menu');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(378, 'Set Order Status', 'MODULE_PAYMENT_OGONE_DIRECTLINK_CC_ORDER_STATUS_ID', '0', 'Set the status of orders made with this payment module to this value', 6, 0, NULL, '2012-12-01 14:18:35', 'lc_cfg_use_get_order_status_title', 'lc_cfg_set_order_statuses_pull_down_menu');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(379, 'Down for Maintenance', 'STORE_DOWN_FOR_MAINTENANCE', '-1', 'Set the store to maintenance mode.', 1, 22, '2012-09-16 00:37:33', '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(1, 'My Store', 'General information about my store', 1, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(2, 'Minimum Values', 'The minimum values for functions / data', 2, 1);
@@ -993,7 +1005,7 @@ INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(16, 'Regulations', 'Regulation options', 16, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(17, 'Credit Cards', 'Credit card options', 17, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(18, 'Program Locations', 'Locations to certain programs on the server.', 18, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(19, 'Core Updater', 'Core updater settings', 19, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(19, 'Core Updates', 'Core update settings', 19, 1);
 
 INSERT INTO lc_countries (countries_id, countries_name, countries_iso_code_2, countries_iso_code_3, address_format) VALUES(3, 'Algeria', 'DZ', 'DZA', '');
 INSERT INTO lc_countries (countries_id, countries_name, countries_iso_code_2, countries_iso_code_3, address_format) VALUES(4, 'American Samoa', 'AS', 'ASM', '');

@@ -125,7 +125,7 @@ class utility {
   * @access public  
   * @return array
   */ 
-  public static function xml2arr($_xml, $get_attributes = 1, $priority = 'tag', $clean = TRUE) {
+  public static function xml2arr($_xml, $get_attributes = 1, $priority = 'tag') {
     if(!$_xml) return array();
     
     $xml = substr($_xml, strpos($_xml, '<?xml'));
@@ -238,7 +238,7 @@ class utility {
         $current = &$parent[$level-1];
       }
     }
-    
+           
     return $xml_array;
   }     
  /**
@@ -374,7 +374,21 @@ class utility {
   * @return string
   */
   public static function getVersion() {
-    return INSTALLED_VERSION_MAJOR . '.' . INSTALLED_VERSION_MINOR . '.' . INSTALLED_VERSION_MAINT . '.' . INSTALLED_VERSION_PATCH . '.' . INSTALLED_VERSION_BUILD;
+    
+    $vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents(DIR_FS_CATALOG . 'includes/version.txt'), 2))));
+
+    return $vInfo[0];
   }
+ /**
+  * Return the version date
+  *
+  * @access public
+  * @return string
+  */
+  public static function getVersionDate() {
+    $vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents(DIR_FS_CATALOG . 'includes/version.txt'), 2))));
+
+    return $vInfo[1];  
+  }  
 } 
 ?>

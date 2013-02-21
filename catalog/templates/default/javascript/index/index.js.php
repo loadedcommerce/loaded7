@@ -1,5 +1,6 @@
+<?php
 /**
-*  $Id: general.js v1.0 2011-11-04  datazen $
+*  $Id: index.js v1.0 2011-11-04  datazen $
 *
 *  LoadedCommerce, Innovative eCommerce Solutions
 *  http://www.loadedcommerce.com
@@ -10,8 +11,18 @@
 *  @copyright  (c) 2013 LoadedCommerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+global $lC_Language; 
+?>
+<script>
 $(document).ready(function() {
 
+  var maintMode = '<?php echo STORE_DOWN_FOR_MAINTENANCE; ?>';
+  if (maintMode == 1) {
+    setMaintenanceMode('on');
+  } else {
+    setMaintenanceMode('off');
+  }
+  
   // jBreadcrumb
   $("#breadCrumbContainer").jBreadCrumb();     
    
@@ -138,6 +149,15 @@ function __jquery_placeholder_goTitling() {
   });
 }
 
+function setMaintenanceMode(s) {
+  if (s == 'on') {
+    $("body").mask('<span style="font-size:2em !important;"><?php echo $lC_Language->get('update_message_text1'); ?></span>');
+    $('.loadmask-msg').css({'top':'200px'});
+  } else {
+    $("body").unmask();
+  }
+}
+ 
 // grid/list product view switch
 $('#listView').click(function(){
   $('#viewList').show();
@@ -155,3 +175,4 @@ function rowOverEffect(object) {
 function rowOutEffect(object) {
   if (object.className == 'moduleRowOver') object.className = 'moduleRow';
 }
+</script>

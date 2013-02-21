@@ -141,19 +141,6 @@ icon_user_male = Male
 icon_view = View
 icon_processing = Processing ...
 
-month_1 = January
-month_2 = February
-month_3 = March
-month_4 = April
-month_5 = May
-month_6 = June
-month_7 = July
-month_8 = August
-month_9 = September
-month_10 = October
-month_11 = November
-month_12 = December
-
 ms_success_action_performed = Success: The action was successfully performed.
 ms_success_upload_file_saved = Success: The file uploaded has been saved successfully.
 
@@ -241,3 +228,9 @@ tooltip_search = Search (space bar)
 tooltip_quick_add = Quick Add (a)
 tooltip_messages = Messages (m)
 tooltip_settings = Settings (s) / Main Menu (escape)
+
+text_version = Version
+
+update_message_title = Updates are Available!
+update_message_text1 = New version
+update_message_text2 = released.

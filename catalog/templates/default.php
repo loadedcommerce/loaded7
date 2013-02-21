@@ -41,6 +41,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <link rel="stylesheet" href="templates/default/css/styles.css">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Istok+Web' type='text/css'>
     <link rel="stylesheet" type="text/css" href="ext/jquery/thickbox/thickbox.css" />
+    <link rel="stylesheet" href="templates/default/css/loadmask.css?v=1">     
 
     <!-- Load Page/Group Specific Tags -->
     <?php
@@ -258,13 +259,13 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="ext/jquery/jquery.jBreadCrumb.1.1.js"></script>
     <script src="ext/jquery/thickbox/thickbox-compressed.js"></script>
     <script src="ext/datepicker/datepicker.js"></script>
+    <script src="ext/jquery/jquery.loadmask.js"></script>
     <!-- Template functions -->
     <script src="templates/default/javascript/jquery.flexslider.js" ></script>
     <script src="templates/default/javascript/jquery.jcarousel.js"></script>
     <script src="templates/default/javascript/jquery.jtweetsanywhere-1.3.1.min.js" ></script>
     <script src="templates/default/javascript/jquery.magnify-1.0.2.js"></script>
     <script src="templates/default/javascript/form_elements.js" ></script>
-    <script src="templates/default/javascript/general.js"></script>
     
     <!-- js loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js'; ?> -->
     <!-- js.php loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '/' . $lC_Template->getModule() . '.js.php'; ?> -->

@@ -27,7 +27,7 @@ class lC_Application_Administrators extends lC_Template_Admin {
   * Class constructor
   */
   public function __construct() {
-    global $lC_Language;
+    global $lC_Language, $lC_Database, $lC_MessageStack;
 
     if ( !isset($_GET['set']) ) {
       $_GET['set'] = 'members';
@@ -51,8 +51,13 @@ class lC_Application_Administrators extends lC_Template_Admin {
             default :
               $result = (lC_Administrators_Admin::saveGroup(NULL, $_POST));
           }
-          if ($result['rpcStatus'] != 1) {
-            die('rpcStatus: ' . $result['rpcStatus']);
+          
+          if ($result['rpcStatus'] != 1 || $lC_Database->isError()) {
+            if ($lC_Database->isError()) {
+              $lC_MessageStack->add($this->_module, $lC_Database->getError(), 'error');
+            } else {
+              $lC_MessageStack->add($this->_module, $lC_Language->get('ms_error_action_not_performed'), 'error');
+            }
           }
           lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '&set=groups'));
         }

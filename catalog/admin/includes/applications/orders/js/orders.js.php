@@ -11,13 +11,13 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-global $lC_Template, $lC_Language;
-$oSearch = (isset($_GET['oID']) && $_GET['oID'] != null ? '&oSearch=' . $_GET['oID'] : null);
+global $lC_Template, $lC_Language, $cSearch;
+$cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '&cSearch=' . $_SESSION['cIDFilter'] : '';
 ?>
 <script>
   $(document).ready(function() {
     var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';            
-    var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA' . $oSearch); ?>';
+    var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA' . $cSearch); ?>';
     oTable = $('#dataTable').dataTable({
       "bProcessing": true,
       "bServerSide": true,

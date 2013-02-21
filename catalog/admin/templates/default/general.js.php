@@ -10,8 +10,10 @@
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
-*/ 
-global $lC_Template, $lC_Language;
+*/
+require_once('includes/applications/updates/classes/updates.php');    
+
+global $lC_Template, $lC_Language; 
 ?>
 <script>
 $(document).ready(function() {
@@ -98,6 +100,16 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
   } else { // desktop
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
+  }
+  
+  // check for updates and show notification if necessary    
+  var title = '<?php echo lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, 'updates'), $lC_Language->get('update_message_title'), 'style="color:white;"'); ?>';
+  var uData = <?php echo json_encode(lC_Updates_Admin::hasUpdatesAvailable()); ?>;
+  if (uData.hasUpdates && module == 'index') {
+    notify(title, '<?php echo $lC_Language->get('update_message_text1'); ?> ' + uData.toVersion + ' <?php echo $lC_Language->get('update_message_text2'); ?>', {
+      icon: 'templates/default/img/smiley.png',
+      showCloseOnHover: false
+    });    
   }
   
   // begin shortcut key additions

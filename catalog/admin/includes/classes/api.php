@@ -45,7 +45,7 @@ class lC_Api {
     $checksum = hash('sha256', json_encode($registerArr));
     $registerArr['checksum'] = $checksum;
     
-    $resultXML = $this->__sendToHost($registerArr);
+    $resultXML = $this->__sendToHost($registerArr, 'https://api.loadedcommerce.com/1_0/register/install/');
     $newInstallationID = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
     
     // remove any old value that might be in the database
@@ -60,7 +60,7 @@ class lC_Api {
     $Qupdate->bindValue(':configuration_key', 'INSTALLATION_ID');
     $Qupdate->bindValue(':configuration_value', $newInstallationID);
     $Qupdate->bindValue(':configuration_description', 'Installation ID');      
-    $Qupdate->bindValue(':configuration_group_id', '0');      
+    $Qupdate->bindValue(':configuration_group_id', '6');      
     $Qupdate->bindValue(':last_modified', date("Y-m-d H:m:s"));   
     $Qupdate->execute();  
 
@@ -100,13 +100,13 @@ class lC_Api {
   * Send the data to the host 
   *  
   * @param array  $_data    The data array to process
+  * @param string $_url     The endpoint URL
   * @param string $_action  Switch for POST or GET
   * @access private      
   * @return mixed
   */  
-  private function __sendToHost($_data, $_action = 'post') {
+  protected function __sendToHost($_data = NULL, $_url, $_action = 'post') {
     
-    $url = 'https://api.loadedcommerce.com/1_0/register/install/'; 
     $agent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)";
     $ch = curl_init();
     
@@ -116,9 +116,9 @@ class lC_Api {
       curl_setopt($ch, CURLOPT_POSTFIELDS, $_data);
     } else {
       $params = (is_array($_data) && !empty($_data)) ? utility::arr2nvp($_data) : $_data;
-      $url .= '?' . $params;
+      if (!empty($params)) $_url .= '?' . $params;
     }
-    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_URL, $_url);
     curl_setopt($ch, CURLOPT_TIMEOUT, 30);
     curl_setopt($ch, CURLOPT_USERAGENT, $agent);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -140,6 +140,6 @@ class lC_Api {
     curl_close($ch);
     
     return $result;
-  }
+  }  
 }
 ?>

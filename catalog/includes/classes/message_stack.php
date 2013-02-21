@@ -26,7 +26,7 @@
  * @access private
  */
 
-    private $_data = array();
+    protected $_data = array();
 
 /**
  * Constructor, references the session data to the private $_data variable

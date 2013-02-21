@@ -39,6 +39,7 @@
   <link rel="stylesheet" href="templates/default/css/reset.css?v=1">
   <link rel="stylesheet" href="templates/default/css/style.css?v=1">
   <link rel="stylesheet" href="templates/default/css/colors.css?v=1">
+  <link rel="stylesheet" href="templates/default/css/error.css?v=1">
   <link rel="stylesheet" media="print" href="templates/default/css/print.css?v=1">
   <!-- For progressively larger displays -->
   <link rel="stylesheet" media="only all and (min-width: 480px)" href="templates/default/css/480.css?v=1">
@@ -423,7 +424,7 @@
               <?php echo $output->drawBigMenu('configuration', 'blue-gradient'); ?>
               <!-- li><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'store'); ?>"><?php echo $lC_Language->get('menu_title_addons'); ?></a></li>
               <li><a href="http://www.loadedcommerce.com/additional-serials-p-360.html?CDpath=216_295" target="_blank"><?php echo $lC_Language->get('menu_title_license_management'); ?></a></li>
-              <li><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'updater'); ?>"><?php echo $lC_Language->get('menu_title_core_update'); ?></a></li -->
+              <li><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'updates'); ?>"><?php echo $lC_Language->get('menu_title_core_update'); ?></a></li -->
               <li><a href="http://support.loadedcommerce.com" target="_blank"><?php echo $lC_Language->get('menu_title_report_issues'); ?></a></li>
               <li><a href="http://www.loadedcommerce.com/support-memberships-pc-175_198.html" target="_blank"><?php echo $lC_Language->get('menu_title_get_help'); ?></a></li>
             </ul>

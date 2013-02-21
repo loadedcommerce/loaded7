@@ -73,6 +73,7 @@
   define('TABLE_TEMPLATES', DB_TABLE_PREFIX . 'templates');
   define('TABLE_TEMPLATES_BOXES', DB_TABLE_PREFIX . 'templates_boxes');
   define('TABLE_TEMPLATES_BOXES_TO_PAGES', DB_TABLE_PREFIX . 'templates_boxes_to_pages');
+  define('TABLE_UPDATES_LOG', DB_TABLE_PREFIX . 'updates_log');
   define('TABLE_WEIGHT_CLASS', DB_TABLE_PREFIX . 'weight_classes');
   define('TABLE_WEIGHT_CLASS_RULES', DB_TABLE_PREFIX . 'weight_classes_rules');
   define('TABLE_WHOS_ONLINE', DB_TABLE_PREFIX . 'whos_online');

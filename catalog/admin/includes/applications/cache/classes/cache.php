@@ -25,12 +25,12 @@ class lC_Cache_Admin {
 
     $media = $_GET['media'];
     
-    $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_WORK);
+    $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_WORK . 'cache/');
     $lC_DirectoryListing->setIncludeDirectories(false);
     $lC_DirectoryListing->setCheckExtension('cache');
     $cached_files = array();
     foreach ( $lC_DirectoryListing->getFiles() as $file ) {
-      $last_modified = filemtime(DIR_FS_WORK . '/' . $file['name']);
+      $last_modified = filemtime(DIR_FS_WORK . 'cache/' . $file['name']);
       if ( strpos($file['name'], '-') !== false ) {
         $code = substr($file['name'], 0, strpos($file['name'], '-'));
       } else {
