@@ -210,6 +210,8 @@ tooltip_quick_add = Quick Add (a)
 tooltip_messages = Messages (m)
 tooltip_settings = Settings (s) / Main Menu (escape)
 
+text_version = Version
+
 update_message_title = Updates are Available!
 update_message_text1 = New version
 update_message_text2 = released.
