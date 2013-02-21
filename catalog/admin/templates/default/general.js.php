@@ -469,6 +469,7 @@ $("#li-search").click(function() {
   var mainOpen = $('#mainMenuContainer').is(':visible');
   var setOpen = $('#settingsContainer').is(':visible');
   var srcClass = $('#li-search').attr('class');
+  $('#searchContainerInput').find('input').focus(); 
   if (addOpen) {
     $('#li-add').removeClass("current");
     $('#addContainer').hide();
