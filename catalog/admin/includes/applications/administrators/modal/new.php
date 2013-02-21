@@ -48,6 +48,16 @@ function newAdmin() {
                '        <label for="user_password" class="label"><?php echo $lC_Language->get('field_password'); ?></label>'+
                '        <?php echo lc_draw_password_field('user_password', 'class="input full-width"'); ?>'+
                '      </p>'+
+               '      <p class="button-height inline-label" id="pImage">'+
+               '        <label for="profile_image" class="label"><?php echo $lC_Language->get('profile_image'); ?></label>'+
+               '        <img alt="<?php echo $lC_Language->get('profile_image'); ?>" />'+
+               '        <input type="hidden" name="avatar" id="newAvatar" />'+
+               '      </p>'+
+               '      <p class="inline-label small-margin-top" id="profileUploaderContainerNew">'+ 
+               '        <noscript>'+
+               '          <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>'+
+               '        </noscript>'+
+               '      </p>'+
                '      <p class="button-height inline-label">'+
                '        <label for="access_group_id" class="label"><?php echo $lC_Language->get('field_access_group'); ?></label>'+
                '        <?php echo lc_draw_pull_down_menu('access_group_id', $groupsSelectArr, null, 'class="select blue-gradient check-list replacement"'); ?>'+
@@ -110,5 +120,16 @@ function newAdmin() {
       },
       buttonsLowPadding: true
   });
+  function createProfileUploaderNew(){
+    var uploader = new qq.FileUploader({
+      element: document.getElementById('profileUploaderContainerNew'),
+      action: '<?php echo lc_href_link_admin('rpc.php', 'administrators=' . $_SESSION['admin']['id'] . '&action=fileUpload'); ?>',
+      onComplete: function(id, fileName, responseJSON){
+        $('#newAvatar').attr("value", fileName);
+        $('#pImage').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName).attr("width", 64).attr("height", 64);
+      },
+    });
+  }
+  createProfileUploaderNew(); 
 }
 </script>

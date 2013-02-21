@@ -108,7 +108,7 @@
 </head>
 
 <body class="clearfix with-menu with-shortcuts">
-
+  
   <!-- Prompt IE 6 users to install Chrome Frame -->
   <!--[if lt IE 7]><p class="message red-gradient simpler">Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
@@ -157,13 +157,58 @@
 
       <!-- This wrapper is used by several responsive layouts -->
       <div id="menu-content">
-
-        <header><?php echo $lC_Language->get('header_title_admin_menu'); ?></header>
-
+        
+        <header>
+          <div class="headerInner">
+            <a href="<?php echo HTTP_SERVER . DIR_WS_CATALOG; ?>" title="View The Store" class="with-tooltip tooltip-bottom grey" target="_blank"><?php echo substr(HTTP_SERVER, 7, 29); ?></a>
+          </div>  
+        </header>
+        
         <div id="profile">
-          <img src="templates/default/img/user.png" width="64" height="64" alt="User name" class="user-icon"><?php echo $lC_Language->get('text_hello'); ?>
-          <span class="name"><?php echo $_SESSION['admin']['firstname']; ?> <b><?php echo $_SESSION['admin']['lastname']; ?></b></span>
-          <div style="position:absolute; right:7px; top:50px;"><div style="float:right; margin-right:6px;"><a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>" target="_blank"><span title="Catalog" class="with-tooltip icon-bag icon-orange"></span></a>&nbsp;&nbsp;<a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login&action=logoff'); ?>"><span title="Log Off" class="with-tooltip icon-cross-round"></span></a></div></div>
+          <div id="profileInner">                
+            <div class="profile50">
+              <div id="profileLeft">
+                <img src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="64" height="64" alt="User name" class="user-icon">
+                <?php echo $lC_Language->get('text_hello'); ?>
+                <span class="name"><?php echo $_SESSION['admin']['firstname']; ?><br />
+                <?php echo $_SESSION['admin']['lastname']; ?></span>
+                <small class="margin-left"><?php echo $lC_Language->get('profile_slate_edit_logout'); ?></small>
+              </div>
+            </div>
+            <div class="profile50">
+              <div id="profileRight">
+                <a href="javascript://" onclick="profileEdit('<?php echo $_SESSION['admin']['id']; ?>')">
+                  <div class="profile-right-fourth">
+                    <img src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="32" height="32"><br />
+                    <small><?php echo $lC_Language->get('profile_slate_edit_profile'); ?></small>
+                  </div>
+                </a>
+                <a href="javascript://" onclick="profilePassChange('<?php echo $_SESSION['admin']['id']; ?>')">
+                  <div class="profile-right-fourth">
+                    <div style="height:8px;"></div>
+                    <span class="icon icon-lock icon-size3"></span>
+                    <div style="height:12px;"></div>
+                    <small><?php echo $lC_Language->get('profile_slate_change_password'); ?></small>
+                  </div>
+                </a>
+                <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login&action=logoff'); ?>" class="confirm">
+                  <div class="profile-right-fourth">
+                    <div style="height:8px;"></div>
+                    <span class="icon icon-cross-round icon-size3"></span>
+                    <div style="height:12px;"></div>
+                    <small><?php echo $lC_Language->get('profile_slate_logout'); ?></small>
+                  </div>
+                </a>
+                <a href="#" id="profileBack">
+                  <div class="profile-right-fourth prf-bottom">
+                    <span class="icon icon-reply icon-size3"></span>
+                    <div style="height:5px;"></div>
+                    <small><?php echo $lC_Language->get('button_back'); ?></small>
+                  </div>
+                </a>                
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Big menu small navigation -->

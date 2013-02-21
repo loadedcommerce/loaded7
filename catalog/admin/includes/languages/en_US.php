@@ -177,6 +177,25 @@ ms_error_no_access = You do not have the access level required for this operatio
 ms_error_javascript_not_enabled_for_upload = Please enable JavaScript to use ajax file uploader.
 ms_error_javascript_not_enabled_warning = Your browser does not support JavaScript! Some features won't work as expected.
 
+profile_slate_edit_logout = edit or logout
+profile_slate_edit_profile = edit<br />profile
+profile_slate_change_password = change<br />password
+profile_slate_logout = log out
+modal_heading_profile_edit = Edit Profile
+modal_heading_profile_pass_change = Change Profile Password
+profile_password = Current Password
+profile_password_new = New Password
+profile_password_confirm = Confirm New Password
+introduction_profile_pass_change = Please make the necessary changes for this administrator.
+profile_password = Current Password
+profile_password_new = New Password
+profile_password_confirm = Confirm Password
+invalid_current_password = The current password you entered is not correct. Please re-enter it and try again.
+invalid_new_password_match = The new password and confirmation does not match. Please try again.
+password_change_success = You have successfully updated your password.
+profile_image = Profile Image
+profile_new_image = New Image
+
 quick_add_order = Order
 quick_add_customer = Customer
 quick_add_category = Category

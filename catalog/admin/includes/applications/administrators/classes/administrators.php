@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: administrators.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -14,7 +14,7 @@
   @function The lC_Administrators_Admin class manages administrators
 */
 class lC_Administrators_Admin {
- /*
+ /**
   * Returns the administrators datatable data for listings
   *
   * @access public
@@ -26,8 +26,14 @@ class lC_Administrators_Admin {
     $lC_Language->loadIniFile('administrators.php');
     
     $media = $_GET['media'];
+    
+    /* Filtering */
+    $aWhere = "";
+    if ($_GET['aSearch'] != "") {
+      $aWhere = "where id = '" . (int)$_GET['aSearch'] . "'";
+    } 
 
-    $Qadmins = $lC_Database->query('select * from :table_administrators order by user_name');
+    $Qadmins = $lC_Database->query('select * from :table_administrators ' . $aWhere . ' order by user_name');
     $Qadmins->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
     $Qadmins->execute();
 
@@ -59,7 +65,7 @@ class lC_Administrators_Admin {
   public static function getAccessGroupName($_id) {
 
   }
- /*
+ /**
   * Returns the administrator information
   *
   * @param integer $id The administrator id
@@ -93,7 +99,7 @@ class lC_Administrators_Admin {
 
     return $data;
   }
- /*
+ /**
   * Saves the administrator information
   *
   * @param integer  $id   The administrator id used on update, null on insert
@@ -123,7 +129,7 @@ class lC_Administrators_Admin {
       $lC_Database->startTransaction();
 
       if ( isset($id) && $id != null ) {
-        $Qadmin = $lC_Database->query('update :table_administrators set first_name = :first_name, last_name = :last_name, user_name = :user_name, access_group_id = :access_group_id ');
+        $Qadmin = $lC_Database->query('update :table_administrators set user_name = :user_name, first_name = :first_name, last_name = :last_name, image = :image, access_group_id = :access_group_id ');
 
         if ( isset($data['user_password']) && !empty($data['user_password']) ) {
           $Qadmin->appendQuery(', user_password = :user_password');
@@ -133,14 +139,15 @@ class lC_Administrators_Admin {
         $Qadmin->appendQuery('where id = :id');
         $Qadmin->bindInt(':id', $id);
       } else {
-        $Qadmin = $lC_Database->query('insert into :table_administrators (first_name, last_name, user_name, user_password, access_group_id) values (:first_name, :last_name, :user_name, :user_password, :access_group_id)');
+        $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, image, access_group_id) values (:user_name, :user_password, :first_name, :last_name, :image, :access_group_id)');
         $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($data['user_password'])));
       }
 
       $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+      $Qadmin->bindValue(':user_name', $data['user_name']);
       $Qadmin->bindValue(':first_name', $data['first_name']);
       $Qadmin->bindValue(':last_name', $data['last_name']);
-      $Qadmin->bindValue(':user_name', $data['user_name']);
+      $Qadmin->bindValue(':image', $data['avatar']);
       $Qadmin->bindInt(':access_group_id', $data['access_group_id']);
       $Qadmin->setLogging($_SESSION['module'], $id);
       $Qadmin->execute();
@@ -165,7 +172,7 @@ class lC_Administrators_Admin {
 
     return $result;
   }
- /*
+ /**
   * Deletes the administrator record
   *
   * @param integer $id The administrator id to delete
@@ -201,7 +208,7 @@ class lC_Administrators_Admin {
 
     return false;
   }
- /*
+ /**
   * Returns the administrators groups datatable data
   *
   * @param boollean $entriesOnly  True = Send back entries data only, False = send back both entries data and data tables data
@@ -239,7 +246,7 @@ class lC_Administrators_Admin {
     if ($entriesOnly) return $result['entries'];
     return $result;
   }
- /*
+ /**
   * Returns the total members for an administrator group
   *
   * @param integer $id The administrator groups id
@@ -260,7 +267,7 @@ class lC_Administrators_Admin {
 
     return $total;
   }
- /*
+ /**
   * Returns the administrators group name
   *
   * @param integer $id The administrator groups id
@@ -281,7 +288,7 @@ class lC_Administrators_Admin {
 
     return $data['name'];
   }
- /*
+ /**
   * Returns the administrator group data
   *
   * @param integer $id The administrator id
@@ -315,7 +322,7 @@ class lC_Administrators_Admin {
 
     return $data;
   }
- /*
+ /**
   * Saves the administrator group information
   *
   * @param  integer $id   The administrator id used on update, null on insert
@@ -406,7 +413,7 @@ class lC_Administrators_Admin {
 
     return $result;
   }
- /*
+ /**
   * Deletes the administrators groups record
   *
   * @param integer $id The administrators groups id to delete
@@ -442,7 +449,7 @@ class lC_Administrators_Admin {
 
     return false;
   }
- /*
+ /**
   * Returns the access modules tag blocks
   *
   * @param string $_group_id The administrators groups id
@@ -494,7 +501,7 @@ class lC_Administrators_Admin {
 
     return $tagBlock;
   }
- /*
+ /**
   * Get the administrator access modules
   *
   * @access public
@@ -522,6 +529,47 @@ class lC_Administrators_Admin {
     ksort($modules);
 
     return $modules;
+  }
+ /**
+  * upload the profile image
+  *
+  * @access public
+  * @return array
+  */
+  public static function profileImageUpload($id) {
+    global $lC_Database;
+    
+    require_once('includes/classes/ajax_upload.php');
+
+    // list of valid extensions, ex. array("jpeg", "jpg", "gif")
+    $allowedExtensions = array('gif', 'jpg', 'jpeg', 'png');
+    // max file size in bytes
+    $sizeLimit = 10 * 1024 * 1024;
+
+    $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+    
+    $profile_image = $uploader->handleUpload('images/avatar/');
+    
+    /*$Qcheck = $lC_Database->query('select user_name from :table_administrators where id = ' . (int)$id);
+    $Qcheck->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+    $Qcheck->execute();
+    
+    if ($Qcheck->numberOfRows() > 0) {  
+      if (isset($profile_image['filename']) && $profile_image['filename'] != null) {
+        $lC_Database->startTransaction();
+        $Qimage = $lC_Database->query('update :table_administrators set image = "' . $profile_image['pathinfo']['basename'] . '" where id = ' . (int)$id);
+        $Qimage->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+        $Qimage->bindValue(':image', $profile_image['pathinfo']['basename']);
+        $Qimage->execute();
+      }
+    } */
+    
+    $result = array('result' => 1,
+                    'success' => true,
+                    'rpcStatus' => RPC_STATUS_SUCCESS,
+                    'filename' => $profile_image['pathinfo']['basename']);
+
+    return $result;
   }
 }
 ?>

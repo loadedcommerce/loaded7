@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: rpc.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -16,7 +16,7 @@
 require('includes/applications/administrators/classes/administrators.php');
 
 class lC_Administrators_Admin_rpc {
- /*
+ /**
   * Returns the administrators datatable data for listings
   *
   * @access public
@@ -28,7 +28,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Returns the administrator data
   *
   * @param integer $_GET['aid'] The administrator id
@@ -43,7 +43,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Saves the administrator information
   *
   * @param integer  $_GET['aid']  The administrator id used on update, null on insert
@@ -59,7 +59,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Delete the administrator record
   *
   * @param integer $_GET['aid'] The administrator id to delete
@@ -75,7 +75,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Returns all the administrator groups data
   *
   * @access public
@@ -87,7 +87,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Returns the individual administrators groups data
   *
   * @param integer $_GET['gid'] The administrators group id
@@ -102,7 +102,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Saves the administrators groups data
   *
   * @param integer  $_GET['gid'] The administrators group id used on update, null on insert
@@ -118,7 +118,7 @@ class lC_Administrators_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
+ /**
   * Delete the administrators groups record
   *
   * @param integer $_GET['aid'] The administrators group id to delete
@@ -131,6 +131,34 @@ class lC_Administrators_Admin_rpc {
     if ($deleted) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
+
+    echo json_encode($result);
+  }
+ /**
+  * Validate the password
+  *
+  * @param string $_GET['encrypted']  Password hash from DB
+  * @param string $_GET['plain']  Plain Password 
+  * @access public
+  * @return json
+  */
+  public static function validatePassword() {
+    $result = array();
+
+    $result = lC_Administrators_Admin::validatePassword($_GET['plain'], $_GET['encrypted']);
+
+    echo json_encode($result);
+  }
+ /**
+  * upload the profile image
+  *
+  * @access public
+  * @return json
+  */
+  public static function fileUpload() {
+    $result = array();
+
+    $result = lC_Administrators_Admin::profileImageUpload($_GET['administrators']);
 
     echo json_encode($result);
   }
