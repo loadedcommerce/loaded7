@@ -255,12 +255,14 @@ function installUpdate(t) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
+  var version = '<?php echo $checkArr['toVersion']; ?>';
+  var count = '<?php echo ($checkArr['total'] > 0) ? $checkArr['total'] : 0; ?>';
+  var type = (t != undefined) ? t : (count > 1) ? 'cumu' : null;  
   var confirmText = (t != undefined && t == 'full') ? '<?php echo $lC_Language->get('text_confirm_full_update');?>' : '<?php echo $lC_Language->get('text_confirm_update');?>';
   $.modal.confirm(confirmText, function() {
     // set maint mode=on
     __setMaintenanceMode('on');
     
-    var fromVersion = '<?php echo utility::getVersion(); ?>';
     var toVersion = '<?php echo $checkArr['toVersion']; ?>';
     $('#versionContainer .fieldset').removeClass('orange-gradient');
     $('#version-table tbody').removeClass('green').removeClass('red');
@@ -320,9 +322,6 @@ function installUpdate(t) {
             __showStep(3,0);
 
               // download the update package
-            var version = '<?php echo $checkArr['toVersion']; ?>';
-            var count = '<?php echo ($checkArr['total'] > 0) ? $checkArr['total'] : 0; ?>';
-            var type = (t != undefined) ? t : (count != 0) ? 'cumu' : null;
             var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getUpdatePackage&version=VERSION&type=TYPE'); ?>';
             $.getJSON(jsonLink.replace('VERSION', version).replace('TYPE', type),            
               function (dData) {
@@ -379,7 +378,7 @@ function installUpdate(t) {
                         $('#version-table thead').removeClass('red').addClass('green');
                         
                         // write to the update history log
-                        __writeHistory('<?php echo $lC_Language->get('text_history_action_update'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_update_success'), $checkArr['toVersion']); ?>');
+                        __writeHistory('<?php echo $lC_Language->get('text_history_action_update'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_update_success'), $checkArr['toVersion']); ?>' + ((type != null) ? ('-' + type) : null));
                         oTable.fnReloadAjax(); 
                               
                         // set maint mode=off
@@ -409,7 +408,6 @@ function undoUpdate() {
     // set maint mode=on
     __setMaintenanceMode('on');
     
-    var fromVersion = '<?php echo utility::getVersion(); ?>';
     var toVersion = '<?php echo $checkArr['toVersion']; ?>';  
     $('#versionContainer .fieldset').removeClass('orange-gradient');
     $('#version-table tbody').removeClass('green').removeClass('red');
@@ -470,7 +468,7 @@ function undoUpdate() {
 
             $('#vFooterText').html(__okBlock());
             $('#version-table thead').removeClass('green').addClass('red');                
-            $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_current_version'); ?></td><td class="version">' + fromVersion + '</td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), utility::getVersionDate()); ?></td></tr>').addClass('red'); 
+            $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_current_version'); ?></td><td class="version"><?php echo utility::getVersion(); ?></td><td class="after"><?php echo sprintf($lC_Language->get('text_released'), utility::getVersionDate()); ?></td></tr>').addClass('red'); 
                   
             // write to the update history log
             __writeHistory('<?php echo $lC_Language->get('text_history_action_undo'); ?>', '<?php echo $lC_Language->get('text_history_result_undo_success'); ?>');

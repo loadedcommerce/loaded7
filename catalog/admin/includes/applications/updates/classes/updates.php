@@ -180,6 +180,7 @@ class lC_Updates_Admin {
   * @return mixed
   */
   public static function downloadPackage($version = null, $type = null) {
+
     if ( empty($version) ) {
       $link = self::getAvailablePackageInfo('update_package');
     } else {
@@ -193,8 +194,9 @@ class lC_Updates_Admin {
       }
     }
     
+    if ($link == null) $link = 'https://api.loadedcommerce.com/1_0/get/' . str_replace(".", "", $version) . '?ref=' . urlencode($_SERVER['SCRIPT_FILENAME']);
     if ($type != null) $link .= '&type=' . $type;
-
+    
     $response = file_get_contents($link);
 
     return file_put_contents(DIR_FS_WORK . 'updates/update.phar', $response);
