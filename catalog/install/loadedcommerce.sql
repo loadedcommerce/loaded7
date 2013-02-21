@@ -707,13 +707,23 @@ CREATE TABLE IF NOT EXISTS lc_templates_boxes_to_pages (
   KEY templates_boxes_id (templates_boxes_id,templates_id,content_page,boxes_group)
 );
 
+DROP TABLE IF EXISTS lc_updates_log;
+CREATE TABLE IF NOT EXISTS lc_updates_log (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  action varchar(32) NOT NULL DEFAULT '',
+  result varchar(128) NOT NULL DEFAULT '',
+  `user` varchar(64) NOT NULL DEFAULT '',
+  dateCreated datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (weight_class_id,language_id)
+);
+
 DROP TABLE IF EXISTS lc_weight_classes;
 CREATE TABLE IF NOT EXISTS lc_weight_classes (
   weight_class_id int(11) NOT NULL,
   weight_class_key varchar(4) NOT NULL,
   language_id int(11) NOT NULL,
   weight_class_title varchar(255) NOT NULL,
-  PRIMARY KEY (weight_class_id,language_id)
+  PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS lc_weight_classes_rules;
