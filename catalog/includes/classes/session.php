@@ -141,7 +141,15 @@
         }
 
         lc_redirect(lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false));
-      } elseif ( session_start() ) {
+      } else if (isset($_GET['lCsid']) && $_GET['lCsid'] != NULL && basename($_SERVER['PHP_SELF']) == 'checkout.php' && stristr($_SERVER['REQUEST_URI'], 'payment_template')) {
+
+        $this->_is_started = true;
+        $this->_id = $_GET['lCsid'];
+        session_id($_GET['lCsid']);
+        session_start();
+        
+        return true;
+      } else if ( session_start() ) {
         $this->_is_started = true;
         $this->_id = session_id();
 
