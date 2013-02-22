@@ -12,14 +12,6 @@
   @license    http://loadedcommerce.com/license.html
 */
 $checkArr = lC_Updates_Admin::hasUpdatesAvailable();
-
-//$findDataArr = lC_Updates_Admin::findAvailablePackages('7.0'); 
-//$availInfoDataArr = lC_Updates_Admin::getAvailablePackageInfo('0'); 
-$downloaded = lC_Updates_Admin::downloadPackage('7.0.0.1.4', 'full'); 
-//$localPackageExists = lC_Updates_Admin::localPackageExists(); 
-//$getPackageInfo = lC_Updates_Admin::getPackageInfo(); 
-//$getPackageContents = lC_Updates_Admin::getPackageContents(); 
-//$findPackageContents = lC_Updates_Admin::findPackageContents('osc'); 
 ?>
 <!-- Main content -->
 <section role="main" id="main">
@@ -102,21 +94,18 @@ $downloaded = lC_Updates_Admin::downloadPackage('7.0.0.1.4', 'full');
           <tr><td>&nbsp;</td></tr>
           <tr>
             <td align="left">
-              <a id="reinstall" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installUpdate(\'full\');"'); ?> class="button re-install<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
-                <span class="button-icon orange-gradient glossy"><span class="icon-redo"></span></span>
-                <?php echo $lC_Language->get('button_reinstall_update'); ?>
+              <a id="reinstall" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installUpdate(\'full\');"'); ?> class="button icon-redo orange-gradient glossy re-install<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
+                <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_reinstall_update'); ?></span>
               </a>               
             </td>
             <td align="center">
-              <a id="download" href="#" class="button download-zip<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>">
-                <span class="button-icon blue-gradient glossy"><span class="icon-download"></span></span>
-                <?php echo $lC_Language->get('button_download_zip'); ?>
+              <a id="download" href="#" class="button icon-download download-zip blue-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>">
+                <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_download_zip'); ?></span>
               </a>
             </td>
             <td align="right">
-              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? NULL : 'onclick="undoUpdate();"')); ?> class="button undo-last<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? ' disabled' : NULL)); ?>">
-                <span class="button-icon red-gradient glossy"><span class="icon-undo"></span></span>
-                <?php echo $lC_Language->get('button_undo_last_update'); ?>
+              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? NULL : 'onclick="undoUpdate();"')); ?> class="button icon-undo undo-last red-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? ' disabled' : NULL)); ?>">
+                <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_undo_last_update'); ?></span>
               </a>                                                                                                                                                
             </td>
           </tr>
@@ -159,28 +148,6 @@ $downloaded = lC_Updates_Admin::downloadPackage('7.0.0.1.4', 'full');
         .paginate_enabled_previous:hover, .paginate_enabled_next:hover { background: none; color: #0689f1; }
         .paginate_disabled_previous, .paginate_disabled_next { color: #999 !important }   
         </style>
-        <script>
-        $(document).ready(function() {
-          var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getHistory&media=MEDIA'); ?>';   
-          oTable = $('#dataTable').dataTable({
-            "bProcessing": true,
-            "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
-            "bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": false,
-            "bSort": true,
-            "bInfo": false,
-            "aaSorting": [[3,'desc']],
-            "aoColumns": [{ "sWidth": "20%", "bSortable": true, "sClass": "dataColAction" },
-                          { "sWidth": "40%", "bSortable": true, "sClass": "dataColResult hide-on-mobile-portrait" },
-                          { "sWidth": "15%", "bSortable": true, "sClass": "dataColUser" },
-                          { "sWidth": "25%", "bSortable": true, "sClass": "dataColTime hide-on-mobile-portrait" }]
-          });
-          $('#dataTable').responsiveTable();
-        });        
-        
-        </script>
-
       </fieldset>    
     </div>
  
@@ -196,7 +163,7 @@ $downloaded = lC_Updates_Admin::downloadPackage('7.0.0.1.4', 'full');
 <!-- Main content end -->
 <script>
 $(document).ready(function() {
-  checkForUpdates();  
+  checkForUpdates(); 
 });
 
 
