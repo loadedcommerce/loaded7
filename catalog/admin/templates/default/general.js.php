@@ -255,6 +255,17 @@ $(document).ready(function() {
   });
   // profile left is clicked
   $("#profileLeft").click(function(){
+    // if any of the 4 mene areas are open close them
+    $('#li-search').removeClass("current");
+    $('#searchContainer').hide();
+    $('#li-add').removeClass("current");
+    $('#addContainer').hide();
+    $('#li-messages').removeClass("current");
+    $('#messagesContainer').hide();
+    $('#li-settings').removeClass("current");
+    $('#settingsContainer').hide();
+    $('#mainMenuContainer').show();
+    $('#recentContainer').show();
     // get the current menu width in case screen size has changed
     var menuWidth = $("#menu").width();
     // slide to the left
@@ -504,6 +515,12 @@ $("#li-search").click(function() {
     $('#mainMenuContainer').show();
     $('#recentContainer').show();
   }
+  // get the current menu width in case screen size has changed
+  var menuWidth = $("#menu").width();
+  // slide to the right
+  $('#profileInner').animate({
+    "marginLeft" : 0
+  });
 });
 
 $("#li-add").click(function() {
@@ -534,6 +551,12 @@ $("#li-add").click(function() {
     $('#mainMenuContainer').show();
     $('#recentContainer').show();
   }
+  // get the current menu width in case screen size has changed
+  var menuWidth = $("#menu").width();
+  // slide to the right
+  $('#profileInner').animate({
+    "marginLeft" : 0
+  });
 });
 
 $("#li-messages").click(function() {
@@ -564,6 +587,12 @@ $("#li-messages").click(function() {
     $('#mainMenuContainer').show();
     $('#recentContainer').show();
   }
+  // get the current menu width in case screen size has changed
+  var menuWidth = $("#menu").width();
+  // slide to the right
+  $('#profileInner').animate({
+    "marginLeft" : 0
+  });
 });
 
 $("#li-settings").click(function() {
@@ -597,6 +626,12 @@ $("#li-settings").click(function() {
     $('#mainMenuContainer').hide();
     $('#recentContainer').hide();
   }
+  // get the current menu width in case screen size has changed
+  var menuWidth = $("#menu").width();
+  // slide to the right
+  $('#profileInner').animate({
+    "marginLeft" : 0
+  });
 });
 
 // added to pull in any added modals used across all admin pages
