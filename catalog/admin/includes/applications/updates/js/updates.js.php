@@ -46,7 +46,8 @@ $('#download').click(function(e) {
     
   // write to the update history log
   __writeHistory('<?php echo $lC_Language->get('text_history_action_backup'); ?>', '<?php echo sprintf($lC_Language->get('text_history_result_download'), $checkArr['toVersion']); ?>');
-  oTable.fnReloadAjax(); 
+  
+  setTimeout('oTable.fnReloadAjax()', 500); 
   
   return false;
 });
