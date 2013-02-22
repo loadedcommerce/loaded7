@@ -244,7 +244,8 @@ class lC_Payment_cresecure extends lC_Payment {
                              lc_draw_hidden_field('delivery_city', $lC_ShoppingCart->getShippingAddress('city')) . "\n" . 
                              lc_draw_hidden_field('delivery_state',  $lC_ShoppingCart->getShippingAddress('state')) . "\n" .
                              lc_draw_hidden_field('delivery_postal_code', $lC_ShoppingCart->getShippingAddress('postcode')) . "\n" .
-                             lc_draw_hidden_field('delivery_country', $lC_ShoppingCart->getShippingAddress('country_iso_code_3')) . "\n"; 
+                             lc_draw_hidden_field('delivery_country', $lC_ShoppingCart->getShippingAddress('country_iso_code_3')) . "\n" .  
+                             lc_draw_hidden_field('form', 'mage') . "\n"; 
 
     return $process_button_string;
   }
