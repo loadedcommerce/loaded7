@@ -714,7 +714,7 @@ CREATE TABLE IF NOT EXISTS lc_updates_log (
   result varchar(128) NOT NULL DEFAULT '',
   `user` varchar(64) NOT NULL DEFAULT '',
   dateCreated datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (weight_class_id,language_id)
+  PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS lc_weight_classes;
