@@ -723,7 +723,7 @@ CREATE TABLE IF NOT EXISTS lc_weight_classes (
   weight_class_key varchar(4) NOT NULL,
   language_id int(11) NOT NULL,
   weight_class_title varchar(255) NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (weight_class_id,language_id)
 );
 
 DROP TABLE IF EXISTS lc_weight_classes_rules;
