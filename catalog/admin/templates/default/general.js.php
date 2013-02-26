@@ -102,14 +102,16 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
   }
   
-  // check for updates and show notification if necessary    
-  var title = '<?php echo lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, 'updates'), $lC_Language->get('update_message_title'), 'style="color:white;"'); ?>';
-  var uData = <?php echo json_encode(lC_Updates_Admin::hasUpdatesAvailable()); ?>;
-  if (uData.hasUpdates && module == 'index') {
-    notify(title, '<?php echo $lC_Language->get('update_message_text1'); ?> ' + uData.toVersion + ' <?php echo $lC_Language->get('update_message_text2'); ?>', {
-      icon: 'templates/default/img/smiley.png',
-      showCloseOnHover: false
-    });    
+  // check for updates and show notification if necessary 
+  if (module == 'index') {   
+    var title = '<?php echo lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, 'updates'), $lC_Language->get('update_message_title'), 'style="color:white;"'); ?>';
+    var uData = <?php echo json_encode(lC_Updates_Admin::hasUpdatesAvailable()); ?>;
+    if (uData.hasUpdates) {
+      notify(title, '<?php echo $lC_Language->get('update_message_text1'); ?> ' + uData.toVersion + ' <?php echo $lC_Language->get('update_message_text2'); ?>', {
+        icon: 'templates/default/img/smiley.png',
+        showCloseOnHover: false
+      });    
+    }
   }
   
   // begin shortcut key additions

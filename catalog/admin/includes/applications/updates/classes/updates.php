@@ -13,6 +13,8 @@
 
   @function The lC_Updater_Admin class manages zM services
 */
+ini_set('error_reporting', 0);
+
 require_once('../includes/classes/transport.php');  
 require_once('includes/applications/backup/classes/backup.php'); 
 
@@ -115,8 +117,9 @@ class lC_Updates_Admin {
     global $lC_Api;
       
     $result = array('entries' => array());
-    $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/updates/available/?ref=' . urlencode($_SERVER['SCRIPT_FILENAME']), 'method' => 'get'));
+    $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
     $versions_array = utility::xml2arr($versions); 
+
     $counter = 0;
     foreach ( $versions_array['data'] as $l => $v ) {
       if ( version_compare(utility::getVersion(), $v['version'], '<') ) {
