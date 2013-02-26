@@ -67,23 +67,6 @@ $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
 $Qadmin->bindValue(':user_name', $_POST['CFG_ADMINISTRATOR_USERNAME']);
 $Qadmin->execute();
 
-$Qcheck = $lC_Database->query('select module from :table_administrators_access where administrators_id = :administrators_id limit 1');
-$Qcheck->bindTable(':table_administrators_access', TABLE_ADMINISTRATORS_ACCESS);
-$Qcheck->bindInt(':administrators_id', $Qadmin->valueInt('id'));
-$Qcheck->execute();
-
-if ($Qcheck->numberOfRows()) {
-  $Qdel = $lC_Database->query('delete from :table_administrators_access where administrators_id = :administrators_id');
-  $Qdel->bindTable(':table_administrators_access', TABLE_ADMINISTRATORS_ACCESS);
-  $Qdel->bindInt(':administrators_id', $Qadmin->valueInt('id'));
-  $Qdel->execute();
-}
-
-$Qaccess = $lC_Database->query('insert into :table_administrators_access (administrators_id, module) values (:administrators_id, :module)');
-$Qaccess->bindTable(':table_administrators_access', TABLE_ADMINISTRATORS_ACCESS);
-$Qaccess->bindInt(':administrators_id', $Qadmin->valueInt('id'));
-$Qaccess->bindValue(':module', '*');
-$Qaccess->execute();
 ?>
 <form name="install" id="installForm" action="install.php?step=4" method="post" class="block wizard-enabled">  
   <span style="width:48%;" class="with-small-padding" style="padding: 10px 0 10px 0;" id="image"><img src="templates/img/logo.png" border="0"></span>
