@@ -59,7 +59,7 @@ $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($_POST['CFG_ADMINIST
 $Qadmin->bindValue(':user_name', $_POST['CFG_ADMINISTRATOR_USERNAME']);
 $Qadmin->bindValue(':first_name', 'Top');
 $Qadmin->bindValue(':last_name', 'Administrator');
-$Qadmin->bindValue(':access_group_id', 1);
+$Qadmin->bindInt(':access_group_id', 1);
 $Qadmin->execute();
 
 $Qadmin = $lC_Database->query('select id from :table_administrators where user_name = :user_name');
