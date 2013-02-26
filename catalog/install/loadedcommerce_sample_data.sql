@@ -96,3 +96,7 @@ INSERT INTO lc_categories_description (categories_id, language_id, categories_na
 INSERT INTO lc_categories_description (categories_id, language_id, categories_name) VALUES(4, 1, 'Watches');
 INSERT INTO lc_categories_description (categories_id, language_id, categories_name) VALUES(5, 1, 'Shirts');
 INSERT INTO lc_categories_description (categories_id, language_id, categories_name) VALUES(6, 1, 'Watches');
+
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(5, 'Banner on Mainpage', 'mainpage_banner', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
+
+INSERT INTO lc_templates_boxes_to_pages (id, templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(1, 5, 1, 'index/index', 'after', 10, 1);
