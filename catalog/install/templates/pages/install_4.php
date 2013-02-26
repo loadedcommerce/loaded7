@@ -62,11 +62,8 @@ $Qadmin->bindValue(':last_name', 'Administrator');
 $Qadmin->bindInt(':access_group_id', 1);
 $Qadmin->execute();
 
-$Qadmin = $lC_Database->query('select id from :table_administrators where user_name = :user_name');
-$Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
-$Qadmin->bindValue(':user_name', $_POST['CFG_ADMINISTRATOR_USERNAME']);
-$Qadmin->execute();
-
+echo $Qadmin->sqlQuery();
+die('11');
 ?>
 <form name="install" id="installForm" action="install.php?step=4" method="post" class="block wizard-enabled">  
   <span style="width:48%;" class="with-small-padding" style="padding: 10px 0 10px 0;" id="image"><img src="templates/img/logo.png" border="0"></span>
