@@ -132,9 +132,9 @@ INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order
 INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order, date_added) VALUES(8, 7, 'mens-watch1.jpg', 1, 0, '2013-02-27 10:40:07');
 INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order, date_added) VALUES(9, 8, 'mens-watch2.jpg', 1, 0, '2013-02-27 10:42:03');
 INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order, date_added) VALUES(10, 9, 'mens-watch3.jpg', 1, 0, '2013-02-27 10:43:21');
-INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order, date_added) VALUES(11, 10, 'womens-watch3.jpg', 1, 0, '2013-02-27 10:45:40');
+INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order, date_added) VALUES(14, 10, 'womens-watch1.jpg', 1, 0, '2013-02-27 11:01:39');
 INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order, date_added) VALUES(12, 11, 'womens-watch2.jpg', 1, 0, '2013-02-27 10:47:13');
-INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order, date_added) VALUES(13, 12, 'womens-watch3.jpg', 1, 0, '2013-02-27 10:50:10');
+INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order, date_added) VALUES(15, 12, 'womens-watch3.jpg', 1, 0, '2013-02-27 11:02:38');
 
 INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(1, 3);
 INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(2, 3);
