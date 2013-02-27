@@ -97,11 +97,21 @@ INSERT INTO lc_categories_description (categories_id, language_id, categories_na
 INSERT INTO lc_categories_description (categories_id, language_id, categories_name) VALUES(5, 1, 'Shirts');
 INSERT INTO lc_categories_description (categories_id, language_id, categories_name) VALUES(6, 1, 'Watches');
 
+INSERT INTO lc_products (products_id, parent_id, products_quantity, products_price, products_model, products_date_added, products_last_modified, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id, products_ordered, has_children) VALUES(1, 0, 999, '80.0000', 'WOM20091189', '2013-02-27 08:33:11', '2013-02-27 08:54:49', '3.30', 4, 1, 0, NULL, 0, 0);
+
+INSERT INTO lc_products_description (products_id, language_id, products_name, products_description, products_keyword, products_tags, products_meta_title, products_meta_keywords, products_meta_description, products_url, products_viewed) VALUES(1, 1, 'Premier Valentino', 'Lorem ipsum dolor sit amet, quo in insolens democritum mediocritatem, dicit feugiat admodum vel ex. Antiopam principes ne per, ut duis vulputate eam, solum torquatos persecuti qui at. Usu discere intellegat ne, tollit meliore nam at. Ne pri idque inciderint, vim no nullam tempor nostrud. Ex his errem alterum complectitur, qui in enim consequuntur, ad appareat convenire facilisis nam.\r\n\r\nEa sea probo doming offendit, deleniti voluptatibus ea quo, veniam aliquando sed cu. His munere mediocritatem eu, at eum labitur adolescens, sed id meis oratio munere. Id vel dolor molestiae. Id eum audire aperiri, nec te alia omnis ullamcorper.\r\n\r\nTe stet veri vitae his. Ex dicit tation vix, exerci equidem cu sed. Cum at alienum periculis omittantur. Duis elaboraret ad vix. Vitae melius vis eu, nam at liber consectetuer reprehendunt.', 'valentino-dress', 'designer dress', NULL, NULL, NULL, 'http://my-leisure.com', NULL);
+
+INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order, date_added) VALUES(2, 1, 'dress3.jpg', 1, 0, '2013-02-27 08:54:05');
+
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(1, 1);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(1, 3);
+
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(5, 'Banner on Mainpage', 'mainpage_banner', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(6, 'Categories', 'categories', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(7, 'Manufacturers', 'manufacturers', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
-
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(8, 'New Products', 'new_products', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
 
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(5, 1, 'index/index', 'after', 10, 1);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(6, 1, '*', 'left', 10, 0);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(7, 1, '*', 'left', 20, 0);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(8, 1, 'index/index', 'after', 20, 1);
