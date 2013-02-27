@@ -269,7 +269,8 @@ h6:first-child {
 .mid-margin-left		{ margin-left: 8px !important; }
 .small-margin-left		{ margin-left: 4px !important; }
 .no-margin-left			{ margin-left: 0 !important; }
-.large-margin-bottom	{ margin-bottom: 30px !important; }
+.large-margin-bottom  { margin-bottom: 30px !important; }
+.extreme-margin-bottom	{ margin-bottom: 40px !important; }
 .margin-bottom			{ margin-bottom: 16px !important; }
 .mid-margin-bottom		{ margin-bottom: 8px !important; }
 .small-margin-bottom	{ margin-bottom: 4px !important; }
@@ -4490,6 +4491,12 @@ a:link {
 .definition.inline,
 .blocks-list { zoom: 1; }
 
+.left-column-280px:before, .left-column-280px:after,
+.right-column-280px:before, .right-column-280px:after { content: "\0020"; display: block; height: 0; visibility: hidden; }
+
+.left-column-280px:after,
+.right-column-280px:after { clear: both; }
+
 /* Image replacement */
 .ir {
 	display: block;
@@ -4563,4 +4570,8 @@ a:link {
   top:43px;
   right:0px;
   padding: 5px 20px;
+}
+
+@media screen and (max-width: 991px) {
+  .hide-below-992 { display: none !important; } 
 }

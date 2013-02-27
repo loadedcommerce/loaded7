@@ -666,623 +666,74 @@ function toggleEditor(id) {
       <div class="standard-tabs same-height">
         <ul class="tabs">
           <li class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
-          <li id="tabHeaderSectionDataContent"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
           <li><?php echo lc_link_object('#section_images_content', $lC_Language->get('section_images')); ?></li>
-          <li><?php echo lc_link_object('#section_categories_content', $lC_Language->get('section_categories')); ?></li>
+          <li><?php echo lc_link_object('#section_pricing_content', $lC_Language->get('section_pricing')); ?></li>
+          <li id="tabHeaderSectionDataContent"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
+          <li><?php echo lc_link_object('#section_options_content', $lC_Language->get('section_options')); ?></li>
+          <li><?php echo lc_link_object('#section_shipping_content', $lC_Language->get('section_shipping')); ?></li>
+          <li><?php echo lc_link_object('#section_relationships_content', $lC_Language->get('section_relationships')); ?></li>
         </ul>
         <div class="clearfix tabs-content">
           <div id="section_general_content" class="with-padding">
-            <div id="languageTabs" class="standard-tabs same-height">
-              <ul class="tabs">
-                <?php
-                foreach ( $lC_Language->getAll() as $l ) {
-                  echo '<li>' . lc_link_object('#languageTabs_' . $l['code'], $lC_Language->showImage($l['code']) . '&nbsp;' . $l['name']) . '</li>';
-                }
-                ?>
-              </ul>
-              <div class="clearfix tabs-content with-padding">
-                <?php
-                foreach ( $lC_Language->getAll() as $l ) {
-                  ?>
-                  <div id="languageTabs_<?php echo $l['code']; ?>">
-                    <fieldset>
-                      <p class="button-height inline-small-label"><label class="label" for="<?php echo 'products_name[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_name'); ?></label><?php echo lc_draw_input_field('products_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null), 'class="required input float-right" style="width:95%;"'); ?></p>
-                      <p class="button-height inline-small-label"><label class="label" for="<?php echo 'products_description[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_description'); ?></label><?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 4, 'class="required input float-right" style="width:95%;"'); ?><div style="width:99%; text-align: right;"><?php echo '<a href="javascript:toggleEditor(\'products_description[' . $l['id'] . ']\');">' . $lC_Language->get('toggle_html_editor') . '</a>'; ?></div></p>
-                      <p class="button-height inline-small-label"><label class="label" for="<?php echo 'products_keyword[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_keyword'); ?></label><?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input float-right" style="width:95%" id="keyword' . $l['id'] . '"'); ?></p>
-                      <p class="button-height inline-small-label"><label class="label" for="<?php echo 'products_tags[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_tags'); ?></label><?php echo lc_draw_input_field('products_tags[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_tags[$l['id']]) ? $products_tags[$l['id']] : null), 'class="input float-right" style="width:95%" maxlength="255"'); ?></p>
-                      <p class="button-height inline-small-label"><label class="label" for="<?php echo 'products_url[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_url'); ?></label><?php echo lc_draw_input_field('products_url[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_url[$l['id']]) ? $products_url[$l['id']] : null), 'class="input float-right" style="width:95%;"'); ?></p>
-                    </fieldset>
-                  </div><div class="clear-both"></div>
-                  <?php
-                }
-                ?>
+            
+            <div class="left-column-280px margin-bottom">
+              <div style="background-color: #eeeeee;" class="left-column">
+                Image
+              </div>
+              <div style="background-color: #eeeeee;" class="right-column">
+                <div>Name</div>
+                <div>Description</div>
               </div>
             </div>
-            <fieldset>
-              <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                <tr><td>&nbsp;</td></tr>
-                <?php
-                $Qattributes = $lC_Database->query('select id, code from :table_templates_boxes where modules_group = :modules_group order by code');
-                $Qattributes->bindTable(':table_templates_boxes');
-                $Qattributes->bindValue(':modules_group', 'product_attributes');
-                $Qattributes->execute();
-                while ( $Qattributes->next() ) {
-                  $module = basename($Qattributes->value('code'));
-                  if ( !class_exists('lC_ProductAttributes_' . $module) ) {
-                    if ( file_exists(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php') ) {
-                      include(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php');
-                    }
-                  }
-                  if ( class_exists('lC_ProductAttributes_' . $module) ) {
-                    $module = 'lC_ProductAttributes_' . $module;
-                    $module = new $module();
-                    ?>
-                    <tr class="with-padding">
-                      <td width="150px" style="font-weight:bold;"><?php echo $module->getTitle() . ':'; ?></td>
-                      <td><?php echo $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)); ?></td>
-                    </tr>
-                    <tr><td>&nbsp;</td></tr>
-                    <?php
-                  }
-                }
-                ?>
-              </table>
-            </fieldset>
-            <script type="text/javascript">
-            $(document).ready(function() {
-              var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
-              var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateKeyword&pid=PID'); ?>';
-              $("#product").validate({
-
-                invalidHandler: function() {
-                  $("#checkAllTabs").html('<?php echo $lC_Language->get('ms_error_check_all_lang_tabs'); ?>').fadeIn('fast').delay(2000).fadeOut('slow');
-                },
-                rules: {
-                  <?php
-                  foreach ( $lC_Language->getAll() as $l ) {
-                    ?>
-                    "products_keyword[<?php echo $l['id']; ?>]": {
-                      required: true,
-                      remote: jsonVKUrl.replace('PID', pid),
-
-                    },
-                    <?php
-                  }
-                  ?>
-                },
-                messages: {
-                  <?php
-                  foreach ( $lC_Language->getAll() as $l ) {
-                    ?>
-                    "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
-                    <?php
-                  }
-                  ?>
-                }
-               });
-               <?php
-               if ( isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ) {
-                 ?>
-                 $("#has_variants").attr('checked', true);
-                 <?php
-               }
-               ?>
-               //$( "button, input:submit, a", ".ui-dialog-buttonset" ).button();
-             });
-            </script>
-          </div>
-          <div id="section_data_content" class="with-padding">
-
-            <p class="button-height">
-              <label for="has_variants" class="label" style="display:inline !important;" for="has_variants">Has Variants?</label>
-              <?php echo lc_draw_checkbox_field('has_variants', null, null, 'onchange="toggleDataDiv();" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?>
-            </p>
             
-            <div id="noVariants" style="display:none;">
-                <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                  <tr>
-                    <td width="50%" height="100%" valign="top">
-                      <fieldset style="height: 100%;">
-                        <p class="button-height">
-                          <label for="tax_class0" class="label"><?php echo $lC_Language->get('field_tax_class'); ?></label>
-                          <?php echo lc_draw_pull_down_menu('products_tax_class_id', $tax_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_tax_class_id') : null), 'class="input with-small-padding" style="width:77%; float:right; margin-right:20px;" id="tax_class0" onchange="updateGross(\'products_price0\');"'); ?>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_price0" class="label"><?php echo $lC_Language->get('field_price_net'); ?></label>
-                          <?php echo lc_draw_input_field('products_price', (isset($lC_ObjectInfo) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="input" style="width:73%; float:right; margin-right:20px;" id="products_price0" onkeyup="updateGross(\'products_price0\')"'); ?>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_price0_gross" class="label"><?php echo $lC_Language->get('field_price_gross'); ?></label>
-                          <?php echo lc_draw_input_field('products_price_gross', (isset($lC_ObjectInfo) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="input" style="width:73%; float:right; margin-right:20px;" id="products_price0_gross" onkeyup="updateNet(\'products_price0\')" READONLY'); ?>
-                        </p>
-
-                        <div>
-                          <label for="qty_price_breaks" class="label" style="padding:3px 0;"><?php echo $lC_Language->get('field_qty_price_breaks'); ?></label>
-                          <table style="margin: 10px 20px 0 0; border:1px solid #7f9db9;" id="qty-pricing-grid" summary="Qty Price Breaks"  width="96%" border="1" cellpadding="2" cellspacing="0">
-                            <thead style="height:24px;" class="ui-widget-header">
-                              <tr style="padding-top:5px">
-                                <th align="left" width="90px"><?php echo $lC_Language->get('table_heading_qpb_customer_group'); ?></th>
-                                <th align="left" width="90px"><?php echo $lC_Language->get('table_heading_qpb_tax_class'); ?></th>
-                                <th align="left" width="100px">&nbsp;<?php echo $lC_Language->get('table_heading_qpb_qty'); ?></th>
-                                <th align="left" width="70px"><?php echo $lC_Language->get('table_heading_qpb_net_price'); ?></th>
-                                <th align="center" width="20px">&nbsp;</th>
-                              </tr>
-                            </thead>
-                            <tbody></tbody>
-                            <tfoot><input type="hidden" id="pbid" value="1"></tfoot>
-                          </table>
-                          <div style="margin:5px 0;">
-                            <div style="float:right; margin-right:20px;">
-                              <button onclick="addPriceBreakFields(); return false;" class="button blue-gradient glossy" /><?php echo $lC_Language->get('button_add_price_break'); ?></button>
-                            </div>
-                          </div>
-                        </div>
-                      </fieldset>
-                    </td>
-                    <td width="50%" height="100%" valign="top">
-                      <fieldset>
-                        <p class="button-height">
-                          <label style="display:inline !important;" for="products_status"><?php echo $lC_Language->get('field_active'); ?></label>
-                          <span style="float:right; margin-right:62%;"><?php echo lc_draw_checkbox_field('products_status', null, ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 1) ? true : false), 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?></span>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_model" class="label"><?php echo $lC_Language->get('field_model'); ?></label>
-                          <?php echo lc_draw_input_field('products_model', (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_model') : null), 'class="input" style="width:73%; float:right;"'); ?>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_quantity" class="label"><?php echo $lC_Language->get('field_quantity'); ?></label>
-                          <?php echo lc_draw_input_field('products_quantity', (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_quantity') : null), 'class="input" style="width:73%; float:right;"'); ?>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_weight" class="label"><?php echo $lC_Language->get('field_weight'); ?></label>
-                          <?php echo lc_draw_input_field('products_weight', (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_weight') : null), 'class="input" style="width:73%; float:right;"'); ?>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_weight_class" class="label"><?php echo $lC_Language->get('field_weight_class'); ?></label>
-                          <?php echo lc_draw_pull_down_menu('products_weight_class', $weight_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_weight_class') : SHIPPING_WEIGHT_UNIT), 'class="input with-small-padding" style="width:77%; float:right;"'); ?>
-                        </p>
-                      </fieldset>
-                    </td>
-                  </tr>
-                </table>
+            <div class="left-column-280px margin-bottom">
+              <div style="background-color: #eeeeee;" class="left-column">
+                Main Category
+              </div>
+              <div style="background-color: #eeeeee;" class="right-column">
+                Keywords
+              </div>
             </div>
-            <div id="hasVariants" style="display:none;">
-              <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                <tr>
-                  <td style="padding-top:10px;" width="20%" valign="top">
-                    <select name="variantGroups" ondblclick="moreFields();" size="20" style="width: 100%;">
-                      <?php
-                      $Qvgroups = $lC_Database->query('select id, title, module from :table_products_variants_groups where languages_id = :languages_id order by sort_order, title');
-                      $Qvgroups->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
-                      $Qvgroups->bindInt(':languages_id', $lC_Language->getID());
-                      $Qvgroups->execute();
-                      $has_multiple_value_groups = false;
-                      while ($Qvgroups->next()) {
-                        $vgroup_title = $Qvgroups->value('title');
-                        if ( lC_Variants::allowsMultipleValues($Qvgroups->value('module')) ) {
-                          if ( $has_multiple_value_groups === false ) {
-                            $has_multiple_value_groups = true;
-                          }                             
-                          $vgroup_title .= ' (*)';
-                        }
-                        echo '          <optgroup label="' . $vgroup_title . '" id="' . $Qvgroups->valueInt('id') . '">' . "\n";
-                        $Qvvalues = $lC_Database->query('select id, title from :table_products_variants_values where products_variants_groups_id = :products_variants_groups_id and languages_id = :languages_id order by sort_order, title');
-                        $Qvvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-                        $Qvvalues->bindInt(':products_variants_groups_id', $Qvgroups->valueInt('id'));
-                        $Qvvalues->bindInt(':languages_id', $lC_Language->getID());
-                        $Qvvalues->execute();
-                        while ($Qvvalues->next()) {
-                          echo '            <option value="' . $Qvvalues->valueInt('id') . '">' . $Qvvalues->value('title') . '</option>' . "\n";
-                        }
-                        echo '          </optgroup>' . "\n";
-                      }
-                      ?>
-                    </select>
-                    <?php
-                    if ( $has_multiple_value_groups === true ) {
-                      echo '<div style="text-align: center; font-style: italic;">(*) Multiple values can be assiged to the same product variant</div>';
-                    }
-                    ?>
-                  </td>
-                  <td valign="top" align="right" width="5%" style="padding-top:110px;">
-                    <span class="button-group compact with-padding">
-                       <span onclick="addVariant(); return false;" style="width:17px; cursor:pointer;" class="button icon-plus icon-size2 icon-blue glossy with-tooltip" title="<?php echo $lC_Language->get('button_add_variant');?>"></span><br /><br />
-                       <span onclick="moreFields(); return false;" style="cursor:pointer;" class="button icon-forward icon-size2 icon-blue glossy with-tooltip" title="<?php echo $lC_Language->get('button_add_variant_option');?>"></span>
-                    </span>
-                  </td>
-                  <td width="75%" valign="top">
-                    <fieldset>
-                      <legend><?php echo $lC_Language->get('subsection_assigned_variants'); ?></legend>
-                      <span id="writeroot">
-                        <?php
-                        $variants_default_combo = null;
-
-                        if ( isset($lC_ObjectInfo) ) {
-                          $Qvariants = $lC_Database->query('select * from :table_products where parent_id = :parent_id');
-                          $Qvariants->bindTable(':table_products', TABLE_PRODUCTS);
-                          $Qvariants->bindInt(':parent_id', $lC_ObjectInfo->getInt('products_id'));
-                          $Qvariants->execute();
-
-                          $counter = 1;
-                          while ( $Qvariants->next() ) {
-                            $Qcombos = $lC_Database->query('select pv.default_combo, pvg.id as group_id, pvg.title as group_title, pvv.id as value_id, pvv.title as value_title from :table_products_variants pv, :table_products_variants_groups pvg, :table_products_variants_values pvv where pv.products_id = :products_id and pv.products_variants_values_id = pvv.id and pvv.languages_id = :languages_id and pvv.products_variants_groups_id = pvg.id and pvg.languages_id = :languages_id order by pvg.sort_order, pvg.title');
-                            $Qcombos->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
-                            $Qcombos->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
-                            $Qcombos->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-                            $Qcombos->bindInt(':products_id', $Qvariants->valueInt('products_id'));
-                            $Qcombos->bindInt(':languages_id', $lC_Language->getID());
-                            $Qcombos->bindInt(':languages_id', $lC_Language->getID());
-                            $Qcombos->execute();
-
-                            // QPB
-                            $Qpb = $lC_Database->query('select group_id, tax_class_id, qty_break, price_break from :table_products_pricing where products_id = :products_id order by group_id, qty_break');
-                            $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
-                            $Qpb->bindInt(':products_id', $Qvariants->valueInt('products_id'));
-                            $Qpb->execute();
-
-                            $divPBEntry = '';
-                            $rowCnt = 1;
-                            while ($Qpb->next()) {
-                              $rowID = 'row' . $counter . '_' . $rowCnt;
-                              $divPBEntry .= '<tr id="' . $rowID . '"><td width="100px"><select style="width:98%" name="price_breaks[group_id][' . $counter . '][]" id="price_breaks[group_id][' . $counter . '][]">' . getCustomerGroupOptionsString($Qpb->valueInt('group_id')) . '</select></td>' .
-                                             '<td width="100px"><select style="width:98%" name="price_breaks[tax_class_id][' . $counter . '][]" id="price_breaks[tax_class_id][' . $counter . '][]">' . getTaxClassOptionsString($Qpb->valueInt('tax_class_id')) . '</select></td>' .
-                                             '<td width="110px"><table width="110px" border="0" cellpadding="0" cellspacing="0"><tr><td><input type="text" value="' . $Qpb->valueInt('qty_break') . '" name="price_breaks[qty][' . $counter . '][]" id="price_breaks[qty][][]" size="5" id="qty' . $counter . '"></td><td width="70%">' . $lC_Language->get('price_breaks_above') . '</td></tr></table></td>' .
-                                             '<td width="80px"><input value="' . number_format(lc_round($Qpb->valueDecimal('price_break'), DECIMAL_PLACES), 2) . '" style="width:70px;" type="text" name="price_breaks[price][' . $counter . '][]" id="price_breaks[price][' . $counter . '][]"></td>' .
-                                             '<td width="30px" align="center"><a id="' . $rowID . 'e" href="javascript://" onclick="removePriceBreakEntry(this); return false;"><img border="0" src="images/icons/cross.png"></a></td></tr>';
-                              $rowCnt++;
-                            }
-
-                            $variants_string = '';
-                            $variants_combo_string = '';
-                            ?>
-                            <script type="text/javascript">
-                              variants[<?php echo $counter; ?>] = new Array();
-                            </script>
-                            <?php
-                            while ( $Qcombos->next() ) {
-                              if ( ($variants_default_combo === null) && ($Qcombos->valueInt('default_combo') === 1) ) {
-                                $variants_default_combo = $counter;
-                              }
-                              $variants_string .= $Qcombos->value('group_title') . ': ' . $Qcombos->value('value_title') . ', ';
-                              $variants_combo_string .= $Qcombos->valueInt('group_id') . '_' . $Qcombos->valueInt('value_id') . ';';
-                              ?>
-                              <script type="text/javascript">
-                                if (variants[<?php echo $counter; ?>][<?php echo $Qcombos->valueInt('group_id'); ?>] == undefined) {
-                                  variants[<?php echo $counter; ?>][<?php echo $Qcombos->valueInt('group_id'); ?>] = new Array();
-                                }
-                                variants[<?php echo $counter; ?>][<?php echo $Qcombos->valueInt('group_id'); ?>][<?php echo $Qcombos->valueInt('value_id'); ?>] = <?php echo $Qcombos->valueInt('value_id'); ?>;
-                              </script>
-                              <?php
-                            }
-                            $variants_string = substr($variants_string, 0, -2);
-                            $variants_combo_string = substr($variants_combo_string, 0, -1);
-                            ?>
-                            <div id="variant<?php echo $counter; ?>" class="attributeAdd" onclick="activateVariant(this);">
-                              <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                                <tr>
-                                  <td colspan="2"><div style="float: right;"><?php echo '<a href="javascript:setDefaultVariant(\'' . $counter . '\');">' . lc_icon_admin((($variants_default_combo === $counter) ? 'default.png' : 'default_grey.png'), null, null, 'id="vdc' . $counter . '"') . '</a>'; ?>&nbsp;<a href="javascript:removeVariant('variant<?php echo $counter; ?>');"><?php echo lc_icon_admin('trash.png'); ?></a></div><span style="font-weight: bold;"><?php echo lc_icon_admin('attach.png') . '&nbsp;' . $variants_string; ?></span></td>
-                                </tr>
-                                <tr id="variantTableContent<?php echo $counter; ?>">
-                                  <td width="60%" height="100%" valign="top">
-                                    <fieldset style="height: 100%;">
-                                      <legend><?php echo $lC_Language->get('subsection_price'); ?></legend>
-
-                                      <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_tax_class'); ?></td>
-                                          <td><?php echo lc_draw_pull_down_menu('variants_tax_class_id[' . $counter . ']', $tax_class_array, $Qvariants->valueInt('products_tax_class_id'), 'id="tax_class' . $counter . '" onchange="updateGross(\'variants_price' . $counter . '\');"'); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_price_net'); ?></td>
-                                          <td><?php echo lc_draw_input_field('variants_price[' . $counter . ']', $Qvariants->value('products_price'), 'id="variants_price' . $counter . '" onkeyup="updateGross(\'variants_price' . $counter . '\')"'); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_price_gross'); ?></td>
-                                          <td><?php echo lc_draw_input_field('variants_price_gross[' . $counter . ']', $Qvariants->value('products_price'), 'id="variants_price' . $counter . '_gross" onkeyup="updateNet(\'variants_price' . $counter . '\')"'); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td colspan="2">
-                                            <div><label for="qty_price_breaks" style="padding:3px 0;"><?php echo $lC_Language->get('field_qty_price_breaks'); ?></label>
-                                              <table style="border:1px solid #7f9db9;" id="qty-pricing-grid-variant<?php echo $counter; ?>" summary="Qty Price Breaks"  width="100%" border="0" cellpadding="2" cellspacing="0">
-                                                <thead style="height:24px;" class="ui-widget-header">
-                                                  <tr style="padding-top:5px">
-                                                    <th align="left" width="100px"><?php echo $lC_Language->get('table_heading_qpb_customer_group'); ?></th>
-                                                    <th align="left" width="100px"><?php echo $lC_Language->get('table_heading_qpb_tax_class'); ?></th>
-                                                    <th align="left" width="110px">&nbsp;<?php echo $lC_Language->get('table_heading_qpb_qty'); ?></th>
-                                                    <th align="left" width="80px"><?php echo $lC_Language->get('table_heading_qpb_net_price'); ?></th>
-                                                    <th align="center" width="30px">&nbsp;</th>
-                                                  </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                                <tfoot><input type="hidden" id="newpbid<?php echo $counter; ?>" value="<?php echo $counter; ?>"></tfoot>
-                                              </table>
-                                              <div style="margin:5px 0;" class="ui-dialog-buttonset">
-                                                <div style="float:right;"><button onclick="addPriceBreakFieldsNew(); return false;" class="operationButton" /><?php echo $lC_Language->get('button_add_price_break'); ?></button></div>
-                                              </div>
-                                            </div>
-                                          </td>
-                                        </tr>
-                                      </table>
-                                      <script type="text/javascript"><!--
-                                        updateGross('variants_price<?php echo $counter; ?>');
-                                        var counter = '<?php echo $counter; ?>';
-                                        var divPBEntry = '<?php echo $divPBEntry; ?>';
-                                        $("#qty-pricing-grid-variant" + counter + " > tbody").append(divPBEntry);
-                                      //--></script>
-                                    </fieldset>
-                                  </td>
-                                  <td width="40%" height="100%" valign="top">
-                                    <fieldset style="height: 100%;">
-                                      <legend><?php echo $lC_Language->get('subsection_data'); ?></legend>
-                                      <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_status'); ?></td>
-                                          <td><?php echo lc_draw_checkbox_field('variants_status[' . $counter . ']', null, null, (($Qvariants->value('products_status') == 1) ? 'checked="checked"' : '') ); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_model'); ?></td>
-                                          <td><?php echo lc_draw_input_field('variants_model[' . $counter . ']', $Qvariants->value('products_model')); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_quantity'); ?></td>
-                                          <td><?php echo lc_draw_input_field('variants_quantity[' . $counter . ']', $Qvariants->value('products_quantity')) . lc_draw_hidden_field('variants_combo[' . $counter . ']', $variants_combo_string, 'id="variants_combo_' . $counter . '"') . lc_draw_hidden_field('variants_combo_db[' . $counter . ']', $Qvariants->valueInt('products_id')); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_weight'); ?></td>
-                                          <td><?php echo lc_draw_input_field('variants_weight[' . $counter . ']', $Qvariants->value('products_weight'), 'size="6"'); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_weight_class'); ?></td>
-                                          <td><?php echo lc_draw_pull_down_menu('variants_weight_class[' . $counter . ']', $weight_class_array, $Qvariants->value('products_weight_class')); ?></td>
-                                        </tr>
-                                      </table>
-                                    </fieldset>
-                                  </td>
-                                </tr>
-                              </table>
-                            </div>
-                            <?php
-                            $counter++;
-                          }
-                          if ( $counter > 0 ) {
-                            ?>
-                            <script type="text/javascript">
-                              variants_counter = <?php echo $counter; ?>;
-                            </script>
-                            <?php
-                          }
-                        }
-                        ?>
-                      </span>
-                      <?php
-                      echo lc_draw_hidden_field('variants_default_combo', $variants_default_combo, 'id="variants_default_combo"');
-                      if ( is_numeric($variants_default_combo) ) {
-                        ?>
-                        <script type="text/javascript">
-                          variants_default_combo = <?php echo $variants_default_combo; ?>;
-                        </script>
-                        <?php
-                      }
-                      ?>
-                      <div id="readroot" style="display: none" class="attributeAdd" onclick="activateVariant(this);">
-                        <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                          <tr>
-                            <td colspan="2"><div style="float: right;"><a href="#" name="default"><?php echo lc_icon_admin('default_grey.png', null, null, 'name="vdcnew"'); ?></a>&nbsp;<a href="#" name="trash"><?php echo lc_icon_admin('trash.png'); ?></a></div><span style="font-weight: bold;"><?php echo lc_icon_admin('attach.png') . '&nbsp;'; ?></span></td>
-                          </tr>
-                          <tr id="variantTableContent">
-                            <td width="60%" height="100%" valign="top">
-                              <fieldset style="height: 100%;">
-                                <legend><?php echo $lC_Language->get('subsection_price'); ?></legend>
-                                <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_tax_class'); ?></td>
-                                    <td><?php echo lc_draw_pull_down_menu('new_variants_tax_class_id', $tax_class_array, null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_price_net'); ?></td>
-                                    <td><?php echo lc_draw_input_field('new_variants_price', null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_price_gross'); ?></td>
-                                    <td><?php echo lc_draw_input_field('new_variants_price_gross', null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="2">
-                                      <div><label for="qty_price_breaks" style="padding:3px 0;"><?php echo $lC_Language->get('field_qty_price_breaks'); ?></label>
-                                        <table style="border:1px solid #7f9db9;" id="qty-pricing-grid-variant" summary="Qty Price Breaks"  width="100%" border="0" cellpadding="2" cellspacing="0">
-                                          <thead style="height:24px;" class="ui-widget-header">
-                                            <tr style="padding-top:5px">
-                                              <th align="left" width="100px"><?php echo $lC_Language->get('table_heading_qpb_customer_group'); ?></th>
-                                              <th align="left" width="100px"><?php echo $lC_Language->get('table_heading_qpb_tax_class'); ?></th>
-                                              <th align="left" width="110px">&nbsp;<?php echo $lC_Language->get('table_heading_qpb_qty'); ?></th>
-                                              <th align="left" width="80px"><?php echo $lC_Language->get('table_heading_qpb_net_price'); ?></th>
-                                              <th align="center" width="30px">&nbsp;</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody></tbody>
-                                          <tfoot><input type="hidden" id="newpbid" value="1"></tfoot>
-                                        </table>
-                                        <div style="margin:5px 0;" class="ui-dialog-buttonset">
-                                          <div style="float:right;"><button onclick="addPriceBreakFieldsNew(); return false;" class="operationButton" /><?php echo $lC_Language->get('button_add_price_break'); ?></button></div>
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </table>
-                              </fieldset>
-                            </td>
-                            <td width="40%" height="100%" valign="top">
-                              <fieldset style="height: 100%;">
-                                <legend><?php echo $lC_Language->get('subsection_data'); ?></legend>
-                                <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_status'); ?></td>
-                                    <td><?php echo lc_draw_checkbox_field('new_variants_status', null, null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_model'); ?></td>
-                                    <td><?php echo lc_draw_input_field('new_variants_model', null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_quantity'); ?></td>
-                                    <td><?php echo lc_draw_input_field('new_variants_quantity', null, 'disabled="disabled"') . lc_draw_hidden_field('new_variants_combo', null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_weight'); ?></td>
-                                    <td><?php echo lc_draw_input_field('new_variants_weight', null, 'size="6" disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_weight_class'); ?></td>
-                                    <td><?php echo lc_draw_pull_down_menu('new_variants_weight_class', $weight_class_array, SHIPPING_WEIGHT_UNIT, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                </table>
-                              </fieldset>
-                            </td>
-                          </tr>
-                        </table>
-                      </div>
-                    </fieldset>
-                  </td>
-                </tr>
-              </table>
+            
+            <div class="field-drop-product button-height black-inputs extreme-margin-bottom">
+              <div class="left-column-280px margin-bottom">
+                <div class="left-column"></div>
+                <div style="background-color: #eeeeee;" class="right-column">
+                  Base Prioe & Status
+                </div>
+              </div>
             </div>
-            <script language="javascript">
-              $(document).ready(function() {
-                toggleDataDiv();
-                toggleVariantTableContent();
-
-                var error = '<?php echo $_SESSION['error']; ?>';
-                if (error) {
-                  var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
-                  alert(errmsg);
-                }
-              });
-
-              function toggleDataDiv() {
-                if ($("#has_variants").attr("checked")) {
-                  $("#noVariants").hide();
-                  $("#hasVariants").show();
-                } else {
-                  $("#hasVariants").hide();
-                  $("#noVariants").show();
-                }
-              }
-            </script>
+            
+            <div class="left-column-280px margin-bottom">
+              <div style="background-color: #eeeeee;" class="left-column">
+                Chart & Stats
+              </div>
+              <div class="right-column">
+                <div class="columns">
+                  <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">6 cols</div>
+                  <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">6 cols</div>
+                </div>
+              </div>
+            </div>            
+            
           </div>
           <div id="section_images_content" class="with-padding">
-            <table border="0" width="100%" cellspacing="0" cellpadding="2">
-              <tr>
-                <td width="100%" height="100%" valign="top">
-                  <fieldset style="height: 100%;">
-                    <legend><?php echo $lC_Language->get('subsection_new_image'); ?></legend>
-                    <div style="float: right;">
-                      <a href="#" id="remoteFilesLink" onclick="switchImageFilesView('remote');" style="background-color: #E5EFE5;"><?php echo $lC_Language->get('image_remote_upload'); ?></a> | <a href="#" id="localFilesLink" onclick="switchImageFilesView('local');"><?php echo $lC_Language->get('image_local_files'); ?></a>
-                    </div>
-                    <div id="remoteFiles">
-                      <span id="fileUploadField"></span>
-                      <?php
-                      if ( isset($lC_ObjectInfo) ) {
-                        ?>
-                        <div id="fileUploaderContainer" class="small-margin-top">
-                          <noscript>
-                            <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
-                          </noscript>
-                        </div>
-                        <?php
-                      } else {
-                        echo lc_draw_file_field('products_image', null, 'class="file"');
-                      }
-                      ?>
-                    </div>
-                    <?php
-                    if ( isset($lC_ObjectInfo) ) {
-                      ?>
-                      <script type="text/javascript"><!--
-                        function createUploader(){
-                          var uploader = new qq.FileUploader({
-                              element: document.getElementById('fileUploaderContainer'),
-                              action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=fileUpload'); ?>',
-                              onComplete: function(id, fileName, responseJSON){
-                                getImages();
-                              },
-                          });
-                        }
-                        $(document).ready(function() {
-                          createUploader();
-                        });
-                      //--></script>
-                      <?php
-                    }
-                    ?>
-                    <div id="localFiles" style="display: none;">
-                      <p><?php echo $lC_Language->get('introduction_select_local_images'); ?></p>
-                      <select id="localImagesSelection" name="localimages[]" size="5" multiple="multiple" style="width: 100%;"></select>
-                      <div id="showProgressGetLocalImages" style="display: none; float: right; padding-right: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_retrieving_local_files'); ?></div>
-                      <p><?php echo realpath('../images/products/_upload'); ?></p>
-                      <?php
-                      if ( isset($lC_ObjectInfo) ) {
-                        echo '<input type="button" value="Assign To Product" class="operationButton" onclick="assignLocalImages();" /><div id="showProgressAssigningLocalImages" style="display: none; padding-left: 10px;">' . lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_multiple_upload_progress') . '</div>';
-                      }
-                      ?>
-                    </div>
-                  </fieldset>
-                  <script type="text/javascript"><!--
-                  getLocalImages();
-                  //--></script>
-                  <?php
-                  if ( isset($lC_ObjectInfo) ) {
-                    ?>
-                    <fieldset style="height: 100%;">
-                      <legend><?php echo $lC_Language->get('subsection_original_images'); ?></legend>
-                      <div id="imagesOriginal" style="overflow: auto;" class="small-margin-top"></div>
-                    </fieldset>
-                    <fieldset style="height: 100%;">
-                      <legend><?php echo $lC_Language->get('subsection_images'); ?></legend>
-                      <div id="imagesOther" style="overflow: auto;"></div>
-                    </fieldset>
-                    <script type="text/javascript"><!--
-                      getImages();
-                    //--></script>
-                    <?php
-                  }
-                  ?>
-                </td>
-              </tr>
-            </table>
-          
+            Images
           </div>
-          <div id="section_categories_content" class="with-padding">
-            <div id="section_categories_content">
-              <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                <tr>
-                  <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
-                    <tbody>
-                      <?php
-                      $product_categories_array = array();
-                      if ( isset($lC_ObjectInfo) ) {
-                        $Qcategories = $lC_Database->query('select categories_id from :table_products_to_categories where products_id = :products_id');
-                        $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
-                        $Qcategories->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
-                        $Qcategories->execute();
-                        while ($Qcategories->next()) {
-                          $product_categories_array[] = $Qcategories->valueInt('categories_id');
-                        }
-                      }
-                      $assignedCategoryTree = new lC_CategoryTree();
-                      $assignedCategoryTree->setBreadcrumbUsage(false);
-                      $assignedCategoryTree->setSpacerString('&nbsp;', 5);
-                      foreach ($assignedCategoryTree->getArray() as $value) {
-                        echo '          <tr>' . "\n" .
-                             '            <td width="30px">' . lc_draw_checkbox_field('categories[]', $value['id'], in_array($value['id'], $product_categories_array), 'class="input" id="categories_' . $value['id'] . '"') . '</td>' . "\n" .
-                             '            <td><a href="#" onclick="document.product.categories_' . $value['id'] . '.checked=!document.product.categories_' . $value['id'] . '.checked;">' . $value['title'] . '</a></td>' . "\n" .
-                             '          </tr>' . "\n";
-                      }
-                      ?>
-                    </tbody>
-                  </table></td>
-                </tr>
-              </table>
-            </div>
+          <div id="section_pricing_content" class="with-padding">
+            Pricing
+          </div>
+          <div id="section_data_content" class="with-padding">
+            Data
+          </div>
+          <div id="section_options_content" class="with-padding">
+            Options
+          </div>
+          <div id="section_shipping_content" class="with-padding">
+            Shipping
+          </div>
+          <div id="section_relationships_content" class="with-padding">
+            Relationships
           </div>
         </div>
       </div>
@@ -1314,42 +765,7 @@ function toggleEditor(id) {
     </div>
   </div>
 </section>
-
-
 <?php
-/*
-
-<script type="text/javascript">
-$(document).ready(function(){
-  $("#mainTabs").tabs( { selected: 0 } );
-  $("#languageTabs").tabs( { selected: 0 } );
-  $("#languageTabsMeta").tabs( { selected: 0 } );
-
- <?php if ( isset($lC_ObjectInfo)) { ?>updatePriceBreakFields();<?php } ?>
-
-});
-</script>
-<form name="product" id="product" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
-<div id="mainTabs">
-  <ul>
-    <li><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
-    <li id="tabHeaderSectionDataContent"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
-    <li><?php echo lc_link_object('#section_images_content', $lC_Language->get('section_images')); ?></li>
-    <li><?php echo lc_link_object('#section_categories_content', $lC_Language->get('section_categories')); ?></li>
-  </ul>
-
-  <div id="section_general_content">
-
-
-  </div>
-
-
-
-</div>
-*/
-
-
 if (isset($_SESSION['error'])) unset($_SESSION['error']);
 if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']);
-
 ?>

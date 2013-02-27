@@ -46,22 +46,39 @@
 	clear: left;
 }
 
-/* Fixed columns */
+/* Fixed columns */ 
 .left-column-200px .left-column {
-	float: left;
-	width: 200px;
-	margin-bottom: 0;
+  float: left;
+  width: 200px;
+  margin-bottom: 0;
 }
 .left-column-200px .right-column {
-	margin-left: 220px;
+  margin-left: 220px;
 }
 .right-column-200px .left-column {
-	margin-right: 220px;
+  margin-right: 220px;
 }
 .right-column-200px .right-column {
-	float: right;
-	width: 200px;
-	margin-bottom: 0;
+  float: right;
+  width: 200px;
+  margin-bottom: 0;
+}
+
+.left-column-280px .left-column {
+  float: left;
+  width: 280px;
+  margin-bottom: 0;
+}
+.left-column-280px .right-column {
+  margin-left: 300px;
+}
+.right-column-280px .left-column {
+  margin-right: 300px;
+}
+.right-column-280px .right-column {
+  float: right;
+  width: 280px;
+  margin-bottom: 0;
 }
 
 /* Content panels */

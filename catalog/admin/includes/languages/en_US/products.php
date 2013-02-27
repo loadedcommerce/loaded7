@@ -37,13 +37,16 @@ modal_heading_delete_image = Delete Image
 modal_heading_batch_copy_products = Batch Copy Products
 modal_heading_product_type = Product Type
 
-section_general = General
+section_general = Content
 section_pricing = Pricing 
 section_meta = Meta Info
 section_data = Data
 section_images = Images
 section_variants = Variants
 section_categories = Categories
+section_options = Options
+section_shipping = Shipping
+section_relationships = Relationships
 
 subsection_price = Price
 subsection_pricing_modifiers = Pricing Modifiers
