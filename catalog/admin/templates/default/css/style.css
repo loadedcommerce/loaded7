@@ -4564,3 +4564,7 @@ a:link {
   right:0px;
   padding: 5px 20px;
 }
+
+@media screen and (max-width: 991px) {
+  .hide-below-992 { display: none !important; } 
+}
