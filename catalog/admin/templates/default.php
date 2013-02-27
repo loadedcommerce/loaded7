@@ -445,7 +445,7 @@
         </div>
       </div>
       
-      <div id="recentContainer">
+      <div id="recentContainer" class="hide-below-992">
         <section>
           <ul class="title-menu">
             <li>Recent Events</li>
@@ -485,7 +485,7 @@
         </section>
       </div>
       
-      <footer id="menu-footer">
+      <footer id="menu-footer" class="hide-below-992">
         <p class="w-mark"></p>
       </footer>      
     </section>
