@@ -1898,7 +1898,8 @@
 			});
 
 			// Use available space (menu is 90% of viewport height)
-			menuContent.css('max-height', (Math.round(0.9*$.template.viewportHeight)-(menu.outerHeight()-menu.height())-siblingsHeight)+'px');
+      //menuContent.css('max-height', (Math.round(0.9*$.template.viewportHeight)-(menu.outerHeight()-menu.height())-siblingsHeight)+'px');
+      menuContent.css('max-height', (Math.round(0.9*$.template.viewportHeight)-(menu.outerHeight()-menu.height()))+'px');
 		};
 
 		// First call
