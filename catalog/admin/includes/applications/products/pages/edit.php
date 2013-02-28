@@ -651,14 +651,15 @@ function toggleEditor(id) {
           <li><?php echo lc_link_object('#section_relationships_content', $lC_Language->get('section_relationships')); ?></li>
         </ul>
         <div class="clearfix tabs-content">
+          <!-- content_tab -->
           <div id="section_general_content" class="with-padding">
             <div class="left-column-280px margin-bottom">
               <div style="background-color: #eeeeee;" class="left-column">
                 Image
               </div>
               <div style="background-color: #eeeeee;" class="right-column">
-                <div>Name</div>
-                <div>Description</div>
+                <p>Name</p>
+                <p>Description</p>
               </div>
             </div>
             <div class="left-column-280px margin-bottom">
@@ -683,12 +684,21 @@ function toggleEditor(id) {
               </div>
               <div class="right-column">
                 <div class="columns">
-                  <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">6 cols</div>
-                  <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">6 cols</div>
+                  <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                    <p>Model<p>
+                    <p>Product Type<p>
+                    <p>Inventory options<p>
+                  </div>
+                  <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                    <p>Date Available<p>
+                    <p>Product Class<p>
+                    <p>Weight<p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- images_tab -->
           <div id="section_images_content" class="with-padding">
             <div class="content-panel margin-bottom enabled-panels">
               <div class="panel-navigation silver-gradient">
@@ -710,6 +720,7 @@ function toggleEditor(id) {
               </div>
             </div>
           </div>
+          <!-- pricing_tab -->
           <div id="section_pricing_content" class="with-padding">
             <fieldset class="fieldset fields-list">
               <legend class="legend">Pricing Overrides</legend>
@@ -746,15 +757,107 @@ function toggleEditor(id) {
               </div>
             </fieldset>
           </div>
+          <!-- data_tab -->
           <div id="section_data_content" class="with-padding">
-            Data
+            <fieldset class="fieldset">
+              <legend class="legend">Inventory Settings</legend>
+              <div class="columns">
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Model Input
+                </div>
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Track Inventory Radio Group (Buttons) and Pro Button
+                </div>
+              </div>
+              <div class="columns">
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  MSRP Input
+                </div>
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Vendor Supplier Dropdown and Pro Button
+                </div>
+              </div>
+              <div class="columns">
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Inventory Control Radio Group (Buttons)
+                </div>
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Blank
+                </div>
+              </div>
+              <div id="inventory_control_container" class="field-drop button-height black-inputs">
+                <label for="input-2" class="label"><b>Label</b></label>
+                <input type="text" name="input-2" id="input-2" value="" class="input">
+                <small class="input-info">Info below input</small>
+              </div>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend class="legend">Tax Settings</legend>
+              <div class="columns">
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Tax Class Dropdown
+                </div>
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Base Price w/Tax Input
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend class="legend">Management Settings</legend>
+              <div class="columns">
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Manufacturer Dropdown
+                </div>
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Product Class Dropdown & Pro Button
+                </div>
+              </div>
+              <div class="columns">
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  URL Slug Input
+                </div>
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Availability Date Start and End Inputs & Pro Button
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend class="legend">Product Details</legend>
+              <div class="columns">
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Custom Field 1
+                </div>
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Customize & Pro Button
+                </div>
+              </div>
+              <div class="columns">
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Custom Field 2
+                </div>
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Blank
+                </div>
+              </div>
+              <div class="columns">
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Custom Field 3
+                </div>
+                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  Blank
+                </div>
+              </div>
+            </fieldset>
           </div>
+          <!-- options_tab -->
           <div id="section_options_content" class="with-padding">
             Options
           </div>
+          <!-- shipping_tab -->
           <div id="section_shipping_content" class="with-padding">
             Shipping
           </div>
+          <!-- relationships_tab -->
           <div id="section_relationships_content" class="with-padding">
             Relationships
           </div>
