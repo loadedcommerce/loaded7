@@ -43,9 +43,9 @@ if ($lC_MessageStack->size('contact') > 0) {
             }
         ?>
           <ul id="personal_details">
-            <li><?php echo lc_draw_label('', 'name', null, false) . ' ' . lc_draw_input_field('name', $contact_name , 'placeholder="' . $lC_Language->get('contact_name_title') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('contact_name_title') . '\'" holder="' . $lC_Language->get('contact_name_title') . '" class="txt" style="width:99%;"'); ?></li>
-            <li><?php echo lc_draw_label('', 'email', null, '', false) . ' ' . lc_draw_input_field('email', $contact_email, 'placeholder="' . $lC_Language->get('contact_email_address_title') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('contact_email_address_title') . '\'" holder="' . $lC_Language->get('contact_email_address_title') . '" class="txt" style="width:99%;"');?></li>
-            <li><?php echo lc_draw_label('', 'inquiry', null, false) . ' ' . lc_draw_textarea_field('inquiry', null, 40, 8, 'placeholder="' . $lC_Language->get('contact_inquiry_title') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('contact_inquiry_title') . '\'" holder="' . $lC_Language->get('contact_inquiry_title') . '"  holder="text" class="txt" style="width:99%;"'); ?></li>
+            <li><?php echo lc_draw_label('', 'name', null, false) . ' ' . lc_draw_input_field('name', $contact_name , 'placeholder="' . $lC_Language->get('contact_name_title') . '" class="txt" style="width:99%;"'); ?></li>
+            <li><?php echo lc_draw_label('', 'email', null, '', false) . ' ' . lc_draw_input_field('email', $contact_email, 'placeholder="' . $lC_Language->get('contact_email_address_title') . '" class="txt" style="width:99%;"');?></li>
+            <li><?php echo lc_draw_label('', 'inquiry', null, false) . ' ' . lc_draw_textarea_field('inquiry', null, 40, 8, 'placeholder="' . $lC_Language->get('contact_inquiry_title') . '" class="txt" style="width:99%;"'); ?></li>
             <!--li>Place for Captcha</li -->
           </ul>
         <?php
