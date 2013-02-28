@@ -638,32 +638,9 @@ function toggleEditor(id) {
     }
     ?>
   </hgroup>
-  <style>
-    .attributeAdd {
-      border: 1px solid #7f9db9;
-      background-color: #F0F1F1;
-      margin: 2px;
-    }
-
-    .variantActive {
-      border: 1px solid #7f9db9;
-      background-color: #E8FFC6;
-      margin: 2px;
-    }
-
-    .variantLine {
-      color: #D3D3D3;
-      background-color: #D3D3D3;
-      height: 1px;
-    }
-    
-    form.dataForm fieldset legend { padding: 3px 5px; border-bottom: 1px solid black; font-weight: bold; width: 99%; }
-    LABEL { font-weight:bold; }
-    TD { padding: 5px 0 0 5px; }
-  </style>
   <div class="with-padding-no-top">
     <form name="product" id="product" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
-      <div class="standard-tabs same-height">
+      <div class="standard-tabs" style="position:relative;">
         <ul class="tabs">
           <li class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
           <li><?php echo lc_link_object('#section_images_content', $lC_Language->get('section_images')); ?></li>
@@ -675,7 +652,6 @@ function toggleEditor(id) {
         </ul>
         <div class="clearfix tabs-content">
           <div id="section_general_content" class="with-padding">
-            
             <div class="left-column-280px margin-bottom">
               <div style="background-color: #eeeeee;" class="left-column">
                 Image
@@ -685,7 +661,6 @@ function toggleEditor(id) {
                 <div>Description</div>
               </div>
             </div>
-            
             <div class="left-column-280px margin-bottom">
               <div style="background-color: #eeeeee;" class="left-column">
                 Main Category
@@ -694,7 +669,6 @@ function toggleEditor(id) {
                 Keywords
               </div>
             </div>
-            
             <div class="field-drop-product button-height black-inputs extreme-margin-bottom">
               <div class="left-column-280px margin-bottom">
                 <div class="left-column"></div>
@@ -703,7 +677,6 @@ function toggleEditor(id) {
                 </div>
               </div>
             </div>
-            
             <div class="left-column-280px margin-bottom">
               <div style="background-color: #eeeeee;" class="left-column">
                 Chart & Stats
@@ -714,14 +687,64 @@ function toggleEditor(id) {
                   <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">6 cols</div>
                 </div>
               </div>
-            </div>            
-            
+            </div>
           </div>
           <div id="section_images_content" class="with-padding">
-            Images
+            <div class="content-panel margin-bottom enabled-panels">
+              <div class="panel-navigation silver-gradient">
+                <div class="panel-control"></div>
+                <div class="panel-load-target scrollable custom-scroll">
+                  <div class="navigable">
+                    <ul class="files-list mini open-on-panel-content">
+                      <li><span class="icon file-jpg"></span><b>Product Images</b></li>
+                      <li><span class="icon folder-image"></span><b>Additional Images</b></li>
+                    </ul>
+                  </div>
+                  <div class="custom-vscrollbar" style="display: none; opacity: 0;">
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-content linen" style="height:400px">
+                <div class="panel-control align-right"><a class="button icon-pictures" href="#">Replace All</a></div>
+              </div>
+            </div>
           </div>
           <div id="section_pricing_content" class="with-padding">
-            Pricing
+            <fieldset class="fieldset fields-list">
+              <legend class="legend">Pricing Overrides</legend>
+              <div class="field-block button-height">
+                <label for="input-1" class="label"><b>Base Price</b></label>
+                <input type="text" name="input-1" id="input-1" value="" class="input">
+              </div>
+              <div class="field-block field-block-product button-height">
+                <label for="input-1" class="label"><b>Group Pricing</b></label>
+                <input onchange="$('#groups_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
+              </div>
+              <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
+                <label for="input-2" class="label"><b>Label</b></label>
+                <input type="text" name="input-2" id="input-2" value="" class="input">
+                <small class="input-info">Info below input</small>
+              </div>
+              <div class="field-block field-block-product button-height">
+                <label for="input-1" class="label"><b>Qty Break Pricing</b></label>
+                <input onchange="$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
+              </div> 
+              <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
+                <label for="input-2" class="label"><b>Label</b></label>
+                <input type="text" name="input-2" id="input-2" value="" class="input">
+                <small class="input-info">Info below input</small>
+              </div>
+              <div class="field-block field-block-product button-height">
+                <label for="input-1" class="label"><b>Special Pricing</b></label>
+                <input onchange="$('#specials_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
+              </div>
+              <div id="specials_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
+                <label for="input-2" class="label"><b>Label</b></label>
+                <input type="text" name="input-2" id="input-2" value="" class="input">
+                <small class="input-info">Info below input</small>
+              </div>
+            </fieldset>
           </div>
           <div id="section_data_content" class="with-padding">
             Data

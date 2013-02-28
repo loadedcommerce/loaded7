@@ -55,6 +55,7 @@
   <!-- Additional styles -->
   <link rel="stylesheet" href="templates/default/css/styles/agenda.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/dashboard.css?v=1">
+  <link rel="stylesheet" href="templates/default/css/styles/files.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/form.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/modal.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/progress-slider.css?v=1">

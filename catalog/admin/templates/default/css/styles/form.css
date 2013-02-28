@@ -632,6 +632,11 @@ input:-moz-placeholder {
 		.field-block .label strong {
 			color: #444444;
 		}
+    .field-block-product {
+      padding-top: 20px !important;
+      padding-bottom: 20px !important;
+      border-bottom: 1px solid #E0E0E0;
+    }
 
 /* Field drop */
 .field-drop {
