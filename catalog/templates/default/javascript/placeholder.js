@@ -1,5 +1,5 @@
 /*
-  $Id: products.js.php v1.0 2011-11-04  datazen $
+  $Id: placeholder.js v1.0 2011-11-04  datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -19,9 +19,15 @@ $(document).ready(function() {
       
         inputField.val(inputField.attr("placeholder"));
         
-        inputField.focus(function(){
+        inputField.keydown(function(){
           if(inputField.val()==inputField.attr("placeholder")) inputField.val("");
         });
+        
+        inputField.focus(function(){
+          setTimeout(function() {
+            inputField.setSelectionRange(0, 0);
+          }, 0);
+        });        
         
         inputField.blur(function(){
           if(inputField.val()=="") inputField.val(inputField.attr("placeholder"));
