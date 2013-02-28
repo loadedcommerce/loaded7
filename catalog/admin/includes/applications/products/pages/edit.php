@@ -653,21 +653,106 @@ function toggleEditor(id) {
         <div class="clearfix tabs-content">
           <!-- content_tab -->
           <div id="section_general_content" class="with-padding">
-            <div class="left-column-280px margin-bottom">
-              <div style="background-color: #eeeeee;" class="left-column">
-                Image
-              </div>
-              <div style="background-color: #eeeeee;" class="right-column">
-                <p>Name</p>
-                <p>Description</p>
+            <div class="columns">
+              <div class="twelve-columns mid-margin-bottom align-right">
+                <select class="select">
+                  <?php foreach ( $lC_Language->getAll() as $l ) { ?>
+                  <option id="<?php echo $l['code']; ?>" value="<?php echo $l['code']; ?>"><?php echo $l['name']; ?></option>
+                  <?php } ?>
+                </select>
               </div>
             </div>
             <div class="left-column-280px margin-bottom">
-              <div style="background-color: #eeeeee;" class="left-column">
-                Main Category
+              <div class="left-column">
+                <span class="small-margin-bottom">Image</span>
+                <span class="info-spot float-right small-margin-bottom">
+                  <span class="icon-info-round"></span>
+                  <span class="info-bubble">
+                    Put the bubble text here
+                  </span>
+                </span>
+                <img src="images/pimage.png" width="280" />
+                <span class="float-left">Drag Image to replace</span>
               </div>
-              <div style="background-color: #eeeeee;" class="right-column">
-                Keywords
+              <div class="right-column">             
+                <div class="columns">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span class="small-margin-bottom">Name</span>
+                    <span class="info-spot float-right small-margin-bottom">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom">
+                    <input type="text" class="input full-width">
+                  </div>
+                  <div class="twelve-columns no-margin-bottom mid-margin-top">
+                    <span class="small-margin-bottom">Description</span>
+                    <span class="info-spot float-right small-margin-bottom">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom">
+                    <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 12, 'class="required input full-width"'); ?>
+                    <span class="float-right small-margin-top"><a href="#">Enlarge Description <span class="icon-extract icon-grey"></span></a>&nbsp;&nbsp;&nbsp;<?php echo '<a href="javascript:toggleEditor(\'products_description[' . $l['id'] . ']\');">' . $lC_Language->get('toggle_html_editor') . '</a>'; ?></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="left-column-280px margin-bottom clear-both">
+              <div class="left-column">             
+                <div class="columns">
+                  <div class="twelve-columns small-margin-bottom">
+                    <span class="small-margin-bottom">Main Category</span>
+                    <span class="info-spot float-right small-margin-bottom">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom">
+                    <select class="select full-width">
+                    <?php
+                      $product_categories_array = array();
+                      if ( isset($lC_ObjectInfo) ) {
+                        $Qcategories = $lC_Database->query('select categories_id from :table_products_to_categories where products_id = :products_id');
+                        $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+                        $Qcategories->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
+                        $Qcategories->execute();
+                        while ($Qcategories->next()) {
+                          $product_categories_array[] = $Qcategories->valueInt('categories_id');
+                        }
+                      }
+                      $assignedCategoryTree = new lC_CategoryTree();
+                      $assignedCategoryTree->setBreadcrumbUsage(false);
+                      $assignedCategoryTree->setSpacerString('&nbsp;', 5);
+                      foreach ($assignedCategoryTree->getArray() as $value) {
+                        echo '<option id="categories_' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
+                      }
+                    ?>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="right-column">
+                <span class="half-width">
+                  <span class="small-margin-bottom">Keywords</span>
+                  <span class="info-spot float-right small-margin-bottom">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
+                    </span>
+                  </span>
+                </span>
+                <div class="full-width clear-right">
+                  <input type="text" class="input full-width">
+                </div>
               </div>
             </div>
             <div class="field-drop-product button-height black-inputs extreme-margin-bottom">
@@ -851,7 +936,29 @@ function toggleEditor(id) {
           </div>
           <!-- options_tab -->
           <div id="section_options_content" class="with-padding">
-            Options
+            <div class="columns">
+              <div style="background-color: #eeeeee;" class="twelve-columns">
+                Inventory Contro Radio Group (Buttons) & Pro Button
+              </div>
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend">Inventory Options Combo Sets</legend>
+                  
+                </fieldset>
+              </div>
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend">Simple Inventory Options</legend>
+                  
+                </fieldset>
+              </div>
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend">Simple Options</legend>
+                  
+                </fieldset>
+              </div>
+            </div>
           </div>
           <!-- shipping_tab -->
           <div id="section_shipping_content" class="with-padding">
