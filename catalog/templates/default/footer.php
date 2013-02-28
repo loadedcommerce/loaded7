@@ -24,7 +24,7 @@
         <h3>Subscribe to our Newsletter</h3>
         <small>Instant wardrobe updates, new arrivals, fashion news, don't miss a beat - sign up to our newsletter now.</small>
         <form id="newsletter" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create', 'SSL'); ?>" method="post">
-          <input type="text" class="input-text" value="<?php echo $lC_Language->get('text_enter_your_email'); ?>" placeholder="<?php echo $lC_Language->get('text_enter_your_email'); ?>" id="newsletter" name="email">
+          <input type="text" class="input-text" value="" placeholder="<?php echo $lC_Language->get('text_enter_your_email'); ?>" id="newsletter" name="email">
           <button class="button" title="" type="submit"></button>
         </form>
       </div>
