@@ -124,14 +124,14 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         $services = array('output_compression',
                           'session',
                           'language',
-                          'debug',
+//                          'debug',
                           'currencies',
                           'core',
                           'simple_counter',
                           'category_path',
                           'breadcrumb',
                           'whos_online',
-//                            'banner',
+                          'banner',
                           'specials',
                           'reviews',
                           'recently_visited');
@@ -204,18 +204,18 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         include('includes/classes/shipping.php');
         include('includes/classes/order_total.php');
 
-        include('../admin/includes/modules/payment/cod.php');
-        $module = new lC_Payment_cod();
-        $module->install();
+   //     include('../admin/includes/modules/payment/cod.php');
+   //     $module = new lC_Payment_cod();
+   //     $module->install();
 
-        $Qupdate = $lC_Database->query('update :table_configuration set configuration_value = 1 where configuration_key = :configuration_key');
-        $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
-        $Qupdate->bindValue(':configuration_key', 'MODULE_PAYMENT_COD_STATUS');
-        $Qupdate->execute();
+  //      $Qupdate = $lC_Database->query('update :table_configuration set configuration_value = 1 where configuration_key = :configuration_key');
+  //      $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
+  //      $Qupdate->bindValue(':configuration_key', 'MODULE_PAYMENT_COD_STATUS');
+  //      $Qupdate->execute();
 
-        include('../admin/includes/modules/shipping/flat.php');
-        $module = new lC_Shipping_flat();
-        $module->install();
+    //    include('../admin/includes/modules/shipping/flat.php');
+    //    $module = new lC_Shipping_flat();
+    //    $module->install();
 
         include('../admin/includes/applications/modules_order_total/classes/modules_order_total.php');    
 
