@@ -49,8 +49,10 @@ param_web_work_directory_description = The working directory for temporarily cre
 
 param_store_name = Store Name
 param_store_name_description = The name of the online store that is presented to the public.
-param_store_owner_name = Store Owner Name
-param_store_owner_name_description = The name of the store owner that is presented to the public.
+param_store_owner_first_name = First Name
+param_store_owner_first_name_description = The first name of the store owner that is presented to the public.
+param_store_owner_last_name = Last Name
+param_store_owner_last_name_description = The last name of the store owner that is presented to the public.
 param_store_owner_email_address = Store Owner E-Mail
 param_store_owner_email_address_description = The e-mail address of the store owner that is presented to the public.
 param_administrator_username = Admin Username

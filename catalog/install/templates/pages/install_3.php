@@ -53,8 +53,9 @@
 
       var bValid = $("#installForm3").validate({
         rules: {
+          CFG_STORE_OWNER_FIRST_NAME: { required: true },
+          CFG_STORE_OWNER_LAST_NAME: { required: true },
           CFG_STORE_NAME: { required: true },
-          CFG_STORE_OWNER_NAME: { required: true },
           CFG_STORE_OWNER_EMAIL_ADDRESS: { required: true },
           CFG_ADMINISTRATOR_USERNAME: { required: true },
           CFG_ADMINISTRATOR_PASSWORD: { required: true },
@@ -110,13 +111,17 @@
     </div> 
         
     <div class="field-block button-height">
-      <label for="CFG_STORE_NAME" class="label"><b><?php echo $lC_Language->get('param_store_name'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_store_name_description'); ?>"></span></label>
-      <?php echo lc_draw_input_field('CFG_STORE_NAME', null, 'class="input" style="width:93%;"'); ?>
+      <label for="CFG_STORE_OWNER_FIRST_NAME" class="label"><b><?php echo $lC_Language->get('param_store_owner_first_name'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_store_owner_first_name_description'); ?>"></span></label>
+      <?php echo lc_draw_input_field('CFG_STORE_OWNER_FIRST_NAME', null, 'class="input" style="width:93%;"'); ?>
     </div>
     <div class="field-block button-height">
-      <label for="CFG_STORE_OWNER_NAME" class="label"><b><?php echo $lC_Language->get('param_store_owner_name'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_store_owner_name_description'); ?>"></span></label>
-      <?php echo lc_draw_input_field('CFG_STORE_OWNER_NAME', null, 'class="input" style="width:93%;"'); ?>
+      <label for="CFG_STORE_OWNER_LAST_NAME" class="label"><b><?php echo $lC_Language->get('param_store_owner_last_name'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_store_owner_last_name_description'); ?>"></span></label>
+      <?php echo lc_draw_input_field('CFG_STORE_OWNER_LAST_NAME', null, 'class="input" style="width:93%;"'); ?>
     </div>
+    <div class="field-block button-height">
+      <label for="CFG_STORE_NAME" class="label"><b><?php echo $lC_Language->get('param_store_name'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_store_name_description'); ?>"></span></label>
+      <?php echo lc_draw_input_field('CFG_STORE_NAME', null, 'class="input" style="width:93%;"'); ?>
+    </div>    
     <div class="field-block button-height">
       <label for="CFG_STORE_OWNER_EMAIL_ADDRESS" class="label"><b><?php echo $lC_Language->get('param_store_owner_email_address'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_store_owner_email_address_description'); ?>"></span></label>
       <?php echo lc_draw_input_field('CFG_STORE_OWNER_EMAIL_ADDRESS', null, 'class="input" style="width:93%;"'); ?>

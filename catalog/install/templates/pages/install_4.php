@@ -24,6 +24,8 @@ $Qupdate->bindValue(':configuration_value', $_POST['CFG_STORE_NAME']);
 $Qupdate->bindValue(':configuration_key', 'STORE_NAME');
 $Qupdate->execute();
 
+$_POST['CFG_STORE_OWNER_NAME'] = $_POST['CFG_STORE_OWNER_FIRST_NAME']." ".$_POST['CFG_STORE_OWNER_LAST_NAME'];
+
 $Qupdate = $lC_Database->query('update :table_configuration set configuration_value = :configuration_value where configuration_key = :configuration_key');
 $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
 $Qupdate->bindValue(':configuration_value', $_POST['CFG_STORE_OWNER_NAME']);
@@ -52,22 +54,14 @@ $Qcheck->execute();
 if ($Qcheck->numberOfRows()) {
   $Qadmin = $lC_Database->query('update :table_administrators set user_password = :user_password where user_name = :user_name');
 } else {
-  $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password) values (:user_name, :user_password, :first_name, :last_name)');
+  $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name) values (:user_name, :user_password, :first_name, :last_name)');
 }
-$cfg_store_owner_name = trim($_POST['CFG_STORE_OWNER_NAME']);
-$split_position = strpos($cfg_store_owner_name," ");  
-if($split_position > 0) {
-  $cfg_store_owner_name_first = substr($cfg_store_owner_name,0,$split_position);
-  $cfg_store_owner_name_last = substr($cfg_store_owner_name,$split_position);
-} else {
-  $cfg_store_owner_name_first = $cfg_store_owner_name;
-  $cfg_store_owner_name_last = '';
-}
+
 $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
 $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($_POST['CFG_ADMINISTRATOR_PASSWORD'])));
 $Qadmin->bindValue(':user_name', $_POST['CFG_ADMINISTRATOR_USERNAME']);
-$Qadmin->bindValue(':first_name', trim($cfg_store_owner_name_first));
-$Qadmin->bindValue(':last_name', trim($cfg_store_owner_name_last));
+$Qadmin->bindValue(':first_name', $_POST['CFG_STORE_OWNER_FIRST_NAME']);
+$Qadmin->bindValue(':last_name', $_POST['CFG_STORE_OWNER_LAST_NAME']);
 $Qadmin->execute();
 
 $Qadmin = $lC_Database->query('select id from :table_administrators where user_name = :user_name');
