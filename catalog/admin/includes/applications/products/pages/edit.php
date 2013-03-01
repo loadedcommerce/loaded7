@@ -640,7 +640,7 @@ function toggleEditor(id) {
   </hgroup>
   <div class="with-padding-no-top">
     <form name="product" id="product" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
-      <div class="standard-tabs" style="position:relative;">
+      <div id="product_tabs" class="side-tabs" style="position:relative;">
         <ul class="tabs">
           <li class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
           <li><?php echo lc_link_object('#section_images_content', $lC_Language->get('section_images')); ?></li>
@@ -654,6 +654,34 @@ function toggleEditor(id) {
           <!-- content_tab -->
           <div id="section_general_content" class="with-padding">
             <div class="columns">
+              <div style="background-color: #dddddd;" class="new-row-mobile four-columns twelve-columns-tablet">
+                &nbsp;
+              </div>
+              <div style="background-color: #dddddd;" class="new-row-mobile four-columns twelve-columns-tablet">
+                &nbsp;
+              </div>
+              <div style="background-color: #dddddd;" class="new-row-mobile four-columns twelve-columns-tablet">
+                      <span class="button-group">
+                        <label for="button-radio-1" class="button blue-active">
+                          <input type="radio" name="button-radio" id="button-radio-1" value="1" checked>
+                          Active
+                        </label>
+                        <label for="button-radio-2" class="button blue-active">
+                          <input type="radio" name="button-radio" id="button-radio-2" value="2">
+                          Inactive
+                        </label>
+                        <label for="button-radio-3" class="button blue-active">
+                          <input type="radio" name="button-radio" id="button-radio-3" value="3">
+                          Coming Soon
+                        </label>
+                      </span>
+              </div>
+            </div>
+          
+          
+          
+          
+            <div class="columns">
               <div class="twelve-columns mid-margin-bottom align-right">
                 <select class="select">
                   <?php foreach ( $lC_Language->getAll() as $l ) { ?>
@@ -665,7 +693,7 @@ function toggleEditor(id) {
             <div class="left-column-280px margin-bottom">
               <div class="left-column">
                 <span class="small-margin-bottom">Image</span>
-                <span class="info-spot float-right small-margin-bottom">
+                <span class="info-spot on-left grey float-right small-margin-bottom">
                   <span class="icon-info-round"></span>
                   <span class="info-bubble">
                     Put the bubble text here
@@ -678,7 +706,7 @@ function toggleEditor(id) {
                 <div class="columns">
                   <div class="twelve-columns no-margin-bottom">
                     <span class="small-margin-bottom">Name</span>
-                    <span class="info-spot float-right small-margin-bottom">
+                    <span class="info-spot on-left grey float-right small-margin-bottom">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
                         Put the bubble text here
@@ -686,11 +714,11 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom">
-                    <input type="text" class="input full-width">
+                    <?php echo lc_draw_input_field('products_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null), 'class="required input full-width"'); ?>
                   </div>
                   <div class="twelve-columns no-margin-bottom mid-margin-top">
                     <span class="small-margin-bottom">Description</span>
-                    <span class="info-spot float-right small-margin-bottom">
+                    <span class="info-spot on-left grey float-right small-margin-bottom">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
                         Put the bubble text here
@@ -698,7 +726,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom">
-                    <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 12, 'class="required input full-width"'); ?>
+                    <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 7, 'class="required input full-width autoexpanding"'); ?>
                     <span class="float-right small-margin-top"><a href="#">Enlarge Description <span class="icon-extract icon-grey"></span></a>&nbsp;&nbsp;&nbsp;<?php echo '<a href="javascript:toggleEditor(\'products_description[' . $l['id'] . ']\');">' . $lC_Language->get('toggle_html_editor') . '</a>'; ?></span>
                   </div>
                 </div>
@@ -709,14 +737,14 @@ function toggleEditor(id) {
                 <div class="columns">
                   <div class="twelve-columns small-margin-bottom">
                     <span class="small-margin-bottom">Main Category</span>
-                    <span class="info-spot float-right small-margin-bottom">
+                    <span class="info-spot on-left grey float-right small-margin-bottom">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
                         Put the bubble text here
                       </span>
                     </span>
                   </div>
-                  <div class="twelve-columns no-margin-bottom">
+                  <div class="twelve-columns mid-margin-bottom">
                     <select class="select full-width">
                     <?php
                       $product_categories_array = array();
@@ -741,43 +769,135 @@ function toggleEditor(id) {
                 </div>
               </div>
               <div class="right-column">
-                <span class="half-width">
+                <span class="full-width">
                   <span class="small-margin-bottom">Keywords</span>
-                  <span class="info-spot float-right small-margin-bottom">
+                  <span class="info-spot on-left grey float-right small-margin-bottom">
                     <span class="icon-info-round"></span>
                     <span class="info-bubble">
                       Put the bubble text here
                     </span>
                   </span>
                 </span>
-                <div class="full-width clear-right">
-                  <input type="text" class="input full-width">
+                <div class="full-width clear-right mid-margin-bottom">
+                  <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input full-width" id="keyword' . $l['id'] . '"'); ?>
                 </div>
               </div>
             </div>
             <div class="field-drop-product button-height black-inputs extreme-margin-bottom">
-              <div class="left-column-280px margin-bottom">
+              <div class="left-column-280px" style="margin-bottom:-18px;">
                 <div class="left-column"></div>
-                <div style="background-color: #eeeeee;" class="right-column">
-                  Base Prioe & Status
+                <div class="right-column">
+                  <div class="columns mid-margin-top">
+                    <div class="new-row-mobile new-row-tablet six-columns twelve-columns-tablet twelve-columns-mobile">
+                      <span class="full-width">
+                        <span>Base Price</span>
+                        <span class="info-spot on-left grey float-right mid-margin-top">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </span>
+                      <?php echo lc_draw_input_field('products_price', (isset($lC_ObjectInfo) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="input full-width" id="products_price0" onkeyup="updateGross(\'products_price0\')"'); ?>
+                    </div>
+                    <div class="new-row-mobile new-row-tablet six-columns twelve-columns-tablet twelve-columns-mobile clear-both">
+                      <span class="full-width">
+                        <span>Status</span>
+                        <span class="info-spot on-left grey float-right mid-margin-top">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </span><br />
+                      <span class="button-group">
+                        <label for="button-radio-1" class="button blue-active">
+                          <input type="radio" name="button-radio" id="button-radio-1" value="1" checked>
+                          Active
+                        </label>
+                        <label for="button-radio-2" class="button blue-active">
+                          <input type="radio" name="button-radio" id="button-radio-2" value="2">
+                          Inactive
+                        </label>
+                        <label for="button-radio-3" class="button blue-active">
+                          <input type="radio" name="button-radio" id="button-radio-3" value="3">
+                          Coming Soon
+                        </label>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="left-column-280px margin-bottom">
-              <div style="background-color: #eeeeee;" class="left-column">
-                Chart & Stats
+              <div class="left-column large-margin-bottom">
+                <img src="images/prodchart.png" width="100%" />
               </div>
               <div class="right-column">
                 <div class="columns">
-                  <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                    <p>Model<p>
-                    <p>Product Type<p>
-                    <p>Inventory options<p>
+                  <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                    <span class="full-width">
+                      <span>Model</span>
+                      <span class="info-spot on-left grey float-right">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </span><br /><br />
+                    <p style="background-color:#cccccc;" class="with-small-padding"><b>K00011</b><p><br />
+                    <span class="full-width">
+                      <span>Product Type</span>
+                      <span class="info-spot on-left grey float-right">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </span>
+                    <p style="background-color:#cccccc;" class="with-small-padding"><b>Simple</b><p><br />
+                    <span class="full-width">
+                      <span>Inventory options</span>
+                      <span class="info-spot on-left grey float-right">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </span>
+                    <p style="background-color:#cccccc;" class="with-small-padding"><b>Base Product</b><p>
                   </div>
-                  <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                    <p>Date Available<p>
-                    <p>Product Class<p>
-                    <p>Weight<p>
+                  <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                    <span class="full-width">
+                      <span>Date Available</span>
+                      <span class="info-spot on-left grey float-right">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </span><br /><br />
+                    <p style="background-color:#cccccc;" class="with-small-padding"><b></b>4/20/2013<p><br />
+                    <span class="full-width">
+                      <span>Product Class</span>
+                      <span class="info-spot on-left grey float-right">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </span>
+                    <p style="background-color:#cccccc;" class="with-small-padding"><b>Common</b><p><br />
+                    <span class="full-width">
+                      <span>Weight</span>
+                      <span class="info-spot on-left grey float-right">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </span>
+                    <p style="background-color:#cccccc;" class="with-small-padding"><b>1 lbs</b><p>
                   </div>
                 </div>
               </div>

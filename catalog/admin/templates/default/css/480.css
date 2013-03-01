@@ -72,3 +72,7 @@
 #shortcuts {
 	width: 400px;
 }
+
+.with-padding-no-top {
+  padding: 0 20px 20px !important;
+}

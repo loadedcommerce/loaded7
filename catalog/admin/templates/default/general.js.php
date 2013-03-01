@@ -244,16 +244,26 @@ $(document).ready(function() {
   });
   // end shortcut key additions
   
-  // profile slate addition
   // get the menu width
   var menuWidth = $("#menu").width();
   // apply twice the menu width to the inner div
   $("#profileInner").css({'width':menuWidth * 2});
   // on screen resize get the new menu width and apply it for click functions
   $(window).resize(function() {
+    // get the visible menu width
     var menuWidthResized = $("#menu").width();
+    // set profile inner width twice that of the visible menu
     $("#profileInner").css({'width':menuWidthResized * 2});
+    // reset the left margin to 0px on window resizing
     $('#profileInner').css({"margin-left":"0px"});
+    // if window width drops below 1280px change product edit tabs from side to top
+    if ($(window).width() < 1380) {
+      $("#product_tabs").removeClass("side-tabs");
+      $("#product_tabs").addClass("standard-tabs");
+    } if ($(window).width() >= 1380) {
+      $("#product_tabs").removeClass("standard-tabs");
+      $("#product_tabs").addClass("side-tabs");
+    }
   });
   // profile left is clicked
   $("#profileLeft").click(function(){
@@ -288,6 +298,12 @@ $(document).ready(function() {
   });
      
 });
+
+// check width of window for product edit tabs placement
+if ($(window).width() < 1380) {
+  $("#product_tabs").removeClass("side-tabs");
+  $("#product_tabs").addClass("standard-tabs");
+}
 
 /* toggle checkboxes on table listings */
 function toggleCheck() {

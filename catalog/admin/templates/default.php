@@ -42,6 +42,7 @@
   <link rel="stylesheet" href="templates/default/css/error.css?v=1">
   <link rel="stylesheet" media="print" href="templates/default/css/print.css?v=1">
   <!-- For progressively larger displays -->
+  <link rel="stylesheet" media="only all and (min-width: 320px)" href="templates/default/css/320.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 480px)" href="templates/default/css/480.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 768px)" href="templates/default/css/768.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 992px)" href="templates/default/css/992.css?v=1">
