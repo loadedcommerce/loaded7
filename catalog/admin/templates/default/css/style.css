@@ -4552,6 +4552,7 @@ a:link {
   opacity: 0.75;
   width: 100%;
   border: 1px solid black;
+  z-index: 999;
 }
 
 #floating-menu-div {

@@ -654,56 +654,29 @@ function toggleEditor(id) {
           <!-- content_tab -->
           <div id="section_general_content" class="with-padding">
             <div class="columns">
-              <div style="background-color: #dddddd;" class="new-row-mobile four-columns twelve-columns-tablet">
-                &nbsp;
-              </div>
-              <div style="background-color: #dddddd;" class="new-row-mobile four-columns twelve-columns-tablet">
-                &nbsp;
-              </div>
-              <div style="background-color: #dddddd;" class="new-row-mobile four-columns twelve-columns-tablet">
-                      <span class="button-group">
-                        <label for="button-radio-1" class="button blue-active">
-                          <input type="radio" name="button-radio" id="button-radio-1" value="1" checked>
-                          Active
-                        </label>
-                        <label for="button-radio-2" class="button blue-active">
-                          <input type="radio" name="button-radio" id="button-radio-2" value="2">
-                          Inactive
-                        </label>
-                        <label for="button-radio-3" class="button blue-active">
-                          <input type="radio" name="button-radio" id="button-radio-3" value="3">
-                          Coming Soon
-                        </label>
-                      </span>
-              </div>
-            </div>
-          
-          
-          
-          
-            <div class="columns">
-              <div class="twelve-columns mid-margin-bottom align-right">
-                <select class="select">
-                  <?php foreach ( $lC_Language->getAll() as $l ) { ?>
-                  <option id="<?php echo $l['code']; ?>" value="<?php echo $l['code']; ?>"><?php echo $l['name']; ?></option>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-            <div class="left-column-280px margin-bottom">
-              <div class="left-column">
-                <span class="small-margin-bottom">Image</span>
-                <span class="info-spot on-left grey float-right small-margin-bottom">
+              <div class="new-row-mobile four-columns twelve-columns-mobile">
+                <div class="twelve-columns" style="height:38px;">
+                  &nbsp;
+                </div>
+                <span>Image</span>
+                <span class="info-spot on-left grey float-right">
                   <span class="icon-info-round"></span>
                   <span class="info-bubble">
                     Put the bubble text here
                   </span>
-                </span>
-                <img src="images/pimage.png" width="280" />
+                </span><br />
+                <center><img src="images/pimage.png" style="margin-top:4px;"/></center>
                 <span class="float-left">Drag Image to replace</span>
               </div>
-              <div class="right-column">             
+              <div class="new-row-mobile eight-columns twelve-columns-mobile">             
                 <div class="columns">
+                  <div class="twelve-columns mid-margin-bottom align-right">
+                    <select class="select">
+                      <?php foreach ( $lC_Language->getAll() as $l ) { ?>
+                      <option id="<?php echo $l['code']; ?>" value="<?php echo $l['code']; ?>"><?php echo $l['name']; ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
                   <div class="twelve-columns no-margin-bottom">
                     <span class="small-margin-bottom">Name</span>
                     <span class="info-spot on-left grey float-right small-margin-bottom">
@@ -732,43 +705,37 @@ function toggleEditor(id) {
                 </div>
               </div>
             </div>
-            <div class="left-column-280px margin-bottom clear-both">
-              <div class="left-column">             
-                <div class="columns">
-                  <div class="twelve-columns small-margin-bottom">
-                    <span class="small-margin-bottom">Main Category</span>
-                    <span class="info-spot on-left grey float-right small-margin-bottom">
-                      <span class="icon-info-round"></span>
-                      <span class="info-bubble">
-                        Put the bubble text here
-                      </span>
-                    </span>
-                  </div>
-                  <div class="twelve-columns mid-margin-bottom">
-                    <select class="select full-width">
-                    <?php
-                      $product_categories_array = array();
-                      if ( isset($lC_ObjectInfo) ) {
-                        $Qcategories = $lC_Database->query('select categories_id from :table_products_to_categories where products_id = :products_id');
-                        $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
-                        $Qcategories->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
-                        $Qcategories->execute();
-                        while ($Qcategories->next()) {
-                          $product_categories_array[] = $Qcategories->valueInt('categories_id');
-                        }
-                      }
-                      $assignedCategoryTree = new lC_CategoryTree();
-                      $assignedCategoryTree->setBreadcrumbUsage(false);
-                      $assignedCategoryTree->setSpacerString('&nbsp;', 5);
-                      foreach ($assignedCategoryTree->getArray() as $value) {
-                        echo '<option id="categories_' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
-                      }
-                    ?>
-                    </select>
-                  </div>
-                </div>
+            <div class="columns">
+              <div class="new-row-mobile four-columns twelve-columns-mobile">
+                <span>Main Category</span>
+                <span class="info-spot on-left grey float-right">
+                  <span class="icon-info-round"></span>
+                  <span class="info-bubble">
+                    Put the bubble text here
+                  </span>
+                </span>
+                <select class="select full-width small-margin-top">
+                <?php
+                  $product_categories_array = array();
+                  if ( isset($lC_ObjectInfo) ) {
+                    $Qcategories = $lC_Database->query('select categories_id from :table_products_to_categories where products_id = :products_id');
+                    $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+                    $Qcategories->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
+                    $Qcategories->execute();
+                    while ($Qcategories->next()) {
+                      $product_categories_array[] = $Qcategories->valueInt('categories_id');
+                    }
+                  }
+                  $assignedCategoryTree = new lC_CategoryTree();
+                  $assignedCategoryTree->setBreadcrumbUsage(false);
+                  $assignedCategoryTree->setSpacerString('&nbsp;', 5);
+                  foreach ($assignedCategoryTree->getArray() as $value) {
+                    echo '<option id="categories_' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
+                  }
+                ?>
+                </select>
               </div>
-              <div class="right-column">
+              <div class="new-row-mobile eight-columns twelve-columns-mobile">
                 <span class="full-width">
                   <span class="small-margin-bottom">Keywords</span>
                   <span class="info-spot on-left grey float-right small-margin-bottom">
@@ -782,7 +749,9 @@ function toggleEditor(id) {
                   <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input full-width" id="keyword' . $l['id'] . '"'); ?>
                 </div>
               </div>
-            </div>
+            </div>            
+            
+            <!-- leave for now -->
             <div class="field-drop-product button-height black-inputs extreme-margin-bottom">
               <div class="left-column-280px" style="margin-bottom:-18px;">
                 <div class="left-column"></div>
@@ -829,77 +798,76 @@ function toggleEditor(id) {
                 </div>
               </div>
             </div>
-            <div class="left-column-280px margin-bottom">
-              <div class="left-column large-margin-bottom">
-                <img src="images/prodchart.png" width="100%" />
+            <!-- end leave for now -->
+            
+            
+            <div class="columns">
+              <div class="four-columns twelve-columns-mobile large-margin-bottom">
+                <center><img src="images/prodchart.png" /></center>
               </div>
-              <div class="right-column">
-                <div class="columns">
-                  <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                    <span class="full-width">
-                      <span>Model</span>
-                      <span class="info-spot on-left grey float-right">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
-                    </span><br /><br />
-                    <p style="background-color:#cccccc;" class="with-small-padding"><b>K00011</b><p><br />
-                    <span class="full-width">
-                      <span>Product Type</span>
-                      <span class="info-spot on-left grey float-right">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
+              <div class="four-columns twelve-columns-mobile">
+                <span class="full-width">
+                  <span>Model</span>
+                  <span class="info-spot on-left grey float-right">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
                     </span>
-                    <p style="background-color:#cccccc;" class="with-small-padding"><b>Simple</b><p><br />
-                    <span class="full-width">
-                      <span>Inventory options</span>
-                      <span class="info-spot on-left grey float-right">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
+                  </span>
+                </span><br /><br />
+                <p style="background-color:#cccccc;" class="with-small-padding"><b>K00011</b><p><br />
+                <span class="full-width">
+                  <span>Product Type</span>
+                  <span class="info-spot on-left grey float-right">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
                     </span>
-                    <p style="background-color:#cccccc;" class="with-small-padding"><b>Base Product</b><p>
-                  </div>
-                  <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                    <span class="full-width">
-                      <span>Date Available</span>
-                      <span class="info-spot on-left grey float-right">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
-                    </span><br /><br />
-                    <p style="background-color:#cccccc;" class="with-small-padding"><b></b>4/20/2013<p><br />
-                    <span class="full-width">
-                      <span>Product Class</span>
-                      <span class="info-spot on-left grey float-right">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
+                  </span>
+                </span>
+                <p style="background-color:#cccccc;" class="with-small-padding"><b>Simple</b><p><br />
+                <span class="full-width">
+                  <span>Inventory options</span>
+                  <span class="info-spot on-left grey float-right">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
                     </span>
-                    <p style="background-color:#cccccc;" class="with-small-padding"><b>Common</b><p><br />
-                    <span class="full-width">
-                      <span>Weight</span>
-                      <span class="info-spot on-left grey float-right">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
+                  </span>
+                </span>
+                <p style="background-color:#cccccc;" class="with-small-padding"><b>Base Product</b><p>                
+              </div>
+              <div class="four-columns twelve-columns-mobile">
+                <span class="full-width">
+                  <span>Date Available</span>
+                  <span class="info-spot on-left grey float-right">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
                     </span>
-                    <p style="background-color:#cccccc;" class="with-small-padding"><b>1 lbs</b><p>
-                  </div>
-                </div>
+                  </span>
+                </span><br /><br />
+                <p style="background-color:#cccccc;" class="with-small-padding"><b></b>4/20/2013<p><br />
+                <span class="full-width">
+                  <span>Product Class</span>
+                  <span class="info-spot on-left grey float-right">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
+                    </span>
+                  </span>
+                </span>
+                <p style="background-color:#cccccc;" class="with-small-padding"><b>Common</b><p><br />
+                <span class="full-width">
+                  <span>Weight</span>
+                  <span class="info-spot on-left grey float-right">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
+                    </span>
+                  </span>
+                </span>
+                <p style="background-color:#cccccc;" class="with-small-padding"><b>1 lbs</b><p>                
               </div>
             </div>
           </div>
