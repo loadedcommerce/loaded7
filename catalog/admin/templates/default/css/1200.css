@@ -37,3 +37,7 @@
 .new-row-desktop {
 	clear: left;
 }
+
+.baseprice-status {
+  width: 49%;
+}

@@ -658,15 +658,31 @@ function toggleEditor(id) {
                 <div class="twelve-columns" style="height:38px;">
                   &nbsp;
                 </div>
-                <span>Image</span>
-                <span class="info-spot on-left grey float-right">
-                  <span class="icon-info-round"></span>
-                  <span class="info-bubble">
-                    Put the bubble text here
+                <div class="twelve-columns" style="height:38px;">
+                  <!--<br />
+                  <center><img src="images/pimage.png" style="margin-top:4px;"/></center>
+                  <span class="float-left">Drag Image to replace</span>--><span>Image</span>
+                  <span class="info-spot on-left grey float-right">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
+                    </span>
                   </span>
-                </span><br />
-                <center><img src="images/pimage.png" style="margin-top:4px;"/></center>
-                <span class="float-left">Drag Image to replace</span>
+                  <dl class="accordion same-height small-margin-top">
+                    <dt>Preview
+                    <div class="button-group absolute-right compact mid-margin-right">
+                      <a href="#" class="button icon-cloud-upload">Upload</a>
+                      <a href="#" class="button icon-trash with-tooltip confirm" title="Delete"></a>
+                    </div></dt>
+                    <dd>
+                      <div class="with-padding">
+
+                        <div style="height:200px;margin-top:20px;text-align:center;"><span class="icon-pictures icon-size5 grey"></span></div>
+
+                      </div>
+                    </dd>
+                  </dl>
+                </div>
               </div>
               <div class="new-row-mobile eight-columns twelve-columns-mobile">             
                 <div class="columns">
@@ -699,7 +715,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom">
-                    <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 7, 'class="required input full-width autoexpanding"'); ?>
+                    <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 2, 'class="required input full-width autoexpanding"'); ?>
                     <span class="float-right small-margin-top"><a href="#">Enlarge Description <span class="icon-extract icon-grey"></span></a>&nbsp;&nbsp;&nbsp;<?php echo '<a href="javascript:toggleEditor(\'products_description[' . $l['id'] . ']\');">' . $lC_Language->get('toggle_html_editor') . '</a>'; ?></span>
                   </div>
                 </div>
@@ -749,15 +765,17 @@ function toggleEditor(id) {
                   <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input full-width" id="keyword' . $l['id'] . '"'); ?>
                 </div>
               </div>
-            </div>            
+            </div>
             
-            <!-- leave for now -->
+            
             <div class="field-drop-product button-height black-inputs extreme-margin-bottom">
-              <div class="left-column-280px" style="margin-bottom:-18px;">
-                <div class="left-column"></div>
-                <div class="right-column">
-                  <div class="columns mid-margin-top">
-                    <div class="new-row-mobile new-row-tablet six-columns twelve-columns-tablet twelve-columns-mobile">
+              <div class="columns">
+                <div class="new-row-mobile four-columns twelve-columns-mobile"></div>
+                <div class="new-row-mobile eight-columns twelve-columns-mobile">
+                  
+                  <div style="width:100%;">
+                  
+                    <div style="float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
                       <span class="full-width">
                         <span>Base Price</span>
                         <span class="info-spot on-left grey float-right mid-margin-top">
@@ -769,7 +787,8 @@ function toggleEditor(id) {
                       </span>
                       <?php echo lc_draw_input_field('products_price', (isset($lC_ObjectInfo) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="input full-width" id="products_price0" onkeyup="updateGross(\'products_price0\')"'); ?>
                     </div>
-                    <div class="new-row-mobile new-row-tablet six-columns twelve-columns-tablet twelve-columns-mobile clear-both">
+                    <div style="float:left;width:2%;">&nbsp;</div>
+                    <div style="float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
                       <span class="full-width">
                         <span>Status</span>
                         <span class="info-spot on-left grey float-right mid-margin-top">
@@ -779,26 +798,27 @@ function toggleEditor(id) {
                           </span>
                         </span>
                       </span><br />
-                      <span class="button-group">
-                        <label for="button-radio-1" class="button blue-active">
-                          <input type="radio" name="button-radio" id="button-radio-1" value="1" checked>
-                          Active
-                        </label>
-                        <label for="button-radio-2" class="button blue-active">
-                          <input type="radio" name="button-radio" id="button-radio-2" value="2">
-                          Inactive
-                        </label>
-                        <label for="button-radio-3" class="button blue-active">
-                          <input type="radio" name="button-radio" id="button-radio-3" value="3">
-                          Coming Soon
-                        </label>
-                      </span>
+                        <span class="button-group">
+                          <label for="button-radio-1" class="button blue-active">
+                            <input type="radio" name="button-radio" id="button-radio-1" value="1" checked>
+                            Active
+                          </label>
+                          <label for="button-radio-2" class="button blue-active">
+                            <input type="radio" name="button-radio" id="button-radio-2" value="2">
+                            Inactive
+                          </label>
+                          <label for="button-radio-3" class="button blue-active">
+                            <input type="radio" name="button-radio" id="button-radio-3" value="3">
+                            Coming Soon
+                          </label>
+                        </span>
                     </div>
+                  
                   </div>
+                  
                 </div>
               </div>
             </div>
-            <!-- end leave for now -->
             
             
             <div class="columns">
