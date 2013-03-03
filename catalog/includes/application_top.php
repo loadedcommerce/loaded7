@@ -36,6 +36,10 @@
     }
   }
 
+  // virtual hook system
+  require_once('ext/vqmod/vqmod.php');
+  $lC_Vqmod = new VQMod();
+    
   // set the type of request (secure or not)
   $request_type = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) ? 'SSL' : 'NONSSL';
 
@@ -46,27 +50,27 @@
   }
 
   // compatibility work-around logic for PHP4
-  require('includes/functions/compatibility.php');
+  require($lC_Vqmod->modCheck('includes/functions/compatibility.php'));
 
   // include the list of project filenames
-  require('includes/filenames.php');
+  require($lC_Vqmod->modCheck('includes/filenames.php'));
 
   // include the list of project database tables
-  require('includes/database_tables.php');
+  require($lC_Vqmod->modCheck('includes/database_tables.php'));
 
   // include the utility class
-  require('includes/classes/utility.php');     
+  require($lC_Vqmod->modCheck('includes/classes/utility.php'));     
 
   // initialize the message stack for output messages
-  require('includes/classes/message_stack.php');
+  require($lC_Vqmod->modCheck('includes/classes/message_stack.php'));
   $lC_MessageStack = new lC_MessageStack();
 
   // initialize the cache class
-  require('includes/classes/cache.php');
+  require($lC_Vqmod->modCheck('includes/classes/cache.php'));
   $lC_Cache = new lC_Cache();
 
   // include the database class
-  require('includes/classes/database.php');
+  require($lC_Vqmod->modCheck('includes/classes/database.php'));
 
   // make a connection to the database... now
   $lC_Database = lC_Database::connect(DB_SERVER, DB_SERVER_USERNAME, DB_SERVER_PASSWORD);
@@ -85,11 +89,11 @@
   $Qcfg->freeResult();
 
 // include functions
-  require('includes/functions/general.php');
-  require('includes/functions/html_output.php');
+  require($lC_Vqmod->modCheck('includes/functions/general.php'));
+  require($lC_Vqmod->modCheck('includes/functions/html_output.php'));
 
 // include and start the services
-  require('includes/classes/services.php');
+  require($lC_Vqmod->modCheck('includes/classes/services.php'));
   $lC_Services = new lC_Services();
   $lC_Services->startServices();
 ?>
