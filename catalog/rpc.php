@@ -16,7 +16,7 @@ header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 
 $_SERVER['SCRIPT_FILENAME'] = 'index.php';
 
-require('includes/application_top.php');
+require($lC_Vqmod->modCheck('includes/application_top.php'));
 
 $lC_Language->load('index');
 

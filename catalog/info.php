@@ -23,7 +23,7 @@ if ($lC_Services->isStarted('breadcrumb')) {
 
 $lC_Template = lC_Template::setup('info');
 
-require('templates/' . $lC_Template->getCode() . '.php');
+require($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '.php'));
 
-require('includes/application_bottom.php');
+require($lC_Vqmod->modCheck('includes/application_bottom.php'));
 ?>
