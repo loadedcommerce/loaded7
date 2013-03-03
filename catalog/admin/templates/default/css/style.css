@@ -4573,6 +4573,12 @@ a:link {
   padding: 5px 20px;
 }
 
+.prod-image {
+  min-height:245px;
+  text-align:center;
+  vertical-align:middle;
+}
+
 @media screen and (max-width: 991px) {
   .hide-below-992 { display: none !important; } 
 }

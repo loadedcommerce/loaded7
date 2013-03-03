@@ -655,12 +655,12 @@ function toggleEditor(id) {
           <div id="section_general_content" class="with-padding">
             <div class="columns">
               <div class="new-row-mobile four-columns twelve-columns-mobile">
-                <div class="twelve-columns" style="height:38px;">
+                <div class="twelve-columns hide-below-768" style="height:38px;">
                   &nbsp;
                 </div>
-                <div class="twelve-columns" style="height:38px;">
+                <div class="twelve-columns">
                   <!--<br />
-                  <center><img src="images/pimage.png" style="margin-top:4px;"/></center>
+                  <center></center>
                   <span class="float-left">Drag Image to replace</span>--><span>Image</span>
                   <span class="info-spot on-left grey float-right">
                     <span class="icon-info-round"></span>
@@ -676,9 +676,7 @@ function toggleEditor(id) {
                     </div></dt>
                     <dd>
                       <div class="with-padding">
-
-                        <div style="height:200px;margin-top:20px;text-align:center;"><span class="icon-pictures icon-size5 grey"></span></div>
-
+                        <div class="prod-image"><img src="images/no-prod-image.png" style="max-width: 100%; height: auto;" /><br />No Image</div>
                       </div>
                     </dd>
                   </dl>
