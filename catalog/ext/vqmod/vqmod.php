@@ -13,7 +13,7 @@ final class VQMod {
   private $_folderChecks = false;
   private $_cachePathFull = '';
   private $_lastModifiedTime = 0;
-  private $_devMode = false;
+  private $_devMode = true;
 
   public $logFolder = 'includes/work/logs/vqmod/';
   public $vqCachePath = 'includes/work/cache/vqmod/';
@@ -374,9 +374,8 @@ class VQModLog {
     }
 
     $logPath = $this->_vqmod->path($this->_vqmod->logFolder . date('D') . '.log', true);
-
+          
     $txt = array();
-
     $txt[] = str_repeat('-', 10) . ' Date: ' . date('Y-m-d H:i:s') . ' ~ IP : ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'N/A') . ' ' . str_repeat('-', 10);
     $txt[] = 'REQUEST URI : ' . $_SERVER['REQUEST_URI'];
 

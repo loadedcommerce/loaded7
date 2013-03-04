@@ -125,9 +125,9 @@ $order = new lC_Order($_GET['orders']);
     }
     if (DOWNLOAD_ENABLED == '1') {
       if (file_exists(DIR_FS_TEMPLATE . 'includes/modules/downloads.php')) {
-          require(DIR_FS_TEMPLATE . 'includes/modules/downloads.php');
+          require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'includes/modules/downloads.php'));
         } else {
-          require('includes/modules/downloads.php'); 
+          require($lC_Vqmod->modCheck('includes/modules/downloads.php')); 
       }    
     }
     ?>

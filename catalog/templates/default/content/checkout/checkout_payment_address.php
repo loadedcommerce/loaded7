@@ -101,9 +101,9 @@ if ($lC_MessageStack->size('checkout_address') > 0) {
           <div id="addressBookDetails">
             <?php 
               if (file_exists(DIR_FS_TEMPLATE . 'modules/address_book_details.php')) {
-                require(DIR_FS_TEMPLATE . 'modules/address_book_details.php');
+                require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/address_book_details.php'));
               } else {
-                require('includes/modules/address_book_details.php'); 
+                require($lC_Vqmod->modCheck('includes/modules/address_book_details.php')); 
               }    
             ?>
           </div>

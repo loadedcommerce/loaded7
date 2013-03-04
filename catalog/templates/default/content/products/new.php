@@ -26,9 +26,9 @@
       $Qlisting = $lC_Products->execute();
       if ($Qlisting->numberOfRows() > 0) {
         if (file_exists(DIR_FS_TEMPLATE . 'modules/product_listing.php')) {
-          require(DIR_FS_TEMPLATE . 'modules/product_listing.php');
+          require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/product_listing.php'));
         } else {
-          require('includes/modules/product_listing.php');
+          require($lC_Vqmod->modCheck('includes/modules/product_listing.php'));
         }      
       } else {
         ?>
