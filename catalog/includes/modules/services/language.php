@@ -14,9 +14,9 @@
 
   class lC_Services_language {
     function start() {
-      global $lC_Language, $lC_Session;
+      global $lC_Language, $lC_Session, $lC_Vqmod;
 
-      require('includes/classes/language.php');
+      require($lC_Vqmod->modCheck('includes/classes/language.php'));
       $lC_Language = new lC_Language();
 
       if (isset($_GET['language']) && !empty($_GET['language'])) {

@@ -14,9 +14,9 @@
 
   class lC_Services_specials {
     function start() {
-      global $lC_Specials;
+      global $lC_Specials, $lC_Vqmod;
 
-      require('includes/classes/specials.php');
+      require($lC_Vqmod->modCheck('includes/classes/specials.php'));
       $lC_Specials = new lC_Specials();
 
       $lC_Specials->activateAll();
