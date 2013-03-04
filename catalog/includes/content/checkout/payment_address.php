@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: payment_address.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -11,9 +11,6 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-
-  require('includes/classes/address_book.php');
-
   class lC_Checkout_Payment_address extends lC_Template {
 
     /* Private variables */
@@ -25,7 +22,9 @@
 
     /* Class constructor */
     function lC_Checkout_Payment_address() {
-      global $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb;
+      global $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Vqmod;
+
+      require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));
 
       if ($lC_Customer->isLoggedOn() === false) {
         $lC_NavigationHistory->setSnapshot();
@@ -72,8 +71,10 @@
 
     /* Private methods */
     function _process() {
-      global $lC_Database, $lC_Session, $lC_Language, $lC_ShoppingCart, $lC_Customer, $lC_MessageStack;
+      global $lC_Database, $lC_Session, $lC_Language, $lC_ShoppingCart, $lC_Customer, $lC_MessageStack, $lC_Vqmod;
 
+      require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));
+      
       // process a new billing address
       if (($lC_Customer->hasDefaultAddress() === false) || (!empty($_POST['firstname']) && !empty($_POST['lastname']) && !empty($_POST['street_address'])) ) {
         if (ACCOUNT_GENDER > 0) {
