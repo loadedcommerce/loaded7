@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: account.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -11,22 +11,21 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+class lC_Account_Account extends lC_Template {
 
-  require('includes/classes/order.php');
+  /* Private variables */
+  var $_module = 'account',
+      $_group = 'account',
+      $_page_title,
+      $_page_contents = 'account.php',
+      $_page_image = 'table_background_account.gif';
 
-  class lC_Account_Account extends lC_Template {
+  function lC_Account_Account() {
+    global $lC_Language, $lC_Vqmod;
 
-    /* Private variables */
-    var $_module = 'account',
-        $_group = 'account',
-        $_page_title,
-        $_page_contents = 'account.php',
-        $_page_image = 'table_background_account.gif';
+    require($lC_Vqmod->modCheck('includes/classes/order.php'));
 
-    function lC_Account_Account() {
-      global $lC_Language;
-
-      $this->_page_title = $lC_Language->get('account_heading');
-    }
+    $this->_page_title = $lC_Language->get('account_heading');
   }
+}
 ?>
