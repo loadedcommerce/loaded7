@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: breadcrunb.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -14,9 +14,9 @@
 class lC_Services_breadcrumb {
 
   public function start() {
-    global $lC_Breadcrumb, $lC_Language;
+    global $lC_Breadcrumb, $lC_Language, $lC_Vqmod;
 
-    include('includes/classes/breadcrumb.php');
+    include($lC_Vqmod->modCheck('includes/classes/breadcrumb.php'));
     $lC_Breadcrumb = new lC_Breadcrumb();
 
     //$lC_Breadcrumb->add($lC_Language->get('breadcrumb_top'), HTTP_SERVER);

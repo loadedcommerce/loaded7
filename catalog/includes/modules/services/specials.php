@@ -1,32 +1,31 @@
 <?php
-/*
-  $Id$
+/**
+  $Id: specials.php v1.0 2013-01-01 datazen $
 
-  LoadedCommerce, Open Source E-Commerce Solutions
+  LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
 
-  Copyright (c) 2007 LoadedCommerce
+  Copyright (c) 2013 Loaded Commerce, LLC
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License v2 (1991)
-  as published by the Free Software Foundation.
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
+class lC_Services_specials {
+  function start() {
+    global $lC_Specials, $lC_Vqmod;
 
-  class lC_Services_specials {
-    function start() {
-      global $lC_Specials, $lC_Vqmod;
+    require($lC_Vqmod->modCheck('includes/classes/specials.php'));
+    $lC_Specials = new lC_Specials();
 
-      require($lC_Vqmod->modCheck('includes/classes/specials.php'));
-      $lC_Specials = new lC_Specials();
+    $lC_Specials->activateAll();
+    $lC_Specials->expireAll();
 
-      $lC_Specials->activateAll();
-      $lC_Specials->expireAll();
-
-      return true;
-    }
-
-    function stop() {
-      return true;
-    }
+    return true;
   }
+
+  function stop() {
+    return true;
+  }
+}
 ?>
