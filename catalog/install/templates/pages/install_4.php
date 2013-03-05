@@ -24,6 +24,8 @@ $Qupdate->bindValue(':configuration_value', $_POST['CFG_STORE_NAME']);
 $Qupdate->bindValue(':configuration_key', 'STORE_NAME');
 $Qupdate->execute();
 
+$_POST['CFG_STORE_OWNER_NAME'] = $_POST['CFG_STORE_OWNER_FIRST_NAME']." ".$_POST['CFG_STORE_OWNER_LAST_NAME'];
+
 $Qupdate = $lC_Database->query('update :table_configuration set configuration_value = :configuration_value where configuration_key = :configuration_key');
 $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
 $Qupdate->bindValue(':configuration_value', $_POST['CFG_STORE_OWNER_NAME']);
@@ -52,13 +54,14 @@ $Qcheck->execute();
 if ($Qcheck->numberOfRows()) {
   $Qadmin = $lC_Database->query('update :table_administrators set user_password = :user_password, first_name = :first_name, last_name = :last_name, access_group_id = :access_group_id where user_name = :user_name');
 } else {
-  $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, access_group_id) values (:user_name, :user_password, :first_name, :last_name, :access_group_id)');
+  $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name) values (:user_name, :user_password, :first_name, :last_name)');
 }
+
 $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
 $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($_POST['CFG_ADMINISTRATOR_PASSWORD'])));
 $Qadmin->bindValue(':user_name', $_POST['CFG_ADMINISTRATOR_USERNAME']);
-$Qadmin->bindValue(':first_name', 'Top');
-$Qadmin->bindValue(':last_name', 'Administrator');
+$Qadmin->bindValue(':first_name', $_POST['CFG_STORE_OWNER_FIRST_NAME']);
+$Qadmin->bindValue(':last_name', $_POST['CFG_STORE_OWNER_LAST_NAME']);
 $Qadmin->bindInt(':access_group_id', 1);
 $Qadmin->execute();
 
