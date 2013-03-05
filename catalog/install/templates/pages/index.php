@@ -118,6 +118,18 @@ TD { height:19px; }
                 <?php if ((int)ini_get('session.use_trans_sid') !== 0) $ok = FALSE; ?>
                 <td align="right"><img src="templates/img/icons/<?php echo (((int)ini_get('session.use_trans_sid') === 0) ? 'tick.gif' : 'cross.gif'); ?>" border="0" width="16" height="16"></td>
               </tr>
+              <tr>
+                <td><?php echo $lC_Language->get('box_server_post_max_size'); ?></td>
+                <td align="right"><?php echo $lC_Language->get('post_max_size_text'); ?></td>
+                <?php if ((int)ini_get('post_max_size') < 10) $ok = FALSE; ?>
+                <td align="right"><img src="templates/img/icons/<?php echo (((int)ini_get('post_max_size') < 10) ? 'cross.gif' : 'tick.gif'); ?>" border="0" width="16" height="16"></td>
+              </tr>
+              <tr>
+                <td><?php echo $lC_Language->get('box_server_upload_max_filesize'); ?></td>
+                <td align="right"><?php echo $lC_Language->get('upload_max_filesize_text'); ?></td>
+                <?php if ((int)ini_get('upload_max_filesize') < 10) $ok = FALSE; ?>
+                <td align="right"><img src="templates/img/icons/<?php echo (((int)ini_get('upload_max_filesize') < 10) ? 'cross.gif' : 'tick.gif'); ?>" border="0" width="16" height="16"></td>
+              </tr>
             </table><br />
             <table border="0" width="100%" cellspacing="0" cellpadding="2">
               <tr>
