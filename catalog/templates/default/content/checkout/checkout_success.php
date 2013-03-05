@@ -11,7 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-include_once('templates/' . $lC_Template->getCode() . '/classes/success.php');
+ini_set('display_errors', 1);
 $oID = lC_Success::getOrderID($lC_Customer->getID());
 ?>
 <!--content/checkout/checkout_success.php start-->

@@ -11,8 +11,6 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-include_once('includes/classes/products.php');
-
 class lC_Default {
  /*
   * Returns the live search data
@@ -184,6 +182,10 @@ class lC_Default {
   * @return string
   */  
   public static function newArrivalsListing() {
+    global $lC_Vqmod; 
+    
+    include_once($lC_Vqmod->modCheck('includes/classes/products.php'));
+
     $lC_Products = new lC_Products();
     $Qlisting = $lC_Products->execute();
     $cnt = 0;
@@ -265,7 +267,9 @@ class lC_Default {
   * @return array
   */  
   public static function getCategoryListing() {
-    global $lC_Database, $lC_Language, $lC_Products, $lC_CategoryTree, $cPath, $cPath_array;
+    global $lC_Database, $lC_Language, $lC_Products, $lC_CategoryTree, $lC_Vqmod, $cPath, $cPath_array;
+    
+    include_once($lC_Vqmod->modCheck('includes/classes/products.php'));
     
     if (isset($cPath) && strpos($cPath, '_')) {
       // check to see if there are deeper categories within the current category
@@ -385,7 +389,9 @@ class lC_Default {
   * @return array
   */  
   private static function __getProductsListingData() {
-    global $lC_Database, $lC_Language, $lC_Products;
+    global $lC_Database, $lC_Language, $lC_Products, $lC_Vqmod;
+    
+    include_once($lC_Vqmod->modCheck('includes/classes/products.php'));
     
     // optional Product List Filter
     $output = '';

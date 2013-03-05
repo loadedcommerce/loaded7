@@ -28,11 +28,13 @@
 
   class lC_Variants {
     static public function parse($module, $data) {
+      global $lC_Vqmod;
+      
       if ( !class_exists('lC_Variants_' . $module) ) {
         if (file_exists(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php')) {
-          include(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php');
+          include($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php'));
         } else if ( file_exists(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php') ) {
-          include(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php');
+          include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php'));
         }
       }
 
@@ -42,11 +44,13 @@
     }
 
     static public function getGroupTitle($module, $data) {
+      global $lC_Vqmod;
+      
       if ( !class_exists('lC_Variants_' . $module) ) {
         if (file_exists(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php')) {
-          include(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php');  
+          include($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php'));  
         } else if ( file_exists(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php') ) {
-          include(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php');
+          include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php'));
         }
       }
 
@@ -58,11 +62,13 @@
     }
 
     static public function getValueTitle($module, $data) {
+      global $lC_Vqmod;
+      
       if ( !class_exists('lC_Variants_' . $module) ) {
         if (file_exists(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php')) {
-          include(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php');
+          include($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php'));
         } else if ( file_exists(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php') ) {
-          include(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php');
+          include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php'));
         }
       }
 
@@ -74,11 +80,13 @@
     }
 
     static public function allowsMultipleValues($module) {
+      global $lC_Vqmod;
+      
       if ( !class_exists('lC_Variants_' . $module) ) {
         if (file_exists(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php')) {
-          include(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php');
+          include($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php'));
         } else if ( file_exists(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php') ) {
-          include(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php');
+          include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php'));
         }
       }
 
@@ -90,11 +98,13 @@
     }
 
     static public function hasCustomValue($module) {
+      global $lC_Vqmod;
+      
       if ( !class_exists('lC_Variants_' . $module) ) {
         if (file_exists(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php')) {
-          include(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php');
+          include($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php'));
         } else if ( file_exists(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php') ) {
-          include(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php');
+          include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php'));
         }
       }
 
