@@ -9,7 +9,7 @@
 #  @copyright  (c) 2012 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-page_title_welcome = Welcome to Loaded Commerce v7.0 Alpha 1!
+page_title_welcome = Welcome to Loaded Commerce v%s
 
 page_heading_server_requirements = Server Requirements
 page_heading_installation_type = Installation Type
@@ -19,7 +19,7 @@ title_language = Language:
 
 text_welcome = Loaded Commerce is the next generation self-hosted open source ecommerce platform and is available for free under the GNU General Public License. A rich set of features and functionality allow store owners to setup, run, and maintain online stores with minimal effort and minimal cost.
 
-text_under_development = Loaded Commerce v7.0a1 is currently in development and does not yet contain all its planned features. This release is recommended for developers and users who are participating in its development and are providing feedback.
+text_under_development = Loaded Commerce v%s is currently in development and does not yet contain all its planned features. This release is recommended for developers and users who are participating in its development and are providing feedback.
 
 box_server_title = Server Capabilities
 box_server_php_version = PHP Version

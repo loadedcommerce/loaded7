@@ -54,7 +54,7 @@ $Qcheck->execute();
 if ($Qcheck->numberOfRows()) {
   $Qadmin = $lC_Database->query('update :table_administrators set user_password = :user_password, first_name = :first_name, last_name = :last_name, access_group_id = :access_group_id where user_name = :user_name');
 } else {
-  $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name) values (:user_name, :user_password, :first_name, :last_name)');
+  $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, access_group_id) values (:user_name, :user_password, :first_name, :last_name, :access_group_id)');
 }
 
 $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);

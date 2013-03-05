@@ -11,6 +11,8 @@
   @copyright  (c) 2012 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+$vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents('..//includes/version.txt'), 2))));
+$version = $vInfo[0];
 $ok = TRUE;
 ?>
 <style>
@@ -47,7 +49,7 @@ TD { height:19px; }
       </ul>
     </div>
     <div class="thin">
-      <h3><?php echo $lC_Language->get('page_title_welcome'); ?></h3>
+      <h3><?php echo sprintf($lC_Language->get('page_title_welcome'), $version); ?></h3>
     </div>
     <noscript>
       <div class="noticeBox">    
@@ -201,7 +203,7 @@ TD { height:19px; }
           </table>
           <p class="message icon-warning margin-top margin-right" style="color:#c09853; background:#fcf8e3; border-color:#fbeed5;">   
             <span class="stripes animated"></span>
-            <?php echo $lC_Language->get('text_under_development'); ?>
+            <?php echo sprintf($lC_Language->get('text_under_development'), $version); ?>
           </p>   
         </div>
       </div>
