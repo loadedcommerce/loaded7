@@ -710,7 +710,7 @@ function toggleEditor(id) {
                   $module = basename($Qattributes->value('code'));
                   if ( !class_exists('lC_ProductAttributes_' . $module) ) {
                     if ( file_exists(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php') ) {
-                      include(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php');
+                      include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php'));
                     }
                   }
                   if ( class_exists('lC_ProductAttributes_' . $module) ) {

@@ -13,7 +13,9 @@
 
   @function The lC_Application_Countries class manages the countries GUI
 */
-require('includes/applications/countries/classes/countries.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/countries/classes/countries.php'));
 
 class lC_Application_Countries extends lC_Template_Admin {
  /*

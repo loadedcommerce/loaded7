@@ -13,7 +13,9 @@
 
   @function The lC_Error_log_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/error_log/classes/error_log.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/error_log/classes/error_log.php'));
 
 class lC_Error_log_Admin_rpc {
  /*

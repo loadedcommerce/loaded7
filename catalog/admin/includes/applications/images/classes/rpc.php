@@ -13,7 +13,9 @@
 
   @function The lC_Images_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/images/classes/images.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/images/classes/images.php'));
 
 class lC_Images_Admin_rpc {
  /*

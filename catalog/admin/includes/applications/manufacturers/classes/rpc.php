@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: rpc.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -13,7 +13,9 @@
 
   @function The lC_Manufacturers_Admin_rpc class is for AJAX remote program control
 */
-require('includes/applications/manufacturers/classes/manufacturers.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/manufacturers/classes/manufacturers.php'));
 
 class lC_Manufacturers_Admin_rpc {
  /*

@@ -13,7 +13,9 @@
 
   @function The lC_Application_Product_attributes class manages the product attributes GUI
 */
-require_once('includes/applications/product_attributes/classes/product_attributes.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/product_attributes/classes/product_attributes.php'));
 
 class lC_Application_Product_attributes extends lC_Template_Admin {
  /*

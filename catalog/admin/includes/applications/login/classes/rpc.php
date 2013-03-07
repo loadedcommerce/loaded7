@@ -13,7 +13,9 @@
 
   @function The lC_Login_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/login/classes/login.php'); 
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/login/classes/login.php')); 
 
 class lC_Login_Admin_rpc {
  /*

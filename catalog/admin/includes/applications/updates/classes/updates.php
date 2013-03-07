@@ -15,8 +15,10 @@
 */
 ini_set('error_reporting', 0);
 
-require_once('../includes/classes/transport.php');  
-require_once('includes/applications/backup/classes/backup.php'); 
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('../includes/classes/transport.php'));  
+require_once($lC_Vqmod->modCheck('includes/applications/backup/classes/backup.php')); 
 
 class lC_Updates_Admin { 
   
@@ -132,7 +134,7 @@ class lC_Updates_Admin {
       }
     }
 
-    usort($result['entries'], function ($a, $b) {
+    @usort($result['entries'], function ($a, $b) {
       return version_compare($a['version'], $b['version'], '>');
     });
 

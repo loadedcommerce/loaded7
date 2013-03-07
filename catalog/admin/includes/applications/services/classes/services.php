@@ -21,7 +21,7 @@ class lC_Services_Admin {
   * @return array
   */
   public static function getAll() {
-    global $lC_Language, $lC_Template;
+    global $lC_Language, $lC_Template, $lC_Vqmod;
 
     $media = $_GET['media'];
     
@@ -33,7 +33,7 @@ class lC_Services_Admin {
 
     $result = array('aaData' => array());
     foreach ($files as $file) {
-      include('includes/modules/services/' . $file['name']);
+      include($lC_Vqmod->modCheck('includes/modules/services/' . $file['name']));
       $class = substr($file['name'], 0, strrpos($file['name'], '.'));
       $module = 'lC_Services_' . $class . '_Admin';
       $module = new $module();
@@ -68,9 +68,9 @@ class lC_Services_Admin {
   * @return array
   */
   public static function getData($id) {
-    global $lC_Database;
+    global $lC_Database, $lC_Vqmod;
 
-    include('includes/modules/services/' . $_GET['module'] . '.php');
+    include($lC_Vqmod->modCheck('includes/modules/services/' . $_GET['module'] . '.php'));
     $module = 'lC_Services_' . $_GET['module'] . '_Admin';
     $module = new $module();
 
@@ -142,9 +142,9 @@ class lC_Services_Admin {
   * @return boolean
   */
   public static function install($module_key) {
-    global $lC_Database;
+    global $lC_Database, $lC_Vqmod;
 
-    include('includes/modules/services/' . $module_key . '.php');
+    include($lC_Vqmod->modCheck('includes/modules/services/' . $module_key . '.php'));
 
     $class = 'lC_Services_' . $module_key . '_Admin';
     $installed = explode(';', MODULE_SERVICES_INSTALLED);
@@ -222,9 +222,9 @@ class lC_Services_Admin {
   * @return boolean
   */
   public static function uninstall($module_key) {
-    global $lC_Database;
+    global $lC_Database, $lC_Vqmod;
 
-    include('includes/modules/services/' . $module_key . '.php');
+    include($lC_Vqmod->modCheck('includes/modules/services/' . $module_key . '.php'));
 
     $class = 'lC_Services_' . $module_key . '_Admin';
     $installed = explode(';', MODULE_SERVICES_INSTALLED);

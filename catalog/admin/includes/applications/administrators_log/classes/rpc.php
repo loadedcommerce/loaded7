@@ -13,7 +13,9 @@
 
   @function The lC_Administrators_log_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/administrators_log/classes/administrators_log.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/administrators_log/classes/administrators_log.php'));
 
 class lC_Administrators_log_Admin_rpc {
  /*

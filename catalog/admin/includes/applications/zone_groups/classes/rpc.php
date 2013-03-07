@@ -13,7 +13,9 @@
 
   @function The lC_Zone_groups_Admin_rpc class is for AJAX remote program control
 */
-require('includes/applications/zone_groups/classes/zone_groups.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/zone_groups/classes/zone_groups.php'));
 
 class lC_Zone_groups_Admin_rpc {
  /*

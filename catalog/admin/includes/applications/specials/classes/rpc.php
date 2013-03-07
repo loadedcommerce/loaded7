@@ -13,7 +13,9 @@
 
   @function The lC_Specials_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/specials/classes/specials.php'); 
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/specials/classes/specials.php')); 
 
 class lC_Specials_Admin_rpc {
  /*

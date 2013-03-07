@@ -21,7 +21,7 @@ class lC_Modules_shipping_Admin {
   * @return array
   */
   public static function getAll() {
-    global $lC_Language, $lC_Template;
+    global $lC_Language, $lC_Template, $lC_Vqmod;
 
     $media = $_GET['media'];
     
@@ -32,7 +32,7 @@ class lC_Modules_shipping_Admin {
     $installed_modules = array();
     $result = array('aaData' => array());
     foreach ( $files as $file ) {
-      include('includes/modules/shipping/' . $file['name']);
+      include($lC_Vqmod->modCheck('includes/modules/shipping/' . $file['name']));
       $class = substr($file['name'], 0, strrpos($file['name'], '.'));
       if ( class_exists('lC_Shipping_' . $class) ) {
         $lC_Language->injectDefinitions('modules/shipping/' . $class . '.xml');
@@ -64,11 +64,11 @@ class lC_Modules_shipping_Admin {
   * @return array
   */
   public static function getData($id) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     $result = array();
 
-    include('includes/modules/shipping/' . $id . '.php');
+    include($lC_Vqmod->modCheck('includes/modules/shipping/' . $id . '.php'));
     $lC_Language->injectDefinitions('modules/shipping/' . $id . '.xml');
     $module = 'lC_Shipping_' . $id;
     $module = new $module();
@@ -142,12 +142,12 @@ class lC_Modules_shipping_Admin {
   * @return boolean
   */
   public static function installModule($key) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     if ( file_exists('includes/modules/shipping/' . $key . '.php') ) {
       $lC_Language->injectDefinitions('modules/shipping/' . $key . '.xml');
 
-      include('includes/modules/shipping/' . $key . '.php');
+      include($lC_Vqmod->modCheck('includes/modules/shipping/' . $key . '.php'));
 
       $module = 'lC_Shipping_' . $key;
       $module = new $module();
@@ -170,12 +170,12 @@ class lC_Modules_shipping_Admin {
   * @return boolean
   */
   public static function uninstall($key) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     if ( file_exists('includes/modules/shipping/' . $key . '.php') ) {
       $lC_Language->injectDefinitions('modules/shipping/' . $key . '.xml');
 
-      include('includes/modules/shipping/' . $key . '.php');
+      include($lC_Vqmod->modCheck('includes/modules/shipping/' . $key . '.php'));
 
       $module = 'lC_Shipping_' . $key;
       $module = new $module();

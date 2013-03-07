@@ -13,7 +13,9 @@
 
   @function The lC_Templates_modules_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/templates_modules/classes/templates_modules.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/templates_modules/classes/templates_modules.php'));
 
 class lC_Templates_modules_Admin_rpc {
  /*

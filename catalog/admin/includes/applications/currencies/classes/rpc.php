@@ -13,7 +13,9 @@
 
   @function The lC_Currencies_Admin_rpc class is for AJAX remote program control
 */
-require('includes/applications/currencies/classes/currencies.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/currencies/classes/currencies.php'));
 
 class lC_Currencies_Admin_rpc {
  /*

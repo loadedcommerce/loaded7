@@ -537,9 +537,9 @@ class lC_Administrators_Admin {
   * @return array
   */
   public static function profileImageUpload($id) {
-    global $lC_Database;
-    
-    require_once('includes/classes/ajax_upload.php');
+    global $lC_Database, $lC_Vqmod;
+
+    require_once($lC_Vqmod->modCheck('includes/classes/ajax_upload.php'));
 
     // list of valid extensions, ex. array("jpeg", "jpg", "gif")
     $allowedExtensions = array('gif', 'jpg', 'jpeg', 'png');

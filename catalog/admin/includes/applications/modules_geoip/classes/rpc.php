@@ -13,8 +13,10 @@
 
   @function The lC_Modules_geoip_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/modules_geoip/classes/modules_geoip.php');    
-require_once('includes/classes/geoip.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/modules_geoip/classes/modules_geoip.php'));    
+require_once($lC_Vqmod->modCheck('includes/classes/geoip.php'));
 
 class lC_Modules_geoip_Admin_rpc {
  /*

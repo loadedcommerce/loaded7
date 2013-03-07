@@ -21,7 +21,7 @@ class lC_Templates_Admin {
   * @return array
   */
   public static function getAll() {
-    global $lC_Language;
+    global $lC_Language, $lC_Vqmod;
 
     $media = $_GET['media'];
     
@@ -32,7 +32,7 @@ class lC_Templates_Admin {
     $cnt = 0;
     $result = array('aaData' => array());
     foreach ( $files as $file ) {
-      include('includes/templates/' . $file['name']);
+      include($lC_Vqmod->modCheck('includes/templates/' . $file['name']));
       $code = substr($file['name'], 0, strrpos($file['name'], '.'));
       $class = 'lC_Template_' . $code;
       if ( class_exists($class) ) {
@@ -70,9 +70,9 @@ class lC_Templates_Admin {
   * @return array
   */
   public static function getData($id) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
-    include('includes/templates/' . $id . '.php');
+    include($lC_Vqmod->modCheck('includes/templates/' . $id . '.php'));
     $module = 'lC_Template_' . $id;
     $module = new $module();
 
@@ -171,8 +171,10 @@ class lC_Templates_Admin {
   * @return boolean
   */
   public static function install($module_name) {
+    global $lC_Vqmod;
+    
     if ( file_exists('includes/templates/' . $module_name . '.php') ) {
-      include('includes/templates/' . $module_name . '.php');
+      include($lC_Vqmod->modCheck('includes/templates/' . $module_name . '.php'));
 
       $class = 'lC_Template_' . $module_name;
 
@@ -195,8 +197,10 @@ class lC_Templates_Admin {
   * @return boolean
   */
   public static function uninstall($module_name) {
+    global $lC_Vqmod;
+    
     if ( file_exists('includes/templates/' . $module_name . '.php') ) {
-      include('includes/templates/' . $module_name . '.php');
+      include($lC_Vqmod->modCheck('includes/templates/' . $module_name . '.php'));
 
       $class = 'lC_Template_' . $module_name;
 

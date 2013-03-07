@@ -13,8 +13,10 @@
 
   @function The lC_Application_Orders class manages the orders GUI
 */
-require_once('includes/applications/orders/classes/orders.php');
-require_once('includes/classes/order.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/orders/classes/orders.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
 
 class lC_Application_Orders extends lC_Template_Admin {
  /*

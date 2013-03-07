@@ -13,7 +13,9 @@
  
   @function The lC_Application_Credit_cards class manages the credit cards GUI
 */
-require('includes/applications/credit_cards/classes/credit_cards.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/credit_cards/classes/credit_cards.php'));
 
 class lC_Application_Credit_cards extends lC_Template_Admin {
  /*

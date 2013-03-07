@@ -13,10 +13,12 @@
   
   @function The lC_Products_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/products/classes/products.php');
-require_once('includes/classes/category_tree.php');
-require_once('includes/classes/image.php');
-require_once('../includes/classes/currencies.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/category_tree.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/image.php'));
+require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
 
 class lC_Products_Admin_rpc { 
  /*
@@ -305,13 +307,13 @@ class lC_Products_Admin_rpc {
   }
 
   public static function fileUpload() {
-    global $lC_Database, $_module;
+    global $lC_Database, $lC_Vqmod, $_module;
 
     $lC_Image = new lC_Image_Admin();
 
     if ( is_numeric($_GET[$_module]) ) {
      
-      require_once('includes/classes/ajax_upload.php');
+      require_once($lC_Vqmod->modCheck('includes/classes/ajax_upload.php'));
 
       // list of valid extensions, ex. array("jpeg", "xml", "bmp")
       $allowedExtensions = array('gif', 'jpg', 'jpeg', 'png');

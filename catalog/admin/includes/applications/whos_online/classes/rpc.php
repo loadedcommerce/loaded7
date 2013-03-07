@@ -13,13 +13,15 @@
 
   @function The lC_Whos_online_Admin_rpc class is for AJAX remote program control
 */
-require_once('../includes/classes/currencies.php');
-require_once('../includes/classes/customer.php');
-require_once('../includes/classes/navigation_history.php');
-require_once('../includes/classes/shopping_cart.php');
-require_once('includes/classes/tax.php');
-require_once('includes/classes/geoip.php');
-require_once('includes/applications/whos_online/classes/whos_online.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
+require_once($lC_Vqmod->modCheck('../includes/classes/customer.php'));
+require_once($lC_Vqmod->modCheck('../includes/classes/navigation_history.php'));
+require_once($lC_Vqmod->modCheck('../includes/classes/shopping_cart.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/tax.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/geoip.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/whos_online/classes/whos_online.php'));
 
 class lC_Whos_online_Admin_rpc {
  /*

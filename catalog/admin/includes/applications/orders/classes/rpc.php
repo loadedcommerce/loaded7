@@ -13,7 +13,9 @@
 
   @function The lC_Orders_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/orders/classes/orders.php'); 
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/orders/classes/orders.php')); 
 
 class lC_Orders_Admin_rpc {
  /*

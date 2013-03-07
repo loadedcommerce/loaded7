@@ -13,7 +13,9 @@
 
   @function The lC_Application_Modules_addons class manages the addons GUI
 */
-require_once('includes/applications/templates_modules_layout/classes/templates_modules_layout.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/templates_modules_layout/classes/templates_modules_layout.php'));
 
 class lC_Application_Templates_modules_layout extends lC_Template_Admin {
  /*

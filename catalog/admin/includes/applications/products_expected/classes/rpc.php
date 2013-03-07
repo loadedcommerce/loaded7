@@ -13,8 +13,10 @@
 
   @function The lC_Products_expected_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/products_expected/classes/products_expected.php'); 
-require_once('includes/applications/products/classes/products.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/products_expected/classes/products_expected.php')); 
+require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
 
 class lC_Products_expected_Admin_rpc {
  /*

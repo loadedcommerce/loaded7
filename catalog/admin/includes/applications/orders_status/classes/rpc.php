@@ -13,7 +13,9 @@
  
   @function The lC_Orders_status_Admin_rpc class is for AJAX remote program control
 */
-require('includes/applications/orders_status/classes/orders_status.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/orders_status/classes/orders_status.php'));
 
 class lC_Orders_status_Admin_rpc {
  /*

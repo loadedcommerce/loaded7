@@ -13,7 +13,9 @@
 
   @function The lC_Services_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/services/classes/services.php');    
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/services/classes/services.php'));    
 
 class lC_Services_Admin_rpc {
  /*

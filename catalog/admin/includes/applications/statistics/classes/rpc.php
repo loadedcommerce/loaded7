@@ -13,7 +13,9 @@
 
   @function The lC_Statistics_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/statistics/classes/statistics.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/statistics/classes/statistics.php'));
 
 class lC_Statistics_Admin_rpc {
  /*

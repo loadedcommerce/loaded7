@@ -13,7 +13,9 @@
 
   @function The lC_Newsletters_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/newsletters/classes/newsletters.php'); 
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/newsletters/classes/newsletters.php')); 
 
 class lC_Newsletters_Admin_rpc {
  /*

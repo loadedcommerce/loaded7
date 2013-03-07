@@ -13,7 +13,9 @@
 
   @function The lC_Application_Banner_manager class manages the banners GUI
 */
-require_once('includes/applications/banner_manager/classes/banner_manager.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/banner_manager/classes/banner_manager.php'));
 
 class lC_Application_Banner_manager extends lC_Template_Admin {
  /*

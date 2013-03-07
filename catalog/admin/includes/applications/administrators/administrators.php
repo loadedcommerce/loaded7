@@ -13,7 +13,9 @@
 
   @function The lC_Application_Administrators class manages the administrators GUI
 */
-require('includes/applications/administrators/classes/administrators.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/administrators/classes/administrators.php'));
 
 class lC_Application_Administrators extends lC_Template_Admin {
  /*

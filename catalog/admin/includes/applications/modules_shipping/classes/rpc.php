@@ -13,8 +13,10 @@
 
   @function The lC_Modules_addons_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/modules_shipping/classes/modules_shipping.php');    
-require_once('includes/classes/shipping.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/modules_shipping/classes/modules_shipping.php'));    
+require_once($lC_Vqmod->modCheck('includes/classes/shipping.php'));
 
 class lC_Modules_shipping_Admin_rpc {
  /*
