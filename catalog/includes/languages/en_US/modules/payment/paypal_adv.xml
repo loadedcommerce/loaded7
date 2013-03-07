@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>payment_paypal_adv_title</key>
+      <value><![CDATA[Credit Card via PayPal Advanced Payments]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_paypal_adv_subtitle</key>
+      <value><![CDATA[Process Credit Card Payments with PayPal Advanced Payments]]></value>
+      <group>modules-payment</group>
+    </definition>    
+    <definition>
+      <key>payment_paypal_adv_description</key>
+      <value><![CDATA[<div></div>]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_paypal_adv_button_description</key>
+      <value><![CDATA[Your payment is protected by PayPal Advanced Payments. Cardholder data will not be stored or shared. Checkout with Confidence.]]></value>
+      <group>modules-payment</group>
+    </definition>      
+  </definitions>
+</language>
