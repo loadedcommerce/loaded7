@@ -25,7 +25,7 @@ ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
 
 // virtual hook system
-require_once('../ext/vqmod/vqmod.php');
+require_once('external/vqmod/vqmod.php');
 $lC_Vqmod = new VQMod();
   
 // set the type of request (secure or not)
@@ -36,7 +36,7 @@ if ($request_type == 'NONSSL') {
   define('DIR_WS_CATALOG', DIR_WS_HTTPS_CATALOG);
 }
 
-// compatibility work-around logic for PHP4
+// compatibility work-around logic for PHP4 
 require($lC_Vqmod->modCheck('../includes/functions/compatibility.php'));
 require($lC_Vqmod->modCheck('includes/functions/compatibility.php'));
 
