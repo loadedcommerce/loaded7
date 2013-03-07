@@ -11,8 +11,10 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+global $lC_Vqmod;
+
 if ( !class_exists('lC_Summary') ) {
-  include('includes/classes/summary.php');
+  include($lC_Vqmod->modCheck('includes/classes/summary.php'));
 }
 
 class lC_Summary_revenue extends lC_Summary {
@@ -36,13 +38,13 @@ class lC_Summary_revenue extends lC_Summary {
 
   /* Private methods */
   function _setData() {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
     
     if (!$this->enabled) {
       $this->_data = '';
     } else {   
 
-      require_once('../includes/classes/currencies.php');
+      require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
       $lC_Currencies = new lC_Currencies();
     
       $lastMonth = date("m",strtotime("-1 month"));
