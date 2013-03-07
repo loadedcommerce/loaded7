@@ -302,6 +302,8 @@
  */
 
   function lc_call_user_func($function, $default = null, $key = null) {
+    global $lC_Vqmod;
+    
     if (strpos($function, '::') !== false) {
       $class_method = explode('::', $function);
 
@@ -318,7 +320,7 @@
       }
 
       if (!function_exists($function_name)) {
-        include('includes/functions/cfg_parameters/' . $function_name . '.php');
+        include($lC_Vqmod->modCheck('includes/functions/cfg_parameters/' . $function_name . '.php'));
       }
 
       if (!empty($function_parameter)) {
