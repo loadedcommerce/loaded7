@@ -13,9 +13,9 @@
 */
 
 function lc_banner_yearly($_id) {
-  global $lC_Database, $lC_Language; 
+  global $lC_Database, $lC_Language, $lC_Vqmod;
 
-  require('external/panachart/panachart.php');
+  require($lC_Vqmod->modCheck('external/panachart/panachart.php'));
 
   $lC_ObjectInfo = new lC_ObjectInfo(lC_Banner_manager_Admin::getData($_id));
 
