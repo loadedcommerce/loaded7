@@ -80,8 +80,8 @@ TD { height:19px; }
               <tr>
                 <td><b><?php echo $lC_Language->get('box_server_php_version'); ?></b></td>
                 <td align="right"><?php echo phpversion(); ?></td>
-                <?php if (version_compare(PHP_VERSION, '5.2') !== 1) $ok = FALSE; ?>
-                <td align="right" width="25"><img src="templates/img/icons/<?php echo ((version_compare(PHP_VERSION, '5.2') === 1) ? 'tick.gif' : 'cross.gif'); ?>" border="0" width="16" height="16"></td>
+                <?php if (version_compare(PHP_VERSION, '5.3') !== 1) $ok = FALSE; ?>
+                <td align="right" width="25"><img src="templates/img/icons/<?php echo ((version_compare(PHP_VERSION, '5.3') === 1) ? 'tick.gif' : 'cross.gif'); ?>" border="0" width="16" height="16"></td>
               </tr>
             </table><br />
             <table border="0" width="100%" cellspacing="0" cellpadding="2">
@@ -167,7 +167,7 @@ TD { height:19px; }
           <p><?php echo $lC_Language->get('text_welcome'); ?></p>
           <h4 class="no-margin-top mid-margin-bottom"><?php echo $lC_Language->get('page_heading_server_requirements'); ?></h4>
           <ul>
-            <li>PHP v5.2+ (with MySQLi extension)</li>
+            <li>PHP v5.3+ (with MySQLi extension)</li>
             <li>MySQL v4.1.13+ or v5.0.7+</li>
           </ul>
           <h4 class="no-margin-top mid-margin-bottom"><?php echo $lC_Language->get('page_heading_permissions'); ?></h4>
