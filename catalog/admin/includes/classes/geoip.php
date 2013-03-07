@@ -19,11 +19,11 @@
 
     // class methods
     function load() {
-      global $lC_Language;
+      global $lC_Language, $lC_Vqmod;
 
       if (defined('MODULE_DEFAULT_GEOIP') && !lc_empty(MODULE_DEFAULT_GEOIP) && file_exists('includes/modules/geoip/' . MODULE_DEFAULT_GEOIP . '.php')) {
         $lC_Language->loadIniFile('modules/geoip/' . MODULE_DEFAULT_GEOIP . '.php');
-        include('includes/modules/geoip/' . MODULE_DEFAULT_GEOIP . '.php');
+        include($lC_Vqmod->modCheck('includes/modules/geoip/' . MODULE_DEFAULT_GEOIP . '.php'));
         $module = 'lC_GeoIP_' . MODULE_DEFAULT_GEOIP;
         return new $module();
       } else {
@@ -94,10 +94,10 @@
     }
 
     function install() {
-      global $lC_Database, $lC_Language;
+      global $lC_Database, $lC_Language, $lC_Vqmod;
 
       if (defined('MODULE_DEFAULT_GEOIP')) {
-        include('includes/modules/geoip/' . MODULE_DEFAULT_GEOIP . '.php');
+        include($lC_Vqmod->modCheck('includes/modules/geoip/' . MODULE_DEFAULT_GEOIP . '.php'));
         $module = 'lC_GeoIP_' . MODULE_DEFAULT_GEOIP;
         $module = new module();
         $module->remove();

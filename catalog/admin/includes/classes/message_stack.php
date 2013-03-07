@@ -1,18 +1,19 @@
 <?php
 /**
-*  $Id: message_stack.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     LoadedCommerce Team
-*  @copyright  (c) 2013 LoadedCommerce Team
-*  @license    http://loadedcommerce.com/license.html
-*/
+  $Id: message_stack.php v1.0 2013-01-01 datazen $
 
-require('../includes/classes/message_stack.php');
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
+*/
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('../includes/classes/message_stack.php'));
 
 /**
 * The lC_MessageStack class manages information messages to be displayed.

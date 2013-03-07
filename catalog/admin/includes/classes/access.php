@@ -55,7 +55,7 @@
     }
 
     function getLevels() {
-      global $lC_Language;
+      global $lC_Language, $lC_Vqmod;
 
       $access = array();
 
@@ -66,7 +66,7 @@
 
             if ( !class_exists( $module_class ) ) {
               $lC_Language->loadIniFile('modules/access/' . $module . '.php');
-              include('includes/modules/access/' . $module . '.php');
+              include($lC_Vqmod->modCheck('includes/modules/access/' . $module . '.php'));
             }
 
             $module_class = new $module_class();
