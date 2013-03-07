@@ -13,17 +13,17 @@
 */
 
 /**
- * Generate an internal URL address for the catalog side
- *
- * @param string $page The page to link to
- * @param string $parameters The parameters to pass to the page (in the GET scope)
- * @param string $connection The connection type for the page (NONSSL, SSL, AUTO)
- * @param boolean $add_session_id Conditionally add the session ID to the URL
- * @param boolean $search_engine_friendly Convert the URL to be search engine friendly
- * @param boolean $use_full_address Add the full server address to the URL
- * @access public
- */
-
+* Generate an internal URL address for the catalog side
+*
+* @param string $page The page to link to
+* @param string $parameters The parameters to pass to the page (in the GET scope)
+* @param string $connection The connection type for the page (NONSSL, SSL, AUTO)
+* @param boolean $add_session_id Conditionally add the session ID to the URL
+* @param boolean $search_engine_friendly Convert the URL to be search engine friendly
+* @param boolean $use_full_address Add the full server address to the URL
+* @access public
+*/
+if (!function_exists('lc_href_link')) {
   function lc_href_link($page = null, $parameters = null, $connection = 'NONSSL', $add_session_id = true, $search_engine_safe = true, $use_full_address = false) {
     global $request_type, $lC_Session, $lC_Services;
 
@@ -80,7 +80,7 @@
       $link = substr($link, 0, -1);
     }
 
-// Add the session ID when moving from different HTTP and HTTPS servers, or when SID is defined
+    // Add the session ID when moving from different HTTP and HTTPS servers, or when SID is defined
     if ( ($add_session_id === true) && $lC_Session->hasStarted() && (SERVICE_SESSION_FORCE_COOKIE_USAGE == '-1') ) {
       if (!lc_empty(SID)) {
         $_sid = SID;
@@ -100,7 +100,7 @@
     }
 
     if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('sefu')) {
-        $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
+      $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
     } else {
       if (strpos($link, '&') !== false) {
         $link = str_replace('&', '&amp;', $link);
@@ -109,31 +109,31 @@
 
     return $link;
   }
-
+}
 /**
- * Links an object with a URL address
- *
- * @param string $link The URL address to link the object to
- * @param string $object The object to set the link on
- * @param string $parameters Additional parameters for the link
- * @access public
- */
-
+* Links an object with a URL address
+*
+* @param string $link The URL address to link the object to
+* @param string $object The object to set the link on
+* @param string $parameters Additional parameters for the link
+* @access public
+*/
+if (!function_exists('lc_link_object')) {
   function lc_link_object($link, $object, $parameters = null) {
     return '<a href="' . $link . '"' . (!empty($parameters) ? ' ' . $parameters : '') . '>' . $object . '</a>';
   }
-
+}
 /**
- * Outputs an image
- *
- * @param string $image The image filename to display
- * @param string $title The title of the image button
- * @param int $width The width of the image
- * @param int $height The height of the image
- * @param string $parameters Additional parameters for the image
- * @access public
- */
-
+* Outputs an image
+*
+* @param string $image The image filename to display
+* @param string $title The title of the image button
+* @param int $width The width of the image
+* @param int $height The height of the image
+* @param string $parameters Additional parameters for the image
+* @access public
+*/
+if (!function_exists('lc_image')) {
   function lc_image($image, $title = null, $width = 0, $height = 0, $parameters = null) {
     if ( (empty($image) || ($image == DIR_WS_IMAGES)) && (IMAGE_REQUIRED == '-1') ) {
       return false;
@@ -169,16 +169,16 @@
 
     return $image;
   }
-
+}
 /**
- * Outputs an image submit button
- *
- * @param string $image The image filename to display
- * @param string $title The title of the image button
- * @param string $parameters Additional parameters for the image submit button
- * @access public
- */
-
+* Outputs an image submit button
+*
+* @param string $image The image filename to display
+* @param string $title The title of the image button
+* @param string $parameters Additional parameters for the image submit button
+* @access public
+*/
+if (!function_exists('lc_draw_image_submit_button')) {
   function lc_draw_image_submit_button($image, $title = null, $parameters = null) {
     global $lC_Language;
 
@@ -196,33 +196,33 @@
 
     return $image_submit;
   }
-
+}
 /**
- * Outputs an image button
- *
- * @param string $image The image filename to display
- * @param string $title The title of the image button
- * @param string $parameters Additional parameters for the image button
- * @access public
- */
-
+* Outputs an image button
+*
+* @param string $image The image filename to display
+* @param string $title The title of the image button
+* @param string $parameters Additional parameters for the image button
+* @access public
+*/
+if (!function_exists('lc_draw_image_button')) {
   function lc_draw_image_button($image, $title = null, $parameters = null) {
     global $lC_Language;
 
     return lc_image(DIR_WS_TEMPLATE . 'includes/languages/' . $lC_Language->getCode() . '/images/buttons/' . $image, $title, null, null, $parameters);
   }
-
+}
 /**
- * Outputs a form input field (text/password)
- *
- * @param string $name The name and ID of the input field
- * @param string $value The default value for the input field
- * @param string $parameters Additional parameters for the input field
- * @param boolean $override Override the default value with the value found in the GET or POST scope
- * @param string $type The type of input field to use (text/password/file)
- * @access public
- */
-
+* Outputs a form input field (text/password)
+*
+* @param string $name The name and ID of the input field
+* @param string $value The default value for the input field
+* @param string $parameters Additional parameters for the input field
+* @param boolean $override Override the default value with the value found in the GET or POST scope
+* @param string $type The type of input field to use (text/password/file)
+* @access public
+*/
+if (!function_exists('lc_draw_input_field')) {
   function lc_draw_input_field($name, $value = null, $parameters = null, $override = true, $type = 'text') {
     if (!is_bool($override)) {
       $override = true;
@@ -269,27 +269,27 @@
 
     return $field;
   }
-
+}
 /**
- * Outputs a form password field
- *
- * @param string $name The name and ID of the password field
- * @param string $parameters Additional parameters for the password field
- * @access public
- */
-
+* Outputs a form password field
+*
+* @param string $name The name and ID of the password field
+* @param string $parameters Additional parameters for the password field
+* @access public
+*/
+if (!function_exists('lc_draw_password_field')) {
   function lc_draw_password_field($name, $parameters = null) {
     return lc_draw_input_field($name, null, $parameters, false, 'password');
   }
-
+}
 /**
- * Outputs a form file upload field
- *
- * @param string $name The name and ID of the file upload field
- * @param boolean $show_max_size Show the maximum file upload size beside the field
- * @access public
- */
-
+* Outputs a form file upload field
+*
+* @param string $name The name and ID of the file upload field
+* @param boolean $show_max_size Show the maximum file upload size beside the field
+* @access public
+*/
+if (!function_exists('lc_draw_file_field')) {
   function lc_draw_file_field($name, $show_max_size = false, $params = 'size="32"') {
     global $lC_Language;
 
@@ -313,19 +313,19 @@
 
     return $field;
   }
-
+}
 /**
- * Outputs a form selection field (checkbox/radio)
- *
- * @param string $name The name and indexed ID of the selection field
- * @param string $type The type of the selection field (checkbox/radio)
- * @param mixed $values The value of, or an array of values for, the selection field
- * @param string $default The default value for the selection field
- * @param string $parameters Additional parameters for the selection field
- * @param string $separator The separator to use between multiple options for the selection field
- * @access public
- */
-
+* Outputs a form selection field (checkbox/radio)
+*
+* @param string $name The name and indexed ID of the selection field
+* @param string $type The type of the selection field (checkbox/radio)
+* @param mixed $values The value of, or an array of values for, the selection field
+* @param string $default The default value for the selection field
+* @param string $parameters Additional parameters for the selection field
+* @param string $separator The separator to use between multiple options for the selection field
+* @access public
+*/
+if (!function_exists('lc_draw_selection_field')) {
   function lc_draw_selection_field($name, $type, $values, $default = null, $parameters = null, $separator = '&nbsp;&nbsp;') {
     if (!is_array($values)) {
       $values = array($values);
@@ -407,49 +407,49 @@
 
     return $field;
   }
-
+}
 /**
- * Outputs a form checkbox field
- *
- * @param string $name The name and indexed ID of the checkbox field
- * @param mixed $values The value of, or an array of values for, the checkbox field
- * @param string $default The default value for the checkbox field
- * @param string $parameters Additional parameters for the checkbox field
- * @param string $separator The separator to use between multiple options for the checkbox field
- * @access public
- */
-
+* Outputs a form checkbox field
+*
+* @param string $name The name and indexed ID of the checkbox field
+* @param mixed $values The value of, or an array of values for, the checkbox field
+* @param string $default The default value for the checkbox field
+* @param string $parameters Additional parameters for the checkbox field
+* @param string $separator The separator to use between multiple options for the checkbox field
+* @access public
+*/
+if (!function_exists('lc_draw_checkbox_field')) {
   function lc_draw_checkbox_field($name, $values = null, $default = null, $parameters = null, $separator = '&nbsp;&nbsp;') {
     return lc_draw_selection_field($name, 'checkbox', $values, $default, $parameters, $separator);
   }
-
+}
 /**
- * Outputs a form radio field
- *
- * @param string $name The name and indexed ID of the radio field
- * @param mixed $values The value of, or an array of values for, the radio field
- * @param string $default The default value for the radio field
- * @param string $parameters Additional parameters for the radio field
- * @param string $separator The separator to use between multiple options for the radio field
- * @access public
- */
-
+* Outputs a form radio field
+*
+* @param string $name The name and indexed ID of the radio field
+* @param mixed $values The value of, or an array of values for, the radio field
+* @param string $default The default value for the radio field
+* @param string $parameters Additional parameters for the radio field
+* @param string $separator The separator to use between multiple options for the radio field
+* @access public
+*/
+if (!function_exists('lc_draw_radio_field')) {
   function lc_draw_radio_field($name, $values, $default = null, $parameters = null, $separator = '&nbsp;&nbsp;') {
     return lc_draw_selection_field($name, 'radio', $values, $default, $parameters, $separator);
   }
-
+}
 /**
- * Outputs a form textarea field
- *
- * @param string $name The name and ID of the textarea field
- * @param string $value The default value for the textarea field
- * @param int $width The width of the textarea field
- * @param int $height The height of the textarea field
- * @param string $parameters Additional parameters for the textarea field
- * @param boolean $override Override the default value with the value found in the GET or POST scope
- * @access public
- */
-
+* Outputs a form textarea field
+*
+* @param string $name The name and ID of the textarea field
+* @param string $value The default value for the textarea field
+* @param int $width The width of the textarea field
+* @param int $height The height of the textarea field
+* @param string $parameters Additional parameters for the textarea field
+* @param boolean $override Override the default value with the value found in the GET or POST scope
+* @access public
+*/
+if (!function_exists('lc_draw_textarea_field')) {
   function lc_draw_textarea_field($name, $value = null, $width = 60, $height = 5, $parameters = null, $override = true) {
     if (!is_bool($override)) {
       $override = true;
@@ -485,16 +485,16 @@
 
     return $field;
   }
-
+}
 /**
- * Outputs a form hidden field
- *
- * @param string $name The name of the hidden field
- * @param string $value The value for the hidden field
- * @param string $parameters Additional parameters for the hidden field
- * @access public
- */
-
+* Outputs a form hidden field
+*
+* @param string $name The name of the hidden field
+* @param string $value The value for the hidden field
+* @param string $parameters Additional parameters for the hidden field
+* @access public
+*/
+if (!function_exists('lc_draw_hidden_field')) {
   function lc_draw_hidden_field($name, $value = null, $parameters = null) {
     $field = '<input type="hidden" name="' . lc_output_string($name) . '"';
 
@@ -510,13 +510,13 @@
 
     return $field;
   }
-
+}
 /**
- * Outputs a form hidden field containing the session name and ID if SID is not empty
- *
- * @access public
- */
-
+* Outputs a form hidden field containing the session name and ID if SID is not empty
+*
+* @access public
+*/
+if (!function_exists('lc_draw_hidden_session_id_field')) {
   function lc_draw_hidden_session_id_field() {
     global $lC_Session;
 
@@ -524,17 +524,17 @@
       return lc_draw_hidden_field($lC_Session->getName(), $lC_Session->getID());
     }
   }
-
+}
 /**
- * Outputs a form pull down menu field
- *
- * @param string $name The name of the pull down menu field
- * @param array $values Defined values for the pull down menu field
- * @param string $default The default value for the pull down menu field
- * @param string $parameters Additional parameters for the pull down menu field
- * @access public
- */
-
+* Outputs a form pull down menu field
+*
+* @param string $name The name of the pull down menu field
+* @param array $values Defined values for the pull down menu field
+* @param string $default The default value for the pull down menu field
+* @param string $parameters Additional parameters for the pull down menu field
+* @access public
+*/
+if (!function_exists('lc_draw_pull_down_menu')) {
   function lc_draw_pull_down_menu($name, $values, $default = null, $parameters = null) {
     $group = false;
 
@@ -584,17 +584,17 @@
 
     return $field;
   }
-
+}
 /**
- * Outputs a label for form field elements
- *
- * @param string $text The text to use as the form field label
- * @param string $for The ID of the form field element to assign the label to
- * @param string $access_key The access key to use for the form field element
- * @param bool $required A flag to show if the form field element requires input or not
- * @access public
- */
-
+* Outputs a label for form field elements
+*
+* @param string $text The text to use as the form field label
+* @param string $for The ID of the form field element to assign the label to
+* @param string $access_key The access key to use for the form field element
+* @param bool $required A flag to show if the form field element requires input or not
+* @access public
+*/
+if (!function_exists('lc_draw_label')) {
   function lc_draw_label($text, $for, $access_key = null, $required = false) {
     if (!is_bool($required)) {
       $required = false;
@@ -602,20 +602,20 @@
 
     return '<label for="' . lc_output_string($for) . '"' . (!empty($access_key) ? ' accesskey="' . lc_output_string($access_key) . '"' : '') . '>' . lc_output_string($text) . ($required === true ? '<em>*</em>' : '') . '</label>';
   }
-
+}
 /**
- * Outputs a form pull down menu for a date selection
- *
- * @param string $name The base name of the date pull down menu fields
- * @param array $value An array containing the year, month, and date values for the default date (year, month, date)
- * @param boolean $default_today Default to todays date if no default value is used
- * @param boolean $show_days Show the days in a pull down menu
- * @param boolean $use_month_names Show the month names in the month pull down menu
- * @param int $year_range_start The start of the years range to use for the year pull down menu
- * @param int $year_range_end The end of the years range to use for the year pull down menu
- * @access public
- */
-
+* Outputs a form pull down menu for a date selection
+*
+* @param string $name The base name of the date pull down menu fields
+* @param array $value An array containing the year, month, and date values for the default date (year, month, date)
+* @param boolean $default_today Default to todays date if no default value is used
+* @param boolean $show_days Show the days in a pull down menu
+* @param boolean $use_month_names Show the month names in the month pull down menu
+* @param int $year_range_start The start of the years range to use for the year pull down menu
+* @param int $year_range_end The end of the years range to use for the year pull down menu
+* @access public
+*/
+if (!function_exists('lc_draw_date_pull_down_menu')) {
   function lc_draw_date_pull_down_menu($name, $value = null, $default_today = true, $show_days = true, $use_month_names = true, $year_range_start = 0, $year_range_end = 1) {
     $year = @date('Y');
 
@@ -679,7 +679,7 @@
       $days_array = array();
       for ($i=1; $i<=$days_in_month; $i++) {
         $days_array[] = array('id' => $i,
-                              'text' => $i);
+          'text' => $i);
       }
 
       $days_select_string = lc_draw_pull_down_menu($name . '_days', $days_array, $value['date']);
@@ -688,7 +688,7 @@
     $months_array = array();
     for ($i=1; $i<=12; $i++) {
       $months_array[] = array('id' => $i,
-                              'text' => (($use_month_names === true) ? @strftime('%B', @mktime(0, 0, 0, $i, 1)) : $i));
+        'text' => (($use_month_names === true) ? @strftime('%B', @mktime(0, 0, 0, $i, 1)) : $i));
     }
 
     $months_select_string = lc_draw_pull_down_menu($name . '_months', $months_array, $value['month'], $params);
@@ -696,24 +696,24 @@
     $years_array = array();
     for ($i = ($year - $year_range_start); $i <= ($year + $year_range_end); $i++) {
       $years_array[] = array('id' => $i,
-                             'text' => $i);
+        'text' => $i);
     }
 
     $years_select_string = lc_draw_pull_down_menu($name . '_years', $years_array, $value['year'], $params);
 
     return $days_select_string . $months_select_string . $years_select_string;
   }
-
+}
 /**
- * Display an icon from a template set
- *
- * @param string $image The icon to display
- * @param string $title The title of the icon
- * @param string $group The size group of the icon
- * @param string $parameters The parameters to pass to the image
- * @access public
- */
-
+* Display an icon from a template set
+*
+* @param string $image The icon to display
+* @param string $title The title of the icon
+* @param string $group The size group of the icon
+* @param string $parameters The parameters to pass to the image
+* @access public
+*/
+if (!function_exists('lc_icon')) {
   function lc_icon($image, $title = null, $group = null, $parameters = null, $default = true) {
     global $lC_Language;
 
@@ -731,40 +731,41 @@
 
     return lc_image('templates/' . $template_code . '/images/icons/' . (!empty($group) ? $group . '/' : null) . $image, $title, null, null, $parameters);
   }
-
+}
 /**
- * Get the raw URL to an icon from a template set
- *
- * @param string $image The icon to display
- * @param string $group The size group of the icon
- * @access public
- */
-
+* Get the raw URL to an icon from a template set
+*
+* @param string $image The icon to display
+* @param string $group The size group of the icon
+* @access public
+*/
+if (!function_exists('lc_icon_raw')) {
   function lc_icon_raw($image, $group = '16') {
     global $lC_Template;
 
     return 'templates/' . $lC_Template->getCode() . '/images/icons/' . (!empty($group) ? $group . '/' : null) . $image;
   }
-
+}
 /**
- * Return a utf8 encoded string
- *
- * @param string $text The text to encode
- * @access public
- */
-
+* Return a utf8 encoded string
+*
+* @param string $text The text to encode
+* @access public
+*/
+if (!function_exists('lc_output_utf8_encoded')) {
   function lc_output_utf8_encoded($text) {
     return utf8_encode($text);
   }
-
+}
 /**
- * Output a decoded utf8 string
- *
- * @param string $text The text to decode
- * @access public
- */
-
+* Output a decoded utf8 string
+*
+* @param string $text The text to decode
+* @access public
+*/
+if (!function_exists('lc_output_utf8_decoded')) {
   function lc_output_utf8_decoded($text) {
     return utf8_decode($text);
   }
+}
 ?>
