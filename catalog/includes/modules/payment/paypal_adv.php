@@ -117,9 +117,9 @@ class lC_Payment_paypal_adv extends lC_Payment {
     if (is_object($order)) $this->update_status();
     
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
-      $this->form_action_url = 'https://sandbox-paypal_adv.net/securepayments/a1/cc_collection.php';  // sandbox url
+      $this->form_action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
     } else {
-      $this->form_action_url = 'https://paypal_adv.net/securepayments/a1/cc_collection.php';  // production url
+      $this->form_action_url = 'https://payflowpro.paypal.com';  // production url
     }  
     
     $Qcredit_cards = $lC_Database->query('select credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
@@ -213,6 +213,9 @@ class lC_Payment_paypal_adv extends lC_Payment {
   public function process_button() {
     global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer;
     
+    $secureToken = $this->_getSecureToken();
+    
+die('11');    
     $process_button_string = lc_draw_hidden_field('CRESecureID', MODULE_PAYMENT_PAYPAL_ADV_LOGIN) . "\n" . 
                              lc_draw_hidden_field('total_amt', $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode())) . "\n" .
                              lc_draw_hidden_field('order_id', $this->_order_id) . "\n" .
@@ -312,5 +315,24 @@ class lC_Payment_paypal_adv extends lC_Payment {
 
     return $this->_check;
   }
+  
+  private function _getSecureToken() {
+    global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer;
+    
+    $secureTokenId = uniqid('', true); 
+    $postData = "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
+                "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
+                "&PARTNER=Paypal" . 
+                "&PWD=" . MODULE_PAYMENT_PAYPAL_ADV_PWD .  
+                "&CREATESECURETOKEN=Y" . 
+                "&SECURETOKENID=" . $secureTokenId .  
+                "&TRXTYPE=" . MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE . 
+                "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()));
+                
+echo '[' . $postData . ']<br>';
+die('00');                
+    
+  }
+
 }
 ?>
