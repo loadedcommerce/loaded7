@@ -25,9 +25,9 @@ if ($lC_MessageStack->size('account_password') > 0) {
           <div class="single-bg">
             <div class="embed-form short-code-column one-half no-margin-bottom">
               <ul id="personal_details">
-                <li><?php echo lc_draw_label('', 'password_current', null, false) . ' ' . lc_draw_password_field('password_current', 'placeholder="' . $lC_Language->get('field_customer_password_current') . '" holder="' . $lC_Language->get('field_customer_password_current') . '" class="txt" style="width:99%;"'); ?></li>
-                <li><?php echo lc_draw_label('', 'password_new', null, false) . ' ' . lc_draw_password_field('password_new', 'placeholder="' . $lC_Language->get('field_customer_password_new') . '" onfocus="this.placeholder = \'\'"   holder="text" class="txt" style="width:99%;"'); ?></li>
-                <li><?php echo lc_draw_label('', 'password_confirmation', null, false) . ' ' . lc_draw_password_field('password_confirmation', 'placeholder="' . $lC_Language->get('field_customer_password_confirmation') . '" holder="' . $lC_Language->get('field_customer_password_confirmation') . '"  holder="text" class="txt" style="width:99%;"'); ?></li>
+                <li><?php echo lc_draw_label('', 'password_current', null, false) . ' ' . lc_draw_password_field('password_current', 'placeholder="' . $lC_Language->get('field_customer_password_current') . '" class="txt" style="width:99%;"'); ?></li>
+                <li><?php echo lc_draw_label('', 'password_new', null, false) . ' ' . lc_draw_password_field('password_new', 'placeholder="' . $lC_Language->get('field_customer_password_new') . '" class="txt" style="width:99%;"'); ?></li>
+                <li><?php echo lc_draw_label('', 'password_confirmation', null, false) . ' ' . lc_draw_password_field('password_confirmation', 'placeholder="' . $lC_Language->get('field_customer_password_confirmation') . '" class="txt" style="width:99%;"'); ?></li>
               </ul>
             </div>
           </div>

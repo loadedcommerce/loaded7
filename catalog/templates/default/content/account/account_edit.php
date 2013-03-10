@@ -26,11 +26,11 @@ if ($lC_MessageStack->size('account_edit') > 0) {
         <div class="embed-form short-code-column one-half no-margin-bottom">
           <h3>Personal Details</h3>
           <ul id="personal_details">
-            <li><?php echo lc_draw_label('', 'firstname', null, false) . ' ' . lc_draw_input_field('firstname', $Qaccount->value('customers_firstname') , 'placeholder="' . $lC_Language->get('field_customer_first_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_first_name') . '\'" holder="' . $lC_Language->get('field_customer_first_name') . '" class="txt" style="width:99%;"'); ?></li>
-            <li><?php echo lc_draw_label('', 'lastname', null, false) . ' ' . lc_draw_input_field('lastname', $Qaccount->value('customers_lastname'), 'placeholder="' . $lC_Language->get('field_customer_last_name') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_last_name') . '\'" holder="' . $lC_Language->get('field_customer_last_name') . '"  holder="text" class="txt" style="width:99%;"'); ?></li>
+            <li><?php echo lc_draw_label('', 'firstname', null, false) . ' ' . lc_draw_input_field('firstname', $Qaccount->value('customers_firstname') , 'placeholder="' . $lC_Language->get('field_customer_first_name') . '" class="txt" style="width:99%;"'); ?></li>
+            <li><?php echo lc_draw_label('', 'lastname', null, false) . ' ' . lc_draw_input_field('lastname', $Qaccount->value('customers_lastname'), 'placeholder="' . $lC_Language->get('field_customer_last_name') . '" class="txt" style="width:99%;"'); ?></li>
             <?php
               if (ACCOUNT_DATE_OF_BIRTH == '1') {
-                echo '<li>' . lc_draw_label('', 'dob_days', null, false) . ' ' . lc_draw_input_field('dob', $Qaccount->value('customers_dob_month') . '/' . $Qaccount->value('customers_dob_date') . '/' . $Qaccount->value('customers_dob_year'),'placeholder="' . $lC_Language->get('field_customer_date_of_birth') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_date_of_birth') . '\'" holder="' . $lC_Language->get('field_customer_date_of_birth') . '" class="txt required date" style="width:86%;"'); 
+                echo '<li>' . lc_draw_label('', 'dob_days', null, false) . ' ' . lc_draw_input_field('dob', $Qaccount->value('customers_dob_month') . '/' . $Qaccount->value('customers_dob_date') . '/' . $Qaccount->value('customers_dob_year'),'placeholder="' . $lC_Language->get('field_customer_date_of_birth') . '" class="txt required date" style="width:86%;"'); 
               } 
               if (ACCOUNT_GENDER > -1) {
                 $gender_array = array(array('id' => 'm', 'text' => $lC_Language->get('gender_male')),
@@ -44,7 +44,7 @@ if ($lC_MessageStack->size('account_edit') > 0) {
           <h3>Login Details</h3>
           <ul id="address_details">
             <?php
-              echo '<li>' . lc_draw_label('', 'email_address', null, '', false) . ' ' . lc_draw_input_field('email_address', $Qaccount->value('customers_email_address'), 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_email_address') . '\'" holder="' . $lC_Language->get('field_customer_email_address') . '" class="txt" style="width:99%;"') . '</li>';      
+              echo '<li>' . lc_draw_label('', 'email_address', null, '', false) . ' ' . lc_draw_input_field('email_address', $Qaccount->value('customers_email_address'), 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" class="txt" style="width:99%;"') . '</li>';      
             ?>
           </ul>
         </div>
