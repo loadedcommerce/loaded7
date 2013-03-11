@@ -13,7 +13,7 @@
     </definition>
     <definition>
       <key>payment_paypal_adv_payment_title</key>
-      <value><![CDATA[Secure Payments by PayPal]]></value>
+      <value><![CDATA[Secure Payments by %s]]></value>
       <group>modules-payment</group>
     </definition>          
     <definition>
