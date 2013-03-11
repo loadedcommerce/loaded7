@@ -302,15 +302,15 @@ class lC_Orders_Admin {
   * @return array
   */ 
   public static function getInfo($id) {
-    global $lC_Language, $lC_Database;
+    global $lC_Language, $lC_Database, $lC_Vqmod;
 
     $lC_Language->loadIniFile('orders.php');
 
-    require_once('../includes/classes/currencies.php');
+    require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
     $lC_Currencies = new lC_Currencies();
-    require_once('includes/classes/tax.php');
+    require_once($lC_Vqmod->modCheck('includes/classes/tax.php'));
     $lC_Tax = new lC_Tax_Admin();
-    require_once('includes/classes/order.php');
+    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
     $lC_Order = new lC_Order($id);
 
     if ( !$lC_Order->isValid() ) {
@@ -460,7 +460,7 @@ class lC_Orders_Admin {
   * @return boolean
   */ 
   private static function _updateTransaction($id, $call_function) {
-    global $lC_Database;
+    global $lC_Database, $lC_Vqmod;
 
     $Qorder = $lC_Database->query('select payment_module from :table_orders where orders_id = :orders_id limit 1');
     $Qorder->bindTable(':table_orders', TABLE_ORDERS);
@@ -469,8 +469,8 @@ class lC_Orders_Admin {
 
     if ( ( $Qorder->numberOfRows() === 1) && !lc_empty($Qorder->value('payment_module')) ) {
       if ( file_exists('includes/modules/payment/' . $Qorder->value('payment_module') . '.php') ) {
-        include('includes/classes/payment.php');
-        include('includes/modules/payment/' . $Qorder->value('payment_module') . '.php');
+        include($lC_Vqmod->modCheck('includes/classes/payment.php'));
+        include($lC_Vqmod->modCheck('includes/modules/payment/' . $Qorder->value('payment_module') . '.php'));
         if ( is_callable(array('lC_Payment_' . $Qorder->value('payment_module'), $call_function)) ) {
           $payment_module = 'lC_Payment_' . $Qorder->value('payment_module');
           $payment_module = new $payment_module();
@@ -492,12 +492,12 @@ class lC_Orders_Admin {
   * @return boolean
   */
   private static function _updateStatus($id, $data) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     $lC_Language->loadIniFile('orders.php');
 
     // build the order status array
-    require_once('includes/classes/order.php');
+    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
     $lC_Order = new lC_Order($id);
 
     $orders_status_array = array();

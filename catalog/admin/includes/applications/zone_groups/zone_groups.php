@@ -13,7 +13,9 @@
 
   @function The lC_Application_Zone_groups class manages the zone groups GUI
 */
-require_once('includes/applications/zone_groups/classes/zone_groups.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/zone_groups/classes/zone_groups.php'));
 
 class lC_Application_Zone_groups extends lC_Template_Admin {
  /*

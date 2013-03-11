@@ -13,8 +13,10 @@
 
   @function The lC_Modules_payment_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/modules_payment/classes/modules_payment.php');    
-require_once('includes/classes/payment.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/modules_payment/classes/modules_payment.php'));    
+require_once($lC_Vqmod->modCheck('includes/classes/payment.php'));
 
 class lC_Modules_payment_Admin_rpc {
  /*

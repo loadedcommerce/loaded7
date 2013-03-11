@@ -13,7 +13,9 @@
 
   @function The lC_Configuration_Admin_rpc class is for AJAX remote program control
 */
-require('includes/applications/configuration/classes/configuration.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/configuration/classes/configuration.php'));
 
 class lC_Configuration_Admin_rpc {
  /*

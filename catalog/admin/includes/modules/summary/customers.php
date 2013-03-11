@@ -11,8 +11,10 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+global $lC_Vqmod;
+
 if ( !class_exists('lC_Summary') ) {
-  include('includes/classes/summary.php');
+  include($lC_Vqmod->modCheck('includes/classes/summary.php'));
 }
 
 class lC_Summary_customers extends lC_Summary {
@@ -74,11 +76,11 @@ class lC_Summary_customers extends lC_Summary {
   }
   
   function loadModal() {
-    global $lC_Database, $lC_Language, $lC_Template;
+    global $lC_Database, $lC_Language, $lC_Template, $lC_Vqmod;
     
     if ( is_dir('includes/applications/customers/modal') ) {
-      if ( file_exists('includes/applications/customers/modal/edit.php') ) include_once('includes/applications/customers/modal/edit.php');
-      //if ( file_exists('includes/applications/customers/modal/delete.php') ) include_once('includes/applications/customers/modal/delete.php');
+      if ( file_exists('includes/applications/customers/modal/edit.php') ) include_once($lC_Vqmod->modCheck('includes/applications/customers/modal/edit.php'));
+      //if ( file_exists('includes/applications/customers/modal/delete.php') ) include_once($lC_Vqmod->modCheck('includes/applications/customers/modal/delete.php'));
     }
   }
 }

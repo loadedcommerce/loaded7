@@ -11,7 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-include_once('templates/' . $lC_Template->getCode() . '/classes/success.php');
+ini_set('display_errors', 1);
 $oID = lC_Success::getOrderID($lC_Customer->getID());
 ?>
 <!--content/checkout/checkout_success.php start-->
@@ -137,9 +137,9 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                     <table border="0" width="100%" cellspacing="0" cellpadding="0">
                       <?php
                       if (file_exists(DIR_FS_TEMPLATE . 'modules/downloads.php')) {
-                        require(DIR_FS_TEMPLATE . 'modules/downloads.php');
+                        require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/downloads.php'));
                       } else {
-                        require('includes/modules/downloads.php'); 
+                        require($lC_Vqmod->modCheck('includes/modules/downloads.php')); 
                       }    
                       ?>
                     </table>

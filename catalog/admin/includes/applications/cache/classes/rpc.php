@@ -13,7 +13,9 @@
 
   @function The lC_Cache_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/cache/classes/cache.php'); 
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/cache/classes/cache.php')); 
 
 class lC_Cache_Admin_rpc {
  /*

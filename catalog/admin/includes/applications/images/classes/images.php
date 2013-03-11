@@ -21,7 +21,7 @@ class lC_Images_Admin {
   * @return array
   */
   public static function getAll() { 
-    global $lC_Language;
+    global $lC_Language, $lC_Vqmod;
 
     $media = $_GET['media'];
     
@@ -32,7 +32,7 @@ class lC_Images_Admin {
     $cnt = 0;
     $result = array('aaData' => array());
     foreach ( $lC_DirectoryListing->getFiles() as $file ) {
-      include('includes/modules/image/' . $file['name']);
+      include($lC_Vqmod->modCheck('includes/modules/image/' . $file['name']));
       $class = 'lC_Image_Admin_' . substr($file['name'], 0, strrpos($file['name'], '.')); 
       if ( class_exists($class) ) {  
         $module = new $class();  
@@ -55,9 +55,9 @@ class lC_Images_Admin {
   * @return array
   */
   public static function check() {
-    global $lC_Language;
+    global $lC_Language, $lC_Vqmod;
 
-    include('includes/modules/image/check.php');
+    include($lC_Vqmod->modCheck('includes/modules/image/check.php'));
     $class = 'lC_Image_Admin_check';
     $lC_Images = new $class();
 
@@ -83,9 +83,9 @@ class lC_Images_Admin {
   * @return array
   */
   public static function getInfo() {
-    global $lC_Language, $lC_Template;
+    global $lC_Language, $lC_Template, $lC_Vqmod;
 
-    include('includes/modules/image/resize.php');
+    include($lC_Vqmod->modCheck('includes/modules/image/resize.php'));
     $class = 'lC_Image_Admin_resize';
     $lC_Images = new $class();
 
@@ -107,9 +107,9 @@ class lC_Images_Admin {
   * @return array
   */
   public static function resizeBatch() {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
-    require_once('includes/classes/image.php');
+    require_once($lC_Vqmod->modCheck('includes/classes/image.php'));
     $lC_Image_Admin = new lC_Image_Admin();
 
     $overwrite = (isset($_GET['overwrite']) && $_GET['overwrite'] == '1') ? true : false;

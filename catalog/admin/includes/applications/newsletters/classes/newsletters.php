@@ -21,7 +21,7 @@ class lC_Newsletters_Admin {
   * @return array
   */
   public static function getAll() {
-    global $lC_Database, $lC_Language, $lC_Currencies, $_module;
+    global $lC_Database, $lC_Language, $lC_Currencies, $lC_Vqmod, $_module;
 
     $media = $_GET['media'];
     
@@ -35,7 +35,7 @@ class lC_Newsletters_Admin {
       $newsletter_module_class = 'lC_Newsletter_' . $Qnewsletters->value('module');
       if ( !class_exists($newsletter_module_class) ) {
         $lC_Language->loadIniFile('modules/newsletters/' . $Qnewsletters->value('module') . '.php');
-        include('includes/modules/newsletters/' . $Qnewsletters->value('module') . '.php');
+        include($lC_Vqmod->modCheck('includes/modules/newsletters/' . $Qnewsletters->value('module') . '.php'));
         $$newsletter_module_class = new $newsletter_module_class();
       }
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qnewsletters->valueInt('newsletters_id') . '" id="' . $Qnewsletters->valueInt('newsletters_id') . '"></td>';
@@ -69,7 +69,7 @@ class lC_Newsletters_Admin {
   * @return array
   */
   public static function formData($id = null) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     $lC_DirectoryListing = new lC_DirectoryListing('includes/modules/newsletters');
     $lC_DirectoryListing->setIncludeDirectories(false);
@@ -77,7 +77,7 @@ class lC_Newsletters_Admin {
     foreach ( $lC_DirectoryListing->getFiles() as $file ) {
       $module = substr($file['name'], 0, strrpos($file['name'], '.'));
       $lC_Language->loadIniFile('modules/newsletters/' . $file['name']);
-      include('includes/modules/newsletters/' . $file['name']);
+      include($lC_Vqmod->modCheck('includes/modules/newsletters/' . $file['name']));
       $newsletter_module_class = 'lC_Newsletter_' . $module;
       $lC_NewsletterModule = new $newsletter_module_class();
       $modules_array[$module] = $lC_NewsletterModule->getTitle();
@@ -108,12 +108,12 @@ class lC_Newsletters_Admin {
   * @return array
   */
   public static function sendData($id, $email = false) {
-   global $lC_Language, $lC_Template;  
+   global $lC_Language, $lC_Template, $lC_Vqmod;  
 
    $result = array();
    $lC_ObjectInfo = new lC_ObjectInfo(lC_Newsletters_Admin::getData($id));
    $lC_Language->loadIniFile('modules/newsletters/' . $lC_ObjectInfo->get('module') . '.php');
-   include('includes/modules/newsletters/' . $lC_ObjectInfo->get('module') . '.php');
+   include($lC_Vqmod->modCheck('includes/modules/newsletters/' . $lC_ObjectInfo->get('module') . '.php'));
    $module_name = 'lC_Newsletter_' . $lC_ObjectInfo->get('module');
    $module = new $module_name($lC_ObjectInfo->get('title'), $lC_ObjectInfo->get('content'), $lC_ObjectInfo->get('newsletters_id'));
 

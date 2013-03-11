@@ -1,5 +1,5 @@
 <?php
-  /*
+/**
   $Id: invoice.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -10,12 +10,14 @@
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
-  */
-  require_once('../includes/classes/currencies.php');
-  $lC_Currencies = new lC_Currencies();
-  require_once('includes/classes/tax.php');
-  $lC_Tax = new lC_Tax_Admin();
-  $lC_Order = new lC_Order($_GET['oid']);
+*/
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
+$lC_Currencies = new lC_Currencies();
+require_once($lC_Vqmod->modCheck('includes/classes/tax.php'));
+$lC_Tax = new lC_Tax_Admin();
+$lC_Order = new lC_Order($_GET['oid']);
 ?>
 <!-- Main content -->
 <section role="main" id="main">
@@ -132,9 +134,5 @@
     <div class="clear-both"></div>
   </div>
 </section>
-<?php 
-  if (isset($_SESSION['error'])) unset($_SESSION['error']);
-  if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']);
-  $lC_Template->loadModal($lC_Template->getModule());
-?>
+<?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <!-- End main content -->

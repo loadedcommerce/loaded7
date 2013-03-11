@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: profileEdit.js.php v1.0 2012-08-08 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -11,12 +11,14 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-  include_once('includes/applications/administrators/classes/administrators.php');
-  $groupsArr = lC_Administrators_Admin::getAllGroups(true);
-  $groupsSelectArr = array();
-  foreach ($groupsArr as $key => $value) {
-    $groupsSelectArr[] = array('id' => $value['id'], 'text' => $value['name']);
-  }
+global $lC_Vqmod;
+
+include_once($lC_Vqmod->modCheck('includes/applications/administrators/classes/administrators.php'));
+$groupsArr = lC_Administrators_Admin::getAllGroups(true);
+$groupsSelectArr = array();
+foreach ($groupsArr as $key => $value) {
+  $groupsSelectArr[] = array('id' => $value['id'], 'text' => $value['name']);
+}
 ?>
 function profileEdit(id) {
   var accessLevel = '<?php echo $_SESSION['admin']['access']['administrators']; ?>';

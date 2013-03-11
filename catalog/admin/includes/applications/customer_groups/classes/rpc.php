@@ -13,7 +13,9 @@
 
   @function The lC_Customer_groups_Admin_rpc class is for AJAX remote program control
 */
-require('includes/applications/customer_groups/classes/customer_groups.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/customer_groups/classes/customer_groups.php'));
 
 class lC_Customer_groups_Admin_rpc {
  /*

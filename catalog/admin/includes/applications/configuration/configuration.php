@@ -13,7 +13,9 @@
  
   @function The lC_Application_Configuration class manages the configuration GUI
 */
-require('includes/applications/configuration/classes/configuration.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/configuration/classes/configuration.php'));
 
 class lC_Application_Configuration extends lC_Template_Admin {
  /*

@@ -13,8 +13,10 @@
 
   @function The lC_Updater_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/updates/classes/updates.php');    
-require_once('includes/applications/backup/classes/backup.php');    
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/updates/classes/updates.php'));    
+require_once($lC_Vqmod->modCheck('includes/applications/backup/classes/backup.php'));    
 
 class lC_Updates_Admin_rpc {
  /*

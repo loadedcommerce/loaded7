@@ -42,7 +42,7 @@ abstract class lC_Product_attributes_Admin {
   * @return array
   */
   public function getAll() {
-    global $lC_Language;
+    global $lC_Language, $lC_Vqmod;
 
     $media = $_GET['media'];
     
@@ -54,7 +54,7 @@ abstract class lC_Product_attributes_Admin {
     $result = array('aaData' => array());
     $installed_modules = array();
     foreach ( $files as $file ) {
-      include('includes/modules/product_attributes/' . $file['name']);
+      include($lC_Vqmod->modCheck('includes/modules/product_attributes/' . $file['name']));
       $class = substr($file['name'], 0, strrpos($file['name'], '.'));
       if ( class_exists('lC_ProductAttributes_' . $class) ) {
         $module = 'lC_ProductAttributes_' . $class;
@@ -130,9 +130,11 @@ abstract class lC_Product_attributes_Admin {
   * @return array
   */
   public function install($module) {
+    global $lC_Vqmod;
+    
     $result = array();
     if ( file_exists('includes/modules/product_attributes/' . $module . '.php') ) {
-      include('includes/modules/product_attributes/' . $module . '.php');
+      include($lC_Vqmod->modCheck('includes/modules/product_attributes/' . $module . '.php'));
       if ( class_exists('lC_ProductAttributes_' . $module) ) {
         $module = 'lC_ProductAttributes_' . $module;
         $module = new $module();
@@ -152,9 +154,11 @@ abstract class lC_Product_attributes_Admin {
   * @return array
   */
   public function uninstall($module) {
+    global $lC_Vqmod;
+    
     $result = array();
     if ( file_exists('includes/modules/product_attributes/' . $module . '.php') ) {
-      include('includes/modules/product_attributes/' . $module . '.php');
+      include($lC_Vqmod->modCheck('includes/modules/product_attributes/' . $module . '.php'));
       if ( class_exists('lC_ProductAttributes_' . $module) ) {
         $module = 'lC_ProductAttributes_' . $module;
         $module = new $module();

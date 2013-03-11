@@ -1,41 +1,40 @@
 <?php
-/*
-  $Id$
+/**
+  $Id: currencies.php v1.0 2013-01-01 datazen $
 
-  LoadedCommerce, Open Source E-Commerce Solutions
+  LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
 
-  Copyright (c) 2007 LoadedCommerce
+  Copyright (c) 2013 Loaded Commerce, LLC
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License v2 (1991)
-  as published by the Free Software Foundation.
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
+class lC_Services_currencies {
+  function start() {
+    global $lC_Language, $lC_Currencies, $lC_Vqmod;
 
-  class lC_Services_currencies {
-    function start() {
-      global $lC_Language, $lC_Currencies;
+    include($lC_Vqmod->modCheck('includes/classes/currencies.php'));
+    $lC_Currencies = new lC_Currencies();
 
-      include('includes/classes/currencies.php');
-      $lC_Currencies = new lC_Currencies();
-
-      if ((isset($_SESSION['currency']) == false) || isset($_GET['currency']) || ( (USE_DEFAULT_LANGUAGE_CURRENCY == '1') && ($lC_Currencies->getCode($lC_Language->getCurrencyID()) != $_SESSION['currency']) ) ) {
-        if (isset($_GET['currency']) && $lC_Currencies->exists($_GET['currency'])) {
-          $_SESSION['currency'] = $_GET['currency'];
-        } else {
-          $_SESSION['currency'] = (USE_DEFAULT_LANGUAGE_CURRENCY == '1') ? $lC_Currencies->getCode($lC_Language->getCurrencyID()) : DEFAULT_CURRENCY;
-        }
-
-        if ( isset($_SESSION['cartID']) ) {
-          unset($_SESSION['cartID']);
-        }
+    if ((isset($_SESSION['currency']) == false) || isset($_GET['currency']) || ( (USE_DEFAULT_LANGUAGE_CURRENCY == '1') && ($lC_Currencies->getCode($lC_Language->getCurrencyID()) != $_SESSION['currency']) ) ) {
+      if (isset($_GET['currency']) && $lC_Currencies->exists($_GET['currency'])) {
+        $_SESSION['currency'] = $_GET['currency'];
+      } else {
+        $_SESSION['currency'] = (USE_DEFAULT_LANGUAGE_CURRENCY == '1') ? $lC_Currencies->getCode($lC_Language->getCurrencyID()) : DEFAULT_CURRENCY;
       }
 
-      return true;
+      if ( isset($_SESSION['cartID']) ) {
+        unset($_SESSION['cartID']);
+      }
     }
 
-    function stop() {
-      return true;
-    }
+    return true;
   }
+
+  function stop() {
+    return true;
+  }
+}
 ?>

@@ -11,10 +11,12 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-require('includes/applications/products/classes/products.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
 
 if ( !class_exists('lC_Summary') ) {
-  include('includes/classes/summary.php');
+  include($lC_Vqmod->modCheck('includes/classes/summary.php'));
 }
 
 class lC_Summary_products extends lC_Summary {
@@ -39,7 +41,7 @@ class lC_Summary_products extends lC_Summary {
 
   /* Private methods */
   function _setData() {
-    global $lC_Database, $lC_Language, $lC_Currencies;
+    global $lC_Database, $lC_Language, $lC_Currencies, $lC_Vqmod;
 
     if (!$this->enabled) {
       $this->_data = '';
@@ -50,7 +52,7 @@ class lC_Summary_products extends lC_Summary {
     
       if ( !isset($lC_Currencies) ) {
         if ( !class_exists('lC_Currencies') ) {
-          include('../includes/classes/currencies.php');
+          include($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
         }
 
         $lC_Currencies = new lC_Currencies();
@@ -105,11 +107,11 @@ class lC_Summary_products extends lC_Summary {
   }
   
   function loadModal() {
-    global $lC_Database, $lC_Language, $lC_Template;
+    global $lC_Database, $lC_Language, $lC_Template, $lC_Vqmod;
     
     if ( is_dir('includes/applications/products/modal') ) {
-      if ( file_exists('includes/applications/products/modal/copy.php') ) include_once('includes/applications/products/modal/copy.php');
-      if ( file_exists('includes/applications/products/modal/delete.php') ) include_once('includes/applications/products/modal/delete.php');
+      if ( file_exists('includes/applications/products/modal/copy.php') ) include_once($lC_Vqmod->modCheck('includes/applications/products/modal/copy.php'));
+      if ( file_exists('includes/applications/products/modal/delete.php') ) include_once($lC_Vqmod->modCheck('includes/applications/products/modal/delete.php'));
     }
   }  
 }

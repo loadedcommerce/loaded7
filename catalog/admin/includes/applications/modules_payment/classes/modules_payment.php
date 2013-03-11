@@ -21,7 +21,7 @@ class lC_Modules_payment_Admin {
   * @return array
   */
   public static function getAll() {
-    global $lC_Language, $lC_Template;
+    global $lC_Language, $lC_Template, $lC_Vqmod;
 
     $media = $_GET['media'];
     
@@ -32,7 +32,7 @@ class lC_Modules_payment_Admin {
     $installed_modules = array();
     $result = array('aaData' => array());
     foreach ( $files as $file ) {
-      include('includes/modules/payment/' . $file['name']);
+      include($lC_Vqmod->modCheck('includes/modules/payment/' . $file['name']));
       $class = substr($file['name'], 0, strrpos($file['name'], '.'));
       if ( class_exists('lC_Payment_' . $class) ) {
         $lC_Language->injectDefinitions('modules/payment/' . $class . '.xml');
@@ -64,11 +64,11 @@ class lC_Modules_payment_Admin {
   * @return array
   */
   public static function getData($id) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     $result = array();
 
-    include('includes/modules/payment/' . $id . '.php');
+    include($lC_Vqmod->modCheck('includes/modules/payment/' . $id . '.php'));
     $lC_Language->injectDefinitions('modules/payment/' . $id . '.xml');
     $module = 'lC_Payment_' . $id;
     $module = new $module();
@@ -142,12 +142,12 @@ class lC_Modules_payment_Admin {
   * @return boolean
   */
   public static function installModule($key) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     if ( file_exists('includes/modules/payment/' . $key . '.php') ) {
       $lC_Language->injectDefinitions('modules/payment/' . $key . '.xml');
 
-      include('includes/modules/payment/' . $key . '.php');
+      include($lC_Vqmod->modCheck('includes/modules/payment/' . $key . '.php'));
 
       $module = 'lC_Payment_' . $key;
       $module = new $module();
@@ -170,12 +170,12 @@ class lC_Modules_payment_Admin {
   * @return boolean
   */
   public static function uninstall($key) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     if ( file_exists('includes/modules/payment/' . $key . '.php') ) {
       $lC_Language->injectDefinitions('modules/payment/' . $key . '.xml');
 
-      include('includes/modules/payment/' . $key . '.php');
+      include($lC_Vqmod->modCheck('includes/modules/payment/' . $key . '.php'));
 
       $module = 'lC_Payment_' . $key;
       $module = new $module();

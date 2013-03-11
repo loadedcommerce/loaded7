@@ -13,7 +13,9 @@
 
   @function The lC_Application_Banner_manager class manages the banners GUI
 */
-require('includes/applications/backup/classes/backup.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/backup/classes/backup.php'));
 
 class lC_Application_Backup extends lC_Template_Admin {
  /*

@@ -13,7 +13,9 @@
 
   @function The lC_Application_File_manager class manages the file manager GUI
 */
-require('includes/applications/file_manager/classes/file_manager.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/file_manager/classes/file_manager.php'));
 
 define('ZM_ADMIN_FILE_MANAGER_ROOT_PATH', realpath('../'));
 

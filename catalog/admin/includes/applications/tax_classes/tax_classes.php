@@ -13,7 +13,9 @@
 
   @function The lC_Application_Tax_classes class manages the addons GUI
 */
-require('includes/applications/tax_classes/classes/tax_classes.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
 
 class lC_Application_Tax_classes extends lC_Template_Admin {
   /*

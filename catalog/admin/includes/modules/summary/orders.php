@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: orders.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -12,7 +12,7 @@
   @license    http://loadedcommerce.com/license.html
 */
 if ( !class_exists('lC_Summary') ) {
-  include('includes/classes/summary.php');
+  include($lC_Vqmod->modCheck('includes/classes/summary.php'));
 }
 
 class lC_Summary_orders extends lC_Summary {
@@ -75,11 +75,11 @@ class lC_Summary_orders extends lC_Summary {
   }
    
   function loadModal() {
-    global $lC_Database, $lC_Language, $lC_Template;
+    global $lC_Database, $lC_Language, $lC_Template, $lC_Vqmod;
     
     if ( is_dir('includes/applications/customers/modal') ) {
-      if ( file_exists('includes/applications/orders/modal/edit.php') ) include_once('includes/applications/orders/modal/edit.php');
-      //if ( file_exists('includes/applications/orders/modal/delete.php') ) include_once('includes/applications/orders/modal/delete.php');
+      if ( file_exists('includes/applications/orders/modal/edit.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/modal/edit.php'));
+      //if ( file_exists('includes/applications/orders/modal/delete.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/modal/delete.php'));
     }
   }    
 }

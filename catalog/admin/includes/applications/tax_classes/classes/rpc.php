@@ -13,8 +13,10 @@
 
   @function The lC_Tax_classes_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/tax_classes/classes/tax_classes.php');
-require_once('includes/applications/zone_groups/classes/zone_groups.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/zone_groups/classes/zone_groups.php'));
 
 class lC_Tax_classes_Admin_rpc {
  /*

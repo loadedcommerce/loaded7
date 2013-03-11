@@ -13,8 +13,10 @@
 
   @function The lC_Categories_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/categories/classes/categories.php');
-require_once('includes/classes/category_tree.php'); 
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/categories/classes/categories.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/category_tree.php')); 
 
 class lC_Categories_Admin_rpc {
  /*

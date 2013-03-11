@@ -116,11 +116,11 @@
   <!--[if lt IE 7]><p class="message red-gradient simpler">Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
   <?php
-  require('templates/default/classes/output.php');
+  require($lC_Vqmod->modCheck('templates/default/classes/output.php'));
   $output = new output();
   
   if ($lC_Template->hasPageHeader()) {
-    include('templates/default/header.php');
+    include($lC_Vqmod->modCheck('templates/default/header.php'));
   }
 
   if ($lC_Template->hasPageWrapper()) {
@@ -135,10 +135,10 @@
 
   // load the main content
   if ($lC_Template->isAuthorized($lC_Template->getModule())) {
-    require('includes/applications/' . $lC_Template->getModule() . '/pages/' . $lC_Template->getPageContentsFilename());
+    require($lC_Vqmod->modCheck('includes/applications/' . $lC_Template->getModule() . '/pages/' . $lC_Template->getPageContentsFilename()));
   } else {
     // not authorized to view
-    require('includes/applications/error_pages/pages/main.php');
+    require($lC_Vqmod->modCheck('includes/applications/error_pages/pages/main.php'));
   }
 
   if ($lC_Template->hasPageWrapper()) {
@@ -494,7 +494,7 @@
   }
 
   if ($lC_Template->hasPageFooter()) {
-    include('templates/default/footer.php');
+    include($lC_Vqmod->modCheck('templates/default/footer.php'));
   }
   ?>
 
@@ -502,7 +502,7 @@
   <?php $lC_Template->loadPageResponsiveScript($lC_Template->getModule()); ?>
                              
   <!-- Include template general.js.php -->
-  <?php if (file_exists('templates/default/general.js.php')) include('templates/default/general.js.php'); ?>
+  <?php if (file_exists('templates/default/general.js.php')) include($lC_Vqmod->modCheck('templates/default/general.js.php')); ?>
 
   <!-- JavaScript at the bottom for fast page loading -->
   <script src="../ext/jquery/tinycon.min.js"></script>

@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: confirmation.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -12,7 +12,6 @@
   @license    http://loadedcommerce.com/license.html
 */
 
-  require('includes/classes/address_book.php');
 
   class lC_Checkout_Confirmation extends lC_Template {
 
@@ -25,7 +24,9 @@
 
     /* Class constructor */
     function lC_Checkout_Confirmation() {
-      global $lC_Session, $lC_Services, $lC_Language, $lC_ShoppingCart, $lC_Customer, $lC_MessageStack, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Payment;
+      global $lC_Session, $lC_Services, $lC_Language, $lC_ShoppingCart, $lC_Customer, $lC_MessageStack, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Payment, $lC_Vqmod;
+
+      require($lC_Vqmod->modCheck('includes/classes/address_book.php'));
 
       if ($lC_Customer->isLoggedOn() === false) {
         $lC_NavigationHistory->setSnapshot();
@@ -42,7 +43,7 @@
         lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
       }
 
-      include('includes/classes/order.php');
+      include($lC_Vqmod->modCheck('includes/classes/order.php'));
 
       $this->_page_title = $lC_Language->get('confirmation_heading');
 
@@ -59,7 +60,8 @@
       }
 
       // load the selected payment module
-      include('includes/classes/payment.php');
+      include($lC_Vqmod->modCheck('includes/classes/payment.php'));
+      
       $lC_Payment = new lC_Payment((isset($_POST['payment_method']) ? $_POST['payment_method'] : $lC_ShoppingCart->getBillingMethod('id')));
 
       if (isset($_POST['payment_method'])) {

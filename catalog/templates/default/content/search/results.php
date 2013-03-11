@@ -19,9 +19,9 @@
       <h1><?php echo $lC_Template->getPageTitle(); ?></h1> 
       <?php 
       if (file_exists(DIR_FS_TEMPLATE . 'modules/product_listing.php')) {
-        require(DIR_FS_TEMPLATE . 'modules/product_listing.php');
+        require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/product_listing.php'));
       } else {
-        require('includes/modules/product_listing.php'); 
+        require($lC_Vqmod->modCheck('includes/modules/product_listing.php')); 
       }
       ?>
       <div id="searchResultsActions">

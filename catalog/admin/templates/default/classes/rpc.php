@@ -13,7 +13,9 @@
  
   @method The lC_Default_rpc class is for AJAX remote program control
 */
-require_once('templates/default/classes/general.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('templates/default/classes/general.php'));
 
 class lC_General_Admin_rpc {
  /*

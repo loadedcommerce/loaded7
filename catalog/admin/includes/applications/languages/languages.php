@@ -13,8 +13,11 @@
 
   @function The lC_Application_Languages class manages the languages GUI
 */
-require('includes/applications/languages/classes/languages.php');
-require('includes/applications/currencies/classes/currencies.php');
+
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/languages/classes/languages.php'));
+require($lC_Vqmod->modCheck('includes/applications/currencies/classes/currencies.php'));
 
 class lC_Application_Languages extends lC_Template_Admin {
   /*

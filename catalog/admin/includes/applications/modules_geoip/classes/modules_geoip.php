@@ -21,7 +21,7 @@ class lC_Modules_geoip_Admin {
   * @return array
   */
   public static function getAll() {
-    global $lC_Language, $lC_Template;
+    global $lC_Language, $lC_Template, $lC_Vqmod;
 
     $media = $_GET['media'];
     
@@ -33,7 +33,7 @@ class lC_Modules_geoip_Admin {
 
     $result = array('aaData' => array());
     foreach ( $files as $file ) {
-      include('includes/modules/geoip/' . $file['name']);
+      include($lC_Vqmod->modCheck('includes/modules/geoip/' . $file['name']));
       $class = substr($file['name'], 0, strrpos($file['name'], '.'));
       if (class_exists('lC_GeoIP_' . $class)) {
         $lC_Language->loadIniFile('modules/geoip/' . $class . '.php');
@@ -68,11 +68,11 @@ class lC_Modules_geoip_Admin {
   * @return array
   */
   public static function getInfo($id) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     $result = array();
 
-    include('includes/modules/geoip/' . $id . '.php');
+    include($lC_Vqmod->modCheck('includes/modules/geoip/' . $id . '.php'));
     $lC_Language->loadIniFile('modules/geoip/' . $id . '.php');
     $module = 'lC_GeoIP_' . $id;
     $module = new $module();
@@ -91,11 +91,11 @@ class lC_Modules_geoip_Admin {
   * @return array
   */
   public static function getData($id) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     $result = array();
 
-    include('includes/modules/geoip/' . $_GET['module'] . '.php');
+    include($lC_Vqmod->modCheck('includes/modules/geoip/' . $_GET['module'] . '.php'));
     $lC_Language->loadIniFile('modules/geoip/' . $_GET['module'] . '.php');
     $module = 'lC_GeoIP_' . $_GET['module'];
     $module = new $module();
@@ -169,12 +169,12 @@ class lC_Modules_geoip_Admin {
   * @return boolean
   */
   public static function installModule($key) {
-    global $lC_Language;
+    global $lC_Language, $lC_Vqmod;
 
     if ( file_exists('includes/modules/geoip/' . $key . '.php') ) {
       $lC_Language->loadIniFile('modules/geoip/' . $key . '.php');
 
-      include('includes/modules/geoip/' . $key . '.php');
+      include($lC_Vqmod->modCheck('includes/modules/geoip/' . $key . '.php'));
 
       $module = 'lC_GeoIP_' . $key;
       $module = new $module();
@@ -197,12 +197,12 @@ class lC_Modules_geoip_Admin {
   * @return boolean
   */
   public static function uninstall($key) {
-    global $lC_Language;
+    global $lC_Language, $lC_Vqmod;
 
     if ( file_exists('includes/modules/geoip/' . $key . '.php') ) {
       $lC_Language->loadIniFile('modules/geoip/' . $key . '.php');
 
-      include('includes/modules/geoip/' . $key . '.php');
+      include($lC_Vqmod->modCheck('includes/modules/geoip/' . $key . '.php'));
 
       $module = 'lC_GeoIP_' . $key;
       $module = new $module();

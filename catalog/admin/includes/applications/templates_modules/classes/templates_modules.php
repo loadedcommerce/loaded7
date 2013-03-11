@@ -21,20 +21,20 @@ class lC_Templates_modules_Admin {
   * @return array
   */
   public static function getAll() {
-    global $lC_Language;
+    global $lC_Language, $lC_Vqmod;
 
     $media = $_GET['media'];
     
     $lC_DirectoryListing = new lC_DirectoryListing('../includes/modules/' . $_GET['set']);
     $lC_DirectoryListing->setIncludeDirectories(false);
 
-    include('../includes/classes/modules.php');
+    include($lC_Vqmod->modCheck('../includes/classes/modules.php'));
 
     $lC_Language->load('modules-' . $_GET['set']);
 
     $result = array('aaData' => array());
     foreach ( $lC_DirectoryListing->getFiles() as $file ) {
-      include('../includes/modules/' . $_GET['set'] . '/' . $file['name']);
+      include($lC_Vqmod->modCheck('../includes/modules/' . $_GET['set'] . '/' . $file['name']));
       $code = substr($file['name'], 0, strrpos($file['name'], '.'));
       $class = 'lC_' . ucfirst($_GET['set']) . '_' . $code;
       if ( class_exists($class) ) {
@@ -68,12 +68,12 @@ class lC_Templates_modules_Admin {
   * @return array
   */
   public static function getData($id) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
-    include('../includes/classes/modules.php');
+    include($lC_Vqmod->modCheck('../includes/classes/modules.php'));
     $lC_Language->load('modules-' . $_GET['set']);
 
-    include('../includes/modules/' . $_GET['set'] . '/' . $id . '.php');
+    include($lC_Vqmod->modCheck('../includes/modules/' . $_GET['set'] . '/' . $id . '.php'));
     $module = 'lC_' . ucfirst($_GET['set']) . '_' . $id;
     $lC_Language->injectDefinitions('modules/' . $_GET['set'] . '/' . $id . '.xml');
     $module = new $module();
@@ -150,11 +150,11 @@ class lC_Templates_modules_Admin {
   * @return boolean
   */
   public static function install($module_name) {
-    global $lC_Language;
+    global $lC_Language, $lC_Vqmod;
 
     if ( file_exists('../includes/modules/' . $_GET['set'] . '/' . $module_name . '.php') ) {
-      include_once('../includes/classes/modules.php');
-      include('../includes/modules/' . $_GET['set'] . '/' . $module_name . '.php');
+      include_once($lC_Vqmod->modCheck('../includes/classes/modules.php'));
+      include($lC_Vqmod->modCheck('../includes/modules/' . $_GET['set'] . '/' . $module_name . '.php'));
 
       $lC_Language->injectDefinitions('modules/' . $_GET['set'] . '/' . $module_name . '.xml');
 
@@ -180,10 +180,11 @@ class lC_Templates_modules_Admin {
   * @return boolean
   */
   public static function uninstall($module_name) {
-    global $lC_Language;
+    global $lC_Language, $lC_Vqmod;
+    
     if ( file_exists('../includes/modules/' . $_GET['set'] . '/' . $module_name . '.php') ) {
-      include_once('../includes/classes/modules.php');
-      include('../includes/modules/' . $_GET['set'] . '/' . $module_name . '.php');
+      include_once($lC_Vqmod->modCheck('../includes/classes/modules.php'));
+      include($lC_Vqmod->modCheck('../includes/modules/' . $_GET['set'] . '/' . $module_name . '.php'));
 
       $lC_Language->injectDefinitions('modules/' . $_GET['set'] . '/' . $module_name . '.xml');
 

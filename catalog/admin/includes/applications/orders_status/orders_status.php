@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: orders_status.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -13,7 +13,9 @@
  
   @function The lC_Application_Orders_status class orders status definition GUI
 */
-require('includes/applications/orders_status/classes/orders_status.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/orders_status/classes/orders_status.php'));
 
 class lC_Application_Orders_status extends lC_Template_Admin {
  /*

@@ -13,7 +13,9 @@
  
   @function The lC_Product_variants_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/product_variants/classes/product_variants.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/product_variants/classes/product_variants.php'));
 
 class lC_Product_variants_Admin_rpc {
  /*

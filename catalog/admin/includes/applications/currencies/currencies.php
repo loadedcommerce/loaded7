@@ -13,7 +13,9 @@
  
   @function The lC_Application_Currencies class manages the currencies GUI
 */
-require('includes/applications/currencies/classes/currencies.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/currencies/classes/currencies.php'));
 
 class lC_Application_Currencies extends lC_Template_Admin {
  /*

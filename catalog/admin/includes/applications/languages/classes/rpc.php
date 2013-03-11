@@ -13,8 +13,10 @@
 
   @function The lC_Languages_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/languages/classes/languages.php');
-require_once('includes/applications/currencies/classes/currencies.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/languages/classes/languages.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/currencies/classes/currencies.php'));
 
 class lC_Languages_Admin_rpc {
  /*

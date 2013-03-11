@@ -208,9 +208,9 @@ class lC_Specials_Admin {
   * @return array
   */
   public static function getTax($id) {
-    global $lC_Database, $lC_Tax;
+    global $lC_Database, $lC_Tax, $lC_Vqmod;
 
-    require_once('includes/classes/tax.php');
+    require_once($lC_Vqmod->modCheck('includes/classes/tax.php'));
     $lC_Tax = new lC_Tax_Admin();
 
     $result = array();

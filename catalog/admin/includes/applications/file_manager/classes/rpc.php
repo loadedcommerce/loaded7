@@ -13,7 +13,9 @@
 
   @function The lC_File_manager_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/file_manager/classes/file_manager.php'); 
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/file_manager/classes/file_manager.php')); 
 
 class lC_File_manager_Admin_rpc {
  /*

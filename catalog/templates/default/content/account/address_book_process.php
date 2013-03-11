@@ -33,9 +33,9 @@ if ($lC_MessageStack->size('address_book') > 0) {
         <form name="address_book" id="address_book" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $_GET['address_book'] . '&' . (isset($_GET['edit']) ? 'edit' : 'new') . '=save', 'SSL'); ?>" method="post">
           <?php
             if (file_exists(DIR_FS_TEMPLATE . 'modules/address_book_details.php')) {
-              require(DIR_FS_TEMPLATE . 'modules/address_book_details.php');
+              require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/address_book_details.php'));
             } else {
-              require('includes/modules/address_book_details.php');
+              require($lC_Vqmod->modCheck('includes/modules/address_book_details.php'));
             }
           ?>
           <div style="clear:both;">&nbsp;</div>

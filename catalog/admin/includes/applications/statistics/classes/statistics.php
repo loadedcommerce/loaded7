@@ -21,7 +21,7 @@ class lC_Statistics_Admin {
   * @return array
   */
   public static function getAll() { 
-    global $lC_Language;
+    global $lC_Language, $lC_Vqmod;
 
     $media = $_GET['media'];
     
@@ -31,7 +31,7 @@ class lC_Statistics_Admin {
 
     $cnt = 0;
     foreach ( $lC_DirectoryListing->getFiles() as $file ) {
-      include('includes/modules/statistics/' . $file['name']);
+      include($lC_Vqmod->modCheck('includes/modules/statistics/' . $file['name']));
       $class = 'lC_Statistics_' . str_replace(' ', '_', ucwords(str_replace('_', ' ', substr($file['name'], 0, strrpos($file['name'], '.')))));
       if ( class_exists($class) ) {
         $module = new $class();
@@ -55,9 +55,9 @@ class lC_Statistics_Admin {
   * @return array
   */
   public static function getData($module) { 
-    global $lC_Language;
+    global $lC_Language, $lC_Vqmod;
 
-    include_once('includes/modules/statistics/' . $module . '.php');
+    include_once($lC_Vqmod->modCheck('includes/modules/statistics/' . $module . '.php'));
     $class = 'lC_Statistics_' . str_replace(' ', '_', ucwords(str_replace('_', ' ', $module)));
     $lC_Statistics = new $class();
     $lC_Statistics->activate();

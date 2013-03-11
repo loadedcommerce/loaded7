@@ -13,12 +13,12 @@
 */
 
 /**
- * Redirect to a URL address
- *
- * @param string $url The URL address to redirect to
- * @access public
- */
-
+* Redirect to a URL address
+*
+* @param string $url The URL address to redirect to
+* @access public
+*/
+if (!function_exists('lc_redirect')) {
   function lc_redirect($url) {
     global $lC_Services;
 
@@ -38,15 +38,15 @@
 
     exit;
   }
-
+}
 /**
- * Parse and output a user submited value
- *
- * @param string $string The string to parse and output
- * @param array $translate An array containing the characters to parse
- * @access public
- */
-
+* Parse and output a user submited value
+*
+* @param string $string The string to parse and output
+* @param array $translate An array containing the characters to parse
+* @access public
+*/
+if (!function_exists('lc_output_string')) {
   function lc_output_string($string, $translate = null) {
     if (empty($translate)) {
       $translate = array('"' => '&quot;');
@@ -54,47 +54,47 @@
 
     return strtr(trim($string), $translate);
   }
-
+}
 /**
- * Strictly parse and output a user submited value
- *
- * @param string $string The string to strictly parse and output
- * @access public
- */
-
+* Strictly parse and output a user submited value
+*
+* @param string $string The string to strictly parse and output
+* @access public
+*/
+if (!function_exists('lc_output_string_protected')) {
   function lc_output_string_protected($string) {
     return htmlspecialchars(trim($string));
   }
-
+}
 /**
- * Sanitize a user submited value
- *
- * @param string $string The string to sanitize
- * @access public
- */
-
+* Sanitize a user submited value
+*
+* @param string $string The string to sanitize
+* @access public
+*/
+if (!function_exists('lc_sanitize_string')) {
   function lc_sanitize_string($string) {
     $string = preg_replace("/ +/", ' ', trim($string));
 
     return preg_replace("/[<>]/", '_', $string);
   }
-
+}
 /**
- * Get all parameters in the GET scope
- *
- * @param array $exclude A list of parameters to exclude
- * @access public
- */
-
+* Get all parameters in the GET scope
+*
+* @param array $exclude A list of parameters to exclude
+* @access public
+*/
+if (!function_exists('lc_get_all_get_params')) {
   function lc_get_all_get_params($exclude = null) {
     global $lC_Session;
 
     $params = '';
 
     $array = array($lC_Session->getName(),
-                   'error',
-                   'x',
-                   'y');
+      'error',
+      'x',
+      'y');
 
     if (is_array($exclude)) {
       foreach ($exclude as $key) {
@@ -116,15 +116,15 @@
 
     return $params;
   }
-
+}
 /**
- * Round a number with the wanted precision
- *
- * @param float $number The number to round
- * @param int $precision The precision to use for the rounding
- * @access public
- */
-
+* Round a number with the wanted precision
+*
+* @param float $number The number to round
+* @param int $precision The precision to use for the rounding
+* @access public
+*/
+if (!function_exists('lc_round')) {
   function lc_round($number, $precision) {
     if ( (strpos($number, '.') !== false) && (strlen(substr($number, strpos($number, '.')+1)) > $precision) ) {
       $number = substr($number, 0, strpos($number, '.') + 1 + $precision + 1);
@@ -144,15 +144,15 @@
 
     return $number;
   }
-
+}
 /**
- * Create a sort heading with appropriate sort link
- *
- * @param string $key The key used for sorting
- * @param string $heading The heading to use the link on
- * @access public
- */
-
+* Create a sort heading with appropriate sort link
+*
+* @param string $key The key used for sorting
+* @param string $heading The heading to use the link on
+* @access public
+*/
+if (!function_exists('lc_create_sort_heading')) {
   function lc_create_sort_heading($key, $heading) {
     global $lC_Language;
 
@@ -175,15 +175,15 @@
 
     return lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('page', 'sort')) . '&sort=' . $key . ($direction == '+' ? '|d' : '')), $heading . (($key == $current) ? $direction : ''), 'title="' . (isset($_GET['sort']) && ($_GET['sort'] == $key) ? sprintf($lC_Language->get('listing_sort_ascendingly'), $heading) : sprintf($lC_Language->get('listing_sort_descendingly'), $heading)) . '" class="productListing-heading"');
   }
-
+}
 /**
- * Generate a product ID string value containing its product attributes combinations
- *
- * @param string $id The product ID
- * @param array $params An array of product attributes
- * @access public
- */
-
+* Generate a product ID string value containing its product attributes combinations
+*
+* @param string $id The product ID
+* @param array $params An array of product attributes
+* @access public
+*/
+if (!function_exists('lc_get_product_id_string')) {
   function lc_get_product_id_string($id, $params) {
     $string = (int)$id;
 
@@ -207,14 +207,14 @@
 
     return $string;
   }
-
+}
 /**
- * Generate a numeric product ID without product attribute combinations
- *
- * @param string $id The product ID
- * @access public
- */
-
+* Generate a numeric product ID without product attribute combinations
+*
+* @param string $id The product ID
+* @access public
+*/
+if (!function_exists('lc_get_product_id')) {
   function lc_get_product_id($id) {
     if (is_numeric($id)) {
       return $id;
@@ -224,19 +224,19 @@
 
     return (int)$product[0];
   }
-
+}
 /**
- * Send an email
- *
- * @param string $to_name The name of the recipient
- * @param string $to_email_address The email address of the recipient
- * @param string $subject The subject of the email
- * @param string $body The body text of the email
- * @param string $from_name The name of the sender
- * @param string $from_email_address The email address of the sender
- * @access public
- */
-
+* Send an email
+*
+* @param string $to_name The name of the recipient
+* @param string $to_email_address The email address of the recipient
+* @param string $subject The subject of the email
+* @param string $body The body text of the email
+* @param string $from_name The name of the sender
+* @param string $from_email_address The email address of the sender
+* @access public
+*/
+if (!function_exists('lc_email')) {
   function lc_email($to_name, $to_email_address, $subject, $body, $from_name, $from_email_address) {
     if (SEND_EMAILS == '-1') {
       return false;
@@ -246,15 +246,15 @@
     $lC_Mail->setBodyPlain($body);
     $lC_Mail->send();
   }
-
+}
 /**
- * Create a random string
- *
- * @param int $length The length of the random string to create
- * @param string $type The type of random string to create (mixed, chars, digits)
- * @access public
- */
-
+* Create a random string
+*
+* @param int $length The length of the random string to create
+* @param string $type The type of random string to create (mixed, chars, digits)
+* @access public
+*/
+if (!function_exists('lc_create_random_string')) {
   function lc_create_random_string($length, $type = 'mixed') {
     if (!in_array($type, array('mixed', 'chars', 'digits'))) {
       return false;
@@ -277,26 +277,26 @@
 
     return $rand_value;
   }
-
+}
 /**
- * Alias function for empty()
- *
- * @param mixed $value The object to check if it is empty or not
- * @access public
- */
-
+* Alias function for empty()
+*
+* @param mixed $value The object to check if it is empty or not
+* @access public
+*/
+if (!function_exists('lc_empty')) {
   function lc_empty($value) {
     return empty($value);
   }
-
+}
 /**
- * Generate a random number
- *
- * @param int $min The minimum number to return
- * @param int $max The maxmimum number to return
- * @access public
- */
-
+* Generate a random number
+*
+* @param int $min The minimum number to return
+* @param int $max The maxmimum number to return
+* @access public
+*/
+if (!function_exists('lc_rand')) {
   function lc_rand($min = null, $max = null) {
     static $seeded;
 
@@ -318,20 +318,20 @@
       return mt_rand();
     }
   }
-
+}
 /**
- * Set a cookie
- *
- * @param string $name The name of the cookie
- * @param string $value The value of the cookie
- * @param int $expire Unix timestamp of when the cookie should expire
- * @param string $path The path on the server for which the cookie will be available on
- * @param string $domain The The domain that the cookie is available on
- * @param boolean $secure Indicates whether the cookie should only be sent over a secure HTTPS connection
- * @param boolean $httpOnly Indicates whether the cookie should only accessible over the HTTP protocol
- * @access public
- */
-
+* Set a cookie
+*
+* @param string $name The name of the cookie
+* @param string $value The value of the cookie
+* @param int $expire Unix timestamp of when the cookie should expire
+* @param string $path The path on the server for which the cookie will be available on
+* @param string $domain The The domain that the cookie is available on
+* @param boolean $secure Indicates whether the cookie should only be sent over a secure HTTPS connection
+* @param boolean $httpOnly Indicates whether the cookie should only accessible over the HTTP protocol
+* @access public
+*/
+if (!function_exists('lc_setcookie')) {
   function lc_setcookie($name, $value = null, $expires = 0, $path = null, $domain = null, $secure = false, $httpOnly = false) {
     global $request_type;
 
@@ -345,13 +345,13 @@
 
     header('Set-Cookie: ' . $name . '=' . urlencode($value) . '; expires=' . @date('D, d-M-Y H:i:s T', $expires) . '; path=' . $path . '; domain=' . $domain . (($secure === true) ? ' secure;' : '') . (($httpOnly === true) ? ' httponly;' : ''));
   }
-
+}
 /**
- * Get the IP address of the client
- *
- * @access public
- */
-
+* Get the IP address of the client
+*
+* @access public
+*/
+if (!function_exists('lc_get_ip_address')) {
   function lc_get_ip_address() {
     if (isset($_SERVER)) {
       if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -373,14 +373,14 @@
 
     return $ip;
   }
-
+}
 /**
- * Encrypt a string
- *
- * @param string $plain The string to encrypt
- * @access public
- */
-
+* Encrypt a string
+*
+* @param string $plain The string to encrypt
+* @access public
+*/
+if (!function_exists('lc_encrypt_string')) {
   function lc_encrypt_string($plain) {
     $password = '';
 
@@ -394,14 +394,14 @@
 
     return $password;
   }
-
+}
 /**
- * Validates the format of an email address
- *
- * @param string $email_address The email address to validate
- * @access public
- */
-
+* Validates the format of an email address
+*
+* @param string $email_address The email address to validate
+* @access public
+*/
+if (!function_exists('lc_validate_email_address')) {
   function lc_validate_email_address($email_address) {
     $valid_address = true;
 
@@ -417,11 +417,11 @@
     if (preg_match($mail_pat, $email_address, $components)) {
       $user = $components[1];
       $domain = $components[2];
-// validate user
+      // validate user
       if (preg_match($user_pat, $user)) {
-// validate domain
+        // validate domain
         if (preg_match($ip_domain_pat, $domain, $ip_components)) {
-// this is an IP address
+          // this is an IP address
           for ($i=1;$i<=4;$i++) {
             if ($ip_components[$i] > 255) {
               $valid_address = false;
@@ -429,30 +429,30 @@
             }
           }
         } else {
-// Domain is a name, not an IP
+          // Domain is a name, not an IP
           if (preg_match($domain_pat, $domain)) {
-// domain name seems valid, but now make sure that it ends in a valid TLD or ccTLD and that there's a hostname preceding the domain or country.
+            // domain name seems valid, but now make sure that it ends in a valid TLD or ccTLD and that there's a hostname preceding the domain or country.
             $domain_components = explode(".", $domain);
-// Make sure there's a host name preceding the domain.
+            // Make sure there's a host name preceding the domain.
             if (sizeof($domain_components) < 2) {
               $valid_address = false;
             } else {
               $top_level_domain = strtolower($domain_components[sizeof($domain_components)-1]);
-// Allow all 2-letter TLDs (ccTLDs)
+              // Allow all 2-letter TLDs (ccTLDs)
               if (preg_match('/^[a-z][a-z]$/i', $top_level_domain) != 1) {
                 $tld_pattern = '';
-// Get authorized TLDs from text file
+                // Get authorized TLDs from text file
                 $tlds = file(DIR_FS_CATALOG . 'includes/tld.txt');
                 while (list(,$line) = each($tlds)) {
-// Get rid of comments
+                  // Get rid of comments
                   $words = explode('#', $line);
                   $tld = trim($words[0]);
-// TLDs should be 3 letters or more
+                  // TLDs should be 3 letters or more
                   if (preg_match('/^[a-z]{3,}$/i', $tld) == 1) {
                     $tld_pattern .= '^' . $tld . '$|';
                   }
                 }
-// Remove last '|'
+                // Remove last '|'
                 $tld_pattern = substr($tld_pattern, 0, -1);
                 if (preg_match("/$tld_pattern/i", $top_level_domain) == 0) {
                   $valid_address = false;
@@ -478,15 +478,15 @@
 
     return $valid_address;
   }
-
+}
 /**
- * Sets the defined locale
- *
- * @param string $category The category of the locale to set
- * @param mixed $locale The locale, or an array of locales to try and set
- * @access public
- */
-
+* Sets the defined locale
+*
+* @param string $category The category of the locale to set
+* @param mixed $locale The locale, or an array of locales to try and set
+* @access public
+*/
+if (!function_exists('lc_setlocale')) {
   function lc_setlocale($category, $locale) {
     if (version_compare(PHP_VERSION, '4.3', '<')) {
       if (is_array($locale)) {
@@ -504,15 +504,22 @@
       return setlocale($category, $locale);
     }
   }
-  
+}
+/**
+* Return the customer groups array
+*
+* @access  public
+* @return  array
+*/
+if (!function_exists('lc_get_customer_groups_array')) {
   function lc_get_customer_groups_array() {
     global $lC_Database, $lC_Language;
-     
+
     $Qgroups = $lC_Database->query('select customers_group_id, customers_group_name from :table_customers_groups where language_id = :language_id');
     $Qgroups->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
     $Qgroups->bindInt(':language_id', $lC_Language->getID());      
     $Qgroups->execute();
-    
+
     $groups_array = array();
     while ( $Qgroups->next() ) {
       $groups_array[] = array('id' => $Qgroups->valueInt('customers_group_id'), 'text' => $Qgroups->value('customers_group_name'));      
@@ -521,29 +528,46 @@
 
     return $groups_array;
   }
-  
+}
+/**
+* Return the customer groups name
+*
+* @param   integer $id The customer group id
+* @access  public
+* @return  string;
+*/
+if (!function_exists('lc_get_customer_groups_name')) { 
   function lc_get_customer_groups_name($id) {
     global $lC_Database, $lC_Language; 
-      
+
     $Qgroups = $lC_Database->query('select customers_group_name from :table_customers_groups where customers_group_id = :customers_group_id and language_id = :language_id');
     $Qgroups->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
     $Qgroups->bindInt(':customers_group_id', $id); 
     $Qgroups->bindInt(':language_id', $lC_Language->getID());      
     $Qgroups->execute();
-  
+
     $group_name = $Qgroups->value('customers_group_name');      
-      
+
     $Qgroups->freeResult();
-      
+
     return $group_name;
   } 
-  
+}
+/**
+* Clean the HTML
+*
+* @param   string  $html The HTML to clean
+* @access  public
+* @return  string;
+*/
+if (!function_exists('lc_clean_html')) {
   function lc_clean_html($html){
     $search = array('@<script[^>]*?>.*?</script>@si', 
-               '@<[\/\!]*?[^<>]*?>@si',
-               '@<style[^>]*?>.*?</style>@siU',
-               '@<![\s\S]*?--[ \t\n\r]*>@'
-               );
+      '@<[\/\!]*?[^<>]*?>@si',
+      '@<style[^>]*?>.*?</style>@siU',
+      '@<![\s\S]*?--[ \t\n\r]*>@'
+    );
     return preg_replace($search, '', $html);
   }   
+}
 ?>

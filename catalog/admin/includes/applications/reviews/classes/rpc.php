@@ -13,7 +13,9 @@
 
   @function The lC_Reviews_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/reviews/classes/reviews.php'); 
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/reviews/classes/reviews.php')); 
 
 class lC_Reviews_Admin_rpc {
  /*

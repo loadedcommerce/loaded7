@@ -132,7 +132,7 @@ class lC_Banner_manager_Admin {
   * @return array
   */
   public static function stats($id, $type = '', $month = '', $year = '') {
-    global $lC_Database, $lC_Language, $lC_Template;
+    global $lC_Database, $lC_Language, $lC_Template, $lC_Vqmod;
 
     $lC_Language->loadIniFile('banner_manager.php');  
 
@@ -188,20 +188,20 @@ class lC_Banner_manager_Admin {
     if ( is_dir('images/graphs') && is_writeable('images/graphs') && !empty($image_extension) ) {
       switch ( $type ) {
         case 'yearly':
-          include('includes/graphs/banner_yearly.php');
+          include($lC_Vqmod->modCheck('includes/graphs/banner_yearly.php'));
           $stats = lc_banner_yearly((int)$id);
           $result['graphInfo'] = '<p align="center">' . lc_image('images/graphs/banner_yearly-' . $id . '.' . $image_extension) . '</p>';
           break;
 
         case 'monthly':
-          include('includes/graphs/banner_monthly.php');
+          include($lC_Vqmod->modCheck('includes/graphs/banner_monthly.php'));
           $stats = lc_banner_monthly((int)$id, (int)$year);
           $result['graphInfo'] = '<p align="center">' . lc_image('images/graphs/banner_monthly-' . $id . '.' . $image_extension) . '</p>';
           break;
 
         case 'daily':
         default:
-          include('includes/graphs/banner_daily.php');
+          include($lC_Vqmod->modCheck('includes/graphs/banner_daily.php'));
           $stats = lc_banner_daily((int)$id, (int)$month, (int)$year);
           $result['graphInfo'] = '<p align="center">' . lc_image('images/graphs/banner_daily-' . $id . '_' . $month . '.' . $image_extension) . '</p>';
           break;

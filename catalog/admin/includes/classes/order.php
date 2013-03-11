@@ -161,13 +161,13 @@
     }
 
     function _getPostTransactionActions() {
-      global $lC_Database, $lC_Language;
+      global $lC_Database, $lC_Language, $lC_Vqmod;
 
       $this->_post_transaction_actions = array();
 
       if (file_exists('includes/modules/payment/' . $this->_payment_module . '.php')) {
-        include('includes/classes/payment.php');
-        include('includes/modules/payment/' . $this->_payment_module . '.php');
+        include($lC_Vqmod->modCheck('includes/classes/payment.php'));
+        include($lC_Vqmod->modCheck('includes/modules/payment/' . $this->_payment_module . '.php'));
 
         if (call_user_func(array('lC_Payment_' . $this->_payment_module, 'isInstalled')) === true) {
           $trans_array = array();

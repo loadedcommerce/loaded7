@@ -53,7 +53,7 @@
       $files = $lC_DirectoryListing->getFiles();
       $content = array();
       foreach ($files as $file) {
-        include('includes/modules/summary/' . $file['name']);
+        include($lC_Vqmod->modCheck('includes/modules/summary/' . $file['name']));
         $module = substr($file['name'], 0, strrpos($file['name'], '.'));
         $module_class = 'lC_Summary_' . $module;
         $lC_Summary = new $module_class();

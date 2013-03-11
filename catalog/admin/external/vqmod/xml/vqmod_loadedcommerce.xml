@@ -1,0 +1,12 @@
+<modification>
+	<id>VQMOD CORE FOR LOADEDCOMMERCE - DO NOT REMOVE</id>
+	<version>7.0</version>
+	<vqmver>2.3.2</vqmver>
+	<author>loadedcommerce.com</author>
+	<file name="templates/default/footer.php">
+		<operation>
+			<search position="replace"><![CDATA[<h3>Find us on</h3>]]></search>
+			<add><![CDATA[<h3>MODIFIED BY VQMOD</h3>]]></add>
+		</operation>
+	</file>
+</modification>

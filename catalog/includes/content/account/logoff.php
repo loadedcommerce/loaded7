@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: logoff.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -11,35 +11,34 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+class lC_Account_Logoff extends lC_Template {
 
-  class lC_Account_Logoff extends lC_Template {
+  /* Private variables */
+  var $_module = 'logoff',
+      $_group = 'account',
+      $_page_title,
+      $_page_contents = 'logoff.php';
 
-    /* Private variables */
-    var $_module = 'logoff',
-        $_group = 'account',
-        $_page_title,
-        $_page_contents = 'logoff.php';
+  /* Class constructor */
+  function lC_Account_Logoff() {
+    global $lC_Language, $lC_Services, $lC_Breadcrumb;
 
-    /* Class constructor */
-    function lC_Account_Logoff() {
-      global $lC_Language, $lC_Services, $lC_Breadcrumb;
+    $this->_page_title = $lC_Language->get('sign_out_heading');
 
-      $this->_page_title = $lC_Language->get('sign_out_heading');
-
-      if ($lC_Services->isStarted('breadcrumb')) {
-        $lC_Breadcrumb->add($lC_Language->get('breadcrumb_sign_out'));
-      }
-
-      $this->_process();
+    if ($lC_Services->isStarted('breadcrumb')) {
+      $lC_Breadcrumb->add($lC_Language->get('breadcrumb_sign_out'));
     }
 
-    /* Private methods */
-    function _process() {
-      global $lC_ShoppingCart, $lC_Customer;
-
-      $lC_ShoppingCart->reset();
-
-      $lC_Customer->reset();
-    }
+    $this->_process();
   }
+
+  /* Private methods */
+  function _process() {
+    global $lC_ShoppingCart, $lC_Customer;
+
+    $lC_ShoppingCart->reset();
+
+    $lC_Customer->reset();
+  }
+}
 ?>

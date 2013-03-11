@@ -13,7 +13,9 @@
  
   @function The lC_Application_Product_variants class manages the product variants GUI
 */
-require_once('includes/applications/product_variants/classes/product_variants.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/product_variants/classes/product_variants.php'));
 
 class lC_Application_Product_variants extends lC_Template_Admin {  
  /*

@@ -24,7 +24,7 @@ class lC_Application_Statistics extends lC_Template_Admin {
   * Class constructor
   */
   function __construct() {
-    global $lC_Language, $lC_Statistics, $breadcrumb_string;
+    global $lC_Language, $lC_Statistics, $lC_Vqmod, $breadcrumb_string;
 
     $this->_page_title = $lC_Language->get('heading_title');
     
@@ -39,7 +39,7 @@ class lC_Application_Statistics extends lC_Template_Admin {
     if ( empty($_GET['module']) ) {
       $this->_page_contents = 'listing.php';
     } else {
-      include_once('includes/modules/statistics/' . $_GET['module'] . '.php');
+      include_once($lC_Vqmod->modCheck('includes/modules/statistics/' . $_GET['module'] . '.php'));
       $class = 'lC_Statistics_' . str_replace(' ', '_', ucwords(str_replace('_', ' ', $_GET['module'])));
       $lC_Statistics = new $class();
       $lC_Statistics->activate();

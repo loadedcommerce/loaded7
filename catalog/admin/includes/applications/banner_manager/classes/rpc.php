@@ -13,7 +13,9 @@
 
   @function The lC_Banner_manager_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/banner_manager/classes/banner_manager.php'); 
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/banner_manager/classes/banner_manager.php')); 
 
 class lC_Banner_manager_Admin_rpc {
  /*

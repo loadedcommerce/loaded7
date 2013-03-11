@@ -13,9 +13,11 @@
 
   @function The lC_Application_Products class manages the products GUI
 */
-require_once('includes/applications/products/classes/products.php');
-require_once('includes/applications/product_attributes/classes/product_attributes.php');
-require_once('../includes/classes/variants.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/product_attributes/classes/product_attributes.php'));
+require_once($lC_Vqmod->modCheck('../includes/classes/variants.php'));
 
 class lC_Application_Products extends lC_Template_Admin {
  /*
@@ -28,7 +30,7 @@ class lC_Application_Products extends lC_Template_Admin {
   * Class constructor
   */
   function __construct() {
-    global $lC_Language, $lC_MessageStack, $lC_Currencies, $lC_Tax, $lC_CategoryTree, $lC_Image, $current_category_id;
+    global $lC_Language, $lC_MessageStack, $lC_Currencies, $lC_Tax, $lC_CategoryTree, $lC_Image, $current_category_id, $lC_Vqmod;
 
     $this->_page_title = $lC_Language->get('heading_title');
 
@@ -40,17 +42,17 @@ class lC_Application_Products extends lC_Template_Admin {
       $_GET['cID'] = $current_category_id;
     }
 
-    require('../includes/classes/currencies.php');
+    require($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
     $lC_Currencies = new lC_Currencies();
 
-    require('includes/classes/tax.php');
+    require($lC_Vqmod->modCheck('includes/classes/tax.php'));
     $lC_Tax = new lC_Tax_Admin();
 
-    require('includes/classes/category_tree.php');
+    require($lC_Vqmod->modCheck('includes/classes/category_tree.php'));
     $lC_CategoryTree = new lC_CategoryTree_Admin();
     $lC_CategoryTree->setSpacerString('&nbsp;', 2);
 
-    require('includes/classes/image.php');
+    require($lC_Vqmod->modCheck('includes/classes/image.php'));
     $lC_Image = new lC_Image_Admin();    
 
     // check if the products image directory exists and is writeable

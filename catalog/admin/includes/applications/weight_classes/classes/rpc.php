@@ -12,8 +12,10 @@
   @license    http://loadedcommerce.com/license.html
 
   @function The lC_Weight_classes_Admin_rpc class is for AJAX remote program control
- */
-require_once('includes/applications/weight_classes/classes/weight_classes.php');
+*/
+global $lC_Vqmod;
+ 
+require_once($lC_Vqmod->modCheck('includes/applications/weight_classes/classes/weight_classes.php'));
 
 class lC_Weight_classes_Admin_rpc {
  /*

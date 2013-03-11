@@ -11,7 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-require_once('includes/classes/order.php');
+require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
 $order = new lC_Order($_GET['receipt']); 
 ?>
 <!--content/account/receipt.php start-->

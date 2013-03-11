@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: error_log.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -11,10 +11,12 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-require('includes/applications/error_log/classes/error_log.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/error_log/classes/error_log.php'));
 
 if ( !class_exists('lC_Summary') ) {
-  include('includes/classes/summary.php');
+  include($lC_Vqmod->modCheck('includes/classes/summary.php'));
 }
 
 class lC_Summary_error_log extends lC_Summary {

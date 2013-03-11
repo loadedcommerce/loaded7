@@ -65,7 +65,7 @@ class lC_Templates_modules_layout_Admin {
   * @return array
   */
   public static function getData($id) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     $lC_Language->loadIniFile('templates_modules_layout.php');
 
@@ -130,7 +130,8 @@ class lC_Templates_modules_layout_Admin {
     }
     $result['pages_array'] = $pages_array;
 
-    require('includes/templates/' . $_GET['filter'] . '.php');
+    require($lC_Vqmod->modCheck('includes/templates/' . $_GET['filter'] . '.php'));
+
     $class = 'lC_Template_' . $_GET['filter'];
     $filter_template = new $class();
     $groups_array = array();
@@ -269,13 +270,13 @@ class lC_Templates_modules_layout_Admin {
   * @return array
   */
   private static function getFilterArray($name) {
-    global $lC_Database;
+    global $lC_Database, $lC_Vqmod;
 
     $filter_id = 0;
     $filter_array = array();
     $templates_array = array();
     if (file_exists('includes/templates/' . $name . '.php')) {
-      require('includes/templates/' . $name . '.php');
+      require($lC_Vqmod->modCheck('includes/templates/' . $name . '.php'));
       $Qtemplates = $lC_Database->query('select id, title, code from :table_templates order by title');
       $Qtemplates->bindTable(':table_templates', TABLE_TEMPLATES);
       $Qtemplates->execute();

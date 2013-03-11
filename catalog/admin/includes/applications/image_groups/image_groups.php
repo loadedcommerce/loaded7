@@ -13,7 +13,9 @@
  
   @function The lC_Application_Image_groups class manages image groups GUI
 */
-require('includes/applications/image_groups/classes/image_groups.php');
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/image_groups/classes/image_groups.php'));
 
 class lC_Application_Image_groups extends lC_Template_Admin {
  /*

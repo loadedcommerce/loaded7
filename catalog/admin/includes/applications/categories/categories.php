@@ -13,9 +13,11 @@
 
   @function The lC_Application_Categories class manages the categories GUI
 */
-require_once('includes/applications/categories/classes/categories.php');
-require_once('includes/applications/products/classes/products.php');
-require_once('includes/classes/category_tree.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/categories/classes/categories.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/category_tree.php'));
 
 class lC_Application_Categories extends lC_Template_Admin {
  /*

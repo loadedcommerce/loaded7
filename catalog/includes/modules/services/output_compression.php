@@ -1,33 +1,32 @@
 <?php
-/*
-  $Id$
+/**
+  $Id: output_compression.php v1.0 2013-01-01 datazen $
 
-  LoadedCommerce, Open Source E-Commerce Solutions
+  LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
 
-  Copyright (c) 2007 LoadedCommerce
+  Copyright (c) 2013 Loaded Commerce, LLC
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License v2 (1991)
-  as published by the Free Software Foundation.
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
+class lC_Services_output_compression {
+  function start() {
+    if (extension_loaded('zlib')) {
+      if ((int)ini_get('zlib.output_compression') < 1) {
+        ini_set('zlib.output_compression_level', SERVICE_OUTPUT_COMPRESSION_GZIP_LEVEL);
+        ob_start('ob_gzhandler');
 
-  class lC_Services_output_compression {
-    function start() {
-      if (extension_loaded('zlib')) {
-        if ((int)ini_get('zlib.output_compression') < 1) {
-          ini_set('zlib.output_compression_level', SERVICE_OUTPUT_COMPRESSION_GZIP_LEVEL);
-          ob_start('ob_gzhandler');
-
-          return false; // no call to stop() is needed
-        }
+        return false; // no call to stop() is needed
       }
-
-      return false;
     }
 
-    function stop() {
-      return true;
-    }
+    return false;
   }
+
+  function stop() {
+    return true;
+  }
+}
 ?>

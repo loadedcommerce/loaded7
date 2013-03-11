@@ -13,7 +13,9 @@
 
   @function The lC_Product_attributes_Admin_rpc class is for AJAX remote program control
 */
-require_once('includes/applications/product_attributes/classes/product_attributes.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/product_attributes/classes/product_attributes.php'));
 
 class lC_Product_attributes_Admin_rpc {
  /*

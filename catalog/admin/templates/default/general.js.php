@@ -11,9 +11,8 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-require_once('includes/applications/updates/classes/updates.php');    
-
-global $lC_Template, $lC_Language; 
+global $lC_Vqmod, $lC_Template, $lC_Language;
+require_once($lC_Vqmod->modCheck('includes/applications/updates/classes/updates.php'));    
 ?>
 <script>
 $(document).ready(function() {

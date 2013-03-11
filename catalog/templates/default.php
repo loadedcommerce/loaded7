@@ -11,7 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-require('templates/default/classes/default.php');
+require($lC_Vqmod->modCheck('templates/default/classes/default.php'));
 if (!defined('DIR_WS_TEMPLATE')) define('DIR_WS_TEMPLATE', DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/');
 if (!defined('DIR_FS_TEMPLATE')) define('DIR_FS_TEMPLATE', DIR_FS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/');
 if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/');  
@@ -71,12 +71,12 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
           $lC_Box->initialize();
           if ($lC_Box->hasContent()) {
             if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
-              include('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php');
+              include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
             } else {
               if (file_exists('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php')) {
-                include('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php');
+                include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
               } else {
-                include('templates/' . DEFAULT_TEMPLATE . '/modules/boxes/' . $lC_Box->getCode() . '.php');
+                include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
               }
             }
           }
@@ -88,7 +88,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       // page header
       if ($lC_Template->hasPageHeader()) {
         if (file_exists('templates/' . $lC_Template->getCode() . '/header.php')) {
-          include('templates/' . $lC_Template->getCode() . '/header.php');
+          include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/header.php'));
         }
       }                
       ?>
@@ -132,12 +132,12 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
                     $lC_Box->initialize();
                     if ($lC_Box->hasContent()) {
                       if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
-                        include('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php');
+                        include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
                       } else {
                         if (file_exists('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php')) {
-                          include('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php');
+                          include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
                         } else {
-                          include('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php');
+                          include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php'));
                         }
                       }
                     }
@@ -145,12 +145,12 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
                   }
                 }
                 if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
-                  include('templates/' . $lC_Template->getCode() . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename());
+                  include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename()));
                 } else {
                   if (file_exists('templates/' . $lC_Template->getCode() . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename())) {
-                    include('templates/' . $lC_Template->getCode() . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename());
+                    include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename()));
                   } else {
-                    include('templates/' . DEFAULT_TEMPLATE . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename());
+                    include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename()));
                   }
                 }
                 if ($lC_Template->hasPageContentModules()) {
@@ -162,12 +162,12 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
                     $lC_Box->initialize();
                     if ($lC_Box->hasContent()) {
                       if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
-                        include('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php');
+                        include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
                       } else {
                         if (file_exists('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php')) {
-                          include('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php');
+                          include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
                         } else {
-                          include('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php');
+                          include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php'));
                         }
                       }
                     }
@@ -187,12 +187,12 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
                 $lC_Box->initialize();
                 if ($lC_Box->hasContent()) {
                   if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
-                    include('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php');
+                    include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
                   } else {
                     if (file_exists('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php')) {
-                      include('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php');
+                      include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
                     } else {
-                      include('templates/' . DEFAULT_TEMPLATE . '/modules/boxes/' . $lC_Box->getCode() . '.php');
+                      include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
                     }
                   }
                 }
@@ -239,7 +239,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       // page footer
       if ($lC_Template->hasPageFooter()) {
         if (file_exists('templates/' . $lC_Template->getCode() . '/footer.php')) {
-          include('templates/' . $lC_Template->getCode() . '/footer.php');
+          include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/footer.php'));
         }            
         echo '<br />';
         if ($lC_Services->isStarted('banner') && $lC_Banner->exists('468x60')) {
