@@ -11,6 +11,8 @@
   @copyright  (c) 2012 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+$vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents('..//includes/version.txt'), 2))));
+$version = $vInfo[0];
 $ok = TRUE;
 ?>
 <style>
@@ -47,7 +49,7 @@ TD { height:19px; }
       </ul>
     </div>
     <div class="thin">
-      <h3><?php echo $lC_Language->get('page_title_welcome'); ?></h3>
+      <h3><?php echo sprintf($lC_Language->get('page_title_welcome'), $version); ?></h3>
     </div>
     <noscript>
       <div class="noticeBox">    
@@ -78,8 +80,8 @@ TD { height:19px; }
               <tr>
                 <td><b><?php echo $lC_Language->get('box_server_php_version'); ?></b></td>
                 <td align="right"><?php echo phpversion(); ?></td>
-                <?php if (version_compare(PHP_VERSION, '5.2') !== 1) $ok = FALSE; ?>
-                <td align="right" width="25"><img src="templates/img/icons/<?php echo ((version_compare(PHP_VERSION, '5.2') === 1) ? 'tick.gif' : 'cross.gif'); ?>" border="0" width="16" height="16"></td>
+                <?php if (version_compare(PHP_VERSION, '5.3') !== 1) $ok = FALSE; ?>
+                <td align="right" width="25"><img src="templates/img/icons/<?php echo ((version_compare(PHP_VERSION, '5.3') === 1) ? 'tick.gif' : 'cross.gif'); ?>" border="0" width="16" height="16"></td>
               </tr>
             </table><br />
             <table border="0" width="100%" cellspacing="0" cellpadding="2">
@@ -118,6 +120,18 @@ TD { height:19px; }
                 <?php if ((int)ini_get('session.use_trans_sid') !== 0) $ok = FALSE; ?>
                 <td align="right"><img src="templates/img/icons/<?php echo (((int)ini_get('session.use_trans_sid') === 0) ? 'tick.gif' : 'cross.gif'); ?>" border="0" width="16" height="16"></td>
               </tr>
+              <tr>
+                <td><?php echo $lC_Language->get('box_server_post_max_size'); ?></td>
+                <td align="right"><?php echo $lC_Language->get('post_max_size_text'); ?></td>
+                <?php if ((int)ini_get('post_max_size') < 10) $ok = FALSE; ?>
+                <td align="right"><img src="templates/img/icons/<?php echo (((int)ini_get('post_max_size') < 10) ? 'cross.gif' : 'tick.gif'); ?>" border="0" width="16" height="16"></td>
+              </tr>
+              <tr>
+                <td><?php echo $lC_Language->get('box_server_upload_max_filesize'); ?></td>
+                <td align="right"><?php echo $lC_Language->get('upload_max_filesize_text'); ?></td>
+                <?php if ((int)ini_get('upload_max_filesize') < 10) $ok = FALSE; ?>
+                <td align="right"><img src="templates/img/icons/<?php echo (((int)ini_get('upload_max_filesize') < 10) ? 'cross.gif' : 'tick.gif'); ?>" border="0" width="16" height="16"></td>
+              </tr>
             </table><br />
             <table border="0" width="100%" cellspacing="0" cellpadding="2">
               <tr>
@@ -153,7 +167,7 @@ TD { height:19px; }
           <p><?php echo $lC_Language->get('text_welcome'); ?></p>
           <h4 class="no-margin-top mid-margin-bottom"><?php echo $lC_Language->get('page_heading_server_requirements'); ?></h4>
           <ul>
-            <li>PHP v5.2+ (with MySQLi extension)</li>
+            <li>PHP v5.3+ (with MySQLi extension)</li>
             <li>MySQL v4.1.13+ or v5.0.7+</li>
           </ul>
           <h4 class="no-margin-top mid-margin-bottom"><?php echo $lC_Language->get('page_heading_permissions'); ?></h4>
@@ -189,7 +203,7 @@ TD { height:19px; }
           </table>
           <p class="message icon-warning margin-top margin-right" style="color:#c09853; background:#fcf8e3; border-color:#fbeed5;">   
             <span class="stripes animated"></span>
-            <?php echo $lC_Language->get('text_under_development'); ?>
+            <?php echo sprintf($lC_Language->get('text_under_development'), $version); ?>
           </p>   
         </div>
       </div>

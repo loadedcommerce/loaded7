@@ -2569,6 +2569,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>box_ordering_steps_secure_checkout</key>
       <value><![CDATA[Secure Payment]]></value>
       <group>general</group>
-    </definition>    
+    </definition>   
+    <definition>
+      <key>text_enter_your_email</key>
+      <value><![CDATA[Enter Your E-mail Address]]></value>
+      <group>general</group>
+    </definition>      
   </definitions>
 </language>

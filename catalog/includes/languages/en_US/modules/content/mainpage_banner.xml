@@ -4,7 +4,7 @@
     <definition>
       <key>mainpage_banner_title</key>
       <value><![CDATA[Banner on Mainpage]]></value>
-      <group>content</group>
+      <group>modules-content</group>
     </definition>
   </definitions>
 </language>
