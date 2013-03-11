@@ -117,9 +117,9 @@ class lC_Payment_paypal_adv extends lC_Payment {
     if (is_object($order)) $this->update_status();
     
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
-      $this->form_action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
+      $this->form_action_url = 'https://pilot-payflowlink.paypal.com';  // sandbox url
     } else {
-      $this->form_action_url = 'https://payflowpro.paypal.com';  // production url
+      $this->form_action_url = 'https://payflowlink.paypal.com';  // production url
     }  
     
     $Qcredit_cards = $lC_Database->query('select credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
@@ -211,45 +211,16 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @return string
   */ 
   public function process_button() {
-    global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer;
-    
-    $secureToken = $this->_getSecureToken();
-    
-die('11');    
-    $process_button_string = lc_draw_hidden_field('CRESecureID', MODULE_PAYMENT_PAYPAL_ADV_LOGIN) . "\n" . 
-                             lc_draw_hidden_field('total_amt', $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode())) . "\n" .
-                             lc_draw_hidden_field('order_id', $this->_order_id) . "\n" .
-                             lc_draw_hidden_field('customer_id', $lC_Customer->getID()) . "\n" .
-                             lc_draw_hidden_field('currency_code', $_SESSION['currency']) . "\n" .
-                             lc_draw_hidden_field('lang', $lC_Language->getCode()) . "\n" .
-                             lc_draw_hidden_field('allowed_types', $this->_allowed_types) . "\n" .
-                             lc_draw_hidden_field('sess_id', session_id()) . "\n" .
-                             lc_draw_hidden_field('sess_name', session_name()) . "\n" .
-                             lc_draw_hidden_field('ip_address', $_SERVER["REMOTE_ADDR"]) . "\n" .
-                             lc_draw_hidden_field('return_url', lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true)) . "\n" .
-                             lc_draw_hidden_field('content_template_url', (getenv('HTTPS') == 'on') ? lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) : null) . "\n" .
-                             lc_draw_hidden_field('customer_company', $lC_ShoppingCart->getBillingAddress('company')) . "\n" .
-                             lc_draw_hidden_field('customer_firstname', $lC_ShoppingCart->getBillingAddress('firstname')) . "\n" .
-                             lc_draw_hidden_field('customer_lastname', $lC_ShoppingCart->getBillingAddress('lastname')) . "\n" .
-                             lc_draw_hidden_field('customer_address', $lC_ShoppingCart->getBillingAddress('street_address')) . "\n" .
-                             lc_draw_hidden_field('customer_email', $lC_Customer->getEmailAddress()) . "\n" .
-                             lc_draw_hidden_field('customer_phone', $lC_Customer->getTelephone()) . "\n" .
-                             lc_draw_hidden_field('customer_city', $lC_ShoppingCart->getBillingAddress('city')) . "\n" . 
-                             lc_draw_hidden_field('customer_state', $lC_ShoppingCart->getBillingAddress('state')) . "\n" . 
-                             lc_draw_hidden_field('customer_postal_code', $lC_ShoppingCart->getBillingAddress('postcode')) . "\n" .
-                             lc_draw_hidden_field('customer_country', $lC_ShoppingCart->getBillingAddress('country_iso_code_3')) . "\n" .
-                             lc_draw_hidden_field('delivery_company', $lC_ShoppingCart->getShippingAddress('company')) . "\n" .
-                             lc_draw_hidden_field('delivery_firstname', $lC_ShoppingCart->getShippingAddress('firstname')) . "\n" .
-                             lc_draw_hidden_field('delivery_lastname', $lC_ShoppingCart->getShippingAddress('lastname')) . "\n" .
-                             lc_draw_hidden_field('delivery_address', $lC_ShoppingCart->getShippingAddress('street_address')) . "\n" .
-                             lc_draw_hidden_field('delivery_email', $lC_Customer->getEmailAddress()) . "\n" .
-                             lc_draw_hidden_field('delivery_phone', $lC_Customer->getTelephone()) . "\n" .
-                             lc_draw_hidden_field('delivery_city', $lC_ShoppingCart->getShippingAddress('city')) . "\n" . 
-                             lc_draw_hidden_field('delivery_state',  $lC_ShoppingCart->getShippingAddress('state')) . "\n" .
-                             lc_draw_hidden_field('delivery_postal_code', $lC_ShoppingCart->getShippingAddress('postcode')) . "\n" .
-                             lc_draw_hidden_field('delivery_country', $lC_ShoppingCart->getShippingAddress('country_iso_code_3')) . "\n" .  
-                             lc_draw_hidden_field('form', 'mage') . "\n"; 
 
+    $tokenArr = $this->_getSecureToken();
+        
+    $process_button_string = lc_draw_hidden_field('SECURETOKEN', $tokenArr['SECURETOKEN']) . 
+                             lc_draw_hidden_field('SECURETOKENID', $tokenArr['SECURETOKENID']);
+                     
+    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {                            
+      $process_button_string .= lc_draw_hidden_field('MODE', 'TEST');
+    }
+    
     return $process_button_string;
   }
  /**
@@ -260,7 +231,12 @@ die('11');
   */ 
   public function process() {
     global $lC_Language, $lC_Database, $lC_MessageStack;
-    
+                      
+echo "<pre>post ";
+print_r($_POST);
+echo "</pre>";
+die('000'); 
+                      
     $error = false;
     $action = (isset($_GET['action']) && !empty($_GET['action'])) ? preg_replace('/[^a-zA-Z]/', '', $_GET['action']) : NULL;
     $code = (isset($_GET['code']) && !empty($_GET['code'])) ? preg_replace('/[^0-9]/', '', $_GET['code']) : NULL;
@@ -317,21 +293,66 @@ die('11');
   }
   
   private function _getSecureToken() {
-    global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer;
+    global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer, $lC_MessageStack;
+    
+    require(DIR_FS_CATALOG . 'includes/classes/transport.php');  
+    
+    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
+      $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
+    } else {
+      $action_url = 'https://payflowpro.paypal.com';  // production url
+    }    
     
     $secureTokenId = uniqid('', true); 
+    $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
     $postData = "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
                 "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
                 "&PARTNER=Paypal" . 
                 "&PWD=" . MODULE_PAYMENT_PAYPAL_ADV_PWD .  
                 "&CREATESECURETOKEN=Y" . 
                 "&SECURETOKENID=" . $secureTokenId .  
-                "&TRXTYPE=" . MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE . 
-                "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()));
+                "&TRXTYPE=" . $transType . 
+                "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
+                "&RETURNURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
+                "&ERRORURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
+                "&CANCELURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
+                //"&BUTTONSOURCE=CREloaded_Cart_EC_US" . 
+                "&BILLTOFIRSTNAME=" . $lC_ShoppingCart->getBillingAddress('firstname') . 
+                "&BILLTOLASTNAME=" . $lC_ShoppingCart->getBillingAddress('lastname') . 
+                "&BILLTOSTREET=" . $lC_ShoppingCart->getBillingAddress('street_address') . 
+                "&BILLTOCITY=" . $lC_ShoppingCart->getBillingAddress('city') . 
+                "&BILLTOSTATE=" . $lC_ShoppingCart->getBillingAddress('zone_code') . 
+                "&BILLTOCOUNTRY=" . $lC_ShoppingCart->getBillingAddress('country_iso_code_2') . 
+                "&BILLTOZIP=" . $lC_ShoppingCart->getBillingAddress('postcode') . 
+                "&BILLTOPHONENUM=" . $lC_Customer->getTelephone() . 
+                "&BILLTOEMAIL=" . $lC_Customer->getEmailAddress() . 
+                "&SHIPTOFIRSTNAME=" . $lC_ShoppingCart->getShippingAddress('firstname') . 
+                "&SHIPTOLASTNAME=" . $lC_ShoppingCart->getShippingAddress('lastname') . 
+                "&SHIPTOSTREET=" . $lC_ShoppingCart->getShippingAddress('street_address') . 
+                "&SHIPTOCITY=" . $lC_ShoppingCart->getBillingAddress('city') . 
+                "&SHIPTOSTATE=" . $lC_ShoppingCart->getBillingAddress('zone_code') . 
+                "&SHIPTOCOUNTRY=" . $lC_ShoppingCart->getShippingAddress('country_iso_code_2') . 
+                "&SHIPTOZIP=" . $lC_ShoppingCart->getShippingAddress('postcode') . 
+                "&SHIPTOPHONENUM=" . $lC_Customer->getTelephone() . 
+                "&SHIPTOEMAIL=" . $lC_Customer->getEmailAddress() . 
+                "&CURRENCY=" . $_SESSION['currency'] . 
+                "&INVNUM=" . $this->_order_id; 
                 
-echo '[' . $postData . ']<br>';
-die('00');                
+    $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));
+
+    if (!$response) {
+      $lC_MessageStack->add('checkout_payment', $lC_Language->get('payment_paypal_adv_error_no_response'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+    }
+
+    @parse_str($response, $dataArr);
     
+    if ($dataArr['RESULT'] != 0) { // server failure error
+      $lC_MessageStack->add('checkout_payment', $lC_Language->get('payment_paypal_adv_error_occurred') . ' (' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']);
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+    }
+    
+    return $dataArr;
   }
 
 }
