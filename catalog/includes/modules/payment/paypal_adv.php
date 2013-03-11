@@ -13,7 +13,7 @@
 */
 class lC_Payment_paypal_adv extends lC_Payment {     
  /**
-  * The public title of the payment module
+  * The public title of the payment module (admin)
   *
   * @var string
   * @access protected
@@ -83,6 +83,13 @@ class lC_Payment_paypal_adv extends lC_Payment {
   */   
   protected $_card_images;  
  /**
+  * The public title of the payment module (storeside)
+  *
+  * @var string
+  * @access protected
+  */  
+  protected $_payment_title;  
+ /**
   * Constructor
   */      
   public function lC_Payment_paypal_adv() {
@@ -90,6 +97,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
 
     $this->_title = $lC_Language->get('payment_paypal_adv_title');
     $this->_method_title = $lC_Language->get('payment_paypal_adv_title');
+    $this->_payment_title = $lC_Language->get('payment_paypal_adv_payment_title');
     $this->_status = (defined('MODULE_PAYMENT_PAYPAL_ADV_STATUS') && (MODULE_PAYMENT_PAYPAL_ADV_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('MODULE_PAYMENT_PAYPAL_ADV_SORT_ORDER') ? MODULE_PAYMENT_PAYPAL_ADV_SORT_ORDER : null);
 
@@ -182,7 +190,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     global $lC_Language;
 
     $selection = array('id' => $this->_code,
-                       'module' => '<div class="payment-selection">' . $this->_title . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_adv_button_description') . '</div>');    
+                       'module' => '<div class="payment-selection">' . $this->_payment_title . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_adv_button_description') . '</div>');    
     
     return $selection;
   }
