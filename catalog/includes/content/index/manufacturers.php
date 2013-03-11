@@ -37,6 +37,13 @@
 
         $this->_page_title = $lC_Manufacturer->getTitle();
         $this->_page_image = 'manufacturers/' . $lC_Manufacturer->getImage();
+        
+        $this->addOGPTags('site_name', STORE_NAME);
+        $this->addOGPTags('type', 'website');
+        $this->addOGPTags('title', $this->_page_title);
+        $this->addOGPTags('description', $this->_page_title);
+        $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, 'manufacturers=' . $lC_Manufacturer->getID(), 'NONSSL',false,true,true));
+        $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/logo.png');
 
         $this->_process();
       } else {

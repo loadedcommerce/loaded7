@@ -23,7 +23,7 @@
 
     /* Class constructor */
     function lC_Products_Reviews() {
-      global $lC_Services, $lC_Session, $lC_Language, $lC_Breadcrumb, $lC_Product, $lC_Customer, $lC_NavigationHistory;
+      global $lC_Services, $lC_Session, $lC_Language, $lC_Breadcrumb, $lC_Product, $lC_Customer, $lC_NavigationHistory, $lC_Image, $lC_Currencies;
 
       if ($lC_Services->isStarted('reviews') === false) {
         lc_redirect(lc_href_link(FILENAME_DEFAULT));
@@ -40,6 +40,20 @@
           $lC_Product = new lC_Product(lC_Reviews::getProductID($_GET[$this->_module]));
 
           $this->_page_title = $lC_Product->getTitle();
+          
+          $this->addOGPTags('type', 'product');
+          $this->addOGPTags('title', $lC_Product->getTitle() . ' ' . $lC_Product->getModel());
+          $this->addOGPTags('description', $lC_Currencies->displayPrice($lC_Product->getPriceBreak(), $lC_Product->getTaxClassID()) .  ' - ' . $lC_Product->getTitle() . ' ' . lc_clean_html($lC_Product->getDescription()));
+          $this->addOGPTags('url', lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword(), 'NONSSL',false,true,true));
+          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/logo.png');
+          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'large'));
+          foreach ( $lC_Product->getImages() as $key => $value ) {
+            if ($value['default_flag'] == true) continue;
+            if(file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))){
+              $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'large'));
+            }
+          }
+        }
           $this->_page_contents = 'reviews_info.php';
 
           if ($lC_Services->isStarted('breadcrumb')) {

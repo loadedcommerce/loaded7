@@ -79,6 +79,22 @@
             $this->_process();
           }
         }
+          $this->addOGPTags('site_name', STORE_NAME);
+          $this->addOGPTags('type', 'website');
+          $this->addOGPTags('title', $this->_page_title);
+          $this->addOGPTags('description', $this->_page_title);
+          $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, 'cPath=' . $_GET['cPath'], 'NONSSL',false,true,true));
+          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/logo.png');
+          if ( $lC_Category->hasImage() ) {
+            $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . DIR_WS_IMAGES . $this->_page_image);
+          }
+      }  else {
+          $this->addOGPTags('site_name', STORE_NAME);
+          $this->addOGPTags('type', 'website');
+          $this->addOGPTags('title', $this->_page_title);
+          $this->addOGPTags('description', $this->_page_title);
+          $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, '', 'NONSSL',false,true,true));
+          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/logo.png');
       }
     }
 

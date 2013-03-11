@@ -670,5 +670,33 @@
     function _getJavascriptBlocks() {
       return implode("\n", $this->_javascript_blocks);
     }
-  }
+   
+/**
+ * Returns OGP tags to add to the page head
+ *
+ * @access private
+ * @return string
+ */
+    function getPageOGPTags() {
+      $tag_string = '';
+      foreach ($this->_ogp_tags as $key => $values) {
+          for ($i=0; $i<=sizeof($values); $i++){
+              if(!empty($values[$i])){
+                  $tag_string .= '<meta property="og:' . $key . '" content="' . $values[$i] . '" />' . "\n";
+              }
+          }
+      }
+      return $tag_string . "\n";
+    }
+
+/**
+ * Returns OGP Image array for OGP tags generation
+ *
+ * @access private
+ * @return string
+ */
+    function addOGPTags($key, $value) {
+      $this->_ogp_tags[$key][] = $value;
+    }    
+  }                     
 ?>
