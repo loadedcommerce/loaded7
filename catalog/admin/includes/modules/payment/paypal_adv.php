@@ -121,6 +121,7 @@ class lC_Payment_paypal_adv extends lC_Payment_Admin {
                            'MODULE_PAYMENT_PAYPAL_ADV_EC_STATUS',
                            'MODULE_PAYMENT_PAYPAL_ADV_USER',
                            'MODULE_PAYMENT_PAYPAL_ADV_PWD',
+                           'MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE',
                            'MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE',
                            'MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE',
                            'MODULE_PAYMENT_PAYPAL_ADV_ACCEPTED_TYPES',
