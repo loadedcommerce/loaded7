@@ -137,7 +137,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $Qcredit_cards->execute();
 
     while ($Qcredit_cards->next()) {
-      $this->_card_images .= lc_image('images/cards/cc_' . strtolower(str_replace(" ", "_", $Qcredit_cards->value('credit_card_name'))) . '.png');
+      $this->_card_images .= lc_image('images/cards/cc_' . strtolower(str_replace(" ", "_", $Qcredit_cards->value('credit_card_name'))) . '.png', $Qcredit_cards->value('credit_card_name'), null, null, 'style="vertical-align:middle;"');
       $name = strtolower($Qcredit_cards->value('credit_card_name'));
       if (stristr($Qcredit_cards->value('credit_card_name'), 'discover')) $name = 'Discover';
       if (stristr($Qcredit_cards->value('credit_card_name'), 'jcb')) $name = 'JCB';
