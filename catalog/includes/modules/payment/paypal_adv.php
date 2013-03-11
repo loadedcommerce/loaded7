@@ -316,7 +316,9 @@ die('000');
                 "&RETURNURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
                 "&ERRORURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
                 "&CANCELURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
-                //"&BUTTONSOURCE=CREloaded_Cart_EC_US" . 
+                "&TEMPLATE=" . MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE .
+                "&BUTTONSOURCE=CRELoaded_Cart_DP_US" . 
+                "&URLMETHOD=POST" . 
                 "&BILLTOFIRSTNAME=" . $lC_ShoppingCart->getBillingAddress('firstname') . 
                 "&BILLTOLASTNAME=" . $lC_ShoppingCart->getBillingAddress('lastname') . 
                 "&BILLTOSTREET=" . $lC_ShoppingCart->getBillingAddress('street_address') . 
