@@ -60,7 +60,7 @@
               $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'large'));
             }
           }
-        }
+        
           lC_Services_category_path::process($lC_Product->getCategoryID());
 
           if ($lC_Services->isStarted('breadcrumb')) {
