@@ -948,20 +948,20 @@ function toggleEditor(id) {
                       <input type="checkbox" class="switch checked">&nbsp; &nbsp; 
                       <span class="input margin-right">
                         <input name="" id="" value="" class="input-unstyled">
-                      </span>Price&nbsp;or&nbsp;%
+                      </span><b>Price&nbsp;or&nbsp;%</b>
                     </div>
                     <div class="new-row-mobile twelve-columns twelve-columns-mobile">
                       <nobr>
                         <span class="input">
                           <input type="text" class="input-unstyled datepicker" value="">
-                        </span>&nbsp;
-                        <span class="icon-calendar icon-size2"></span>&nbsp;&nbsp;Start&nbsp;
+                        </span>
+                        <b>&nbsp;<span class="icon-calendar icon-size2"></span>&nbsp;&nbsp;Start&nbsp;</b>
                       </nobr>
                       <nobr>
                         <span class="input">
                           <input type="text" class="input-unstyled datepicker" value="">
-                        </span>&nbsp;
-                        <span class="icon-calendar icon-size2"></span>&nbsp;&nbsp;End
+                        </span>
+                        <b>&nbsp;<span class="icon-calendar icon-size2"></span>&nbsp;&nbsp;End</b>
                       </nobr>
                     </div>
                 </div>
