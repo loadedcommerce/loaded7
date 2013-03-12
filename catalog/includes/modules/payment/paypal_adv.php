@@ -129,23 +129,6 @@ class lC_Payment_paypal_adv extends lC_Payment {
     } else {
       $this->form_action_url = 'https://payflowlink.paypal.com';  // production url
     }  
-    
-    $Qcredit_cards = $lC_Database->query('select credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
-    $Qcredit_cards->bindRaw(':table_credit_cards', TABLE_CREDIT_CARDS);
-    $Qcredit_cards->bindInt(':credit_card_status', '1');
-    $Qcredit_cards->setCache('credit-cards');
-    $Qcredit_cards->execute();
-
-    while ($Qcredit_cards->next()) {
-      $this->_card_images .= lc_image('images/cards/cc_' . strtolower(str_replace(" ", "_", $Qcredit_cards->value('credit_card_name'))) . '.png', $Qcredit_cards->value('credit_card_name'), null, null, 'style="vertical-align:middle;"');
-      $name = strtolower($Qcredit_cards->value('credit_card_name'));
-      if (stristr($Qcredit_cards->value('credit_card_name'), 'discover')) $name = 'Discover';
-      if (stristr($Qcredit_cards->value('credit_card_name'), 'jcb')) $name = 'JCB';
-      $this->_allowed_types .= ucwords($name) . '|';
-    }
-    if (substr($this->_allowed_types, -1) == '|') $this->_allowed_types = substr($this->_allowed_types, 0, strlen($this->_allowed_types) - 1);
-    
-    $Qcredit_cards->freeResult();      
   }
  /**
   * Disable module if zone selected does not match billing zone  
@@ -190,7 +173,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     global $lC_Language;
 
     $selection = array('id' => $this->_code,
-                       'module' => '<div class="payment-selection">' . sprintf($this->_payment_title, lc_image('images/paypal-small.png', null, null, null, 'style="vertical-align:middle;"')) . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_adv_button_description') . '</div>');    
+                       'module' => '<div class="payment-selection">' . sprintf($this->_payment_title, lc_image('images/paypal-small.png', null, null, null, 'style="vertical-align:middle;"')) . '<span>' . lc_image('images/paypal-cards.png', null, null, null, 'style="vertical-align:middle;"')) . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_adv_button_description') . '</div>');    
     
     return $selection;
   }
@@ -241,8 +224,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
     global $lC_Language, $lC_Database, $lC_MessageStack;
                       
     $error = false;
-    $result = (isset($_POST['RESULT']) && !empty($_POST['RESULT'])) ? preg_replace('/[^0-9]/', '', $_POST['RESULT']) : NULL;
-    if (!isset($this->_order_id) || $this->_order_id == NULL) $this->_order_id = (isset($_POST['INVNUM']) && !empty($_POST['INVNUM'])) ? preg_replace('/[^0-9]/', '', $_POST['INVNUM']) : $_POST['INVOICE'];
+    $result = (isset($_POST['RESULT']) && $_POST['RESULT'] != NULL) ? $_POST['RESULT'] : NULL;
+    if (!isset($this->_order_id) || $this->_order_id == NULL) $this->_order_id = (isset($_POST['INVNUM']) && !empty($_POST['INVNUM'])) ? $_POST['INVNUM'] : $_POST['INVOICE'];
 
     switch ($result) {
       case '0' :
@@ -306,7 +289,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $itemsString = '';
     foreach ($lC_ShoppingCart->getProducts() as $products) {
       $itemsString .= '&L_NAME' . (string)$cnt . '=' . $products['name'] .
-                      '&L_DESC' . (string)$cnt . '=' . substr($products['description'], 0, 40) .
+                      //'&L_DESC' . (string)$cnt . '=' . substr($products['description'], 0, 40) .
+                      '&L_DESC=test_desc' .
                       '&L_SKU' . (string)$cnt . '=' . $products['id'] .
                       '&L_COST' . (string)$cnt . '=' . $products['price'] .
                       '&L_QTY' . (string)$cnt . '=' . $products['quantity'];
@@ -364,19 +348,18 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));
 
     if (!$response) {
-      $lC_MessageStack->add('checkout_payment', $lC_Language->get('payment_paypal_adv_error_no_response'));
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+      $errmsg = sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_no_response'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
     }
 
     @parse_str($response, $dataArr);
     
     if ($dataArr['RESULT'] != 0) { // server failure error
-      $lC_MessageStack->add('checkout_payment', $lC_Language->get('payment_paypal_adv_error_occurred') . ' (' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']);
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+      $errmsg = sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_occurred'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
     }
     
     return $dataArr;
   }
-
 }
 ?>

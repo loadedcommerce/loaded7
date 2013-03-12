@@ -159,7 +159,7 @@
       $Qorder->bindValue(':billing_country_iso2', $lC_ShoppingCart->getBillingAddress('country_iso_code_2'));
       $Qorder->bindValue(':billing_country_iso3', $lC_ShoppingCart->getBillingAddress('country_iso_code_3'));
       $Qorder->bindValue(':billing_address_format', $lC_ShoppingCart->getBillingAddress('format'));
-      $Qorder->bindValue(':payment_method', strip_tags($lC_ShoppingCart->getBillingMethod('title')));
+      $Qorder->bindValue(':payment_method', $lC_ShoppingCart->getBillingMethod('title'));
       $Qorder->bindValue(':payment_module', $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getCode());
       $Qorder->bindInt(':orders_status', 4);
       $Qorder->bindValue(':currency', $lC_Currencies->getCode());

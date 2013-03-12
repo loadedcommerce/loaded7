@@ -351,7 +351,7 @@ CREATE TABLE IF NOT EXISTS lc_orders (
   billing_country_iso2 char(2) NOT NULL,
   billing_country_iso3 char(3) NOT NULL,
   billing_address_format varchar(255) NOT NULL,
-  payment_method varchar(255) NOT NULL,
+  payment_method varchar(512) NOT NULL,
   payment_module varchar(255) NOT NULL,
   last_modified datetime DEFAULT NULL,
   date_purchased datetime DEFAULT NULL,
