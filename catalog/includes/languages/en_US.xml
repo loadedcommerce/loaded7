@@ -1040,6 +1040,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>checkout</group>
     </definition>
     <definition>
+      <key>error_payment_problem</key>
+      <value><![CDATA[ERROR: %s. Please try again.]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
       <key>breadcrumb_checkout_shopping_cart</key>
       <value><![CDATA[Shopping Cart]]></value>
       <group>checkout</group>

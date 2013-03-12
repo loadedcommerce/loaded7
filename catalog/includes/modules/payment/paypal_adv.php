@@ -240,38 +240,28 @@ class lC_Payment_paypal_adv extends lC_Payment {
   public function process() {
     global $lC_Language, $lC_Database, $lC_MessageStack;
                       
-echo "<pre>post ";
-print_r($_POST);
-echo "</pre>";
-die('000'); 
-                      
     $error = false;
-    $action = (isset($_GET['action']) && !empty($_GET['action'])) ? preg_replace('/[^a-zA-Z]/', '', $_GET['action']) : NULL;
-    $code = (isset($_GET['code']) && !empty($_GET['code'])) ? preg_replace('/[^0-9]/', '', $_GET['code']) : NULL;
-    $msg = (isset($_GET['msg']) && !empty($_GET['msg'])) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_GET['msg']) : NULL;
-    $order_id = (isset($_GET['order_id']) && !empty($_GET['order_id'])) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]\-/', '', $_GET['order_id']) : NULL;
-    
-    switch (strtolower($action)) {
-      case 'cancel' :
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
+    $result = (isset($_POST['RESULT']) && !empty($_POST['RESULT'])) ? preg_replace('/[^0-9]/', '', $_POST['RESULT']) : NULL;
+    if (!isset($this->_order_id) || $this->_order_id == NULL) $this->_order_id = (isset($_POST['INVNUM']) && !empty($_POST['INVNUM'])) ? preg_replace('/[^0-9]/', '', $_POST['INVNUM']) : $_POST['INVOICE'];
+
+    switch ($result) {
+      case '0' :
+        // update order status
+        lC_Order::process($this->_order_id, $this->_order_status_complete);
         break;
         
       default :
-        switch ($code) {
-          case '000' :
-            // update order status
-            lC_Order::process($order_id, $this->_order_status_complete);
-            break;
-            
-          default :
-            // there was an error
-            $lC_MessageStack->add('checkout_payment', $code . ' - ' . $msg);
-            $error = true;
+        if ($result == NULL) { // customer clicked cancel
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
+        } else { // an error occurred
+          $errmsg = sprintf($lC_Language->get('error_payment_problem'), '(' . $result . ') ' . $_POST['RESPMSG']);
+          $error = true;
         }
+        
         // insert into transaction history
-        $this->_transaction_response = $code;
+        $this->_transaction_response = $result;
 
-        $response_array = array('root' => $_GET);
+        $response_array = array('root' => $_POST);
         $response_array['root']['transaction_response'] = trim($this->_transaction_response);
         $lC_XML = new lC_XML($response_array);
         
@@ -283,7 +273,7 @@ die('000');
         $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '000') ? 1 : 0);
         $Qtransaction->execute();
         
-        if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+        if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
     }
   } 
  /**
@@ -312,30 +302,42 @@ die('000');
     }    
     
     // build the product description
+    $cnt = 0;
+    $itemsString = '';
     foreach ($lC_ShoppingCart->getProducts() as $products) {
-
-echo "<pre>";
-print_r($products);
-echo "</pre>";
+      $itemsString .= '&L_NAME' . (string)$cnt . '=' . $products['name'] .
+                      '&L_DESC' . (string)$cnt . '=' . substr($products['description'], 0, 40) .
+                      '&L_SKU' . (string)$cnt . '=' . $products['id'] .
+                      '&L_COST' . (string)$cnt . '=' . $products['price'] .
+                      '&L_QTY' . (string)$cnt . '=' . $products['quantity'];
+    }
+    
+    // get the shipping amount
+    $taxTotal = 0;
+    $shippingTotal = 0;
+    foreach ($lC_ShoppingCart->getOrderTotals() as $ot) {
+      if ($ot['code'] == 'shipping') $shippingTotal = (float)$ot['value'];
+      if ($ot['code'] == 'tax') $taxTotal = (float)$ot['value'];
     }
 
-die();    
     $secureTokenId = uniqid('', true); 
     $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
     $postData = "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
                 "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
                 "&PARTNER=Paypal" . 
                 "&PWD=" . MODULE_PAYMENT_PAYPAL_ADV_PWD .  
-                "&CREATESECURETOKEN=Y" . 
-                "&SECURETOKENID=" . $secureTokenId .  
                 "&TRXTYPE=" . $transType . 
+                "&BUTTONSOURCE=CRELoaded_Cart_DP_US" . 
+                "&CREATESECURETOKEN=Y" . 
+                "&SECURETOKENID=" . $secureTokenId . $itemsString .
+                "&ITEMAMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getSubTotal(), $lC_Currencies->getCode()) . 
+                "&TAXAMT=" . $lC_Currencies->formatRaw($taxTotal, $lC_Currencies->getCode()) . 
+                "&FREIGHTAMT=" . $shippingTotal . 
                 "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
                 "&RETURNURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
                 "&ERRORURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
                 "&CANCELURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
                 "&TEMPLATE=" . MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE .
-                "&BUTTONSOURCE=CRELoaded_Cart_DP_US" . 
-                "&URLMETHOD=POST" . 
                 "&BILLTOFIRSTNAME=" . $lC_ShoppingCart->getBillingAddress('firstname') . 
                 "&BILLTOLASTNAME=" . $lC_ShoppingCart->getBillingAddress('lastname') . 
                 "&BILLTOSTREET=" . $lC_ShoppingCart->getBillingAddress('street_address') . 
@@ -355,7 +357,9 @@ die();
                 "&SHIPTOPHONENUM=" . $lC_Customer->getTelephone() . 
                 "&SHIPTOEMAIL=" . $lC_Customer->getEmailAddress() . 
                 "&CURRENCY=" . $_SESSION['currency'] . 
-                "&INVNUM=" . $this->_order_id; 
+                "&INVNUM=" . $this->_order_id . 
+                "&URLMETHOD=POST" . 
+                "&ADDROVERRIDE=1"; 
                 
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));
 

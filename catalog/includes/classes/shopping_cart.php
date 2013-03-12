@@ -622,7 +622,7 @@
 
     public function getWeight() {
       return $this->_weight;
-    }
+    }   
 
     public function generateCartID($length = 5) {
       return lc_create_random_string($length, 'digits');
