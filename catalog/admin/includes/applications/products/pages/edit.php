@@ -914,7 +914,7 @@ function toggleEditor(id) {
           <!-- pricing_tab -->
           <div id="section_pricing_content" class="with-padding">
             <fieldset class="fieldset fields-list">
-              <legend class="legend">Pricing Overrides</legend>
+              <legend class="legend">Pricing Overrides2</legend>
               <div class="field-block button-height">
                 <label for="input-1" class="label"><b>Base Price</b></label>
                 <input type="text" name="input-1" id="input-1" value="" class="input">
@@ -942,10 +942,30 @@ function toggleEditor(id) {
                 <input onchange="$('#specials_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
               </div>
               <div id="specials_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-                <label for="input-2" class="label"><b>Label</b></label>
-                <input type="text" name="input-2" id="input-2" value="" class="input">
-                <small class="input-info">Info below input</small>
-              </div>
+                <label for="resize_height" class="label"><b>Special Retail Price</b></label>
+                  <div class="columns">
+                    <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+                      <input type="checkbox" class="switch checked">&nbsp; &nbsp; 
+                      <span class="input margin-right">
+                        <input name="" id="" value="" class="input-unstyled">
+                      </span>Price&nbsp;or&nbsp;%
+                    </div>
+                    <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+                      <nobr>
+                        <span class="input">
+                          <input type="text" class="input-unstyled datepicker" value="">
+                        </span>&nbsp;
+                        <span class="icon-calendar icon-size2"></span>&nbsp;&nbsp;Start&nbsp;
+                      </nobr>
+                      <nobr>
+                        <span class="input">
+                          <input type="text" class="input-unstyled datepicker" value="">
+                        </span>&nbsp;
+                        <span class="icon-calendar icon-size2"></span>&nbsp;&nbsp;End
+                      </nobr>
+                    </div>
+                </div>
+              </div>                
             </fieldset>
           </div>
           <!-- data_tab -->
