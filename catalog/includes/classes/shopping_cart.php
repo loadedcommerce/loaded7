@@ -157,7 +157,7 @@
 
       while ( $Qproducts->next() ) {
         if ( $Qproducts->valueInt('products_status') === 1 ) {
-          $Qdesc = $lC_Database->query('select products_name, products_keyword from :table_products_description where products_id = :products_id and language_id = :language_id');
+          $Qdesc = $lC_Database->query('select products_name, products_keyword, products_description from :table_products_description where products_id = :products_id and language_id = :language_id');
           $Qdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
           $Qdesc->bindInt(':products_id', ($Qproducts->valueInt('parent_id') > 0) ? $Qproducts->valueInt('parent_id') : $Qproducts->valueInt('products_id'));
           $Qdesc->bindInt(':language_id', $lC_Language->getID());
@@ -183,6 +183,7 @@
                                                                     'model' => $Qproducts->value('products_model'),
                                                                     'name' => $Qdesc->value('products_name'),
                                                                     'keyword' => $Qdesc->value('products_keyword'),
+                                                                    'description' => $Qdesc->value('products_description'),
                                                                     'image' => ($Qimage->numberOfRows() === 1) ? $Qimage->value('image') : '',
                                                                     'price' => $price,
                                                                     'quantity' => $Qproducts->valueInt('quantity'),
@@ -348,7 +349,7 @@
             $quantity = 1;
           } 
 
-          $Qdescription = $lC_Database->query('select products_name, products_keyword from :table_products_description where products_id = :products_id and language_id = :language_id');
+          $Qdescription = $lC_Database->query('select products_name, products_keyword, products_description from :table_products_description where products_id = :products_id and language_id = :language_id');
           $Qdescription->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
           $Qdescription->bindInt(':products_id', ($Qproduct->valueInt('parent_id') > 0) ? $Qproduct->valueInt('parent_id') : $product_id);
           $Qdescription->bindInt(':language_id', $lC_Language->getID());
@@ -410,6 +411,7 @@
                                              'name' => $Qdescription->value('products_name'),
                                              'model' => $Qproduct->value('products_model'),
                                              'keyword' => $Qdescription->value('products_keyword'),
+                                             'description' => $Qdescription->value('products_description'),
                                              'image' => $image,
                                              'price' => $price,
                                              'quantity' => $quantity,

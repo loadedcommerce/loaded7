@@ -311,6 +311,15 @@ die('000');
       $action_url = 'https://payflowpro.paypal.com';  // production url
     }    
     
+    // build the product description
+    foreach ($lC_ShoppingCart->getProducts() as $products) {
+
+echo "<pre>";
+print_r($products);
+echo "</pre>";
+    }
+
+die();    
     $secureTokenId = uniqid('', true); 
     $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
     $postData = "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
