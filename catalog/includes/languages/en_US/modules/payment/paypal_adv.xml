@@ -13,7 +13,7 @@
     </definition>          
     <definition>
       <key>payment_paypal_adv_description</key>
-      <value><![CDATA[<img src="images/paypal-large.png" style="vertical-align:middle"><h3 class="thin">Payments Advanced</h3>]]></value>
+      <value><![CDATA[<h3 class="thin small-margin-left"><img src="images/paypal-large.png" class="margin-right" style="vertical-align:middle">Payments Advanced / Payflow Link</h3>]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>
