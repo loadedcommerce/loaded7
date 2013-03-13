@@ -79,7 +79,6 @@ function editModule(id) {
           },
           buttonsLowPadding: true
       });
-      $(".label").addClass('small-margin-top');   
       $("#logo-image").html(data.desc);   
       $("#editModuleFormKeys").html(data.keys);   
       if ($.template.mediaQuery.isSmallerThan('desktop')) {
@@ -87,7 +86,11 @@ function editModule(id) {
       } 
       if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
         $('.modal').attr('style', 'top:10px !important; left: 19%;  margin-left: -50px;');  
-      }      
+      }
+      if ($.template.mediaQuery.name === 'desktop') {
+        $('.modal').attr('style', 'top:10px !important; left: 35%;  margin-left: -50px;');  
+      } 
+      $(".label").addClass('small-margin-top');   
     }
   );
 }
