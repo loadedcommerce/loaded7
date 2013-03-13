@@ -1324,30 +1324,126 @@ function toggleEditor(id) {
             <fieldset class="fieldset">
               <legend class="legend">Tax Settings</legend>
               <div class="columns">
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Tax Class Dropdown
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>Tax Class</span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <select class="select full-width small-margin-top">
+                      <option id="1" value="1">Taxable Goods</option>
+                      <option id="2" value="2">Retail Customer</option>
+                      <option id="3" value="3">Wholesale Customer</option>
+                      <option id="4" value="4">Employee</option>
+                    </select>
+                  </div>
                 </div>
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Base Price w/Tax Input
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>Base Price with Tax</span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <input type="text" class="required input full-width" value="" id="" name="">
+                  </div>
                 </div>
               </div>
             </fieldset>
             <fieldset class="fieldset">
               <legend class="legend">Management Settings</legend>
               <div class="columns">
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Manufacturer Dropdown
-                </div>
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Product Class Dropdown & Pro Button
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>Manufacturer</span> 
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <select class="select full-width small-margin-top">
+                      <option id="1" value="1">Boutique</option>
+                      <option id="2" value="2">Citezens of Humanity</option>
+                      <option id="3" value="3">Crew Clothing</option>
+                      <option id="4" value="4">Mudd & Water</option>
+                      <option id="5" value="5">Summer</option>
+                    </select>
+                  </div>
+                </div> 
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>Product Class</span>
+                    <span class="info-spot on-left grey">
+                      <img src="images/go-pro.png" />
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <select class="select full-width small-margin-top">
+                      <option id="1" value="1">Common</option>
+                      <option id="2" value="2">2nd Class</option>
+                      <option id="3" value="3">3rd Class</option>
+                      <option id="4" value="4">4th Class</option>
+                      <option id="5" value="5">5th Class</option>
+                    </select>
+                  </div>
                 </div>
               </div>
               <div class="columns">
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  URL Slug Input
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>URL Slug</span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <input type="text" class="required input full-width" value="" id="" name="">
+                  </div>
                 </div>
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Availability Date Start and End Inputs & Pro Button
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>Availability</span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom">
+                    <span class="input small-margin-top">
+                      <input type="text" placeholder="Start" class="input-unstyled datepicker" value="">
+                      <span class="icon-calendar icon-size2"></span>
+                    </span>
+                    <span class="input small-margin-top">
+                      <input type="text" placeholder="End" class="input-unstyled datepicker" value="">
+                      <span class="icon-calendar icon-size2"></span>
+                    </span>
+                  </div>
                 </div>
               </div>
             </fieldset>
