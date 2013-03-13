@@ -539,7 +539,7 @@ input:-moz-placeholder {
 
 /* Fieldset and field-lists */
 .fieldset {
-	padding: 20px;
+	padding: 20px 20px 0 20px;
 	border: 1px solid #cccccc;
 	margin-bottom: 16px;
 	-webkit-background-clip: padding-box;
@@ -681,7 +681,7 @@ input:-moz-placeholder {
 		border-top: 1px solid #666666;
 	}
 	.field-block + .field-drop {
-		margin-top: 20px;
+		/*margin-top: 20px;*/
 	}
 	.field-drop .label b,
 	.field-drop .label strong {

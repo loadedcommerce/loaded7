@@ -945,24 +945,20 @@ function toggleEditor(id) {
                 <label for="resize_height" class="label"><b>Special Retail Price</b></label>
                   <div class="columns">
                     <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-                      <input type="checkbox" class="switch checked">&nbsp; &nbsp; 
-                      <span class="input margin-right">
-                        <input name="" id="" value="" class="input-unstyled">
-                      </span><b>Price&nbsp;or&nbsp;%</b>
+                      <input type="checkbox" class="switch checked">
+                      <span class="input">
+                        <input name="" id="" value="" placeholder="Price or %" class="input-unstyled">
+                      </span>
                     </div>
                     <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-                      <nobr>
-                        <span class="input">
-                          <input type="text" class="input-unstyled datepicker" value="">
-                        </span>
-                        <b>&nbsp;<span class="icon-calendar icon-size2"></span>&nbsp;&nbsp;Start&nbsp;</b>
-                      </nobr>
-                      <nobr>
-                        <span class="input">
-                          <input type="text" class="input-unstyled datepicker" value="">
-                        </span>
-                        <b>&nbsp;<span class="icon-calendar icon-size2"></span>&nbsp;&nbsp;End</b>
-                      </nobr>
+                      <span class="input">
+                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="">
+                        <span class="icon-calendar icon-size2"></span>
+                      </span>
+                      <span class="input">
+                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="">
+                        <span class="icon-calendar icon-size2"></span>
+                      </span>
                     </div>
                 </div>
               </div>                
