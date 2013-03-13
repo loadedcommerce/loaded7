@@ -921,16 +921,60 @@ function toggleEditor(id) {
               </div>
               <div class="field-block field-block-product button-height">
                 <label for="input-1" class="label"><b>Group Pricing</b></label>
-                <input onchange="$('#groups_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
+                <input onchange="$('#groups_pricing_pro_badge').toggle('300');$('#groups_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
+                <span class="info-spot on-left grey margin-left">
+                  <span class="icon-info-round"></span>
+                  <span class="info-bubble">
+                    Put the bubble text here
+                  </span>
+                </span>
+                <span id="groups_pricing_pro_badge" class="info-spot on-left grey" style="display:none;">
+                  <img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="margin:0 0 -3px 5px;" />
+                  <span class="info-bubble">
+                    <b>Go Pro!</b> and enjoy this feature!
+                  </span>
+                </span>
               </div>
               <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-                <label for="input-2" class="label"><b>Label</b></label>
-                <input type="text" name="input-2" id="input-2" value="" class="input">
-                <small class="input-info">Info below input</small>
+                <?php //foreach() { ?>
+                <div>
+                  <label for="input-2" class="label margin-right"><b>Reseller Group 1</b></label>
+                  <input type="checkbox" class="switch checked margin-right">
+                  <span class="nowrap">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                  </span>
+                  <small class="input-info">Price/Special</small>
+                </div>
+                <div>
+                  <label for="input-2" class="label margin-right"><b>Employee Group</b></label>
+                  <input type="checkbox" class="switch checked margin-right">
+                  <span class="nowrap">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                  </span>
+                  <small class="input-info">Price/Special</small>
+                </div>
+                <div>
+                  <label for="input-2" class="label margin-right"><b>Gold Reseller</b></label>
+                  <input type="checkbox" class="switch checked margin-right">
+                  <span class="nowrap">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                  </span>
+                  <small class="input-info">Price/Special</small>
+                </div>
+                <?php //} ?>
               </div>
               <div class="field-block field-block-product button-height">
                 <label for="input-1" class="label"><b>Qty Break Pricing</b></label>
-                <input onchange="$('#qty_breaks_number_of_break_points').toggle('300');$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider margin-right" data-text-off="DISABLED" data-text-on="ENABLED">
+                <input onchange="$('#qty_breaks_number_of_break_points').toggle('300');$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
+                <span class="info-spot on-left grey margin-left margin-right">
+                  <span class="icon-info-round"></span>
+                  <span class="info-bubble">
+                    Put the bubble text here
+                  </span>
+                </span>
                 <span id="qty_breaks_number_of_break_points" style="display:none;">
                   <span class="number input">
                     <button type="button" class="button number-down">-</button>
@@ -938,7 +982,7 @@ function toggleEditor(id) {
                     <button type="button" class="button number-up">+</button>
                   </span>
                   <span class="info-spot on-left grey">
-                    <img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="margin:-2px 0 -4px 5px;" />
+                    <img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="margin:0 0 -3px 5px;" />
                     <span class="info-bubble">
                       <b>Go Pro!</b> and enjoy this feature!
                     </span>
@@ -958,45 +1002,45 @@ function toggleEditor(id) {
                 <?php //foreach() { ?>
                 <div>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
                     <?php //if (specials price not exists) { ?>
                     <!--<small class="input-info">Price</small>-->
                     <?php //} else { ?>
-                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
                     <small class="input-info">Price/Special</small>
                     <?php //} ?>
                   </span>
                 </div>
                 <div>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
                     <?php //if (specials price not exists) { ?>
                     <!--<small class="input-info">Price</small>-->
                     <?php //} else { ?>
-                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
                     <small class="input-info">Price/Special</small>
                     <?php //} ?>
                   </span>
                 </div>
                 <div> 
                   <span style="white-space:nowrap;">
-                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
                     <?php //if (specials price not exists) { ?>
                     <!--<small class="input-info">Price</small>-->
                     <?php //} else { ?>
-                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
                     <small class="input-info">Price/Special</small>
                     <?php //} ?>
                   </span>
@@ -1006,6 +1050,12 @@ function toggleEditor(id) {
               <div class="field-block field-block-product button-height">
                 <label for="input-1" class="label"><b>Special Pricing</b></label>
                 <input onchange="$('#specials_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
+                <span class="info-spot on-left grey margin-left margin-right">
+                  <span class="icon-info-round"></span>
+                  <span class="info-bubble">
+                    Put the bubble text here
+                  </span>
+                </span>
               </div>
               <div id="specials_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
                 <label for="resize_height" class="label"><b>Special Retail Price</b></label>
