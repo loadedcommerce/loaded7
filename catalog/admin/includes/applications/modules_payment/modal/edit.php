@@ -79,7 +79,7 @@ function editModule(id) {
           },
           buttonsLowPadding: true
       });
-      $("#editModuleFormKeys > label").addClass('small-margin-top');   
+      $(".label").addClass('small-margin-top');   
       $("#logo-image").html(data.desc);   
       $("#editModuleFormKeys").html(data.keys);   
       if ($.template.mediaQuery.isSmallerThan('desktop')) {
