@@ -57,6 +57,10 @@
         if ( (!empty($module)) && (in_array($module, $this->_modules)) && (isset($GLOBALS['lC_Payment_' . $module]->form_action_url)) ) {
           $this->form_action_url = $GLOBALS['lC_Payment_' . $module]->form_action_url;
         }
+        
+        if ( (!empty($module)) && (in_array($module, $this->_modules)) && (isset($GLOBALS['lC_Payment_' . $module]->iframe_action_url)) ) {
+          $this->iframe_action_url = $GLOBALS['lC_Payment_' . $module]->iframe_action_url;
+        }        
       }
     }
 
@@ -331,6 +335,22 @@
       }
 
       return $has_active;
+    }
+
+    function hasIframeURL() {
+      if (is_array($this->_modules)) {
+        if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
+          if (isset($GLOBALS[$this->selected_module]->iframe_action_url) && (empty($GLOBALS[$this->selected_module]->iframe_action_url) === false)) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    function getIframeURL() {
+      return $GLOBALS[$this->selected_module]->iframe_action_url;
     }
 
     function numberOfActive() {

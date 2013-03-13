@@ -189,6 +189,9 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
               } else {
                 $form_action_url = lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL');
               }
+              
+echo '[' . $lC_Payment->hasIframeURL() . ']<br>';              
+              
               echo "<form name='checkout_confirmation' id='checkout_confirmation' action='" . $form_action_url . "' method='post'>";
               if ($lC_Payment->hasActive()) {
                 echo $lC_Payment->process_button();

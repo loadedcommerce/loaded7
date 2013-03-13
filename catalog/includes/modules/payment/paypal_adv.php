@@ -114,7 +114,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
       $this->form_action_url = 'https://pilot-payflowlink.paypal.com';  // sandbox url
     } else {
       $this->form_action_url = 'https://payflowlink.paypal.com';  // production url
-    }  
+    }
+    $this->iframe_action_url = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ? lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) : NULL;  // sandbox url
   }
  /**
   * Disable module if zone selected does not match billing zone  
@@ -294,14 +295,12 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
     $template = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ? 'MINILAYOUT' : ((MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'B') ? 'TEMPLATEB' : 'TEMPLATEA');
     
-echo '[' . $template . ']<br>';
-die();    
     $postData = "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
                 "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
                 "&PARTNER=Paypal" . 
                 "&PWD=" . MODULE_PAYMENT_PAYPAL_ADV_PWD .  
                 "&TRXTYPE=" . $transType . 
-                "&BUTTONSOURCE=CRELoaded_Cart_DP_US" . 
+                "&BUTTONSOURCE=CRELoaded_Cart_EC_US" . 
                 "&CREATESECURETOKEN=Y" . 
                 "&SECURETOKENID=" . $secureTokenId . $itemsString .
                 "&ITEMAMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getSubTotal(), $lC_Currencies->getCode()) . 
