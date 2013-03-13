@@ -930,12 +930,65 @@ function toggleEditor(id) {
               </div>
               <div class="field-block field-block-product button-height">
                 <label for="input-1" class="label"><b>Qty Break Pricing</b></label>
-                <input onchange="$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
+                <input onchange="$('#qty_breaks_number_of_break_points').toggle('300');$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider margin-right" data-text-off="DISABLED" data-text-on="ENABLED">
+                <span id="qty_breaks_number_of_break_points" style="display:none;">
+                  <span class="number input">
+                    <button type="button" class="button number-down">-</button>
+                    <input type="text" value="3" size="3" class="input-unstyled">
+                    <button type="button" class="button number-up">+</button>
+                  </span>
+                  <img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="margin:0 0 -4px 5px;" />
+                </span>
               </div> 
               <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-                <label for="input-2" class="label"><b>Label</b></label>
-                <input type="text" name="input-2" id="input-2" value="" class="input">
-                <small class="input-info">Info below input</small>
+                <label for="input-2" class="label"><img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="border:2px solid grey;margin:0 5px -4px;" /><b>Pro</b></label>
+                <?php //foreach() { ?>
+                <div>
+                  <span style="white-space:nowrap;">
+                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <small class="input-info small-margin-right">Qty</small>
+                  </span>
+                  <span style="white-space:nowrap;">
+                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <?php //if (specials price not exists) { ?>
+                    <!--<small class="input-info">Price</small>-->
+                    <?php //} else { ?>
+                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                    <small class="input-info">Price/Special</small>
+                    <?php //} ?>
+                  </span>
+                </div>
+                <div>
+                  <span style="white-space:nowrap;">
+                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <small class="input-info small-margin-right">Qty</small>
+                  </span>
+                  <span style="white-space:nowrap;">
+                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <?php //if (specials price not exists) { ?>
+                    <!--<small class="input-info">Price</small>-->
+                    <?php //} else { ?>
+                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                    <small class="input-info">Price/Special</small>
+                    <?php //} ?>
+                  </span>
+                </div>
+                <div> 
+                  <span style="white-space:nowrap;">
+                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <small class="input-info small-margin-right">Qty</small>
+                  </span>
+                  <span style="white-space:nowrap;">
+                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <?php //if (specials price not exists) { ?>
+                    <!--<small class="input-info">Price</small>-->
+                    <?php //} else { ?>
+                    <input type="text" name="input-2" id="input-2" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                    <small class="input-info">Price/Special</small>
+                    <?php //} ?>
+                  </span>
+                </div>
+                <?php //} ?>
               </div>
               <div class="field-block field-block-product button-height">
                 <label for="input-1" class="label"><b>Special Pricing</b></label>
