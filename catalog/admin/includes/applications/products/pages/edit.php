@@ -929,7 +929,7 @@ function toggleEditor(id) {
                   </span>
                 </span>
                 <span id="groups_pricing_pro_badge" class="info-spot on-left grey" style="display:none;">
-                  <img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="margin:0 0 -3px 5px;" />
+                  <img src="images/go-pro.png" style="margin:0 0 -3px 5px;" />
                   <span class="info-bubble">
                     <b>Go Pro!</b> and enjoy this feature!
                   </span>
@@ -982,7 +982,7 @@ function toggleEditor(id) {
                     <button type="button" class="button number-up">+</button>
                   </span>
                   <span class="info-spot on-left grey">
-                    <img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="margin:0 0 -3px 5px;" />
+                    <img src="images/go-pro.png" style="margin:0 0 -3px 5px;" />
                     <span class="info-bubble">
                       <b>Go Pro!</b> and enjoy this feature!
                     </span>
@@ -992,7 +992,7 @@ function toggleEditor(id) {
               <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
                 <label for="input-2" class="label">
                   <span class="info-spot on-left grey">
-                    <img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="border:2px solid grey;margin:-2px 0 0 -18px;" />
+                    <img src="images/go-pro.png" style="border:2px solid grey;margin:-2px 0 0 -18px;" />
                     <span class="info-bubble">
                       <b>Go Pro!</b> and enjoy this feature!
                     </span>
@@ -1184,31 +1184,136 @@ function toggleEditor(id) {
             <fieldset class="fieldset">
               <legend class="legend">Inventory Settings</legend>
               <div class="columns">
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Model Input
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>Model</span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <input type="text" class="required input full-width" value="" id="" name="">
+                  </div>
                 </div>
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Track Inventory Radio Group (Buttons) and Pro Button
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>Track Inventory Override</span>
+                    <span class="info-spot on-left grey">
+                      <img src="images/go-pro.png" />
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <span class="button-group">
+                      <label for="button-radio-1" class="button">
+                        <input type="radio" name="button-radio" id="button-radio-1" value="1">
+                        Default
+                      </label>
+                      <label for="button-radio-2" class="button">
+                        <input type="radio" name="button-radio" id="button-radio-2" value="2">
+                        On
+                      </label>
+                      <label for="button-radio-3" class="button">
+                        <input type="radio" name="button-radio" id="button-radio-3" value="3">
+                        Off
+                      </label>
+                    </span>
+                  </div>
                 </div>
               </div>
               <div class="columns">
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  MSRP Input
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>MSRP</span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <input type="text" class="required input full-width" value="" id="" name="">
+                  </div>
                 </div>
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Vendor Supplier Dropdown and Pro Button
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>Vendor/Supplier</span>
+                    <span class="info-spot on-left grey">
+                      <img src="images/go-pro.png" />
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <select class="select full-width small-margin-top">
+                      <option id="1" value="1">Vendor #1</option>
+                      <option id="2" value="2">Vendor #2</option>
+                      <option id="3" value="3">Vendor #3</option>
+                      <option id="4" value="4">Vendor #4</option>
+                      <option id="5" value="5">Vendor #5</option>
+                      <option id="6" value="6">Vendor #6</option>
+                      <option id="7" value="7">Vendor #7</option>
+                    </select>
+                  </div>
                 </div>
               </div>
               <div class="columns">
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Inventory Control Radio Group (Buttons)
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>Inventory Control</span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <span class="button-group">
+                      <label for="button-radio-1" class="button green-active">
+                        <input type="radio" name="button-radio" id="button-radio-1" value="1">
+                        Simple
+                      </label>
+                      <label for="button-radio-2" class="button green-active">
+                        <input type="radio" name="button-radio" id="button-radio-2" value="2">
+                        Multi SKU
+                      </label>
+                      <label for="button-radio-3" class="button green-active">
+                        <input type="radio" name="button-radio" id="button-radio-3" value="3">
+                        Recurring
+                      </label>
+                    </span>
+                    <span class="info-spot on-left grey small-margin-left small-margin-top">
+                      <img src="images/go-pro.png" />
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                  </div>
                 </div>
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Blank
-                </div>
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">&nbsp;</div>
               </div>
-              <div id="inventory_control_container" class="field-drop button-height black-inputs">
-                <label for="input-2" class="label"><b>Label</b></label>
+              <div id="inventory_control_container" class="field-drop button-height black-inputs no-margin-bottom">
+                <label for="input-2" class="label"><b>Qty On Hand</b></label>
                 <input type="text" name="input-2" id="input-2" value="" class="input">
                 <small class="input-info">Info below input</small>
               </div>
