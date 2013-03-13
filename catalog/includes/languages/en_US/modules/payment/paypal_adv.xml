@@ -13,7 +13,7 @@
     </definition>          
     <definition>
       <key>payment_paypal_adv_description</key>
-      <value><![CDATA[<img src="images/paypal-advanced-logo.png" border="0">]]></value>
+      <value><![CDATA[<img src="images/paypal-large.png" style="vertical-align:middle"><h3 class="thin">Payments Advanced</h3>]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>
@@ -21,18 +21,15 @@
       <value><![CDATA[Pay with PayPal - The faster, safer way to pay. <a target="_blank" href="https://www.paypal.com/webapps/mpp/referral/paypal-payments-advanced?partner_id=QXM5AQKDYTXQS"><small><i><u>Learn More</u></i></small></a>]]></value>
       <group>modules-payment</group>
     </definition>    
-    
     <definition>
       <key>payment_paypal_adv_error_no_response</key>
       <value><![CDATA[ERROR: There was no response from the PayPal server. Please try again.]]></value>
       <group>modules-payment</group>
     </definition> 
-    
     <definition>
       <key>payment_paypal_adv_error_occurred</key>
       <value><![CDATA[ERROR:]]></value>
       <group>modules-payment</group>
     </definition> 
-              
   </definitions>
 </language>

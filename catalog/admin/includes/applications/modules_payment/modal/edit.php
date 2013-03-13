@@ -79,6 +79,7 @@ function editModule(id) {
           },
           buttonsLowPadding: true
       });
+      $("#logo-image").html(data.desc);   
       $("#editModuleFormKeys").html(data.keys);   
  //     if ($.template.mediaQuery.isSmallerThan('desktop')) {
  //       $('.modal').attr('style', 'top:10px !important; left: 25%;  margin-left: -50px;');  

@@ -72,11 +72,8 @@ class lC_Modules_payment_Admin {
     $lC_Language->injectDefinitions('modules/payment/' . $id . '.xml');
     $module = 'lC_Payment_' . $id;
     $module = new $module();
-
-echo "<pre>";
-print_r($module);
-echo "</pre>";
-die();    
+    
+    $result['desc'] = $module->_description;
     
     $cnt = 0;
     $keys = '';
