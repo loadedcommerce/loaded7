@@ -37,13 +37,13 @@
 
       $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
       $Qinstall->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-      $Qinstall->bindValue(':title', $this->_title);
+      $Qinstall->bindValue(':title', strip_tags($this->_title));
       $Qinstall->bindValue(':code', $this->_code);
       $Qinstall->bindValue(':author_name', $this->_author_name);
       $Qinstall->bindValue(':author_www', $this->_author_www);
       $Qinstall->bindValue(':modules_group', $this->_group);
       $Qinstall->execute();
-
+      
       foreach ($lC_Language->getAll() as $key => $value) {
         if (file_exists('../includes/languages/' . $key . '/modules/' . $this->_group . '/' . $this->_code . '.xml')) {
           foreach ($lC_Language->extractDefinitions($key . '/modules/' . $this->_group . '/' . $this->_code . '.xml') as $def) {
