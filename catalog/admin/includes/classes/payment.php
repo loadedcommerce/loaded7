@@ -36,24 +36,24 @@ class lC_Payment_Admin extends lC_Payment {
   function install() {
     global $lC_Database, $lC_Language;
 
-    $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
-    $Qinstall->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-    $Qinstall->bindValue(':title', $this->_title);
-    $Qinstall->bindValue(':code', $this->_code);
-    $Qinstall->bindValue(':author_name', $this->_author_name);
-    $Qinstall->bindValue(':author_www', $this->_author_www);
-    $Qinstall->bindValue(':modules_group', $this->_group);
-    $Qinstall->execute();
-
-    foreach ($lC_Language->getAll() as $key => $value) {
-      if (file_exists('../includes/languages/' . $key . '/modules/' . $this->_group . '/' . $this->_code . '.xml')) {
-        foreach ($lC_Language->extractDefinitions($key . '/modules/' . $this->_group . '/' . $this->_code . '.xml') as $def) {
-          $Qcheck = $lC_Database->query('select id from :table_languages_definitions where definition_key = :definition_key and content_group = :content_group and languages_id = :languages_id limit 1');
-          $Qcheck->bindTable(':table_languages_definitions', TABLE_LANGUAGES_DEFINITIONS);
-          $Qcheck->bindValue(':definition_key', $def['key']);
-          $Qcheck->bindValue(':content_group', $def['group']);
-          $Qcheck->bindInt(':languages_id', $value['id']);
-          $Qcheck->execute();
+      $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
+      $Qinstall->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+      $Qinstall->bindValue(':title', strip_tags($this->_title));
+      $Qinstall->bindValue(':code', $this->_code);
+      $Qinstall->bindValue(':author_name', $this->_author_name);
+      $Qinstall->bindValue(':author_www', $this->_author_www);
+      $Qinstall->bindValue(':modules_group', $this->_group);
+      $Qinstall->execute();
+      
+      foreach ($lC_Language->getAll() as $key => $value) {
+        if (file_exists('../includes/languages/' . $key . '/modules/' . $this->_group . '/' . $this->_code . '.xml')) {
+          foreach ($lC_Language->extractDefinitions($key . '/modules/' . $this->_group . '/' . $this->_code . '.xml') as $def) {
+            $Qcheck = $lC_Database->query('select id from :table_languages_definitions where definition_key = :definition_key and content_group = :content_group and languages_id = :languages_id limit 1');
+            $Qcheck->bindTable(':table_languages_definitions', TABLE_LANGUAGES_DEFINITIONS);
+            $Qcheck->bindValue(':definition_key', $def['key']);
+            $Qcheck->bindValue(':content_group', $def['group']);
+            $Qcheck->bindInt(':languages_id', $value['id']);
+            $Qcheck->execute();
 
           if ($Qcheck->numberOfRows() === 1) {
             $Qdef = $lC_Database->query('update :table_languages_definitions set definition_value = :definition_value where definition_key = :definition_key and content_group = :content_group and languages_id = :languages_id');

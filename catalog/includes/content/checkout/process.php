@@ -52,7 +52,12 @@ class lC_Checkout_Process extends lC_Template {
 
     include($lC_Vqmod->modCheck('includes/classes/order.php'));
 
-    $lC_Payment->process();
+      if (isset($_SESSION['PROCESS_DATA']) && $_SESSION['PROCESS_DATA'] != NULL) {
+        $_POST = $_SESSION['PROCESS_DATA'];
+        unset($_SESSION['PROCESS_DATA']);
+      }
+      
+      $lC_Payment->process();
 
     $lC_ShoppingCart->reset(true);
 

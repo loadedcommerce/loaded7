@@ -165,7 +165,7 @@
       $Qorder->bindValue(':currency', $lC_Currencies->getCode());
       $Qorder->bindValue(':currency_value', $lC_Currencies->value($lC_Currencies->getCode()));
       $Qorder->execute();
-
+      
       $insert_id = $lC_Database->nextID();
 
       foreach ($lC_ShoppingCart->getOrderTotals() as $module) {

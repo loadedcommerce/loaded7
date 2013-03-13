@@ -13,9 +13,9 @@
 
   @function The lC_Updater_Admin class manages zM services
 */
-require_once('../includes/classes/transport/curl.php');  
-require_once('../includes/classes/transport/httpRequest.php');  
-require_once('../includes/classes/transport/stream.php');  
+require_once(DIR_FS_CATALOG . 'includes/classes/transport/curl.php');  
+require_once(DIR_FS_CATALOG . 'includes/classes/transport/httpRequest.php');  
+require_once(DIR_FS_CATALOG . 'includes/classes/transport/stream.php');  
 
 class transport {  
 

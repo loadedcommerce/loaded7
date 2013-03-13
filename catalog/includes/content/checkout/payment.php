@@ -87,8 +87,8 @@ class lC_Checkout_Payment extends lC_Template {
       $this->addJavascriptBlock($lC_Payment->getJavascriptBlocks());
     }
 
-    if (isset($_GET['payment_error']) && is_object(${$_GET['payment_error']}) && ($error = ${$_GET['payment_error']}->get_error())) {
-      $lC_MessageStack->add('checkout_payment', $error['error'], 'error');
+    if (isset($_GET['payment_error'])) {
+      $lC_MessageStack->add('checkout_payment', $_GET['payment_error'], 'error');
     }
   }
 }

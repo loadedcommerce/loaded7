@@ -28,7 +28,7 @@
 #payment-button { color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#873b7a !important; border:0px; line-height:100%; cursor:pointer; vertical-align:middle; float:right; }
 #payment-buttons-container { width: 98%; }
 #cancel { float:left; }
-#checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding: 13px 20px 35px 25px; width: 89%; }
+#checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding-top: 4px; width: 100%; height:450px; }
 .v-fix { padding-bottom:15px; }
 #payment_form_ccsave u { float:right; padding-right: 15px; }
 #payment-processing { right: 50px; margin-top: 8px; }
@@ -59,7 +59,8 @@
         </div>
         <div id="checkout-step-login">
           <div class="col2-set">
-            <div id="checkout_shipping_col1" style="width:35%; float:left;">
+          
+            <div id="checkout_shipping_col1" style="width:32%; float:left;">
               <div id="ot-container">
                 <div class="ot-block" id="order-number">
                   <label><?php echo $lC_Language->get('checkout_order_number'); ?></label>
@@ -75,13 +76,24 @@
               <div id="bill-to-address-block">
                 <h3><?php echo $lC_Language->get('bill_to_address'); ?></h3>
                 <span style="float:right;"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span> <span id="bill-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?></span>
-               </div>
+              </div>
             </div>
-            <div id="checkout_shipping_col2" style="width:60%; float:right;">
-              <div id="checkoutConfirmationDetails"> [[FORM INSERT]] </div>
-            </div>
+            
+            <div id="checkout_shipping_col2" style="width:67%; float:right; margin-right:-4px">
+              <div id="checkoutConfirmationDetails"> 
+                <?php
+                if (isset($_POST['SECURETOKEN']) && $_POST['SECURETOKEN'] != NULL && isset($_POST['iframe_action_url']) && $_POST['iframe_action_url'] != NULL) {
+                  // paypal iframe
+                  echo '<iframe src="' . $_POST['iframe_action_url'] . '?mode=' . $_POST['MODE'] . '&amp;SECURETOKEN=' . $_POST['SECURETOKEN'] . '&amp;SECURETOKENID=' . $_POST['SECURETOKENID'] . '" width="480" height="450" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
+                } else {
+                  // cre
+                  echo '[[FORM INSERT]]'; 
+                }
+              ?>
+              </div>
+            </div>     
           </div>
-        </div>
+        </div> 
       </li>
     </ol>
   </div>
