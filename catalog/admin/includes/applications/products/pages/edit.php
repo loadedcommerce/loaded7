@@ -947,7 +947,7 @@ function toggleEditor(id) {
                     <div class="new-row-mobile twelve-columns twelve-columns-mobile">
                       <input type="checkbox" class="switch checked">
                       <span class="input">
-                        <input name="" id="" value="" placeholder="Price or %" class="input-unstyled">
+                        <input name="" id="" value="" placeholder="Price or %" class="input-unstyled align-right">
                       </span>
                     </div>
                     <div class="new-row-mobile twelve-columns twelve-columns-mobile">
@@ -963,6 +963,105 @@ function toggleEditor(id) {
                 </div>
               </div>                
             </fieldset>
+            <dl class="accordion same-height">
+              <dt>Retail Price</dt>
+              <dd>
+                <?php // if no options set ?>
+                  <!-- Please Create your inventory Option -->
+                <?php //} else { ?>
+                <div class="left-column-200px margin-bottom clear-left with-mid-padding">
+                  <div class="left-column">
+                    IOption Set - SKU&nbsp;&nbsp;
+                    <span class="info-spot on-left grey">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="right-column">
+                    Price&nbsp;&nbsp;
+                    <span class="info-spot on-left grey">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Special&nbsp;Price&nbsp;&nbsp;
+                    <span class="info-spot on-left grey">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="left-column-200px margin-bottom clear-left with-mid-padding">
+                  <?php //foreach() { ?>
+                  <div class="left-column with-small-padding">
+                    Red Medium - KSRM0001
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <div class="left-column with-small-padding silver-bg">
+                    Red Large - KSRL0023
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <div class="left-column with-small-padding">
+                    Red X Large - KSRXL0011
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <div class="left-column with-small-padding silver-bg">
+                    Green Medium - KSGM0054
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <div class="left-column with-small-padding">
+                    Green Large - KSGL0055
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <div class="left-column with-small-padding silver-bg">
+                    Green X Large - KSGXL0167
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <?php //} //} ?>
+                </div>
+              </dd>
+            </dl>
           </div>
           <!-- data_tab -->
           <div id="section_data_content" class="with-padding">
