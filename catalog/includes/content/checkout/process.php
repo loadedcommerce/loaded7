@@ -53,6 +53,11 @@
 
       include('includes/classes/order.php');
 
+      if (isset($_SESSION['PROCESS_DATA']) && $_SESSION['PROCESS_DATA'] != NULL) {
+        $_POST = $_SESSION['PROCESS_DATA'];
+        unset($_SESSION['PROCESS_DATA']);
+      }
+      
       $lC_Payment->process();
 
       $lC_ShoppingCart->reset(true);

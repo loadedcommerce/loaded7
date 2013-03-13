@@ -18,13 +18,10 @@ require('includes/application_top.php');
 <head>
 <title></title>
 <?php
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";  
-  
+if (isset($_POST) && $_POST != NULL) $_SESSION['PROCESS_DATA'] = $_POST;
 ?>
 <script>
-// parent.location = '';
+ parent.location = '<?php echo lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true); ?>';
 </script>
 </head>
 <body>
