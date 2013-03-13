@@ -11,6 +11,9 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+echo "<pre>post ";
+print_r($_POST);
+echo "</pre>";
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
