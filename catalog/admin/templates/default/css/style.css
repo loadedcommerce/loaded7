@@ -4586,3 +4586,18 @@ a:link {
 @media screen and (max-width: 991px) {
   .hide-below-992 { display: none !important; } 
 }
+
+@media screen and (max-width: 479px) {
+  #section_general_content, 
+  #section_images_content, 
+  #section_pricing_content, 
+  #section_data_content, 
+  #section_options_content, 
+  #section_shipping_content,
+  #section_relationships_content {
+    margin: -15px; 
+  }
+  .fieldset {
+    padding: 20px 10px 0 10px !important;
+  } 
+}

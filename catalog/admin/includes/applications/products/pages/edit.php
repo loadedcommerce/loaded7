@@ -659,9 +659,7 @@ function toggleEditor(id) {
                   &nbsp;
                 </div>
                 <div class="twelve-columns">
-                  <!--<br />
-                  <center></center>
-                  <span class="float-left">Drag Image to replace</span>--><span>Image</span>
+                  <span>Image</span>
                   <span class="info-spot on-left grey float-right">
                     <span class="icon-info-round"></span>
                     <span class="info-bubble">
@@ -670,10 +668,11 @@ function toggleEditor(id) {
                   </span>
                   <dl class="accordion same-height small-margin-top">
                     <dt>Preview
-                    <div class="button-group absolute-right compact mid-margin-right">
-                      <a href="#" class="button icon-cloud-upload">Upload</a>
-                      <a href="#" class="button icon-trash with-tooltip confirm" title="Delete"></a>
-                    </div></dt>
+                      <div class="button-group absolute-right compact mid-margin-right">
+                        <a href="#" class="button icon-cloud-upload">Upload</a>
+                        <a href="#" class="button icon-trash with-tooltip confirm" title="Delete"></a>
+                      </div>
+                    </dt>
                     <dd>
                       <div class="with-padding">
                         <div class="prod-image"><img src="images/no-prod-image.png" style="max-width: 100%; height: auto;" /><br />No Image</div>
@@ -764,15 +763,11 @@ function toggleEditor(id) {
                 </div>
               </div>
             </div>
-            
-            
             <div class="field-drop-product button-height black-inputs extreme-margin-bottom">
               <div class="columns">
                 <div class="new-row-mobile four-columns twelve-columns-mobile"></div>
                 <div class="new-row-mobile eight-columns twelve-columns-mobile">
-                  
                   <div style="width:100%;">
-                  
                     <div style="float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
                       <span class="full-width">
                         <span>Base Price</span>
@@ -796,29 +791,25 @@ function toggleEditor(id) {
                           </span>
                         </span>
                       </span><br />
-                        <span class="button-group">
-                          <label for="button-radio-1" class="button blue-active">
-                            <input type="radio" name="button-radio" id="button-radio-1" value="1" checked>
-                            Active
-                          </label>
-                          <label for="button-radio-2" class="button blue-active">
-                            <input type="radio" name="button-radio" id="button-radio-2" value="2">
-                            Inactive
-                          </label>
-                          <label for="button-radio-3" class="button blue-active">
-                            <input type="radio" name="button-radio" id="button-radio-3" value="3">
-                            Coming Soon
-                          </label>
-                        </span>
-                    </div>
-                  
-                  </div>
-                  
+                      <span class="button-group">
+                        <label for="ps-radio-1" class="button blue-active">
+                          <input type="radio" name="product-status-radio-group" id="ps-radio-1" value="1" checked>
+                          Active
+                        </label>
+                        <label for="ps-radio-2" class="button blue-active">
+                          <input type="radio" name="product-status-radio-group" id="ps-radio-2" value="2">
+                          Inactive
+                        </label>
+                        <label for="ps-radio-3" class="button blue-active">
+                          <input type="radio" name="product-status-radio-group" id="ps-radio-3" value="3">
+                          Coming Soon
+                        </label>
+                      </span>
+                    </div>                  
+                  </div>                  
                 </div>
               </div>
             </div>
-            
-            
             <div class="columns">
               <div class="four-columns twelve-columns-mobile large-margin-bottom">
                 <center><img src="images/prodchart.png" /></center>
@@ -1216,16 +1207,16 @@ function toggleEditor(id) {
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
                     <span class="button-group">
-                      <label for="button-radio-1" class="button">
-                        <input type="radio" name="button-radio" id="button-radio-1" value="1">
+                      <label for="ti-radio-1" class="button">
+                        <input type="radio" name="track-inventory-radio-group" id="ti-radio-1" value="1" checked>
                         Default
                       </label>
-                      <label for="button-radio-2" class="button">
-                        <input type="radio" name="button-radio" id="button-radio-2" value="2">
+                      <label for="ti-radio-2" class="button">
+                        <input type="radio" name="track-inventory-radio-group" id="ti-radio-2" value="2">
                         On
                       </label>
-                      <label for="button-radio-3" class="button">
-                        <input type="radio" name="button-radio" id="button-radio-3" value="3">
+                      <label for="ti-radio-3" class="button">
+                        <input type="radio" name="track-inventory-radio-group" id="ti-radio-3" value="3">
                         Off
                       </label>
                     </span>
@@ -1280,6 +1271,12 @@ function toggleEditor(id) {
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
                     <span>Inventory Control</span>
+                    <span class="info-spot on-left grey small-margin-left">
+                      <img src="images/go-pro.png" />
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
                     <span class="info-spot on-left grey float-right">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
@@ -1289,24 +1286,18 @@ function toggleEditor(id) {
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
                     <span class="button-group">
-                      <label for="button-radio-1" class="button green-active">
-                        <input type="radio" name="button-radio" id="button-radio-1" value="1">
+                      <label for="ic-radio-1" class="button green-active">
+                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-1" value="1" checked>
                         Simple
                       </label>
-                      <label for="button-radio-2" class="button green-active">
-                        <input type="radio" name="button-radio" id="button-radio-2" value="2">
+                      <label for="ic-radio-2" class="button green-active">
+                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-2" value="2">
                         Multi SKU
                       </label>
-                      <label for="button-radio-3" class="button green-active">
-                        <input type="radio" name="button-radio" id="button-radio-3" value="3">
+                      <label for="ic-radio-3" class="button green-active">
+                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-3" value="3">
                         Recurring
                       </label>
-                    </span>
-                    <span class="info-spot on-left grey small-margin-left small-margin-top">
-                      <img src="images/go-pro.png" />
-                      <span class="info-bubble">
-                        <b>Go Pro!</b> and enjoy this feature!
-                      </span>
                     </span>
                   </div>
                 </div>
