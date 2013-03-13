@@ -1,5 +1,5 @@
 <?php
-/*
+  /*
   $Id: reviews.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -10,16 +10,16 @@
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
-*/
+  */
 
   class lC_Products_Reviews extends lC_Template {
 
     /* Private variables */
     var $_module = 'reviews',
-        $_group = 'products',
-        $_page_title,
-        $_page_contents = 'reviews.php',
-        $_page_image = 'table_background_reviews_new.gif';
+    $_group = 'products',
+    $_page_title,
+    $_page_contents = 'reviews.php',
+    $_page_image = 'table_background_reviews_new.gif';
 
     /* Class constructor */
     function lC_Products_Reviews() {
@@ -40,7 +40,7 @@
           $lC_Product = new lC_Product(lC_Reviews::getProductID($_GET[$this->_module]));
 
           $this->_page_title = $lC_Product->getTitle();
-          
+
           $this->addOGPTags('type', 'product');
           $this->addOGPTags('title', $lC_Product->getTitle() . ' ' . $lC_Product->getModel());
           $this->addOGPTags('description', $lC_Currencies->displayPrice($lC_Product->getPriceBreak(), $lC_Product->getTaxClassID()) .  ' - ' . $lC_Product->getTitle() . ' ' . lc_clean_html($lC_Product->getDescription()));
@@ -54,70 +54,68 @@
             }
           }
         }
-          $this->_page_contents = 'reviews_info.php';
+        $this->_page_contents = 'reviews_info.php';
 
-          if ($lC_Services->isStarted('breadcrumb')) {
-            $lC_Breadcrumb->add($lC_Product->getTitle(), lc_href_link(FILENAME_PRODUCTS, $this->_module . '=' . $_GET[$this->_module]));
-          }
-        } else {
-          $this->_page_contents = 'reviews_not_found.php';
+        if ($lC_Services->isStarted('breadcrumb')) {
+          $lC_Breadcrumb->add($lC_Product->getTitle(), lc_href_link(FILENAME_PRODUCTS, $this->_module . '=' . $_GET[$this->_module]));
         }
       } else {
-        $counter = 0;
-        foreach ($_GET as $key => $value) {
-          $counter++;
-
-          if ($counter < 2) {
-            continue;
-          }
-
-          if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) ) {
-            if (lC_Product::checkEntry($key) === false) {
-              $this->_page_contents = 'info_not_found.php';
-            } elseif ($_GET[$this->_module] == 'new') {
-              if ( ($lC_Customer->isLoggedOn() === false ) && (SERVICE_REVIEW_ENABLE_REVIEWS == 1) ) {
-                $lC_NavigationHistory->setSnapshot();
-
-                lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
-              }
-
-              $lC_Product = new lC_Product($key);
-
-              $this->_page_title = $lC_Product->getTitle();
-              $this->_page_contents = 'reviews_new.php';
-
-              if ($lC_Services->isStarted('breadcrumb')) {
-                $lC_Breadcrumb->add($lC_Product->getTitle(), lc_href_link(FILENAME_PRODUCTS, $this->_module . '&' . $lC_Product->getKeyword()));
-                $lC_Breadcrumb->add($lC_Language->get('breadcrumb_reviews_new'), lc_href_link(FILENAME_PRODUCTS, $this->_module . '=new&' . $lC_Product->getKeyword()));
-              }
-
-              if (isset($_GET['action']) && ($_GET['action'] == 'process')) {
-                $this->_process($lC_Product->getID());
-              }
-            } else {
-              $lC_Product = new lC_Product($key);
-
-              $this->_page_title = $lC_Product->getTitle();
-              $this->_page_contents = 'product_reviews.php';
-
-              if ($lC_Services->isStarted('breadcrumb')) {
-                $lC_Breadcrumb->add($lC_Product->getTitle(), lc_href_link(FILENAME_PRODUCTS, $this->_module . '&' . $lC_Product->getKeyword()));
-              }
-            }
-          }
-
-          break;
-        }
+        $this->_page_contents = 'reviews_not_found.php';
+      } 
+      $counter = 0;
+      foreach ($_GET as $key => $value) {
+        $counter++;
 
         if ($counter < 2) {
-          if (lC_Reviews::exists() === false) {
-            $this->_page_contents = 'reviews_not_found.php';
+          continue;
+        }
+
+        if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) ) {
+          if (lC_Product::checkEntry($key) === false) {
+            $this->_page_contents = 'info_not_found.php';
+          } elseif ($_GET[$this->_module] == 'new') {
+            if ( ($lC_Customer->isLoggedOn() === false ) && (SERVICE_REVIEW_ENABLE_REVIEWS == 1) ) {
+              $lC_NavigationHistory->setSnapshot();
+
+              lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
+            }
+
+            $lC_Product = new lC_Product($key);
+
+            $this->_page_title = $lC_Product->getTitle();
+            $this->_page_contents = 'reviews_new.php';
+
+            if ($lC_Services->isStarted('breadcrumb')) {
+              $lC_Breadcrumb->add($lC_Product->getTitle(), lc_href_link(FILENAME_PRODUCTS, $this->_module . '&' . $lC_Product->getKeyword()));
+              $lC_Breadcrumb->add($lC_Language->get('breadcrumb_reviews_new'), lc_href_link(FILENAME_PRODUCTS, $this->_module . '=new&' . $lC_Product->getKeyword()));
+            }
+
+            if (isset($_GET['action']) && ($_GET['action'] == 'process')) {
+              $this->_process($lC_Product->getID());
+            }
+          } else {
+            $lC_Product = new lC_Product($key);
+
+            $this->_page_title = $lC_Product->getTitle();
+            $this->_page_contents = 'product_reviews.php';
+
+            if ($lC_Services->isStarted('breadcrumb')) {
+              $lC_Breadcrumb->add($lC_Product->getTitle(), lc_href_link(FILENAME_PRODUCTS, $this->_module . '&' . $lC_Product->getKeyword()));
+            }
           }
+        }
+
+        break;
+      }
+
+      if ($counter < 2) {
+        if (lC_Reviews::exists() === false) {
+          $this->_page_contents = 'reviews_not_found.php';
         }
       }
     }
 
-/* Private methods */
+    /* Private methods */
 
     function _process($id) {
       global $lC_Language, $lC_MessageStack, $lC_Customer, $lC_Reviews;
