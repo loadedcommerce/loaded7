@@ -43,7 +43,7 @@ class lC_Modules_payment_Admin {
         if ( $module->isInstalled() ) {
           $action = '<td class="align-right vertical-center"><span class="button-group compact">
                        <a href="' . ((int)($_SESSION['admin']['access']['modules'] < 3) ? '#' : 'javascript://" onclick="editModule(\'' . $module->_code . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['modules'] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                       <a href="' . ((int)($_SESSION['admin']['access']['modules'] < 4) ? '#' : 'javascript://" onclick="uninstallModule(\'' . $module->_code . '\', \'' . urlencode($module->_title) . '\')') . '" class="button icon-minus-round icon-red with-tooltip' . ((int)($_SESSION['admin']['access']['modules'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_uninstall') . '"></a>
+                       <a href="' . ((int)($_SESSION['admin']['access']['modules'] < 4) ? '#' : 'javascript://" onclick="uninstallModule(\'' . $module->_code . '\', \'' . urlencode(strip_tags($module->_title)) . '\')') . '" class="button icon-minus-round icon-red with-tooltip' . ((int)($_SESSION['admin']['access']['modules'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_uninstall') . '"></a>
                      </span></td>';
         } else {
           $action = '<td class="align-right vertical-center"><span class="button-group compact">
@@ -73,6 +73,11 @@ class lC_Modules_payment_Admin {
     $module = 'lC_Payment_' . $id;
     $module = new $module();
 
+echo "<pre>";
+print_r($module);
+echo "</pre>";
+die();    
+    
     $cnt = 0;
     $keys = '';
     foreach ( $module->getKeys() as $key ) {
@@ -86,7 +91,7 @@ class lC_Modules_payment_Admin {
       } else {
         $keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input"');
       }
-      $keys .= '&nbsp;<span class="icon-info-round icon-blue with-tooltip with-small-padding" style="cursor:pointer;" title="' . $Qkey->value('configuration_description') . '" data-tooltip-options=\'{"classes":["anthracite-gradient"]}\'></span><br /><br />';
+      $keys .= '&nbsp;<span class="icon-info-round icon-blue with-tooltip with-small-padding" style="cursor:pointer;" title="' . $Qkey->value('configuration_description') . '" data-tooltip-options=\'{"classes":["blue-gradient"]}\'></span><br /><br />';
       $cnt++;
     }
     $result['keys'] = substr($keys, 0, strrpos($keys, '<br /><br />'));

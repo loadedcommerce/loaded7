@@ -7,18 +7,13 @@
       <group>modules-payment</group>
     </definition>  
     <definition>
-      <key>payment_paypal_adv_subtitle</key>
-      <value><![CDATA[Accept payments with a PCI-compliant checkout that keeps customers on your site.]]></value>
-      <group>modules-payment</group>
-    </definition>
-    <definition>
       <key>payment_paypal_adv_payment_title</key>
       <value><![CDATA[Secure Payments by %s]]></value>
       <group>modules-payment</group>
     </definition>          
     <definition>
       <key>payment_paypal_adv_description</key>
-      <value><![CDATA[<div></div>]]></value>
+      <value><![CDATA[<img src="images/paypal-advanced-logo.png" border="0">]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>

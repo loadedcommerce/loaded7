@@ -14,13 +14,6 @@
 ?>
 <style>
 #editModule { padding-bottom:20px; }
-.field-block {
-    margin: 0 -20px;
-    padding: 0 30px 0 260px;
-}
-.field-block .label, .field-drop .label {
-    margin: 0 0 0 -255px;
-    width: 113%;
 </style>
 <script>
 function editModule(id) {
@@ -41,7 +34,8 @@ function editModule(id) {
         return false;
       }
       $.modal({
-          content: '<fieldset style="background-size:50% 100%;" class="fieldset fields-list">'+
+          content: '<span id="logo-image"></span>'+
+                   '<fieldset class="fieldset fields-list">'+
                    '  <form name="mEdit" id="mEdit" autocomplete="off" action="" method="post">'+
                    '    <div class="field-block" id="editModuleFormKeys">'+
                    '    </div>'+
