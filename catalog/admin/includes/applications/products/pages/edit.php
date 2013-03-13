@@ -916,11 +916,11 @@ function toggleEditor(id) {
             <fieldset class="fieldset fields-list">
               <legend class="legend">Pricing Overrides2</legend>
               <div class="field-block button-height">
-                <label for="input-1" class="label"><b>Base Price</b></label>
-                <input type="text" name="input-1" id="input-1" value="" class="input">
+                <label for="" class="label"><b>Base Price</b></label>
+                <input type="text" name="" id="" value="" class="input">
               </div>
               <div class="field-block field-block-product button-height">
-                <label for="input-1" class="label"><b>Group Pricing</b></label>
+                <label for="" class="label"><b>Group Pricing</b></label>
                 <input onchange="$('#groups_pricing_pro_badge').toggle('300');$('#groups_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
                 <span class="info-spot on-left grey margin-left">
                   <span class="icon-info-round"></span>
@@ -938,7 +938,7 @@ function toggleEditor(id) {
               <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
                 <?php //foreach() { ?>
                 <div>
-                  <label for="input-2" class="label margin-right"><b>Reseller Group 1</b></label>
+                  <label for="" class="label margin-right"><b>Reseller Group 1</b></label>
                   <input type="checkbox" class="switch checked margin-right">
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
@@ -947,7 +947,7 @@ function toggleEditor(id) {
                   <small class="input-info">Price/Special</small>
                 </div>
                 <div>
-                  <label for="input-2" class="label margin-right"><b>Employee Group</b></label>
+                  <label for="" class="label margin-right"><b>Employee Group</b></label>
                   <input type="checkbox" class="switch checked margin-right">
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
@@ -956,7 +956,7 @@ function toggleEditor(id) {
                   <small class="input-info">Price/Special</small>
                 </div>
                 <div>
-                  <label for="input-2" class="label margin-right"><b>Gold Reseller</b></label>
+                  <label for="" class="label margin-right"><b>Gold Reseller</b></label>
                   <input type="checkbox" class="switch checked margin-right">
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
@@ -967,7 +967,7 @@ function toggleEditor(id) {
                 <?php //} ?>
               </div>
               <div class="field-block field-block-product button-height">
-                <label for="input-1" class="label"><b>Qty Break Pricing</b></label>
+                <label for="" class="label"><b>Qty Break Pricing</b></label>
                 <input onchange="$('#qty_breaks_number_of_break_points').toggle('300');$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
                 <span class="info-spot on-left grey margin-left margin-right">
                   <span class="icon-info-round"></span>
@@ -990,7 +990,7 @@ function toggleEditor(id) {
                 </span>
               </div> 
               <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-                <label for="input-2" class="label">
+                <label for="" class="label">
                   <span class="info-spot on-left grey">
                     <img src="images/go-pro.png" style="border:2px solid grey;margin:-2px 0 0 -18px;" />
                     <span class="info-bubble">
@@ -1048,7 +1048,7 @@ function toggleEditor(id) {
                 <?php //} ?>
               </div>
               <div class="field-block field-block-product button-height">
-                <label for="input-1" class="label"><b>Special Pricing</b></label>
+                <label for="" class="label"><b>Special Pricing</b></label>
                 <input onchange="$('#specials_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
                 <span class="info-spot on-left grey margin-left margin-right">
                   <span class="icon-info-round"></span>
@@ -1313,8 +1313,8 @@ function toggleEditor(id) {
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">&nbsp;</div>
               </div>
               <div id="inventory_control_container" class="field-drop button-height black-inputs no-margin-bottom">
-                <label for="input-2" class="label"><b>Qty On Hand</b></label>
-                <input type="text" name="input-2" id="input-2" value="" class="input">
+                <label for="" class="label"><b>Qty On Hand</b></label>
+                <input type="text" name="" id="" value="" class="input">
                 <small class="input-info">Info below input</small>
               </div>
             </fieldset>
