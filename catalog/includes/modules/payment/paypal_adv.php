@@ -193,10 +193,13 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $tokenArr = $this->_getSecureToken();
         
     $process_button_string = lc_draw_hidden_field('SECURETOKEN', $tokenArr['SECURETOKEN']) . 
-                             lc_draw_hidden_field('SECURETOKENID', $tokenArr['SECURETOKENID']);
+                             lc_draw_hidden_field('SECURETOKENID', $tokenArr['SECURETOKENID']); 
                      
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {                            
       $process_button_string .= lc_draw_hidden_field('MODE', 'TEST');
+    }
+    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') {
+      $process_button_string .= lc_draw_hidden_field('iframe_action_url', $this->form_action_url);
     }
     
     return $process_button_string;
@@ -293,7 +296,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
 
     $secureTokenId = uniqid('', true); 
     $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
-    $template = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ? 'MINILAYOUT' : ((MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'B') ? 'TEMPLATEB' : 'TEMPLATEA');
+    $template = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ? 'MINLAYOUT' : ((MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'B') ? 'TEMPLATEB' : 'TEMPLATEA');
+    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ?  lc_href_link('includes/modules/payment/paypal_adv/iframe_process.php', '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
     
     $postData = "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
                 "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
@@ -307,10 +311,10 @@ class lC_Payment_paypal_adv extends lC_Payment {
                 "&TAXAMT=" . $lC_Currencies->formatRaw($taxTotal, $lC_Currencies->getCode()) . 
                 "&FREIGHTAMT=" . $shippingTotal . 
                 "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
-                "&RETURNURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
+                "&RETURNURL=" . $returnUrl .
                 "&ERRORURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
                 "&CANCELURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
-                "&TEMPLATE=" . MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE .
+                "&TEMPLATE=" . $template .
                 "&BILLTOFIRSTNAME=" . $lC_ShoppingCart->getBillingAddress('firstname') . 
                 "&BILLTOLASTNAME=" . $lC_ShoppingCart->getBillingAddress('lastname') . 
                 "&BILLTOSTREET=" . $lC_ShoppingCart->getBillingAddress('street_address') . 
