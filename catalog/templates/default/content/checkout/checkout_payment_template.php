@@ -84,7 +84,7 @@
                 <?php
                 if (isset($_POST['SECURETOKEN']) && $_POST['SECURETOKEN'] != NULL && isset($_POST['iframe_action_url']) && $_POST['iframe_action_url'] != NULL) {
                   // paypal iframe
-                  echo '<iframe src="' . $_POST['iframe_action_url'] . '?mode=' . $_POST['MODE'] . '&amp;SECURETOKEN=' . $_POST['SECURETOKEN'] . '&amp;SECURETOKENID=' . $_POST['SECURETOKENID'] . '" width="480" height="565" scrolling="no" frameborder="1" border="0" allowtransparency="true"></iframe>';
+                  echo '<iframe src="' . $_POST['iframe_action_url'] . '?mode=' . $_POST['MODE'] . '&amp;SECURETOKEN=' . $_POST['SECURETOKEN'] . '&amp;SECURETOKENID=' . $_POST['SECURETOKENID'] . '" width="480" height="450" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
                 } else {
                   // cre
                   echo '[[FORM INSERT]]'; 
