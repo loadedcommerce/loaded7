@@ -1313,9 +1313,21 @@ function toggleEditor(id) {
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">&nbsp;</div>
               </div>
               <div id="inventory_control_container" class="field-drop button-height black-inputs no-margin-bottom">
-                <label for="" class="label"><b>Qty On Hand</b></label>
-                <input type="text" name="" id="" value="" class="input">
-                <small class="input-info">Info below input</small>
+                <div>
+                  <label for="" class="label"><b>Qty On Hand</b></label>
+                  <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;">
+                  <input type="text" name="" id="" value="" class="input">
+                  <b>SKU/EAN13</b>
+                </div>
+                <div class="small-margin-top">
+                  <input type="text" name="" id="" value="" class="input small-margin-right"> Cost
+                  <span class="info-spot on-left grey small-margin-left">
+                    <img src="images/go-pro.png" />
+                    <span class="info-bubble">
+                      <b>Go Pro!</b> and enjoy this feature!
+                    </span>
+                  </span> 
+                </div>
               </div>
             </fieldset>
             <fieldset class="fieldset">
