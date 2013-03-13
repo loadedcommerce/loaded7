@@ -53,14 +53,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @var integer
   * @access protected
   */  
-  protected $_sort_order;  
- /**
-  * The allowed credit card types (pipe separated)
-  *
-  * @var string
-  * @access protected
-  */ 
-  protected $_allowed_types;  
+  protected $_sort_order;    
  /**
   * The order id
   *
@@ -75,13 +68,6 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @access protected
   */   
   protected $_order_status_complete;
- /**
-  * The credit card image string
-  *
-  * @var string
-  * @access protected
-  */   
-  protected $_card_images;  
  /**
   * The public title of the payment module (storeside)
   *
