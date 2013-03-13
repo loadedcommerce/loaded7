@@ -4579,6 +4579,10 @@ a:link {
   vertical-align:middle;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 @media screen and (max-width: 991px) {
   .hide-below-992 { display: none !important; } 
 }

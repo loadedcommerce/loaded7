@@ -937,11 +937,24 @@ function toggleEditor(id) {
                     <input type="text" value="3" size="3" class="input-unstyled">
                     <button type="button" class="button number-up">+</button>
                   </span>
-                  <img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="margin:0 0 -4px 5px;" />
+                  <span class="info-spot on-left grey">
+                    <img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="margin:-2px 0 -4px 5px;" />
+                    <span class="info-bubble">
+                      <b>Go Pro!</b> and enjoy this feature!
+                    </span>
+                  </span>
                 </span>
               </div> 
               <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-                <label for="input-2" class="label"><img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="border:2px solid grey;margin:0 5px -4px;" /><b>Pro</b></label>
+                <label for="input-2" class="label">
+                  <span class="info-spot on-left grey">
+                    <img src="images/go-pro.png" title="Go Pro Now and enjoy this feature!" style="border:2px solid grey;margin:-2px 0 0 -18px;" />
+                    <span class="info-bubble">
+                      <b>Go Pro!</b> and enjoy this feature!
+                    </span>
+                  </span>
+                  <b>Retail</b>
+                </label>
                 <?php //foreach() { ?>
                 <div>
                   <span style="white-space:nowrap;">
