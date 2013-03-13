@@ -14,7 +14,7 @@
 ?>
 <style>
 #editModule { padding-bottom:20px; }
-label { margin-top:4px; }
+label { margin-top:4px !important; }
 </style>
 <script>
 function editModule(id) {
