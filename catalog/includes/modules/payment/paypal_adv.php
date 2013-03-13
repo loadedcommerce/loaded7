@@ -276,7 +276,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     foreach ($lC_ShoppingCart->getProducts() as $products) {
       $itemsString .= '&L_NAME' . (string)$cnt . '=' . $products['name'] .
                       //'&L_DESC' . (string)$cnt . '=' . substr($products['description'], 0, 40) .
-                      '&L_DESC=test_desc' .
+                      '&L_DESC' . (string)$cnt . '=test_desc' .
                       '&L_SKU' . (string)$cnt . '=' . $products['id'] .
                       '&L_COST' . (string)$cnt . '=' . $products['price'] .
                       '&L_QTY' . (string)$cnt . '=' . $products['quantity'];
@@ -292,6 +292,10 @@ class lC_Payment_paypal_adv extends lC_Payment {
 
     $secureTokenId = uniqid('', true); 
     $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
+    $template = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ? 'MINILAYOUT' : ((MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'B') ? 'TEMPLATEB' : 'TEMPLATEA');
+    
+echo '[' . $template . ']<br>';
+die();    
     $postData = "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
                 "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
                 "&PARTNER=Paypal" . 
