@@ -19,5 +19,6 @@
   define('FILENAME_INFO', 'info.php');
   define('FILENAME_PRODUCTS', 'products.php');
   define('FILENAME_REDIRECT', 'redirect.php');
+  define('FILENAME_IREDIRECT', 'iredirect.php');
   define('FILENAME_SEARCH', 'search.php');
 ?>

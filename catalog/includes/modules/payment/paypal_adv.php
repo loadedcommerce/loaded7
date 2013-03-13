@@ -297,7 +297,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $secureTokenId = uniqid('', true); 
     $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
     $template = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ? 'MINLAYOUT' : ((MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'B') ? 'TEMPLATEB' : 'TEMPLATEA');
-    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ?  lc_href_link('includes/modules/payment/paypal_adv/iframe_process.php', '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
+    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
     
     $postData = "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
                 "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
@@ -312,8 +312,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
                 "&FREIGHTAMT=" . $shippingTotal . 
                 "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
                 "&RETURNURL=" . $returnUrl .
-                "&ERRORURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
-                "&CANCELURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
+                "&ERRORURL=" . $returnUrl .
+                "&CANCELURL=" . $returnUrl .
                 "&TEMPLATE=" . $template .
                 "&BILLTOFIRSTNAME=" . $lC_ShoppingCart->getBillingAddress('firstname') . 
                 "&BILLTOLASTNAME=" . $lC_ShoppingCart->getBillingAddress('lastname') . 
