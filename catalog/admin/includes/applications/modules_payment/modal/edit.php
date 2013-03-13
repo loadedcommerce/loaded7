@@ -82,12 +82,12 @@ function editModule(id) {
       });
       $("#logo-image").html(data.desc);   
       $("#editModuleFormKeys").html(data.keys);   
- //     if ($.template.mediaQuery.isSmallerThan('desktop')) {
- //       $('.modal').attr('style', 'top:10px !important; left: 25%;  margin-left: -50px;');  
- //     } 
- //     if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
- //       $('.modal').attr('style', 'top:10px !important; left: 19%;  margin-left: -50px;');  
- //     }      
+      if ($.template.mediaQuery.isSmallerThan('desktop')) {
+        $('.modal').attr('style', 'top:10px !important; left: 25%;  margin-left: -50px;');  
+      } 
+      if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
+        $('.modal').attr('style', 'top:10px !important; left: 19%;  margin-left: -50px;');  
+      }      
     }
   );
 }
