@@ -230,24 +230,23 @@ class lC_Payment_paypal_adv extends lC_Payment {
           $errmsg = sprintf($lC_Language->get('error_payment_problem'), '(' . $result . ') ' . $_POST['RESPMSG']);
           $error = true;
         }
-        
-        // insert into transaction history
-        $this->_transaction_response = $result;
+    }   
+    // insert into transaction history
+    $this->_transaction_response = $result;
 
-        $response_array = array('root' => $_POST);
-        $response_array['root']['transaction_response'] = trim($this->_transaction_response);
-        $lC_XML = new lC_XML($response_array);
-        
-        $Qtransaction = $lC_Database->query('insert into :table_orders_transactions_history (orders_id, transaction_code, transaction_return_value, transaction_return_status, date_added) values (:orders_id, :transaction_code, :transaction_return_value, :transaction_return_status, now())');
-        $Qtransaction->bindTable(':table_orders_transactions_history', TABLE_ORDERS_TRANSACTIONS_HISTORY);
-        $Qtransaction->bindInt(':orders_id', $order_id);
-        $Qtransaction->bindInt(':transaction_code', 1);
-        $Qtransaction->bindValue(':transaction_return_value', $lC_XML->toXML());
-        $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '000') ? 1 : 0);
-        $Qtransaction->execute();
-        
-        if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
-    }
+    $response_array = array('root' => $_POST);
+    $response_array['root']['transaction_response'] = trim($this->_transaction_response);
+    $lC_XML = new lC_XML($response_array);
+    
+    $Qtransaction = $lC_Database->query('insert into :table_orders_transactions_history (orders_id, transaction_code, transaction_return_value, transaction_return_status, date_added) values (:orders_id, :transaction_code, :transaction_return_value, :transaction_return_status, now())');
+    $Qtransaction->bindTable(':table_orders_transactions_history', TABLE_ORDERS_TRANSACTIONS_HISTORY);
+    $Qtransaction->bindInt(':orders_id', $this->_order_id);
+    $Qtransaction->bindInt(':transaction_code', 1);
+    $Qtransaction->bindValue(':transaction_return_value', $lC_XML->toXML());
+    $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '0') ? 1 : 0);
+    $Qtransaction->execute();
+    
+    if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
   } 
  /**
   * Check the status of the pasyment module
@@ -279,11 +278,11 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $itemsString = '';
     foreach ($lC_ShoppingCart->getProducts() as $products) {
       $itemsString .= '&L_NAME' . (string)$cnt . '=' . $products['name'] .
-                      //'&L_DESC' . (string)$cnt . '=' . substr($products['description'], 0, 40) .
-                      '&L_DESC' . (string)$cnt . '=test_desc' .
+                      '&L_DESC' . (string)$cnt . '=' . substr($products['description']) .
                       '&L_SKU' . (string)$cnt . '=' . $products['id'] .
                       '&L_COST' . (string)$cnt . '=' . $products['price'] .
                       '&L_QTY' . (string)$cnt . '=' . $products['quantity'];
+      $cnt++;                      
     }
     
     // get the shipping amount
@@ -336,6 +335,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
                 "&CURRENCY=" . $_SESSION['currency'] . 
                 "&INVNUM=" . $this->_order_id . 
                 "&URLMETHOD=POST" . 
+                "&CSCREQUIRED=TRUE" . 
+                "&CSCEDIT=TRUE" . 
                 "&ADDROVERRIDE=1"; 
                 
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));
