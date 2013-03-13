@@ -14,7 +14,6 @@
 ?>
 <style>
 #editModule { padding-bottom:20px; }
-label { margin-top:4px !important; }
 </style>
 <script>
 function editModule(id) {
@@ -80,6 +79,7 @@ function editModule(id) {
           },
           buttonsLowPadding: true
       });
+      $("label").addClass('small-mergin-top');   
       $("#logo-image").html(data.desc);   
       $("#editModuleFormKeys").html(data.keys);   
       if ($.template.mediaQuery.isSmallerThan('desktop')) {
