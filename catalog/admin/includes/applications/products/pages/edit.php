@@ -1529,6 +1529,11 @@ function toggleEditor(id) {
               <div class="twelve-columns">
                 <fieldset class="fieldset">
                   <legend class="legend">Inventory Options Combo Sets</legend>
+                  <div class="columns">
+                    <div class="twelve-columns">
+                      Data Table                    
+                    </div>
+                  </div>
                   <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)">New Inventory Option Combo Set</a></div>
                 </fieldset>
               </div>
@@ -1569,6 +1574,14 @@ function toggleEditor(id) {
                   <span class="icon-cross"></span>
                 </span><?php echo $lC_Language->get('button_cancel'); ?>
               </a>&nbsp;
+              <select class="select expandable-list" style="width:96px;">
+                <option id="1" value="1">Actions</option>
+                <option id="2" value="2">Create Order</option>
+                <option id="3" value="3">Duplicate</option>
+                <option id="4" value="4">View In Catalog</option>
+                <option id="5" value="5">View Customers</option>
+                <option id="6" value="6">Notify Customers</option>
+              </select>&nbsp;
               <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#product\').submit();'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
@@ -1584,7 +1597,3 @@ function toggleEditor(id) {
     </div>
   </div>
 </section>
-<?php
-if (isset($_SESSION['error'])) unset($_SESSION['error']);
-if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']);
-?>
