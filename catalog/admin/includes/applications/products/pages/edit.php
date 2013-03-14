@@ -1435,13 +1435,17 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom">
-                    <span class="input small-margin-top">
-                      <input type="text" placeholder="Start" class="input-unstyled datepicker" value="">
-                      <span class="icon-calendar icon-size2"></span>
+                    <span class="nowrap margin-right">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="" style="width:100px;">
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
                     </span>
-                    <span class="input small-margin-top">
-                      <input type="text" placeholder="End" class="input-unstyled datepicker" value="">
-                      <span class="icon-calendar icon-size2"></span>
+                    <span class="nowrap">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:100px;">
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
                     </span>
                   </div>
                 </div>
@@ -1450,27 +1454,32 @@ function toggleEditor(id) {
             <fieldset class="fieldset">
               <legend class="legend">Product Details</legend>
               <div class="columns">
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Custom Field 1
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <?php //foreach() { ?>
+                  <div class="margin-bottom">
+                    <label for="" class="label">Custom Field 1</label>
+                    <input type="text" name="" id="" value="" class="input">
+                  </div>
+                  <?php //} ?>
+                  <div class="margin-bottom">
+                    <label for="" class="label">Custom Field 2</label>
+                    <input type="text" name="" id="" value="" class="input">
+                  </div>
+                  <div> 
+                    <label for="" class="label">Custom Field 3</label>
+                    <input type="text" name="" id="" value="" class="input">
+                  </div>
                 </div>
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Customize & Pro Button
-                </div>
-              </div>
-              <div class="columns">
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Custom Field 2
-                </div>
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Blank
-                </div>
-              </div>
-              <div class="columns">
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Custom Field 3
-                </div>
-                <div style="background-color: #eeeeee;" class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  Blank
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <p class="button-height">
+                    <a class="button icon-star small-margin-right" href="javascript:void(0)">Customize</a>
+                    <span class="info-spot on-left grey">
+                      <img src="images/go-pro.png" />
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                  </p>
                 </div>
               </div>
             </fieldset>
