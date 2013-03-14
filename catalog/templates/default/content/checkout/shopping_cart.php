@@ -10,7 +10,10 @@
 *  @author     Loaded Commerce Team
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
-*/
+*/  
+if ($lC_MessageStack->size('shopping_cart') > 0) {
+  echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('shopping_cart', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
+}
 ?>
 <!--content/checkout/shopping_cart.php start-->
 <div id="shopping_cart_content" class="full_page">
@@ -95,6 +98,19 @@
         </table>
       </div>
     </div>
+    <?php
+    if ((defined('MODULE_PAYMENT_PAYPAL_ADV_STATUS') && MODULE_PAYMENT_PAYPAL_ADV_STATUS == '1') &&
+        (defined('MODULE_PAYMENT_PAYPAL_ADV_EC_STATUS') && MODULE_PAYMENT_PAYPAL_ADV_EC_STATUS == 'On')) {
+      ?>
+      <style>
+      #paypal-ec-button-container { float: right; margin-right:12px; }
+      #paypal-ec-button img { vertical-align: middle; }
+      #paypal-ec-span { margin:0 0 10px 50px; }
+      </style>
+      <div id="paypal-ec-button-container"><div id="paypal-ec-button"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping&ppec=process', 'SSL'); ?>"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif"></a> -OR-</div></div>
+      <?php 
+    }
+    ?>
     <div class="action_buttonbar">
       <button type="button" onclick="location='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="checkout"><?php echo $lC_Language->get('button_checkout'); ?></button>
       <span class="buttonRight padding-right-15"><button type="button" class="continue" onclick="$('#shopping_cart').submit();"><?php echo $lC_Language->get('button_update'); ?></button></span>

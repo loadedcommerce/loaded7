@@ -22,7 +22,7 @@ class lC_Payment {
   function lC_Payment($module = '') {
     global $lC_Database, $lC_Language, $lC_Vqmod;
 
-    include($lC_Vqmod->modCheck(dirname(__FILE__) . '/credit_card.php'));
+    include_once($lC_Vqmod->modCheck(dirname(__FILE__) . '/credit_card.php'));
 
     $Qmodules = $lC_Database->query('select code from :table_templates_boxes where modules_group = "payment"');
     $Qmodules->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);

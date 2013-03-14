@@ -11,6 +11,8 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+require_once(DIR_FS_CATALOG . 'includes/classes/transport.php'); 
+
 class lC_Payment_paypal_adv extends lC_Payment {     
  /**
   * The public title of the payment module (admin)
@@ -76,6 +78,13 @@ class lC_Payment_paypal_adv extends lC_Payment {
   */  
   protected $_payment_title;  
  /**
+  * The Express Checkout Redirect URL
+  *
+  * @var string
+  * @access protected
+  */  
+  public $_ec_redirect_url;   
+ /**
   * Constructor
   */      
   public function lC_Payment_paypal_adv() {
@@ -112,8 +121,10 @@ class lC_Payment_paypal_adv extends lC_Payment {
     
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
       $this->form_action_url = 'https://pilot-payflowlink.paypal.com';  // sandbox url
+      $this->_ec_redirect_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';  // sandbox url
     } else {
       $this->form_action_url = 'https://payflowlink.paypal.com';  // production url
+      $this->_ec_redirect_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';  // production url
     }
     $this->iframe_action_url = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ? lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) : NULL;  // sandbox url
   }
@@ -212,6 +223,11 @@ class lC_Payment_paypal_adv extends lC_Payment {
   */ 
   public function process() {
     global $lC_Language, $lC_Database, $lC_MessageStack;
+     
+    // this is express checkout - goto ec process        
+    if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) {
+      return $this->_ec_process();
+    }               
                       
     $error = false;
     $result = (isset($_POST['RESULT']) && $_POST['RESULT'] != NULL) ? $_POST['RESULT'] : NULL;
@@ -249,7 +265,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
   } 
  /**
-  * Check the status of the pasyment module
+  * Check the status of the payment module
   *
   * @access public
   * @return boolean
@@ -261,12 +277,193 @@ class lC_Payment_paypal_adv extends lC_Payment {
 
     return $this->_check;
   }
-  
+ /**
+  * Initialize the transaciton
+  *
+  * @access public
+  * @return string
+  */   
+  public function setExpressCheckout() {
+    return $this->_setExpressCheckout();
+  }
+ /**
+  * Get the transaction details
+  * 
+  * @param  string  $token  The transaciton token
+  * @access public
+  * @return array
+  */   
+  public function getExpressCheckoutDetails($token) {
+    return $this->_getExpressCheckoutDetails($token);
+  }
+ /**
+  * Finalize the transaction
+  *
+  * @access public
+  * @return bookean
+  */   
+  public function doExpressCheckoutPayment() {
+    return $this->_doExpressCheckoutPayment();
+  }  
+ /**
+  * Set the API authenticaiton parameters
+  *
+  * @access private
+  * @return string
+  */
+  private function _getUserParams() {
+    return "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
+           "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
+           "&PARTNER=Paypal" . 
+           "&PWD=" . MODULE_PAYMENT_PAYPAL_ADV_PWD;
+  }
+ /**
+  * Perform the Express Checkout post process
+  *
+  * @access private
+  * @return string
+  */  
+  private function _ec_process() {
+    // get customer details
+    $dataArr = $this->_getExpressCheckoutDetails($_SESSION['PPEC_TOKEN']);
+
+    if (isset($dataArr['error']) && $dataArr['error'] == true) {
+      die('ERROR: ' . $dataArr['errmsg']);
+    }
+echo "<pre>";
+print_r($dataArr);
+echo "</pre>";
+die();    
+
+  }
+ /**
+  * Do the getExpressCheckoutDetails API call
+  *
+  * @access private
+  * @return string
+  */  
+  private function _getExpressCheckoutDetails($token) {
+    global $lC_ShoppingCart, $lC_Currencies, $lC_Language;
+     
+    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
+      $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
+    } else {
+      $action_url = 'https://payflowpro.paypal.com';  // production url
+    }     
+
+    $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
+    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
+
+    $postData = $this->_getUserParams() .  
+                "&TRXTYPE=" . $transType . 
+                "&TENDER=P" . 
+                "&ACTION=G" . 
+                "&TOKEN=" . $token;
+                
+    $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));    
+      
+    if (!$response) {
+      $errmsg = sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_no_response'));
+      $error = true;
+    }
+
+    @parse_str($response, $dataArr);
+    
+    if ($dataArr['RESULT'] != 0) { // server failure error
+      $errmsg = sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_occurred'));
+      $error = true;
+    }   
+    
+    return (!$error) ? $dataArr : array('error' => true, 'errmsg' => $errmsg);             
+  }
+ /**
+  * Do the setExpressCheckout API call
+  *
+  * @access private
+  * @return string
+  */  
+  private function _setExpressCheckout() {
+    global $lC_ShoppingCart, $lC_Currencies, $lC_Language;
+     
+    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
+      $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
+    } else {
+      $action_url = 'https://payflowpro.paypal.com';  // production url
+    }     
+
+    $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
+    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
+
+    $postData = $this->_getUserParams() .  
+                "&TRXTYPE=" . $transType . 
+                "&TENDER=P" . 
+                "&ACTION=S" . 
+                "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
+                "&RETURNURL=" . $returnUrl .
+                "&CANCELURL=" . $returnUrl;                
+              /*  
+                "&BUTTONSOURCE=CRELoaded_Cart_EC_US" . 
+                "&CREATESECURETOKEN=Y" . 
+                "&SECURETOKENID=" . $secureTokenId . $itemsString .
+                "&ITEMAMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getSubTotal(), $lC_Currencies->getCode()) . 
+                "&TAXAMT=" . $lC_Currencies->formatRaw($taxTotal, $lC_Currencies->getCode()) . 
+                "&FREIGHTAMT=" . $shippingTotal . 
+                "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
+                "&RETURNURL=" . $returnUrl .
+                "&ERRORURL=" . $returnUrl .
+                "&CANCELURL=" . $returnUrl .
+                "&TEMPLATE=" . $template .
+                "&BILLTOFIRSTNAME=" . $lC_ShoppingCart->getBillingAddress('firstname') . 
+                "&BILLTOLASTNAME=" . $lC_ShoppingCart->getBillingAddress('lastname') . 
+                "&BILLTOSTREET=" . $lC_ShoppingCart->getBillingAddress('street_address') . 
+                "&BILLTOCITY=" . $lC_ShoppingCart->getBillingAddress('city') . 
+                "&BILLTOSTATE=" . $lC_ShoppingCart->getBillingAddress('zone_code') . 
+                "&BILLTOCOUNTRY=" . $lC_ShoppingCart->getBillingAddress('country_iso_code_2') . 
+                "&BILLTOZIP=" . $lC_ShoppingCart->getBillingAddress('postcode') . 
+                "&BILLTOPHONENUM=" . $lC_Customer->getTelephone() . 
+                "&BILLTOEMAIL=" . $lC_Customer->getEmailAddress() . 
+                "&SHIPTOFIRSTNAME=" . $lC_ShoppingCart->getShippingAddress('firstname') . 
+                "&SHIPTOLASTNAME=" . $lC_ShoppingCart->getShippingAddress('lastname') . 
+                "&SHIPTOSTREET=" . $lC_ShoppingCart->getShippingAddress('street_address') . 
+                "&SHIPTOCITY=" . $lC_ShoppingCart->getBillingAddress('city') . 
+                "&SHIPTOSTATE=" . $lC_ShoppingCart->getBillingAddress('zone_code') . 
+                "&SHIPTOCOUNTRY=" . $lC_ShoppingCart->getShippingAddress('country_iso_code_2') . 
+                "&SHIPTOZIP=" . $lC_ShoppingCart->getShippingAddress('postcode') . 
+                "&SHIPTOPHONENUM=" . $lC_Customer->getTelephone() . 
+                "&SHIPTOEMAIL=" . $lC_Customer->getEmailAddress() . 
+                "&CURRENCY=" . $_SESSION['currency'] . 
+                "&INVNUM=" . $this->_order_id . 
+                "&URLMETHOD=POST" . 
+                "&CSCREQUIRED=TRUE" . 
+                "&CSCEDIT=TRUE" . 
+                "&ADDROVERRIDE=1"; 
+              */  
+                           
+    $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));    
+    
+    if ($response) {
+      $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_no_response')), 'error');
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
+    }
+
+    @parse_str($response, $dataArr);
+    
+    if ($dataArr['RESULT'] != 0) { // server failure error
+      $errmsg = sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_occurred'));
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
+    }
+    
+    return $dataArr['TOKEN'];    
+  }
+ /**
+  * Send data and receive secure token array
+  *
+  * @access private
+  * @return array
+  */
   private function _getSecureToken() {
     global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer, $lC_MessageStack;
-    
-    require(DIR_FS_CATALOG . 'includes/classes/transport.php');  
-    
+        
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
       $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
     } else {
@@ -298,10 +495,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $template = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ? 'MINLAYOUT' : ((MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'B') ? 'TEMPLATEB' : 'TEMPLATEA');
     $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
     
-    $postData = "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
-                "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
-                "&PARTNER=Paypal" . 
-                "&PWD=" . MODULE_PAYMENT_PAYPAL_ADV_PWD .  
+    $postData = $this->_getUserParams() .  
                 "&TRXTYPE=" . $transType . 
                 "&BUTTONSOURCE=CRELoaded_Cart_EC_US" . 
                 "&CREATESECURETOKEN=Y" . 
