@@ -1574,17 +1574,18 @@ function toggleEditor(id) {
                   <span class="icon-cross"></span>
                 </span><?php echo $lC_Language->get('button_cancel'); ?>
               </a>&nbsp;
-              <select class="select expandable-list" style="width:96px;"> 
-                <option id="1" value="1">Actions</option>
-                <option id="2" value="2">Create Order</option>
-                <option id="3" value="3">Duplicate</option>
-                <option id="4" value="4">View In Catalog</option>
-                <option id="5" value="5">View Customers</option>
-                <option id="6" value="6">Notify Customers</option>
+              <select class="select expandable-list"> 
+                <option id="" value="">Related</option>
+                <option id="create_order" value="create_order">Create Order</option>
+                <option id="duplicate_product" value="duplicate_product">Duplicate</option>
+                <option id="catalog_view" value="catalog_view">View In Catalog</option>
+                <option id="view_customers" value="view_customers">View Customers</option>
+                <option id="notify_customers" value="notify_customers">Notify Customers</option>
               </select>&nbsp;
               <select class="select expandable-list" style="width:96px;"> 
-                <option id="1" value="1">Save</option>
-                <option id="2" value="2">Apply</option>
+                <option id="" value="">Actions</option>
+                <option id="save" value="save">Save</option>
+                <option id="apply_changes" value="apply_changes">Apply</option>
               </select>&nbsp;
               <!--<a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#product\').submit();'); ?>">
                 <span class="button-icon green-gradient glossy">
