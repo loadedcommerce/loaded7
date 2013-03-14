@@ -64,7 +64,7 @@ class lC_Checkout_Process extends lC_Template {
       $_POST = $_SESSION['PROCESS_DATA'];
       unset($_SESSION['PROCESS_DATA']);
     }
-     
+    
     $lC_Payment->process();
 
     $lC_ShoppingCart->reset(true);

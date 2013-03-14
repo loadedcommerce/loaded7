@@ -233,20 +233,36 @@ class lC_Payment_paypal_adv extends lC_Payment {
   */ 
   public function process() {
     global $lC_Language, $lC_Database, $lC_MessageStack;
-ini_set('display_errors', 1);                     
-                              
+ 
+     if (isset($_SESSION['PPEC_PROCESS']) && $_SESSION['PPEC_PROCESS'] != NULL) {
+       $result = $this->doExpressCheckoutPayment();
+echo "<pre>";
+//print_r($_SESSION['PPEC_PROCESS']['DATA']);
+print_r($result);
+echo "</pre>";
+unset($_SESSION['PPEC_PROCESS']);
+die('678');       
+  //     unset($_SESSION['PPEC_PROCESS']);
+       return true;
+     }
+
     // this is express checkout - goto ec process        
     if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) { 
       if (isset($_GET['PayerID']) && $_GET['PayerID'] != NULL) {
+        $_SESSION['PPEC_PAYERID'] = $_GET['PayerID'];
         if (!$this->_ec_process()) {
+          unset($_SESSION['PPEC_TOKEN']);
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
         } else {
           // success
+          unset($_SESSION['PPEC_TOKEN']);
           return true;
         }
       } else { // customer clicked cancel 
-        unset($_SESSION['PPEC_TOKEN']);
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
+        if (isset($_GET['token']) && $_GET['token'] != NULL) {  // came from EC
+          unset($_SESSION['PPEC_TOKEN']);
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
+        }
       }
     }               
                       
@@ -316,7 +332,7 @@ ini_set('display_errors', 1);
         $_SESSION['messageToStack'] = array('shopping_cart', array('text' => 'An unknown error has occurred', 'type' => 'error'));
       }
       return false;
-    }
+    }   
     
     return $response;
   }
@@ -350,7 +366,23 @@ ini_set('display_errors', 1);
   * @return bookean
   */   
   public function doExpressCheckoutPayment() {
-    return $this->_doExpressCheckoutPayment();
+    global $lC_MessageStack;
+
+    $response = $this->_doExpressCheckoutPayment($_SESSION['PPEC_TOKEN'], $_SESSION['PPEC_PAYERID']);
+
+    if (!$response) {
+      if ($lC_MessageStack->size('shopping_cart') > 0) {
+        $_SESSION['messageToStack'] = $lC_MessageStack->getAll();
+      } else {
+        $_SESSION['messageToStack'] = array('shopping_cart', array('text' => 'An unknown error has occurred', 'type' => 'error'));
+      }
+      return false;
+    }
+    if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
+    if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
+    if (isset($_SESSION['PPEC_PAYERID'])) unset($_SESSION['PPEC_PAYERID']);
+    
+    return $response;    
   }  
  /**
   * Set the API authenticaiton parameters
@@ -371,7 +403,7 @@ ini_set('display_errors', 1);
   * @return string
   */  
   private function _ec_process() {
-    global $lC_MessageStack;
+    global $lC_MessageStack, $lC_Customer, $lC_Account;
 
     $details = $this->_getExpressCheckoutDetails($_SESSION['PPEC_TOKEN']);
 
@@ -382,12 +414,61 @@ ini_set('display_errors', 1);
         $_SESSION['messageToStack'] = array('shopping_cart', array('text' => 'An unknown error has occurred', 'type' => 'error'));
       }
       return false;
+    }  
+      
+    if ($lC_Customer->isLoggedOn() === false) {
+      // create a new customer account
+      // log the customer in
+      die('need customer record');    
     }
+
+    // redirect to confirmation
+    $_SESSION['PPEC_PROCESS']['LINK'] = lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL');
+    $_SESSION['PPEC_PROCESS']['DATA'] = $details;
+    lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'));
+  }
+  
+ /**
+  * Perform the doExpressCheckoutPayment API call
+  *
+  * @access private
+  * @return string
+  */  
+  private function _doExpressCheckoutPayment($token, $payerID) {
+    global $lC_ShoppingCart, $lC_Currencies, $lC_Language, $lC_MessageStack;
+     
+    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
+      $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
+    } else {
+      $action_url = 'https://payflowpro.paypal.com';  // production url
+    }     
+
+    $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
+    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
+
+    $postData = $this->_getUserParams() .  
+                "&TRXTYPE=" . $transType . 
+                "&TENDER=P" . 
+                "&ACTION=D" . 
+                "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
+                "&TOKEN=" . $token . 
+                "&PAYERID=" . $payerID;
+         
+    $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));    
+  
+    if (!$response) { // server failure error
+      $lC_MessageStack->add('shopping_cart', $lC_Language->get('payment_paypal_adv_error_server'), 'error');
+      return false;
+    }
+
+    @parse_str($response, $dataArr);
     
-    echo "<pre>";
-    print_r($details);
-    echo "</pre>";
-    die('ec_process');
+    if ($dataArr['RESULT'] != 0) { // other error
+      $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('payment_paypal_adv_error_occurred'), '(' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']), 'error');
+      return false;
+    }  
+    
+    return $dataArr;
   }
  /**
   * Do the getExpressCheckoutDetails API call
@@ -422,7 +503,7 @@ ini_set('display_errors', 1);
 
     @parse_str($response, $dataArr);
     
-    if ($dataArr['RESULT'] == 0) { // other error
+    if ($dataArr['RESULT'] != 0) { // other error
       $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('payment_paypal_adv_error_occurred'), '(' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']), 'error');
       return false;
     }  
@@ -446,15 +527,13 @@ ini_set('display_errors', 1);
     }     
 
     $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
-    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
-
     $postData = $this->_getUserParams() .  
                 "&TRXTYPE=" . $transType . 
                 "&TENDER=P" . 
                 "&ACTION=S" . 
                 "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
-                "&RETURNURL=" . $returnUrl .
-                "&CANCELURL=" . $returnUrl .                 
+                "&RETURNURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
+                "&CANCELURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .                 
                 "&BUTTONSOURCE=CRELoaded_Cart_EC_US" . $itemsString .
                 "&ITEMAMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getSubTotal(), $lC_Currencies->getCode()) . 
                 "&TAXAMT=" . $lC_Currencies->formatRaw($taxTotal, $lC_Currencies->getCode()) . 
