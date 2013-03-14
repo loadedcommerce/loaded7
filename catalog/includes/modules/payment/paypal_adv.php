@@ -284,7 +284,20 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @return string
   */   
   public function setExpressCheckout() {
-    return $this->_setExpressCheckout();
+    global $lC_MessageStack;
+
+    $response = $this->_setExpressCheckout();
+
+    if (!$response) {
+      if ($lC_MessageStack->size('shopping_cart') > 0) {
+        $_SESSION['messageToStack'] = $lC_MessageStack->getAll();
+      } else {
+        $_SESSION['messageToStack'] = array('checkout_payment', array('text' => 'An unknown error has occurred', 'type' => 'error'));
+      }
+      return false;
+    }
+    
+    return $response;
   }
  /**
   * Get the transaction details
@@ -294,7 +307,20 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @return array
   */   
   public function getExpressCheckoutDetails($token) {
-    return $this->_getExpressCheckoutDetails($token);
+    global $lC_MessageStack;
+
+    $response = $this->_getExpressCheckoutDetails($token);
+
+    if (!$response) {
+      if ($lC_MessageStack->size('shopping_cart') > 0) {
+        $_SESSION['messageToStack'] = $lC_MessageStack->getAll();
+      } else {
+        $_SESSION['messageToStack'] = array('checkout_payment', array('text' => 'An unknown error has occurred', 'type' => 'error'));
+      }
+      return false;
+    }
+    
+    return $response;    
   }
  /**
   * Finalize the transaction
@@ -363,16 +389,16 @@ die();
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));    
       
     if (!$response) {
-      $errmsg = sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_no_response'));
-      $error = true;
+      $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_no_response')), 'error');
+      return false;
     }
 
     @parse_str($response, $dataArr);
     
     if ($dataArr['RESULT'] != 0) { // server failure error
-      $errmsg = sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_occurred'));
-      $error = true;
-    }   
+      $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_occurred')), 'error');
+      return false;
+    }  
     
     return (!$error) ? $dataArr : array('error' => true, 'errmsg' => $errmsg);             
   }
@@ -383,7 +409,7 @@ die();
   * @return string
   */  
   private function _setExpressCheckout() {
-    global $lC_ShoppingCart, $lC_Currencies, $lC_Language;
+    global $lC_ShoppingCart, $lC_Currencies, $lC_Language, $lC_MessageStack;
      
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
       $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
@@ -441,16 +467,16 @@ die();
                            
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));    
     
-    if ($response) {
+    if (!$response) {
       $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_no_response')), 'error');
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
+      return false;
     }
 
     @parse_str($response, $dataArr);
     
     if ($dataArr['RESULT'] != 0) { // server failure error
-      $errmsg = sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_occurred'));
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
+      $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_occurred')), 'error');
+      return false;
     }
     
     return $dataArr['TOKEN'];    
@@ -461,7 +487,7 @@ die();
   * @access private
   * @return array
   */
-  private function _getSecureToken() {
+  private function _getSecureToken() {   
     global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer, $lC_MessageStack;
         
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {

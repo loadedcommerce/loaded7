@@ -35,11 +35,14 @@
  */
 
     public function __construct() {
+     
       if ( !isset($_SESSION['messageToStack']) ) {
         $_SESSION['messageToStack'] = array();
       }
 
       $this->_data =& $_SESSION['messageToStack'];
+      
+      unset($_SESSION['messageToStack']);
     }
 
 /**
@@ -53,7 +56,7 @@
 
     public function add($group, $message, $type = 'error') {
       $this->_data[$group][] = array('text' => $message,
-                                     'type' => $type);
+                                     'type' => $type);                                     
     }
 
 /**
@@ -98,7 +101,7 @@
 
     public function get($group, $imgLoc = '', $ext = '') {
       $result = false;
-
+      
       if ( $this->exists($group) ) {
         $result = '<div class="messageStack"><ul>';
 
