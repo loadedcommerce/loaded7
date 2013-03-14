@@ -1492,12 +1492,12 @@ function toggleEditor(id) {
           <div id="section_options_content" class="with-padding">
             <div class="columns">
               <div class="twelve-columns">
-              
-              
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
-                    <span>Inventory Control</span>
-                    <span class="info-spot on-left grey float-right">
+                    <span class="large-margin-right">Inventory Control</span>
+                    <span class="large-margin-right">&nbsp;</span>
+                    <span class="margin-right">&nbsp;</span>
+                    <span class="info-spot on-left grey large-margin-left">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
                         Put the bubble text here
@@ -1525,25 +1525,23 @@ function toggleEditor(id) {
                     </span>
                   </div>
                 </div>
-              
-              
               </div>
               <div class="twelve-columns">
                 <fieldset class="fieldset">
                   <legend class="legend">Inventory Options Combo Sets</legend>
-                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom" href="javascript:void(0)">Create New Inventory Option Combo Set</a></div>
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)">New Inventory Option Combo Set</a></div>
                 </fieldset>
               </div>
               <div class="twelve-columns">
                 <fieldset class="fieldset">
                   <legend class="legend">Simple Inventory Options</legend>
-                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom" href="javascript:void(0)">Create New Inventory Simple Option</a></div>
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)">New Inventory Simple Option</a></div>
                 </fieldset>
               </div>
               <div class="twelve-columns">
                 <fieldset class="fieldset">
                   <legend class="legend">Simple Options</legend>
-                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom" href="javascript:void(0)">Create New Simple Option</a></div>
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)">New Simple Option</a></div>
                 </fieldset>
               </div>
             </div>
