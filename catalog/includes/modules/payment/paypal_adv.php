@@ -199,12 +199,22 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @access public
   * @return string
   */ 
-  public function process_button() {
+  public function process_button() { 
+    global $lC_MessageStack;
 
-    $tokenArr = $this->_getSecureToken();
-        
-    $process_button_string = lc_draw_hidden_field('SECURETOKEN', $tokenArr['SECURETOKEN']) . 
-                             lc_draw_hidden_field('SECURETOKENID', $tokenArr['SECURETOKENID']); 
+    $response = $this->_getSecureToken();
+
+    if (!$response) {
+      if ($lC_MessageStack->size('checkout_payment') > 0) {
+        $_SESSION['messageToStack'] = $lC_MessageStack->getAll();
+      } else {
+        $_SESSION['messageToStack'] = array('checkout_payment', array('text' => 'An unknown error has occurred', 'type' => 'error'));
+      }
+      return false;
+    }
+    
+    $process_button_string = lc_draw_hidden_field('SECURETOKEN', $response['SECURETOKEN']) . 
+                             lc_draw_hidden_field('SECURETOKENID', $response['SECURETOKENID']); 
                      
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {                            
       $process_button_string .= lc_draw_hidden_field('MODE', 'TEST');
@@ -223,10 +233,21 @@ class lC_Payment_paypal_adv extends lC_Payment {
   */ 
   public function process() {
     global $lC_Language, $lC_Database, $lC_MessageStack;
-     
+ini_set('display_errors', 1);                     
+                              
     // this is express checkout - goto ec process        
-    if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) {
-      return $this->_ec_process();
+    if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) { 
+      if (isset($_GET['PayerID']) && $_GET['PayerID'] != NULL) {
+        if (!$this->_ec_process()) {
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
+        } else {
+          // success
+          return true;
+        }
+      } else { // customer clicked cancel 
+        unset($_SESSION['PPEC_TOKEN']);
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
+      }
     }               
                       
     $error = false;
@@ -292,7 +313,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
       if ($lC_MessageStack->size('shopping_cart') > 0) {
         $_SESSION['messageToStack'] = $lC_MessageStack->getAll();
       } else {
-        $_SESSION['messageToStack'] = array('checkout_payment', array('text' => 'An unknown error has occurred', 'type' => 'error'));
+        $_SESSION['messageToStack'] = array('shopping_cart', array('text' => 'An unknown error has occurred', 'type' => 'error'));
       }
       return false;
     }
@@ -315,7 +336,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
       if ($lC_MessageStack->size('shopping_cart') > 0) {
         $_SESSION['messageToStack'] = $lC_MessageStack->getAll();
       } else {
-        $_SESSION['messageToStack'] = array('checkout_payment', array('text' => 'An unknown error has occurred', 'type' => 'error'));
+        $_SESSION['messageToStack'] = array('shopping_cart', array('text' => 'An unknown error has occurred', 'type' => 'error'));
       }
       return false;
     }
@@ -350,17 +371,23 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @return string
   */  
   private function _ec_process() {
-    // get customer details
-    $dataArr = $this->_getExpressCheckoutDetails($_SESSION['PPEC_TOKEN']);
+    global $lC_MessageStack;
 
-    if (isset($dataArr['error']) && $dataArr['error'] == true) {
-      die('ERROR: ' . $dataArr['errmsg']);
+    $details = $this->_getExpressCheckoutDetails($_SESSION['PPEC_TOKEN']);
+
+    if (!$details) {
+      if ($lC_MessageStack->size('shopping_cart') > 0) {
+        $_SESSION['messageToStack'] = $lC_MessageStack->getAll();
+      } else {
+        $_SESSION['messageToStack'] = array('shopping_cart', array('text' => 'An unknown error has occurred', 'type' => 'error'));
+      }
+      return false;
     }
-echo "<pre>";
-print_r($dataArr);
-echo "</pre>";
-die();    
-
+    
+    echo "<pre>";
+    print_r($details);
+    echo "</pre>";
+    die('ec_process');
   }
  /**
   * Do the getExpressCheckoutDetails API call
@@ -369,7 +396,7 @@ die();
   * @return string
   */  
   private function _getExpressCheckoutDetails($token) {
-    global $lC_ShoppingCart, $lC_Currencies, $lC_Language;
+    global $lC_ShoppingCart, $lC_Currencies, $lC_Language, $lC_MessageStack;
      
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
       $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
@@ -385,22 +412,22 @@ die();
                 "&TENDER=P" . 
                 "&ACTION=G" . 
                 "&TOKEN=" . $token;
-                
+         
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));    
-      
-    if (!$response) {
-      $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_no_response')), 'error');
+  
+    if (!$response) { // server failure error
+      $lC_MessageStack->add('shopping_cart', $lC_Language->get('payment_paypal_adv_error_server'), 'error');
       return false;
     }
 
     @parse_str($response, $dataArr);
     
-    if ($dataArr['RESULT'] != 0) { // server failure error
-      $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_occurred')), 'error');
+    if ($dataArr['RESULT'] == 0) { // other error
+      $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('payment_paypal_adv_error_occurred'), '(' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']), 'error');
       return false;
     }  
     
-    return (!$error) ? $dataArr : array('error' => true, 'errmsg' => $errmsg);             
+    return $dataArr;
   }
  /**
   * Do the setExpressCheckout API call
@@ -409,9 +436,7 @@ die();
   * @return string
   */  
   private function _setExpressCheckout() {
-    global $lC_ShoppingCart, $lC_Currencies, $lC_Language, $lC_MessageStack;
-     
-ini_set('display_errors', 1);     
+    global $lC_ShoppingCart, $lC_Currencies, $lC_Language, $lC_MessageStack, $lC_Customer;
     $lC_Language->load('modules-payment');
      
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
@@ -429,19 +454,11 @@ ini_set('display_errors', 1);
                 "&ACTION=S" . 
                 "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
                 "&RETURNURL=" . $returnUrl .
-                "&CANCELURL=" . $returnUrl;                
-              /*  
-                "&BUTTONSOURCE=CRELoaded_Cart_EC_US" . 
-                "&CREATESECURETOKEN=Y" . 
-                "&SECURETOKENID=" . $secureTokenId . $itemsString .
+                "&CANCELURL=" . $returnUrl .                 
+                "&BUTTONSOURCE=CRELoaded_Cart_EC_US" . $itemsString .
                 "&ITEMAMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getSubTotal(), $lC_Currencies->getCode()) . 
                 "&TAXAMT=" . $lC_Currencies->formatRaw($taxTotal, $lC_Currencies->getCode()) . 
                 "&FREIGHTAMT=" . $shippingTotal . 
-                "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
-                "&RETURNURL=" . $returnUrl .
-                "&ERRORURL=" . $returnUrl .
-                "&CANCELURL=" . $returnUrl .
-                "&TEMPLATE=" . $template .
                 "&BILLTOFIRSTNAME=" . $lC_ShoppingCart->getBillingAddress('firstname') . 
                 "&BILLTOLASTNAME=" . $lC_ShoppingCart->getBillingAddress('lastname') . 
                 "&BILLTOSTREET=" . $lC_ShoppingCart->getBillingAddress('street_address') . 
@@ -462,23 +479,19 @@ ini_set('display_errors', 1);
                 "&SHIPTOEMAIL=" . $lC_Customer->getEmailAddress() . 
                 "&CURRENCY=" . $_SESSION['currency'] . 
                 "&INVNUM=" . $this->_order_id . 
-                "&URLMETHOD=POST" . 
-                "&CSCREQUIRED=TRUE" . 
-                "&CSCEDIT=TRUE" . 
                 "&ADDROVERRIDE=1"; 
-              */  
                            
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));    
     
-    if ($response) {
-      $lC_MessageStack->add('shopping_cart', $lC_Language->get('payment_paypal_adv_error_occurred'), 'error');
+    if (!$response) { // server failure error
+      $lC_MessageStack->add('shopping_cart', $lC_Language->get('payment_paypal_adv_error_server'), 'error');
       return false;
     }
 
     @parse_str($response, $dataArr);
     
-    if ($dataArr['RESULT'] != 0) { // server failure error
-      $lC_MessageStack->add('shopping_cart', $lC_Language->get('payment_paypal_adv_error_occurred'), 'error');
+    if ($dataArr['RESULT'] != 0) { // other error  
+      $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('payment_paypal_adv_error_occurred'), '(' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']), 'error');
       return false;
     }
     
@@ -574,7 +587,7 @@ ini_set('display_errors', 1);
     if ($dataArr['RESULT'] != 0) { // server failure error
       $errmsg = $lC_Language->get('payment_paypal_adv_error_occurred');
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
-    }
+    }    
     
     return $dataArr;
   }

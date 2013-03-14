@@ -21,7 +21,7 @@ class lC_Checkout_Process extends lC_Template {
     global $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_NavigationHistory, $lC_Payment, $lC_Vqmod;
     
     require($lC_Vqmod->modCheck('includes/classes/address_book.php'));
-
+   
     if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL && isset($_GET['token']) && $_GET['token'] == $_SESSION['PPEC_TOKEN']) {  
     } else {
       if ($lC_Customer->isLoggedOn() === false) {
@@ -43,22 +43,21 @@ class lC_Checkout_Process extends lC_Template {
     if (($lC_ShoppingCart->hasShippingMethod() === false) && ($lC_ShoppingCart->getContentType() != 'virtual')) {
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
     }
-          
-ini_set('display_errors', 1);
              
     // load selected payment module
     include($lC_Vqmod->modCheck('includes/classes/payment.php'));
     
     if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL && isset($_GET['token']) && $_GET['token'] == $_SESSION['PPEC_TOKEN']) {  
       $lC_Payment = new lC_Payment('paypal_adv');
+      $lC_ShoppingCart->setBillingMethod(array('id' => 'paypal_adv', 'title' => $GLOBALS['lC_Payment_paypal_adv']->getMethodTitle()));
     } else {
       $lC_Payment = new lC_Payment($lC_ShoppingCart->getBillingMethod('id'));
     }
-      
+            
     if ($lC_Payment->hasActive() && ($lC_ShoppingCart->hasBillingMethod() === false)) {
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
     }
-     
+                
     include($lC_Vqmod->modCheck('includes/classes/order.php'));
 
     if (isset($_SESSION['PROCESS_DATA']) && $_SESSION['PROCESS_DATA'] != NULL) {

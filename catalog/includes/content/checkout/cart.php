@@ -29,10 +29,6 @@ class lC_Checkout_Cart extends lC_Template {
     if ($lC_Services->isStarted('breadcrumb')) {
       $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_shopping_cart'), lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
     }
-    
-    if (isset($_SESSION['messageToStack'])) {   
-      $lC_MessageStack = new lC_MessageStack(); 
-    }
   }
 }
 ?>
