@@ -411,6 +411,9 @@ die();
   private function _setExpressCheckout() {
     global $lC_ShoppingCart, $lC_Currencies, $lC_Language, $lC_MessageStack;
      
+ini_set('display_errors', 1);     
+    $lC_Language->load('modules-payment');
+     
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
       $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
     } else {
@@ -467,15 +470,15 @@ die();
                            
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));    
     
-    if (!$response) {
-      $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_no_response')), 'error');
+    if ($response) {
+      $lC_MessageStack->add('shopping_cart', $lC_Language->get('payment_paypal_adv_error_occurred'), 'error');
       return false;
     }
 
     @parse_str($response, $dataArr);
     
     if ($dataArr['RESULT'] != 0) { // server failure error
-      $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_occurred')), 'error');
+      $lC_MessageStack->add('shopping_cart', $lC_Language->get('payment_paypal_adv_error_occurred'), 'error');
       return false;
     }
     
@@ -562,14 +565,14 @@ die();
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));
 
     if (!$response) {
-      $errmsg = sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_no_response'));
+      $errmsg = $lC_Language->get('payment_paypal_adv_error_no_response');
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
     }
 
     @parse_str($response, $dataArr);
     
     if ($dataArr['RESULT'] != 0) { // server failure error
-      $errmsg = sprintf($lC_Language->get('error_payment_problem'), $lC_Language->get('payment_paypal_adv_error_occurred'));
+      $errmsg = $lC_Language->get('payment_paypal_adv_error_occurred');
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
     }
     

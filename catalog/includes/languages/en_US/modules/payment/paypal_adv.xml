@@ -22,13 +22,8 @@
       <group>modules-payment</group>
     </definition>    
     <definition>
-      <key>payment_paypal_adv_error_no_response</key>
-      <value><![CDATA[ERROR: There was no response from the PayPal server. Please try again.]]></value>
-      <group>modules-payment</group>
-    </definition> 
-    <definition>
       <key>payment_paypal_adv_error_occurred</key>
-      <value><![CDATA[ERROR:]]></value>
+      <value><![CDATA[ERROR: There was no response from the PayPal server. Please try again.]]></value>
       <group>modules-payment</group>
     </definition> 
   </definitions>
