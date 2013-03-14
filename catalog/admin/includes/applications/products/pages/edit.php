@@ -1196,7 +1196,7 @@ function toggleEditor(id) {
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
                     <span>Track Inventory Override</span>
-                    <span class="info-spot on-left grey">
+                    <span class="info-spot on-left grey small-margin-left">
                       <img src="images/go-pro.png" />
                       <span class="info-bubble">
                         <b>Go Pro!</b> and enjoy this feature!
@@ -1245,7 +1245,7 @@ function toggleEditor(id) {
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
                     <span>Vendor/Supplier</span>
-                    <span class="info-spot on-left grey">
+                    <span class="info-spot on-left grey small-margin-left">
                       <img src="images/go-pro.png" />
                       <span class="info-bubble">
                         <b>Go Pro!</b> and enjoy this feature!
@@ -1315,9 +1315,9 @@ function toggleEditor(id) {
                   <b>SKU/EAN13</b>
                 </div>
                 <div class="small-margin-top">
-                  <input type="text" name="" id="" value="" class="input small-margin-right"> Cost
+                  <input type="text" name="" id="" value="" class="input small-margin-right"> <b>Cost</b>
                   <span class="info-spot on-left grey small-margin-left">
-                    <img src="images/go-pro.png" />
+                    <img src="images/go-pro.png" style="border:2px solid grey;margin-top:-2px;" />
                     <span class="info-bubble">
                       <b>Go Pro!</b> and enjoy this feature!
                     </span>
@@ -1389,7 +1389,7 @@ function toggleEditor(id) {
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
                     <span>Product Class</span>
-                    <span class="info-spot on-left grey">
+                    <span class="info-spot on-left grey small-margin-left">
                       <img src="images/go-pro.png" />
                       <span class="info-bubble">
                         <b>Go Pro!</b> and enjoy this feature!
@@ -1531,7 +1531,7 @@ function toggleEditor(id) {
                   <legend class="legend">Inventory Options Combo Sets</legend>
                   <div class="columns">
                     <div class="twelve-columns">
-                      Data Table                    
+                      Data Table is Going to be here :)                   
                     </div>
                   </div>
                   <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)">New Inventory Option Combo Set</a></div>
@@ -1574,7 +1574,7 @@ function toggleEditor(id) {
                   <span class="icon-cross"></span>
                 </span><?php echo $lC_Language->get('button_cancel'); ?>
               </a>&nbsp;
-              <select class="select expandable-list" style="width:96px;">
+              <select class="select expandable-list" style="width:96px;"> 
                 <option id="1" value="1">Actions</option>
                 <option id="2" value="2">Create Order</option>
                 <option id="3" value="3">Duplicate</option>
@@ -1582,11 +1582,15 @@ function toggleEditor(id) {
                 <option id="5" value="5">View Customers</option>
                 <option id="6" value="6">Notify Customers</option>
               </select>&nbsp;
-              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#product\').submit();'); ?>">
+              <select class="select expandable-list" style="width:96px;"> 
+                <option id="1" value="1">Save</option>
+                <option id="2" value="2">Apply</option>
+              </select>&nbsp;
+              <!--<a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#product\').submit();'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
                 </span><?php echo $lC_Language->get('button_save'); ?>
-              </a>&nbsp;
+              </a>&nbsp;-->
             </p>
           </div>
           <div id="floating-button-container-title" class="hidden">
