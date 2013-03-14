@@ -1058,13 +1058,17 @@ function toggleEditor(id) {
                       </span>
                     </div>
                     <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-                      <span class="input">
-                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="">
-                        <span class="icon-calendar icon-size2"></span>
+                      <span class="nowrap margin-right">
+                        <span class="input small-margin-top">
+                          <input type="text" placeholder="Start" class="input-unstyled datepicker" value="" style="width:97px;">
+                        </span>
+                        <span class="icon-calendar icon-size2 small-margin-left"></span>
                       </span>
-                      <span class="input">
-                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="">
-                        <span class="icon-calendar icon-size2"></span>
+                      <span class="nowrap">
+                        <span class="input small-margin-top">
+                          <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;">
+                        </span>
+                        <span class="icon-calendar icon-size2 small-margin-left"></span>
                       </span>
                     </div>
                 </div>
@@ -1437,13 +1441,13 @@ function toggleEditor(id) {
                   <div class="twelve-columns no-margin-bottom">
                     <span class="nowrap margin-right">
                       <span class="input small-margin-top">
-                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="" style="width:100px;">
+                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="" style="width:97px;">
                       </span>
                       <span class="icon-calendar icon-size2 small-margin-left"></span>
                     </span>
                     <span class="nowrap">
                       <span class="input small-margin-top">
-                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:100px;">
+                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;">
                       </span>
                       <span class="icon-calendar icon-size2 small-margin-left"></span>
                     </span>
@@ -1487,25 +1491,59 @@ function toggleEditor(id) {
           <!-- options_tab -->
           <div id="section_options_content" class="with-padding">
             <div class="columns">
-              <div style="background-color: #eeeeee;" class="twelve-columns">
-                Inventory Contro Radio Group (Buttons) & Pro Button
+              <div class="twelve-columns">
+              
+              
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span>Inventory Control</span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span><br />
+                    <span class="button-group small-margin-top">
+                      <label for="ioc-radio-1" class="button red-active">
+                        <input type="radio" name="inventory-control-radio-group" id="ioc-radio-1" value="1">
+                        Simple
+                      </label>
+                      <label for="ioc-radio-2" class="button red-active">
+                        <input type="radio" name="inventory-control-radio-group" id="ioc-radio-2" value="2" checked>
+                        Multi SKU
+                      </label>
+                      <label for="ioc-radio-3" class="button red-active">
+                        <input type="radio" name="inventory-control-radio-group" id="ioc-radio-3" value="3">
+                        Recurring
+                      </label>
+                      <span class="info-spot on-left grey margin-left">
+                      <img src="images/go-pro.png" />
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                    </span>
+                  </div>
+                </div>
+              
+              
               </div>
               <div class="twelve-columns">
                 <fieldset class="fieldset">
                   <legend class="legend">Inventory Options Combo Sets</legend>
-                  
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom" href="javascript:void(0)">Create New Inventory Option Combo Set</a></div>
                 </fieldset>
               </div>
               <div class="twelve-columns">
                 <fieldset class="fieldset">
                   <legend class="legend">Simple Inventory Options</legend>
-                  
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom" href="javascript:void(0)">Create New Inventory Simple Option</a></div>
                 </fieldset>
               </div>
               <div class="twelve-columns">
                 <fieldset class="fieldset">
                   <legend class="legend">Simple Options</legend>
-                  
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom" href="javascript:void(0)">Create New Simple Option</a></div>
                 </fieldset>
               </div>
             </div>
