@@ -192,6 +192,9 @@ class lC_Payment_paypal_adv extends lC_Payment {
   */ 
   public function confirmation() {
     $this->_order_id = lC_Order::insert();
+    // store the cartID info to match up on the return - to prevent multiple order IDs being created
+    $_SESSION['CARTSYNC']['CARTID'] = $_SESSION['cartID'];
+    $_SESSION['CARTSYNC']['PREPORDERID'] = $_SESSION['prepOrderID'];    
   }
  /**
   * Return the confirmation button logic
@@ -223,21 +226,21 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @return string
   */ 
   public function process() {
-    global $lC_Language, $lC_Database, $lC_MessageStack;
+    global $lC_Language, $lC_Database, $lC_MessageStack, $lC_ShoppingCart;
  
-     if (isset($_SESSION['PPEC_PROCESS']) && $_SESSION['PPEC_PROCESS'] != NULL) {
-       $response = $this->doExpressCheckoutPayment();
-       $result = (isset($response['RESULT']) && $response['RESULT'] != NULL) ? $response['RESULT'] : NULL;
-     } else if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) {  // this is express checkout - goto ec process
+    if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) {  // this is express checkout - goto ec process
       if (isset($_GET['PayerID']) && $_GET['PayerID'] != NULL) {
-        $_SESSION['PPEC_PAYERID'] = $_GET['PayerID'];
+        $_SESSION['PPEC_PAYDATA']['TOKEN'] = $_GET['token'];
+        $_SESSION['PPEC_PAYDATA']['PAYERID'] = $_GET['PayerID'];
         if (!$this->_ec_process()) {
           unset($_SESSION['PPEC_TOKEN']);
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
         } else {
           // ec step1 success
           unset($_SESSION['PPEC_TOKEN']);
-          return true;
+          // set the skip payment flag
+          $_SESSION['PPEC_SKIP_PAYMENT'] = TRUE;
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'));
         }
       } else { // customer clicked cancel 
         if (isset($_GET['token']) && $_GET['token'] != NULL) {  // came from EC
@@ -245,20 +248,17 @@ class lC_Payment_paypal_adv extends lC_Payment {
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
         }
       }
+    } else if (isset($_SESSION['PPEC_PROCESS']) && $_SESSION['PPEC_PROCESS'] != NULL) {
+       $response = $this->doExpressCheckoutPayment();
+       $result = (isset($response['RESULT']) && $response['RESULT'] != NULL) ? $response['RESULT'] : NULL;  
     } else {
       $result = (isset($_POST['RESULT']) && $_POST['RESULT'] != NULL) ? $_POST['RESULT'] : NULL;
       if (!isset($this->_order_id) || $this->_order_id == NULL) $this->_order_id = (isset($_POST['INVNUM']) && !empty($_POST['INVNUM'])) ? $_POST['INVNUM'] : $_POST['INVOICE'];
     }               
-                      
+
     $error = false;
     switch ($result) {
       case '0' :
-      
-//echo "<pre>";
-//print_r($_SESSION);
-//echo "</pre>";      
-//echo '[' . $this->_order_id . ']<br>';
-//die('1111');      
         // update order status
         lC_Order::process($this->_order_id, $this->_order_status_complete);
         break;
@@ -274,7 +274,11 @@ class lC_Payment_paypal_adv extends lC_Payment {
     // insert into transaction history
     $this->_transaction_response = $result;
 
-    $response_array = array('root' => $_POST);
+    if (isset($_SESSION['PPEC_PROCESS']['DATA']) && $_SESSION['PPEC_PROCESS']['DATA'] != NULL) {
+      $response_array = array('root' => $_SESSION['PPEC_PROCESS']['DATA']);
+    } else {
+      $response_array = array('root' => $_POST);
+    }
     $response_array['root']['transaction_response'] = trim($this->_transaction_response);
     $lC_XML = new lC_XML($response_array);
     
@@ -285,6 +289,11 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $Qtransaction->bindValue(':transaction_return_value', $lC_XML->toXML());
     $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '0') ? 1 : 0);
     $Qtransaction->execute();
+    
+    // unset the ppec sesssion
+    if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
+    if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
+    if (isset($_SESSION['PPEC_SKIP_PAYMENT'] )) unset($_SESSION['PPEC_SKIP_PAYMENT']);
     
     if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
   } 
@@ -355,7 +364,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
   public function doExpressCheckoutPayment() {
     global $lC_MessageStack;
                    
-    $response = $this->_doExpressCheckoutPayment($_SESSION['PPEC_TOKEN'], $_SESSION['PPEC_PAYERID']);
+    $response = $this->_doExpressCheckoutPayment($_SESSION['PPEC_PAYDATA']['TOKEN'], $_SESSION['PPEC_PAYDATA']['PAYERID']);
 
     if (!$response) {
       if ($lC_MessageStack->size('shopping_cart') > 0) {
@@ -365,9 +374,9 @@ class lC_Payment_paypal_adv extends lC_Payment {
       }
       return false;
     }
-    if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
-    if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
-    if (isset($_SESSION['PPEC_PAYERID'])) unset($_SESSION['PPEC_PAYERID']);
+    
+    unset($_SESSION['PPEC_PAYDATA']['TOKEN']);
+    unset($_SESSION['PPEC_PAYDATA']['PAYERID']);
     
     if (!isset($this->_order_id) || $this->_order_id == NULL) $this->_order_id = (isset($_SESSION['prepOrderID']) && $_SESSION['prepOrderID'] != NULL) ? end(explode('-', $_SESSION['prepOrderID'])) : 0;
     
@@ -392,7 +401,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @return string
   */  
   private function _ec_process() {
-    global $lC_MessageStack, $lC_Customer, $lC_Account;
+    global $lC_MessageStack, $lC_Customer, $lC_Account, $lC_ShoppingCart;
 
     $details = $this->_getExpressCheckoutDetails($_SESSION['PPEC_TOKEN']);
 
@@ -411,10 +420,10 @@ class lC_Payment_paypal_adv extends lC_Payment {
       die('need customer record');    
     }
 
-    // redirect to confirmation
     $_SESSION['PPEC_PROCESS']['LINK'] = lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL');
     $_SESSION['PPEC_PROCESS']['DATA'] = $details;
-    lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'));
+     
+    return true; 
   }
   
  /**

@@ -118,7 +118,7 @@
       $customer_address = lC_AddressBook::getEntry($lC_Customer->getDefaultAddressID())->toArray();
 
       // ppec inject
-      if ($lC_ShoppingCart->getBillingMethod('id') != NULL) {
+      if ($lC_ShoppingCart->getBillingMethod('id') != NULL && $_GET['ppec'] != 'process') {
         $payment_method = $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getCode();
       } else if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) {
         $payment_method = 'paypal_adv';

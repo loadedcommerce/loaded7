@@ -28,7 +28,7 @@
 #payment-button { color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#873b7a !important; border:0px; line-height:100%; cursor:pointer; vertical-align:middle; float:right; }
 #payment-buttons-container { width: 98%; }
 #cancel { float:left; }
-#checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding-top: 4px; width: 100%; height:450px; }
+#checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding-top: 4px; width: 100%; height:478px; }
 .v-fix { padding-bottom:15px; }
 #payment_form_ccsave u { float:right; padding-right: 15px; }
 #payment-processing { right: 50px; margin-top: 8px; }
@@ -84,7 +84,7 @@
                 <?php
                 if (isset($_POST['SECURETOKEN']) && $_POST['SECURETOKEN'] != NULL && isset($_POST['iframe_action_url']) && $_POST['iframe_action_url'] != NULL) {
                   // paypal iframe
-                  echo '<iframe src="' . $_POST['iframe_action_url'] . '?mode=' . $_POST['MODE'] . '&amp;SECURETOKEN=' . $_POST['SECURETOKEN'] . '&amp;SECURETOKENID=' . $_POST['SECURETOKENID'] . '" width="480" height="450" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
+                  echo '<iframe src="' . $_POST['iframe_action_url'] . '?mode=' . $_POST['MODE'] . '&amp;SECURETOKEN=' . $_POST['SECURETOKEN'] . '&amp;SECURETOKENID=' . $_POST['SECURETOKENID'] . '" width="478" height="450" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
                 } else {
                   // cre
                   echo '[[FORM INSERT]]'; 

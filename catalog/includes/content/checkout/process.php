@@ -50,6 +50,14 @@ class lC_Checkout_Process extends lC_Template {
     if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL && isset($_GET['token']) && $_GET['token'] == $_SESSION['PPEC_TOKEN']) {  
       $lC_Payment = new lC_Payment('paypal_adv');
       $lC_ShoppingCart->setBillingMethod(array('id' => 'paypal_adv', 'title' => $GLOBALS['lC_Payment_paypal_adv']->getMethodTitle()));
+      
+      if (isset($_SESSION['CARTSYNC']['CARTID']) && $_SESSION['CARTSYNC']['CARTID'] != NULL) {
+        $_SESSION['cartID'] = $_SESSION['CARTSYNC']['CARTID'];
+        $_SESSION['prepOrderID'] = $_SESSION['CARTSYNC']['PREPORDERID'];
+        unset($_SESSION['CARTSYNC']['CARTID']);
+        unset($_SESSION['CARTSYNC']['PREPORDERID']);
+      }
+     
     } else {
       $lC_Payment = new lC_Payment($lC_ShoppingCart->getBillingMethod('id'));
     }
@@ -64,7 +72,7 @@ class lC_Checkout_Process extends lC_Template {
       $_POST = $_SESSION['PROCESS_DATA'];
       unset($_SESSION['PROCESS_DATA']);
     }
-    
+
     $lC_Payment->process();
 
     $lC_ShoppingCart->reset(true);

@@ -39,6 +39,7 @@ ini_set('display_errors', 1);
       }
       // insert the order before leaving for paypal
       $ppec->confirmation();
+      // redirect to paypal
       lc_redirect($ppec->_ec_redirect_url . $_SESSION['PPEC_TOKEN']);
     }     
     
