@@ -203,15 +203,6 @@ class lC_Payment_paypal_adv extends lC_Payment {
     global $lC_MessageStack;
 
     $response = $this->_getSecureToken();
-
-    if (!$response) {
-      if ($lC_MessageStack->size('checkout_payment') > 0) {
-        $_SESSION['messageToStack'] = $lC_MessageStack->getAll();
-      } else {
-        $_SESSION['messageToStack'] = array('checkout_payment', array('text' => 'An unknown error has occurred', 'type' => 'error'));
-      }
-      return false;
-    }
     
     $process_button_string = lc_draw_hidden_field('SECURETOKEN', $response['SECURETOKEN']) . 
                              lc_draw_hidden_field('SECURETOKENID', $response['SECURETOKENID']); 
@@ -235,26 +226,16 @@ class lC_Payment_paypal_adv extends lC_Payment {
     global $lC_Language, $lC_Database, $lC_MessageStack;
  
      if (isset($_SESSION['PPEC_PROCESS']) && $_SESSION['PPEC_PROCESS'] != NULL) {
-       $result = $this->doExpressCheckoutPayment();
-echo "<pre>";
-//print_r($_SESSION['PPEC_PROCESS']['DATA']);
-print_r($result);
-echo "</pre>";
-unset($_SESSION['PPEC_PROCESS']);
-die('678');       
-  //     unset($_SESSION['PPEC_PROCESS']);
-       return true;
-     }
-
-    // this is express checkout - goto ec process        
-    if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) { 
+       $response = $this->doExpressCheckoutPayment();
+       $result = (isset($response['RESULT']) && $response['RESULT'] != NULL) ? $response['RESULT'] : NULL;
+     } else if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) {  // this is express checkout - goto ec process
       if (isset($_GET['PayerID']) && $_GET['PayerID'] != NULL) {
         $_SESSION['PPEC_PAYERID'] = $_GET['PayerID'];
         if (!$this->_ec_process()) {
           unset($_SESSION['PPEC_TOKEN']);
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
         } else {
-          // success
+          // ec step1 success
           unset($_SESSION['PPEC_TOKEN']);
           return true;
         }
@@ -264,14 +245,20 @@ die('678');
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
         }
       }
+    } else {
+      $result = (isset($_POST['RESULT']) && $_POST['RESULT'] != NULL) ? $_POST['RESULT'] : NULL;
+      if (!isset($this->_order_id) || $this->_order_id == NULL) $this->_order_id = (isset($_POST['INVNUM']) && !empty($_POST['INVNUM'])) ? $_POST['INVNUM'] : $_POST['INVOICE'];
     }               
                       
     $error = false;
-    $result = (isset($_POST['RESULT']) && $_POST['RESULT'] != NULL) ? $_POST['RESULT'] : NULL;
-    if (!isset($this->_order_id) || $this->_order_id == NULL) $this->_order_id = (isset($_POST['INVNUM']) && !empty($_POST['INVNUM'])) ? $_POST['INVNUM'] : $_POST['INVOICE'];
-
     switch ($result) {
       case '0' :
+      
+//echo "<pre>";
+//print_r($_SESSION);
+//echo "</pre>";      
+//echo '[' . $this->_order_id . ']<br>';
+//die('1111');      
         // update order status
         lC_Order::process($this->_order_id, $this->_order_status_complete);
         break;
@@ -367,7 +354,7 @@ die('678');
   */   
   public function doExpressCheckoutPayment() {
     global $lC_MessageStack;
-
+                   
     $response = $this->_doExpressCheckoutPayment($_SESSION['PPEC_TOKEN'], $_SESSION['PPEC_PAYERID']);
 
     if (!$response) {
@@ -381,6 +368,8 @@ die('678');
     if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
     if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
     if (isset($_SESSION['PPEC_PAYERID'])) unset($_SESSION['PPEC_PAYERID']);
+    
+    if (!isset($this->_order_id) || $this->_order_id == NULL) $this->_order_id = (isset($_SESSION['prepOrderID']) && $_SESSION['prepOrderID'] != NULL) ? end(explode('-', $_SESSION['prepOrderID'])) : 0;
     
     return $response;    
   }  

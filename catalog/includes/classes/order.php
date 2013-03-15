@@ -100,7 +100,7 @@
       }
     }
 
-    function insert() {
+    function insert($blank = false) {
       global $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Tax;
 
       if (isset($_SESSION['prepOrderID'])) {
@@ -117,6 +117,13 @@
 
       $customer_address = lC_AddressBook::getEntry($lC_Customer->getDefaultAddressID())->toArray();
 
+      // ppec inject
+      if ($lC_ShoppingCart->getBillingMethod('id') != NULL) {
+        $payment_method = $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getCode();
+      } else if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) {
+        $payment_method = 'paypal_adv';
+      }
+      
       $Qorder = $lC_Database->query('insert into :table_orders (customers_id, customers_name, customers_company, customers_street_address, customers_suburb, customers_city, customers_postcode, customers_state, customers_state_code, customers_country, customers_country_iso2, customers_country_iso3, customers_telephone, customers_email_address, customers_address_format, customers_ip_address, delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state, delivery_state_code, delivery_country, delivery_country_iso2, delivery_country_iso3, delivery_address_format, billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state, billing_state_code, billing_country, billing_country_iso2, billing_country_iso3, billing_address_format, payment_method, payment_module, date_purchased, orders_status, currency, currency_value) values (:customers_id, :customers_name, :customers_company, :customers_street_address, :customers_suburb, :customers_city, :customers_postcode, :customers_state, :customers_state_code, :customers_country, :customers_country_iso2, :customers_country_iso3, :customers_telephone, :customers_email_address, :customers_address_format, :customers_ip_address, :delivery_name, :delivery_company, :delivery_street_address, :delivery_suburb, :delivery_city, :delivery_postcode, :delivery_state, :delivery_state_code, :delivery_country, :delivery_country_iso2, :delivery_country_iso3, :delivery_address_format, :billing_name, :billing_company, :billing_street_address, :billing_suburb, :billing_city, :billing_postcode, :billing_state, :billing_state_code, :billing_country, :billing_country_iso2, :billing_country_iso3, :billing_address_format, :payment_method, :payment_module, now(), :orders_status, :currency, :currency_value)');
       $Qorder->bindTable(':table_orders', TABLE_ORDERS);
       $Qorder->bindInt(':customers_id', $lC_Customer->getID());
@@ -160,8 +167,8 @@
       $Qorder->bindValue(':billing_country_iso3', $lC_ShoppingCart->getBillingAddress('country_iso_code_3'));
       $Qorder->bindValue(':billing_address_format', $lC_ShoppingCart->getBillingAddress('format'));
       $Qorder->bindValue(':payment_method', $lC_ShoppingCart->getBillingMethod('title'));
-      $Qorder->bindValue(':payment_module', $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getCode());
-      $Qorder->bindInt(':orders_status', 4);
+      $Qorder->bindValue(':payment_module', $payment_method);
+      $Qorder->bindInt(':orders_status', 1);
       $Qorder->bindValue(':currency', $lC_Currencies->getCode());
       $Qorder->bindValue(':currency_value', $lC_Currencies->value($lC_Currencies->getCode()));
       $Qorder->execute();
@@ -183,7 +190,7 @@
       $Qstatus = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments)');
       $Qstatus->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
       $Qstatus->bindInt(':orders_id', $insert_id);
-      $Qstatus->bindInt(':orders_status_id', 4);
+      $Qstatus->bindInt(':orders_status_id', 1);
       $Qstatus->bindInt(':customer_notified', '0');
       $Qstatus->bindValue(':comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : ''));
       $Qstatus->execute();
