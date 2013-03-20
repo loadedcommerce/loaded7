@@ -86,6 +86,12 @@ if ( isset($lC_ObjectInfo) ) {
   }
 }
 
+// get product image
+$Qpi = $lC_Database->query('select image from :table_products_images where products_id = :products_id');
+$Qpi->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+$Qpi->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
+$Qpi->execute(); 
+
 function getCustomerGroupOptionsString($id = null, $esc = false) {
   global $customer_groups_array;
   $options_string = '';
@@ -675,7 +681,11 @@ function toggleEditor(id) {
                     </dt>
                     <dd>
                       <div class="with-padding">
+                        <?php if ($Qpi->value('image')) { ?>
+                        <div class="prod-image"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>" style="max-width:100%;" /></div>
+                        <?php } else { ?>
                         <div class="prod-image"><img src="images/no-prod-image.png" style="max-width: 100%; height: auto;" /><br />No Image</div>
+                        <?php } ?>
                       </div>
                     </dd>
                   </dl>
@@ -1587,7 +1597,7 @@ function toggleEditor(id) {
               </a>&nbsp;
               <select class="select expandable-list"> 
                 <option id="" value="">Related</option>
-                <option id="create_order" value="create_order">Create Order</option>
+                <!--<option id="create_order" value="create_order">Create Order</option>-->
                 <option id="duplicate_product" value="duplicate_product">Duplicate</option>
                 <option id="catalog_view" value="catalog_view">View In Catalog</option>
                 <option id="view_customers" value="view_customers">View Customers</option>
