@@ -1211,15 +1211,15 @@ function toggleEditor(id) {
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
                     <span class="button-group">
-                      <label for="ti-radio-1" class="button">
-                        <input type="radio" name="track-inventory-radio-group" id="ti-radio-1" value="1" checked>
+                      <label for="ti-radio-1" class="button disabled">
+                        <input type="radio" name="track-inventory-radio-group" id="ti-radio-1" value="1">
                         Default
                       </label>
-                      <label for="ti-radio-2" class="button">
+                      <label for="ti-radio-2" class="button disabled">
                         <input type="radio" name="track-inventory-radio-group" id="ti-radio-2" value="2">
                         On
                       </label>
-                      <label for="ti-radio-3" class="button">
+                      <label for="ti-radio-3" class="button disabled">
                         <input type="radio" name="track-inventory-radio-group" id="ti-radio-3" value="3">
                         Off
                       </label>
@@ -1259,7 +1259,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <select class="select full-width small-margin-top">
+                    <select class="select full-width small-margin-top" disabled>
                       <option id="1" value="1">Vendor #1</option>
                       <option id="2" value="2">Vendor #2</option>
                       <option id="3" value="3">Vendor #3</option>
@@ -1408,7 +1408,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <select class="select full-width small-margin-top">
+                    <select class="select full-width small-margin-top" disabled>
                       <option id="1" value="1">Common</option>
                       <option id="2" value="2">2nd Class</option>
                       <option id="3" value="3">3rd Class</option>
@@ -1452,9 +1452,15 @@ function toggleEditor(id) {
                     </span>
                     <span class="nowrap">
                       <span class="input small-margin-top">
-                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;">
+                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;" disabled>
                       </span>
-                      <span class="icon-calendar icon-size2 small-margin-left"></span>
+                      <span class="icon-calendar icon-size2 small-margin-left grey"></span>
+                      <span class="info-spot on-left grey small-margin-left">
+                        <img src="images/go-pro.png" />
+                        <span class="info-bubble">
+                          <b>Go Pro!</b> and enjoy this feature!
+                        </span>
+                      </span>
                     </span>
                   </div>
                 </div>
@@ -1481,7 +1487,7 @@ function toggleEditor(id) {
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <p class="button-height">
-                    <a class="button icon-star small-margin-right" href="javascript:void(0)">Customize</a>
+                    <a class="button icon-star small-margin-right disabled" href="javascript:void(0)">Customize</a>
                     <span class="info-spot on-left grey">
                       <img src="images/go-pro.png" />
                       <span class="info-bubble">
