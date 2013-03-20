@@ -930,28 +930,28 @@ function toggleEditor(id) {
                 <?php //foreach() { ?>
                 <div>
                   <label for="" class="label margin-right"><b>Reseller Group 1</b></label>
-                  <input type="checkbox" class="switch checked margin-right">
+                  <input type="checkbox" class="switch disabled margin-right">
                   <span class="nowrap">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">
                   </span>
                   <small class="input-info">Price/Special</small>
                 </div>
                 <div>
                   <label for="" class="label margin-right"><b>Employee Group</b></label>
-                  <input type="checkbox" class="switch checked margin-right">
+                  <input type="checkbox" class="switch disabled margin-right">
                   <span class="nowrap">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">
                   </span>
                   <small class="input-info">Price/Special</small>
                 </div>
                 <div>
                   <label for="" class="label margin-right"><b>Gold Reseller</b></label>
-                  <input type="checkbox" class="switch checked margin-right">
+                  <input type="checkbox" class="switch disabled margin-right">
                   <span class="nowrap">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">
                   </span>
                   <small class="input-info">Price/Special</small>
                 </div>
@@ -968,9 +968,9 @@ function toggleEditor(id) {
                 </span>
                 <span id="qty_breaks_number_of_break_points" style="display:none;">
                   <span class="number input">
-                    <button type="button" class="button number-down">-</button>
-                    <input type="text" value="3" size="3" class="input-unstyled">
-                    <button type="button" class="button number-up">+</button>
+                    <button type="button" class="button number-down" disabled>-</button>
+                    <input type="text" value="3" size="3" class="input-unstyled" disabled>
+                    <button type="button" class="button number-up" disabled>+</button>
                   </span>
                   <span class="info-spot on-left grey">
                     <img src="images/go-pro.png" style="margin:0 0 -3px 5px;" />
@@ -993,7 +993,7 @@ function toggleEditor(id) {
                 <?php //foreach() { ?>
                 <div>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
@@ -1008,7 +1008,7 @@ function toggleEditor(id) {
                 </div>
                 <div>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
@@ -1023,7 +1023,7 @@ function toggleEditor(id) {
                 </div>
                 <div> 
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
@@ -1290,15 +1290,15 @@ function toggleEditor(id) {
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
                     <span class="button-group">
-                      <label for="ic-radio-1" class="button green-active">
-                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-1" value="1" checked>
+                      <label for="ic-radio-1" class="button green-active active">
+                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-1" value="1" onclick="$('#inventory_control_simple').show('300');$('#inventory_control_multi').hide('300');">
                         Simple
                       </label>
                       <label for="ic-radio-2" class="button green-active">
-                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-2" value="2">
+                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-2" value="2" onclick="$('#inventory_control_simple').hide('300');$('#inventory_control_multi').show('300');">
                         Multi SKU
                       </label>
-                      <label for="ic-radio-3" class="button green-active">
+                      <label for="ic-radio-3" class="button disabled green-active">
                         <input type="radio" name="inventory-control-radio-group" id="ic-radio-3" value="3">
                         Recurring
                       </label>
@@ -1308,20 +1308,25 @@ function toggleEditor(id) {
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">&nbsp;</div>
               </div>
               <div id="inventory_control_container" class="field-drop button-height black-inputs no-margin-bottom">
-                <div>
-                  <label for="" class="label"><b>Qty On Hand</b></label>
-                  <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;">
-                  <input type="text" name="" id="" value="" class="input">
-                  <b>SKU/EAN13</b>
-                </div>
-                <div class="small-margin-top">
-                  <input type="text" name="" id="" value="" class="input small-margin-right"> <b>Cost</b>
-                  <span class="info-spot on-left grey small-margin-left">
-                    <img src="images/go-pro.png" style="border:2px solid grey;margin-top:-2px;" />
-                    <span class="info-bubble">
-                      <b>Go Pro!</b> and enjoy this feature!
-                    </span>
-                  </span> 
+                <div id="inventory_control_simple">
+                  <div>
+                    <label for="" class="label"><b>Qty On Hand</b></label>
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;">
+                    <input type="text" name="" id="" value="" class="input">
+                    <b>SKU/EAN13</b>
+                  </div>
+                  <div class="small-margin-top">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled> <b>Cost</b>
+                    <span class="info-spot on-left grey small-margin-left">
+                      <img src="images/go-pro.png" style="border:2px solid grey;margin-top:-2px;" />
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span> 
+                  </div>
+                </div>                                       
+                <div id="inventory_control_multi" style="display:none;">
+                  <span class="icon-warning icon icon-size2 icon-orange small-margin-right"></span> Edit QOH and SKU on the Options Tab.
                 </div>
               </div>
             </fieldset>
