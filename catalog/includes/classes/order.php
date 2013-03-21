@@ -120,7 +120,7 @@
         $_SESSION['cartSync']['orderCreated'] = TRUE; 
       } else {
         if (isset($_SESSION['cartSync']['orderCreated']) && $_SESSION['cartSync']['orderCreated'] === TRUE) {
-          return end(explode('-', $_SESSION['cartSync']['PREPORDERID']));  // order id
+          return end(explode('-', $_SESSION['cartSync']['prepOrderID']));  // order id
         }
         $customerName = $lC_Customer->getName();
       }

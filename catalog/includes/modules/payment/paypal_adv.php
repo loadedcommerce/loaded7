@@ -194,7 +194,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $this->_order_id = lC_Order::insert();
     // store the cartID info to match up on the return - to prevent multiple order IDs being created
     $_SESSION['cartSync']['cartID'] = $_SESSION['cartID'];
-    $_SESSION['cartSync']['PREPORDERID'] = $_SESSION['prepOrderID'];    
+    $_SESSION['cartSync']['prepOrderID'] = $_SESSION['prepOrderID'];    
   }
  /**
   * Return the confirmation button logic
@@ -427,7 +427,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
         $lC_Customer->setIsLoggedOn(true); 
         // sync the cart/order
         $_SESSION['cartSync']['cartID'] = $_SESSION['cartID'];
-        $_SESSION['cartSync']['PREPORDERID'] = $_SESSION['prepOrderID'];             
+        $_SESSION['cartSync']['prepOrderID'] = $_SESSION['prepOrderID'];             
         
 //echo "<pre>";
 //print_r($_SESSION);

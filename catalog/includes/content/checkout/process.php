@@ -53,9 +53,9 @@ class lC_Checkout_Process extends lC_Template {
       
       if (isset($_SESSION['cartSync']['cartID']) && $_SESSION['cartSync']['cartID'] != NULL) {
         $_SESSION['cartID'] = $_SESSION['cartSync']['cartID'];
-        $_SESSION['prepOrderID'] = $_SESSION['cartSync']['PREPORDERID'];
+        $_SESSION['prepOrderID'] = $_SESSION['cartSync']['prepOrderID'];
         unset($_SESSION['cartSync']['cartID']);
-        unset($_SESSION['cartSync']['PREPORDERID']);
+        unset($_SESSION['cartSync']['prepOrderID']);
       }
      
     } else {
