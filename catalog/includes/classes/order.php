@@ -114,11 +114,6 @@
           }
         }
       }
-
-echo "<pre>";
-print_r($_SESSION['cartSync']);
-echo "</pre>";
-die('21');
       
       if ($lC_Customer->getID() == 0) {
         $customerName = 'New Customer';
@@ -390,7 +385,60 @@ die('21');
       $Qstatus->bindInt(':customer_notified', (SEND_EMAILS == '1') ? '1' : '0');
       $Qstatus->bindValue(':comments', '');
       $Qstatus->execute();
+      
+      $Qpt = $lC_Database->query('delete from :table_orders_total where orders_id = :orders_id');
+      $Qpt->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+      $Qpt->bindInt(':orders_id', $order_id); 
+      $Qpt->execute(); 
+      
+      foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
+        $Qtotals = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values (:orders_id, :title, :text, :value, :class, :sort_order)');
+        $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+        $Qtotals->bindInt(':orders_id', $order_id);
+        $Qtotals->bindValue(':title', $module['title']);
+        $Qtotals->bindValue(':text', $module['text']);
+        $Qtotals->bindValue(':value', $module['value']);
+        $Qtotals->bindValue(':class', $module['code']);
+        $Qtotals->bindInt(':sort_order', $module['sort_order']);
+        $Qtotals->execute();
+      }      
 
+      $Qpd = $lC_Database->query('delete from :table_orders_products where orders_id = :orders_id');
+      $Qpd->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+      $Qpd->bindInt(':orders_id', $order_id); 
+      $Qpd->execute();     
+      
+      foreach ($lC_ShoppingCart->getProducts() as $products) {
+        $Qproducts = $lC_Database->query('insert into :table_orders_products (orders_id, products_id, products_model, products_name, products_price, products_tax, products_quantity) values (:orders_id, :products_id, :products_model, :products_name, :products_price, :products_tax, :products_quantity)');
+        $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+        $Qproducts->bindInt(':orders_id', $order_id);
+        $Qproducts->bindInt(':products_id', lc_get_product_id($products['id']));
+        $Qproducts->bindValue(':products_model', $products['model']);
+        $Qproducts->bindValue(':products_name', $products['name']);
+        $Qproducts->bindValue(':products_price', $products['price']);
+        $Qproducts->bindValue(':products_tax', $lC_Tax->getTaxRate($products['tax_class_id']));
+        $Qproducts->bindInt(':products_quantity', $products['quantity']);
+        $Qproducts->execute();
+
+        $order_products_id = $lC_Database->nextID();
+
+        if ( $lC_ShoppingCart->isVariant($products['item_id']) ) {
+          foreach ( $lC_ShoppingCart->getVariant($products['item_id']) as $variant ) {
+
+            $Qvariant = $lC_Database->query('insert into :table_orders_products_variants (orders_id, orders_products_id, group_title, value_title) values (:orders_id, :orders_products_id, :group_title, :value_title)');
+            $Qvariant->bindTable(':table_orders_products_variants', TABLE_ORDERS_PRODUCTS_VARIANTS);
+            $Qvariant->bindInt(':orders_id', $insert_id);
+            $Qvariant->bindInt(':orders_products_id', $order_products_id);
+            $Qvariant->bindValue(':group_title', $variant['group_title']);
+            $Qvariant->bindValue(':value_title', $variant['value_title']);
+            $Qvariant->execute();
+
+          }
+        }
+      }      
+
+      $lC_ShoppingCart->synchronizeWithDatabase();
+      
       $Qproducts = $lC_Database->query('select products_id, products_quantity from :table_orders_products where orders_id = :orders_id');
       $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
       $Qproducts->bindInt(':orders_id', $order_id);

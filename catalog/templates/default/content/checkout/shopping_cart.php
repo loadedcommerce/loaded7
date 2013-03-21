@@ -100,16 +100,19 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
       </div>
     </div>
     <?php
-    if ((defined('MODULE_PAYMENT_PAYPAL_ADV_STATUS') && MODULE_PAYMENT_PAYPAL_ADV_STATUS == '1') &&
-        (defined('MODULE_PAYMENT_PAYPAL_ADV_EC_STATUS') && MODULE_PAYMENT_PAYPAL_ADV_EC_STATUS == 'On')) {
-      ?>
-      <style>
-      #paypal-ec-button-container { float: right; margin-right:12px; }
-      #paypal-ec-button img { vertical-align: middle; }
-      #paypal-ec-span { margin:0 0 10px 50px; }
-      </style>
-      <div id="paypal-ec-button-container"><div id="paypal-ec-button"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping&ppec=process', 'SSL'); ?>"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif"></a> -OR-</div></div>
-      <?php 
+    if (isset($_SESSION['PPEC_PROCESS']) && !empty($_SESSION['PPEC_PROCESS'])) {
+    } else {
+      if ((defined('MODULE_PAYMENT_PAYPAL_ADV_STATUS') && MODULE_PAYMENT_PAYPAL_ADV_STATUS == '1') &&
+          (defined('MODULE_PAYMENT_PAYPAL_ADV_EC_STATUS') && MODULE_PAYMENT_PAYPAL_ADV_EC_STATUS == 'On')) {
+        ?>
+        <style>
+        #paypal-ec-button-container { float: right; margin-right:12px; }
+        #paypal-ec-button img { vertical-align: middle; }
+        #paypal-ec-span { margin:0 0 10px 50px; }
+        </style>
+        <div id="paypal-ec-button-container"><div id="paypal-ec-button"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping&ppec=process', 'SSL'); ?>"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif"></a> -OR-</div></div>
+        <?php 
+      }
     }
     ?>
     <div class="action_buttonbar">

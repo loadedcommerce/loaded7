@@ -92,8 +92,11 @@ class lC_Checkout_Payment extends lC_Template {
     }
     
     // ppec inject
-    if (isset($_SESSION['PPEC_SKIP_PAYMENT']) && $_SESSION['PPEC_SKIP_PAYMENT'] === TRUE) {
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'));
+    if (isset($_GET['skip']) && $_GET['skip'] == 'no') {
+    } else {
+      if (isset($_SESSION['PPEC_SKIP_PAYMENT']) && $_SESSION['PPEC_SKIP_PAYMENT'] === TRUE) {
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'));
+      }
     }
 
   }

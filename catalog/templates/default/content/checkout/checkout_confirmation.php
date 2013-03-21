@@ -58,7 +58,7 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
               </div>
               <div id="payment-method-block">  
                 <h3><?php echo $lC_Language->get('payment_method_heading'); ?></h3>
-                <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span>
+                <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment&skip=no', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span>
                 <p><?php echo $lC_ShoppingCart->getBillingMethod('title'); ?></p>
               </div>
             </div>
