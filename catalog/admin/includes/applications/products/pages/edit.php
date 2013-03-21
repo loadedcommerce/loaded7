@@ -915,11 +915,12 @@ function toggleEditor(id) {
           <!-- pricing_tab -->
           <div id="section_pricing_content" class="with-padding">
             <fieldset class="fieldset fields-list">
-              <legend class="legend">Pricing Overrides2</legend>
+              <legend class="legend">Pricing Overrides</legend>
               <div class="field-block button-height">
                 <label for="" class="label"><b>Base Price</b></label>
                 <input type="text" name="" id="" value="" class="input">
               </div>
+              <!-- lc_group_pricing begin -->
               <div class="field-block field-block-product button-height">
                 <label for="" class="label"><b>Group Pricing</b></label>
                 <input onchange="$('#groups_pricing_pro_badge').toggle('300');$('#groups_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
@@ -930,7 +931,7 @@ function toggleEditor(id) {
                   </span>
                 </span>
                 <span id="groups_pricing_pro_badge" class="info-spot on-left grey" style="display:none;">
-                  <img src="images/go-pro.png" style="margin:0 0 -3px 5px;" />
+                  <small class="tag red-bg">Pro</small>
                   <span class="info-bubble">
                     <b>Go Pro!</b> and enjoy this feature!
                   </span>
@@ -967,6 +968,8 @@ function toggleEditor(id) {
                 </div>
                 <?php //} ?>
               </div>
+              <!-- lc_group_pricing end -->
+              <!-- lc_qty_price_breaks begin -->
               <div class="field-block field-block-product button-height">
                 <label for="" class="label"><b>Qty Break Pricing</b></label>
                 <input onchange="$('#qty_breaks_number_of_break_points').toggle('300');$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
@@ -983,7 +986,7 @@ function toggleEditor(id) {
                     <button type="button" class="button number-up" disabled>+</button>
                   </span>
                   <span class="info-spot on-left grey">
-                    <img src="images/go-pro.png" style="margin:0 0 -3px 5px;" />
+                    <small class="tag red-bg">Pro</small>
                     <span class="info-bubble">
                       <b>Go Pro!</b> and enjoy this feature!
                     </span>
@@ -993,7 +996,7 @@ function toggleEditor(id) {
               <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
                 <label for="" class="label">
                   <span class="info-spot on-left grey">
-                    <img src="images/go-pro.png" style="border:2px solid grey;margin:-2px 0 0 -18px;" />
+                    <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
                     <span class="info-bubble">
                       <b>Go Pro!</b> and enjoy this feature!
                     </span>
@@ -1048,6 +1051,7 @@ function toggleEditor(id) {
                 </div>
                 <?php //} ?>
               </div>
+              <!-- lc_qty_price_breaks end --> 
               <div class="field-block field-block-product button-height">
                 <label for="" class="label"><b>Special Pricing</b></label>
                 <input onchange="$('#specials_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
@@ -1204,10 +1208,11 @@ function toggleEditor(id) {
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <!-- lc_track_inventory_override begin -->
                   <div class="twelve-columns no-margin-bottom">
                     <span>Track Inventory Override</span>
                     <span class="info-spot on-left grey small-margin-left">
-                      <img src="images/go-pro.png" />
+                      <small class="tag red-bg">Pro</small>
                       <span class="info-bubble">
                         <b>Go Pro!</b> and enjoy this feature!
                       </span>
@@ -1235,6 +1240,7 @@ function toggleEditor(id) {
                       </label>
                     </span>
                   </div>
+                  <!-- lc_track_inventory_override end -->
                 </div>
               </div>
               <div class="columns">
@@ -1253,10 +1259,11 @@ function toggleEditor(id) {
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <!-- lc_vendor_supplier begin -->
                   <div class="twelve-columns no-margin-bottom">
                     <span>Vendor/Supplier</span>
                     <span class="info-spot on-left grey small-margin-left">
-                      <img src="images/go-pro.png" />
+                      <small class="tag red-bg">Pro</small>
                       <span class="info-bubble">
                         <b>Go Pro!</b> and enjoy this feature!
                       </span>
@@ -1279,14 +1286,16 @@ function toggleEditor(id) {
                       <option id="7" value="7">Vendor #7</option>
                     </select>
                   </div>
+                  <!-- lc_vendor_supplier end -->
                 </div>
               </div>
               <div class="columns">
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <!-- lc_inventory_control begin -->
                   <div class="twelve-columns no-margin-bottom">
                     <span>Inventory Control</span>
                     <span class="info-spot on-left grey small-margin-left">
-                      <img src="images/go-pro.png" />
+                      <small class="tag red-bg">Pro</small>
                       <span class="info-bubble">
                         <b>Go Pro!</b> and enjoy this feature!
                       </span>
@@ -1314,10 +1323,12 @@ function toggleEditor(id) {
                       </label>
                     </span>
                   </div>
+                  <!-- lc_inventory_control end -->
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">&nbsp;</div>
               </div>
               <div id="inventory_control_container" class="field-drop button-height black-inputs no-margin-bottom">
+                <!-- lc_inventory_control_simple begin -->
                 <div id="inventory_control_simple">
                   <div>
                     <label for="" class="label"><b>Qty On Hand</b></label>
@@ -1328,13 +1339,14 @@ function toggleEditor(id) {
                   <div class="small-margin-top">
                     <input type="text" name="" id="" value="" class="input small-margin-right" disabled> <b>Cost</b>
                     <span class="info-spot on-left grey small-margin-left">
-                      <img src="images/go-pro.png" style="border:2px solid grey;margin-top:-2px;" />
+                      <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
                       <span class="info-bubble">
                         <b>Go Pro!</b> and enjoy this feature!
                       </span>
                     </span> 
                   </div>
-                </div>                                       
+                </div>
+                <!-- lc_inventory_control_simple end -->                                       
                 <div id="inventory_control_multi" style="display:none;">
                   <span class="icon-warning icon icon-size2 icon-orange small-margin-right"></span> Edit QOH and SKU on the Options Tab.
                 </div>
@@ -1402,10 +1414,11 @@ function toggleEditor(id) {
                   </div>
                 </div> 
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <!-- lc_products_class begin -->
                   <div class="twelve-columns no-margin-bottom">
                     <span>Product Class</span>
                     <span class="info-spot on-left grey small-margin-left">
-                      <img src="images/go-pro.png" />
+                      <small class="tag red-bg">Pro</small>
                       <span class="info-bubble">
                         <b>Go Pro!</b> and enjoy this feature!
                       </span>
@@ -1426,6 +1439,7 @@ function toggleEditor(id) {
                       <option id="5" value="5">5th Class</option>
                     </select>
                   </div>
+                  <!-- lc_products_class end -->
                 </div>
               </div>
               <div class="columns">
@@ -1460,18 +1474,20 @@ function toggleEditor(id) {
                       </span>
                       <span class="icon-calendar icon-size2 small-margin-left"></span>
                     </span>
+                    <!-- lc_products_availability begin -->
                     <span class="nowrap">
                       <span class="input small-margin-top">
                         <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;" disabled>
                       </span>
                       <span class="icon-calendar icon-size2 small-margin-left grey"></span>
                       <span class="info-spot on-left grey small-margin-left">
-                        <img src="images/go-pro.png" />
+                        <small class="tag red-bg">Pro</small>
                         <span class="info-bubble">
                           <b>Go Pro!</b> and enjoy this feature!
                         </span>
                       </span>
                     </span>
+                    <!-- lc_products_availability end -->
                   </div>
                 </div>
               </div>
@@ -1496,15 +1512,17 @@ function toggleEditor(id) {
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <!-- lc_products_custom begin -->
                   <p class="button-height">
                     <a class="button icon-star small-margin-right disabled" href="javascript:void(0)">Customize</a>
                     <span class="info-spot on-left grey">
-                      <img src="images/go-pro.png" />
+                      <small class="tag red-bg">Pro</small>
                       <span class="info-bubble">
                         <b>Go Pro!</b> and enjoy this feature!
                       </span>
                     </span>
                   </p>
+                  <!-- lc_products_custom end -->
                 </div>
               </div>
             </fieldset>
@@ -1525,6 +1543,7 @@ function toggleEditor(id) {
                       </span>
                     </span><br />
                     <span class="button-group small-margin-top">
+                      <!-- lc_options_inventory_control begin -->
                       <label for="ioc-radio-1" class="button red-active">
                         <input type="radio" name="inventory-control-radio-group" id="ioc-radio-1" value="1">
                         Simple
@@ -1533,16 +1552,17 @@ function toggleEditor(id) {
                         <input type="radio" name="inventory-control-radio-group" id="ioc-radio-2" value="2" checked>
                         Multi SKU
                       </label>
-                      <label for="ioc-radio-3" class="button red-active">
+                      <label for="ioc-radio-3" class="button red-active disabled">
                         <input type="radio" name="inventory-control-radio-group" id="ioc-radio-3" value="3">
                         Recurring
                       </label>
                       <span class="info-spot on-left grey margin-left">
-                      <img src="images/go-pro.png" />
-                      <span class="info-bubble">
-                        <b>Go Pro!</b> and enjoy this feature!
+                        <small class="tag red-bg">Pro</small>
+                        <span class="info-bubble">
+                          <b>Go Pro!</b> and enjoy this feature!
+                        </span>
                       </span>
-                    </span>
+                      <!-- lc_options_inventory_control end -->
                     </span>
                   </div>
                 </div>
