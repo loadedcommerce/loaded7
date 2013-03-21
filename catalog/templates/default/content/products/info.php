@@ -82,23 +82,6 @@ function refreshVariants() {
   document.getElementById('productInfoModel').innerHTML = model;
 }
 </script>
-<style>
-input { 
-    /* round the corners */
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;    
-}
-
-input:focus { 
-    outline:none;
-    border: 1px solid #c541fc; 
-    /* create a BIG glow */
-    box-shadow: 0px 0px 14px #c541fc; 
-    -moz-box-shadow: 0px 0px 14px #c541fc;
-    -webkit-box-shadow: 0px 0px 14px #c541fc;  
-}
-</style>
 <div id="product_detail">
   <?php if ($lC_Product->hasImage()) { ?> 
   <div class="product_leftcol"> 

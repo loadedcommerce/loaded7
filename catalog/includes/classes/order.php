@@ -379,9 +379,6 @@
       $Qupdate->bindInt(':orders_id', $order_id); 
       $Qupdate->execute();  
  
-      
-          
-      
       $Qstatus = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments)');
       $Qstatus->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
       $Qstatus->bindInt(':orders_id', $order_id);
@@ -458,7 +455,6 @@
       lC_Order::sendEmail($order_id);
 
       unset($_SESSION['prepOrderID']);
-      if (isset($_SESSION['cartSync'])) unset($_SESSION['cartSync']);
     }
 
     function sendEmail($id) {

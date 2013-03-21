@@ -276,10 +276,12 @@ class lC_Payment_paypal_adv extends lC_Payment {
 
     if (isset($_SESSION['PPEC_PROCESS']['DATA']) && $_SESSION['PPEC_PROCESS']['DATA'] != NULL) {
       $response_array = array('root' => $_SESSION['PPEC_PROCESS']['DATA']);
+      if (isset($_SESSION['cartSync']['orderID']) && $_SESSION['cartSync']['orderID'] != NULL) $this->_order_id = $_SESSION['cartSync']['orderID'];
     } else {
       $response_array = array('root' => $_POST);
     }
     $response_array['root']['transaction_response'] = trim($this->_transaction_response);
+       
     $lC_XML = new lC_XML($response_array);
     
     $Qtransaction = $lC_Database->query('insert into :table_orders_transactions_history (orders_id, transaction_code, transaction_return_value, transaction_return_status, date_added) values (:orders_id, :transaction_code, :transaction_return_value, :transaction_return_status, now())');
@@ -289,7 +291,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $Qtransaction->bindValue(':transaction_return_value', $lC_XML->toXML());
     $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '0') ? 1 : 0);
     $Qtransaction->execute();
-    
+                        
     // unset the ppec sesssion
     if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
     if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
@@ -428,11 +430,6 @@ class lC_Payment_paypal_adv extends lC_Payment {
         // sync the cart/order
         $_SESSION['cartSync']['cartID'] = $_SESSION['cartID'];
         $_SESSION['cartSync']['prepOrderID'] = $_SESSION['prepOrderID'];             
-        
-//echo "<pre>";
-//print_r($_SESSION);
-//echo "</pre>";
-//die('333');           
       } else {
         // create a new customer account
         $dataArr = array('firstname' => $details['FIRSTNAME'],
@@ -706,7 +703,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
                 "&ADDROVERRIDE=1"; 
                 
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));
-
+    
     if (!$response) {
       $errmsg = $lC_Language->get('payment_paypal_adv_error_no_response');
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
