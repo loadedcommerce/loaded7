@@ -100,7 +100,7 @@
       }
     }
 
-    function insert() {
+    function insert($status = 1) {
       global $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Tax;
           
       if (isset($_SESSION['prepOrderID'])) {
@@ -109,7 +109,7 @@
         if ($_prep[0] == $lC_ShoppingCart->getCartID()) {   
           return $_prep[1]; // order_id
         } else {
-          if (lC_Order::getStatusID($_prep[1]) === 1) {
+          if (lC_Order::getStatusID($_prep[1]) === $status) {
             lC_Order::remove($_prep[1]);
           }
         }
@@ -117,7 +117,6 @@
 
       if ($lC_Customer->getID() == 0) {
         $customerName = 'New Customer';
-        $_SESSION['cartSync']['orderCreated'] = TRUE; 
       } else {
         if (isset($_SESSION['cartSync']['orderCreated']) && $_SESSION['cartSync']['orderCreated'] === TRUE) {
           return end(explode('-', $_SESSION['cartSync']['prepOrderID']));  // order id
@@ -178,7 +177,7 @@
       $Qorder->bindValue(':billing_address_format', $lC_ShoppingCart->getBillingAddress('format'));
       $Qorder->bindValue(':payment_method', $lC_ShoppingCart->getBillingMethod('title'));
       $Qorder->bindValue(':payment_module', $payment_method);
-      $Qorder->bindInt(':orders_status', 1);
+      $Qorder->bindInt(':orders_status', $status);
       $Qorder->bindValue(':currency', $lC_Currencies->getCode());
       $Qorder->bindValue(':currency_value', $lC_Currencies->value($lC_Currencies->getCode()));
       $Qorder->execute();
@@ -368,15 +367,11 @@
         $Qupdate->bindValue(':billing_country_iso3', $lC_ShoppingCart->getBillingAddress('country_iso_code_3'));
         $Qupdate->bindValue(':billing_address_format', $lC_ShoppingCart->getBillingAddress('format'));
         $Qupdate->bindValue(':payment_method', $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getTitle());
-        //$Qupdate->bindValue(':payment_method', $lC_ShoppingCart->getBillingMethod('title'));
         $Qupdate->bindValue(':payment_module', $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getCode());
         $Qupdate->bindValue(':currency', $lC_Currencies->getCode());
         $Qupdate->bindValue(':currency_value', $lC_Currencies->value($lC_Currencies->getCode()));
-echo '[' . $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getTitle() . ']<br>';
-die('001');        
       } else {
         $Qupdate = $lC_Database->query('update :table_orders set orders_status = :orders_status where orders_id = :orders_id');
-die('222');        
       }
       $Qupdate->bindTable(':table_orders', TABLE_ORDERS);
       $Qupdate->bindInt(':orders_status', $status_id);
