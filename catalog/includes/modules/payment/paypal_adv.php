@@ -239,7 +239,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
           // ec step1 success
           unset($_SESSION['PPEC_TOKEN']);
           // set the skip payment flag
-          $_SESSION['PPEC_SKIP_PAYMENT'] = TRUE;
+          $_SESSION['PPEC_SKIP_PAYMENT'] = TRUE;          
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'));
         }
       } else { // customer clicked cancel 
@@ -294,6 +294,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
     if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
     if (isset($_SESSION['PPEC_SKIP_PAYMENT'] )) unset($_SESSION['PPEC_SKIP_PAYMENT']);
+    if (isset($_SESSION['CARTSYNC'] )) unset($_SESSION['CARTSYNC']);
     
     if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
   } 
@@ -401,7 +402,10 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @return string
   */  
   private function _ec_process() {
-    global $lC_MessageStack, $lC_Customer, $lC_Account, $lC_ShoppingCart;
+    global $lC_MessageStack, $lC_Customer, $lC_AddressBook, $lC_ShoppingCart;
+
+    include_once('includes/classes/account.php');
+    include_once('includes/classes/address.php');
 
     $details = $this->_getExpressCheckoutDetails($_SESSION['PPEC_TOKEN']);
 
@@ -415,9 +419,58 @@ class lC_Payment_paypal_adv extends lC_Payment {
     }  
       
     if ($lC_Customer->isLoggedOn() === false) {
-      // create a new customer account
-      // log the customer in
-      die('need customer record');    
+      // check to see if email exists
+      if (lC_Account::checkEntry($details['EMAIL'])) {
+        // set customer data
+        $lC_Customer->setCustomerData(lC_Account::getID($details['EMAIL']));
+        // log the customer in
+        $lC_Customer->setIsLoggedOn(true); 
+        // sync the cart/order
+        $_SESSION['CARTSYNC']['CARTID'] = $_SESSION['cartID'];
+        $_SESSION['CARTSYNC']['PREPORDERID'] = $_SESSION['prepOrderID'];             
+        
+//echo "<pre>";
+//print_r($_SESSION);
+//echo "</pre>";
+//die('333');           
+      } else {
+        // create a new customer account
+        $dataArr = array('firstname' => $details['FIRSTNAME'],
+                         'lastname' => $details['LASTNAME'],
+                         'email_address' => $details['EMAIL'],
+                         'newsletter' => '0',
+                         'password' => $details['EMAIL'],
+                         'dob' => '0000-00-00 00:00:00');
+                         
+        lC_Account::createEntry($dataArr);
+
+        // log the customer in
+        $lC_Customer->setIsLoggedOn(true);
+        
+        // create the address book entry
+        $addrArr = array('gender' => '',
+                         'company' => '',
+                         'firstname' => $details['FIRSTNAME'],
+                         'lastname' => $details['LASTNAME'],
+                         'street_address' => $details['SHIPTOSTREET'],
+                         'suburb' => '',
+                         'postcode' => $details['SHIPTOZIP'],
+                         'city' => $details['SHIPTOCITY'],
+                         'state' => $details['SHIPTOSTATE'],
+                         'country' => ($details['COUNTRYCODE'] == 'CA') ? '38' : '223',
+                         'zone_id' => lC_Address::getZoneID($details['SHIPTOSTATE']),
+                         'telephone' => '',
+                         'fax' => '',
+                         'primary' => true);
+                         
+        lC_AddressBook::saveEntry($addrArr);
+        
+      }
+      $lC_ShoppingCart->setBillingMethod(array('id' => 'paypal_adv', 'title' => $GLOBALS['lC_Payment_paypal_adv']->getMethodTitle()));
+
+      $lC_ShoppingCart->resetBillingAddress();
+      $lC_ShoppingCart->resetShippingAddress();
+      
     }
 
     $_SESSION['PPEC_PROCESS']['LINK'] = lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL');

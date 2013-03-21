@@ -72,8 +72,11 @@
         $lC_MessageStack->add('checkout_payment', $lC_Language->get('error_no_payment_module_selected'), 'error');
       }
 
-      if ($lC_MessageStack->size('checkout_payment') > 0) {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+      if (defined('PPEC_SKIP_PAYMENT') && PPEC_SKIP_PAYMENT == '1') { 
+      } else {
+        if ($lC_MessageStack->size('checkout_payment') > 0) {
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+        }
       }
 
       if ($lC_Payment->hasActive()) {

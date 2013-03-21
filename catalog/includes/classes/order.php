@@ -100,21 +100,31 @@
       }
     }
 
-    function insert($blank = false) {
+    function insert() {
       global $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Tax;
-
+          
       if (isset($_SESSION['prepOrderID'])) {
         $_prep = explode('-', $_SESSION['prepOrderID']);
 
-        if ($_prep[0] == $lC_ShoppingCart->getCartID()) {
+        if ($_prep[0] == $lC_ShoppingCart->getCartID()) {   
           return $_prep[1]; // order_id
         } else {
-          if (lC_Order::getStatusID($_prep[1]) === 4) {
+          if (lC_Order::getStatusID($_prep[1]) === 1) {
             lC_Order::remove($_prep[1]);
           }
         }
       }
 
+      if ($lC_Customer->getID() == 0) {
+        $customerName = 'New Customer';
+        $_SESSION['CARTSYNC']['ORDERCREATED'] = TRUE; 
+      } else {
+        if (isset($_SESSION['CARTSYNC']['ORDERCREATED']) && $_SESSION['CARTSYNC']['ORDERCREATED'] === TRUE) {
+          return end(explode('-', $_SESSION['CARTSYNC']['PREPORDERID']));  // order id
+        }
+        $customerName = $lC_Customer->getName();
+      }
+      
       $customer_address = lC_AddressBook::getEntry($lC_Customer->getDefaultAddressID())->toArray();
 
       // ppec inject
@@ -127,7 +137,7 @@
       $Qorder = $lC_Database->query('insert into :table_orders (customers_id, customers_name, customers_company, customers_street_address, customers_suburb, customers_city, customers_postcode, customers_state, customers_state_code, customers_country, customers_country_iso2, customers_country_iso3, customers_telephone, customers_email_address, customers_address_format, customers_ip_address, delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state, delivery_state_code, delivery_country, delivery_country_iso2, delivery_country_iso3, delivery_address_format, billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state, billing_state_code, billing_country, billing_country_iso2, billing_country_iso3, billing_address_format, payment_method, payment_module, date_purchased, orders_status, currency, currency_value) values (:customers_id, :customers_name, :customers_company, :customers_street_address, :customers_suburb, :customers_city, :customers_postcode, :customers_state, :customers_state_code, :customers_country, :customers_country_iso2, :customers_country_iso3, :customers_telephone, :customers_email_address, :customers_address_format, :customers_ip_address, :delivery_name, :delivery_company, :delivery_street_address, :delivery_suburb, :delivery_city, :delivery_postcode, :delivery_state, :delivery_state_code, :delivery_country, :delivery_country_iso2, :delivery_country_iso3, :delivery_address_format, :billing_name, :billing_company, :billing_street_address, :billing_suburb, :billing_city, :billing_postcode, :billing_state, :billing_state_code, :billing_country, :billing_country_iso2, :billing_country_iso3, :billing_address_format, :payment_method, :payment_module, now(), :orders_status, :currency, :currency_value)');
       $Qorder->bindTable(':table_orders', TABLE_ORDERS);
       $Qorder->bindInt(':customers_id', $lC_Customer->getID());
-      $Qorder->bindValue(':customers_name', $lC_Customer->getName());
+      $Qorder->bindValue(':customers_name', $customerName);
       $Qorder->bindValue(':customers_company', $customer_address['entry_company']);
       $Qorder->bindValue(':customers_street_address', $customer_address['entry_street_address']);
       $Qorder->bindValue(':customers_suburb', $customer_address['entry_suburb']);
@@ -174,6 +184,8 @@
       $Qorder->execute();
       
       $insert_id = $lC_Database->nextID();
+      
+      if (isset($_SESSION['CARTSYNC']['ORDERCREATED']) && $_SESSION['CARTSYNC']['ORDERCREATED'] === TRUE) $_SESSION['CARTSYNC']['ORDERID'] = $insert_id;
 
       foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
         $Qtotals = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values (:orders_id, :title, :text, :value, :class, :sort_order)');
@@ -255,14 +267,116 @@
 
       return $insert_id;
     }
-
+    
     function process($order_id, $status_id = '') {
-      global $lC_Database;
+      global $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Tax;
 
       if (empty($status_id) || (is_numeric($status_id) === false)) {
         $status_id = DEFAULT_ORDERS_STATUS_ID;
       }
 
+      if (isset($_SESSION['CARTSYNC']['ORDERCREATED']) && $_SESSION['CARTSYNC']['ORDERCREATED'] === TRUE) {
+        if (isset($_SESSION['CARTSYNC']['ORDERID']) && $_SESSION['CARTSYNC']['ORDERID'] != NULL) $order_id = $_SESSION['CARTSYNC']['ORDERID'];
+        // update the order info
+
+        $customer_address = lC_AddressBook::getEntry($lC_Customer->getDefaultAddressID())->toArray();
+
+        $Qupdate = $lC_Database->query('update :table_orders set 
+          customers_id = :customers_id,
+          customers_name = :customers_name,
+          customers_company = :customers_company,
+          customers_street_address = :customers_street_address,
+          customers_suburb = :customers_suburb,
+          customers_city = :customers_city,
+          customers_postcode = :customers_postcode,
+          customers_state = :customers_state,
+          customers_state_code = :customers_state_code,
+          customers_country = :customers_country,
+          customers_country_iso2 = :customers_country_iso2,
+          customers_country_iso3 = :customers_country_iso3,
+          customers_telephone = :customers_telephone,
+          customers_email_address = :customers_email_address,
+          customers_address_format = :customers_address_format,
+          customers_ip_address = :customers_ip_address,
+          delivery_name = :delivery_name,
+          delivery_company = :delivery_company,
+          delivery_street_address = :delivery_street_address,
+          delivery_suburb = :delivery_suburb,
+          delivery_city = :delivery_city,
+          delivery_postcode = :delivery_postcode,
+          delivery_state = :delivery_state,
+          delivery_state_code = :delivery_state_code,
+          delivery_country = :delivery_country,
+          delivery_country_iso2 = :delivery_country_iso2,
+          delivery_country_iso3 = :delivery_country_iso3,
+          delivery_address_format = :delivery_address_format, 
+          billing_company = :billing_company,
+          billing_street_address = :billing_street_address,
+          billing_suburb = :billing_suburb,
+          billing_city = :billing_city,
+          billing_postcode = :billing_postcode,
+          billing_state = :billing_state,
+          billing_state_code = :billing_state_code,
+          billing_country = :billing_country,
+          billing_country_iso2 = :billing_country_iso2,
+          billing_country_iso3 = :billing_country_iso3,
+          billing_address_format = :billing_address_format,   
+          payment_module = :payment_module,
+          currency = :currency, 
+          currency_value = :currency_value, 
+          orders_status = :orders_status where orders_id = :orders_id');
+                     
+        $Qupdate->bindTable(':table_orders', TABLE_ORDERS);
+        $Qupdate->bindInt(':customers_id', $lC_Customer->getID());
+        $Qupdate->bindValue(':customers_name', $lC_Customer->getName());
+        $Qupdate->bindValue(':customers_company', $customer_address['entry_company']);
+        $Qupdate->bindValue(':customers_street_address', $customer_address['entry_street_address']);
+        $Qupdate->bindValue(':customers_suburb', $customer_address['entry_suburb']);
+        $Qupdate->bindValue(':customers_city', $customer_address['entry_city']);
+        $Qupdate->bindValue(':customers_postcode', $customer_address['entry_postcode']);
+        $Qupdate->bindValue(':customers_state', $customer_address['entry_state']);
+        $Qupdate->bindValue(':customers_state_code', lC_Address::getZoneCode($customer_address['entry_zone_id']));
+        $Qupdate->bindValue(':customers_country', lC_Address::getCountryName($customer_address['entry_country_id']));
+        $Qupdate->bindValue(':customers_country_iso2', lC_Address::getCountryIsoCode2($customer_address['entry_country_id']));
+        $Qupdate->bindValue(':customers_country_iso3', lC_Address::getCountryIsoCode3($customer_address['entry_country_id']));
+        $Qupdate->bindValue(':customers_telephone', $customer_address['entry_telephone']);
+        $Qupdate->bindValue(':customers_email_address', $lC_Customer->getEmailAddress());
+        $Qupdate->bindValue(':customers_address_format', lC_Address::getFormat($customer_address['entry_country_id']));
+        $Qupdate->bindValue(':customers_ip_address', lc_get_ip_address());
+        $Qupdate->bindValue(':delivery_name', $lC_ShoppingCart->getShippingAddress('firstname') . ' ' . $lC_ShoppingCart->getShippingAddress('lastname'));
+        $Qupdate->bindValue(':delivery_company', $lC_ShoppingCart->getShippingAddress('company'));
+        $Qupdate->bindValue(':delivery_street_address', $lC_ShoppingCart->getShippingAddress('street_address'));
+        $Qupdate->bindValue(':delivery_suburb', $lC_ShoppingCart->getShippingAddress('suburb'));
+        $Qupdate->bindValue(':delivery_city', $lC_ShoppingCart->getShippingAddress('city'));
+        $Qupdate->bindValue(':delivery_postcode', $lC_ShoppingCart->getShippingAddress('postcode'));
+        $Qupdate->bindValue(':delivery_state', $lC_ShoppingCart->getShippingAddress('state'));
+        $Qupdate->bindValue(':delivery_state_code', $lC_ShoppingCart->getShippingAddress('zone_code'));
+        $Qupdate->bindValue(':delivery_country', $lC_ShoppingCart->getShippingAddress('country_title'));
+        $Qupdate->bindValue(':delivery_country_iso2', $lC_ShoppingCart->getShippingAddress('country_iso_code_2'));
+        $Qupdate->bindValue(':delivery_country_iso3', $lC_ShoppingCart->getShippingAddress('country_iso_code_3'));
+        $Qupdate->bindValue(':delivery_address_format', $lC_ShoppingCart->getShippingAddress('format'));
+        $Qupdate->bindValue(':billing_name', $lC_ShoppingCart->getBillingAddress('firstname') . ' ' . $lC_ShoppingCart->getBillingAddress('lastname'));
+        $Qupdate->bindValue(':billing_company', $lC_ShoppingCart->getBillingAddress('company'));
+        $Qupdate->bindValue(':billing_street_address', $lC_ShoppingCart->getBillingAddress('street_address'));
+        $Qupdate->bindValue(':billing_suburb', $lC_ShoppingCart->getBillingAddress('suburb'));
+        $Qupdate->bindValue(':billing_city', $lC_ShoppingCart->getBillingAddress('city'));
+        $Qupdate->bindValue(':billing_postcode', $lC_ShoppingCart->getBillingAddress('postcode'));
+        $Qupdate->bindValue(':billing_state', $lC_ShoppingCart->getBillingAddress('state'));
+        $Qupdate->bindValue(':billing_state_code', $lC_ShoppingCart->getBillingAddress('zone_code'));
+        $Qupdate->bindValue(':billing_country', $lC_ShoppingCart->getBillingAddress('country_title'));
+        $Qupdate->bindValue(':billing_country_iso2', $lC_ShoppingCart->getBillingAddress('country_iso_code_2'));
+        $Qupdate->bindValue(':billing_country_iso3', $lC_ShoppingCart->getBillingAddress('country_iso_code_3'));
+        $Qupdate->bindValue(':billing_address_format', $lC_ShoppingCart->getBillingAddress('format'));
+        $Qupdate->bindInt(':orders_status', $status_id);
+        $Qupdate->bindInt(':orders_id', $order_id);      
+        $Qupdate->bindValue(':payment_method', $lC_ShoppingCart->getBillingMethod('title'));
+        $Qupdate->bindValue(':payment_module', $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getCode());
+        $Qupdate->bindValue(':currency', $lC_Currencies->getCode());
+        $Qupdate->bindValue(':currency_value', $lC_Currencies->value($lC_Currencies->getCode()));
+        $Qupdate->execute();  
+        
+      }      
+      
       $Qstatus = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments)');
       $Qstatus->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
       $Qstatus->bindInt(':orders_id', $order_id);
@@ -270,12 +384,6 @@
       $Qstatus->bindInt(':customer_notified', (SEND_EMAILS == '1') ? '1' : '0');
       $Qstatus->bindValue(':comments', '');
       $Qstatus->execute();
-
-      $Qupdate = $lC_Database->query('update :table_orders set orders_status = :orders_status where orders_id = :orders_id');
-      $Qupdate->bindTable(':table_orders', TABLE_ORDERS);
-      $Qupdate->bindInt(':orders_status', $status_id);
-      $Qupdate->bindInt(':orders_id', $order_id);
-      $Qupdate->execute();
 
       $Qproducts = $lC_Database->query('select products_id, products_quantity from :table_orders_products where orders_id = :orders_id');
       $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
