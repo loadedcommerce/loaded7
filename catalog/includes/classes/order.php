@@ -115,6 +115,11 @@
         }
       }
 
+echo "<pre>";
+print_r($_SESSION['cartSync']);
+echo "</pre>";
+die('21');
+      
       if ($lC_Customer->getID() == 0) {
         $customerName = 'New Customer';
       } else {

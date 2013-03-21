@@ -91,8 +91,6 @@
           }
         }
       }
-      // unset cart sync
-      if (isset($_SESSION['cartSync'] )) unset($_SESSION['cartSync']);
     }
   }
 ?>

@@ -42,6 +42,9 @@ class lC_Checkout_Success extends lC_Template {
     if ($_GET[$this->_module] == 'update') {
       $this->_process();
     }
+    
+    // unset cart sync
+    if (isset($_SESSION['cartSync'] )) unset($_SESSION['cartSync']);
   }
 
   /* Private methods */
