@@ -28,9 +28,9 @@ $cSearch = (isset($_GET['cID']) && $_GET['cID'] != null ? '&cSearch=' . $_GET['c
       "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
       "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "hide-on-mobile dataColCheck" },
                     { "sWidth": "10px", "bSortable": false, "sClass": "hide-on-mobile dataColIcon" },
-                    { "sWidth": "15%", "bSortable": true, "sClass": "hide-on-mobile dataColLast" },
+                    { "sWidth": "15%", "bSortable": true, "sClass": "dataColLast" },
                     { "sWidth": "15%", "bSortable": true, "sClass": "hide-on-mobile dataColFirst" },
-                    { "sWidth": "30%", "bSortable": true, "sClass": "dataColEmail" },
+                    { "sWidth": "30%", "bSortable": true, "sClass": "hide-on-mobile dataColEmail" },
                     { "sWidth": "10%", "bSortable": true, "sClass": "hide-on-mobile-portrait dataColGroup" },
                     { "sWidth": "10%", "bSortable": true, "sClass": "hide-on-tablet hide-on-mobile dataColDate" },
                     { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]

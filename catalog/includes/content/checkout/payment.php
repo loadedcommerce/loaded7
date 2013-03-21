@@ -88,11 +88,12 @@ class lC_Checkout_Payment extends lC_Template {
     }
 
     if (isset($_GET['payment_error'])) {
-      $lC_MessageStack->add('checkout_payment', $_GET['payment_error'], 'error');
+      $lC_MessageStack->add('checkout_payment', $_GET['payment_error'], 'error'); 
     }
     
     // ppec inject
-    if (isset($_GET['skip']) && $_GET['skip'] == 'no') {
+    if ((isset($_GET['skip']) && $_GET['skip'] == 'no') || isset($_GET['payment_error'])) {
+      if (isset( $_SESSION['PPEC_SKIP_PAYMENT'])) unset($_SESSION['PPEC_SKIP_PAYMENT']);
     } else {
       if (isset($_SESSION['PPEC_SKIP_PAYMENT']) && $_SESSION['PPEC_SKIP_PAYMENT'] === TRUE) {
         lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'));

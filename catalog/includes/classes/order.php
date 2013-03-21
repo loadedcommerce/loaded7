@@ -278,8 +278,9 @@
         if (isset($_SESSION['cartSync']['orderID']) && $_SESSION['cartSync']['orderID'] != NULL) $order_id = $_SESSION['cartSync']['orderID'];
         // update the order info
         
+        if ($lC_Customer->getDefaultAddressID() == '') $lC_Customer->setCustomerData($lC_Customer->getID());
         $customer_address = lC_AddressBook::getEntry($lC_Customer->getDefaultAddressID())->toArray();
-
+      
         $Qupdate = $lC_Database->query('update :table_orders set 
           customers_id = :customers_id,
           customers_name = :customers_name,
@@ -342,7 +343,7 @@
         $Qupdate->bindValue(':customers_email_address', $lC_Customer->getEmailAddress());
         $Qupdate->bindValue(':customers_address_format', lC_Address::getFormat($customer_address['entry_country_id']));
         $Qupdate->bindValue(':customers_ip_address', lc_get_ip_address());
-        $Qupdate->bindValue(':delivery_name', $lC_ShoppingCart->getShippingAddress('firstname') . ' ' . $lC_ShoppingCart->getShippingAddress('lastname'));
+        $Qupdate->bindValue(':delivery_name', ($lC_ShoppingCart->getShippingAddress('lastname') != NULL) ? $lC_ShoppingCart->getShippingAddress('firstname') . ' ' . $lC_ShoppingCart->getShippingAddress('lastname') : $lC_Customer->getName());
         $Qupdate->bindValue(':delivery_company', $lC_ShoppingCart->getShippingAddress('company'));
         $Qupdate->bindValue(':delivery_street_address', $lC_ShoppingCart->getShippingAddress('street_address'));
         $Qupdate->bindValue(':delivery_suburb', $lC_ShoppingCart->getShippingAddress('suburb'));
@@ -354,7 +355,7 @@
         $Qupdate->bindValue(':delivery_country_iso2', $lC_ShoppingCart->getShippingAddress('country_iso_code_2'));
         $Qupdate->bindValue(':delivery_country_iso3', $lC_ShoppingCart->getShippingAddress('country_iso_code_3'));
         $Qupdate->bindValue(':delivery_address_format', $lC_ShoppingCart->getShippingAddress('format'));
-        $Qupdate->bindValue(':billing_name', $lC_ShoppingCart->getBillingAddress('firstname') . ' ' . $lC_ShoppingCart->getBillingAddress('lastname'));
+        $Qupdate->bindValue(':billing_name', ($lC_ShoppingCart->getBillingAddress('lastname') != NULL) ? $lC_ShoppingCart->getBillingAddress('firstname') . ' ' . $lC_ShoppingCart->getBillingAddress('lastname') : $lC_Customer->getName());
         $Qupdate->bindValue(':billing_company', $lC_ShoppingCart->getBillingAddress('company'));
         $Qupdate->bindValue(':billing_street_address', $lC_ShoppingCart->getBillingAddress('street_address'));
         $Qupdate->bindValue(':billing_suburb', $lC_ShoppingCart->getBillingAddress('suburb'));

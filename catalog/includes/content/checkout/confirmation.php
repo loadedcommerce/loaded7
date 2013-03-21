@@ -25,7 +25,7 @@
     /* Class constructor */
     function lC_Checkout_Confirmation() {
       global $lC_Session, $lC_Services, $lC_Language, $lC_ShoppingCart, $lC_Customer, $lC_MessageStack, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Payment, $lC_Vqmod;
-
+ini_set('display_errors', 1);
       require($lC_Vqmod->modCheck('includes/classes/address_book.php'));
 
       if ($lC_Customer->isLoggedOn() === false) {
@@ -72,7 +72,7 @@
         $lC_MessageStack->add('checkout_payment', $lC_Language->get('error_no_payment_module_selected'), 'error');
       }
 
-      if (defined('PPEC_SKIP_PAYMENT') && PPEC_SKIP_PAYMENT == '1') { 
+      if (isset($_SESSION['PPEC_SKIP_PAYMENT']) && $_SESSION['PPEC_SKIP_PAYMENT'] == '1') { 
       } else {
         if ($lC_MessageStack->size('checkout_payment') > 0) {
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
