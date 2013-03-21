@@ -25,7 +25,7 @@ class lC_Checkout_Shipping extends lC_Template {
     global $lC_Database, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Shipping, $lC_MessageStack, $lC_Vqmod;
        
     require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));
-ini_set('display_errors', 1);
+
     // ppec intercept
     if (isset($_GET['ppec']) && $_GET['ppec'] == 'process') {
       // setExpressCheckout()

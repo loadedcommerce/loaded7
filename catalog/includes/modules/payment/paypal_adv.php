@@ -296,7 +296,6 @@ class lC_Payment_paypal_adv extends lC_Payment {
     if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
     if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
     if (isset($_SESSION['PPEC_SKIP_PAYMENT'] )) unset($_SESSION['PPEC_SKIP_PAYMENT']);
-    if (isset($_SESSION['cartSync'] )) unset($_SESSION['cartSync']);
     
     if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
   } 

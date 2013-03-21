@@ -278,7 +278,7 @@
       if (isset($_SESSION['cartSync']['orderCreated']) && $_SESSION['cartSync']['orderCreated'] === TRUE) {
         if (isset($_SESSION['cartSync']['orderID']) && $_SESSION['cartSync']['orderID'] != NULL) $order_id = $_SESSION['cartSync']['orderID'];
         // update the order info
-
+        
         $customer_address = lC_AddressBook::getEntry($lC_Customer->getDefaultAddressID())->toArray();
 
         $Qupdate = $lC_Database->query('update :table_orders set 
@@ -367,17 +367,21 @@
         $Qupdate->bindValue(':billing_country_iso2', $lC_ShoppingCart->getBillingAddress('country_iso_code_2'));
         $Qupdate->bindValue(':billing_country_iso3', $lC_ShoppingCart->getBillingAddress('country_iso_code_3'));
         $Qupdate->bindValue(':billing_address_format', $lC_ShoppingCart->getBillingAddress('format'));
-        $Qupdate->bindValue(':payment_method', $lC_ShoppingCart->getBillingMethod('title'));
+        $Qupdate->bindValue(':payment_method', $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getTitle());
+        //$Qupdate->bindValue(':payment_method', $lC_ShoppingCart->getBillingMethod('title'));
         $Qupdate->bindValue(':payment_module', $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getCode());
         $Qupdate->bindValue(':currency', $lC_Currencies->getCode());
         $Qupdate->bindValue(':currency_value', $lC_Currencies->value($lC_Currencies->getCode()));
+echo '[' . $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getTitle() . ']<br>';
+die('001');        
       } else {
         $Qupdate = $lC_Database->query('update :table_orders set orders_status = :orders_status where orders_id = :orders_id');
+die('222');        
       }
       $Qupdate->bindTable(':table_orders', TABLE_ORDERS);
       $Qupdate->bindInt(':orders_status', $status_id);
       $Qupdate->bindInt(':orders_id', $order_id); 
-      $Qupdate->execute();  
+      $Qupdate->execute();   
  
       $Qstatus = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments)');
       $Qstatus->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
