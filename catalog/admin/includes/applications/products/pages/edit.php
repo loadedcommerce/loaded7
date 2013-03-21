@@ -90,7 +90,22 @@ if ( isset($lC_ObjectInfo) ) {
 $Qpi = $lC_Database->query('select image from :table_products_images where products_id = :products_id');
 $Qpi->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
 $Qpi->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
-$Qpi->execute(); 
+$Qpi->execute();
+
+// get categories array
+$product_categories_array = array();
+if ( isset($lC_ObjectInfo) ) {
+  $Qcategories = $lC_Database->query('select categories_id from :table_products_to_categories where products_id = :products_id');
+  $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+  $Qcategories->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
+  $Qcategories->execute();
+  while ($Qcategories->next()) {
+    $product_categories_array[] = $Qcategories->valueInt('categories_id');
+  }
+}
+$assignedCategoryTree = new lC_CategoryTree();
+$assignedCategoryTree->setBreadcrumbUsage(false);
+$assignedCategoryTree->setSpacerString('&nbsp;', 5); 
 
 function getCustomerGroupOptionsString($id = null, $esc = false) {
   global $customer_groups_array;
@@ -675,8 +690,8 @@ function toggleEditor(id) {
                   <dl class="accordion same-height small-margin-top">
                     <dt>Preview
                       <div class="button-group absolute-right compact mid-margin-right">
-                        <a href="#" class="button icon-cloud-upload">Upload</a>
-                        <a href="#" class="button icon-trash with-tooltip confirm" title="Delete"></a>
+                        <a href="#" class="button icon-cloud-upload disabled">Upload</a>
+                        <a href="#" class="button icon-trash with-tooltip disabled" title="Delete"></a>
                       </div>
                     </dt>
                     <dd>
@@ -739,21 +754,12 @@ function toggleEditor(id) {
                 </span>
                 <select class="select full-width small-margin-top">
                 <?php
-                  $product_categories_array = array();
-                  if ( isset($lC_ObjectInfo) ) {
-                    $Qcategories = $lC_Database->query('select categories_id from :table_products_to_categories where products_id = :products_id');
-                    $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
-                    $Qcategories->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
-                    $Qcategories->execute();
-                    while ($Qcategories->next()) {
-                      $product_categories_array[] = $Qcategories->valueInt('categories_id');
-                    }
-                  }
-                  $assignedCategoryTree = new lC_CategoryTree();
-                  $assignedCategoryTree->setBreadcrumbUsage(false);
-                  $assignedCategoryTree->setSpacerString('&nbsp;', 5);
                   foreach ($assignedCategoryTree->getArray() as $value) {
-                    echo '<option id="categories_' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
+                    $Qci = $lC_Database->query('select categories_id from :table_products_to_categories where products_id = :products_id');
+                    $Qci->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+                    $Qci->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
+                    $Qci->execute();
+                    echo '<option id="categories_' . $value['id'] . '"' . (($Qci->valueInt('categories_id') == $value['id']) ? ' selected="selected"' : '') . '>' . $value['title'] . '</option>' . "\n";
                   }
                 ?>
                 </select>
@@ -803,15 +809,15 @@ function toggleEditor(id) {
                       </span><br />
                       <span class="button-group">
                         <label for="ps-radio-1" class="button blue-active">
-                          <input type="radio" name="product-status-radio-group" id="ps-radio-1" value="1" checked>
+                          <input type="radio" name="product-status-radio-group" id="ps-radio-1" value="active"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 1) ? ' checked' : ''); ?>>
                           Active
                         </label>
                         <label for="ps-radio-2" class="button blue-active">
-                          <input type="radio" name="product-status-radio-group" id="ps-radio-2" value="2">
+                          <input type="radio" name="product-status-radio-group" id="ps-radio-2" value="inactive"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 0) ? ' checked' : ''); ?>>
                           Inactive
                         </label>
-                        <label for="ps-radio-3" class="button blue-active">
-                          <input type="radio" name="product-status-radio-group" id="ps-radio-3" value="3">
+                        <label for="ps-radio-3" class="button blue-active disabled">
+                          <input type="radio" name="product-status-radio-group" id="ps-radio-3" value="">
                           Coming Soon
                         </label>
                       </span>
@@ -822,7 +828,7 @@ function toggleEditor(id) {
             </div>
             <div class="columns">
               <div class="four-columns twelve-columns-mobile large-margin-bottom">
-                <center><img src="images/prodchart.png" /></center>
+                <center>Chart Here</center>
               </div>
               <div class="four-columns twelve-columns-mobile">
                 <span class="full-width">
@@ -834,7 +840,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                 </span><br /><br />
-                <p style="background-color:#cccccc;" class="with-small-padding"><b>K00011</b><p><br />
+                <p style="background-color:#cccccc;" class="with-small-padding"><b><?php echo $lC_ObjectInfo->get('products_model'); ?></b><p><br />
                 <span class="full-width">
                   <span>Product Type</span>
                   <span class="info-spot on-left grey float-right">
@@ -844,7 +850,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                 </span>
-                <p style="background-color:#cccccc;" class="with-small-padding"><b>Simple</b><p><br />
+                <p style="background-color:#cccccc;" class="with-small-padding"><b>&nbsp;</b><p><br />
                 <span class="full-width">
                   <span>Inventory options</span>
                   <span class="info-spot on-left grey float-right">
@@ -854,7 +860,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                 </span>
-                <p style="background-color:#cccccc;" class="with-small-padding"><b>Base Product</b><p>                
+                <p style="background-color:#cccccc;" class="with-small-padding"><b>&nbsp;</b><p>                
               </div>
               <div class="four-columns twelve-columns-mobile">
                 <span class="full-width">
@@ -866,7 +872,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                 </span><br /><br />
-                <p style="background-color:#cccccc;" class="with-small-padding"><b></b>4/20/2013<p><br />
+                <p style="background-color:#cccccc;" class="with-small-padding"><b>&nbsp;</b><p><br />
                 <span class="full-width">
                   <span>Product Class</span>
                   <span class="info-spot on-left grey float-right">
@@ -876,7 +882,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                 </span>
-                <p style="background-color:#cccccc;" class="with-small-padding"><b>Common</b><p><br />
+                <p style="background-color:#cccccc;" class="with-small-padding"><b>&nbsp;</b><p><br />
                 <span class="full-width">
                   <span>Weight</span>
                   <span class="info-spot on-left grey float-right">
@@ -886,7 +892,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                 </span>
-                <p style="background-color:#cccccc;" class="with-small-padding"><b>1 lbs</b><p>                
+                <p style="background-color:#cccccc;" class="with-small-padding"><b><?php echo $lC_ObjectInfo->get('products_weight'); ?></b><p>                
               </div>
             </div>
           </div>
