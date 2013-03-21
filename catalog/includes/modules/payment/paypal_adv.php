@@ -666,7 +666,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     
     $postData = $this->_getUserParams() .  
                 "&TRXTYPE=" . $transType . 
-                "&BUTTONSOURCE=CRELoaded_Cart_EC_US" . 
+                "&BUTTONSOURCE=LoadedCommerce_Cart" . 
                 "&CREATESECURETOKEN=Y" . 
                 "&SECURETOKENID=" . $secureTokenId . $itemsString .
                 "&ITEMAMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getSubTotal(), $lC_Currencies->getCode()) . 

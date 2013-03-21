@@ -11,7 +11,6 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-ini_set('display_errors', 1);
 ?>
 <!-- Main content -->
 <section role="main" id="main">
