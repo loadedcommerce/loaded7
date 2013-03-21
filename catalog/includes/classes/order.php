@@ -117,10 +117,10 @@
 
       if ($lC_Customer->getID() == 0) {
         $customerName = 'New Customer';
-        $_SESSION['CARTSYNC']['ORDERCREATED'] = TRUE; 
+        $_SESSION['cartSync']['orderCreated'] = TRUE; 
       } else {
-        if (isset($_SESSION['CARTSYNC']['ORDERCREATED']) && $_SESSION['CARTSYNC']['ORDERCREATED'] === TRUE) {
-          return end(explode('-', $_SESSION['CARTSYNC']['PREPORDERID']));  // order id
+        if (isset($_SESSION['cartSync']['orderCreated']) && $_SESSION['cartSync']['orderCreated'] === TRUE) {
+          return end(explode('-', $_SESSION['cartSync']['PREPORDERID']));  // order id
         }
         $customerName = $lC_Customer->getName();
       }
@@ -185,7 +185,7 @@
       
       $insert_id = $lC_Database->nextID();
       
-      if (isset($_SESSION['CARTSYNC']['ORDERCREATED']) && $_SESSION['CARTSYNC']['ORDERCREATED'] === TRUE) $_SESSION['CARTSYNC']['ORDERID'] = $insert_id;
+      if (isset($_SESSION['cartSync']['orderCreated']) && $_SESSION['cartSync']['orderCreated'] === TRUE) $_SESSION['cartSync']['orderID'] = $insert_id;
 
       foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
         $Qtotals = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values (:orders_id, :title, :text, :value, :class, :sort_order)');
@@ -275,8 +275,8 @@
         $status_id = DEFAULT_ORDERS_STATUS_ID;
       }
 
-      if (isset($_SESSION['CARTSYNC']['ORDERCREATED']) && $_SESSION['CARTSYNC']['ORDERCREATED'] === TRUE) {
-        if (isset($_SESSION['CARTSYNC']['ORDERID']) && $_SESSION['CARTSYNC']['ORDERID'] != NULL) $order_id = $_SESSION['CARTSYNC']['ORDERID'];
+      if (isset($_SESSION['cartSync']['orderCreated']) && $_SESSION['cartSync']['orderCreated'] === TRUE) {
+        if (isset($_SESSION['cartSync']['orderID']) && $_SESSION['cartSync']['orderID'] != NULL) $order_id = $_SESSION['cartSync']['orderID'];
         // update the order info
 
         $customer_address = lC_AddressBook::getEntry($lC_Customer->getDefaultAddressID())->toArray();
@@ -322,11 +322,11 @@
           billing_country_iso3 = :billing_country_iso3,
           billing_address_format = :billing_address_format,   
           payment_module = :payment_module,
+          payment_method = :payment_method,
           currency = :currency, 
           currency_value = :currency_value, 
           orders_status = :orders_status where orders_id = :orders_id');
                      
-        $Qupdate->bindTable(':table_orders', TABLE_ORDERS);
         $Qupdate->bindInt(':customers_id', $lC_Customer->getID());
         $Qupdate->bindValue(':customers_name', $lC_Customer->getName());
         $Qupdate->bindValue(':customers_company', $customer_address['entry_company']);
@@ -367,15 +367,20 @@
         $Qupdate->bindValue(':billing_country_iso2', $lC_ShoppingCart->getBillingAddress('country_iso_code_2'));
         $Qupdate->bindValue(':billing_country_iso3', $lC_ShoppingCart->getBillingAddress('country_iso_code_3'));
         $Qupdate->bindValue(':billing_address_format', $lC_ShoppingCart->getBillingAddress('format'));
-        $Qupdate->bindInt(':orders_status', $status_id);
-        $Qupdate->bindInt(':orders_id', $order_id);      
         $Qupdate->bindValue(':payment_method', $lC_ShoppingCart->getBillingMethod('title'));
         $Qupdate->bindValue(':payment_module', $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getCode());
         $Qupdate->bindValue(':currency', $lC_Currencies->getCode());
         $Qupdate->bindValue(':currency_value', $lC_Currencies->value($lC_Currencies->getCode()));
-        $Qupdate->execute();  
-        
-      }      
+      } else {
+        $Qupdate = $lC_Database->query('update :table_orders set orders_status = :orders_status where orders_id = :orders_id');
+      }
+      $Qupdate->bindTable(':table_orders', TABLE_ORDERS);
+      $Qupdate->bindInt(':orders_status', $status_id);
+      $Qupdate->bindInt(':orders_id', $order_id); 
+      $Qupdate->execute();  
+ 
+      
+          
       
       $Qstatus = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments)');
       $Qstatus->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
@@ -453,6 +458,7 @@
       lC_Order::sendEmail($order_id);
 
       unset($_SESSION['prepOrderID']);
+      if (isset($_SESSION['cartSync'])) unset($_SESSION['cartSync']);
     }
 
     function sendEmail($id) {

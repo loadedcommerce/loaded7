@@ -193,8 +193,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
   public function confirmation() {
     $this->_order_id = lC_Order::insert();
     // store the cartID info to match up on the return - to prevent multiple order IDs being created
-    $_SESSION['CARTSYNC']['CARTID'] = $_SESSION['cartID'];
-    $_SESSION['CARTSYNC']['PREPORDERID'] = $_SESSION['prepOrderID'];    
+    $_SESSION['cartSync']['cartID'] = $_SESSION['cartID'];
+    $_SESSION['cartSync']['PREPORDERID'] = $_SESSION['prepOrderID'];    
   }
  /**
   * Return the confirmation button logic
@@ -294,7 +294,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
     if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
     if (isset($_SESSION['PPEC_SKIP_PAYMENT'] )) unset($_SESSION['PPEC_SKIP_PAYMENT']);
-    if (isset($_SESSION['CARTSYNC'] )) unset($_SESSION['CARTSYNC']);
+    if (isset($_SESSION['cartSync'] )) unset($_SESSION['cartSync']);
     
     if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
   } 
@@ -426,8 +426,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
         // log the customer in
         $lC_Customer->setIsLoggedOn(true); 
         // sync the cart/order
-        $_SESSION['CARTSYNC']['CARTID'] = $_SESSION['cartID'];
-        $_SESSION['CARTSYNC']['PREPORDERID'] = $_SESSION['prepOrderID'];             
+        $_SESSION['cartSync']['cartID'] = $_SESSION['cartID'];
+        $_SESSION['cartSync']['PREPORDERID'] = $_SESSION['prepOrderID'];             
         
 //echo "<pre>";
 //print_r($_SESSION);

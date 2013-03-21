@@ -51,11 +51,11 @@ class lC_Checkout_Process extends lC_Template {
       $lC_Payment = new lC_Payment('paypal_adv');
       $lC_ShoppingCart->setBillingMethod(array('id' => 'paypal_adv', 'title' => $GLOBALS['lC_Payment_paypal_adv']->getMethodTitle()));
       
-      if (isset($_SESSION['CARTSYNC']['CARTID']) && $_SESSION['CARTSYNC']['CARTID'] != NULL) {
-        $_SESSION['cartID'] = $_SESSION['CARTSYNC']['CARTID'];
-        $_SESSION['prepOrderID'] = $_SESSION['CARTSYNC']['PREPORDERID'];
-        unset($_SESSION['CARTSYNC']['CARTID']);
-        unset($_SESSION['CARTSYNC']['PREPORDERID']);
+      if (isset($_SESSION['cartSync']['cartID']) && $_SESSION['cartSync']['cartID'] != NULL) {
+        $_SESSION['cartID'] = $_SESSION['cartSync']['cartID'];
+        $_SESSION['prepOrderID'] = $_SESSION['cartSync']['PREPORDERID'];
+        unset($_SESSION['cartSync']['cartID']);
+        unset($_SESSION['cartSync']['PREPORDERID']);
       }
      
     } else {
