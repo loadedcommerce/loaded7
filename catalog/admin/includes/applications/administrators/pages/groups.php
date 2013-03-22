@@ -11,6 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+
 ?>
 <!-- Main content -->
 <section role="main" id="main">
