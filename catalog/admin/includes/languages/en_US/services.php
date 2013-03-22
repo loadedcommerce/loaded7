@@ -9,7 +9,7 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-heading_title = Services
+heading_title = Service Modules
 
 table_heading_service_modules = Service Modules
 table_heading_action = Action
