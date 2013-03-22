@@ -3,12 +3,12 @@
   <definitions>
     <definition>
       <key>payment_cod_title</key>
-      <value><![CDATA[Cash on Delivery]]></value>
+      <value><![CDATA[Cash On Delivery]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>
       <key>payment_cod_description</key>
-      <value><![CDATA[Cash on Delivery]]></value>
+      <value><![CDATA[<h3 class="thin small-margin-left mid-margin-bottom"><img src="images/cod.png" class="margin-right" style="vertical-align:middle">Cash On Delivery</h3>]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>
