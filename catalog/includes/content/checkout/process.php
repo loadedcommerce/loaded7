@@ -21,17 +21,19 @@ class lC_Checkout_Process extends lC_Template {
     global $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_NavigationHistory, $lC_Payment, $lC_Vqmod;
     
     require($lC_Vqmod->modCheck('includes/classes/address_book.php'));
-
-    if ($lC_Customer->isLoggedOn() === false) {
-      $lC_NavigationHistory->setSnapshot();
-
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
-    }
+   
+    if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL && isset($_GET['token']) && $_GET['token'] == $_SESSION['PPEC_TOKEN']) {  
+    } else {
+      if ($lC_Customer->isLoggedOn() === false) {
+        $lC_NavigationHistory->setSnapshot();
+        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
+      }
+    }    
 
     if ($lC_ShoppingCart->hasContents() === false) {
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
     }
-    
+        
     // added for removal of order comments from shipping and payment pages and placed on confirmation page only during checkout
     if (!empty($_POST['comments'])) {
       $_SESSION['comments'] = lc_sanitize_string($_POST['comments']);
@@ -41,16 +43,33 @@ class lC_Checkout_Process extends lC_Template {
     if (($lC_ShoppingCart->hasShippingMethod() === false) && ($lC_ShoppingCart->getContentType() != 'virtual')) {
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
     }
-
+             
     // load selected payment module
     include($lC_Vqmod->modCheck('includes/classes/payment.php'));
-    $lC_Payment = new lC_Payment($lC_ShoppingCart->getBillingMethod('id'));
-
+    
+    if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL && isset($_GET['token']) && $_GET['token'] == $_SESSION['PPEC_TOKEN']) {  
+      $lC_Payment = new lC_Payment('paypal_adv');
+      $lC_ShoppingCart->setBillingMethod(array('id' => 'paypal_adv', 'title' => $GLOBALS['lC_Payment_paypal_adv']->getMethodTitle()));
+      
+      if (isset($_SESSION['cartSync']['cartID']) && $_SESSION['cartSync']['cartID'] != NULL) {
+        $_SESSION['cartID'] = $_SESSION['cartSync']['cartID'];
+        $_SESSION['prepOrderID'] = $_SESSION['cartSync']['prepOrderID'];
+      }
+     
+    } else {
+      $lC_Payment = new lC_Payment($lC_ShoppingCart->getBillingMethod('id'));
+    }
+            
     if ($lC_Payment->hasActive() && ($lC_ShoppingCart->hasBillingMethod() === false)) {
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
     }
-
+                
     include($lC_Vqmod->modCheck('includes/classes/order.php'));
+
+    if (isset($_SESSION['PROCESS_DATA']) && $_SESSION['PROCESS_DATA'] != NULL) {
+      $_POST = $_SESSION['PROCESS_DATA'];
+      unset($_SESSION['PROCESS_DATA']);
+    }
 
     $lC_Payment->process();
 

@@ -22,7 +22,7 @@ class lC_Checkout_Payment extends lC_Template {
 
   /* Class constructor */
   function lC_Checkout_Payment() {
-    global $lC_Database, $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Payment, $lC_Vqmod;
+    global $lC_Database, $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Payment, $lC_MessageStack, $lC_Vqmod;
 
     require($lC_Vqmod->modCheck('includes/classes/address_book.php'));
 
@@ -87,9 +87,19 @@ class lC_Checkout_Payment extends lC_Template {
       $this->addJavascriptBlock($lC_Payment->getJavascriptBlocks());
     }
 
-    if (isset($_GET['payment_error']) && is_object(${$_GET['payment_error']}) && ($error = ${$_GET['payment_error']}->get_error())) {
-      $lC_MessageStack->add('checkout_payment', $error['error'], 'error');
+    if (isset($_GET['payment_error'])) {
+      $lC_MessageStack->add('checkout_payment', $_GET['payment_error'], 'error'); 
     }
+    
+    // ppec inject
+    if ((isset($_GET['skip']) && $_GET['skip'] == 'no') || isset($_GET['payment_error'])) {
+      if (isset( $_SESSION['PPEC_SKIP_PAYMENT'])) unset($_SESSION['PPEC_SKIP_PAYMENT']);
+    } else {
+      if (isset($_SESSION['PPEC_SKIP_PAYMENT']) && $_SESSION['PPEC_SKIP_PAYMENT'] === TRUE) {
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'));
+      }
+    }
+
   }
 }
 ?>

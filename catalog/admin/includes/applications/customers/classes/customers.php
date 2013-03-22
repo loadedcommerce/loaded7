@@ -90,14 +90,18 @@ class lC_Customers_Admin {
       if ( ACCOUNT_GENDER > -1 ) {
         switch ( $Qcustomers->value('customers_gender') ) {
           case 'm':
-            $customer_icon = lc_icon_admin('male.png', 'cID[' . $Qcustomers->value('customers_id') . '] ' . $lC_Language->get('gender_male'));
+            $customer_icon = '<span style="cursor:pointer;" class="with-tooltip" title="cID[' . $Qcustomers->value('customers_id') . '] ' . $lC_Language->get('gender_male') . '">' . lc_icon_admin('male.png') . '</span>';
             //$customer_icon = '<span class="icon-user icon-blue" title="cID[' . $Qcustomers->value('customers_id') . '] ' . $lC_Language->get('gender_male') . '"></span>';
             break;
 
           case 'f':
-            $customer_icon = lc_icon_admin('female.png', 'cID[' . $Qcustomers->value('customers_id') . '] ' . $lC_Language->get('gender_female'));
+            $customer_icon = '<span style="cursor:pointer;" class="with-tooltip" title="cID[' . $Qcustomers->value('customers_id') . '] ' . $lC_Language->get('gender_female') . '">' . lc_icon_admin('female.png') . '</span>';
             //$customer_icon = '<span class="icon-user icon-red" title="cID[' . $Qcustomers->value('customers_id') . '] ' . $lC_Language->get('gender_female') . '"></span>';
             break;
+            
+          default:
+            //$customer_icon = lc_icon_admin('female.png', 'cID[' . $Qcustomers->value('customers_id') . '] ' . $lC_Language->get('gender_female'));
+            $customer_icon = '<span style="cursor:pointer;" class="icon-user icon-anthracite with-tooltip" title="cID[' . $Qcustomers->value('customers_id') . ']"></span>';
         }
       }
 

@@ -11,7 +11,6 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-ini_set('display_errors', 1);
 $oID = lC_Success::getOrderID($lC_Customer->getID());
 ?>
 <!--content/checkout/checkout_success.php start-->
@@ -109,26 +108,28 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                   </div>
                 </div>
                 <div style="clear:both;">&nbsp;</div>
-              </form>
-              <div id="success-additional-info">
-                <div id="checkoutSuccessNotification" class="borderPadMe">
-                <?php
-                  $products_array = lC_Success::globalNotifications($lC_Customer->getID());
-                  if (isset($products_array) && !empty($products_array)) {
-                    echo $lC_Language->get('add_selection_to_product_notifications') . '<br /><p class="productsNotifications">';
-                    $products_displayed = array();
-                    for ($i=0, $n=sizeof($products_array); $i<$n; $i++) {
-                      if (!in_array($products_array[$i]['id'], $products_displayed)) {
-                        echo lc_draw_checkbox_field('notify[]', $products_array[$i]['id']) . ' ' . $products_array[$i]['text'] . '<br />';
-                        $products_displayed[] = $products_array[$i]['id'];
+                <div id="success-additional-info">
+                  <div id="checkoutSuccessNotification" class="borderPadMe">
+                  <?php
+                    $products_array = lC_Success::globalNotifications($lC_Customer->getID());
+                    if (isset($products_array) && !empty($products_array)) {
+                      echo $lC_Language->get('add_selection_to_product_notifications') . '<br />';
+                      $products_displayed = array();
+                      for ($i=0, $n=sizeof($products_array); $i<$n; $i++) {
+                        if (!in_array($products_array[$i]['id'], $products_displayed)) {
+                          echo '<div class="productsNotifications">' . lc_draw_checkbox_field('notify[]', $products_array[$i]['id']) . ' ' . $products_array[$i]['text'] . '</div>';
+                          $products_displayed[] = $products_array[$i]['id'];
+                        }
                       }
+                    } else {
+                      echo sprintf($lC_Language->get('view_order_history'), lc_href_link(FILENAME_ACCOUNT, null, 'SSL'), lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL')) . '<br /><br />' . sprintf($lC_Language->get('contact_store_owner'), lc_href_link(FILENAME_INFO, 'contact'));
                     }
-                    echo '</p>';     
-                  } else {
-                    echo sprintf($lC_Language->get('view_order_history'), lc_href_link(FILENAME_ACCOUNT, null, 'SSL'), lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL')) . '<br /><br />' . sprintf($lC_Language->get('contact_store_owner'), lc_href_link(FILENAME_INFO, 'contact'));
-                  }
-                ?>
-                </div> 
+                  ?>
+                  </div> 
+                </form>
+                <div id="checkoutSuccessActions" style="margin-top:20px;">
+                  <span class="buttonRight"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></span>
+                </div>
                 <div style="clear:both;">&nbsp;</div>
                 <?php
                 if (DOWNLOAD_ENABLED == '1') {

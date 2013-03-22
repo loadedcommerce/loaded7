@@ -21,14 +21,30 @@ class lC_Checkout_Shipping extends lC_Template {
       $_page_image = 'table_background_delivery.gif';
 
   /* Class constructor */
-  function lC_Checkout_Shipping() {
-    global $lC_Database, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Shipping, $lC_Vqmod;
-
+  function lC_Checkout_Shipping() {  
+    global $lC_Database, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Shipping, $lC_MessageStack, $lC_Vqmod;
+       
     require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));
 
+    // ppec intercept
+    if (isset($_GET['ppec']) && $_GET['ppec'] == 'process') {
+      // setExpressCheckout()
+      include_once('includes/classes/order.php');
+      include_once('includes/classes/payment.php');
+      include_once('includes/modules/payment/paypal_adv.php');
+      $ppec = new lC_Payment_paypal_adv();
+      $_SESSION['PPEC_TOKEN'] = $ppec->setExpressCheckout(); 
+      if (!$_SESSION['PPEC_TOKEN']) {
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL')); 
+      }
+      // insert the order before leaving for paypal
+      $ppec->confirmation();
+      // redirect to paypal
+      lc_redirect($ppec->_ec_redirect_url . $_SESSION['PPEC_TOKEN']);
+    }     
+    
     if ($lC_Customer->isLoggedOn() === false) {
       $lC_NavigationHistory->setSnapshot();
-
       lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
     }
 
@@ -72,7 +88,7 @@ class lC_Checkout_Shipping extends lC_Template {
           $lC_ShoppingCart->setShippingAddress($lC_Customer->getDefaultAddressID());
         }
       }
-
+      
       // load all enabled shipping modules
       if (class_exists('lC_Shipping') === false) {
         include($lC_Vqmod->modCheck('includes/classes/shipping.php'));

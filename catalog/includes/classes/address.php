@@ -157,7 +157,7 @@
       $Qcountry->execute();
 
       return $Qcountry->value('countries_name');
-    }
+    }   
 
 /**
  * Return the country 2 character ISO code
@@ -253,6 +253,26 @@
 
       return $Qzone->value('zone_code');
     }
+    
+/**
+ * Return the zone ID
+ *
+ * @param string $name The name of the zone
+ * @access public
+ * @return string
+ */
+
+    public static function getZoneID($code, $country_id = '223') {
+      global $lC_Database;
+
+      $Qzone = $lC_Database->query('select zone_id from :table_zones where zone_code = :zone_code and zone_country_id = :zone_country_id');
+      $Qzone->bindTable(':table_zones', TABLE_ZONES);
+      $Qzone->bindValue(':zone_code', $code);
+      $Qzone->bindValue(':zone_country_id', $country_id);
+      $Qzone->execute();
+
+      return $Qzone->valueInt('zone_id');
+    }    
 
 /**
  * Return the zones belonging to a country, or all zones

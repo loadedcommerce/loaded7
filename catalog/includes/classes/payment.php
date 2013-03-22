@@ -22,7 +22,7 @@ class lC_Payment {
   function lC_Payment($module = '') {
     global $lC_Database, $lC_Language, $lC_Vqmod;
 
-    include($lC_Vqmod->modCheck(dirname(__FILE__) . '/credit_card.php'));
+    include_once($lC_Vqmod->modCheck(dirname(__FILE__) . '/credit_card.php'));
 
     $Qmodules = $lC_Database->query('select code from :table_templates_boxes where modules_group = "payment"');
     $Qmodules->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
@@ -53,11 +53,15 @@ class lC_Payment {
 
       usort($this->_modules, array('lC_Payment', '_usortModules'));
 
-      if ( (!empty($module)) && (in_array($module, $this->_modules)) && (isset($GLOBALS['lC_Payment_' . $module]->form_action_url)) ) {
-        $this->form_action_url = $GLOBALS['lC_Payment_' . $module]->form_action_url;
+        if ( (!empty($module)) && (in_array($module, $this->_modules)) && (isset($GLOBALS['lC_Payment_' . $module]->form_action_url)) ) {
+          $this->form_action_url = $GLOBALS['lC_Payment_' . $module]->form_action_url;
+        }
+        
+        if ( (!empty($module)) && (in_array($module, $this->_modules)) && (isset($GLOBALS['lC_Payment_' . $module]->iframe_action_url)) ) {
+          $this->iframe_action_url = $GLOBALS['lC_Payment_' . $module]->iframe_action_url;
+        }        
       }
     }
-  }
 
   // class methods
   function sendTransactionToGateway($url, $parameters, $header = '', $method = 'post', $certificate = '') {
@@ -332,8 +336,24 @@ class lC_Payment {
     return $has_active;
   }
 
-  function numberOfActive() {
-    static $active;
+    function hasIframeURL() {
+      if (is_array($this->_modules)) {
+        if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
+          if (isset($GLOBALS[$this->selected_module]->iframe_action_url) && (empty($GLOBALS[$this->selected_module]->iframe_action_url) === false)) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    function getIframeURL() {
+      return $GLOBALS[$this->selected_module]->iframe_action_url;
+    }
+
+    function numberOfActive() {
+      static $active;
 
     if (isset($active) === false) {
       $active = 0;

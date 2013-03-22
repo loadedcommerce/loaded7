@@ -170,7 +170,6 @@ function editCustomer(id) {
   }
   $.modal({
       content: '<div class="standard-tabs same-height" id="editCustomerContainer">'+
-               '<div id="loaderContainer" style="position:absolute; display:none;"><span id="loaderContent" class="button refreshing anthracite-bg" style="left:200px; top:75px; z-index:2; padding:20px 60px;"><?php echo $lC_Language->get('icon_processing'); ?></span></div>'+
                '  <ul class="tabs">'+
                '    <li class="active"><?php echo lc_link_object('#section_personal', $lC_Language->get('section_personal'), 'onclick="toggleAddAddressButton(false); return false;"'); ?></li>'+
                '    <li><?php echo lc_link_object('#section_address_book', $lC_Language->get('section_address_book'), 'onclick="toggleAddAddressButton(true); return false;"'); ?></li>'+
@@ -212,7 +211,7 @@ function editCustomer(id) {
       },
       buttonsLowPadding: true
   });
-  $('#loaderContainer').show();
+  mask();
   getFormData(id);
   $('.datepicker').glDatePicker({ startDate: new Date("January 1, 1960"), zIndex: 100 });
 }
@@ -226,7 +225,7 @@ function getFormData(id) {
         $(location).attr('href',url);
       }
       if (data.rpcStatus != 1) {
-        $("#formProcessing").fadeOut('slow');
+        unmask();
         $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
         return false;
       }
@@ -273,7 +272,7 @@ function getFormData(id) {
           $("<option " + selected + "></option>").val(val).html(text)
         );
       });
-      $('#loaderContainer').hide();
+      unmask();
     }
   );
 }
@@ -310,8 +309,6 @@ function toggleAddAddressButton(x) {
   }
 }
 
-
-
 function saveCustomer() {
   var cid = parseInt($("#abParentId").html());
   var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
@@ -328,9 +325,7 @@ function saveCustomer() {
       confirmation: { minlength: pwMin },
     },
     invalidHandler: function() {
-      $('#pSaveButton').removeClass('disabled');
-      $('#pIconSave').show();
-      $('#pIconLoader').hide();
+      unmask();
     }
   }).form();
   if (bValid) {
