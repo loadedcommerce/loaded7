@@ -26,6 +26,10 @@ class lC_OrderTotal {
     $Qmodules->execute();
 
     while ($Qmodules->next()) {
+      if (!file_exists('includes/modules/order_total/' . $Qmodules->value('code') . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1)))) {
+        $this->removeModule($Qmodules->value('code'));
+        continue;
+      }      
       $this->_modules[] = $Qmodules->value('code');
     }
 
@@ -47,6 +51,15 @@ class lC_OrderTotal {
   }
 
   // class methods
+  function removeModule($code) {
+    global $lC_Database;
+    
+    $Qmd = $lC_Database->query('delete from :table_templates_boxes where code = :code and modules_group = "order_total"');
+    $Qmd->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+    $Qmd->bindValue(':code', $code);
+    $Qmd->execute();    
+  }
+    
   function getCode() {
     return $this->_code;
   }
