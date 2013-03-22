@@ -25,7 +25,6 @@
     /* Class constructor */
     function lC_Checkout_Confirmation() {
       global $lC_Session, $lC_Services, $lC_Language, $lC_ShoppingCart, $lC_Customer, $lC_MessageStack, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Payment, $lC_Vqmod;
-
       require($lC_Vqmod->modCheck('includes/classes/address_book.php'));
 
       if ($lC_Customer->isLoggedOn() === false) {
