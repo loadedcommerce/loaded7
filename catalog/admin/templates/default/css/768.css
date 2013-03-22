@@ -262,6 +262,16 @@ h2 {
 			.shortcut-marketing,		span.shortcut-marketing		{ background-position: 0 -350px; }
 			.shortcut-store,		span.shortcut-store	{ background-position: 0 -420px; }
 			.shortcut-reports,		span.shortcut-reports		{ background-position: 0 -490px; }
+
+				body.reversed a.shortcut-dashboard	{ background-position: 68px 0; }
+				body.reversed a.shortcut-orders	{ background-position: 68px -70px; }
+				body.reversed a.shortcut-customers		{ background-position: 68px -140px; }
+				body.reversed a.shortcut-content	{ background-position: 68px -210px; }
+				body.reversed a.shortcut-products		{ background-position: 68px -280px; }
+				body.reversed a.shortcut-marketing		{ background-position: 68px -350px; }
+				body.reversed a.shortcut-store	{ background-position: 68px -420px; }
+				body.reversed a.shortcut-reports		{ background-position: 68px -490px; }
+
 			#shortcuts > li > a:before,
 			#shortcuts > li:after {
 				display: block;
@@ -288,13 +298,13 @@ h2 {
 					}
 
 					a.shortcut-dashboard:before	{ background-position: -70px -5px; }
-					a.shortcut-messages:before	{ background-position: -70px -75px; }
-					a.shortcut-agenda:before	{ background-position: -70px -145px; }
-					a.shortcut-contacts:before	{ background-position: -70px -215px; }
-					a.shortcut-medias:before	{ background-position: -70px -285px; }
-					a.shortcut-stats:before		{ background-position: -70px -355px; }
-					a.shortcut-settings:before	{ background-position: -70px -425px; }
-					a.shortcut-notes:before		{ background-position: -70px -495px; }
+					a.shortcut-orders:before	{ background-position: -70px -75px; }
+					a.shortcut-customers:before	{ background-position: -70px -145px; }
+					a.shortcut-content:before	{ background-position: -70px -215px; }
+					a.shortcut-products:before	{ background-position: -70px -285px; }
+					a.shortcut-marketing:before		{ background-position: -70px -355px; }
+					a.shortcut-store:before	{ background-position: -70px -425px; }
+					a.shortcut-reports:before		{ background-position: -70px -495px; }
 
 				#shortcuts > li:after {
 					right: 0;
