@@ -408,7 +408,7 @@
       $Qpd->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
       $Qpd->bindInt(':orders_id', $order_id); 
       $Qpd->execute();     
-      
+           
       foreach ($lC_ShoppingCart->getProducts() as $products) {
         $Qproducts = $lC_Database->query('insert into :table_orders_products (orders_id, products_id, products_model, products_name, products_price, products_tax, products_quantity) values (:orders_id, :products_id, :products_model, :products_name, :products_price, :products_tax, :products_quantity)');
         $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);

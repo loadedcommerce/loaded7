@@ -346,9 +346,10 @@ class lC_Orders_Admin {
     $result['orderComments'] = '<span>' . $lC_Language->get('number_of_comments') . ' ' . $lC_Order->getNumberOfComments() . '</span>';
     $result['orderTotal'] = '<span>' . $lC_Order->getTotal() . '</span>';
     $result['numberProducts'] = '<span>' . $lC_Language->get('number_of_products') . ' ' . $lC_Order->getNumberOfProducts() . '<br />' . $lC_Language->get('number_of_items') . ' ' . $lC_Order->getNumberOfItems . '</span>';
-    // build the product string   
+    // build the product string  
+    $result['orderProducts'] = ''; 
     foreach ( $lC_Order->getProducts() as $products ) {
-      $result['orderProducts'] = '<tr>
+      $result['orderProducts'] .= '<tr>
                                     <td valign="top" align="left">' . $products['quantity'] . '&nbsp;x&nbsp;</td>
                                     <td valign="top">' . $products['name'];
       if ( isset($products['attributes']) && is_array($products['attributes']) && ( sizeof($products['attributes']) > 0 ) ) {
