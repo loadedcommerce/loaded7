@@ -375,6 +375,9 @@ class lC_Payment_paypal_adv extends lC_Payment {
       } else {
         $_SESSION['messageToStack'] = array('shopping_cart', array('text' => 'An unknown error has occurred', 'type' => 'error'));
       }
+      if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
+      if (isset($_SESSION['PPEC_PAYDATA'])) unset($_SESSION['PPEC_PAYDATA']);
+      if (isset($_SESSION['PPEC_SKIP_PAYMENT'])) unset($_SESSION['PPEC_SKIP_PAYMENT']);
       return false;
     }
     
@@ -644,7 +647,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $itemsString = '';
     foreach ($lC_ShoppingCart->getProducts() as $products) {
       $itemsString .= '&L_NAME' . (string)$cnt . '=' . $products['name'] .
-                      '&L_DESC' . (string)$cnt . '=' . substr($products['description']) .
+                      '&L_DESC' . (string)$cnt . '=' . substr($products['description'], 0, 40) .
                       '&L_SKU' . (string)$cnt . '=' . $products['id'] .
                       '&L_COST' . (string)$cnt . '=' . $products['price'] .
                       '&L_QTY' . (string)$cnt . '=' . $products['quantity'];
