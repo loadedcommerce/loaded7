@@ -107,6 +107,12 @@ $assignedCategoryTree = new lC_CategoryTree();
 $assignedCategoryTree->setBreadcrumbUsage(false);
 $assignedCategoryTree->setSpacerString('&nbsp;', 5); 
 
+// get specials
+$Qspecials = $lC_Database->query('select specials_new_products_price from :table_specials where products_id = :products_id');
+$Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
+$Qspecials->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
+$Qspecials->execute();
+
 function getCustomerGroupOptionsString($id = null, $esc = false) {
   global $customer_groups_array;
   $options_string = '';
@@ -924,7 +930,7 @@ function toggleEditor(id) {
               <legend class="legend">Pricing Overrides</legend>
               <div class="field-block button-height">
                 <label for="" class="label"><b>Base Price</b></label>
-                <input type="text" name="" id="" value="" class="input">
+                <input type="text" name="" id="" value="<?php echo lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input">
               </div>
               <!-- lc_group_pricing begin -->
               <div class="field-block field-block-product button-height">
@@ -950,27 +956,27 @@ function toggleEditor(id) {
                   <input type="checkbox" class="switch disabled margin-right">
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">
+                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">-->
                   </span>
-                  <small class="input-info">Price/Special</small>
+                  <small class="input-info">Price<!-- if specials enabled /Special--></small>
                 </div>
                 <div>
                   <label for="" class="label margin-right"><b>Employee Group</b></label>
                   <input type="checkbox" class="switch disabled margin-right">
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">
+                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">-->
                   </span>
-                  <small class="input-info">Price/Special</small>
+                  <small class="input-info">Price<!-- if specials enabled /Special--></small>
                 </div>
                 <div>
                   <label for="" class="label margin-right"><b>Gold Reseller</b></label>
                   <input type="checkbox" class="switch disabled margin-right">
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">
+                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">-->
                   </span>
-                  <small class="input-info">Price/Special</small>
+                  <small class="input-info">Price<!-- if specials enabled /Special--></small>
                 </div>
                 <?php //} ?>
               </div>
@@ -1001,7 +1007,7 @@ function toggleEditor(id) {
               </div> 
               <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
                 <label for="" class="label">
-                  <span class="info-spot on-left grey">
+                  <span class="info-spot on-left grey margin-right">
                     <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
                     <span class="info-bubble">
                       <b>Go Pro!</b> and enjoy this feature!
@@ -1012,46 +1018,37 @@ function toggleEditor(id) {
                 <?php //foreach() { ?>
                 <div>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;">
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
                     <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
-                    <?php //if (specials price not exists) { ?>
-                    <!--<small class="input-info">Price</small>-->
-                    <?php //} else { ?>
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
-                    <small class="input-info">Price/Special</small>
+                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">-->
+                    <small class="input-info">Price<!-- if specials enabled /Special--></small>
                     <?php //} ?>
                   </span>
                 </div>
                 <div>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;">
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
                     <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
-                    <?php //if (specials price not exists) { ?>
-                    <!--<small class="input-info">Price</small>-->
-                    <?php //} else { ?>
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
-                    <small class="input-info">Price/Special</small>
+                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">-->
+                    <small class="input-info">Price<!-- if specials enabled /Special--></small>
                     <?php //} ?>
                   </span>
                 </div>
                 <div> 
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;">
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
                     <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
-                    <?php //if (specials price not exists) { ?>
-                    <!--<small class="input-info">Price</small>-->
-                    <?php //} else { ?>
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">
-                    <small class="input-info">Price/Special</small>
+                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">-->
+                    <small class="input-info">Price<!-- if specials enabled /Special--></small>
                     <?php //} ?>
                   </span>
                 </div>
@@ -1060,7 +1057,7 @@ function toggleEditor(id) {
               <!-- lc_qty_price_breaks end --> 
               <div class="field-block field-block-product button-height">
                 <label for="" class="label"><b>Special Pricing</b></label>
-                <input onchange="$('#specials_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
+                <input onchange="$('#specials_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' checked' : ''); ?>>
                 <span class="info-spot on-left grey margin-left margin-right">
                   <span class="icon-info-round"></span>
                   <span class="info-bubble">
@@ -1068,7 +1065,7 @@ function toggleEditor(id) {
                   </span>
                 </span>
               </div>
-              <div id="specials_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
+              <div id="specials_pricing_container" class="field-drop button-height black-inputs"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' style="display:block;"' : ' style="display:none;"'); ?>>
                 <label for="resize_height" class="label"><b>Special Retail Price</b></label>
                   <div class="columns">
                     <div class="new-row-mobile twelve-columns twelve-columns-mobile">
@@ -1117,14 +1114,14 @@ function toggleEditor(id) {
                       <span class="info-bubble">
                         Put the bubble text here
                       </span>
-                    </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span><!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     Special&nbsp;Price&nbsp;&nbsp;
                     <span class="info-spot on-left grey">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
                         Put the bubble text here
                       </span>
-                    </span>
+                    </span>-->
                   </div>
                 </div>
                 <div class="left-column-200px margin-bottom clear-left with-mid-padding">
@@ -1135,7 +1132,7 @@ function toggleEditor(id) {
                   <div class="right-column">
                     <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
                     <?php // if special price ?>
-                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                      <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
                   </div>
                   <div style="height:5px;"></div>
@@ -1145,7 +1142,7 @@ function toggleEditor(id) {
                   <div class="right-column">
                     <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
                     <?php // if special price ?>
-                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                      <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
                   </div>
                   <div style="height:5px;"></div>
@@ -1155,7 +1152,7 @@ function toggleEditor(id) {
                   <div class="right-column">
                     <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
                     <?php // if special price ?>
-                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                      <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
                   </div>
                   <div style="height:5px;"></div>
@@ -1165,7 +1162,7 @@ function toggleEditor(id) {
                   <div class="right-column">
                     <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
                     <?php // if special price ?>
-                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                      <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
                   </div>
                   <div style="height:5px;"></div>
@@ -1175,7 +1172,7 @@ function toggleEditor(id) {
                   <div class="right-column">
                     <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
                     <?php // if special price ?>
-                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                      <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
                   </div>
                   <div style="height:5px;"></div>
@@ -1185,7 +1182,7 @@ function toggleEditor(id) {
                   <div class="right-column">
                     <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
                     <?php // if special price ?>
-                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                      <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
                   </div>
                   <div style="height:5px;"></div>
