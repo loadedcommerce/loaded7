@@ -93,6 +93,16 @@ $(document).ready(function() {
   
   $("#browse-catalog").click(function () {
     $("#browse-catalog-div").slideToggle("slow");
+  }); 
+ 
+  // grid/list product view switch
+  $('#listView').click(function(){
+    $('#viewList').show();
+    $('#viewGrid').hide();
+  });
+  $('#gridView').click(function(){
+    $('#viewGrid').show();
+    $('#viewList').hide();
   });  
 
 });

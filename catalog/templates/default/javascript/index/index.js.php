@@ -21,15 +21,5 @@ function __jquery_placeholder_goTitling() {
       $(this).addClass("holder");
     }
   });
-} 
- 
-// grid/list product view switch
-$('#listView').click(function(){
-  $('#viewList').show();
-  $('#viewGrid').hide();
-});
-$('#gridView').click(function(){
-  $('#viewGrid').show();
-  $('#viewList').hide();
-});
+}
 </script>
