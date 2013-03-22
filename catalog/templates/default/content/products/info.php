@@ -79,7 +79,9 @@ function refreshVariants() {
 
   document.getElementById('productInfoPrice').innerHTML = '<big>' + price + '</big>';
   document.getElementById('productInfoAvailability').innerHTML = availability;
-  document.getElementById('productInfoModel').innerHTML = model;
+  if (document.getElementById('productInfoModel')) {
+    document.getElementById('productInfoModel').innerHTML = model;
+  }
 }
 </script>
 <div id="product_detail">
