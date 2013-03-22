@@ -1,0 +1,7 @@
+/* jQuery form validation */
+span.req { color: red; }
+label.error { display: block; color: red; font-style: italic; font-weight: normal; }
+span.error { color: red; font-style: italic; font-weight: normal; }
+input.error { border: 2px solid red; }
+textarea.error { border: 2px solid red; }
+select.error { border: 2px solid red; }

@@ -1,5 +1,4 @@
 /**
- *
  * Confirmation plugin
  *
  * Structural good practices from the article from Addy Osmani 'Essential jQuery plugin patterns'
@@ -22,136 +21,113 @@
 	var doc = $(document);
 
 	/**
-	 * Display the confirm message
+	 * Display the confirm message (older syntax kept for backward compatibility)
 	 * @param jQuery target the clicked element
 	 * @param event event the initial event
 	 * @return void
 	 */
 	$.confirm = function(target, event)
 	{
-			// Options
-		var settings = $.extend({}, $.confirm.defaults, target.data('confirm-options')),
-
-			// Mode
-			modeTooltip = (settings.tooltip || !$.modal),
-
-			// Has the user made his choice?
-			choose = false,
-
-			// Callbacks
-			onShow, onRemove,
-
-			// Message
-			message,
-
-			// Buttons
-			buttons, confirmButton, cancelButton,
-
-			// Functions
-			confirmFunc, cancelFunc;
-
 		// Prevent default
 		event.preventDefault();
 		event.stopPropagation();
 
-		// If already confirmed, run
-		if (target.data('confirmed'))
-		{
-			call = true;
+		// Show confirmation
+		$(target).confirm();
+	};
 
-			// Function on confirm
-			if (settings.onConfirm)
+	/**
+	 * Display the confirm message
+	 * @param object options additional options (optional)
+	 */
+	$.fn.confirm = function(options)
+	{
+		return this.each(function()
+		{
+			var target = $(this),
+
+				// Options
+				settings = $.extend({}, $.confirm.defaults, target.data('confirm-options'), options),
+
+				// Mode
+				modeTooltip = (settings.tooltip || !$.modal),
+
+				// Has the user made his choice?
+				choose = false,
+
+				// Callbacks
+				onShow, onRemove,
+
+				// Message
+				message,
+
+				// Buttons
+				buttons, confirmButton, cancelButton,
+
+				// Functions
+				confirmFunc, cancelFunc;
+
+			// If already confirmed, run
+			if (target.data('confirmed'))
 			{
-				if (settings.onConfirm.call(target[0]) !== false)
+				call = true;
+
+				// Function on confirm
+				if (settings.onConfirm)
+				{
+					if (settings.onConfirm.call(target[0]) !== false)
+					{
+						_runDefault(target);
+					}
+				}
+				else
 				{
 					_runDefault(target);
 				}
-			}
-			else
-			{
-				_runDefault(target);
+
+				return;
 			}
 
-			return;
-		}
-
-		// Callback on show
-		if (settings.onShow)
-		{
-			onShow = function()
+			// Callback on show
+			if (settings.onShow)
 			{
-				settings.onShow.call(target[0], $(this));
-			};
-		}
-
-		// Callback on remove
-		onRemove = function()
-		{
-			// Abort callback
-			if (!choose && settings.onAbort)
-			{
-				settings.onAbort.call(target[0]);
-			}
-
-			// Remove callback
-			if (settings.onRemove)
-			{
-				settings.onRemove.call(target[0]);
-			}
-		};
-
-		// Function on confirm button
-		confirmFunc = function()
-		{
-			var call = true;
-
-			// Mark as done
-			choose = true;
-
-			// Function on confirm
-			if (settings.onConfirm)
-			{
-				if (settings.onConfirm.call(target[0]) === false)
+				onShow = function()
 				{
-					call = false;
+					settings.onShow.call(target[0], $(this));
+				};
+			}
+
+			// Callback on remove
+			onRemove = function()
+			{
+				// Abort callback
+				if (!choose && settings.onAbort)
+				{
+					settings.onAbort.call(target[0]);
 				}
-			}
 
-			// Remove message
-			if (modeTooltip)
-			{
-				target.removeTooltip();
-			}
-			else
-			{
-				$(this).getModalWindow().closeModal();
-			}
+				// Remove callback
+				if (settings.onRemove)
+				{
+					settings.onRemove.call(target[0]);
+				}
+			};
 
-			// Run original event
-			if (call)
+			// Function on confirm button
+			confirmFunc = function()
 			{
-				_runDefault(target);
-			}
+				var call = true;
 
-			// Should the element remind confirmation?
-			if (settings.remind)
-			{
-				target.data('confirmed', true);
-			}
-		};
-
-		// Function on cancel button
-		if (settings.cancel)
-		{
-			cancelFunc = function()
-			{
 				// Mark as done
 				choose = true;
 
-				// Function on cancel
-				if (settings.onCancel)
+				// Function on confirm
+				if (settings.onConfirm)
 				{
-					settings.onCancel.call(target[0]);
+					if (settings.onConfirm.call(target[0]) === false)
+					{
+						call = false;
+					}
 				}
 
 				// Remove message
@@ -163,92 +139,130 @@
 				{
 					$(this).getModalWindow().closeModal();
 				}
+
+				// Run original event
+				if (call)
+				{
+					_runDefault(target);
+				}
+
+				// Should the element remind confirmation?
+				if (settings.remind)
+				{
+					target.data('confirmed', true);
+				}
 			};
-		}
 
-		// Tooltip mode
-		if (modeTooltip)
-		{
-			// Message
-			message = $('<div class="with-small-padding align-center"><div class="mid-margin-bottom">'+settings.message+'</div></div>');
-
-			// Confirm button
-			confirmButton = $('<button type="button" class="'+['button'].concat(settings.confirmClasses).join(' ')+'">'+settings.confirmText+'</button>').click(confirmFunc);
-
-			// Cancel button
+			// Function on cancel button
 			if (settings.cancel)
 			{
-				// Create
-				cancelButton = $('<button type="button" class="'+['button'].concat(settings.cancelClasses).join(' ')+'">'+settings.cancelText+'</button>').click(cancelFunc);
-
-				// Insert
-				if (settings.cancelFirst)
+				cancelFunc = function()
 				{
-					cancelButton.addClass('mid-margin-right').appendTo(message);
-					confirmButton.appendTo(message);
+					// Mark as done
+					choose = true;
+
+					// Function on cancel
+					if (settings.onCancel)
+					{
+						settings.onCancel.call(target[0]);
+					}
+
+					// Remove message
+					if (modeTooltip)
+					{
+						target.removeTooltip();
+					}
+					else
+					{
+						$(this).getModalWindow().closeModal();
+					}
+				};
+			}
+
+			// Tooltip mode
+			if (modeTooltip)
+			{
+				// Message
+				message = $('<div class="with-small-padding align-center"><div class="mid-margin-bottom">'+settings.message+'</div></div>');
+
+				// Confirm button
+				confirmButton = $('<button type="button" class="'+['button'].concat(settings.confirmClasses).join(' ')+'">'+settings.confirmText+'</button>').click(confirmFunc);
+
+				// Cancel button
+				if (settings.cancel)
+				{
+					// Create
+					cancelButton = $('<button type="button" class="'+['button'].concat(settings.cancelClasses).join(' ')+'">'+settings.cancelText+'</button>').click(cancelFunc);
+
+					// Insert
+					if (settings.cancelFirst)
+					{
+						cancelButton.addClass('mid-margin-right').appendTo(message);
+						confirmButton.appendTo(message);
+					}
+					else
+					{
+						confirmButton.addClass('mid-margin-right').appendTo(message);
+						cancelButton.appendTo(message);
+					}
 				}
 				else
 				{
-					confirmButton.addClass('mid-margin-right').appendTo(message);
-					cancelButton.appendTo(message);
+					// Full-width
+					confirmButton.addClass('full-width').appendTo(message);
 				}
+
+				// Show tooltip
+				target.tooltip(message, $.extend({}, settings.tooltipOptions, {
+					lock:				true,
+					exclusive:			target.closest('.tooltip').length === 0,
+					onShow:				onShow,
+					onRemove:			onRemove,
+					onAbort:			onRemove,
+					removeOnBlur:		true,
+					noPointerEvents:	false
+				}));
 			}
 			else
 			{
-				// Full-width
-				confirmButton.addClass('full-width').appendTo(message);
-			}
+				// Buttons
+				buttons = {};
 
-			// Show tooltip
-			target.tooltip(message, $.extend({}, settings.tooltipOptions, {
-				lock:				true,
-				exclusive:			true,
-				onShow:				onShow,
-				onRemove:			onRemove,
-				onAbort:			onRemove,
-				removeOnBlur:		true,
-				noPointerEvents:	false
-			}));
-		}
-		else
-		{
-			// Buttons
-			buttons = {};
+				// Cancel button - after
+				if (settings.cancel && settings.cancelFirst)
+				{
+					buttons[settings.cancelText] = {
+						classes :	settings.cancelClasses.join(' '),
+						click :		cancelFunc
+					};
+				}
 
-			// Cancel button - after
-			if (settings.cancel && settings.cancelFirst)
-			{
-				buttons[settings.cancelText] = {
-					classes :	settings.cancelClasses.join(' '),
-					click :		cancelFunc
+				// Confirm
+				buttons[settings.confirmText] = {
+					classes :	settings.confirmClasses.join(' '),
+					click :		confirmFunc
 				};
+
+				// Cancel button - after
+				if (settings.cancel && !settings.cancelFirst)
+				{
+					buttons[settings.cancelText] = {
+						classes :	settings.cancelClasses.join(' '),
+						click :		cancelFunc
+					};
+				}
+
+				// Open modal
+				$.modal($.extend({}, $.modal.defaults.confirmOptions, {
+
+					content:			settings.message,
+					buttons:			buttons,
+					onOpen:				onShow,
+					onClose:			onRemove
+
+				}));
 			}
-
-			// Confirm
-			buttons[settings.confirmText] = {
-				classes :	settings.confirmClasses.join(' '),
-				click :		confirmFunc
-			};
-
-			// Cancel button - after
-			if (settings.cancel && !settings.cancelFirst)
-			{
-				buttons[settings.cancelText] = {
-					classes :	settings.cancelClasses.join(' '),
-					click :		cancelFunc
-				};
-			}
-
-			// Open modal
-			$.modal($.extend({}, $.modal.defaults.confirmOptions, {
-
-				content:			settings.message,
-				buttons:			buttons,
-				onOpen:				onShow,
-				onClose:			onRemove
-
-			}));
-		}
+		});
 	};
 
 	/**
@@ -279,7 +293,7 @@
 	 * Confirmation defaults
 	 * @var object
 	 */
-	$.confirm.defaults = {
+	$.confirm.defaults = $.fn.confirm.defaults = {
 		/**
 		 * Default message
 		 * @var string
@@ -354,7 +368,7 @@
 			},
 
 			// Submit buttons
-			'[type="submit"]': function()
+			'[type="submit"]': function(target)
 			{
 				target.closest('form').submit();
 			}
@@ -401,9 +415,12 @@
 	// Event binding
 	doc.on('click', '.confirm', function(event)
 	{
-		// Show confirmation
-		$.confirm($(this), event);
+		// Prevent default
+		event.preventDefault();
+		event.stopPropagation();
 
+		// Show confirmation
+		$(this).confirm();
 	});
 
 })(jQuery, document);

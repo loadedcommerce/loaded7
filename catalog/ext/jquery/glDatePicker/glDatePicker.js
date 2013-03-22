@@ -7,7 +7,7 @@
 	Complete project source available at:
 	https://github.com/glad/glDatePicker/
 
-	Copyright (c) 2013 Gautam Lad.  All rights reserved.
+	Copyright (c) 2011 Gautam Lad.  All rights reserved.
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -293,12 +293,19 @@
 			var calendar = $("#"+calId);
 			if(calendar.length == 0)
 			{
-				calendar = $("<div id='"+calId+"'></div>")
-				.appendTo(document.body)
-				.css({
-					"position":settings.position,
-					"z-index": target.closest('.modal').length ? 999600 : 100
-				});
+				calendar = $("<div id='"+calId+"'></div>");
+				if (settings.showAlways)
+				{
+					calendar.appendTo(target);
+				}
+				else
+				{
+					calendar.appendTo(document.body)
+					.css({
+						"position":settings.position,
+						"z-index": target.closest('.modal').length ? 999600 : 100
+					});
+				}
 			}
 
 			// Show calendar

@@ -1,5 +1,4 @@
 /**
- *
  * Custom scroll plugin
  *
  * Structural good practices from the article from Addy Osmani 'Essential jQuery plugin patterns'
@@ -18,8 +17,11 @@
 	 * quickens the resolution process and can be more efficiently minified.
 	 */
 
-	// Objects cache
-	var doc = $(document);
+		// Objects cache
+	var doc = $(document),
+
+		// Check if device has a touch screen
+		touch = $('html').hasClass('touch');
 
 	/**
 	 * Enable custom scroll bar
@@ -214,7 +216,10 @@
 
 						// Size
 						width: width+'px',
-						height: settings.width+'px'
+						height: settings.width+'px',
+
+						// Opacity
+						opacity: (element.data('scroll-focus') || !settings.showOnHover) ? 1 : 0
 
 					});
 
@@ -364,7 +369,10 @@
 
 						// Size
 						height: height+'px',
-						width: settings.width+'px'
+						width: settings.width+'px',
+
+						// Opacity
+						opacity: (element.data('scroll-focus') || !settings.showOnHover) ? 1 : 0
 
 					});
 
@@ -533,8 +541,16 @@
 				if (vscrollbar) vscrollbar.css({ opacity: 0 });
 
 				// Watch
-				element.on('mouseenter', _handleScrolledMouseEnter)
-					   .on('mouseleave', _handleScrolledMouseLeave);
+				if (touch)
+				{
+					element.on('touchstart', _handleScrolledMouseEnter)
+						   .on('touchend', _handleScrolledMouseLeave)
+				}
+				else
+				{
+					element.on('mouseenter', _handleScrolledMouseEnter)
+						   .on('mouseleave', _handleScrolledMouseLeave);
+				}
 			}
 
 			// Mark as inited
@@ -556,6 +572,8 @@
 			.off('mousewheel', _handleMouseWheel)
 			.off('scroll sizechange scrollsizechange', _handleScroll)
 		  	.off('touchstart', _handleTouchScroll)
+			.off('touchstart', _handleScrolledMouseEnter)
+			.off('touchend', _handleScrolledMouseLeave)
 			.off('mouseenter', _handleScrolledMouseEnter)
 			.off('mouseleave', _handleScrolledMouseLeave)
 			.removeData('scroll-options').removeData('touch-scrolling')
@@ -584,8 +602,13 @@
 	 */
 	function _handleScrolledMouseEnter()
 	{
-		if (object = $(this).data('custom-scroll'))
+		var element = $(this),
+			object = element.data('custom-scroll');
+
+		// If valid
+		if (object)
 		{
+			element.data('scroll-focus', true);
 			if (object.hscrollbar()) object.hscrollbar().animate({ opacity: 1 });
 			if (object.vscrollbar()) object.vscrollbar().animate({ opacity: 1 });
 		}
@@ -598,8 +621,13 @@
 	 */
 	function _handleScrolledMouseLeave()
 	{
-		if (object = $(this).data('custom-scroll'))
+		var element = $(this),
+			object = element.data('custom-scroll');
+
+		// If valid
+		if (object)
 		{
+			element.removeData('scroll-focus');
 			if (object.hscrollbar()) object.hscrollbar().animate({ opacity: 0 });
 			if (object.vscrollbar()) object.vscrollbar().animate({ opacity: 0 });
 		}
@@ -656,7 +684,6 @@
 			// Handle moves
 			moveFunc = function(event)
 			{
-
 				// Mark as touching
 				element.data('touch-scrolling', true);
 
@@ -668,7 +695,7 @@
 				movement = object.move(posX-newX, newY-posY, true);
 
 				// If the element scrolled
-				if (movement.x != 0 || movement.y != 0 || !object.settings.continuousTouchScroll)
+				if (movement.x !== 0 || movement.y !== 0 || !object.settings.continuousTouchScroll)
 				{
 					// Prevent parents from scrolling
 					event.preventDefault();
@@ -682,8 +709,6 @@
 			// Handle end of touch event
 			endFunc = function(event)
 			{
-				event.stopPropagation();
-
 				// Stop watching
 				element.off('touchmove', moveFunc);
 				element.off('touchend touchcancel', endFunc);
@@ -696,7 +721,7 @@
 			element.on('touchmove', moveFunc);
 			element.on('touchend touchcancel', endFunc);
 		}
-	};
+	}
 
 	/**
 	 * Tell whether the element has custom scrolling

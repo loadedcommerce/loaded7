@@ -1,4 +1,13 @@
-/**
+﻿/**
+ *
+ * '||''|.                            '||
+ *  ||   ||    ....  .... ...   ....   ||    ...   ... ...  ... ..
+ *  ||    || .|...||  '|.  |  .|...||  ||  .|  '|.  ||'  ||  ||' ''
+ *  ||    || ||        '|.|   ||       ||  ||   ||  ||    |  ||
+ * .||...|'   '|...'    '|     '|...' .||.  '|..|'  ||...'  .||.
+ *                                                  ||
+ * --------------- By Display:inline ------------- '''' -----------
+ *
  * Login pages stylesheet
  */
 html {
@@ -23,6 +32,10 @@ body {
 	#container input[type="radio"],
 	#container input[type="checkbox"] {
 		width: auto !important;
+	}
+	#container input[type="text"],
+	#container input[type="password"] {
+		-webkit-appearance: none;
 	}
 #form-block {
 	position: relative;
@@ -223,7 +236,7 @@ form {
 	/* Animation styles */
 	.js-login #container {
 		position: absolute;
-		top: 40%;
+		top: 50%;
 		left: 50%;
 		padding: 0;
 		margin-left: -140px;

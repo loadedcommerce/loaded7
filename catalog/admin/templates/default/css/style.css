@@ -332,6 +332,18 @@ h6:first-child {
 	margin-right: -4px;
 }
 
+/* Contextual elements */
+.hidden-on-mobile,
+.only-on-tablet,
+.only-on-desktop {
+	display: none;
+}
+.hidden-on-tablet,
+.hidden-on-desktop,
+.only-on-mobile {
+	display: block;
+}
+
 
 /********************************************************/
 /*                  5. Generic shadows                  */
@@ -508,6 +520,7 @@ li.message-menu {
 		top: 0;
 		bottom: 0;
 		background: url(../img/effects/glow.png) no-repeat center center;
+		pointer-events: none;
 		-webkit-background-size: 100% 100%;
 		-moz-background-size: 100% 100%;
 		-o-background-size: 100% 100%;
@@ -992,6 +1005,10 @@ li.message-menu {
 		-webkit-border-radius: 5px;
 		-moz-border-radius: 5px;
 		border-radius: 5px;
+	}
+	.blocks-list > li > [class^="icon-"]:before,
+	.blocks-list > li > [class*=" icon-"] {
+		border: 1px solid transparent;
 	}
 
 	/* Fixed sizes */
@@ -2036,7 +2053,7 @@ li.message-menu {
 	.icon-paperclip:before			{ content: '\''; }
 	.icon-reply:before				{ content: '('; }
 	.icon-replay-all:before			{ content: ')'; }
-	.icon-forward:before			{ content: '*'; }
+	.icon-fwd:before				{ content: '*'; }
 	.icon-user:before				{ content: '+'; }
 	.icon-users:before				{ content: ','; }
 	.icon-add-user:before			{ content: '-'; }
@@ -2105,7 +2122,7 @@ li.message-menu {
 	.icon-page-list:before			{ content: 'l'; }
 	.icon-page:before				{ content: 'm'; }
 	.icon-pages:before				{ content: 'n'; }
-	.icon-marker:before				{ content: '0'; }
+	.icon-frame:before				{ content: 'o'; }
 	.icon-pictures:before			{ content: 'p'; }
 	.icon-movie:before				{ content: 'q'; }
 	.icon-music:before				{ content: 'r'; }
@@ -2171,9 +2188,21 @@ li.message-menu {
 	}
 	.with-shortcuts #title-bar {
 		padding-left: 43px;
-	}
+		}
+		.reversed.with-shortcuts #title-bar {
+			padding-left: 10px;
+			padding-right: 43px;
+		}
 	.with-menu #title-bar {
 		padding-right: 92px;
+		}
+		.reversed.with-menu #title-bar {
+			padding-right: 10px;
+			padding-left: 92px;
+		}
+	.reversed.with-shortcuts.with-menu #title-bar {
+		padding-right: 43px;
+		padding-left: 92px;
 	}
 	#title-bar h2 {
 		font-family: Arial, Helvetica, sans-serif;
@@ -2320,6 +2349,10 @@ li.message-menu {
 	-moz-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.8);
 	box-shadow: 0 1px 7px rgba(0, 0, 0, 0.8);
 	}
+	.reversed #shortcuts {
+		left: auto;
+		right: 10px;
+	}
 	body.shortcuts-open #shortcuts {
 		display: block;
 	}
@@ -2336,7 +2369,11 @@ li.message-menu {
 		position: absolute;
 		bottom: 100%;
 		left: 6px;
-	}
+		}
+		.reversed #shortcuts:before {
+			left: auto;
+			right: 6px;
+		}
 	#shortcuts > li {
 		width: 70px;
 		height: 70px;
@@ -2487,6 +2524,7 @@ li.message-menu {
 	/* User name/profile */
 	#profile {
 		display: block;
+		padding: 20px;
 		font-size: 14px;
 		line-height: 14px;
 		color: #b2b2b2;
@@ -2618,26 +2656,22 @@ li.message-menu {
 					.ie8 #access > li > a:after {
 						display: none;
 					}
-        #access > li > a:hover,
-        #access > li.current > a {
+				#access > li > a:hover {
 					padding-top: 0;
 					padding-bottom: 8px;
 					color: white;
 					}
-				#access > li > a:hover:after,
-        #access > li.current > a:after {
+					#access > li > a:hover:after {
 						-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 						filter: alpha(opacity=100);
 						-khtml-opacity: 1;
 						-moz-opacity: 1;
 						opacity: 1;
 					}
-				.ie8 #access > li > a:hover:after,
-        .ie8 #access > li.current > a: {
+					.ie8 #access > li > a:hover:after {
 						display: block;
 					}
-				.no-generatedcontent #access > li > a:hover,
-        .no-generatedcontent #access > li.current > a {
+					.no-generatedcontent #access > li > a:hover {
 						padding-bottom: 4px;
 						border-bottom: 4px solid #66ccff;
 					}
@@ -3595,6 +3629,11 @@ li.message-menu {
 	.ie7 .button > .button-icon {
 		margin: -1px 9px -1px 0;
 	}
+	@-moz-document url-prefix() {
+		.button > .button-icon {
+			margin-left: -15px;
+		}
+	}
 	.button > .button-icon.right-side {
 		margin: -1px -12px -1px 9px;
 		-webkit-border-radius: 0;
@@ -3605,6 +3644,11 @@ li.message-menu {
 		}
 		.ie7 .button > .button-icon.right-side {
 			margin: -1px 0 -1px 0;
+		}
+		@-moz-document url-prefix() {
+			.button > .button-icon.right-side {
+				margin-right: -15px;
+			}
 		}
 	:active > .button-icon,
 	.active > .button-icon {
