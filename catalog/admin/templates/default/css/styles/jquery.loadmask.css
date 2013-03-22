@@ -1,5 +1,5 @@
 .loadmask {
-    z-index: 100;
+    z-index: 1000000;
     position: absolute;
     top:0;
     left:0;
@@ -12,7 +12,7 @@
     zoom: 1;
 }
 .loadmask-msg {
-    z-index: 20001;
+    z-index: 1100000;
     position: absolute;
     top: 0;
     left: 0;
