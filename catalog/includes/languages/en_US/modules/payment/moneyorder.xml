@@ -8,7 +8,7 @@
     </definition>
     <definition>
       <key>payment_moneyorder_description</key>
-      <value><![CDATA[<h3 class="thin small-margin-left mid-margin-bottom"><img src="images/payment/moneyorder.png" class="margin-right" style="vertical-align:middle">Check or Money Order</h3><br /><p>Make Payable To:&nbsp;%s<br /><br />Send To:<br />%s<br /><br />Your order will not ship until we receive payment.</p>]]></value>
+      <value><![CDATA[<h3 class="thin small-margin-left mid-margin-bottom"><img src="images/payment/moneyorder.png" class="margin-right" style="vertical-align:middle">Check or Money Order</h3>]]></value>
       <group>modules-payment</group>
     </definition>   
     <definition>
