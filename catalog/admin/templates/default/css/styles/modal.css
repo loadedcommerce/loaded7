@@ -1,5 +1,4 @@
 /**
-*  *
  * Modal windows styles
  */
 
@@ -91,7 +90,7 @@
 			line-height: 16px;
 			font-weight: bold;
 			margin: 0;
-			padding: 12px 0 12px;
+			padding: 10px 0 12px;
 			-webkit-text-shadow: 0 -1px 0 black;
 			-moz-text-shadow: 0 -1px 0 black;
 			text-shadow: 0 -1px 0 black;
@@ -102,7 +101,7 @@
 		.modal-actions {
 			float: left;
 			height: 34px;
-			margin: 3px;
+			margin: 2px;
 			list-style-type: none;
 			}
 			.modal > .modal-actions {

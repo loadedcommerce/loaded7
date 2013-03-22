@@ -1,5 +1,4 @@
 /**
- *
  * Slider & progress plugin
  *
  * Structural good practices from the article from Addy Osmani 'Essential jQuery plugin patterns'
@@ -196,7 +195,7 @@
 				autoSpacingRight	= _parseAutoSpacing(settings.autoSpacingRight, settings.autoSpacing),
 				autoSpacingBottom	= _parseAutoSpacing(settings.autoSpacingBottom, settings.autoSpacing),
 				autoSpacingLeft		= _parseAutoSpacing(settings.autoSpacingLeft, settings.autoSpacing),
-				autoSpacing = (autoSpacingTop !== false && autoSpacingRight !== false && autoSpacingBottom !== false && autoSpacingLeft !== false),
+				autoSpacing = (autoSpacingTop !== false || autoSpacingRight !== false || autoSpacingBottom !== false || autoSpacingLeft !== false),
 
 				// Work vars
 				position, label, labelAlign;
@@ -223,7 +222,7 @@
 				// Unit
 				if (typeof settings.size === 'number')
 				{
-					settings.size += '%';
+					settings.size += 'px';
 				}
 				style[horizontal ? 'width' : 'height'] = settings.size;
 			}

@@ -1,5 +1,4 @@
 /**
- *
  * Modal window plugin
  *
  * Structural good practices from the article from Addy Osmani 'Essential jQuery plugin patterns'
@@ -46,18 +45,23 @@
 		$.modal.all.each(function(i)
 		{
 			var modal = $(this),
-				data = modal.data('modal');
+				data = modal.data('modal'),
+				initialWidth, initialHeight;
 
 			// If valid
 			if (data)
 			{
+				// Initial size
+				initialWidth = modal.outerWidth();
+				initialHeight = modal.outerHeight();
+
 				// Update max-sizes
 				data.updateMaxSizes();
 
 				// Redefine position relative to screen center
 				data.setPosition(
-					modal.parseCSSValue('left')+widthChange,
-					modal.parseCSSValue('top')+heightChange
+					modal.parseCSSValue('left')+widthChange+Math.round((initialWidth-modal.outerWidth())/2),
+					modal.parseCSSValue('top')+heightChange+Math.round((initialHeight-modal.outerHeight())/2)
 				);
 			}
 		});
@@ -70,7 +74,7 @@
 	function getModalRoot()
 	{
 		var root = $('#modals');
-		if (root.length == 0)
+		if (root.length === 0)
 		{
 			// Create element
 			root = $('<div id="modals"></div>').appendTo(document.body);
@@ -83,7 +87,7 @@
 		}
 
 		return root;
-	};
+	}
 
 	/**
 	 * Opens a new modal window
@@ -96,7 +100,7 @@
 			root = getModalRoot(),
 
 			// Elements
-			modal, barBlock, contentBg, contentBlock,
+			modal, barBlock, contentBg, contentBlock, contentBlockIframe = false,
 			actionsBlock = false, buttonsBlock = false,
 
 			// Max sizes
@@ -122,8 +126,8 @@
 			// Vars for markup building
 			title = settings.title ? '<h3>'+settings.title+'</h3>' : '',
 			titleBar = (settings.titleBar || (settings.titleBar === null && title.length > 0)) ? '<div class="modal-bar">'+title+'</div>' : '',
-			sizeParts = new Array(), contentWrapper,
-			spacingClass = '',
+			sizeParts = [], contentWrapper,
+			spacingClass = '', scrolling,
 
 			/**
 			 * Remove DOM content
@@ -234,11 +238,15 @@
 				{
 					if (typeof width === 'number')
 					{
-						contentBlock.prop('width', Math.min(width, maxWidth));
+						width = Math.min(width, maxWidth);
+						contentBlock.css('width', width+'px');
+						contentBlockIframe.prop('width', width);
 					}
 					if (typeof height === 'number')
 					{
-						contentBlock.prop('height', Math.min(height, maxHeight));
+						height = Math.min(height, maxHeight);
+						contentBlock.css('height', height+'px');
+						contentBlockIframe.prop('height', height);
 					}
 				}
 				else
@@ -296,8 +304,8 @@
 			{
 				// Set position
 				modal[animate ? 'animate' : 'css']({
-					left:	Math.min(Math.max(0, x), viewportWidth-modal.outerWidth()),
-					top:	Math.min(Math.max(0, y), viewportHeight-modal.outerHeight())
+					left:	Math.min(Math.max(settings.maxSizeMargin, x), viewportWidth-modal.outerWidth()-settings.maxSizeMargin),
+					top:	Math.min(Math.max(settings.maxSizeMargin, y), viewportHeight-modal.outerHeight()-settings.maxSizeMargin)
 				});
 			},
 
@@ -312,7 +320,7 @@
 				// Mode
 				if (settings.useIframe)
 				{
-					contentBlock.prop('src', url);
+					contentBlockIframe.prop('src', url);
 				}
 				else
 				{
@@ -350,7 +358,7 @@
 							{
 								setContentSize(true, false);
 							}
-						}
+						};
 					}
 
 					// If loading message
@@ -495,7 +503,7 @@
 
 				// Remaining modals
 				$.modal.all = modal.siblings('.modal');
-				if ($.modal.all.length == 0)
+				if ($.modal.all.length === 0)
 				{
 					// No more modals
 					$.modal.current = false;
@@ -517,7 +525,11 @@
 					viewportMaxHeight = viewportHeight-(2*settings.maxSizeMargin)-(modal.outerHeight()-contentBlock.height()),
 
 					// Minimum sizes
-					minWidth, minHeight;
+					minWidth, minHeight,
+
+					// Actual and final iframe sizes
+					width, height,
+					finalWidth, finalHeight;
 
 				// maxWidth and maxHeight are set outside this function's scope, because they are used in setContentSize()
 
@@ -528,8 +540,20 @@
 				// Update content-block
 				if (settings.useIframe)
 				{
-					contentBlock.prop('width', Math.min(settings.width, maxWidth));
-					contentBlock.prop('height', Math.min(settings.height, maxHeight));
+					// Actual iframe size
+					width = parseInt(contentBlockIframe.prop('width'), 10) || settings.width;
+					height = parseInt(contentBlockIframe.prop('height'), 10) || settings.height;
+
+					// Final size
+					finalWidth = Math.min(Math.max(width, settings.width), maxWidth);
+					finalHeight = Math.min(Math.max(height, settings.height), maxHeight);
+
+					contentBlock.css({
+						width: finalWidth+'px',
+						height: finalHeight+'px'
+					});
+					contentBlockIframe.prop('width', finalWidth);
+					contentBlockIframe.prop('height', finalHeight);
 				}
 				else
 				{
@@ -581,8 +605,14 @@
 				settings.height = settings.maxHeight || settings.minHeight || 120;
 			}
 
+			// Scrolling
+			scrolling = ( settings.scrolling === true ) ? '' : ' scrolling="'+((typeof settings.scrolling === 'string') ? settings.scrolling : 'no')+'"';
+
 			// Bloc style
-			contentWrapper = '<iframe class="modal-iframe" src="'+(settings.url || '')+'" frameborder="0" width="'+settings.width+'" height="'+settings.height+'"></iframe>';
+			// The wrapping div is required because iOS ignores iframe size attributes
+			contentWrapper = '<div style="width:'+settings.width+'px; height:'+settings.height+'px; -webkit-overflow-scrolling:touch; overflow: auto;">'+
+								'<iframe class="modal-iframe" src="'+(settings.url || '')+'" frameborder="0" width="'+settings.width+'" height="'+settings.height+'"'+scrolling+'></iframe>'+
+							'</div>';
 		}
 		else
 		{
@@ -597,33 +627,39 @@
 			}
 			if (settings.width)
 			{
-				sizeParts.push('width:'+settings.width+'px; ');
+				sizeParts.push('width:'+settings.width+'px;');
 			}
 			if (settings.height)
 			{
-				sizeParts.push('height:'+settings.height+'px; ');
+				sizeParts.push('height:'+settings.height+'px;');
 			}
 			if (settings.maxWidth)
 			{
-				sizeParts.push('max-width:'+settings.maxWidth+'px; ');
+				sizeParts.push('max-width:'+settings.maxWidth+'px;');
 			}
 			if (settings.maxHeight)
 			{
-				sizeParts.push('max-height:'+settings.maxHeight+'px; ');
+				sizeParts.push('max-height:'+settings.maxHeight+'px;');
 			}
 
 			// Bloc style
 			contentWrapper = '<div class="modal-content'+
-							 (settings.scrolling ? ' modal-scroll' : '')+
-							 ((settings.contentAlign !== 'left') ? ' align-'+settings.contentAlign : '')+
-							 '" style="'+sizeParts.join(' ')+'"></div>';
+							(settings.scrolling ? ' modal-scroll' : '')+
+							((settings.contentAlign !== 'left') ? ' align-'+settings.contentAlign : '')+
+							'" style="'+sizeParts.join(' ')+'"></div>';
 		}
 
 		// Insert window
-		modal = $('<div class="modal"></div>').appendTo(root);
+		modal = $('<div class="modal'+(settings.classes ? ' '+settings.classes : '')+'"></div>').appendTo(root);
 		barBlock = (titleBar.length > 0) ? $(titleBar).appendTo(modal) : false;
 		contentBg = settings.contentBg ? $('<div class="modal-bg"></div>').appendTo(modal) : false;
 		contentBlock = $(contentWrapper).appendTo(contentBg || modal);
+
+		// iFrame
+		if (settings.useIframe)
+		{
+			contentBlockIframe = contentBlock.children('iframe');
+		}
 
 		// Set contents
 		if (!settings.useIframe && settings.content)
@@ -678,7 +714,7 @@
 			endResize = function(event)
 			{
 				doc.off('mousemove', handleResize)
-				   .off('mouseup', endResize);
+					.off('mouseup', endResize);
 			};
 
 			// Create resize handlers
@@ -739,7 +775,7 @@
 				event.preventDefault();
 
 				doc.on('mousemove', handleResize)
-				   .on('mouseup', endResize);
+					.on('mouseup', endResize);
 
 			}).on('selectstart', _preventTextSelectionIE); // Prevent text selection for IE7
 		}
@@ -750,34 +786,47 @@
 			// Set position
 			handleMove = function(event)
 			{
+				var touchEvent = (event.type === 'touchmove'),
+					offsetHolder = touchEvent ? event.originalEvent.touches[0] : event;
+
 				// New position
-				setPosition(modalX+(event.pageX-mouseX), modalY+(event.pageY-mouseY));
+				setPosition(modalX+(offsetHolder.pageX-mouseX), modalY+(offsetHolder.pageY-mouseY));
 			};
 
 			// Callback on end of move
 			endMove = function(event)
 			{
-				doc.off('mousemove', handleMove)
-				   .off('mouseup', endMove);
+				var touchEvent = (event.type === 'touchend');
+
+				doc.off(touchEvent ? 'touchmove' : 'mousemove', handleMove)
+					.off(touchEvent ? 'touchend' : 'mouseup', endMove);
 			};
 
 			// Watch
 			// Delegating the event to the modal allows the remove/add the title bar without handling this each time
-			modal.on('mousedown', '.modal-bar', function(event)
+			modal.on('touchstart mousedown', '.modal-bar', function(event)
 			{
+				// Handle only if not clicking on the actions leds
+				if ($(event.target).closest('.modal-actions').length > 0)
+				{
+					return;
+				}
+
 				// Detect positions
 				var position = modal.position();
 				modalX = position.left;
 				modalY = position.top;
-				mouseX = event.pageX;
-				mouseY = event.pageY;
+				touchEvent = (event.type === 'touchstart'),
+				offsetHolder = touchEvent ? event.originalEvent.touches[0] : event,
+				mouseX = offsetHolder.pageX;
+				mouseY = offsetHolder.pageY;
 
 				// Prevent text selection
 				event.preventDefault();
 
 				// Listeners
-				doc.on('mousemove', handleMove)
-				   .on('mouseup', endMove);
+				doc.on(touchEvent ? 'touchmove' : 'mousemove', handleMove)
+					.on(touchEvent ? 'touchend' : 'mouseup', endMove);
 
 			}).on('selectstart', '.modal-bar', _preventTextSelectionIE); // Prevent text selection for IE7
 		}
@@ -849,6 +898,7 @@
 		// Interface
 		modal.data('modal', {
 			contentBlock:		contentBlock,
+			contentBlockIframe:	contentBlockIframe,
 			setContent:			setContent,
 			load:				loadContent,
 			setContentSize:		setContentSize,
@@ -936,16 +986,17 @@
 	 */
 	$.modal.prompt = function(message, callback, cancelCallback, options)
 	{
+		var isSubmitted = false, onClose;
+
 		// Params
 		if (typeof cancelCallback !== 'function')
 		{
 			options = cancelCallback;
 			cancelCallback = null;
 		}
-		options = options || {};
+		options = $.extend({}, $.modal.defaults.promptOptions, options || {});
 
 		// Cancel callback
-		var isSubmitted = false, onClose;
 		if (cancelCallback)
 		{
 			onClose = options.onClose;
@@ -965,38 +1016,35 @@
 			};
 		}
 
-		// Open modal
-		$.modal($.extend({}, $.modal.defaults.promptOptions, options, {
+		// Content
+		options.content = '<div class="margin-bottom">'+message+'</div><div class="input full-width"><input type="text" name="prompt-value" id="prompt-value" value="" class="input-unstyled full-width"></div>';
 
-			content:	'<div class="margin-bottom">'+message+'</div><div class="input full-width"><input type="text" name="prompt-value" id="prompt-value" value="" class="input-unstyled full-width"></div>',
-			buttons:	{
+		// Buttons
+		options.buttons = {};
+		options.buttons[ options.textCancel ] = {
+			classes :	'glossy',
+			click :		function(modal) { modal.closeModal(); }
+		};
+		options.buttons[ options.textSubmit ] = {
+			classes :	'blue-gradient glossy',
+			click :		function(modal)
+			{
+				// Mark as sumbmitted to prevent the cancel callback to fire
+				isSubmitted = true;
 
-				'Cancel' : {
-					classes :	'glossy',
-					click :		function(modal) { modal.closeModal(); }
-				},
-
-				'Submit' : {
-					classes :	'blue-gradient glossy',
-					click :		function(modal)
-					{
-						// Mark as sumbmitted to prevent the cancel callback to fire
-						isSubmitted = true;
-
-						// Callback
-						if (callback.call(modal[0], modal.find('input:first').val()) === false)
-						{
-							return;
-						}
-
-						// Close modal
-						modal.closeModal();
-					}
+				// Callback
+				if (callback.call(modal[0], modal.find('input:first').val()) === false)
+				{
+					return;
 				}
 
+				// Close modal
+				modal.closeModal();
 			}
+		};
 
-		}));
+		// Open modal
+		$.modal(options);
 	};
 
 	/**
@@ -1009,7 +1057,7 @@
 	 */
 	$.modal.confirm = function(message, confirmCallback, cancelCallback, options)
 	{
-		options = options || {};
+		options = $.extend({}, $.modal.defaults.confirmOptions, options || {});
 
 		// Cancel callback
 		var isConfirmed = false,
@@ -1029,35 +1077,32 @@
 			}
 		};
 
-		// Open modal
-		$.modal($.extend({}, $.modal.defaults.confirmOptions, options, {
+		// Content
+		options.content = message;
 
-			content:	message,
-			buttons:	{
+		// Buttons
+		options.buttons = {};
+		options.buttons[ options.textCancel ] = {
+			classes:	'glossy',
+			click:		function(modal) { modal.closeModal(); }
+		};
+		options.buttons[ options.textConfirm ] = {
+			classes:	'blue-gradient glossy',
+			click:		function(modal)
+			{
+				// Mark as sumbmitted to prevent the cancel callback to fire
+				isConfirmed = true;
 
-				'Cancel' : {
-					classes:	'glossy',
-					click:		function(modal) { modal.closeModal(); }
-				},
+				// Callback
+				confirmCallback.call(modal[0]);
 
-				'Confirm' : {
-					classes:	'blue-gradient glossy',
-					click:		function(modal)
-					{
-						// Mark as sumbmitted to prevent the cancel callback to fire
-						isConfirmed = true;
-
-						// Callback
-						confirmCallback.call(modal[0]);
-
-						// Close modal
-						modal.closeModal();
-					}
-				}
-
+				// Close modal
+				modal.closeModal();
 			}
+		};
 
-		}));
+		// Open modal
+		$.modal(options);
 	};
 
 	/**
@@ -1091,7 +1136,7 @@
 		}
 
 		var data = this.getModalWindow().data('modal');
-		return data ? data.contentBlock : $();
+		return data ? ( data.contentBlockIframe || data.contentBlock ) : $();
 	};
 
 	/**
@@ -1150,7 +1195,7 @@
 		});
 
 		return this;
-	}
+	};
 
 	/**
 	 * Load AJAX content
@@ -1159,7 +1204,7 @@
 	 */
 	$.fn.loadModalContent = function(url, options)
 	{
-		var settings = $.extend({}, $.modal.defaults.ajax, options)
+		var settings = $.extend({}, $.modal.defaults.ajax, options);
 
 		this.each(function()
 		{
@@ -1174,7 +1219,7 @@
 		});
 
 		return this;
-	}
+	};
 
 	/**
 	 * Set modal title
@@ -1196,7 +1241,7 @@
 		});
 
 		return this;
-	}
+	};
 
 	/**
 	 * Center the modal
@@ -1296,6 +1341,12 @@
 		 * @var boolean
 		 */
 		blockerVisible: true,
+
+		/**
+		 * CSS classes for the modal
+		 * @var string
+		 */
+		classes: '',
 
 		/**
 		 * HTML before the content
@@ -1404,7 +1455,8 @@
 
 		/**
 		 * If  true, enable content vertical scrollbar if content is higher than 'height' (or 'maxHeight' if 'height' is undefined)
-		 * @var boolean
+		 * If useIframe is true, you may pass one one the scrolling attribute values: 'yes', 'no', 'auto'
+		 * @var boolean|string
 		 */
 		scrolling: true,
 
@@ -1413,16 +1465,16 @@
 		 * Ex:
 		 *
 		 *  {
-		 * 		'Close' : function(modal) { modal.closeModal(); }
+		 *      'Close' : function(modal) { modal.closeModal(); }
 		 *  }
 		 *
 		 * Or:
 		 *
-		 * 	{
-		 *  	'Close' : {
-		 *  		color :		'red',
-		 *  		click :		function(modal) { modal.closeModal(); }
-		 *  	}
+		 *  {
+		 *      'Close' : {
+		 *          color :		'red',
+		 *          click :		function(modal) { modal.closeModal(); }
+		 *      }
 		 *  }
 		 * @var boolean
 		 */
@@ -1448,16 +1500,16 @@
 		 * Ex:
 		 *
 		 *  {
-		 * 		'Close' : function(modal) { modal.closeModal(); }
+		 *      'Close' : function(modal) { modal.closeModal(); }
 		 *  }
 		 *
 		 * Or:
 		 *
-		 * 	{
-		 *  	'Close' : {
-		 *  		classes :	'blue-gradient glossy huge full-width',
-		 *  		click :		function(modal) { modal.closeModal(); }
-		 *  	}
+		 *  {
+		 *      'Close' : {
+		 *          classes :	'blue-gradient glossy huge full-width',
+		 *          click :		function(modal) { modal.closeModal(); }
+		 *      }
 		 *  }
 		 * @var object
 		 */
@@ -1569,7 +1621,19 @@
 			width:			false,
 			maxWidth:		260,
 			resizable:		false,
-			actions:		{}
+			actions:		{},
+
+			/**
+			 * Text for cancel button for prompt windows
+			 * @var string
+			 */
+			textCancel: 'Cancel',
+
+			/**
+			 * Text for submit button for prompt windows
+			 * @var string
+			 */
+			textSubmit: 'Submit'
 		},
 
 		/**
@@ -1581,7 +1645,19 @@
 			minWidth:		120,
 			width:			false,
 			maxWidth:		260,
-			buttonsAlign:	'center'
+			buttonsAlign:	'center',
+
+			/**
+			 * Text for cancel button for confirm windows
+			 * @var string
+			 */
+			textCancel: 'Cancel',
+
+			/**
+			 * Text for submit button for confirm windows
+			 * @var string
+			 */
+			textConfirm: 'Confirm'
 		}
 	};
 

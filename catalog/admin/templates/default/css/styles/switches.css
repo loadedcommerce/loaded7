@@ -279,8 +279,6 @@
 			display: block;
 			content: ' ';
 			position: absolute;
-			top: 50%;
-			left: 50%;
 			background-image: url(../../img/standard/sprites.png);
 		}
 	/* Prevent animation when dragging */
@@ -441,6 +439,8 @@
 			width: 28px;
 			}
 			.medium > .switch-button:after {
+				top: 50%;
+				left: 50%;
 				width: 7px;
 				height: 8px;
 				margin: -3px 0 0 -3px;
@@ -601,15 +601,15 @@
 				right: -2px;
 			}
 			.tiny > .switch-button:after {
+				top: 6px;
+				left: 6px;
 				width: 5px;
 				height: 7px;
-				margin: -2px 0 0 -2px;
 				background-position: -134px 0;
 				}
 				.black-inputs .tiny > .switch-button:after,
 				.black-input.tiny > .switch-button:after {
 					background-position: -139px 0;
-					margin-top: -3px;
 				}
 		.mini > .switch-button {
 			width: 13px;
@@ -618,9 +618,10 @@
 			border-radius: 8px;
 			}
 			.mini > .switch-button:after {
+				top: 4px;
+				left: 4px;
 				width: 5px;
 				height: 6px;
-				margin: -2px 0 0 -2px;
 				background-position: -144px 0;
 				}
 				.black-inputs .mini > .switch-button:after,

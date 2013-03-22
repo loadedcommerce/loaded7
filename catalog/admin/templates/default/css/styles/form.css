@@ -1,5 +1,5 @@
 /**
-*  * Form & inputs styles
+ * Form & inputs styles
  */
 
 /* Disable outline */
@@ -161,11 +161,6 @@ label {
 		box-shadow: none;
 		background: none;
 		}
-    .mega-search-border {
-    -webkit-border-radius: 18px;
-    -moz-border-radius: 18px;
-    border-radius: 18px;
-    }
 		.input-unstyled.full-width {
 			padding: 0;
 			width: 100%;
@@ -744,6 +739,7 @@ input:-moz-placeholder {
 	.select.full-width,
 	.selectMultiple.full-width {
 		display: block;
+		margin: 0;
 	}
 	.select {
 		padding: 0 26px 0 0;
@@ -768,10 +764,6 @@ input:-moz-placeholder {
 			-moz-opacity: 0;
 			opacity: 0;
 		}
-	p > .select {
-		margin-top: -7px;
-		margin-bottom: -7px;
-	}
 	.button-height .select.float-left,
 	.button-height .select.float-right {
 		margin-top: 2px;
@@ -1084,6 +1076,15 @@ input:-moz-placeholder {
 			.disabled .drop-down {
 				display: none !important;
 			}
+			.disabled .selectMultiple > .drop-down,
+			.selectMultiple.disabled > .drop-down {
+				display: block !important;
+				-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+				filter: alpha(opacity=50);
+				-khtml-opacity: 0.5;
+				-moz-opacity: 0.5;
+				opacity: 0.5;
+			}
 		.drop-down > span,
 		.drop-down > a {
 			display: block;
@@ -1094,6 +1095,14 @@ input:-moz-placeholder {
 			padding: 5px 10px;
 			cursor: pointer;
 			color: inherit;
+			}
+			.drop-down > .disabled {
+				-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+				filter: alpha(opacity=50);
+				-khtml-opacity: 0.5;
+				-moz-opacity: 0.5;
+				opacity: 0.5;
+				background: none !important;
 			}
 			.check-list > .drop-down > span,
 			.check-list > .drop-down > a {
@@ -1116,6 +1125,9 @@ input:-moz-placeholder {
 					width: 26px;
 					height: 26px;
 					background: url(../../img/standard/sprites.png) no-repeat 0 -128px;
+					}
+					.check-list > .drop-down > .disabled > span {
+						background-position: 0 -128px !important;
 					}
 					.check-list > .drop-down > .selected > span {
 						background-position: -26px -128px;
@@ -1143,6 +1155,15 @@ input:-moz-placeholder {
 				-webkit-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6) !important;
 				-moz-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6) !important;
 				text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6) !important;
+				}
+				.no-touch .drop-down > .disabled:hover {
+					border: 0;
+					padding: 5px 10px;
+					color: inherit;
+					//color:expression(this.parentNode.currentStyle['color']);
+					-webkit-text-shadow: none !important;
+					-moz-text-shadow: none !important;
+					text-shadow: none !important;
 				}
 				.no-touch .check-list > .drop-down > span:hover,
 				.no-touch .check-list > .drop-down > a:hover,
@@ -1230,6 +1251,9 @@ input:-moz-placeholder {
 				.no-touch .drop-down > .in-group:hover,
 				.drop-down > .in-group.selected {
 					padding-left: 19px;
+				}
+				.no-touch .drop-down > .in-group.disabled:hover {
+					padding-left: 20px;
 				}
 				.check-list > .drop-down > .in-group,
 				.no-touch .check-list > .drop-down > .in-group:hover,
@@ -1352,10 +1376,10 @@ input:-moz-placeholder {
 	.check-knob {
 		display: none;
 		position: absolute;
-		left: 50%;
-		top: 50%;
 		}
 		.checkbox > .check-knob {
+			left: 50%;
+			top: 50%;
 			width: 15px;
 			height: 13px;
 			margin: -7px -5px;
@@ -1370,22 +1394,12 @@ input:-moz-placeholder {
 				background-position: -39px -81px;
 			}
 		.radio > .check-knob {
-			width: 7px;
-			height: 7px;
-			margin: -4px -4px;
-			border-width: 1px;
-			border-style: solid;
-			-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
-			-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
-			box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
-			-webkit-background-clip: padding-box;
-			-webkit-border-radius: 4px;
-			-moz-border-radius: 4px;
-			border-radius: 4px;
-			}
-			.ie7 .radio > .check-knob {
-				margin: -5px -5px;
-			}
+			left: 2px;
+			top: 2px;
+			width: 9px;
+			height: 9px;
+			background: url(../../img/standard/sprites.png) no-repeat -64px 0;
+		}
 		.checked > .check-knob {
 			display: block;
 		}
@@ -1440,6 +1454,7 @@ input:-moz-placeholder {
 		padding: 0 0 0 57px;
 		width: 0;
 		text-indent: -9999px;
+		white-space: nowrap;
 		background: url(../../img/effects/wizard-steps-separator.png) no-repeat left center;
 		overflow: hidden;
 		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
@@ -1561,14 +1576,14 @@ input:-moz-placeholder {
 	.field-block {
 		padding: 0 30px 0 230px;
 		margin: 0 -20px;
-	}
-	.field-block .label,
-	.field-drop .label {
-		float: left;
-		text-align: right;
-		margin: 0 0 0 -210px;
-		width: 150px;
-	}
+		}
+		.field-block .label,
+		.field-drop .label {
+			float: left;
+			text-align: right;
+			margin: 0 0 0 -210px;
+			width: 150px;
+		}
 
 	/* Field drop */
 	.field-drop {
@@ -1580,6 +1595,32 @@ input:-moz-placeholder {
 	.field-drop:after {
 		left: 236px;
 	}
+
+	/* Sizes */
+	.compact-field-blocks {
+		background-position: -40px 0;
+		}
+		.compact-field-blocks .field-block,
+		.compact-field-blocks .field-drop {
+			padding-left: 190px;
+			}
+			.compact-field-blocks .field-block .label,
+			.compact-field-blocks .field-drop .label {
+				width: 110px;
+				margin-left: -170px;
+			}
+	.mini-field-blocks {
+		background-position: -80px 0;
+		}
+		.mini-field-blocks .field-block,
+		.mini-field-blocks .field-drop {
+			padding-left: 150px;
+			}
+			.mini-field-blocks .field-block .label,
+			.mini-field-blocks .field-drop .label {
+				width: 70px;
+				margin-left: -130px;
+			}
 
 	/* Wizard */
 	.full-page-wizard {
@@ -1607,11 +1648,3 @@ input:-moz-placeholder {
 		}
 
 }/*/mediaquery*/
-
-/* jQuery form validation */
-span.req { color: red; }
-label.error { display: block; color: red; font-style: italic; font-weight: normal; }
-span.error { color: red; font-style: italic; font-weight: normal; }
-input.error { border: 2px solid red; }
-textarea.error { border: 2px solid red; }
-select.error { border: 2px solid red; }

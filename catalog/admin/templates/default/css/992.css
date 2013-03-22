@@ -1,4 +1,13 @@
 /**
+ *
+ * '||''|.                            '||
+ *  ||   ||    ....  .... ...   ....   ||    ...   ... ...  ... ..
+ *  ||    || .|...||  '|.  |  .|...||  ||  .|  '|.  ||'  ||  ||' ''
+ *  ||    || ||        '|.|   ||       ||  ||   ||  ||    |  ||
+ * .||...|'   '|...'    '|     '|...' .||.  '|..|'  ||...'  .||.
+ *                                                  ||
+ * --------------- By Display:inline ------------- '''' -----------
+ *
  * Styles override for 992+ pixels screens
  */
 
@@ -7,11 +16,23 @@
 	width: 40px;
 }
 
+/* Contextual elements */
+.hidden-on-tablet,
+.only-on-desktop {
+	display: block;
+}
+.hidden-on-desktop,
+.only-on-tablet {
+	display: none;
+}
+
 /* 7. Title bar */
 #title-bar {
 	height: 34px;
 	line-height: 32px;
 	border-top: 1px solid #666666;
+	padding-left: 10px !important;
+	padding-right: 10px !important;
 	}
 	#title-bar h2 {
 		height: 34px;

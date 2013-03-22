@@ -1,11 +1,29 @@
 /**
-*  *
+ *
+ * '||''|.                            '||
+ *  ||   ||    ....  .... ...   ....   ||    ...   ... ...  ... ..
+ *  ||    || .|...||  '|.  |  .|...||  ||  .|  '|.  ||'  ||  ||' ''
+ *  ||    || ||        '|.|   ||       ||  ||   ||  ||    |  ||
+ * .||...|'   '|...'    '|     '|...' .||.  '|..|'  ||...'  .||.
+ *                                                  ||
+ * --------------- By Display:inline ------------- '''' -----------
+ *
  * Styles override for 768+ pixels screens
  */
 
 /* Class used to determine which media queries are on */
 #mediaquery-checker {
 	width: 30px;
+}
+
+/* Contextual elements */
+.hidden-on-mobile,
+.only-on-tablet {
+	display: block;
+}
+.hidden-on-tablet,
+.only-on-mobile {
+	display: none;
 }
 
 /* Columns */
@@ -127,7 +145,14 @@ h2 {
 	}
 	.with-shortcuts #title-bar {
 		padding-left: 10px;
-	}
+		}
+		.reversed.with-shortcuts #title-bar {
+			padding-right: 10px;
+			}
+			.reversed.with-shortcuts.with-menu #title-bar {
+				padding-right: 10px;
+				padding-left: 92px;
+			}
 	#title-bar ~ #main {
 		margin-top: 40px;
 	}
@@ -222,7 +247,13 @@ h2 {
 			}
 			body.reversed #shortcuts > li > a {
 				margin-left: -68px;
-			}
+				}
+				.no-generatedcontent body.reversed #shortcuts > li > a {
+					margin-left: -68px;
+					margin-right: -68px;
+					width: 204px;
+				}
+
 			.shortcut-dashboard,	span.shortcut-dashboard	{ background-position: 0 0; }
 			.shortcut-orders,		span.shortcut-orders	{ background-position: 0 -70px; }
 			.shortcut-customers,		span.shortcut-customers	{ background-position: 0 -140px; }
@@ -231,6 +262,16 @@ h2 {
 			.shortcut-marketing,		span.shortcut-marketing		{ background-position: 0 -350px; }
 			.shortcut-store,		span.shortcut-store	{ background-position: 0 -420px; }
 			.shortcut-reports,		span.shortcut-reports		{ background-position: 0 -490px; }
+
+				body.reversed a.shortcut-dashboard	{ background-position: 68px 0; }
+				body.reversed a.shortcut-orders	{ background-position: 68px -70px; }
+				body.reversed a.shortcut-customers		{ background-position: 68px -140px; }
+				body.reversed a.shortcut-content	{ background-position: 68px -210px; }
+				body.reversed a.shortcut-products		{ background-position: 68px -280px; }
+				body.reversed a.shortcut-marketing		{ background-position: 68px -350px; }
+				body.reversed a.shortcut-store	{ background-position: 68px -420px; }
+				body.reversed a.shortcut-reports		{ background-position: 68px -490px; }
+
 			#shortcuts > li > a:before,
 			#shortcuts > li:after {
 				display: block;
@@ -255,6 +296,16 @@ h2 {
 						-moz-border-radius: 0 7px 7px 0;
 						border-radius: 0 7px 7px 0;
 					}
+
+					a.shortcut-dashboard:before	{ background-position: -70px -5px; }
+					a.shortcut-orders:before	{ background-position: -70px -75px; }
+					a.shortcut-customers:before	{ background-position: -70px -145px; }
+					a.shortcut-content:before	{ background-position: -70px -215px; }
+					a.shortcut-products:before	{ background-position: -70px -285px; }
+					a.shortcut-marketing:before		{ background-position: -70px -355px; }
+					a.shortcut-store:before	{ background-position: -70px -425px; }
+					a.shortcut-reports:before		{ background-position: -70px -495px; }
+
 				#shortcuts > li:after {
 					right: 0;
 					width: 6px;
@@ -298,7 +349,7 @@ h2 {
 					#shortcuts > li.current:after {
 						display: none;
 					}
-					#shortcuts > li:hover:after {
+					.no-touch #shortcuts > li:hover:after {
 						opacity: 1;
 						-webkit-transition: none;
 						-moz-transition: none;
@@ -306,41 +357,46 @@ h2 {
 						transition: none;
 					}
 
-			.no-generatedcontent #shortcuts > li.current > a {
-				background-color: white;
-			}
-			#shortcuts:hover > li.current > a {
-				margin-left: -60px;
-				}
-				.no-generatedcontent #shortcuts:hover > li.current > a {
-					margin-left: -68px;
-				}
-				body.reversed #shortcuts:hover > li.current > a {
-					margin-left: 0;
-					margin-right: -60px;
-					}
-					body.reversed.no-generatedcontent #shortcuts:hover > li.current > a {
-						margin-right: -68px;
-					}
-			#shortcuts > li > a:hover,
+			.no-touch #shortcuts > li > a:hover,
 			#shortcuts > li.current > a,
-			#shortcuts:hover > li.current:hover > a {
+			.no-touch #shortcuts:hover > li.current:hover > a {
 				margin-left: -68px;
 				}
-				body.reversed #shortcuts > li > a:hover,
+				.no-generatedcontent #shortcuts > li.current > a {
+					background-color: white;
+				}
+				.no-touch body.reversed #shortcuts > li > a:hover,
 				body.reversed #shortcuts > li.current > a,
-				body.reversed #shortcuts:hover > li.current:hover > a {
+				.no-touch body.reversed #shortcuts:hover > li.current:hover > a {
 					margin-left: 0;
 					margin-right: -68px;
-				}
-				a.shortcut-dashboard:before	{ background-position: -70px -5px; }
-				a.shortcut-orders:before	{ background-position: -70px -75px; }
-				a.shortcut-customers:before	{ background-position: -70px -145px; }
-				a.shortcut-content:before	{ background-position: -70px -215px; }
-				a.shortcut-products:before	{ background-position: -70px -285px; }
-				a.shortcut-marketing:before		{ background-position: -70px -355px; }
-				a.shortcut-store:before	{ background-position: -70px -425px; }
-				a.shortcut-reports:before		{ background-position: -70px -495px; }
+					}
+					.no-generatedcontent body.reversed #shortcuts > li.current > a,
+					.no-generatedcontent body.reversed #shortcuts > li > a:hover {
+						margin-left: -136px;
+						margin-right: 0;
+					}
+
+				.no-touch #shortcuts:hover > li.current > a {
+					margin-left: -60px;
+					}
+					.no-touch.no-generatedcontent #shortcuts:hover > li.current > a {
+						margin-left: -68px;
+					}
+					.no-touch body.reversed #shortcuts:hover > li.current > a {
+						margin-left: -8px;
+						margin-right: -60px;
+						}
+						.no-touch.no-generatedcontent body.reversed #shortcuts:hover > li.current > a {
+							margin-left: -136px;
+							margin-right: 0;
+						}
+
+			#shortcuts > li.at-bottom {
+				position: absolute;
+				left: 0;
+				bottom: 0;
+			}
 
 #menu {
 	position: fixed;
@@ -561,6 +617,7 @@ h2 {
 				}
 				.standard-tabs > .tabs > li > a:after {
 					display: none;
+					content: '';
 					}
 					/* IE7 */
 					.standard-tabs > .tabs > li > a > .with-arrow-after {

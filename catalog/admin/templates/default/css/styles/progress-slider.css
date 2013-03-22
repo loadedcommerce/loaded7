@@ -1,5 +1,4 @@
 /**
-*  *
  * Progress & slider
  */
 
@@ -51,12 +50,10 @@
 			line-height: 7px;
 			height: 7px;
 		}
-	.progress.full-width {
+	.progress.full-width,
+	.slider.full-width {
 		width: 100%;
 	}
-  .slider.full-width {
-    width: 100%;
-  }
 	.progress.thin {
 		line-height: 9px;
 		height: 9px;

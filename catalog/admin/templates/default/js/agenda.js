@@ -1,5 +1,4 @@
 /**
- *
  * Scrolling agenda plugin
  *
  * Structural good practices from the article from Addy Osmani 'Essential jQuery plugin patterns'
@@ -161,7 +160,7 @@
 				}
 
 				// Animate argument
-				if (animate == undefined || animate === null)
+				if (animate === undefined || animate === null)
 				{
 					animate = settings.animate;
 				}
@@ -172,15 +171,54 @@
 					return;
 				}
 
+				/**
+				 * Note: since v1.8 (and earlier in FF), jQuery has an issue retrieving left/right values when they use percentages.
+				 * I included several workarounds below that may be removed anytime when the issue is fixed by jQuery.
+				 */
+
 				// Trim
 				firstCol = firstCol.first();
+
+				/* Workaround */
+				firstCol.data('agenda-fixed-left', false)
+						.data('agenda-fixed-right', false)
+						.data('agenda-initial-left', firstCol[0].style.left ? parseFloat(firstCol[0].style.left) : false)
+						.data('agenda-initial-right', firstCol[0].style.right ? parseFloat(firstCol[0].style.right) : false);
+				/* End workaround */
 
 				// Init
 				firstCol.addClass('agenda-visible-column agenda-visible-first').stop(true)[animate ? 'animate' : 'css']({
 					left:	'0%',
 					right:	(100-colSize)+'%',
 					marginLeft: '-1px'			// This is to hide left border
-				});
+				}
+
+				/* Workaround */
+				,{
+					step: function(now, fx)
+					{
+						var value;
+						if (fx.prop === 'left' || fx.prop === 'right')
+						{
+							if (!firstCol.data('agenda-fixed-'+fx.prop))
+							{
+								value = firstCol.data('agenda-initial-'+fx.prop);
+								if (value)
+								{
+									console.log('init', fx.prop, value);
+									fx.now = value+((now-fx.start)/(fx.end-fx.start)*(fx.end-value));
+									firstCol.css(fx.prop, fx.now);
+									fx.start = value;
+								}
+								firstCol.data('agenda-fixed-'+fx.prop, true);
+							}
+						}
+						console.log(fx.prop, now);
+					}
+				}
+				/* End workaround */
+
+				);
 				firstCol[(colCount === 1) ? 'addClass' : 'removeClass']('agenda-visible-last');
 
 				// Previous columns
@@ -189,18 +227,57 @@
 				{
 					var column = $(this);
 
+					/* Workaround */
+					column.data('agenda-fixed-left', false)
+							.data('agenda-fixed-right', false)
+							.data('agenda-initial-left', column[0].style.left ? parseFloat(column[0].style.left) : false)
+							.data('agenda-initial-right', column[0].style.right ? parseFloat(column[0].style.right) : false);
+					/* End workaround */
+
 					// Position
 					column.stop(true)[animate ? 'animate' : 'css']({
 						left:	(-colSize*(i+1))+'%',
 						right:	(100+(colSize*i))+'%',
 						marginLeft: '0px'
-					});
+					}
+
+					/* Workaround */
+					,{
+						step: function(now, fx)
+						{
+							var value;
+							if (fx.prop === 'left' || fx.prop === 'right')
+							{
+								if (!column.data('agenda-fixed-'+fx.prop))
+								{
+									value = column.data('agenda-initial-'+fx.prop);
+									if (value)
+									{
+										fx.now = value+((now-fx.start)/(fx.end-fx.start)*(fx.end-value));
+										column.css(fx.prop, fx.now);
+										fx.start = value;
+									}
+									column.data('agenda-fixed-'+fx.prop, true);
+								}
+							}
+						}
+					}
+					/* End workaround */
+
+					);
 				});
 
 				// Next columns
 				firstCol.nextAll('.agenda-events').removeClass('agenda-visible-first').each(function(i)
 				{
 					var column = $(this);
+
+					/* Workaround */
+					column.data('agenda-fixed-left', false)
+							.data('agenda-fixed-right', false)
+							.data('agenda-initial-left', column[0].style.left ? parseFloat(column[0].style.left) : false)
+							.data('agenda-initial-right', column[0].style.right ? parseFloat(column[0].style.right) : false);
+					/* End workaround */
 
 					// Visible class
 					column[(i < colCount-1) ? 'addClass' : 'removeClass']('agenda-visible-column');
@@ -211,7 +288,32 @@
 						left:	(colSize*(i+1))+'%',
 						right:	(100-(colSize*(i+2)))+'%',
 						marginLeft: '0px'
-					});
+					}
+
+					/* Workaround */
+					,{
+						step: function(now, fx)
+						{
+							var value;
+							if (fx.prop === 'left' || fx.prop === 'right')
+							{
+								if (!column.data('agenda-fixed-'+fx.prop))
+								{
+									value = column.data('agenda-initial-'+fx.prop);
+									if (value)
+									{
+										fx.now = value+((now-fx.start)/(fx.end-fx.start)*(fx.end-value));
+										column.css(fx.prop, fx.now);
+										fx.start = value;
+									}
+									column.data('agenda-fixed-'+fx.prop, true);
+								}
+							}
+						}
+					}
+					/* End workaround */
+
+					);
 				});
 
 				// Update range

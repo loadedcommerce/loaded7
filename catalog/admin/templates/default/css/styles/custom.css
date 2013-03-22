@@ -1,0 +1,12 @@
+/*
+  General Template CSS 
+*/
+.mega-search-border {
+  -webkit-border-radius: 18px;
+  -moz-border-radius: 18px;
+  border-radius: 18px;
+}
+
+.progress.full-width {
+  width: 100% !important;
+}

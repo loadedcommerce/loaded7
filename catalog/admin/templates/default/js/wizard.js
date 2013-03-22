@@ -1,5 +1,4 @@
 /**
- *
  * Wizard plugin
  *
  * Structural good practices from the article from Addy Osmani 'Essential jQuery plugin patterns'
@@ -47,7 +46,7 @@
 		this.filter('form').removeClass('wizard-enabled').each(function(i)
 		{
 				// Form object
-			var form = $(this),
+			var form = $(this).addClass('wizard'),
 
 				// Options
 				settings = $.extend({}, globalSettings, form.data('wizard-options')),
@@ -113,6 +112,7 @@
 					classes = [],
 					title = fieldset.find('legend').text(),
 					controlsWrapper = fieldset.find('.wizard-controls'),
+					previousPrev, previousNext,
 					step, height;
 
 				// Classes
@@ -147,25 +147,43 @@
 				}
 				else
 				{
-					controlsWrapper.css('margin-top', '').find('.wizard-prev, .wizard-next, .wizard-spacer').remove();
+					controlsWrapper.find('.wizard-spacer').remove();
 				}
+
+				// Previous controls
+				previousPrev = controlsWrapper.find('.wizard-prev');
+				previousNext = controlsWrapper.find('.wizard-next');
 
 				// Create controls where required
 				if (i > 0)
 				{
-					$(settings.controlPrev).prependTo(controlsWrapper).applySetup().click(function(event)
+					if (previousPrev.length === 0)
 					{
-						event.preventDefault();
-						form.showWizardPrevStep();
-					})
+						$(settings.controlPrev).prependTo(controlsWrapper).applySetup().click(function(event)
+						{
+							event.preventDefault();
+							form.showWizardPrevStep();
+						});
+					}
+				}
+				else
+				{
+					previousPrev.remove();
 				}
 				if (i < fieldsets.length-1)
 				{
-					$(settings.controlNext).appendTo(controlsWrapper).applySetup().click(function(event)
+					if (previousNext.length === 0)
 					{
-						event.preventDefault();
-						form.showWizardNextStep();
-					})
+						$(settings.controlNext).appendTo(controlsWrapper).applySetup().click(function(event)
+						{
+							event.preventDefault();
+							form.showWizardNextStep();
+						});
+					}
+				}
+				else
+				{
+					previousNext.remove();
 				}
 
 				// Height
@@ -237,7 +255,7 @@
 			previous = fieldset.siblings('.active');
 
 			// Validation
-			if (!previous.hasClass('current') && $.validationEngine && !form.validationEngine('validate'))
+			if (!previous.hasClass('current') && $.validationEngine && form.removeClass('validating').validationEngine('validate') === false)
 			{
 				return;
 			}
@@ -246,6 +264,12 @@
 			// Set as active
 			step.addClass('active');
 			fieldset.addClass('active').trigger('wizardenter');
+
+			// Hide validation messages
+			if ($.validationEngine)
+			{
+				form.validationEngine('hideAll');
+			}
 
 			// Previously active section
 			step.siblings('.active').removeClass('active');
@@ -381,7 +405,7 @@
 		 * Previous button markup - must use class 'wizard-prev'
 		 * @var string
 		 */
-		controlPrev: '<button type="button" class="button glossy mid-margin-right wizard-previous float-left"><span class="button-icon anthracite-gradient"><span class="icon-backward"></span></span>Back</button>',
+		controlPrev: '<button type="button" class="button glossy mid-margin-right wizard-prev float-left"><span class="button-icon anthracite-gradient"><span class="icon-backward"></span></span>Back</button>',
 
 		/**
 		 * Next button markup - must use class 'wizard-next'
