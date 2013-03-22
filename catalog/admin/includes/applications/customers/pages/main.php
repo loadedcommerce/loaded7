@@ -38,8 +38,8 @@
           <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
           <th scope="col" class="align-center hide-on-mobile"><span class="icon-user icon-anthracite"></span></th>
           <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_last_name'); ?></th>
-          <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_first_name'); ?></th>
-          <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_email_address'); ?></th>
+          <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_first_name'); ?></th>
+          <th scope="col" class="align-left hide-on-mobile hide-on-tablet"><?php echo $lC_Language->get('table_heading_email_address'); ?></th>
           <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_group'); ?></th>
           <th scope="col" class="align-left hide-on-tablet hide-on-mobile"><?php echo $lC_Language->get('table_heading_date_created'); ?></th>
           <th scope="col" class="align-right">
@@ -87,9 +87,5 @@
     </div>
   </div>
 </section>
-<?php
-  if (isset($_SESSION['error'])) unset($_SESSION['error']);
-  if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']);
-  $lC_Template->loadModal($lC_Template->getModule());
-?>
+<?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <!-- End main content -->
