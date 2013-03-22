@@ -9,7 +9,7 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-heading_title = Product Attributes
+heading_title = Product MOdules
 
 table_heading_product_attribute_modules = Product Attribute Modules
 table_heading_action = Action

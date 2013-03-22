@@ -56,6 +56,7 @@ button_go = Global
 button_global = Go
 button_import = Import
 button_insert = Insert
+button_install = Install
 button_login = Login
 button_move = Move
 button_new_file = New File
