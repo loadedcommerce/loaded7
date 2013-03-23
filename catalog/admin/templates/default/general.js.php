@@ -285,6 +285,9 @@ $(document).ready(function() {
     });
     return false;
   });
+  
+  $("#profileLoader").hide();
+  $("#profileInner").fadeTo(1000, 1);
      
 });
 

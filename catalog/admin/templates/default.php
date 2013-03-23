@@ -170,7 +170,8 @@
         </header>
         
         <div id="profile">
-          <div id="profileInner">                
+          <div class="align-center"><span id="profileLoader" class="loader huge refreshing on-dark with-padding"></span></div>
+          <div id="profileInner" style="display:none;">                
             <div class="profile50">
               <div id="profileLeft">
                 <img src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="64" height="64" alt="User name" class="user-icon">
