@@ -69,7 +69,7 @@
         $this->error_number = $error_number;
         $this->error_query = $query;
 
-        trigger_error('[MYSQL] ' . $this->error . ' (' . $this->error_number . '): [QUERY] ' . $this->error_query, E_USER_WARNING);
+        //trigger_error('[MYSQL] ' . $this->error . ' (' . $this->error_number . '): [QUERY] ' . $this->error_query, E_USER_WARNING);
 
         if (isset($lC_MessageStack)) {
           $lC_MessageStack->add('debug', $this->getError());

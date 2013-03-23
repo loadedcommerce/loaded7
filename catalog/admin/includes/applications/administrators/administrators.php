@@ -34,9 +34,7 @@ class lC_Application_Administrators extends lC_Template_Admin {
     if ( !isset($_GET['set']) ) {
       $_GET['set'] = 'members';
     }
-
     $action = (isset($_GET['gid']) && !empty($_GET['gid'])) ? 'edit' : 'insert';
-
     switch ( $_GET['set'] ) {
       case 'groups':
         $this->_page_title = $lC_Language->get('heading_title_groups');
@@ -60,7 +58,8 @@ class lC_Application_Administrators extends lC_Template_Admin {
             } else {
               $lC_MessageStack->add($this->_module, $lC_Language->get('ms_error_action_not_performed'), 'error');
             }
-          }
+          } 
+          $_SESSION['messageToStack'] = $lC_MessageStack->getAll();         
           lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '&set=groups'));
         }
         break;
