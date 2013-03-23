@@ -50,7 +50,7 @@
   <link rel="stylesheet" media="only all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min-device-pixel-ratio: 1.5)" href="templates/default/css/2x.css?v=1">
 
   <!-- Webfonts -->
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
 
   <!-- Additional styles -->
   <link rel="stylesheet" href="templates/default/css/styles/agenda.css?v=1">
