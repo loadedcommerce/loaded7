@@ -64,7 +64,8 @@
   <link rel="stylesheet" href="templates/default/css/styles/table.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/datepicker.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/breadcrumb.css?v=1">
-  <link rel="stylesheet" href="templates/default/css/styles/fileuploader.css?v=1">
+  <link rel="stylesheet" href="templates/default/css/styles/fileuploader.css?v=1"> 
+  <link rel="stylesheet" href="templates/default/css/styles/custom.css?v=1">
   <!-- DataTables -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables-tableTools.css?v=1">

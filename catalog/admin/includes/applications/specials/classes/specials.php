@@ -117,6 +117,7 @@ class lC_Specials_Admin {
   * @return array
   */
   public static function save($id = null, $data) {
+    print_r($data);
     global $lC_Database, $lC_DateTime;
 
     $error = false;
