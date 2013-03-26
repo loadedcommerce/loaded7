@@ -89,7 +89,7 @@
       <?php
         //print_r($lC_ShoppingCart->getProducts());
         if ($lC_ShoppingCart->hasContents()) {
-          echo '<a href="#" class="minicart_link">
+          echo '<a href="' . lc_href_link(FILENAME_CHECKOUT, 'cart') . '" class="minicart_link">
           <span class="item"><b>' . $lC_ShoppingCart->numberOfItems() . '</b> ' . ($lC_ShoppingCart->numberOfItems() > 1 ? strtoupper($lC_Language->get('text_cart_items')) : strtoupper($lC_Language->get('text_cart_item'))) . ' /</span> <span class="price"><b>' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</b></span>
           </a>
           <div class="cart_drop">
