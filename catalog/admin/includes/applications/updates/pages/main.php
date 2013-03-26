@@ -109,7 +109,7 @@ echo "</pre>";
               </a>
             </td>
             <td align="right">
-              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="undoUpdate();"'); ?> class="button icon-undo undo-last red-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? ' disabled' : NULL)); ?>">
+              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="undoUpdate();"'); ?> class="button icon-undo undo-last red-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
                 <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_undo_last_update'); ?></span>
               </a>                                                                                                                                                
             </td>

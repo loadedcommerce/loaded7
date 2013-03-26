@@ -11,7 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-global $lC_Template, $lC_Language, $checkArr;
+global $lC_Template, $lC_Language, $checkArr, $backupArr;
 ?>
 <script>
 $(document).ready(function() {
@@ -257,7 +257,7 @@ function undoUpdate() {
                '      <p><?php echo $lC_Language->get('introduction_new_undo'); ?></p>'+
                '      <p class="button-height inline-label">'+
                '        <label for="version" class="label" style="width:50%;"><?php echo $lC_Language->get('field_product'); ?></label>'+
-               '        <?php echo lc_draw_pull_down_menu('version', null, null, 'class="input with-small-padding"'); ?>'+
+               '        <?php echo lc_draw_pull_down_menu('version', $backupArr, null, 'class="input with-small-padding"'); ?>'+
                '      </p>'+
                '    </form>'+
                '  </div>'+
