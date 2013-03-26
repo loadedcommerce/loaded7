@@ -78,8 +78,8 @@ if ( isset($lC_ObjectInfo) ) {
     if (isset($Qpb->result)) {
       $editPBEntry .= "<tr id='row"  . $rowCnt . "'><td width='100px'><select style='width:98%' name='price_breaks[group_id][]'>" . getCustomerGroupOptionsString($Qpb->valueInt('group_id'), true) . "</select></td>" .
                       "<td width='100px'><select style='width:98%' name='price_breaks[tax_class_id][]'>" . getTaxClassOptionsString($Qpb->valueInt('tax_class_id'), true) . "</select></td>" .
-                      "<td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' value='" . $Qpb->valueInt('qty_break') . "' name='price_breaks[qty][]' size='5' id='qty" . $rowCnt . "'></td><td width='70%'>" . $lC_Language->get('price_breaks_above') . "</td></tr></table></td>" .
-                      "<td width='80px'><input value='" . ((isset($lC_ObjectInfo)) ? number_format($Qpb->valueDecimal('price_break'), DECIMAL_PLACES) : null) . "' style='width:70px;' type='text' name='price_breaks[price][]' id='price" . $rowCnt . "'></td>" .
+                      "<td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' value='" . $Qpb->valueInt('qty_break') . "' name='price_breaks[qty][]' size='5' id='qty" . $rowCnt . "' /></td><td width='70%'>" . $lC_Language->get('price_breaks_above') . "</td></tr></table></td>" .
+                      "<td width='80px'><input value='" . ((isset($lC_ObjectInfo)) ? number_format($Qpb->valueDecimal('price_break'), DECIMAL_PLACES) : null) . "' style='width:70px;' type='text' name='price_breaks[price][]' id='price" . $rowCnt . "' /></td>" .
                       "<td width='30px' align='center'><a id='row" . $rowCnt . "e' href='javascript://' onclick='removePriceBreakEntry(this);'><img border='0' src='images/icons/cross.png'></a></td></tr>";
       $rowCnt++;
     }
@@ -108,7 +108,7 @@ $assignedCategoryTree->setBreadcrumbUsage(false);
 $assignedCategoryTree->setSpacerString('&nbsp;', 5); 
 
 // get specials
-$Qspecials = $lC_Database->query('select specials_new_products_price from :table_specials where products_id = :products_id');
+$Qspecials = $lC_Database->query('select * from :table_specials where products_id = :products_id');
 $Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
 $Qspecials->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
 $Qspecials->execute();
@@ -623,8 +623,8 @@ function toggleEditor(id) {
     var id = $("#pbid").val();
     var newPBEntry = "<tr id='row" + id + "'><td width='100px'><select style='width:98%' name='price_breaks[group_id][]'><?php echo $groups_options_string; ?></select></td>" +
                      "    <td width='100px'><select style='width:98%' name='price_breaks[tax_class_id][]'><?php echo $tax_options_string; ?></select></td>" +
-                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][]' size='5' id='qty" + id + "'></td><td width='70%'><?php echo $lC_Language->get('price_breaks_above'); ?></td></tr></table></td>" +
-                     "    <td width='80px'><input value='<?php echo (isset($lC_ObjectInfo)) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null; ?>' style='width:70px;' type='text' name='price_breaks[price][]' id='price" + id + "'></td>" +
+                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][]' size='5' id='qty" + id + "' /></td><td width='70%'><?php echo $lC_Language->get('price_breaks_above'); ?></td></tr></table></td>" +
+                     "    <td width='80px'><input value='<?php echo (isset($lC_ObjectInfo)) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null; ?>' style='width:70px;' type='text' name='price_breaks[price][]' id='price" + id + "' /></td>" +
                      "    <td width='30px' align='center'><a href='javascript://' onClick='$(\"#row" + id + "\").remove(); return false;'><img border='0' src='images/icons/cross.png'></a></td></tr>";
     $("#qty-pricing-grid > tbody").append(newPBEntry);
     id++;
@@ -640,8 +640,8 @@ function toggleEditor(id) {
     var row = $("#newpbid" + id).val();
     var newPBEntry = "<tr id='row-" + id + '-' + row + "'><td width='100px'><select style='width:98%' name='price_breaks[group_id][" + id + "][]' id='price_breaks[group_id][" + id + "][]'><?php echo $groups_options_string; ?></select></td>" +
                      "    <td width='100px'><select style='width:98%' name='price_breaks[tax_class_id][" + id + "][]' id='price_breaks[tax_class_id][" + id + "][]'><?php echo $tax_options_string; ?></select></td>" +
-                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][" + id + "][]' id='price_breaks[qty][" + id + "][]' size='5' id='qty" + id + "'></td><td width='70%'><?php echo $lC_Language->get('price_breaks_above'); ?></td></tr></table></td>" +
-                     "    <td width='80px'><input value='<?php echo (isset($lC_ObjectInfo)) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null; ?>' style='width:70px;' type='text' name='price_breaks[price][" + id + "][]' id='price_breaks[price][" + id + "][]'></td>" +
+                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][" + id + "][]' id='price_breaks[qty][" + id + "][]' size='5' id='qty" + id + "' /></td><td width='70%'><?php echo $lC_Language->get('price_breaks_above'); ?></td></tr></table></td>" +
+                     "    <td width='80px'><input value='<?php echo (isset($lC_ObjectInfo)) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null; ?>' style='width:70px;' type='text' name='price_breaks[price][" + id + "][]' id='price_breaks[price][" + id + "][]' /></td>" +
                      "    <td width='30px' align='center'><a href='javascript://' onClick='$(\"#row-" + id + "-" + row + "\").remove(); return false;'><img border='0' src='images/icons/cross.png'></a></td></tr>";
     $("#qty-pricing-grid-variant" + id + " > tbody").append(newPBEntry);
     row++;
@@ -815,15 +815,15 @@ function toggleEditor(id) {
                       </span><br />
                       <span class="button-group">
                         <label for="ps-radio-1" class="button blue-active">
-                          <input type="radio" name="product-status-radio-group" id="ps-radio-1" value="active"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 1) ? ' checked' : ''); ?>>
+                          <input type="radio" name="product-status-radio-group" id="ps-radio-1" value="active"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 1) ? ' checked' : ''); ?> />
                           Active
                         </label>
                         <label for="ps-radio-2" class="button blue-active">
-                          <input type="radio" name="product-status-radio-group" id="ps-radio-2" value="inactive"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 0) ? ' checked' : ''); ?>>
+                          <input type="radio" name="product-status-radio-group" id="ps-radio-2" value="inactive"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 0) ? ' checked' : ''); ?> />
                           Inactive
                         </label>
                         <label for="ps-radio-3" class="button blue-active disabled">
-                          <input type="radio" name="product-status-radio-group" id="ps-radio-3" value="">
+                          <input type="radio" name="product-status-radio-group" id="ps-radio-3" value="" />
                           Coming Soon
                         </label>
                       </span>
@@ -838,7 +838,7 @@ function toggleEditor(id) {
               </div>
               <div class="four-columns twelve-columns-mobile">
                 <span class="full-width">
-                  <span>Model</span>
+                  <span><?php echo $lC_Language->get('field_model'); ?></span>
                   <span class="info-spot on-left grey float-right">
                     <span class="icon-info-round"></span>
                     <span class="info-bubble">
@@ -878,7 +878,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                 </span><br /><br />
-                <p style="background-color:#cccccc;" class="with-small-padding"><b>&nbsp;</b><p><br />
+                <p style="background-color:#cccccc;" class="with-small-padding"><b><?php echo lC_DateTime::getShort($lC_ObjectInfo->get('products_date_added')); ?></b><p><br />
                 <span class="full-width">
                   <span>Product Class</span>
                   <span class="info-spot on-left grey float-right">
@@ -930,12 +930,12 @@ function toggleEditor(id) {
               <legend class="legend">Pricing Overrides</legend>
               <div class="field-block button-height">
                 <label for="" class="label"><b>Base Price</b></label>
-                <input type="text" name="" id="" value="<?php echo lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input">
+                <input type="text" name="" id="" value="<?php echo lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input" />
               </div>
               <!-- lc_group_pricing begin -->
               <div class="field-block field-block-product button-height">
                 <label for="" class="label"><b>Group Pricing</b></label>
-                <input onchange="$('#groups_pricing_pro_badge').toggle('300');$('#groups_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
+                <input onchange="$('#groups_pricing_pro_badge').toggle('300');$('#groups_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" />
                 <span class="info-spot on-left grey margin-left">
                   <span class="icon-info-round"></span>
                   <span class="info-bubble">
@@ -953,10 +953,10 @@ function toggleEditor(id) {
                 <?php //foreach() { ?>
                 <div>
                   <label for="" class="label margin-right"><b>Reseller Group 1</b></label>
-                  <input type="checkbox" class="switch disabled margin-right">
+                  <input type="checkbox" class="switch disabled margin-right" />
                   <span class="nowrap">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
-                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">-->
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
                   </span>
                   <small class="input-info">Price<!-- if specials enabled /Special--></small>
                 </div>
@@ -964,8 +964,8 @@ function toggleEditor(id) {
                   <label for="" class="label margin-right"><b>Employee Group</b></label>
                   <input type="checkbox" class="switch disabled margin-right">
                   <span class="nowrap">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
-                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">-->
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
                   </span>
                   <small class="input-info">Price<!-- if specials enabled /Special--></small>
                 </div>
@@ -973,8 +973,8 @@ function toggleEditor(id) {
                   <label for="" class="label margin-right"><b>Gold Reseller</b></label>
                   <input type="checkbox" class="switch disabled margin-right">
                   <span class="nowrap">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;">
-                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;">-->
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
                   </span>
                   <small class="input-info">Price<!-- if specials enabled /Special--></small>
                 </div>
@@ -984,7 +984,7 @@ function toggleEditor(id) {
               <!-- lc_qty_price_breaks begin -->
               <div class="field-block field-block-product button-height">
                 <label for="" class="label"><b>Qty Break Pricing</b></label>
-                <input onchange="$('#qty_breaks_number_of_break_points').toggle('300');$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED">
+                <input onchange="$('#qty_breaks_number_of_break_points').toggle('300');$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" />
                 <span class="info-spot on-left grey margin-left margin-right">
                   <span class="icon-info-round"></span>
                   <span class="info-bubble">
@@ -994,7 +994,7 @@ function toggleEditor(id) {
                 <span id="qty_breaks_number_of_break_points" style="display:none;">
                   <span class="number input">
                     <button type="button" class="button number-down" disabled>-</button>
-                    <input type="text" value="3" size="3" class="input-unstyled" disabled>
+                    <input type="text" value="3" size="3" class="input-unstyled" disabled />
                     <button type="button" class="button number-up" disabled>+</button>
                   </span>
                   <span class="info-spot on-left grey">
@@ -1018,36 +1018,36 @@ function toggleEditor(id) {
                 <?php //foreach() { ?>
                 <div>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
-                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">-->
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <small class="input-info">Price<!-- if specials enabled /Special--></small>
                     <?php //} ?>
                   </span>
                 </div>
                 <div>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
-                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">-->
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <small class="input-info">Price<!-- if specials enabled /Special--></small>
                     <?php //} ?>
                   </span>
                 </div>
                 <div> 
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;">
+                    <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
                     <small class="input-info small-margin-right">Qty</small>
                   </span>
                   <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;">
-                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;">-->
+                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <small class="input-info">Price<!-- if specials enabled /Special--></small>
                     <?php //} ?>
                   </span>
@@ -1057,7 +1057,7 @@ function toggleEditor(id) {
               <!-- lc_qty_price_breaks end --> 
               <div class="field-block field-block-product button-height">
                 <label for="" class="label"><b>Special Pricing</b></label>
-                <input onchange="$('#specials_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' checked' : ''); ?>>
+                <input onchange="$('#specials_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' checked' : ''); ?> />
                 <span class="info-spot on-left grey margin-left margin-right">
                   <span class="icon-info-round"></span>
                   <span class="info-bubble">
@@ -1069,21 +1069,21 @@ function toggleEditor(id) {
                 <label for="resize_height" class="label"><b>Special Retail Price</b></label>
                   <div class="columns">
                     <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-                      <input type="checkbox" class="switch checked">
+                      <input type="checkbox" class="switch<?php if ($Qspecials->value('status') != 0) echo ' checked'; ?>" />
                       <span class="input">
-                        <input name="" id="" value="" placeholder="Price or %" class="input-unstyled align-right">
+                        <input name="" id="" value="<?php echo number_format($Qspecials->value('specials_new_products_price'), DECIMAL_PLACES); ?>" placeholder="Price or %" class="input-unstyled align-right" style="color:#ff0000;font-weight:bold;" />
                       </span>
                     </div>
                     <div class="new-row-mobile twelve-columns twelve-columns-mobile">
                       <span class="nowrap margin-right">
                         <span class="input small-margin-top">
-                          <input type="text" placeholder="Start" class="input-unstyled datepicker" value="" style="width:97px;">
+                          <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('start_date')); ?>" style="width:97px;" />
                         </span>
                         <span class="icon-calendar icon-size2 small-margin-left"></span>
                       </span>
                       <span class="nowrap">
                         <span class="input small-margin-top">
-                          <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;">
+                          <input type="text" placeholder="End" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('expires_date')); ?>" style="width:97px;" />
                         </span>
                         <span class="icon-calendar icon-size2 small-margin-left"></span>
                       </span>
@@ -1124,7 +1124,7 @@ function toggleEditor(id) {
                     </span>-->
                   </div>
                 </div>
-                <div class="left-column-200px margin-bottom clear-left with-mid-padding">
+                <!--<div class="left-column-200px margin-bottom clear-left with-mid-padding">
                   <?php //foreach() { ?>
                   <div class="left-column with-small-padding">
                     Red Medium - KSRM0001
@@ -1134,7 +1134,7 @@ function toggleEditor(id) {
                     <?php // if special price ?>
                       <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
-                  </div>
+                  <!--</div>
                   <div style="height:5px;"></div>
                   <div class="left-column with-small-padding silver-bg">
                     Red Large - KSRL0023
@@ -1144,7 +1144,7 @@ function toggleEditor(id) {
                     <?php // if special price ?>
                       <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
-                  </div>
+                  <!--</div>
                   <div style="height:5px;"></div>
                   <div class="left-column with-small-padding">
                     Red X Large - KSRXL0011
@@ -1154,7 +1154,7 @@ function toggleEditor(id) {
                     <?php // if special price ?>
                       <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
-                  </div>
+                  <!--</div>
                   <div style="height:5px;"></div>
                   <div class="left-column with-small-padding silver-bg">
                     Green Medium - KSGM0054
@@ -1164,7 +1164,7 @@ function toggleEditor(id) {
                     <?php // if special price ?>
                       <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
-                  </div>
+                  <!--</div>
                   <div style="height:5px;"></div>
                   <div class="left-column with-small-padding">
                     Green Large - KSGL0055
@@ -1174,7 +1174,7 @@ function toggleEditor(id) {
                     <?php // if special price ?>
                       <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
-                  </div>
+                  <!--</div>
                   <div style="height:5px;"></div>
                   <div class="left-column with-small-padding silver-bg">
                     Green X Large - KSGXL0167
@@ -1184,10 +1184,10 @@ function toggleEditor(id) {
                     <?php // if special price ?>
                       <!--&nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />-->
                     <?php // } ?>
-                  </div>
+                  <!--</div>
                   <div style="height:5px;"></div>
                   <?php //} //} ?>
-                </div>
+                </div>-->
               </dd>
             </dl>
           </div>
@@ -1198,7 +1198,7 @@ function toggleEditor(id) {
               <div class="columns">
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
-                    <span>Model</span>
+                    <span><?php echo $lC_Language->get('field_model'); ?></span>
                     <span class="info-spot on-left grey float-right">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
@@ -1207,7 +1207,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <input type="text" class="required input full-width" value="" id="" name="">
+                    <input type="text" class="required input full-width" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_model') : null); ?>" id="" name="" />
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -1230,15 +1230,15 @@ function toggleEditor(id) {
                   <div class="twelve-columns no-margin-bottom small-margin-top">
                     <span class="button-group">
                       <label for="ti-radio-1" class="button disabled">
-                        <input type="radio" name="track-inventory-radio-group" id="ti-radio-1" value="1">
+                        <input type="radio" name="track-inventory-radio-group" id="ti-radio-1" value="1" />
                         Default
                       </label>
                       <label for="ti-radio-2" class="button disabled">
-                        <input type="radio" name="track-inventory-radio-group" id="ti-radio-2" value="2">
+                        <input type="radio" name="track-inventory-radio-group" id="ti-radio-2" value="2" />
                         On
                       </label>
                       <label for="ti-radio-3" class="button disabled">
-                        <input type="radio" name="track-inventory-radio-group" id="ti-radio-3" value="3">
+                        <input type="radio" name="track-inventory-radio-group" id="ti-radio-3" value="3" />
                         Off
                       </label>
                     </span>
@@ -1258,7 +1258,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <input type="text" class="required input full-width" value="" id="" name="">
+                    <input type="text" class="required input full-width" value="coing soon..." id="" name="" disabled />
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -1281,12 +1281,6 @@ function toggleEditor(id) {
                   <div class="twelve-columns no-margin-bottom small-margin-top">
                     <select class="select full-width small-margin-top" disabled>
                       <option id="1" value="1">Vendor #1</option>
-                      <option id="2" value="2">Vendor #2</option>
-                      <option id="3" value="3">Vendor #3</option>
-                      <option id="4" value="4">Vendor #4</option>
-                      <option id="5" value="5">Vendor #5</option>
-                      <option id="6" value="6">Vendor #6</option>
-                      <option id="7" value="7">Vendor #7</option>
                     </select>
                   </div>
                   <!-- lc_vendor_supplier end -->
@@ -1313,15 +1307,15 @@ function toggleEditor(id) {
                   <div class="twelve-columns no-margin-bottom small-margin-top">
                     <span class="button-group">
                       <label for="ic-radio-1" class="button green-active active">
-                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-1" value="1" onclick="$('#inventory_control_simple').show('300');$('#inventory_control_multi').hide('300');">
+                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-1" value="1" onclick="$('#inventory_control_simple').show('300');$('#inventory_control_multi').hide('300');" />
                         Simple
                       </label>
                       <label for="ic-radio-2" class="button green-active">
-                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-2" value="2" onclick="$('#inventory_control_simple').hide('300');$('#inventory_control_multi').show('300');">
+                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-2" value="2" onclick="$('#inventory_control_simple').hide('300');$('#inventory_control_multi').show('300');" />
                         Multi SKU
                       </label>
                       <label for="ic-radio-3" class="button disabled green-active">
-                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-3" value="3">
+                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-3" value="3" />
                         Recurring
                       </label>
                     </span>
@@ -1335,12 +1329,12 @@ function toggleEditor(id) {
                 <div id="inventory_control_simple">
                   <div>
                     <label for="" class="label"><b>Qty On Hand</b></label>
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;">
-                    <input type="text" name="" id="" value="" class="input">
+                    <input type="text" name="products_quantity" id="products_quantity" value="<?php echo $lC_ObjectInfo->get('products_quantity'); ?>" class="input small-margin-right" style="width:60px;" />
+                    <input type="text" name="products_sku_ean13" id="products_sku_ean13" value="" class="input" disabled />
                     <b>SKU/EAN13</b>
                   </div>
                   <div class="small-margin-top">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled> <b>Cost</b>
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled /> <b>Cost</b>
                     <span class="info-spot on-left grey small-margin-left">
                       <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
                       <span class="info-bubble">
@@ -1369,12 +1363,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <select class="select full-width small-margin-top">
-                      <option id="1" value="1">Taxable Goods</option>
-                      <option id="2" value="2">Retail Customer</option>
-                      <option id="3" value="3">Wholesale Customer</option>
-                      <option id="4" value="4">Employee</option>
-                    </select>
+                    <?php echo lc_draw_pull_down_menu('products_tax_class_id', $tax_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_tax_class_id') : null), 'class="select full-width small-margin-top" id="tax_class0"'); ?>
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -1388,7 +1377,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <input type="text" class="required input full-width" value="" id="" name="">
+                    <?php echo lc_draw_input_field('products_price_gross', (isset($lC_ObjectInfo) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="required input full-width" id="products_price0_gross" READONLY'); ?>
                   </div>
                 </div>
               </div>
@@ -1457,7 +1446,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <input type="text" class="required input full-width" value="" id="" name="">
+                    <input type="text" class="required input full-width" value="coming soon..." id="" name="" disabled />
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -1473,14 +1462,14 @@ function toggleEditor(id) {
                   <div class="twelve-columns no-margin-bottom">
                     <span class="nowrap margin-right">
                       <span class="input small-margin-top">
-                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="" style="width:97px;">
+                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($lC_ObjectInfo->get('products_date_added')); ?>" style="width:97px;" />
                       </span>
                       <span class="icon-calendar icon-size2 small-margin-left"></span>
                     </span>
                     <!-- lc_products_availability begin -->
                     <span class="nowrap">
                       <span class="input small-margin-top">
-                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;" disabled>
+                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;" disabled />
                       </span>
                       <span class="icon-calendar icon-size2 small-margin-left grey"></span>
                       <span class="info-spot on-left grey small-margin-left">
@@ -1502,16 +1491,16 @@ function toggleEditor(id) {
                   <?php //foreach() { ?>
                   <div class="margin-bottom">
                     <label for="" class="label">Custom Field 1</label>
-                    <input type="text" name="" id="" value="" class="input">
+                    <input type="text" name="" id="" value="coming soon..." class="input" disabled />
                   </div>
                   <?php //} ?>
                   <div class="margin-bottom">
                     <label for="" class="label">Custom Field 2</label>
-                    <input type="text" name="" id="" value="" class="input">
+                    <input type="text" name="" id="" value="coming soon..." class="input" disabled />
                   </div>
                   <div> 
                     <label for="" class="label">Custom Field 3</label>
-                    <input type="text" name="" id="" value="" class="input">
+                    <input type="text" name="" id="" value="coming soon..." class="input" disabled />
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -1548,15 +1537,15 @@ function toggleEditor(id) {
                     <span class="button-group small-margin-top">
                       <!-- lc_options_inventory_control begin -->
                       <label for="ioc-radio-1" class="button red-active">
-                        <input type="radio" name="inventory-control-radio-group" id="ioc-radio-1" value="1">
+                        <input type="radio" name="inventory-control-radio-group" id="ioc-radio-1" value="1" />
                         Simple
                       </label>
                       <label for="ioc-radio-2" class="button red-active">
-                        <input type="radio" name="inventory-control-radio-group" id="ioc-radio-2" value="2" checked>
+                        <input type="radio" name="inventory-control-radio-group" id="ioc-radio-2" value="2" checked />
                         Multi SKU
                       </label>
                       <label for="ioc-radio-3" class="button red-active disabled">
-                        <input type="radio" name="inventory-control-radio-group" id="ioc-radio-3" value="3">
+                        <input type="radio" name="inventory-control-radio-group" id="ioc-radio-3" value="3" />
                         Recurring
                       </label>
                       <span class="info-spot on-left grey margin-left">
@@ -1597,7 +1586,38 @@ function toggleEditor(id) {
           </div>
           <!-- shipping_tab -->
           <div id="section_shipping_content" class="with-padding">
-            Shipping
+            <div class="columns">
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend">Product Characteristics</legend>
+                  <div class="columns">
+                    <div class="twelve-columns">
+                      Product Characteristics                   
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend">Order Fee Modifiers</legend>
+                  <div class="columns">
+                    <div class="twelve-columns">
+                      Order Fee Modifiers                   
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend">Supplier Characteristics</legend>
+                  <div class="columns">
+                    <div class="twelve-columns">
+                      Supplier Characteristics                   
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
           </div>
           <!-- relationships_tab -->
           <div id="section_relationships_content" class="with-padding">
