@@ -249,87 +249,129 @@ function undoUpdate() {
   if (parseInt(accessLevel) < 4) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
-  }  
-  $.modal.confirm('<?php echo $lC_Language->get('text_confirm_undo');?>', function() {
-    // set maint mode=on
-    __setMaintenanceMode('on');
-    
-    var toVersion = '<?php echo $checkArr['toVersion']; ?>';  
-    $('#versionContainer .fieldset').removeClass('orange-gradient');
-    $('#version-table tbody').removeClass('green').removeClass('red');
-    $('#version-table > tbody').empty();  
-    $('#version-table > tbody').empty();
-    $('#version-table').css("margin-bottom", "10px");
-    $('#version-table > thead').html('<tr><td class="before">&nbsp;</td><td class="version">Undo Update</td><td class="after">&nbsp;</td></tr>').addClass('red'); 
-    $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
-    $('#updateButtonset').slideUp();
-    $('.update-text').html('<p><?php echo $lC_Language->get('text_initializing'); ?></p>').attr('style', 'text-align:center').blink({ maxBlinks: 5, blinkPeriod: 1000 });
-
-    setTimeout(function() { 
-      __setup(); 
-      __showUndoStep(1,0);
-      $('#vFooterText').html(__cancelBlock()).show();
-      
-      // restore files
-      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doFullFileRestore'); ?>';
-      $.getJSON(jsonLink,   
-      function (data) {
-        if (data.rpcStatus == -10) { // no session
-          __showUndoStep(1,2);
-          __setMaintenanceMode('off');
-          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";     
-          $(location).attr('href',url);
-        }      
-        if (data.rpcStatus != 1) {
-          __showUndoStep(1,2);
-          
-          // write to the update history log
-          __writeHistory('<?php echo $lC_Language->get('text_history_action_undo'); ?>', '<?php echo $lC_Language->get('text_history_result_undo_error'); ?>');
-          oTable.fnReloadAjax();
-                        
-          __setMaintenanceMode('off');
-          $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-          return false;
+  } 
+  $.modal({
+      content: '<div id="undoUpdate">'+
+               '  <div id="undoUpdateForm">'+
+               '    <form name="undo" id="undo" method="post">'+
+               '      <p><?php echo $lC_Language->get('introduction_new_undo'); ?></p>'+
+               '      <p class="button-height inline-label">'+
+               '        <label for="version" class="label" style="width:50%;"><?php echo $lC_Language->get('field_product'); ?></label>'+
+               '        <?php echo lc_draw_pull_down_menu('version', null, null, 'class="input with-small-padding"'); ?>'+
+               '      </p>'+
+               '    </form>'+
+               '  </div>'+
+               '</div>',
+      title: '<?php echo $lC_Language->get('modal_heading_new_undo'); ?>',
+      width: 600,
+      scrolling: false,
+      actions: {
+        'Close' : {
+          color: 'red',
+          click: function(win) { win.closeModal(); return false; }
         }
-        __showUndoStep(1,1);
-        __showUndoStep(2,0);
-
-        // restore DB
-        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBRestore'); ?>'
-        $.getJSON(jsonLink,        
-          function (cData) {
-            if (cData.rpcStatus != 1) {
-              __showUndoStep(2,2);
+      },
+      buttons: {
+        '<?php echo $lC_Language->get('button_cancel'); ?>': {
+          classes:  'glossy',
+          click:    function(win) { win.closeModal(); }
+        },
+        '<?php echo $lC_Language->get('button_save'); ?>': {
+          classes:  'blue-gradient glossy',
+          click:    function(win) {
+            var bValid = $("#undo").validate({
+              rules: {
+              },
+              invalidHandler: function() {
+              }
+            }).form();
+            if (bValid) {
+              // set maint mode=on
+              __setMaintenanceMode('on');
               
-              // write to the update history log
-              __writeHistory('<?php echo $lC_Language->get('text_history_action_undo'); ?>', '<?php echo $lC_Language->get('text_history_result_undo_error'); ?>');
-              oTable.fnReloadAjax();
-                          
-              __setMaintenanceMode('off');
-              $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-              return false;
+              win.closeModal();
+
+              var toVersion = '<?php echo $checkArr['toVersion']; ?>';  
+              $('#versionContainer .fieldset').removeClass('orange-gradient');
+              $('#version-table tbody').removeClass('green').removeClass('red');
+              $('#version-table > tbody').empty();  
+              $('#version-table > tbody').empty();
+              $('#version-table').css("margin-bottom", "10px");
+              $('#version-table > thead').html('<tr><td class="before">&nbsp;</td><td class="version">Undo Update</td><td class="after">&nbsp;</td></tr>').addClass('red'); 
+              $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
+              $('#updateButtonset').slideUp();
+              $('.update-text').html('<p><?php echo $lC_Language->get('text_initializing'); ?></p>').attr('style', 'text-align:center').blink({ maxBlinks: 5, blinkPeriod: 1000 });
+
+              setTimeout(function() { 
+                __setup(); 
+                __showUndoStep(1,0);
+                $('#vFooterText').html(__cancelBlock()).show();
+                
+                // restore files
+                var nvp = $("#undo").serialize();
+                var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doFullFileRestore&NVP'); ?>';
+                $.getJSON(jsonLink.replace('NVP', nvp),   
+                function (data) {
+                  if (data.rpcStatus == -10) { // no session
+                    __showUndoStep(1,2);
+                    __setMaintenanceMode('off');
+                    var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";     
+                    $(location).attr('href',url);
+                  }      
+                  if (data.rpcStatus != 1) {
+                    __showUndoStep(1,2);
+                    
+                    // write to the update history log
+                    __writeHistory('<?php echo $lC_Language->get('text_history_action_undo'); ?>', '<?php echo $lC_Language->get('text_history_result_undo_error'); ?>');
+                    oTable.fnReloadAjax();
+                                  
+                    __setMaintenanceMode('off');
+                    $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+                    return false;
+                  }
+                  __showUndoStep(1,1);
+                  __showUndoStep(2,0);
+
+                  // restore DB
+                  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doDBRestore'); ?>'
+                  $.getJSON(jsonLink,        
+                    function (cData) {
+                      if (cData.rpcStatus != 1) {
+                        __showUndoStep(2,2);
+                        
+                        // write to the update history log
+                        __writeHistory('<?php echo $lC_Language->get('text_history_action_undo'); ?>', '<?php echo $lC_Language->get('text_history_result_undo_error'); ?>');
+                        oTable.fnReloadAjax();
+                                    
+                        __setMaintenanceMode('off');
+                        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+                        return false;
+                      }
+                      __showUndoStep(2,1);
+                      __showUndoStep(99,1); 
+                            
+                      // write to the update history log
+                      __writeHistory('<?php echo $lC_Language->get('text_history_action_undo'); ?>', '<?php echo $lC_Language->get('text_history_result_undo_success'); ?>');
+                      
+                      $('#vFooterText').html(__okBlock());
+                      $('#version-table thead').removeClass('green').addClass('red');                
+                      $('#version-table > thead').html('<tr><td class="before">&nbsp;</td><td class="version">Undo Update</td><td class="after">&nbsp;</td></tr>').addClass('red');            
+                      oTable.fnReloadAjax(); 
+                                                    
+                      // set maint mode=off
+                      __setMaintenanceMode('off');  
+             
+                    }
+                  );        
+                }); 
+              }, 3000);              
             }
-            __showUndoStep(2,1);
-            __showUndoStep(99,1); 
-                  
-            // write to the update history log
-            __writeHistory('<?php echo $lC_Language->get('text_history_action_undo'); ?>', '<?php echo $lC_Language->get('text_history_result_undo_success'); ?>');
-            
-            $('#vFooterText').html(__okBlock());
-            $('#version-table thead').removeClass('green').addClass('red');                
-            $('#version-table > thead').html('<tr><td class="before">&nbsp;</td><td class="version">Undo Update</td><td class="after">&nbsp;</td></tr>').addClass('red');            
-            oTable.fnReloadAjax(); 
-                                          
-            // set maint mode=off
-            __setMaintenanceMode('off');  
-   
           }
-        );        
-      });     
-    }, 3000); 
-  }, function() {
-    return false;
-  });      
+        }
+      },
+      buttonsLowPadding: true
+  });  
+  
 } 
 
 function __showStep(step, fini) {

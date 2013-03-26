@@ -745,6 +745,26 @@ class lC_Updates_Admin {
     }
   }  
  /**
+  * Get backups listing
+  *  
+  * @access public      
+  * @return array
+  */
+  public static function getBackups() {
+    $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_WORK . 'updates');
+    $lC_DirectoryListing->setIncludeDirectories(false);  
+    $lC_DirectoryListing->setCheckExtension('zip');
+    //$lC_DirectoryListing->setCheckExtension('sql');
+    //$lC_DirectoryListing->setCheckExtension('gz');
+    
+    $backups = array();
+    foreach ( $lC_DirectoryListing->getFiles() as $file ) {
+      $backups[] = array('id' => substr($file['name'], 0, strrpos($file['name'], '.')), 'text' => substr($file['name'], 0, strrpos($file['name'], '.')));
+    }    
+    
+    return $backups;
+  }  
+ /**
   * Restore from last DB backup
   *  
   * @access public      

@@ -85,6 +85,19 @@ class lC_Updates_Admin_rpc {
     echo json_encode($result);
   }
  /**
+  * Get the backup listing
+  *
+  * @access public
+  * @return json
+  */
+  public static function getBackupsAvailable() {
+    if ( lC_Updates_Admin::getBackups()) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  } 
+ /**
   * Deploy the update package
   *
   * @access public
@@ -104,7 +117,7 @@ class lC_Updates_Admin_rpc {
   * @return json
   */
   public static function doFullFileRestore() {
-    if ( lC_Updates_Admin::fullFileRestore($_GET['ver '])) {
+    if ( lC_Updates_Admin::fullFileRestore($_GET['version'])) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
 

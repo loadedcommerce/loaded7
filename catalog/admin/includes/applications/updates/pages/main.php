@@ -12,6 +12,11 @@
   @license    http://loadedcommerce.com/license.html
 */
 $checkArr = lC_Updates_Admin::hasUpdatesAvailable();
+$backupArr = lC_Updates_Admin::getBackupsAvailable();
+
+echo "<pre style='margin:100px;'>";
+print_r($backupArr);
+echo "</pre>";
 ?>
 <!-- Main content -->
 <section role="main" id="main">
@@ -104,7 +109,7 @@ $checkArr = lC_Updates_Admin::hasUpdatesAvailable();
               </a>
             </td>
             <td align="right">
-              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? NULL : 'onclick="undoUpdate();"')); ?> class="button icon-undo undo-last red-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? ' disabled' : NULL)); ?>">
+              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="undoUpdate();"'); ?> class="button icon-undo undo-last red-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : ((!file_exists(DIR_FS_WORK . 'updates/full-file-backup.zip')) ? ' disabled' : NULL)); ?>">
                 <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_undo_last_update'); ?></span>
               </a>                                                                                                                                                
             </td>
