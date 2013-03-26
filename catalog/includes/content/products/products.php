@@ -24,6 +24,8 @@
     /* Class constructor */
     function lC_Products_Products() {
       global $lC_Database, $lC_Services, $lC_Session, $lC_Language, $lC_Breadcrumb, $lC_Product, $lC_Image, $lC_Currencies;
+      
+      $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
 
       if (empty($_GET) === false) {
         $id = false;
@@ -52,7 +54,7 @@
           $this->addOGPTags('title', $lC_Product->getTitle() . ' ' . $lC_Product->getModel());
           $this->addOGPTags('description', $lC_Currencies->displayPrice($lC_Product->getPriceBreak(), $lC_Product->getTaxClassID()) .  ' - ' . $lC_Product->getTitle() . ' ' . lc_clean_html($lC_Product->getDescription()));
           $this->addOGPTags('url', lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword(), 'NONSSL',false,true,true));
-          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/logo.png');
+          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
           $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'large'));
           foreach ( $lC_Product->getImages() as $key => $value ) {
             if ($value['default_flag'] == true) continue;

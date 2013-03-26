@@ -30,6 +30,7 @@
       }
 
       $this->_page_title = $lC_Language->get('reviews_heading');
+      $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
 
       if ($lC_Services->isStarted('breadcrumb')) {
         $lC_Breadcrumb->add($lC_Language->get('breadcrumb_reviews'), lc_href_link(FILENAME_PRODUCTS, $this->_module));
@@ -45,7 +46,7 @@
           $this->addOGPTags('title', $lC_Product->getTitle() . ' ' . $lC_Product->getModel());
           $this->addOGPTags('description', $lC_Currencies->displayPrice($lC_Product->getPriceBreak(), $lC_Product->getTaxClassID()) .  ' - ' . $lC_Product->getTitle() . ' ' . lc_clean_html($lC_Product->getDescription()));
           $this->addOGPTags('url', lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword(), 'NONSSL',false,true,true));
-          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/logo.png');
+          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
           $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'large'));
           foreach ( $lC_Product->getImages() as $key => $value ) {
             if ($value['default_flag'] == true) continue;

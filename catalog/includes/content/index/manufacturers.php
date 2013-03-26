@@ -26,6 +26,7 @@
       global $lC_Services, $lC_Language, $lC_Breadcrumb, $lC_Manufacturer;
 
       $this->_page_title = sprintf($lC_Language->get('index_heading'), STORE_NAME);
+      $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
 
       if (is_numeric($_GET[$this->_module])) {
         include('includes/classes/manufacturer.php');
@@ -43,7 +44,7 @@
         $this->addOGPTags('title', $this->_page_title);
         $this->addOGPTags('description', $this->_page_title);
         $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, 'manufacturers=' . $lC_Manufacturer->getID(), 'NONSSL',false,true,true));
-        $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/logo.png');
+        $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
 
         $this->_process();
       } else {

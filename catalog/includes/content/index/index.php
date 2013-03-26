@@ -26,6 +26,7 @@
       global $lC_Database, $lC_Services, $lC_Language, $lC_Breadcrumb, $cPath, $cPath_array, $current_category_id, $lC_Category;
 
       $this->_page_title = sprintf($lC_Language->get('index_heading'), STORE_NAME);
+      $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
 
       if (isset($cPath) && (empty($cPath) === false)) {
         if ($lC_Services->isStarted('breadcrumb')) {
@@ -84,7 +85,7 @@
           $this->addOGPTags('title', $this->_page_title);
           $this->addOGPTags('description', $this->_page_title);
           $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, 'cPath=' . $_GET['cPath'], 'NONSSL',false,true,true));
-          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/logo.png');
+          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
           if ( $lC_Category->hasImage() ) {
             $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . DIR_WS_IMAGES . $this->_page_image);
           }
@@ -94,7 +95,7 @@
           $this->addOGPTags('title', $this->_page_title);
           $this->addOGPTags('description', $this->_page_title);
           $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, '', 'NONSSL',false,true,true));
-          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/logo.png');
+          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
       }
     }
 
