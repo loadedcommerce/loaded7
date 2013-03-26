@@ -704,7 +704,7 @@ class lC_Updates_Admin {
          
     // create full file backup
     try {
-      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x \'*/.zip/*\'');
+      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x \*.zip\*');
     } catch ( Exception $e ) {  
       return false;
     } 
