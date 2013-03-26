@@ -129,7 +129,7 @@ class lC_Payment_cresecure extends lC_Payment {
     $Qcredit_cards->execute();
 
     while ($Qcredit_cards->next()) {
-      $this->_card_images .= lc_image('images/cards/cc_' . strtolower(str_replace(" ", "_", $Qcredit_cards->value('credit_card_name'))) . '.png', null, null, null, 'style="vertical-align:middle;"');
+      $this->_card_images .= lc_image('images/cards/cc_' . strtolower(str_replace(" ", "_", $Qcredit_cards->value('credit_card_name'))) . '.png', null, null, null, 'style="vertical-align:middle; margin:0 2px;"');
       $name = strtolower($Qcredit_cards->value('credit_card_name'));
       if (stristr($Qcredit_cards->value('credit_card_name'), 'discover')) $name = 'Discover';
       if (stristr($Qcredit_cards->value('credit_card_name'), 'jcb')) $name = 'JCB';

@@ -18,7 +18,7 @@
     </definition>
     <definition>
       <key>payment_cresecure_button_description</key>
-      <value><![CDATA[Your payment is protected by CRE Secure. Cardholder data will not be stored or shared. Checkout with Confidence.]]></value>
+      <value><![CDATA[Your payment is protected by CRE Secure. Checkout with Confidence.]]></value>
       <group>modules-payment</group>
     </definition>    
     <definition>
