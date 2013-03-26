@@ -129,7 +129,7 @@ class lC_Payment_cresecure extends lC_Payment {
     $Qcredit_cards->execute();
 
     while ($Qcredit_cards->next()) {
-      $this->_card_images .= lc_image('images/cards/cc_' . strtolower(str_replace(" ", "_", $Qcredit_cards->value('credit_card_name'))) . '.png');
+      $this->_card_images .= lc_image('images/cards/cc_' . strtolower(str_replace(" ", "_", $Qcredit_cards->value('credit_card_name'))) . '.png', null, null, null, 'style="vertical-align:middle;"');
       $name = strtolower($Qcredit_cards->value('credit_card_name'));
       if (stristr($Qcredit_cards->value('credit_card_name'), 'discover')) $name = 'Discover';
       if (stristr($Qcredit_cards->value('credit_card_name'), 'jcb')) $name = 'JCB';
@@ -203,6 +203,10 @@ class lC_Payment_cresecure extends lC_Payment {
   */ 
   public function confirmation() {
     $this->_order_id = lC_Order::insert();
+    // store the cartID info to match up on the return - to prevent multiple order IDs being created
+    $_SESSION['cartSync']['cartID'] = $_SESSION['cartID'];
+    $_SESSION['cartSync']['prepOrderID'] = $_SESSION['prepOrderID'];  
+    $_SESSION['cartSync']['orderCreated'] = TRUE;    
   }
  /**
   * Return the confirmation button logic

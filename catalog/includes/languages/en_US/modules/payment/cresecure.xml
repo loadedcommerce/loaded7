@@ -3,7 +3,7 @@
   <definitions>
     <definition>
       <key>payment_cresecure_title</key>
-      <value><![CDATA[Credit Card via CRE Secure]]></value>
+      <value><![CDATA[Credit Card via <img src="images/payment/cresecure-small.png" style="vertical-align:middle">]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>
@@ -13,7 +13,7 @@
     </definition>    
     <definition>
       <key>payment_cresecure_description</key>
-      <value><![CDATA[<div><img src="images/cre_secure.png"/></div><div style="padding:10px;"> <b>Universal Payment System</b><br/> See for yourself why CRE Secure is the best option for online retailers who want a PCI Compliant, designer-friendly way to accept credit cards.<br/><a href="http://cresecure.com/from_admin" target="_blank">Click Here to Learn More >></a><p>Version 7.0</p></div>]]></value>
+      <value><![CDATA[<h3 class="thin small-margin-left mid-margin-bottom"><img src="images/payment/cresecure-large.png" class="margin-right" style="vertical-align:middle">Payments</h3>]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>
