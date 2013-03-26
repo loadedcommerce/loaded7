@@ -17,7 +17,7 @@
 /*content area width, it is needed*/
 .colMid {width:75%;}
 /*form styles*/
-dd { margin-left:10px; }
+dd { margin:0 0 10px 10px; }
 .form-list li { margin:0 0 8px; }
 .form-list label { float:left; color:#666; font-weight:bold; position:relative; z-index:0; }
 .form-list label.required {}
