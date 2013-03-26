@@ -695,14 +695,16 @@ class lC_Updates_Admin {
   */
   public static function fullBackup() {
 
-    $backup_file = 'full-file-backup.zip';
+    $ext = '.zip';
+    
+    $backup_file = 'full-backup-' . str_replace('.','', utility::getVersion()) . $ext;
     
     // remove the old backup
     if (file_exists(DIR_FS_WORK . 'updates/' . $backup_file)) unlink(DIR_FS_WORK . 'updates/' . $backup_file);
          
     // create full file backup
     try {
-      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '*');
+      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x \'*/.zip/*\'');
     } catch ( Exception $e ) {  
       return false;
     } 
@@ -715,9 +717,11 @@ class lC_Updates_Admin {
   * @access public      
   * @return boolean
   */
-  public static function fullFileRestore() {
+  public static function fullFileRestore($version) {
 
-    $restore_file = 'full-file-backup.zip';
+    $ext = '.zip';
+    
+    $restore_file = 'full-backup-' . str_replace('.','', $version) . $ext;
     
     if (file_exists(DIR_FS_WORK . 'updates/' . $restore_file)) {
       // remove old zip extraction  if any

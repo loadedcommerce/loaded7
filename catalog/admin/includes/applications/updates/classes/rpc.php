@@ -104,7 +104,7 @@ class lC_Updates_Admin_rpc {
   * @return json
   */
   public static function doFullFileRestore() {
-    if ( lC_Updates_Admin::fullFileRestore()) {
+    if ( lC_Updates_Admin::fullFileRestore($_GET['ver '])) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
 
