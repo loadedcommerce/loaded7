@@ -12,7 +12,7 @@
   @license    http://loadedcommerce.com/license.html
 */
 $checkArr = lC_Updates_Admin::hasUpdatesAvailable();
-$backupArr = lC_Updates_Admin::getBackupsAvailable();
+$backupArr = lC_Updates_Admin::getBackups();
 
 echo "<pre style='margin:100px;'>";
 print_r($backupArr);
