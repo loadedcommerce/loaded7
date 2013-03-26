@@ -100,8 +100,6 @@ class lC_Payment_paypal_adv extends lC_Payment_Admin {
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Sort Order of Display', 'MODULE_PAYMENT_PAYPAL_ADV_SORT_ORDER', '0', 'Sort order of display. Lowest is displayed first.', '6', '0' , now())");
     
     $lC_Database->simpleQuery("ALTER TABLE " . TABLE_ORDERS . " CHANGE payment_method payment_method VARCHAR( 512 ) NOT NULL");
-    
-    $Qcheck->freeResult();
   }
  /**
   * Return the configuration parameter keys in an array
