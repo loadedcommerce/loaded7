@@ -3,7 +3,7 @@
   <definitions>
     <definition>
       <key>payment_cresecure_title</key>
-      <value><![CDATA[Credit Card via <img src="images/payment/cresecure-small.png" style="vertical-align:middle">]]></value>
+      <value><![CDATA[<img src="images/payment/cresecure-small.png" style="vertical-align:middle"> Payments]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>
