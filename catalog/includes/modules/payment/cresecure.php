@@ -202,7 +202,12 @@ class lC_Payment_cresecure extends lC_Payment {
   * @return integer
   */ 
   public function confirmation() {
-    $this->_order_id = lC_Order::insert();   
+    $_SESSION['cartSync']['paymentMethod'] = $this->_code;
+    $this->_order_id = lC_Order::insert();
+    // store the cartID info to match up on the return - to prevent multiple order IDs being created
+    $_SESSION['cartSync']['cartID'] = $_SESSION['cartID'];
+    $_SESSION['cartSync']['prepOrderID'] = $_SESSION['prepOrderID'];  
+    $_SESSION['cartSync']['orderCreated'] = TRUE;    
   }
  /**
   * Return the confirmation button logic

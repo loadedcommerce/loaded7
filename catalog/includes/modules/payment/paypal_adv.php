@@ -191,6 +191,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @return integer
   */ 
   public function confirmation() {
+    $_SESSION['cartSync']['paymentMethod'] = $this->_code;
     $this->_order_id = lC_Order::insert($this->order_status);
     // store the cartID info to match up on the return - to prevent multiple order IDs being created
     $_SESSION['cartSync']['cartID'] = $_SESSION['cartID'];
