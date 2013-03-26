@@ -26,7 +26,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-  <title><?php echo STORE_NAME . ': ' . ($lC_Template->hasPageTitle() ? ': ' . $lC_Template->getPageTitle() : ''); ?></title>
+  <title><?php echo STORE_NAME . ($lC_Template->hasPageTitle() ? ': ' . $lC_Template->getPageTitle() : ''); ?></title>
   <meta name="description" content="Loaded Commerce Shopping Cart">
   <meta name="author" content="Loaded Commerce">
 
