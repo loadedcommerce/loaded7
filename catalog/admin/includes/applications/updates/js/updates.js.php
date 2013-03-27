@@ -254,7 +254,7 @@ function undoUpdate() {
   $.modal({
       content: '<div id="undoUpdate">'+
                '  <div id="undoUpdateForm">'+
-               '    <form name="undo" id="undo" method="post">'+
+               '    <form name="undo-form" action="" id="undo-form" method="post">'+
                '      <p><?php echo $lC_Language->get('introduction_undo_update'); ?></p>'+
                '      <p class="button-height inline-label">'+
                '        <label for="version" class="label"><?php echo $lC_Language->get('field_restore_from'); ?></label>'+
@@ -287,13 +287,12 @@ function undoUpdate() {
               }
             }).form();
             if (bValid) {
-              
-              
+              var nvp = $("#undo-form").serialize();
               var confirmText = '<?php echo $lC_Language->get('text_confirm_undo'); ?>';
               $.modal.confirm(confirmText, function() {              
                 // set maint mode=on
                 __setMaintenanceMode('on');
-                
+
                 win.closeModal();
 
                 var toVersion = '<?php echo $checkArr['toVersion']; ?>';  
@@ -313,7 +312,6 @@ function undoUpdate() {
                   $('#vFooterText').html(__cancelBlock()).show();
                   
                   // restore files
-                  var nvp = $("#undo").serialize();
                   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doFullFileRestore&NVP'); ?>';
                   $.getJSON(jsonLink.replace('NVP', nvp),   
                   function (data) {

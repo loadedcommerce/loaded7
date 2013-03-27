@@ -59,7 +59,7 @@ table_heading_timestamp = Time Stamp
 
 text_confirm_update = This action will update your core files and database to the latest version. Press `Confirm` to proceed.
 text_confirm_full_update = This action will update your core files and database to the latest version using the FULL update package which contains all files in the current release. Press `Confirm` to proceed.
-text_confirm_undo = This action will roll back your core files and database to the state prior to the last update. Press `Confirm` to proceed.
+text_confirm_undo = This action will roll back your core files and database to the selected version. Press `Confirm` to proceed.
 
 text_history_action_update = Update
 text_history_action_backup = Download

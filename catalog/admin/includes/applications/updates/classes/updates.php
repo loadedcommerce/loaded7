@@ -721,7 +721,7 @@ class lC_Updates_Admin {
 
     $ext = '.zip';
     
-    $restore_file = 'full-backup-' . str_replace('.','', $version) . $ext;
+    $restore_file = $version . $ext;
     
     if (file_exists(DIR_FS_WORK . 'updates/' . $restore_file)) {
       // remove old zip extraction  if any
