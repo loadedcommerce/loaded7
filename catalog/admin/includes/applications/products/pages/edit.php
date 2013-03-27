@@ -910,19 +910,19 @@ function toggleEditor(id) {
                 <div class="panel-load-target scrollable custom-scroll">
                   <div class="navigable">
                     <ul class="files-list mini open-on-panel-content">
-                      <li id="images-gallery-trigger" onclick="$('#images-gallery').show();$('#additional-gallery').hide();$('#images-gallery-trigger').removeClass('grey').addClass('with-right-arrow grey-arrow');$('#additional-gallery-trigger').addClass('grey').removeClass('with-right-arrow grey-arrow');" class="with-right-arrow grey-arrow">
+                      <li id="images-gallery-trigger" onclick="imagesGalleryTrigger();" class="with-right-arrow grey-arrow">
                         <span class="icon file-jpg"></span><b>Product Image</b>
                       </li>
-                      <li id="additional-gallery-trigger" onclick="$('#images-gallery').hide();$('#additional-gallery').show();$('#images-gallery-trigger').addClass('grey').removeClass('with-right-arrow grey-arrow');$('#additional-gallery-trigger').removeClass('grey').addClass('with-right-arrow grey-arrow');" class="grey">
+                      <li id="additional-gallery-trigger" onclick="additionalGalleryTrigger();" class="grey">
                         <span class="icon folder-image"></span><b>Additional Images</b>
                       </li>
                     </ul>
                   </div> 
                 </div>
               </div>
-              <div class="panel-content linen" style="height:500px">
+              <div class="panel-content linen" style="height:auto">
                 <div class="panel-control align-right"><a class="button icon-pictures" href="#">Upload</a></div>
-                <div style="height: 400px; position: relative;" class="panel-load-target scrollable with-padding custom-scroll">
+                <div style="height: auto; position: relative;" class="panel-load-target scrollable with-padding custom-scroll">
                   <ul class="gallery" id="images-gallery">
                     <li>
                       <img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>">
