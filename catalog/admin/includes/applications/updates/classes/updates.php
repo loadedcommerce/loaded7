@@ -512,16 +512,13 @@ class lC_Updates_Admin {
       trigger_error('Please review the update log at: ' . DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
     }
 
-$meta['runAfter'] = 'test.php';
+$meta['runAfter'] = 'runAfter/';
     if ( $phar_can_open === true ) {
       // execute run after script if exists
-      if ( isset($meta['runAfter']) && file_exists(DIR_FS_WORK . 'updates/' . $meta['runAfter']) ) {
-        include_once(DIR_FS_WORK . 'updates/' . $meta['runAfter']);
-        $runAfter = new lC_Updates_Admin_run_after();
-        $results = array();
-        if (method_exists($runAfter, 'process')) {
-          $results = $runAfter->process();
-        }
+      include_once(DIR_FS_WORK . 'updates/' . $meta['runAfter'] . 'controller.php');
+      
+      if ( method_exists('lC_Updates_Admin_run_after', 'process') ) {
+        $results = call_user_func(array('lC_Updates_Admin_run_after' , 'process'));      
 
         if ( !empty($results) ) {
           self::log('##### RAN AFTER');

@@ -1,6 +1,6 @@
 <?php
 /**
-  $Id: updates.php v1.0 2011-11-04 datazen $
+  $Id: controller.php v1.0 2011-11-04 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -11,7 +11,6 @@
   @copyright  (c) 2011 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 
-  @function The lC_Updater_Admin class manages zM services
 */
 ini_set('display_errors', 1);
 
