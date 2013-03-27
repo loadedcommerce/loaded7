@@ -57,7 +57,9 @@
         <div class="step-title">
           <h2><?php echo $lC_Language->get('box_ordering_steps_secure_checkout'); ?></h2>
         </div>
+        
         <div id="checkout-step-login">
+          <p><?php echo $lC_Language->get('secure_payment_description_text'); ?></p>
           <div class="col2-set">
           
             <div id="checkout_shipping_col1" style="width:32%; float:left;">
