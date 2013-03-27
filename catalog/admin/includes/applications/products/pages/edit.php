@@ -1591,9 +1591,44 @@ function toggleEditor(id) {
                 <fieldset class="fieldset">
                   <legend class="legend">Product Characteristics</legend>
                   <div class="columns">
-                    <div class="twelve-columns">
-                      Product Characteristics                   
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span>Weight</span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <input type="text" class="required input full-width" value="" id="" name="" />
+                      </div>
+                      <div class="twelve-columns no-margin-bottom margin-top">
+                        Non Shippable Item
+                        <input type="checkbox" id="virtual" name="virtual" disabled />
+                      </div>
                     </div>
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span>Additional Handling Fee</span>
+                        <span class="info-spot on-left grey">
+                          <small class="tag red-bg">Pro</small>
+                          <span class="info-bubble">
+                            <b>Go Pro!</b> and enjoy this feature!
+                          </span>
+                        </span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <input type="text" class="required input full-width" value="coming soon..." id="" name="" disabled />
+                      </div>
+                    </div>                
                   </div>
                 </fieldset>
               </div>
@@ -1601,9 +1636,40 @@ function toggleEditor(id) {
                 <fieldset class="fieldset">
                   <legend class="legend">Order Fee Modifiers</legend>
                   <div class="columns">
-                    <div class="twelve-columns">
-                      Order Fee Modifiers                   
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span>Shipping Fee Override</span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <input type="text" class="required input full-width" value="coming soon..." id="" name="" disabled /><small>Enter 0 for free shipping</small>
+                      </div>
                     </div>
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span>Additional Handling Fee</span>
+                        <span class="info-spot on-left grey">
+                          <small class="tag red-bg">Pro</small>
+                          <span class="info-bubble">
+                            <b>Go Pro!</b> and enjoy this feature!
+                          </span>
+                        </span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <input type="text" class="required input full-width" value="coming soon..." id="" name="" disabled />
+                      </div>
+                    </div>                
                   </div>
                 </fieldset>
               </div>
@@ -1611,9 +1677,59 @@ function toggleEditor(id) {
                 <fieldset class="fieldset">
                   <legend class="legend">Supplier Characteristics</legend>
                   <div class="columns">
-                    <div class="twelve-columns">
-                      Supplier Characteristics                   
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span>Days to Ship</span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <input type="text" class="required input full-width" value="coming soon..." id="" name="" disabled />
+                      </div>
                     </div>
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span>Warehouse</span>
+                        <span class="info-spot on-left grey">
+                          <small class="tag red-bg">Pro</small>
+                          <span class="info-bubble">
+                            <b>Go Pro!</b> and enjoy this feature!
+                          </span>
+                        </span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <input type="text" class="required input full-width" value="coming soon..." id="" name="" disabled />
+                      </div>
+                    </div>
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span>Date Expected for Stock</span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <span class="nowrap margin-right">
+                          <span class="input small-margin-top full-width">
+                            <input type="text" placeholder="" class="input-unstyled datepicker full-width" value="coming soon..." disabled />
+                            <span class="icon-calendar icon-size2 small-margin-left float-right" style="margin-top:-29px;"></span>
+                          </span>
+                        </span>
+                      </div>
+                    </div>                
                   </div>
                 </fieldset>
               </div>
