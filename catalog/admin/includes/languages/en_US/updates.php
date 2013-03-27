@@ -40,7 +40,7 @@ text_up_to_date = You are up to date!
 text_initializing = Initializing Update Engine
 text_warning_do_not_interrupt = Interrupting the process may cause unexpected results.
 
-field_backup_version = Restore to Version
+field_restore_from = Restore from
 modal_heading_undo_update = Undo Last Update
 introduction_undo_update = Please choose the version you would like to revert back to and click the Undo button.
 
