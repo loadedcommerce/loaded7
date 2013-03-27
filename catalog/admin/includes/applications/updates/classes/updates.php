@@ -13,7 +13,8 @@
 
   @function The lC_Updater_Admin class manages zM services
 */
-ini_set('error_reporting', 0);
+//ini_set('error_reporting', 0);
+ini_set('display_errors', 1);
 
 global $lC_Vqmod;
 
@@ -512,12 +513,11 @@ class lC_Updates_Admin {
     }
 
 $meta['runAfter'] = 'test.php';
-    
     if ( $phar_can_open === true ) {
       // execute run after script if exists
       if ( isset($meta['runAfter']) && file_exists(DIR_FS_WORK . 'updates/' . $meta['runAfter']) ) {
         include_once(DIR_FS_WORK . 'updates/' . $meta['runAfter']);
-        $runAfter = new runAfter();
+        $runAfter = new lC_Updates_Admin_run_after();
         $results = array();
         if (method_exists($runAfter, 'process')) {
           $results = $runAfter->process();
@@ -533,16 +533,16 @@ $meta['runAfter'] = 'test.php';
 
         self::log('##### CLEANUP');
 
-        if ( self::rmdir_r(DIR_FS_WORK . 'updates/' . $meta['run']) ) {
-          self::log('Deleted: ' . DIR_FS_WORK . 'updates/' . $meta['run']);
+        if ( self::rmdir_r(DIR_FS_WORK . 'updates/' . $meta['runAfter']) ) {
+          self::log('Deleted: ' . DIR_FS_WORK . 'updates/' . $meta['runAfter']);
         } else {
-          self::log('*** Could Not Delete: ' . DIR_FS_WORK . 'updates/' . $meta['run']);
+          self::log('*** Could Not Delete: ' . DIR_FS_WORK . 'updates/' . $meta['runAfter']);
         }
       }
 
       self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
     }
-    
+
     return $phar_can_open;
   }
  /**
