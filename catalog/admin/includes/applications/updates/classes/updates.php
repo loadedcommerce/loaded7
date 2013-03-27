@@ -319,24 +319,25 @@ class lC_Updates_Admin {
     if ( isset($meta['delete']) ) {
       $files = array();
 
-      foreach ( $meta['delete'] as $file ) {
+      if (is_array($meta['delete']) && count($meta['delete']) > 0) {
+        foreach ( $meta['delete'] as $file ) {
+          if ( file_exists(realpath(DIR_FS_CATALOG) . '/' . $file) ) {
+            if ( is_dir(realpath(DIR_FS_CATALOG) . '/' . $file) ) {
+              $DL = new DirectoryListing(realpath(DIR_FS_CATALOG) . '/' . $file);
+              $DL->setRecursive(true);
+              $DL->setAddDirectoryToFilename(true);
+              $DL->setIncludeDirectories(false);
 
-        if ( file_exists(realpath(DIR_FS_CATALOG) . '/' . $file) ) {
-          if ( is_dir(realpath(DIR_FS_CATALOG) . '/' . $file) ) {
-            $DL = new DirectoryListing(realpath(DIR_FS_CATALOG) . '/' . $file);
-            $DL->setRecursive(true);
-            $DL->setAddDirectoryToFilename(true);
-            $DL->setIncludeDirectories(false);
-
-            foreach ( $DL->getFiles() as $f ) {
-              $files[] = $file . '/' . $f['name'];
+              foreach ( $DL->getFiles() as $f ) {
+                $files[] = $file . '/' . $f['name'];
+              }
+            } else {
+              $files[] = $file;
             }
-          } else {
-            $files[] = $file;
           }
         }
       }
-
+      
       natcasesort($files);
 
       foreach ( $files as $d ) {
@@ -406,7 +407,7 @@ class lC_Updates_Admin {
       self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED');
 
       // first delete files before extracting new files
-      if ( isset($meta['delete']) ) {
+      if (is_array($meta['delete']) && count($meta['delete']) > 0) {
         foreach ( $meta['delete'] as $file ) {
           $directory = realpath(DIR_FS_CATALOG) . '/';
 
@@ -429,7 +430,6 @@ class lC_Updates_Admin {
           }
         }
       }
-
       // loop through each file individually as extractTo() does not work with
       // directories (see http://bugs.php.net/bug.php?id=54289)
       foreach ( new RecursiveIteratorIterator($phar) as $iteration ) {
