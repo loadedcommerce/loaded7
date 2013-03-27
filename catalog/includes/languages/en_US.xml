@@ -2573,9 +2573,30 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     <definition>
       <key>box_ordering_steps_secure_checkout</key>
       <value><![CDATA[Secure Payment]]></value>
-      <group>general</group>
+      <group>checkout</group>
     </definition>   
     <definition>
+    <definition>
+      <key>secure_payment_heading_title</key>
+      <value><![CDATA[Secure Payment]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>secure_payment_description_text</key>
+      <value><![CDATA[Your Payment Method is displayed below.  To complete the order, please follow the instructions from the payment provider.]]></value>
+      <group>checkout</group>
+    </definition>  
+    <definition>
+      <key>secure_payment_security_info_title</key>
+      <value><![CDATA[view security information]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>secure_payment_security_info_text</key>
+      <value><![CDATA[This form is served from a PCI compliant secure location.  No sensitive card data is shared with this website.]]></value>
+      <group>checkout</group>
+    </definition>              
+    <definition>    
       <key>text_enter_your_email</key>
       <value><![CDATA[Enter Your E-mail Address]]></value>
       <group>general</group>

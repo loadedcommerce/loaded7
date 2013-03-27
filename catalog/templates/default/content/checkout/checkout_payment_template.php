@@ -37,7 +37,7 @@
   #checkoutConfirmationDetails { width: 83% !important; } 
 }
 </style>
-<div class="full_page">
+<div id="paymentTemplateContainer" class="full_page">
   <h5><?php echo $lC_Language->get('text_checkout'); ?></h5>
   <div class="checkout_steps">
     <ol id="checkoutSteps">
