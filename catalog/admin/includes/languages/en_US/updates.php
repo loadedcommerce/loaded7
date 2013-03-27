@@ -35,11 +35,14 @@ text_undo_step_success = Undo Last Update Success!
 text_undo_step_error = Undo Last Update Error!
 text_undo_step_error_text = An error has occured and the undo process cannot continue.  Please correct the error(s) and try again.
 
-
 text_update_avail = An update is available!
 text_up_to_date = You are up to date!
 text_initializing = Initializing Update Engine
 text_warning_do_not_interrupt = Interrupting the process may cause unexpected results.
+
+field_backup_version = Restore to Version
+modal_heading_undo_update = Undo Last Update
+introduction_undo_update = Please choose the version you would like to revert back to and click the Undo button.
 
 button_ok = Ok
 button_install_update = Install Update
@@ -47,6 +50,7 @@ button_reinstall_update = Full Re-install
 button_download_zip = Download ZIP
 button_undo_last_update = Undo Last Update
 button_check_again = Check Again
+button_undo = Undo
 
 table_heading_action = Action
 table_heading_result = Result

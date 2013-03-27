@@ -255,16 +255,16 @@ function undoUpdate() {
       content: '<div id="undoUpdate">'+
                '  <div id="undoUpdateForm">'+
                '    <form name="undo" id="undo" method="post">'+
-               '      <p><?php echo $lC_Language->get('introduction_new_undo'); ?></p>'+
+               '      <p><?php echo $lC_Language->get('introduction_undo_update'); ?></p>'+
                '      <p class="button-height inline-label">'+
-               '        <label for="version" class="label" style="width:50%;"><?php echo $lC_Language->get('field_product'); ?></label>'+
+               '        <label for="version" class="label" style="width:50%;"><?php echo $lC_Language->get('field_backup_version'); ?></label>'+
                '        <?php echo lc_draw_pull_down_menu('version', $backupArr, null, 'class="input with-small-padding"'); ?>'+
                '      </p>'+
                '    </form>'+
                '  </div>'+
                '</div>',
-      title: '<?php echo $lC_Language->get('modal_heading_new_undo'); ?>',
-      width: 600,
+      title: '<?php echo $lC_Language->get('modal_heading_undo_update'); ?>',
+      width: 350,
       scrolling: false,
       actions: {
         'Close' : {
@@ -277,7 +277,7 @@ function undoUpdate() {
           classes:  'glossy',
           click:    function(win) { win.closeModal(); }
         },
-        '<?php echo $lC_Language->get('button_save'); ?>': {
+        '<?php echo $lC_Language->get('button_undo'); ?>': {
           classes:  'blue-gradient glossy',
           click:    function(win) {
             var bValid = $("#undo").validate({

@@ -759,7 +759,7 @@ class lC_Updates_Admin {
     
     $backups = array();
     foreach ( $lC_DirectoryListing->getFiles() as $file ) {
-      $backups[] = array('id' => substr($file['name'], 0, strrpos($file['name'], '.')), 'text' => substr($file['name'], 0, strrpos($file['name'], '.')));
+      $backups[] = array('id' => substr($file['name'], 0, strrpos($file['name'], '.')), 'text' => substr($file['name'], 0, strrpos($file['name'], '.')) );
     }    
     
     return $backups;
