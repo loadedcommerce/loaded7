@@ -10,7 +10,8 @@
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
-*/
+*/   
+ini_set('display_errors', 1);
 $checkArr = lC_Updates_Admin::hasUpdatesAvailable();  
 $backupArr = lC_Updates_Admin::getBackups();
 
@@ -109,7 +110,7 @@ echo "</pre>";
               </a>
             </td>
             <td align="right">
-              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : (is_array($backupArr) && !empty($backupArr)) ? NULL : 'onclick="undoUpdate();"')); ?> class="button icon-undo undo-last red-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : (is_array($backupArr) && !empty($backupArr)) ? ' disabled' : NULL)); ?>">
+              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : (is_array($backupArr) && count($backupArr) == 0) ? NULL : 'onclick="undoUpdate();"'); ?> class="button icon-undo undo-last red-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : (is_array($backupArr) && count($backupArr) == 0) ? ' disabled' : NULL); ?>">
                 <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_undo_last_update'); ?></span>
               </a>                                                                                                                                                
             </td>
