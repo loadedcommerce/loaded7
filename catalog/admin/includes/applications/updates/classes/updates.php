@@ -518,7 +518,7 @@ $meta['runAfter'] = 'runAfter/';
       include_once(DIR_FS_WORK . 'updates/' . $meta['runAfter'] . 'controller.php');
       
       if ( method_exists('lC_Updates_Admin_run_after', 'process') ) {
-        $results = call_user_func(array('lC_Updates_Admin_run_after' , 'process'));      
+        $results = call_user_func(array('lC_Updates_Admin_run_after', 'process'));      
 
         if ( !empty($results) ) {
           self::log('##### RAN AFTER');
