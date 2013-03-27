@@ -290,7 +290,7 @@ function undoUpdate() {
               var backup = $('#version').val();
               var vArr = backup.split('-');
               var letters = vArr[2].split('');
-              var prevVersion = '';
+              var version = '';
               $.each(letters, function(index, value) {
                 version = version + value + '.';
               }); 
@@ -303,14 +303,12 @@ function undoUpdate() {
 
                 win.closeModal();
 
-                var prevVersion = '<?php echo $checkArr['toVersion']; ?>';  
                 $('#versionContainer .fieldset').removeClass('orange-gradient');
                 $('#version-table tbody').removeClass('green').removeClass('red');
                 $('#version-table > tbody').empty();  
                 $('#version-table > tbody').empty();
                 $('#version-table').css("margin-bottom", "10px");
                 $('#version-table > thead').html('<tr><td class="before"><?php echo $lC_Language->get('text_previous_version'); ?></td><td class="version">' + prevVersion + '</td><td class="after"><?php echo $lC_Language->get('text_previous_version'); ?></td></tr>').addClass('red'); 
-                //$('#version-table > thead').html('<tr><td class="before">&nbsp;</td><td class="version">Undo Update</td><td class="after">&nbsp;</td></tr>').addClass('red'); 
                 $('#version-table > tbody').html('<tr><td colspan="3"><span id="updateProgressContainer" style="display:none;"></span></td></tr>');  
                 $('#updateButtonset').slideUp();
                 $('.update-text').html('<p><?php echo $lC_Language->get('text_initializing'); ?></p>').attr('style', 'text-align:center').blink({ maxBlinks: 5, blinkPeriod: 1000 });
@@ -367,7 +365,6 @@ function undoUpdate() {
                         
                         $('#vFooterText').html(__okBlock());
                         $('#version-table thead').removeClass('green').addClass('red');                
-                        $('#version-table > thead').html('<tr><td class="before">&nbsp;</td><td class="version">Undo Update</td><td class="after">&nbsp;</td></tr>').addClass('red');            
                         oTable.fnReloadAjax(); 
                                                       
                         // set maint mode=off
@@ -380,15 +377,12 @@ function undoUpdate() {
               }, function() {
                 return false;
               });   
-              
-                         
             }
           }
         }
       },
       buttonsLowPadding: true
   });  
-  
 } 
 
 function __showStep(step, fini) {
