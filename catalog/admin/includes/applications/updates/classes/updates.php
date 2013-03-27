@@ -511,9 +511,17 @@ class lC_Updates_Admin {
       trigger_error('Please review the update log at: ' . DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
     }
 
+$meta['runAfter'] = 'test.php';
+    
     if ( $phar_can_open === true ) {
-      if ( isset($meta['run']) && method_exists('osCommerce\\OM\\Work\\CoreUpdate\\' . $meta['run'] . '\\Controller', 'runAfter') ) {
-        $results = call_user_func(array(DIR_FS_WORK . 'updates/' . $meta['run'] . '/controller', 'runAfter'));
+      // execute run after script if exists
+      if ( isset($meta['runAfter']) && file_exists(DIR_FS_WORK . 'updates/' . $meta['runAfter']) ) {
+        include_once(DIR_FS_WORK . 'updates/' . $meta['runAfter']);
+        $runAfter = new runAfter();
+        $results = array();
+        if (method_exists($runAfter, 'process')) {
+          $results = $runAfter->process();
+        }
 
         if ( !empty($results) ) {
           self::log('##### RAN AFTER');
@@ -526,9 +534,9 @@ class lC_Updates_Admin {
         self::log('##### CLEANUP');
 
         if ( self::rmdir_r(DIR_FS_WORK . 'updates/' . $meta['run']) ) {
-          self::log('Deleted: catalog/includes/work/updates/' . $meta['run']);
+          self::log('Deleted: ' . DIR_FS_WORK . 'updates/' . $meta['run']);
         } else {
-          self::log('*** Could Not Delete: catalog/includes/work/updates/' . $meta['run']);
+          self::log('*** Could Not Delete: ' . DIR_FS_WORK . 'updates/' . $meta['run']);
         }
       }
 
