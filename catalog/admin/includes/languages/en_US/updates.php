@@ -17,7 +17,9 @@ heading_legend_history = History
 
 text_latest_version = Latest Version
 text_current_version = Current Version
+text_previous_version = Previous Version
 text_released = released %s
+text_backed_up = backed up %s
 text_last_checked = Last checked on
 
 text_step_1 = Creating Database Backup

@@ -13,8 +13,7 @@
 
   @function The lC_Updater_Admin class manages zM services
 */
-//ini_set('error_reporting', 0);
-ini_set('display_errors', 1);
+ini_set('error_reporting', 0);
 
 global $lC_Vqmod;
 
@@ -86,8 +85,6 @@ class lC_Updates_Admin {
       $result['rpcStatus'] = -1;
     }
     
- //   lC_Cache::clear('configuration'); 
-
     return $result;
   }  
   /**
@@ -512,31 +509,32 @@ class lC_Updates_Admin {
       trigger_error('Please review the update log at: ' . DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
     }
 
-$meta['runAfter'] = 'runAfter/';
     if ( $phar_can_open === true ) {
       // execute run after script if exists
-      include_once(DIR_FS_WORK . 'updates/' . $meta['runAfter'] . 'controller.php');
-      
-      if ( method_exists('lC_Updates_Admin_run_after', 'process') ) {
-        $results = call_user_func(array('lC_Updates_Admin_run_after', 'process'));      
+      if (file_exists(DIR_FS_WORK . 'updates/' . $meta['runAfter'] . 'controller.php')) {
+        include_once(DIR_FS_WORK . 'updates/' . $meta['runAfter'] . 'controller.php');
+        
+        if ( method_exists('lC_Updates_Admin_run_after', 'process') ) {
+          $results = call_user_func(array('lC_Updates_Admin_run_after', 'process'));      
 
-        if ( !empty($results) ) {
-          self::log('##### RAN AFTER');
+          if ( !empty($results) ) {
+            self::log('##### RAN AFTER');
 
-          foreach ( $results as $r ) {
-            self::log($r);
+            foreach ( $results as $r ) {
+              self::log($r);
+            }
+          }
+
+          self::log('##### CLEANUP');
+
+          if ( self::rmdir_r(DIR_FS_WORK . 'updates/' . $meta['runAfter']) ) {
+            self::log('Deleted: ' . DIR_FS_WORK . 'updates/' . $meta['runAfter']);
+          } else {
+            self::log('*** Could Not Delete: ' . DIR_FS_WORK . 'updates/' . $meta['runAfter']);
           }
         }
-
-        self::log('##### CLEANUP');
-
-        if ( self::rmdir_r(DIR_FS_WORK . 'updates/' . $meta['runAfter']) ) {
-          self::log('Deleted: ' . DIR_FS_WORK . 'updates/' . $meta['runAfter']);
-        } else {
-          self::log('*** Could Not Delete: ' . DIR_FS_WORK . 'updates/' . $meta['runAfter']);
-        }
       }
-
+      
       self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
     }
 
