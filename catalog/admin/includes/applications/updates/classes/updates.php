@@ -412,7 +412,7 @@ class lC_Updates_Admin {
       // first delete files before extracting new files
       if ( isset($meta['delete']) ) {
         foreach ( $meta['delete'] as $file ) {
-          $directory = realpath(DIR_FS_CATALOG . '../../');
+          $directory = realpath(DIR_FS_CATALOG) . '/';
 
           if ( file_exists($directory . $file) ) {
             if ( is_dir($directory . $file) ) {
