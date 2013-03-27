@@ -71,11 +71,45 @@
       </div>
       <div class="contact_info">
         <big>1.823.456.7890</big>
+<!-- QR Code -->
+        <div style="margin:-15px; padding:10px 20px 14px 10px; width:100%; height:32px; margin-top:5px;">
+          <a id="qrcode-tooltip">
+            <p style="width:32px;float:left;cursor:pointer;">
+              <img src="images/icons/qr-icon.png" border="0" class="Click to Generate QR Code" /> 
+            </p>
+          </a>
+          <p style="float:left; padding:10px 0 0px 10px; font-weight:bold;">QR Code for Current URL</p> 
+        </div>
+       <div class="clear-both"></div>
+<!-- QR Code EOf-->
       </div>
     </div>
     <address>
       Copyright &copy; <?php echo @date("Y"); ?> Loaded Commerce <img src="templates/default/images/payment_info.jpg"/>
     </address>
   </footer>
-</div>
+</div>           
+<!-- QR Code -->
+   <div id="qr-message" class="message silver" style="border:display: none;">
+    <a class="close-qr" title="Hide message" onclick="$('#qr-message').hide('500');"><span style="color:#fff;">X</span></a>
+    <?php 
+    require('./includes/classes/BarcodeQR.php');
+    $BarcodeQR = new BarcodeQR();
+    $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
+    $BarcodeQR->url($qrcode_url);
+    if ($lC_Customer->isLoggedOn() === true) {
+      $BarcodeQR->draw(230, 'includes/work/qrcode/c' .  $lC_Customer->id . '.png');
+      echo '<h5>QR Code</h5><br/><img src="includes/work/qrcode/c' . $lC_Customer->id . '.png" /><br /><h6>Current URL</h6><p>' . $qrcode_url . '</p>';
+    } else {
+      $BarcodeQR->draw(230, 'includes/work/qrcode/g' .  $lC_Session->getID() . '.png');
+      echo '<h5>QR Code</h5><br/><img src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" /><br /><h6>Current URL</h6><p>' . $qrcode_url . '</p>';
+    }
+    ?>
+    </div>
+    <script>
+    $("#qrcode-tooltip").click(function() {
+      $("#qr-message").show("500");
+    });
+    </script>   
+    <!-- QR Code EOF -->
 <!--footer.php end-->
