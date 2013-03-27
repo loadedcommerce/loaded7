@@ -13,7 +13,8 @@
 
   @function The lC_Updater_Admin class manages zM services
 */
-ini_set('error_reporting', 0);
+//ini_set('error_reporting', 0);
+ini_set('display_errors', 1);
 
 global $lC_Vqmod;
 
@@ -300,43 +301,40 @@ class lC_Updates_Admin {
       $counter = 0;
 
       foreach ( $update_pkg as $file ) {
-        if ( substr($file, 0, 8) == 'catalog/' ) {
-          $custom = false;
+        $custom = false;
 
-          $result['entries'][] = array('key' => $counter,
-                                       'name' => $file,
-                                       'exists' => file_exists(realpath(DIR_FS_CATALOG . '../../') . '/' . $file),
-                                       'writable' => self::isWritable(realpath(DIR_FS_CATALOG . '../../') . '/' . $file) && self::isWritable(realpath(DIR_FS_CATALOG . '../../') . '/' . dirname($file)),
-                                       'custom' => $custom,
-                                       'to_delete' => false);
+        $result['entries'][] = array('key' => $counter,
+                                     'name' => $file,
+                                     'exists' => file_exists(realpath(DIR_FS_CATALOG) . '/' . $file),
+                                     'writable' => self::isWritable(realpath(DIR_FS_CATALOG) . '/' . $file) && self::isWritable(realpath(DIR_FS_CATALOG) . '/' . dirname($file)),
+                                     'custom' => $custom,
+                                     'to_delete' => false);
 
-          $counter++;
-        }
+        $counter++;
       }
     }
 
     $meta = $phar->getMetadata();
-
+    
     if ( isset($meta['delete']) ) {
       $files = array();
 
       foreach ( $meta['delete'] as $file ) {
-        if ( substr($file, 0, 8) == 'catalog/' ) {
-          if ( file_exists(realpath(DIR_FS_CATALOG . '../../') . '/' . $file) ) {
-            if ( is_dir(realpath(DIR_FS_CATALOG . '../../') . '/' . $file) ) {
-              $DL = new DirectoryListing(realpath(DIR_FS_CATALOG . '../../') . '/' . $file);
-              $DL->setRecursive(true);
-              $DL->setAddDirectoryToFilename(true);
-              $DL->setIncludeDirectories(false);
 
-              foreach ( $DL->getFiles() as $f ) {
-                $files[] = $file . '/' . $f['name'];
-              }
-            } else {
-              $files[] = $file;
+        if ( file_exists(realpath(DIR_FS_CATALOG) . '/' . $file) ) {
+          if ( is_dir(realpath(DIR_FS_CATALOG) . '/' . $file) ) {
+            $DL = new DirectoryListing(realpath(DIR_FS_CATALOG) . '/' . $file);
+            $DL->setRecursive(true);
+            $DL->setAddDirectoryToFilename(true);
+            $DL->setIncludeDirectories(false);
+
+            foreach ( $DL->getFiles() as $f ) {
+              $files[] = $file . '/' . $f['name'];
             }
+          } else {
+            $files[] = $file;
           }
-        } 
+        }
       }
 
       natcasesort($files);
@@ -345,9 +343,7 @@ class lC_Updates_Admin {
         $writable = false;
         $custom = false;
 
-        if ( substr($d, 0, 8) == 'catalog/' ) {
-          $writable = self::isWritable(realpath(DIR_FS_CATALOG . '../../') . '/' . $d) && self::isWritable(realpath(DIR_FS_CATALOG . '../../') . '/' . dirname($d));
-        }
+        $writable = self::isWritable(realpath(DIR_FS_CATALOG) . '/' . $d) && self::isWritable(realpath(DIR_FS_CATALOG) . '/' . dirname($d));
 
         $result['entries'][] = array('key' => $counter,
                                      'name' => $d,

@@ -11,13 +11,8 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */   
-ini_set('display_errors', 1);
 $checkArr = lC_Updates_Admin::hasUpdatesAvailable();  
 $backupArr = lC_Updates_Admin::getBackups();
-
-echo "<pre style='margin:100px;'>";
-print_r($backupArr);
-echo "</pre>";
 ?>
 <!-- Main content -->
 <section role="main" id="main">
