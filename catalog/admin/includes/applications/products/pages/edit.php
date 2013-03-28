@@ -1153,8 +1153,8 @@ function toggleEditor(id) {
               </div>
               <!-- lc_qty_price_breaks end --> 
               <div class="field-block field-block-product button-height">
-                <label for="" class="label"><b>Special Pricing</b></label>
-                <input onchange="$('#specials_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' checked' : ''); ?> />
+                <label for="specials-pricing-switch" class="label"><b>Special Pricing</b></label>
+                <input id="specials-pricing-switch" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' checked' : ''); ?> />
                 <span class="info-spot on-left grey margin-left margin-right">
                   <span class="icon-info-round"></span>
                   <span class="info-bubble">
@@ -1866,9 +1866,9 @@ function toggleEditor(id) {
                   <span class="icon-cross"></span>
                 </span><?php echo $lC_Language->get('button_cancel'); ?>
               </a>&nbsp;
-              <select class="select expandable-list"> 
+              <!--<select class="select expandable-list"> 
                 <option id="" value="">Related</option>
-                <!--<option id="create_order" value="create_order">Create Order</option>-->
+                <option id="create_order" value="create_order">Create Order</option>
                 <option id="duplicate_product" value="duplicate_product">Duplicate</option>
                 <option id="catalog_view" value="catalog_view">View In Catalog</option>
                 <option id="view_customers" value="view_customers">View Customers</option>
@@ -1878,12 +1878,12 @@ function toggleEditor(id) {
                 <option id="" value="">Actions</option>
                 <option id="save" value="save">Save</option>
                 <option id="apply_changes" value="apply_changes">Apply</option>
-              </select>&nbsp;
-              <!--<a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#product\').submit();'); ?>">
+              </select>&nbsp;-->
+              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#product\').submit();'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
                 </span><?php echo $lC_Language->get('button_save'); ?>
-              </a>&nbsp;-->
+              </a>&nbsp;
             </p>
           </div>
           <div id="floating-button-container-title" class="hidden">

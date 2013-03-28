@@ -665,6 +665,9 @@ function additionalGalleryTrigger() {
   $('#images-gallery-trigger').addClass('grey').removeClass('with-right-arrow grey-arrow');
   $('#additional-gallery-trigger').removeClass('grey').addClass('with-right-arrow grey-arrow'); 
 }
+$('#specials-pricing-switch').click(function() {
+  alert('hi'); 
+});
 
 // added to pull in any added modals used across all admin pages
 <?php
