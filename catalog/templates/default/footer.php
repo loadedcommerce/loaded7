@@ -90,7 +90,7 @@
   </footer>
 </div>           
 <!-- QR Code -->
-   <div id="qr-message" class="message silver" style="border:display: none;">
+   <div id="qr-message">
     <a class="close-qr" title="Hide message" onclick="$('#qr-message').hide('500');"><span style="color:#fff;">X</span></a>
     <?php 
     require('./includes/classes/BarcodeQR.php');
@@ -99,10 +99,10 @@
     $BarcodeQR->url($qrcode_url);
     if ($lC_Customer->isLoggedOn() === true) {
       $BarcodeQR->draw(230, 'includes/work/qrcode/c' .  $lC_Customer->id . '.png');
-      echo '<h5>QR Code</h5><br/><img src="includes/work/qrcode/c' . $lC_Customer->id . '.png" /><br /><h6>Current URL</h6><p>' . $qrcode_url . '</p>';
+      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/c' . $lC_Customer->id . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . '</p>';
     } else {
       $BarcodeQR->draw(230, 'includes/work/qrcode/g' .  $lC_Session->getID() . '.png');
-      echo '<h5>QR Code</h5><br/><img src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" /><br /><h6>Current URL</h6><p>' . $qrcode_url . '</p>';
+      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . '</p>';
     }
     ?>
     </div>
