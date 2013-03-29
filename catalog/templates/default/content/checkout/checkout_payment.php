@@ -144,7 +144,7 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                             if ($n > 1) {
                             ?>
                             <td colspan="3"><?php echo '<b>' . $selection[$i]['module'] . '</b>'; ?></td>
-                            <td align="right" width="20"><?php echo lc_draw_radio_field('payment_method', $selection[$i]['id'], ($lC_ShoppingCart->hasBillingMethod() ? $lC_ShoppingCart->getBillingMethod('id') : null), 'id="pm_' . $counter . '"'); ?></td>
+                            <td align="right" width="20"><?php echo lc_draw_radio_field('payment_method', $selection[$i]['id'], ($lC_ShoppingCart->hasBillingMethod() ? $lC_ShoppingCart->getBillingMethod('id') : null), 'id="pm_' . $counter . '"',''); ?></span></td>
                             <?php
                             } else {
                             ?>

@@ -122,7 +122,7 @@
                                 ?>
                                 <td width="10">&nbsp;</td>
                                 <td colspan="2" style="padding:2px 0 2px 0;"><b><?php echo $Qaddresses->valueProtected('firstname') . ' ' . $Qaddresses->valueProtected('lastname'); ?></b></td>
-                                <td align="right"><div align="right" style="padding-right:12px;"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getShippingAddress('id')); ?></div></td>
+                                <td align="right"><div align="right" style="padding-right:12px;"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getShippingAddress('id'),null,''); ?></span></div></td>
                                 <td width="10">&nbsp;</td>
                               </tr>
                               <tr>
