@@ -77,7 +77,7 @@ if ($lC_MessageStack->size('checkout_address') > 0) {
         <?php } ?>
       </div>
     </div>
-    <div id="checkout_shipping_col2" style="width:64%; float:right; margin-right:18px;">
+    <div id="checkout_shipping_col2" style="width:64%; float:right;">
       <form name="checkout_address" id="checkout_address" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address=process', 'SSL'); ?>" method="post">
         <?php
          if (isset($_GET['payment_address']) && ($_GET['payment_address'] != 'process')) {
@@ -85,11 +85,12 @@ if ($lC_MessageStack->size('checkout_address') > 0) {
        ?>
         <div id="checkoutShippingAddressHeading" style="margin-top:15px;">
           <h3><?php echo $lC_Language->get('billing_address_title'); ?></h3>
-          <div>
-            <div style="float: right; padding: 0px 0px 10px 20px; width:50%;"> <?php echo $lC_Language->get('selected_billing_destination'); ?> </div>
-            <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>
-            <div style="clear: both;"></div>
-          </div>
+                      <span id="bill-to-address"><?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?></span>
+                      <span id="bill-to-change"><?php echo $lC_Language->get('selected_billing_destination'); ?></span>
+                      <div style="clear: both;"></div>
+
+
+
         </div>
         <?php
         }
@@ -98,7 +99,7 @@ if ($lC_MessageStack->size('checkout_address') > 0) {
         <div id="checkoutShippingAddressEntries" style="margin-top:15px;">
         <h3><?php echo $lC_Language->get('address_book_entries_title'); ?></h3>
         <div>
-          <div style="float: right; padding: 0px 0px 10px 20px; text-align: center;"> <?php echo '<b>' . $lC_Language->get('please_select') . '</b><br />'; ?> </div>
+          <div class="hide-on-320 hide-on-480" style="float: right; padding: 0px 0px 10px 20px; text-align: center;"> <?php echo '<b>' . $lC_Language->get('please_select') . '</b><br />'; ?> </div>
           <div>
             <p style="margin-top: 0px;"><?php echo $lC_Language->get('select_another_billing_destination'); ?></p>
             <table border="0" width="100%" cellspacing="0" cellpadding="2">
@@ -165,9 +166,9 @@ if ($lC_MessageStack->size('checkout_address') > 0) {
         }
       ?>
         <div id="checkoutPaymentAddressActions" class="action_buttonbar"> 
-          <span class="buttonLeft"><button class="button purple_btn" name="payment_address_form" type="button" id="payment_address_form"><?php echo $lC_Language->get('show_address_form'); ?></button></a></span>
           <!-- <span class="buttonLeft"><?php echo '<b>' . $lC_Language->get('continue_checkout_procedure_title') . '</b> ' . $lC_Language->get('continue_checkout_procedure_to_shipping'); ?></span> -->
           <span class="buttonRight"><a onclick="$('#checkout_address').submit();"><button class="button brown_btn" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></a></span> </div>
+          <span style="float: left"><button class="button purple_btn" name="payment_address_form" type="button" id="payment_address_form"><?php echo $lC_Language->get('show_address_form'); ?></button></span>
         <div style="clear:both;"></div>
       </form>
     </div>

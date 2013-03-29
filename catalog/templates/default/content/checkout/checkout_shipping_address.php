@@ -20,7 +20,7 @@
     <ol id="checkoutSteps">
       <li class="section allow active">
         <div class="step-title">
-          <h2><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h2>
+          <h2><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?>ssss</h2>
         </div>
         <div style="margin-bottom:18px;">
           <div class="col2-set">
@@ -56,7 +56,7 @@
             </div>
             <div id="checkout_coupon_tip_mobile" style="display:none;"><?php echo $lC_Language->get('checkout_coupon_tip'); ?></div>
             <div id="checkout_shipping_col1" style="width:30%; float:left;">
-              <div id="ship-to-address-block">
+              <div id="ship-to-address-block" class="hide-on-320 hide-on-480">
                 <h3><?php echo $lC_Language->get('ship_to_address'); ?></h3>
                 <p><?php echo $lC_Language->get('add_first_address'); ?></p>
               </div>
@@ -75,7 +75,7 @@
               </div>
               <div id="checkout_coupon_tip"><?php echo $lC_Language->get('checkout_coupon_tip'); ?></div>
             </div>
-            <div id="checkout_shipping_col2" style="width:64%; float:right; margin-right:18px;">
+            <div id="checkout_shipping_col2" style="width:65%; float:right;">
               <form name="checkout_address" id="checkout_address" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address=process', 'SSL'); ?>" method="post">
                 <?php
                   if (isset($_GET['shipping_address']) && ($_GET['shipping_address'] != 'process')) {
@@ -83,13 +83,9 @@
                     ?>
                     <div id="checkoutShippingAddressHeading" style="margin-top:15px;">
                       <h3><?php echo $lC_Language->get('shipping_address_title'); ?></h3>
-                      <div>
-                        <div style="float: right; padding: 0px 0px 10px 20px; width:50%;">
-                          <?php echo $lC_Language->get('selected_shipping_destination'); ?>
-                        </div>
-                        <?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?>
-                        <div style="clear: both;"></div>
-                      </div>
+                      <span id="bill-to-address"><?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?></span>
+                      <span id="bill-to-change"><?php echo $lC_Language->get('selected_shipping_destination'); ?></span>
+                      <div style="clear: both;"></div>
                     </div>
                     <?php
                     }
@@ -98,7 +94,7 @@
                     <div id="checkoutShippingAddressEntries" style="margin-top:15px;">
                       <h3><?php echo $lC_Language->get('address_book_entries_title'); ?></h3>
                       <div>
-                        <div style="float: right; padding: 0px 0px 10px 20px; text-align: center;">
+                        <div class="hide-on-320 hide-on-480" style="float: right; padding: 0px 0px 10px 20px; text-align: center;">
                           <?php echo '<b>' . $lC_Language->get('please_select') . '</b><br />'; ?>
                         </div>
                         <div>  
@@ -174,8 +170,8 @@
                   }
                 ?>
                 <div id="shippingActions">
-                  <span class="buttonLeft"><button class="button purple_btn" name="shipping_address_form" type="button" id="shipping_address_form"><?php echo $lC_Language->get('show_address_form'); ?></button></a></span>
                   <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
+                  <span style="float:left"><button class="button purple_btn" name="shipping_address_form" type="button" id="shipping_address_form"><?php echo $lC_Language->get('show_address_form'); ?></button></span>
                 </div>
               </form>
             </div>
