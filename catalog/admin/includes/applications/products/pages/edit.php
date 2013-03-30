@@ -1708,7 +1708,23 @@ function toggleEditor(id) {
                     </div>
                     <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                       <div class="twelve-columns no-margin-bottom">
-                        <span>Additional Handling Fee</span>
+                        <span>Weight Class</span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <?php echo lc_draw_pull_down_menu('products_weight_class', $weight_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_weight_class') : SHIPPING_WEIGHT_UNIT), 'class="select full-width small-margin-top required"'); ?>
+                      </div>
+                    </div>                
+                  </div>
+                  <div class="columns">
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span>Dimensional</span>
                         <span class="info-spot on-left grey">
                           <small class="tag red-bg">Pro</small>
                           <span class="info-bubble">
@@ -1722,9 +1738,23 @@ function toggleEditor(id) {
                           </span>
                         </span>
                       </div>
-                      <div class="twelve-columns no-margin-bottom small-margin-top">
-                        <input type="text" class="required input full-width" value="coming soon..." id="" name="" disabled />
+                      <div class="twelve-columns no-margin-bottom margin-top">
+                        <div class="twelve-columns clear-both">
+                          <div style="width:50px;" class="float-left small-margin-top"><label for="product_length" class="label">Length</label></div>
+                          <input type="text" class="input unstyled margin-bottom float-left" value="coming soon..." id="product_length" name="product_length" disabled />
+                        </div>
+                        <div class="twelve-columns clear-both">
+                          <div style="width:50px;" class="float-left small-margin-top"><label for="product_length" class="label">Width</label></div>
+                          <input type="text" class="input unstyled margin-bottom" value="coming soon..." id="product_width" name="product_width" disabled />
+                        </div>
+                        <div class="twelve-columns">
+                          <div style="width:50px;" class="float-left small-margin-top"><label for="product_length" class="label">Height</label></div>
+                          <input type="text" class="input unstyled margin-bottom" value="coming soon..." id="product_height" name="product_height" disabled />
+                        </div>
                       </div>
+                    </div>
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      &nbsp;
                     </div>                
                   </div>
                 </fieldset>
