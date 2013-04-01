@@ -40,7 +40,7 @@ session_start();
 
 require($lC_Vqmod->modCheck('../admin/includes/classes/directory_listing.php'));
 
-require($lC_Vqmod->modCheck('includes/classes/language.php'));
+require('includes/classes/language.php');
 $lC_Language = new lC_LanguageInstall();
 
 header('Content-Type: text/html; charset=' . $lC_Language->getCharacterSet());
