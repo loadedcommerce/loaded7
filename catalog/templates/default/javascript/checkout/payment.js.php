@@ -21,4 +21,15 @@ function selectRowEffect(object, buttonSelect) {
     document.checkout_payment.payment_method.checked=true;
   }
 }
+
+function toggleSecurityInfo() {
+  var open = $('.security-info-text-container').is(':visible');
+  if (!open) {
+    $('.security-info-text-container').slideDown();
+    $('#arrow').removeClass('arrow-down').addClass('arrow-up');
+  } else {
+    $('.security-info-text-container').slideUp();
+    $('#arrow').removeClass('arrow-up').addClass('arrow-down');
+  }  
+}
 </script>
