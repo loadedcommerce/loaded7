@@ -31,6 +31,10 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <base href="<?php echo lc_href_link(null, null, 'AUTO', false); ?>" />
     <meta name="description" content="Loaded Commerce Shopping Cart">
     <meta name="author" content="Loaded Commerce">
+    
+    <?php
+     echo $lC_Template->getPageOGPTags();
+    ?>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
