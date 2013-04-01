@@ -30,24 +30,5 @@ class lC_Application_Updates extends lC_Template_Admin {
 
     $this->_page_title = $lC_Language->get('heading_title');
   }
-  /**
-  * Check if the location is writeable
-  *  
-  * @param array  $location  The file location to check
-  * @access public      
-  * @return boolean
-  */   
-  public function getLogList() {
-    $array = array(array('id' => '',
-                         'text' => OSCOM::getDef('select_log_to_view'),
-                         'params' => 'disabled="disabled"'));
-
-    foreach ( updates::getLogs() as $f ) {
-      $array[] = array('id' => substr($f, 0, -4),
-                       'text' => substr($f, 0, -4));
-    }
-
-    return $array;
-  }  
 }
 ?>
