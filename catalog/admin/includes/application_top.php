@@ -150,6 +150,10 @@ require($lC_Vqmod->modCheck('includes/classes/upload.php'));
 require($lC_Vqmod->modCheck('includes/classes/api.php'));
 $lC_Api = new lC_Api();
 
+// QR code class
+require('../includes/classes/BarcodeQR.php');
+$BarcodeQR = new BarcodeQR();
+
 // templates general class
 require($lC_Vqmod->modCheck('templates/default/classes/general.php'));
 
