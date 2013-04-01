@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id: shipping_address.js.php v1.0 2013-01-01 datazen $
+  $Id: payment_address.js.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -15,15 +15,41 @@
 */
 ?>
 <script>
-   $(document).ready(function() {
-     $('#shipping_address_form').click(function(){
-       $('#checkoutShippingAddressDetails').show('drop');
-     });
+var selected;
+
+function selectRowEffect(object, buttonSelect) {
+  if (!selected) {
+    if (document.getElementById) {
+      selected = document.getElementById('defaultSelected');
+    } else {
+      selected = document.all['defaultSelected'];
+    }
+  }
+
+  if (selected) selected.className = 'moduleRow';
+  object.className = 'moduleRowSelected';
+  selected = object;
+
+// one button is not an array
+  if (document.checkout_address.address[0]) {
+    document.checkout_address.address[buttonSelect].checked=true;
+  } else {
+    document.checkout_address.address.checked=true;
+  }
+}
+
+ $(document).ready(function() {
+   $('#payment_address_form').click(function(){
+     $('#checkoutPaymentAddressDetails').show('drop');
    });
-   
+ });
+  
+
   $('#checkout_address').submit(function() {
-    // validate if form is visible
-    if($("#checkoutShippingAddressDetails").is(':visible')) { 
+
+if($("#checkoutPaymentAddressDetails").is(':visible')) {
+
+
     var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
     var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
     jQuery.validator.messages.required = "";
@@ -49,30 +75,8 @@
       $('#checkout_address').submit();
     }
     return false;
-    }
+} 
   }); 
-  
-  // Address selection 
-  var selected;
 
-  function selectRowEffect(object, buttonSelect) {
-    if (!selected) {
-      if (document.getElementById) {
-        selected = document.getElementById('defaultSelected');
-      } else {
-        selected = document.all['defaultSelected'];
-      }
-    }
 
-    if (selected) selected.className = 'moduleRow';
-    object.className = 'moduleRowSelected';
-    selected = object;
-
-  // one button is not an array
-    if (document.checkout_address.address[0]) {
-      document.checkout_address.address[buttonSelect].checked=true;
-    } else {
-      document.checkout_address.address.checked=true;
-    }
-  }
 </script>

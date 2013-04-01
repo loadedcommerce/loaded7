@@ -20,7 +20,7 @@
     <ol id="checkoutSteps">
       <li class="section allow active">
         <div class="step-title">
-          <h2><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h2>
+          <h2><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?>ssss</h2>
         </div>
         <div style="margin-bottom:18px;">
           <div class="col2-set">
@@ -56,7 +56,7 @@
             </div>
             <div id="checkout_coupon_tip_mobile" style="display:none;"><?php echo $lC_Language->get('checkout_coupon_tip'); ?></div>
             <div id="checkout_shipping_col1" style="width:30%; float:left;">
-              <div id="ship-to-address-block">
+              <div id="ship-to-address-block" class="hide-on-320 hide-on-480">
                 <h3><?php echo $lC_Language->get('ship_to_address'); ?></h3>
                 <p><?php echo $lC_Language->get('add_first_address'); ?></p>
               </div>
@@ -75,34 +75,27 @@
               </div>
               <div id="checkout_coupon_tip"><?php echo $lC_Language->get('checkout_coupon_tip'); ?></div>
             </div>
-            <div id="checkout_shipping_col2" style="width:64%; float:right; margin-right:18px;">
+            <div id="checkout_shipping_col2" style="width:65%; float:right;">
               <form name="checkout_address" id="checkout_address" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address=process', 'SSL'); ?>" method="post">
                 <?php
                   if (isset($_GET['shipping_address']) && ($_GET['shipping_address'] != 'process')) {
                     if ($lC_Customer->hasDefaultAddress()) {
                     ?>
-                    <div id="checkoutShippingAddressHeading">
+                    <div id="checkoutShippingAddressHeading" style="margin-top:15px;">
                       <h3><?php echo $lC_Language->get('shipping_address_title'); ?></h3>
-                      <div>
-                        <div style="float: right; padding: 0px 0px 10px 20px;">
-                          <?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?>
-                        </div>
-                        <div style="float: right; padding: 0px 0px 10px 20px; text-align: center;">
-                          <?php echo '<b>' . $lC_Language->get('current_shipping_address_title') . '</b><br />' . lc_image(DIR_WS_TEMPLATE_IMAGES . 'arrow_south_east.png'); ?>
-                        </div>
-                        <?php echo $lC_Language->get('selected_shipping_destination'); ?>
-                        <div style="clear: both;"></div>
-                      </div>
+                      <span id="bill-to-address"><?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?></span>
+                      <span id="bill-to-change"><?php echo $lC_Language->get('selected_shipping_destination'); ?></span>
+                      <div style="clear: both;"></div>
                     </div>
                     <?php
                     }
                     if (lC_AddressBook::numberOfEntries() > 1) {
                     ?>
-                    <div id="checkoutShippingAddressEntries">
+                    <div id="checkoutShippingAddressEntries" style="margin-top:15px;">
                       <h3><?php echo $lC_Language->get('address_book_entries_title'); ?></h3>
                       <div>
-                        <div style="float: right; padding: 0px 0px 10px 20px; text-align: center;">
-                          <?php echo '<b>' . $lC_Language->get('please_select') . '</b><br />' . lc_image(DIR_WS_TEMPLATE_IMAGES . 'arrow_east_south.png'); ?>
+                        <div class="hide-on-320 hide-on-480" style="float: right; padding: 0px 0px 10px 20px; text-align: center;">
+                          <?php echo '<b>' . $lC_Language->get('please_select') . '</b><br />'; ?>
                         </div>
                         <div>  
                           <p style="margin-top: 0px;"><?php echo $lC_Language->get('select_another_shipping_destination'); ?></p>
@@ -124,13 +117,13 @@
                                   }
                                 ?>
                                 <td width="10">&nbsp;</td>
-                                <td colspan="2"><b><?php echo $Qaddresses->valueProtected('firstname') . ' ' . $Qaddresses->valueProtected('lastname'); ?></b></td>
-                                <td align="right"><div align="right" style="padding-right:12px;"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getShippingAddress('id')); ?></div></td>
+                                <td colspan="2" style="padding:2px 0 2px 0;"><b><?php echo $Qaddresses->valueProtected('firstname') . ' ' . $Qaddresses->valueProtected('lastname'); ?></b></td>
+                                <td align="right"><div align="right" style="padding-right:12px;"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getShippingAddress('id'),null,''); ?></span></div></td>
                                 <td width="10">&nbsp;</td>
                               </tr>
                               <tr>
                                 <td width="10">&nbsp;</td>
-                                <td colspan="3">
+                                <td colspan="3" style="padding-bottom:10px;">
                                   <table border="0" cellspacing="0" cellpadding="2">
                                     <tr>
                                       <td width="10">&nbsp;</td>
@@ -158,8 +151,10 @@
                   }
                   if (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES) {
                   ?>
-                  <div id="checkoutShippingAddressDetails">
+
+                  <div id="checkoutShippingAddressDetails" style="display:none;">
                     <h3><?php echo $lC_Language->get('new_shipping_address_title'); ?></h3>
+
                     <p style="padding:0 0 7px 10px;"><?php echo $lC_Language->get('new_shipping_address'); ?></p>
                     <div id="addressBookDetails" style="margin-top:10px;">
                       <?php
@@ -176,6 +171,7 @@
                 ?>
                 <div id="shippingActions">
                   <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
+                  <span style="float:left"><button class="button purple_btn" name="shipping_address_form" type="button" id="shipping_address_form"><?php echo $lC_Language->get('show_address_form'); ?></button></span>
                 </div>
               </form>
             </div>
