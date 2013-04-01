@@ -33,6 +33,6 @@
                           'text' => $Qcc->value('credit_card_name'));
     }
 
-    return lc_draw_checkbox_field($name, $cc_array, explode(',', $default), 'class="checkbox"', '<br /><span style="margin-left:103px;"></span>');
+    return lc_draw_checkbox_field($name, $cc_array, explode(',', $default), 'class="checkbox"', '<br />');
   }
 ?>
