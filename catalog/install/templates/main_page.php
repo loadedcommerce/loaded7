@@ -89,7 +89,7 @@ $template = 'main_page';
 
 <body class="full-page-wizard">
 
-  <?php require('templates/pages/' . $page_contents); ?>
+  <?php require($lC_Vqmod->modCheck('templates/pages/' . $page_contents)); ?>
   
   <div class="margin-top" id="pageFooter">Copyright &copy; <?php echo @date("Y"); ?> <a href="http://www.loaded7.com" target="_blank">Loaded Commerce</a></div>
 

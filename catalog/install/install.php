@@ -30,5 +30,5 @@ if (isset($_GET['step']) && is_numeric($_GET['step'])) {
       break;
   }
 }
-require('templates/main_page.php');
+require($lC_Vqmod->modCheck('templates/main_page.php'));
 ?>

@@ -22,21 +22,25 @@ define('HTTPS_COOKIE_PATH', '');
 define('HTTP_COOKIE_DOMAIN', '');
 define('HTTPS_COOKIE_DOMAIN', '');
 
-require('../includes/functions/compatibility.php');
+// virtual hook system
+require_once('../ext/vqmod/vqmod.php');
+$lC_Vqmod = new VQMod();
 
-require('../includes/functions/general.php');
-require('functions/general.php');
-require('../includes/functions/html_output.php');
+require($lC_Vqmod->modCheck('../includes/functions/compatibility.php'));
 
-require('../includes/classes/database.php');
+require($lC_Vqmod->modCheck('../includes/functions/general.php'));
+require($lC_Vqmod->modCheck('functions/general.php'));
+require($lC_Vqmod->modCheck('../includes/functions/html_output.php'));
 
-require('../includes/classes/xml.php');
+require($lC_Vqmod->modCheck('../includes/classes/database.php'));
+
+require($lC_Vqmod->modCheck('../includes/classes/xml.php'));
 
 session_start();
 
-require('../admin/includes/classes/directory_listing.php');
+require($lC_Vqmod->modCheck('../admin/includes/classes/directory_listing.php'));
 
-require('includes/classes/language.php');
+require($lC_Vqmod->modCheck('includes/classes/language.php'));
 $lC_Language = new lC_LanguageInstall();
 
 header('Content-Type: text/html; charset=' . $lC_Language->getCharacterSet());

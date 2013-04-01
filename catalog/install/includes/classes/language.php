@@ -11,7 +11,7 @@
   @copyright  (c) 2012 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-require('../admin/includes/classes/language.php');
+require($lC_Vqmod->modCheck('../admin/includes/classes/language.php'));
 
 class lC_LanguageInstall extends lC_Language_Admin {
 
