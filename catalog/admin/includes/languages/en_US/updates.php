@@ -17,7 +17,9 @@ heading_legend_history = History
 
 text_latest_version = Latest Version
 text_current_version = Current Version
+text_previous_version = Previous Version
 text_released = released %s
+text_backed_up = backed up %s
 text_last_checked = Last checked on
 
 text_step_1 = Creating Database Backup
@@ -35,11 +37,14 @@ text_undo_step_success = Undo Last Update Success!
 text_undo_step_error = Undo Last Update Error!
 text_undo_step_error_text = An error has occured and the undo process cannot continue.  Please correct the error(s) and try again.
 
-
 text_update_avail = An update is available!
 text_up_to_date = You are up to date!
 text_initializing = Initializing Update Engine
 text_warning_do_not_interrupt = Interrupting the process may cause unexpected results.
+
+field_restore_from = Restore from
+modal_heading_undo_update = Undo Last Update
+introduction_undo_update = Please choose the version you would like to revert back to and click the Undo button.
 
 button_ok = Ok
 button_install_update = Install Update
@@ -47,6 +52,7 @@ button_reinstall_update = Full Re-install
 button_download_zip = Download ZIP
 button_undo_last_update = Undo Last Update
 button_check_again = Check Again
+button_undo = Undo
 
 table_heading_action = Action
 table_heading_result = Result
@@ -55,7 +61,7 @@ table_heading_timestamp = Time Stamp
 
 text_confirm_update = This action will update your core files and database to the latest version. Press `Confirm` to proceed.
 text_confirm_full_update = This action will update your core files and database to the latest version using the FULL update package which contains all files in the current release. Press `Confirm` to proceed.
-text_confirm_undo = This action will roll back your core files and database to the state prior to the last update. Press `Confirm` to proceed.
+text_confirm_undo = This action will roll back your core files and database to the selected version. Press `Confirm` to proceed.
 
 text_history_action_update = Update
 text_history_action_backup = Download

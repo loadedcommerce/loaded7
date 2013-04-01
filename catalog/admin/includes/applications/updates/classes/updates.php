@@ -85,8 +85,6 @@ class lC_Updates_Admin {
       $result['rpcStatus'] = -1;
     }
     
- //   lC_Cache::clear('configuration'); 
-
     return $result;
   }  
   /**
@@ -300,31 +298,29 @@ class lC_Updates_Admin {
       $counter = 0;
 
       foreach ( $update_pkg as $file ) {
-        if ( substr($file, 0, 8) == 'catalog/' ) {
-          $custom = false;
+        $custom = false;
 
-          $result['entries'][] = array('key' => $counter,
-                                       'name' => $file,
-                                       'exists' => file_exists(realpath(DIR_FS_CATALOG . '../../') . '/' . $file),
-                                       'writable' => self::isWritable(realpath(DIR_FS_CATALOG . '../../') . '/' . $file) && self::isWritable(realpath(DIR_FS_CATALOG . '../../') . '/' . dirname($file)),
-                                       'custom' => $custom,
-                                       'to_delete' => false);
+        $result['entries'][] = array('key' => $counter,
+                                     'name' => $file,
+                                     'exists' => file_exists(realpath(DIR_FS_CATALOG) . '/' . $file),
+                                     'writable' => self::isWritable(realpath(DIR_FS_CATALOG) . '/' . $file) && self::isWritable(realpath(DIR_FS_CATALOG) . '/' . dirname($file)),
+                                     'custom' => $custom,
+                                     'to_delete' => false);
 
-          $counter++;
-        }
+        $counter++;
       }
     }
 
     $meta = $phar->getMetadata();
-
+    
     if ( isset($meta['delete']) ) {
       $files = array();
 
-      foreach ( $meta['delete'] as $file ) {
-        if ( substr($file, 0, 8) == 'catalog/' ) {
-          if ( file_exists(realpath(DIR_FS_CATALOG . '../../') . '/' . $file) ) {
-            if ( is_dir(realpath(DIR_FS_CATALOG . '../../') . '/' . $file) ) {
-              $DL = new DirectoryListing(realpath(DIR_FS_CATALOG . '../../') . '/' . $file);
+      if (is_array($meta['delete']) && count($meta['delete']) > 0) {
+        foreach ( $meta['delete'] as $file ) {
+          if ( file_exists(realpath(DIR_FS_CATALOG) . '/' . $file) ) {
+            if ( is_dir(realpath(DIR_FS_CATALOG) . '/' . $file) ) {
+              $DL = new DirectoryListing(realpath(DIR_FS_CATALOG) . '/' . $file);
               $DL->setRecursive(true);
               $DL->setAddDirectoryToFilename(true);
               $DL->setIncludeDirectories(false);
@@ -336,18 +332,16 @@ class lC_Updates_Admin {
               $files[] = $file;
             }
           }
-        } 
+        }
       }
-
+      
       natcasesort($files);
 
       foreach ( $files as $d ) {
         $writable = false;
         $custom = false;
 
-        if ( substr($d, 0, 8) == 'catalog/' ) {
-          $writable = self::isWritable(realpath(DIR_FS_CATALOG . '../../') . '/' . $d) && self::isWritable(realpath(DIR_FS_CATALOG . '../../') . '/' . dirname($d));
-        }
+        $writable = self::isWritable(realpath(DIR_FS_CATALOG) . '/' . $d) && self::isWritable(realpath(DIR_FS_CATALOG) . '/' . dirname($d));
 
         $result['entries'][] = array('key' => $counter,
                                      'name' => $d,
@@ -410,9 +404,9 @@ class lC_Updates_Admin {
       self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED');
 
       // first delete files before extracting new files
-      if ( isset($meta['delete']) ) {
+      if (is_array($meta['delete']) && count($meta['delete']) > 0) {
         foreach ( $meta['delete'] as $file ) {
-          $directory = realpath(DIR_FS_CATALOG . '../../');
+          $directory = realpath(DIR_FS_CATALOG) . '/';
 
           if ( file_exists($directory . $file) ) {
             if ( is_dir($directory . $file) ) {
@@ -433,7 +427,6 @@ class lC_Updates_Admin {
           }
         }
       }
-
       // loop through each file individually as extractTo() does not work with
       // directories (see http://bugs.php.net/bug.php?id=54289)
       foreach ( new RecursiveIteratorIterator($phar) as $iteration ) {
@@ -517,29 +510,34 @@ class lC_Updates_Admin {
     }
 
     if ( $phar_can_open === true ) {
-      if ( isset($meta['run']) && method_exists('osCommerce\\OM\\Work\\CoreUpdate\\' . $meta['run'] . '\\Controller', 'runAfter') ) {
-        $results = call_user_func(array(DIR_FS_WORK . 'updates/' . $meta['run'] . '/controller', 'runAfter'));
+      // execute run after script if exists
+      if (file_exists(DIR_FS_WORK . 'updates/' . $meta['runAfter'] . 'controller.php')) {
+        include_once(DIR_FS_WORK . 'updates/' . $meta['runAfter'] . 'controller.php');
+        
+        if ( method_exists('lC_Updates_Admin_run_after', 'process') ) {
+          $results = call_user_func(array('lC_Updates_Admin_run_after', 'process'));      
 
-        if ( !empty($results) ) {
-          self::log('##### RAN AFTER');
+          if ( !empty($results) ) {
+            self::log('##### RAN AFTER');
 
-          foreach ( $results as $r ) {
-            self::log($r);
+            foreach ( $results as $r ) {
+              self::log($r);
+            }
+          }
+
+          self::log('##### CLEANUP');
+
+          if ( self::rmdir_r(DIR_FS_WORK . 'updates/' . $meta['runAfter']) ) {
+            self::log('Deleted: ' . DIR_FS_WORK . 'updates/' . $meta['runAfter']);
+          } else {
+            self::log('*** Could Not Delete: ' . DIR_FS_WORK . 'updates/' . $meta['runAfter']);
           }
         }
-
-        self::log('##### CLEANUP');
-
-        if ( self::rmdir_r(DIR_FS_WORK . 'updates/' . $meta['run']) ) {
-          self::log('Deleted: catalog/includes/work/updates/' . $meta['run']);
-        } else {
-          self::log('*** Could Not Delete: catalog/includes/work/updates/' . $meta['run']);
-        }
       }
-
+      
       self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
     }
-    
+
     return $phar_can_open;
   }
  /**
@@ -695,14 +693,16 @@ class lC_Updates_Admin {
   */
   public static function fullBackup() {
 
-    $backup_file = 'full-file-backup.zip';
+    $ext = '.zip';
+    
+    $backup_file = 'full-backup-' . str_replace('.','', utility::getVersion()) . $ext;
     
     // remove the old backup
     if (file_exists(DIR_FS_WORK . 'updates/' . $backup_file)) unlink(DIR_FS_WORK . 'updates/' . $backup_file);
          
     // create full file backup
     try {
-      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '*');
+      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x \*.zip\*');
     } catch ( Exception $e ) {  
       return false;
     } 
@@ -715,9 +715,11 @@ class lC_Updates_Admin {
   * @access public      
   * @return boolean
   */
-  public static function fullFileRestore() {
+  public static function fullFileRestore($version) {
 
-    $restore_file = 'full-file-backup.zip';
+    $ext = '.zip';
+    
+    $restore_file = $version . $ext;
     
     if (file_exists(DIR_FS_WORK . 'updates/' . $restore_file)) {
       // remove old zip extraction  if any
@@ -739,6 +741,26 @@ class lC_Updates_Admin {
     } else {
       return false;
     }
+  }  
+ /**
+  * Get backups listing
+  *  
+  * @access public      
+  * @return array
+  */
+  public static function getBackups() {
+    $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_WORK . 'updates');
+    $lC_DirectoryListing->setIncludeDirectories(false);  
+    $lC_DirectoryListing->setCheckExtension('zip');
+    //$lC_DirectoryListing->setCheckExtension('sql');
+    //$lC_DirectoryListing->setCheckExtension('gz');
+    
+    $backups = array();
+    foreach ( $lC_DirectoryListing->getFiles() as $file ) {
+      $backups[] = array('id' => substr($file['name'], 0, strrpos($file['name'], '.')), 'text' => substr($file['name'], 0, strrpos($file['name'], '.')) );
+    }    
+    
+    return $backups;
   }  
  /**
   * Restore from last DB backup
