@@ -1,3 +1,9 @@
 .cat_rel_td {
   padding: 5px 0;
 }
+#images-gallery-trigger {
+  cursor: pointer;
+}
+#additional-gallery-trigger {
+  cursor: pointer;
+}
