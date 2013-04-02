@@ -2599,6 +2599,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>text_enter_your_email</key>
       <value><![CDATA[Enter Your E-mail Address]]></value>
       <group>general</group>
-    </definition>      
+    </definition>
+    <definition>    
+      <key>show_address_form</key>
+      <value><![CDATA[Add Address]]></value>
+      <group>general</group>
+    </definition>  
   </definitions>
 </language>

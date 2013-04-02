@@ -20,7 +20,7 @@
     <ol id="checkoutSteps">
       <li class="section allow active">
         <div class="step-title">
-          <h2><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?>ssss</h2>
+          <h2><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h2>
         </div>
         <div style="margin-bottom:18px;">
           <div class="col2-set">
@@ -171,7 +171,7 @@
                 ?>
                 <div id="shippingActions">
                   <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
-                  <span style="float:left"><button class="button purple_btn" name="shipping_address_form" type="button" id="shipping_address_form"><?php echo $lC_Language->get('show_address_form'); ?></button></span>
+                  <span style="float:left"><button class="button purple_btn" name="shipping_address_form" type="button" id="shipping_address_form" style="display:none;"><?php echo $lC_Language->get('show_address_form'); ?></button></span>
                 </div>
               </form>
             </div>

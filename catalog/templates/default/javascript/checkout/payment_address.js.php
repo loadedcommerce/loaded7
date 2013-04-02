@@ -38,7 +38,7 @@ function selectRowEffect(object, buttonSelect) {
   }
 }
 
- $(document).ready(function() {
+ $(document).ready(function() {    
    $('#payment_address_form').click(function(){
      $('#checkoutPaymentAddressDetails').show('drop');
    });
