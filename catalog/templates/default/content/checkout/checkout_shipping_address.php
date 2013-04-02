@@ -75,7 +75,7 @@
               </div>
               <div id="checkout_coupon_tip"><?php echo $lC_Language->get('checkout_coupon_tip'); ?></div>
             </div>
-            <div id="checkout_shipping_col2" style="width:65%; float:right;">
+            <div id="checkout_shipping_col2" style="width:65%; float:right; padding-right:15px;">
               <form name="checkout_address" id="checkout_address" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address=process', 'SSL'); ?>" method="post">
                 <?php
                   if (isset($_GET['shipping_address']) && ($_GET['shipping_address'] != 'process')) {

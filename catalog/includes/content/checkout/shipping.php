@@ -71,7 +71,7 @@ class lC_Checkout_Shipping extends lC_Template {
       //$this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_shipping_address.js');
       $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
     } else {
-      //$this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_shipping.js');
+      $this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/shipping.js.php');
 
       // if no shipping destination address was selected, use the customers own address as default
       if ($lC_ShoppingCart->hasShippingAddress() === false) {
