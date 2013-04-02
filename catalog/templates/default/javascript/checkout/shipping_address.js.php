@@ -16,6 +16,7 @@
 ?>
 <script>
    $(document).ready(function() {
+     $('#shipping_address_form').show();
      $('#shipping_address_form').click(function(){
        $('#checkoutShippingAddressDetails').show('drop');
      });
