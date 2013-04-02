@@ -516,14 +516,7 @@ function __setMaintenanceMode(s) {
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=setMaintMode&s=MODE'); ?>'
   $.getJSON(jsonLink.replace('MODE', s),
     function (data) {
-      if (data.rpcStatus == -10) { // no session
-        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-        $(location).attr('href',url);
-      }
-      if (data.rpcStatus != 1) {
-        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-        return false;
-      }
+      return true;
     }
   );  
 }
@@ -532,7 +525,7 @@ function __writeHistory(ua, ur) {
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=writeHistory&ua=ACTION&ur=RESULT'); ?>'
   $.getJSON(jsonLink.replace('ACTION', ua).replace('RESULT', ur),
     function (data) {
-
+      return true;
     }
   );  
 }
