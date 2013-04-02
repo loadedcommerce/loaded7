@@ -207,7 +207,7 @@ function installUpdate(t) {
                     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=installUpdate'); ?>';
                     $.getJSON(jsonLink,                
                       function (dData) {
-                        if (dData.rpcStatus != 1) {
+                        if (dData.rpcStatus != 1 && dData.rpcStatus != 10) {
                           __showStep(5,2);
 
                           // write to the update history log
