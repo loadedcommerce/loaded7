@@ -11,6 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+ini_set('display_errors', 1);
 
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
@@ -104,9 +105,12 @@ dd { margin:0 0 10px 10px; }
             <div id="checkout_shipping_col2" style="width:67%; float:right; margin-right:-4px">
               <div id="checkoutConfirmationDetails"> 
                 <?php
-                if (isset($_POST['SECURETOKEN']) && $_POST['SECURETOKEN'] != NULL && isset($_POST['iframe_action_url']) && $_POST['iframe_action_url'] != NULL) {
-                  // paypal iframe
-                  echo '<iframe src="' . $_POST['iframe_action_url'] . '?mode=' . $_POST['MODE'] . '&amp;SECURETOKEN=' . $_POST['SECURETOKEN'] . '&amp;SECURETOKENID=' . $_POST['SECURETOKENID'] . '" width="480" height="475" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
+echo '[' . $lC_Payment->iframe_action_url . ']<br>';                
+               
+                if (isset($lC_Payment->iframe_action_url) && $lC_Payment->iframe_action_url != NULL) {
+                    //echo '<iframe src="' . $_POST['iframe_action_url'] . '?mode=' . $_POST['MODE'] . '&amp;SECURETOKEN=' . $_POST['SECURETOKEN'] . '&amp;SECURETOKENID=' . $_POST['SECURETOKENID'] . '" width="480" height="475" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
+                    
+                  echo '<iframe src="' . $lC_Payment->iframe_action_url . '" width="480" height="475" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
                 } else {
                   // cre
                   echo '[[FORM INSERT]]'; 

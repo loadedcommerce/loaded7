@@ -11,6 +11,8 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+include_once('includes/classes/transport.php');
+
 class lC_Payment_cresecure extends lC_Payment {     
  /**
   * The public title of the payment module
@@ -231,56 +233,52 @@ class lC_Payment_cresecure extends lC_Payment {
   * @return string
   */ 
   private function _iframe_params() {
-    global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer;
+    global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer; 
     
     if (defined('MODULE_PAYMENT_CRESECURE_TEST_MODE') && MODULE_PAYMENT_CRESECURE_TEST_MODE == '1') {
-      $uid_action_url = 'https://sandbox-cresecure.net/securepayments/a1/cc_collection.php?' . $this->_iframe_params();  // sandbox url
+      $uid_action_url = 'https://sandbox-cresecure.net/direct/services/request/init/';  // sandbox url
     } else {
-      $uid_action_url = 'https://cresecure.net/securepayments/a1/cc_collection.php?' . $this->_iframe_params();  // production url
+      $uid_action_url = 'https://cresecure.net/direct/services/request/init/'; // production url
     }    
     
-    $uid_post_params = array('CRESecureID' => MODULE_PAYMENT_CRESECURE_LOGIN, 
-                             'total_amt' => $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()),
-                             'order_id' => $this->_order_id,
-                             'customer_id' => $lC_Customer->getID(),
-                             'currency_code' => $_SESSION['currency'],
-                             'lang' => $lC_Language->getCode(),
-                             'allowed_types' => $this->_allowed_types,
-                             'sess_id' => session_id(),
-                             'sess_name' => session_name(),
-                             'ip_address' => $_SERVER["REMOTE_ADDR"],
-                             'return_url' => lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true),
-                             'content_template_url' => (getenv('HTTPS') == 'on') ? lc_href_link('cresecure_template.php', '', 'SSL', true, true, true) : null,
-                             'customer_company' => $lC_ShoppingCart->getBillingAddress('company'),
-                             'customer_firstname' => $lC_ShoppingCart->getBillingAddress('firstname'),
-                             'customer_lastname' => $lC_ShoppingCart->getBillingAddress('lastname'),
-                             'customer_address' => $lC_ShoppingCart->getBillingAddress('street_address'),
-                             'customer_email' => $lC_Customer->getEmailAddress(),
-                             'customer_phone' => $lC_Customer->getTelephone(),
-                             'customer_city' => $lC_ShoppingCart->getBillingAddress('city'), 
-                             'customer_state' => $lC_ShoppingCart->getBillingAddress('state'), 
-                             'customer_postal_code' => $lC_ShoppingCart->getBillingAddress('postcode'),
-                             'customer_country' => $lC_ShoppingCart->getBillingAddress('country_iso_code_3'),
-                             'delivery_company' => $lC_ShoppingCart->getShippingAddress('company'),
-                             'delivery_firstname' => $lC_ShoppingCart->getShippingAddress('firstname'),
-                             'delivery_lastname' => $lC_ShoppingCart->getShippingAddress('lastname'),
-                             'delivery_address' => $lC_ShoppingCart->getShippingAddress('street_address'),
-                             'delivery_email' => $lC_Customer->getEmailAddress(),
-                             'delivery_phone' => $lC_Customer->getTelephone(),
-                             'delivery_city' => $lC_ShoppingCart->getShippingAddress('city'), 
-                             'delivery_state' =>  $lC_ShoppingCart->getShippingAddress('state'),
-                             'delivery_postal_code' => $lC_ShoppingCart->getShippingAddress('postcode'),
-                             'delivery_country' => $lC_ShoppingCart->getShippingAddress('country_iso_code_3'),  
-                             'form' => 'mage');   
+    $uid_action_params = array('CRESecureID' => MODULE_PAYMENT_CRESECURE_LOGIN, 
+                               'CRESecureAPIToken' => MODULE_PAYMENT_CRESECURE_API_TOKEN,
+                               'total_amt' => $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()),
+                               'order_id' => $this->_order_id,
+                               'customer_id' => $lC_Customer->getID(),
+                               'currency_code' => $_SESSION['currency'],
+                               'lang' => $lC_Language->getCode(),
+                               'allowed_types' => $this->_allowed_types,
+                               'sess_id' => session_id(),
+                               'sess_name' => session_name(),
+                               'ip_address' => $_SERVER["REMOTE_ADDR"],
+                               'return_url' => lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true),
+                               'content_template_url' => (getenv('HTTPS') == 'on') ? lc_href_link('cresecure_template.php', '', 'SSL', true, true, true) : null,
+                               'customer_company' => $lC_ShoppingCart->getBillingAddress('company'),
+                               'customer_firstname' => $lC_ShoppingCart->getBillingAddress('firstname'),
+                               'customer_lastname' => $lC_ShoppingCart->getBillingAddress('lastname'),
+                               'customer_address' => $lC_ShoppingCart->getBillingAddress('street_address'),
+                               'customer_email' => $lC_Customer->getEmailAddress(),
+                               'customer_phone' => $lC_Customer->getTelephone(),
+                               'customer_city' => $lC_ShoppingCart->getBillingAddress('city'), 
+                               'customer_state' => $lC_ShoppingCart->getBillingAddress('state'), 
+                               'customer_postal_code' => $lC_ShoppingCart->getBillingAddress('postcode'),
+                               'customer_country' => $lC_ShoppingCart->getBillingAddress('country_iso_code_3'),
+                               'delivery_company' => $lC_ShoppingCart->getShippingAddress('company'),
+                               'delivery_firstname' => $lC_ShoppingCart->getShippingAddress('firstname'),
+                               'delivery_lastname' => $lC_ShoppingCart->getShippingAddress('lastname'),
+                               'delivery_address' => $lC_ShoppingCart->getShippingAddress('street_address'),
+                               'delivery_email' => $lC_Customer->getEmailAddress(),
+                               'delivery_phone' => $lC_Customer->getTelephone(),
+                               'delivery_city' => $lC_ShoppingCart->getShippingAddress('city'), 
+                               'delivery_state' =>  $lC_ShoppingCart->getShippingAddress('state'),
+                               'delivery_postal_code' => $lC_ShoppingCart->getShippingAddress('postcode'),
+                               'delivery_country' => $lC_ShoppingCart->getShippingAddress('country_iso_code_3'),  
+                               'form' => 'mage');   
                                   
-    $response = transport::getResponse(array('url' => $uid_action_url, 'method' => 'post', 'parameters' => $uid_post_params));
-   
-echo "<pre>";
-print_r($response);
-echo "</pre>";
-die('11');                                           
+    $response = transport::getResponse(array('url' => $uid_action_url, 'method' => 'post', 'parameters' => $uid_action_params));   
                                   
-    return utility::arr2nvp($iframe_action_params);
+    return $response;
   }  
   
  /**
