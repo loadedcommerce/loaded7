@@ -82,6 +82,7 @@ class lC_Payment_cresecure extends lC_Payment_Admin {
           
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable Module', 'MODULE_PAYMENT_CRESECURE_STATUS', '-1', 'Do you want to accept payments through the CRE Secure Payment System?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Account ID', 'MODULE_PAYMENT_CRESECURE_LOGIN', '', 'The Account ID used for the CRE Secure payment service.', '6', '0', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('API Token', 'MODULE_PAYMENT_CRESECURE_API_TOKEN', '', 'The API Token used for the CRE Secure payment service.', '6', '0', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Sandbox Mode', 'MODULE_PAYMENT_CRESECURE_TEST_MODE', '-1', 'Set to \'Yes\' for sandbox test environment or set to \'No\' for production environment.', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
     //$lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Show Incomplete Orders', 'MODULE_PAYMENT_CRESECURE_SHOW_INCOMPLETE', '-1', 'Set to \'Yes\' to show incomplete orders on shopping cart page and customer order history page.', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");           
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('Cards Accepted', 'MODULE_PAYMENT_CRESECURE_ACCEPTED_TYPES', '', 'Accept these credit card types for this payment method.', '6', '0', 'lc_cfg_set_credit_cards_checkbox_field', now())");
@@ -102,6 +103,7 @@ class lC_Payment_cresecure extends lC_Payment_Admin {
     if (!isset($this->_keys)) {
       $this->_keys = array('MODULE_PAYMENT_CRESECURE_STATUS',
                            'MODULE_PAYMENT_CRESECURE_LOGIN',
+                           'MODULE_PAYMENT_CRESECURE_API_TOKEN',
                            'MODULE_PAYMENT_CRESECURE_TEST_MODE',
                          //   'MODULE_PAYMENT_CRESECURE_SHOW_INCOMPLETE',
                            'MODULE_PAYMENT_CRESECURE_ACCEPTED_TYPES',
