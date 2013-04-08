@@ -117,9 +117,9 @@ class lC_Payment_cresecure extends lC_Payment {
     if (is_object($order)) $this->update_status();
     
     if (defined('MODULE_PAYMENT_CRESECURE_TEST_MODE') && MODULE_PAYMENT_CRESECURE_TEST_MODE == '1') {
-      $this->form_action_url = 'https://sandbox-cresecure.net/securepayments/a1/cc_collection.php';  // sandbox url
+      $this->iframe_action_url = 'https://sandbox-cresecure.net/securepayments/a1/cc_collection.php';  // sandbox url
     } else {
-      $this->form_action_url = 'https://cresecure.net/securepayments/a1/cc_collection.php';  // production url
+      $this->iframe_action_url = 'https://cresecure.net/securepayments/a1/cc_collection.php';  // production url
     }  
     
     $Qcredit_cards = $lC_Database->query('select credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
