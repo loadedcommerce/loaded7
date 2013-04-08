@@ -121,7 +121,7 @@ class lC_Payment_cresecure extends lC_Payment {
     } else {
       $this->iframe_action_url = 'https://cresecure.net/securepayments/a1/cc_collection.php';  // production url
     }  
-    $this->form_url = (getenv('HTTPS') == 'on') ? lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) : null;
+    $this->form_action_url = (getenv('HTTPS') == 'on') ? lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) : null;
     
     $Qcredit_cards = $lC_Database->query('select credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
     $Qcredit_cards->bindRaw(':table_credit_cards', TABLE_CREDIT_CARDS);
