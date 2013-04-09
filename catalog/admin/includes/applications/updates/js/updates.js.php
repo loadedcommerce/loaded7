@@ -60,11 +60,11 @@ function checkForUpdates() {
     return false;
   }  
   $('#lastCheckedContainer').empty();
-  $('.loader').show();
+  $('#checkedLoader').show();
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=hasUpdates'); ?>'
   $.getJSON(jsonLink,
     function (data) {
-      $('.loader').hide();
+      $('#checkedLoader').hide();
       if (data.rpcStatus == -10) { // no session
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
         $(location).attr('href',url);

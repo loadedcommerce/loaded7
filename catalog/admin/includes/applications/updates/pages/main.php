@@ -91,7 +91,7 @@ $backupArr = lC_Updates_Admin::getBackups();
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('heading_legend_tools'); ?></legend>
         <table id="toolsButtonSet">
-          <tr><td colspan="3"><span class="loader"></span><span id="lastCheckedContainer"></span></td></tr>
+          <tr><td colspan="3"><span id="checkedLoader" class="loader"></span><span id="lastCheckedContainer"></span></td></tr>
           <tr><td>&nbsp;</td></tr>
           <tr>
             <td align="left">
