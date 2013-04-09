@@ -178,7 +178,7 @@
                 <?php echo $lC_Language->get('text_hello'); ?>
                 <span class="name"><?php echo $_SESSION['admin']['firstname']; ?><br />
                 <?php echo $_SESSION['admin']['lastname']; ?></span>
-                <small class="margin-left"><?php echo $lC_Language->get('profile_slate_edit_logout'); ?></small>
+                <small class="profile-edit-logout"><?php echo $lC_Language->get('profile_slate_edit_logout'); ?></small>
               </div>
             </div>
             <div class="profile50">
