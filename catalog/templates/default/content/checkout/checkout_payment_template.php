@@ -17,29 +17,12 @@ ini_set('display_errors', 1);
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
 /*content area width, it is needed*/
-.colMid {width:75%;}
-/*form styles*/
-dd { margin:0 0 10px 10px; }
-.form-list li { margin:0 0 8px; }
-.form-list label { float:left; color:#666; font-weight:bold; position:relative; z-index:0; }
-.form-list label.required {}
-.form-list label.required em { float:right; font-style:normal; color:#eb340a; position:absolute; top:10; right:-18px; }
-.form-list .input-box { display:block; clear:both; width:98%; }
-.form-list .field { float:left; width:275px; }
-.form-list input.input-text { width:98%; height:20px; }
-.form-list select { width:100%; height:25px; padding:5px }
-#payment-button { color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#873b7a !important; border:0px; line-height:100%; cursor:pointer; vertical-align:middle; float:right; }
-#payment-buttons-container { width: 98%; }
-#cancel { float:left; }
-#checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding-top: 4px; width: 100%; height:478px; }
-.v-fix { padding-bottom:15px; }
-#payment_form_ccsave u { float:right; padding-right: 15px; }
-#payment-processing { right: 50px; margin-top: 8px; }
-#ot-container { display: block; }
-@media only screen and (max-width: 320px) {
-  #checkoutConfirmationDetails { width: 83% !important; } 
-}
+.colMid { width:75%; }
 
+#checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding-top: 4px; width: 100%; }
+
+
+/* paypal */
 #paymentTemplateContainer .security-info-title { cursor:pointer; float:right; }
 #paymentTemplateContainer .security-info-text-container { margin:0 -5px 10px 0; background-color:#edfbec; }
 #paymentTemplateContainer .security-info-url { border:1px solid #ccc; padding:5px; }
@@ -47,6 +30,19 @@ dd { margin:0 0 10px 10px; }
 #paymentTemplateContainer .arrow-container { margin-top:15px; }
 #paymentTemplateContainer .arrow-down { border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid gray; float: right; height: 0; width: 0; margin:13px 0 0 6px; }
 #paymentTemplateContainer .arrow-up { border-bottom: 10px solid gray; border-left: 10px solid transparent; border-right: 10px solid transparent; float: right; height: 0; width: 0; margin:13px 0 0 6px; } 
+
+#payformIframe { min-width:480px; min-height:265px; }
+
+@media only screen and (min-width: 650px) and (max-width: 960px) {  /* tablet portrait */
+}
+
+@media only screen and (min-width: 480px) and (max-width: 649px) {  /* mobile landscape */
+}
+
+@media only screen and (max-width: 479px) { /* mobile portrait */
+  #payformIframe { min-width:300px; min-height:445px; }
+
+}
 </style>
 <div id="paymentTemplateContainer" class="full_page">
   <h5><?php echo $lC_Language->get('text_checkout'); ?></h5>
@@ -105,12 +101,10 @@ dd { margin:0 0 10px 10px; }
             <div id="checkout_shipping_col2" style="width:67%; float:right; margin-right:-4px">
               <div id="checkoutConfirmationDetails"> 
                 <?php
-echo '[' . $lC_Payment->iframe_action_url . ']<br>';                
-               
                 if (isset($lC_Payment->iframe_action_url) && $lC_Payment->iframe_action_url != NULL) {
                     //echo '<iframe src="' . $_POST['iframe_action_url'] . '?mode=' . $_POST['MODE'] . '&amp;SECURETOKEN=' . $_POST['SECURETOKEN'] . '&amp;SECURETOKENID=' . $_POST['SECURETOKENID'] . '" width="480" height="475" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
                     
-                  echo '<iframe src="' . $lC_Payment->iframe_action_url . '" width="480" height="475" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
+                  echo '<iframe id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
                 } else {
                   // cre
                   echo '[[FORM INSERT]]'; 

@@ -252,7 +252,7 @@ class lC_Payment_cresecure extends lC_Payment {
                                'sess_id' => session_id(),
                                'sess_name' => session_name(),
                                'ip_address' => $_SERVER["REMOTE_ADDR"],
-                               'return_url' => lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true),
+                               'return_url' => lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true),
                                'content_template_url' => (getenv('HTTPS') == 'on') ? lc_href_link('cresecure_template.php', '', 'SSL', true, true, true) : null,
                                'customer_company' => $lC_ShoppingCart->getBillingAddress('company'),
                                'customer_firstname' => $lC_ShoppingCart->getBillingAddress('firstname'),
@@ -277,8 +277,10 @@ class lC_Payment_cresecure extends lC_Payment {
                                'form' => 'mage');   
                                   
     $response = transport::getResponse(array('url' => $uid_action_url, 'method' => 'post', 'parameters' => $uid_action_params));   
+
+    $params = substr($response, strpos($response, 'uID='));         
                                   
-    return $response;
+    return $params;
   }  
   
  /**
