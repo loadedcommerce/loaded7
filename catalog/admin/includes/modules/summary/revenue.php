@@ -87,7 +87,7 @@ class lC_Summary_revenue extends lC_Summary {
       $growth = (($current - $last) / $llast);
       $ribbonText = ($growth > 0) ? '<span class="ribbon-inner green-gradient glossy"><span class="fact-progress">+' . number_format($growth, 1) . '% ▲</span></span>' : '<span class="ribbon-inner red-gradient glossy"><span class="fact-progress">-' . number_format($growth, 1) . '% ▼</span></span>';
 
-      $this->_data = '<div class="new-row-mobile four-columns six-columns-tablet twelve-columns-mobile">' . 
+      $this->_data = '<div class="new-row-mobile four-columns six-columns-tablet twelve-columns-mobile margin-top">' . 
                      '  <style>#revenueTable h3, h4 { margin:0; }</style>' . 
                      '  <div class="block large-margin-bottom">' .
                      '    <h3 class="block-title">' . $this->_title. '</h3>' .
