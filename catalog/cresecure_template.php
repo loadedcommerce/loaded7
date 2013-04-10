@@ -40,14 +40,7 @@ require('includes/application_top.php');
 #error_message span { display: block; padding: 6px 0 6px 40px !important; background: url("<?php echo lc_href_link('templates/default/images/shortcodes/error.png', null, 'SSL', null, null, true); ?>") no-repeat scroll left center transparent !important; }
 #payment-processing { font-family:Arial,Helvetica,sans-serif !important; right: 28px; bottom:-37px !important; }
 
-/* Smartphones (portrait and landscape) ----------- */
-@media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 480px) {
-/* Styles */
-}
-
-/* Smartphones (landscape) ----------- */
+/* Mobile (landscape) ----------- */
 @media only screen 
 and (min-width : 321px) 
 and (max-device-width : 480px) {
@@ -61,11 +54,9 @@ and (max-device-width : 480px) {
   #cresecure_cc_expires_year { width:58% !important; margin-left:95px; } 
   #payment-buttons-container { width:36% !important; }
   #payment-processing { right: 0px !important; }
-
- 
 }
 
-/* Smartphones (portrait) ----------- */
+/* Mobile (portrait) ----------- */
 @media only screen 
 and (max-width : 320px) {
   #payformContainer { margin-left:-30px !important; }
@@ -83,28 +74,20 @@ and (max-width : 320px) {
 
 }
 
-/* iPads (portrait and landscape) ----------- */
+/* Tablet (portrait and landscape) ----------- */
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) {
-/* Styles */
-}
-
-/* iPads (landscape) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : landscape) {
-/* Styles */
-}
-
-/* iPads (portrait) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : portrait) {
-/* Styles */
-}
+  #payformContainer { padding-top:20px; margin-left:-25px !important; width:100% !important; }
+  #payformContainer label { width:35% !important; }
+  #payformContainer input { width:52% !important; }  
+  #payformContainer li > span > span { right:29% !important; } 
+  #error_message { margin:-20px 50px 10px 0 !important; }
+  #card_type { width:52% !important; }
+  #cresecure_cc_expires_month { width:165% !important; }
+  #cresecure_cc_expires_year { width:54% !important; margin-left:58px; } 
+  #payment-buttons-container { width:46% !important; }
+  #payment-processing { right: 35px !important; }}
 
 /* Desktops and laptops ----------- */
 @media only screen 

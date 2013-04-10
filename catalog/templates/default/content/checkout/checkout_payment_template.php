@@ -29,14 +29,7 @@ ini_set('display_errors', 1);
 #paymentTemplateContainer .arrow-up { border-bottom: 10px solid gray; border-left: 10px solid transparent; border-right: 10px solid transparent; float: right; height: 0; width: 0; margin:13px 0 0 6px; } 
 #payformIframe { min-width:480px; min-height:300px; }
 
-/* Smartphones (portrait and landscape) ----------- */
-@media only screen 
-and (min-device-width : 320px) 
-and (max-device-width : 480px) {
-/* Styles */
-}
-
-/* Smartphones (landscape) ----------- */
+/* Mobile (landscape) ----------- */
 @media only screen 
 and (min-width : 321px) 
 and (max-device-width : 480px) {
@@ -44,34 +37,29 @@ and (max-device-width : 480px) {
   #checkoutConfirmationDetails {width: 98% !important; }
 }
 
-/* Smartphones (portrait) ----------- */
+/* Mobile (portrait) ----------- */
 @media only screen 
 and (max-width : 320px) {
   #payformIframe { min-width:300px; min-height:380px; }
   #checkoutConfirmationDetails {width: 96% !important; }
 }
 
-/* iPads (portrait and landscape) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) {
-/* Styles */
-}
-
-/* iPads (landscape) ----------- */
+/* Tablet (landscape) ----------- */
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : landscape) {
-/* Styles */
+  #payformIframe { min-width:520px; min-height:300px; }
+  #checkoutConfirmationDetails {width: 96% !important; }
 }
 
-/* iPads (portrait) ----------- */
+/* Tablet (portrait) ----------- */
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
-/* Styles */
+  #payformIframe { min-width:460px; min-height:300px; }
+  #checkoutConfirmationDetails {width: 96% !important; }
 }
 
 /* Desktops and laptops ----------- */
