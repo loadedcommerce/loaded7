@@ -399,7 +399,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     return "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
            "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
            "&PARTNER=Paypal" . 
-           "&PWD=" . MODULE_PAYMENT_PAYPAL_ADV_PWD;
+           "&PWD=" . MODULE_PAYMENT_PAYPAL_ADV_PASSWORD;
   }
  /**
   * Perform the Express Checkout post process
