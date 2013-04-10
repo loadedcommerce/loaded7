@@ -232,6 +232,115 @@ class lC_Payment_cresecure extends lC_Payment {
   * @access public
   * @return string
   */ 
+  public function process_button() {
+    return false;
+  }
+ /**
+  * Parse the response from the processor
+  *
+  * @access public
+  * @return string
+  */ 
+  public function process() {
+    global $lC_Language, $lC_Database, $lC_MessageStack;
+
+    $error = false;
+    $action = (isset($_POST['action']) && !empty($_POST['action'])) ? preg_replace('/[^a-zA-Z]/', '', $_POST['action']) : NULL;
+    $uID = (isset($_POST['uID']) && !empty($_POST['uID'])) ? preg_replace('/[^A-Z0-9]/', '', $_POST['uID']) : NULL;
+    
+    switch (strtolower($action)) {
+      case 'cancel' :
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
+        break;
+        
+      default :
+        if (!isset($uID)) {
+          // uID is missing for some reason
+          $code = '360';
+          $message = 'uID missing from response.';
+          $lC_MessageStack->add('checkout_payment', $code . ' - ' . $msg);
+          $error = true;
+        }
+    
+        // get the transaction details
+        $details = utility::nvp2arr($this->_query_uid($uID));
+
+        $code = (isset($details['code']) && !empty($details['code'])) ? preg_replace('/[^0-9]/', '', $details['code']) : NULL;
+        $msg = (isset($details['msg']) && !empty($details['msg'])) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $details['msg']) : NULL;
+        $order_id = (isset($details['order_id']) && !empty($details['order_id'])) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]\-/', '', $details['order_id']) : NULL;    
+
+        switch ($code) {
+          case '000' :
+            // update order status
+            lC_Order::process($order_id, $this->_order_status_complete);
+            break;
+            
+          default :
+            // there was an error
+            $lC_MessageStack->add('checkout_payment', $code . ' - ' . $msg);
+            $error = true;
+        }
+        // insert into transaction history
+        $this->_transaction_response = $code;
+
+        $response_array = array('root' => $details);
+        $response_array['root']['transaction_response'] = trim($this->_transaction_response);
+        $lC_XML = new lC_XML($response_array);
+        
+        $Qtransaction = $lC_Database->query('insert into :table_orders_transactions_history (orders_id, transaction_code, transaction_return_value, transaction_return_status, date_added) values (:orders_id, :transaction_code, :transaction_return_value, :transaction_return_status, now())');
+        $Qtransaction->bindTable(':table_orders_transactions_history', TABLE_ORDERS_TRANSACTIONS_HISTORY);
+        $Qtransaction->bindInt(':orders_id', $order_id);
+        $Qtransaction->bindInt(':transaction_code', 1);
+        $Qtransaction->bindValue(':transaction_return_value', $lC_XML->toXML());
+        $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '000') ? 1 : 0);
+        $Qtransaction->execute();
+        
+        if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
+    }
+  } 
+ /**
+  * Check the status of the pasyment module
+  *
+  * @access public
+  * @return boolean
+  */ 
+  public function check() {
+    if (!isset($this->_check)) {
+      $this->_check = defined('MODULE_PAYMENT_CRESECURE_STATUS');
+    }
+
+    return $this->_check;
+  }
+ /**
+  * Get the transaction details from CRE
+  *
+  * @access public
+  * @return string
+  */ 
+  private function _query_uid($uID) {
+    
+    if (defined('MODULE_PAYMENT_CRESECURE_TEST_MODE') && MODULE_PAYMENT_CRESECURE_TEST_MODE == '1') {
+      $uid_query_url = 'https://sandbox-cresecure.net/direct/services/request/query/';  // sandbox url
+    } else {
+      $uid_query_url = 'https://cresecure.net/direct/services/request/query/'; // production url
+    }
+    
+    $uid_query_params = array('CRESecureID' => MODULE_PAYMENT_CRESECURE_LOGIN, 
+                              'CRESecureAPIToken' => MODULE_PAYMENT_CRESECURE_API_TOKEN,
+                              'uID' => $uID);    
+        
+    $response = transport::getResponse(array('url' => $uid_query_url, 'method' => 'post', 'parameters' => $uid_query_params));
+    
+    $params = substr($response, strpos($response, 'code='));         
+
+    return $params;
+  }  
+ /**
+  * Return the confirmation button logic
+  *
+  * @access public
+  * @return string
+  */ 
   private function _iframe_params() {
     global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer; 
     
@@ -282,78 +391,5 @@ class lC_Payment_cresecure extends lC_Payment {
                                   
     return $params;
   }  
-  
- /**
-  * Return the confirmation button logic
-  *
-  * @access public
-  * @return string
-  */ 
-  public function process_button() {
-    return false;
-  }
- /**
-  * Parse the response from the processor
-  *
-  * @access public
-  * @return string
-  */ 
-  public function process() {
-    global $lC_Language, $lC_Database, $lC_MessageStack;
-    
-    $error = false;
-    $action = (isset($_GET['action']) && !empty($_GET['action'])) ? preg_replace('/[^a-zA-Z]/', '', $_GET['action']) : NULL;
-    $code = (isset($_GET['code']) && !empty($_GET['code'])) ? preg_replace('/[^0-9]/', '', $_GET['code']) : NULL;
-    $msg = (isset($_GET['msg']) && !empty($_GET['msg'])) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_GET['msg']) : NULL;
-    $order_id = (isset($_GET['order_id']) && !empty($_GET['order_id'])) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]\-/', '', $_GET['order_id']) : NULL;
-    
-    switch (strtolower($action)) {
-      case 'cancel' :
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
-        break;
-        
-      default :
-        switch ($code) {
-          case '000' :
-            // update order status
-            lC_Order::process($order_id, $this->_order_status_complete);
-            break;
-            
-          default :
-            // there was an error
-            $lC_MessageStack->add('checkout_payment', $code . ' - ' . $msg);
-            $error = true;
-        }
-        // insert into transaction history
-        $this->_transaction_response = $code;
-
-        $response_array = array('root' => $_GET);
-        $response_array['root']['transaction_response'] = trim($this->_transaction_response);
-        $lC_XML = new lC_XML($response_array);
-        
-        $Qtransaction = $lC_Database->query('insert into :table_orders_transactions_history (orders_id, transaction_code, transaction_return_value, transaction_return_status, date_added) values (:orders_id, :transaction_code, :transaction_return_value, :transaction_return_status, now())');
-        $Qtransaction->bindTable(':table_orders_transactions_history', TABLE_ORDERS_TRANSACTIONS_HISTORY);
-        $Qtransaction->bindInt(':orders_id', $order_id);
-        $Qtransaction->bindInt(':transaction_code', 1);
-        $Qtransaction->bindValue(':transaction_return_value', $lC_XML->toXML());
-        $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '000') ? 1 : 0);
-        $Qtransaction->execute();
-        
-        if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
-    }
-  } 
- /**
-  * Check the status of the pasyment module
-  *
-  * @access public
-  * @return boolean
-  */ 
-  public function check() {
-    if (!isset($this->_check)) {
-      $this->_check = defined('MODULE_PAYMENT_CRESECURE_STATUS');
-    }
-
-    return $this->_check;
-  }
 }
 ?>

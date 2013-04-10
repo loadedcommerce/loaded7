@@ -18,10 +18,7 @@ ini_set('display_errors', 1);
 <style>
 /*content area width, it is needed*/
 .colMid { width:75%; }
-
 #checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding-top: 4px; width: 100%; }
-
-
 /* paypal */
 #paymentTemplateContainer .security-info-title { cursor:pointer; float:right; }
 #paymentTemplateContainer .security-info-text-container { margin:0 -5px 10px 0; background-color:#edfbec; }
@@ -30,18 +27,70 @@ ini_set('display_errors', 1);
 #paymentTemplateContainer .arrow-container { margin-top:15px; }
 #paymentTemplateContainer .arrow-down { border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid gray; float: right; height: 0; width: 0; margin:13px 0 0 6px; }
 #paymentTemplateContainer .arrow-up { border-bottom: 10px solid gray; border-left: 10px solid transparent; border-right: 10px solid transparent; float: right; height: 0; width: 0; margin:13px 0 0 6px; } 
+#payformIframe { min-width:480px; min-height:300px; }
 
-#payformIframe { min-width:480px; min-height:265px; }
-
-@media only screen and (min-width: 650px) and (max-width: 960px) {  /* tablet portrait */
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+/* Styles */
 }
 
-@media only screen and (min-width: 480px) and (max-width: 649px) {  /* mobile landscape */
+/* Smartphones (landscape) ----------- */
+@media only screen 
+and (min-width : 321px) 
+and (max-device-width : 480px) {
+  #payformIframe { min-width:460px; min-height:300px; }
+  #checkoutConfirmationDetails {width: 98% !important; }
 }
 
-@media only screen and (max-width: 479px) { /* mobile portrait */
-  #payformIframe { min-width:300px; min-height:445px; }
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+  #payformIframe { min-width:300px; min-height:380px; }
+  #checkoutConfirmationDetails {width: 96% !important; }
+}
 
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+/* Styles */
+}
+
+/* iPads (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+/* Styles */
+}
+
+/* iPads (portrait) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+/* Styles */
+}
+
+/* Desktops and laptops ----------- */
+@media only screen 
+and (min-width : 1224px) {
+/* Styles */
+}
+
+/* Large screens ----------- */
+@media only screen 
+and (min-width : 1824px) {
+/* Styles */
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
 }
 </style>
 <div id="paymentTemplateContainer" class="full_page">
