@@ -18,8 +18,12 @@
 
       parent::__construct();
     
-      $this->_page_contents = 'edit.php';
-
+      if (isset($_GET['old']) && $_GET['old'] == 'old') {
+        $this->_page_contents = 'edit.old.php';
+      } else {
+        $this->_page_contents = 'edit.php';
+      }
+      
       if ( (lc_empty(CFG_APP_IMAGEMAGICK_CONVERT) || !@file_exists(CFG_APP_IMAGEMAGICK_CONVERT)) && !lC_Image_Admin::hasGDSupport() ) {
         $_SESSION['error'] = true;                                                                                            
         $_SESSION['errmsg'] = $lC_Language->get('ms_warning_image_processor_not_available');
