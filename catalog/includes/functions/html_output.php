@@ -278,8 +278,8 @@ if (!function_exists('lc_draw_input_field')) {
 * @access public
 */
 if (!function_exists('lc_draw_password_field')) {
-  function lc_draw_password_field($name, $parameters = null) {
-    return lc_draw_input_field($name, null, $parameters, false, 'password');
+  function lc_draw_password_field($name, $parameters = null, $default = null) {
+    return lc_draw_input_field($name, $default, $parameters, false, 'password');
   }
 }
 /**
