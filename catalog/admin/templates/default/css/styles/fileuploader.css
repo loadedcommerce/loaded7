@@ -2,8 +2,15 @@
 
 .qq-upload-button {
     display:block; /* or inline-block */
-    width: 105px; padding: 7px 0; text-align:center;    
-    background:#880000; border-bottom:1px solid #ddd;color:#fff;
+    width: 105px; 
+    padding: 7px 0; 
+    text-align:center;    
+    background:#7D7C7C; 
+    border-bottom:1px solid #ddd;
+    color:#fff;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
 }
 .qq-upload-button-hover {background:#cc0000;}
 .qq-upload-button-focus {outline:1px dotted black;}

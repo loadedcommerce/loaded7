@@ -459,22 +459,28 @@ function toggleEditor(id) {
         var style = 'width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px; padding: 10px; float: left; text-align: center;';
 
         if ( entry[1] == '1' ) { // original (products_images_groups_id)
-          var onmouseover = 'this.style.backgroundColor=\'#EFEBDE\'; this.style.backgroundImage=\'url(<?php echo lc_href_link_admin('templates/' . $lC_Template->getCode() . '/img/icons/16/drag.png'); ?>)\'; this.style.backgroundRepeat=\'no-repeat\'; this.style.backgroundPosition=\'0 0\';';
-
+          var onmouseover = 'this.style.backgroundImage=\'url(<?php echo lc_href_link_admin('templates/' . $lC_Template->getCode() . '/img/icons/16/drag.png'); ?>)\'; this.style.backgroundRepeat=\'no-repeat\';  this.style.zIndex=\'300000 !important\'; this.style.backgroundPosition=\'8px 2px\';';
+          
           if ( entry[6] == '1' ) { // default_flag
-            style += ' background-color: #E5EFE5;';
+            //style += ' background-color: #E5EFE5;';
+            style += ' ';
 
-            var onmouseout = 'this.style.backgroundColor=\'#E5EFE5\'; this.style.backgroundImage=\'none\';';
+            //var onmouseout = 'this.style.backgroundColor=\'#E5EFE5\'; this.style.backgroundImage=\'none\';';
+            var onmouseout = 'this.style.backgroundImage=\'none\';';
           } else {
-            var onmouseout = 'this.style.backgroundColor=\'#FFFFFF\'; this.style.backgroundImage=\'none\';';
+            //var onmouseout = 'this.style.backgroundColor=\'#FFFFFF\'; this.style.backgroundImage=\'none\';';
+            var onmouseout = 'this.style.backgroundImage=\'none\';';
           }
         } else {
-          var onmouseover = 'this.style.backgroundColor=\'#EFEBDE\';';
-          var onmouseout = 'this.style.backgroundColor=\'#FFFFFF\';';
+          //var onmouseover = 'this.style.backgroundColor=\'#EFEBDE\';';
+          var onmouseover = '';
+          //var onmouseout = 'this.style.backgroundColor=\'#FFFFFF\';';
+          var onmouseout = '';
         }
 
         var newdiv = '<span id="image_' + entry[0] + '" style="' + style + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
-        newdiv += '<a href="' + entry[4] + '" target="_blank"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[2] + '" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /></a><br />' + entry[3] + '<br />' + entry[5] + ' bytes<br />';
+        //newdiv += '<a href="' + entry[4] + '" target="_blank"><img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[2] + '" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /></a><br />' + entry[3] + '<br />' + entry[5] + ' bytes<br />';
+        newdiv += '<a href="' + entry[4] + '" target="_blank"><img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /></a><br />' + entry[3] + '<br />';
 
         if ( entry[1] == '1' ) {
           if ( entry[6] == '1' ) {
@@ -608,8 +614,8 @@ function toggleEditor(id) {
     if ( (layer != 'local') || ((layer == 'local') && (layer1.style.display != 'none')) ) {
       layer1.style.display='none';
       layer2.style.display='inline';
-      layer1link.style.backgroundColor='';
-      layer2link.style.backgroundColor='#E5EFE5';
+      layer1link.style.fontWeight='normal';
+      layer2link.style.fontWeight='bolder';
     } else {
       getLocalImages();
     }
@@ -686,7 +692,7 @@ function toggleEditor(id) {
                   &nbsp;
                 </div>-->
                 <div class="twelve-columns">
-                  <span>Image</span>
+                  <span><?php echo $lC_Language->get('products_image'); ?></span>
                   <span class="info-spot on-left grey float-right">
                     <span class="icon-info-round"></span>
                     <span class="info-bubble">
@@ -694,7 +700,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                   <dl class="accordion same-height small-margin-top">
-                    <dt>Preview
+                    <dt><?php echo $lC_Language->get('products_image_preview'); ?>
                       <!--<div class="button-group absolute-right compact mid-margin-right">
                         <a href="#" class="button icon-cloud-upload disabled">Upload</a>
                         <a href="#" class="button icon-trash with-tooltip disabled" title="Delete"></a>
@@ -722,7 +728,7 @@ function toggleEditor(id) {
                     </select>
                   </div>-->
                   <div class="twelve-columns no-margin-bottom">
-                    <span class="small-margin-bottom">Name</span>
+                    <span class="small-margin-bottom"><?php echo $lC_Language->get('field_name'); ?></span>
                     <span class="info-spot on-left grey float-right small-margin-bottom">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
@@ -734,7 +740,7 @@ function toggleEditor(id) {
                     <?php echo lc_draw_input_field('products_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null), 'class="required input full-width"'); ?>
                   </div>
                   <div class="twelve-columns no-margin-bottom mid-margin-top">
-                    <span class="small-margin-bottom">Description</span>
+                    <span class="small-margin-bottom"><?php echo $lC_Language->get('field_description'); ?></span>
                     <span class="info-spot on-left grey float-right small-margin-bottom">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
@@ -748,7 +754,7 @@ function toggleEditor(id) {
                   </div>
                   <div class="twelve-columns no-margin-bottom mid-margin-top">
                     <span class="full-width">
-                      <span class="small-margin-bottom"><?php echo $lC_Language->get('field_keywords'); ?></span>
+                      <span class="small-margin-bottom"><?php echo $lC_Language->get('field_keyword'); ?></span>
                       <span class="info-spot on-left grey float-right small-margin-bottom">
                         <span class="icon-info-round"></span>
                         <span class="info-bubble">
@@ -794,7 +800,7 @@ function toggleEditor(id) {
                   <div style="width:100%;">
                     <div style="float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
                       <span class="full-width">
-                        <span>Base Price</span>
+                        <span><?php echo $lC_Language->get('field_base_price'); ?></span>
                         <span class="info-spot on-left grey float-right mid-margin-top">
                           <span class="icon-info-round"></span>
                           <span class="info-bubble">
@@ -807,7 +813,7 @@ function toggleEditor(id) {
                     <div style="float:left;width:2%;">&nbsp;</div>
                     <div style="float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
                       <span class="full-width">
-                        <span>Status</span>
+                        <span><?php echo $lC_Language->get('field_status'); ?></span>
                         <span class="info-spot on-left grey float-right mid-margin-top">
                           <span class="icon-info-round"></span>
                           <span class="info-bubble">
@@ -818,15 +824,15 @@ function toggleEditor(id) {
                       <span class="button-group">
                         <label for="ps-radio-1" class="button blue-active">
                           <input type="radio" name="product-status-radio-group" id="ps-radio-1" value="active"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 1) ? ' checked' : ''); ?> />
-                          Active
+                          <?php echo $lC_Language->get('field_status_active'); ?>
                         </label>
                         <label for="ps-radio-2" class="button blue-active">
                           <input type="radio" name="product-status-radio-group" id="ps-radio-2" value="inactive"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 0) ? ' checked' : ''); ?> />
-                          Inactive
+                          <?php echo $lC_Language->get('field_status_inactive'); ?>
                         </label>
                         <label for="ps-radio-3" class="button blue-active disabled">
                           <input type="radio" name="product-status-radio-group" id="ps-radio-3" value="" />
-                          Coming Soon
+                          <?php echo $lC_Language->get('field_status_coming'); ?>
                         </label>
                       </span>
                     </div>                  
@@ -840,7 +846,7 @@ function toggleEditor(id) {
               </div>
               <div class="four-columns twelve-columns-mobile"> 
                 <span class="full-width">
-                  <span>Model</span>
+                  <span><?php echo $lC_Language->get('field_model'); ?></span>
                   <span class="info-spot on-left grey float-right">
                     <span class="icon-info-round"></span>
                     <span class="info-bubble">
@@ -850,7 +856,7 @@ function toggleEditor(id) {
                 </span>
                 <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo $lC_ObjectInfo->get('products_model'); ?></b></p>
                 <span class="full-width">
-                  <span>Date Available</span>
+                  <span><?php echo $lC_Language->get('field_date_available'); ?></span>
                   <span class="info-spot on-left grey float-right">
                     <span class="icon-info-round"></span>
                     <span class="info-bubble">
@@ -862,7 +868,7 @@ function toggleEditor(id) {
               </div>
               <div class="four-columns twelve-columns-mobile">
                 <span class="full-width">
-                  <span>Weight</span>
+                  <span><?php echo $lC_Language->get('field_weight'); ?></span>
                   <span class="info-spot on-left grey float-right">
                     <span class="icon-info-round"></span>
                     <span class="info-bubble">
@@ -883,112 +889,98 @@ function toggleEditor(id) {
                   <div class="navigable">
                     <ul class="files-list mini open-on-panel-content">
                       <li id="images-gallery-trigger" onclick="imagesGalleryTrigger();" class="with-right-arrow grey-arrow">
-                        <span class="icon file-jpg"></span><b>Product Image</b>
+                        <span class="icon file-jpg"></span><b>Product Images</b>
                       </li>
-                      <li id="additional-gallery-trigger" onclick="additionalGalleryTrigger();" class="grey">
+                      <!--<li id="additional-gallery-trigger" onclick="additionalGalleryTrigger();" class="grey">
                         <span class="icon folder-image"></span><b>Additional Images</b>
-                      </li>
+                      </li>-->
                     </ul>
                   </div> 
                 </div>
               </div>
               <div class="panel-content linen" style="height:auto">
-                <div class="panel-control align-right"><a class="button icon-pictures" href="#">Upload</a></div>
+                <div class="panel-control align-right"></div>
                 <div style="height: auto; position: relative;" class="panel-load-target scrollable with-padding custom-scroll">
-                  <ul class="gallery" id="images-gallery">
-                    <li>
-                      <img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>">
-                      <div class="controls">
-                        <span class="button-group compact children-tooltip">
-                          <a title="Edit" class="button icon-pencil" href="#"></a>
-                          <a title="Delete" class="button icon-trash" href="#"></a>
-                        </span>
-                      </div>
-                    </li>
-                    <li>
-                      <img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>">
-                      <div class="controls">
-                        <span class="button-group compact children-tooltip">
-                          <a title="Edit" class="button icon-pencil" href="#"></a>
-                          <a title="Delete" class="button icon-trash" href="#"></a>
-                        </span>
-                      </div>
-                    </li>
-                    <li>
-                      <img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>">
-                      <div class="controls">
-                        <span class="button-group compact children-tooltip">
-                          <a title="Edit" class="button icon-pencil" href="#"></a>
-                          <a title="Delete" class="button icon-trash" href="#"></a>
-                        </span>
-                      </div>
-                    </li>
-                  </ul>
-                  <ul class="gallery" id="additional-gallery" style="display:none;">
-                    <li>
-                      <img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>">
-                      <div class="controls">
-                        <span class="button-group compact children-tooltip">
-                          <a title="Edit" class="button icon-pencil" href="#"></a>
-                          <a title="Delete" class="button icon-trash" href="#"></a>
-                        </span>
-                      </div>
-                    </li>
-                    <li>
-                      <img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>">
-                      <div class="controls">
-                        <span class="button-group compact children-tooltip">
-                          <a title="Edit" class="button icon-pencil" href="#"></a>
-                          <a title="Delete" class="button icon-trash" href="#"></a>
-                        </span>
-                      </div>
-                    </li>
-                    <li>
-                      <img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>">
-                      <div class="controls">
-                        <span class="button-group compact children-tooltip">
-                          <a title="Edit" class="button icon-pencil" href="#"></a>
-                          <a title="Delete" class="button icon-trash" href="#"></a>
-                        </span>
-                      </div>
-                    </li>
-                    <li>
-                      <img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>">
-                      <div class="controls">
-                        <span class="button-group compact children-tooltip">
-                          <a title="Edit" class="button icon-pencil" href="#"></a>
-                          <a title="Delete" class="button icon-trash" href="#"></a>
-                        </span>
-                      </div>
-                    </li>
-                    <li>
-                      <img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>">
-                      <div class="controls">
-                        <span class="button-group compact children-tooltip">
-                          <a title="Edit" class="button icon-pencil" href="#"></a>
-                          <a title="Delete" class="button icon-trash" href="#"></a>
-                        </span>
-                      </div>
-                    </li>
-                    <li>
-                      <img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>">
-                      <div class="controls">
-                        <span class="button-group compact children-tooltip">
-                          <a title="Edit" class="button icon-pencil" href="#"></a>
-                          <a title="Delete" class="button icon-trash" href="#"></a>
-                        </span>
-                      </div>
-                    </li>
-                    <li>
-                      <img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>">
-                      <div class="controls">
-                        <span class="button-group compact children-tooltip">
-                          <a title="Edit" class="button icon-pencil" href="#"></a>
-                          <a title="Delete" class="button icon-trash" href="#"></a>
-                        </span>
-                      </div>
-                    </li>
-                  </ul>
+                  <div class="gallery" id="images-gallery">
+                    <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                      <tr>
+                        <td width="100%" height="100%" valign="top">
+                          <div class="message white-gradient margin-bottom" style="min-height:37px;">
+                            <div style="float: right;">
+                              <?php echo $lC_Language->get('products_image_drag_n_drop'); ?>
+                              <!--<a href="#" id="remoteFilesLink" onclick="switchImageFilesView('remote');" style="font-weight:bolder; color:#000;"><?php echo $lC_Language->get('image_remote_upload'); ?></a> | <a href="#" id="localFilesLink" onclick="switchImageFilesView('local');" style="color:#000;"><?php echo $lC_Language->get('image_local_files'); ?></a>-->
+                            </div>
+                            <div id="remoteFiles" style="white-space:nowrap;">
+                              <span id="fileUploadField"></span>
+                              <?php
+                              if ( isset($lC_ObjectInfo) ) {
+                                ?>
+                                <div id="fileUploaderContainer" class="small-margin-top">
+                                  <noscript>
+                                    <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
+                                  </noscript>
+                                </div>
+                                <?php
+                              } else {
+                                echo lc_draw_file_field('products_image', null, 'class="file"');
+                              }
+                              ?>                              
+                            </div>
+                            <?php
+                            if ( isset($lC_ObjectInfo) ) {
+                              ?>
+                              <script type="text/javascript"><!--
+                                function createUploader(){
+                                  var uploader = new qq.FileUploader({
+                                      element: document.getElementById('fileUploaderContainer'),
+                                      action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=fileUpload'); ?>',
+                                      onComplete: function(id, fileName, responseJSON){
+                                        getImages();
+                                      },
+                                  });
+                                }
+                                $(document).ready(function() {
+                                  createUploader();
+                                });
+                              //--></script>
+                              <?php
+                            }
+                            ?>
+                            <div id="localFiles" style="display: none;">
+                              <p><?php echo $lC_Language->get('introduction_select_local_images'); ?></p>
+                              <select id="localImagesSelection" name="localimages[]" size="5" multiple="multiple" style="width: 100%;"></select>
+                              <div id="showProgressGetLocalImages" style="display: none; float: right; padding-right: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_retrieving_local_files'); ?></div>
+                              <p><?php echo realpath('../images/products/_upload'); ?></p>
+                              <?php
+                              if ( isset($lC_ObjectInfo) ) {
+                                echo '<input type="button" value="Assign To Product" class="operationButton" onclick="assignLocalImages();" /><div id="showProgressAssigningLocalImages" style="display: none; padding-left: 10px;">' . lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_multiple_upload_progress') . '</div>';
+                              }
+                              ?>
+                            </div>
+                          </div>
+                          <script type="text/javascript"><!--
+                          getLocalImages();
+                          //--></script>
+                          <?php
+                          if ( isset($lC_ObjectInfo) ) {
+                            ?>
+                            <div class="message white-gradient"><span class="anthracite"><strong><?php echo $lC_Language->get('subsection_original_images'); ?></strong></span></div>
+                            <div id="imagesOriginal" style="overflow: auto;" class="small-margin-top"></div>
+                            <div class="message white-gradient"><span class="anthracite"><strong><?php echo $lC_Language->get('subsection_images'); ?></strong></span></div>
+                            <div id="imagesOther" style="overflow: auto;"></div>
+                            <script type="text/javascript"><!--
+                              getImages();
+                            //--></script>
+                            <?php
+                          }
+                          ?>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>  
+                  <!--<div class="gallery" id="additional-gallery" style="display:none;">
+                    Saved For Later
+                  </div>-->
                 </div>
               </div>
             </div>
