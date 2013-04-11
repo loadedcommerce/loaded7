@@ -682,9 +682,9 @@ function toggleEditor(id) {
           <div id="section_general_content" class="with-padding">
             <div class="columns">
               <div class="new-row-mobile four-columns twelve-columns-mobile">
-                <div class="twelve-columns hide-below-768" style="height:38px;">
+                <!--<div class="twelve-columns hide-below-768" style="height:38px;">
                   &nbsp;
-                </div>
+                </div>-->
                 <div class="twelve-columns">
                   <span>Image</span>
                   <span class="info-spot on-left grey float-right">
@@ -695,10 +695,10 @@ function toggleEditor(id) {
                   </span>
                   <dl class="accordion same-height small-margin-top">
                     <dt>Preview
-                      <div class="button-group absolute-right compact mid-margin-right">
+                      <!--<div class="button-group absolute-right compact mid-margin-right">
                         <a href="#" class="button icon-cloud-upload disabled">Upload</a>
                         <a href="#" class="button icon-trash with-tooltip disabled" title="Delete"></a>
-                      </div>
+                      </div>-->
                     </dt>
                     <dd>
                       <div class="with-padding">
@@ -714,13 +714,13 @@ function toggleEditor(id) {
               </div>
               <div class="new-row-mobile eight-columns twelve-columns-mobile">             
                 <div class="columns">
-                  <div class="twelve-columns mid-margin-bottom align-right">
+                  <!--<div class="twelve-columns mid-margin-bottom align-right">
                     <select class="select">
                       <?php foreach ( $lC_Language->getAll() as $l ) { ?>
                       <option id="<?php echo $l['code']; ?>" value="<?php echo $l['code']; ?>"><?php echo $l['name']; ?></option>
                       <?php } ?>
                     </select>
-                  </div>
+                  </div>-->
                   <div class="twelve-columns no-margin-bottom">
                     <span class="small-margin-bottom">Name</span>
                     <span class="info-spot on-left grey float-right small-margin-bottom">
@@ -743,51 +743,53 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom">
-                    <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 2, 'class="required input full-width autoexpanding"'); ?>
+                    <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'class="required input full-width"'); ?>
                     <span class="float-right small-margin-top"><a href="#">Enlarge Description <span class="icon-extract icon-grey"></span></a>&nbsp;&nbsp;&nbsp;<?php echo '<a href="javascript:toggleEditor(\'products_description[' . $l['id'] . ']\');">' . $lC_Language->get('toggle_html_editor') . '</a>'; ?></span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom mid-margin-top">
+                    <span class="full-width">
+                      <span class="small-margin-bottom"><?php echo $lC_Language->get('field_keywords'); ?></span>
+                      <span class="info-spot on-left grey float-right small-margin-bottom">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </span>
+                    <div class="full-width clear-right mid-margin-bottom">
+                      <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input full-width" id="keyword' . $l['id'] . '"'); ?>
+                    </div>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom mid-margin-top">
+                    <span class="full-width">
+                      <span class="small-margin-bottom"><?php echo $lC_Language->get('field_tags'); ?></span>
+                      <span class="info-spot on-left grey float-right small-margin-bottom">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </span>
+                    <div class="full-width clear-right mid-margin-bottom">
+                      <?php echo lc_draw_input_field('products_tags[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_tags[$l['id']]) ? $products_tags[$l['id']] : null), 'class="input full-width" id="keyword' . $l['id'] . '"'); ?>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="columns">
-              <div class="new-row-mobile four-columns twelve-columns-mobile">
-                <span>Main Category</span>
-                <span class="info-spot on-left grey float-right">
-                  <span class="icon-info-round"></span>
-                  <span class="info-bubble">
-                    Put the bubble text here
-                  </span>
-                </span>
-                <select class="select full-width small-margin-top">
-                <?php
-                  foreach ($assignedCategoryTree->getArray() as $value) {
-                    $Qci = $lC_Database->query('select categories_id from :table_products_to_categories where products_id = :products_id');
-                    $Qci->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
-                    $Qci->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
-                    $Qci->execute();
-                    echo '<option id="categories_' . $value['id'] . '"' . (($Qci->valueInt('categories_id') == $value['id']) ? ' selected="selected"' : '') . '>' . $value['title'] . '</option>' . "\n";
-                  }
-                ?>
-                </select>
-              </div>
-              <div class="new-row-mobile eight-columns twelve-columns-mobile">
-                <span class="full-width">
-                  <span class="small-margin-bottom">Keywords</span>
-                  <span class="info-spot on-left grey float-right small-margin-bottom">
-                    <span class="icon-info-round"></span>
-                    <span class="info-bubble">
-                      Put the bubble text here
-                    </span>
-                  </span>
-                </span>
-                <div class="full-width clear-right mid-margin-bottom">
-                  <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input full-width" id="keyword' . $l['id'] . '"'); ?>
-                </div>
-              </div>
             </div>
             <div class="field-drop-product button-height black-inputs extreme-margin-bottom">
               <div class="columns">
-                <div class="new-row-mobile four-columns twelve-columns-mobile"></div>
+                <div class="new-row-mobile four-columns twelve-columns-mobile">
+                  <div id="content-tab-ads">
+                    <p class="big-message">
+                      <span class="big-message-icon icon-speech"></span>
+                      <strong class="anthracite">Big ad with icon - GoPro!</strong><br>
+                      This is where and ad may go
+                    </p>
+                  </div>
+                </div>
                 <div class="new-row-mobile eight-columns twelve-columns-mobile">
                   <div style="width:100%;">
                     <div style="float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
@@ -834,21 +836,11 @@ function toggleEditor(id) {
             </div>
             <div class="columns">
               <div class="four-columns twelve-columns-mobile large-margin-bottom">
-                <center>Chart Here</center>
+                <center><img src="images/prodchart.png" /></center>
               </div>
-              <div class="four-columns twelve-columns-mobile">
+              <div class="four-columns twelve-columns-mobile"> 
                 <span class="full-width">
-                  <span><?php echo $lC_Language->get('field_model'); ?></span>
-                  <span class="info-spot on-left grey float-right">
-                    <span class="icon-info-round"></span>
-                    <span class="info-bubble">
-                      Put the bubble text here
-                    </span>
-                  </span>
-                </span><br /><br />
-                <p style="background-color:#cccccc;" class="with-small-padding"><b><?php echo $lC_ObjectInfo->get('products_model'); ?></b><p><br />
-                <span class="full-width">
-                  <span>Product Type</span>
+                  <span>Model</span>
                   <span class="info-spot on-left grey float-right">
                     <span class="icon-info-round"></span>
                     <span class="info-bubble">
@@ -856,19 +848,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                 </span>
-                <p style="background-color:#cccccc;" class="with-small-padding"><b>&nbsp;</b><p><br />
-                <span class="full-width">
-                  <span>Inventory options</span>
-                  <span class="info-spot on-left grey float-right">
-                    <span class="icon-info-round"></span>
-                    <span class="info-bubble">
-                      Put the bubble text here
-                    </span>
-                  </span>
-                </span>
-                <p style="background-color:#cccccc;" class="with-small-padding"><b>&nbsp;</b><p>                
-              </div>
-              <div class="four-columns twelve-columns-mobile">
+                <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo $lC_ObjectInfo->get('products_model'); ?></b></p>
                 <span class="full-width">
                   <span>Date Available</span>
                   <span class="info-spot on-left grey float-right">
@@ -877,18 +857,10 @@ function toggleEditor(id) {
                       Put the bubble text here
                     </span>
                   </span>
-                </span><br /><br />
-                <p style="background-color:#cccccc;" class="with-small-padding"><b><?php echo lC_DateTime::getShort($lC_ObjectInfo->get('products_date_added')); ?></b><p><br />
-                <span class="full-width">
-                  <span>Product Class</span>
-                  <span class="info-spot on-left grey float-right">
-                    <span class="icon-info-round"></span>
-                    <span class="info-bubble">
-                      Put the bubble text here
-                    </span>
-                  </span>
                 </span>
-                <p style="background-color:#cccccc;" class="with-small-padding"><b>&nbsp;</b><p><br />
+                <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b>Random Date Here</b></p>              
+              </div>
+              <div class="four-columns twelve-columns-mobile">
                 <span class="full-width">
                   <span>Weight</span>
                   <span class="info-spot on-left grey float-right">
@@ -898,7 +870,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                 </span>
-                <p style="background-color:#cccccc;" class="with-small-padding"><b><?php echo $lC_ObjectInfo->get('products_weight'); ?></b><p>                
+                <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo $lC_ObjectInfo->get('products_weight'); ?></b></p>              
               </div>
             </div>
           </div>
