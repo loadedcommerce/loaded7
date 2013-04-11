@@ -29,7 +29,8 @@ echo '[' . $lC_ShoppingCart->getBillingMethod('id') . ']<br>';
 #paymentTemplateContainer .arrow-down { border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid gray; float: right; height: 0; width: 0; margin:13px 0 0 6px; }
 #paymentTemplateContainer .arrow-up { border-bottom: 10px solid gray; border-left: 10px solid transparent; border-right: 10px solid transparent; float: right; height: 0; width: 0; margin:13px 0 0 6px; } 
 
-#loadingContainer { padding:50px 0 0 190px; }
+#loadingContainer { position:absolute; right:250px; }
+#iloader { margin:100px 0 0 0px; }
 <?php 
 if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
   echo "#payformIframe { min-width:468px; min-height:580px; }";
@@ -60,7 +61,6 @@ and (max-device-width : 1024px)
 and (orientation : landscape) {
   #payformIframe { min-width:520px; min-height:300px; }
   #checkoutConfirmationDetails {width: 96% !important; }
-  #loadingContainer { padding:50px 0 0 180px; }
 }
 
 /* Tablet (portrait) ----------- */
@@ -70,8 +70,6 @@ and (max-device-width : 1024px)
 and (orientation : portrait) {
   #payformIframe { min-width:460px; min-height:300px; }
   #checkoutConfirmationDetails {width: 96% !important; }
-  #loadingContainer { padding:50px 0 0 150px; }
-
 }
 
 /* Desktops and laptops ----------- */
@@ -149,7 +147,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
             
             <div id="checkout_shipping_col2" style="width:67%; float:right; margin-right:-4px">
               <div id="checkoutConfirmationDetails"> 
-                <div id="loadingContainer"></div>
+                <div id="loadingContainer"><p id="iloader"></p></div>
                 <?php
                 if (isset($lC_Payment->iframe_action_url) && $lC_Payment->iframe_action_url != NULL) {
                   echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
@@ -173,7 +171,7 @@ function hideLoader() {
 }
 
 $(function() {
-  $('#loadingContainer').activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5});
+  $('#iloader').activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5});
 });
 </script>
 <!--content/checkout/checkout_payment_template.php end-->
