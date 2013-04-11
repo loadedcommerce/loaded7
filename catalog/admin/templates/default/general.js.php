@@ -526,7 +526,6 @@ function search(q) {
       } 
       $('#searchResults').html(data.html);
     }
-    
   );
 }
 
