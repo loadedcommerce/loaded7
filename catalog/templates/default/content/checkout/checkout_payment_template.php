@@ -11,10 +11,6 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-ini_set('display_errors', 1);
-
-echo '[' . $lC_ShoppingCart->getBillingMethod('id') . ']<br>';
-
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
