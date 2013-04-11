@@ -124,7 +124,13 @@
   if ($lC_Template->hasPageHeader()) {
     include($lC_Vqmod->modCheck('templates/default/header.php'));
   }
-
+  ?>
+  
+  <div id="mainMessageContainer" style="margin:50px 273px 0 84px;">
+    <p class="message icon-speech">Standard message</p>
+  </div>
+    
+  <?php
   if ($lC_Template->hasPageWrapper()) {
     ?>
     <!-- Button to open/hide menu -->

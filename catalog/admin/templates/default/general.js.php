@@ -113,19 +113,17 @@ $(document).ready(function() {
     }
   }
   
-  <?php 
-    if (STORE_DOWN_FOR_MAINTENANCE == 1) {
-  ?>
-  if (module != 'login') { 
-    notify('<?php echo $lC_Language->get('site_maintenance_message_title'); ?>', '<?php echo $lC_Language->get('site_maintenance_message_text'); ?>', {
-      icon: 'templates/default/img/construction.png',
-      showCloseOnHover: false,
-      iconOutside: false
-    });
-  }
-  <?php
+  var dfm = '<?php echo STORE_DOWN_FOR_MAINTENANCE; ?>';
+  if (dfm == 1) {
+    if (module != 'login') { 
+      $('#main').addClass('no-margin-top');
+      $('#mainMessageContainer').show();
+      $('#mainMessageContainer p').html('<?php echo $lC_Language->get('site_maintenance_message_text'); ?>');
     }
-  ?>
+  } else {
+    $('#mainMessageContainer').hide();    
+    $('#main').removeClass('no-margin-top');
+  }
   
   // begin shortcut key additions
   $(window).bind("load", function() {

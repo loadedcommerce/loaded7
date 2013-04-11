@@ -237,4 +237,4 @@ update_message_text1 = New version
 update_message_text2 = released.
 
 site_maintenance_message_title = Maintenance Mode
-site_maintenance_message_text = Your store\'s Maintenance Mode is currently active.<br />To disable click <a href="index.php?configuration"><b>here</b></a>.
+site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
