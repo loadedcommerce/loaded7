@@ -313,6 +313,16 @@ $(document).ready(function() {
      
 });
 
+$("#mainMessageContainer").click(function(){
+  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=setMaintMode&s=MODE', 'AUTO'); ?>'
+  $.getJSON(jsonLink.replace('MODE', 'off'),
+    function (data) {
+      $('#mainMessageContainer').slideUp();
+      return true;
+    }
+  );  
+});
+
 /* toggle checkboxes on table listings */
 function toggleCheck() {
   checked = $("#check-all").is(':checked');

@@ -33,5 +33,19 @@ class lC_General_Admin_rpc {
     
     echo json_encode($result);
   }
+ /*
+  * Set maintenance mode on/off
+  *
+  * @access public
+  * @return json
+  */
+  public static function setMaintMode() {
+    $result = array();
+    if (lC_General_Admin::setMaintenanceMode($_GET['s'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }
 }
 ?>

@@ -127,7 +127,7 @@
   ?>
   
   <div id="mainMessageContainer" style="margin:50px 273px 0 84px;">
-    <p class="message icon-speech">Standard message</p>
+    <p class="message icon-warning orange-gradient black icon-black" style="cursor:pointer"></p>
   </div>
     
   <?php

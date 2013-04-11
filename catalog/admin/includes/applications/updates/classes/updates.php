@@ -836,10 +836,10 @@ class lC_Updates_Admin {
     return true;
   }  
  /**
-  * Set Maintenance Mode
+  * Get the last database backup
   *  
   * @access public      
-  * @return boolean
+  * @return array
   */
   private static function __getLastDBBackup() {
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_BACKUP);
