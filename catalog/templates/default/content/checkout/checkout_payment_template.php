@@ -13,13 +13,14 @@
 */
 ini_set('display_errors', 1);
 
+echo '[' . $lC_ShoppingCart->getBillingMethod('id') . ']<br>';
+
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
 /*content area width, it is needed*/
 .colMid { width:75%; }
 #checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding-top: 4px; width: 100%; }
-/* paypal */
 #paymentTemplateContainer .security-info-title { cursor:pointer; float:right; }
 #paymentTemplateContainer .security-info-text-container { margin:0 -5px 10px 0; background-color:#edfbec; }
 #paymentTemplateContainer .security-info-url { border:1px solid #ccc; padding:5px; }
@@ -27,7 +28,15 @@ ini_set('display_errors', 1);
 #paymentTemplateContainer .arrow-container { margin-top:15px; }
 #paymentTemplateContainer .arrow-down { border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid gray; float: right; height: 0; width: 0; margin:13px 0 0 6px; }
 #paymentTemplateContainer .arrow-up { border-bottom: 10px solid gray; border-left: 10px solid transparent; border-right: 10px solid transparent; float: right; height: 0; width: 0; margin:13px 0 0 6px; } 
-#payformIframe { min-width:480px; min-height:300px; }
+
+#loadingContainer { padding:50px 0 0 190px; }
+<?php 
+if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
+  echo "#payformIframe { min-width:468px; min-height:580px; }";
+} else if ($lC_ShoppingCart->getBillingMethod('id') == 'cresecure') {
+  echo "#payformIframe { min-width:480px; min-height:300px; }";
+}
+?>
 
 /* Mobile (landscape) ----------- */
 @media only screen 
@@ -51,6 +60,7 @@ and (max-device-width : 1024px)
 and (orientation : landscape) {
   #payformIframe { min-width:520px; min-height:300px; }
   #checkoutConfirmationDetails {width: 96% !important; }
+  #loadingContainer { padding:50px 0 0 180px; }
 }
 
 /* Tablet (portrait) ----------- */
@@ -60,6 +70,8 @@ and (max-device-width : 1024px)
 and (orientation : portrait) {
   #payformIframe { min-width:460px; min-height:300px; }
   #checkoutConfirmationDetails {width: 96% !important; }
+  #loadingContainer { padding:50px 0 0 150px; }
+
 }
 
 /* Desktops and laptops ----------- */
@@ -137,13 +149,11 @@ only screen and (min-device-pixel-ratio : 1.5) {
             
             <div id="checkout_shipping_col2" style="width:67%; float:right; margin-right:-4px">
               <div id="checkoutConfirmationDetails"> 
+                <div id="loadingContainer"></div>
                 <?php
                 if (isset($lC_Payment->iframe_action_url) && $lC_Payment->iframe_action_url != NULL) {
-                    //echo '<iframe src="' . $_POST['iframe_action_url'] . '?mode=' . $_POST['MODE'] . '&amp;SECURETOKEN=' . $_POST['SECURETOKEN'] . '&amp;SECURETOKENID=' . $_POST['SECURETOKENID'] . '" width="480" height="475" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
-                    
-                  echo '<iframe id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
+                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
                 } else {
-                  // cre
                   echo '[[FORM INSERT]]'; 
                 }
               ?>
@@ -156,4 +166,14 @@ only screen and (min-device-pixel-ratio : 1.5) {
   </div>
 </div>
 <div style="clear:both;"></div>
+<script>
+function hideLoader() {
+  var loadDiv = document.getElementById("loadingContainer"); 
+  loadDiv.style.display = "none"; 
+}
+
+$(function() {
+  $('#loadingContainer').activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5});
+});
+</script>
 <!--content/checkout/checkout_payment_template.php end-->

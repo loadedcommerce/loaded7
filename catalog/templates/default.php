@@ -264,6 +264,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="ext/jquery/thickbox/thickbox-compressed.js"></script>
     <script src="ext/datepicker/datepicker.js"></script>
     <script src="ext/jquery/jquery.loadmask.js"></script>
+    <script src="ext/jquery/jquery.activity-indicator-1.0.0.min.js"></script>
     <!-- Template functions -->
     <script src="templates/default/javascript/jquery.flexslider.js" ></script>
     <script src="templates/default/javascript/jquery.jcarousel.js"></script>
@@ -271,6 +272,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="templates/default/javascript/jquery.magnify-1.0.2.js"></script>
     <script src="templates/default/javascript/form_elements.js" ></script>
     <script src="templates/default/javascript/placeholder.js" ></script>
+    
     <!-- main js.php for all site pages -->
     <?php $lC_Template->addJavascriptPhpFilename('templates/' . $lC_Template->getCode() . '/javascript/general.js.php'); ?>
     

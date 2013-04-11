@@ -84,6 +84,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @access protected
   */  
   public $_ec_redirect_url;   
+  
  /**
   * Constructor
   */      
@@ -120,13 +121,23 @@ class lC_Payment_paypal_adv extends lC_Payment {
     if (is_object($order)) $this->update_status();
     
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
-      $this->form_action_url = 'https://pilot-payflowlink.paypal.com';  // sandbox url
       $this->_ec_redirect_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';  // sandbox url
+      if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'C') {
+        $this->form_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true);  // payment page
+        $this->iframe_action_url = 'https://pilot-payflowlink.paypal.com?SECURETOKEN=' . $_SESSION['cartSync']['SECURETOKEN'] . '&SECURETOKENID=' . $_SESSION['cartSync']['SECURETOKENID'] . '&MODE=TEST';  
+      } else {
+        $this->form_action_url = 'https://pilot-payflowlink.paypal.com';  // sandbox url
+      }
     } else {
-      $this->form_action_url = 'https://payflowlink.paypal.com';  // production url
       $this->_ec_redirect_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';  // production url
+      if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'C') {
+        $this->form_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true);  // payment page
+        $this->iframe_action_url = 'https://payflowlink.paypal.com?SECURETOKEN=' . $_SESSION['cartSync']['SECURETOKEN'] . '&SECURETOKENID=' . $_SESSION['cartSync']['SECURETOKENID'];  
+      } else {
+        $this->form_action_url = 'https://payflowlink.paypal.com';  // production url
+      }      
+      
     }
-    $this->iframe_action_url = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ? lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) : NULL;  // sandbox url
   }
  /**
   * Disable module if zone selected does not match billing zone  
@@ -208,15 +219,15 @@ class lC_Payment_paypal_adv extends lC_Payment {
     global $lC_MessageStack;
 
     $response = $this->_getSecureToken();
-    
+
     $process_button_string = lc_draw_hidden_field('SECURETOKEN', $response['SECURETOKEN']) . 
                              lc_draw_hidden_field('SECURETOKENID', $response['SECURETOKENID']); 
-                     
+
+    $_SESSION['cartSync']['SECURETOKEN'] = $response['SECURETOKEN'];                      
+    $_SESSION['cartSync']['SECURETOKENID'] = $response['SECURETOKENID'];
+                         
     if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {                            
       $process_button_string .= lc_draw_hidden_field('MODE', 'TEST');
-    }
-    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') {
-      $process_button_string .= lc_draw_hidden_field('iframe_action_url', $this->form_action_url);
     }
     
     return $process_button_string;
@@ -229,11 +240,6 @@ class lC_Payment_paypal_adv extends lC_Payment {
   */ 
   public function process() {
     global $lC_Language, $lC_Database, $lC_MessageStack, $lC_ShoppingCart;
- 
- echo "<pre>process post ";
- print_r($_POST);
- echo "</pre>";
- die('11');
  
     if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) {  // this is express checkout - goto ec process
       if (isset($_GET['PayerID']) && $_GET['PayerID'] != NULL) {
@@ -675,7 +681,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
 
     // switch to mofile if iframe and media=mobile
     $mediaType = (isset($_SESSION['mediaType']) && $_SESSION['mediaType'] != NULL) ? $_SESSION['mediaType'] : 'desktop';
-    if ($template == 'MINLAYOUT' && stristr($mediaType, 'mobile-')) $template = 'MOBILE';
+    if ($template == 'MINLAYOUT' && (stristr($mediaType, 'mobile-') || stristr($mediaType, 'tablet-')) ) $template = 'MOBILE';
     
     $postData = $this->_getUserParams() .  
                 "&TRXTYPE=" . $transType . 

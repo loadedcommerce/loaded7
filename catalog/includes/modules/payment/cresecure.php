@@ -83,21 +83,7 @@ class lC_Payment_cresecure extends lC_Payment {
   * @var string
   * @access protected
   */   
-  protected $_card_images;  
- /**
-  * The iFrame action URL
-  *
-  * @var string
-  * @access protected
-  */   
- // protected $_iframe_action_url;  
- /**
-  * The iFrame action parameters
-  *
-  * @var string
-  * @access protected
-  */   
-  protected $_iframe_action_params;  
+  protected $_card_images;   
  /**
   * Constructor
   */      
