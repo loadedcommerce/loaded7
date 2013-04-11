@@ -241,25 +241,6 @@ class lC_General_Admin {
     
     // return the image name      
     return $result;
-  }
- /**
-  * Set Maintenance Mode
-  *  
-  * @access public      
-  * @return boolean
-  */
-  public static function setMaintenanceMode($mode) {
-    global $lC_Database;
-    
-    if ($mode == 'on') {
-      $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '1' where configuration_key = 'STORE_DOWN_FOR_MAINTENANCE'");
-    } else {
-      $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '-1' where configuration_key = 'STORE_DOWN_FOR_MAINTENANCE'");
-    }
-    
-    lC_Cache::clear('configuration');
-    
-    return true;
-  }  
+  } 
 }
 ?>

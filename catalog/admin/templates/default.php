@@ -126,7 +126,7 @@
   }
   ?>
   
-  <div id="mainMessageContainer" style="margin:50px 273px 0 84px;">
+  <div id="mainMessageContainer" style="display:none;">
     <p class="message icon-warning orange-gradient black icon-black" style="cursor:pointer"></p>
   </div>
     

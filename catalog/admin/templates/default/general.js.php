@@ -314,9 +314,10 @@ $(document).ready(function() {
 });
 
 $("#mainMessageContainer").click(function(){
-  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=setMaintMode&s=MODE', 'AUTO'); ?>'
-  $.getJSON(jsonLink.replace('MODE', 'off'),
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'updates' . '&action=setMaintMode&s=MODE'); ?>'
+  $.getJSON(jsonLink.replace('MODE', 'off').replace('&amp;', '&'),
     function (data) {
+      $('#main').removeClass('no-margin-top');
       $('#mainMessageContainer').slideUp();
       return true;
     }
