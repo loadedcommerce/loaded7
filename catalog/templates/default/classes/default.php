@@ -389,6 +389,7 @@ class lC_Default {
   * @return boolean
   */
   public static function setMediaType($type) {
+    
     $_SESSION['mediaType'] = $type;
     
     return true;   

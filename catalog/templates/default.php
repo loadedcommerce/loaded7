@@ -295,6 +295,5 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         $('#liveSearchContainer input[name="q"]').liveSearch({url: searchUrl + '&q='});
       }); 
     </script>
-    <!-- media type: <?php echo $_SESSION['mediaType']; ?> -->
   </body>
 </html>

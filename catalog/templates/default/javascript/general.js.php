@@ -106,23 +106,34 @@ $(document).ready(function() {
   });
   
   // run this last - determine media type
-  var mobile = $('#browse-catalog-div').is(':visible');
-  if (mobile) {
-    mtype = 'mobile';
-  } else {
-    mtype = 'desktop';
-  }
-  
-  _setMediaType(mtype);  
+  setTimeout('_setMediaType()', 1000);  
 
 });
 
-function _setMediaType(mtype) {
+function _setMediaType() {
+  var winW = $(window).width();
+  
+  if (winW < 321) {
+    mtype = 'mobile-portrait';
+  } else if (winW > 320 && winW < 601) {
+    mtype = 'mobile-landscape';
+  } else if (winW > 601 && winW < 769) {
+    mtype = 'tablet-portrait';    
+  } else if (winW > 769 && winW < 1025) {
+    mtype = 'tablet-landscape';    
+  } else if (winW > 1024) {
+    mtype = 'desktop';    
+  }
+  
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=setMediaType&type=TYPE', 'AUTO'); ?>'
-  $.getJSON(jsonLink.replace('TYPE', mtype),
+  $.getJSON(jsonLink.replace('TYPE', mtype).replace('&amp;', '&'),
     function (data) {
       return true;
     }
   );  
 }
+
+$(window).resize(function() {
+  _setMediaType();
+});
 </script>
