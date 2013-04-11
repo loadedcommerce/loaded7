@@ -587,13 +587,33 @@ class lC_Payment_paypal_adv extends lC_Payment {
       $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
     } else {
       $action_url = 'https://payflowpro.paypal.com';  // production url
-    }     
+    }   
+    
+    // build the product description
+    $cnt = 0;
+    $itemsString = '';
+    foreach ($lC_ShoppingCart->getProducts() as $products) {
+      $itemsString .= '&L_NAME' . (string)$cnt . '=' . $products['name'] .
+                      '&L_DESC' . (string)$cnt . '=' . substr($products['description'], 0, 40) .
+                      '&L_SKU' . (string)$cnt . '=' . $products['id'] .
+                      '&L_COST' . (string)$cnt . '=' . $products['price'] .
+                      '&L_QTY' . (string)$cnt . '=' . $products['quantity'];
+      $cnt++;                      
+    } 
+    
+    // get the shipping amount
+    $taxTotal = 0;
+    $shippingTotal = 0;
+    foreach ($lC_ShoppingCart->getOrderTotals() as $ot) {
+      if ($ot['code'] == 'shipping') $shippingTotal = (float)$ot['value'];
+      if ($ot['code'] == 'tax') $taxTotal = (float)$ot['value'];
+    }         
 
     $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
     $postData = $this->_getUserParams() .  
                 "&TRXTYPE=" . $transType . 
                 "&TENDER=P" . 
-                "&ACTION=S" . 
+                "&ACTION=S" . $itemsString .
                 "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
                 "&RETURNURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
                 "&CANCELURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .                 
@@ -624,7 +644,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
                 "&ADDROVERRIDE=1"; 
                            
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));    
-    
+   
     if (!$response) { // server failure error
       $lC_MessageStack->add('shopping_cart', $lC_Language->get('payment_paypal_adv_error_server'), 'error');
       return false;

@@ -13,7 +13,7 @@
     </definition>          
     <definition>
       <key>payment_paypal_adv_description</key>
-      <value><![CDATA[<h3 class="thin small-margin-left mid-margin-bottom"><img src="images/payment/paypal-large.png" class="margin-right" style="vertical-align:middle">Payments Advanced / Payflow Link</h3>]]></value>
+      <value><![CDATA[<h3 class="thin small-margin-left mid-margin-bottom"><img src="images/payment/paypal-large.png" class="margin-right" style="vertical-align:middle">Payments Advanced / Payflow Link</h3><p class="big-message margin-bottom orange-gradient anthracite"><span class="big-message-icon icon-speech icon-red"></span><strong class="red">IMPORTANT:</strong>&nbsp;&nbsp;Please enable the Secure Token option at<br><a class="blue" href=""><u>manage.paypal.com</u></a> under Hosted Pages > Setup > Security Options.</p>]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>
