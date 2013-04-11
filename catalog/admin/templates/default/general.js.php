@@ -91,14 +91,19 @@ $(document).ready(function() {
   // tweak template depending on view
   if ($.template.mediaQuery.name === 'mobile-portrait') { 
     $('#logoImg').attr('style', 'margin-top:2px !important;');
+    $('#mainMessageContainer').css('margin', '6px 4px 0px 4px');
   } else if ($.template.mediaQuery.name === 'mobile-landscape') { 
     $('#logoImg').attr('style', 'margin-top:2px !important;');
+    $('#mainMessageContainer').css('margin', '6px 4px 0px 4px');
   } else if ($.template.mediaQuery.name === 'tablet-portrait') {  
     $('#logoImg').attr('style', 'margin-top:2px !important;');
+    $('#mainMessageContainer').css('margin', '54px 4px 0px 74px');    
   } else if ($.template.mediaQuery.name === 'tablet-landscape') {  
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
+    $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   } else { // desktop
     $('#logoImg').attr('style', 'margin-top:-1px !important;');
+    $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   }
   
   // check for updates and show notification if necessary 
@@ -313,7 +318,9 @@ $(document).ready(function() {
      
 });
 
+// turn off maintenance mode
 $("#mainMessageContainer").click(function(){
+  $('#mainMessageContainer p').removeClass('icon-warning icon-black').html('<span class="loader on-dark small-margin-right" style="margin-left:-4px"></span><?php echo $lC_Language->get('site_maintenance_message_text'); ?>');
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'updates' . '&action=setMaintMode&s=MODE'); ?>'
   $.getJSON(jsonLink.replace('MODE', 'off').replace('&amp;', '&'),
     function (data) {
