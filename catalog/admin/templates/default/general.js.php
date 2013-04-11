@@ -323,10 +323,6 @@ $(document).ready(function() {
      
 });
 
-;function simpleTrigger() {
-  $("#tabHeaderSectionOptions").hide();
-}
-
 // check width of window for product edit tabs placement
 if ($(window).width() < 1380) {
   $("#product_tabs").removeClass("side-tabs");

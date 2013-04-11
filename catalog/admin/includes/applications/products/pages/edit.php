@@ -1370,10 +1370,12 @@ function toggleEditor(id) {
                   <div class="twelve-columns no-margin-bottom small-margin-top">
                     <span class="button-group">
                       <label for="ic-radio-1" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
+                        <!-- move onclick to function later maestro -->
                         <input type="radio" name="inventory-control-radio-group" id="ic-radio-1" value="1" onclick="$('#inventory_control_simple').show('300');$('#inventory_control_multi').hide('300');$('#section_options_content').hide();$('#tabHeaderSectionOptions').hide();" />
                         Simple
                       </label>
                       <label for="ic-radio-2" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
+                        <!-- move onclick to function later maestro -->
                         <input type="radio" name="inventory-control-radio-group" id="ic-radio-2" value="2" onclick="$('#inventory_control_simple').hide('300');$('#inventory_control_multi').show('300');$('#section_options_content').show();$('#tabHeaderSectionOptions').show().removeClass('active');$('label[for=\'ic-radio-1\']').removeClass('active');$('label[for=\'ic-radio-2\']').addClass('active');$('label[for=\'ioc-radio-1\']').removeClass('active');$('label[for=\'ioc-radio-2\']').addClass('active');" />
                         Multi SKU
                       </label>
@@ -1600,6 +1602,7 @@ function toggleEditor(id) {
                     <span class="button-group small-margin-top">
                       <!-- lc_options_inventory_control begin -->
                       <label for="ioc-radio-1" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
+                        <!-- move onclick to function later maestro -->
                         <input type="radio" name="inventory-option-control-radio-group" id="ioc-radio-1" value="1" onclick="$('#inventory_control_simple').show('300');$('#inventory_control_multi').hide('300');$('#section_options_content').hide();$('#tabHeaderSectionOptions').hide();$('#section_data_content').show();$('#tabHeaderSectionData').addClass('active');$('label[for=\'ic-radio-1\']').addClass('active');$('label[for=\'ic-radio-2\']').removeClass('active');" />
                         Simple
                       </label>
