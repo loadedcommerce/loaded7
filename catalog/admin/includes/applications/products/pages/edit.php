@@ -854,7 +854,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                 </span>
-                <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo $lC_ObjectInfo->get('products_model'); ?></b></p>
+                <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? $lC_Language->get('text_complex_variants') : $lC_ObjectInfo->get('products_model')); ?></b></p>
                 <span class="full-width">
                   <span><?php echo $lC_Language->get('field_date_available'); ?></span>
                   <span class="info-spot on-left grey float-right">
@@ -1257,7 +1257,7 @@ function toggleEditor(id) {
           <!-- data_tab -->
           <div id="section_data_content" class="with-padding">
             <fieldset class="fieldset">
-              <legend class="legend">Inventory Settings</legend>
+              <legend class="legend"><?php echo $lC_Language->get('text_inventory_settings'); ?></legend>
               <div class="columns">
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
@@ -1276,7 +1276,7 @@ function toggleEditor(id) {
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <!-- lc_track_inventory_override begin -->
                   <div class="twelve-columns no-margin-bottom">
-                    <span>Track Inventory Override</span>
+                    <span><?php echo $lC_Language->get('text_track_inventory_override'); ?></span>
                     <span class="info-spot on-left grey small-margin-left">
                       <small class="tag red-bg">Pro</small>
                       <span class="info-bubble">
@@ -1294,15 +1294,15 @@ function toggleEditor(id) {
                     <span class="button-group">
                       <label for="ti-radio-1" class="button disabled">
                         <input type="radio" name="track-inventory-radio-group" id="ti-radio-1" value="1" />
-                        Default
+                        <?php echo $lC_Language->get('text_default'); ?>
                       </label>
                       <label for="ti-radio-2" class="button disabled">
                         <input type="radio" name="track-inventory-radio-group" id="ti-radio-2" value="2" />
-                        On
+                        <?php echo $lC_Language->get('text_on'); ?>
                       </label>
                       <label for="ti-radio-3" class="button disabled">
                         <input type="radio" name="track-inventory-radio-group" id="ti-radio-3" value="3" />
-                        Off
+                        <?php echo $lC_Language->get('text_off'); ?>
                       </label>
                     </span>
                   </div>
@@ -1312,7 +1312,7 @@ function toggleEditor(id) {
               <div class="columns">
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
-                    <span>MSRP</span>
+                    <span><?php echo $lC_Language->get('text_msrp'); ?></span>
                     <span class="info-spot on-left grey float-right">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
@@ -1327,7 +1327,7 @@ function toggleEditor(id) {
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <!-- lc_vendor_supplier begin -->
                   <div class="twelve-columns no-margin-bottom">
-                    <span>Vendor/Supplier</span>
+                    <span><?php echo $lC_Language->get('text_vendor_supplier'); ?></span>
                     <span class="info-spot on-left grey small-margin-left">
                       <small class="tag red-bg">Pro</small>
                       <span class="info-bubble">
@@ -1353,7 +1353,7 @@ function toggleEditor(id) {
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <!-- lc_inventory_control begin -->
                   <div class="twelve-columns no-margin-bottom">
-                    <span>Inventory Control</span>
+                    <span><?php echo $lC_Language->get('text_inventory_control'); ?></span>
                     <span class="info-spot on-left grey small-margin-left">
                       <small class="tag red-bg">Pro</small>
                       <span class="info-bubble">
@@ -1372,16 +1372,16 @@ function toggleEditor(id) {
                       <label for="ic-radio-1" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
                         <!-- move onclick to function later maestro -->
                         <input type="radio" name="inventory-control-radio-group" id="ic-radio-1" value="1" onclick="$('#inventory_control_simple').show('300');$('#inventory_control_multi').hide('300');$('#section_options_content').hide();$('#tabHeaderSectionOptions').hide();" />
-                        Simple
+                        <?php echo $lC_Language->get('text_simple'); ?>
                       </label>
                       <label for="ic-radio-2" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
                         <!-- move onclick to function later maestro -->
                         <input type="radio" name="inventory-control-radio-group" id="ic-radio-2" value="2" onclick="$('#inventory_control_simple').hide('300');$('#inventory_control_multi').show('300');$('#section_options_content').show();$('#tabHeaderSectionOptions').show().removeClass('active');$('label[for=\'ic-radio-1\']').removeClass('active');$('label[for=\'ic-radio-2\']').addClass('active');$('label[for=\'ioc-radio-1\']').removeClass('active');$('label[for=\'ioc-radio-2\']').addClass('active');" />
-                        Multi SKU
+                        <?php echo $lC_Language->get('text_multi_sku'); ?>
                       </label>
                       <label for="ic-radio-3" class="button disabled green-active">
                         <input type="radio" name="inventory-control-radio-group" id="ic-radio-3" value="3" />
-                        Recurring
+                        <?php echo $lC_Language->get('text_recurring'); ?>
                       </label>
                     </span>
                   </div>
@@ -1393,13 +1393,13 @@ function toggleEditor(id) {
                 <!-- lc_inventory_control_simple begin -->
                 <div id="inventory_control_simple"<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' style="display:none;"' : ''); ?>>
                   <div>
-                    <label for="" class="label"><b>Qty On Hand</b></label>
+                    <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_on_hand'); ?></b></label>
                     <input type="text" name="products_quantity" id="products_quantity" value="<?php echo $lC_ObjectInfo->get('products_quantity'); ?>" class="input small-margin-right" style="width:60px;" />
                     <input type="text" name="products_sku_ean13" id="products_sku_ean13" value="" class="input" disabled />
-                    <b>SKU/EAN13</b>
+                    <b><?php echo $lC_Language->get('text_sku_ean13'); ?></b>
                   </div>
                   <div class="small-margin-top">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled /> <b>Cost</b>
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled /> <b><?php echo $lC_Language->get('text_cost'); ?></b>
                     <span class="info-spot on-left grey small-margin-left">
                       <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
                       <span class="info-bubble">
@@ -1410,16 +1410,16 @@ function toggleEditor(id) {
                 </div>
                 <!-- lc_inventory_control_simple end -->                                       
                 <div id="inventory_control_multi"<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' style="display:none;"'); ?>>
-                  <span class="icon-warning icon icon-size2 icon-orange small-margin-right"></span> Edit QOH and SKU on the Options Tab.
+                  <span class="icon-warning icon icon-size2 icon-orange small-margin-right"></span> <?php echo $lC_Language->get('text_edit_qoh_sku'); ?>
                 </div>
               </div>
             </fieldset>
             <fieldset class="fieldset">
-              <legend class="legend">Tax Settings</legend>
+              <legend class="legend"><?php echo $lC_Language->get('text_tax_settings'); ?></legend>
               <div class="columns">
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
-                    <span>Tax Class</span>
+                    <span><?php echo $lC_Language->get('text_tax_class'); ?></span>
                     <span class="info-spot on-left grey float-right">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
@@ -1433,7 +1433,7 @@ function toggleEditor(id) {
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
-                    <span>Base Price with Tax</span>
+                    <span><?php echo $lC_Language->get('text_base_price_with_tax'); ?></span>
                     <span class="info-spot on-left grey float-right">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
@@ -1448,11 +1448,11 @@ function toggleEditor(id) {
               </div>
             </fieldset>
             <fieldset class="fieldset">
-              <legend class="legend">Management Settings</legend>
+              <legend class="legend"><?php echo $lC_Language->get('text_management_settings'); ?></legend>
               <div class="columns">
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
-                    <span>Manufacturer</span> 
+                    <span><?php echo $lC_Language->get('text_manufacturer'); ?></span> 
                     <span class="info-spot on-left grey float-right">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
@@ -1473,7 +1473,7 @@ function toggleEditor(id) {
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <!-- lc_products_class begin -->
                   <div class="twelve-columns no-margin-bottom">
-                    <span>Product Class</span>
+                    <span><?php echo $lC_Language->get('text_product_class'); ?></span>
                     <span class="info-spot on-left grey small-margin-left">
                       <small class="tag red-bg">Pro</small>
                       <span class="info-bubble">
@@ -1502,7 +1502,7 @@ function toggleEditor(id) {
               <div class="columns">
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
-                    <span>URL Slug</span>
+                    <span><?php echo $lC_Language->get('text_url_slug'); ?></span>
                     <span class="info-spot on-left grey float-right">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
@@ -1516,7 +1516,7 @@ function toggleEditor(id) {
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
-                    <span>Availability</span>
+                    <span><?php echo $lC_Language->get('text_availability'); ?></span>
                     <span class="info-spot on-left grey float-right">
                       <span class="icon-info-round"></span>
                       <span class="info-bubble">
@@ -1550,7 +1550,7 @@ function toggleEditor(id) {
               </div>
             </fieldset>
             <fieldset class="fieldset">
-              <legend class="legend">Product Details</legend>
+              <legend class="legend"><?php echo $lC_Language->get('text_product_details'); ?></legend>
               <div class="columns">
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <?php //foreach() { ?>
@@ -1590,7 +1590,7 @@ function toggleEditor(id) {
               <div class="twelve-columns">
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                   <div class="twelve-columns no-margin-bottom">
-                    <span class="large-margin-right">Inventory Control</span>
+                    <span class="large-margin-right"><?php echo $lC_Language->get('text_inventory_control'); ?></span>
                     <span class="large-margin-right">&nbsp;</span>
                     <span class="margin-right">&nbsp;</span>
                     <span class="info-spot on-left grey large-margin-left">
@@ -1604,15 +1604,15 @@ function toggleEditor(id) {
                       <label for="ioc-radio-1" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
                         <!-- move onclick to function later maestro -->
                         <input type="radio" name="inventory-option-control-radio-group" id="ioc-radio-1" value="1" onclick="$('#inventory_control_simple').show('300');$('#inventory_control_multi').hide('300');$('#section_options_content').hide();$('#tabHeaderSectionOptions').hide();$('#section_data_content').show();$('#tabHeaderSectionData').addClass('active');$('label[for=\'ic-radio-1\']').addClass('active');$('label[for=\'ic-radio-2\']').removeClass('active');" />
-                        Simple
+                        <?php echo $lC_Language->get('text_simple'); ?>
                       </label>
                       <label for="ioc-radio-2" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
                         <input type="radio" name="inventory-option-control-radio-group" id="ioc-radio-2" value="2" />
-                        Multi SKU
+                        <?php echo $lC_Language->get('text_multi_sku'); ?>
                       </label>
                       <label for="ioc-radio-3" class="button disabled green-active">
                         <input type="radio" name="inventory-option-control-radio-group" id="ioc-radio-3" value="3" />
-                        Recurring
+                        <?php echo $lC_Language->get('text_recurring'); ?>
                       </label>
                       <span class="info-spot on-left grey margin-left">
                         <small class="tag red-bg">Pro</small>
@@ -1627,25 +1627,25 @@ function toggleEditor(id) {
               </div>
               <div class="twelve-columns">
                 <fieldset class="fieldset">
-                  <legend class="legend">Inventory Options Combo Sets</legend>
+                  <legend class="legend"><?php echo $lC_Language->get('text_inventory_options_combo_sets'); ?></legend>
                   <div class="columns">
                     <div class="twelve-columns">
                       Data Table is Going to be here :)                   
                     </div>
                   </div>
-                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)">New Inventory Option Combo Set</a></div>
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)"><?php echo $lC_Language->get('text_new_inventory_option_combo_set'); ?></a></div>
                 </fieldset>
               </div>
               <div class="twelve-columns">
                 <fieldset class="fieldset">
-                  <legend class="legend">Simple Inventory Options</legend>
-                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)">New Inventory Simple Option</a></div>
+                  <legend class="legend"><?php echo $lC_Language->get('text_simple_inventory_options'); ?></legend>
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)"><?php echo $lC_Language->get('text_new_simple_inventory_option'); ?></a></div>
                 </fieldset>
               </div>
               <div class="twelve-columns">
                 <fieldset class="fieldset">
-                  <legend class="legend">Simple Options</legend>
-                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)">New Simple Option</a></div>
+                  <legend class="legend"><?php echo $lC_Language->get('text_simple_options'); ?></legend>
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)"><?php echo $lC_Language->get('text_new_simple_option'); ?></a></div>
                 </fieldset>
               </div>
             </div>
@@ -1655,11 +1655,11 @@ function toggleEditor(id) {
             <div class="columns">
               <div class="twelve-columns">
                 <fieldset class="fieldset">
-                  <legend class="legend">Product Characteristics</legend>
+                  <legend class="legend"><?php echo $lC_Language->get('text_product_characteristics'); ?></legend>
                   <div class="columns">
                     <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                       <div class="twelve-columns no-margin-bottom">
-                        <span>Weight</span>
+                        <span><?php echo $lC_Language->get('field_weight'); ?></span>
                         <span class="info-spot on-left grey float-right">
                           <span class="icon-info-round"></span>
                           <span class="info-bubble">
@@ -1677,7 +1677,7 @@ function toggleEditor(id) {
                     </div>
                     <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
                       <div class="twelve-columns no-margin-bottom">
-                        <span>Weight Class</span>
+                        <span><?php echo $lC_Language->get('field_weight_class'); ?></span>
                         <span class="info-spot on-left grey float-right">
                           <span class="icon-info-round"></span>
                           <span class="info-bubble">
