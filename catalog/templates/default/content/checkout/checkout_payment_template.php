@@ -11,6 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+$secureUrl = substr($lC_Payment->iframe_action_url, 0, strpos($lC_Payment->iframe_action_url, '?'));
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
@@ -19,7 +20,7 @@
 #checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding-top: 4px; width: 100%; }
 #paymentTemplateContainer .security-info-title { cursor:pointer; float:right; }
 #paymentTemplateContainer .security-info-text-container { margin:0 -5px 10px 0; background-color:#edfbec; }
-#paymentTemplateContainer .security-info-url { border:1px solid #ccc; padding:5px; }
+#paymentTemplateContainer .security-info-url { border:1px solid #ccc; padding:5px; font-weight:bold; }
 #paymentTemplateContainer .security-info-text { border:1px solid #ccc; padding:7px 5px; }
 #paymentTemplateContainer .arrow-container { margin-top:15px; }
 #paymentTemplateContainer .arrow-down { border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid gray; float: right; height: 0; width: 0; margin:13px 0 0 6px; }
@@ -115,7 +116,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
                          '<div class="security-info-title" onclick="toggleSecurityInfo();"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin:10px 5px;"') . $lC_Language->get('secure_payment_security_info_title'); ?><span class="arrow-container"><span id="arrow" class="arrow-down"></span></span></div>'+
                          '<div style="clear:both;"></div>'+
                          '<div class="security-info-text-container" style="display:none;">'+
-                         '  <div class="security-info-url"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin-right:5px;"') . "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?></div>'+
+                         '  <div class="security-info-url"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin-right:5px;"') . $secureUrl; ?></div>'+
                          '  <div class="security-info-text"><?php echo $lC_Language->get('secure_payment_security_info_text'); ?></div>'+
                          '</div></div><div style="clear:both;"></div>';
             
