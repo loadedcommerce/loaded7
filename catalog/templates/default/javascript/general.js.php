@@ -103,7 +103,26 @@ $(document).ready(function() {
   $('#gridView').click(function(){
     $('#viewGrid').show();
     $('#viewList').hide();
-  });  
+  });
+  
+  // run this last - determine media type
+  var mobile = $('#browse-catalog-div').is(':visible');
+  if (mobile) {
+    mtype = 'mobile';
+  } else {
+    mtype = 'desktop';
+  }
+  
+  _setMediaType(mtype);  
 
 });
+
+function _setMediaType(mtype) {
+  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=setMediaType&type=TYPE', 'AUTO'); ?>'
+  $.getJSON(jsonLink.replace('TYPE', mtype),
+    function (data) {
+      return true;
+    }
+  );  
+}
 </script>

@@ -54,6 +54,20 @@ class lC_Default_rpc {
     if (is_array($result)) $result['rpcStatus'] = '1';
     
     echo json_encode($result);
-  }  
+  }
+ /*
+  * Set the media type to session
+  *
+  * @access public
+  * @return json
+  */
+  public static function setMediaType() {
+    $result = array();
+    if (lC_Default::setMediaType($_GET['type'])) {
+      $result['rpcStatus'] = '1';
+    }
+    
+    echo json_encode($result);
+  }    
 }
 ?>

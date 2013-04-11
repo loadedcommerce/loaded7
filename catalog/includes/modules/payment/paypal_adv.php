@@ -397,8 +397,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
   */
   private function _getUserParams() {
     return "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
-           "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
-           "&PARTNER=Paypal" . 
+           "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_MERCH .
+           "&PARTNER=" . MODULE_PAYMENT_PAYPAL_ADV_PARTNER .
            "&PWD=" . MODULE_PAYMENT_PAYPAL_ADV_PASSWORD;
   }
  /**
@@ -614,6 +614,10 @@ class lC_Payment_paypal_adv extends lC_Payment {
                            
     $response = transport::getResponse(array('url' => $action_url, 'method' => 'post', 'parameters' => $postData));    
     
+echo '[' . $postData . ']<br>';
+echo '[' . $response . ']<br>';
+    
+die('00');    
     if (!$response) { // server failure error
       $lC_MessageStack->add('shopping_cart', $lC_Language->get('payment_paypal_adv_error_server'), 'error');
       return false;
@@ -665,8 +669,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
 
     $secureTokenId = uniqid('', true); 
     $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
-    $template = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ? 'MINLAYOUT' : ((MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'B') ? 'TEMPLATEB' : 'TEMPLATEA');
-    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
+    $template = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'C') ? 'MINLAYOUT' : ((MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'B') ? 'TEMPLATEB' : 'TEMPLATEA');
+    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'C') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
     
     $postData = $this->_getUserParams() .  
                 "&TRXTYPE=" . $transType . 
