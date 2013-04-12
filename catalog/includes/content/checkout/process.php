@@ -25,7 +25,7 @@ class lC_Checkout_Process extends lC_Template {
     if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL && isset($_GET['token']) && $_GET['token'] == $_SESSION['PPEC_TOKEN']) {  
     } else {
       if ($lC_Customer->isLoggedOn() === false) {
-        $lC_NavigationHistory->setSnapshot();
+        $lC_NavigationHistory->setSnapshot();                                     
         lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
       }
     }    
@@ -55,6 +55,9 @@ class lC_Checkout_Process extends lC_Template {
         $_SESSION['cartID'] = $_SESSION['cartSync']['cartID'];
         $_SESSION['prepOrderID'] = $_SESSION['cartSync']['prepOrderID'];
       }
+    } else if (isset($_SESSION['cartSync']['paymentMethod']) && $_SESSION['cartSync']['paymentMethod'] != NULL) {
+      $lC_Payment = new lC_Payment($_SESSION['cartSync']['paymentMethod']);
+      $lC_ShoppingCart->setBillingMethod(array('id' => $_SESSION['cartSync']['paymentMethod'], 'title' => $GLOBALS['lC_Payment_' . $_SESSION['cartSync']['paymentMethod']]->getMethodTitle()));
      
     } else {
       $lC_Payment = new lC_Payment($lC_ShoppingCart->getBillingMethod('id'));
@@ -66,7 +69,7 @@ class lC_Checkout_Process extends lC_Template {
                 
     include($lC_Vqmod->modCheck('includes/classes/order.php'));
 
-    if (isset($_SESSION['PROCESS_DATA']) && $_SESSION['PROCESS_DATA'] != NULL) {
+    if (isset($_SESSION['PROCESS_DATA']) && !empty($_SESSION['PROCESS_DATA'])) {
       $_POST = $_SESSION['PROCESS_DATA'];
       unset($_SESSION['PROCESS_DATA']);
     }

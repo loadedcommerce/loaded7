@@ -206,7 +206,7 @@ class lC_Payment {
 
   function getMethodTitle() {
     return $this->_method_title;
-  }
+  }      
 
   function isEnabled() {
     return $this->_status;
@@ -214,7 +214,7 @@ class lC_Payment {
 
   function getSortOrder() {
     return $this->_sort_order;
-  }
+  }     
 
   function getJavascriptBlock() {
   }

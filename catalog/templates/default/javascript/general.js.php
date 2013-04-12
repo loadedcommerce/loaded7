@@ -103,7 +103,37 @@ $(document).ready(function() {
   $('#gridView').click(function(){
     $('#viewGrid').show();
     $('#viewList').hide();
-  });  
+  });
+  
+  // run this last - determine media type
+  setTimeout('_setMediaType()', 1000);  
 
+});
+
+function _setMediaType() {
+  var winW = $(window).width();
+  
+  if (winW < 321) {
+    mtype = 'mobile-portrait';
+  } else if (winW > 320 && winW < 601) {
+    mtype = 'mobile-landscape';
+  } else if (winW > 601 && winW < 769) {
+    mtype = 'tablet-portrait';    
+  } else if (winW > 769 && winW < 1025) {
+    mtype = 'tablet-landscape';    
+  } else if (winW > 1024) {
+    mtype = 'desktop';    
+  }
+  
+  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=setMediaType&type=TYPE', 'AUTO'); ?>'
+  $.getJSON(jsonLink.replace('TYPE', mtype).replace('&amp;', '&'),
+    function (data) {
+      return true;
+    }
+  );  
+}
+
+$(window).resize(function() {
+  _setMediaType();
 });
 </script>
