@@ -185,7 +185,8 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
               <div style="clear:both;"></div>
               <?php
               if ($lC_Payment->hasActionURL()) {
-                $form_action_url = ($lC_Payment->hasIframeURL()) ?  $lC_Payment->getIframeURL() : $lC_Payment->getActionURL();
+                //$form_action_url = ($lC_Payment->hasIframeURL()) ?  $lC_Payment->getIframeURL() : $lC_Payment->getActionURL();
+                $form_action_url = $lC_Payment->getActionURL();
               } else {
                 $form_action_url = lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL');
               }

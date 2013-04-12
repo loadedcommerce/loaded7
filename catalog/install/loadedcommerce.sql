@@ -1190,14 +1190,14 @@ INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, 
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(3, 'JCB', '/^((2131|1800)\\d{11}|3[0135]\\d{14})$/', '0', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(4, 'MasterCard', '/^5[1-5]\\d{14}$/', '1', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(5, 'Visa', '/^4\\d{12}(\\d{3})?$/', '1', 0);
-INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(6, 'Discover Card', '/^6011\\d{12}$/', '0', 0);
+INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(6, 'Discover Card', '/^6011\\d{12}$/', '1', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(7, 'Solo', '/^(63|67)\\d{14}(\\d{2,3})?$/', '0', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(8, 'Switch', '/^(49|56|63|67)\\d{14}(\\d{2,3})?$/', '0', 0);
-INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(9, 'Australian Bankcard', '/^5610\\d{12}$/', '1', 0);
+INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(9, 'Australian Bankcard', '/^5610\\d{12}$/', '0', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(10, 'enRoute', '/^(2014|2149)\\d{11}$/', '0', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(11, 'Laser', '/^6304\\d{12}(\\d{2,3})?$/', '0', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(12, 'Maestro', '/^(50|56|57|58|6)/', '0', 0);
-INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(13, 'Saferpay Test Card', '/^9451123100000004$/', '0', 0);
+INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(13, 'Smartpay', '/^4\\d{12}(\\d{3})?$/', '0', 0);
 
 INSERT INTO `lc_currencies` (`currencies_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_places`, `value`, `last_updated`) VALUES(1, 'US Dollar', 'USD', '$', '', '2', 1.00000000, '2012-12-07 09:25:45');
 INSERT INTO `lc_currencies` (`currencies_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_places`, `value`, `last_updated`) VALUES(2, 'Euro', 'EUR', '€', '', '2', 1.20760000, '2012-12-07 09:25:45');

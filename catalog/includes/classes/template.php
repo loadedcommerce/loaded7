@@ -679,6 +679,7 @@
  */
     function getPageOGPTags() {
       $tag_string = '';
+      if (!is_array($this->_ogp_tags)) return $tag_string;     
       foreach ($this->_ogp_tags as $key => $values) {
           for ($i=0; $i<=sizeof($values); $i++){
               if(!empty($values[$i])){
