@@ -8,7 +8,7 @@
     </definition>  
     <definition>
       <key>payment_paypal_adv_payment_title</key>
-      <value><![CDATA[Secure Payments by %s]]></value>
+      <value><![CDATA[%s Payments Advanced]]></value>
       <group>modules-payment</group>
     </definition>          
     <definition>
@@ -18,7 +18,7 @@
     </definition>
     <definition>
       <key>payment_paypal_adv_button_description</key>
-      <value><![CDATA[Payments Advanced (includes Express Checkout) <a target="_blank" href="https://www.paypal.com/webapps/mpp/referral/paypal-payments-advanced?partner_id=QXM5AQKDYTXQS"><small><i><u>Learn More</u></i></small></a>]]></value>
+      <value><![CDATA[(includes Express Checkout) <a target="_blank" href="https://www.paypal.com/webapps/mpp/referral/paypal-payments-advanced?partner_id=QXM5AQKDYTXQS"><small><i><u>Learn More</u></i></small></a>]]></value>
       <group>modules-payment</group>
     </definition>    
     <definition>
