@@ -241,6 +241,6 @@ class lC_General_Admin {
     
     // return the image name      
     return $result;
-  }
+  } 
 }
 ?>
