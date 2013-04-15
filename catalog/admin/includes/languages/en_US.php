@@ -235,3 +235,6 @@ text_version = Version
 update_message_title = Updates are Available!
 update_message_text1 = New version
 update_message_text2 = released.
+
+site_maintenance_message_title = Maintenance Mode
+site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
