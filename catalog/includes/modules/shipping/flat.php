@@ -69,7 +69,7 @@
       $this->quotes = array('id' => $this->_code,
                             'module' => $this->_title,
                             'methods' => array(array('id' => $this->_code,
-                                                     'title' => $lC_Language->get('shipping_flat_method'),
+                                                     'title' => '<div style="padding:10px 0;">' . $lC_Language->get('shipping_flat_method') . '</div>',
                                                      'cost' => MODULE_SHIPPING_FLAT_COST)),
                             'tax_class_id' => $this->tax_class);
 
