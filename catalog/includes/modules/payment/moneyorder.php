@@ -25,7 +25,7 @@ class lC_Payment_moneyorder extends lC_Payment {
   * @var string
   * @access protected
   */  
-  protected $_moneyordere = 'moneyorder';
+  protected $_moneyorder = 'moneyorder';
  /**
   * The developers name
   *
@@ -109,8 +109,8 @@ class lC_Payment_moneyorder extends lC_Payment {
   * @return array
   */  
   public function selection() {
-    return array('id' => $this->_moneyordere,
-                 'module' => $this->_method_title);
+    return array('id' => $this->_moneyorder,
+                 'module' => '<div style="padding:10px 0;" class="paymentSelectionTitle">' . $this->_method_title . '</div>');
   }
  /**
   * Parse the response from the processor

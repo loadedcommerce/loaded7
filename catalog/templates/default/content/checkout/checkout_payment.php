@@ -134,9 +134,9 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                           <td colspan="2"><table border="0" width="100%" cellspacing="0" cellpadding="2">
                           <?php
                             if ( ($n == 1) || ($lC_ShoppingCart->hasBillingMethod() && ($selection[$i]['id'] == $lC_ShoppingCart->getBillingMethod('id'))) ) {
-                              echo '          <tr id="defaultSelected" class="moduleRowSelected" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
+                              echo '<tr id="defaultSelected" class="moduleRowSelected" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
                             } else {
-                              echo '          <tr class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
+                              echo '<tr class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
                             }
                           ?>
                           <td width="10">&nbsp;</td>
