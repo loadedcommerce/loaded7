@@ -22,11 +22,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
   <head>
-    <?php ini_set('default_charset', 'UTF-8'); ?>
-    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
     <title><?php echo STORE_NAME . ($lC_Template->hasPageTitle() ? ': ' . $lC_Template->getPageTitle() : ''); ?></title>
     <base href="<?php echo lc_href_link(null, null, 'AUTO', false); ?>" />
     <meta name="description" content="Loaded Commerce Shopping Cart">
@@ -35,18 +31,14 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <?php
      echo $lC_Template->getPageOGPTags();
     ?>
-
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
     <!-- Boilerplate CSS -->
     <link rel="stylesheet" href="templates/default/css/normalize.min.css">
-    
     <!-- Template CSS -->
     <link rel="stylesheet" href="templates/default/css/styles.css">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Istok+Web' type='text/css'>
     <link rel="stylesheet" type="text/css" href="ext/jquery/thickbox/thickbox.css" />
     <link rel="stylesheet" href="templates/default/css/loadmask.css?v=1">     
-
     <!-- Load Page/Group Specific Tags -->
     <?php
       echo $lC_Template->loadCSS($lC_Template->getCode(), $lC_Template->getGroup());
