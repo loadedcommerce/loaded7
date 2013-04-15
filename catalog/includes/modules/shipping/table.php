@@ -88,7 +88,7 @@
       $this->quotes = array('id' => $this->_code,
                             'module' => $this->_title,
                             'methods' => array(array('id' => $this->_code,
-                                                     'title' => '<div style="padding:10px 0;">' . $lC_Language->get('shipping_table_method') . '</div>',
+                                                     'title' => $lC_Language->get('shipping_table_method'),
                                                      'cost' => $shipping + MODULE_SHIPPING_TABLE_HANDLING)),
                             'tax_class_id' => $this->tax_class);
 

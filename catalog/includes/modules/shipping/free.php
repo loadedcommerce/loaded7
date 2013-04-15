@@ -72,8 +72,7 @@
       $this->quotes = array('id' => $this->_code,
                             'module' => $this->_title,
                             'methods' => array(array('id' => $this->_code,
-                                                     'title' => '<div style="padding:10px 0;">' . sprintf($lC_Language->get('shipping_free_for_amount'), $lC_Currencies->format(MODULE_SHIPPING_FREE_MINIMUM_ORDER)) . '</div>',
-                                                     
+                                                     'title' => sprintf($lC_Language->get('shipping_free_for_amount'), $lC_Currencies->format(MODULE_SHIPPING_FREE_MINIMUM_ORDER)),
                                                      'cost' => 0)),
                             'tax_class_id' => 0);
 

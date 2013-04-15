@@ -88,7 +88,7 @@
       $this->quotes = array('id' => $this->_code,
                             'module' => $this->_title,
                             'methods' => array(array('id' => $this->_code,
-                                                     'title' => '<div style="padding:10px 0;">' . $shipping_method . '</div>',
+                                                     'title' => $shipping_method,
                                                      'cost' => $shipping_cost)),
                             'tax_class_id' => $this->tax_class);
 
