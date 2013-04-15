@@ -69,14 +69,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @var integer
   * @access protected
   */   
-  protected $_order_status_complete;
- /**
-  * The public title of the payment module (storeside)
-  *
-  * @var string
-  * @access protected
-  */  
-  protected $_payment_title;  
+  protected $_order_status_complete;  
  /**
   * The Express Checkout Redirect URL
   *
@@ -91,9 +84,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
   public function lC_Payment_paypal_adv() {
     global $lC_Language;
 
-    $this->_title = $lC_Language->get('payment_paypal_adv_title');
-    $this->_method_title = $lC_Language->get('payment_paypal_adv_title');
-    $this->_payment_title = $lC_Language->get('payment_paypal_adv_payment_title');
+    $this->_title = $lC_Language->get('payment_paypal_adv_title'); // admin listing title
+    $this->_method_title = $lC_Language->get('payment_paypal_adv_method_title'); // public sidebar title 
     $this->_status = (defined('MODULE_PAYMENT_PAYPAL_ADV_STATUS') && (MODULE_PAYMENT_PAYPAL_ADV_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('MODULE_PAYMENT_PAYPAL_ADV_SORT_ORDER') ? MODULE_PAYMENT_PAYPAL_ADV_SORT_ORDER : null);
 
@@ -182,7 +174,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     global $lC_Language;
 
     $selection = array('id' => $this->_code,
-                       'module' => '<div class="payment-selection">' . sprintf($this->_payment_title, lc_image('images/payment/paypal-small.png', null, null, null, 'style="vertical-align:middle;"')) . '<span>' . lc_image('images/payment/paypal-cards.png', null, null, null, 'style="vertical-align:middle;"') . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_adv_button_description') . '</div>');    
+                       'module' => '<div class="payment-selection">' . sprintf($lC_Language->get('payment_paypal_adv_payment_title'), lc_image('images/payment/paypal-small.png', null, null, null, 'style="vertical-align:middle;"')) . '<span>' . lc_image('images/payment/paypal-cards.png', null, null, null, 'style="vertical-align:middle;"') . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_adv_payment_blurb') . '</div>');    
     
     return $selection;
   }
