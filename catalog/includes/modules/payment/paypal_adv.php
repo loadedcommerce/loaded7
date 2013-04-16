@@ -232,12 +232,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
   */ 
   public function process() {
     global $lC_Language, $lC_Database, $lC_MessageStack, $lC_ShoppingCart;
- 
- echo "<pre>";
- print_r($_POST);
- print_r($_GET);
- echo "</pre>";
- die('00');
+
     if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) {  // this is express checkout - goto ec process
       if (isset($_GET['PayerID']) && $_GET['PayerID'] != NULL) {
         $_SESSION['PPEC_PAYDATA']['TOKEN'] = $_GET['token'];
@@ -261,7 +256,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     } else if (isset($_SESSION['PPEC_PROCESS']) && $_SESSION['PPEC_PROCESS'] != NULL) {
        $response = $this->doExpressCheckoutPayment();
        $result = (isset($response['RESULT']) && $response['RESULT'] != NULL) ? $response['RESULT'] : NULL;  
-    } else {
+    } else {     
       $result = (isset($_POST['RESULT']) && $_POST['RESULT'] != NULL) ? $_POST['RESULT'] : NULL;
       if (!isset($this->_order_id) || $this->_order_id == NULL) $this->_order_id = (isset($_POST['INVNUM']) && !empty($_POST['INVNUM'])) ? $_POST['INVNUM'] : $_POST['INVOICE'];
     }               
@@ -510,6 +505,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
                 "&TRXTYPE=" . $transType . 
                 "&TENDER=P" . 
                 "&ACTION=D" . 
+                "&BUTTONSOURCE=CRELoaded_Cart_EC_US" .
                 "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
                 "&TOKEN=" . $token . 
                 "&PAYERID=" . $payerID;
@@ -614,7 +610,6 @@ class lC_Payment_paypal_adv extends lC_Payment {
                 "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
                 "&RETURNURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .
                 "&CANCELURL=" . lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true) .                 
-                "&BUTTONSOURCE=CRELoaded_Cart_EC_US" . $itemsString .
                 "&ITEMAMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getSubTotal(), $lC_Currencies->getCode()) . 
                 "&TAXAMT=" . $lC_Currencies->formatRaw($taxTotal, $lC_Currencies->getCode()) . 
                 "&FREIGHTAMT=" . $shippingTotal . 
