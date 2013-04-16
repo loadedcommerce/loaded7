@@ -2520,67 +2520,7 @@ li.message-menu {
 		body.reversed #menu header {
 			text-align: right;
 		}
-
-	/* User name/profile */
-	#profile {
-		display: block;
-		font-size: 14px;
-		line-height: 14px;
-		color: #b2b2b2;
-		background: #31363a url(../img/old-browsers/style/bg_profile.png) repeat-x;
-		-webkit-background-size: 100% 100%;
-		-moz-background-size: 100% 100%;
-		-o-background-size: 100% 100%;
-		background-size: 100% 100%;
-		background: -webkit-gradient(linear, left top, left bottom, from(#383e42), to(#31363a));
-		background: -webkit-linear-gradient( top, #383e42, #31363a );
-		background: -moz-linear-gradient( top, #383e42, #31363a );
-		background: -ms-linear-gradient( top, #383e42, #31363a );
-		background: -o-linear-gradient( top, #383e42, #31363a );
-		background: linear-gradient( top, #383e42, #31363a );
-    overflow: hidden;
-    width:100%;
-		}
-    .profile50 { 
-      float:left; 
-      width:50%; 
-    }
-    #profileLeft {
-      padding:25px 10px 0px 10px;
-      cursor: pointer;
-    }
-    #profileRight {
-      padding:30px 0px 0px 0px;
-    }
-    .profileRightBr {
-      margin-bottom:6px;
-    }
-    .prf-top-bot-10 {
-      margin-top: 10px !important;
-      margin-bottom: 10px !important;
-    }
-		#profile .user-icon {
-			float: left;
-			margin: 0 10px 0 -2px;
-		}
-		#profile .name {
-			display: block;
-			font-size: 24px;
-			line-height: 22px;
-			color: white;
-			margin-bottom: 4px;
-      overflow:hidden; 
-      text-overflow: ellipsis;
-		}
-    .profile-right-fourth {
-      float: left;
-      text-align: center;
-      width: 25%;
-      height: 64px;
-    }
-    .prf-bottom {
-      padding-top: 30px;
-    }
+    
 		#access {
 			min-height: 62px;
 			width: 100%;
@@ -4607,6 +4547,8 @@ a:link {
   right:0px;
   padding: 5px 20px;
 }
+
+#mainMessageContainer { margin:50px 273px 0 84px }
 
 @media screen and (max-width: 991px) {
   .hide-below-992 { display: none !important; } 

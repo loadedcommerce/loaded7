@@ -110,7 +110,7 @@ class lC_Payment_cod extends lC_Payment {
   */  
   public function selection() {
     return array('id' => $this->_code,
-                 'module' => $this->_method_title);
+                 'module' => '<div style="padding:10px 0;" class="paymentSelectionTitle">' . $this->_method_title . '</div>');
   }
  /**
   * Parse the response from the processor

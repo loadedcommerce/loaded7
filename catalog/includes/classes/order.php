@@ -131,7 +131,7 @@
         $payment_method = $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getCode();
       } else if (isset($_SESSION['cartSync']['paymentMethod']) && $_SESSION['cartSync']['paymentMethod'] != NULL) {
         $payment_method = $_SESSION['cartSync']['paymentMethod'];
-      }
+      }      
       
       $Qorder = $lC_Database->query('insert into :table_orders (customers_id, customers_name, customers_company, customers_street_address, customers_suburb, customers_city, customers_postcode, customers_state, customers_state_code, customers_country, customers_country_iso2, customers_country_iso3, customers_telephone, customers_email_address, customers_address_format, customers_ip_address, delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state, delivery_state_code, delivery_country, delivery_country_iso2, delivery_country_iso3, delivery_address_format, billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state, billing_state_code, billing_country, billing_country_iso2, billing_country_iso3, billing_address_format, payment_method, payment_module, date_purchased, orders_status, currency, currency_value) values (:customers_id, :customers_name, :customers_company, :customers_street_address, :customers_suburb, :customers_city, :customers_postcode, :customers_state, :customers_state_code, :customers_country, :customers_country_iso2, :customers_country_iso3, :customers_telephone, :customers_email_address, :customers_address_format, :customers_ip_address, :delivery_name, :delivery_company, :delivery_street_address, :delivery_suburb, :delivery_city, :delivery_postcode, :delivery_state, :delivery_state_code, :delivery_country, :delivery_country_iso2, :delivery_country_iso3, :delivery_address_format, :billing_name, :billing_company, :billing_street_address, :billing_suburb, :billing_city, :billing_postcode, :billing_state, :billing_state_code, :billing_country, :billing_country_iso2, :billing_country_iso3, :billing_address_format, :payment_method, :payment_module, now(), :orders_status, :currency, :currency_value)');
       $Qorder->bindTable(':table_orders', TABLE_ORDERS);
@@ -321,8 +321,6 @@
           billing_country_iso2 = :billing_country_iso2,
           billing_country_iso3 = :billing_country_iso3,
           billing_address_format = :billing_address_format,   
-          payment_module = :payment_module,
-          payment_method = :payment_method,
           currency = :currency, 
           currency_value = :currency_value, 
           orders_status = :orders_status where orders_id = :orders_id');
@@ -367,8 +365,6 @@
         $Qupdate->bindValue(':billing_country_iso2', $lC_ShoppingCart->getBillingAddress('country_iso_code_2'));
         $Qupdate->bindValue(':billing_country_iso3', $lC_ShoppingCart->getBillingAddress('country_iso_code_3'));
         $Qupdate->bindValue(':billing_address_format', $lC_ShoppingCart->getBillingAddress('format'));
-        $Qupdate->bindValue(':payment_method', $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getTitle());
-        $Qupdate->bindValue(':payment_module', $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getCode());
         $Qupdate->bindValue(':currency', $lC_Currencies->getCode());
         $Qupdate->bindValue(':currency_value', $lC_Currencies->value($lC_Currencies->getCode()));
       } else {

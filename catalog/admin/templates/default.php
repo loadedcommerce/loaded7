@@ -124,7 +124,13 @@
   if ($lC_Template->hasPageHeader()) {
     include($lC_Vqmod->modCheck('templates/default/header.php'));
   }
-
+  ?>
+  
+  <div id="mainMessageContainer" style="display:none;">
+    <p class="message icon-warning orange-gradient black icon-black" style="cursor:pointer"></p>
+  </div>
+    
+  <?php
   if ($lC_Template->hasPageWrapper()) {
     ?>
     <!-- Button to open/hide menu -->
@@ -178,7 +184,7 @@
                 <?php echo $lC_Language->get('text_hello'); ?>
                 <span class="name"><?php echo $_SESSION['admin']['firstname']; ?><br />
                 <?php echo $_SESSION['admin']['lastname']; ?></span>
-                <small class="margin-left"><?php echo $lC_Language->get('profile_slate_edit_logout'); ?></small>
+                <small class="profile-edit-logout"><?php echo $lC_Language->get('profile_slate_edit_logout'); ?></small>
               </div>
             </div>
             <div class="profile50">

@@ -18,7 +18,10 @@ require('includes/application_top.php');
 <head>
 <title></title>
 <?php
-if (isset($_POST) && $_POST != NULL) $_SESSION['PROCESS_DATA'] = $_POST;
+// collect the post
+$_SESSION['PROCESS_DATA'] = (isset($_POST) && $_POST != NULL) ? $_POST : array();
+// collect the get
+if (empty($_SESSION['PROCESS_DATA'])) $_SESSION['PROCESS_DATA'] = (isset($_GET) && !empty($_GET)) ? $_GET : array();
 ?>
 <script>
  parent.location = '<?php echo lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true); ?>';

@@ -86,7 +86,11 @@ class lC_Modules_payment_Admin {
       if ( !lc_empty($Qkey->value('set_function')) ) {
         $keys .= lc_call_user_func($Qkey->value('set_function'), $Qkey->value('configuration_value'), $key);
       } else {
-        $keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input"');
+        if (stristr($key, 'password')) {
+          $keys .= lc_draw_password_field('configuration[' . $key . ']', 'class="input"', $Qkey->value('configuration_value'));
+        } else {
+          $keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input"');
+        }
       }
       $keys .= '&nbsp;<span class="icon-info-round icon-blue with-tooltip with-small-padding" style="cursor:pointer;" title="' . $Qkey->value('configuration_description') . '" data-tooltip-options=\'{"classes":["blue-gradient"]}\'></span><br /><br />';
       $cnt++;

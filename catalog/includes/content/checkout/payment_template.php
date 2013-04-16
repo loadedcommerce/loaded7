@@ -11,6 +11,8 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+include_once('includes/classes/payment.php');  
+
 class lC_Checkout_Payment_template extends lC_Template {
 
   /* Private variables */
@@ -21,7 +23,14 @@ class lC_Checkout_Payment_template extends lC_Template {
 
   /* Class constructor */
   function lC_Checkout_Payment_template() {
-      global $lC_ShoppingCart, $lC_Language;
+      //global $lC_Database, $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Payment, $lC_MessageStack, $lC_Vqmod;
+      global $lC_ShoppingCart, $lC_Language, $lC_Payment;
+      
+      if ($lC_ShoppingCart->getBillingMethod('id')) {
+        $lC_Payment = new lC_Payment($lC_ShoppingCart->getBillingMethod('id'));                
+      } else {
+        $lC_Payment = new lC_Payment();                
+      }               
 
       $this->_page_title = $lC_Language->get('secure_payment_heading_title');
   }

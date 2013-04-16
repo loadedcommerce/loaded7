@@ -383,6 +383,18 @@ class lC_Default {
     return $countries_array;   
   }
  /*
+  * Sets the media type to session
+  *
+  * @access public
+  * @return boolean
+  */
+  public static function setMediaType($type) {
+    
+    $_SESSION['mediaType'] = $type;
+    
+    return true;   
+  }  
+ /*
   * Returns the product listing data
   *
   * @access private

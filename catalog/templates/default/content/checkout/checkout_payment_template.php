@@ -11,41 +11,82 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-
+$secureUrl = substr($lC_Payment->iframe_action_url, 0, strpos($lC_Payment->iframe_action_url, '?'));
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
 /*content area width, it is needed*/
-.colMid {width:75%;}
-/*form styles*/
-dd { margin:0 0 10px 10px; }
-.form-list li { margin:0 0 8px; }
-.form-list label { float:left; color:#666; font-weight:bold; position:relative; z-index:0; }
-.form-list label.required {}
-.form-list label.required em { float:right; font-style:normal; color:#eb340a; position:absolute; top:10; right:-18px; }
-.form-list .input-box { display:block; clear:both; width:98%; }
-.form-list .field { float:left; width:275px; }
-.form-list input.input-text { width:98%; height:20px; }
-.form-list select { width:100%; height:25px; padding:5px }
-#payment-button { color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#873b7a !important; border:0px; line-height:100%; cursor:pointer; vertical-align:middle; float:right; }
-#payment-buttons-container { width: 98%; }
-#cancel { float:left; }
-#checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding-top: 4px; width: 100%; height:478px; }
-.v-fix { padding-bottom:15px; }
-#payment_form_ccsave u { float:right; padding-right: 15px; }
-#payment-processing { right: 50px; margin-top: 8px; }
-#ot-container { display: block; }
-@media only screen and (max-width: 320px) {
-  #checkoutConfirmationDetails { width: 83% !important; } 
-}
-
+.colMid { width:75%; }
+#checkoutConfirmationDetails { background-color: #F9F8F6; border: 1px solid #EBE2D9; padding-top: 4px; width: 100%; }
 #paymentTemplateContainer .security-info-title { cursor:pointer; float:right; }
 #paymentTemplateContainer .security-info-text-container { margin:0 -5px 10px 0; background-color:#edfbec; }
-#paymentTemplateContainer .security-info-url { border:1px solid #ccc; padding:5px; }
+#paymentTemplateContainer .security-info-url { border:1px solid #ccc; padding:5px; font-weight:bold; }
 #paymentTemplateContainer .security-info-text { border:1px solid #ccc; padding:7px 5px; }
 #paymentTemplateContainer .arrow-container { margin-top:15px; }
 #paymentTemplateContainer .arrow-down { border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid gray; float: right; height: 0; width: 0; margin:13px 0 0 6px; }
 #paymentTemplateContainer .arrow-up { border-bottom: 10px solid gray; border-left: 10px solid transparent; border-right: 10px solid transparent; float: right; height: 0; width: 0; margin:13px 0 0 6px; } 
+
+#loadingContainer { position:absolute; right:250px; }
+#iloader { margin:100px 0 0 0px; }
+<?php 
+if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
+  echo "#payformIframe { min-width:468px; min-height:580px; }";
+} else if ($lC_ShoppingCart->getBillingMethod('id') == 'cresecure') {
+  echo "#payformIframe { min-width:480px; min-height:300px; }";
+}
+?>
+
+/* Mobile (landscape) ----------- */
+@media only screen 
+and (min-width : 321px) 
+and (max-device-width : 480px) {
+  #payformIframe { min-width:460px; min-height:300px; }
+  #checkoutConfirmationDetails {width: 98% !important; }
+}
+
+/* Mobile (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+  #payformIframe { min-width:300px; min-height:380px; }
+  #checkoutConfirmationDetails {width: 96% !important; }
+}
+
+/* Tablet (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+  #payformIframe { min-width:520px; min-height:300px; }
+  #checkoutConfirmationDetails {width: 96% !important; }
+}
+
+/* Tablet (portrait) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+  #payformIframe { min-width:460px; min-height:300px; }
+  #checkoutConfirmationDetails {width: 96% !important; }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen 
+and (min-width : 1224px) {
+/* Styles */
+}
+
+/* Large screens ----------- */
+@media only screen 
+and (min-width : 1824px) {
+/* Styles */
+}
+
+/* iPhone 4 ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio : 1.5),
+only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
+}
 </style>
 <div id="paymentTemplateContainer" class="full_page">
   <h5><?php echo $lC_Language->get('text_checkout'); ?></h5>
@@ -75,7 +116,7 @@ dd { margin:0 0 10px 10px; }
                          '<div class="security-info-title" onclick="toggleSecurityInfo();"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin:10px 5px;"') . $lC_Language->get('secure_payment_security_info_title'); ?><span class="arrow-container"><span id="arrow" class="arrow-down"></span></span></div>'+
                          '<div style="clear:both;"></div>'+
                          '<div class="security-info-text-container" style="display:none;">'+
-                         '  <div class="security-info-url"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin-right:5px;"') . "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s://" : "://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?></div>'+
+                         '  <div class="security-info-url"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin-right:5px;"') . $secureUrl; ?></div>'+
                          '  <div class="security-info-text"><?php echo $lC_Language->get('secure_payment_security_info_text'); ?></div>'+
                          '</div></div><div style="clear:both;"></div>';
             
@@ -103,12 +144,11 @@ dd { margin:0 0 10px 10px; }
             
             <div id="checkout_shipping_col2" style="width:67%; float:right; margin-right:-4px">
               <div id="checkoutConfirmationDetails"> 
+                <div id="loadingContainer"><p id="iloader"></p></div>
                 <?php
-                if (isset($_POST['SECURETOKEN']) && $_POST['SECURETOKEN'] != NULL && isset($_POST['iframe_action_url']) && $_POST['iframe_action_url'] != NULL) {
-                  // paypal iframe
-                  echo '<iframe src="' . $_POST['iframe_action_url'] . '?mode=' . $_POST['MODE'] . '&amp;SECURETOKEN=' . $_POST['SECURETOKEN'] . '&amp;SECURETOKENID=' . $_POST['SECURETOKENID'] . '" width="480" height="475" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
+                if (isset($lC_Payment->iframe_action_url) && $lC_Payment->iframe_action_url != NULL) {
+                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
                 } else {
-                  // cre
                   echo '[[FORM INSERT]]'; 
                 }
               ?>
@@ -121,4 +161,14 @@ dd { margin:0 0 10px 10px; }
   </div>
 </div>
 <div style="clear:both;"></div>
+<script>
+function hideLoader() {
+  var loadDiv = document.getElementById("loadingContainer"); 
+  loadDiv.style.display = "none"; 
+}
+
+$(function() {
+  $('#iloader').activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5});
+});
+</script>
 <!--content/checkout/checkout_payment_template.php end-->
