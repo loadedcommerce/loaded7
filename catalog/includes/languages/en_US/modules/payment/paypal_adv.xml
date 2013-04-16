@@ -23,7 +23,7 @@
     </definition>  
     <definition>
       <key>payment_paypal_adv_method_title</key>
-      <value><![CDATA[Secure Payments by <img src="images/payment/paypal-small.png" style="vertical-align:middle"><br />Pay with PayPal - The faster, safer way to pay. <a target="_blank" href="https://www.paypal.com/webapps/mpp/referral/paypal-payments-advanced?partner_id=QXM5AQKDYTXQS"><small><i><u>Learn More</u></i></small></a>]]></value>
+      <value><![CDATA[Secure Payments by <img src="images/payment/paypal-small.png" style="vertical-align:middle"><br />Pay with PayPal - The faster, safer way to pay.]]></value>
       <group>modules-payment</group>
     </definition> 
     <definition>   
