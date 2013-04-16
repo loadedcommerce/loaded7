@@ -233,6 +233,11 @@ class lC_Payment_paypal_adv extends lC_Payment {
   public function process() {
     global $lC_Language, $lC_Database, $lC_MessageStack, $lC_ShoppingCart;
  
+ echo "<pre>";
+ print_r($_POST);
+ print_r($_GET);
+ echo "</pre>";
+ die('00');
     if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL) {  // this is express checkout - goto ec process
       if (isset($_GET['PayerID']) && $_GET['PayerID'] != NULL) {
         $_SESSION['PPEC_PAYDATA']['TOKEN'] = $_GET['token'];
@@ -743,7 +748,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     @parse_str($response, $dataArr);
     
     if ($dataArr['RESULT'] != 0) { // server failure error
-      $errmsg = $lC_Language->get('payment_paypal_adv_error_occurred');
+      $errmsg = sprintf($lC_Language->get('payment_paypal_adv_error_occurred'), '(' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']);
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
     }    
     
