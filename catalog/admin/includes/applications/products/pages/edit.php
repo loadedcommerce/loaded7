@@ -448,31 +448,32 @@ function toggleEditor(id) {
       for ( i=0; i<data.entries.length; i++ ) {
         var entry = data.entries[i];
 
-        var style = 'width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px; padding: 10px; float: left; text-align: center;';
+        var style = 'width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px; margin: 10px; padding: 10px; float: left; text-align: center; border-radius: 5px;';
 
         if ( entry[1] == '1' ) { // original (products_images_groups_id)
-          var onmouseover = 'this.style.backgroundImage=\'url(<?php echo lc_href_link_admin('templates/' . $lC_Template->getCode() . '/img/icons/16/drag.png'); ?>)\'; this.style.backgroundRepeat=\'no-repeat\';  this.style.zIndex=\'300000 !important\'; this.style.backgroundPosition=\'8px 2px\';';
+          var onmouseover = 'this.style.backgroundColor=\'#656565\'; this.style.backgroundImage=\'url(<?php echo lc_href_link_admin('templates/' . $lC_Template->getCode() . '/img/icons/16/drag.png'); ?>)\'; this.style.backgroundRepeat=\'no-repeat\'; this.style.zIndex=\'300000 !important\'; this.style.backgroundPosition=\'8px 2px\';';
           
           if ( entry[6] == '1' ) { // default_flag
             //style += ' background-color: #E5EFE5;';
             style += ' ';
 
+            //var onmouseover += 'this.style.backgroundColor=\'#656565\';';
             //var onmouseout = 'this.style.backgroundColor=\'#E5EFE5\'; this.style.backgroundImage=\'none\';';
-            var onmouseout = 'this.style.backgroundImage=\'none\';';
+            var onmouseout = 'this.style.backgroundColor=\'\'; this.style.backgroundImage=\'none\';';
           } else {
+            var onmouseover = 'this.style.backgroundColor=\'#656565\';';
             //var onmouseout = 'this.style.backgroundColor=\'#FFFFFF\'; this.style.backgroundImage=\'none\';';
-            var onmouseout = 'this.style.backgroundImage=\'none\';';
+            var onmouseout = 'this.style.backgroundColor=\'\'; this.style.backgroundImage=\'none\';';
           }
         } else {
-          //var onmouseover = 'this.style.backgroundColor=\'#EFEBDE\';';
-          var onmouseover = '';
-          //var onmouseout = 'this.style.backgroundColor=\'#FFFFFF\';';
-          var onmouseout = '';
+          var onmouseover = 'this.style.backgroundColor=\'#656565\';';
+          //var onmouseover = '';
+          var onmouseout = 'this.style.backgroundColor=\'\';';
+          //var onmouseout = '';
         }
 
         var newdiv = '<span id="image_' + entry[0] + '" style="' + style + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
-        //newdiv += '<a href="' + entry[4] + '" target="_blank"><img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[2] + '" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /></a><br />' + entry[3] + '<br />' + entry[5] + ' bytes<br />';
-        newdiv += '<a href="' + entry[4] + '" target="_blank"><img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /></a><br />' + entry[3] + '<br />';
+        newdiv += '<a href="' + entry[4] + '" target="_blank"><img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /></a><br />' + entry[3];
 
         if ( entry[1] == '1' ) {
           if ( entry[6] == '1' ) {
