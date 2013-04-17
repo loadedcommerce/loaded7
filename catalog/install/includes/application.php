@@ -26,7 +26,7 @@ define('HTTPS_COOKIE_DOMAIN', '');
 require_once('../ext/vqmod/vqmod.php');
 $lC_Vqmod = new VQMod();
 
-require($lC_Vqmod->modCheck('../includes/functions/compatibility.php'));
+require('../includes/functions/compatibility.php');
 
 require('../includes/functions/general.php');
 require('functions/general.php');
