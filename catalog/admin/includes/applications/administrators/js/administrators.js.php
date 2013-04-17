@@ -121,7 +121,7 @@ if (!empty($_GET['set']) && $_GET['set'] == 'members') { // members
         $("#aEdit").validate();
       } else {
         // set focus to first input field
-        $("input:text:visible:first").focus();
+        //$("input:text:visible:first").focus();
         $("#aNew").validate();
       }
 
