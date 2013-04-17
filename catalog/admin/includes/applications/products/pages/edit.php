@@ -712,13 +712,6 @@ function toggleEditor(id) {
               </div>
               <div class="new-row-mobile eight-columns twelve-columns-mobile">             
                 <div class="columns">
-                  <!--<div class="twelve-columns mid-margin-bottom align-right">
-                    <select class="select">
-                      <?php foreach ( $lC_Language->getAll() as $l ) { ?>
-                      <option id="<?php echo $l['code']; ?>" value="<?php echo $l['code']; ?>"><?php echo $l['name']; ?></option>
-                      <?php } ?>
-                    </select>
-                  </div>-->
                   <div class="twelve-columns no-margin-bottom">
                     <span class="small-margin-bottom"><?php echo $lC_Language->get('field_name'); ?></span>
                     <span class="info-spot on-left grey float-right small-margin-bottom">
@@ -729,7 +722,14 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom">
-                    <?php echo lc_draw_input_field('products_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null), 'class="required input full-width"'); ?>
+                    <span class="input full-width">  
+                      <select name="pseudo-input-select" class="select compact expandable-list float-right prod-edit-lang-select">
+                        <?php foreach ( $lC_Language->getAll() as $l ) { ?>
+                        <option id="<?php echo $l['code']; ?>" value="<?php echo $l['code']; ?>"><?php echo $l['name']; ?></option>
+                        <?php } ?>
+                      </select>
+                      <input type="text" class="required input-unstyled" style="width:60%;" value="<?php echo (isset($lC_ObjectInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null); ?>" id="<?php echo 'products_name[' . $l['id'] . ']'; ?>" name="<?php echo 'products_name[' . $l['id'] . ']'; ?>">
+                    </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom mid-margin-top">
                     <span class="small-margin-bottom"><?php echo $lC_Language->get('field_description'); ?></span>
@@ -1152,7 +1152,7 @@ function toggleEditor(id) {
               <!-- lc_qty_price_breaks end --> 
               <div class="field-block field-block-product button-height">
                 <label for="specials-pricing-switch" class="label"><b><?php echo $lC_Language->get('text_special_pricing'); ?></b></label>
-                <input id="specials-pricing-switch" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' checked' : ''); ?> />
+                <input onchange="$('#specials_pricing_container').toggle('300');" id="specials-pricing-switch" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' checked' : ''); ?> />
                 <span class="info-spot on-left grey margin-left margin-right">
                   <span class="icon-info-round"></span>
                   <span class="info-bubble">
