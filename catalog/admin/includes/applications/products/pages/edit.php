@@ -142,27 +142,19 @@ function getTaxClassOptionsString($id = null, $esc = false) {
 }
 ?>
 <script type="text/javascript" src="../ext/tiny_mce/tiny_mce.js"></script>
-<script>
-tinyMCE.init({
-  mode : "none",
-  theme : "advanced",
-  language : "<?php echo substr($lC_Language->getCode(), 0, 2); ?>",
-  height : "400",
-  theme_advanced_toolbar_align : "left",
-  theme_advanced_toolbar_location : "top",
-  theme_advanced_statusbar_location : "bottom",
-  cleanup : false,
-  plugins : "style,layer,table,advimage,advlink,preview,contextmenu,paste,fullscreen,visualchars",
-  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,formatselect,fontselect,fontsizeselect,bullist,numlist,separator,outdent,indent",
-  theme_advanced_buttons2 : "undo,redo,separator,link,unlink,anchor,image,code,separator,preview,separator,forecolor,backcolor,tablecontrols,separator,hr,removeformat,visualaid",
-  theme_advanced_buttons3 : "sub,sup,separator,charmap,fullscreen,separator,insertlayer,moveforward,movebackward,absolute,|,styleprops,|,visualchars"
-});
-
+<script> 
 function toggleEditor(id) {
-  if ( !tinyMCE.get(id) ) {
-    tinyMCE.execCommand('mceAddControl', false, id);
+  var editorHidden = $("#products_description_" + id).is(":visible");
+  if (editorHidden) {
+    //alert('show');
+    $("#products_description_" + id).cleditor({width:"99%", height:"350"});
   } else {
-    tinyMCE.execCommand('mceRemoveControl', false, id);
+    //alert('hide');
+    var editor = $("#products_description_" + id).cleditor()[0];
+    editor.$area.insertBefore(editor.$main); // Move the textarea out of the main div
+    editor.$area.removeData("cleditor"); // Remove the cleditor pointer from the textarea
+    editor.$main.remove(); // Remove the main div and all children from the DOM
+    $("#products_description_" + id).show();
   }
 }
 </script>
@@ -749,8 +741,8 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom">
-                    <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'class="required input full-width"'); ?>
-                    <span class="float-right small-margin-top"><a href="#">Enlarge Description <span class="icon-extract icon-grey"></span></a>&nbsp;&nbsp;&nbsp;<?php echo '<a href="javascript:toggleEditor(\'products_description[' . $l['id'] . ']\');">' . $lC_Language->get('toggle_html_editor') . '</a>'; ?></span>
+                    <?php echo lc_draw_textarea_field('products_description_' . $l['id'], (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'class="required input full-width"'); ?>
+                    <span class="float-right small-margin-top"><a href="#">Enlarge Description <span class="icon-extract icon-grey"></span></a>&nbsp;&nbsp;&nbsp;<?php echo '<a href="javascript:toggleEditor(' . $l['id'] . ');">' . $lC_Language->get('toggle_html_editor') . '</a>'; ?></span>
                   </div>
                   <div class="twelve-columns no-margin-bottom mid-margin-top">
                     <span class="full-width">
@@ -762,6 +754,48 @@ function toggleEditor(id) {
                         </span>
                       </span>
                     </span>
+                    <script type="text/javascript">
+                    $(document).ready(function() {
+                      var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
+                      var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateKeyword&pid=PID'); ?>';
+                      $("#product").validate({
+
+                        invalidHandler: function() {
+                          $("#checkAllTabs").html('<?php echo $lC_Language->get('ms_error_check_all_lang_tabs'); ?>').fadeIn('fast').delay(2000).fadeOut('slow');
+                        },
+                        rules: {
+                          <?php
+                          foreach ( $lC_Language->getAll() as $l ) {
+                            ?>
+                            "products_keyword[<?php echo $l['id']; ?>]": {
+                              required: true,
+                              remote: jsonVKUrl.replace('PID', pid),
+
+                            },
+                            <?php
+                          }
+                          ?>
+                        },
+                        messages: {
+                          <?php
+                          foreach ( $lC_Language->getAll() as $l ) {
+                            ?>
+                            "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
+                            <?php
+                          }
+                          ?>
+                        }
+                       });
+                       <?php
+                       if ( isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ) {
+                         ?>
+                         $("#has_variants").attr('checked', true);
+                         <?php
+                       }
+                       ?>
+                       //$( "button, input:submit, a", ".ui-dialog-buttonset" ).button();
+                     });
+                    </script>
                     <div class="full-width clear-right mid-margin-bottom">
                       <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input full-width" id="keyword' . $l['id'] . '"'); ?>
                     </div>
@@ -1376,7 +1410,7 @@ function toggleEditor(id) {
                       </label>
                       <label for="ic-radio-2" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
                         <!-- move onclick to function later maestro -->
-                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-2" value="2" onclick="$('#inventory_control_simple').hide('300');$('#inventory_control_multi').show('300');$('#section_options_content').show();$('#tabHeaderSectionOptions').show().removeClass('active');$('label[for=\'ic-radio-1\']').removeClass('active');$('label[for=\'ic-radio-2\']').addClass('active');$('label[for=\'ioc-radio-1\']').removeClass('active');$('label[for=\'ioc-radio-2\']').addClass('active');" />
+                        <input type="radio" name="inventory-control-radio-group" id="ic-radio-2" value="2" onclick="$('#inventory_control_simple').hide('300');$('#inventory_control_multi').show('300');$('#tabHeaderSectionOptions').show().removeClass('active');$('label[for=\'ic-radio-1\']').removeClass('active');$('label[for=\'ic-radio-2\']').addClass('active');$('label[for=\'ioc-radio-1\']').removeClass('active');$('label[for=\'ioc-radio-2\']').addClass('active');" />
                         <?php echo $lC_Language->get('text_multi_sku'); ?>
                       </label>
                       <label for="ic-radio-3" class="button disabled green-active">
