@@ -39,7 +39,7 @@ $Qtc = $lC_Database->query('select tax_class_id, tax_class_title from :table_tax
 $Qtc->bindTable(':table_tax_class', TABLE_TAX_CLASS);
 $Qtc->execute();
 $tax_class_array = array(array('id' => '0',
-                               'text' => $lC_Language->get('none')));
+                               'text' => $lC_Language->get('text_none')));
 while ($Qtc->next()) {
   $tax_class_array[] = array('id' => $Qtc->valueInt('tax_class_id'),
                              'text' => $Qtc->value('tax_class_title'));
@@ -78,7 +78,7 @@ if ( isset($lC_ObjectInfo) ) {
     if (isset($Qpb->result)) {
       $editPBEntry .= "<tr id='row"  . $rowCnt . "'><td width='100px'><select style='width:98%' name='price_breaks[group_id][]'>" . getCustomerGroupOptionsString($Qpb->valueInt('group_id'), true) . "</select></td>" .
                       "<td width='100px'><select style='width:98%' name='price_breaks[tax_class_id][]'>" . getTaxClassOptionsString($Qpb->valueInt('tax_class_id'), true) . "</select></td>" .
-                      "<td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' value='" . $Qpb->valueInt('qty_break') . "' name='price_breaks[qty][]' size='5' id='qty" . $rowCnt . "' /></td><td width='70%'>" . $lC_Language->get('price_breaks_above') . "</td></tr></table></td>" .
+                      "<td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' value='" . $Qpb->valueInt('qty_break') . "' name='price_breaks[qty][]' size='5' id='qty" . $rowCnt . "' /></td><td width='70%'>" . $lC_Language->get('text_price_breaks_above') . "</td></tr></table></td>" .
                       "<td width='80px'><input value='" . ((isset($lC_ObjectInfo)) ? number_format($Qpb->valueDecimal('price_break'), DECIMAL_PLACES) : null) . "' style='width:70px;' type='text' name='price_breaks[price][]' id='price" . $rowCnt . "' /></td>" .
                       "<td width='30px' align='center'><a id='row" . $rowCnt . "e' href='javascript://' onclick='removePriceBreakEntry(this);'><img border='0' src='images/icons/cross.png'></a></td></tr>";
       $rowCnt++;
@@ -524,7 +524,7 @@ function toggleEditor(id) {
     }
 
     function getImagesOriginals(makeCall) {
-      $('#imagesOriginal').html('<div id="showProgressOriginal" style="float: left; padding-left: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('images_loading_from_server'); ?></div>');
+      $('#imagesOriginal').html('<div id="showProgressOriginal" style="float: left; padding-left: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_loading_from_server'); ?></div>');
 
       if ( makeCall != false ) {
         $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=getImages&filter=originals'); ?>',
@@ -536,7 +536,7 @@ function toggleEditor(id) {
     }
 
     function getImagesOthers(makeCall) {
-      $('#imagesOther').html('<div id="showProgressOther" style="float: left; padding-left: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('images_loading_from_server'); ?></div>');
+      $('#imagesOther').html('<div id="showProgressOther" style="float: left; padding-left: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_loading_from_server'); ?></div>');
 
       if ( makeCall != false ) {
         $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=getImages&filter=others'); ?>',
@@ -621,7 +621,7 @@ function toggleEditor(id) {
     var id = $("#pbid").val();
     var newPBEntry = "<tr id='row" + id + "'><td width='100px'><select style='width:98%' name='price_breaks[group_id][]'><?php echo $groups_options_string; ?></select></td>" +
                      "    <td width='100px'><select style='width:98%' name='price_breaks[tax_class_id][]'><?php echo $tax_options_string; ?></select></td>" +
-                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][]' size='5' id='qty" + id + "' /></td><td width='70%'><?php echo $lC_Language->get('price_breaks_above'); ?></td></tr></table></td>" +
+                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][]' size='5' id='qty" + id + "' /></td><td width='70%'><?php echo $lC_Language->get('text_price_breaks_above'); ?></td></tr></table></td>" +
                      "    <td width='80px'><input value='<?php echo (isset($lC_ObjectInfo)) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null; ?>' style='width:70px;' type='text' name='price_breaks[price][]' id='price" + id + "' /></td>" +
                      "    <td width='30px' align='center'><a href='javascript://' onClick='$(\"#row" + id + "\").remove(); return false;'><img border='0' src='images/icons/cross.png'></a></td></tr>";
     $("#qty-pricing-grid > tbody").append(newPBEntry);
@@ -638,7 +638,7 @@ function toggleEditor(id) {
     var row = $("#newpbid" + id).val();
     var newPBEntry = "<tr id='row-" + id + '-' + row + "'><td width='100px'><select style='width:98%' name='price_breaks[group_id][" + id + "][]' id='price_breaks[group_id][" + id + "][]'><?php echo $groups_options_string; ?></select></td>" +
                      "    <td width='100px'><select style='width:98%' name='price_breaks[tax_class_id][" + id + "][]' id='price_breaks[tax_class_id][" + id + "][]'><?php echo $tax_options_string; ?></select></td>" +
-                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][" + id + "][]' id='price_breaks[qty][" + id + "][]' size='5' id='qty" + id + "' /></td><td width='70%'><?php echo $lC_Language->get('price_breaks_above'); ?></td></tr></table></td>" +
+                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][" + id + "][]' id='price_breaks[qty][" + id + "][]' size='5' id='qty" + id + "' /></td><td width='70%'><?php echo $lC_Language->get('text_price_breaks_above'); ?></td></tr></table></td>" +
                      "    <td width='80px'><input value='<?php echo (isset($lC_ObjectInfo)) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null; ?>' style='width:70px;' type='text' name='price_breaks[price][" + id + "][]' id='price_breaks[price][" + id + "][]' /></td>" +
                      "    <td width='30px' align='center'><a href='javascript://' onClick='$(\"#row-" + id + "-" + row + "\").remove(); return false;'><img border='0' src='images/icons/cross.png'></a></td></tr>";
     $("#qty-pricing-grid-variant" + id + " > tbody").append(newPBEntry);
@@ -684,7 +684,7 @@ function toggleEditor(id) {
                   &nbsp;
                 </div>-->
                 <div class="twelve-columns">
-                  <span><?php echo $lC_Language->get('products_image'); ?></span>
+                  <span><?php echo $lC_Language->get('text_product_image'); ?></span>
                   <span class="info-spot on-left grey float-right">
                     <span class="icon-info-round"></span>
                     <span class="info-bubble">
@@ -692,7 +692,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                   <dl class="accordion same-height small-margin-top">
-                    <dt><?php echo $lC_Language->get('products_image_preview'); ?>
+                    <dt><?php echo $lC_Language->get('text_product_image_preview'); ?>
                       <!--<div class="button-group absolute-right compact mid-margin-right">
                         <a href="#" class="button icon-cloud-upload disabled">Upload</a>
                         <a href="#" class="button icon-trash with-tooltip disabled" title="Delete"></a>
@@ -742,7 +742,7 @@ function toggleEditor(id) {
                   </div>
                   <div class="twelve-columns no-margin-bottom">
                     <?php echo lc_draw_textarea_field('products_description_' . $l['id'], (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'class="required input full-width"'); ?>
-                    <span class="float-right small-margin-top"><a href="#">Enlarge Description <span class="icon-extract icon-grey"></span></a>&nbsp;&nbsp;&nbsp;<?php echo '<a href="javascript:toggleEditor(' . $l['id'] . ');">' . $lC_Language->get('toggle_html_editor') . '</a>'; ?></span>
+                    <span class="float-right small-margin-top"><a href="#">Enlarge Description <span class="icon-extract icon-grey"></span></a>&nbsp;&nbsp;&nbsp;<?php echo '<a href="javascript:toggleEditor(' . $l['id'] . ');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
                   </div>
                   <div class="twelve-columns no-margin-bottom mid-margin-top">
                     <span class="full-width">
@@ -888,7 +888,7 @@ function toggleEditor(id) {
                     </span>
                   </span>
                 </span>
-                <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? $lC_Language->get('text_complex_variants') : $lC_ObjectInfo->get('products_model')); ?></b></p>
+                <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1)) ? $lC_Language->get('text_complex_variants') : (($lC_ObjectInfo->get('products_model') != '') ? $lC_ObjectInfo->get('products_model') : $lC_Language->get('text_no_model')); ?></b></p>
                 <span class="full-width">
                   <span><?php echo $lC_Language->get('field_date_available'); ?></span>
                   <span class="info-spot on-left grey float-right">
@@ -941,7 +941,7 @@ function toggleEditor(id) {
                         <td width="100%" height="100%" valign="top">
                           <div class="message white-gradient margin-bottom" style="min-height:37px;">
                             <div style="float: right;">
-                              <?php echo $lC_Language->get('products_image_drag_n_drop'); ?>
+                              <?php echo $lC_Language->get('text_product_image_drag_n_drop'); ?>
                               <!--<a href="#" id="remoteFilesLink" onclick="switchImageFilesView('remote');" style="font-weight:bolder; color:#000;"><?php echo $lC_Language->get('image_remote_upload'); ?></a> | <a href="#" id="localFilesLink" onclick="switchImageFilesView('local');" style="color:#000;"><?php echo $lC_Language->get('image_local_files'); ?></a>-->
                             </div>
                             <div id="remoteFiles" style="white-space:nowrap;">
@@ -981,7 +981,7 @@ function toggleEditor(id) {
                             }
                             ?>
                             <div id="localFiles" style="display: none;">
-                              <p><?php echo $lC_Language->get('introduction_select_local_images'); ?></p>
+                              <p><?php echo $lC_Language->get('text_introduction_select_local_images'); ?></p>
                               <select id="localImagesSelection" name="localimages[]" size="5" multiple="multiple" style="width: 100%;"></select>
                               <div id="showProgressGetLocalImages" style="display: none; float: right; padding-right: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_retrieving_local_files'); ?></div>
                               <p><?php echo realpath('../images/products/_upload'); ?></p>
@@ -1022,14 +1022,14 @@ function toggleEditor(id) {
           <!-- pricing_tab -->
           <div id="section_pricing_content" class="with-padding">
             <fieldset class="fieldset fields-list">
-              <legend class="legend"><?php echo $lC_Language->get('princing_overrides'); ?></legend>
+              <legend class="legend"><?php echo $lC_Language->get('text_pricing_overrides'); ?></legend>
               <div class="field-block button-height">
-                <label for="" class="label"><b><?php echo $lC_Language->get('base_price'); ?></b></label>
+                <label for="" class="label"><b><?php echo $lC_Language->get('text_base_price'); ?></b></label>
                 <input type="text" name="" id="" value="<?php echo lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input" />
               </div>
               <!-- lc_group_pricing begin -->
               <div class="field-block field-block-product button-height">
-                <label for="" class="label"><b><?php echo $lC_Language->get('group_pricing'); ?></b></label>
+                <label for="" class="label"><b><?php echo $lC_Language->get('text_group_pricing'); ?></b></label>
                 <input onchange="$('#groups_pricing_pro_badge').toggle('300');$('#groups_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" />
                 <span class="info-spot on-left grey margin-left">
                   <span class="icon-info-round"></span>
@@ -1078,7 +1078,7 @@ function toggleEditor(id) {
               <!-- lc_group_pricing end -->
               <!-- lc_qty_price_breaks begin -->
               <div class="field-block field-block-product button-height">
-                <label for="" class="label"><b><?php echo $lC_Language->get('qty_break_pricing'); ?></b></label>
+                <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_break_pricing'); ?></b></label>
                 <input onchange="$('#qty_breaks_number_of_break_points').toggle('300');$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" />
                 <span class="info-spot on-left grey margin-left margin-right">
                   <span class="icon-info-round"></span>
@@ -1114,7 +1114,7 @@ function toggleEditor(id) {
                 <div>
                   <span style="white-space:nowrap;">
                     <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-                    <small class="input-info small-margin-right"><?php echo $lC_Language->get('qty'); ?></small>
+                    <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
                   </span>
                   <span style="white-space:nowrap;">
                     <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
@@ -1126,7 +1126,7 @@ function toggleEditor(id) {
                 <div>
                   <span style="white-space:nowrap;">
                     <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-                    <small class="input-info small-margin-right"><?php echo $lC_Language->get('qty'); ?></small>
+                    <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
                   </span>
                   <span style="white-space:nowrap;">
                     <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
@@ -1138,7 +1138,7 @@ function toggleEditor(id) {
                 <div> 
                   <span style="white-space:nowrap;">
                     <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-                    <small class="input-info small-margin-right"><?php echo $lC_Language->get('qty'); ?></small>
+                    <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
                   </span>
                   <span style="white-space:nowrap;">
                     <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
@@ -1151,7 +1151,7 @@ function toggleEditor(id) {
               </div>
               <!-- lc_qty_price_breaks end --> 
               <div class="field-block field-block-product button-height">
-                <label for="specials-pricing-switch" class="label"><b><?php echo $lC_Language->get('special_pricing'); ?></b></label>
+                <label for="specials-pricing-switch" class="label"><b><?php echo $lC_Language->get('text_special_pricing'); ?></b></label>
                 <input id="specials-pricing-switch" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' checked' : ''); ?> />
                 <span class="info-spot on-left grey margin-left margin-right">
                   <span class="icon-info-round"></span>
