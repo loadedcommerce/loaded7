@@ -1042,7 +1042,7 @@ function toggleEditor(id) {
                 <?php //foreach() { ?>
                 <div>
                   <label for="" class="label margin-right"><b>Reseller Group 1</b></label>
-                  <input type="checkbox" class="switch disabled margin-right" />
+                  <input type="checkbox" class="switch disabled margin-right" checked />
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
                     <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
@@ -1051,7 +1051,7 @@ function toggleEditor(id) {
                 </div>
                 <div>
                   <label for="" class="label margin-right"><b>Employee Group</b></label>
-                  <input type="checkbox" class="switch disabled margin-right">
+                  <input type="checkbox" class="switch disabled margin-right" checked />
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
                     <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
@@ -1060,7 +1060,7 @@ function toggleEditor(id) {
                 </div>
                 <div>
                   <label for="" class="label margin-right"><b>Gold Reseller</b></label>
-                  <input type="checkbox" class="switch disabled margin-right">
+                  <input type="checkbox" class="switch disabled margin-right" checked />
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
                     <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
