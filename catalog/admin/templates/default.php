@@ -13,6 +13,7 @@
 
   Based on the Developr theme
 */
+ini_set('display_errors', 1);
 ?>
 <!DOCTYPE html>
 <!--[if IEMobile 7]><html class="no-js iem7 oldie"><![endif]-->
