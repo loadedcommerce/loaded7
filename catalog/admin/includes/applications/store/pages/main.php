@@ -11,14 +11,49 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
   */
-  
-typesArr = array(  
 ?>
 <!-- main content -->
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
   <hgroup id="main-title" class="thin" style="padding-bottom:0;">
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <div class="columns" id="headerRightContainer" style="width:64%; float:right;">
+      <!-- search -->
+      <div class="six-columns twelve-columns-tablet" id="storeSearchContainer" style="float:right; width:45%;">
+        <section>
+          <div class="megaSearch no-padding" id="storeSearchContainerInput">
+            <form method="post" action="storeSearch" name="storeSearch">
+              <ul class="inputs mega-search-border">
+                <li>
+                  <span class="icon-search mid-margin-left"></span>
+                  <input type="text" id="storeSearch" name="q" value="" placeholder="Search" autocomplete="off" class="input-unstyled">
+                </li>
+              </ul>
+            </form>
+          </div>        
+        </section>
+      </div>
+      <!-- filter -->
+      <div class="six-columns twelve-columns-tablet" id="filterContainer" style="float:left; width:45%; font-family:Arial;">
+        <label class="label" for="sortby">Sort by:</label>
+        <span class="button-group">
+          <label for="sortby-1" class="button blue-active">
+            <input type="radio" name="sortby" id="sortby-1" value="1" checked>
+            Rating
+          </label>
+          <label for="sortby-2" class="button blue-active">
+            <input type="radio" name="sortby" id="sortby-2" value="2">
+            Popular
+          </label>
+          <label for="sortby-3" class="button blue-active">
+            <input type="radio" name="sortby" id="sortby-3" value="3">
+            New
+          </label>
+        </span>      
+      </div>
+    </div><div style="clear:both;"></div>
+    
+    
   </hgroup>
   <style>
     .dataColTitle { text-align: left; }
@@ -40,7 +75,7 @@ typesArr = array(
           </div>
         </div>
       </div>
-      <!-- datatable content panel -->
+      <!-- content panel -->
       <div class="panel-content">
         <div class="panel-control">
           <p id="cfgTitle" align="center" class="big-text">Installed
@@ -48,22 +83,18 @@ typesArr = array(
         </div>
         <div class="panel-load-target scrollable" style="min-height:460px">
           <div class="large-box-shadow white-gradient with-border" style="padding:3px;">
-            <table border="0" width="100%" cellspacing="0" cellpadding="0" class="simple-table responsive-table" id="dataTable">
-              <thead>
-                <tr>
-                  <th scope="col" class="align-left"><?php //echo $lC_Language->get('table_heading_title'); ?></th>
-                  <th scope="col" class="align-left"><?php //echo $lC_Language->get('table_heading_value'); ?></th>
-                  <th scope="col" class="align-right"><?php //echo $lC_Language->get('table_heading_action'); ?></th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
+            <div id="contentContainer"><!-- ajax delivered content --></div>
           </div>
         </div>
       </div>
+      <!-- content panel eof-->
     </div>
   </div>
 </section>
 <?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <!-- End main content -->
+<script>
+function showGroup(id, text) {
+  $('#contentContainer').html(text + ' Addons Listing Area');
+}
+</script>

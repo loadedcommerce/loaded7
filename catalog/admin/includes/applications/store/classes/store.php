@@ -22,7 +22,8 @@ class lC_Store_Admin {
   * @return string
   */
   public static function drawMenu() {
-    foreach ( lc_toObjectInfo(self::getAllTypes())->get('entries') as $type ) {
+    foreach ( self::getAllTypes() as $key => $type ) {
+      
       $menu .= '<li class="message-menu" id="menuGroup' . $type['text'] . '">' .
                '  <span class="message-status" style="padding-top:14px;">' .
                '     <a href="javascript://" onclick="showType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');" class="new-message" title=""></a>' .
@@ -44,16 +45,17 @@ class lC_Store_Admin {
   */
   public static function getAllTypes() {
 
-    $result = array('entries' => array('id' => '0', 'text' => 'Payment'),
-                                 array('id' => '1', 'text' => 'Shipping'),
-                                 array('id' => '2', 'text' => 'Themes'),
-                                 array('id' => '3', 'text' => 'Checkout'),
-                                 array('id' => '4', 'text' => 'Catalog'),
-                                 array('id' => '5', 'text' => 'Admin'),
-                                 array('id' => '6', 'text' => 'Reports'),
-                                 array('id' => '7', 'text' => 'Connectors'),
-                                 array('id' => '8', 'text' => 'Other'));
-    return $result;
+    $types = array(array('id' => '0', 'text' => 'Payment', 'icon' => ''),
+                   array('id' => '1', 'text' => 'Shipping', 'icon' => ''),
+                   array('id' => '2', 'text' => 'Themes', 'icon' => ''),
+                   array('id' => '3', 'text' => 'Checkout', 'icon' => ''),
+                   array('id' => '4', 'text' => 'Catalog', 'icon' => ''),
+                   array('id' => '5', 'text' => 'Admin', 'icon' => ''),
+                   array('id' => '6', 'text' => 'Reports', 'icon' => ''),
+                   array('id' => '7', 'text' => 'Connectors', 'icon' => ''),
+                   array('id' => '8', 'text' => 'Other', 'icon' => ''));
+
+    return $types;
   }  
 }
 ?>
