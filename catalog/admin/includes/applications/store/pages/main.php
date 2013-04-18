@@ -11,6 +11,8 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
   */
+  
+typesArr = array(  
 ?>
 <!-- main content -->
 <section role="main" id="main">
@@ -28,12 +30,12 @@
     <!-- main panel -->
     <div class="content-panel margin-bottom">
       <!-- menu nav panel -->
-      <div class="panel-navigation silver-gradient">
-        <div class="panel-control"><span class="big-text small-margin-left"><strong>Configuration Menu</strong></span></div>
+      <div class="panel-navigation silver-gradient" style=overflow:hidden;">
+        <div class="panel-control"><p align="center" class="big-text small-margin-left"><strong>Type</strong></p></div>
         <div class="panel-load-target scrollable" style="height:490px">
           <div class="navigable">
             <ul class="unstyled-list open-on-panel-content">
-              <?php echo lC_Configuration_Admin::drawMenu(); ?>
+              <?php echo lC_Store_Admin::drawMenu(); ?>
             </ul>
           </div>
         </div>
@@ -41,17 +43,17 @@
       <!-- datatable content panel -->
       <div class="panel-content">
         <div class="panel-control">
-          <span id="cfgTitle" class="big-text small-margin-left"></span>
-          <a href="javascript://" onclick="oTable.fnReloadAjax();" class="button icon-undo float-right"><?php echo $lC_Language->get('button_refresh'); ?></a>
+          <p id="cfgTitle" align="center" class="big-text">Installed
+          <a href="javascript://" onclick="oTable.fnReloadAjax();" class="button icon-undo float-right" style="margin-top:1px;"><?php echo $lC_Language->get('button_refresh'); ?></a></p>
         </div>
         <div class="panel-load-target scrollable" style="min-height:460px">
           <div class="large-box-shadow white-gradient with-border" style="padding:3px;">
             <table border="0" width="100%" cellspacing="0" cellpadding="0" class="simple-table responsive-table" id="dataTable">
               <thead>
                 <tr>
-                  <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_title'); ?></th>
-                  <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_value'); ?></th>
-                  <th scope="col" class="align-right"><?php echo $lC_Language->get('table_heading_action'); ?></th>
+                  <th scope="col" class="align-left"><?php //echo $lC_Language->get('table_heading_title'); ?></th>
+                  <th scope="col" class="align-left"><?php //echo $lC_Language->get('table_heading_value'); ?></th>
+                  <th scope="col" class="align-right"><?php //echo $lC_Language->get('table_heading_action'); ?></th>
                 </tr>
               </thead>
               <tbody>
