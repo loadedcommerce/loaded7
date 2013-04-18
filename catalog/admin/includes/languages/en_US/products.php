@@ -113,6 +113,7 @@ text_all_products = -- All Products --
 text_availability = Availability
 text_base_price = Base Price
 text_base_price_with_tax = Base Price with tax
+text_categories = Categories
 text_coming_soon = Coming Soon...
 text_complex_variants = Complex Variants
 text_copy_method_link = Link Product
