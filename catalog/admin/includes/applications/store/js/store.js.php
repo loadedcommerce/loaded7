@@ -15,8 +15,8 @@ global $lC_Template, $lC_Language;
 ?>
 <script>
 $(document).ready(function() {
-  $('.message-status').remove();
-  showType('1', 'Payment');  
+  $('.message-status > a, .message-status > span').css('height', '0');
+  showType('0', 'Payment');  
 });
 
 function showType(id, text) {
@@ -28,7 +28,7 @@ function showType(id, text) {
       "sAjaxSource": dataTableDataURL.replace('AID', parseInt(id)).replace('MEDIA', $.template.mediaQuery.name),
       "bPaginate": false,
       "bLengthChange": false,
-      "bFilter": false,
+      "bFilter": true,
       "bSort": false,
       "bInfo": false,
       "bDestroy": true,
@@ -40,8 +40,10 @@ function showType(id, text) {
   oTable.responsiveTable();  
   $('#dataTable thead').remove();
   $('#cfgTitleText').html(text + ' Add Ons'); 
+  $('#dataTable_wrapper').removeClass('dataTables_wrapper');
   $(".unstyled-list a").removeClass("store-type-selected");
   $("#menuLink" + id).addClass('store-type-selected');
+
   setTimeout('updateTitles()', 800);
      
 }  
@@ -88,6 +90,8 @@ function updateTitles() {
       $('.hide-on-tablet').attr('style', 'display:none !important');
   } else { // desktop
   }  
-  
+
+  $('#dataTable_filter input').attr('placeholder', 'Search');
+
 } 
 </script>
