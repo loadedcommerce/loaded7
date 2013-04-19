@@ -9,4 +9,4 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-heading_title = App Store
+heading_title = Add Ons
