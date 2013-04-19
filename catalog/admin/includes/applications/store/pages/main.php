@@ -26,9 +26,6 @@
 #dataTable TD { border: none; cursor: pointer; }
 .store-type-selected { border-left-width: 4px !important; border-color: #00569c !important; padding-left:7px !important; }
 .message-status > a, .message-status > span { height:0 !important; }
-#dataTable_filter { position: fixed !important; right: 295px; top: 60px; }
-#dataTable_filter input { width: 100% !important; }
-#dataTable_wrapper { color: #fff !important; }
 <?php
 $typesArr = lC_Store_Admin::getAllTypes();
 foreach ($typesArr as $key => $value) {

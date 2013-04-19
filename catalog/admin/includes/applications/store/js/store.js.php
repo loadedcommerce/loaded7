@@ -28,7 +28,7 @@ function showType(id, text) {
       "sAjaxSource": dataTableDataURL.replace('AID', parseInt(id)).replace('MEDIA', $.template.mediaQuery.name),
       "bPaginate": false,
       "bLengthChange": false,
-      "bFilter": true,
+      "bFilter": false,
       "bSort": false,
       "bInfo": false,
       "bDestroy": true,
@@ -90,8 +90,6 @@ function updateTitles() {
       $('.hide-on-tablet').attr('style', 'display:none !important');
   } else { // desktop
   }  
-
-  $('#dataTable_filter input').attr('placeholder', 'Search');
 
 } 
 </script>
