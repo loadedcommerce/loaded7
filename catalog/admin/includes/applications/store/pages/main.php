@@ -25,8 +25,14 @@
 .tag { font-size:.8em; }
 #dataTable TD { border: none; cursor: pointer; }
 .store-type-selected { color: #ff9f00 !important; font-size: 1.2em; }
+    
+<?php
+$typesArr = lC_Store_Admin::getAllTypes();
+foreach ($typesArr as $key => $value) {
+  echo ".store-menu-" . strtolower($value['text']) . " { background: url('templates/default/img/icons/16/" . $value['icon'] . "') no-repeat scroll 8px 15px transparent !important; }";
+}
+?>   
 
-.store-menu-payment { background: url("templates/default/img/icons/16/payment.png") no-repeat scroll 0 -34px transparent !important; }
 </style>
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>

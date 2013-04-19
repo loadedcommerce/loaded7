@@ -15,9 +15,8 @@ global $lC_Template, $lC_Language;
 ?>
 <script>
 $(document).ready(function() {
-  
+  $('.message-status').remove();
   showType('1', 'Payment');  
-  
 });
 
 function showType(id, text) {
@@ -43,7 +42,6 @@ function showType(id, text) {
   $('#cfgTitleText').html(text + ' Add Ons'); 
   $(".unstyled-list a").removeClass("store-type-selected");
   $("#menuLink" + id).addClass('store-type-selected');
-
   setTimeout('updateTitles()', 800);
      
 }  

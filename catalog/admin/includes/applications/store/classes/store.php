@@ -98,15 +98,15 @@ class lC_Store_Admin {
   */
   public static function getAllTypes() {
 
-    $types = array(array('id' => '0', 'text' => 'Payment', 'icon' => ''),
-                   array('id' => '1', 'text' => 'Shipping', 'icon' => ''),
-                   array('id' => '2', 'text' => 'Themes', 'icon' => ''),
-                   array('id' => '3', 'text' => 'Checkout', 'icon' => ''),
-                   array('id' => '4', 'text' => 'Catalog', 'icon' => ''),
-                   array('id' => '5', 'text' => 'Admin', 'icon' => ''),
-                   array('id' => '6', 'text' => 'Reports', 'icon' => ''),
-                   array('id' => '7', 'text' => 'Connectors', 'icon' => ''),
-                   array('id' => '8', 'text' => 'Other', 'icon' => ''));
+    $types = array(array('id' => '0', 'text' => 'Payment', 'icon' => 'payment.png'),
+                   array('id' => '1', 'text' => 'Shipping', 'icon' => 'shipping.png'),
+                   array('id' => '2', 'text' => 'Themes', 'icon' => 'themes.png'),
+                   array('id' => '3', 'text' => 'Checkout', 'icon' => 'checkout.png'),
+                   array('id' => '4', 'text' => 'Catalog', 'icon' => 'catalog.png'),
+                   array('id' => '5', 'text' => 'Admin', 'icon' => 'admin.png'),
+                   array('id' => '6', 'text' => 'Reports', 'icon' => 'reports.png'),
+                   array('id' => '7', 'text' => 'Connectors', 'icon' => 'connectors.png'),
+                   array('id' => '8', 'text' => 'Other', 'icon' => 'other.png'));
 
     return $types;
   }  
