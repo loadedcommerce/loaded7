@@ -81,7 +81,7 @@ button_no = No
 button_info = Info
 
 icon_all = All
-icon_app_store = App Store
+icon_app_store = Add Ons
 icon_preview = Preview
 icon_backup = Backup
 icon_checkbox_ticked =
