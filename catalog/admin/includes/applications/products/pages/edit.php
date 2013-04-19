@@ -851,15 +851,15 @@ function toggleEditor(id) {
                       </span><br />
                       <span class="button-group">
                         <label for="ps_radio_1" class="button blue-active">
-                          <input type="radio" name="product_status_radio_group" id="ps_radio_1" value="active"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 1) ? ' checked' : ''); ?> />
+                          <input type="radio" name="products_status" id="ps_radio_1" value="active"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 1) ? ' checked' : ''); ?> />
                           <?php echo $lC_Language->get('field_status_active'); ?>
                         </label>
                         <label for="ps_radio_2" class="button blue-active">
-                          <input type="radio" name="product_status_radio_group" id="ps_radio_2" value="inactive"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 0) ? ' checked' : ''); ?> />
+                          <input type="radio" name="products_status" id="ps_radio_2" value="inactive"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == -1) ? ' checked' : ''); ?> />
                           <?php echo $lC_Language->get('field_status_inactive'); ?>
                         </label>
                         <label for="ps_radio_3" class="button blue-active disabled">
-                          <input type="radio" name="product_status_radio_group" id="ps_radio_3" value="" />
+                          <input type="radio" name="products_status" id="ps_radio_3" value="recurring"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 0) ? ' checked' : ''); ?> />
                           <?php echo $lC_Language->get('field_status_coming'); ?>
                         </label>
                       </span>

@@ -349,9 +349,11 @@ class lC_Products_Admin {
       $Qproduct = $lC_Database->query('insert into :table_products (products_quantity, products_price, products_model, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added) values (:products_quantity, :products_price, :products_model, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added)');
       $Qproduct->bindRaw(':products_date_added', 'now()');
     }
-
-    // set parent status to active if has variants
-    if ( isset($data['variants_combo']) && !empty($data['variants_combo']) ) $data['status'] = 1;
+    
+    // set parent status
+    if ( isset($_POST['products_status']) && $_POST['products_status'] == 'active' ) $data['status'] = 1;
+    if ( isset($_POST['products_status']) && $_POST['products_status'] == 'inactive' ) $data['status'] = -1;
+    if ( isset($_POST['products_status']) && $_POST['products_status'] == 'recurring' ) $data['status'] = 0;
     
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproduct->bindInt(':products_quantity', $data['quantity']);
