@@ -1019,7 +1019,7 @@ function toggleEditor(id) {
               <legend class="legend"><?php echo $lC_Language->get('text_pricing_overrides'); ?></legend>
               <div class="field-block button-height">
                 <label for="" class="label"><b><?php echo $lC_Language->get('text_base_price'); ?></b></label>
-                <input type="text" name="" id="" value="<?php echo lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input" />
+                <input type="text" name="products_base_price" id="products_bas_price" value="<?php echo lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input" />
               </div>
               <!-- lc_group_pricing begin -->
               <div class="field-block field-block-product button-height">
@@ -1349,7 +1349,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="" name="" disabled />
+                    <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_msrp" name="products_msrp" disabled />
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -1423,11 +1423,11 @@ function toggleEditor(id) {
                   <div>
                     <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_on_hand'); ?></b></label>
                     <input type="text" name="products_quantity" id="products_quantity" value="<?php echo $lC_ObjectInfo->get('products_quantity'); ?>" class="input small-margin-right" style="width:60px;" />
-                    <input type="text" name="products_sku_ean13" id="products_sku_ean13" value="" class="input" disabled />
+                    <input type="text" name="products_sku_ean13" id="products_sku_ean13" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" class="input" disabled />
                     <b><?php echo $lC_Language->get('text_sku_ean13'); ?></b>
                   </div>
                   <div class="small-margin-top">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled /> <b><?php echo $lC_Language->get('text_cost'); ?></b>
+                    <input type="text" name="products_cost" id="products_cost" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" class="input small-margin-right" disabled /> <b><?php echo $lC_Language->get('text_cost'); ?></b>
                     <span class="info-spot on-left grey small-margin-left">
                       <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
                       <span class="info-bubble">
@@ -1539,7 +1539,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="" name="" disabled />
+                    <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_url_slug" name="products_url_slug" disabled />
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -1696,7 +1696,7 @@ function toggleEditor(id) {
                         </span>
                       </div>
                       <div class="twelve-columns no-margin-bottom small-margin-top">
-                        <input type="text" class="required input full-width" value="<?php echo $lC_ObjectInfo->get('products_weight'); ?>" id="" name="" />
+                        <input type="text" class="required input full-width" value="<?php echo $lC_ObjectInfo->get('products_weight'); ?>" id="products_weight" name="products_weight" />
                       </div>
                       <div class="twelve-columns no-margin-bottom margin-top grey disabled">
                         <?php echo $lC_Language->get('text_non_shippable_item'); ?>
@@ -1772,7 +1772,7 @@ function toggleEditor(id) {
                         </span>
                       </div>
                       <div class="twelve-columns no-margin-bottom small-margin-top">
-                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="" name="" disabled /><small class="small-margin-top"><?php echo $lC_Language->get('text_zero_for_free_shipping'); ?></small>
+                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_shipping_fee_override" name="products_shipping_fee_override" disabled /><small class="small-margin-top"><?php echo $lC_Language->get('text_zero_for_free_shipping'); ?></small>
                       </div>
                     </div>
                     <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -1792,7 +1792,7 @@ function toggleEditor(id) {
                         </span>
                       </div>
                       <div class="twelve-columns no-margin-bottom small-margin-top">
-                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="" name="" disabled />
+                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_add_handling_fee" name="products_add_handling_fee" disabled />
                       </div>
                     </div>                
                   </div>
@@ -1813,7 +1813,7 @@ function toggleEditor(id) {
                         </span>
                       </div>
                       <div class="twelve-columns no-margin-bottom small-margin-top">
-                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="" name="" disabled />
+                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_days_to_ship" name="products_days_to_ship" disabled />
                       </div>
                     </div>
                     <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -1833,7 +1833,7 @@ function toggleEditor(id) {
                         </span>
                       </div>
                       <div class="twelve-columns no-margin-bottom small-margin-top">
-                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="" name="" disabled />
+                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_warehouse" name="products_warehouse" disabled />
                       </div>
                     </div>
                     <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
