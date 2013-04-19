@@ -321,7 +321,7 @@ $(document).ready(function() {
   };
   $("h1").fitText();
   
-  $("#products_description_1").cleditor({width:"99%", height:"255"});
+  $(".clEditorProductDescription").cleditor({width:"99%", height:"255"});
      
 });
 

@@ -491,7 +491,7 @@ class lC_Products_Admin {
         $default_flag = 0;
       }
     }
-
+    
     if ( $error === false ) {
       foreach ($lC_Language->getAll() as $l) {
         if ( is_numeric($id) ) {

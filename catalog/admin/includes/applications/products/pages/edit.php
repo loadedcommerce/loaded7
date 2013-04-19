@@ -144,17 +144,17 @@ function getTaxClassOptionsString($id = null, $esc = false) {
 <script type="text/javascript" src="../ext/tiny_mce/tiny_mce.js"></script>
 <script>
 function toggleEditor(id) {
-  var editorHidden = $("#products_description_" + id).is(":visible");
+  var editorHidden = $(".clEditorProductDescription").is(":visible");
   if (editorHidden) {
     //alert('show');
-    $("#products_description_" + id).cleditor({width:"99%", height:"255"});
+    $(".clEditorProductDescription").cleditor({width:"99%", height:"255"});
   } else {
     //alert('hide');
-    var editor = $("#products_description_" + id).cleditor()[0];
+    var editor = $(".clEditorProductDescription").cleditor()[0];
     editor.$area.insertBefore(editor.$main); // Move the textarea out of the main div
     editor.$area.removeData("cleditor"); // Remove the cleditor pointer from the textarea
     editor.$main.remove(); // Remove the main div and all children from the DOM
-    $("#products_description_" + id).show();
+    $(".clEditorProductDescription").show();
   }
 }
 </script>
@@ -665,7 +665,7 @@ function toggleEditor(id) {
     ?>
   </hgroup>
   <div class="with-padding-no-top">
-    <form name="product_edit" id="product_edit" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
+    <form name="product" id="product" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="product_tabs" class="side-tabs" style="position:relative;">
         <ul class="tabs">
           <li id="tabHeaderSectionContent" class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
@@ -742,8 +742,8 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom">
-                    <?php echo lc_draw_textarea_field('products_description_' . $l['id'], (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding"'); ?>
-                    <span class="float-right small-margin-top"><a href="#">Enlarge Description <span class="icon-extract icon-grey"></span></a>&nbsp;&nbsp;&nbsp;<?php echo '<a href="javascript:toggleEditor(' . $l['id'] . ');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
+                    <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding clEditorProductDescription"'); ?>
+                    <span class="float-right small-margin-top"><a href="#">Enlarge Description <span class="icon-extract icon-grey"></span></a>&nbsp;&nbsp;&nbsp;<?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
                   </div>
                   <div class="twelve-columns no-margin-bottom mid-margin-top">
                     <span class="full-width">
@@ -1298,7 +1298,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <input type="text" class="required input full-width" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_model') : null); ?>" id="" name="" />
+                    <input type="text" class="required input full-width" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_model') : null); ?>" id="products_model" name="products_model" />
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -1911,7 +1911,7 @@ function toggleEditor(id) {
                 <option id="save" value="save">Save</option>
                 <option id="apply_changes" value="apply_changes">Apply</option>
               </select>&nbsp;-->
-              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#product_edit\').submit();'); ?>">
+              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#product\').submit();'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
                 </span><?php echo $lC_Language->get('button_save'); ?>
