@@ -35,7 +35,7 @@ text_with_selected = With Selected:
 text_version_info = Version Info
 
 menu_title_addons = Add Ons
-menu_title_app_store = App Store
+menu_title_app_store = Add Ons
 menu_title_license_management = License Management
 menu_title_core_update = Core Update
 menu_title_report_issues = Report Issues
