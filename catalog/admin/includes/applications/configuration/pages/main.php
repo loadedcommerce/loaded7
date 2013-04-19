@@ -22,7 +22,7 @@
     .dataColTitle { text-align: left; }
     .dataColValue { text-align: left; }
     .dataColAction { text-align: right; }
-    .cfg-menu-selected { color: #ff9f00 !important; font-size: 1.2em; }
+    .store-type-selected{ color: #ff9f00 !important; font-size: 1.2em; }
   </style>
   <div class="with-padding">
     <!-- main panel -->

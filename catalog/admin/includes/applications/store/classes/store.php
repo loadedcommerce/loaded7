@@ -77,7 +77,7 @@ class lC_Store_Admin {
   public static function drawMenu() {
     foreach ( self::getAllTypes() as $key => $type ) {
       
-      $menu .= '<li class="message-menu" id="menuGroup' . $type['text'] . '">' .
+      $menu .= '<li class="message-menu ' . 'store-menu-' . strtolower($type['text']) . '" id="menuType' . ucwords($type['text']) . '">' .
                '  <span class="message-status" style="padding-top:14px;">' .
                '     <a href="javascript://" onclick="showType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');" class="new-message" title=""></a>' .
                '   </span>' .

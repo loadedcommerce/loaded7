@@ -24,6 +24,9 @@
 .version-tag { position:absolute; right:-10px; bottom:-6px; opacity:0.5; }
 .tag { font-size:.8em; }
 #dataTable TD { border: none; cursor: pointer; }
+.store-type-selected { color: #ff9f00 !important; font-size: 1.2em; }
+
+.store-menu-payment { background: url("templates/default/img/icons/16/payment.png") no-repeat scroll 0 -34px transparent !important; }
 </style>
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
