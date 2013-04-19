@@ -14,13 +14,16 @@
 ?>
 <!-- main content -->
 <style>
-.dataColThumb { text-align: center; }
+.dataColThumb { text-align: center; width: 80px; }
 .dataColTitle { text-align: left; }
 .dataColDesc { text-align: left; }
-.dataColAction { text-align: center; }
+.dataColAction { text-align: center; width:110px; }
 #storeHeaderRightContainer { width:64%; float:right; font-family:Arial; }
 #storeSearchContainer { float:right; width:45%; }
 #storeFilterContainer { float:left; width:45%; }
+.version-tag { position:absolute; right:-10px; bottom:-6px; opacity:0.5; }
+.tag { font-size:.8em; }
+#dataTable TD { border: none; cursor: pointer; }
 </style>
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
@@ -68,7 +71,7 @@
     <div class="content-panel margin-bottom">
       <!-- menu nav panel -->
       <div class="panel-navigation silver-gradient" style=overflow:hidden;">
-        <div class="panel-control"><p align="center" class="big-text small-margin-left"><strong>Type</strong></p></div>
+        <div class="panel-control"><p align="center" class="big-text small-margin-left">Type</p></div>
         <div class="panel-load-target scrollable" style="height:490px">
           <div class="navigable">
             <ul class="unstyled-list open-on-panel-content">
@@ -80,11 +83,11 @@
       <!-- content panel -->
       <div class="panel-content">
         <div class="panel-control">
-          <p id="cfgTitle" align="center" class="big-text">Installed
-          <a href="javascript://" onclick="oTable.fnReloadAjax();" class="button icon-undo float-right" style="margin-top:1px;"><?php echo $lC_Language->get('button_refresh'); ?></a></p>
+          <p id="cfgTitle" align="center" class="big-text"><span id="cfgTitleText"></span>
+          <a href="javascript://" onclick="_updateTitles();" class="button icon-undo float-right" style="margin-top:1px;"><?php echo $lC_Language->get('button_refresh'); ?></a></p>
         </div>
         <div class="panel-load-target scrollable" style="min-height:460px">
-          <div class="large-box-shadow white-gradient with-border" style="padding:3px;">
+          <div class="large-box-shadow white-gradient">
             <div id="contentContainer">
             
             <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
@@ -101,25 +104,3 @@
 </section>
 <?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <!-- End main content -->
-<script>
-function showGroup(id, text) {
-  $('#contentContainer').html(text + ' Addons Listing Area');
- 
-  var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA'); ?>';   
-  oTable = $('#dataTable').dataTable({
-    "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
-    "bPaginate": false,
-    "bLengthChange": false,
-    "bFilter": false,
-    "bSort": false,
-    "bInfo": false,
-    "aaSorting": [[3,'desc']],
-    "aoColumns": [{ "sWidth": "80px", "sClass": "dataColThumb" },
-                  { "sWidth": "20%", "sClass": "dataColTitle" },
-                  { "sWidth": "65%", "sClass": "dataColDesc" },
-                  { "sWidth": "15%", "sClass": "dataColAction" }]
-  });
-  oTable.responsiveTable();  
-  
-}
-</script>

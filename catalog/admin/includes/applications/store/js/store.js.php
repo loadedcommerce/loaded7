@@ -11,6 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+global $lC_Template, $lC_Language;
 ?>
 <script>
 $(document).ready(function() {
@@ -44,7 +45,44 @@ $(document).ready(function() {
       $('#storeFilterContainer').css('width', '48%').css('float', 'left').addClass('margin-top');     
   } else { // desktop
   }
-
+  
+  showType('1', 'Payment');
 });
 
+function showType(id, text) {
+  //$('#contentContainer').html(text + ' Addons Listing Area');
+ 
+  var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&aid=AID&action=getAll&media=MEDIA'); ?>';
+  oTable = $('#dataTable').dataTable({
+      "bProcessing": true,
+      "sAjaxSource": dataTableDataURL.replace('AID', parseInt(id)).replace('MEDIA', $.template.mediaQuery.name),
+      "bPaginate": false,
+      "bLengthChange": false,
+      "bFilter": false,
+      "bSort": false,
+      "bInfo": false,
+      "bDestroy": true,
+      "aoColumns": [{ "sWidth": "80px", "sClass": "dataColThumb" },
+                    { "sWidth": "30%", "sClass": "dataColTitle hide-on-mobile-portrait" },
+                    { "sWidth": "50%", "sClass": "dataColDesc hide-on-mobile" },
+                    { "sWidth": "110px", "sClass": "dataColAction" }]
+  });
+  oTable.responsiveTable();  
+  $('#dataTable thead').remove();
+  $('#cfgTitleText').html(text + ' Add Ons');
+  
+  setTimeout('updateTitles()', 800);
+     
+}  
+  
+
+function updateTitles() {
+  var installed = 'Installed';
+  var available = 'Available';
+  $("#dataTable td").each(function() {
+    var t = $(this).text();
+    if (t == installed) $(this).closest('tr').html('<td class="grey-gradient glossy no-padding" colspan="4" align="center"><span class="big-text">Installed</span></td>');  
+    if (t == available) $(this).closest('tr').html('<td class="grey-gradient glossy no-padding" colspan="4" align="center"><span class="big-text">Available</span></td>');  
+  });
+} 
 </script>

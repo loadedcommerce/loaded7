@@ -28,15 +28,43 @@ class lC_Store_Admin {
     $Qaddons = self::getAvailbleAddons(); 
     
     $result = array('aaData' => array());
+    
+    // Installed heading
+    $thumb = '';
+    $title = '';
+    $desc = '<span class="white">Installed</span>';
+    $action = '';
+    $result['aaData'][] = array("$thumb", "$title", "$desc", "$action");    
+
     foreach ( $Qaddons as $key => $value ) {
+      if ($value['installed'] === false) continue;
       
-      $thumb = $value['thumbnail'];
-      $title = $value['title'];
-      $desc = substr($value['description'], 0, 60) . '...';
-      $action = 'action';
+      $thumb = '<div style="position:relative;">' . lc_image('images/store/' . $value['thumbnail'], $value['title'], 80, 60) . '<div class="version-tag"><span class="tag black-gradient">' . $value['version'] . '</span></div></div>';
+      $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $value['title']) . '</strong><br />' . lc_image('../images/stars_' . $value['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $value['rating']), null, null, 'class="mid-margin-top small-margin-bottom"') . '<br /><small>' . str_replace(' ', '&nbsp;', $value['author']) . '</small>';
+      $desc = substr($value['description'], 0, 300) . '...';
+      $action = '<a href="javascript:void(0)" class="button icon-gear green-gradient glossy">Setup</a><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
                  
       $result['aaData'][] = array("$thumb", "$title", "$desc", "$action");
     }
+    
+    // Available heading
+    $thumb = '';
+    $title = '';
+    $desc = '<span class="white">Available</span>';
+    $action = '';
+    $result['aaData'][] = array("$thumb", "$title", "$desc", "$action");    
+    
+    reset($Qaddons);
+    foreach ( $Qaddons as $key => $value ) {
+      if ($value['installed'] === true) continue;
+      
+      $thumb = '<div style="position:relative;">' . lc_image('images/store/' . $value['thumbnail'], $value['title'], 80, 60) . '<div class="version-tag"><span class="tag black-gradient">' . $value['version'] . '</span></div></div>';
+      $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $value['title']) . '</strong><br />' . lc_image('../images/stars_' . $value['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $value['rating']), null, null, 'class="mid-margin-top small-margin-bottom"') . '<br /><small>' . str_replace(' ', '&nbsp;', $value['author']) . '</small>';
+      $desc = substr($value['description'], 0, 300) . '...';
+      $action = '<a href="javascript:void(0)" class="button icon-gear orange-gradient glossy">Install</a><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
+                 
+      $result['aaData'][] = array("$thumb", "$title", "$desc", "$action");
+    }    
 
     return $result;
   }
@@ -99,9 +127,9 @@ class lC_Store_Admin {
                          'description' => $desc, 
                          'rating' => '5', 
                          'author' => 'Loaded Commerce, LLC', 
-                         'thumbnail' => 'loadedpayments.png', 
+                         'thumbnail' => 'p1.png', 
                          'version' => '1.0.1',
-                         'installed' => '1'),                         
+                         'installed' => true),                         
 
                    array('id' => '2', 
                          'type' => 'payment', 
@@ -109,9 +137,9 @@ class lC_Store_Admin {
                          'description' => $desc, 
                          'rating' => '5', 
                          'author' => 'PayPal, Inc.', 
-                         'thumbnail' => 'paypal.png', 
+                         'thumbnail' => 'p7.jpg', 
                          'version' => '2.1.3',
-                         'installed' => '1'),   
+                         'installed' => true),   
                          
                    array('id' => '3', 
                          'type' => 'payment', 
@@ -119,9 +147,9 @@ class lC_Store_Admin {
                          'description' => $desc, 
                          'rating' => '4', 
                          'author' => 'Even More Corp.', 
-                         'thumbnail' => 'otherpay.png', 
+                         'thumbnail' => 'p3.png', 
                          'version' => '5.0.3',
-                         'installed' => '0'),
+                         'installed' => false),
                          
                    array('id' => '4', 
                          'type' => 'payment', 
@@ -129,9 +157,9 @@ class lC_Store_Admin {
                          'description' => $desc, 
                          'rating' => '3', 
                          'author' => 'Acme, Inc.', 
-                         'thumbnail' => 'morepay.png', 
+                         'thumbnail' => 'p4.png', 
                          'version' => '3.1.4',
-                         'installed' => '0'),
+                         'installed' => false),
                          
                    array('id' => '5', 
                          'type' => 'payment', 
@@ -139,9 +167,9 @@ class lC_Store_Admin {
                          'description' => $desc, 
                          'rating' => '3', 
                          'author' => 'Wadayawant, Inc.', 
-                         'thumbnail' => 'iou.png', 
+                         'thumbnail' => 'p5.png', 
                          'version' => '5.7.7',
-                         'installed' => '0'),
+                         'installed' => false),
                          
                    array('id' => '6', 
                          'type' => 'payment', 
@@ -149,10 +177,10 @@ class lC_Store_Admin {
                          'description' => $desc, 
                          'rating' => '2', 
                          'author' => 'Morners, Inc.', 
-                         'thumbnail' => 'ppme.png', 
+                         'thumbnail' => 'p6.png', 
                          'version' => '1.0.1',
-                         'installed' => '0'                                                                                                                          
-                         ));
+                         'installed' => false)                                                                                                                          
+                   );
 
     return $types;
   }   
