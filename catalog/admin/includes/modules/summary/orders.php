@@ -46,7 +46,7 @@ class lC_Summary_orders extends lC_Summary {
                      '  <h2 class="relative thin">' . $this->_title . '</h2>' .
                      '  <ul class="list spaced">';      
 
-      $Qorders = $lC_Database->query('select o.orders_id, o.customers_name, greatest(o.date_purchased, ifnull(o.last_modified, "1970-01-01")) as date_last_modified, s.orders_status_name, ot.text as order_total from :table_orders o, :table_orders_total ot, :table_orders_status s where o.orders_id = ot.orders_id and ot.class = "total" and o.orders_status = s.orders_status_id and s.language_id = :language_id order by date_last_modified desc limit 6');
+      $Qorders = $lC_Database->query('select o.orders_id, o.customers_name, greatest(o.date_purchased, ifnull(o.last_modified, "1970-01-01")) as date_last_modified, s.orders_status_name, ot.text as order_total from :table_orders o, :table_orders_total ot, :table_orders_status s where o.orders_id = ot.orders_id and ot.class = "total" and o.orders_status = s.orders_status_id and s.language_id = :language_id order by date_last_modified desc limit 7');
       $Qorders->bindTable(':table_orders', TABLE_ORDERS);
       $Qorders->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
       $Qorders->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
@@ -55,8 +55,8 @@ class lC_Summary_orders extends lC_Summary {
 
       while ( $Qorders->next() ) {
         $this->_data .= '    <li>' .
-                        '      <span class="list-link icon-price-tag icon-green" title="' . $lC_Language->get('orders') . '">' .  
-                        '        <strong>' . strip_tags($Qorders->value('order_total'))  . '</strong> ' . $Qorders->value('customers_name') .
+                        '      <span class="list-link icon-price-tag icon-green" title="oID[' . $Qorders->value('orders_id') . ']">' .  
+                        '        <strong><span class="tag green-bg"><small class="white">' . strip_tags($Qorders->value('order_total'))  . '</small></span></strong> &nbsp; <span class="anthracite"><strong>' . $Qorders->value('customers_name') . '</strong> &nbsp; ' . lC_DateTime::getShort($Qorders->value('date_purchased')) . '</span>' . 
                         '      </span>' .
                         '      <div class="absolute-right compact show-on-parent-hover">' .
                         '        <a href="' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? '#' : 'javascript://" onclick="editOrder(\'' . $Qorders->valueInt('orders_id') . '\')') . ';" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? ' disabled' : NULL) . '">' .  $lC_Language->get('icon_view') . '</a>' . 
