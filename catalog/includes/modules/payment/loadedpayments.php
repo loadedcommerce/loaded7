@@ -1,6 +1,6 @@
 <?php
 /**
-*  $Id: loadedpayment.php v1.0 2013-01-01 datazen $
+*  $Id: loadedpayments.php v1.0 2013-01-01 datazen $
 *
 *  LoadedCommerce, Innovative eCommerce Solutions
 *  http://www.loadedcommerce.com
@@ -11,7 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-class lC_Payment_loadedpayment extends lC_Payment {
+class lC_Payment_loadedpayments extends lC_Payment {
  /**
   * The public title of the payment module
   *
@@ -25,7 +25,7 @@ class lC_Payment_loadedpayment extends lC_Payment {
   * @var string
   * @access protected
   */
-  protected $_code = 'loadedpayment';
+  protected $_code = 'loadedpayments';
  /**
   * The developers name
   *
@@ -85,11 +85,11 @@ class lC_Payment_loadedpayment extends lC_Payment {
  /**
   * Constructor
   */
-  public function lC_Payment_loadedpayment() {
+  public function lC_Payment_loadedpayments() {
     global $lC_Language;
 
-    $this->_title = $lC_Language->get('payment_loadedpayment_title');
-    $this->_method_title = $lC_Language->get('payment_loadedpayment_title');
+    $this->_title = $lC_Language->get('payment_loadedpayments_title');
+    $this->_method_title = $lC_Language->get('payment_loadedpayments_title');
     $this->_status = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_STATUS') && (MODULE_PAYMENT_LOADEDPAYMENTS_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_SORT_ORDER') ? MODULE_PAYMENT_LOADEDPAYMENTS_SORT_ORDER : null);
 
@@ -187,7 +187,7 @@ class lC_Payment_loadedpayment extends lC_Payment {
     global $lC_Language;
 
     $selection = array('id' => $this->_code,
-                       'module' => '<div class="payment-selection">' . $this->_title . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_loadedpayment_button_description') . '</div>');
+                       'module' => '<div class="payment-selection">' . $this->_title . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_loadedpayments_button_description') . '</div>');
 
     return $selection;
   }

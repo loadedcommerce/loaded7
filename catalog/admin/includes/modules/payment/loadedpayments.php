@@ -1,6 +1,6 @@
 <?php
 /**  
-*  $Id: cresecure.php v1.0 2013-01-01 datazen $
+*  $Id: loadedpayments.php v1.0 2013-01-01 datazen $
 *
 *  LoadedCommerce, Innovative eCommerce Solutions
 *  http://www.loadedcommerce.com
@@ -12,7 +12,7 @@
 *  @license    http://loadedcommerce.com/license.html
 * 
 */
-class lC_Payment_loadedpayment extends lC_Payment_Admin {
+class lC_Payment_loadedpayments extends lC_Payment_Admin {
  /**
   * The administrative title of the payment module
   *
@@ -26,7 +26,7 @@ class lC_Payment_loadedpayment extends lC_Payment_Admin {
   * @var string
   * @access public
   */
-  public $_code = 'loadedpayment';
+  public $_code = 'loadedpayments';
  /**
   * The developers name
   *
@@ -51,12 +51,11 @@ class lC_Payment_loadedpayment extends lC_Payment_Admin {
  /**
   * Constructor
   */
-  public function lC_Payment_loadedpayment() {
+  public function lC_Payment_loadedpayments() {
     global $lC_Language;
 
     $this->_title = $lC_Language->get('payment_loadedpayments_title');
     $this->_description = $lC_Language->get('payment_loadedpayments_description');
-//    $this->_method_title = $lC_Language->get('payment_loadedpayments_method_title');
     $this->_status = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_STATUS') && (MODULE_PAYMENT_LOADEDPAYMENTS_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_SORT_ORDER') ? MODULE_PAYMENT_LOADEDPAYMENTS_SORT_ORDER : '');
   }

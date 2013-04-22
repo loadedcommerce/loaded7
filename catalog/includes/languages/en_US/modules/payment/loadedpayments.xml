@@ -3,7 +3,7 @@
   <definitions>
     <definition>
       <key>payment_loadedpayments_title</key>
-      <value><![CDATA[<img src="images/payment/loadedpayments-small.png" style="vertical-align:middle"> <span style="color:#13684b;">Payments</span> <a href="http://www.loadedcommerce.com/start-accepting-payments-now-pg-381.html?CDpath=0_282" target="_blank" style="text-decoration: underline; font-weight: bold;">><small><i><u>Learn More</u></i></small></a>]]></value>
+      <value><![CDATA[<img src="images/payment/loadedpayments-small.png" style="vertical-align:middle"> <span style="color:#13684b;">Payments</span> <a href="http://www.loadedcommerce.com/start-accepting-payments-now-pg-381.html?CDpath=0_282" target="_blank" style="text-decoration: underline; font-weight: bold;"><small><i><u>Learn More</u></i></small></a>]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>
@@ -11,6 +11,11 @@
       <value><![CDATA[<h3 class="thin small-margin-left mid-margin-bottom"><img src="images/payment/loadedpayments-large.png" class="margin-right" style="vertical-align:middle">]]></value>
       <group>modules-payment</group>
     </definition>
+    <definition>
+      <key>payment_loadedpayments_plaintext_title</key>
+      <value><![CDATA[Loaded Payments]]></value>
+      <group>modules-payment</group>
+    </definition>    
     
     
     <definition>
