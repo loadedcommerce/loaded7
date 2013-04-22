@@ -59,8 +59,11 @@ class lC_Shipping {
 
       usort($this->_modules, array('lC_Shipping', '_usortModules'));
     }
-
-    if ( empty($this->_quotes) ) {
+    if (empty($_GET) === false) {
+      $first_array = array_slice($_GET, 0, 1);
+      $_module = lc_sanitize_string(basename(key($first_array)));
+    }
+    if ( empty($this->_quotes) || $_module == 'shipping') {
       $this->_calculate();
     }
   }
