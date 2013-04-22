@@ -37,48 +37,51 @@ class lC_Default {
     $cnt = 0;
     $result = '<table id="liveSearchTable" border="0" width="100%" cellspacing="0" cellpadding="2" onMouseover="bgcolor:#cccccc;">';
     while ( $Qproducts->next() ) {
-      $price = $lC_Currencies->format($Qproducts->value('products_price'));
-      $products_status = ($Qproducts->valueInt('products_status') === 1);
-      $products_quantity = $Qproducts->valueInt('products_quantity');
-      $products_name = $Qproducts->value('products_name');
-      $products_description = $Qproducts->value('products_description');
-      $products_keyword = $Qproducts->value('products_keyword');
+      if ($Qproducts->valueInt('products_status') > -1) {
+        $price = $lC_Currencies->format($Qproducts->value('products_price'));
+        //$products_status = ($Qproducts->valueInt('products_status') === 1);
+        $products_status = ($Qproducts->valueInt('products_status'));
+        $products_quantity = $Qproducts->valueInt('products_quantity');
+        $products_name = $Qproducts->value('products_name');
+        $products_description = $Qproducts->value('products_description');
+        $products_keyword = $Qproducts->value('products_keyword');
 
-      if ( $Qproducts->valueInt('has_children') === 1 ) {
-        $Qvariants = $lC_Database->query('select min(products_price) as min_price, max(products_price) as max_price, sum(products_quantity) as total_quantity, min(products_status) as products_status from :table_products where parent_id = :parent_id');
-        $Qvariants->bindTable(':table_products', TABLE_PRODUCTS);
-        $Qvariants->bindInt(':parent_id', $Qproducts->valueInt('products_id'));
-        $Qvariants->execute();
+        if ( $Qproducts->valueInt('has_children') === 1 ) {
+          $Qvariants = $lC_Database->query('select min(products_price) as min_price, max(products_price) as max_price, sum(products_quantity) as total_quantity, min(products_status) as products_status from :table_products where parent_id = :parent_id');
+          $Qvariants->bindTable(':table_products', TABLE_PRODUCTS);
+          $Qvariants->bindInt(':parent_id', $Qproducts->valueInt('products_id'));
+          $Qvariants->execute();
 
-        $products_status = ($Qvariants->valueInt('products_status') === 1);
-        $products_quantity = '(' . $Qvariants->valueInt('total_quantity') . ')';
+          $products_status = ($Qvariants->valueInt('products_status') === 1);
+          $products_quantity = '(' . $Qvariants->valueInt('total_quantity') . ')';
 
-        $price = $lC_Currencies->format($Qvariants->value('min_price'));
+          $price = $lC_Currencies->format($Qvariants->value('min_price'));
 
-        if ( $Qvariants->value('min_price') != $Qvariants->value('max_price') ) {
-          $price .= '&nbsp;-&nbsp;' . $lC_Currencies->format($Qvariants->value('max_price'));
+          if ( $Qvariants->value('min_price') != $Qvariants->value('max_price') ) {
+            $price .= '&nbsp;-&nbsp;' . $lC_Currencies->format($Qvariants->value('max_price'));
+          }
         }
+
+        $Qimage = $lC_Database->query("select image from :table_products_images where products_id = '" . $Qproducts->valueInt('products_id') . "'");
+        $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+        $Qimage->execute();
+
+        $products_image = $Qimage->value('image');
+        $products_link = lc_href_link(FILENAME_PRODUCTS, $products_keyword);
+
+        $rowClass = ($cnt & 1) ? 'liveSearchRowOdd' : 'liveSearchRowEven';
+        $result .= '<tr onclick="window.location=\'' . $products_link . '\';" class="' . $rowClass . '"><td valign="top">' .
+                   '  <ol class="liveSearchListing">' .
+                   '    <li>' .
+                   '      <span class="liveSearchListingSpan" style="width: ' . $lC_Image->getWidth('mini') . 'px;">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products_keyword), $lC_Image->show($products_image, $products_name, null, 'mini')) . '</span>' .
+                   '      <div class="liveSearchListingDiv">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products_keyword), $products_name) . '</div>' .
+                   '      <div class="liveSearchListingPrice">' . $price . '</div>' .
+                   '      <div style="clear: both;"></div>' .
+                   '    </li>' .
+                   '  </ol>' .
+                   '</td></tr></a>';
+        $cnt++;
       }
-
-      $Qimage = $lC_Database->query("select image from :table_products_images where products_id = '" . $Qproducts->valueInt('products_id') . "'");
-      $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
-      $Qimage->execute();
-
-      $products_image = $Qimage->value('image');
-      $products_link = lc_href_link(FILENAME_PRODUCTS, $products_keyword);
-
-      $rowClass = ($cnt & 1) ? 'liveSearchRowOdd' : 'liveSearchRowEven';
-      $result .= '<tr onclick="window.location=\'' . $products_link . '\';" class="' . $rowClass . '"><td valign="top">' .
-                 '  <ol class="liveSearchListing">' .
-                 '    <li>' .
-                 '      <span class="liveSearchListingSpan" style="width: ' . $lC_Image->getWidth('mini') . 'px;">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products_keyword), $lC_Image->show($products_image, $products_name, null, 'mini')) . '</span>' .
-                 '      <div class="liveSearchListingDiv">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products_keyword), $products_name) . '</div>' .
-                 '      <div class="liveSearchListingPrice">' . $price . '</div>' .
-                 '      <div style="clear: both;"></div>' .
-                 '    </li>' .
-                 '  </ol>' .
-                 '</td></tr></a>';
-      $cnt++;
     }
     $result .= '</table>';
 
