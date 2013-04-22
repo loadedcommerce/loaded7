@@ -260,16 +260,26 @@ $(document).ready(function() {
   });
   // end shortcut key additions
   
-  // profile slate addition
   // get the menu width
   var menuWidth = $("#menu").width();
   // apply twice the menu width to the inner div
   $("#profileInner").css({'width':menuWidth * 2});
   // on screen resize get the new menu width and apply it for click functions
   $(window).resize(function() {
+    // get the visible menu width
     var menuWidthResized = $("#menu").width();
+    // set profile inner width twice that of the visible menu
     $("#profileInner").css({'width':menuWidthResized * 2});
+    // reset the left margin to 0px on window resizing
     $('#profileInner').css({"margin-left":"0px"});
+    // if window width drops below 1280px change product edit tabs from side to top
+    if ($(window).width() < 1380) {
+      $("#product_tabs").removeClass("side-tabs");
+      $("#product_tabs").addClass("standard-tabs");
+    } if ($(window).width() >= 1380) {
+      $("#product_tabs").removeClass("standard-tabs");
+      $("#product_tabs").addClass("side-tabs");
+    }
   });
   // profile left is clicked
   $("#profileLeft").click(function(){
@@ -303,6 +313,32 @@ $(document).ready(function() {
     return false;
   });
   
+  // added for h1 titles to auto fit window width
+  $.fn.fitText = function( kompressor, options ) {
+    // Setup options
+    var compressor = kompressor || 1,
+        settings = $.extend({
+          'minFontSize' : 14,
+          'maxFontSize' : 40
+        }, options);
+    return this.each(function(){
+      // Store the object
+      var $this = $(this);
+      // modified for Loaded7 
+      // Resizer() resizes items based on the object width divided by the compressor * 17
+      var resizer = function () {
+        $this.css('font-size', Math.max(Math.min($this.width() / (compressor*17), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
+      };
+      // do the magic.
+      resizer();
+      // Call on resize. Opera debounces their resize by default. 
+      $(window).on('resize', resizer);
+    });
+  };
+  $("h1").fitText();
+  
+  $(".clEditorProductDescription").cleditor({width:"99%", height:"255"});
+  
   // defeat Google Chrome form autofill and its yellow background
   if(navigator.userAgent.toLowerCase().indexOf("chrome") >= 0 || navigator.userAgent.toLowerCase().indexOf("safari") >= 0){
     window.setInterval(function(){
@@ -318,18 +354,11 @@ $(document).ready(function() {
      
 });
 
-// turn off maintenance mode
-$("#mainMessageContainer").click(function(){
-  $('#mainMessageContainer p').removeClass('icon-warning icon-black').html('<span class="loader on-dark small-margin-right" style="margin-left:-4px"></span><?php echo $lC_Language->get('site_maintenance_message_text'); ?>');
-  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'updates' . '&action=setMaintMode&s=MODE'); ?>'
-  $.getJSON(jsonLink.replace('MODE', 'off').replace('&amp;', '&'),
-    function (data) {
-      $('#main').removeClass('no-margin-top');
-      $('#mainMessageContainer').slideUp();
-      return true;
-    }
-  );  
-});
+// check width of window for product edit tabs placement
+if ($(window).width() < 1380) {
+  $("#product_tabs").removeClass("side-tabs");
+  $("#product_tabs").addClass("standard-tabs");
+}
 
 /* toggle checkboxes on table listings */
 function toggleCheck() {
@@ -675,6 +704,23 @@ $("#li-settings").click(function() {
   $('#profileInner').animate({
     "marginLeft" : 0
   });
+});
+
+// added for the product images content panel switching
+function imagesGalleryTrigger() {
+  $('#images-gallery').show();
+  $('#additional-gallery').hide();
+  $('#images-gallery-trigger').removeClass('grey').addClass('with-right-arrow grey-arrow');
+  $('#additional-gallery-trigger').addClass('grey').removeClass('with-right-arrow grey-arrow');
+}
+function additionalGalleryTrigger() {
+  $('#images-gallery').hide();
+  $('#additional-gallery').show();
+  $('#images-gallery-trigger').addClass('grey').removeClass('with-right-arrow grey-arrow');
+  $('#additional-gallery-trigger').removeClass('grey').addClass('with-right-arrow grey-arrow'); 
+}
+$('#specials-pricing-switch').click(function() {
+  alert('hi'); 
 });
 
 // added to pull in any added modals used across all admin pages

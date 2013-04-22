@@ -72,3 +72,13 @@
 #shortcuts {
 	width: 400px;
 }
+
+.with-padding-no-top {
+  padding: 0 20px 20px !important;
+}
+
+@media screen and (max-width: 767px) {
+  .hide-below-768 {
+    display: none;
+  }
+}
