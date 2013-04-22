@@ -146,6 +146,15 @@ only screen and (min-device-pixel-ratio : 1.5) {
               <div id="checkoutConfirmationDetails"> 
                 <div id="loadingContainer"><p id="iloader"></p></div>
                 <?php
+echo "<pre>post ";
+print_r($_POST);
+echo "</pre>";
+echo "<pre>payment ";
+print_r($lC_Payment);
+echo "</pre>";
+die('11');
+                
+                
                 if (isset($lC_Payment->iframe_action_url) && $lC_Payment->iframe_action_url != NULL) {
                   echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
                 } else {

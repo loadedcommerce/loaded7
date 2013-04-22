@@ -15,7 +15,12 @@
       <key>payment_loadedpayments_plaintext_title</key>
       <value><![CDATA[Loaded Payments]]></value>
       <group>modules-payment</group>
-    </definition>    
+    </definition> 
+    <definition>
+      <key>payment_loadedpayments_blurb</key>
+      <value><![CDATA[Your payment is protected by Loaded Payments. Cardholder data will not be stored or shared. Checkout with Confidence.]]></value>
+      <group>modules-payment</group>
+    </definition>        
     
     
     <definition>

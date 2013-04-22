@@ -117,15 +117,11 @@ class lC_Payment_loadedpayments extends lC_Payment {
     if (is_object($order)) $this->update_status();
 
     if (defined('MODULE_PAYMENT_LOADEDPAYMENTS_TESTMODE') && MODULE_PAYMENT_LOADEDPAYMENTS_TESTMODE == '1') {
-      $this->form_action_url = 'https://uat.payleap.com/plcheckout.aspx';  // sandbox url
+      $this->iframe_relay_url = 'https://uat.payleap.com/plcheckout.aspx';  // sandbox url
     } else {
-      $this->form_action_url = 'https://secure1.payleap.com/plcheckout.aspx';  // production url
+      $this->iframe_relay_url = 'https://secure1.payleap.com/plcheckout.aspx';  // production url
     }
-
-    //$this->iframe_action_url = lc_href_link('loadedpayments.php', 'payment_template', 'SSL', true, true, true) ;  // we need this page link
-
-    $this->iframe_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) ;  
-
+    $this->form_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) ;  
 
     $Qcredit_cards = $lC_Database->query('select credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
     $Qcredit_cards->bindRaw(':table_credit_cards', TABLE_CREDIT_CARDS);
@@ -135,12 +131,7 @@ class lC_Payment_loadedpayments extends lC_Payment {
 
     while ($Qcredit_cards->next()) {
       $this->_card_images .= lc_image('images/cards/cc_' . strtolower(str_replace(" ", "_", $Qcredit_cards->value('credit_card_name'))) . '.png', null, null, null, 'style="vertical-align:middle; margin:0 2px;"');
-      $name = strtolower($Qcredit_cards->value('credit_card_name'));
-      if (stristr($Qcredit_cards->value('credit_card_name'), 'discover')) $name = 'Discover';
-      if (stristr($Qcredit_cards->value('credit_card_name'), 'jcb')) $name = 'JCB';
-      $this->_allowed_types .= ucwords($name) . '|';
     }
-    if (substr($this->_allowed_types, -1) == '|') $this->_allowed_types = substr($this->_allowed_types, 0, strlen($this->_allowed_types) - 1);
 
     $Qcredit_cards->freeResult();
   }
@@ -187,7 +178,7 @@ class lC_Payment_loadedpayments extends lC_Payment {
     global $lC_Language;
 
     $selection = array('id' => $this->_code,
-                       'module' => '<div class="payment-selection">' . $this->_title . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_loadedpayments_button_description') . '</div>');
+                       'module' => '<div class="payment-selection">' . $this->_title . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_loadedpayments_blurb') . '</div>');
 
     return $selection;
   }
@@ -258,11 +249,9 @@ class lC_Payment_loadedpayments extends lC_Payment {
                              lc_draw_hidden_field('includeInvoice', 'F') . "\n" .
                              lc_draw_hidden_field('hideAddress', 'T') . "\n" .
                              lc_draw_hidden_field('isRelayResponse', 'T') . "\n" .
-                             lc_draw_hidden_field('relayResponseURL', lc_href_link('iredirect.php', '', 'SSL', true, true, true)) . "\n" .
+                             lc_draw_hidden_field('relayResponseURL', lc_href_link('iredirect.php', '', 'SSL', true, true, true));
                              //lc_draw_hidden_field('styleSheetURL', lc_href_link('loadedpayments.css', '', 'SSL', true, true, true)) . "\n" .
-                             lc_draw_hidden_field('form', 'mage') . "\n";
-      $process_button_string .= lc_draw_hidden_field('iframe_action_url', $this->form_action_url);
-      $process_button_string .= lc_draw_hidden_field('SECURETOKEN', '45456465464654'); // JUST FOR TESTING PUT as hardcoded
+      
     return $process_button_string;
   }
  /**

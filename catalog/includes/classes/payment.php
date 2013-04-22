@@ -64,7 +64,11 @@ class lC_Payment {
         
         if ( (!empty($module)) && (in_array($module, $this->_modules)) && (isset($GLOBALS['lC_Payment_' . $module]->iframe_action_url)) ) {
           $this->iframe_action_url = $GLOBALS['lC_Payment_' . $module]->iframe_action_url;
-        }        
+        }   
+        
+        if ( (!empty($module)) && (in_array($module, $this->_modules)) && (isset($GLOBALS['lC_Payment_' . $module]->iframe_relay_url)) ) {
+          $this->iframe_relay_url = $GLOBALS['lC_Payment_' . $module]->iframe_relay_url;
+        }              
       }
     }
  
@@ -218,6 +222,38 @@ class lC_Payment {
     return $GLOBALS[$this->selected_module]->form_action_url;
   }
 
+  function hasIframeURL() {
+    if (is_array($this->_modules)) {
+      if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
+        if (isset($GLOBALS[$this->selected_module]->iframe_action_url) && (empty($GLOBALS[$this->selected_module]->iframe_action_url) === false)) {
+          return true;
+          }
+        }
+      }
+
+      return false;
+  }
+
+  function getIframeURL() {
+    return $GLOBALS[$this->selected_module]->iframe_action_url;
+  }
+
+  function hasRelayURL() {
+    if (is_array($this->_modules)) {
+      if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
+        if (isset($GLOBALS[$this->selected_module]->iframe_relay_url) && (empty($GLOBALS[$this->selected_module]->iframe_relay_url) === false)) {
+          return true;
+        }
+      }
+    }
+    
+    return false;
+  }
+
+  function getRelayURL() {
+    return $GLOBALS[$this->selected_module]->iframe_relay_url;
+  }
+
   function hasActive() {
     static $has_active;
 
@@ -234,25 +270,9 @@ class lC_Payment {
 
     return $has_active;
   }
-
-    function hasIframeURL() {
-      if (is_array($this->_modules)) {
-        if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
-          if (isset($GLOBALS[$this->selected_module]->iframe_action_url) && (empty($GLOBALS[$this->selected_module]->iframe_action_url) === false)) {
-            return true;
-          }
-        }
-      }
-
-      return false;
-    }
-
-    function getIframeURL() {
-      return $GLOBALS[$this->selected_module]->iframe_action_url;
-    }
-
-    function numberOfActive() {
-      static $active;
+    
+  function numberOfActive() {
+    static $active;
 
     if (isset($active) === false) {
       $active = 0;
@@ -266,7 +286,7 @@ class lC_Payment {
 
     return $active;
   }
-
+   
   function _usortModules($a, $b) {
     if ($GLOBALS['lC_Payment_' . $a]->getSortOrder() == $GLOBALS['lC_Payment_' . $b]->getSortOrder()) {
       return strnatcasecmp($GLOBALS['lC_Payment_' . $a]->getTitle(), $GLOBALS['lC_Payment_' . $a]->getTitle());
