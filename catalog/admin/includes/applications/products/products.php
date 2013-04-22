@@ -12,7 +12,7 @@
   @license    http://loadedcommerce.com/license.html
 
   @function The lC_Application_Products class manages the products GUI
-*/
+*/ 
 require_once('includes/applications/products/classes/products.php');
 require_once('includes/applications/product_attributes/classes/product_attributes.php');
 require_once('../includes/classes/variants.php');
