@@ -113,4 +113,19 @@ Custom Template CSS added by Loaded7 Dev Team
   top: -6px;
   z-index: 1;
   cursor: pointer;
-} 
+}
+
+.cat_rel_td {
+  padding: 5px 0;
+}
+#images-gallery-trigger {
+  cursor: pointer;
+}
+#additional-gallery-trigger {
+  cursor: pointer;
+}
+
+.prod-edit-lang-select {
+  width: 80px;
+  margin: 3px -7px 0px 0px;
+}

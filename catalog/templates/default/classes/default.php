@@ -11,6 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+error_reporting(0);
 class lC_Default {
  /*
   * Returns the live search data

@@ -1407,7 +1407,7 @@ function toggleEditor(id) {
                       </label>
                       <label for="ic_radio_2" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
                         <!-- move onclick to function later maestro -->
-                        <input type="radio" name="inventory_control_radio_group" id="ic_radio_2" value="2" onclick="$('#inventory_control_simple').hide('300');$('#inventory_control_multi').show('300');$('#tabHeaderSectionOptions').show().removeClass('active');$('label[for=\'ic-radio-1\']').removeClass('active');$('label[for=\'ic-radio-2\']').addClass('active');$('label[for=\'ioc-radio-1\']').removeClass('active');$('label[for=\'ioc-radio-2\']').addClass('active');" />
+                        <input type="radio" name="inventory_control_radio_group" id="ic_radio_2" value="2" onclick="$('#inventory_control_simple').hide('300');$('#inventory_control_multi').show('300');$('#tabHeaderSectionOptions').show().removeClass('active');$('label[for=\'ic_radio_1\']').removeClass('active');$('label[for=\'ic_radio_2\']').addClass('active');$('label[for=\'ioc_radio_1\']').removeClass('active');$('label[for=\'ioc_radio_2\']').addClass('active');" />
                         <?php echo $lC_Language->get('text_multi_sku'); ?>
                       </label>
                       <label for="ic_radio_3" class="button disabled green-active">
@@ -1634,7 +1634,7 @@ function toggleEditor(id) {
                       <!-- lc_options_inventory_control begin -->
                       <label for="ioc_radio_1" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
                         <!-- move onclick to function later maestro -->
-                        <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_1" value="1" onclick="$('#inventory_control_simple').show('300');$('#inventory_control_multi').hide('300');$('#section_options_content').hide();$('#tabHeaderSectionOptions').hide();$('#section_data_content').show();$('#tabHeaderSectionData').addClass('active');$('label[for=\'ic-radio-1\']').addClass('active');$('label[for=\'ic-radio-2\']').removeClass('active');" />
+                        <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_1" value="1" onclick="$('#inventory_control_simple').show('300');$('#inventory_control_multi').hide('300');$('#section_options_content').hide();$('#tabHeaderSectionOptions').hide();$('#section_data_content').show();$('#tabHeaderSectionData').addClass('active');$('label[for=\'ic_radio_1\']').addClass('active');$('label[for=\'ic_radio_2\']').removeClass('active');" />
                         <?php echo $lC_Language->get('text_simple'); ?>
                       </label>
                       <label for="ioc_radio_2" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
