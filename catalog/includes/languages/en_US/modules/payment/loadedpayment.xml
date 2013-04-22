@@ -2,27 +2,32 @@
 <language>
   <definitions>
     <definition>
-      <key>payment_loadedpayment_title</key>
-      <value><![CDATA[Credit Card via Loaded Payments]]></value>
+      <key>payment_loadedpayments_title</key>
+      <value><![CDATA[<img src="images/payment/loadedpayments-small.png" style="vertical-align:middle"> <span style="color:#13684b;">Payments</span> <a href="http://www.loadedcommerce.com/start-accepting-payments-now-pg-381.html?CDpath=0_282" target="_blank" style="text-decoration: underline; font-weight: bold;">><small><i><u>Learn More</u></i></small></a>]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>
-      <key>payment_loadedpayment_subtitle</key>
+      <key>payment_loadedpayments_description</key>
+      <value><![CDATA[<h3 class="thin small-margin-left mid-margin-bottom"><img src="images/payment/loadedpayments-large.png" class="margin-right" style="vertical-align:middle">]]></value>
+      <group>modules-payment</group>
+    </definition>
+    
+    
+    <definition>
+      <key>payment_loadedpayments_subtitle</key>
       <value><![CDATA[Process Secure Credit Card Transactions Transparently via Loaded Payments.]]></value>
       <group>modules-payment</group>
     </definition>    
+
+
+    
     <definition>
-      <key>payment_loadedpayment_description</key>
-      <value><![CDATA[<p align="center" style="margin:0 20px 5px 0;"><a href="http://www.loadedcommerce.com/start-accepting-payments-now-pg-381.html?CDpath=0_282" target="_blank" style="text-decoration: underline; font-weight: bold;"><img src="images/payment/loaded-payments.png" border="0"></p><p align="center">Signup for Loaded Payments</a><br /></p><br />]]></value>
-      <group>modules-payment</group>
-    </definition>
-    <definition>
-      <key>payment_loadedpayment_button_description</key>
+      <key>payment_loadedpayments_button_description</key>
       <value><![CDATA[Your payment is protected by Loaded Payments. Cardholder data will not be stored or shared. Checkout with Confidence.]]></value>
       <group>modules-payment</group>
     </definition>    
     <definition>
-      <key>payment_loadedpayment_preparing_status</key>
+      <key>payment_loadedpayments_preparing_status</key>
       <value><![CDATA[Preparing [Loaded Payments]]]></value>
       <group>modules-payment</group>
     </definition>	

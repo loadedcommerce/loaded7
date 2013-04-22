@@ -54,9 +54,9 @@ class lC_Payment_loadedpayment extends lC_Payment_Admin {
   public function lC_Payment_loadedpayment() {
     global $lC_Language;
 
-    $this->_title = $lC_Language->get('payment_loadedpayment_title');
-    $this->_description = $lC_Language->get('payment_loadedpayment_description');
-    $this->_method_title = $lC_Language->get('payment_loadedpayment_method_title');
+    $this->_title = $lC_Language->get('payment_loadedpayments_title');
+    $this->_description = $lC_Language->get('payment_loadedpayments_description');
+//    $this->_method_title = $lC_Language->get('payment_loadedpayments_method_title');
     $this->_status = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_STATUS') && (MODULE_PAYMENT_LOADEDPAYMENTS_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_SORT_ORDER') ? MODULE_PAYMENT_LOADEDPAYMENTS_SORT_ORDER : '');
   }

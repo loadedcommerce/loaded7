@@ -62,7 +62,7 @@ class lC_Payment_paypal_adv extends lC_Payment_Admin {
     global $lC_Language;
 
     $this->_title = $lC_Language->get('payment_paypal_adv_title');
-    $this->_method_title = $lC_Language->get('payment_paypal_adv_title');
+  //  $this->_method_title = $lC_Language->get('payment_paypal_adv_title');
     $this->_description = $lC_Language->get('payment_paypal_adv_description');
     $this->_status = (defined('MODULE_PAYMENT_PAYPAL_ADV_STATUS') && (MODULE_PAYMENT_PAYPAL_ADV_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('MODULE_PAYMENT_PAYPAL_ADV_SORT_ORDER') ? MODULE_PAYMENT_PAYPAL_ADV_SORT_ORDER : '');
