@@ -515,7 +515,7 @@
          <?php 
           $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
           $BarcodeQR->url($qrcode_url);
-          $BarcodeQR->draw(230, '../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png');
+          $BarcodeQR->draw(200, '../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png');
           echo '<h5>QR Code</h5><img src="../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png" /><br /><h6>Current URL</h6><p>' . $qrcode_url . '</p>';
          ?>
          </div>
@@ -572,12 +572,7 @@
   <script src="templates/default/js/fittext.js"></script>
   <!-- script src="templates/default/js/agenda.js"></script -->
   <script src="templates/default/js/tabs.js"></script>    <!-- Must be loaded last -->
-  <script>
-  $("#qrcode-tooltip").click(function() {
-      $("#qr-message").show("500");
-  });
-  </script>
-
+  
   <!-- CLEditor -->
   <script src="external/CLEditor/jquery.cleditor.min.js"></script>
   <!-- Load page specific javascript -->

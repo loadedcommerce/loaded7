@@ -82,7 +82,7 @@ body.with-menu #main {
 			}
 
 #open-menu {
-	top: 0;
+	top: 35px;
 	right: 0;
 	padding: 10px 8px 11px;
 	}

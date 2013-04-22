@@ -534,7 +534,7 @@ input:-moz-placeholder {
 
 /* Fieldset and field-lists */
 .fieldset {
-	padding: 20px 20px 0 20px;
+	padding: 20px;
 	border: 1px solid #cccccc;
 	margin-bottom: 16px;
 	-webkit-background-clip: padding-box;

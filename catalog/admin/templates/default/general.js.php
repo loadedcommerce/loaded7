@@ -350,7 +350,11 @@ $(document).ready(function() {
   }
   
   $("#profileLoader").hide();
-  $("#profileInner").fadeTo(1000, 1);     
+  $("#profileInner").fadeTo(1000, 1);
+  
+  $("#qrcode-tooltip").click(function() {
+    $("#qr-message").show("500");
+  });        
      
 });
 
