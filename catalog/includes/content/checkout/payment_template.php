@@ -34,5 +34,14 @@ class lC_Checkout_Payment_template extends lC_Template {
 
       $this->_page_title = $lC_Language->get('secure_payment_heading_title');
   }
+  
+  function rePost() {
+    $postData = '';
+    foreach ($_POST as $key => $value) {
+      $postData .= '<input type="hidden" name="' . $key . '" value="' . $value . '">' . "\n";
+    }
+    
+    return $postData;
+  }  
 }
 ?>

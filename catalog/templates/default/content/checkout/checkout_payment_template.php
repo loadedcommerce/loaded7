@@ -11,6 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+ini_set('display_errors', 1);
 $secureUrl = substr($lC_Payment->iframe_action_url, 0, strpos($lC_Payment->iframe_action_url, '?'));
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
@@ -145,19 +146,15 @@ only screen and (min-device-pixel-ratio : 1.5) {
             <div id="checkout_shipping_col2" style="width:67%; float:right; margin-right:-4px">
               <div id="checkoutConfirmationDetails"> 
                 <div id="loadingContainer"><p id="iloader"></p></div>
-                <?php
-echo "<pre>post ";
-print_r($_POST);
-echo "</pre>";
-echo "<pre>payment ";
-print_r($lC_Payment);
-echo "</pre>";
-die('11');
-                
-                
-                if (isset($lC_Payment->iframe_action_url) && $lC_Payment->iframe_action_url != NULL) {
-                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
+                <?php                              
+                if ($lC_Payment->hasIframeURL()) {
+                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
+                } else if ($lC_Payment->hasRelayURL()) {
+                  echo '<form name="pmtForm" id="pmtForm" action="' . $this->iframe_action_url . '" target="pmtFrame" method="post">' . self::rePost() . '</form>' . "\n";        
+                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" height="300px" width="606px" scrolling="no" marginheight="0" marginwidth="0">Your browser does not support iframes.</iframe>'; 
+                  
                 } else {
+                  
                   echo '[[FORM INSERT]]'; 
                 }
               ?>
@@ -179,5 +176,11 @@ function hideLoader() {
 $(function() {
   $('#iloader').activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5});
 });
+
+<?php
+if ($lC_Payment->hasRelayURL()) {
+  echo "window.onload = function(){ document.forms['pmtForm'].submit(); };";
+}
+?>
 </script>
 <!--content/checkout/checkout_payment_template.php end-->
