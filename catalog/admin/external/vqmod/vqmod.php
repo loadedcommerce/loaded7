@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 /**
  * VQMod
  * @description Main Object used
@@ -413,9 +414,9 @@ class VQModLog {
       }
     }
 
-    $result = file_put_contents($logPath, implode(PHP_EOL, $txt), ($append ? FILE_APPEND : 0));
+    $result = @file_put_contents($logPath, implode(PHP_EOL, $txt), ($append ? FILE_APPEND : 0));
     if(!$result) {
-      die('LOG FILE COULD NOT BE WRITTEN');
+      //die('LOG FILE COULD NOT BE WRITTEN');
     }
   }
 
