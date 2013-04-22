@@ -566,11 +566,6 @@
   <script src="templates/default/js/confirm.js"></script>
   <!-- script src="templates/default/js/agenda.js"></script -->
   <script src="templates/default/js/tabs.js"></script>    <!-- Must be loaded last -->
-  <script>
-  $("#qrcode-tooltip").click(function() {
-      $("#qr-message").show("500");
-  });
-  </script>
   <!-- Load page specific javascript -->
   <?php $lC_Template->loadPageScript($lC_Template->getModule()); ?>
 </body>

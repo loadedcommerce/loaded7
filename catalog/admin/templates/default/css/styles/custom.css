@@ -76,7 +76,6 @@ Custom Template CSS added by Loaded7 Dev Team
   width: 100% !important;
 }
 
-/*Prevent Long URL From Breaking Out of Container*/
 #qr-message {
   -ms-word-break: break-all;
   word-break: break-all;
@@ -85,12 +84,12 @@ Custom Template CSS added by Loaded7 Dev Team
   -webkit-hyphens: auto;
   -moz-hyphens: auto;
   hyphens: auto;
-  display:none;
-  position:fixed;
-  bottom:20px;
-  right:26px;
-  width: 240px;
-  text-align:center;
+  display: none;
+  position: fixed;
+  bottom: 10px;
+  right: 22px;
+  width: 210px;
+  text-align: center;
 }
 
 .close-qr {
