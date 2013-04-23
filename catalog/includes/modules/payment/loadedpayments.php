@@ -198,12 +198,7 @@ class lC_Payment_loadedpayments extends lC_Payment {
   * @return integer
   */
   public function confirmation() {
-    $_SESSION['cartSync']['paymentMethod'] = $this->_code;
-    $this->_order_id = lC_Order::insert();
-    // store the cartID info to match up on the return - to prevent multiple order IDs being created
-    $_SESSION['cartSync']['cartID'] = $_SESSION['cartID'];
-    $_SESSION['cartSync']['prepOrderID'] = $_SESSION['prepOrderID'];
-    $_SESSION['cartSync']['orderCreated'] = TRUE;
+    return false;
   }
  /**
   * Return the confirmation button logic
@@ -212,14 +207,13 @@ class lC_Payment_loadedpayments extends lC_Payment {
   * @return string
   */
   public function process_button() {
-    global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer;
+    global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer;  
 
     $loginid = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_USERNAME')) ? MODULE_PAYMENT_LOADEDPAYMENTS_USERNAME : '';
     $transactionkey = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_TRANSKEY')) ? MODULE_PAYMENT_LOADEDPAYMENTS_TRANSKEY : '';  
     $amount = $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode());
     $sequence = rand(1, 1000); // a sequence number is randomly generated
     $timestamp = time(); // a timestamp is generated
-    $mediaType = (isset($_SESSION['mediaType'] ) && $_SESSION['mediaType']  != NULL) ? $_SESSION['mediaType'] : 'desktop';
     $fingerprint = hash_hmac("md5", $loginid . "" . $amount . "" . $sequence . "" . $timestamp . "", $transactionkey); 
 
     $process_button_string = lc_draw_hidden_field('loginid', $loginid) . "\n" .
@@ -241,7 +235,6 @@ class lC_Payment_loadedpayments extends lC_Payment {
                              lc_draw_hidden_field('fingerprint', $fingerprint) . "\n" .                             
                              lc_draw_hidden_field('customField1', session_name()) . "\n" .
                              lc_draw_hidden_field('customField2', session_id()) . "\n" .
-                             lc_draw_hidden_field('customField3', $this->_order_id) . "\n" . 
                              lc_draw_hidden_field('includeMerchantName', 'F') . "\n" .
                              lc_draw_hidden_field('readonlyorderdetail', 'F') . "\n" .
                              lc_draw_hidden_field('emailReceipt', 'T') . "\n" .
@@ -250,7 +243,7 @@ class lC_Payment_loadedpayments extends lC_Payment {
                              lc_draw_hidden_field('hideAddress', 'T') . "\n" .
                              lc_draw_hidden_field('isRelayResponse', 'T') . "\n" .
                              lc_draw_hidden_field('relayResponseURL', lc_href_link('iredirect.php', '', 'SSL', true, true, true)) . "\n" .
-                             lc_draw_hidden_field('styleSheetURL', lc_href_link('includes/modules/payment/loadedpayments/loadedpayments-' . $_SESSION['mediaType'] . '.css', '', 'SSL', true, true, true)) . "\n";
+                             lc_draw_hidden_field('styleSheetURL', lc_href_link('includes/modules/payment/loadedpayments/loadedpayments.css', '', 'SSL', true, true, true)) . "\n";
       
     return $process_button_string;
   }
@@ -262,44 +255,46 @@ class lC_Payment_loadedpayments extends lC_Payment {
   */
   public function process() {
     global $lC_Language, $lC_Database, $lC_MessageStack;
-
+    
     $error = false;
-    $action = (isset($_GET['action']) && !empty($_GET['action'])) ? preg_replace('/[^a-zA-Z]/', '', $_GET['action']) : NULL;
-    $code = (isset($_GET['code']) && !empty($_GET['code'])) ? preg_replace('/[^0-9]/', '', $_GET['code']) : NULL;
-    $msg = (isset($_GET['msg']) && !empty($_GET['msg'])) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_GET['msg']) : NULL;
-    $order_id = (isset($_GET['order_id']) && !empty($_GET['order_id'])) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]\-/', '', $_GET['order_id']) : NULL;
+    $success = (isset($_POST['success']) && $_POST['success'] == 'T') ? true : false;
+    $code = (isset($_POST['responseCode']) && $_POST['responseCode'] != '') ? preg_replace('/[^0-9]/', '', $_POST['responseCode']) : NULL;
+    $msg = (isset($_POST['error']) && $_POST['error'] != NULL) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_POST['error']) : NULL;
 
-    switch (strtolower($action)) {
-      case 'cancel' :
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
-        break;
-
-      default :
-        switch ($code) {
-          case '000' :
-            // update order status
-            lC_Order::process($order_id, $this->_order_status_complete);
-            break;
-
-          default :
-            // there was an error
-            $lC_MessageStack->add('checkout_payment', $code . ' - ' . $msg);
-            $error = true;
-        }
+    switch ($success) {
+      case true : // success
+        // update order status
+        $this->_order_id = lC_Order::insert();
+        lC_Order::process($this->_order_id, $this->_order_status_complete);      
         // insert into transaction history
         $this->_transaction_response = $code;
 
-        $response_array = array('root' => $_GET);
-        $response_array['root']['transaction_response'] = trim($this->_transaction_response);
+        $response_array = array('root' => utility::cleanArr($_POST));
+        $response_array['root']['transaction_response'] = $this->_transaction_response;
         $lC_XML = new lC_XML($response_array);
 
         $Qtransaction = $lC_Database->query('insert into :table_orders_transactions_history (orders_id, transaction_code, transaction_return_value, transaction_return_status, date_added) values (:orders_id, :transaction_code, :transaction_return_value, :transaction_return_status, now())');
         $Qtransaction->bindTable(':table_orders_transactions_history', TABLE_ORDERS_TRANSACTIONS_HISTORY);
-        $Qtransaction->bindInt(':orders_id', $order_id);
+        $Qtransaction->bindInt(':orders_id', $this->_order_id);
         $Qtransaction->bindInt(':transaction_code', 1);
         $Qtransaction->bindValue(':transaction_return_value', $lC_XML->toXML());
         $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '000') ? 1 : 0);
         $Qtransaction->execute();
+        break;
+
+      default : // error
+        switch ($code) {
+          case '2' :
+            // cancelled
+            lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL'));
+            break;
+
+          default :
+            // there was an error
+            $lC_MessageStack->add('checkout_payment', sprintf($lC_Language->get('error_payment_problem'), '(' . $code . ') : ' . $msg));
+            $_SESSION['messageToStack'] = $lC_MessageStack->getAll(); 
+            $error = true;
+        }
 
         if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
     }

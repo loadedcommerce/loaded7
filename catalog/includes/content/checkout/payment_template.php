@@ -34,6 +34,35 @@ class lC_Checkout_Payment_template extends lC_Template {
 
       $this->_page_title = $lC_Language->get('secure_payment_heading_title');
   }
+
+  function getIframeWidth() {
+    $mediaType = (isset($_SESSION['mediaType']) && $_SESSION['mediaType'] != NULL) ? strtolower($_SESSION['mediaType']) : 'desktop';
+    switch($mediaType) {
+      case 'mobile-portrait' :
+        $frameWidth = '254px';
+        break;
+      case 'mobile-landscape' :
+        $frameWidth = '414px';
+        break;
+      case 'small-tablet-portrait' :
+        $frameWidth = '510px';
+        break;   
+      case 'small-tablet-landscape' :
+        $frameWidth = '410px';
+        break;                                         
+      case 'tablet-portrait' :
+        $frameWidth = '410px';
+        break;  
+      case 'tablet-landscape' :
+        $frameWidth = '470px';
+        break;                                                                 
+      default : // desktop
+        $frameWidth = '478px';
+    }    
+      
+    return $frameWidth;
+  }
+  
   
   function rePost() {
     $postData = '';

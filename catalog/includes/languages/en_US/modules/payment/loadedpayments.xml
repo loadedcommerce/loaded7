@@ -26,46 +26,5 @@
       <value><![CDATA[<img src="images/payment/loadedpayments-small.png" style="vertical-align:middle"> <span style="color:#13684b; margin-left:0;">Payments</span>]]></value>
       <group>modules-payment</group>
     </definition>    
-       
-    
-    
-    <definition>
-      <key>payment_loadedpayments_subtitle</key>
-      <value><![CDATA[Process Secure Credit Card Transactions Transparently via Loaded Payments.]]></value>
-      <group>modules-payment</group>
-    </definition>    
-
-
-    
-    <definition>
-      <key>payment_loadedpayments_button_description</key>
-      <value><![CDATA[Your payment is protected by Loaded Payments. Cardholder data will not be stored or shared. Checkout with Confidence.]]></value>
-      <group>modules-payment</group>
-    </definition>    
-    <definition>
-      <key>payment_loadedpayments_preparing_status</key>
-      <value><![CDATA[Preparing [Loaded Payments]]]></value>
-      <group>modules-payment</group>
-    </definition>	
-	<definition>
-      <key>payment_loadedpayments_text_amex</key>
-      <value><![CDATA[American Express]]></value>
-      <group>modules-payment</group>
-    </definition>
-	<definition>
-      <key>payment_loadedpayments_text_mastercard</key>
-      <value><![CDATA[Mastercard]]></value>
-      <group>modules-payment</group>
-    </definition>
-	<definition>
-      <key>payment_loadedpayments_text_discover</key>
-      <value><![CDATA[Discover]]></value>
-      <group>modules-payment</group>
-    </definition>
-	<definition>
-      <key>payment_loadedpayments_text_visa</key>
-      <value><![CDATA[Visa]]></value>
-      <group>modules-payment</group>
-    </definition>
   </definitions>
 </language>

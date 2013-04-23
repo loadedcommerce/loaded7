@@ -17,14 +17,14 @@
       <group>modules-payment</group>
     </definition>
     <definition>
-      <key>payment_cresecure_button_description</key>
+      <key>payment_cresecure_plaintext_title</key>
+      <value><![CDATA[CRE Secure Payments]]></value>
+      <group>modules-payment</group>
+    </definition>     
+    <definition>
+      <key>payment_cresecure_blurb</key>
       <value><![CDATA[Your payment is protected by CRE Secure. Checkout with Confidence.]]></value>
       <group>modules-payment</group>
-    </definition>    
-    <definition>
-      <key>payment_cresecure_preparing_status</key>
-      <value><![CDATA[Preparing [CRE Secure]]]></value>
-      <group>modules-payment</group>
-    </definition>    
+    </definition>      
   </definitions>
 </language>

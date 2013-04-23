@@ -91,7 +91,7 @@ class lC_Payment_cresecure extends lC_Payment {
     global $lC_Language;
 
     $this->_title = $lC_Language->get('payment_cresecure_title');
-    $this->_method_title = $lC_Language->get('payment_cresecure_title');
+    $this->_method_title = $lC_Language->get('payment_cresecure_method_title');
     $this->_status = (defined('MODULE_PAYMENT_CRESECURE_STATUS') && (MODULE_PAYMENT_CRESECURE_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('MODULE_PAYMENT_CRESECURE_SORT_ORDER') ? MODULE_PAYMENT_CRESECURE_SORT_ORDER : null);
 
@@ -185,7 +185,7 @@ class lC_Payment_cresecure extends lC_Payment {
     global $lC_Language;
 
     $selection = array('id' => $this->_code,
-                       'module' => '<div class="payment-selection">' . $this->_title . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_cresecure_button_description') . '</div>');    
+                       'module' => '<div class="payment-selection">' . $this->_method_title . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_cresecure_blurb') . '</div>');    
     
     return $selection;
   }
