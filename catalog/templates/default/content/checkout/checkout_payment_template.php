@@ -12,7 +12,8 @@
 *  @license    http://loadedcommerce.com/license.html
 */
 ini_set('display_errors', 1);
-$secureUrl = substr($lC_Payment->iframe_action_url, 0, strpos($lC_Payment->iframe_action_url, '?'));
+
+$secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->iframe_action_url, 0, strpos($lC_Payment->iframe_action_url, '?')) : ($lC_Payment->hasRelayURL()) ?  $lC_Payment->iframe_relay_url : NULL ;
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
@@ -48,7 +49,7 @@ and (max-device-width : 480px) {
 /* Mobile (portrait) ----------- */
 @media only screen 
 and (max-width : 320px) {
-  #payformIframe { min-width:300px; min-height:380px; }
+  #payformIframe { min-width:320px; min-height:380px; }
   #checkoutConfirmationDetails {width: 96% !important; }
 }
 
@@ -141,20 +142,42 @@ only screen and (min-device-pixel-ratio : 1.5) {
                 <h3><?php echo $lC_Language->get('bill_to_address'); ?></h3>
                 <span style="float:right;"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span> <span id="bill-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?></span>
               </div>
+              <?php
+                echo '[' . $_SESSION['mediaType'] . '][' . $_SESSION['mediaSize'] . ']<br>';
+              ?>
             </div>
             
             <div id="checkout_shipping_col2" style="width:67%; float:right; margin-right:-4px">
               <div id="checkoutConfirmationDetails"> 
                 <div id="loadingContainer"><p id="iloader"></p></div>
-                <?php                              
+                <?php  
                 if ($lC_Payment->hasIframeURL()) {
                   echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
-                } else if ($lC_Payment->hasRelayURL()) {
-                  echo '<form name="pmtForm" id="pmtForm" action="' . $this->iframe_action_url . '" target="pmtFrame" method="post">' . self::rePost() . '</form>' . "\n";        
-                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" height="300px" width="606px" scrolling="no" marginheight="0" marginwidth="0">Your browser does not support iframes.</iframe>'; 
-                  
+                } else if ($lC_Payment->hasRelayURL()) { 
+                  $mediaType = (isset($_SESSION['mediaType']) && $_SESSION['mediaType'] != NULL) ? strtolower($_SESSION['mediaType']) : 'desktop';
+                  switch($mediaType) {
+                    case 'mobile-portrait' :
+                      $frameWidth = '254px';
+                      break;
+                    case 'mobile-landscape' :
+                      $frameWidth = '414px';
+                      break;
+                      
+                    case 'tablet-portrait' :
+                      $frameWidth = '400px';
+                      break;  
+                      
+                    case 'tablet-landscape' :
+                      $frameWidth = '470px';
+                      break;                                                                 
+                      
+                    default : // desktop
+                      $frameWidth = '478px';
+                  }
+                
+                  echo '<form name="pmtForm" id="pmtForm" action="' . $lC_Payment->iframe_relay_url . '" target="pmtFrame" method="post">' . lC_Checkout_Payment_template::rePost() . '</form>' . "\n";        
+                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="' . $frameWidth . '" height="550px" scrolling="no" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 
                 } else {
-                  
                   echo '[[FORM INSERT]]'; 
                 }
               ?>

@@ -114,19 +114,23 @@ function _setMediaType() {
   var winW = $(window).width();
   
   if (winW < 321) {
-    mtype = 'mobile-portrait';
+    mtype = 'mobile-portrait'; //320 x 480
   } else if (winW > 320 && winW < 601) {
-    mtype = 'mobile-landscape';
-  } else if (winW > 601 && winW < 769) {
-    mtype = 'tablet-portrait';    
+    mtype = 'mobile-landscape'; //480 x 320
+    
+//600 x 800
+// 800 x 600                                
+    
+  } else if (winW > 601 && winW < 769) {  
+    mtype = 'tablet-portrait'; //768 x 1024   
   } else if (winW > 769 && winW < 1025) {
-    mtype = 'tablet-landscape';    
+    mtype = 'tablet-landscape'; //1024 x 768    
   } else if (winW > 1024) {
     mtype = 'desktop';    
   }
   
-  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=setMediaType&type=TYPE', 'AUTO'); ?>'
-  $.getJSON(jsonLink.replace('TYPE', mtype).replace('&amp;', '&'),
+  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=setMediaType&type=TYPE&size=SIZE', 'AUTO'); ?>'
+  $.getJSON(jsonLink.replace('TYPE', mtype).replace('SIZE', winW).replace('&amp;', '&'),
     function (data) {
       return true;
     }

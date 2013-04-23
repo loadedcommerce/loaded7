@@ -63,7 +63,7 @@ class lC_Default_rpc {
   */
   public static function setMediaType() {
     $result = array();
-    if (lC_Default::setMediaType($_GET['type'])) {
+    if (lC_Default::setMediaType($_GET['type'], $_GET['size'])) {
       $result['rpcStatus'] = '1';
     }
     

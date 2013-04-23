@@ -219,7 +219,7 @@ class lC_Payment_loadedpayments extends lC_Payment {
     $amount = $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode());
     $sequence = rand(1, 1000); // a sequence number is randomly generated
     $timestamp = time(); // a timestamp is generated
-
+    $mediaType = (isset($_SESSION['mediaType'] ) && $_SESSION['mediaType']  != NULL) ? $_SESSION['mediaType'] : 'desktop';
     $fingerprint = hash_hmac("md5", $loginid . "" . $amount . "" . $sequence . "" . $timestamp . "", $transactionkey); 
 
     $process_button_string = lc_draw_hidden_field('loginid', $loginid) . "\n" .
@@ -249,8 +249,8 @@ class lC_Payment_loadedpayments extends lC_Payment {
                              lc_draw_hidden_field('includeInvoice', 'F') . "\n" .
                              lc_draw_hidden_field('hideAddress', 'T') . "\n" .
                              lc_draw_hidden_field('isRelayResponse', 'T') . "\n" .
-                             lc_draw_hidden_field('relayResponseURL', lc_href_link('iredirect.php', '', 'SSL', true, true, true));
-                             //lc_draw_hidden_field('styleSheetURL', lc_href_link('loadedpayments.css', '', 'SSL', true, true, true)) . "\n" .
+                             lc_draw_hidden_field('relayResponseURL', lc_href_link('iredirect.php', '', 'SSL', true, true, true)) . "\n" .
+                             lc_draw_hidden_field('styleSheetURL', lc_href_link('includes/modules/payment/loadedpayments/loadedpayments-' . $_SESSION['mediaType'] . '.css', '', 'SSL', true, true, true)) . "\n";
       
     return $process_button_string;
   }
