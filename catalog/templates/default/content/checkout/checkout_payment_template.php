@@ -11,8 +11,6 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-ini_set('display_errors', 1);
-
 $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->iframe_action_url, 0, strpos($lC_Payment->iframe_action_url, '?')) : ($lC_Payment->hasRelayURL()) ?  $lC_Payment->iframe_relay_url : NULL ;
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
@@ -27,7 +25,6 @@ $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->iframe_action_u
 #paymentTemplateContainer .arrow-container { margin-top:15px; }
 #paymentTemplateContainer .arrow-down { border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid gray; float: right; height: 0; width: 0; margin:13px 0 0 6px; }
 #paymentTemplateContainer .arrow-up { border-bottom: 10px solid gray; border-left: 10px solid transparent; border-right: 10px solid transparent; float: right; height: 0; width: 0; margin:13px 0 0 6px; } 
-
 #loadingContainer { position:absolute; right:250px; }
 #iloader { margin:100px 0 0 0px; }
 <?php 
@@ -142,6 +139,9 @@ only screen and (min-device-pixel-ratio : 1.5) {
                 <h3><?php echo $lC_Language->get('bill_to_address'); ?></h3>
                 <span style="float:right;"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span> <span id="bill-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?></span>
               </div>
+              <?php
+                //echo '[' . $_SESSION['mediaType'] . '][' . $_SESSION['mediaSize'] . ']<br>';
+              ?>
             </div>
             <div id="checkout_shipping_col2" style="width:67%; float:right; margin-right:-4px">
               <div id="checkoutConfirmationDetails"> 

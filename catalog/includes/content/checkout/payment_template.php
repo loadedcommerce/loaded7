@@ -45,16 +45,16 @@ class lC_Checkout_Payment_template extends lC_Template {
         $frameWidth = '414px';
         break;
       case 'small-tablet-portrait' :
-        $frameWidth = '510px';
+        $frameWidth = '490px';
         break;   
       case 'small-tablet-landscape' :
         $frameWidth = '410px';
         break;                                         
       case 'tablet-portrait' :
-        $frameWidth = '410px';
+        $frameWidth = '390px';
         break;  
       case 'tablet-landscape' :
-        $frameWidth = '470px';
+        $frameWidth = '450px';
         break;                                                                 
       default : // desktop
         $frameWidth = '478px';
