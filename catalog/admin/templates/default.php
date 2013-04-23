@@ -575,6 +575,7 @@
   
   <!-- CLEditor -->
   <script src="external/CLEditor/jquery.cleditor.min.js"></script>
+  <script src="external/CLEditor/jquery.cleditor.fullscreen.js"></script>
   <!-- Load page specific javascript -->
   <?php $lC_Template->loadPageScript($lC_Template->getModule()); ?>
 </body>

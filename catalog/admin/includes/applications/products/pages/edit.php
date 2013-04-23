@@ -746,7 +746,7 @@ function toggleEditor(id) {
                   </div>
                   <div class="twelve-columns no-margin-bottom">
                     <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding clEditorProductDescription"'); ?>
-                    <span class="float-right small-margin-top"><a href="#">Enlarge Description <span class="icon-extract icon-grey"></span></a>&nbsp;&nbsp;&nbsp;<?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
+                    <span class="float-right small-margin-top"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
                   </div>
                   <div class="twelve-columns no-margin-bottom mid-margin-top">
                     <span class="full-width">

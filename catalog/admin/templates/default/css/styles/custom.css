@@ -128,4 +128,9 @@ Custom Template CSS added by Loaded7 Dev Team
 .prod-edit-lang-select {
   width: 80px;
   margin: 3px -7px 0px 0px;
+  z-index: 0 !important;
+}
+
+#floating-menu-div-listing {
+  z-index: 1;
 }
