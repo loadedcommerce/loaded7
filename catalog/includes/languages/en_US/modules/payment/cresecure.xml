@@ -7,8 +7,8 @@
       <group>modules-payment</group>
     </definition>
     <definition>
-      <key>payment_cresecure_subtitle</key>
-      <value><![CDATA[Process Credit Card Payments with multiple gateways and PayPal Express Checkout]]></value>
+      <key>payment_cresecure_method_title</key>
+      <value><![CDATA[<img src="images/payment/cresecure-small.png" style="vertical-align:middle"> Payments]]></value>
       <group>modules-payment</group>
     </definition>    
     <definition>

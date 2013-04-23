@@ -203,7 +203,7 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                   <div id="confirmation-order-comment">
                     <h3><?php echo $lC_Language->get('order_comment_title'); ?></h3>
                     <div id="confirmation-order-comment-inner">
-                      <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), 34, 3, 'placeholder="' . $lC_Language->get('text_add_comment_to_order') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('text_add_comment_to_order') . '\'" style="height:47px;"'); ?>
+                      <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), '27%', '3', 'placeholder="' . $lC_Language->get('text_add_comment_to_order') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('text_add_comment_to_order') . '\'" style="height:47px;"'); ?>
                     </div>
                   </div>
                   <div id="confirmation-grand-total">
