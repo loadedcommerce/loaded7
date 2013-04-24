@@ -222,35 +222,27 @@ $(document).ready(function() {
           var liAddClass = $('#li-add').attr("class");
           if (liAddClass == 'current') {
             if (code == 111) { // o for new (O)rder
-              //alert('new order');
               //window.location.href = '';
             };
             if (code == 99) { // c for new (C)ustomer
-              //alert('new customer');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>';
             };
             if (code == 103) { // g for new cate(G)ory
-              //alert('new category');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>';
             };
             if (code == 112) { // p for new (P)roduct
-              //alert('new product');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>';
             };
             if (code == 108) { // l for new specia(L)
-              //alert('new special');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>';
             };
             if (code == 116) { // t for new manufac(T)urer
-              //alert('new manufacturer');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>';
             };
             if (code == 98) { // b for new (B)anner
-              //alert('new banner');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>';
             };
             if (code == 110) { // n for new (N)ewsletter
-              //alert('new newsletter');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>';
             };
           }
@@ -724,8 +716,8 @@ function additionalGalleryTrigger() {
   $('#additional-gallery-trigger').removeClass('grey').addClass('with-right-arrow grey-arrow'); 
 }
 $('#specials-pricing-switch').click(function() {
-  alert('hi'); 
-});
+  //alert('hi'); 
+}); 
 
 // added to pull in any added modals used across all admin pages
 <?php
