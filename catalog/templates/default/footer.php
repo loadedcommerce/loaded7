@@ -96,6 +96,13 @@
     require('./includes/classes/BarcodeQR.php');
     $BarcodeQR = new BarcodeQR();
     $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
+
+    if(empty($_GET) === false) {
+      $qrcode_url .= '&'.$lC_Session->getName().'='.$lC_Session->getID();
+    } else {
+      $qrcode_url .= '?'.$lC_Session->getName().'='.$lC_Session->getID();
+    }
+
     $BarcodeQR->url($qrcode_url);
     if ($lC_Customer->isLoggedOn() === true) {
       $BarcodeQR->draw(230, 'includes/work/qrcode/c' .  $lC_Customer->id . '.png');
