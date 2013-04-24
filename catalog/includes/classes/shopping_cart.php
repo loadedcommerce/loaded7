@@ -728,7 +728,7 @@ class lC_ShoppingCart {
   }
 
   public function setShippingAddress($address_id) {
-    global $lC_Database, $lC_Customer;
+    global $lC_Database, $lC_Customer, $lC_Language;
 
     $previous_address = null;
 
@@ -748,7 +748,7 @@ class lC_ShoppingCart {
       $this->_shipping_address = array('id' => $address_id,
                                        'firstname' => $Qaddress->valueProtected('entry_firstname'),
                                        'lastname' => $Qaddress->valueProtected('entry_lastname'),
-                                       'company' => $Qaddress->valueProtected('entry_company'),
+                                       'company' => (!lc_empty($Qaddress->valueProtected('entry_company'))) ? $Qaddress->valueProtected('entry_company') : $lC_Language->get('field_customer_company'),
                                        'street_address' => $Qaddress->valueProtected('entry_street_address'),
                                        'suburb' => $Qaddress->valueProtected('entry_suburb'),
                                        'city' => $Qaddress->valueProtected('entry_city'),

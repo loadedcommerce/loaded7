@@ -20,7 +20,7 @@ if ( !class_exists('lC_Summary') ) {
 class lC_Summary_reviews extends lC_Summary {
 
   var $enabled = FALSE,
-      $sort_order = 60;
+      $sort_order = 50;
   
   /* Class constructor */
   function __construct() {
