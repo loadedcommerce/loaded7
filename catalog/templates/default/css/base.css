@@ -820,7 +820,7 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #confirmation-order-comment-inner { margin-bottom: 10px; }
 #confirmation-grand-total { float: right; width: 49%; }
 #confirmation-grand-total-inner #ot-container #total { border-top: 0 !important; } 
-#confirmation-grand-total-inner #ot-container #total label { margin: -1px 0 -1px 0; }
+#confirmation-grand-total-inner #ot-container #total label { margin: -1px 0 -1px 0; width:50%; }
 #confirmation-grand-total-inner #ot-container #total span { margin: -1px 0 -1px 0; }
 #checkout-step-login h3 { margin-bottom: -10px !important; margin-top: 5px; }
 .next-li { margin-top: -4px !important; }
