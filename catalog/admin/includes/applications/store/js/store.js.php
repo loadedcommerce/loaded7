@@ -22,10 +22,11 @@ $(document).ready(function() {
 function showType(id, text) {
   //$('#contentContainer').html(text + ' Addons Listing Area');
  
-  var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&aid=AID&action=getAll&media=MEDIA'); ?>';
+  var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&aid=AID&action=getAll&type=TYPE&media=MEDIA'); ?>';
   oTable = $('#dataTable').dataTable({
       "bProcessing": true,
-      "sAjaxSource": dataTableDataURL.replace('AID', parseInt(id)).replace('MEDIA', $.template.mediaQuery.name),
+      "bServerSide": true,
+      "sAjaxSource": dataTableDataURL.replace('AID', parseInt(id)).replace('TYPE', text).replace('MEDIA', $.template.mediaQuery.name),
       "bPaginate": false,
       "bLengthChange": false,
       "bFilter": false,
