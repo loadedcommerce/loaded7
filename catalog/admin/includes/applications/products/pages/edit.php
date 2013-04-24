@@ -1503,7 +1503,7 @@ function toggleEditor(id) {
                     </span>
                   </div>
                   <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_msrp" name="products_msrp" disabled />
+                    <input type="text" class="required input full-width" value="<?php echo number_format($lC_ObjectInfo->get('products_msrp'), DECIMAL_PLACES); ?>" id="products_msrp" name="products_msrp" />
                   </div>
                 </div>
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -1589,15 +1589,6 @@ function toggleEditor(id) {
                       </span>
                     </span> 
                   </div>
-                  <div class="small-margin-top">
-                    <input type="text" name="products_msrp" id="products_msrp" value="<?php //echo number_format($lC_ObjectInfo->get('products_msrp'), DECIMAL_PLACES); ?>" class="input small-margin-right" disabled /> <b><?php echo $lC_Language->get('text_msrp'); ?></b>
-                    <span class="info-spot on-left grey small-margin-left">
-                      <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
-                      <span class="info-bubble">
-                        <b>Go Pro!</b> and enjoy this feature!
-                      </span>
-                    </span> 
-                  </div>
                 </div>
                 <!-- lc_inventory_control_simple end -->                                       
                 <div id="inventory_control_multi"<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' style="display:none;"'); ?>>
@@ -1641,7 +1632,7 @@ function toggleEditor(id) {
             <fieldset class="fieldset">
               <legend class="legend"><?php echo $lC_Language->get('text_management_settings'); ?></legend>
               <div class="columns">
-                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
                 <?php
                   $Qattributes = $lC_Database->query('select id, code from :table_templates_boxes where modules_group = :modules_group order by code');
                   $Qattributes->bindTable(':table_templates_boxes');
@@ -1661,7 +1652,7 @@ function toggleEditor(id) {
                   <div class="twelve-columns small-margin-bottom">
                     <span><?php echo $module->getTitle(); ?></span>
                   </div>
-                  <div class="twelve-columns margin-bottom">
+                  <div class="twelve-columns margin-bottom product-module-content">
                     <?php echo $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)); ?>
                   </div>
                   <?php
@@ -1670,8 +1661,7 @@ function toggleEditor(id) {
                 ?>
                 </div>
                 
-                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">                  
                   <div class="twelve-columns small-margin-bottom">
                     <span><?php echo $lC_Language->get('text_product_class'); ?></span>
                     <span class="info-spot on-left grey small-margin-left">
