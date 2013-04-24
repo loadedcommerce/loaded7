@@ -1022,7 +1022,8 @@ function toggleEditor(id) {
               <legend class="legend"><?php echo $lC_Language->get('text_pricing_overrides'); ?></legend>
               <div class="field-block button-height">
                 <label for="products_base_price" class="label"><b><?php echo $lC_Language->get('text_base_price'); ?></b></label>
-                <input type="text" name="products_base_price" id="products_base_price" value="<?php echo lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input strong" disabled />
+                <input type="text" name="products_base_price" id="products_base_price" value="<?php echo lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input strong" readonly />
+                <br /><div style="margin-top:-10px;"><small>&nbsp;Edit on Content tab</small></div>
               </div>
               <!-- lc_group_pricing begin -->
               <div class="field-block field-block-product button-height">
@@ -1044,7 +1045,7 @@ function toggleEditor(id) {
               <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
                 <?php //foreach() { ?>
                 <div>
-                  <label for="" class="label margin-right"><b>Reseller Group 1</b></label>
+                  <label for="" class="label margin-right"><b>Retail</b></label>
                   <input type="checkbox" class="switch disabled margin-right" checked />
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
@@ -1053,7 +1054,7 @@ function toggleEditor(id) {
                   <small class="input-info">Price<!-- if specials enabled /Special--></small>
                 </div>
                 <div>
-                  <label for="" class="label margin-right"><b>Employee Group</b></label>
+                  <label for="" class="label margin-right"><b>Wholesale</b></label>
                   <input type="checkbox" class="switch disabled margin-right" checked />
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
@@ -1062,14 +1063,14 @@ function toggleEditor(id) {
                   <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
                 </div>
                 <div>
-                  <label for="" class="label margin-right"><b>Gold Reseller</b></label>
+                  <label for="" class="label margin-right"><b>Employee</b></label>
                   <input type="checkbox" class="switch disabled margin-right" checked />
                   <span class="nowrap">
                     <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
                     <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
                   </span>
                   <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-                </div>
+                </div> 
                 <?php //} ?>
               </div>
               <!-- lc_group_pricing end -->
@@ -1098,53 +1099,155 @@ function toggleEditor(id) {
                 </span>
               </div> 
               <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-                <label for="" class="label">
-                  <span class="info-spot on-left grey margin-right">
-                    <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
-                    <span class="info-bubble">
-                      <b>Go Pro!</b> and enjoy this feature!
+                <div id="" class="with-mid-padding" style="border-bottom:1px solid #dddddd; margin-left:-10px;">
+                  <label for="" class="label">
+                    <strong>Retail</strong>
+                    <span class="info-spot on-left grey margin-right">
+                      <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
                     </span>
-                  </span>
-                  <b>Retail</b>
-                </label>
-                <?php //foreach() { ?>
-                <div>
-                  <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-                    <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-                  </span>
-                  <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
-                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-                    <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-                    <?php //} ?>
-                  </span>
+                  </label>
+                  <?php //foreach() { ?>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div> 
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <?php //} ?>
                 </div>
-                <div>
-                  <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-                    <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-                  </span>
-                  <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
-                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-                    <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-                    <?php //} ?>
-                  </span>
+                  
+                <div id="" class="with-mid-padding" style="border-bottom:1px solid #dddddd; margin-left:-10px;">
+                  <label for="" class="label">
+                    <strong>Wholesale</strong>
+                    <span class="info-spot on-left grey margin-right">
+                      <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                  </label>
+                  <?php //foreach() { ?>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div> 
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <?php //} ?>
                 </div>
-                <div> 
-                  <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-                    <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-                  </span>
-                  <span style="white-space:nowrap;">
-                    <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
-                    <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-                    <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-                    <?php //} ?>
-                  </span>
+                
+                <div id="" class="with-mid-padding" style="border-bottom:1px solid #dddddd; margin-left:-10px;">
+                  <label for="" class="label">
+                    <strong>Employee</strong>
+                    <span class="info-spot on-left grey margin-right">
+                      <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                  </label>
+                  <?php //foreach() { ?>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div> 
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <?php //} ?>
                 </div>
-                <?php //} ?>
               </div>
               <!-- lc_qty_price_breaks end --> 
               <div class="field-block field-block-product button-height">
@@ -1157,17 +1260,65 @@ function toggleEditor(id) {
                   </span>
                 </span>
               </div>
-              <div id="specials_pricing_container" class="field-drop button-height black-inputs"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' style="display:block;"' : ' style="display:none;"'); ?>>
+              <div id="specials_pricing_container" class="field-drop button-height black-inputs no-margin-bottom"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' style="display:block;"' : ' style="display:none;"'); ?>>
                 <?php //foreach () { ?>
                 <label for="resize_height" class="label"><b>Special Retail Price</b></label>
-                <div class="columns">
+                <div class="columns margin-bottom" style="border-bottom:1px solid #dddddd;">
                   <div class="new-row-mobile twelve-columns twelve-columns-mobile">
                     <input type="checkbox" class="switch<?php if ($Qspecials->value('status') != -1) echo ' checked'; ?>" />
                     <span class="input">
                       <input name="" id="" value="<?php echo number_format($Qspecials->value('specials_new_products_price'), DECIMAL_PLACES); ?>" placeholder="Price or %" class="input-unstyled align-right" style="color:#ff0000;font-weight:bold;" />
                     </span>
                   </div>
+                  <div class="new-row-mobile twelve-columns twelve-columns-mobile margin-bottom">
+                    <span class="nowrap margin-right">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('start_date')); ?>" style="width:97px;" />
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
+                    </span>
+                    <span class="nowrap">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('expires_date')); ?>" style="width:97px;" />
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
+                    </span>
+                  </div>
+                </div>
+                
+                <label for="resize_height" class="label"><b>Special Wholesale Price</b></label>
+                <div class="columns margin-bottom" style="border-bottom:1px solid #dddddd;">
                   <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+                    <input type="checkbox" class="switch<?php if ($Qspecials->value('status') != -1) echo ' checked'; ?>" />
+                    <span class="input">
+                      <input name="" id="" value="<?php echo number_format($Qspecials->value('specials_new_products_price'), DECIMAL_PLACES); ?>" placeholder="Price or %" class="input-unstyled align-right" style="color:#ff0000;font-weight:bold;" />
+                    </span>
+                  </div>
+                  <div class="new-row-mobile twelve-columns twelve-columns-mobile margin-bottom">
+                    <span class="nowrap margin-right">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('start_date')); ?>" style="width:97px;" />
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
+                    </span>
+                    <span class="nowrap">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('expires_date')); ?>" style="width:97px;" />
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
+                    </span>
+                  </div>
+                </div>
+                
+                <label for="resize_height" class="label"><b>Special Employee Price</b></label>
+                <div class="columns margin-bottom" style="border-bottom:1px solid #dddddd;">
+                  <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+                    <input type="checkbox" class="switch<?php if ($Qspecials->value('status') != -1) echo ' checked'; ?>" />
+                    <span class="input">
+                      <input name="" id="" value="<?php echo number_format($Qspecials->value('specials_new_products_price'), DECIMAL_PLACES); ?>" placeholder="Price or %" class="input-unstyled align-right" style="color:#ff0000;font-weight:bold;" />
+                    </span>
+                  </div>
+                  <div class="new-row-mobile twelve-columns twelve-columns-mobile margin-bottom">
                     <span class="nowrap margin-right">
                       <span class="input small-margin-top">
                         <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('start_date')); ?>" style="width:97px;" />
