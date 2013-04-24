@@ -1023,7 +1023,7 @@ function toggleEditor(id) {
               <div class="field-block button-height">
                 <label for="products_base_price" class="label"><b><?php echo $lC_Language->get('text_base_price'); ?></b></label>
                 <input type="text" name="products_base_price" id="products_base_price" value="<?php echo lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input strong" readonly />
-                <br /><div style="margin-top:-10px;"><small>&nbsp;<?php echo $lC_Language->get('text_editon_on_content_tab'); ?></small></div>
+                <br /><div style="margin-top:-10px;"><small>&nbsp;<?php echo $lC_Language->get('text_edit_on_content_tab'); ?></small></div>
               </div>
               <!-- lc_group_pricing begin -->
               <div class="field-block field-block-product button-height">
@@ -1642,28 +1642,37 @@ function toggleEditor(id) {
               <legend class="legend"><?php echo $lC_Language->get('text_management_settings'); ?></legend>
               <div class="columns">
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  <div class="twelve-columns no-margin-bottom">
-                    <span><?php echo $lC_Language->get('text_manufacturer'); ?></span> 
-                    <span class="info-spot on-left grey float-right">
-                      <span class="icon-info-round"></span>
-                      <span class="info-bubble">
-                        Put the bubble text here
-                      </span>
-                    </span>
+                <?php
+                  $Qattributes = $lC_Database->query('select id, code from :table_templates_boxes where modules_group = :modules_group order by code');
+                  $Qattributes->bindTable(':table_templates_boxes');
+                  $Qattributes->bindValue(':modules_group', 'product_attributes');
+                  $Qattributes->execute();
+                  while ( $Qattributes->next() ) {
+                    $module = basename($Qattributes->value('code'));
+                    if ( !class_exists('lC_ProductAttributes_' . $module) ) {
+                      if ( file_exists(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php') ) {
+                        include(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php');
+                      }
+                    }
+                    if ( class_exists('lC_ProductAttributes_' . $module) ) {
+                      $module = 'lC_ProductAttributes_' . $module;
+                      $module = new $module();
+                  ?>
+                  <div class="twelve-columns small-margin-bottom">
+                    <span><?php echo $module->getTitle(); ?></span>
                   </div>
-                  <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <select class="select full-width small-margin-top">
-                      <option id="1" value="1">Boutique</option>
-                      <option id="2" value="2">Citezens of Humanity</option>
-                      <option id="3" value="3">Crew Clothing</option>
-                      <option id="4" value="4">Mudd & Water</option>
-                      <option id="5" value="5">Summer</option>
-                    </select>
+                  <div class="twelve-columns margin-bottom">
+                    <?php echo $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)); ?>
                   </div>
-                </div> 
+                  <?php
+                    }
+                  }
+                ?>
+                </div>
+                
                 <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  <!-- lc_products_class begin -->
-                  <div class="twelve-columns no-margin-bottom">
+                  
+                  <div class="twelve-columns small-margin-bottom">
                     <span><?php echo $lC_Language->get('text_product_class'); ?></span>
                     <span class="info-spot on-left grey small-margin-left">
                       <small class="tag red-bg">Pro</small>
@@ -1677,8 +1686,8 @@ function toggleEditor(id) {
                         Put the bubble text here
                       </span>
                     </span>
-                  </div>
-                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                  </div>                  
+                  <div class="twelve-columns margin-bottom">
                     <select class="select full-width small-margin-top" disabled>
                       <option id="1" value="1">Common</option>
                       <option id="2" value="2">2nd Class</option>
@@ -1687,56 +1696,41 @@ function toggleEditor(id) {
                       <option id="5" value="5">5th Class</option>
                     </select>
                   </div>
-                  <!-- lc_products_class end -->
-                </div>
-              </div>
-              <div class="columns">
-                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  <div class="twelve-columns no-margin-bottom">
-                    <span><?php echo $lC_Language->get('text_url_slug'); ?></span>
-                    <span class="info-spot on-left grey float-right">
-                      <span class="icon-info-round"></span>
-                      <span class="info-bubble">
-                        Put the bubble text here
-                      </span>
-                    </span>
-                  </div>
-                  <div class="twelve-columns no-margin-bottom small-margin-top">
-                    <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_url_slug" name="products_url_slug" disabled />
-                  </div>
-                </div>
-                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-                  <div class="twelve-columns no-margin-bottom">
-                    <span><?php echo $lC_Language->get('text_availability'); ?></span>
-                    <span class="info-spot on-left grey float-right">
-                      <span class="icon-info-round"></span>
-                      <span class="info-bubble">
-                        Put the bubble text here
-                      </span>
-                    </span>
-                  </div>
-                  <div class="twelve-columns no-margin-bottom">
-                    <span class="nowrap margin-right">
-                      <span class="input small-margin-top">
-                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($lC_ObjectInfo->get('products_date_added')); ?>" style="width:97px;" />
-                      </span>
-                      <span class="icon-calendar icon-size2 small-margin-left"></span>
-                    </span>
-                    <!-- lc_products_availability begin -->
-                    <span class="nowrap">
-                      <span class="input small-margin-top">
-                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;" disabled />
-                      </span>
-                      <span class="icon-calendar icon-size2 small-margin-left grey"></span>
-                      <span class="info-spot on-left grey small-margin-left">
-                        <small class="tag red-bg">Pro</small>
+                  
+                  <div class="twelve-columns mid-margin-bottom">
+                    <div class="twelve-columns no-margin-bottom">
+                      <span><?php echo $lC_Language->get('text_availability'); ?></span>
+                      <span class="info-spot on-left grey float-right">
+                        <span class="icon-info-round"></span>
                         <span class="info-bubble">
-                          <b>Go Pro!</b> and enjoy this feature!
+                          Put the bubble text here
                         </span>
                       </span>
-                    </span>
-                    <!-- lc_products_availability end -->
+                    </div>
+                    <div class="twelve-columns margin-bottom">
+                      <span class="nowrap margin-right">
+                        <span class="input small-margin-top">
+                          <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($lC_ObjectInfo->get('products_date_added')); ?>" style="width:97px;" />
+                        </span>
+                        <span class="icon-calendar icon-size2 small-margin-left"></span>
+                      </span>
+                      <!-- lc_products_availability begin -->
+                      <span class="nowrap">
+                        <span class="input small-margin-top">
+                          <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;" disabled />
+                        </span>
+                        <span class="icon-calendar icon-size2 small-margin-left grey"></span>
+                        <span class="info-spot on-left grey small-margin-left">
+                          <small class="tag red-bg">Pro</small>
+                          <span class="info-bubble">
+                            <b>Go Pro!</b> and enjoy this feature!
+                          </span>
+                        </span>
+                      </span>
+                      <!-- lc_products_availability end -->
+                    </div>
                   </div>
+                
                 </div>
               </div>
             </fieldset>
