@@ -57,7 +57,9 @@ class lC_Products_Admin {
     $Qproducts->execute();
 
     while ( $Qproducts->next() ) {
+      $cost = $lC_Currencies->format($Qproducts->value('products_cost'));
       $price = $lC_Currencies->format($Qproducts->value('products_price'));
+      $msrp = $lC_Currencies->format($Qproducts->value('products_msrp'));
       $products_status = ($Qproducts->valueInt('products_status') === 1);
       $products_quantity = $Qproducts->valueInt('products_quantity');
       $products_keyword  = $Qproducts->value('products_keyword');
@@ -80,7 +82,9 @@ class lC_Products_Admin {
         $product_icon = 'icon-paperclip icon-blue';
       }
 
-      $extra_data = array('products_price_formatted' => $price,
+      $extra_data = array('products_cost_formatted' => $cost,
+                          'products_price_formatted' => $price,
+                          'products_msrp_formatted' => $msrp,
                           'products_status' => $products_status,
                           'products_quantity' => $products_quantity,
                           'products_keyword' => $products_keyword);
@@ -178,7 +182,7 @@ class lC_Products_Admin {
 
     $result = array();
 
-    $Qp = $lC_Database->query('select p.products_id, p.products_quantity, p.products_price, p.products_model, p.products_weight, p.products_weight_class, p.products_date_added, p.products_last_modified, p.products_status, p.products_tax_class_id, p.manufacturers_id, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and default_flag = :default_flag) where p.products_id = :products_id');
+    $Qp = $lC_Database->query('select p.products_id, p.products_quantity, p.products_cost, p.products_price, p.products_msrp, p.products_model, p.products_sku_ean13, p.products_weight, p.products_weight_class, p.products_date_added, p.products_last_modified, p.products_status, p.products_tax_class_id, p.manufacturers_id, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and default_flag = :default_flag) where p.products_id = :products_id');
     $Qp->bindTable(':table_products', TABLE_PRODUCTS);
     $Qp->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
     $Qp->bindInt(':products_id', $id);
@@ -279,9 +283,12 @@ class lC_Products_Admin {
       $Qsubproducts->execute();
 
       while ( $Qsubproducts->next() ) {
-        $variants_array[$Qsubproducts->valueInt('products_id')]['data'] = array('price' => $Qsubproducts->value('products_price'),
+        $variants_array[$Qsubproducts->valueInt('products_id')]['data'] = array('cost' => $Qsubproducts->value('products_cost'),
+                                                                                'price' => $Qsubproducts->value('products_price'),
+                                                                                'msrp' => $Qsubproducts->value('products_msrp'),
                                                                                 'tax_class_id' => $Qsubproducts->valueInt('products_tax_class_id'),
                                                                                 'model' => $Qsubproducts->value('products_model'),
+                                                                                'sku_ean13' => $Qsubproducts->value('products_sku_ean13'),
                                                                                 'quantity' => $Qsubproducts->value('products_quantity'),
                                                                                 'weight' => $Qsubproducts->value('products_weight'),
                                                                                 'weight_class_id' => $Qsubproducts->valueInt('products_weight_class'),
@@ -343,10 +350,10 @@ class lC_Products_Admin {
     $lC_Database->startTransaction();
 
     if ( is_numeric($id) ) {
-      $Qproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_price = :products_price, products_model = :products_model, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id, products_last_modified = now() where products_id = :products_id');
+      $Qproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku_ean13 = :products_sku_ean13, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id, products_last_modified = now() where products_id = :products_id');
       $Qproduct->bindInt(':products_id', $id);
     } else {
-      $Qproduct = $lC_Database->query('insert into :table_products (products_quantity, products_price, products_model, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added) values (:products_quantity, :products_price, :products_model, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added)');
+      $Qproduct = $lC_Database->query('insert into :table_products (products_quantity, products_cost, products_price, products_msrp, products_model, products_sku_ean13, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added) values (:products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku_ean13, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added)');
       $Qproduct->bindRaw(':products_date_added', 'now()');
     }
     
@@ -357,8 +364,11 @@ class lC_Products_Admin {
     
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproduct->bindInt(':products_quantity', $data['quantity']);
+    $Qproduct->bindFloat(':products_cost', $data['cost']);
     $Qproduct->bindFloat(':products_price', $data['price']);
+    $Qproduct->bindFloat(':products_msrp', $data['msrp']);
     $Qproduct->bindValue(':products_model', $data['model']);
+    $Qproduct->bindValue(':products_sku_ean13', $data['sku_ean13']);
     $Qproduct->bindFloat(':products_weight', $data['weight']);
     $Qproduct->bindInt(':products_weight_class', $data['weight_class']);
     $Qproduct->bindInt(':products_status', $data['status']);
@@ -562,18 +572,21 @@ class lC_Products_Admin {
       if ( isset($data['variants_combo']) && !empty($data['variants_combo']) ) {
         foreach ( $data['variants_combo'] as $key => $combos ) {
           if ( isset($data['variants_combo_db'][$key]) ) {
-            $Qsubproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_price = :products_price, products_model = :products_model, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id where products_id = :products_id');
+            $Qsubproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku_ean13 = :products_sku_ean13, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id where products_id = :products_id');
             $Qsubproduct->bindInt(':products_id', $data['variants_combo_db'][$key]);
           } else {
-            $Qsubproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_price, products_model, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added) values (:parent_id, :products_quantity, :products_price, :products_model, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added)');
+            $Qsubproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku_ean13, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added) values (:parent_id, :products_quantity, :products_price, :products_model, :products_sku_ean13, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added)');
             $Qsubproduct->bindInt(':parent_id', $products_id);
             $Qsubproduct->bindRaw(':products_date_added', 'now()');
           }
 
           $Qsubproduct->bindTable(':table_products', TABLE_PRODUCTS);
           $Qsubproduct->bindInt(':products_quantity', $data['variants_quantity'][$key]);
+          $Qsubproduct->bindFloat(':products_cost', $data['variants_cost'][$key]);
           $Qsubproduct->bindFloat(':products_price', $data['variants_price'][$key]);
+          $Qsubproduct->bindFloat(':products_msrp', $data['variants_msrp'][$key]);
           $Qsubproduct->bindValue(':products_model', $data['variants_model'][$key]);
+          $Qsubproduct->bindValue(':products_sku_ean13', $data['variants_sku_ean13'][$key]);
           $Qsubproduct->bindFloat(':products_weight', $data['variants_weight'][$key]);
           $Qsubproduct->bindInt(':products_weight_class', $data['variants_weight_class'][$key]);
           $Qsubproduct->bindInt(':products_status', (isset($data['variants_status'][$key]) && $data['variants_status'][$key] == 'on') ? 1 : 0);
@@ -793,12 +806,14 @@ class lC_Products_Admin {
 
         $lC_Database->startTransaction();
 
-        $Qnew = $lC_Database->query('insert into :table_products (products_quantity, products_price, products_model, products_date_added, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id)
-                                     values (:products_quantity, :products_price, :products_model, now(), :products_weight, :products_weight_class, 0, :products_tax_class_id, :manufacturers_id)');
+        $Qnew = $lC_Database->query('insert into :table_products (products_quantity, products_cost, products_price, products_msrp, products_model, products_sku_ean13, products_date_added, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id) values (:products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku_ean13, now(), :products_weight, :products_weight_class, 0, :products_tax_class_id, :manufacturers_id)');
         $Qnew->bindTable(':table_products', TABLE_PRODUCTS);
         $Qnew->bindInt(':products_quantity', $Qproduct->valueInt('products_quantity'));
+        $Qnew->bindValue(':products_cost', $Qproduct->value('products_cost'));
         $Qnew->bindValue(':products_price', $Qproduct->value('products_price'));
+        $Qnew->bindValue(':products_msrp', $Qproduct->value('products_msrp'));
         $Qnew->bindValue(':products_model', $Qproduct->value('products_model'));
+        $Qnew->bindValue(':products_sku_ean13', $Qproduct->value('products_sku_ean13'));
         $Qnew->bindValue(':products_weight', $Qproduct->value('products_weight'));
         $Qnew->bindInt(':products_weight_class', $Qproduct->valueInt('products_weight_class'));
         $Qnew->bindInt(':products_tax_class_id', $Qproduct->valueInt('products_tax_class_id'));

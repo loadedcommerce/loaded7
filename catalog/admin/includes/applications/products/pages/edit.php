@@ -1023,7 +1023,7 @@ function toggleEditor(id) {
               <div class="field-block button-height">
                 <label for="products_base_price" class="label"><b><?php echo $lC_Language->get('text_base_price'); ?></b></label>
                 <input type="text" name="products_base_price" id="products_base_price" value="<?php echo lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input strong" readonly />
-                <br /><div style="margin-top:-10px;"><small>&nbsp;Edit on Content tab</small></div>
+                <br /><div style="margin-top:-10px;"><small>&nbsp;<?php echo $lC_Language->get('text_editon_on_content_tab'); ?></small></div>
               </div>
               <!-- lc_group_pricing begin -->
               <div class="field-block field-block-product button-height">
@@ -1577,11 +1577,20 @@ function toggleEditor(id) {
                   <div>
                     <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_on_hand'); ?></b></label>
                     <input type="text" name="products_quantity" id="products_quantity" value="<?php echo $lC_ObjectInfo->get('products_quantity'); ?>" class="input small-margin-right" style="width:60px;" />
-                    <input type="text" name="products_sku_ean13" id="products_sku_ean13" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" class="input" disabled />
+                    <input type="text" name="products_sku_ean13" id="products_sku_ean13" value="<?php echo $lC_ObjectInfo->get('products_sku_ean13'); ?>" class="input" />
                     <b><?php echo $lC_Language->get('text_sku_ean13'); ?></b>
                   </div>
                   <div class="small-margin-top">
-                    <input type="text" name="products_cost" id="products_cost" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" class="input small-margin-right" disabled /> <b><?php echo $lC_Language->get('text_cost'); ?></b>
+                    <input type="text" name="products_cost" id="products_cost" value="<?php //echo number_format($lC_ObjectInfo->get('products_cost'), DECIMAL_PLACES); ?>" class="input small-margin-right" disabled /> <b><?php echo $lC_Language->get('text_cost'); ?></b>
+                    <span class="info-spot on-left grey small-margin-left">
+                      <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span> 
+                  </div>
+                  <div class="small-margin-top">
+                    <input type="text" name="products_msrp" id="products_msrp" value="<?php //echo number_format($lC_ObjectInfo->get('products_msrp'), DECIMAL_PLACES); ?>" class="input small-margin-right" disabled /> <b><?php echo $lC_Language->get('text_msrp'); ?></b>
                     <span class="info-spot on-left grey small-margin-left">
                       <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
                       <span class="info-bubble">

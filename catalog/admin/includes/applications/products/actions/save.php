@@ -35,11 +35,14 @@
         $has_variants = (isset($_POST['has_variants']) && $_POST['has_variants'] == 'on') ? true : false;   
 
         $data = array('quantity' => (isset($_POST['products_quantity']) && $has_variants === false) ? $_POST['products_quantity'] : 0,
+                      'cost' => (is_numeric($_POST['products_cost']) && $has_variants === false) ? $_POST['products_cost'] : 0,
                       'price' => (is_numeric($_POST['products_price']) && $has_variants === false) ? $_POST['products_price'] : 0,
+                      'msrp' => (is_numeric($_POST['products_msrp']) && $has_variants === false) ? $_POST['products_msrp'] : 0,
                       'weight' => (isset($_POST['products_weight']) && $has_variants === false) ? $_POST['products_weight'] : 0,
                       'weight_class' => (isset($_POST['products_weight_class']) && $has_variants === false) ? $_POST['products_weight_class'] : '',
                       'status' => (isset($_POST['products_status']) && $_POST['products_status'] == 'on' && $has_variants === false) ? true : false,
                       'model' => (isset($_POST['products_model']) && $has_variants === false) ? $_POST['products_model'] : '',
+                      'sku_ean13' => (isset($_POST['products_sku_ean13']) && $has_variants === false) ? $_POST['products_sku_ean13'] : '',
                       'tax_class_id' => (isset($_POST['products_tax_class_id']) && $has_variants === false) ? $_POST['products_tax_class_id'] : 0,
                       'products_name' => $_POST['products_name'],
                       'products_description' => $_POST['products_description'],
@@ -64,12 +67,24 @@
             $data['variants_status'] = $_POST['variants_status'];
           }
 
+          if ( isset($_POST['variants_cost']) ) {
+            $data['variants_cost'] = $_POST['variants_cost'];
+          }
+
           if ( isset($_POST['variants_price']) ) {
             $data['variants_price'] = $_POST['variants_price'];
           }
 
+          if ( isset($_POST['variants_msrp']) ) {
+            $data['variants_msrp'] = $_POST['variants_msrp'];
+          }
+
           if ( isset($_POST['variants_model']) ) {
             $data['variants_model'] = $_POST['variants_model'];
+          }
+
+          if ( isset($_POST['variants_sku_ean13']) ) {
+            $data['variants_sku_ean13'] = $_POST['variants_sku_ean13'];
           }
 
           if ( isset($_POST['variants_tax_class_id']) ) {

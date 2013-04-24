@@ -122,6 +122,7 @@ text_cost = Cost
 text_days_to_ship = Days to Ship
 text_default = Default
 text_dimensional = Dimensional
+text_edit_on_content_tab = Edit on Content Tab
 text_edit_qoh_sku = Edit QOH and SKU in the Options Tab
 text_group_pricing = Group Pricing
 text_height = Height
