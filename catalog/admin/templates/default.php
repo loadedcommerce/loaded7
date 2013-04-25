@@ -494,7 +494,7 @@
         </section>
       </div>
       
-      <footer id="menu-footer" class="hide-below-992">
+      <footer id="menu-footer">
         <!-- QR Code -->
         <div style="margin:-15px; padding:10px 20px 14px 10px; width:100%; height:32px; margin-bottom:0px;">
           <a id="qrcode-tooltip">
@@ -510,7 +510,7 @@
          <?php 
           $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
           $BarcodeQR->url($qrcode_url);
-          $BarcodeQR->draw(230, '../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png');
+          $BarcodeQR->draw(200, '../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png');
           echo '<h5>QR Code</h5><img src="../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png" /><br /><h6>Current URL</h6><p>' . $qrcode_url . '</p>';
          ?>
          </div>
