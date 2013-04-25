@@ -11,7 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-?>
+?> 
 <style>
 #newBanner { padding-bottom:20px; }
 #bannerNotes li { margin-right:10px; } 
