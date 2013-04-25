@@ -36,6 +36,7 @@ class lC_Account_Address_book extends lC_Template {
       $this->_page_title = $lC_Language->get('address_book_add_entry_heading');
       $this->_page_contents = 'address_book_process.php';
 
+      $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
       //$this->addJavascriptPhpFilename('includes/form_check.js.php');
     } elseif (isset($_GET['new'])) {
       if ($lC_Services->isStarted('breadcrumb')) {
