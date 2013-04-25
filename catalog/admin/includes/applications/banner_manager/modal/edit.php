@@ -14,7 +14,7 @@
 ?>
 <style>
 #editBanner { padding-bottom:20px; }
-#bannerNotes li { margin-right:10px; } 
+#bannerNotes li { margin-right:10px; }  
 </style>
 <script>
 function editBanner(id) {
