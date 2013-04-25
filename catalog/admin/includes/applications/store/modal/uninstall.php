@@ -56,6 +56,7 @@ function uninstallAddon(id, name) {
                 return false;
               } 
               oTable.fnReloadAjax();
+              $($.modal.all).closeModal();
             }
           );
           win.closeModal();

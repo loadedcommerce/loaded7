@@ -37,7 +37,7 @@ class lC_Store_Admin {
       if ($addon['installed'] == '1') {  
         $action = '<button onclick="editAddon(\'' . $addon['code'] . '\',\'' . urlencode($addon['type']) . '\');" class="button icon-gear green-gradient glossy">Setup</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
       } else {  
-        $action = '<button onclick="installAddon(\'' . $addon['code'] . '\');" class="button icon-gear orange-gradient glossy">Install</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
+        $action = '<button onclick="installAddon(\'' . $addon['code'] . '\');" class="button icon-download orange-gradient glossy">Install</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
       }
 
       $result['aaData'][] = array("$thumb", "$title", "$desc", "$action");
