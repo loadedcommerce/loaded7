@@ -571,7 +571,7 @@ class lC_Orders_Admin {
                        <td align="left" valign="top">' . lC_DateTime::getShort($status_history['date_added'], true) . '</td>
                        <td align="left" valign="top">' . $status_history['status'] . '</td>
                        <td align="left" valign="top">' . nl2br($status_history['comment']) . '</td>
-                       <td align="center" valign="top">' . lc_icon_admin((($status_history['customer_notified'] === 1) ? 'checkbox_ticked.gif' : 'checkbox_crossed.gif'), null, null, null, true) . '</td>
+                       <td align="center" valign="top"><span class="' . (($status_history['customer_notified'] === 1) ? 'icon-tick icon-green' : 'icon-cross icon-red') . '"><span></td>
                      </tr>';
       }
       $result['orderStatusHistory'] = $history;

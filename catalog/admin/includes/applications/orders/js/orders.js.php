@@ -16,38 +16,40 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
 ?>
 <script>
   $(document).ready(function() {
-    var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';            
-    var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA' . $cSearch); ?>';
-    oTable = $('#dataTable').dataTable({
-      "bProcessing": true,
-      "bServerSide": true,
-      "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
-      "sPaginationType": paginationType,     
-      "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
-      "aaSorting": [[1,'desc']],
-      "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
-                    { "sWidth": "10%", "bSortable": true, "sClass": "dataColOID" },
-                    { "sWidth": "25%", "bSortable": true, "sClass": "dataColName hide-on-mobile-portrait" },
-                    { "sWidth": "10%", "bSortable": true, "sClass": "dataColCID hide-on-tablet hide-on-mobile" },
-                    { "sWidth": "10%", "bSortable": true, "sClass": "dataColOTotal" },
-                    { "sWidth": "15%", "bSortable": true,"sClass": "dataColDate hide-on-mobile-portrait" },
-                    { "sWidth": "10%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile" },
-                    { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
-    });
-    $('#dataTable').responsiveTable();
-        
-    setTimeout('hideElements()', 500); // because of server-side processing we need to delay for race condition
-         
-    if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
-      $('#main-title > h1').attr('style', 'font-size:1.8em;');
-      $('#main-title').attr('style', 'padding: 0 0 0 20px;');
-      $('#dataTable_info').attr('style', 'bottom: 42px; color:#4c4c4c;');
-      $('#dataTable_length').hide();
-      $('#floating-button-container').hide();
-      $('#actionText').hide();
-      $('.on-mobile').show();
-      $('.selectContainer').hide();   
-    }    
+    if (document.getElementById('dataTable')) {    
+      var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';            
+      var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA' . $cSearch); ?>';
+      oTable = $('#dataTable').dataTable({
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
+        "sPaginationType": paginationType,     
+        "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
+        "aaSorting": [[1,'desc']],
+        "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
+                      { "sWidth": "10%", "bSortable": true, "sClass": "dataColOID" },
+                      { "sWidth": "25%", "bSortable": true, "sClass": "dataColName hide-on-mobile-portrait" },
+                      { "sWidth": "10%", "bSortable": true, "sClass": "dataColCID hide-on-tablet hide-on-mobile" },
+                      { "sWidth": "10%", "bSortable": true, "sClass": "dataColOTotal" },
+                      { "sWidth": "15%", "bSortable": true,"sClass": "dataColDate hide-on-mobile-portrait" },
+                      { "sWidth": "10%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile" },
+                      { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
+      });
+      $('#dataTable').responsiveTable();
+          
+      setTimeout('hideElements()', 500); // because of server-side processing we need to delay for race condition
+           
+      if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
+        $('#main-title > h1').attr('style', 'font-size:1.8em;');
+        $('#main-title').attr('style', 'padding: 0 0 0 20px;');
+        $('#dataTable_info').attr('style', 'bottom: 42px; color:#4c4c4c;');
+        $('#dataTable_length').hide();
+        $('#floating-button-container').hide();
+        $('#actionText').hide();
+        $('.on-mobile').show();
+        $('.selectContainer').hide();   
+      }   
+    } 
   });
   
   function hideElements() {  
@@ -70,17 +72,19 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
   
   function updateOrderStatus() {
     var nvp = $("#updateOrder").serialize();
-    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateOrderStatus&NVP'); ?>'  
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'orders&action=updateOrderStatus&NVP'); ?>'  
     $.getJSON(jsonLink.replace('NVP', nvp),     
       function (data) {
+        $("[name=comment]").val(""); 
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";     
           $(location).attr('href',url);
-        }    
+        }   
         if (data.rpcStatus == 1) {
-          oTable.fnReloadAjax();
+          if (typeof oTable !== 'undefined') {   
+            oTable.fnReloadAjax();
+          }
           $("#orderStatusTableData > tbody").html(data.orderStatusHistory);
-          $("[name=comment]").val(""); 
         } else {    
           $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         }
@@ -91,7 +95,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
 
   function executePostTransaction() {
     var nvp = $("#updateOrder").serialize();
-    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=executePostTransaction&NVP'); ?>'  
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', '?orders&action=executePostTransaction&NVP'); ?>'  
     $.getJSON(jsonLink.replace('NVP', nvp),     
       function (data) {
         if (data.rpcStatus == -10) { // no session
