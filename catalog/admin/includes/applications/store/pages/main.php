@@ -32,7 +32,6 @@ foreach ($typesArr as $key => $value) {
   echo ".store-menu-" . strtolower($value['text']) . " { background: url('templates/default/img/icons/16/" . $value['icon'] . "') no-repeat scroll 8px 15px transparent !important; }";
 }
 ?>   
-
 </style>
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
@@ -99,9 +98,9 @@ foreach ($typesArr as $key => $value) {
           <div class="large-box-shadow white-gradient">
             <div id="contentContainer">
             
-            <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
-              <tbody><!-- ajax delivered content --></tbody>
-            </table>   
+              <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
+                <tbody><!-- ajax delivered content --></tbody>
+              </table>   
                      
             </div>
           </div>

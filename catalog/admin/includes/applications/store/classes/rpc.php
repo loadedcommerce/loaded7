@@ -28,5 +28,37 @@ class lC_Store_Admin_rpc {
 
     echo json_encode($result);
   }
+ /*
+  * Uninstall the addon
+  *
+  * @param string $_GET['addon'] The addon name
+  * @access public
+  * @return json
+  */
+  public static function uninstallAddon() {
+    $result = array();
+    $uninstalled = lC_Store_Admin::uninstall($_GET['name']);
+    if ($uninstalled) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  } 
+ /*
+  * Install the addon
+  *
+  * @param string $_GET['addon'] The addon name
+  * @access public
+  * @return json
+  */ 
+  public static function installAddon() {
+    $result = array();
+    $installed = lC_Store_Admin::install($_GET['name']);
+    if ($installed) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }   
 }
 ?>

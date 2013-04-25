@@ -49,7 +49,6 @@ function showType(id, text) {
      
 }  
   
-
 function updateTitles() {
   var installed = 'Installed';
   var available = 'Available';
