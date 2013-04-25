@@ -55,6 +55,9 @@ field_expiry_date = Expiry Date:
 field_maximum_impressions = Maximum Impressions:
 field_status = Active:
 field_delete_image = Delete Banner Image?
+field_target = Target
+
+text_banners_target = Open in new window?
 
 introduction_new_banner = Please fill in the following information for the new banner.
 introduction_edit_banner = Please make the necessary changes for this banner.
