@@ -29,6 +29,35 @@ class lC_Store_Admin_rpc {
     echo json_encode($result);
   }
  /*
+  * Return the data used on the modal forms
+  *
+  * @param string $_GET['name'] The addon name
+  * @access public
+  * @return json
+  */
+  public static function getFormData() {
+    $result = lC_Store_Admin::getData($_GET['name']);     
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+
+    echo json_encode($result);
+  } 
+ /*
+  * Save the addon data
+  *
+  * @param string $_GET['configuration'] The addon name
+  * @access public
+  * @return json
+  */ 
+  public static function saveAddon() { 
+    $result = array();
+    $saved = lC_Store_Admin::save(array('configuration' => $_GET['configuration']));
+    if ($saved) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }
+ /*
   * Uninstall the addon
   *
   * @param string $_GET['addon'] The addon name

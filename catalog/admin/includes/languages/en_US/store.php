@@ -10,3 +10,5 @@
 #  @license    http://loadedcommerce.com/license.html
 
 heading_title = Add Ons
+
+modal_heading_setup_addon = Setup Addon

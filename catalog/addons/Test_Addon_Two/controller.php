@@ -27,6 +27,10 @@ class Test_Addon_Two extends lC_Addons_Bootstrap {
     */    
     $this->_type = 'payment';
    /**
+    * The addon class name
+    */    
+    $this->_code = 'Test_Addon_Two';    
+   /**
     * The addon title used in the addons store listing
     */     
     $this->_title = 'PayPal Payments';

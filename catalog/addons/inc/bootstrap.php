@@ -16,6 +16,7 @@
 abstract class lC_Addons_Bootstrap { 
 
   protected $_type,
+            $_code,
             $_title,
             $_description,
             $_rating = '5',
@@ -42,6 +43,10 @@ abstract class lC_Addons_Bootstrap {
     return $this->_type;
   }
   
+  public function getAddonCode() {
+    return $this->_code;
+  }
+    
   public function getAddonTitle() {
     return $this->_title;
   }  

@@ -35,7 +35,7 @@ class lC_Store_Admin {
       $desc = substr($addon['description'], 0, 300) . '...';
       
       if ($addon['installed'] == '1') {  
-        $action = '<button onclick="uninstallAddon(\'' . $addon['code'] . '\',\'' . urlencode($addon['title']) . '\');" class="button icon-gear green-gradient glossy">Setup</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
+        $action = '<button onclick="editAddon(\'' . $addon['code'] . '\');" class="button icon-gear green-gradient glossy">Setup</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
       } else {  
         $action = '<button onclick="installAddon(\'' . $addon['code'] . '\');" class="button icon-gear orange-gradient glossy">Install</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
       }
@@ -45,6 +45,100 @@ class lC_Store_Admin {
 
     return $result;
   }
+ /*
+  * Return the addon information
+  *
+  * @param integer $id The addon name
+  * @access public
+  * @return array
+  */
+  public static function getData($name) {    
+    global $lC_Database, $lC_Language, $lC_Vqmod;
+
+    $result = array();
+
+    include(DIR_FS_CATALOG . 'addons/' . $name . '/controller.php');
+    //$lC_Language->injectDefinitions('modules/payment/' . $id . '.xml');
+    $addon = new $name();
+    
+    $result['desc'] = '<div class="margin-bottom" id="mainContainer" style="border:1px dashed red; width:100%;">
+                         <div class="float-left margin-right" id="imgContainer" style="">' . $addon->getAddonThumbnail() . '</div>
+                           <div style="border:1px dashed green; width:90%;" id="titleContainer">
+                             <div class="strong">' . $addon->getAddonTitle() . '</div>
+                             <div>' . lc_image('../images/stars_' . $addon->getAddonRating() . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon->getAddonRating()), null, null, 'class="mid-margin-top small-margin-bottom"') . '</div>
+                             <div><small>' . $addon->getAddonAuthor() . '</small></div>
+                           </div>
+                           <div class="float-right"><button onclick="uninstallAddon(\'' . $addon->getAddonCode() . '\',\'' . urlencode($addon->getAddonTitle()) . '\');" class="button icon-undo red-gradient glossy">Uninstall</button></div>
+                         </div>
+                       </div>';
+         
+    $cnt = 0;
+    $keys = '';
+    foreach ( $addon->getKeys() as $key ) {
+      $Qkey = $lC_Database->query('select configuration_title, configuration_value, configuration_description, use_function, set_function from :table_configuration where configuration_key = :configuration_key');
+      $Qkey->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $Qkey->bindValue(':configuration_key', $key);
+      $Qkey->execute();
+      $keys .= '<label for="' . $Qkey->value('configuration_title') . '" class="label"><strong>' . $Qkey->value('configuration_title') . '</strong></label>';
+      if ( !lc_empty($Qkey->value('set_function')) ) {
+        $keys .= lc_call_user_func($Qkey->value('set_function'), $Qkey->value('configuration_value'), $key);
+      } else {
+        if (stristr($key, 'password')) {
+          $keys .= lc_draw_password_field('configuration[' . $key . ']', 'class="input"', $Qkey->value('configuration_value'));
+        } else {
+          $keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input"');
+        }
+      }
+      $keys .= '&nbsp;<span class="icon-info-round icon-blue with-tooltip with-small-padding" style="cursor:pointer;" title="' . $Qkey->value('configuration_description') . '" data-tooltip-options=\'{"classes":["blue-gradient"]}\'></span><br /><br />';
+      $cnt++;
+    }
+    $result['keys'] = substr($keys, 0, strrpos($keys, '<br /><br />'));
+    $result['totalKeys'] = $cnt;
+
+    return $result;
+  }  
+  
+ /*
+  * Save the addon information
+  *
+  * @param array $data An array containing the addon information
+  * @access public
+  * @return boolean
+  */
+  public static function save($data) {
+    global $lC_Database;
+
+    $error = false;
+
+    $lC_Database->startTransaction();
+
+    foreach ( $data['configuration'] as $key => $value ) {
+      $Qupdate = $lC_Database->query('update :table_configuration set configuration_value = :configuration_value where configuration_key = :configuration_key');
+      $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $Qupdate->bindValue(':configuration_value', is_array($data['configuration'][$key]) ? implode(',', $data['configuration'][$key]) : $value);
+      $Qupdate->bindValue(':configuration_key', $key);
+      $Qupdate->setLogging($_SESSION['module']);
+      $Qupdate->execute();
+
+      if ( $lC_Database->isError() ) {
+        $error = true;
+        break;
+      }
+    }
+
+    if ( $error === false ) {
+      $lC_Database->commitTransaction();
+
+      lC_Cache::clear('configuration');
+
+      return true;
+    }
+
+    $lC_Database->rollbackTransaction();
+
+    return false;
+  }  
+  
  /*
   * Returns the app store menu listing
   *
