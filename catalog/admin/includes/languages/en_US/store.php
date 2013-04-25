@@ -11,4 +11,4 @@
 
 heading_title = Add Ons
 
-modal_heading_setup_addon = Setup Addon
+modal_heading_setup_addon = Setup %s Add On

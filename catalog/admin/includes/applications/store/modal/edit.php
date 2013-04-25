@@ -16,7 +16,7 @@
 #editAddon { padding-bottom:20px; }
 </style>
 <script>
-function editAddon(id) {
+function editAddon(id, name) {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -41,7 +41,7 @@ function editAddon(id) {
                    '    </div>'+
                    '  </form>'+
                    '</fieldset>',
-          title: '<?php echo $lC_Language->get('modal_heading_setup_addon'); ?>',
+          title: '<?php echo sprintf($lC_Language->get('modal_heading_setup_addon'), 'TITLE'); ?>'.replace('TITLE', name),
           width: 500,
           scrolling: false,
           actions: {

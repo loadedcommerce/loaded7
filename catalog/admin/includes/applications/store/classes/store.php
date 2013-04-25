@@ -35,7 +35,7 @@ class lC_Store_Admin {
       $desc = substr($addon['description'], 0, 300) . '...';
       
       if ($addon['installed'] == '1') {  
-        $action = '<button onclick="editAddon(\'' . $addon['code'] . '\');" class="button icon-gear green-gradient glossy">Setup</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
+        $action = '<button onclick="editAddon(\'' . $addon->getAddonCode() . '\',\'' . urlencode($addon->getAddonTitle()) . '\');" class="button icon-gear green-gradient glossy">Setup</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
       } else {  
         $action = '<button onclick="installAddon(\'' . $addon['code'] . '\');" class="button icon-gear orange-gradient glossy">Install</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
       }
@@ -61,14 +61,14 @@ class lC_Store_Admin {
     //$lC_Language->injectDefinitions('modules/payment/' . $id . '.xml');
     $addon = new $name();
     
-    $result['desc'] = '<div class="margin-bottom" id="mainContainer" style="border:1px dashed red; width:100%;">
-                         <div class="float-left margin-right" id="imgContainer" style="">' . $addon->getAddonThumbnail() . '</div>
-                           <div style="border:1px dashed green; width:90%;" id="titleContainer">
+    $result['desc'] = '<div class="margin-bottom" style="width:100%;">
+                         <div class="float-left margin-right">' . $addon->getAddonThumbnail() . '</div>
+                           <div style="width:90%;">
                              <div class="strong">' . $addon->getAddonTitle() . '</div>
                              <div>' . lc_image('../images/stars_' . $addon->getAddonRating() . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon->getAddonRating()), null, null, 'class="mid-margin-top small-margin-bottom"') . '</div>
                              <div><small>' . $addon->getAddonAuthor() . '</small></div>
+                             <div style="position:absolute; right:0; top:0;" onclick="uninstallAddon(\'' . $addon->getAddonCode() . '\',\'' . urlencode($addon->getAddonTitle()) . '\');" class="button icon-undo red-gradient glossy">Uninstall</button></div>
                            </div>
-                           <div class="float-right"><button onclick="uninstallAddon(\'' . $addon->getAddonCode() . '\',\'' . urlencode($addon->getAddonTitle()) . '\');" class="button icon-undo red-gradient glossy">Uninstall</button></div>
                          </div>
                        </div>';
          
