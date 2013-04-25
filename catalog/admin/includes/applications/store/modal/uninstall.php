@@ -22,12 +22,12 @@ function uninstallAddon(id, name) {
   $.modal({
     content: '<div id="uninstallAddon">'+
              '  <div id="uninstallAddonConfirm">'+
-             '    <p id="uninstallAddonConfirmMessage"><?php echo $lC_Language->get('introduction_uninstall_addon_module'); ?>'+
+             '    <p id="uninstallAddonConfirmMessage"><?php echo $lC_Language->get('introduction_uninstall_addon'); ?>'+
              '      <p><b>' + decodeURI(name.replace(/\+/g, '%20')) + '</b></p>'+
              '    </p>'+
              '  </div>'+
              '</div>',
-    title: '<?php echo $lC_Language->get('modal_heading_uninstall_addon_module'); ?>',
+    title: '<?php echo $lC_Language->get('modal_heading_uninstall_addon'); ?>',
     width: 300,
     scrolling: false,
     actions: {
