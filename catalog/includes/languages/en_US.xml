@@ -1060,6 +1060,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>checkout</group>
     </definition>
     <definition>
+      <key>hide_address_form</key>
+      <value><![CDATA[Hide Address Form]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
       <key>breadcrumb_checkout_payment</key>
       <value><![CDATA[Payment Method]]></value>
       <group>checkout</group>
