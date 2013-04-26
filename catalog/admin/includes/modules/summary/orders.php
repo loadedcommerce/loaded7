@@ -77,10 +77,17 @@ class lC_Summary_orders extends lC_Summary {
   function loadModal() {
     global $lC_Database, $lC_Language, $lC_Template, $lC_Vqmod;
     
-    if ( is_dir('includes/applications/customers/modal') ) {
+    if ( is_dir('includes/applications/orders/modal') ) {
       if ( file_exists('includes/applications/orders/modal/edit.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/modal/edit.php'));
-      //if ( file_exists('includes/applications/orders/modal/delete.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/modal/delete.php'));
     }
+    
+    if ( is_dir('includes/applications/orders/js') ) {
+      if ( file_exists('includes/applications/orders/js/orders.js.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/js/orders.js.php'));
+    } 
+    
+    if ( is_dir('includes/applications/orders/classes') ) {
+      if ( file_exists('includes/applications/orders/classes/orders.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/classes/orders.php'));
+    }       
   }    
 }
 ?>
