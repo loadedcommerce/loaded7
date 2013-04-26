@@ -14,7 +14,7 @@
 ?>
 <style>
 #editBanner { padding-bottom:20px; }
-#bannerNotes li { margin-right:10px; } 
+#bannerNotes li { margin-right:10px; }  
 </style>
 <script>
 function editBanner(id) {
@@ -152,6 +152,7 @@ function editBanner(id) {
       if (data.bannerData.date_scheduled) $("#editDateScheduled").val(data.bannerData.date_scheduled.substr(0,10));
       if (data.bannerData.status == 1) { 
         $("#editStatus").attr('checked', true);
+        $("[tabindex=0]").addClass("checked");
       } else {
         $("#editStatus").attr('checked', false);
       } 
