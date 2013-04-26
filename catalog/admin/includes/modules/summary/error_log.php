@@ -22,7 +22,7 @@ if ( !class_exists('lC_Summary') ) {
 class lC_Summary_error_log extends lC_Summary {
   
   var $enabled = FALSE,
-      $sort_order = 50;
+      $sort_order = 70;
 
   /* Class constructor */
   function __construct() {
@@ -45,7 +45,7 @@ class lC_Summary_error_log extends lC_Summary {
     if (!$this->enabled) {
       $this->_data = '';
     } else {
-      $this->_data = '<div class="four-columns six-columns-tablet twelve-columns-mobile">' .
+      $this->_data = '<div class="four-columns six-columns-tablet twelve-columns-mobile clear-both">' .
                      '  <h2 class="relative thin">' . $this->_title . '</h2>' .
                      '  <ul class="list spaced">';
       $counter = 0;

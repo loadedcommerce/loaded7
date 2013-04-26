@@ -160,6 +160,7 @@ $aContent .= '  <p class="button-height float-right">' .
 ?>
 <style>
 #editCustomer { padding-bottom:20px; }
+.list > li > span { color: #666666; }
 </style>
 <script>
 function editCustomer(id) {
@@ -187,7 +188,6 @@ function editCustomer(id) {
                '          <div id="addressListContainer"></div>'+
                '        </div>'+
                '        <?php echo $aContent; ?>'+
-
                '      </form>'+
                '    </div>'+
                '    <span id="abParentId" style="display:none;"></span>'+

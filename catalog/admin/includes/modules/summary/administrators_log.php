@@ -20,7 +20,7 @@ if ( !class_exists('lC_Summary') ) {
 class lC_Summary_administrators_log extends lC_Summary {
 
   var $enabled = FALSE,
-      $sort_order = 40;
+      $sort_order = 60;
   
   /* Class constructor */
   function __construct() {
@@ -56,7 +56,7 @@ class lC_Summary_administrators_log extends lC_Summary {
       while ( $Qlog->next() ) {
         $this->_data .= '    <li>' .
                         '      <span class="list-link icon-bullet-list icon-orange" title="' . $lC_Language->get('orders') . '">' .  
-                        '        <strong>' . $Qlog->value('module') . ' (' . $Qlog->valueInt('total') . ')</strong> ' . $Qlog->valueProtected('user_name') .
+                        '        <strong>' . $Qlog->value('module') . ' (' . $Qlog->valueInt('total') . ')</strong>  <span class="anthracite">' . $Qlog->valueProtected('user_name') . '</span>' . 
                         '      </span>' .
                         '      <div class="absolute-right compact show-on-parent-hover">' .
                         '        <a href="' . ((int)($_SESSION['admin']['access']['administrators_log'] < 1) ? '#' : 'javascript://" onclick="showAdminLogInfo(\'' . $Qlog->valueInt('id') . '\')') . ';" title="' . $lC_Language->get('icon_info') . '" class="button icon-info with-tooltip ' . ((int)($_SESSION['admin']['access']['administrators_log'] < 1) ? ' disabled' : NULL) . '"></a>' . 

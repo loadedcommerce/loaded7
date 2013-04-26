@@ -15,5 +15,5 @@ require('includes/application.php');
 
 $page_contents = 'index.php';
 
-require($lC_Vqmod->modCheck('templates/main_page.php'));
+require('templates/main_page.php');
 ?>
