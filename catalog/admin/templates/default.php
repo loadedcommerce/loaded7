@@ -251,7 +251,7 @@
           <section>
             <div id="addContainerLinks">
               <ul class="list spaced">
-                <li class="anthracite-gradient">
+                <!--<li class="anthracite-gradient">
                   <span class="list-count grey with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_order'); ?>">o</span>
                   <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_order_title'); ?>">
                     <div class="add-container-icon">
@@ -261,7 +261,7 @@
                       <?php echo $lC_Language->get('quick_add_order'); ?>
                     </div>
                   </a>
-                </li>
+                </li>-->
                 <li class="anthracite-gradient">
                   <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>">c</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_customer_title'); ?>">
