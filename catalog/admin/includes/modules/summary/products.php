@@ -22,7 +22,7 @@ if ( !class_exists('lC_Summary') ) {
 class lC_Summary_products extends lC_Summary {
 
   var $enabled = FALSE,
-      $sort_order = 50;
+      $sort_order = 40;
   
   /* Class constructor */
   function lC_Summary_products() {
@@ -46,7 +46,7 @@ class lC_Summary_products extends lC_Summary {
     if (!$this->enabled) {
       $this->_data = '';
     } else {
-      $this->_data = '<div class="four-columns six-columns-tablet twelve-columns-mobile">' .
+      $this->_data = '<div class="four-columns six-columns-tablet twelve-columns-mobile clear-both">' .
                      '  <h2 class="relative thin">' . $this->_title . '</h2>' .
                      '  <ul class="list spaced">';    
     
@@ -87,7 +87,7 @@ class lC_Summary_products extends lC_Summary {
         
         $this->_data .= '    <li>' .
                         '      <span class="list-link icon-bag icon-blue" title="' . $lC_Language->get('edit') . '">' .  
-                        '        <strong>' . (!empty($data['variants']) ? 'from ' : '') . $lC_Currencies->format($products_price) . '</strong> ' . lc_output_string_protected($data['products_name']) .
+                        '        <strong>' . (!empty($data['variants']) ? $lC_Language->get('text_from') . ' ' : '') . $lC_Currencies->format($products_price) . '</strong> <span class="anthracite">' . lc_output_string_protected($data['products_name']) . '</span>' . 
                         '      </span>' .
                         '      <div class="absolute-right compact show-on-parent-hover">' .
                         '        <a href="' . ((int)($_SESSION['admin']['access']['products'] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'products=' . $Qproducts->valueInt('products_id') . '&cID=' . $category_id . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['products'] < 3) ? ' disabled' : NULL) . '">' .  $lC_Language->get('icon_edit') . '</a>' .

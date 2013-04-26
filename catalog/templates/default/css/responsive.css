@@ -156,11 +156,8 @@
   .hide-on-mobile { display:none; }
   .browse-catalog { float:right; display:block !important; height:24px; margin:10px 3px 0 0; padding-top:5px; }
   #browse-catalog-div { width: 240px; left:277px; top:89px; }
-
   #liveSearchForm { margin-top:10px; }
- 
   footer .footer_links > li { width:112px !important; padding:5px 0px 5px 10px;  }
-  #ot-container { display: none; }
   #checkout_shipping_order_totals { display: none; }
   #mobile-grand-total { display:block; border:1px solid #ccc; padding:5px 10px 5px 0px; height:25px; width:96%; margin-bottom:15px; }
   #mobile-order-totals { border:1px solid #ccc; padding:8px 10px 5px 0px; width:96%; height:120px; line-height: 10px; margin-bottom:15px; }

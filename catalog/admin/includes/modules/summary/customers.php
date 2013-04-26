@@ -48,7 +48,7 @@ class lC_Summary_customers extends lC_Summary {
                      '  <h2 class="relative thin">' . $this->_title . '</h2>' .
                      '  <ul class="list spaced">';
 
-      $Qcustomers = $lC_Database->query('select customers_id, customers_gender, customers_lastname, customers_firstname, customers_status, date_account_created from :table_customers order by date_account_created desc limit 6');
+      $Qcustomers = $lC_Database->query('select customers_id, customers_gender, customers_lastname, customers_firstname, customers_status, date_account_created from :table_customers order by date_account_created desc limit 7');
       $Qcustomers->bindTable(':table_customers', TABLE_CUSTOMERS);
       $Qcustomers->execute();
 
@@ -56,7 +56,7 @@ class lC_Summary_customers extends lC_Summary {
         $full = $Qcustomers->valueProtected('customers_firstname') . ' ' . $Qcustomers->valueProtected('customers_lastname');
         $this->_data .= '    <li>' .
                         '      <span class="list-link icon-user icon-blue" title="' . $lC_Language->get('edit') . '">' .  
-                        '        <strong>' . $Qcustomers->value('customers_firstname') . '</strong> ' . $Qcustomers->value('customers_lastname') .
+                        '        <strong>' . $Qcustomers->value('customers_firstname') . ' ' . $Qcustomers->value('customers_lastname') . '</strong> &nbsp; <span class="anthracite">' . lC_DateTime::getShort($Qcustomers->value('date_account_created')) . '</span>' . 
                         '      </span>' .
                         '      <div class="absolute-right compact show-on-parent-hover">' .
                         '        <a href="' . ((int)($_SESSION['admin']['access']['customers'] < 3) ? '#' : 'javascript://" onclick="editCustomer(\'' . $Qcustomers->valueInt('customers_id') . '\')') . ';" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['customers'] < 3) ? ' disabled' : NULL) . '">' .  $lC_Language->get('icon_view') . '</a>' . 
