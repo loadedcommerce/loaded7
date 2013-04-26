@@ -24,23 +24,29 @@ class lC_Store_Admin {
     global $lC_Database, $lC_Language, $_module;
     
     $media = $_GET['media'];
+    
+    $type = (isset($_GET['type']) && $_GET['type'] != NULL) ? strtolower($_GET['type']) : NULL;
 
     $Qaddons = self::getAvailbleAddons(); 
     
     $result = array('aaData' => array());
     
     foreach ( $Qaddons as $key => $addon ) {
-      $thumb = '<div style="position:relative;">' . $addon['thumbnail'] . '<div class="version-tag"><span class="tag black-gradient">' . $addon['version'] . '</span></div></div>';
-      $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom"') . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . '</small>';
-      $desc = substr($addon['description'], 0, 300) . '...';
       
-      if ($addon['installed'] == '1') {  
-        $action = '<button onclick="editAddon(\'' . $addon['code'] . '\',\'' . urlencode($addon['type']) . '\');" class="button icon-gear green-gradient glossy">Setup</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
-      } else {  
-        $action = '<button onclick="installAddon(\'' . $addon['code'] . '\');" class="button icon-download orange-gradient glossy">Install</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
-      }
+      if ($type != NULL && $type == $addon['type']) {
+        $thumb = '<div style="position:relative;">' . $addon['thumbnail'] . '<div class="version-tag"><span class="tag black-gradient">' . $addon['version'] . '</span></div></div>';
+        $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom"') . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . '</small>';
+        $desc = substr($addon['description'], 0, 300) . '...';     
+       
+        if ($addon['installed'] == '1') { 
+          $bg = ($addon['enabled'] == '1') ? ' green-gradient' : ' silver-gradient'; 
+          $action = '<button onclick="editAddon(\'' . $addon['code'] . '\',\'' . urlencode($addon['type']) . '\');" class="button icon-gear glossy' . $bg . '">Setup</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
+        } else {  
+          $action = '<button onclick="installAddon(\'' . $addon['code'] . '\');" class="button icon-download orange-gradient glossy">Install</button><div class="mid-margin-top"><a href="#"><span class="icon-search">More Info</span></a></div>';
+        }
 
-      $result['aaData'][] = array("$thumb", "$title", "$desc", "$action");
+        $result['aaData'][] = array("$thumb", "$title", "$desc", "$action");
+      }
     } 
 
     return $result;
@@ -148,11 +154,9 @@ class lC_Store_Admin {
   public static function drawMenu() {
     foreach ( self::getAllTypes() as $key => $type ) {
       
-      $menu .= '<li class="message-menu ' . 'store-menu-' . strtolower($type['text']) . '" id="menuType' . ucwords($type['text']) . '">' .
-               '  <span class="message-status" style="padding-top:14px;">' .
-               '     <a href="javascript://" onclick="showType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');" class="new-message" title=""></a>' .
-               '   </span>' .
-               '   <a id="menuLink' . (int)$type['id'] . '" href="javascript://" onclick="showType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');">' .
+      $menu .= '<li style="cursor:pointer;" onclick="showAddonType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\'); return false;" class="message-menu ' . 'store-menu-' . strtolower($type['text']) . '" id="menuType' . ucwords($type['text']) . '">' .
+               '  <span class="message-status" style="padding-top:14px;"></span>' .
+               '   <a id="menuLink' . (int)$type['id'] . '">' .
                '     <br><strong>' . lc_output_string_protected($type['text']) . '</strong>' .
                '   </a>' .
                ' </li>';
@@ -230,9 +234,9 @@ class lC_Store_Admin {
                              'version' => '1.0.1'),
                        );
 
-    $result = array_merge((array)$installed, (array)$available);
-    
-    return $result;
+   // $result = array_merge((array)$installed, (array)$available);
+        
+    return $installed;
   } 
   
  /*

@@ -13,7 +13,7 @@
 */
 require_once(DIR_FS_CATALOG . 'addons/inc/bootstrap.php');
 
-class Test_Addon_One extends lC_Addons_Bootstrap {
+class Test_Addon_Three extends lC_Addons_Bootstrap {
   /*
   * Class constructor
   */

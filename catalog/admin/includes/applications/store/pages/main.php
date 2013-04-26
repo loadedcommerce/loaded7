@@ -58,15 +58,15 @@ foreach ($typesArr as $key => $value) {
         <label class="label" for="sortby">Sort by:</label>
         <span class="button-group">
           <label for="sortby-1" class="button blue-active">
-            <input type="radio" name="sortby" id="sortby-1" value="1" checked>
+            <input type="radio" name="sortby" id="sortby-1" value="rating" checked>
             Rating
           </label>
           <label for="sortby-2" class="button blue-active">
-            <input type="radio" name="sortby" id="sortby-2" value="2">
+            <input type="radio" name="sortby" id="sortby-2" value="popular">
             Popular
           </label>
           <label for="sortby-3" class="button blue-active">
-            <input type="radio" name="sortby" id="sortby-3" value="3">
+            <input type="radio" name="sortby" id="sortby-3" value="date">
             New
           </label>
         </span>      

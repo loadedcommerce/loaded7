@@ -16,17 +16,22 @@ global $lC_Template, $lC_Language;
 <script>
 $(document).ready(function() {
   $('.message-status > a, .message-status > span').css('height', '0');
-  showType('0', 'Payment');  
+  showAddonType('0', 'Payment');  
 });
 
-function showType(id, text) {
-  //$('#contentContainer').html(text + ' Addons Listing Area');
- 
-  var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&aid=AID&action=getAll&type=TYPE&media=MEDIA'); ?>';
+$('input[name=sortby]').click(function() {
+  var type = $('.store-type-selected').closest('li').attr('onclick');
+  var atype = type.substring(type.indexOf("('")+1, type.indexOf("')")).replace(/'/gi,'').replace(/ /gi,'').split(",");
+  showAddonType(atype[0], atype[1]);
+});
+
+function showAddonType(id, text) {
+  var filter = $('input[name=sortby]:radio:checked').val();
+  var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&aid=AID&action=getAll&type=TYPE&media=MEDIA&filter=FILTER'); ?>';
   oTable = $('#dataTable').dataTable({
       "bProcessing": true,
       "bServerSide": true,
-      "sAjaxSource": dataTableDataURL.replace('AID', parseInt(id)).replace('TYPE', text).replace('MEDIA', $.template.mediaQuery.name),
+      "sAjaxSource": dataTableDataURL.replace('AID', parseInt(id)).replace('TYPE', text).replace('MEDIA', $.template.mediaQuery.name).replace('FILTER', filter),
       "bPaginate": false,
       "bLengthChange": false,
       "bFilter": false,
@@ -37,7 +42,7 @@ function showType(id, text) {
                     { "sWidth": "30%", "sClass": "dataColTitle hide-on-mobile-portrait" },
                     { "sWidth": "50%", "sClass": "dataColDesc hide-on-mobile hide-on-tablet" },
                     { "sWidth": "110px", "sClass": "dataColAction" }]
-  });
+  });  
   oTable.responsiveTable();  
   $('#dataTable thead').remove();
   $('#cfgTitleText').html(text + ' Add Ons'); 
@@ -45,8 +50,8 @@ function showType(id, text) {
   $(".unstyled-list a").removeClass("store-type-selected");
   $("#menuLink" + id).addClass('store-type-selected');
 
-  setTimeout('updateTitles()', 800);
-     
+  //setTimeout('updateTitles()', 800);
+  setTimeout('updateWindowSize()', 0);
 }  
   
 function updateTitles() {
@@ -57,7 +62,9 @@ function updateTitles() {
     if (t == installed) $(this).closest('tr').html('<td class="grey-gradient glossy no-padding" colspan="4" align="center"><span class="big-text">Installed</span></td>');  
     if (t == available) $(this).closest('tr').html('<td class="grey-gradient glossy no-padding" colspan="4" align="center"><span class="big-text">Available</span></td>');  
   });
-  
+} 
+
+function updateWindowSize() {
   var winW = $(window).width();
   
   // tweak template depending on view
@@ -89,7 +96,6 @@ function updateTitles() {
       $('#storeFilterContainer').css('width', '48%').css('float', 'left').addClass('margin-top'); 
       $('.hide-on-tablet').attr('style', 'display:none !important');
   } else { // desktop
-  }  
-
-} 
+  }   
+}
 </script>
