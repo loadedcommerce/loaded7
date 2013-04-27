@@ -18,7 +18,6 @@ class Test_Addon_One extends lC_Addons_Bootstrap {
   * Class constructor
   */
   public function Test_Addon_One() {
-    global $lC_Language;
    /**
     * The addon enable/disable switch
     */    
@@ -54,19 +53,24 @@ class Test_Addon_One extends lC_Addons_Bootstrap {
    /**
     * Initialize if enabled
     */ 
-    if ($this->_enabled) $this->_initialize();
+    if ($this->_enabled) {
+      $this->_initialize();
+    }
   }
   
   private function _initialize() {
-die('injected');    
-    
     global $lC_Language;
+echo '[' . $lC_Language->getCode() . ']<br>';
+echo '[' . DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml' . ']<br>';
    /**
     * Inject the language definitions if they exist
     */ 
     if (file_exists(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml')) {        
       $lC_Language->injectDefinitions(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml');
+
     }
+die('11');    
+    
   }
   
  /**
