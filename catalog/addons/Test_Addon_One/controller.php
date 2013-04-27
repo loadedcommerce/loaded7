@@ -58,6 +58,8 @@ class Test_Addon_One extends lC_Addons_Bootstrap {
   }
   
   private function _initialize() {
+die('injected');    
+    
     global $lC_Language;
    /**
     * Inject the language definitions if they exist
@@ -65,7 +67,6 @@ class Test_Addon_One extends lC_Addons_Bootstrap {
     if (file_exists(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml')) {        
       $lC_Language->injectDefinitions(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml');
     }
-die('injected');    
   }
   
  /**

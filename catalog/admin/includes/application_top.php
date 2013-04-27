@@ -111,8 +111,8 @@ if ( !isset($_SESSION['admin']) && (basename($_SERVER['PHP_SELF']) != FILENAME_R
   unset($redirect);
 }
 
-require($lC_Vqmod->modCheck('includes/classes/directory_listing.php'));
 require($lC_Vqmod->modCheck('includes/classes/access.php'));
+require($lC_Vqmod->modCheck('../includes/classes/directory_listing.php'));
 require($lC_Vqmod->modCheck('../includes/classes/address.php'));
 require($lC_Vqmod->modCheck('../includes/classes/weight.php'));
 require($lC_Vqmod->modCheck('../includes/classes/xml.php'));

@@ -15,10 +15,13 @@ class lC_Addons {
 
   // class constructor
   public function lC_Addons() {
+    ini_set('display_errors', 1);
     $this->_initialize();
   }
   
   private function _initialize() {
+    global $lC_DirectoryListing;
+die(DIR_FS_CATALOG . 'addons');
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
     $lC_DirectoryListing->setRecursive(true);
     $lC_DirectoryListing->setIncludeDirectories(false);
@@ -26,6 +29,11 @@ class lC_Addons {
   //  $lC_DirectoryListing->setStats(true);
     $lC_DirectoryListing->setCheckExtension('php');
 
+echo "<pre>";
+print_r($lC_DirectoryListing->getFiles());
+echo "</pre>";
+die('00');
+    
     $addons = array();
     foreach ( $lC_DirectoryListing->getFiles() as $addon ) { 
       $ao = utility::cleanArr($addon);

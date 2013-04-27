@@ -58,7 +58,10 @@ require($lC_Vqmod->modCheck('includes/filenames.php'));
 require($lC_Vqmod->modCheck('includes/database_tables.php'));
 
 // include the utility class
-require($lC_Vqmod->modCheck('includes/classes/utility.php'));     
+require($lC_Vqmod->modCheck('includes/classes/utility.php'));  
+
+// include the directory listing class   
+require($lC_Vqmod->modCheck('includes/classes/directory_listing.php'));
 
 // initialize the message stack for output messages
 require($lC_Vqmod->modCheck('includes/classes/message_stack.php'));
@@ -91,12 +94,12 @@ $Qcfg->freeResult();
 require($lC_Vqmod->modCheck('includes/functions/general.php'));
 require($lC_Vqmod->modCheck('includes/functions/html_output.php'));
 
-// instantiate the addons class
-require('includes/classes/addons.php'));
-$lC_Addons = new lC_Addons();
-
 // include and start the services
 require($lC_Vqmod->modCheck('includes/classes/services.php'));
 $lC_Services = new lC_Services();
 $lC_Services->startServices();
+
+// instantiate the addons class
+require('includes/classes/addons.php');
+$lC_Addons = new lC_Addons();
 ?>
