@@ -66,7 +66,7 @@ echo '[' . DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language
     * Inject the language definitions if they exist
     */ 
     if (file_exists(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml')) {        
-      $lC_Language->injectDefinitions(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml');
+      $lC_Language->injectAddonDefinitions(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml');
 
     }
 die('11');    

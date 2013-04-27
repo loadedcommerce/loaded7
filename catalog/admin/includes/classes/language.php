@@ -71,6 +71,20 @@ class lC_Language_Admin extends lC_Language {
     $this->_definitions = array_merge($this->_definitions, $ini_array);
   }
 
+  public function injectDefinitions($file, $language_code = null) {
+    if ( is_null($language_code) ) {
+      $language_code = $this->_code;
+    }
+
+    if ( $this->_languages[$language_code]['parent_id'] > 0 ) {
+      $this->injectDefinitions($file, $this->getCodeFromID($this->_languages[$language_code]['parent_id']));
+    }
+
+    foreach ($this->extractDefinitions($language_code . '/' . $file) as $def) {
+      $this->_definitions[$def['key']] = $def['value'];
+    }
+  }
+
   public function &extractDefinitions($xml) {
     $definitions = array();
 

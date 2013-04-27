@@ -239,18 +239,39 @@
       return $this->_languages[$this->_code]['numeric_separator_thousands'];
     }
     
-    public function injectDefinitions($file, $language_code = null) {
+    public function injectAddonDefinitions($file, $language_code = null) {
       if ( is_null($language_code) ) {
         $language_code = $this->_code;
       }
 
       if ( $this->_languages[$language_code]['parent_id'] > 0 ) {
-        $this->injectDefinitions($file, $this->getCodeFromID($this->_languages[$language_code]['parent_id']));
+        $this->injectAddonDefinitions($file, $this->getCodeFromID($this->_languages[$language_code]['parent_id']));
       }
 
-      foreach ($this->extractDefinitions($language_code . '/' . $file) as $def) {
+      foreach ($this->extractAddonDefinitions($language_code . '.php/') as $def) {
         $this->_definitions[$def['key']] = $def['value'];
       }
+    }    
+    
+    public function &extractAddonDefinitions($xml) {
+      $definitions = array();
+
+echo '[' . dirname(__FILE__) . '/../../../includes/languages/' . $xml . ']<br>';
+die('123');      
+      
+      if ( file_exists(dirname(__FILE__) . '/../../../includes/languages/' . $xml) ) {
+        $lC_XML = new lC_XML(file_get_contents(dirname(__FILE__) . '/../../../includes/languages/' . $xml));
+
+        $definitions = $lC_XML->toArray();
+
+        if (isset($definitions['language']['definitions']['definition'][0]) === false) {
+          $definitions['language']['definitions']['definition'] = array($definitions['language']['definitions']['definition']);
+        }
+
+        $definitions = $definitions['language']['definitions']['definition'];
+      }
+
+      return $definitions;
     }    
 
     public function showImage($code = null, $width = '16', $height = '10', $parameters = null) {
