@@ -2,12 +2,12 @@
 /*
   $Id: controller.php v1.0 2013-04-20 datazen $
 
-  LoadedCommerce, Innovative eCommerce Solutions
+  Loaded Commerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
 
   Copyright (c) 2013 Loaded Commerce, LLC
 
-  @author     LoadedCommerce Team
+  @author     Loaded Commerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
@@ -57,18 +57,6 @@ class Test_Addon_One extends lC_Addons_Bootstrap {
       $this->_initialize();
     }
   }
-  
-  private function _initialize() {
-    global $lC_Language;
-   /**
-    * Inject the language definitions if they exist
-    */ 
-    if (file_exists(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml')) {        
-      $lC_Language->injectAddonDefinitions(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml');
-
-    }
-  }
-  
  /**
   * Checks to see if the addon has been installed
   *
@@ -93,7 +81,7 @@ class Test_Addon_One extends lC_Addons_Bootstrap {
     //$lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Sort Order', 'MODULE_PAYMENT_COD_SORT_ORDER', '0', 'Sort order of display. Lowest is displayed first.', '6', '0', now())");
   }
  /**
-  * Return the configuration parameter keys in an array
+  * Return the configuration parameter keys an an array
   *
   * @access public
   * @return array
@@ -101,12 +89,24 @@ class Test_Addon_One extends lC_Addons_Bootstrap {
   public function getKeys() {
     if (!isset($this->_keys)) {
       $this->_keys = array('MODULE_ADDONS_' . strtoupper(__CLASS__) . '_STATUS');
-      //                     'MODULE_PAYMENT_COD_ZONE',
-      //                     'MODULE_PAYMENT_COD_ORDER_STATUS_ID',
-      //                     'MODULE_PAYMENT_COD_SORT_ORDER');
     }
 
     return $this->_keys;
+  }  
+ /**
+  * Initialize the Add-On
+  *
+  * @access private
+  * @return void
+  */  
+  private function _initialize() {
+    global $lC_Language;
+   /**
+    * Inject the language definitions if they exist
+    */ 
+    if (file_exists(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml')) {        
+      $lC_Language->injectAddonDefinitions(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml');
+    }
   }  
 
 }

@@ -15,18 +15,14 @@ class lC_Addons {
 
   // class constructor
   public function lC_Addons() {
-    ini_set('display_errors', 1);
     $this->_initialize();
   }
   
   private function _initialize() {
-    global $lC_DirectoryListing;
-
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
     $lC_DirectoryListing->setRecursive(true);
     $lC_DirectoryListing->setIncludeDirectories(false);
     $lC_DirectoryListing->setAddDirectoryToFilename(true);
-  //  $lC_DirectoryListing->setStats(true);
     $lC_DirectoryListing->setCheckExtension('php');
     
     $addons = array();
@@ -37,8 +33,21 @@ class lC_Addons {
       if (file_exists(DIR_FS_CATALOG . 'addons/' . $ao['name'])) {
         include_once(DIR_FS_CATALOG . 'addons/' . $ao['name']);
         $GLOBALS[$class] = new $class();
+        $addon['code'] = substr($ao['name'], 0, strpos($ao['name'], '/'));
+        $addon['type'] = $GLOBALS[$class]->getAddonType();
+        $addon['title'] = $GLOBALS[$class]->getAddonTitle();
+        $addon['description'] = $GLOBALS[$class]->getAddonDescription();
+        $addon['rating'] = $GLOBALS[$class]->getAddonRating();
+        $addon['author'] = $GLOBALS[$class]->getAddonAuthor();
+        $addon['thumbnail'] = $GLOBALS[$class]->getAddonThumbnail();
+        $addon['version'] = $GLOBALS[$class]->getAddonVersion();
+        $addon['installed'] = $GLOBALS[$class]->isInstalled();
+        $addon['enabled'] = $GLOBALS[$class]->isEnabled();
+        $addon['valid'] = $GLOBALS[$class]->isValid();        
+        
+        $_SESSION['lC_Addons'][$class] = $addon;        
       }
-    }    
+    }
   }
 }
 ?>

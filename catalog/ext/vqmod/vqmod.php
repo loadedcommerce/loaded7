@@ -1,9 +1,9 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 /**
  * VQMod
  * @description Main Object used
- */
+ */  
 final class VQMod {
   private $_vqversion = '2.3.2';
   private $_modFileList = array();
@@ -14,7 +14,7 @@ final class VQMod {
   private $_folderChecks = false;
   private $_cachePathFull = '';
   private $_lastModifiedTime = 0;
-  private $_devMode = true;
+  private $_devMode = false;
 
   public $logFolder = 'includes/work/logs/vqmod/';
   public $vqCachePath = 'includes/work/cache/vqmod/';
@@ -37,7 +37,7 @@ final class VQMod {
   public function __construct($path = false, $logging = true) {
     if(!class_exists('DOMDocument')) {
       die('ERROR - YOU NEED DOMDocument INSTALLED TO USE VQMod');
-    }
+    }                
     
     $this->directorySeparator = defined('DIRECTORY_SEPARATOR') ? DIRECTORY_SEPARATOR : '/';
 
@@ -51,7 +51,7 @@ final class VQMod {
     
     $replacesPath = $this->path($this->pathReplaces);
     $replaces = array();
-    if($replacesPath) {
+    if($replacesPath) {  
       include_once($replacesPath);
       $this->_lastModifiedTime = filemtime($replacesPath);
     }
@@ -59,6 +59,17 @@ final class VQMod {
     $this->_replaces = !is_array($replaces) ? array() : $replaces;
     $this->_getMods();
     $this->_loadProtected();
+  }
+  
+  private function _cleanup() {   
+    $files = scandir($vqCachePath);
+    foreach ($files as $file) {
+      if ($file != "." && $file != ".." && $file != ".htaccess") {
+        if (!is_dir($vqCachePath . $file) === true) {
+          unlink($vqCachePath . $file); 
+        }
+      }
+    }    
   }
 
   /**
@@ -87,6 +98,8 @@ final class VQMod {
 
       $this->_folderChecks = true;
     }
+    
+    $this->_cleanup();
 
     if(!preg_match('%^([a-z]:)?[\\\\/]%i', $sourceFile)) {
       $sourcePath = $this->path($sourceFile);
@@ -111,9 +124,9 @@ final class VQMod {
     }
 
     $changed = false;
-    $fileHash = sha1_file($sourcePath);
+    $fileHash = sha1_file($sourcePath);  
     $fileData = file_get_contents($sourcePath);
-
+    
     foreach($this->_mods as $modObject) {
       foreach($modObject->mods as $path => $mods) {
         if($this->_checkMatch($path, $sourcePath)) {
@@ -124,8 +137,8 @@ final class VQMod {
 
     if (sha1($fileData) != $fileHash) {
       $writePath = $cacheFile;
-      if(!file_exists($writePath) || is_writable($writePath)) {
-        file_put_contents($writePath, $fileData);
+      if(!file_exists($writePath) || is_writable($writePath)) { 
+        file_put_contents($writePath, $this->_phpLiteObfuscator($fileData));
         $changed = true;
       }
     }
@@ -178,6 +191,73 @@ final class VQMod {
       }
     }
   }
+  
+  private function _phpLiteObfuscator( $SourceString, $_varsPrivate=array(), $_funcPrivate=array(), $classPrivate=array(), &$dicc) {
+    $varsPrivate = array_merge( $_varsPrivate, array( '_SESSION','_GET','_POST','this','_SERVER' ) );
+    $funcPrivate = array_merge( $_funcPrivate, array( "__construct") );
+
+    /* FUNCTIONS */
+    //$ref = $this->_phpLiteObfuscatorObscurer($SourceString, $funcPrivate, "/function\s+(\w+)\s*\(/m", "/(\W)VARNAME\s*(\()/", $dicc);
+
+    /* VARIABLES */
+    //$ref = $this->_phpLiteObfuscatorObscurer($SourceString, $varsPrivate, "/\\$(\w{2,})\W/m", array("|([>])\s*VARNAME(\W)|", "|(\\$)"."VARNAME(\W)|"), $ref ); 
+
+    /* CLASSNAMES */
+    //$ref = $this->_phpLiteObfuscatorObscurer($SourceString, $classPrivate, "/(?:class|interface) (\w+)[^\w]/m", "/(\W)VARNAME(\W)/", $ref );
+        
+    ##remove comments
+    $SourceString = preg_replace( "/(\s+)#(.*)\n/","$1\n",$SourceString );
+    $SourceString = preg_replace( "/(\s+)\/\/(.*)\n/","$1\n",$SourceString );
+    ##remove spaces
+    $SourceString = preg_replace( "/ +/"," ",$SourceString );
+    $SourceString = preg_replace( "/\n\s*\n/","\n",$SourceString );
+    $SourceString = preg_replace( "/\t+/"," ",$SourceString );
+    $SourceString = preg_replace( "/<\?php\s*/","<?php ",$SourceString );
+    $SourceString = preg_replace( "/\n/","",$SourceString );
+    $SourceString = preg_replace( "#/\*(?:(?!\*/).)*\*/#","",$SourceString );
+
+    //$dicc = $ref;
+    $dicc = $ref;
+
+    return $SourceString;
+  }
+
+  /**@private*/
+  private function _phpLiteObfuscatorObscurer( &$Source, &$privateVars, $ColectorRegexp, $snifferRegexp, $refs = array() ) {
+    $find       = array();
+    $replace    = array();
+    $varNum     = count($refs);
+    $diccionary = &$refs;
+
+    preg_match_all( $ColectorRegexp ,$Source, $matches );
+
+    foreach( $matches[1] as $i=>$varName ) {
+      if( in_array( $varName, $privateVars ) || array_key_exists( $varName, $diccionary) ) {
+        continue;
+      }
+
+      $varNum++;
+
+      if( array_key_exists( $varName, $diccionary) ) {
+        $vname = $diccionary[$varName];
+      } else {
+        $diccionary[$varName] = $vname = "_" . dechex($varNum);
+      }
+
+      if( is_array( $snifferRegexp ) ) {
+        foreach( $snifferRegexp as $_snifRegexp ){
+          $find[] = str_replace( "VARNAME",$varName, $_snifRegexp );
+          $replace[] = "$1". $vname . "$2";
+        }
+      } else {
+        $find[] = str_replace("VARNAME",$varName, $snifferRegexp);
+        $replace[] = "$1". $vname . "$2";
+      }
+    }
+    $Source = preg_replace( $find, $replace, $Source );
+
+    return $diccionary;
+  }    
 
   /**
    * VQMod::_getMods()
@@ -188,7 +268,7 @@ final class VQMod {
   private function _getMods() {
 
     $this->_modFileList = glob($this->path('ext/vqmod/xml/', true) . '*.xml');
-
+          
     foreach($this->_modFileList as $file) {
       if(file_exists($file)) {
         $lastMod = filemtime($file);
@@ -207,7 +287,14 @@ final class VQMod {
     if($this->_devMode || !file_exists($modCache)) {
       $this->_lastModifiedTime = time();
     } elseif(file_exists($modCache) && filemtime($modCache) >= $this->_lastModifiedTime) {
-      $mods = file_get_contents($modCache);
+      
+      if (function_exists('ioncube_read_file')) {
+         $mods = ioncube_read_file($modCache);
+         if (is_int($mods)) $mods = false;
+      } else {
+        $mods = file_get_contents($modCache);
+      }      
+      
       if(!empty($mods))
       $this->_mods = unserialize($mods);
       if($this->_mods !== false) {
@@ -233,7 +320,15 @@ final class VQMod {
     $dom = new DOMDocument('1.0', 'UTF-8');
     foreach($this->_modFileList as $modFileKey => $modFile) {
       if(file_exists($modFile)) {
-        if(@$dom->load($modFile)) {
+        
+        if (function_exists('ioncube_read_file')) {
+           $xml = ioncube_read_file($modFile);
+           if (is_int($xml)) $xml = false;
+        } else {
+          $xml = file_get_contents($modFile);
+        }        
+        
+        if(@$dom->loadXML($xml)) {
           $mod = $dom->getElementsByTagName('modification')->item(0);
           $this->_mods[] = new VQModObject($mod, $modFile, $this);
         } else {
@@ -245,7 +340,18 @@ final class VQMod {
     }
 
     $modCache = $this->path($this->modCache, true);
-    $result = file_put_contents($modCache, serialize($this->_mods));
+      
+    if (function_exists('ioncube_write_file')) {  
+      if (ioncube_file_is_encoded()) {
+        ioncube_write_file($modCache, serialize($this->_mods));
+        $result = true;
+      } else {
+        $result = file_put_contents($modCache, serialize($this->_mods));
+      }
+    } else {
+      $result = file_put_contents($modCache, serialize($this->_mods));
+    }
+    
     if(!$result) {
       die('MODS CACHE PATH NOT WRITEABLE');
     }
