@@ -18,6 +18,7 @@ class Test_Addon_One extends lC_Addons_Bootstrap {
   * Class constructor
   */
   public function Test_Addon_One() {
+    global $lC_Language;
    /**
     * The addon enable/disable switch
     */    
@@ -50,7 +51,23 @@ class Test_Addon_One extends lC_Addons_Bootstrap {
     * The base64 encoded addon image used in the addons store listing
     */     
     $this->_thumbnail = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAA8CAIAAAB+RarbAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDg0NjBDMkFBREVEMTFFMkEyREZDNzBCOTUwMzAyMDIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDg0NjBDMkJBREVEMTFFMkEyREZDNzBCOTUwMzAyMDIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowODQ2MEMyOEFERUQxMUUyQTJERkM3MEI5NTAzMDIwMiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowODQ2MEMyOUFERUQxMUUyQTJERkM3MEI5NTAzMDIwMiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Ptesk0oAAADiSURBVHja7NsxCsIwFMZxU6ShHaSg4uJiB93dKkUHPYKDSx08hAh1ERREPEAP4B1cHaSHcBbPYSGQG1jk5f+mR7Yf7xE+AlGe8houlVtaF8FN250mO8HOvDyz0oABAwYMGDBgwIABAwYMmAeAumqcJa1eZPrH9S4cHHTC6XrhB1o+uKIO0mGymlmt5JXePo9cWqIn/Hm9TaND3e535YNvm8I08Xy0PGSsNGDAgAEDBkzSqj9L2/MqitlwwoQB//9KX9I9EwYMGDBgwIABAwYMGDBgwIABA/5dKT5qAZZVXwEGAFIDHF2VkT2hAAAAAElFTkSuQmCC">';
+   /**
+    * Initialize if enabled
+    */ 
+    if ($this->_enabled) $this->_initialize();
   }
+  
+  private function _initialize() {
+    global $lC_Language;
+   /**
+    * Inject the language definitions if they exist
+    */ 
+    if (file_exists(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml')) {        
+      $lC_Language->injectDefinitions(DIR_FS_CATALOG . 'addons/' . __CLASS__ . '/languages/' . $lC_Language->getCode() . '.xml');
+    }
+die('injected');    
+  }
+  
  /**
   * Checks to see if the addon has been installed
   *

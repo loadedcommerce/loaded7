@@ -91,6 +91,10 @@ $Qcfg->freeResult();
 require($lC_Vqmod->modCheck('includes/functions/general.php'));
 require($lC_Vqmod->modCheck('includes/functions/html_output.php'));
 
+// instantiate the addons class
+require('includes/classes/addons.php'));
+$lC_Addons = new lC_Addons();
+
 // include and start the services
 require($lC_Vqmod->modCheck('includes/classes/services.php'));
 $lC_Services = new lC_Services();

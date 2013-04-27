@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>test_addon_one_text_on_hand</key>
+      <value><![CDATA[On Hand]]></value>
+      <group>product</group>
+    </definition>
+  </definitions>
+</language>
