@@ -135,7 +135,9 @@ class lC_Store_Admin {
     if ( $error === false ) {
       $lC_Database->commitTransaction();
 
+      lC_Cache::clear('vqmods');
       lC_Cache::clear('configuration');
+      lC_Cache::clear('addons');
 
       return true;
     }

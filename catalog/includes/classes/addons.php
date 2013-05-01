@@ -22,16 +22,20 @@ class lC_Addons {
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
     $lC_DirectoryListing->setRecursive(true);
     $lC_DirectoryListing->setIncludeDirectories(false);
-    $lC_DirectoryListing->setAddDirectoryToFilename(true);
+  //  $lC_DirectoryListing->setAddDirectoryToFilename(true);
     $lC_DirectoryListing->setCheckExtension('php');
+    $lC_DirectoryListing->setStats(true);
     
-    $addons = array();
+    $enabled = '';
     foreach ( $lC_DirectoryListing->getFiles() as $addon ) { 
       $ao = utility::cleanArr($addon);
-      if ($ao['name'] == 'inc/bootstrap.php') continue;
-      $class = substr($ao['name'], 0, strpos($ao['name'], '/'));   
-      if (file_exists(DIR_FS_CATALOG . 'addons/' . $ao['name'])) {
-        include_once(DIR_FS_CATALOG . 'addons/' . $ao['name']);
+      if ($ao['name'] == 'bootstrap.php') continue;
+
+      $nameArr = explode('/', $ao['path']);
+      $class = $nameArr[count($nameArr)-2];
+
+      if (file_exists($ao['path'])) {
+        include_once($ao['path']);
         $GLOBALS[$class] = new $class();
         $addon['code'] = substr($ao['name'], 0, strpos($ao['name'], '/'));
         $addon['type'] = $GLOBALS[$class]->getAddonType();
@@ -45,9 +49,15 @@ class lC_Addons {
         $addon['enabled'] = $GLOBALS[$class]->isEnabled();
         $addon['valid'] = $GLOBALS[$class]->isValid();        
         
-        $_SESSION['lC_Addons'][$class] = $addon;        
+        if ($addon['enabled']) {
+          $enabled .= $addon['path'] . ';';
+        }
       }
     }
+    if ($enabled != '') $enabled = substr($enabled, 0, -1);
+    if (!file_exists(DIR_FS_WORK . 'cache/addons.cache')) {
+      file_put_contents(DIR_FS_WORK . 'cache/addons.cache', serialize($enabled));
+    }    
   }
 }
 ?>

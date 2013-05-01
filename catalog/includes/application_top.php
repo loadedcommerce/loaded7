@@ -24,7 +24,7 @@ require('includes/config.php');
 
 // set the level of error reporting
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
-//ini_set("display_errors", 1);
+ini_set("display_errors", 1);
 ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
 
@@ -33,7 +33,7 @@ if (strlen(DB_SERVER) < 1) {
   if (is_dir('install')) {
     header('Location: install/index.php');
   }
-}
+}      
 
 // virtual hook system
 require_once('ext/vqmod/vqmod.php');
@@ -88,8 +88,8 @@ while ($Qcfg->next()) {
   define($Qcfg->value('cfgKey'), $Qcfg->value('cfgValue'));
 }
 
-$Qcfg->freeResult();
-
+$Qcfg->freeResult();    
+                
 // include functions
 require($lC_Vqmod->modCheck('includes/functions/general.php'));
 require($lC_Vqmod->modCheck('includes/functions/html_output.php'));

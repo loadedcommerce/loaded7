@@ -16,28 +16,31 @@ final class VQMod {
   private $_lastModifiedTime = 0;
   private $_devMode = false;
 
-  public $logFolder = 'includes/work/logs/vqmod/';
-  public $vqCachePath = 'includes/work/cache/vqmod/';
-  public $modCache = 'ext/vqmod/vqcache/vqmods.cache';
+  public $logFolder;
+  public $vqCachePath;
+  public $modCache;
   public $protectedFilelist = 'ext/vqmod/vqprotect.txt';
   public $pathReplaces = 'ext/vqmod/pathReplaces.php';
   public $logging = true;
   public $log;
   public $fileModding = false;
   public $directorySeparator = '';
-
-  /**
-   * VQMod::__construct()
-   *
-   * @param bool $path File path to use
-   * @param bool $logging Enable/disabled logging
-   * @return null
-   * @description Startup of VQMod
-   */
+/**
+  * VQMod::__construct()
+  *
+  * @param bool $path File path to use
+  * @param bool $logging Enable/disabled logging
+  * @return null
+  * @description Startup of VQMod
+  */
   public function __construct($path = false, $logging = true) {
     if(!class_exists('DOMDocument')) {
       die('ERROR - YOU NEED DOMDocument INSTALLED TO USE VQMod');
     }                
+    
+  $this->logFolder = 'includes/work/logs/vqmod/';
+  $this->vqCachePath = 'includes/work/cache/vqmod/';
+  $this->modCache = 'includes/work/cache/vqmods.cache';    
     
     $this->directorySeparator = defined('DIRECTORY_SEPARATOR') ? DIRECTORY_SEPARATOR : '/';
 
@@ -60,25 +63,13 @@ final class VQMod {
     $this->_getMods();
     $this->_loadProtected();
   }
-  
-  private function _cleanup() {   
-    $files = scandir($vqCachePath);
-    foreach ($files as $file) {
-      if ($file != "." && $file != ".." && $file != ".htaccess") {
-        if (!is_dir($vqCachePath . $file) === true) {
-          unlink($vqCachePath . $file); 
-        }
-      }
-    }    
-  }
-
-  /**
-   * VQMod::modCheck()
-   *
-   * @param string $sourceFile path for file
-   * @return string
-   * @description Checks if a file has modifications and applies them, returning cache files or the file name
-   */
+ /**
+  * VQMod::modCheck()
+  *
+  * @param string $sourceFile path for file
+  * @return string
+  * @description Checks if a file has modifications and applies them, returning cache files or the file name
+  */
   public function modCheck($sourceFile) {
 
     if(!$this->_folderChecks) {
@@ -147,15 +138,14 @@ final class VQMod {
     $this->fileModding = false;
     return $changed ? $writePath : $sourcePath;
   }
-
-  /**
-   * VQMod::path()
-   *
-   * @param string $path File path
-   * @param bool $skip_real If true path is full not relative
-   * @return bool, string
-   * @description Returns the full true path of a file if it exists, otherwise false
-   */
+ /**
+  * VQMod::path()
+  *
+  * @param string $path File path
+  * @param bool $skip_real If true path is full not relative
+  * @return bool, string
+  * @description Returns the full true path of a file if it exists, otherwise false
+  */
   public function path($path, $skip_real = false) {
     $tmp = realpath($this->_cwd . '../') . '/' . $path;
     $realpath = $skip_real ? $tmp : $this->_realpath($tmp);
@@ -166,24 +156,22 @@ final class VQMod {
         
     return $realpath;
   }
-
-  /**
-   * VQMod::getCwd()
-   *
-   * @return string
-   * @description Returns current working directory
-   */
+ /**
+  * VQMod::getCwd()
+  *
+  * @return string
+  * @description Returns current working directory
+  */
   public function getCwd() {
     return $this->_cwd;
   }
-
-  /**
-   * VQMod::dirCheck()
-   * 
-   * @param string $path
-   * @return null
-   * @description Creates $path folder if it doesn't exist 
-   */
+ /**
+  * VQMod::dirCheck()
+  * 
+  * @param string $path
+  * @return null
+  * @description Creates $path folder if it doesn't exist 
+  */
   public function dirCheck($path) {
     if(!is_dir($path)) {
       if(!mkdir($path)) {
@@ -191,7 +179,33 @@ final class VQMod {
       }
     }
   }
-  
+ /**
+  * VQMod::_cleanup()
+  * 
+  * @return null
+  * @description Reoves modded cached files 
+  */  
+  private function _cleanup() { 
+    $files = scandir(DIR_FS_CATALOG . $this->vqCachePath);
+    foreach ($files as $file) {
+      if ($file != "." && $file != ".." && $file != ".htaccess") {
+        if (!is_dir($vqCachePath . $file) === true) {
+          unlink(DIR_FS_CATALOG . $this->vqCachePath . $file); 
+        }
+      }
+    }    
+  }  
+ /**
+  * VQMod::_phpLiteObfuscator()
+  * 
+  * @param  string  $SourceString
+  * @param  array   $_varsPrivate
+  * @param  array   $_funcPrivate
+  * @param  array   $classPrivate
+  * @param  array   $dicc
+  * @return string
+  * @description Obfuscates the modified code
+  */   
   private function _phpLiteObfuscator( $SourceString, $_varsPrivate=array(), $_funcPrivate=array(), $classPrivate=array(), &$dicc) {
     $varsPrivate = array_merge( $_varsPrivate, array( '_SESSION','_GET','_POST','this','_SERVER' ) );
     $funcPrivate = array_merge( $_funcPrivate, array( "__construct") );
@@ -221,9 +235,18 @@ final class VQMod {
 
     return $SourceString;
   }
-
-  /**@private*/
-  private function _phpLiteObfuscatorObscurer( &$Source, &$privateVars, $ColectorRegexp, $snifferRegexp, $refs = array() ) {
+ /**
+  * VQMod::_phpLiteObfuscatorObscurer()
+  * 
+  * @param  string  $Source
+  * @param  array   $privateVars
+  * @param  array   $ColectorRegexp
+  * @param  array   $snifferRegexp
+  * @param  array   $refs
+  * @return string
+  * @description Support function for _phpLiteObfuscator()
+  */  
+   private function _phpLiteObfuscatorObscurer( &$Source, &$privateVars, $ColectorRegexp, $snifferRegexp, $refs = array() ) {
     $find       = array();
     $replace    = array();
     $varNum     = count($refs);
@@ -258,16 +281,39 @@ final class VQMod {
 
     return $diccionary;
   }    
-
   /**
-   * VQMod::_getMods()
-   *
-   * @return null
-   * @description Gets list of XML files in vqmod xml folder for processing
-   */
+  * VQMod::_getModFileList()
+  *
+  * @return array
+  * @description Gets list of addon files processing
+  */  
+  private function _getModFileList() {
+    $modList = '';
+    if (file_exists(DIR_FS_WORK . 'cache/addons.cache')) {
+      $fh = fopen(DIR_FS_WORK . 'cache/addons.cache', 'r');
+      $modList = fread($fh, filesize(DIR_FS_WORK . 'cache/addons.cache'));
+      fclose($fh);
+    }
+    $modList = explode(';', unserialize($modList));
+    
+    $modArr = array();
+    foreach ($modList as $key => $value) {
+      $loc = str_replace('controller.php', '', $value);
+      $hooks = glob($loc . 'hooks/*.xml');
+      $modArr = array_merge((array)$modArr, (array)$hooks);
+    }
+    
+    return $modArr;   
+  }  
+  /**
+  * VQMod::_getMods()
+  *
+  * @return null
+  * @description Gets list of XML files in vqmod xml folder for processing
+  */
   private function _getMods() {
 
-    $this->_modFileList = glob($this->path('ext/vqmod/xml/', true) . '*.xml');
+    $this->_modFileList = $this->_getModFileList();
           
     foreach($this->_modFileList as $file) {
       if(file_exists($file)) {
@@ -308,13 +354,12 @@ final class VQMod {
       $this->log->write('NO MODS IN USE');
     }
   }
-
-  /**
-   * VQMod::_parseMods()
-   *
-   * @return null
-   * @description Loops through xml files and attempts to load them as VQModObject's
-   */
+ /**
+  * VQMod::_parseMods()
+  *
+  * @return null
+  * @description Loops through xml files and attempts to load them as VQModObject's
+  */
   private function _parseMods() {
 
     $dom = new DOMDocument('1.0', 'UTF-8');
@@ -356,13 +401,12 @@ final class VQMod {
       die('MODS CACHE PATH NOT WRITEABLE');
     }
   }
-
-  /**
-   * VQMod::_loadProtected()
-   *
-   * @return null
-   * @description Loads protected list and adds them to _doNotMod array
-   */
+ /**
+  * VQMod::_loadProtected()
+  *
+  * @return null
+  * @description Loads protected list and adds them to _doNotMod array
+  */
   private function _loadProtected() {
     $file = $this->path($this->protectedFilelist);
     if($file && is_file($file)) {
@@ -379,36 +423,33 @@ final class VQMod {
       }
     }
   }
-
-  /**
-   * VQMod::_cacheName()
-   *
-   * @param string $file Filename to be converted to cache filename
-   * @return string
-   * @description Returns cache file name for a path
-   */
+ /**
+  * VQMod::_cacheName()
+  *
+  * @param string $file Filename to be converted to cache filename
+  * @return string
+  * @description Returns cache file name for a path
+  */
   private function _cacheName($file) {
     return $this->_cachePathFull . 'vq2-' . preg_replace('~[/\\\\]+~', '_', $file);
   }
-
-  /**
-   * VQMod::_setCwd()
-   *
-   * @param string $path Path to be used as current working directory
-   * @return null
-   * @description Sets the current working directory variable
-   */
+ /**
+  * VQMod::_setCwd()
+  *
+  * @param string $path Path to be used as current working directory
+  * @return null
+  * @description Sets the current working directory variable
+  */
   private function _setCwd($path) {
     $this->_cwd = $this->_realpath($path);
   }
-
-  /**
-   * VQMod::_realpath()
-   * 
-   * @param string $file
-   * @return string
-   * @description Returns real path of any path, adding directory slashes if necessary
-   */
+ /**
+  * VQMod::_realpath()
+  * 
+  * @param string $file
+  * @return string
+  * @description Returns real path of any path, adding directory slashes if necessary
+  */
   private function _realpath($file) {
     $path = realpath($file);
     if(!file_exists($path)) {
@@ -421,15 +462,14 @@ final class VQMod {
 
     return $path;
   }
-
-  /**
-   * VQMod::_checkMatch()
-   *
-   * @param string $modFilePath Modification path from a <file> node
-   * @param string $checkFilePath File path
-   * @return bool
-   * @description Checks a modification path against a file path
-   */
+ /**
+  * VQMod::_checkMatch()
+  *
+  * @param string $modFilePath Modification path from a <file> node
+  * @param string $checkFilePath File path
+  * @return bool
+  * @description Checks a modification path against a file path
+  */
   private function _checkMatch($modFilePath, $checkFilePath) {
     $modFilePath = str_replace('\\', '/', $modFilePath);
     $checkFilePath = str_replace('\\', '/', $checkFilePath);

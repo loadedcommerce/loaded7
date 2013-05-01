@@ -101,6 +101,7 @@ class Test_Addon_One extends lC_Addons_Bootstrap {
   */  
   private function _initialize() {
     global $lC_Language;
+    
    /**
     * Inject the language definitions if they exist
     */ 
