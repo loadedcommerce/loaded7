@@ -13,7 +13,7 @@
 */
 $_SERVER['SCRIPT_FILENAME'] = __FILE__;
 
-require($lC_Vqmod->modCheck('includes/application_top.php'));
+require('includes/application_top.php');
 
 switch ($_GET['action']) {
   case 'banner':
