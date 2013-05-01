@@ -182,14 +182,16 @@ final class VQMod {
   * @description Reoves modded cached files 
   */  
   private function _cleanup() { 
-    $files = scandir(DIR_FS_CATALOG . $this->vqCachePath);
-    foreach ($files as $file) {
-      if ($file != "." && $file != ".." && $file != ".htaccess") {
-        if (!is_dir($vqCachePath . $file) === true) {
-          unlink(DIR_FS_CATALOG . $this->vqCachePath . $file); 
+    $files = @scandir(DIR_FS_CATALOG . $this->vqCachePath);
+      if (is_array($files) && !empty($files)) {
+      foreach ($files as $file) {
+        if ($file != "." && $file != ".." && $file != ".htaccess") {
+          if (file_exists(DIR_FS_CATALOG . $this->vqCachePath . $file)) {
+            unlink(DIR_FS_CATALOG . $this->vqCachePath . $file); 
+          }
         }
-      }
-    }    
+      }    
+    }
   }  
  /**
   * VQMod::_phpLiteObfuscator()
@@ -202,19 +204,7 @@ final class VQMod {
   * @return string
   * @description Obfuscates the modified code
   */   
-  private function _phpLiteObfuscator( $SourceString, $_varsPrivate=array(), $_funcPrivate=array(), $classPrivate=array(), &$dicc) {
-    $varsPrivate = array_merge( $_varsPrivate, array( '_SESSION','_GET','_POST','this','_SERVER' ) );
-    $funcPrivate = array_merge( $_funcPrivate, array( "__construct") );
-
-    /* FUNCTIONS */
-    //$ref = $this->_phpLiteObfuscatorObscurer($SourceString, $funcPrivate, "/function\s+(\w+)\s*\(/m", "/(\W)VARNAME\s*(\()/", $dicc);
-
-    /* VARIABLES */
-    //$ref = $this->_phpLiteObfuscatorObscurer($SourceString, $varsPrivate, "/\\$(\w{2,})\W/m", array("|([>])\s*VARNAME(\W)|", "|(\\$)"."VARNAME(\W)|"), $ref ); 
-
-    /* CLASSNAMES */
-    //$ref = $this->_phpLiteObfuscatorObscurer($SourceString, $classPrivate, "/(?:class|interface) (\w+)[^\w]/m", "/(\W)VARNAME(\W)/", $ref );
-        
+  private function _phpLiteObfuscator($SourceString) {
     ##remove comments
     $SourceString = preg_replace( "/(\s+)#(.*)\n/","$1\n",$SourceString );
     $SourceString = preg_replace( "/(\s+)\/\/(.*)\n/","$1\n",$SourceString );
@@ -226,57 +216,8 @@ final class VQMod {
     $SourceString = preg_replace( "/\n/","",$SourceString );
     $SourceString = preg_replace( "#/\*(?:(?!\*/).)*\*/#","",$SourceString );
 
-    //$dicc = $ref;
-    $dicc = $ref;
-
     return $SourceString;
-  }
- /**
-  * VQMod::_phpLiteObfuscatorObscurer()
-  * 
-  * @param  string  $Source
-  * @param  array   $privateVars
-  * @param  array   $ColectorRegexp
-  * @param  array   $snifferRegexp
-  * @param  array   $refs
-  * @return string
-  * @description Support function for _phpLiteObfuscator()
-  */  
-   private function _phpLiteObfuscatorObscurer( &$Source, &$privateVars, $ColectorRegexp, $snifferRegexp, $refs = array() ) {
-    $find       = array();
-    $replace    = array();
-    $varNum     = count($refs);
-    $diccionary = &$refs;
-
-    preg_match_all( $ColectorRegexp ,$Source, $matches );
-
-    foreach( $matches[1] as $i=>$varName ) {
-      if( in_array( $varName, $privateVars ) || array_key_exists( $varName, $diccionary) ) {
-        continue;
-      }
-
-      $varNum++;
-
-      if( array_key_exists( $varName, $diccionary) ) {
-        $vname = $diccionary[$varName];
-      } else {
-        $diccionary[$varName] = $vname = "_" . dechex($varNum);
-      }
-
-      if( is_array( $snifferRegexp ) ) {
-        foreach( $snifferRegexp as $_snifRegexp ){
-          $find[] = str_replace( "VARNAME",$varName, $_snifRegexp );
-          $replace[] = "$1" . $vname . "$2";
-        }
-      } else {
-        $find[] = str_replace("VARNAME",$varName, $snifferRegexp);
-        $replace[] = "$1" . $vname . "$2";
-      }
-    }
-    $Source = preg_replace( $find, $replace, $Source );
-
-    return $diccionary;
-  }    
+  }   
   /**
   * VQMod::_getModFileList()
   *
@@ -339,11 +280,7 @@ final class VQMod {
       }      
       
       if(!empty($mods))
-      $this->_mods = unserialize($mods);
-echo "<pre>";
-print_r($this->_mods);
-echo "</pre>";
-die('00');      
+      $this->_mods = unserialize($mods);     
       if($this->_mods !== false) {
         return;
       }

@@ -136,6 +136,7 @@ class lC_Store_Admin {
       $lC_Database->commitTransaction();
 
       lC_Cache::clear('vqmods');
+      lC_Cache::clear('vqmoda');
       lC_Cache::clear('configuration');
       lC_Cache::clear('addons');
 
