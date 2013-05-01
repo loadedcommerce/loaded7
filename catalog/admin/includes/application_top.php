@@ -157,6 +157,10 @@ $BarcodeQR = new BarcodeQR();
 // templates general class
 require($lC_Vqmod->modCheck('templates/default/classes/general.php'));
 
+// instantiate the addons class
+require('includes/classes/addons.php');
+$lC_Addons = new lC_Addons_Admin();
+
 // check if a default currency is set
 if (!defined('DEFAULT_CURRENCY')) {
   $lC_MessageStack->add('header', $lC_Language->get('ms_error_no_default_currency'), 'error');
