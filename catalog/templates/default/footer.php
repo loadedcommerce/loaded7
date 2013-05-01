@@ -97,9 +97,9 @@
     $BarcodeQR = new BarcodeQR();
     $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
 
-    if(empty($_GET) === false &&  !array_key_exists($lC_Session->getName(),$_GET)) {     
+    if(empty($_GET) === false && !array_key_exists($lC_Session->getName(),$_GET)) {     
       $qrcode_url .= '&'.$lC_Session->getName().'='.$lC_Session->getID();
-    } else if(!isset($_GET)){
+    } else if(!isset($_GET) || empty($_GET)){
       $qrcode_url .= '?'.$lC_Session->getName().'='.$lC_Session->getID();
     }
 
