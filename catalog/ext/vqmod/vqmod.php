@@ -34,19 +34,15 @@ final class VQMod {
   * @description Startup of VQMod
   */
   public function __construct($path = false, $logging = true) {
-    if(!class_exists('DOMDocument')) {
-      die('ERROR - YOU NEED DOMDocument INSTALLED TO USE VQMod');
-    }                
     
-  $this->logFolder = 'includes/work/logs/vqmod/';
-  $this->vqCachePath = 'includes/work/cache/vqmod/';
-  $this->modCache = 'includes/work/cache/vqmods.cache';    
-    
+    $this->logFolder = 'includes/work/logs/vqmod/';
+    $this->vqCachePath = 'includes/work/cache/vqmod/';
+    $this->modCache = 'includes/work/cache/vqmods.cache';    
     $this->directorySeparator = defined('DIRECTORY_SEPARATOR') ? DIRECTORY_SEPARATOR : '/';
 
     if(!$path){
       $path = dirname(dirname(__FILE__));
-    }
+    }    
     $this->_setCwd($path);
 
     $this->logging = (bool) $logging;
@@ -76,7 +72,7 @@ final class VQMod {
 
       if($this->logging) {
         // Create log folder if it doesn't exist
-        $log_folder = $this->path($this->logFolder, true);
+        $log_folder = $this->path($this->logFolder, true); 
         $this->dirCheck($log_folder);
       }
 
@@ -175,7 +171,7 @@ final class VQMod {
   public function dirCheck($path) {
     if(!is_dir($path)) {
       if(!mkdir($path)) {
-        die('ERROR! FOLDER CANNOT BE CREATED: ' . $path);
+        //die('ERROR! FOLDER CANNOT BE CREATED: ' . $path);
       }
     }
   }
@@ -270,11 +266,11 @@ final class VQMod {
       if( is_array( $snifferRegexp ) ) {
         foreach( $snifferRegexp as $_snifRegexp ){
           $find[] = str_replace( "VARNAME",$varName, $_snifRegexp );
-          $replace[] = "$1". $vname . "$2";
+          $replace[] = "$1" . $vname . "$2";
         }
       } else {
         $find[] = str_replace("VARNAME",$varName, $snifferRegexp);
-        $replace[] = "$1". $vname . "$2";
+        $replace[] = "$1" . $vname . "$2";
       }
     }
     $Source = preg_replace( $find, $replace, $Source );
@@ -299,7 +295,7 @@ final class VQMod {
     $modArr = array();
     foreach ($modList as $key => $value) {
       $loc = str_replace('controller.php', '', $value);
-      $hooks = glob($loc . 'hooks/*.xml');
+      $hooks = glob($loc . 'hooks/catalog/*.xml');
       $modArr = array_merge((array)$modArr, (array)$hooks);
     }
     
@@ -398,7 +394,7 @@ final class VQMod {
     }
     
     if(!$result) {
-      die('MODS CACHE PATH NOT WRITEABLE');
+      //die('MODS CACHE PATH NOT WRITEABLE');
     }
   }
  /**
