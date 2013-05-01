@@ -6,5 +6,10 @@
       <value><![CDATA[On Hand]]></value>
       <group>product</group>
     </definition>
+    <definition>
+      <key>addon_test</key>
+      <value><![CDATA[ADDON TEST]]></value>
+      <group>product</group>
+    </definition>    
   </definitions>
 </language>

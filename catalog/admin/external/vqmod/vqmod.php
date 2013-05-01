@@ -72,12 +72,12 @@ final class VQMod {
 
       if($this->logging) {
         // Create log folder if it doesn't exist
-        $log_folder = $this->path($this->logFolder, true); 
+        $log_folder = DIR_FS_CATALOG . $this->logFolder; 
         $this->dirCheck($log_folder);
       }
 
       // Create cache folder if it doesn't exist
-      $cache_folder = $this->path($this->vqCachePath, true);
+      $cache_folder = DIR_FS_WORK . 'cache/';
       $this->dirCheck($cache_folder);
 
       // Store cache folder path to save on repeat checks for path validity
@@ -171,7 +171,7 @@ final class VQMod {
   public function dirCheck($path) {
     if(!is_dir($path)) {
       if(!mkdir($path)) {
-        //die('ERROR! FOLDER CANNOT BE CREATED: ' . $path);
+        die('ERROR! FOLDER CANNOT BE CREATED: ' . $path);
       }
     }
   }
@@ -320,12 +320,13 @@ final class VQMod {
       }
     }
 
-    $xml_folder_time = filemtime($this->path('ext/vqmod/xml'));
+    $xml_folder_time = filemtime($this->path('external/vqmod/xml'));
     if($xml_folder_time > $this->_lastModifiedTime){
       $this->_lastModifiedTime = $xml_folder_time;
     }
 
-    $modCache = $this->path($this->modCache);
+    $modCache = DIR_FS_CATALOG . $this->modCache;
+    
     if($this->_devMode || !file_exists($modCache)) {
       $this->_lastModifiedTime = time();
     } elseif(file_exists($modCache) && filemtime($modCache) >= $this->_lastModifiedTime) {
@@ -339,6 +340,10 @@ final class VQMod {
       
       if(!empty($mods))
       $this->_mods = unserialize($mods);
+echo "<pre>";
+print_r($this->_mods);
+echo "</pre>";
+die('00');      
       if($this->_mods !== false) {
         return;
       }
@@ -380,7 +385,7 @@ final class VQMod {
       }
     }
 
-    $modCache = $this->path($this->modCache, true);
+    $modCache = DIR_FS_CATALOG . $this->modCache;
       
     if (function_exists('ioncube_write_file')) {  
       if (ioncube_file_is_encoded()) {
@@ -394,7 +399,7 @@ final class VQMod {
     }
     
     if(!$result) {
-      //die('MODS CACHE PATH NOT WRITEABLE');
+      die('MODS CACHE PATH NOT WRITEABLE: ' . $modCache);
     }
   }
  /**
@@ -516,7 +521,7 @@ class VQModLog {
       return;
     }
 
-    $logPath = $this->_vqmod->path($this->_vqmod->logFolder . date('D') . '-admin.log', true);
+    $logPath = DIR_FS_CATALOG . date('D') . '-admin.log';
           
     $txt = array();
     $txt[] = str_repeat('-', 10) . ' Date: ' . date('Y-m-d H:i:s') . ' ~ IP : ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'N/A') . ' ' . str_repeat('-', 10);
@@ -558,7 +563,7 @@ class VQModLog {
 
     $result = @file_put_contents($logPath, implode(PHP_EOL, $txt), ($append ? FILE_APPEND : 0));
     if(!$result) {
-      //die('LOG FILE COULD NOT BE WRITTEN');
+      die('LOG FILE COULD NOT BE WRITTEN: ' . $logPath);
     }
   }
 

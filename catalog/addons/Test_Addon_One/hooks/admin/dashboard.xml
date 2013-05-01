@@ -4,13 +4,13 @@
   <version>1.0.0</version>
   <vqmver>2.3.2</vqmver>
   <author>loadedcommerce.com</author>
-  <file name="admin/templates/default.php">
+  <file name="includes/applications/index/pages/main.php">
     <operation info="After H1 title, add TEST">
       <search position="after"><![CDATA[
-        <h1>Dashboard</h1>
+        <h1><?php echo $lC_Language->get('heading_title_dashboard'); ?></h1>
       ]]></search>         
       <add><![CDATA[
-        <span class="margin-left">ADDON TEST</span>
+        <span class="margin-left"><?php echo $lC_Language->get('addon_test'); ?></span>
       ]]></add>
     </operation>
   </file> 
