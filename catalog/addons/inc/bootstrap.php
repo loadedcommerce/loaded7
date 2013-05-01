@@ -23,16 +23,12 @@ abstract class lC_Addons_Bootstrap {
             $_author,
             $_thumbnail,
             $_version,
-            $_exists,
+            $_compatibility,
             $_enabled,
             $_valid;
   
   final public function isValid() {
     return true;
-  }  
-  
-  public function exists() {
-    return $this->_exists;
   }  
   
   public function isEnabled() {
@@ -70,6 +66,10 @@ abstract class lC_Addons_Bootstrap {
   public function getAddonVersion() {
     return $this->_version;
   }  
+  
+  public function getCompatibility() {
+    return $this->_compatibility;
+  }   
   
   public function hasKeys() {
     static $has_keys;
