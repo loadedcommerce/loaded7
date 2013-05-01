@@ -454,7 +454,7 @@
         </div>
       </div>
       
-      <div id="recentContainer" class="hide-below-992">
+      <!--<div id="recentContainer" class="hide-below-992">
         <section>
           <ul class="title-menu">
             <li>Recent Events</li>
@@ -492,9 +492,9 @@
             </li>
           </ul>
         </section>
-      </div>
+      </div>-->
       
-      <footer id="menu-footer" class="hide-below-992">
+      <footer id="menu-footer">
         <!-- QR Code -->
         <div style="margin:-15px; padding:10px 20px 14px 10px; width:100%; height:32px; margin-bottom:0px;">
           <a id="qrcode-tooltip">
