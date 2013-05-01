@@ -17,7 +17,7 @@ class lC_Addons_Admin extends lC_Addons {
 
   // class constructor
   public function lC_Addons_Admin() {
-    $this->_initialize();
+    parent::_initialize();
   }
   
 }

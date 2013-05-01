@@ -63,7 +63,7 @@ class lC_Store_Admin {
 
     $result = array();
 
-    include(DIR_FS_CATALOG . 'addons/' . $name . '/controller.php');
+    include_once(DIR_FS_CATALOG . 'addons/' . $name . '/controller.php');
     //$lC_Language->injectDefinitions('modules/payment/' . $id . '.xml');
     $addon = new $name();
     

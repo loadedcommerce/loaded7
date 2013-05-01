@@ -18,7 +18,7 @@ class lC_Addons {
     $this->_initialize();
   }
   
-  private function _initialize() {
+  protected function _initialize() {
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
     $lC_DirectoryListing->setRecursive(true);
     $lC_DirectoryListing->setIncludeDirectories(false);
