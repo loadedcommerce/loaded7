@@ -21,7 +21,7 @@ final class VQMod {
   public $modCache;
   public $protectedFilelist = 'ext/vqmod/vqprotect.txt';
   public $pathReplaces = 'ext/vqmod/pathReplaces.php';
-  public $logging = true;
+  public $logging = false;
   public $log;
   public $fileModding = false;
   public $directorySeparator = '';

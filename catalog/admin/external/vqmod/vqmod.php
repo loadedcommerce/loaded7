@@ -21,7 +21,7 @@ final class VQMod {
   public $modCache;
   public $protectedFilelist = 'admin/external/vqmod/vqprotect.txt';
   public $pathReplaces = 'admin/external/vqmod/pathReplaces.php';
-  public $logging = true;
+  public $logging = false;
   public $log;
   public $fileModding = false;
   public $directorySeparator = '';
@@ -171,7 +171,7 @@ final class VQMod {
   public function dirCheck($path) {
     if(!is_dir($path)) {
       if(!mkdir($path)) {
-        die('ERROR! FOLDER CANNOT BE CREATED: ' . $path);
+        //die('ERROR! FOLDER CANNOT BE CREATED: ' . $path);
       }
     }
   }
@@ -336,7 +336,7 @@ final class VQMod {
     }
     
     if(!$result) {
-      die('MODS CACHE PATH NOT WRITEABLE: ' . $modCache);
+      //die('MODS CACHE PATH NOT WRITEABLE: ' . $modCache);
     }
   }
  /**
@@ -500,7 +500,7 @@ class VQModLog {
 
     $result = @file_put_contents($logPath, implode(PHP_EOL, $txt), ($append ? FILE_APPEND : 0));
     if(!$result) {
-      die('LOG FILE COULD NOT BE WRITTEN: ' . $logPath);
+      //die('LOG FILE COULD NOT BE WRITTEN: ' . $logPath);
     }
   }
 
