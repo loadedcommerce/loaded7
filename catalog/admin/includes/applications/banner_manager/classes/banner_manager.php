@@ -244,7 +244,7 @@ class lC_Banner_manager_Admin {
   */
   public static function save($id = null, $data) {
     global $lC_Database;
-   
+    
     $error = false;
 
     if ( empty($data['html_text']) && empty($data['image_local']) && !empty($data['image']) ) {
@@ -272,7 +272,7 @@ class lC_Banner_manager_Admin {
       $Qbanner->bindValue(':banners_image', $image_location);
       $Qbanner->bindValue(':banners_group', (!empty($data['group_new']) ? $data['group_new'] : $data['group']));
       $Qbanner->bindValue(':banners_html_text', $data['html_text']);
-
+      
       if ( empty($data['date_expires']) ) {
         $Qbanner->bindRaw(':expires_date', 'null');
         $Qbanner->bindInt(':expires_impressions', $data['expires_impressions']);
