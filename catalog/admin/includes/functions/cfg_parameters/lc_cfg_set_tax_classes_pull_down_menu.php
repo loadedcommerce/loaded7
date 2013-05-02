@@ -14,6 +14,12 @@
 
   function lc_cfg_set_tax_classes_pull_down_menu($default, $key = null) {
     global $lC_Database, $lC_Language;
+    
+    $css_class = 'class="input with-small-padding"';
+    $args = func_get_args();
+    if(count($args) > 2 &&  strpos($args[0], 'class') !== false ) {
+      $css_class = $args[0];
+    }
 
     if (isset($_GET['plugins'])) {
       $name = (empty($key)) ? 'plugins_value' : 'plugins[' . $key . ']';
@@ -33,6 +39,6 @@
                                  'text' => $Qclasses->value('tax_class_title'));
     }
 
-    return lc_draw_pull_down_menu($name, $tax_class_array, $default, 'class="input with-small-padding"');
+    return lc_draw_pull_down_menu($name, $tax_class_array, $default, $css_class);
   }
 ?>

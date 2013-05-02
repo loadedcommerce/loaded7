@@ -14,6 +14,12 @@
 
   function lc_cfg_set_countries_pulldown_menu($default, $key = null) {
 
+    $css_class = 'class="input with-small-padding"';
+    $args = func_get_args();
+    if(count($args) > 2 &&  strpos($args[0], 'class') !== false ) {
+      $css_class = $args[0];
+    }
+
     if (isset($_GET['plugins'])) {
       $name = (!empty($key) ? 'plugins[' . $key . ']' : 'plugins_value');
     } else {
@@ -27,6 +33,6 @@
                                  'text' => $country['name']);
     }
 
-    return lc_draw_pull_down_menu($name, $countries_array, $default, 'class="input with-small-padding"');
+    return lc_draw_pull_down_menu($name, $countries_array, $default, $css_class);
   }
 ?>
