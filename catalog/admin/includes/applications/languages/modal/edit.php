@@ -58,7 +58,7 @@ function editLanguage(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="text_direction" class="label"><?php echo $lC_Language->get('field_text_direction'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('text_direction', array(array('id' => 'ltr', 'text' => 'ltr'), array('id' => 'rtl', 'text' => 'rtl')), null, 'class="input with-small-padding"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('text_direction', array(array('id' => 'ltr', 'text' => 'ltr'), array('id' => 'rtl', 'text' => 'rtl')), null, 'class="select"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="date_format_short" class="label"><?php echo $lC_Language->get('field_date_format_short'); ?></label>'+
