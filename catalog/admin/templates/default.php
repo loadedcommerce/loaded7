@@ -515,7 +515,7 @@
             $qrcode_url .= '?'.$lC_Session->getName().'='.$lC_Session->getID();
           }
           $BarcodeQR->url($qrcode_url);
-          $BarcodeQR->draw(230, '../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png');
+          $BarcodeQR->draw(200, '../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png');
           echo '<h5>QR Code</h5><img src="../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png" /><br /><h6>Current URL</h6><p>' . $qrcode_url . '</p>';
          ?>
          </div>
