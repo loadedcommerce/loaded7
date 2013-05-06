@@ -46,6 +46,11 @@ function editBanner(id) {
                    '      <p class="button-height inline-label">'+
                    '        <label for="url" class="label"><?php echo $lC_Language->get('field_url'); ?></label>'+
                    '        <?php echo lc_draw_input_field('url', null, 'id="editUrl" class="input" style="width:93%;"'); ?>'+
+                   '      </p>'+                       
+                   '      <p class="button-height inline-label">'+
+                   '        <label for="target" class="label"><?php echo $lC_Language->get('field_target'); ?></label>'+
+                   '         <?php echo '&nbsp;' . lc_draw_checkbox_field('target', null, null, 'id="editTarget" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>'+
+                   '         <?php echo $lC_Language->get('text_banners_target'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="group" class="label"><?php echo $lC_Language->get('field_group'); ?></label>'+
@@ -152,11 +157,16 @@ function editBanner(id) {
       if (data.bannerData.date_scheduled) $("#editDateScheduled").val(data.bannerData.date_scheduled.substr(0,10));
       if (data.bannerData.status == 1) { 
         $("#editStatus").attr('checked', true);
-        $("[tabindex=0]").addClass("checked");
+        $("#editStatus").parent().addClass("checked");
       } else {
         $("#editStatus").attr('checked', false);
       } 
-           
+      if (data.bannerData.banners_target == 1) { 
+        $("#editTarget").attr('checked', true);
+        $("#editTarget").parent().addClass("checked");
+      } else {
+        $("#editTarget").attr('checked', false);
+      }           
     }              
   ); 
 }
