@@ -9,7 +9,7 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-heading_title = Categories
+heading_title = Category Pages
 
 table_heading_categories = Categories
 table_heading_sort_order = Sort Order

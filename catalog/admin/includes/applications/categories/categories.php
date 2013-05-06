@@ -68,7 +68,7 @@ class lC_Application_Categories extends lC_Template_Admin {
     }  
     $breadcrumb_string .= '</ul>';    
     
-    if ( !empty($_GET['action']) ) {
+    /*if ( !empty($_GET['action']) ) {
       switch ( $_GET['action'] ) {
         case 'save':  
           $data = array('name' => $_POST['categories_name'],
@@ -83,7 +83,7 @@ class lC_Application_Categories extends lC_Template_Admin {
           * @access public
           * @return boolean
           */
-          if ( lC_Categories_Admin::save((isset($_GET['cid']) && is_numeric($_GET['cid']) ? $_GET['cid'] : null), $data) ) {
+          /*if ( lC_Categories_Admin::save((isset($_GET['cid']) && is_numeric($_GET['cid']) ? $_GET['cid'] : null), $data) ) {
             lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $_GET[$this->_module]));
           } else {
             $_SESSION['error'] = true;
@@ -91,7 +91,7 @@ class lC_Application_Categories extends lC_Template_Admin {
           }
           break;
       }
-    }
+    }*/
   }
 }
 ?>
