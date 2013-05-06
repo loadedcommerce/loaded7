@@ -56,7 +56,6 @@ class lC_Payment_cresecure extends lC_Payment_Admin {
 
     $this->_title = $lC_Language->get('payment_cresecure_title');
     $this->_description = $lC_Language->get('payment_cresecure_description');
-    $this->_method_title = $lC_Language->get('payment_cresecure_method_title');
     $this->_status = (defined('MODULE_PAYMENT_CRESECURE_STATUS') && (MODULE_PAYMENT_CRESECURE_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('MODULE_PAYMENT_CRESECURE_SORT_ORDER') ? MODULE_PAYMENT_CRESECURE_SORT_ORDER : '');
   }

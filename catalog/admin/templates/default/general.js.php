@@ -271,6 +271,7 @@ $(document).ready(function() {
     $("#profileInner").css({'width':menuWidthResized * 2});
     $('#profileInner').css({"margin-left":"0px"});
   });
+  
   // profile left is clicked
   $("#profileLeft").click(function(){
     // if any of the 4 mene areas are open close them
