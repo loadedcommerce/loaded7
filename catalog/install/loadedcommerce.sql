@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS lc_banners (
   banners_image varchar(255) NOT NULL,
   banners_group varchar(255) NOT NULL,
   banners_html_text text,
+  banners_target int(1) NOT NULL DEFAULT '1',
   expires_impressions int(11) DEFAULT NULL,
   expires_date datetime DEFAULT NULL,
   date_scheduled datetime DEFAULT NULL,
