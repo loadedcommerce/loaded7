@@ -40,11 +40,11 @@ function editEntry(id) {
                  '      <p><?php echo $lC_Language->get('introduction_edit_zone_entry'); ?></p>'+
                  '      <p class="button-height inline-label">'+
                  '        <label for="zone_country_id" class="label"><?php echo $lC_Language->get('field_country'); ?></label>'+
-                 '        <?php echo lc_draw_pull_down_menu('zone_country_id', null, null, 'class="input with-small-padding" id="editZoneCountryId" onchange="updateZonesEdit();"'); ?>'+
+                 '        <?php echo lc_draw_pull_down_menu('zone_country_id', null, null, 'class="select" style = "width:73%" id="editZoneCountryId" onchange="updateZonesEdit();"'); ?>'+
                  '      </p>'+
                  '      <p class="button-height inline-label">'+
                  '        <label for="zone_id" class="label"><?php echo $lC_Language->get('field_zone'); ?></label>'+
-                 '        <?php echo  lc_draw_pull_down_menu('zone_id', null, null, 'class="input with-small-padding" id="editZoneId"'); ?>'+
+                 '        <?php echo  lc_draw_pull_down_menu('zone_id', null, null, 'class="select" style = "width:73%"  id="editZoneId"'); ?>'+
                  '      </p>'+
                  '    </form>'+
                  '  </div>'+
@@ -101,6 +101,9 @@ function editEntry(id) {
       $("#editZoneCountryId").empty();
       $.each(data.countriesArray, function(val, text) {
         var selected = (data.zoneData.zone_country_id == val) ? 'selected="selected"' : '';
+        if(data.zoneData.zone_country_id == val) {
+          $("#editZoneCountryId").closest("span + *").prevAll("span.select-value:first").text(text);         
+        }
         $("#editZoneCountryId").append(
           $("<option " + selected + "></option>").val(val).html(text)
         );
@@ -128,7 +131,12 @@ function updateZonesEdit(selected) {
       } else {
 
       $("#editZoneId").empty();
+      i = 0;
       $.each(data.zonesArray, function(val, text) {
+        if(i == 0) {
+          $("#editZoneId").closest("span + *").prevAll("span.select-value:first").text(text); 
+          i++;
+        }
         $("#editZoneId").append(
           $("<option></option>").val(val).html(text)
         );

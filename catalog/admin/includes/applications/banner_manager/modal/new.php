@@ -134,7 +134,7 @@ function newBanner() {
       $("#group").html("");  // clear the old values
       i=0;
       $.each(data.groupsArray, function(val, text) {
-         if(i == 0) {
+        if(i == 0) {
           $("#group").closest("span + *").prevAll("span.select-value:first").text(text);
           i++;
         }

@@ -41,7 +41,7 @@ function newEntry(zid) {
                    '      <p><?php echo $lC_Language->get('introduction_new_tax_rate'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="tax_zone_id" class="label"><?php echo $lC_Language->get('field_tax_rate_zone_group'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('tax_zone_id', null, null, 'class="input with-small-padding"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('tax_zone_id', null, null, 'class="select" style = "width:73%" '); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="tax_description" class="label"><?php echo $lC_Language->get('field_tax_rate_description'); ?></label>'+
@@ -110,7 +110,12 @@ function newEntry(zid) {
           buttonsLowPadding: true
       });
       $("#tax_zone_id").empty();
+      i = 0;
       $.each(data.zonesArray, function(val, text) {
+        if(i==0) {
+          $("#tax_zone_id").closest("span + *").prevAll("span.select-value:first").text(text);  
+          i++;
+        }
         $("#tax_zone_id").append(
           $("<option></option>").val(val).html(text)
         );

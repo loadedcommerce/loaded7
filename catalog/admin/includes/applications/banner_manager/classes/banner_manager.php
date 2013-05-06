@@ -165,19 +165,19 @@ class lC_Banner_manager_Admin {
 
     $lC_ObjectInfo = new lC_ObjectInfo(lC_Banner_manager_Admin::getData($id));
      
-    $result['formElements'] = $lC_Language->get('operation_heading_type') . ' ' . lc_draw_pull_down_menu('type', $type_array, 'daily', 'onchange="updateStats(\'' . $id . '\');"') . ' ';
+    $result['formElements'] = $lC_Language->get('operation_heading_type') . ' ' . lc_draw_pull_down_menu('type', $type_array, 'daily', 'class="select" onchange="updateStats(\'' . $id . '\');"') . ' ';
     switch ( $type ) {
       case 'yearly':
         break;
 
       case 'monthly':
-        $result['formElements'] .= $lC_Language->get('operation_heading_year') . ' ' . lc_draw_pull_down_menu('year', $years_array, @date('Y'), 'onchange="updateStats(\'' . $id . '\');"');
+        $result['formElements'] .= $lC_Language->get('operation_heading_year') . ' ' . lc_draw_pull_down_menu('year', $years_array, @date('Y'), 'class="select" onchange="updateStats(\'' . $id . '\');"');
         break;
 
       case 'daily':
       default:
-        $result['formElements'] .= $lC_Language->get('operation_heading_month') . ' ' . lc_draw_pull_down_menu('month', $months_array, @date('n'), 'onchange="updateStats(\'' . $id . '\');"') . ' ' .
-                                   $lC_Language->get('operation_heading_year') . ' ' . lc_draw_pull_down_menu('year', $years_array, @date('Y'), 'onchange="updateStats(\'' . $id . '\');"');
+        $result['formElements'] .= $lC_Language->get('operation_heading_month') . ' ' . lc_draw_pull_down_menu('month', $months_array, @date('n'), ' class="select" onchange="updateStats(\'' . $id . '\');"') . ' ' .
+                                   $lC_Language->get('operation_heading_year') . ' ' . lc_draw_pull_down_menu('year', $years_array, @date('Y'), 'class="select" onchange="updateStats(\'' . $id . '\');"');
         break;
     }
 
