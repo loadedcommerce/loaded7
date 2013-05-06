@@ -130,7 +130,7 @@ class lC_Categories_Admin {
     $Qcategories->execute();
 
     $data = $Qcategories->toArray();
-
+    
     $data['childs_count'] = sizeof($lC_CategoryTree->getChildren($Qcategories->valueInt('categories_id'), $dummy = array()));
     $data['products_count'] = $lC_CategoryTree->getNumberOfProducts($Qcategories->valueInt('categories_id'));
 

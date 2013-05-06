@@ -11,6 +11,17 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
+  $lC_ObjectInfo = new lC_ObjectInfo(lC_Categories_Admin::get($_GET[$lC_Template->getModule()]));
+  $Qcd = $lC_Database->query('select categories_name, language_id from :table_categories_description where categories_id = :categories_id');
+  $Qcd->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+  $Qcd->bindInt(':categories_id', $lC_ObjectInfo->get('categories_id'));
+  $Qcd->execute();
+  $categories_name = array();
+  while ($Qcd->next()) {
+    $categories_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_name');
+  }
+}
 
   if (isset($_SESSION['error'])) unset($_SESSION['error']);
   if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']);
@@ -19,7 +30,7 @@
 <!-- Main content -->
 <section role="main" id="main">
   <hgroup id="main-title" class="thin">
-    <h1>Test Category Page</h1>
+    <h1><?php echo (isset($lC_ObjectInfo) && isset($categories_name[$lC_Language->getID()])) ? $categories_name[$lC_Language->getID()] : $lC_Language->get('heading_title_new_category'); ?></h1>
     <?php
       if ( $lC_MessageStack->exists($lC_Template->getModule()) ) {
         echo $lC_MessageStack->get($lC_Template->getModule());
