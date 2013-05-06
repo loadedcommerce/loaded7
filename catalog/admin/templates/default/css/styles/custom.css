@@ -125,6 +125,101 @@ Custom Template CSS added by Loaded7 Dev Team
   cursor: pointer;
 }
 
+  .field-drop-tabs + .field-block {
+    padding-top: 20px;
+    }
+    .field-drop-tabs + .field-block.button-height {
+      padding-top: 18px;
+    }
+  .field-drop-tabs .label {
+    display: block;
+    padding: 0;
+    color: #999999;
+    font-weight: bold;
+    margin: 0;
+    }
+
+/* Field drop */
+.field-drop-tabs {
+  padding: 18px 0px;
+  line-height: 24px;
+  margin: 0 -1px;
+  -webkit-box-shadow: inset 0 1px 10px black;
+  -moz-box-shadow: inset 0 1px 10px black;
+  box-shadow: inset 0 1px 10px black;
+  position: relative;
+  }
+  .field-drop-tabs.button-height {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .field-drop-tabs:first-child,
+  .fields-list legend:first-child + .field-drop-tabs {
+    margin-top: -22px;
+    -webkit-background-clip: padding-box;
+  }
+  .field-drop-tabs:last-child {
+    margin-bottom: -20px;
+    -webkit-background-clip: padding-box;
+    }
+    /* IE7 */
+    .field-drop-tabs.last-child {
+      margin-bottom: -20px;
+    }
+  .field-drop-tabs + .field-drop-tabs {
+    border-top: 1px solid #666666;
+  }
+  .field-block + .field-drop-tabs {
+    margin-top: 20px;
+  }
+  .field-drop-tabs .label b,
+  .field-drop-tabs .label strong {
+    color: white;
+  }
+  .field-drop-tabs:after {
+    display: block;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: white;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 100px;
+  }
+    .field-drop-tabs .label {
+      float: left;
+      text-align: right;
+      margin: 0 0 0 -210px;
+      width: 150px;
+    }
+
+  /* Field drop */
+  .field-drop-tabs {
+    padding: 13px 30px 17px 230px;
+  }
+  .field-drop-tabs .label {
+    width: 190px;
+  }
+  .field-drop-tabs:after {
+    left: 236px;
+  }
+  
+
+.field-drop-tabs {
+  background: #3c4044 url(../img/textures/grid.png) !important;
+  background: url(../img/textures/grid.png), -webkit-gradient(linear, left top, left bottom, from(#6d7073), to(#3c4044)) !important;
+  background: url(../img/textures/grid.png), -webkit-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), -moz-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), -ms-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), -o-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), linear-gradient(top, #6d7073, #3c4044) !important;
+  color: #afafaf;
+  }
+  .field-drop-tabs b, .field-drop-tabs strong {
+    color: white;
+  }
+
 @media screen and (min-width: 992px) {
   #menu header .headerInner {
     padding: 10px 0;
