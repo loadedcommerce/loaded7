@@ -11,6 +11,9 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+error_reporting(E_ALL & ~E_NOTICE);
+ini_set("display_errors", 1);
+
 if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
   $lC_ObjectInfo = new lC_ObjectInfo(lC_Products_Admin::get($_GET[$lC_Template->getModule()]));
   $attributes = $lC_ObjectInfo->get('attributes');
@@ -36,7 +39,7 @@ $Qtc = $lC_Database->query('select tax_class_id, tax_class_title from :table_tax
 $Qtc->bindTable(':table_tax_class', TABLE_TAX_CLASS);
 $Qtc->execute();
 $tax_class_array = array(array('id' => '0',
-                               'text' => $lC_Language->get('none')));
+                               'text' => $lC_Language->get('text_none')));
 while ($Qtc->next()) {
   $tax_class_array[] = array('id' => $Qtc->valueInt('tax_class_id'),
                              'text' => $Qtc->value('tax_class_title'));
@@ -75,13 +78,40 @@ if ( isset($lC_ObjectInfo) ) {
     if (isset($Qpb->result)) {
       $editPBEntry .= "<tr id='row"  . $rowCnt . "'><td width='100px'><select style='width:98%' name='price_breaks[group_id][]'>" . getCustomerGroupOptionsString($Qpb->valueInt('group_id'), true) . "</select></td>" .
                       "<td width='100px'><select style='width:98%' name='price_breaks[tax_class_id][]'>" . getTaxClassOptionsString($Qpb->valueInt('tax_class_id'), true) . "</select></td>" .
-                      "<td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' value='" . $Qpb->valueInt('qty_break') . "' name='price_breaks[qty][]' size='5' id='qty" . $rowCnt . "'></td><td width='70%'>" . $lC_Language->get('price_breaks_above') . "</td></tr></table></td>" .
-                      "<td width='80px'><input value='" . ((isset($lC_ObjectInfo)) ? number_format($Qpb->valueDecimal('price_break'), DECIMAL_PLACES) : null) . "' style='width:70px;' type='text' name='price_breaks[price][]' id='price" . $rowCnt . "'></td>" .
+                      "<td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' value='" . $Qpb->valueInt('qty_break') . "' name='price_breaks[qty][]' size='5' id='qty" . $rowCnt . "' /></td><td width='70%'>" . $lC_Language->get('text_price_breaks_above') . "</td></tr></table></td>" .
+                      "<td width='80px'><input value='" . ((isset($lC_ObjectInfo)) ? number_format($Qpb->valueDecimal('price_break'), DECIMAL_PLACES) : null) . "' style='width:70px;' type='text' name='price_breaks[price][]' id='price" . $rowCnt . "' /></td>" .
                       "<td width='30px' align='center'><a id='row" . $rowCnt . "e' href='javascript://' onclick='removePriceBreakEntry(this);'><img border='0' src='images/icons/cross.png'></a></td></tr>";
       $rowCnt++;
     }
   }
 }
+
+// get product image
+$Qpi = $lC_Database->query('select image from :table_products_images where products_id = :products_id');
+$Qpi->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+$Qpi->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
+$Qpi->execute();
+
+// get categories array
+$product_categories_array = array();
+if ( isset($lC_ObjectInfo) ) {
+  $Qcategories = $lC_Database->query('select categories_id from :table_products_to_categories where products_id = :products_id');
+  $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+  $Qcategories->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
+  $Qcategories->execute();
+  while ($Qcategories->next()) {
+    $product_categories_array[] = $Qcategories->valueInt('categories_id');
+  }
+}
+$assignedCategoryTree = new lC_CategoryTree();
+$assignedCategoryTree->setBreadcrumbUsage(false);
+$assignedCategoryTree->setSpacerString('&nbsp;', 5); 
+
+// get specials
+$Qspecials = $lC_Database->query('select * from :table_specials where products_id = :products_id');
+$Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
+$Qspecials->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
+$Qspecials->execute();
 
 function getCustomerGroupOptionsString($id = null, $esc = false) {
   global $customer_groups_array;
@@ -113,26 +143,18 @@ function getTaxClassOptionsString($id = null, $esc = false) {
 ?>
 <script type="text/javascript" src="../ext/tiny_mce/tiny_mce.js"></script>
 <script>
-tinyMCE.init({
-  mode : "none",
-  theme : "advanced",
-  language : "<?php echo substr($lC_Language->getCode(), 0, 2); ?>",
-  height : "400",
-  theme_advanced_toolbar_align : "left",
-  theme_advanced_toolbar_location : "top",
-  theme_advanced_statusbar_location : "bottom",
-  cleanup : false,
-  plugins : "style,layer,table,advimage,advlink,preview,contextmenu,paste,fullscreen,visualchars",
-  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,formatselect,fontselect,fontsizeselect,bullist,numlist,separator,outdent,indent",
-  theme_advanced_buttons2 : "undo,redo,separator,link,unlink,anchor,image,code,separator,preview,separator,forecolor,backcolor,tablecontrols,separator,hr,removeformat,visualaid",
-  theme_advanced_buttons3 : "sub,sup,separator,charmap,fullscreen,separator,insertlayer,moveforward,movebackward,absolute,|,styleprops,|,visualchars"
-});
-
 function toggleEditor(id) {
-  if ( !tinyMCE.get(id) ) {
-    tinyMCE.execCommand('mceAddControl', false, id);
+  var editorHidden = $(".clEditorProductDescription").is(":visible");
+  if (editorHidden) {
+    //alert('show');
+    $(".clEditorProductDescription").cleditor({width:"99%", height:"255"});
   } else {
-    tinyMCE.execCommand('mceRemoveControl', false, id);
+    //alert('hide');
+    var editor = $(".clEditorProductDescription").cleditor()[0];
+    editor.$area.insertBefore(editor.$main); // Move the textarea out of the main div
+    editor.$area.removeData("cleditor"); // Remove the cleditor pointer from the textarea
+    editor.$main.remove(); // Remove the main div and all children from the DOM
+    $(".clEditorProductDescription").show();
   }
 }
 </script>
@@ -180,7 +202,10 @@ function toggleEditor(id) {
     var fieldcounter = field.substring(14);
     var taxRate = getTaxRate(fieldcounter);
     var grossValue = document.getElementById(field).value;
-
+    
+    // added to update base price field
+    document.getElementById('products_base_price').value = grossValue;
+    
     if (taxRate > 0) {
       grossValue = grossValue * ((taxRate / 100) + 1);
     }
@@ -426,25 +451,32 @@ function toggleEditor(id) {
       for ( i=0; i<data.entries.length; i++ ) {
         var entry = data.entries[i];
 
-        var style = 'width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px; padding: 10px; float: left; text-align: center;';
+        var style = 'width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px; margin: 10px; padding: 10px; float: left; text-align: center; border-radius: 5px;';
 
         if ( entry[1] == '1' ) { // original (products_images_groups_id)
-          var onmouseover = 'this.style.backgroundColor=\'#EFEBDE\'; this.style.backgroundImage=\'url(<?php echo lc_href_link_admin('templates/' . $lC_Template->getCode() . '/img/icons/16/drag.png'); ?>)\'; this.style.backgroundRepeat=\'no-repeat\'; this.style.backgroundPosition=\'0 0\';';
-
+          var onmouseover = 'this.style.backgroundColor=\'#656565\'; this.style.backgroundImage=\'url(<?php echo lc_href_link_admin('templates/' . $lC_Template->getCode() . '/img/icons/16/drag.png'); ?>)\'; this.style.backgroundRepeat=\'no-repeat\'; this.style.zIndex=\'300000 !important\'; this.style.backgroundPosition=\'8px 2px\';';
+          
           if ( entry[6] == '1' ) { // default_flag
-            style += ' background-color: #E5EFE5;';
+            //style += ' background-color: #E5EFE5;';
+            style += ' ';
 
-            var onmouseout = 'this.style.backgroundColor=\'#E5EFE5\'; this.style.backgroundImage=\'none\';';
+            //var onmouseover += 'this.style.backgroundColor=\'#656565\';';
+            //var onmouseout = 'this.style.backgroundColor=\'#E5EFE5\'; this.style.backgroundImage=\'none\';';
+            var onmouseout = 'this.style.backgroundColor=\'\'; this.style.backgroundImage=\'none\';';
           } else {
-            var onmouseout = 'this.style.backgroundColor=\'#FFFFFF\'; this.style.backgroundImage=\'none\';';
+            var onmouseover = 'this.style.backgroundColor=\'#656565\';';
+            //var onmouseout = 'this.style.backgroundColor=\'#FFFFFF\'; this.style.backgroundImage=\'none\';';
+            var onmouseout = 'this.style.backgroundColor=\'\'; this.style.backgroundImage=\'none\';';
           }
         } else {
-          var onmouseover = 'this.style.backgroundColor=\'#EFEBDE\';';
-          var onmouseout = 'this.style.backgroundColor=\'#FFFFFF\';';
+          var onmouseover = 'this.style.backgroundColor=\'#656565\';';
+          //var onmouseover = '';
+          var onmouseout = 'this.style.backgroundColor=\'\';';
+          //var onmouseout = '';
         }
 
         var newdiv = '<span id="image_' + entry[0] + '" style="' + style + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
-        newdiv += '<a href="' + entry[4] + '" target="_blank"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[2] + '" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /></a><br />' + entry[3] + '<br />' + entry[5] + ' bytes<br />';
+        newdiv += '<a href="' + entry[4] + '" target="_blank"><img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /></a><br />' + entry[3];
 
         if ( entry[1] == '1' ) {
           if ( entry[6] == '1' ) {
@@ -496,7 +528,7 @@ function toggleEditor(id) {
     }
 
     function getImagesOriginals(makeCall) {
-      $('#imagesOriginal').html('<div id="showProgressOriginal" style="float: left; padding-left: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('images_loading_from_server'); ?></div>');
+      $('#imagesOriginal').html('<div id="showProgressOriginal" style="float: left; padding-left: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_loading_from_server'); ?></div>');
 
       if ( makeCall != false ) {
         $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=getImages&filter=originals'); ?>',
@@ -508,7 +540,7 @@ function toggleEditor(id) {
     }
 
     function getImagesOthers(makeCall) {
-      $('#imagesOther').html('<div id="showProgressOther" style="float: left; padding-left: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('images_loading_from_server'); ?></div>');
+      $('#imagesOther').html('<div id="showProgressOther" style="float: left; padding-left: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_loading_from_server'); ?></div>');
 
       if ( makeCall != false ) {
         $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=getImages&filter=others'); ?>',
@@ -578,8 +610,8 @@ function toggleEditor(id) {
     if ( (layer != 'local') || ((layer == 'local') && (layer1.style.display != 'none')) ) {
       layer1.style.display='none';
       layer2.style.display='inline';
-      layer1link.style.backgroundColor='';
-      layer2link.style.backgroundColor='#E5EFE5';
+      layer1link.style.fontWeight='normal';
+      layer2link.style.fontWeight='bolder';
     } else {
       getLocalImages();
     }
@@ -593,8 +625,8 @@ function toggleEditor(id) {
     var id = $("#pbid").val();
     var newPBEntry = "<tr id='row" + id + "'><td width='100px'><select style='width:98%' name='price_breaks[group_id][]'><?php echo $groups_options_string; ?></select></td>" +
                      "    <td width='100px'><select style='width:98%' name='price_breaks[tax_class_id][]'><?php echo $tax_options_string; ?></select></td>" +
-                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][]' size='5' id='qty" + id + "'></td><td width='70%'><?php echo $lC_Language->get('price_breaks_above'); ?></td></tr></table></td>" +
-                     "    <td width='80px'><input value='<?php echo (isset($lC_ObjectInfo)) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null; ?>' style='width:70px;' type='text' name='price_breaks[price][]' id='price" + id + "'></td>" +
+                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][]' size='5' id='qty" + id + "' /></td><td width='70%'><?php echo $lC_Language->get('text_price_breaks_above'); ?></td></tr></table></td>" +
+                     "    <td width='80px'><input value='<?php echo (isset($lC_ObjectInfo)) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null; ?>' style='width:70px;' type='text' name='price_breaks[price][]' id='price" + id + "' /></td>" +
                      "    <td width='30px' align='center'><a href='javascript://' onClick='$(\"#row" + id + "\").remove(); return false;'><img border='0' src='images/icons/cross.png'></a></td></tr>";
     $("#qty-pricing-grid > tbody").append(newPBEntry);
     id++;
@@ -610,8 +642,8 @@ function toggleEditor(id) {
     var row = $("#newpbid" + id).val();
     var newPBEntry = "<tr id='row-" + id + '-' + row + "'><td width='100px'><select style='width:98%' name='price_breaks[group_id][" + id + "][]' id='price_breaks[group_id][" + id + "][]'><?php echo $groups_options_string; ?></select></td>" +
                      "    <td width='100px'><select style='width:98%' name='price_breaks[tax_class_id][" + id + "][]' id='price_breaks[tax_class_id][" + id + "][]'><?php echo $tax_options_string; ?></select></td>" +
-                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][" + id + "][]' id='price_breaks[qty][" + id + "][]' size='5' id='qty" + id + "'></td><td width='70%'><?php echo $lC_Language->get('price_breaks_above'); ?></td></tr></table></td>" +
-                     "    <td width='80px'><input value='<?php echo (isset($lC_ObjectInfo)) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null; ?>' style='width:70px;' type='text' name='price_breaks[price][" + id + "][]' id='price_breaks[price][" + id + "][]'></td>" +
+                     "    <td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' name='price_breaks[qty][" + id + "][]' id='price_breaks[qty][" + id + "][]' size='5' id='qty" + id + "' /></td><td width='70%'><?php echo $lC_Language->get('text_price_breaks_above'); ?></td></tr></table></td>" +
+                     "    <td width='80px'><input value='<?php echo (isset($lC_ObjectInfo)) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null; ?>' style='width:70px;' type='text' name='price_breaks[price][" + id + "][]' id='price_breaks[price][" + id + "][]' /></td>" +
                      "    <td width='30px' align='center'><a href='javascript://' onClick='$(\"#row-" + id + "-" + row + "\").remove(); return false;'><img border='0' src='images/icons/cross.png'></a></td></tr>";
     $("#qty-pricing-grid-variant" + id + " > tbody").append(newPBEntry);
     row++;
@@ -635,651 +667,1368 @@ function toggleEditor(id) {
     }
     ?>
   </hgroup>
-  <style>
-    .attributeAdd {
-      border: 1px solid #7f9db9;
-      background-color: #F0F1F1;
-      margin: 2px;
-    }
-
-    .variantActive {
-      border: 1px solid #7f9db9;
-      background-color: #E8FFC6;
-      margin: 2px;
-    }
-
-    .variantLine {
-      color: #D3D3D3;
-      background-color: #D3D3D3;
-      height: 1px;
-    }
-    
-    form.dataForm fieldset legend { padding: 3px 5px; border-bottom: 1px solid black; font-weight: bold; width: 99%; }
-    LABEL { font-weight:bold; }
-    TD { padding: 5px 0 0 5px; }
-  </style>
   <div class="with-padding-no-top">
     <form name="product" id="product" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
-      <div class="standard-tabs same-height">
+      <div id="product_tabs" class="side-tabs" style="position:relative;">
         <ul class="tabs">
-          <li class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
-          <li id="tabHeaderSectionDataContent"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
-          <li><?php echo lc_link_object('#section_images_content', $lC_Language->get('section_images')); ?></li>
-          <li><?php echo lc_link_object('#section_categories_content', $lC_Language->get('section_categories')); ?></li>
+          <li id="tabHeaderSectionContent" class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
+          <li id="tabHeaderSectionImages"><?php echo lc_link_object('#section_images_content', $lC_Language->get('section_images')); ?></li>
+          <li id="tabHeaderSectionPricing"><?php echo lc_link_object('#section_pricing_content', $lC_Language->get('section_pricing')); ?></li>
+          <li id="tabHeaderSectionData"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
+          <li id="tabHeaderSectionOptions"<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' style="display:none;"'); ?>><?php echo lc_link_object('#section_options_content', $lC_Language->get('section_options')); ?></li>
+          <li id="tabHeaderSectionShipping"><?php echo lc_link_object('#section_shipping_content', $lC_Language->get('section_shipping')); ?></li>
+          <li id="tabHeaderSectionRelationships"><?php echo lc_link_object('#section_relationships_content', $lC_Language->get('section_relationships')); ?></li>
         </ul>
         <div class="clearfix tabs-content">
+          <!-- content_tab -->
           <div id="section_general_content" class="with-padding">
-            <div id="languageTabs" class="standard-tabs same-height">
-              <ul class="tabs">
-                <?php
-                foreach ( $lC_Language->getAll() as $l ) {
-                  echo '<li>' . lc_link_object('#languageTabs_' . $l['code'], $lC_Language->showImage($l['code']) . '&nbsp;' . $l['name']) . '</li>';
-                }
-                ?>
-              </ul>
-              <div class="clearfix tabs-content with-padding">
-                <?php
-                foreach ( $lC_Language->getAll() as $l ) {
-                  ?>
-                  <div id="languageTabs_<?php echo $l['code']; ?>">
-                    <fieldset>
-                      <p class="button-height inline-small-label"><label class="label" for="<?php echo 'products_name[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_name'); ?></label><?php echo lc_draw_input_field('products_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null), 'class="required input float-right" style="width:95%;"'); ?></p>
-                      <p class="button-height inline-small-label"><label class="label" for="<?php echo 'products_description[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_description'); ?></label><?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 4, 'class="required input float-right" style="width:95%;"'); ?><div style="width:99%; text-align: right;"><?php echo '<a href="javascript:toggleEditor(\'products_description[' . $l['id'] . ']\');">' . $lC_Language->get('toggle_html_editor') . '</a>'; ?></div></p>
-                      <p class="button-height inline-small-label"><label class="label" for="<?php echo 'products_keyword[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_keyword'); ?></label><?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input float-right" style="width:95%" id="keyword' . $l['id'] . '"'); ?></p>
-                      <p class="button-height inline-small-label"><label class="label" for="<?php echo 'products_tags[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_tags'); ?></label><?php echo lc_draw_input_field('products_tags[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_tags[$l['id']]) ? $products_tags[$l['id']] : null), 'class="input float-right" style="width:95%" maxlength="255"'); ?></p>
-                      <p class="button-height inline-small-label"><label class="label" for="<?php echo 'products_url[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_url'); ?></label><?php echo lc_draw_input_field('products_url[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_url[$l['id']]) ? $products_url[$l['id']] : null), 'class="input float-right" style="width:95%;"'); ?></p>
-                    </fieldset>
-                  </div><div class="clear-both"></div>
-                  <?php
-                }
-                ?>
+            <div class="columns">
+              <div class="new-row-mobile four-columns twelve-columns-mobile">
+                <!--<div class="twelve-columns hide-below-768" style="height:38px;">
+                  &nbsp;
+                </div>-->
+                <div class="twelve-columns">
+                  <span><?php echo $lC_Language->get('text_product_image'); ?></span>
+                  <span class="info-spot on-left grey float-right">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
+                    </span>
+                  </span>
+                  <dl class="accordion same-height small-margin-top">
+                    <dt><?php echo $lC_Language->get('text_product_image_preview'); ?>
+                      <!--<div class="button-group absolute-right compact mid-margin-right">
+                        <a href="#" class="button icon-cloud-upload disabled">Upload</a>
+                        <a href="#" class="button icon-trash with-tooltip disabled" title="Delete"></a>
+                      </div>-->
+                    </dt>
+                    <dd>
+                      <div class="with-padding">
+                        <?php if ($Qpi->value('image')) { ?>
+                        <div class="prod-image"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/large/' . $Qpi->value('image'); ?>" style="max-width:100%;" /></div>
+                        <?php } else { ?>
+                        <div class="prod-image"><img src="images/no-prod-image.png" style="max-width: 100%; height: auto;" /><br />No Image</div>
+                        <?php } ?>
+                      </div>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+              <div class="new-row-mobile eight-columns twelve-columns-mobile">             
+                <div class="columns">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span class="small-margin-bottom"><?php echo $lC_Language->get('field_name'); ?></span>
+                    <span class="info-spot on-left grey float-right small-margin-bottom">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom">
+                    <span class="input full-width">  
+                      <select name="pseudo-input-select" class="select compact expandable-list float-right prod-edit-lang-select">
+                        <?php foreach ( $lC_Language->getAll() as $l ) { ?>
+                        <option id="<?php echo $l['code']; ?>" value="<?php echo $l['code']; ?>"><?php echo $l['name']; ?></option>
+                        <?php } ?>
+                      </select>
+                      <input type="text" class="required input-unstyled" style="width:60%;" value="<?php echo (isset($lC_ObjectInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null); ?>" id="<?php echo 'products_name[' . $l['id'] . ']'; ?>" name="<?php echo 'products_name[' . $l['id'] . ']'; ?>">
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom mid-margin-top">
+                    <span class="small-margin-bottom"><?php echo $lC_Language->get('field_description'); ?></span>
+                    <span class="info-spot on-left grey float-right small-margin-bottom">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom">
+                    <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding clEditorProductDescription"'); ?>
+                    <span class="float-right small-margin-top"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom mid-margin-top">
+                    <span class="full-width">
+                      <span class="small-margin-bottom"><?php echo $lC_Language->get('field_keyword'); ?></span>
+                      <span class="info-spot on-left grey float-right small-margin-bottom">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </span>
+                    <script type="text/javascript">
+                    $(document).ready(function() {
+                      var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
+                      var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateKeyword&pid=PID'); ?>';
+                      $("#product").validate({
+
+                        invalidHandler: function() {
+                          $("#checkAllTabs").html('<?php echo $lC_Language->get('ms_error_check_all_lang_tabs'); ?>').fadeIn('fast').delay(2000).fadeOut('slow');
+                        },
+                        rules: {
+                          <?php
+                          foreach ( $lC_Language->getAll() as $l ) {
+                            ?>
+                            "products_keyword[<?php echo $l['id']; ?>]": {
+                              required: true,
+                              remote: jsonVKUrl.replace('PID', pid),
+
+                            },
+                            <?php
+                          }
+                          ?>
+                        },
+                        messages: {
+                          <?php
+                          foreach ( $lC_Language->getAll() as $l ) {
+                            ?>
+                            "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
+                            <?php
+                          }
+                          ?>
+                        }
+                       });
+                       <?php
+                       if ( isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ) {
+                         ?>
+                         $("#has_variants").attr('checked', true);
+                         <?php
+                       }
+                       ?>
+                       //$( "button, input:submit, a", ".ui-dialog-buttonset" ).button();
+                     });
+                    </script>
+                    <div class="full-width clear-right mid-margin-bottom">
+                      <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input full-width" id="keyword' . $l['id'] . '"'); ?>
+                    </div>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom mid-margin-top">
+                    <span class="full-width">
+                      <span class="small-margin-bottom"><?php echo $lC_Language->get('field_tags'); ?></span>
+                      <span class="info-spot on-left grey float-right small-margin-bottom">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </span>
+                    <div class="full-width clear-right mid-margin-bottom">
+                      <?php echo lc_draw_input_field('products_tags[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_tags[$l['id']]) ? $products_tags[$l['id']] : null), 'class="input full-width" id="keyword' . $l['id'] . '"'); ?>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <fieldset>
-              <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                <tr><td>&nbsp;</td></tr>
-                <?php
-                $Qattributes = $lC_Database->query('select id, code from :table_templates_boxes where modules_group = :modules_group order by code');
-                $Qattributes->bindTable(':table_templates_boxes');
-                $Qattributes->bindValue(':modules_group', 'product_attributes');
-                $Qattributes->execute();
-                while ( $Qattributes->next() ) {
-                  $module = basename($Qattributes->value('code'));
-                  if ( !class_exists('lC_ProductAttributes_' . $module) ) {
-                    if ( file_exists(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php') ) {
-                      include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php'));
-                    }
-                  }
-                  if ( class_exists('lC_ProductAttributes_' . $module) ) {
-                    $module = 'lC_ProductAttributes_' . $module;
-                    $module = new $module();
-                    ?>
-                    <tr class="with-padding">
-                      <td width="150px" style="font-weight:bold;"><?php echo $module->getTitle() . ':'; ?></td>
-                      <td><?php echo $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)); ?></td>
-                    </tr>
-                    <tr><td>&nbsp;</td></tr>
-                    <?php
-                  }
-                }
-                ?>
-              </table>
-            </fieldset>
-            <script type="text/javascript">
-            $(document).ready(function() {
-              var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
-              var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateKeyword&pid=PID'); ?>';
-              $("#product").validate({
-
-                invalidHandler: function() {
-                  $("#checkAllTabs").html('<?php echo $lC_Language->get('ms_error_check_all_lang_tabs'); ?>').fadeIn('fast').delay(2000).fadeOut('slow');
-                },
-                rules: {
-                  <?php
-                  foreach ( $lC_Language->getAll() as $l ) {
-                    ?>
-                    "products_keyword[<?php echo $l['id']; ?>]": {
-                      required: true,
-                      remote: jsonVKUrl.replace('PID', pid),
-
-                    },
-                    <?php
-                  }
-                  ?>
-                },
-                messages: {
-                  <?php
-                  foreach ( $lC_Language->getAll() as $l ) {
-                    ?>
-                    "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
-                    <?php
-                  }
-                  ?>
-                }
-               });
-               <?php
-               if ( isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ) {
-                 ?>
-                 $("#has_variants").attr('checked', true);
-                 <?php
-               }
-               ?>
-               //$( "button, input:submit, a", ".ui-dialog-buttonset" ).button();
-             });
-            </script>
-          </div>
-          <div id="section_data_content" class="with-padding">
-
-            <p class="button-height">
-              <label for="has_variants" class="label" style="display:inline !important;" for="has_variants">Has Variants?</label>
-              <?php echo lc_draw_checkbox_field('has_variants', null, null, 'onchange="toggleDataDiv();" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?>
-            </p>
-            
-            <div id="noVariants" style="display:none;">
-                <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                  <tr>
-                    <td width="50%" height="100%" valign="top">
-                      <fieldset style="height: 100%;">
-                        <p class="button-height">
-                          <label for="tax_class0" class="label"><?php echo $lC_Language->get('field_tax_class'); ?></label>
-                          <?php echo lc_draw_pull_down_menu('products_tax_class_id', $tax_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_tax_class_id') : null), 'class="input with-small-padding" style="width:77%; float:right; margin-right:20px;" id="tax_class0" onchange="updateGross(\'products_price0\');"'); ?>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_price0" class="label"><?php echo $lC_Language->get('field_price_net'); ?></label>
-                          <?php echo lc_draw_input_field('products_price', (isset($lC_ObjectInfo) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="input" style="width:73%; float:right; margin-right:20px;" id="products_price0" onkeyup="updateGross(\'products_price0\')"'); ?>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_price0_gross" class="label"><?php echo $lC_Language->get('field_price_gross'); ?></label>
-                          <?php echo lc_draw_input_field('products_price_gross', (isset($lC_ObjectInfo) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="input" style="width:73%; float:right; margin-right:20px;" id="products_price0_gross" onkeyup="updateNet(\'products_price0\')" READONLY'); ?>
-                        </p>
-
-                        <div>
-                          <label for="qty_price_breaks" class="label" style="padding:3px 0;"><?php echo $lC_Language->get('field_qty_price_breaks'); ?></label>
-                          <table style="margin: 10px 20px 0 0; border:1px solid #7f9db9;" id="qty-pricing-grid" summary="Qty Price Breaks"  width="96%" border="1" cellpadding="2" cellspacing="0">
-                            <thead style="height:24px;" class="ui-widget-header">
-                              <tr style="padding-top:5px">
-                                <th align="left" width="90px"><?php echo $lC_Language->get('table_heading_qpb_customer_group'); ?></th>
-                                <th align="left" width="90px"><?php echo $lC_Language->get('table_heading_qpb_tax_class'); ?></th>
-                                <th align="left" width="100px">&nbsp;<?php echo $lC_Language->get('table_heading_qpb_qty'); ?></th>
-                                <th align="left" width="70px"><?php echo $lC_Language->get('table_heading_qpb_net_price'); ?></th>
-                                <th align="center" width="20px">&nbsp;</th>
-                              </tr>
-                            </thead>
-                            <tbody></tbody>
-                            <tfoot><input type="hidden" id="pbid" value="1"></tfoot>
-                          </table>
-                          <div style="margin:5px 0;">
-                            <div style="float:right; margin-right:20px;">
-                              <button onclick="addPriceBreakFields(); return false;" class="button blue-gradient glossy" /><?php echo $lC_Language->get('button_add_price_break'); ?></button>
-                            </div>
-                          </div>
-                        </div>
-                      </fieldset>
-                    </td>
-                    <td width="50%" height="100%" valign="top">
-                      <fieldset>
-                        <p class="button-height">
-                          <label style="display:inline !important;" for="products_status"><?php echo $lC_Language->get('field_active'); ?></label>
-                          <span style="float:right; margin-right:62%;"><?php echo lc_draw_checkbox_field('products_status', null, ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 1) ? true : false), 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?></span>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_model" class="label"><?php echo $lC_Language->get('field_model'); ?></label>
-                          <?php echo lc_draw_input_field('products_model', (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_model') : null), 'class="input" style="width:73%; float:right;"'); ?>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_quantity" class="label"><?php echo $lC_Language->get('field_quantity'); ?></label>
-                          <?php echo lc_draw_input_field('products_quantity', (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_quantity') : null), 'class="input" style="width:73%; float:right;"'); ?>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_weight" class="label"><?php echo $lC_Language->get('field_weight'); ?></label>
-                          <?php echo lc_draw_input_field('products_weight', (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_weight') : null), 'class="input" style="width:73%; float:right;"'); ?>
-                        </p>
-                        <p class="button-height">
-                          <label for="products_weight_class" class="label"><?php echo $lC_Language->get('field_weight_class'); ?></label>
-                          <?php echo lc_draw_pull_down_menu('products_weight_class', $weight_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_weight_class') : SHIPPING_WEIGHT_UNIT), 'class="input with-small-padding" style="width:77%; float:right;"'); ?>
-                        </p>
-                      </fieldset>
-                    </td>
-                  </tr>
-                </table>
+            <div class="columns">
             </div>
-            <div id="hasVariants" style="display:none;">
-              <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                <tr>
-                  <td style="padding-top:10px;" width="20%" valign="top">
-                    <select name="variantGroups" ondblclick="moreFields();" size="20" style="width: 100%;">
-                      <?php
-                      $Qvgroups = $lC_Database->query('select id, title, module from :table_products_variants_groups where languages_id = :languages_id order by sort_order, title');
-                      $Qvgroups->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
-                      $Qvgroups->bindInt(':languages_id', $lC_Language->getID());
-                      $Qvgroups->execute();
-                      $has_multiple_value_groups = false;
-                      while ($Qvgroups->next()) {
-                        $vgroup_title = $Qvgroups->value('title');
-                        if ( lC_Variants::allowsMultipleValues($Qvgroups->value('module')) ) {
-                          if ( $has_multiple_value_groups === false ) {
-                            $has_multiple_value_groups = true;
-                          }                             
-                          $vgroup_title .= ' (*)';
-                        }
-                        echo '          <optgroup label="' . $vgroup_title . '" id="' . $Qvgroups->valueInt('id') . '">' . "\n";
-                        $Qvvalues = $lC_Database->query('select id, title from :table_products_variants_values where products_variants_groups_id = :products_variants_groups_id and languages_id = :languages_id order by sort_order, title');
-                        $Qvvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-                        $Qvvalues->bindInt(':products_variants_groups_id', $Qvgroups->valueInt('id'));
-                        $Qvvalues->bindInt(':languages_id', $lC_Language->getID());
-                        $Qvvalues->execute();
-                        while ($Qvvalues->next()) {
-                          echo '            <option value="' . $Qvvalues->valueInt('id') . '">' . $Qvvalues->value('title') . '</option>' . "\n";
-                        }
-                        echo '          </optgroup>' . "\n";
-                      }
-                      ?>
-                    </select>
-                    <?php
-                    if ( $has_multiple_value_groups === true ) {
-                      echo '<div style="text-align: center; font-style: italic;">(*) Multiple values can be assiged to the same product variant</div>';
-                    }
-                    ?>
-                  </td>
-                  <td valign="top" align="right" width="5%" style="padding-top:110px;">
-                    <span class="button-group compact with-padding">
-                       <span onclick="addVariant(); return false;" style="width:17px; cursor:pointer;" class="button icon-plus icon-size2 icon-blue glossy with-tooltip" title="<?php echo $lC_Language->get('button_add_variant');?>"></span><br /><br />
-                       <span onclick="moreFields(); return false;" style="cursor:pointer;" class="button icon-forward icon-size2 icon-blue glossy with-tooltip" title="<?php echo $lC_Language->get('button_add_variant_option');?>"></span>
+            <div class="field-drop-product button-height black-inputs extreme-margin-bottom">
+              <div class="columns">
+                <div class="new-row-mobile four-columns twelve-columns-mobile">
+                </div>
+                <div class="new-row-mobile eight-columns twelve-columns-mobile">
+                  <div style="width:100%;">
+                    <div style="float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
+                      <span class="full-width">
+                        <span><?php echo $lC_Language->get('field_base_price'); ?></span>
+                        <span class="info-spot on-left grey float-right mid-margin-top">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </span>
+                      <?php echo lc_draw_input_field('products_price', (isset($lC_ObjectInfo) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="input full-width" id="products_price0" onkeyup="updateGross(\'products_price0\')"'); ?>
+                    </div>
+                    <div style="float:left;width:2%;">&nbsp;</div>
+                    <div style="float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
+                      <span class="full-width">
+                        <span><?php echo $lC_Language->get('field_status'); ?></span>
+                        <span class="info-spot on-left grey float-right mid-margin-top">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </span><br />
+                      <span class="button-group">
+                        <label for="ps_radio_1" class="button blue-active">
+                          <input type="radio" name="products_status" id="ps_radio_1" value="active"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 1) ? ' checked' : ''); ?> />
+                          <?php echo $lC_Language->get('field_status_active'); ?>
+                        </label>
+                        <label for="ps_radio_2" class="button blue-active">
+                          <input type="radio" name="products_status" id="ps_radio_2" value="inactive"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == -1) ? ' checked' : ''); ?> />
+                          <?php echo $lC_Language->get('field_status_inactive'); ?>
+                        </label>
+                        <label for="ps_radio_3" class="button blue-active disabled">
+                          <input type="radio" name="products_status" id="ps_radio_3" value="recurring"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->getInt('products_status') == 0) ? ' checked' : ''); ?> />
+                          <?php echo $lC_Language->get('field_status_coming'); ?>
+                        </label>
+                      </span>
+                    </div>                  
+                  </div>                  
+                </div>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="four-columns twelve-columns-mobile large-margin-bottom">
+                <center><img src="images/prodchart.png" /></center>
+              </div>
+              <div class="four-columns twelve-columns-mobile"> 
+                <span class="full-width">
+                  <span><?php echo $lC_Language->get('field_model'); ?></span>
+                  <span class="info-spot on-left grey float-right">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
                     </span>
-                  </td>
-                  <td width="75%" valign="top">
-                    <fieldset>
-                      <legend><?php echo $lC_Language->get('subsection_assigned_variants'); ?></legend>
-                      <span id="writeroot">
-                        <?php
-                        $variants_default_combo = null;
-
-                        if ( isset($lC_ObjectInfo) ) {
-                          $Qvariants = $lC_Database->query('select * from :table_products where parent_id = :parent_id');
-                          $Qvariants->bindTable(':table_products', TABLE_PRODUCTS);
-                          $Qvariants->bindInt(':parent_id', $lC_ObjectInfo->getInt('products_id'));
-                          $Qvariants->execute();
-
-                          $counter = 1;
-                          while ( $Qvariants->next() ) {
-                            $Qcombos = $lC_Database->query('select pv.default_combo, pvg.id as group_id, pvg.title as group_title, pvv.id as value_id, pvv.title as value_title from :table_products_variants pv, :table_products_variants_groups pvg, :table_products_variants_values pvv where pv.products_id = :products_id and pv.products_variants_values_id = pvv.id and pvv.languages_id = :languages_id and pvv.products_variants_groups_id = pvg.id and pvg.languages_id = :languages_id order by pvg.sort_order, pvg.title');
-                            $Qcombos->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
-                            $Qcombos->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
-                            $Qcombos->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-                            $Qcombos->bindInt(':products_id', $Qvariants->valueInt('products_id'));
-                            $Qcombos->bindInt(':languages_id', $lC_Language->getID());
-                            $Qcombos->bindInt(':languages_id', $lC_Language->getID());
-                            $Qcombos->execute();
-
-                            // QPB
-                            $Qpb = $lC_Database->query('select group_id, tax_class_id, qty_break, price_break from :table_products_pricing where products_id = :products_id order by group_id, qty_break');
-                            $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
-                            $Qpb->bindInt(':products_id', $Qvariants->valueInt('products_id'));
-                            $Qpb->execute();
-
-                            $divPBEntry = '';
-                            $rowCnt = 1;
-                            while ($Qpb->next()) {
-                              $rowID = 'row' . $counter . '_' . $rowCnt;
-                              $divPBEntry .= '<tr id="' . $rowID . '"><td width="100px"><select style="width:98%" name="price_breaks[group_id][' . $counter . '][]" id="price_breaks[group_id][' . $counter . '][]">' . getCustomerGroupOptionsString($Qpb->valueInt('group_id')) . '</select></td>' .
-                                             '<td width="100px"><select style="width:98%" name="price_breaks[tax_class_id][' . $counter . '][]" id="price_breaks[tax_class_id][' . $counter . '][]">' . getTaxClassOptionsString($Qpb->valueInt('tax_class_id')) . '</select></td>' .
-                                             '<td width="110px"><table width="110px" border="0" cellpadding="0" cellspacing="0"><tr><td><input type="text" value="' . $Qpb->valueInt('qty_break') . '" name="price_breaks[qty][' . $counter . '][]" id="price_breaks[qty][][]" size="5" id="qty' . $counter . '"></td><td width="70%">' . $lC_Language->get('price_breaks_above') . '</td></tr></table></td>' .
-                                             '<td width="80px"><input value="' . number_format(lc_round($Qpb->valueDecimal('price_break'), DECIMAL_PLACES), 2) . '" style="width:70px;" type="text" name="price_breaks[price][' . $counter . '][]" id="price_breaks[price][' . $counter . '][]"></td>' .
-                                             '<td width="30px" align="center"><a id="' . $rowID . 'e" href="javascript://" onclick="removePriceBreakEntry(this); return false;"><img border="0" src="images/icons/cross.png"></a></td></tr>';
-                              $rowCnt++;
-                            }
-
-                            $variants_string = '';
-                            $variants_combo_string = '';
-                            ?>
-                            <script type="text/javascript">
-                              variants[<?php echo $counter; ?>] = new Array();
-                            </script>
-                            <?php
-                            while ( $Qcombos->next() ) {
-                              if ( ($variants_default_combo === null) && ($Qcombos->valueInt('default_combo') === 1) ) {
-                                $variants_default_combo = $counter;
+                  </span>
+                </span>
+                <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1)) ? $lC_Language->get('text_complex_variants') : (($lC_ObjectInfo->get('products_model') != '') ? $lC_ObjectInfo->get('products_model') : $lC_Language->get('text_no_model')); ?></b></p>
+                <span class="full-width">
+                  <span><?php echo $lC_Language->get('field_date_available'); ?></span>
+                  <span class="info-spot on-left grey float-right">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
+                    </span>
+                  </span>
+                </span>
+                <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b>Random Date Here</b></p>              
+              </div>
+              <div class="four-columns twelve-columns-mobile">
+                <span class="full-width">
+                  <span><?php echo $lC_Language->get('field_weight'); ?></span>
+                  <span class="info-spot on-left grey float-right">
+                    <span class="icon-info-round"></span>
+                    <span class="info-bubble">
+                      Put the bubble text here
+                    </span>
+                  </span>
+                </span>
+                <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo $lC_ObjectInfo->get('products_weight'); ?></b></p>              
+              </div>
+            </div>
+          </div>
+          <!-- images_tab -->
+          <div id="section_images_content" class="with-padding">
+            <div class="content-panel margin-bottom enabled-panels">
+              <div class="panel-navigation silver-gradient">
+                <div class="panel-control"></div>
+                <div class="panel-load-target scrollable custom-scroll">
+                  <div class="navigable">
+                    <ul class="files-list mini open-on-panel-content">
+                      <li id="images-gallery-trigger" onclick="imagesGalleryTrigger();" class="with-right-arrow grey-arrow">
+                        <span class="icon file-jpg"></span><b>Product Images</b>
+                      </li>
+                      <!--<li id="additional-gallery-trigger" onclick="additionalGalleryTrigger();" class="grey">
+                        <span class="icon folder-image"></span><b>Additional Images</b>
+                      </li>-->
+                    </ul>
+                  </div> 
+                </div>
+              </div>
+              <div class="panel-content linen" style="height:auto">
+                <div class="panel-control align-right"></div>
+                <div style="height: auto; position: relative;" class="panel-load-target scrollable with-padding custom-scroll">
+                  <div class="gallery" id="images-gallery">
+                    <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                      <tr>
+                        <td width="100%" height="100%" valign="top">
+                          <div class="message white-gradient margin-bottom" style="min-height:37px;">
+                            <div style="float: right;">
+                              <?php echo $lC_Language->get('text_product_image_drag_n_drop'); ?>
+                              <!--<a href="#" id="remoteFilesLink" onclick="switchImageFilesView('remote');" style="font-weight:bolder; color:#000;"><?php echo $lC_Language->get('image_remote_upload'); ?></a> | <a href="#" id="localFilesLink" onclick="switchImageFilesView('local');" style="color:#000;"><?php echo $lC_Language->get('image_local_files'); ?></a>-->
+                            </div>
+                            <div id="remoteFiles" style="white-space:nowrap;">
+                              <span id="fileUploadField"></span>
+                              <?php
+                              if ( isset($lC_ObjectInfo) ) {
+                                ?>
+                                <div id="fileUploaderContainer" class="small-margin-top">
+                                  <noscript>
+                                    <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
+                                  </noscript>
+                                </div>
+                                <?php
+                              } else {
+                                echo lc_draw_file_field('products_image', null, 'class="file"');
                               }
-                              $variants_string .= $Qcombos->value('group_title') . ': ' . $Qcombos->value('value_title') . ', ';
-                              $variants_combo_string .= $Qcombos->valueInt('group_id') . '_' . $Qcombos->valueInt('value_id') . ';';
+                              ?>                              
+                            </div>
+                            <?php
+                            if ( isset($lC_ObjectInfo) ) {
                               ?>
-                              <script type="text/javascript">
-                                if (variants[<?php echo $counter; ?>][<?php echo $Qcombos->valueInt('group_id'); ?>] == undefined) {
-                                  variants[<?php echo $counter; ?>][<?php echo $Qcombos->valueInt('group_id'); ?>] = new Array();
+                              <script type="text/javascript"><!--
+                                function createUploader(){
+                                  var uploader = new qq.FileUploader({
+                                      element: document.getElementById('fileUploaderContainer'),
+                                      action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=fileUpload'); ?>',
+                                      onComplete: function(id, fileName, responseJSON){
+                                        getImages();
+                                      },
+                                  });
                                 }
-                                variants[<?php echo $counter; ?>][<?php echo $Qcombos->valueInt('group_id'); ?>][<?php echo $Qcombos->valueInt('value_id'); ?>] = <?php echo $Qcombos->valueInt('value_id'); ?>;
-                              </script>
+                                $(document).ready(function() {
+                                  createUploader();
+                                });
+                              //--></script>
                               <?php
                             }
-                            $variants_string = substr($variants_string, 0, -2);
-                            $variants_combo_string = substr($variants_combo_string, 0, -1);
                             ?>
-                            <div id="variant<?php echo $counter; ?>" class="attributeAdd" onclick="activateVariant(this);">
-                              <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                                <tr>
-                                  <td colspan="2"><div style="float: right;"><?php echo '<a href="javascript:setDefaultVariant(\'' . $counter . '\');">' . lc_icon_admin((($variants_default_combo === $counter) ? 'default.png' : 'default_grey.png'), null, null, 'id="vdc' . $counter . '"') . '</a>'; ?>&nbsp;<a href="javascript:removeVariant('variant<?php echo $counter; ?>');"><?php echo lc_icon_admin('trash.png'); ?></a></div><span style="font-weight: bold;"><?php echo lc_icon_admin('attach.png') . '&nbsp;' . $variants_string; ?></span></td>
-                                </tr>
-                                <tr id="variantTableContent<?php echo $counter; ?>">
-                                  <td width="60%" height="100%" valign="top">
-                                    <fieldset style="height: 100%;">
-                                      <legend><?php echo $lC_Language->get('subsection_price'); ?></legend>
-
-                                      <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_tax_class'); ?></td>
-                                          <td><?php echo lc_draw_pull_down_menu('variants_tax_class_id[' . $counter . ']', $tax_class_array, $Qvariants->valueInt('products_tax_class_id'), 'id="tax_class' . $counter . '" onchange="updateGross(\'variants_price' . $counter . '\');"'); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_price_net'); ?></td>
-                                          <td><?php echo lc_draw_input_field('variants_price[' . $counter . ']', $Qvariants->value('products_price'), 'id="variants_price' . $counter . '" onkeyup="updateGross(\'variants_price' . $counter . '\')"'); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_price_gross'); ?></td>
-                                          <td><?php echo lc_draw_input_field('variants_price_gross[' . $counter . ']', $Qvariants->value('products_price'), 'id="variants_price' . $counter . '_gross" onkeyup="updateNet(\'variants_price' . $counter . '\')"'); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td colspan="2">
-                                            <div><label for="qty_price_breaks" style="padding:3px 0;"><?php echo $lC_Language->get('field_qty_price_breaks'); ?></label>
-                                              <table style="border:1px solid #7f9db9;" id="qty-pricing-grid-variant<?php echo $counter; ?>" summary="Qty Price Breaks"  width="100%" border="0" cellpadding="2" cellspacing="0">
-                                                <thead style="height:24px;" class="ui-widget-header">
-                                                  <tr style="padding-top:5px">
-                                                    <th align="left" width="100px"><?php echo $lC_Language->get('table_heading_qpb_customer_group'); ?></th>
-                                                    <th align="left" width="100px"><?php echo $lC_Language->get('table_heading_qpb_tax_class'); ?></th>
-                                                    <th align="left" width="110px">&nbsp;<?php echo $lC_Language->get('table_heading_qpb_qty'); ?></th>
-                                                    <th align="left" width="80px"><?php echo $lC_Language->get('table_heading_qpb_net_price'); ?></th>
-                                                    <th align="center" width="30px">&nbsp;</th>
-                                                  </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                                <tfoot><input type="hidden" id="newpbid<?php echo $counter; ?>" value="<?php echo $counter; ?>"></tfoot>
-                                              </table>
-                                              <div style="margin:5px 0;" class="ui-dialog-buttonset">
-                                                <div style="float:right;"><button onclick="addPriceBreakFieldsNew(); return false;" class="operationButton" /><?php echo $lC_Language->get('button_add_price_break'); ?></button></div>
-                                              </div>
-                                            </div>
-                                          </td>
-                                        </tr>
-                                      </table>
-                                      <script type="text/javascript"><!--
-                                        updateGross('variants_price<?php echo $counter; ?>');
-                                        var counter = '<?php echo $counter; ?>';
-                                        var divPBEntry = '<?php echo $divPBEntry; ?>';
-                                        $("#qty-pricing-grid-variant" + counter + " > tbody").append(divPBEntry);
-                                      //--></script>
-                                    </fieldset>
-                                  </td>
-                                  <td width="40%" height="100%" valign="top">
-                                    <fieldset style="height: 100%;">
-                                      <legend><?php echo $lC_Language->get('subsection_data'); ?></legend>
-                                      <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_status'); ?></td>
-                                          <td><?php echo lc_draw_checkbox_field('variants_status[' . $counter . ']', null, null, (($Qvariants->value('products_status') == 1) ? 'checked="checked"' : '') ); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_model'); ?></td>
-                                          <td><?php echo lc_draw_input_field('variants_model[' . $counter . ']', $Qvariants->value('products_model')); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_quantity'); ?></td>
-                                          <td><?php echo lc_draw_input_field('variants_quantity[' . $counter . ']', $Qvariants->value('products_quantity')) . lc_draw_hidden_field('variants_combo[' . $counter . ']', $variants_combo_string, 'id="variants_combo_' . $counter . '"') . lc_draw_hidden_field('variants_combo_db[' . $counter . ']', $Qvariants->valueInt('products_id')); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_weight'); ?></td>
-                                          <td><?php echo lc_draw_input_field('variants_weight[' . $counter . ']', $Qvariants->value('products_weight'), 'size="6"'); ?></td>
-                                        </tr>
-                                        <tr>
-                                          <td><?php echo $lC_Language->get('field_weight_class'); ?></td>
-                                          <td><?php echo lc_draw_pull_down_menu('variants_weight_class[' . $counter . ']', $weight_class_array, $Qvariants->value('products_weight_class')); ?></td>
-                                        </tr>
-                                      </table>
-                                    </fieldset>
-                                  </td>
-                                </tr>
-                              </table>
+                            <div id="localFiles" style="display: none;">
+                              <p><?php echo $lC_Language->get('text_introduction_select_local_images'); ?></p>
+                              <select id="localImagesSelection" name="localimages[]" size="5" multiple="multiple" style="width: 100%;"></select>
+                              <div id="showProgressGetLocalImages" style="display: none; float: right; padding-right: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_retrieving_local_files'); ?></div>
+                              <p><?php echo realpath('../images/products/_upload'); ?></p>
+                              <?php
+                              if ( isset($lC_ObjectInfo) ) {
+                                echo '<input type="button" value="Assign To Product" class="operationButton" onclick="assignLocalImages();" /><div id="showProgressAssigningLocalImages" style="display: none; padding-left: 10px;">' . lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_multiple_upload_progress') . '</div>';
+                              }
+                              ?>
                             </div>
-                            <?php
-                            $counter++;
-                          }
-                          if ( $counter > 0 ) {
+                          </div>
+                          <script type="text/javascript"><!--
+                          getLocalImages();
+                          //--></script>
+                          <?php
+                          if ( isset($lC_ObjectInfo) ) {
                             ?>
-                            <script type="text/javascript">
-                              variants_counter = <?php echo $counter; ?>;
-                            </script>
+                            <div class="message white-gradient"><span class="anthracite"><strong><?php echo $lC_Language->get('subsection_original_images'); ?></strong></span></div>
+                            <div id="imagesOriginal" style="overflow: auto;" class="small-margin-top"></div>
+                            <div class="message white-gradient"><span class="anthracite"><strong><?php echo $lC_Language->get('subsection_images'); ?></strong></span></div>
+                            <div id="imagesOther" style="overflow: auto;"></div>
+                            <script type="text/javascript"><!--
+                              getImages();
+                            //--></script>
                             <?php
                           }
-                        }
-                        ?>
-                      </span>
-                      <?php
-                      echo lc_draw_hidden_field('variants_default_combo', $variants_default_combo, 'id="variants_default_combo"');
-                      if ( is_numeric($variants_default_combo) ) {
-                        ?>
-                        <script type="text/javascript">
-                          variants_default_combo = <?php echo $variants_default_combo; ?>;
-                        </script>
-                        <?php
-                      }
-                      ?>
-                      <div id="readroot" style="display: none" class="attributeAdd" onclick="activateVariant(this);">
-                        <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                          <tr>
-                            <td colspan="2"><div style="float: right;"><a href="#" name="default"><?php echo lc_icon_admin('default_grey.png', null, null, 'name="vdcnew"'); ?></a>&nbsp;<a href="#" name="trash"><?php echo lc_icon_admin('trash.png'); ?></a></div><span style="font-weight: bold;"><?php echo lc_icon_admin('attach.png') . '&nbsp;'; ?></span></td>
-                          </tr>
-                          <tr id="variantTableContent">
-                            <td width="60%" height="100%" valign="top">
-                              <fieldset style="height: 100%;">
-                                <legend><?php echo $lC_Language->get('subsection_price'); ?></legend>
-                                <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_tax_class'); ?></td>
-                                    <td><?php echo lc_draw_pull_down_menu('new_variants_tax_class_id', $tax_class_array, null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_price_net'); ?></td>
-                                    <td><?php echo lc_draw_input_field('new_variants_price', null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_price_gross'); ?></td>
-                                    <td><?php echo lc_draw_input_field('new_variants_price_gross', null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="2">
-                                      <div><label for="qty_price_breaks" style="padding:3px 0;"><?php echo $lC_Language->get('field_qty_price_breaks'); ?></label>
-                                        <table style="border:1px solid #7f9db9;" id="qty-pricing-grid-variant" summary="Qty Price Breaks"  width="100%" border="0" cellpadding="2" cellspacing="0">
-                                          <thead style="height:24px;" class="ui-widget-header">
-                                            <tr style="padding-top:5px">
-                                              <th align="left" width="100px"><?php echo $lC_Language->get('table_heading_qpb_customer_group'); ?></th>
-                                              <th align="left" width="100px"><?php echo $lC_Language->get('table_heading_qpb_tax_class'); ?></th>
-                                              <th align="left" width="110px">&nbsp;<?php echo $lC_Language->get('table_heading_qpb_qty'); ?></th>
-                                              <th align="left" width="80px"><?php echo $lC_Language->get('table_heading_qpb_net_price'); ?></th>
-                                              <th align="center" width="30px">&nbsp;</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody></tbody>
-                                          <tfoot><input type="hidden" id="newpbid" value="1"></tfoot>
-                                        </table>
-                                        <div style="margin:5px 0;" class="ui-dialog-buttonset">
-                                          <div style="float:right;"><button onclick="addPriceBreakFieldsNew(); return false;" class="operationButton" /><?php echo $lC_Language->get('button_add_price_break'); ?></button></div>
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </table>
-                              </fieldset>
-                            </td>
-                            <td width="40%" height="100%" valign="top">
-                              <fieldset style="height: 100%;">
-                                <legend><?php echo $lC_Language->get('subsection_data'); ?></legend>
-                                <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_status'); ?></td>
-                                    <td><?php echo lc_draw_checkbox_field('new_variants_status', null, null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_model'); ?></td>
-                                    <td><?php echo lc_draw_input_field('new_variants_model', null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_quantity'); ?></td>
-                                    <td><?php echo lc_draw_input_field('new_variants_quantity', null, 'disabled="disabled"') . lc_draw_hidden_field('new_variants_combo', null, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_weight'); ?></td>
-                                    <td><?php echo lc_draw_input_field('new_variants_weight', null, 'size="6" disabled="disabled"'); ?></td>
-                                  </tr>
-                                  <tr>
-                                    <td><?php echo $lC_Language->get('field_weight_class'); ?></td>
-                                    <td><?php echo lc_draw_pull_down_menu('new_variants_weight_class', $weight_class_array, SHIPPING_WEIGHT_UNIT, 'disabled="disabled"'); ?></td>
-                                  </tr>
-                                </table>
-                              </fieldset>
-                            </td>
-                          </tr>
-                        </table>
-                      </div>
-                    </fieldset>
-                  </td>
-                </tr>
-              </table>
+                          ?>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>  
+                  <!--<div class="gallery" id="additional-gallery" style="display:none;">
+                    Saved For Later
+                  </div>-->
+                </div>
+              </div>
             </div>
-            <script language="javascript">
-              $(document).ready(function() {
-                toggleDataDiv();
-                toggleVariantTableContent();
-
-                var error = '<?php echo $_SESSION['error']; ?>';
-                if (error) {
-                  var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
-                  alert(errmsg);
-                }
-              });
-
-              function toggleDataDiv() {
-                if ($("#has_variants").attr("checked")) {
-                  $("#noVariants").hide();
-                  $("#hasVariants").show();
-                } else {
-                  $("#hasVariants").hide();
-                  $("#noVariants").show();
-                }
-              }
-            </script>
           </div>
-          <div id="section_images_content" class="with-padding">
-            <table border="0" width="100%" cellspacing="0" cellpadding="2">
-              <tr>
-                <td width="100%" height="100%" valign="top">
-                  <fieldset style="height: 100%;">
-                    <legend><?php echo $lC_Language->get('subsection_new_image'); ?></legend>
-                    <div style="float: right;">
-                      <a href="#" id="remoteFilesLink" onclick="switchImageFilesView('remote');" style="background-color: #E5EFE5;"><?php echo $lC_Language->get('image_remote_upload'); ?></a> | <a href="#" id="localFilesLink" onclick="switchImageFilesView('local');"><?php echo $lC_Language->get('image_local_files'); ?></a>
-                    </div>
-                    <div id="remoteFiles">
-                      <span id="fileUploadField"></span>
-                      <?php
-                      if ( isset($lC_ObjectInfo) ) {
-                        ?>
-                        <div id="fileUploaderContainer" class="small-margin-top">
-                          <noscript>
-                            <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
-                          </noscript>
-                        </div>
-                        <?php
-                      } else {
-                        echo lc_draw_file_field('products_image', null, 'class="file"');
+          <!-- pricing_tab -->
+          <div id="section_pricing_content" class="with-padding">
+            <fieldset class="fieldset fields-list">
+              <legend class="legend"><?php echo $lC_Language->get('text_pricing_overrides'); ?></legend>
+              <div class="field-block button-height">
+                <label for="products_base_price" class="label"><b><?php echo $lC_Language->get('text_base_price'); ?></b></label>
+                <input type="text" name="products_base_price" id="products_base_price" value="<?php echo lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input strong" readonly />
+                <br /><div style="margin-top:-10px;"><small>&nbsp;<?php echo $lC_Language->get('text_edit_on_content_tab'); ?></small></div>
+              </div>
+              <!-- lc_group_pricing begin -->
+              <div class="field-block field-block-product button-height">
+                <label for="" class="label"><b><?php echo $lC_Language->get('text_group_pricing'); ?></b></label>
+                <input onchange="$('#groups_pricing_pro_badge').toggle('300');$('#groups_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" />
+                <span class="info-spot on-left grey margin-left">
+                  <span class="icon-info-round"></span>
+                  <span class="info-bubble">
+                    Put the bubble text here
+                  </span>
+                </span>
+                <span id="groups_pricing_pro_badge" class="info-spot on-left grey" style="display:none;">
+                  <small class="tag red-bg">Pro</small>
+                  <span class="info-bubble">
+                    <b>Go Pro!</b> and enjoy this feature!
+                  </span>
+                </span>
+              </div>
+              <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
+                <?php //foreach() { ?>
+                <div>
+                  <label for="" class="label margin-right"><b>Retail</b></label>
+                  <input type="checkbox" class="switch disabled margin-right" checked />
+                  <span class="nowrap">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
+                  </span>
+                  <small class="input-info">Price<!-- if specials enabled /Special--></small>
+                </div>
+                <div>
+                  <label for="" class="label margin-right"><b>Wholesale</b></label>
+                  <input type="checkbox" class="switch disabled margin-right" checked />
+                  <span class="nowrap">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
+                  </span>
+                  <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                </div>
+                <div>
+                  <label for="" class="label margin-right"><b>Employee</b></label>
+                  <input type="checkbox" class="switch disabled margin-right" checked />
+                  <span class="nowrap">
+                    <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                    <!-- if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
+                  </span>
+                  <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                </div> 
+                <?php //} ?>
+              </div>
+              <!-- lc_group_pricing end -->
+              <!-- lc_qty_price_breaks begin -->
+              <div class="field-block field-block-product button-height">
+                <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_break_pricing'); ?></b></label>
+                <input onchange="$('#qty_breaks_number_of_break_points').toggle('300');$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" />
+                <span class="info-spot on-left grey margin-left margin-right">
+                  <span class="icon-info-round"></span>
+                  <span class="info-bubble">
+                    Put the bubble text here
+                  </span>
+                </span>
+                <span id="qty_breaks_number_of_break_points" style="display:none;">
+                  <span class="number input">
+                    <button type="button" class="button number-down" disabled>-</button>
+                    <input type="text" value="3" size="3" class="input-unstyled" disabled />
+                    <button type="button" class="button number-up" disabled>+</button>
+                  </span>
+                  <span class="info-spot on-left grey">
+                    <small class="tag red-bg">Pro</small>
+                    <span class="info-bubble">
+                      <b>Go Pro!</b> and enjoy this feature!
+                    </span>
+                  </span>
+                </span>
+              </div> 
+              <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
+                <div id="" class="with-mid-padding" style="border-bottom:1px solid #dddddd; margin-left:-10px;">
+                  <label for="" class="label">
+                    <strong>Retail</strong>
+                    <span class="info-spot on-left grey margin-right">
+                      <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                  </label>
+                  <?php //foreach() { ?>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div> 
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <?php //} ?>
+                </div>
+                  
+                <div id="" class="with-mid-padding" style="border-bottom:1px solid #dddddd; margin-left:-10px;">
+                  <label for="" class="label">
+                    <strong>Wholesale</strong>
+                    <span class="info-spot on-left grey margin-right">
+                      <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                  </label>
+                  <?php //foreach() { ?>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div> 
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <?php //} ?>
+                </div>
+                
+                <div id="" class="with-mid-padding" style="border-bottom:1px solid #dddddd; margin-left:-10px;">
+                  <label for="" class="label">
+                    <strong>Employee</strong>
+                    <span class="info-spot on-left grey margin-right">
+                      <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                  </label>
+                  <?php //foreach() { ?>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <div> 
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
+                      <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
+                    </span>
+                    <span style="white-space:nowrap;">
+                      <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+                      <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
+                      <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
+                      <?php //} ?>
+                    </span>
+                  </div>
+                  <?php //} ?>
+                </div>
+              </div>
+              <!-- lc_qty_price_breaks end --> 
+              <div class="field-block field-block-product button-height">
+                <label for="specials-pricing-switch" class="label"><b><?php echo $lC_Language->get('text_special_pricing'); ?></b></label>
+                <input onchange="$('#specials_pricing_container').toggle('300');" id="specials-pricing-switch" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' checked' : ''); ?> />
+                <span class="info-spot on-left grey margin-left margin-right">
+                  <span class="icon-info-round"></span>
+                  <span class="info-bubble">
+                    Put the bubble text here
+                  </span>
+                </span>
+              </div>
+              <div id="specials_pricing_container" class="field-drop button-height black-inputs no-margin-bottom"<?php echo (($Qspecials->value('specials_new_products_price') != null) ? ' style="display:block;"' : ' style="display:none;"'); ?>>
+                <?php //foreach () { ?>
+                <label for="resize_height" class="label"><b>Special Retail Price</b></label>
+                <div class="columns margin-bottom" style="border-bottom:1px solid #dddddd;">
+                  <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+                    <input type="checkbox" class="switch<?php if ($Qspecials->value('status') != -1) echo ' checked'; ?>" />
+                    <span class="input">
+                      <input name="" id="" value="<?php echo number_format($Qspecials->value('specials_new_products_price'), DECIMAL_PLACES); ?>" placeholder="Price or %" class="input-unstyled align-right" style="color:#ff0000;font-weight:bold;" />
+                    </span>
+                  </div>
+                  <div class="new-row-mobile twelve-columns twelve-columns-mobile margin-bottom">
+                    <span class="nowrap margin-right">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('start_date')); ?>" style="width:97px;" />
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
+                    </span>
+                    <span class="nowrap">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('expires_date')); ?>" style="width:97px;" />
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
+                    </span>
+                  </div>
+                </div>
+                
+                <label for="resize_height" class="label"><b>Special Wholesale Price</b></label>
+                <div class="columns margin-bottom" style="border-bottom:1px solid #dddddd;">
+                  <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+                    <input type="checkbox" class="switch<?php if ($Qspecials->value('status') != -1) echo ' checked'; ?>" />
+                    <span class="input">
+                      <input name="" id="" value="<?php echo number_format($Qspecials->value('specials_new_products_price'), DECIMAL_PLACES); ?>" placeholder="Price or %" class="input-unstyled align-right" style="color:#ff0000;font-weight:bold;" />
+                    </span>
+                  </div>
+                  <div class="new-row-mobile twelve-columns twelve-columns-mobile margin-bottom">
+                    <span class="nowrap margin-right">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('start_date')); ?>" style="width:97px;" />
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
+                    </span>
+                    <span class="nowrap">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('expires_date')); ?>" style="width:97px;" />
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
+                    </span>
+                  </div>
+                </div>
+                
+                <label for="resize_height" class="label"><b>Special Employee Price</b></label>
+                <div class="columns margin-bottom" style="border-bottom:1px solid #dddddd;">
+                  <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+                    <input type="checkbox" class="switch<?php if ($Qspecials->value('status') != -1) echo ' checked'; ?>" />
+                    <span class="input">
+                      <input name="" id="" value="<?php echo number_format($Qspecials->value('specials_new_products_price'), DECIMAL_PLACES); ?>" placeholder="Price or %" class="input-unstyled align-right" style="color:#ff0000;font-weight:bold;" />
+                    </span>
+                  </div>
+                  <div class="new-row-mobile twelve-columns twelve-columns-mobile margin-bottom">
+                    <span class="nowrap margin-right">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('start_date')); ?>" style="width:97px;" />
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
+                    </span>
+                    <span class="nowrap">
+                      <span class="input small-margin-top">
+                        <input type="text" placeholder="End" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($Qspecials->value('expires_date')); ?>" style="width:97px;" />
+                      </span>
+                      <span class="icon-calendar icon-size2 small-margin-left"></span>
+                    </span>
+                  </div>
+                </div>
+                <?php //} ?>
+              </div>                
+            </fieldset>
+            <!--<dl class="accordion same-height">
+              <dt>Retail Price</dt>
+              <dd>
+                <?php // if no options set ?>
+                  <!-- Please Create your inventory Option
+                <?php //} else { ?>
+                <div class="left-column-200px margin-bottom clear-left with-mid-padding">
+                  <div class="left-column">
+                    IOption Set - SKU&nbsp;&nbsp;
+                    <span class="info-spot on-left grey">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="right-column">
+                    Price&nbsp;&nbsp;
+                    <span class="info-spot on-left grey">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Special&nbsp;Price&nbsp;&nbsp;
+                    <span class="info-spot on-left grey">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="left-column-200px margin-bottom clear-left with-mid-padding">
+                  <?php //foreach() { ?>
+                  <div class="left-column with-small-padding">
+                    Red Medium - KSRM0001
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <div class="left-column with-small-padding silver-bg">
+                    Red Large - KSRL0023
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <div class="left-column with-small-padding">
+                    Red X Large - KSRXL0011
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <div class="left-column with-small-padding silver-bg">
+                    Green Medium - KSGM0054
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <div class="left-column with-small-padding">
+                    Green Large - KSGL0055
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <div class="left-column with-small-padding silver-bg">
+                    Green X Large - KSGXL0167
+                  </div>
+                  <div class="right-column">
+                    <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
+                    <?php // if special price ?>
+                      &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
+                    <?php // } ?>
+                  </div>
+                  <div style="height:5px;"></div>
+                  <?php //} //} ?>
+                </div>
+              </dd>
+            </dl>-->
+          </div>
+          <!-- data_tab -->
+          <div id="section_data_content" class="with-padding">
+            <fieldset class="fieldset">
+              <legend class="legend"><?php echo $lC_Language->get('text_inventory_settings'); ?></legend>
+              <div class="columns">
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span><?php echo $lC_Language->get('field_model'); ?></span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <input type="text" class="required input full-width" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_model') : null); ?>" id="products_model" name="products_model" />
+                  </div>
+                </div>
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <!-- lc_track_inventory_override begin -->
+                  <div class="twelve-columns no-margin-bottom">
+                    <span><?php echo $lC_Language->get('text_track_inventory_override'); ?></span>
+                    <span class="info-spot on-left grey small-margin-left">
+                      <small class="tag red-bg">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <span class="button-group">
+                      <label for="ti_radio_1" class="button disabled">
+                        <input type="radio" name="track_inventory_radio_group" id="ti_radio_1" value="1" />
+                        <?php echo $lC_Language->get('text_default'); ?>
+                      </label>
+                      <label for="ti_radio_2" class="button disabled">
+                        <input type="radio" name="track_inventory_radio_group" id="ti_radio_2" value="2" />
+                        <?php echo $lC_Language->get('text_on'); ?>
+                      </label>
+                      <label for="ti_radio_3" class="button disabled">
+                        <input type="radio" name="track_inventory_radio_group" id="ti_radio_3" value="3" />
+                        <?php echo $lC_Language->get('text_off'); ?>
+                      </label>
+                    </span>
+                  </div>
+                  <!-- lc_track_inventory_override end -->
+                </div>
+              </div>
+              <div class="columns">
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span><?php echo $lC_Language->get('text_msrp'); ?></span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <input type="text" class="required input full-width" value="<?php echo number_format($lC_ObjectInfo->get('products_msrp'), DECIMAL_PLACES); ?>" id="products_msrp" name="products_msrp" />
+                  </div>
+                </div>
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <!-- lc_vendor_supplier begin -->
+                  <div class="twelve-columns no-margin-bottom">
+                    <span><?php echo $lC_Language->get('text_vendor_supplier'); ?></span>
+                    <span class="info-spot on-left grey small-margin-left">
+                      <small class="tag red-bg">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <select class="select full-width small-margin-top" disabled>
+                      <option id="1" value="1">Vendor #1</option>
+                    </select>
+                  </div>
+                  <!-- lc_vendor_supplier end -->
+                </div>
+              </div>
+              <div class="columns">
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <!-- lc_inventory_control begin -->
+                  <div class="twelve-columns no-margin-bottom">
+                    <span><?php echo $lC_Language->get('text_inventory_control'); ?></span>
+                    <span class="info-spot on-left grey small-margin-left">
+                      <small class="tag red-bg">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <span class="button-group">
+                      <label for="ic_radio_1" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
+                        <!-- move onclick to function later maestro -->
+                        <input type="radio" name="inventory_control_radio_group" id="ic_radio_1" value="1" onclick="$('#inventory_control_simple').show('300');$('#inventory_control_multi').hide('300');$('#section_options_content').hide();$('#tabHeaderSectionOptions').hide();" />
+                        <?php echo $lC_Language->get('text_simple'); ?>
+                      </label>
+                      <label for="ic_radio_2" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
+                        <!-- move onclick to function later maestro -->
+                        <input type="radio" name="inventory_control_radio_group" id="ic_radio_2" value="2" onclick="$('#inventory_control_simple').hide('300');$('#inventory_control_multi').show('300');$('#tabHeaderSectionOptions').show().removeClass('active');$('label[for=\'ic_radio_1\']').removeClass('active');$('label[for=\'ic_radio_2\']').addClass('active');$('label[for=\'ioc_radio_1\']').removeClass('active');$('label[for=\'ioc_radio_2\']').addClass('active');" />
+                        <?php echo $lC_Language->get('text_multi_sku'); ?>
+                      </label>
+                      <label for="ic_radio_3" class="button disabled green-active">
+                        <input type="radio" name="inventory_control_radio_group" id="ic_radio_3" value="3" />
+                        <?php echo $lC_Language->get('text_recurring'); ?>
+                      </label>
+                    </span>
+                  </div>
+                  <!-- lc_inventory_control end -->
+                </div>
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">&nbsp;</div>
+              </div>
+              <div id="inventory_control_container" class="field-drop button-height black-inputs no-margin-bottom">
+                <!-- lc_inventory_control_simple begin -->
+                <div id="inventory_control_simple"<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' style="display:none;"' : ''); ?>>
+                  <div>
+                    <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_on_hand'); ?></b></label>
+                    <input type="text" name="products_quantity" id="products_quantity" value="<?php echo $lC_ObjectInfo->get('products_quantity'); ?>" class="input small-margin-right" style="width:60px;" />
+                    <input type="text" name="products_sku_ean13" id="products_sku_ean13" value="<?php echo $lC_ObjectInfo->get('products_sku_ean13'); ?>" class="input" />
+                    <b><?php echo $lC_Language->get('text_sku_ean13'); ?></b>
+                  </div>
+                  <div class="small-margin-top">
+                    <input type="text" name="products_cost" id="products_cost" value="<?php //echo number_format($lC_ObjectInfo->get('products_cost'), DECIMAL_PLACES); ?>" class="input small-margin-right" disabled /> <b><?php echo $lC_Language->get('text_cost'); ?></b>
+                    <span class="info-spot on-left grey small-margin-left">
+                      <small class="tag red-bg" style="border:2px solid grey;">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span> 
+                  </div>
+                </div>
+                <!-- lc_inventory_control_simple end -->                                       
+                <div id="inventory_control_multi"<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' style="display:none;"'); ?>>
+                  <span class="icon-warning icon icon-size2 icon-orange small-margin-right"></span> <?php echo $lC_Language->get('text_edit_qoh_sku'); ?>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend class="legend"><?php echo $lC_Language->get('text_tax_settings'); ?></legend>
+              <div class="columns">
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span><?php echo $lC_Language->get('text_tax_class'); ?></span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <?php echo lc_draw_pull_down_menu('products_tax_class_id', $tax_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_tax_class_id') : null), 'class="select full-width small-margin-top" id="tax_class0"'); ?>
+                  </div>
+                </div>
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span><?php echo $lC_Language->get('text_base_price_with_tax'); ?></span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>
+                  <div class="twelve-columns no-margin-bottom small-margin-top">
+                    <?php echo lc_draw_input_field('products_price_gross', (isset($lC_ObjectInfo) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="required input full-width" id="products_price0_gross" READONLY'); ?>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend class="legend"><?php echo $lC_Language->get('text_management_settings'); ?></legend>
+              <div class="columns">
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
+                <?php
+                  $Qattributes = $lC_Database->query('select id, code from :table_templates_boxes where modules_group = :modules_group order by code');
+                  $Qattributes->bindTable(':table_templates_boxes');
+                  $Qattributes->bindValue(':modules_group', 'product_attributes');
+                  $Qattributes->execute();
+                  while ( $Qattributes->next() ) {
+                    $module = basename($Qattributes->value('code'));
+                    if ( !class_exists('lC_ProductAttributes_' . $module) ) {
+                      if ( file_exists(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php') ) {
+                        include(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php');
                       }
-                      ?>
-                    </div>
-                    <?php
-                    if ( isset($lC_ObjectInfo) ) {
-                      ?>
-                      <script type="text/javascript"><!--
-                        function createUploader(){
-                          var uploader = new qq.FileUploader({
-                              element: document.getElementById('fileUploaderContainer'),
-                              action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=fileUpload'); ?>',
-                              onComplete: function(id, fileName, responseJSON){
-                                getImages();
-                              },
-                          });
-                        }
-                        $(document).ready(function() {
-                          createUploader();
-                        });
-                      //--></script>
-                      <?php
                     }
-                    ?>
-                    <div id="localFiles" style="display: none;">
-                      <p><?php echo $lC_Language->get('introduction_select_local_images'); ?></p>
-                      <select id="localImagesSelection" name="localimages[]" size="5" multiple="multiple" style="width: 100%;"></select>
-                      <div id="showProgressGetLocalImages" style="display: none; float: right; padding-right: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_retrieving_local_files'); ?></div>
-                      <p><?php echo realpath('../images/products/_upload'); ?></p>
-                      <?php
-                      if ( isset($lC_ObjectInfo) ) {
-                        echo '<input type="button" value="Assign To Product" class="operationButton" onclick="assignLocalImages();" /><div id="showProgressAssigningLocalImages" style="display: none; padding-left: 10px;">' . lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_multiple_upload_progress') . '</div>';
-                      }
-                      ?>
-                    </div>
-                  </fieldset>
-                  <script type="text/javascript"><!--
-                  getLocalImages();
-                  //--></script>
-                  <?php
-                  if ( isset($lC_ObjectInfo) ) {
-                    ?>
-                    <fieldset style="height: 100%;">
-                      <legend><?php echo $lC_Language->get('subsection_original_images'); ?></legend>
-                      <div id="imagesOriginal" style="overflow: auto;" class="small-margin-top"></div>
-                    </fieldset>
-                    <fieldset style="height: 100%;">
-                      <legend><?php echo $lC_Language->get('subsection_images'); ?></legend>
-                      <div id="imagesOther" style="overflow: auto;"></div>
-                    </fieldset>
-                    <script type="text/javascript"><!--
-                      getImages();
-                    //--></script>
-                    <?php
-                  }
+                    if ( class_exists('lC_ProductAttributes_' . $module) ) {
+                      $module = 'lC_ProductAttributes_' . $module;
+                      $module = new $module();
                   ?>
-                </td>
-              </tr>
-            </table>
-          
+                  <div class="twelve-columns small-margin-bottom">
+                    <span><?php echo $module->getTitle(); ?></span>
+                  </div>
+                  <div class="twelve-columns margin-bottom product-module-content">
+                    <?php echo $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)); ?>
+                  </div>
+                  <?php
+                    }
+                  }
+                ?>
+                </div>
+                
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">                  
+                  <div class="twelve-columns small-margin-bottom">
+                    <span><?php echo $lC_Language->get('text_product_class'); ?></span>
+                    <span class="info-spot on-left grey small-margin-left">
+                      <small class="tag red-bg">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                    <span class="info-spot on-left grey float-right">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </div>                  
+                  <div class="twelve-columns margin-bottom">
+                    <select class="select full-width small-margin-top" disabled>
+                      <option id="1" value="1">Common</option>
+                      <option id="2" value="2">2nd Class</option>
+                      <option id="3" value="3">3rd Class</option>
+                      <option id="4" value="4">4th Class</option>
+                      <option id="5" value="5">5th Class</option>
+                    </select>
+                  </div>
+                  
+                  <div class="twelve-columns mid-margin-bottom">
+                    <div class="twelve-columns no-margin-bottom">
+                      <span><?php echo $lC_Language->get('text_availability'); ?></span>
+                      <span class="info-spot on-left grey float-right">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </div>
+                    <div class="twelve-columns margin-bottom">
+                      <span class="nowrap margin-right">
+                        <span class="input small-margin-top">
+                          <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($lC_ObjectInfo->get('products_date_added')); ?>" style="width:97px;" />
+                        </span>
+                        <span class="icon-calendar icon-size2 small-margin-left"></span>
+                      </span>
+                      <!-- lc_products_availability begin -->
+                      <span class="nowrap">
+                        <span class="input small-margin-top">
+                          <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;" disabled />
+                        </span>
+                        <span class="icon-calendar icon-size2 small-margin-left grey"></span>
+                        <span class="info-spot on-left grey small-margin-left">
+                          <small class="tag red-bg">Pro</small>
+                          <span class="info-bubble">
+                            <b>Go Pro!</b> and enjoy this feature!
+                          </span>
+                        </span>
+                      </span>
+                      <!-- lc_products_availability end -->
+                    </div>
+                  </div>
+                
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend class="legend"><?php echo $lC_Language->get('text_product_details'); ?></legend>
+              <div class="columns">
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <?php //foreach() { ?>
+                  <div class="margin-bottom">
+                    <label for="" class="label">Custom Field 1</label>
+                    <input type="text" name="" id="" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" class="input" disabled />
+                  </div>
+                  <?php //} ?>
+                  <div class="margin-bottom">
+                    <label for="" class="label">Custom Field 2</label>
+                    <input type="text" name="" id="" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" class="input" disabled />
+                  </div>
+                  <div> 
+                    <label for="" class="label">Custom Field 3</label>
+                    <input type="text" name="" id="" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" class="input" disabled />
+                  </div>
+                </div>
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <!-- lc_products_custom begin -->
+                  <p class="button-height">
+                    <a class="button icon-star small-margin-right disabled" href="javascript:void(0)">Customize</a>
+                    <span class="info-spot on-left grey">
+                      <small class="tag red-bg">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>
+                  </p>
+                  <!-- lc_products_custom end -->
+                </div>
+              </div>
+            </fieldset>
           </div>
-          <div id="section_categories_content" class="with-padding">
-            <div id="section_categories_content">
-              <table border="0" width="100%" cellspacing="0" cellpadding="2">
+          <!-- options_tab -->
+          <div id="section_options_content" class="with-padding"<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' style="display:none;"'); ?>>
+            <div class="columns">
+              <div class="twelve-columns">
+                <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                  <div class="twelve-columns no-margin-bottom">
+                    <span class="large-margin-right"><?php echo $lC_Language->get('text_inventory_control'); ?></span>
+                    <span class="large-margin-right">&nbsp;</span>
+                    <span class="margin-right">&nbsp;</span>
+                    <span class="info-spot on-left grey large-margin-left">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span><br />
+                    <span class="button-group small-margin-top">
+                      <!-- lc_options_inventory_control begin -->
+                      <label for="ioc_radio_1" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
+                        <!-- move onclick to function later maestro -->
+                        <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_1" value="1" onclick="$('#inventory_control_simple').show('300');$('#inventory_control_multi').hide('300');$('#section_options_content').hide();$('#tabHeaderSectionOptions').hide();$('#section_data_content').show();$('#tabHeaderSectionData').addClass('active');$('label[for=\'ic_radio_1\']').addClass('active');$('label[for=\'ic_radio_2\']').removeClass('active');" />
+                        <?php echo $lC_Language->get('text_simple'); ?>
+                      </label>
+                      <label for="ioc_radio_2" class="button green-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
+                        <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_2" value="2" />
+                        <?php echo $lC_Language->get('text_multi_sku'); ?>
+                      </label>
+                      <label for="ioc_radio_3" class="button disabled green-active">
+                        <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_3" value="3" />
+                        <?php echo $lC_Language->get('text_recurring'); ?>
+                      </label>
+                      <span class="info-spot on-left grey margin-left">
+                        <small class="tag red-bg">Pro</small>
+                        <span class="info-bubble">
+                          <b>Go Pro!</b> and enjoy this feature!
+                        </span>
+                      </span>
+                      <!-- lc_options_inventory_control end -->
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend"><?php echo $lC_Language->get('text_inventory_options_combo_sets'); ?></legend>
+                  <div class="columns">
+                    <div class="twelve-columns">
+                      Data Table is Going to be here :)                   
+                    </div>
+                  </div>
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)"><?php echo $lC_Language->get('text_new_inventory_option_combo_set'); ?></a></div>
+                </fieldset>
+              </div>
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend"><?php echo $lC_Language->get('text_simple_inventory_options'); ?></legend>
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)"><?php echo $lC_Language->get('text_new_simple_inventory_option'); ?></a></div>
+                </fieldset>
+              </div>
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend"><?php echo $lC_Language->get('text_simple_options'); ?></legend>
+                  <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)"><?php echo $lC_Language->get('text_new_simple_option'); ?></a></div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+          <!-- shipping_tab -->
+          <div id="section_shipping_content" class="with-padding">
+            <div class="columns">
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend"><?php echo $lC_Language->get('text_product_characteristics'); ?></legend>
+                  <div class="columns">
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span><?php echo $lC_Language->get('field_weight'); ?></span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <input type="text" class="required input full-width" value="<?php echo $lC_ObjectInfo->get('products_weight'); ?>" id="products_weight" name="products_weight" />
+                      </div>
+                      <div class="twelve-columns no-margin-bottom margin-top grey disabled">
+                        <?php echo $lC_Language->get('text_non_shippable_item'); ?>
+                        <input type="checkbox" id="virtual" name="virtual" disabled /> 
+                        <?php echo $lC_Language->get('text_coming_soon'); ?>
+                      </div>
+                    </div>
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span><?php echo $lC_Language->get('text_dimensional'); ?></span>
+                        <span class="info-spot on-left grey">
+                          <small class="tag red-bg">Pro</small>
+                          <span class="info-bubble">
+                            <b>Go Pro!</b> and enjoy this feature!
+                          </span>
+                        </span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom margin-top">
+                        <div class="twelve-columns clear-both">
+                          <div style="width:50px;" class="float-left small-margin-top"><label for="product_length" class="label"><?php echo $lC_Language->get('text_length'); ?></label></div>
+                          <input type="text" class="input unstyled margin-bottom float-left" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="product_length" name="product_length" disabled />
+                        </div>
+                        <div class="twelve-columns clear-both">
+                          <div style="width:50px;" class="float-left small-margin-top"><label for="product_length" class="label"><?php echo $lC_Language->get('text_width'); ?></label></div>
+                          <input type="text" class="input unstyled margin-bottom" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="product_width" name="product_width" disabled />
+                        </div>
+                        <div class="twelve-columns">
+                          <div style="width:50px;" class="float-left small-margin-top"><label for="product_length" class="label"><?php echo $lC_Language->get('text_height'); ?></label></div>
+                          <input type="text" class="input unstyled margin-bottom" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="product_height" name="product_height" disabled />
+                        </div>
+                      </div>
+                    </div>                
+                  </div>
+                  <div class="columns">
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span><?php echo $lC_Language->get('field_weight_class'); ?></span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <?php echo lc_draw_pull_down_menu('products_weight_class', $weight_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_weight_class') : SHIPPING_WEIGHT_UNIT), 'class="select full-width small-margin-top required"'); ?>
+                      </div>
+                    </div>
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      &nbsp;
+                    </div>                
+                  </div>
+                </fieldset>
+              </div>
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend"><?php echo $lC_Language->get('text_order_fee_modifiers'); ?></legend>
+                  <div class="columns">
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span><?php echo $lC_Language->get('text_shipping_fee_override'); ?></span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_shipping_fee_override" name="products_shipping_fee_override" disabled /><small class="small-margin-top"><?php echo $lC_Language->get('text_zero_for_free_shipping'); ?></small>
+                      </div>
+                    </div>
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span><?php echo $lC_Language->get('text_add_handling_fee'); ?></span>
+                        <span class="info-spot on-left grey">
+                          <small class="tag red-bg">Pro</small>
+                          <span class="info-bubble">
+                            <b>Go Pro!</b> and enjoy this feature!
+                          </span>
+                        </span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_add_handling_fee" name="products_add_handling_fee" disabled />
+                      </div>
+                    </div>                
+                  </div>
+                </fieldset>
+              </div>
+              <div class="twelve-columns">
+                <fieldset class="fieldset">
+                  <legend class="legend"><?php echo $lC_Language->get('text_supplier_characteristics'); ?></legend>
+                  <div class="columns">
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span><?php echo $lC_Language->get('text_days_to_ship'); ?></span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_days_to_ship" name="products_days_to_ship" disabled />
+                      </div>
+                    </div>
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span><?php echo $lC_Language->get('text_warehouse'); ?></span>
+                        <span class="info-spot on-left grey">
+                          <small class="tag red-bg">Pro</small>
+                          <span class="info-bubble">
+                            <b>Go Pro!</b> and enjoy this feature!
+                          </span>
+                        </span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_warehouse" name="products_warehouse" disabled />
+                      </div>
+                    </div>
+                    <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+                      <div class="twelve-columns no-margin-bottom">
+                        <span><?php echo $lC_Language->get('text_stock_date_expected'); ?></span>
+                        <span class="info-spot on-left grey float-right">
+                          <span class="icon-info-round"></span>
+                          <span class="info-bubble">
+                            Put the bubble text here
+                          </span>
+                        </span>
+                      </div>
+                      <div class="twelve-columns no-margin-bottom small-margin-top">
+                        <span class="nowrap margin-right">
+                          <span class="input small-margin-top full-width">
+                            <input type="text" placeholder="" class="input-unstyled datepicker full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" disabled />
+                            <span class="icon-calendar icon-size2 small-margin-left float-right" style="margin-top:-29px;"></span>
+                          </span>
+                        </span>
+                      </div>
+                    </div>                
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+          <!-- relationships_tab -->
+          <div id="section_relationships_content" class="with-padding"> 
+            <fieldset class="fieldset">
+              <legend class="legend"><?php echo $lC_Language->get('text_categories'); ?></legend>
+              <table border="0" width="100%" cellspacing="0" cellpadding="2" style="margin-top:-10px;">
                 <tr>
                   <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
                     <tbody>
-                      <?php
-                      $product_categories_array = array();
-                      if ( isset($lC_ObjectInfo) ) {
-                        $Qcategories = $lC_Database->query('select categories_id from :table_products_to_categories where products_id = :products_id');
-                        $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
-                        $Qcategories->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
-                        $Qcategories->execute();
-                        while ($Qcategories->next()) {
-                          $product_categories_array[] = $Qcategories->valueInt('categories_id');
-                        }
-                      }
-                      $assignedCategoryTree = new lC_CategoryTree();
-                      $assignedCategoryTree->setBreadcrumbUsage(false);
-                      $assignedCategoryTree->setSpacerString('&nbsp;', 5);
+                    <?php
                       foreach ($assignedCategoryTree->getArray() as $value) {
                         echo '          <tr>' . "\n" .
-                             '            <td width="30px">' . lc_draw_checkbox_field('categories[]', $value['id'], in_array($value['id'], $product_categories_array), 'class="input" id="categories_' . $value['id'] . '"') . '</td>' . "\n" .
-                             '            <td><a href="#" onclick="document.product.categories_' . $value['id'] . '.checked=!document.product.categories_' . $value['id'] . '.checked;">' . $value['title'] . '</a></td>' . "\n" .
+                             '            <td width="30px" class="cat_rel_td">' . lc_draw_checkbox_field('categories[]', $value['id'], in_array($value['id'], $product_categories_array), 'class="input" id="categories_' . $value['id'] . '"') . '</td>' . "\n" .
+                             '            <td class="cat_rel_td"><a href="#" onclick="document.product.categories_' . $value['id'] . '.checked=!document.product.categories_' . $value['id'] . '.checked;">' . $value['title'] . '</a></td>' . "\n" .
                              '          </tr>' . "\n";
                       }
-                      ?>
+                    ?>
                     </tbody>
                   </table></td>
                 </tr>
               </table>
-            </div>
+              <br />
+            </fieldset>
           </div>
         </div>
       </div>
@@ -1296,6 +2045,19 @@ function toggleEditor(id) {
                   <span class="icon-cross"></span>
                 </span><?php echo $lC_Language->get('button_cancel'); ?>
               </a>&nbsp;
+              <!--<select class="select expandable-list"> 
+                <option id="" value="">Related</option>
+                <option id="create_order" value="create_order">Create Order</option>
+                <option id="duplicate_product" value="duplicate_product">Duplicate</option>
+                <option id="catalog_view" value="catalog_view">View In Catalog</option>
+                <option id="view_customers" value="view_customers">View Customers</option>
+                <option id="notify_customers" value="notify_customers">Notify Customers</option>
+              </select>&nbsp;
+              <select class="select expandable-list" style="width:96px;"> 
+                <option id="" value="">Actions</option>
+                <option id="save" value="save">Save</option>
+                <option id="apply_changes" value="apply_changes">Apply</option>
+              </select>&nbsp;-->
               <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#product\').submit();'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
@@ -1311,42 +2073,3 @@ function toggleEditor(id) {
     </div>
   </div>
 </section>
-
-
-<?php
-/*
-
-<script type="text/javascript">
-$(document).ready(function(){
-  $("#mainTabs").tabs( { selected: 0 } );
-  $("#languageTabs").tabs( { selected: 0 } );
-  $("#languageTabsMeta").tabs( { selected: 0 } );
-
- <?php if ( isset($lC_ObjectInfo)) { ?>updatePriceBreakFields();<?php } ?>
-
-});
-</script>
-<form name="product" id="product" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
-<div id="mainTabs">
-  <ul>
-    <li><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
-    <li id="tabHeaderSectionDataContent"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
-    <li><?php echo lc_link_object('#section_images_content', $lC_Language->get('section_images')); ?></li>
-    <li><?php echo lc_link_object('#section_categories_content', $lC_Language->get('section_categories')); ?></li>
-  </ul>
-
-  <div id="section_general_content">
-
-
-  </div>
-
-
-
-</div>
-*/
-
-
-if (isset($_SESSION['error'])) unset($_SESSION['error']);
-if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']);
-
-?>

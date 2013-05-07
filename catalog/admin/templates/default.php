@@ -42,6 +42,7 @@
   <link rel="stylesheet" href="templates/default/css/error.css?v=1">
   <link rel="stylesheet" media="print" href="templates/default/css/print.css?v=1">
   <!-- For progressively larger displays -->
+  <link rel="stylesheet" media="only all and (min-width: 320px)" href="templates/default/css/320.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 480px)" href="templates/default/css/480.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 768px)" href="templates/default/css/768.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 992px)" href="templates/default/css/992.css?v=1">
@@ -55,6 +56,7 @@
   <!-- Additional styles -->
   <link rel="stylesheet" href="templates/default/css/styles/agenda.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/dashboard.css?v=1">
+  <link rel="stylesheet" href="templates/default/css/styles/files.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/form.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/validate.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/modal.css?v=1">
@@ -63,11 +65,14 @@
   <link rel="stylesheet" href="templates/default/css/styles/table.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/datepicker.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/breadcrumb.css?v=1">
-  <link rel="stylesheet" href="templates/default/css/styles/fileuploader.css?v=1">
+  <link rel="stylesheet" href="templates/default/css/styles/fileuploader.css?v=1"> 
+  <link rel="stylesheet" href="templates/default/css/styles/custom.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/custom.css?v=1">
   <!-- DataTables -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables-tableTools.css?v=1">
+  <!-- CLEditor -->
+  <link rel="stylesheet" href="external/CLEditor/jquery.cleditor.css">
   <!-- loading mask -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.loadmask.css?v=1">  
   <!-- Google code prettifier -->
@@ -569,8 +574,14 @@
   <script src="templates/default/js/progress-slider.js"></script>
   <script src="templates/default/js/tooltip.js"></script>
   <script src="templates/default/js/confirm.js"></script>
+  <script src="templates/default/js/fittext.js"></script>
   <!-- script src="templates/default/js/agenda.js"></script -->
   <script src="templates/default/js/tabs.js"></script>    <!-- Must be loaded last -->
+  
+  <!-- CLEditor -->
+  <script src="external/CLEditor/jquery.cleditor.min.js"></script>
+  <script src="external/CLEditor/jquery.cleditor.fullscreen.js"></script>
+  <script src="external/CLEditor/jquery.cleditor.advancedtable.js"></script>
   <!-- Load page specific javascript -->
   <?php $lC_Template->loadPageScript($lC_Template->getModule()); ?>
 </body>
