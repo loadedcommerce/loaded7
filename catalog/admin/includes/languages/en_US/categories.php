@@ -17,10 +17,13 @@ delete_warning_category_in_use = Warning: There are
 delete_warning_category_in_use_children = sub-categories assigned to this category that will also be removed.
 delete_warning_category_in_use_products = products assigned to this category that will have this category relationship removed.
 
-field_parent_category = Parent Category:
-field_name = Name:
-field_image = Image:
-field_sort_order = Sort Order:
+field_description = Content
+field_image = Image
+field_menu_name = Nick (Menu Title)
+field_meta_keywords = Meta Keywords
+field_name = Title
+field_parent_category = Parent Category
+field_sort_order = Sort Order
 
 heading_title = Category Pages
 
@@ -50,6 +53,12 @@ table_heading_categories = Categories
 table_heading_sort_order = Sort Order
 table_heading_action = Action
 
-text_move_category = Move category
+text_categories = Categories
+text_categories_image_preview  = Image Preview
+text_edit_category = Edit Category
+text_move_category = Move Category
+text_no_image = No Image
+text_thumbnail_image = Thumbnail Image
 text_to_parent = to which parent category? 
+text_toggle_html_editor = Toggle HTML Editor 
 top_category = -- Top --

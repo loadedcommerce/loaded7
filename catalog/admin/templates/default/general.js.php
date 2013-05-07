@@ -270,6 +270,14 @@ $(document).ready(function() {
     var menuWidthResized = $("#menu").width();
     $("#profileInner").css({'width':menuWidthResized * 2});
     $('#profileInner').css({"margin-left":"0px"});
+    // if window width drops below 1280px change category edit tabs from side to top
+    if ($(window).width() < 1380) {
+      $("#category_tabs").removeClass("side-tabs");
+      $("#category_tabs").addClass("standard-tabs");
+    } if ($(window).width() >= 1380) {
+      $("#category_tabs").removeClass("standard-tabs");
+      $("#category_tabs").addClass("side-tabs");
+    }
   });
   
   // profile left is clicked
