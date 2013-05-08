@@ -66,4 +66,14 @@ function doSelectFunction(e) {
     batchMove();
   }
 }
+
+function customCheck() {
+  var cModeVal = $("#categories_mode").val();
+  if (cModeVal == 'override') {
+    $("#categories_custom").show();
+  } else {
+    $("#categories_custom").hide();
+    $("#categories_custom_url").val("");
+  }
+}
 </script>

@@ -167,10 +167,10 @@
                 <div class="field-drop-tabs button-height black-inputs">
                   <div class="columns no-margin-bottom mid-margin-top">
                     <div class="six-columns twelve-columns-mobile margin-bottom">
-                      <label class="label" for="resize_height"><b>Mode</b></label>
+                      <label class="label" for="resize_height"><b><?php echo $lC_Language->get('text_mode'); ?></b></label>
                       <select class="select full-width" id="categories_mode" name="categories_mode" onchange="customCheck();">
-                        <option value="category">Category</option>
-                        <option value="page">Page</option>
+                        <option value="category"><?php echo $lC_Language->get('text_category'); ?></option>
+                        <option value="page"><?php echo $lC_Language->get('text_page'); ?></option>
                         <?php //foreach () { ?>
                         <!-- this will be somehow generated per the store side content possobilities -->
                         <option value="specials">Specials</option>
@@ -180,28 +180,17 @@
                         <option value="cart">Cart</option>
                         <option value="account">My Account</option>
                         <?php //} ?>
-                        <option value="override">Custom Link (Override)</option>
+                        <option value="override"><?php echo $lC_Language->get('text_custom_link'); ?></option>
                       </select>
-                      <p class="small-margin-top"><input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"> Open in New Window</p>
-                      <script>
-                        function customCheck() {
-                          var cModeVal = $("#categories_mode").val();
-                          if (cModeVal == 'override') {
-                            $("#categories_custom").show();
-                          } else {
-                            $("#categories_custom").hide();
-                            $("#categories_custom_url").val("");
-                          }
-                        }
-                      </script>
+                      <p class="small-margin-top"><input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"> <?php echo $lC_Language->get('text_new_window'); ?></p>
                     </div>
                     <div class="six-columns twelve-columns-mobile" style="display:none;" id="categories_custom">
-                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"> &nbsp;<strong>Custom Link</strong>
+                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"> &nbsp;<strong><?php echo $lC_Language->get('text_custom_link'); ?></strong>
                     </div>
                   </div>
                   <div class="columns">
                     <div class="six-columns twelve-columns-mobile">
-                      <label class="label" for="resize_height"><b>Parent</b></label>
+                      <label class="label" for="resize_height"><b><?php echo $lC_Language->get('text_parent'); ?></b></label>
                       <select class="select full-width">
                         <option>Top</option>
                         <option>Women</option>
@@ -211,7 +200,7 @@
                       </select>
                     </div>
                     <div class="six-columns twelve-columns-mobile small-margin-top">
-                      <input type="checkbox" class="checkbox" id="categories_" name="categories_"> Display in Main Category Menu
+                      <input type="checkbox" class="checkbox" id="categories_" name="categories_"> <?php echo $lC_Language->get('text_display_in_menu'); ?>
                     </div>
                   </div>
                 </div>

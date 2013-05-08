@@ -53,13 +53,20 @@ section_categories = Relationships
 table_heading_categories = Categories
 table_heading_sort_order = Sort Order
 table_heading_action = Action
-
+ 
+top_category = -- Top --
+text_category = Category
 text_categories = Categories
 text_categories_image_preview  = Image Preview
+text_custom_link  = Custom Link
+text_display_in_menu = Display in Main Category Menu
 text_edit_category = Edit Category
+text_mode = Mode
 text_move_category = Move Category
+text_new_window = Open in New Window
 text_no_image = No Image
+text_page = Page
+text_parent = Parent
 text_thumbnail_image = Thumbnail Image
 text_to_parent = to which parent category? 
-text_toggle_html_editor = Toggle HTML Editor 
-top_category = -- Top --
+text_toggle_html_editor = Toggle HTML Editor
