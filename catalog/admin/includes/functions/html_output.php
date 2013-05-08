@@ -167,4 +167,10 @@
 
     return 'templates/' . $lC_Template->getCode() . '/img/icons/' . (!empty($group) ? $group . '/' : null) . $image;
   }
+  
+  function lc_go_pro() {
+    $html = '<span class="info-spot on-left grey margin-left"><small class="tag red-bg">Pro</small><span class="info-bubble"><b>Go Pro!</b> and enjoy this feature!</span></span>';
+    
+    return $html;
+  }
 ?>

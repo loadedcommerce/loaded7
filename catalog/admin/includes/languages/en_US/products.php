@@ -118,6 +118,7 @@ text_coming_soon = Coming Soon...
 text_complex_variants = Complex Variants
 text_copy_method_link = Link Product
 text_copy_method_duplicate = Duplicate Product
+text_confirm_set_default = Make this image group the default image group?
 text_cost = Cost
 text_days_to_ship = Days to Ship
 text_default = Default

@@ -703,23 +703,6 @@ $("#li-settings").click(function() {
   });
 });
 
-// added for the product images content panel switching
-function imagesGalleryTrigger() {
-  $('#images-gallery').show();
-  $('#additional-gallery').hide();
-  $('#images-gallery-trigger').removeClass('grey').addClass('with-right-arrow grey-arrow');
-  $('#additional-gallery-trigger').addClass('grey').removeClass('with-right-arrow grey-arrow');
-}
-function additionalGalleryTrigger() {
-  $('#images-gallery').hide();
-  $('#additional-gallery').show();
-  $('#images-gallery-trigger').addClass('grey').removeClass('with-right-arrow grey-arrow');
-  $('#additional-gallery-trigger').removeClass('grey').addClass('with-right-arrow grey-arrow'); 
-}
-$('#specials-pricing-switch').click(function() {
-  //alert('hi'); 
-}); 
-
 // added to pull in any added modals used across all admin pages
 <?php
   $lC_DirectoryListing = new lC_DirectoryListing('templates/' . $lC_Template->getCode() . '/modal/');

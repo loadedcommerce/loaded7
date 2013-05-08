@@ -335,7 +335,12 @@ class lC_Products_Admin_rpc {
           $Qcheck->execute();
 
           if ( $Qcheck->numberOfRows() === 1 ) {
-            $default_flag = 0;
+            // is default image uploaded, remove the old default image first.
+            if (isset($_GET['default']) && $_GET['default'] == '1') {
+              $lC_Image->delete($Qcheck->value('id'));
+            } else {
+              $default_flag = 0;
+            }
           }
 
           $Qimage = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added) values (:products_id, :image, :default_flag, :sort_order, :date_added)');

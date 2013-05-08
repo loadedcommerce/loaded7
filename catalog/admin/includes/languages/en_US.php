@@ -116,6 +116,7 @@ icon_nav_back = Previous
 icon_nav_back_grey =
 icon_nav_forward = Next
 icon_nav_forward_grey =
+icon_make_default = Make Default
 icon_marketing = Marketing
 icon_new = New
 icon_new_file = New File
@@ -231,6 +232,7 @@ tooltip_messages = Messages (m)
 tooltip_settings = Settings (s) / Main Menu (escape)
 
 text_version = Version
+text_confirm_delete = Confirm Delete?
 
 update_message_title = Updates are Available!
 update_message_text1 = New version
