@@ -156,7 +156,8 @@ function showImages(data) {
 
     if ( entry[6] == '1' ) { // default_flag         
       var newdiv = '<span id="image_' + entry[0] + '" style="' + style + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
-      newdiv += '<img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /><br />' + entry[3];
+      newdiv += '<img class="framed" src="<?php echo '../images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /><br />' + entry[3];
+      var prevdiv = '<img src="<?php echo '../images/products/large/'; ?>' + entry[2] + '" border="0" style="max-width:100%;" />';
       if ( entry[1] == '1' ) {    
         newdiv += '<div class="show-on-parent-hover" style="position:relative;"><span class="button-group compact children-tooltip" style="position:absolute; top:-42px; left:8px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showImage(\'' + entry[4] + '\', \'' + entry[7] + '\', \'' + entry[8] + '\');"></a><a href="#" class="button icon-trash" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
       } else {
@@ -189,6 +190,8 @@ function showImages(data) {
       }
     }      
   }
+  
+  $('#imagePreviewContainer').html(prevdiv);
 
   $('#additionalOriginal').sortable({
     update: function(event, ui) {
@@ -224,7 +227,9 @@ function getImages() {
 
 function getImagesOriginals(makeCall) {
   $('#additionalOriginal').empty();
+  $('#imagePreviewContainer').empty();
   $('#defaultImages').html('<div id="showProgressOriginal" style="float: left; padding-left: 10px;"><span class="loader on-dark small-margin-right"></span><?php echo $lC_Language->get('image_loading_from_server'); ?></div>');
+  $('#imagePreviewContainer').html('<p id="showProgressOriginal" align="center" class="large-margin-top"><span class="loader huge refreshing"></span></p>');
 
   if ( makeCall != false ) {
     $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=getImages&filter=originals'); ?>',

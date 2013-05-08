@@ -15,6 +15,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 ini_set("display_errors", 1);
 
 if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
+  $pInfo = new lC_ObjectInfo(lC_Products_Admin::get($_GET[$lC_Template->getModule()]));
+}
+
+if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
   $lC_ObjectInfo = new lC_ObjectInfo(lC_Products_Admin::get($_GET[$lC_Template->getModule()]));
   $attributes = $lC_ObjectInfo->get('attributes');
   $Qpd = $lC_Database->query('select products_name, products_description, products_keyword, products_tags, products_url, language_id from :table_products_description where products_id = :products_id');
@@ -87,7 +91,7 @@ if ( isset($lC_ObjectInfo) ) {
 }
 
 // get product image
-$Qpi = $lC_Database->query('select image from :table_products_images where products_id = :products_id');
+$Qpi = $lC_Database->query("select image from :table_products_images where products_id = :products_id and default_flag = '1'");
 $Qpi->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
 $Qpi->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
 $Qpi->execute();
@@ -141,23 +145,8 @@ function getTaxClassOptionsString($id = null, $esc = false) {
   }
 }
 ?>
-<script type="text/javascript" src="../ext/tiny_mce/tiny_mce.js"></script>
-<script>
-function toggleEditor(id) {
-  var editorHidden = $(".clEditorProductDescription").is(":visible");
-  if (editorHidden) {
-    //alert('show');
-    $(".clEditorProductDescription").cleditor({width:"99%", height:"255"});
-  } else {
-    //alert('hide');
-    var editor = $(".clEditorProductDescription").cleditor()[0];
-    editor.$area.insertBefore(editor.$main); // Move the textarea out of the main div
-    editor.$area.removeData("cleditor"); // Remove the cleditor pointer from the textarea
-    editor.$main.remove(); // Remove the main div and all children from the DOM
-    $(".clEditorProductDescription").show();
-  }
-}
-</script>
+
+
 <?php
   if (isset($_SESSION['error'])) unset($_SESSION['error']);
   if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']);

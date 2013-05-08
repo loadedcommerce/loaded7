@@ -331,7 +331,18 @@ class lC_Products_Admin {
     }
 
     $data['attributes'] = $attributes_array;
+    
+    $Qimages = $lC_Database->query('select id, image, default_flag from :table_products_images where products_id = :products_id order by sort_order');
+    $Qimages->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+    $Qimages->bindInt(':products_id', $id);
+    $Qimages->execute();
 
+    while ($Qimages->next()) {
+      if ($Qimages->valueInt('default_flag') == '1') {
+        $data['image'] = $Qimages->value('image');
+      }
+    }
+    
     return $data;
   }
  /*
