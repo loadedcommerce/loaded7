@@ -174,6 +174,7 @@ function editLanguage(id) {
       $("#locale").val(data.languageData.locale);
       $("#charset").val(data.languageData.charset);
       $("#text_direction").val( data.languageData.text_direction ).attr('selected', true);
+      $("#text_direction").closest("span + *").prevAll("span.select-value:first").text(data.languageData.text_direction);
       $("#date_format_short").val(data.languageData.date_format_short);
       $("#date_format_long").val(data.languageData.date_format_long);
       $("#time_format").val(data.languageData.time_format);
