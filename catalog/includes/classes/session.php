@@ -149,6 +149,14 @@
         session_start();
         
         return true;
+      } else if (isset($_GET['lCAdminID']) && $_GET['lCAdminID'] != NULL ) {
+
+        $this->_is_started = true;
+        $this->_id = $_GET['lCAdminID'];
+        session_id($_GET['lCAdminID']);
+        session_start();
+        
+        return true;
       } else if ( session_start() ) {
         $this->_is_started = true;
         $this->_id = session_id();

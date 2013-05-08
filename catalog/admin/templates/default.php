@@ -251,7 +251,7 @@
           <section>
             <div id="addContainerLinks">
               <ul class="list spaced">
-                <li class="anthracite-gradient">
+                <!--<li class="anthracite-gradient">
                   <span class="list-count grey with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_order'); ?>">o</span>
                   <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_order_title'); ?>">
                     <div class="add-container-icon">
@@ -261,7 +261,7 @@
                       <?php echo $lC_Language->get('quick_add_order'); ?>
                     </div>
                   </a>
-                </li>
+                </li>-->
                 <li class="anthracite-gradient">
                   <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>">c</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_customer_title'); ?>">
@@ -454,7 +454,7 @@
         </div>
       </div>
       
-      <div id="recentContainer" class="hide-below-992">
+      <!--<div id="recentContainer" class="hide-below-992">
         <section>
           <ul class="title-menu">
             <li>Recent Events</li>
@@ -492,9 +492,9 @@
             </li>
           </ul>
         </section>
-      </div>
+      </div>-->
       
-      <footer id="menu-footer" class="hide-below-992">
+      <footer id="menu-footer">
         <!-- QR Code -->
         <div style="margin:-15px; padding:10px 20px 14px 10px; width:100%; height:32px; margin-bottom:0px;">
           <a id="qrcode-tooltip">
@@ -509,8 +509,13 @@
          <a class="close-qr" title="Hide message" onclick="$('#qr-message').hide('500');"><span style="color:#fff;">X</span></a>
          <?php 
           $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
+          if(empty($_GET) === false && !array_key_exists($lC_Session->getName(),$_GET)) {     
+            $qrcode_url .= '&'.$lC_Session->getName().'='.$lC_Session->getID();
+          } else if(!isset($_GET) || empty($_GET)){
+            $qrcode_url .= '?'.$lC_Session->getName().'='.$lC_Session->getID();
+          }
           $BarcodeQR->url($qrcode_url);
-          $BarcodeQR->draw(230, '../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png');
+          $BarcodeQR->draw(200, '../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png');
           echo '<h5>QR Code</h5><img src="../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png" /><br /><h6>Current URL</h6><p>' . $qrcode_url . '</p>';
          ?>
          </div>

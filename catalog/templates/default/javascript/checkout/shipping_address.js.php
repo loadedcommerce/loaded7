@@ -18,7 +18,14 @@
    $(document).ready(function() {
      $('#shipping_address_form').show();
      $('#shipping_address_form').click(function(){
-       $('#checkoutShippingAddressDetails').show('drop');
+       var newAddOpen = $('#checkoutShippingAddressDetails').is(':visible');
+       if (!newAddOpen) {
+         $('#shipping_address_form').html('<?php echo $lC_Language->get('hide_address_form'); ?>');
+       } else {
+         $('#shipping_address_form').html('<?php echo $lC_Language->get('show_address_form'); ?>');
+       }
+       $('#checkoutShippingAddressEntries').toggle('slideUp');
+       $('#checkoutShippingAddressDetails').toggle('slideUp');
      });
    });
    
