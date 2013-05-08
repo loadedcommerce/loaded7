@@ -58,7 +58,7 @@ function editLanguage(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="text_direction" class="label"><?php echo $lC_Language->get('field_text_direction'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('text_direction', array(array('id' => 'ltr', 'text' => 'ltr'), array('id' => 'rtl', 'text' => 'rtl')), null, 'class="select" style="width:95px;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('text_direction', array(array('id' => 'ltr', 'text' => 'ltr'), array('id' => 'rtl', 'text' => 'rtl')), null, 'class="select" style="width:47%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="date_format_short" class="label"><?php echo $lC_Language->get('field_date_format_short'); ?></label>'+
@@ -74,7 +74,7 @@ function editLanguage(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="currencies_id" class="label"><?php echo $lC_Language->get('field_currency'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('currencies_id', null, null, 'class="select" style="width:125px;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('currencies_id', null, null, 'class="select" style="width:47%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="numeric_separator_decimal" class="label"><?php echo $lC_Language->get('field_currency_separator_decimal'); ?></label>'+
@@ -86,7 +86,7 @@ function editLanguage(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="parent_id" class="label"><?php echo $lC_Language->get('field_parent_language'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('parent_id', null, null, 'class="select" style="width:125px;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('parent_id', null, null, 'class="select" style="width:47%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="sort_order" class="label"><?php echo $lC_Language->get('field_sort_order'); ?></label>'+
