@@ -154,11 +154,13 @@ function showImages(data) {
       var onmouseout = 'this.style.backgroundColor=\'\';';
     }
 
-    if ( entry[6] == '1' ) { // default_flag
+    if ( entry[6] == '1' ) { // default_flag         
       var newdiv = '<span id="image_' + entry[0] + '" style="' + style + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
-      newdiv += '<a href="' + entry[4] + '" target="_blank" class="thickbox"><img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /></a><br />' + entry[3];
-      if ( entry[1] == '1' ) {
-        newdiv += '<div class="show-on-parent-hover" style="position:relative;"><span class="button-group compact children-tooltip" style="position:absolute; top:-42px; left:8px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showPreview(\'image_' + entry[0] + '\');"></a><a href="#" class="button icon-trash" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
+      newdiv += '<img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /><br />' + entry[3];
+      if ( entry[1] == '1' ) {    
+        newdiv += '<div class="show-on-parent-hover" style="position:relative;"><span class="button-group compact children-tooltip" style="position:absolute; top:-42px; left:8px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showImage(\'' + entry[4] + '\', \'' + entry[7] + '\', \'' + entry[8] + '\');"></a><a href="#" class="button icon-trash" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
+      } else {
+        newdiv += '<div class="show-on-parent-hover" style="position:relative;"><span class="button-group compact children-tooltip" style="position:absolute; top:-42px; left:21px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showImage(\'' + entry[4] + '\', \'' + entry[7] + '\', \'' + entry[8] + '\');"></a></div>';
       }
       newdiv += '</span>';
 
@@ -167,16 +169,17 @@ function showImages(data) {
     } else {
       if ( entry[1] == '1' ) {  // original images
         var onmouseover = 'this.style.backgroundColor=\'#656565\'; this.style.backgroundImage=\'url(<?php echo lc_href_link_admin('templates/' . $lC_Template->getCode() . '/img/icons/16/drag.png'); ?>)\'; this.style.backgroundRepeat=\'no-repeat\'; this.style.zIndex=\'300000 !important\'; this.style.backgroundPosition=\'8px 2px\';';
-
         var newdiv2 = '<span id="image_' + entry[0] + '" style="' + style + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
         newdiv2 += '<img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /><br />' + entry[3];
-        newdiv2 += '<div class="show-on-parent-hover" style="position:relative; width:125%;"><span class="button-group compact children-tooltip" style="position:absolute; top:-34px; left:-3px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showPreview(\'image_' + entry[0] + '\');"></a><a href="#" class="button icon-marker" onclick="setDefaultImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_make_default'); ?>"></a><a href="#" class="button icon-trash" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
+        newdiv2 += '<div class="show-on-parent-hover" style="position:relative; width:125%;"><span class="button-group compact children-tooltip" style="position:absolute; top:-34px; left:-3px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showImage(\'' + entry[4] + '\', \'' + entry[7] + '\', \'' + entry[8] + '\');"></a><a href="#" class="button icon-marker" onclick="setDefaultImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_make_default'); ?>"></a><a href="#" class="button icon-trash" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
+        
         newdiv2 += '</span>';  
         $('#additionalOriginal').append(newdiv2);      
       } else {
         var newdiv2 = '<span id="image_' + entry[0] + '" style="' + style + (( entry[1] == "1" ) ? " clear:both;" : "") + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
         newdiv2 += '<a href="' + entry[4] + '" target="_blank"><img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /></a><br />' + entry[3];
-
+        newdiv2 += '<div class="show-on-parent-hover" style="position:relative;"><span class="button-group compact children-tooltip" style="position:absolute; top:-42px; left:21px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showImage(\'' + entry[4] + '\', \'' + entry[7] + '\', \'' + entry[8] + '\');"></a></div>';
+        
           //newdiv2 += '<div class="show-on-parent-hover" style="position:relative;"><span class="button-group compact children-tooltip" style="position:absolute; top:-42px; left:8px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_edit'); ?>" onclick="previewImage(\'image_' + entry[0] + '\');"></a><a href="#" class="button icon-trash" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
          // newdiv2 += '<a href="#" onclick="setDefaultImage(\'image_' + entry[0] + '\');"><?php echo lc_icon_admin('default_grey.png'); ?></a>&nbsp;';
 

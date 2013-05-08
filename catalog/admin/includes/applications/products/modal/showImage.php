@@ -13,48 +13,39 @@
 */
 ?>
 <script>
-function showImage(id) {
+function showImage(src, wid, hgt) {
+  if (wid < 1) wid = 300;
+  m = wid * .25;
+  w = parseInt(wid) + m;
+ 
+  size = ''
+  if ((wid != 'undefined' && hgt != 'undefined') && (wid > 0 && hgt > 0)) size = '(' + wid + 'x' + hgt + ')'
+    
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 1) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
-  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getPreview&pid=PID'); ?>'
-  $.getJSON(jsonLink.replace('PID', parseInt(id)),
-    function (data) {
-      if (data.rpcStatus == -10) { // no session
-        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-        $(location).attr('href',url);
-      }
-      if (data.rpcStatus != 1) {
-        $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
-        return false;
-      }
-      $.modal({
-          content: '<div id="showImage">'+
-                   '  <div id="showImageForm">'+
-                   '    <p class="button-height" id="previewContentMessage"></p>'+
-                   '  </div>'+
-                   '</div>',
-          title: '<?php echo $lC_Language->get('modal_heading_preview_product'); ?>',
-          width: 600,
-          scrolling: false,
-          actions: {
-            'Close' : {
-              color: 'red',
-              click: function(win) { win.closeModal(); }
-            }
-          },
-          buttons: {
-            '<?php echo $lC_Language->get('button_close'); ?>': {
-              classes:  'glossy',
-              click:    function(win) { win.closeModal(); }
-            }
-          },
-          buttonsLowPadding: true
-      });
-      $("#previewContentMessage").html(data.previewHtml);
-    }
-  );
+  $.modal({
+      content: '<div id="showImage">'+
+               '  <p align="center"><img src="' + src + '" border="0"></p>'+
+               '</div>',
+      title: '<?php echo $lC_Language->get('modal_heading_preview_image'); ?> ' + size,
+      width: w,
+      scrolling: false,
+      actions: {
+        'Close' : {
+          color: 'red',
+          click: function(win) { win.closeModal(); }
+        }
+      },
+      buttons: {
+        '<?php echo $lC_Language->get('button_close'); ?>': {
+          classes:  'glossy',
+          click:    function(win) { win.closeModal(); }
+        }
+      },
+      buttonsLowPadding: true
+  });
 }
 </script>

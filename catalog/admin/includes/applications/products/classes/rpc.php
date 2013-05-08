@@ -187,7 +187,9 @@ class lC_Products_Admin_rpc {
                                        $group['code'],
                                        lc_href_link($lC_Image->getAddress($Qimages->value('image'), $group['code']), null, 'NONSSL', false, false, true),
                                        number_format(@filesize(DIR_FS_CATALOG . DIR_WS_IMAGES . 'products/' . $group['code'] . '/' . $Qimages->value('image'))),
-                                       $Qimages->valueInt('default_flag'));
+                                       $Qimages->valueInt('default_flag'),
+                                       $lC_Image->getWidth($group['code']),
+                                       $lC_Image->getHeight($group['code']));
         }
       }
     }

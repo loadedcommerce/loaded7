@@ -62,6 +62,7 @@ modal_heading_edit_product = Edit Product
 modal_heading_copy_product = Copy Product
 modal_heading_delete_product = Delete Product
 modal_heading_preview_product = Preview Product
+modal_heading_preview_image = Preview Image
 modal_heading_batch_delete_products = Batch Delete Products
 modal_heading_batch_copy_products = Batch Copy Products 
 modal_heading_delete_image = Delete Image
