@@ -81,84 +81,80 @@
         </ul>
         <div class="clearfix tabs-content">
           <div id="section_general_content">
-            <div class="columns">
-              <div class="twelve-columns large-margin-top">
-                <div class="with-padding">
-                  <div id="categoryLanguageTabs" class="standard-tabs at-bottom">
-                    <ul class="tabs">
-                    <?php
-                      foreach ( $lC_Language->getAll() as $l ) {
-                        echo '<li>' . lc_link_object('#languageTabs_' . $l['code'], $lC_Language->showImage($l['code']) . '&nbsp;' . $l['name']) . '</li>';
-                      }
+            <div class="columns with-padding">
+              <div class="eight-columns">
+                <div id="categoryLanguageTabs" class="standard-tabs at-bottom">
+                  <ul class="tabs">
+                  <?php
+                    foreach ( $lC_Language->getAll() as $l ) {
+                      echo '<li>' . lc_link_object('#languageTabs_' . $l['code'], $lC_Language->showImage($l['code']) . '&nbsp;' . $l['name']) . '</li>';
+                    }
+                  ?>
+                  </ul>
+                  <div class="clearfix tabs-content with-padding">
+                  <?php
+                    foreach ( $lC_Language->getAll() as $l ) {
                     ?>
-                    </ul>
-                    <div class="clearfix tabs-content with-padding">
-                    <?php
-                      foreach ( $lC_Language->getAll() as $l ) {
-                      ?>
-                        <div id="languageTabs_<?php echo $l['code']; ?>">
-                          <div class="columns margin-top">
-                            <div class="eight-columns">
-                              <p class="button-height block-label">
-                                <label class="label" for="<?php echo 'categories_name[' . $l['id'] . ']'; ?>">
-                                  <!--<small>Additional information</small>-->
-                                  <?php echo $lC_Language->get('field_name'); ?>
-                                </label>
-                                <?php echo lc_draw_input_field('categories_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_name[$l['id']]) ? $categories_name[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
-                              </p>
-                              <p class="button-height block-label">
-                                <label class="label" for="<?php echo 'categories_menu_name[' . $l['id'] . ']'; ?>">
-                                  <!--<small>Additional information</small>-->
-                                  <?php echo $lC_Language->get('field_menu_name'); ?>
-                                </label>
-                                <?php echo lc_draw_input_field('categories_menu_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_menu_name[$l['id']]) ? $categories_menu_name[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
-                              </p>
-                              <p class="button-height block-label">
-                                <label class="label" for="<?php echo 'categories_description[' . $l['id'] . ']'; ?>">
-                                  <!--<small>Additional information</small>-->
-                                  <?php echo $lC_Language->get('field_description'); ?>
-                                </label>
-                                <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_description[$l['id']]) ? $categories_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding clEditorCategoriesDescription"'); ?>
-                                <span class="float-right"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
-                              </p>
-                              <p class="button-height block-label">
-                                <label class="label" for="<?php echo 'categories_meta_keywords[' . $l['id'] . ']'; ?>">
-                                  <!--<small>Additional information</small>-->
-                                  <?php echo $lC_Language->get('field_meta_keywords'); ?>
-                                </label>
-                                <?php echo lc_draw_input_field('categories_meta_keywords[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_meta_keywords[$l['id']]) ? $categories_meta_keywords[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
-                              </p>
-                            </div>
-                            <div class="four-columns small-margin-top">
-                              <dl class="accordion same-height margin-top">
-                                <dt><?php echo $lC_Language->get('text_categories_image_preview'); ?>
-                                  <!--<div class="button-group absolute-right compact mid-margin-right">
-                                    <a href="#" class="button icon-cloud-upload disabled">Upload</a>
-                                    <a href="#" class="button icon-trash with-tooltip disabled" title="Delete"></a>
-                                  </div>-->
-                                </dt>
-                                <dd>
-                                  <div class="with-padding">
-                                    <?php //if ($Qpi->value('image')) { ?>
-                                    <!--<div class="prod-image align-center"><img src="<?php //echo DIR_WS_HTTP_CATALOG . 'images/categories/large/' . $Qpi->value('image'); ?>" style="max-width:100%;" /></div>-->
-                                    <?php //} else { ?>
-                                    <div class="prod-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
-                                    <?php //} ?>
-                                  </div>
-                                </dd>
-                              </dl>
-                              <p class="align-center"><?php echo $lC_Language->get('text_thumbnail_image'); ?></p>
-                            </div>  
-                          </div>
-                        </div>
-                        <div class="clear-both"></div>
-                      <?php
-                      }
-                    ?>
+                    <div id="languageTabs_<?php echo $l['code']; ?>">
+                      <p class="button-height block-label">
+                        <label class="label" for="<?php echo 'categories_name[' . $l['id'] . ']'; ?>">
+                          <!--<small>Additional information</small>-->
+                          <?php echo $lC_Language->get('field_name'); ?>
+                        </label>
+                        <?php echo lc_draw_input_field('categories_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_name[$l['id']]) ? $categories_name[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
+                      </p>
+                      <p class="button-height block-label">
+                        <label class="label" for="<?php echo 'categories_menu_name[' . $l['id'] . ']'; ?>">
+                          <!--<small>Additional information</small>-->
+                          <?php echo $lC_Language->get('field_menu_name'); ?>
+                        </label>
+                        <?php echo lc_draw_input_field('categories_menu_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_menu_name[$l['id']]) ? $categories_menu_name[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
+                      </p>
+                      <p class="button-height block-label">
+                        <label class="label" for="<?php echo 'categories_description[' . $l['id'] . ']'; ?>">
+                          <!--<small>Additional information</small>-->
+                          <?php echo $lC_Language->get('field_description'); ?>
+                        </label>
+                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_description[$l['id']]) ? $categories_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding clEditorCategoriesDescription"'); ?>
+                        <span class="float-right"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
+                      </p>
+                      <p class="button-height block-label">
+                        <label class="label" for="<?php echo 'categories_meta_keywords[' . $l['id'] . ']'; ?>">
+                          <!--<small>Additional information</small>-->
+                          <?php echo $lC_Language->get('field_meta_keywords'); ?>
+                        </label>
+                        <?php echo lc_draw_input_field('categories_meta_keywords[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_meta_keywords[$l['id']]) ? $categories_meta_keywords[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
+                      </p>
                     </div>
+                    <div class="clear-both"></div>
+                    <?php
+                    }
+                  ?>
                   </div>
                 </div>
               </div>
+              <div class="four-columns">
+                <dl class="accordion">
+                  <dt><?php echo $lC_Language->get('text_categories_image_preview'); ?>
+                    <!--<div class="button-group absolute-right compact mid-margin-right">
+                      <a href="#" class="button icon-cloud-upload disabled">Upload</a>
+                      <a href="#" class="button icon-trash with-tooltip disabled" title="Delete"></a>
+                    </div>-->
+                  </dt>
+                  <dd>
+                    <div class="with-padding">
+                      <?php //if ($Qpi->value('image')) { ?>
+                      <!--<div class="prod-image align-center"><img src="<?php //echo DIR_WS_HTTP_CATALOG . 'images/categories/large/' . $Qpi->value('image'); ?>" style="max-width:100%;" /></div>-->
+                      <?php //} else { ?>
+                      <div class="prod-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
+                      <?php //} ?>
+                    </div>
+                  </dd>
+                </dl>
+                <p class="align-center"><?php echo $lC_Language->get('text_thumbnail_image'); ?></p>
+              </div>
+            </div>
+            <div class="columns">
               <div class="twelve-columns no-margin-bottom">
                 <div class="field-drop-tabs button-height black-inputs">
                   <div class="columns no-margin-bottom">
@@ -192,11 +188,9 @@
                   </div>
                 </div>
               </div>
-              
-              
-              
-              
-              <div class="twelve-columns with-padding no-margin-top no-margin-bottom">
+            </div>
+            <div class="columns with-padding">
+              <div class="twelve-columns no-margin-top no-margin-bottom">
                 <div class="columns">
                   <div class="three-columns">
                     Left
@@ -209,10 +203,10 @@
                   </div>
                 </div>
               </div>
+            </div>
+            
+            
               
-              
-              
-            </div>  
           </div>
           <div id="section_data_content" class="with-padding">
             Data
