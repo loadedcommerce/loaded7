@@ -229,4 +229,22 @@ Custom Template CSS added by Loaded7 Dev Team
     box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
   }
 }
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .field-drop-tabs {
+    padding: 13px 20px 17px 85px !important;
+  }
+}
+
+@media screen and (min-width: 480px) and (max-width: 767px) {
+  .field-drop-tabs {
+    padding: 13px 20px 17px 85px !important;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 479px) {
+  .field-drop-tabs {
+    padding: 13px 20px 17px 85px !important;
+  }
+}
      

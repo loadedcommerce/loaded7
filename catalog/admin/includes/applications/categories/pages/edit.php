@@ -21,6 +21,7 @@
     while ($Qcd->next()) {
       $categories_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_name');
       $categories_menu_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_menu_name');
+      $categories_blurb[$Qcd->valueInt('language_id')] = $Qcd->value('categories_blurb');
       $categories_description[$Qcd->valueInt('language_id')] = $Qcd->value('categories_description');
       $categories_keyword[$Qcd->valueInt('language_id')] = $Qcd->value('categories_keyword');
       $categories_tags[$Qcd->valueInt('language_id')] = $Qcd->value('categories_tags');
@@ -82,7 +83,7 @@
         <div class="clearfix tabs-content">
           <div id="section_general_content">
             <div class="columns with-padding">
-              <div class="eight-columns">
+              <div class="eight-columns twelve-columns-mobile">
                 <div id="categoryLanguageTabs" class="standard-tabs at-bottom">
                   <ul class="tabs">
                   <?php
@@ -111,6 +112,13 @@
                         <?php echo lc_draw_input_field('categories_menu_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_menu_name[$l['id']]) ? $categories_menu_name[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
                       </p>
                       <p class="button-height block-label">
+                        <label class="label" for="<?php echo 'categories_blurb[' . $l['id'] . ']'; ?>">
+                          <!--<small>Additional information</small>-->
+                          <?php echo $lC_Language->get('field_blurb'); ?>
+                        </label>
+                        <?php echo lc_draw_textarea_field('categories_blurb[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_blurb[$l['id']]) ? $categories_blurb[$l['id']] : null), null, 1, 'class="required input full-width mid-margin-top"'); ?>
+                      </p>
+                      <p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_description[' . $l['id'] . ']'; ?>">
                           <!--<small>Additional information</small>-->
                           <?php echo $lC_Language->get('field_description'); ?>
@@ -133,7 +141,7 @@
                   </div>
                 </div>
               </div>
-              <div class="four-columns">
+              <div class="four-columns twelve-columns-mobile">
                 <dl class="accordion">
                   <dt><?php echo $lC_Language->get('text_categories_image_preview'); ?>
                     <!--<div class="button-group absolute-right compact mid-margin-right">
@@ -157,33 +165,53 @@
             <div class="columns">
               <div class="twelve-columns no-margin-bottom">
                 <div class="field-drop-tabs button-height black-inputs">
-                  <div class="columns no-margin-bottom">
-                    <div class="one-column">
+                  <div class="columns no-margin-bottom mid-margin-top">
+                    <div class="six-columns twelve-columns-mobile margin-bottom">
                       <label class="label" for="resize_height"><b>Mode</b></label>
+                      <select class="select full-width" id="categories_mode" name="categories_mode" onchange="customCheck();">
+                        <option value="category">Category</option>
+                        <option value="page">Page</option>
+                        <?php //foreach () { ?>
+                        <!-- this will be somehow generated per the store side content possobilities -->
+                        <option value="specials">Specials</option>
+                        <option value="featured">Featured</option>
+                        <option value="new">New</option>
+                        <option value="search">Search</option>
+                        <option value="cart">Cart</option>
+                        <option value="account">My Account</option>
+                        <?php //} ?>
+                        <option value="override">Custom Link (Override)</option>
+                      </select>
+                      <p class="small-margin-top"><input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"> Open in New Window</p>
+                      <script>
+                        function customCheck() {
+                          var cModeVal = $("#categories_mode").val();
+                          if (cModeVal == 'override') {
+                            $("#categories_custom").show();
+                          } else {
+                            $("#categories_custom").hide();
+                            $("#categories_custom_url").val("");
+                          }
+                        }
+                      </script>
                     </div>
-                    <div class="eleven-columns margin-bottom">
-                      <div>
-                        <input id="category_mode_1" type="radio" value="category" name="category_mode">
-                        <span>Product Category</span>
-                      </div>
-                      <div>
-                        <input id="category_mode_2" type="radio" value="page" name="category_mode">
-                        <span>Page Only</span>
-                      </div>
+                    <div class="six-columns twelve-columns-mobile" style="display:none;" id="categories_custom">
+                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"> &nbsp;<strong>Custom Link</strong>
                     </div>
                   </div>
                   <div class="columns">
-                    <div class="one-column">
+                    <div class="six-columns twelve-columns-mobile">
                       <label class="label" for="resize_height"><b>Parent</b></label>
-                    </div>
-                    <div class="eleven-columns">
-                      <select class="select">
+                      <select class="select full-width">
                         <option>Top</option>
                         <option>Women</option>
                         <option>Men</option>
                         <option>Kids</option>
                         <option>Accessories</option>
                       </select>
+                    </div>
+                    <div class="six-columns twelve-columns-mobile small-margin-top">
+                      <input type="checkbox" class="checkbox" id="categories_" name="categories_"> Display in Main Category Menu
                     </div>
                   </div>
                 </div>

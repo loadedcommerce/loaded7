@@ -17,6 +17,7 @@ delete_warning_category_in_use = Warning: There are
 delete_warning_category_in_use_children = sub-categories assigned to this category that will also be removed.
 delete_warning_category_in_use_products = products assigned to this category that will have this category relationship removed.
 
+field_blurb = Listing Blurb
 field_description = Content
 field_image = Image
 field_menu_name = Nick (Menu Title)
