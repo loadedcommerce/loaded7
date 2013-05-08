@@ -539,7 +539,7 @@ class lC_Updates_Admin {
       try {
         exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
       } catch ( Exception $e ) {  
-        die('RUN ERROR: ' . '\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');      
+        self::log('*** Could Not Set Permissions on PHP files to 644');
       }       
       
       self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
