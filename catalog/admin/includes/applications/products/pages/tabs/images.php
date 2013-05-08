@@ -12,7 +12,11 @@
   @license    http://loadedcommerce.com/license.html
 */
 global $lC_Language, $lC_Template, $lC_ObjectInfo; 
-?>
+?>   
+<style>
+.files-list > li:hover { color: #0099FF; }
+.selected-menu { color: #016cb3; }
+</style>
 <div id="section_images_content" class="with-padding">
   <div class="content-panel margin-bottom enabled-panels">
     <div class="panel-navigation silver-gradient">
@@ -107,7 +111,8 @@ global $lC_Language, $lC_Template, $lC_ObjectInfo;
 <script>
 $(document).ready(function() {
   createUploader();
-  getImages();
+  getImages();  
+  $('#images-gallery-trigger').addClass('with-right-arrow grey-arrow').addClass('selected-menu');;
 });
 
 function createUploader(){
@@ -121,17 +126,18 @@ function createUploader(){
 }
 
 // added for the product images content panel switching
-function showContent(tab) {
+function showContent(tab) { 
+  $('.qq-upload-list').empty();
   if (tab == 'default') {
     $('#defaultImagesContainer').show();
     $('#additionalImagesContainer').hide();
-    $('#images-gallery-trigger').addClass('with-right-arrow grey-arrow');
-    $('#additional-gallery-trigger').removeClass('with-right-arrow grey-arrow');    
+    $('#images-gallery-trigger').addClass('with-right-arrow grey-arrow').addClass('selected-menu');;
+    $('#additional-gallery-trigger').removeClass('with-right-arrow grey-arrow').removeClass('selected-menu');;    
   } else {
     $('#defaultImagesContainer').hide();
     $('#additionalImagesContainer').show();
-    $('#images-gallery-trigger').removeClass('with-right-arrow grey-arrow');
-    $('#additional-gallery-trigger').addClass('with-right-arrow grey-arrow');  
+    $('#images-gallery-trigger').removeClass('with-right-arrow grey-arrow').removeClass('selected-menu');;
+    $('#additional-gallery-trigger').addClass('with-right-arrow grey-arrow').addClass('selected-menu');  
   }
 }   
 
@@ -150,9 +156,9 @@ function showImages(data) {
 
     if ( entry[6] == '1' ) { // default_flag
       var newdiv = '<span id="image_' + entry[0] + '" style="' + style + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
-      newdiv += '<img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /><br />' + entry[3];
+      newdiv += '<a href="' + entry[4] + '" target="_blank" class="thickbox"><img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /></a><br />' + entry[3];
       if ( entry[1] == '1' ) {
-        newdiv += '<div class="show-on-parent-hover" style="position:relative;"><span class="button-group compact children-tooltip" style="position:absolute; top:-42px; left:8px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="previewImage(\'image_' + entry[0] + '\');"></a><a href="#" class="button icon-trash" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
+        newdiv += '<div class="show-on-parent-hover" style="position:relative;"><span class="button-group compact children-tooltip" style="position:absolute; top:-42px; left:8px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showPreview(\'image_' + entry[0] + '\');"></a><a href="#" class="button icon-trash" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
       }
       newdiv += '</span>';
 
@@ -164,7 +170,7 @@ function showImages(data) {
 
         var newdiv2 = '<span id="image_' + entry[0] + '" style="' + style + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
         newdiv2 += '<img class="framed" src="<?php echo DIR_WS_HTTP_CATALOG . 'images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /><br />' + entry[3];
-        newdiv2 += '<div class="show-on-parent-hover" style="position:relative; width:125%;"><span class="button-group compact children-tooltip" style="position:absolute; top:-34px; left:-3px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="previewImage(\'image_' + entry[0] + '\');"></a><a href="#" class="button icon-marker" onclick="setDefaultImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_make_default'); ?>"></a><a href="#" class="button icon-trash" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
+        newdiv2 += '<div class="show-on-parent-hover" style="position:relative; width:125%;"><span class="button-group compact children-tooltip" style="position:absolute; top:-34px; left:-3px;"><a href="javascript://" class="button icon-camera" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showPreview(\'image_' + entry[0] + '\');"></a><a href="#" class="button icon-marker" onclick="setDefaultImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_make_default'); ?>"></a><a href="#" class="button icon-trash" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
         newdiv2 += '</span>';  
         $('#additionalOriginal').append(newdiv2);      
       } else {
@@ -199,11 +205,6 @@ function showImages(data) {
   if ( $('#showProgressOther').css('display') != 'none') {
     $('#showProgressOther').css('display', 'none');
   }
-}
-
-
-function previewImage(img) {
-  alert('preview: ' + img);
 }
 
 function getImages() {
@@ -256,15 +257,15 @@ function removeImage(id) {
   });
 }
              
-function setDefaultImage(id) {
+function setDefaultImage(id) {  
   $.modal.confirm('<?php echo $lC_Language->get('text_confirm_set_default'); ?>', function() {
     var image = id.split('_');
     $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=setDefaultImage'); ?>' + '&image=' + image[1],
       function (data) {
-        getImages();
+        getImages();  
         showContent('default');
       }
-    );
+    ); 
   }, function() {
   })  
 }

@@ -77,7 +77,9 @@
   <link rel="stylesheet" href="templates/default/css/styles/jquery.loadmask.css?v=1">  
   <!-- Google code prettifier -->
   <link rel="stylesheet" href="../ext/jquery/google-code-prettify/sunburst.css?v=1">
-
+  <!-- image thickbox plugin -->    
+  <link rel="stylesheet" type="text/css" href="../ext/jquery/thickbox/thickbox.css" />
+  
   <!-- Load Page Specific CSS -->
   <?php echo $lC_Template->loadPageCss($lC_Template->getModule()); ?>
 
@@ -557,6 +559,7 @@
   <script src="../ext/jquery/jquery.details.min.js"></script>
   <script src="../ext/jquery/jquery.blink.js"></script>
   <script src="../ext/jquery/jquery.loadmask.js"></script>
+  <script src="../ext/jquery/thickbox/thickbox-compressed.js"></script>
   <!-- Template functions -->
   <script src="templates/default/js/setup.js"></script>
   <script src="templates/default/js/float.js"></script>

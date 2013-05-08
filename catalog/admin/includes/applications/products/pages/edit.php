@@ -609,3 +609,8 @@ function toggleEditor(id) {
     </div>
   </div>
 </section>
+<?php
+if ( is_dir('includes/applications/products/modal') ) {
+  if ( file_exists('includes/applications/products/modal/preview.php') ) include_once($lC_Vqmod->modCheck('includes/applications/products/modal/preview.php'));
+}
+?>
