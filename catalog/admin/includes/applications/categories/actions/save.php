@@ -21,7 +21,43 @@
       $this->_page_contents = 'edit.php'; 
 
       if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
-        die('test confirm');
+        switch ( $_GET['action'] ) {
+          case 'save':  
+            $data = array('parent_id' => $_POST['parent_id'],
+                          'image' => (isset($_FILES['categories_image']) ? $_FILES['categories_image'] : null),
+                          'sort_order' => $_POST['sort_order'],
+                          'mode' => $_POST['categories_mode'],
+                          'link_target' => $_POST['categories_link_target'],
+                          'custom_url' => $_POST['categories_custom_url'],
+                          'name' => $_POST['categories_name'],
+                          'menu_name' =>  $_POST['categories_menu_name'],
+                          'blurb' =>  $_POST['categories_blurb'],
+                          'description' =>  $_POST['categories_description'],
+                          //'keyword' =>  $_POST['categories_keyword'],
+                          'tags' =>  $_POST['categories_tags'],
+                          'meta_title' =>  $_POST['categories_meta_title'],
+                          'meta_keywords' =>  $_POST['categories_meta_keywords'],
+                          'meta_description' => $_POST['categories_meta_description'] );
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
+            die();
+           /*
+            * Save the category information
+            *
+            * @param integer $_GET['cid'] The categories id used on update, null on insert
+            * @param array $data The categories information
+            * @access public
+            * @return boolean
+            */
+            if ( lC_Categories_Admin::save((isset($_GET['cid']) && is_numeric($_GET['cid']) ? $_GET['cid'] : null), $data) ) {
+              lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $_GET[$this->_module]));
+            } else {
+              $_SESSION['error'] = true;
+              $_SESSION['errmsg'] = $lC_Language->get('ms_error_action_not_performed');
+            }
+            break;
+        }
       }
     }
   }

@@ -18,22 +18,26 @@
     $Qcd->bindInt(':categories_id', $lC_ObjectInfo->get('categories_id'));
     $Qcd->execute();
     $categories_name = array();
+    $categories_menu_name = array();
+    $categories_blurb = array();
+    $categories_description = array();
+    //$categories_keyword = array();
+    $categories_tags = array();
+    $categories_meta_title = array();
+    $categories_meta_keywords = array();
+    $categories_meta_description = array();
     while ($Qcd->next()) {
       $categories_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_name');
       $categories_menu_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_menu_name');
       $categories_blurb[$Qcd->valueInt('language_id')] = $Qcd->value('categories_blurb');
       $categories_description[$Qcd->valueInt('language_id')] = $Qcd->value('categories_description');
-      $categories_keyword[$Qcd->valueInt('language_id')] = $Qcd->value('categories_keyword');
+      //$categories_keyword[$Qcd->valueInt('language_id')] = $Qcd->value('categories_keyword');
       $categories_tags[$Qcd->valueInt('language_id')] = $Qcd->value('categories_tags');
       $categories_meta_title[$Qcd->valueInt('language_id')] = $Qcd->value('categories_meta_title');
       $categories_meta_keywords[$Qcd->valueInt('language_id')] = $Qcd->value('categories_meta_keywords');
       $categories_meta_description[$Qcd->valueInt('language_id')] = $Qcd->value('categories_meta_description');
     }
   }
-  
-  $assignedCategoryTree = new lC_CategoryTree();
-  $assignedCategoryTree->setBreadcrumbUsage(false);
-  $assignedCategoryTree->setSpacerString('&nbsp;', 5);
 
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
@@ -52,7 +56,7 @@
     TD { padding: 5px 0 0 5px; }
   </style>
   <div class="with-padding-no-top">
-    <form name="product" id="product" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('categories_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
+    <form name="category" id="category" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('categories_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="category_tabs" class="side-tabs">
         <ul class="tabs">
           <li class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
@@ -149,7 +153,7 @@
                       <label class="label" for="resize_height"><b><?php echo $lC_Language->get('text_mode'); ?></b></label>
                       <select class="select full-width" id="categories_mode" name="categories_mode" onchange="customCheck();">
                         <option value="category"><?php echo $lC_Language->get('text_category'); ?></option>
-                        <option value="page"><?php echo $lC_Language->get('text_page'); ?></option>
+                        <option value="page"><?php echo $lC_Language->get('text_page_only'); ?></option>
                         <?php //foreach () { ?>
                         <!-- this will be somehow generated per the store side content possobilities -->
                         <option value="specials">Specials</option>
@@ -170,12 +174,12 @@
                   <div class="columns">
                     <div class="six-columns twelve-columns-mobile">
                       <label class="label" for="resize_height"><b><?php echo $lC_Language->get('text_parent'); ?></b></label>
-                      <select class="select full-width">
-                        <option>Top</option>
-                        <option>Women</option>
-                        <option>Men</option>
-                        <option>Kids</option>
-                        <option>Accessories</option>
+                      <select class="select full-width" id="parent_id" name="parent_id">
+                        <option value="1">Top</option>
+                        <option value="2">Women</option>
+                        <option value="3">Men</option>
+                        <option value="4">Kids</option>
+                        <option value="5">Accessories</option>
                       </select>
                     </div>
                     <div class="six-columns twelve-columns-mobile small-margin-top">
@@ -205,29 +209,11 @@
             Data
           </div>
           <div id="section_categories_content" class="with-padding"> 
-            <fieldset class="fieldset">
-              <legend class="legend"><?php echo $lC_Language->get('text_categories'); ?></legend>
-              <table border="0" width="100%" cellspacing="0" cellpadding="2" style="margin-top:-10px;">
-                <tr>
-                  <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
-                    <tbody>
-                    <?php
-                      foreach ($assignedCategoryTree->getArray() as $value) {
-                        echo '          <tr>' . "\n" .
-                             '            <td width="30px" class="cat_rel_td">' . lc_draw_checkbox_field('categories[]', $value['id'], in_array($value['id'], $product_categories_array), 'class="input" id="categories_' . $value['id'] . '"') . '</td>' . "\n" .
-                             '            <td class="cat_rel_td"><a href="#" onclick="document.product.categories_' . $value['id'] . '.checked=!document.product.categories_' . $value['id'] . '.checked;">' . $value['title'] . '</a></td>' . "\n" .
-                             '          </tr>' . "\n";
-                      }
-                    ?>
-                    </tbody>
-                  </table></td>
-                </tr>
-              </table>
-              <br /> 
-            </fieldset>
+            Relationships (Later Phase)
           </div>
         </div>
       </div>
+      <?php echo lc_draw_hidden_field('sort_order', 'confirm'); ?>
       <?php echo lc_draw_hidden_field('subaction', 'confirm'); ?>
     </form>
     <div class="clear-both"></div>
@@ -241,7 +227,7 @@
                   <span class="icon-cross"></span>
                 </span><?php echo $lC_Language->get('button_cancel'); ?>
               </a>&nbsp;
-              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#product\').submit();'); ?>">
+              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#category\').submit();'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
                 </span><?php echo $lC_Language->get('button_save'); ?>

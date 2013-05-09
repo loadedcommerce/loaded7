@@ -66,32 +66,7 @@ class lC_Application_Categories extends lC_Template_Admin {
     foreach ($breadcrumb_array as $key => $value) {
       $breadcrumb_string .= '<li>' . $value . '</li>';
     }  
-    $breadcrumb_string .= '</ul>';    
-    
-    /*if ( !empty($_GET['action']) ) {
-      switch ( $_GET['action'] ) {
-        case 'save':  
-          $data = array('name' => $_POST['categories_name'],
-                        'parent_id' => $_POST['parent_id'],
-                        'image' => (isset($_FILES['categories_image']) ? $_FILES['categories_image'] : null),
-                        'sort_order' => $_POST['sort_order']);
-         /*
-          * Save the category information
-          *
-          * @param integer $_GET['cid'] The categories id used on update, null on insert
-          * @param array $data The categories information
-          * @access public
-          * @return boolean
-          */
-          /*if ( lC_Categories_Admin::save((isset($_GET['cid']) && is_numeric($_GET['cid']) ? $_GET['cid'] : null), $data) ) {
-            lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $_GET[$this->_module]));
-          } else {
-            $_SESSION['error'] = true;
-            $_SESSION['errmsg'] = $lC_Language->get('ms_error_action_not_performed');
-          }
-          break;
-      }
-    }*/
+    $breadcrumb_string .= '</ul>';
   }
 }
 ?>
