@@ -173,4 +173,10 @@
     
     return $html;
   }
+  
+  function lc_show_info_bubble($msg, $classA = 'on-left grey float-right', $classB = 'blue-bg', $minWidth = '150px') {
+    $html = '<span class="info-spot ' . $classA . '"><span class="icon-info-round"></span><span style="min-width:' . $minWidth . ';" class="info-bubble ' . $classB . '">' . $msg . '</span></span>';
+    
+    return $html;    
+  }
 ?>
