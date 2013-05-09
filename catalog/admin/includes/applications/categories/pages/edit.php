@@ -35,29 +35,8 @@
   $assignedCategoryTree->setBreadcrumbUsage(false);
   $assignedCategoryTree->setSpacerString('&nbsp;', 5);
 
-  if (isset($_SESSION['error'])) unset($_SESSION['error']);
-  if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']);
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
-<script>
-  function toggleEditor(id) {
-    var editorHidden = $(".clEditorCategoriesDescription").is(":visible");
-    if (editorHidden) {
-      //alert('show');
-      $(".clEditorCategoriesDescription").cleditor({width:"99%", height:"255"});
-    } else {
-      //alert('hide');
-      var editor = $(".clEditorCategoriesDescription").cleditor()[0];
-      editor.$area.insertBefore(editor.$main); // Move the textarea out of the main div
-      editor.$area.removeData("cleditor"); // Remove the cleditor pointer from the textarea
-      editor.$main.remove(); // Remove the main div and all children from the DOM
-      $(".clEditorCategoriesDescription").show();
-    }
-  }
-  $(document).ready(function() {
-    $(".clEditorCategoriesDescription").cleditor({width:"99%", height:"255"});
-  });
-</script>
 <!-- Main content -->
 <section role="main" id="main">
   <hgroup id="main-title" class="thin">
@@ -221,9 +200,6 @@
                 </div>
               </div>
             </div>
-            
-            
-              
           </div>
           <div id="section_data_content" class="with-padding">
             Data

@@ -57,6 +57,8 @@ $(document).ready(function() {
   if (quickAdd) {
     newCategory();
   }
+  
+  $(".clEditorCategoriesDescription").cleditor({width:"99%", height:"255"});
 });
 
 function doSelectFunction(e) {
@@ -74,6 +76,21 @@ function customCheck() {
   } else {
     $("#categories_custom").hide();
     $("#categories_custom_url").val("");
+  }
+}
+
+function toggleEditor(id) {
+  var editorHidden = $(".clEditorCategoriesDescription").is(":visible");
+  if (editorHidden) {
+    //alert('show');
+    $(".clEditorCategoriesDescription").cleditor({width:"99%", height:"255"});
+  } else {
+    //alert('hide');
+    var editor = $(".clEditorCategoriesDescription").cleditor()[0];
+    editor.$area.insertBefore(editor.$main); // Move the textarea out of the main div
+    editor.$area.removeData("cleditor"); // Remove the cleditor pointer from the textarea
+    editor.$main.remove(); // Remove the main div and all children from the DOM
+    $(".clEditorCategoriesDescription").show();
   }
 }
 </script>
