@@ -27,9 +27,9 @@
                           'parent_id' => $_POST['parent_id'],
                           'sort_order' => $_POST['sort_order'],
                           'mode' => $_POST['categories_mode'],
-                          'link_target' => $_POST['categories_link_target'],
+                          'link_target' => ($_POST['categories_link_target'] == 'on') ? 1 : 0,
                           'custom_url' => $_POST['categories_custom_url'],
-                          'display_in_menu' => $_POST['categories_display_in_menu'],
+                          'display_in_menu' => ($_POST['categories_display_in_menu'] == 'on') ? 1 : 0,
                           'name' => $_POST['categories_name'],
                           'menu_name' =>  $_POST['categories_menu_name'],
                           'blurb' =>  $_POST['categories_blurb'],
@@ -39,10 +39,6 @@
                           'meta_title' =>  $_POST['categories_meta_title'],
                           'meta_keywords' =>  $_POST['categories_meta_keywords'],
                           'meta_description' => $_POST['categories_meta_description'] );
-            echo '<pre>[';
-            print_r($_GET['cID']);
-            echo ']</pre>';
-            die();
            /*
             * Save the category information
             *
@@ -51,7 +47,7 @@
             * @access public
             * @return boolean
             */
-            if ( lC_Categories_Admin::save((isset($_GET['cid']) && is_numeric($_GET['cID']) ? $_GET['cID'] : null), $data) ) {
+            if ( lC_Categories_Admin::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data) ) {
               lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $_GET[$this->_module]));
             } else {
               $_SESSION['error'] = true;
