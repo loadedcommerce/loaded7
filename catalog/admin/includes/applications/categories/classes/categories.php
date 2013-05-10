@@ -67,16 +67,18 @@ class lC_Categories_Admin {
   */
   public static function formData($id = null, $parent = null) {
     global $lC_Language, $_module;
-
+    
     $lC_Language->loadIniFile('categories.php');
     $lC_CategoryTree = new lC_CategoryTree_Admin();
-
+    
     $result = array();
     $categories_array = array('0' => $lC_Language->get('top_category'));
     foreach ( $lC_CategoryTree->getArray() as $value ) {
       $cid = explode('_', $value['id']);
       $cid = end($cid);
-      $categories_array[$cid] = $value['title'];
+      if ($cid != $id && lC_Categories_Admin::get_final_parent($cid) != $id) {
+        $categories_array[$cid] = $value['title'];
+      }
     }
     $result['categoriesArray'] = $categories_array;
 
