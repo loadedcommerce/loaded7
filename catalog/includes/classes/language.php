@@ -27,7 +27,7 @@
       $Qlanguages->bindTable(':table_languages', TABLE_LANGUAGES);
       $Qlanguages->setCache('languages');
       $Qlanguages->execute();
-
+      
       while ($Qlanguages->next()) {
         $this->_languages[$Qlanguages->value('code')] = array('id' => $Qlanguages->valueInt('languages_id'),
                                                               'code' => $Qlanguages->value('code'),
@@ -168,7 +168,18 @@
     }
 
     function getAll() {
-      return $this->_languages;
+      // sort the lang data so default lang is first
+      $langArr1 = array();
+      $langArr2 = array();
+      foreach($this->_languages as $lang => $data) {
+        if ($data['id'] == $this->getID()) {
+          $langArr1[$lang] = $data;
+        } else {
+          $langArr2[$lang] = $data;
+        }
+      }
+      
+      return array_merge((array)$langArr1, (array)$langArr2);
     }
 
     function getData($key, $language = '') {

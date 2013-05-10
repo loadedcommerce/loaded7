@@ -91,10 +91,10 @@ if ( isset($lC_ObjectInfo) ) {
 }
 
 // get product image
-$Qpi = $lC_Database->query("select image from :table_products_images where products_id = :products_id and default_flag = '1'");
-$Qpi->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
-$Qpi->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
-$Qpi->execute();
+//$Qpi = $lC_Database->query("select image from :table_products_images where products_id = :products_id and default_flag = '1'");
+//$Qpi->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+//$Qpi->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
+//$Qpi->execute();
 
 // get categories array
 $product_categories_array = array();
@@ -112,10 +112,10 @@ $assignedCategoryTree->setBreadcrumbUsage(false);
 $assignedCategoryTree->setSpacerString('&nbsp;', 5); 
 
 // get specials
-$Qspecials = $lC_Database->query('select * from :table_specials where products_id = :products_id');
-$Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
-$Qspecials->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
-$Qspecials->execute();
+//$Qspecials = $lC_Database->query('select * from :table_specials where products_id = :products_id');
+//$Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
+//$Qspecials->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
+//$Qspecials->execute();
 
 function getCustomerGroupOptionsString($id = null, $esc = false) {
   global $customer_groups_array;
@@ -410,76 +410,7 @@ function getTaxClassOptionsString($id = null, $esc = false) {
       variants_default_combo = id;
     }
   }
-  <?php
-  if ( isset($lC_ObjectInfo) ) {
-    ?>
-    
 
-    function assignLocalImages() {
-      $('#showProgressAssigningLocalImages').css('display', 'inline');
-
-      var selectedFiles = '';
-
-      $('#localImagesSelection :selected').each(function(i, selected) {
-        selectedFiles += 'files[]=' + $(selected).text() + '&';
-      });
-
-      $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=assignLocalImages'); ?>' + '&' + selectedFiles,
-        function (data) {
-          $('#showProgressAssigningLocalImages').css('display', 'none');
-          getLocalImages();
-          getImages();
-        }
-      );
-    }
-    <?php
-  }
-  ?>
-
-  function getLocalImages() {
-    $('#showProgressGetLocalImages').css('display', 'inline');
-
-    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getLocalImages'); ?>',
-      function (data) {
-        var i = 0;
-        var selectList = document.getElementById('localImagesSelection');
-
-        for ( i=selectList.options.length; i>=0; i-- ) {
-          selectList.options[i] = null;
-        }
-
-        for ( i=0; i<data.entries.length; i++ ) {
-          selectList.options[i] = new Option(data.entries[i]);
-          selectList.options[i].selected = false;
-        }
-
-        $('#showProgressGetLocalImages').css('display', 'none');
-      }
-    );
-  }
-
-  function switchImageFilesView(layer) {
-    if (layer == 'local') {
-      var layer1 = document.getElementById('remoteFiles');
-      var layer1link = document.getElementById('remoteFilesLink');
-      var layer2 = document.getElementById('localFiles');
-      var layer2link = document.getElementById('localFilesLink');
-    } else {
-      var layer1 = document.getElementById('localFiles');
-      var layer1link = document.getElementById('localFilesLink');
-      var layer2 = document.getElementById('remoteFiles');
-      var layer2link = document.getElementById('remoteFilesLink');
-    }
-
-    if ( (layer != 'local') || ((layer == 'local') && (layer1.style.display != 'none')) ) {
-      layer1.style.display='none';
-      layer2.style.display='inline';
-      layer1link.style.fontWeight='normal';
-      layer2link.style.fontWeight='bolder';
-    } else {
-      getLocalImages();
-    }
-  }
   // qty pricing
   function updatePriceBreakFields() {
     $("#qty-pricing-grid > tbody").append("<?php  echo $editPBEntry; ?>");
@@ -521,6 +452,9 @@ function getTaxClassOptionsString($id = null, $esc = false) {
 //--></script>
 
 <!-- Main content -->
+<style>
+.legend { font-weight:bold; font-size: 1.1em; }
+</style>
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
   <hgroup id="main-title" class="thin">
@@ -532,7 +466,7 @@ function getTaxClassOptionsString($id = null, $esc = false) {
     ?>
   </hgroup>
   <div class="with-padding-no-top small-margin-top">
-    <form name="product" id="product" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
+    <form name="product" id="product" class="dataForm" onsubmit="validateForm(); return false;" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="product_tabs" class="side-tabs" style="position:relative;">  
         <ul class="tabs">
           <li id="tabHeaderSectionContent" class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
@@ -543,7 +477,7 @@ function getTaxClassOptionsString($id = null, $esc = false) {
           <li id="tabHeaderSectionShipping"><?php echo lc_link_object('#section_shipping_content', $lC_Language->get('section_shipping')); ?></li>
           <li id="tabHeaderSectionRelationships"><?php echo lc_link_object('#section_relationships_content', $lC_Language->get('section_relationships')); ?></li>
         </ul>
-        <div class="clearfix tabs-content">
+        <div class="tabs-content">
           <?php 
           include('includes/applications/products/pages/tabs/content.php'); 
           include('includes/applications/products/pages/tabs/images.php');  
@@ -598,8 +532,45 @@ function getTaxClassOptionsString($id = null, $esc = false) {
     </div>
   </div>
 </section>
-<?php
-if ( is_dir('includes/applications/products/modal') ) {
-  if ( file_exists('includes/applications/products/modal/preview.php') ) include_once($lC_Vqmod->modCheck('includes/applications/products/modal/preview.php'));
-}
-?>
+<script>
+function validateForm(e) {
+  // turn off messages
+  jQuery.validator.messages.required = "";
+
+  var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
+  var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateKeyword&pid=PID'); ?>';
+  var bValid = $("#product").validate({
+    invalidHandler: function() {
+    },
+    rules: {
+      <?php
+      foreach ( $lC_Language->getAll() as $l ) {
+        ?>
+        'products_keyword[<?php echo $l['id']; ?>]': {
+          required: true,
+          remote: jsonVKUrl.replace('PID', pid),
+        },
+        <?php
+      }
+      ?>
+    },
+    
+    messages: {
+      <?php
+      foreach ( $lC_Language->getAll() as $l ) {
+        ?>
+        "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
+        <?php
+      }
+      ?>
+    }
+    
+    
+  }).form();
+  if (bValid) {
+    $(e).submit();
+  }
+
+  return false;
+}           
+</script>

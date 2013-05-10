@@ -262,7 +262,7 @@ class lC_Products_Admin {
   * @return array
   */
   public static function get($id) {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $lC_Currencies;
 
     $Qproducts = $lC_Database->query('select p.*, pd.* from :table_products p, :table_products_description pd where p.products_id = :products_id and p.products_id = pd.products_id and pd.language_id = :language_id');
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
@@ -272,6 +272,20 @@ class lC_Products_Admin {
     $Qproducts->execute();
 
     $data = $Qproducts->toArray();
+    
+    $Qproducts->freeResult(); 
+    
+    $Qspecials = $lC_Database->query('select * from :table_specials where products_id = :products_id');
+    $Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
+    $Qspecials->bindInt(':products_id', $id);
+    $Qspecials->execute();    
+    
+    $data['products_special_status'] = $Qspecials->valueInt('status');
+    $data['products_special_price'] = $Qspecials->valueDecimal('specials_new_products_price');
+    $data['products_special_start_date'] = lC_DateTime::getShort($Qspecials->value('start_date'));
+    $data['products_special_expires_date'] = lC_DateTime::getShort($Qspecials->value('expires_date'));  
+    
+    $Qspecials->freeResult();  
 
     $variants_array = array();
 
@@ -332,6 +346,8 @@ class lC_Products_Admin {
 
     $data['attributes'] = $attributes_array;
     
+    $Qattributes->freeResult(); 
+    
     $Qimages = $lC_Database->query('select id, image, default_flag from :table_products_images where products_id = :products_id order by sort_order');
     $Qimages->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
     $Qimages->bindInt(':products_id', $id);
@@ -342,6 +358,8 @@ class lC_Products_Admin {
         $data['image'] = $Qimages->value('image');
       }
     }
+    
+    $Qimages->freeResult();
     
     return $data;
   }
@@ -1260,5 +1278,7 @@ class lC_Products_Admin {
 
     return $validated;
   }
+  
+  
 }
 ?>

@@ -14,31 +14,37 @@
 global $lC_Language, $lC_Template, $lC_ObjectInfo; 
 ?>   
 <style>
-.files-list > li:hover { color: #0099FF; }
-.selected-menu { color: #016cb3; }
+.files-list > li > a:hover { color: #0099FF; }
+.selected-menu b { color: #016cb3; }
 </style>
 <div id="section_images_content" class="with-padding">
   <div class="content-panel margin-bottom enabled-panels">
+  
     <div class="panel-navigation silver-gradient">
       <div class="panel-control"></div>
-      <div class="panel-load-target scrollable custom-scroll">
+      <div class="scrollable custom-scroll">
         <div class="navigable">
           <ul class="files-list mini open-on-panel-content">
-            <li id="images-gallery-trigger" onclick="showContent('default');" class="with-right-arrow grey-arrow">
-              <span class="icon file-jpg"></span><b>Product Images</b>
+            <li id="images-gallery-trigger" class="with-right-arrow grey-arrow">     
+              <a class="file-link selected-menu" href="javascript://" onclick="showContent('default');">
+                <span class="icon file-jpg"></span>
+                <b><?php echo $lC_Language->get('text_product_images'); ?></b>
+              </a>            
             </li>
-            <li id="additional-gallery-trigger" onclick="showContent('additional');">
-            <span class="icon folder-image"></span><b>Additional Images</b>
-            </li>
+            <li id="additional-gallery-trigger">     
+              <a class="file-link" href="javascript://" onclick="showContent('additional');">
+                <span class="icon file-jpg"></span>
+                <b><?php echo $lC_Language->get('text_additional_images'); ?></b>
+              </a>            
+            </li>            
           </ul>
         </div> 
       </div>
     </div>
+    
     <div class="panel-content linen" style="height:auto">
       <div class="panel-control align-right"></div>
-      <div style="height: auto; position: relative;" class="panel-load-target scrollable with-padding custom-scroll">
-      
-      
+      <div style="height: auto; position: relative;" class="scrollable with-padding custom-scroll">
         <div class="gallery" id="images-gallery">
           <table border="0" width="100%" cellspacing="0" cellpadding="2">
             <tr>
@@ -52,7 +58,7 @@ global $lC_Language, $lC_Template, $lC_ObjectInfo;
                   <div id="remoteFiles" style="white-space:nowrap;">
                     <span id="fileUploadField"></span>
                     <?php
-                      if ( isset($lC_ObjectInfo) ) {
+                    if ( isset($lC_ObjectInfo) ) {
                       ?>
                       <div id="fileUploaderContainer" class="small-margin-top">
                         <noscript>
@@ -60,9 +66,9 @@ global $lC_Language, $lC_Template, $lC_ObjectInfo;
                         </noscript>
                       </div>
                       <?php
-                      } else {
-                        echo lc_draw_file_field('products_image', null, 'class="file"');
-                      }
+                    } else {
+                      echo lc_draw_file_field('products_image', null, 'class="file"');
+                    }
                     ?>                              
                   </div>
 
@@ -79,23 +85,18 @@ global $lC_Language, $lC_Template, $lC_ObjectInfo;
                   </div>
                   
                 </div>
-                <script type="text/javascript"><!--
-                  getLocalImages();
-                //--></script>
                 <?php
                   if ( isset($lC_ObjectInfo) ) {
                     ?>
                     <div id="defaultImagesContainer">
                       <div id="defaultImages" style="overflow: auto;" class="small-margin-top"></div>
                     </div>
-                    
                     <div id="additionalImagesContainer" style="display:none;">
                       <div class="message white-gradient"><span class="anthracite"><strong><?php echo $lC_Language->get('subsection_original_images'); ?></strong></span></div>
                       <div id="additionalOriginal" style="overflow: auto;" class="small-margin-top"></div>
                       <div class="message white-gradient"><span class="anthracite"><strong><?php echo $lC_Language->get('subsection_images'); ?></strong></span></div>
                       <div id="additionalOther" style="overflow: auto;"></div>                    
                     </div>                    
-                    
                   <?php
                   }
                 ?>
@@ -103,7 +104,6 @@ global $lC_Language, $lC_Template, $lC_ObjectInfo;
             </tr>
           </table>
         </div>  
-        
       </div>
     </div>
   </div>
@@ -111,8 +111,9 @@ global $lC_Language, $lC_Template, $lC_ObjectInfo;
 <script>
 $(document).ready(function() {
   createUploader();
-  getImages();  
-  $('#images-gallery-trigger').addClass('with-right-arrow grey-arrow').addClass('selected-menu');;
+  getImages();
+  //getLocalImages();  
+  $('#images-gallery-trigger').addClass('with-right-arrow grey-arrow');
 });
 
 function createUploader(){
@@ -131,13 +132,17 @@ function showContent(tab) {
   if (tab == 'default') {
     $('#defaultImagesContainer').show();
     $('#additionalImagesContainer').hide();
-    $('#images-gallery-trigger').addClass('with-right-arrow grey-arrow').addClass('selected-menu');;
-    $('#additional-gallery-trigger').removeClass('with-right-arrow grey-arrow').removeClass('selected-menu');;    
+    $('#images-gallery-trigger').addClass('with-right-arrow grey-arrow');
+    $('#images-gallery-trigger > a').addClass('selected-menu');
+    $('#additional-gallery-trigger').removeClass('with-right-arrow grey-arrow');
+    $('#additional-gallery-trigger > a').removeClass('selected-menu');    
   } else {
     $('#defaultImagesContainer').hide();
     $('#additionalImagesContainer').show();
-    $('#images-gallery-trigger').removeClass('with-right-arrow grey-arrow').removeClass('selected-menu');;
-    $('#additional-gallery-trigger').addClass('with-right-arrow grey-arrow').addClass('selected-menu');  
+    $('#images-gallery-trigger').removeClass('with-right-arrow grey-arrow');
+    $('#images-gallery-trigger > a').removeClass('selected-menu');
+    $('#additional-gallery-trigger').addClass('with-right-arrow grey-arrow');  
+    $('#additional-gallery-trigger > a').addClass('selected-menu');  
   }
 }   
 
@@ -276,4 +281,74 @@ function setDefaultImage(id) {
   })  
 }
 
+function getLocalImages() {
+  $('#showProgressGetLocalImages').css('display', 'inline');
+
+  $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getLocalImages'); ?>',
+    function (data) {
+      var i = 0;
+      var selectList = document.getElementById('localImagesSelection');
+
+      for ( i=selectList.options.length; i>=0; i-- ) {
+        selectList.options[i] = null;
+      }
+
+      for ( i=0; i<data.entries.length; i++ ) {
+        selectList.options[i] = new Option(data.entries[i]);
+        selectList.options[i].selected = false;
+      }
+
+      $('#showProgressGetLocalImages').css('display', 'none');
+    }
+  );
+}
+
+<?php
+if ( isset($lC_ObjectInfo) ) {
+  ?>
+  function assignLocalImages() {
+    $('#showProgressAssigningLocalImages').css('display', 'inline');
+
+    var selectedFiles = '';
+
+    $('#localImagesSelection :selected').each(function(i, selected) {
+      selectedFiles += 'files[]=' + $(selected).text() + '&';
+    });
+
+    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=assignLocalImages'); ?>' + '&' + selectedFiles,
+      function (data) {
+        $('#showProgressAssigningLocalImages').css('display', 'none');
+        getLocalImages();
+        getImages();
+      }
+    );
+  }
+  <?php
+}
+?>
+
+function switchImageFilesView(layer) {
+  /*
+  if (layer == 'local') {
+    var layer1 = document.getElementById('remoteFiles');
+    var layer1link = document.getElementById('remoteFilesLink');
+    var layer2 = document.getElementById('localFiles');
+    var layer2link = document.getElementById('localFilesLink');
+  } else {
+    var layer1 = document.getElementById('localFiles');
+    var layer1link = document.getElementById('localFilesLink');
+    var layer2 = document.getElementById('remoteFiles');
+    var layer2link = document.getElementById('remoteFilesLink');
+  }
+
+  if ( (layer != 'local') || ((layer == 'local') && (layer1.style.display != 'none')) ) {
+    layer1.style.display='none';
+    layer2.style.display='inline';
+    layer1link.style.fontWeight='normal';
+    layer2link.style.fontWeight='bolder';
+  } else {
+    getLocalImages();
+  }
+  */
+}
 </script>   

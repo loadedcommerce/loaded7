@@ -152,7 +152,10 @@ class lC_Products_Admin_rpc {
   * @return json
   */
   public static function validateKeyword() {
-    $validated = lC_Products_Admin::validate($_GET['products_keyword'], $_GET['pid']);
+    $data = str_replace('%5B', '[', $_GET);
+    $data = str_replace('%5D', ']', $data);
+    
+    $validated = lC_Products_Admin::validate($data['products_keyword'], $data['pid']);
 
     echo json_encode($validated);
   }

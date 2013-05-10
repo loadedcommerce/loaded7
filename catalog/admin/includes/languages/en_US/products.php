@@ -109,6 +109,7 @@ table_heading_qpb_qty = Qty
 table_heading_qpb_net_price = Price
 table_heading_qpb_action = Action
 
+text_additional_images = Additional Images
 text_add_handling_fee = Add Handling Fee
 text_all_products = -- All Products --
 text_availability = Availability
@@ -155,6 +156,7 @@ text_product_date_added = This product was added to our catalog on %s.
 text_product_date_available = This product will be available for order on %s.
 text_product_details = Product Details
 text_product_image = Image
+text_product_images = Product Images
 text_product_image_preview = Preview
 text_product_image_drag_n_drop = You can also Drag & Drop here for file upload
 text_pro = Pro
@@ -182,3 +184,20 @@ text_vendor_supplier = Vendor/Supplier
 text_warehouse = Warehouse
 text_width = Width
 text_zero_for_free_shipping = &nbsp;Enter 0 for Free Shipping
+
+text_drag_drop_to_replace = Drag & Drop Image to Replace
+
+info_bubble_content_image = Default Product Image
+info_bubble_content_name =  Product Name (required)
+info_bubble_content_description =  Product Descripton (required)
+info_bubble_content_keyword = Product Unique Keyword (required)
+info_bubble_content_tags = Product Tags Cloud (optional)
+info_bubble_content_base_price = Product Base Price
+info_bubble_content_status = Product Status
+info_bubble_content_model = Product Model Number
+info_bubble_content_weight = Product Weight
+
+info_bubble_pricing_base_price = Product Base Price
+info_bubble_pricing_group_pricing = Separate Pricing Per Customer Group
+info_bubble_pricing_qty_price_breaks = Quantity Price Breaks
+info_bubble_pricing_specials = Product Specials Pricing

@@ -266,11 +266,9 @@ $(document).ready(function() {
     $('#profileInner').css({"margin-left":"0px"});
     // if window width drops below 1280px change product edit tabs from side to top
     if ($(window).width() < 1380) {
-      $("#product_tabs").removeClass("side-tabs");
-      $("#product_tabs").addClass("standard-tabs");
+      $("#product_tabs").removeClass("side-tabs").addClass("standard-tabs");
     } if ($(window).width() >= 1380) {
-      $("#product_tabs").removeClass("standard-tabs");
-      $("#product_tabs").addClass("side-tabs");
+      $("#product_tabs").removeClass("standard-tabs").addClass("side-tabs");
     }
   });
   
@@ -329,8 +327,6 @@ $(document).ready(function() {
     });
   };
   $("h1").fitText();
-  
-  $(".clEditorProductDescription").cleditor({width:"99%", height:"255"});
   
   // defeat Google Chrome form autofill and its yellow background
   if(navigator.userAgent.toLowerCase().indexOf("chrome") >= 0 || navigator.userAgent.toLowerCase().indexOf("safari") >= 0){

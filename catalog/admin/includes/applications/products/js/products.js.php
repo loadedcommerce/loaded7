@@ -21,12 +21,6 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       // instantiate the datepicker
       $(".datepicker").glDatePicker({ zIndex: 100 });      
       // js code here
-
-      var error = '<?php echo $_SESSION['error']; ?>';
-      if (error) {
-        var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
-        $.modal.alert(errmsg);
-      }
     });
   </script>
   <?php
