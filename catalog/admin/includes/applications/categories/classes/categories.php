@@ -151,6 +151,10 @@ class lC_Categories_Admin {
   * @return boolean
   */
   public static function save($id = null, $data) {
+    echo '<pre>['; 
+    print_r($id);
+    echo ']</pre>';
+    die();
     global $lC_Database, $lC_Language;
 
     $category_id = '';

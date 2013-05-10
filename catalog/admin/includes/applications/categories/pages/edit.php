@@ -150,7 +150,7 @@
                 <div class="field-drop-tabs button-height black-inputs">
                   <div class="columns no-margin-bottom mid-margin-top">
                     <div class="six-columns twelve-columns-mobile margin-bottom">
-                      <label class="label" for="resize_height"><b><?php echo $lC_Language->get('text_mode'); ?></b></label>
+                      <label class="label" for="categories_mode"><b><?php echo $lC_Language->get('text_mode'); ?></b></label>
                       <select class="select full-width" id="categories_mode" name="categories_mode" onchange="customCheck();">
                         <option value="category"><?php echo $lC_Language->get('text_category'); ?></option>
                         <option value="page"><?php echo $lC_Language->get('text_page_only'); ?></option>
@@ -173,7 +173,7 @@
                   </div>
                   <div class="columns">
                     <div class="six-columns twelve-columns-mobile">
-                      <label class="label" for="resize_height"><b><?php echo $lC_Language->get('text_parent'); ?></b></label>
+                      <label class="label" for="parent_id"><b><?php echo $lC_Language->get('text_parent'); ?></b></label>
                       <select class="select full-width" id="parent_id" name="parent_id">
                         <option value="1">Top</option>
                         <option value="2">Women</option>
@@ -183,7 +183,7 @@
                       </select>
                     </div>
                     <div class="six-columns twelve-columns-mobile small-margin-top">
-                      <input type="checkbox" class="checkbox" id="categories_" name="categories_"> <?php echo $lC_Language->get('text_display_in_menu'); ?>
+                      <input type="checkbox" class="checkbox" id="categories_display_in_menu" name="categories_display_in_menu"> <?php echo $lC_Language->get('text_display_in_menu'); ?>
                     </div>
                   </div>
                 </div>
@@ -213,7 +213,7 @@
           </div>
         </div>
       </div>
-      <?php echo lc_draw_hidden_field('sort_order', 'confirm'); ?>
+      <?php echo lc_draw_hidden_field('sort_order', '10'); ?>
       <?php echo lc_draw_hidden_field('subaction', 'confirm'); ?>
     </form>
     <div class="clear-both"></div>
