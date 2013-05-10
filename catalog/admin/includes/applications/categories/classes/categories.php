@@ -75,9 +75,10 @@ class lC_Categories_Admin {
     $categories_array = array('0' => $lC_Language->get('top_category'));
     foreach ( $lC_CategoryTree->getArray() as $value ) {
       $cid = explode('_', $value['id']);
+      $count = count($cid);
       $cid = end($cid);
       if ($cid != $id && lC_Categories_Admin::get_final_parent($cid) != $id) {
-        $categories_array[$cid] = $value['title'];
+        $categories_array[$cid] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $count-1) . ' ' . $value['title'];
       }
     }
     $result['categoriesArray'] = $categories_array;
