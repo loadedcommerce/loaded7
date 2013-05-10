@@ -48,7 +48,7 @@
             * @return boolean
             */
             if ( lC_Categories_Admin::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data) ) {
-              lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $_GET[$this->_module]));
+              lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=&cid=' . $_GET['cid']));
             } else {
               $_SESSION['error'] = true;
               $_SESSION['errmsg'] = $lC_Language->get('ms_error_action_not_performed');

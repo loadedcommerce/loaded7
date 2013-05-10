@@ -38,7 +38,7 @@
       $categories_meta_description[$Qcd->valueInt('language_id')] = $Qcd->value('categories_meta_description');
     }
   }
-
+  
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
 <!-- Main content -->
@@ -134,11 +134,11 @@
                   </dt>
                   <dd>
                     <div class="with-padding">
-                      <?php //if ($Qpi->value('image')) { ?>
-                      <!--<div class="prod-image align-center"><img src="<?php //echo DIR_WS_HTTP_CATALOG . 'images/categories/large/' . $Qpi->value('image'); ?>" style="max-width:100%;" /></div>-->
-                      <?php //} else { ?>
+                      <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
+                      <div class="prod-image align-center"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . $lC_ObjectInfo->get('categories_image'); ?>" style="max-width:100%;" /></div>
+                      <?php } else { ?>
                       <div class="prod-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
-                      <?php //} ?>
+                      <?php } ?>
                     </div>
                   </dd>
                 </dl>
@@ -152,38 +152,43 @@
                     <div class="six-columns twelve-columns-mobile margin-bottom">
                       <label class="label" for="categories_mode"><b><?php echo $lC_Language->get('text_mode'); ?></b></label>
                       <select class="select full-width" id="categories_mode" name="categories_mode" onchange="customCheck();">
-                        <option value="category"><?php echo $lC_Language->get('text_category'); ?></option>
-                        <option value="page"><?php echo $lC_Language->get('text_page_only'); ?></option>
-                        <?php //foreach () { ?>
-                        <!-- this will be somehow generated per the store side content possobilities -->
-                        <option value="specials">Specials</option>
-                        <option value="featured">Featured</option>
-                        <option value="new">New</option>
-                        <option value="search">Search</option>
-                        <option value="cart">Cart</option>
-                        <option value="account">My Account</option>
-                        <?php //} ?>
-                        <option value="override"><?php echo $lC_Language->get('text_custom_link'); ?></option>
+                      <?php
+                        // later this will become an array from the possible places to link to and expandable by dvelopers also
+                        $modes_array = array(
+                          array('text' => 'Category', 'value' => 'category'),
+                          array('text' => 'Page', 'value' => 'page'),
+                          array('text' => 'Link To: Specials', 'value' => 'specials'),
+                          array('text' => 'Link To: Featured', 'value' => 'featured'),
+                          array('text' => 'Link To: New Products', 'value' => 'new'),
+                          array('text' => 'Link To: Search', 'value' => 'search'),
+                          array('text' => 'Link To: Shopping Cart', 'value' => 'cart'),
+                          array('text' => 'Link To: My Account', 'value' => 'account'),
+                          array('text' => 'Custom Link', 'value' => 'override')
+                        );
+                        foreach ($modes_array as $mode) {
+                          echo '<option value="' . $mode['value'] . '"' . (($lC_ObjectInfo->get('categories_mode') == $mode['value']) ? ' selected' : '') . '>' . $mode['text'] . '</option>'; 
+                        }
+                      ?>
                       </select>
-                      <p class="small-margin-top"><input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"> <?php echo $lC_Language->get('text_new_window'); ?></p>
+                      <p class="small-margin-top"><input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"<?php echo ($lC_ObjectInfo->getInt('categories_link_target') == 1) ? ' checked' : ''; ?>> <?php echo $lC_Language->get('text_new_window'); ?></p>
                     </div>
-                    <div class="six-columns twelve-columns-mobile" style="display:none;" id="categories_custom">
-                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"> &nbsp;<strong><?php echo $lC_Language->get('text_custom_link'); ?></strong>
+                    <div class="six-columns twelve-columns-mobile" id="categories_custom"<?php echo ($lC_ObjectInfo->get('categories_mode') != 'override') ? ' style="display:none;"' : ''; ?>>
+                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"<?php echo ($lC_ObjectInfo->get('categories_mode') == 'override') ? ' value="' . $lC_ObjectInfo->get('categories_custom_url') . '"' : ''; ?>> &nbsp;<strong><?php echo $lC_Language->get('text_custom_link'); ?></strong>
                     </div>
                   </div>
                   <div class="columns">
                     <div class="six-columns twelve-columns-mobile">
                       <label class="label" for="parent_id"><b><?php echo $lC_Language->get('text_parent'); ?></b></label>
                       <select class="select full-width" id="parent_id" name="parent_id">
-                        <option value="1">Top</option>
-                        <option value="2">Women</option>
-                        <option value="3">Men</option>
-                        <option value="4">Kids</option>
-                        <option value="5">Accessories</option>
+                        <option value="0">Top</option>
+                        <option value="0">Women</option>
+                        <option value="0">Men</option>
+                        <option value="0">Kids</option>
+                        <option value="0">Accessories</option>
                       </select>
                     </div>
                     <div class="six-columns twelve-columns-mobile small-margin-top">
-                      <input type="checkbox" class="checkbox" id="categories_display_in_menu" name="categories_display_in_menu"> <?php echo $lC_Language->get('text_display_in_menu'); ?>
+                      <input type="checkbox" class="checkbox" id="categories_display_in_menu" name="categories_display_in_menu"<?php echo ($lC_ObjectInfo->getInt('categories_display_in_menu') == 1) ? ' checked' : ''; ?>> <?php echo $lC_Language->get('text_display_in_menu'); ?>
                     </div>
                   </div>
                 </div>
