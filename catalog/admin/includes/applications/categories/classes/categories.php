@@ -430,5 +430,27 @@ class lC_Categories_Admin {
 
     return $parentID;
   }
+  
+  public static function get_final_parent($id = 0) {
+    global $lC_Database;
+    $loop = true;
+    while ($loop === true) {
+      $Qpath = $lC_Database->query('select parent_id from :table_categories where categories_id = :categories_id');
+      $Qpath->bindTable(':table_categories', TABLE_CATEGORIES);
+      $Qpath->bindInt(':categories_id', $id);
+      $Qpath->execute();
+      if ($Qpath->value('parent_id') != 0) {
+        $cPath .= '_' . $Qpath->value('parent_id');
+        $id = $Qpath->value('parent_id');
+        continue;
+      }
+      $Qpath->freeResult();
+      $loop = false;
+      break;
+    }
+    $cPath = array_reverse(explode("_", $cPath));
+    return $cPath[0];
+  }
+                          
 }
 ?>

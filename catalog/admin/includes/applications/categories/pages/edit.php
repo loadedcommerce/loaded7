@@ -39,6 +39,10 @@
     }
   }
   
+  $assignedCategoryTree = new lC_CategoryTree();
+  $assignedCategoryTree->setBreadcrumbUsage(false);
+  $assignedCategoryTree->setSpacerString('&nbsp;', 5);
+
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
 <!-- Main content -->
@@ -178,13 +182,16 @@
                   </div>
                   <div class="columns">
                     <div class="six-columns twelve-columns-mobile">
-                      <label class="label" for="parent_id"><b><?php echo $lC_Language->get('text_parent'); ?></b></label>
+                      <label class="label" for="parent_id"><b><?php echo $lC_Language->get('text_parent'); ?></b></label> 
                       <select class="select full-width" id="parent_id" name="parent_id">
                         <option value="0">Top</option>
-                        <option value="0">Women</option>
-                        <option value="0">Men</option>
-                        <option value="0">Kids</option>
-                        <option value="0">Accessories</option>
+                        <?php
+                          foreach ($assignedCategoryTree->getArray() as $value) {
+                            if ($lC_ObjectInfo->getInt('categories_id') != $value['id'] && lC_Categories_Admin::get_final_parent($value['id']) != $lC_ObjectInfo->getInt('categories_id')) {
+                              echo '<option final_parent="' . $pStr . '" value="' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
+                            }
+                          }
+                        ?>
                       </select>
                     </div>
                     <div class="six-columns twelve-columns-mobile small-margin-top">
@@ -240,7 +247,7 @@
             </p>
           </div>
           <div id="floating-button-container-title" class="hidden">
-            <p class="white big-text small-margin-top"><?php echo $lC_Template->getPageTitle(); ?></p>
+            <p class="white big-text small-margin-top"><?php echo $lC_Template->getPageTitle() . ' :: ' . $lC_ObjectInfo->get('categories_name'); ?></p>
           </div>
         </div>
       </div>
