@@ -243,17 +243,58 @@
                 </div>
               </div>
             </div>
-            <div class="columns with-padding">
+            <div class="columns with-padding no-margin-bottom">
               <div class="twelve-columns no-margin-top no-margin-bottom">
-                <div class="columns">
-                  <div class="three-columns">
-                    Left
+                <div class="columns no-margin-left">
+                  <div class="three-columns"> 
+                    <div class="margin-right">
+                      <label class="label" for="categories_page_type"><b><?php echo $lC_Language->get('field_categories_page_type'); ?></b></label>
+                    </div>
                   </div>
-                  <div class="five-columns">
-                    Middle
+                  <div class="nine-columns">
+                    <p class="mid-margin-bottom">
+                      <input type="radio" class="radio small-margin-right" name="categories_page_type" value="html" checked disabled>
+                      <?php echo $lC_Language->get('text_standard_html_page'); ?>  
+                      <span class="info-spot on-left grey large-margin-left">
+                        <span class="icon-info-round"></span>
+                        <span class="info-bubble">
+                          Put the bubble text here
+                        </span>
+                      </span>
+                    </p>
+                    <p class="mid-margin-bottom">
+                      <input type="radio" class="radio small-margin-right" name="categories_page_type" value="photo" disabled>
+                      <?php echo $lC_Language->get('text_photo_album'); ?>
+                    </p>
+                    <p class="mid-margin-bottom">
+                      <input type="radio" class="radio small-margin-right" name="categories_page_type" value="faq" disabled>
+                      <?php echo $lC_Language->get('text_faq'); ?>
+                    </p>
                   </div>
-                  <div class="four-columns">
-                    Right
+                </div>
+              </div>
+              <div class="twelve-columns no-margin-top no-margin-bottom">
+                <div class="columns no-margin-left">
+                  <div class="three-columns"> 
+                    <div class="margin-right">
+                      <label class="label" for="categories_content_file"><b><?php echo $lC_Language->get('field_categories_content_file'); ?></b></label>
+                    </div>
+                  </div>
+                  <div class="nine-columns">
+                    <?php echo lc_draw_input_field('categories_content_file', null, 'id="categories_content_file" name="categories_content_file" class="input" style="min-width:250px;"' . (($lC_ObjectInfo->get('categories_content_file') != '') ? ' value="' . $lC_ObjectInfo->get('categories_content_file') . '"' : ' placeholder="/customhtml.php"') . '" disabled'); ?>
+                    <span class="info-spot on-left grey">
+                      <small class="tag red-bg mid-margin-left margin-right">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>  
+                    <span class="info-spot on-left grey large-margin-left">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                    <p class="small-margin-top"><?php echo $lC_Language->get('text_path_to_file'); ?></p>
                   </div>
                 </div>
               </div>
