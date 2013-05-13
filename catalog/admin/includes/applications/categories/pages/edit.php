@@ -184,7 +184,7 @@
                     <div class="six-columns twelve-columns-mobile">
                       <label class="label" for="parent_id"><b><?php echo $lC_Language->get('text_parent'); ?></b></label> 
                       <select class="select full-width" id="parent_id" name="parent_id">
-                        <option value="0">Top</option>
+                        <option value="top">Top</option>
                         <?php
                           foreach ($assignedCategoryTree->getArray() as $value) {
                             if ($lC_ObjectInfo->getInt('categories_id') != $value['id'] && lC_Categories_Admin::get_final_parent($value['id']) != $lC_ObjectInfo->getInt('categories_id')) {
@@ -247,7 +247,7 @@
             </p>
           </div>
           <div id="floating-button-container-title" class="hidden">
-            <p class="white big-text small-margin-top"><?php echo $lC_Template->getPageTitle() . ' :: ' . $lC_ObjectInfo->get('categories_name'); ?></p>
+            <p class="white big-text small-margin-top"><?php echo $lC_ObjectInfo->get('categories_name'); ?></p>
           </div>
         </div>
       </div>
