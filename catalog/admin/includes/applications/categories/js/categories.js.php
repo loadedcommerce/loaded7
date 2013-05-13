@@ -73,9 +73,15 @@ function customCheck() {
   var cModeVal = $("#categories_mode").val();
   if (cModeVal == 'override') {
     $("#categories_custom").show();
+    $("#categories_link_target_p").show();
+    $("#categories_link_target_info").hide();
   } else {
     $("#categories_custom").hide();
+    $("#categories_link_target_p").hide();
+    $("#categories_link_target_info").show();
     $("#categories_custom_url").val("");
+    $("#categories_link_target").removeAttr("checked");
+    $("#categories_link_target").parent("span").removeClass("checked");
   }
 }
 
