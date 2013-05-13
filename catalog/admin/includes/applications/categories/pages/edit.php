@@ -246,12 +246,12 @@
             <div class="columns with-padding no-margin-bottom">
               <div class="twelve-columns no-margin-top no-margin-bottom">
                 <div class="columns no-margin-left">
-                  <div class="three-columns"> 
+                  <div class="three-columns twelve-columns-mobile"> 
                     <div class="margin-right">
                       <label class="label" for="categories_page_type"><b><?php echo $lC_Language->get('field_categories_page_type'); ?></b></label>
                     </div>
                   </div>
-                  <div class="nine-columns">
+                  <div class="nine-columns twelve-columns-mobile">
                     <p class="mid-margin-bottom">
                       <input type="radio" class="radio small-margin-right" name="categories_page_type" value="html" checked disabled>
                       <?php echo $lC_Language->get('text_standard_html_page'); ?>  
@@ -275,12 +275,12 @@
               </div>
               <div class="twelve-columns no-margin-top no-margin-bottom">
                 <div class="columns no-margin-left">
-                  <div class="three-columns"> 
+                  <div class="three-columns twelve-columns-mobile"> 
                     <div class="margin-right">
                       <label class="label" for="categories_content_file"><b><?php echo $lC_Language->get('field_categories_content_file'); ?></b></label>
                     </div>
                   </div>
-                  <div class="nine-columns">
+                  <div class="nine-columns twelve-columns-mobile">
                     <?php echo lc_draw_input_field('categories_content_file', null, 'id="categories_content_file" name="categories_content_file" class="input" style="min-width:250px;"' . (($lC_ObjectInfo->get('categories_content_file') != '') ? ' value="' . $lC_ObjectInfo->get('categories_content_file') . '"' : ' placeholder="/customhtml.php"') . '" disabled'); ?>
                     <span class="info-spot on-left grey">
                       <small class="tag red-bg mid-margin-left margin-right">Pro</small>
@@ -301,7 +301,77 @@
             </div>
           </div>
           <div id="section_data_content" class="with-padding">
-            Data
+            <fieldset class="fieldset">
+              <legend class="legend"><?php echo $lC_Language->get('field_management_settings'); ?></legend>
+              <div class="columns no-margin-bottom">
+                <div class="six-columns twelve-columns-mobile">
+                  <label class="label" for="<?php echo 'categories_slug'; ?>">
+                    <!--<small>Additional information</small>-->
+                    <?php echo $lC_Language->get('field_slug'); ?>
+                    <span class="info-spot on-left grey float-right small-margin-bottom">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </label>
+                  <?php echo lc_draw_input_field('categories_slug', (isset($lC_ObjectInfo) && isset($categories_slug) ? $categories_slug : null), 'class="required input full-width mid-margin-top" placeholder="category-url-slug" disabled'); ?>
+                </div>
+                <div class="six-columns twelve-columns-mobile">
+                  <label class="label" for="<?php echo 'categories_product_class'; ?>">
+                    <!--<small>Additional information</small>-->
+                    <?php echo $lC_Language->get('field_product_class'); ?>
+                    <span class="info-spot on-left grey">
+                      <small class="tag red-bg mid-margin-left margin-right">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>  
+                    <span class="info-spot on-left grey float-right small-margin-bottom">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>
+                  </label>
+                  <select class="select full-width mid-margin-top" id="categories_product_class" name="categories_product_class" disabled>
+                    <option>Common</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend class="legend"><?php echo $lC_Language->get('field_access_settings'); ?></legend>
+              <div class="columns no-margin-bottom">
+                <div class="six-columns twelve-columns-mobile">
+                  <p class="margin-bottom">
+                    <label class="label" for="categories_access_levels"><?php echo $lC_Language->get('field_access_levels'); ?></label>
+                    <span class="info-spot on-left grey">
+                      <small class="tag orange-bg mid-margin-left margin-right">Pro</small>
+                      <span class="info-bubble">
+                        <b>Go Pro!</b> and enjoy this feature!
+                      </span>
+                    </span>  
+                    <span class="info-spot on-left grey large-margin-left">
+                      <span class="icon-info-round"></span>
+                      <span class="info-bubble">
+                        Put the bubble text here
+                      </span>
+                    </span>  
+                  </p>
+                  <p class="margin-left">
+                    <input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_retail'); ?>
+                  </p>
+                  <p class="margin-left">
+                    <input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_wholesale'); ?>
+                  </p>
+                  <p class="margin-left">
+                    <input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_dealerl'); ?>
+                  </p>
+                </div>
+                <div class="six-columns twelve-columns-mobile"></div>
+              </div>
+            </fieldset>
           </div>
           <div id="section_categories_content" class="with-padding"> 
             Relationships (Later Phase)

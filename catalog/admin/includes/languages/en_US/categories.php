@@ -9,6 +9,10 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
+access_levels_retail = Retail
+access_levels_wholesale = Wholesale
+access_levels_dealer = Dealer
+
 batch_delete_warning_category_products = Warning: All sub-categories and products assigned to the selected categories will have the category relationship removed.
 
 button_new_category = New Category 
@@ -17,15 +21,20 @@ delete_warning_category_in_use = Warning: There are
 delete_warning_category_in_use_children = sub-categories assigned to this category that will also be removed.
 delete_warning_category_in_use_products = products assigned to this category that will have this category relationship removed.
 
+field_access_levels = Access Levels
+field_access_settings = Access Settings
 field_blurb = Listing Blurb
 field_categories_content_file = HTML Content File
 field_categories_page_type = Page Only Type
 field_description = Content
 field_image = Image
+field_management_settings = Management Settings
 field_menu_name = Nick (Menu Title)
 field_meta_keywords = Meta Keywords
 field_name = Title
 field_parent_category = Parent Category
+field_product_class = Product Class
+field_slug = URL Slug
 field_sort_order = Sort Order
 
 heading_title = Category Pages
