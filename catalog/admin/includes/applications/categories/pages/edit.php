@@ -134,7 +134,7 @@
                             </span>
                           </span>
                         </label>
-                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_description[$l['id']]) ? $categories_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding clEditorCategoriesDescription"'); ?>
+                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_description[$l['id']]) ? $categories_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding clEditorCategoriesDescription small-margin-top"'); ?>
                         <span class="float-right"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
                       </p>
                       <br />
@@ -167,7 +167,7 @@
                   <div class="prod-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
                   <?php } ?>
                 </div>
-                <p class="align-center"><?php echo $lC_Language->get('text_thumbnail_image'); ?></p>
+                <p class="align-center margin-top"><?php echo $lC_Language->get('text_thumbnail_image'); ?></p>
               </div>
             </div>
             <div class="columns">

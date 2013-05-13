@@ -1,4 +1,4 @@
-.cleditorMain {border:1px solid #999; padding:0 1px 1px; background-color:white}
+.cleditorMain {border:1px solid #999; padding:0 1px 1px; background-color:white;margin: 5px 0 0 1px;}
 .cleditorMain iframe {border:none; margin:0; padding:0}
 .cleditorMain textarea {border:none; margin:0; padding:0; overflow-y:scroll; font:10pt Arial,Verdana; resize:none; outline:none /* webkit grip focus */}
 .cleditorToolbar {background: url('images/toolbar.gif') repeat}
