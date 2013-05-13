@@ -127,18 +127,19 @@
                         <label class="label" for="<?php echo 'categories_description[' . $l['id'] . ']'; ?>">
                           <!--<small>Additional information</small>-->
                           <?php echo $lC_Language->get('field_description'); ?>
-                          <span class="info-spot on-left grey float-right small-margin-bottom">
+                          <span class="info-spot on-left grey float-right">
                             <span class="icon-info-round"></span>
                             <span class="info-bubble">
                               Put the bubble text here
                             </span>
                           </span>
                         </label>
-                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_description[$l['id']]) ? $categories_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding clEditorCategoriesDescription small-margin-top"'); ?>
-                        <span class="float-right"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
+                        <div style="margin-bottom:-6px;"></div>
+                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_description[$l['id']]) ? $categories_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding clEditorCategoriesDescription"'); ?>
+                        <span class="float-right small-margin-top small-margin-right"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
                       </p>
                       <br />
-                      <p class="button-height block-label small-margin-top">
+                      <p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_meta_keywords[' . $l['id'] . ']'; ?>">
                           <!--<small>Additional information</small>-->
                           <?php echo $lC_Language->get('field_meta_keywords'); ?>
