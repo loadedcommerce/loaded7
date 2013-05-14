@@ -18,19 +18,11 @@ global $lC_Language, $lC_ObjectInfo;
     <div class="twelve-columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <div class="twelve-columns no-margin-bottom">
-          <span class="large-margin-right"><?php echo $lC_Language->get('text_inventory_control'); ?></span>
-          <span class="large-margin-right">&nbsp;</span>
-          <span class="margin-right">&nbsp;</span>
-          <span class="info-spot on-left grey large-margin-left">
-            <span class="icon-info-round"></span>
-            <span class="info-bubble">
-              Put the bubble text here
-            </span>
-          </span><br />
-          <span id="optionsInvControlButtons" class="button-group small-margin-top">
+          <div class="big-text"><?php echo $lC_Language->get('text_inventory_control'); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_options_inventory_control'), null, 'info-spot on-right margin-left'); ?></div>
+          
+          <div id="optionsInvControlButtons" class="button-group small-margin-top">
             <!-- lc_options_inventory_control begin -->
             <label for="ioc_radio_1" class="oicb button blue-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
-              <!-- move onclick to function later maestro -->
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_1" value="1" />
               <?php echo $lC_Language->get('text_simple'); ?>
             </label>
@@ -38,37 +30,34 @@ global $lC_Language, $lC_ObjectInfo;
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_2" value="2" />
               <?php echo $lC_Language->get('text_multi_sku'); ?>
             </label>
-            <label for="ioc_radio_3" class="oicb button disabled orange-active">
-              <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_3" value="3" />
-              <?php echo $lC_Language->get('text_recurring'); ?>
-            </label><?php echo lc_go_pro(); ?>
             <!-- lc_options_inventory_control end -->
-          </span>
+          </div>
         </div>
       </div>
     </div>
-    <div class="twelve-columns">
+    <div id="multiSkuContainer" class="twelve-columns" style="position:relative; display:block;">
       <fieldset class="fieldset">
-        <legend class="legend"><?php echo $lC_Language->get('text_inventory_options_combo_sets'); ?></legend>
-        <div class="columns">
-          <div class="twelve-columns">
-            Data Table is Going to be here :)                   
-          </div>
-        </div>
-        <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)"><?php echo $lC_Language->get('text_new_inventory_option_combo_set'); ?></a></div>
+        <legend class="legend"><?php echo $lC_Language->get('text_multi_sku_options'); ?></legend>
+        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewVariantFieldset();"><?php echo $lC_Language->get('button_add'); ?></a></span>
+
       </fieldset>
     </div>
-    <div class="twelve-columns">
-      <fieldset class="fieldset">
-        <legend class="legend"><?php echo $lC_Language->get('text_simple_inventory_options'); ?></legend>
-        <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)"><?php echo $lC_Language->get('text_new_simple_inventory_option'); ?></a></div>
-      </fieldset>
-    </div>
-    <div class="twelve-columns">
+    
+    <div id="simpleOptionsContainer" class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_simple_options'); ?></legend>
-        <div><a class="button icon-plus icon-size2 icon-green margin-bottom nowrap" href="javascript:void(0)"><?php echo $lC_Language->get('text_new_simple_option'); ?></a></div>
-      </fieldset>
+        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)"><?php echo $lC_Language->get('button_add'); ?></a></span>
+
+      </fieldset>    
+    </div>
+    
+    <div id="bundleProductsContainer" class="twelve-columns">
+      <fieldset class="fieldset">
+        <legend class="legend"><?php echo $lC_Language->get('text_bundle_products'); ?><?php echo lc_go_pro(); ?></legend>
+        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)"><?php echo $lC_Language->get('button_add'); ?></a></span>
+
+      </fieldset>     
+
     </div>
   </div>
 </div>

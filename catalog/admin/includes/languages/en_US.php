@@ -41,6 +41,7 @@ menu_title_core_update = Core Update
 menu_title_report_issues = Report Issues
 menu_title_get_help = Get Help
 
+button_add = Add
 button_add_new = Add New
 button_approve = Approve
 button_back = Back

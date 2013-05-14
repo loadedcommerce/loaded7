@@ -19,13 +19,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
     <div class="columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <div class="twelve-columns no-margin-bottom">
-          <span><?php echo $lC_Language->get('field_model'); ?></span>
-          <span class="info-spot on-left grey float-right">
-            <span class="icon-info-round"></span>
-            <span class="info-bubble">
-              Put the bubble text here
-            </span>
-          </span>
+          <span><?php echo $lC_Language->get('field_model'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_model')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <input type="text" class="required input full-width" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_model') : null); ?>" id="products_model" name="products_model" />
@@ -35,12 +29,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
         <!-- lc_track_inventory_override begin -->
         <div class="twelve-columns no-margin-bottom">
           <span><?php echo $lC_Language->get('text_track_inventory_override'); ?></span><?php echo lc_go_pro(); ?>
-          <span class="info-spot on-left grey float-right">
-            <span class="icon-info-round"></span>
-            <span class="info-bubble">
-              Put the bubble text here
-            </span>
-          </span>
+          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_inventory_override')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <span class="button-group">
@@ -64,13 +53,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
     <div class="columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <div class="twelve-columns no-margin-bottom">
-          <span><?php echo $lC_Language->get('text_msrp'); ?></span>
-          <span class="info-spot on-left grey float-right">
-            <span class="icon-info-round"></span>
-            <span class="info-bubble">
-              Put the bubble text here
-            </span>
-          </span>
+          <span><?php echo $lC_Language->get('text_msrp'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_msrp')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <input type="text" class="required input full-width" value="<?php echo number_format($lC_ObjectInfo->get('products_msrp'), DECIMAL_PLACES); ?>" id="products_msrp" name="products_msrp" />
@@ -79,13 +62,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <!-- lc_vendor_supplier begin -->
         <div class="twelve-columns no-margin-bottom">
-          <span><?php echo $lC_Language->get('text_vendor_supplier'); ?></span><?php echo lc_go_pro(); ?>
-          <span class="info-spot on-left grey float-right">
-            <span class="icon-info-round"></span>
-            <span class="info-bubble">
-              Put the bubble text here
-            </span>
-          </span>
+          <span><?php echo $lC_Language->get('text_vendor_supplier'); ?></span><?php echo lc_go_pro(); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_vendor')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <select class="select full-width small-margin-top" disabled>
@@ -99,13 +76,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <!-- lc_inventory_control begin -->
         <div class="twelve-columns no-margin-bottom">
-          <span><?php echo $lC_Language->get('text_inventory_control'); ?></span><?php echo lc_go_pro(); ?>
-          <span class="info-spot on-left grey float-right">
-            <span class="icon-info-round"></span>
-            <span class="info-bubble">
-              Put the bubble text here
-            </span>
-          </span>
+          <span><?php echo $lC_Language->get('text_inventory_control'); ?></span><?php echo lc_go_pro(); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_inventory_control')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <span id=invControlButtons" class="button-group">
@@ -119,17 +90,13 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_2" value="2" />
               <?php echo $lC_Language->get('text_multi_sku'); ?>
             </label>
-            <label for="ic_radio_3" class="oicb button disabled orange-active">
-              <input type="radio" name="inventory_control_radio_group" id="ic_radio_3" value="3" />
-              <?php echo $lC_Language->get('text_recurring'); ?>
-            </label>
           </span>
         </div>
         <!-- lc_inventory_control end -->
       </div>
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">&nbsp;</div>
     </div>
-    <div id="inventory_control_container" class="field-drop button-height black-inputs no-margin-bottom">
+    <div id="inventory_control_container" class="field-drop button-height black-inputs">
       <!-- lc_inventory_control_simple begin -->
       <div id="inventory_control_simple"<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' style="display:none;"' : ''); ?>>
         <div>
@@ -153,13 +120,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
     <div class="columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <div class="twelve-columns no-margin-bottom">
-          <span><?php echo $lC_Language->get('text_tax_class'); ?></span>
-          <span class="info-spot on-left grey float-right">
-            <span class="icon-info-round"></span>
-            <span class="info-bubble">
-              Put the bubble text here
-            </span>
-          </span>
+          <span><?php echo $lC_Language->get('text_tax_class'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_tax_class')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <?php echo lc_draw_pull_down_menu('products_tax_class_id', $tax_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_tax_class_id') : null), 'class="select full-width small-margin-top" id="tax_class0"'); ?>
@@ -167,16 +128,10 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
       </div>
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <div class="twelve-columns no-margin-bottom">
-          <span><?php echo $lC_Language->get('text_base_price_with_tax'); ?></span>
-          <span class="info-spot on-left grey float-right">
-            <span class="icon-info-round"></span>
-            <span class="info-bubble">
-              Put the bubble text here
-            </span>
-          </span>
+          <span><?php echo $lC_Language->get('text_base_price_with_tax'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_price_with_tax')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
-          <?php echo lc_draw_input_field('products_price_gross', (isset($lC_ObjectInfo) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="required input full-width" id="products_price0_gross" READONLY'); ?>
+          <?php echo lc_draw_input_field('products_price_gross', (isset($lC_ObjectInfo) ? lc_round($lC_ObjectInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="required input full-width blue-gradient strong" id="products_price0_gross" READONLY'); ?>
         </div>
       </div>
     </div>
@@ -216,12 +171,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">                  
         <div class="twelve-columns small-margin-bottom">
           <span><?php echo $lC_Language->get('text_product_class'); ?></span><?php echo lc_go_pro(); ?>
-          <span class="info-spot on-left grey float-right">
-            <span class="icon-info-round"></span>
-            <span class="info-bubble">
-              Put the bubble text here
-            </span>
-          </span>
+          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_product_class')); ?>
         </div>                  
         <div class="twelve-columns margin-bottom">
           <select class="select full-width small-margin-top" disabled>
@@ -236,12 +186,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
         <div class="twelve-columns mid-margin-bottom">
           <div class="twelve-columns no-margin-bottom">
             <span><?php echo $lC_Language->get('text_availability'); ?></span>
-            <span class="info-spot on-left grey float-right">
-              <span class="icon-info-round"></span>
-              <span class="info-bubble">
-                Put the bubble text here
-              </span>
-            </span>
+            <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_availability')); ?>
           </div>
           <div class="twelve-columns margin-bottom">
             <span class="nowrap margin-right">
