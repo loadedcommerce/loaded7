@@ -41,11 +41,11 @@ function newEntry(zid) {
                    '      <p><?php echo $lC_Language->get('introduction_new_zone_entry'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="zone_country_id" class="label"><?php echo $lC_Language->get('field_country'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('zone_country_id', null, null, 'onchange="updateZones();" class="input with-small-padding"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('zone_country_id', null, null, 'onchange="updateZones();" class="select" style = "width:73%'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="zone_id" class="label"><?php echo $lC_Language->get('field_zone'); ?></label>'+
-                   '        <?php echo  lc_draw_pull_down_menu('zone_id', null, null, 'class="input with-small-padding"'); ?>'+
+                   '        <?php echo  lc_draw_pull_down_menu('zone_id', null, null, 'class="select" style = "width:73%'); ?>'+
                    '      </p>'+
                    '    </form>'+
                    '  </div>'+
@@ -100,13 +100,23 @@ function newEntry(zid) {
           buttonsLowPadding: true
       });
       $("#zone_country_id").empty();
+      i = 0
       $.each(data.countriesArray, function(val, text) {
+        if(i == 0) {
+          $("#zone_country_id").closest("span + *").prevAll("span.select-value:first").text(text);
+          i++;
+        }
         $("#zone_country_id").append(
           $("<option></option>").val(val).html(text)
         );
       });
       $("#zone_id").empty();
+      i = 0;
       $.each(data.zonesArray, function(val, text) {
+        if(i == 0) {
+          $("#zone_id").closest("span + *").prevAll("span.select-value:first").text(text);
+          i++;
+        }
         $("#zone_id").append(
           $("<option></option>").val(val).html(text)
         );

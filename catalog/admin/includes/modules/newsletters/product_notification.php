@@ -137,7 +137,7 @@
       $audience_form .= '<form name="notifications" id="notifications" action="#" method="post">' .
                         '  <table border="0" width="100%" cellspacing="0" cellpadding="2">' .
                         '    <tr>' .
-                        '      <td align="center"><b>' . $lC_Language->get('newsletter_product_notifications_table_heading_products') . '</b><br />' . lc_draw_pull_down_menu('products', $products_array, null, 'class="input with-small-padding" size="20" style="width: 20em;" multiple') . '</td>' .
+                        '      <td align="center"><b>' . $lC_Language->get('newsletter_product_notifications_table_heading_products') . '</b><br />' . lc_draw_pull_down_menu('products', $products_array, null, 'class="select" size="20" style="width: 20em;" multiple') . '</td>' .
                         '      <td align="center" style="padding-top:125px;">' .
                         '        <input type="button" value="' . $lC_Language->get('newsletter_product_notifications_button_select') . '" onclick="mover(\'remove\');" class="button with-small-padding" /><br /><br />' .
                         '        <input type="button" value="' . $lC_Language->get('newsletter_product_notifications_button_deselect') . '" onclick="mover(\'add\');" class="button with-small-padding" /><br /><br /><br />' .

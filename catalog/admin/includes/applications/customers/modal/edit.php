@@ -61,7 +61,7 @@ $pContent .= '<p class="button-height inline-label">' .
              '</p>' .
              '<p class="button-height inline-label">' .
              '  <label for="group" class="label" style="width:30%;">' . $lC_Language->get('field_customer_group') . '</label>' .
-                lc_draw_pull_down_menu('group', null, null, 'class="input with-small-padding" style="width:73%;" id="editGroup"') .
+                lc_draw_pull_down_menu('group', null, null, 'class="select" style="width:73%;" id="editGroup"') .
              '</p>' .
              '<p class="button-height inline-label">' .
                '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
@@ -127,7 +127,7 @@ if ( ACCOUNT_STATE > -1 ) {
 }     
 $aContent .=  '<p class="button-height inline-label">' .
               '  <label for="ab_country_id" class="label" style="width:30%;">' . $lC_Language->get('field_country') . '</label>' .
-              lc_draw_pull_down_menu('ab_country_id', null, STORE_COUNTRY, 'class="input with-small-padding" style="width:73%;" onchange="updateZones();"') .
+              lc_draw_pull_down_menu('ab_country_id', null, STORE_COUNTRY, 'class="select" style="width:73%;" onchange="updateZones();"') .
               '</p>';         
 if ( ACCOUNT_TELEPHONE > -1 ) {
   $aContent .=  '<p class="button-height inline-label">' .
@@ -233,6 +233,9 @@ function getFormData(id) {
       $("#editGroup").empty();
       $.each(data.groupsArray, function(val, text) {
         var selected = (data.customerData.customers_group_id == val) ? 'selected="selected"' : '';
+        if(data.customerData.customers_group_id == val) {
+          $("#editGroup").closest("span + *").prevAll("span.select-value:first").text(text);
+        }
         $("#editGroup").append(
           $("<option " + selected + "></option>").val(val).html(text)
         );
@@ -268,6 +271,9 @@ function getFormData(id) {
       $.each(data.countriesArray, function(val, text) {
         var storeCountry = '<?php echo STORE_COUNTRY; ?>';
         var selected = (storeCountry == val) ? 'selected="selected"' : '';
+        if(storeCountry == val) {
+          $("#ab_country_id").closest("span + *").prevAll("span.select-value:first").text(text);
+        }
         $("#ab_country_id").append(
           $("<option " + selected + "></option>").val(val).html(text)
         );
@@ -524,7 +530,8 @@ function updateZones(selected) {
         }
       } else {
         $("#abState").html(data.abZonesDropdown);
-        if (selected != undefined) {
+        if (selected != undefined) {          
+          $("#ab_state").closest("span + *").prevAll("span.select-value:first").text(selected);
           $("#ab_state").val( selected ).attr('selected', true);
         }
         $("#formProcessing").fadeOut('slow');
