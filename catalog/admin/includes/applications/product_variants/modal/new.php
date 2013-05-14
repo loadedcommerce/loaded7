@@ -44,7 +44,7 @@ function newGroup() {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="module" class="label" style="width:30%;"><?php echo $lC_Language->get('field_display_module'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('module', null, null, 'class="input with-small-padding" style=width:73%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('module', null, null, 'class="select" style=width:73%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="sort_order" class="label" style="width:30%;"><?php echo $lC_Language->get('field_sort_order'); ?></label>'+
@@ -104,7 +104,12 @@ function newGroup() {
           buttonsLowPadding: true
       });
       $("#module").empty();  // clear the old values
+      i = 0;
       $.each(data.modulesArray, function(val, text) {
+        if(i == 0) {
+          $("#module").closest("span + *").prevAll("span.select-value:first").text(text);
+          i++;
+        }
         $("#module").append(
           $('<option></option>').val(val).html(text)
         );

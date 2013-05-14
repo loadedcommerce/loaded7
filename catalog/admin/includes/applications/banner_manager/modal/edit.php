@@ -54,7 +54,7 @@ function editBanner(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="group" class="label"><?php echo $lC_Language->get('field_group'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('group', null, null, 'id="editGroup" class="input with-small-padding"') . $lC_Language->get('field_group_new') . '<br />' . lc_draw_input_field('group_new', null, 'class="input" style="width:93%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('group', null, null, 'id="editGroup" class="select" style="width:46%;"') . $lC_Language->get('field_group_new') . '<br />' . lc_draw_input_field('group_new', null, 'class="input" style="width:93%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="image" class="label"><?php echo $lC_Language->get('field_image'); ?></label>'+
@@ -143,6 +143,9 @@ function editBanner(id) {
       $("#editGroup").html("");  // clear the old values
       $.each(data.groupsArray, function(val, text) {
         var selected = (data.bannerData.banners_group == val) ? 'selected="selected"' : '';
+        if(data.bannerData.banners_group == val) {
+          $("#editGroup").closest("span + *").prevAll("span.select-value:first").text(text);
+        }
         $("#editGroup").append(
           $("<option " + selected + "></option>").val(val).html(text)
         );
