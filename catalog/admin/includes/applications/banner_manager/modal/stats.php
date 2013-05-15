@@ -20,7 +20,7 @@ function showStats(id) {
   $.modal({
       content: '<div id="statsContent">'+
                '  <form name="statsType" action="#" method="post">'+
-               '    <p id="statsFormElements" align="right" style = "margin-top:2px"></p>'+
+               '    <p id="statsFormElements" align="right"></p>'+
                '  </form>'+
                '  <div class="standard-tabs">'+
                '    <ul class="tabs">'+
