@@ -11,4 +11,4 @@
 
 product_attributes_date_available_title = Date Available
 
-info_bubble_attributes_date_available_title = Availability of the Product for Purchase
+info_bubble_attributes_date_available_text = Availability of the Product for Purchase

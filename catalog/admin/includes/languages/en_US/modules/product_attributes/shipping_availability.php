@@ -11,4 +11,4 @@
 
 product_attributes_shipping_availability_title = Days to Ship
 
-info_bubble_attributes_shipping_availability_title = Product Shipping Availability
+info_bubble_attributes_shipping_availability_text = Product Shipping Availability
