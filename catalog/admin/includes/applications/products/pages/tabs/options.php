@@ -18,7 +18,7 @@ global $lC_Language, $lC_ObjectInfo;
     <div class="twelve-columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <div class="twelve-columns no-margin-bottom">
-          <div class="big-text"><?php echo $lC_Language->get('text_inventory_control'); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_options_inventory_control'), null, 'info-spot on-right margin-left'); ?></div>
+          <div class="strong"><?php echo $lC_Language->get('text_inventory_control'); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), null, 'info-spot on-right margin-left'); ?></div>
           
           <div id="optionsInvControlButtons" class="button-group small-margin-top">
             <!-- lc_options_inventory_control begin -->
@@ -39,7 +39,34 @@ global $lC_Language, $lC_ObjectInfo;
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_multi_sku_options'); ?></legend>
         <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewMultiSkuOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
-
+        <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
+          <?php
+            $Qattributes = $lC_Database->query('select id, code from :table_templates_boxes where modules_group = :modules_group order by code');
+            $Qattributes->bindTable(':table_templates_boxes');
+            $Qattributes->bindValue(':modules_group', 'product_attributes');
+            $Qattributes->execute();
+            while ( $Qattributes->next() ) {
+              $module = basename($Qattributes->value('code'));
+              if ( !class_exists('lC_ProductAttributes_' . $module) ) {
+                if ( file_exists(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php') ) {
+                  include(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php');
+                }
+              }
+              if ( class_exists('lC_ProductAttributes_' . $module) ) {
+                $module = 'lC_ProductAttributes_' . $module;
+                $module = new $module();
+              ?>
+              <div class="twelve-columns small-margin-bottom">
+                <span><?php echo $module->getTitle(); ?></span>
+              </div>
+              <div class="twelve-columns margin-bottom product-module-content">
+                <?php echo $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)); ?>
+              </div>
+              <?php
+              }
+            }
+          ?>
+        </div>
       </fieldset>
     </div>
     

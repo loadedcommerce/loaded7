@@ -18,7 +18,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
     <legend class="legend"><?php echo $lC_Language->get('text_inventory_settings'); ?></legend>
     <div class="columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-        <div class="twelve-columns no-margin-bottom">
+        <div class="twelve-columns no-margin-bottom strong">
           <span><?php echo $lC_Language->get('field_model'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_model')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
@@ -27,9 +27,9 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
       </div>
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <!-- lc_track_inventory_override begin -->
-        <div class="twelve-columns no-margin-bottom">
+        <div class="twelve-columns no-margin-bottom strong">
           <span><?php echo $lC_Language->get('text_track_inventory_override'); ?></span><?php echo lc_go_pro(); ?>
-          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_inventory_override')); ?>
+          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_track_inventory_override')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <span class="button-group">
@@ -52,7 +52,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
     </div>
     <div class="columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-        <div class="twelve-columns no-margin-bottom">
+        <div class="twelve-columns no-margin-bottom strong">
           <span><?php echo $lC_Language->get('text_msrp'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_msrp')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
@@ -61,7 +61,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
       </div>
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <!-- lc_vendor_supplier begin -->
-        <div class="twelve-columns no-margin-bottom">
+        <div class="twelve-columns no-margin-bottom strong">
           <span><?php echo $lC_Language->get('text_vendor_supplier'); ?></span><?php echo lc_go_pro(); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_vendor')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
@@ -75,8 +75,8 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
     <div class="columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <!-- lc_inventory_control begin -->
-        <div class="twelve-columns no-margin-bottom">
-          <span><?php echo $lC_Language->get('text_inventory_control'); ?></span><?php echo lc_go_pro(); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_inventory_control')); ?>
+        <div class="twelve-columns no-margin-bottom strong">
+          <span><?php echo $lC_Language->get('text_inventory_control'); ?></span><?php echo lc_go_pro(); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), null, 'info-spot on-right large-margin-left'); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <span id=invControlButtons" class="button-group">
@@ -119,7 +119,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
     <legend class="legend"><?php echo $lC_Language->get('text_tax_settings'); ?></legend>
     <div class="columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-        <div class="twelve-columns no-margin-bottom">
+        <div class="twelve-columns no-margin-bottom strong">
           <span><?php echo $lC_Language->get('text_tax_class'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_tax_class')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
@@ -127,7 +127,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
         </div>
       </div>
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-        <div class="twelve-columns no-margin-bottom">
+        <div class="twelve-columns no-margin-bottom strong">
           <span><?php echo $lC_Language->get('text_base_price_with_tax'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_price_with_tax')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
@@ -139,37 +139,10 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
   <fieldset class="fieldset">
     <legend class="legend"><?php echo $lC_Language->get('text_management_settings'); ?></legend>
     <div class="columns">
-      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
-        <?php
-          $Qattributes = $lC_Database->query('select id, code from :table_templates_boxes where modules_group = :modules_group order by code');
-          $Qattributes->bindTable(':table_templates_boxes');
-          $Qattributes->bindValue(':modules_group', 'product_attributes');
-          $Qattributes->execute();
-          while ( $Qattributes->next() ) {
-            $module = basename($Qattributes->value('code'));
-            if ( !class_exists('lC_ProductAttributes_' . $module) ) {
-              if ( file_exists(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php') ) {
-                include(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php');
-              }
-            }
-            if ( class_exists('lC_ProductAttributes_' . $module) ) {
-              $module = 'lC_ProductAttributes_' . $module;
-              $module = new $module();
-            ?>
-            <div class="twelve-columns small-margin-bottom">
-              <span><?php echo $module->getTitle(); ?></span>
-            </div>
-            <div class="twelve-columns margin-bottom product-module-content">
-              <?php echo $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)); ?>
-            </div>
-            <?php
-            }
-          }
-        ?>
-      </div>
+
 
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">                  
-        <div class="twelve-columns small-margin-bottom">
+        <div class="twelve-columns small-margin-bottom strong">
           <span><?php echo $lC_Language->get('text_product_class'); ?></span><?php echo lc_go_pro(); ?>
           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_product_class')); ?>
         </div>                  
@@ -183,8 +156,8 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
           </select>
         </div>
 
-        <div class="twelve-columns mid-margin-bottom">
-          <div class="twelve-columns no-margin-bottom">
+        <!-- div class="twelve-columns mid-margin-bottom">
+          <div class="twelve-columns no-margin-bottom strong">
             <span><?php echo $lC_Language->get('text_availability'); ?></span>
             <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_availability')); ?>
           </div>
@@ -196,15 +169,15 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
               <span class="icon-calendar icon-size2 small-margin-left"></span>
             </span>
             <!-- lc_products_availability begin -->
-            <span class="nowrap">
+            <!-- span class="nowrap">
               <span class="input small-margin-top">
                 <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;" disabled />
               </span>
-              <span class="icon-calendar icon-size2 small-margin-left grey"></span><?php echo lc_go_pro(); ?>
+              <span class="icon-calendar icon-size2 small-margin-left grey"></span><?php //echo lc_go_pro(); ?>
             </span>
             <!-- lc_products_availability end -->
-          </div>
-        </div>
+          <!-- /div>
+        </div -->
 
       </div>
     </div>
@@ -215,16 +188,16 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <?php //foreach() { ?>
         <div class="margin-bottom">
-          <label for="" class="label">Custom Field 1</label>
+          <label for="" class="label strong">Custom Field 1</label>
           <input type="text" name="" id="" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" class="input" disabled />
         </div>
         <?php //} ?>
         <div class="margin-bottom">
-          <label for="" class="label">Custom Field 2</label>
+          <label for="" class="label strong">Custom Field 2</label>
           <input type="text" name="" id="" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" class="input" disabled />
         </div>
         <div> 
-          <label for="" class="label">Custom Field 3</label>
+          <label for="" class="label strong">Custom Field 3</label>
           <input type="text" name="" id="" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" class="input" disabled />
         </div>
       </div>

@@ -18,7 +18,7 @@ global $lC_Language, $pInfo;
     <legend class="legend"><?php echo $lC_Language->get('text_pricing_overrides'); ?></legend>
     <div class="field-block button-height">
       <label for="products_base_price" class="label"><b><?php echo $lC_Language->get('text_base_price'); ?></b></label>
-      <input type="text" name="products_base_price" id="products_base_price" value="<?php echo lc_round($pInfo->get('products_price'), DECIMAL_PLACES); ?>" class="input strong" onblur="$('#products_price0').val(this.value);" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_base_price'), null, 'info-spot on-left grey margin-left'); ?>
+      <input type="text" name="products_base_price" id="products_base_price" value="<?php echo number_format(lc_round($pInfo->get('products_price'), DECIMAL_PLACES), DECIMAL_PLACES);; ?>" class="input strong" onblur="$('#products_price0').val(this.value);" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_base_price'), null, 'info-spot on-left grey margin-left'); ?>
     </div>
     <!-- lc_group_pricing begin -->
     <div class="field-block field-block-product button-height">
@@ -81,7 +81,7 @@ global $lC_Language, $pInfo;
             <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
           </span>
           <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.9, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
             <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
             <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
           </span>
@@ -92,7 +92,7 @@ global $lC_Language, $pInfo;
             <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
           </span>
           <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.875, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
             <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
             <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
           </span>
@@ -103,7 +103,7 @@ global $lC_Language, $pInfo;
             <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
           </span>
           <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.85, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
             <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
             <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
           </span>
@@ -121,7 +121,7 @@ global $lC_Language, $pInfo;
             <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
           </span>
           <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.85, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
             <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
             <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
           </span>
@@ -132,7 +132,7 @@ global $lC_Language, $pInfo;
             <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
           </span>
           <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.825, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
             <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
             <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
           </span>
@@ -143,7 +143,7 @@ global $lC_Language, $pInfo;
             <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
           </span>
           <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.8, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
             <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
             <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
           </span>
@@ -161,7 +161,7 @@ global $lC_Language, $pInfo;
             <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
           </span>
           <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.8, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
             <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
             <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
           </span>
@@ -172,7 +172,7 @@ global $lC_Language, $pInfo;
             <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
           </span>
           <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.775, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
             <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
             <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
           </span>
@@ -183,7 +183,7 @@ global $lC_Language, $pInfo;
             <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
           </span>
           <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;" />
+            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.75, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
             <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
             <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
           </span>

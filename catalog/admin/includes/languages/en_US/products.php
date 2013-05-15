@@ -198,7 +198,18 @@ info_bubble_content_status = Product Status
 info_bubble_content_model = Product Model Number
 info_bubble_content_weight = Product Weight
 
+info_bubble_inventory_control = Simple product with no variants or Multi-SKU product with variants.
+
 info_bubble_pricing_base_price = Product Base Price
 info_bubble_pricing_group_pricing = Separate Pricing Per Customer Group
 info_bubble_pricing_qty_price_breaks = Quantity Price Breaks
 info_bubble_pricing_specials = Product Specials Pricing
+
+info_bubble_data_model = Product Model Number
+info_bubble_data_msrp = Manufacturer Suggested Retail Price
+info_bubble_data_track_inventory_override = Track Inventory Overrides
+info_bubble_data_vendor = Product Vendor/Supplier 
+info_bubble_data_tax_class = Product Tax Class
+info_bubble_data_price_with_tax = Product Price including Tax (calculated)
+info_bubble_data_product_class = The Product Classification
+

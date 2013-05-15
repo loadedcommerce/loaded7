@@ -11,11 +11,14 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-
-  class lC_ProductAttributes_date_available extends lC_Product_attributes_Admin {
-    public function setFunction($value) {
-      $string = '<span class="input full-width"><span class="icon-calendar"></span>' . lc_draw_input_field('attributes[' . self::getID() . ']', $value, 'id="attributes_' . self::getID() . '" class="input-unstyled datepicker"') . '</span>';
-      return $string;
-    }
+class lC_ProductAttributes_date_available extends lC_Product_attributes_Admin {
+  public function __construct() {
+    $this->_section = 'shipping';
   }
+
+  public function setFunction($value) {
+    $string = '<span class="input full-width"><span class="icon-calendar"></span>' . lc_draw_input_field('attributes[' . self::getID() . ']', $value, 'id="attributes_' . self::getID() . '" class="input-unstyled datepicker"') . '</span>';
+    return $string;
+  }
+}
 ?>
