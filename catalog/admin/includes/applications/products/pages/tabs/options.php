@@ -35,10 +35,10 @@ global $lC_Language, $lC_ObjectInfo;
         </div>
       </div>
     </div>
-    <div id="multiSkuContainer" class="twelve-columns" style="position:relative; display:block;">
+    <div id="multiSkuContainer" class="twelve-columns" style="position:relative; display:none;">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_multi_sku_options'); ?></legend>
-        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewVariantFieldset();"><?php echo $lC_Language->get('button_add'); ?></a></span>
+        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewMultiSkuOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
 
       </fieldset>
     </div>
@@ -46,15 +46,15 @@ global $lC_Language, $lC_ObjectInfo;
     <div id="simpleOptionsContainer" class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_simple_options'); ?></legend>
-        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)"><?php echo $lC_Language->get('button_add'); ?></a></span>
+        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewSimpleOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
 
       </fieldset>    
     </div>
     
     <div id="bundleProductsContainer" class="twelve-columns">
       <fieldset class="fieldset">
-        <legend class="legend"><?php echo $lC_Language->get('text_bundle_products'); ?><?php echo lc_go_pro(); ?></legend>
-        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)"><?php echo $lC_Language->get('button_add'); ?></a></span>
+        <legend class="legend"><?php echo $lC_Language->get('text_bundle_products'); ?><?php echo lc_go_pro('info-spot on-right margin-left mid-margin-right'); ?></legend>
+        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewBundleOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
 
       </fieldset>     
 
@@ -76,15 +76,29 @@ function _updateInvControlType(type) {
     $('#inventory_control_simple').show('300');
     $('#inventory_control_multi').hide('300');
     $('label[for=\'ic_radio_1\']').addClass('active');
-    $('label[for=\'ioc_radio_1\']').addClass('active');    
+    $('label[for=\'ioc_radio_1\']').addClass('active'); 
+    $('#multiSkuContainer').hide();   
+    $('#simpleOptionsContainer').show();   
   } else if (type == '2') {   
     $('#inventory_control_simple').hide('300');
     $('#inventory_control_multi').show('300');
     $('label[for=\'ic_radio_2\']').addClass('active');
-    $('label[for=\'ioc_radio_2\']').addClass('active');    
-  } else { // type=3
-  
+    $('label[for=\'ioc_radio_2\']').addClass('active'); 
+    $('#multiSkuContainer').show();   
+    $('#simpleOptionsContainer').hide();        
   }
+}
+
+function addNewMultiSkuOption() {
+  alert('addNewMultiSkuOption() called');
+}
+
+function addNewSimpleOption() {
+  alert('addNewSimpleOption() called');
+}
+
+function addNewBundleOption() {
+  alert('Coming Soon');
 }
 
 </script>
