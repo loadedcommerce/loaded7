@@ -48,6 +48,11 @@ function newBanner() {
                    '        <?php echo lc_draw_input_field('url', null, 'class="input" style="width:93%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
+                   '        <label for="target" class="label"><?php echo $lC_Language->get('field_target'); ?></label>'+
+                   '         <?php echo '&nbsp;' . lc_draw_checkbox_field('target', null, null, 'class="switch medium checked" checked="checked" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>'+
+                   '         <?php echo $lC_Language->get('text_banners_target'); ?>'+
+                   '      </p>'+                   
+                   '      <p class="button-height inline-label">'+
                    '        <label for="group" class="label"><?php echo $lC_Language->get('field_group'); ?></label>'+
                    '        <?php echo lc_draw_pull_down_menu('group', null, null, 'class="select" style="width:46%;"') . $lC_Language->get('field_group_new') . '<br />' . lc_draw_input_field('group_new', null, 'class="input" style="width:93%;"'); ?>'+
                    '      </p>'+
@@ -83,7 +88,7 @@ function newBanner() {
                    '      </p>'+                       
                    '      <p class="button-height inline-label">'+
                    '        <label for="status" class="label"><?php echo $lC_Language->get('field_status'); ?></label>'+
-                   '         <?php echo '&nbsp;' . lc_draw_checkbox_field('status', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>'+
+                   '         <?php echo '&nbsp;' . lc_draw_checkbox_field('status', null, null, 'class="switch medium checked" checked="checked" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>'+
                    '      </p>'+
                    '    </form>'+
                    '    <hr>'+
