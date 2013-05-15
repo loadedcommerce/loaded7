@@ -10,3 +10,5 @@
 #  @license    http://loadedcommerce.com/license.html
 
 product_attributes_manufacturers_title = Manufacturer
+
+info_bubble_attributes_manufacturers_title = Product Manufacturer

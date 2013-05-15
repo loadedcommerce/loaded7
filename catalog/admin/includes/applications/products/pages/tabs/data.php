@@ -139,7 +139,9 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
   <fieldset class="fieldset">
     <legend class="legend"><?php echo $lC_Language->get('text_management_settings'); ?></legend>
     <div class="columns">
-
+      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
+        <?php echo lC_Products_Admin::getProductAttributeModules('dataManagementSettings'); ?>
+      </div>
 
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">                  
         <div class="twelve-columns small-margin-bottom strong">
@@ -155,29 +157,6 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
             <option id="5" value="5">5th Class</option>
           </select>
         </div>
-
-        <!-- div class="twelve-columns mid-margin-bottom">
-          <div class="twelve-columns no-margin-bottom strong">
-            <span><?php echo $lC_Language->get('text_availability'); ?></span>
-            <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_availability')); ?>
-          </div>
-          <div class="twelve-columns margin-bottom">
-            <span class="nowrap margin-right">
-              <span class="input small-margin-top">
-                <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo lC_DateTime::getShort($lC_ObjectInfo->get('products_date_added')); ?>" style="width:97px;" />
-              </span>
-              <span class="icon-calendar icon-size2 small-margin-left"></span>
-            </span>
-            <!-- lc_products_availability begin -->
-            <!-- span class="nowrap">
-              <span class="input small-margin-top">
-                <input type="text" placeholder="End" class="input-unstyled datepicker" value="" style="width:97px;" disabled />
-              </span>
-              <span class="icon-calendar icon-size2 small-margin-left grey"></span><?php //echo lc_go_pro(); ?>
-            </span>
-            <!-- lc_products_availability end -->
-          <!-- /div>
-        </div -->
 
       </div>
     </div>

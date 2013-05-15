@@ -15,7 +15,7 @@
 class lC_ProductAttributes_shipping_availability extends lC_Product_attributes_Admin {
   
   public function __construct() {
-    $this->_section = 'shipping';
+    $this->_section = 'shippingSupplierCharacteristics';
   }
     
   public function setFunction($value) {

@@ -45,7 +45,13 @@ global $lC_Language, $lC_ObjectInfo;
             $Qattributes->bindTable(':table_templates_boxes');
             $Qattributes->bindValue(':modules_group', 'product_attributes');
             $Qattributes->execute();
+            
             while ( $Qattributes->next() ) {
+echo "<pre>";
+print_r($Qattributes->toArray());
+echo "</pre>";
+
+              
               $module = basename($Qattributes->value('code'));
               if ( !class_exists('lC_ProductAttributes_' . $module) ) {
                 if ( file_exists(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php') ) {
@@ -55,9 +61,17 @@ global $lC_Language, $lC_ObjectInfo;
               if ( class_exists('lC_ProductAttributes_' . $module) ) {
                 $module = 'lC_ProductAttributes_' . $module;
                 $module = new $module();
+
+    $lC_Language->loadIniFile('modules/product_attributes/' . $module->getCode() . '.php');
+                
+                
+echo '[' . $lC_Language->get('product_attributes_' . $module->getCode() . '_title') . ']<br>';
+echo '[' . $module->getTitle() . ']<br>';
+                
               ?>
               <div class="twelve-columns small-margin-bottom">
                 <span><?php echo $module->getTitle(); ?></span>
+                <span><?php echo $module->getSection(); ?></span>
               </div>
               <div class="twelve-columns margin-bottom product-module-content">
                 <?php echo $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)); ?>

@@ -1278,7 +1278,43 @@ class lC_Products_Admin {
 
     return $validated;
   }
-  
+    /*
+  * Get the product attribute modules HTML
+  *
+  * @param string $section The product page section to display in
+  * @access public
+  * @return string
+  */  
+  public static function getProductAttributeModules($section = '') {
+    global $lC_Database, $lC_Language;
+
+    $output = '';
+    
+    $Qattributes = $lC_Database->query('select id, code from :table_templates_boxes where modules_group = :modules_group order by code desc');
+    $Qattributes->bindTable(':table_templates_boxes');
+    $Qattributes->bindValue(':modules_group', 'product_attributes');
+    $Qattributes->execute();
+    while ( $Qattributes->next() ) {
+      $module = basename($Qattributes->value('code'));
+      if ( !class_exists('lC_ProductAttributes_' . $module) ) {
+        if ( file_exists(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php') ) {
+          include(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php');
+        }
+      }
+      if ( class_exists('lC_ProductAttributes_' . $module) ) {
+        $module = 'lC_ProductAttributes_' . $module;
+        $module = new $module();
+        if ($module->getSection() == $section) {
+          $lC_Language->loadIniFile('modules/product_attributes/' . $module->getCode() . '.php');
+          $output .= '<div id="' . $Qattributes->valueInt('id') . '" class="twelve-columns strong">
+                        <span>' . $lC_Language->get('product_attributes_' . $module->getCode() . '_title') . '</span>' . lc_show_info_bubble($lC_Language->get('info_bubble_attributes_' . $module->getCode() . '_text')) . '</div>
+                      <div class="twelve-columns product-module-content">' . $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)) . '</div>';
+        }
+      }
+    }    
+    
+    return $output;
+  }
   
 }
 ?>

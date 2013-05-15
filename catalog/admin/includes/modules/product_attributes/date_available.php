@@ -13,7 +13,7 @@
 */
 class lC_ProductAttributes_date_available extends lC_Product_attributes_Admin {
   public function __construct() {
-    $this->_section = 'shipping';
+    $this->_section = 'dataManagementSettings';
   }
 
   public function setFunction($value) {

@@ -14,7 +14,7 @@
 class lC_ProductAttributes_manufacturers extends lC_Product_attributes_Admin {
   
   public function __construct() {
-    $this->_section = 'options';
+    $this->_section = 'dataManagementSettings';
   }
   
   public function setFunction($value) {

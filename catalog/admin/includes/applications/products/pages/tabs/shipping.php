@@ -136,22 +136,14 @@ global $lC_Language, $lC_ObjectInfo, $weight_class_array;
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_supplier_characteristics'); ?></legend>
         <div class="columns">
+        
           <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-            <div class="twelve-columns no-margin-bottom">
-              <span><?php echo $lC_Language->get('text_days_to_ship'); ?></span>
-              <span class="info-spot on-left grey float-right">
-                <span class="icon-info-round"></span>
-                <span class="info-bubble">
-                  Put the bubble text here
-                </span>
-              </span>
-            </div>
-            <div class="twelve-columns no-margin-bottom small-margin-top">
-              <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_days_to_ship" name="products_days_to_ship" disabled />
-            </div>
+            <?php echo lC_Products_Admin::getProductAttributeModules('shippingSupplierCharacteristics'); ?>
           </div>
+          
+          
           <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-            <div class="twelve-columns no-margin-bottom">
+       
               <span><?php echo $lC_Language->get('text_warehouse'); ?></span>
               <span class="info-spot on-left grey">
                 <small class="tag red-bg">Pro</small>
@@ -165,11 +157,14 @@ global $lC_Language, $lC_ObjectInfo, $weight_class_array;
                   Put the bubble text here
                 </span>
               </span>
-            </div>
-            <div class="twelve-columns no-margin-bottom small-margin-top">
+       
               <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_warehouse" name="products_warehouse" disabled />
             </div>
           </div>
+          
+          
+          
+          
           <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
             <div class="twelve-columns no-margin-bottom">
               <span><?php echo $lC_Language->get('text_stock_date_expected'); ?></span>
@@ -189,6 +184,8 @@ global $lC_Language, $lC_ObjectInfo, $weight_class_array;
               </span>
             </div>
           </div>                
+          
+          
         </div>
       </fieldset>
     </div>

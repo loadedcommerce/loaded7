@@ -23,8 +23,7 @@ class lC_Application_Product_attributes extends lC_Template_Admin {
   */
   protected $_module = 'product_attributes',
             $_page_title,
-            $_page_contents = 'main.php',
-            $_section;
+            $_page_contents = 'main.php';
  /*
   * Class constructor
   */
