@@ -144,26 +144,26 @@ $(document).ready(function() {
     });
     // when a key is pressed 
     $("*").keypress(function(e){
-      // first check if the escape key has been presed
-      $(document).keydown(function(e){
-        var code = e.keyCode ? e.keyCode : e.which;
-        if (code == 27) {
-          disableKeyCombo = false; 
-          $('#li-search').removeClass("current");
-          $('#li-messages').removeClass("current");
-          $('#li-add').removeClass("current");
-          $('#li-settings').removeClass("current");
-          $('#addContainer').hide();
-          $('#searchContainer').hide();
-          $('#messagesContainer').hide();
-          $('#settingsContainer').hide();
-          $('#mainMenuContainer').show();
-          $('#recentContainer').show();
-          $('body').focus();
-        }
-      });
       // if the disable var is false we continue
       if (!disableKeyCombo == true) {
+        // first check if the escape key has been presed
+        $(document).keydown(function(e){
+          var code = e.keyCode ? e.keyCode : e.which;
+          if (code == 27) {
+            disableKeyCombo = false; 
+            $('#li-search').removeClass("current");
+            $('#li-messages').removeClass("current");
+            $('#li-add').removeClass("current");
+            $('#li-settings').removeClass("current");
+            $('#addContainer').hide();
+            $('#searchContainer').hide();
+            $('#messagesContainer').hide();
+            $('#settingsContainer').hide();
+            $('#mainMenuContainer').show();
+            $('#recentContainer').show();
+            $('body').focus();
+          }
+        });
         // check to see if a modal is open currently by it's class attribute
         var modalClass = $('#modals').attr('class');
         // if the modal's class is not with-blocker we can continue

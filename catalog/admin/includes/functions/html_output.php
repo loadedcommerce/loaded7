@@ -167,4 +167,16 @@
 
     return 'templates/' . $lC_Template->getCode() . '/img/icons/' . (!empty($group) ? $group . '/' : null) . $image;
   }
+  
+  function lc_go_pro() {
+    $html = '<span class="info-spot on-left grey margin-left"><small class="tag red-bg">Pro</small><span class="info-bubble"><b>Go Pro!</b> and enjoy this feature!</span></span>';
+    
+    return $html;
+  }
+  
+  function lc_show_info_bubble($msg, $styleA = 'margin-right:6px;', $classA = 'on-left grey float-right', $classB = 'blue-bg', $minWidth = '180px') {
+    $html = '<span style="' . $styleA . '" class="info-spot ' . $classA . '"><span class="icon-info-round"></span><span style="min-width:' . $minWidth . ';" class="info-bubble ' . $classB . '">' . $msg . '</span></span>';
+    
+    return $html;    
+  }
 ?>
