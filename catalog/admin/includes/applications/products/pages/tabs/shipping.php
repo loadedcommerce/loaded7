@@ -18,112 +18,76 @@ global $lC_Language, $lC_ObjectInfo, $weight_class_array;
     <div class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_product_characteristics'); ?></legend>
-        <div class="columns">
+        <div class="columns no-margin-bottom">
+        
+        
           <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-            <div class="twelve-columns no-margin-bottom">
-              <span><?php echo $lC_Language->get('field_weight'); ?></span>
-              <span class="info-spot on-left grey float-right">
-                <span class="icon-info-round"></span>
-                <span class="info-bubble">
-                  Put the bubble text here
-                </span>
-              </span>
+            <div class="twelve-columns no-margin-bottom strong">
+              <span><?php echo $lC_Language->get('field_weight'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_shipping_weight')); ?>
             </div>
             <div class="twelve-columns no-margin-bottom small-margin-top">
               <input type="text" class="required input full-width" value="<?php echo $lC_ObjectInfo->get('products_weight'); ?>" id="products_weight" name="products_weight" />
             </div>
-            <div class="twelve-columns no-margin-bottom margin-top grey disabled">
-              <?php echo $lC_Language->get('text_non_shippable_item'); ?>
-              <input type="checkbox" id="virtual" name="virtual" disabled /> 
-              <?php echo $lC_Language->get('text_coming_soon'); ?>
-            </div>
           </div>
+          
           <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-            <div class="twelve-columns no-margin-bottom">
-              <span><?php echo $lC_Language->get('text_dimensional'); ?></span>
-              <span class="info-spot on-left grey">
-                <small class="tag red-bg">Pro</small>
-                <span class="info-bubble">
-                  <b>Go Pro!</b> and enjoy this feature!
-                </span>
-              </span>
-              <span class="info-spot on-left grey float-right">
-                <span class="icon-info-round"></span>
-                <span class="info-bubble">
-                  Put the bubble text here
-                </span>
-              </span>
-            </div>
-            <div class="twelve-columns no-margin-bottom margin-top">
-              <div class="twelve-columns clear-both">
-                <div style="width:50px;" class="float-left small-margin-top"><label for="product_length" class="label"><?php echo $lC_Language->get('text_length'); ?></label></div>
-                <input type="text" class="input unstyled margin-bottom float-left" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="product_length" name="product_length" disabled />
-              </div>
-              <div class="twelve-columns clear-both">
-                <div style="width:50px;" class="float-left small-margin-top"><label for="product_length" class="label"><?php echo $lC_Language->get('text_width'); ?></label></div>
-                <input type="text" class="input unstyled margin-bottom" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="product_width" name="product_width" disabled />
-              </div>
-              <div class="twelve-columns">
-                <div style="width:50px;" class="float-left small-margin-top"><label for="product_length" class="label"><?php echo $lC_Language->get('text_height'); ?></label></div>
-                <input type="text" class="input unstyled margin-bottom" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="product_height" name="product_height" disabled />
-              </div>
-            </div>
-          </div>                
-        </div>
-        <div class="columns">
-          <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-            <div class="twelve-columns no-margin-bottom">
-              <span><?php echo $lC_Language->get('field_weight_class'); ?></span>
-              <span class="info-spot on-left grey float-right">
-                <span class="icon-info-round"></span>
-                <span class="info-bubble">
-                  Put the bubble text here
-                </span>
-              </span>
+            <div class="twelve-columns no-margin-bottom strong">
+              <span><?php echo $lC_Language->get('field_weight_class'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_shipping_weight_class')); ?>
             </div>
             <div class="twelve-columns no-margin-bottom small-margin-top">
               <?php echo lc_draw_pull_down_menu('products_weight_class', $weight_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_weight_class') : SHIPPING_WEIGHT_UNIT), 'class="select full-width small-margin-top required"'); ?>
             </div>
           </div>
+          
           <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-            &nbsp;
-          </div>                
+            <div class="twelve-columns no-margin-bottom strong">
+              <span><?php echo $lC_Language->get('field_non_shippable'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_shipping_non_shippable'), null, 'info-spot grey on-right mid-margin-left'); ?>
+            </div>
+            <div class="twelve-columns no-margin-bottom small-margin-top">
+              <?php echo lc_draw_checkbox_field('products_weight_class', null, null, 'class="input small-margin-top required"'); ?>
+              <span><?php echo $lC_Language->get('text_non_shippable_item'); ?></span>
+            </div>
+          </div>          
+          
+        
+          
+
+          <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
+            <div class="twelve-columns no-margin-bottom strong">
+              <span><?php echo $lC_Language->get('text_dimensions'); ?></span><?php echo lc_go_pro() . lc_show_info_bubble($lC_Language->get('info_bubble_shipping_dimensions')); ?>
+            </div>
+            
+            <div class="twelve-columns no-margin-bottom mid-margin-top">
+            
+              <div class="twelve-columns clear-both" style="display:inline-block; white-space:nowrap;">
+                <input type="text" class="input" style="width:24%;" value="" placeholder="<?php echo $lC_Language->get('text_length'); ?>" id="product_length" name="product_length" disabled /><span class="mid-margin-left small-margin-right strong">X</span> 
+                <input type="text" class="input" style="width:24%;" value="" placeholder="<?php echo $lC_Language->get('text_width'); ?>" id="product_width" name="product_width" disabled /><span class="mid-margin-left small-margin-right strong">X</span> 
+                <input type="text" class="input" style="width:24%;" value="" placeholder="<?php echo $lC_Language->get('text_height'); ?>" id="product_height" name="product_height" disabled />
+              </div>
+
+            </div>
+          </div>  
+
+
+
         </div>
       </fieldset>
     </div>
     <div class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_order_fee_modifiers'); ?></legend>
-        <div class="columns">
-          <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-            <div class="twelve-columns no-margin-bottom">
-              <span><?php echo $lC_Language->get('text_shipping_fee_override'); ?></span>
-              <span class="info-spot on-left grey float-right">
-                <span class="icon-info-round"></span>
-                <span class="info-bubble">
-                  Put the bubble text here
-                </span>
-              </span>
+        <div class="columns no-margin-bottom ">
+          <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom ">
+            <div class="twelve-columns no-margin-bottom strong">
+              <span><?php echo $lC_Language->get('text_shipping_fee_override'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_shipping_fee_override'), 'margin-right:4px', 'info-spot on-left grey float-right'); ?>
             </div>
             <div class="twelve-columns no-margin-bottom small-margin-top">
               <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_shipping_fee_override" name="products_shipping_fee_override" disabled /><small class="small-margin-top"><?php echo $lC_Language->get('text_zero_for_free_shipping'); ?></small>
             </div>
           </div>
           <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-            <div class="twelve-columns no-margin-bottom">
-              <span><?php echo $lC_Language->get('text_add_handling_fee'); ?></span>
-              <span class="info-spot on-left grey">
-                <small class="tag red-bg">Pro</small>
-                <span class="info-bubble">
-                  <b>Go Pro!</b> and enjoy this feature!
-                </span>
-              </span>
-              <span class="info-spot on-left grey float-right">
-                <span class="icon-info-round"></span>
-                <span class="info-bubble">
-                  Put the bubble text here
-                </span>
-              </span>
+            <div class="twelve-columns no-margin-bottom strong">
+              <span><?php echo $lC_Language->get('text_add_handling_fee'); ?></span><?php echo lc_go_pro('info-spot on-left grey mid-margin-left') . lc_show_info_bubble($lC_Language->get('info_bubble_shipping_handling_fee'), 'margin-right:4px', 'info-spot on-left grey float-right'); ?>
             </div>
             <div class="twelve-columns no-margin-bottom small-margin-top">
               <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_add_handling_fee" name="products_add_handling_fee" disabled />
@@ -135,56 +99,32 @@ global $lC_Language, $lC_ObjectInfo, $weight_class_array;
     <div class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_supplier_characteristics'); ?></legend>
-        <div class="columns">
+        <div class="columns no-margin-bottom">
         
-          <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+          <div class="new-row-mobile six-colmns six-columns-tablet twelve-columns-mobile no-margin-bottom">
             <?php echo lC_Products_Admin::getProductAttributeModules('shippingSupplierCharacteristics'); ?>
           </div>
           
-          
           <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-       
-              <span><?php echo $lC_Language->get('text_warehouse'); ?></span>
-              <span class="info-spot on-left grey">
-                <small class="tag red-bg">Pro</small>
-                <span class="info-bubble">
-                  <b>Go Pro!</b> and enjoy this feature!
-                </span>
-              </span>
-              <span class="info-spot on-left grey float-right">
-                <span class="icon-info-round"></span>
-                <span class="info-bubble">
-                  Put the bubble text here
-                </span>
-              </span>
-       
-              <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_warehouse" name="products_warehouse" disabled />
-            </div>
-          </div>
-          
-          
-          
-          
-          <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-            <div class="twelve-columns no-margin-bottom">
-              <span><?php echo $lC_Language->get('text_stock_date_expected'); ?></span>
-              <span class="info-spot on-left grey float-right">
-                <span class="icon-info-round"></span>
-                <span class="info-bubble">
-                  Put the bubble text here
-                </span>
-              </span>
+            <div class="twelve-columns no-margin-bottom strong">
+              <span><?php echo $lC_Language->get('text_warehouse'); ?></span><?php echo lc_go_pro('info-spot on-left grey mid-margin-left') . lc_show_info_bubble($lC_Language->get('info_bubble_shipping_date_expected'), 'margin-right:4px', 'info-spot on-left grey float-right'); ?>
             </div>
             <div class="twelve-columns no-margin-bottom small-margin-top">
-              <span class="nowrap margin-right">
-                <span class="input small-margin-top full-width">
-                  <input type="text" placeholder="" class="input-unstyled datepicker full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" disabled />
-                  <span class="icon-calendar icon-size2 small-margin-left float-right" style="margin-top:-29px;"></span>
-                </span>
+              <input type="text" class="required input full-width" value="<?php echo $lC_Language->get('text_coming_soon'); ?>" id="products_warehouse" name="products_warehouse" disabled />
+            </div>
+          </div>      
+          
+          <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+            <div class="twelve-columns no-margin-bottom strong">
+              <span><?php echo $lC_Language->get('text_stock_date_expected'); ?></span><?php echo lc_go_pro('info-spot on-left grey mid-margin-left') . lc_show_info_bubble($lC_Language->get('info_bubble_shipping_date_expected'), 'margin-right:4px', 'info-spot on-left grey float-right'); ?>
+            </div>
+            <div class="twelve-columns no-margin-bottom small-margin-top">
+              <span class="input full-width">
+                <span class="icon-calendar"></span>
+                <input type="text" class="input-unstyled datepicker" id="date_expected" name="date_expected">
               </span>
             </div>
           </div>                
-          
           
         </div>
       </fieldset>

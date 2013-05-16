@@ -168,7 +168,7 @@
     return 'templates/' . $lC_Template->getCode() . '/img/icons/' . (!empty($group) ? $group . '/' : null) . $image;
   }
   
-  function lc_go_pro($style = 'info-spot on-left grey margin-left') {
+  function lc_go_pro($style = 'info-spot on-left grey mid-margin-left') {
     $html = '<span class="' . $style . '"><small class="tag red-bg">Pro</small><span class="info-bubble"><b>Go Pro!</b> and enjoy this feature!</span></span>';
     
     return $html;

@@ -1308,7 +1308,7 @@ class lC_Products_Admin {
           $lC_Language->loadIniFile('modules/product_attributes/' . $module->getCode() . '.php');
           $output .= '<div class="twelve-columns strong small-margin-bottom">
                         <span>' . $lC_Language->get('product_attributes_' . $module->getCode() . '_title') . '</span>' . lc_show_info_bubble($lC_Language->get('info_bubble_attributes_' . $module->getCode() . '_text')) . '</div>
-                      <div class="twelve-columns product-module-content">' . $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)) . '</div>';
+                      <div class="twelve-columns product-module-content margin-bottom">' . $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)) . '</div>';
         }
       }
     }    

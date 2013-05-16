@@ -1229,6 +1229,11 @@ INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width,
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(5, 1, 'Mini', 'mini', 50, 40, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 600, 450, 0);
 
+INSERT INTO lc_shipping_availability VALUES(1, 1, 'Ships within 24 hours.', 'ships24hours');
+INSERT INTO lc_shipping_availability VALUES(2, 1, 'Ships within 2 days.', 'ships2days');
+INSERT INTO lc_shipping_availability VALUES(3, 1, 'Ships within 3-5 days.', 'ships3to5days');
+INSERT INTO lc_shipping_availability VALUES(4, 1, 'Backordered; no date available.', 'backorder');
+
 INSERT INTO lc_tax_class VALUES (1, 'Taxable Goods', 'The following types of products are included non-food, services, etc', now(), now());
 
 # USA/Florida

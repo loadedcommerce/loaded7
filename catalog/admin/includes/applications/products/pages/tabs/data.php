@@ -29,7 +29,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
         <!-- lc_track_inventory_override begin -->
         <div class="twelve-columns no-margin-bottom strong">
           <span><?php echo $lC_Language->get('text_track_inventory_override'); ?></span><?php echo lc_go_pro(); ?>
-          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_track_inventory_override')); ?>
+          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_track_inventory_override'), null, 'info-spot on-left grey margin-left'); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <span class="button-group">
@@ -76,7 +76,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <!-- lc_inventory_control begin -->
         <div class="twelve-columns no-margin-bottom strong">
-          <span><?php echo $lC_Language->get('text_inventory_control'); ?></span><?php echo lc_go_pro(); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), null, 'info-spot on-right large-margin-left'); ?>
+          <span><?php echo $lC_Language->get('text_inventory_control'); ?></span><?php echo lc_go_pro(); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), 'margin-left:20px', 'info-spot info-spot on-right grey'); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <span id=invControlButtons" class="button-group">
@@ -117,8 +117,8 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
   </fieldset>
   <fieldset class="fieldset">
     <legend class="legend"><?php echo $lC_Language->get('text_tax_settings'); ?></legend>
-    <div class="columns">
-      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+    <div class="columns no-margin-bottom">
+      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile mid-margin-bottom">
         <div class="twelve-columns no-margin-bottom strong">
           <span><?php echo $lC_Language->get('text_tax_class'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_tax_class')); ?>
         </div>
@@ -126,7 +126,7 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
           <?php echo lc_draw_pull_down_menu('products_tax_class_id', $tax_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_tax_class_id') : null), 'class="select full-width small-margin-top" id="tax_class0"'); ?>
         </div>
       </div>
-      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile mid-margin-bottom">
         <div class="twelve-columns no-margin-bottom strong">
           <span><?php echo $lC_Language->get('text_base_price_with_tax'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_price_with_tax')); ?>
         </div>
@@ -138,7 +138,8 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
   </fieldset>
   <fieldset class="fieldset">
     <legend class="legend"><?php echo $lC_Language->get('text_management_settings'); ?></legend>
-    <div class="columns">
+    <div class="columns no-margin-bottom">
+    
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
         <?php echo lC_Products_Admin::getProductAttributeModules('dataManagementSettings'); ?>
       </div>
@@ -163,8 +164,8 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
   </fieldset>
   <fieldset class="fieldset">
     <legend class="legend"><?php echo $lC_Language->get('text_product_details'); ?></legend>
-    <div class="columns">
-      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+    <div class="columns no-margin-bottom">
+      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
         <?php //foreach() { ?>
         <div class="margin-bottom">
           <label for="" class="label strong">Custom Field 1</label>
