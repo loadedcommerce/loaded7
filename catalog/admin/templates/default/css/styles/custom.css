@@ -742,7 +742,7 @@ li .message-menu {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin: -132px 0 0 -150px;
+  margin: -132px 0 0 -160px !important;
   width: 284px;
   padding: 8px;
   -webkit-border-radius: 0;
@@ -776,10 +776,11 @@ li .message-menu {
 
 #main-title h1 {
   color: #B3B5B8 !important;
-}
-
-#open-menu {
-  top: 35px !important;
+  font-size: 40px !important;
+  line-height: 48px !important;
+  -webkit-text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25) !important;
+    -moz-text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25) !important;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25) !important;
 }
 
 #shortcuts > li > span {
@@ -850,6 +851,13 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   padding: 3px 8px;
 }
 
+#logoImg {
+  margin-left: -65px;
+}
+
+@media screen and (min-width: 1200px) {
+}
+
 @media screen and (min-width: 992px) {
   .hide-below-992 { display: none !important; }
   #menu header .headerInner {
@@ -859,5 +867,19 @@ a.shortcut-reports:before { background-position: -70px -495px; }
     -moz-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
     box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
   }
+  #open-menu {
+    top: 35px;
+  } 
+} 
+
+@media screen and (min-width: 768px) {
 }
-     
+
+@media screen and (min-width: 480px) {
+}  
+  
+@media screen and (min-width: 320px) {
+  #title-bar {
+    height: 40px !important;
+  }
+}     
