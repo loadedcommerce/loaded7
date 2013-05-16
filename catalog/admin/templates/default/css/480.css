@@ -11,53 +11,56 @@
 
 /* These styles define the columns size. They must be redefined for each responsive size */
 .column,
-.one-column,
-.one-column-tablet,
-.one-column-mobile,
+.one-column			{ width: 6.0833%; }
+.two-columns		{ width: 14.4167%; }
+.three-columns		{ width: 22.75%; }
+.four-columns		{ width: 31.0833%; }
+.five-columns		{ width: 39.4167%; }
+.six-columns		{ width: 47.75%; }
+.seven-columns		{ width: 56.0833%; }
+.eight-columns		{ width: 64.4167%; }
+.nine-columns		{ width: 72.72%; }
+.ten-columns		{ width: 81.0833%; }
+.eleven-columns		{ width: 89.4167%; }
+.twelve-columns		{ width: 97.75%; }
+
+.one-column-tablet		{ width: 6.0833%; }
+.two-columns-tablet		{ width: 14.4167%; }
+.three-columns-tablet	{ width: 22.75%; }
+.four-columns-tablet	{ width: 31.0833%; }
+.five-columns-tablet	{ width: 39.4167%; }
+.six-columns-tablet		{ width: 47.75%; }
+.seven-columns-tablet	{ width: 56.0833%; }
+.eight-columns-tablet	{ width: 64.4167%; }
+.nine-columns-tablet	{ width: 72.72%; }
+.ten-columns-tablet		{ width: 81.0833%; }
+.eleven-columns-tablet	{ width: 89.4167%; }
+.twelve-columns-tablet	{ width: 97.75%; }
+
+.one-column-mobile		{ width: 6.0833%; }
+.two-columns-mobile		{ width: 14.4167%; }
+.three-columns-mobile	{ width: 22.75%; }
+.four-columns-mobile	{ width: 31.0833%; }
+.five-columns-mobile	{ width: 39.4167%; }
+.six-columns-mobile		{ width: 47.75%; }
+.seven-columns-mobile	{ width: 56.0833%; }
+.eight-columns-mobile	{ width: 64.4167%; }
+.nine-columns-mobile	{ width: 72.72%; }
+.ten-columns-mobile		{ width: 81.0833%; }
+.eleven-columns-mobile	{ width: 89.4167%; }
+.twelve-columns-mobile	{ width: 97.75%; }
+
 .one-column-mobile-landscape		{ width: 6.0833%; }
-.two-columns,
-.two-columns-tablet,
-.two-columns-mobile,
 .two-columns-mobile-landscape		{ width: 14.4167%; }
-.three-columns,
-.three-columns-tablet,
-.three-columns-mobile,
 .three-columns-mobile-landscape		{ width: 22.75%; }
-.four-columns,
-.four-columns-tablet,
-.four-columns-mobile,
 .four-columns-mobile-landscape		{ width: 31.0833%; }
-.five-columns,
-.five-columns-tablet,
-.five-columns-mobile,
 .five-columns-mobile-landscape		{ width: 39.4167%; }
-.six-columns,
-.six-columns-tablet,
-.six-columns-mobile,
 .six-columns-mobile-landscape		{ width: 47.75%; }
-.seven-columns,
-.seven-columns-tablet,
-.seven-columns-mobile,
 .seven-columns-mobile-landscape		{ width: 56.0833%; }
-.eight-columns,
-.eight-columns-tablet,
-.eight-columns-mobile,
 .eight-columns-mobile-landscape		{ width: 64.4167%; }
-.nine-columns,
-.nine-columns-tablet,
-.nine-columns-mobile,
 .nine-columns-mobile-landscape		{ width: 72.72%; }
-.ten-columns,
-.ten-columns-tablet,
-.ten-columns-mobile,
 .ten-columns-mobile-landscape		{ width: 81.0833%; }
-.eleven-columns,
-.eleven-columns-tablet,
-.eleven-columns-mobile,
 .eleven-columns-mobile-landscape	{ width: 89.4167%; }
-.twelve-columns,
-.twelve-columns-tablet,
-.twelve-columns-mobile,
 .twelve-columns-mobile-landscape	{ width: 97.75%; }
 
 /* Line breaks to ensure correct float */
