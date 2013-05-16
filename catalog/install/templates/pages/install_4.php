@@ -200,7 +200,7 @@ $Qadmin->execute();
     <br /><br />
     <div class="field-block button-height">
       <div id="buttonContainer">
-        <div id="buttonSet" style="float:right;">
+        <div id="buttonSet" style="width:260px;float:right;">
           <span class="margin-right"><a class="button blue-gradient glossy" style="float:right;" href="<?php echo $http_server . $http_catalog . 'admin/index.php'; ?>" target="_blank">Administration Tool</a></span>
           <span class="margin-left"><a class="button blue-gradient glossy" style="float:left;" href="<?php echo $http_server . $http_catalog . 'index.php'; ?>" target="_blank">Catalog</a></span>
         </div>
