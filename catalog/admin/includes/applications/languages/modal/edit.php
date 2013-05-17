@@ -58,7 +58,7 @@ function editLanguage(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="text_direction" class="label"><?php echo $lC_Language->get('field_text_direction'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('text_direction', array(array('id' => 'ltr', 'text' => 'ltr'), array('id' => 'rtl', 'text' => 'rtl')), null, 'class="select" style="width:47%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('text_direction', array(array('id' => 'ltr', 'text' => 'ltr'), array('id' => 'rtl', 'text' => 'rtl')), null, 'class="select"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="date_format_short" class="label"><?php echo $lC_Language->get('field_date_format_short'); ?></label>'+
@@ -74,7 +74,7 @@ function editLanguage(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="currencies_id" class="label"><?php echo $lC_Language->get('field_currency'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('currencies_id', null, null, 'class="select" style="width:47%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('currencies_id', null, null, 'class="select"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="numeric_separator_decimal" class="label"><?php echo $lC_Language->get('field_currency_separator_decimal'); ?></label>'+
@@ -86,7 +86,7 @@ function editLanguage(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="parent_id" class="label"><?php echo $lC_Language->get('field_parent_language'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('parent_id', null, null, 'class="select" style="width:47%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('parent_id', null, null, 'class="select"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="sort_order" class="label"><?php echo $lC_Language->get('field_sort_order'); ?></label>'+
@@ -149,7 +149,7 @@ function editLanguage(id) {
       $.each(data.currenciesArray, function(val, text) {
         var selected = (data.languageData.currencies_id == val) ? 'selected="selected"' : '';
         if(data.languageData.currencies_id == val) {
-          $("#currencies_id").closest("span + *").prevAll("span.select-value:first").text(text);
+          $("#currencies_id").next("span.select-value:first").text(text);
         }
         $("#currencies_id").append(
           $("<option " + selected + "></option>").val(val).html(text)
@@ -160,8 +160,8 @@ function editLanguage(id) {
       $("#parent_id").empty();  // clear the old values
       $.each(data.languagesArray, function(val, text) {
         var selected = (data.languageData.languages_id == val) ? 'selected="selected"' : '';
-        if(val==0) {
-          $("#parent_id").closest("span + *").prevAll("span.select-value:first").text('none');
+        if (val == 0) {
+          $("#parent_id").next("span.select-value:first").text(text);
         } else if(data.languageData.languages_id == val) {
           $("#parent_id").closest("span + *").prevAll("span.select-value:first").text(text);
         }
