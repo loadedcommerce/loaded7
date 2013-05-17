@@ -1,3 +1,16 @@
+/**
+ *
+ * '||''|.                            '||
+ *  ||   ||    ....  .... ...   ....   ||    ...   ... ...  ... ..
+ *  ||    || .|...||  '|.  |  .|...||  ||  .|  '|.  ||'  ||  ||' ''
+ *  ||    || ||        '|.|   ||       ||  ||   ||  ||    |  ||
+ * .||...|'   '|...'    '|     '|...' .||.  '|..|'  ||...'  .||.
+ *                                                  ||
+ * --------------- By Display:inline ------------- '''' -----------
+ *
+ * Styles override for 992+ pixels screens
+ */
+
 /* Class used to determine which media queries are on */
 #mediaquery-checker {
 	width: 40px;
