@@ -8,7 +8,7 @@ Custom Template CSS added by Loaded7 Dev Team
   font-size: 14px;
   line-height: 14px;
   color: #b2b2b2;
-  background: #31363a url(../img/old-browsers/style/bg_profile.png) repeat-x;
+  background: #31363a url(../../img/old-browsers/style/bg_profile.png) repeat-x;
   -webkit-background-size: 100% 100%;
   -moz-background-size: 100% 100%;
   -o-background-size: 100% 100%;
@@ -164,7 +164,7 @@ Custom Template CSS added by Loaded7 Dev Team
 
 #menu-footer .w-mark { 
   height:182px; 
-  background: url('../img/logo-grill.png'); 
+  background: url('../../img/logo-grill.png'); 
 }  
 #versionInfo { 
   position:relative; 
@@ -172,7 +172,7 @@ Custom Template CSS added by Loaded7 Dev Team
 }
 #versionBg { 
   height:84px; 
-  background: #fff url('../img/logo-version.png') no-repeat center; 
+  background: #fff url('../../img/logo-version.png') no-repeat center; 
 }
 #versionText { position:absolute; bottom:7px; left:130px }
 
