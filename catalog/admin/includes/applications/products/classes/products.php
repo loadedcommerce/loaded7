@@ -13,6 +13,8 @@
 
   @function The lC_Products_Admin class manages products
 */
+include_once('includes/applications/product_variants/classes/product_variants.php');
+
 class lC_Products_Admin {
  /*
   * Returns the products datatable data for listings
@@ -1315,6 +1317,26 @@ class lC_Products_Admin {
     
     return $output;
   }
+  
+ /*
+  * Return the product variant group data for options modal
+  *
+  * @access public
+  * @return array
+  */
+  public static function getSimpleOptionData() {
+    return lC_Product_variants_Admin::getVariantGroups();
+  } 
+  
+ /*
+  * Return the product variant entry data for options modal
+  *
+  * @access public
+  * @return array
+  */
+  public static function getSimpleOptionEntryData($eData) {
+    return lC_Product_variants_Admin::getVariantEntries($eData['group']);
+  }   
   
 }
 ?>

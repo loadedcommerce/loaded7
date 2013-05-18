@@ -373,5 +373,31 @@ class lC_Products_Admin_rpc {
 
     echo json_encode($result);
   }
+  
+ /*
+  * Return the variant group data for use on simple options modal
+  *
+  * @access public
+  * @return json
+  */
+  public static function getSimpleOptionData() {
+    $result = lC_Products_Admin::getSimpleOptionData();
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+
+    echo json_encode($result);
+  } 
+ /*
+  * Return the variant entry data for use on simple options modal
+  *
+  * @access public
+  * @return json
+  */
+  public static function getSimpleOptionEntryData() {
+    $result = lC_Products_Admin::getSimpleOptionEntryData($_GET);
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+
+    echo json_encode($result);
+  }     
+  
 }
 ?>

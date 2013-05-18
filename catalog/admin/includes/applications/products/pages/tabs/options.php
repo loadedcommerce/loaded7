@@ -18,7 +18,7 @@ global $lC_Language, $lC_ObjectInfo;
     <div class="twelve-columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <div class="twelve-columns no-margin-bottom">
-          <div class="strong"><?php echo $lC_Language->get('text_inventory_control'); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), null, 'info-spot on-right margin-left'); ?></div>
+          <div class="strong"><?php echo $lC_Language->get('text_inventory_control'); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), null, 'info-spot on-right grey margin-left'); ?></div>
           
           <div id="optionsInvControlButtons" class="button-group small-margin-top">
             <!-- lc_options_inventory_control begin -->
@@ -49,8 +49,24 @@ global $lC_Language, $lC_ObjectInfo;
     <div id="simpleOptionsContainer" class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_simple_options'); ?></legend>
-        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewSimpleOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
-
+        <span class="float-right" style="margin:-26px -8px 4px 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addSimpleOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
+        <table width="100%" style="" id="simpleOptionsTable" class="simple-table">
+          <thead>
+            <tr>
+              <th scope="col" class="align-left" width="16px"><img src="templates/default/img/icons/16/drag.png"></th>
+              <th scope="col" class="align-left">Name</th>
+              <th scope="col" class="align-left">Type</th>
+              <th scope="col" class="align-left">Sort</th>
+              <th scope="col" class="align-center" width="50px">Remove</th>
+            </tr>
+          </thead>
+          
+          <tbody>
+          </tbody>
+        
+        </table>
+        
+        
       </fieldset>    
     </div>
     
@@ -96,9 +112,6 @@ function addNewMultiSkuOption() {
   alert('addNewMultiSkuOption() called');
 }
 
-function addNewSimpleOption() {
-  alert('addNewSimpleOption() called');
-}
 
 function addNewBundleOption() {
   alert('Coming Soon');

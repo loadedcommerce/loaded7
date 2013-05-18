@@ -466,7 +466,7 @@ function getTaxClassOptionsString($id = null, $esc = false) {
     ?>
   </hgroup>
   <div class="with-padding-no-top small-margin-top">
-    <form name="product" id="product" class="dataForm" onsubmit="validateForm(); return false;" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
+    <form name="product" id="product" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="product_tabs" class="side-tabs" style="position:relative;">  
         <ul class="tabs">
           <li id="tabHeaderSectionContent" class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>

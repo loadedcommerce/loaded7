@@ -23,6 +23,7 @@
       } else {
         $this->_page_contents = 'edit.php';
       }
+          
       
       if ( (lc_empty(CFG_APP_IMAGEMAGICK_CONVERT) || !@file_exists(CFG_APP_IMAGEMAGICK_CONVERT)) && !lC_Image_Admin::hasGDSupport() ) {
         $_SESSION['error'] = true;                                                                                            
@@ -30,6 +31,11 @@
       }
 
       if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
+        
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
+die('end run');          
         $error = false;
 
         $has_variants = (isset($_POST['has_variants']) && $_POST['has_variants'] == 'on') ? true : false;   
