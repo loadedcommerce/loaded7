@@ -81,8 +81,7 @@ table.simple-table tr.placeholder:before {
               <th scope="col" class="align-center" width="50px">Remove</th>
             </tr>
           </thead>
-          <tbody class="sorted_table">
-          </tbody>
+          <tbody class="sorted_table"><?php echo lC_Products_Admin::getSimpleOptionsContent($pInfo->get('simple_options')); ?></tbody>
         </table>
       </fieldset>    
     </div>

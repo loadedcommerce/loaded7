@@ -56,7 +56,7 @@ function addSimpleOption(id) {
               '  <td onclick="$(\'.drop' + ref + '\').toggle();">' + groupTitle + '<div class="small-margin-top drop' + ref + '" style="display:none;"><span>' + items + '</span></div></td>'+
               '  <td onclick="$(\'.drop' + ref + '\').toggle();">' + groupModule + '</td>'+
               '  <td class="sort" onclick="$(\'.drop' + ref + '\').toggle();"></td>'+
-              '  <td align="center"><span class="icon-cross icon-size2 icon-red" onclick="$(\'#tr-' + ref + '\').remove();$(\'#drop' + ref + '\').remove();"></span></td>'+
+              '  <td align="center"><span class="icon-cross icon-size2 icon-red" style="cursor:pointer;" onclick="$(\'#tr-' + ref + '\').remove();$(\'#drop' + ref + '\').remove();"></span></td>'+
               '  <input type="hidden" name="simple_options_group_name[' + id + ']" value="' + groupTitle + '">'+
               '  <input type="hidden" name="simple_options_group_type[' + id + ']" value="' + groupModule + '">'+
               '  <input class="sort" type="hidden" name="simple_options_group_sort_order[' + id + ']" value="0">'+
@@ -183,6 +183,7 @@ function addSimpleOption(id) {
                                 $('#simpleOptionsTable > tbody').append(getNewOptionsRow(groupID, data, edata, sel));
                                 win.closeModal();
                                 ewin.closeModal();
+                                _setSortOrder();
                                 
                               }                              
                             }

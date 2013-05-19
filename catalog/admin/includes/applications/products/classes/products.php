@@ -363,6 +363,31 @@ class lC_Products_Admin {
     
     $Qimages->freeResult();
     
+    // load simple options
+    $Qoptions = $lC_Database->query('select so.options_id, so.price_modifier, so.sort_order, so.status, vg.title, vg.module from :table_products_simple_options so left join :table_products_variants_groups vg on (so.options_id = vg.id) where so.products_id = :products_id and vg.languages_id = :languages_id order by so.sort_order');
+    $Qoptions->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+    $Qoptions->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
+    $Qoptions->bindInt(':products_id', $id);
+    $Qoptions->bindInt(':languages_id', $lC_Language->getID());
+    $Qoptions->execute();
+    
+    while ($Qoptions->next()) {
+      $data['simple_options'][] = $Qoptions->toArray();      
+      
+      $Qvalues = $lC_Database->query('select sov.options_id, sov.values_id, vv.title from :table_products_simple_options_values sov left join :table_products_variants_values vv on (sov.values_id = vv.id) where sov.options_id = :options_id and vv.languages_id = :languages_id');
+      $Qvalues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+      $Qvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+      $Qvalues->bindInt(':options_id', $Qoptions->valueInt('options_id'));
+      $Qvalues->bindInt(':languages_id', $lC_Language->getID());
+      $Qvalues->execute();
+      
+      while ($Qvalues->next()) {
+        $data['simple_options']['values'][] = $Qvalues->toArray();      
+      }
+      $Qvalues->freeResult();    
+    }
+    $Qoptions->freeResult();    
+    
     return $data;
   }
  /*
@@ -781,42 +806,40 @@ class lC_Products_Admin {
     
     // simple options
     if ( $error === false ) {
-      $simple_options_array = array();
       
-echo "<pre>";
-print_r($data);
-echo "</pre>";
-die('00');
+      // remove old values
+      $Qcheck = $lC_Database->query('select options_id from :table_products_simple_options where products_id = :products_id');
+      $Qcheck->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+      $Qcheck->bindInt(':products_id', $products_id);
+      $Qcheck->execute();
+      // delete the simple options values
+      while ( $Qcheck->next() ) {
+        $Qdel = $lC_Database->query('delete from :table_products_simple_options_values where options_id = :options_id');
+        $Qdel->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+        $Qdel->bindInt(':options_id', $Qcheck->valueInt('options_id'));
+        $Qdel->setLogging($_SESSION['module'], $products_id);
+        $Qdel->execute();
+      } 
+      // delete the simple option
+      $Qdel = $lC_Database->query('delete from :table_products_simple_options where products_id = :products_id');
+      $Qdel->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+      $Qdel->bindInt(':products_id', $products_id);
+      $Qdel->setLogging($_SESSION['module'], $products_id);
+      $Qdel->execute();                    
       
+      $Qcheck->freeResult();      
+     
+      // if values are set, save them
       if ( isset($data['simple_options_group_name']) && !empty($data['simple_options_group_name']) ) {
-        foreach ( $data['simple_options_group_name'] as $options_id => $value ) {
-          
-          $Qcheck = $lC_Database->query('select id from :table_products_simple_options where products_id = :products_id');
-          $Qcheck->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
-          $Qcheck->bindInt(':products_id', $products_id);
-          $Qcheck->execute();
-          // delete the simple options values
-          while ( $Qcheck->next() ) {
-            $Qdel = $lC_Database->query('delete from :table_products_simple_options_values where options_id = :options_id');
-            $Qdel->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-            $Qdel->bindInt(':options_id', $Qcheck->valueInt('id'));
-            $Qdel->execute();
-          } 
-          // delete the simple option
-          $Qdel = $lC_Database->query('delete from :table_products_simple_options where products_id = :products_id');
-          $Qdel->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
-          $Qdel->bindInt(':products_id', $products_id);
-          $Qdel->execute();                    
-          
-          $Qcheck->freeResult();
+        foreach ( $data['simple_options_group_name'] as $group_id => $value ) {
           
           // add the new option
           $Qoptions = $lC_Database->query('insert into :table_products_simple_options (options_id, products_id, sort_order, status) values (:options_id, :products_id, :sort_order, :status)');
           $Qoptions->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
-          $Qoptions->bindInt(':options_id', $options_id);
+          $Qoptions->bindInt(':options_id', $group_id);
           $Qoptions->bindInt(':products_id', $products_id);
-          $Qoptions->bindInt(':sort_order', $data['simple_options_group_sort_order'][$options_id]);
-          $Qoptions->bindInt(':status', $data['simple_options_group_status'][$options_id]);
+          $Qoptions->bindInt(':sort_order', $data['simple_options_group_sort_order'][$group_id]);
+          $Qoptions->bindInt(':status', $data['simple_options_group_status'][$group_id]);
           $Qoptions->setLogging($_SESSION['module'], $products_id);
           $Qoptions->execute();
 
@@ -827,26 +850,28 @@ die('00');
           
           // add the new option values
           foreach ( $data['simple_options_entry'] as $options_id => $option_value ) {
-            foreach ( $option_value as $values_id => $values_text ) {
-              $Qoptions = $lC_Database->query('insert into :table_products_simple_options_values (values_id, options_id) values (:values_id, :options_id)');
-              $Qoptions->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-              $Qoptions->bindInt(':values_id', $values_id);
-              $Qoptions->bindInt(':options_id', $options_id);
-              $Qoptions->setLogging($_SESSION['module'], $products_id);
-              $Qoptions->execute();
+            
+            if ($options_id == $group_id) {
+              foreach ( $option_value as $values_id => $values_text ) {
+                $Qoptions = $lC_Database->query('insert into :table_products_simple_options_values (values_id, options_id) values (:values_id, :options_id)');
+                $Qoptions->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+                $Qoptions->bindInt(':values_id', $values_id);
+                $Qoptions->bindInt(':options_id', $options_id);
+                $Qoptions->setLogging($_SESSION['module'], $products_id);
+                $Qoptions->execute();
 
-              if ( $lC_Database->isError() ) {
-                $error = true;
-                break 3;
-              }            
+                if ( $lC_Database->isError() ) {
+                  $error = true;
+                  break 3;
+                }            
+              }
             }
           }
         }
       }      
     }    
     
-if ($lC_Database->isError()) echo $lC_Database->getError();
-die('0000');    
+if ($lC_Database->isError()) { echo $lC_Database->getError(); die('0000'); }
 
     if ( $error === false ) {
       $lC_Database->commitTransaction();
@@ -1244,7 +1269,35 @@ die('0000');
         }
       }
     }
-
+    
+    // delete simple options
+    if ( ($error === false) && ($delete_product === true) ) {
+      $Qcheck = $lC_Database->query('select options_id from :table_products_simple_options where products_id = :products_id');
+      $Qcheck->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+      $Qcheck->bindInt(':products_id', $id);
+      $Qcheck->execute();
+      // delete the simple options values
+      while ( $Qcheck->next() ) {
+        $Qdel = $lC_Database->query('delete from :table_products_simple_options_values where options_id = :options_id');
+        $Qdel->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+        $Qdel->bindInt(':options_id', $Qcheck->valueInt('options_id'));
+        $Qdel->setLogging($_SESSION['module'], $id);
+        $Qdel->execute();
+      } 
+      // delete the simple option
+      $Qdel = $lC_Database->query('delete from :table_products_simple_options where products_id = :products_id');
+      $Qdel->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+      $Qdel->bindInt(':products_id', $id);
+      $Qdel->setLogging($_SESSION['module'], $id);
+      $Qdel->execute();                    
+      
+      $Qcheck->freeResult();
+      
+      if ( $lC_Database->isError() ) {
+        $error = true;
+      }
+    }
+    
     if ( $error === false ) {
       $lC_Database->commitTransaction();
 
@@ -1386,7 +1439,6 @@ die('0000');
     
     return $output;
   }
-  
  /*
   * Return the product variant group data for options modal
   *
@@ -1396,7 +1448,6 @@ die('0000');
   public static function getSimpleOptionData() {
     return lC_Product_variants_Admin::getVariantGroups();
   } 
-  
  /*
   * Return the product variant entry data for options modal
   *
@@ -1406,6 +1457,44 @@ die('0000');
   public static function getSimpleOptionEntryData($eData) {
     return lC_Product_variants_Admin::getVariantEntries($eData['group']);
   }   
-  
+ /*
+  * Return the product simple options listing content
+  *
+  * @param array $options The product simple options array
+  * @access public
+  * @return string
+  */  
+  public static function getSimpleOptionsContent($options = array()) {
+    $tbody = '';    
+    if (isset($options) && !empty($options)) {
+      foreach ($options as $key => $so) {
+        if (isset($so['title']) && $so['title'] != NULL) {
+          $items = '';
+          $itemsInput = '';    
+
+          foreach ($options['values'] as $k => $v) {
+            if ($v['options_id'] == $so['options_id']) {
+              $items .= '<div class="small"><span class="icon-right icon-blue with-small-padding"></span>' . $v['title'] . '</div>';
+              $itemsInput .= '<input type="hidden" name="simple_options_entry[' . $v['options_id'] . '][' . $v['values_id'] . ']" value="' . $v['title'] . '">';
+            }
+          }
+          
+          $tbody .= '<tr id="tre-' . $so['options_id'] .'" style="cursor:pointer;">' .
+                    '  <td><img src="templates/default/img/icons/16/drag.png"></td>' .
+                    '  <td onclick="$(\'.drope' . $so['options_id'] . '\').toggle();">' . $so['title'] . '<div class="small-margin-top drope' . $so['options_id'] . '" style="display:none;"><span>' . $items . '</span></div></td>' .
+                    '  <td onclick="$(\'.drope' . $so['options_id'] . '\').toggle();">' . $so['module'] . '</td>' .
+                    '  <td class="sort" onclick="$(\'.drope' . $so['options_id'] . '\').toggle();"></td>' .
+                    '  <td align="center"><span class="icon-cross icon-size2 icon-red" style="cursor:pointer;" onclick="$(\'#tre-' . $so['options_id'] . '\').remove();$(\'#drope' . $so['options_id'] . '\').remove();"></span></td>' .
+                    '  <input type="hidden" name="simple_options_group_name[' . $so['options_id'] . ']" value="' . $so['title'] . '">' .
+                    '  <input type="hidden" name="simple_options_group_type[' . $so['options_id'] . ']" value="' . $so['module'] . '">' .
+                    '  <input class="sort" type="hidden" name="simple_options_group_sort_order[' . $so['options_id'] . ']" value="' . $so['sort_order'] . '">' .
+                    '  <input type="hidden" name="simple_options_group_status[' . $so['options_id'] . ']" value="1">'. $itemsInput  .
+                    '</tr>';
+        }
+      }
+    }
+    
+    return $tbody;    
+  }
 }
 ?>
