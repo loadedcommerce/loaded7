@@ -550,7 +550,7 @@
   <script src="../ext/jquery/jquery.easing.1.3.js"></script>
   <script src="../ext/jquery/jquery.jBreadCrumb.1.1.js"></script>
   <script src="../ext/jquery/fileuploader.js"></script> 
-  <script src="../ext/jquery/jquery-ui-sortable.min.js"></script> 
+  <script src="../ext/jquery/jquery-sortable.js"></script> 
   <script src="../ext/jquery/glDatePicker/glDatePicker.min.js"></script>
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.min.js"></script>
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.reloadAjax.js"></script>
@@ -576,12 +576,10 @@
   <script src="templates/default/js/confirm.js"></script>
   <script src="templates/default/js/fittext.js"></script>
   <!-- script src="templates/default/js/agenda.js"></script -->
-  <script src="templates/default/js/tabs.js"></script>    <!-- Must be loaded last -->
-  
-  <!-- CLEditor -->
   <script src="external/CLEditor/jquery.cleditor.min.js"></script>
   <script src="external/CLEditor/jquery.cleditor.fullscreen.js"></script>
   <script src="external/CLEditor/jquery.cleditor.advancedtable.js"></script>
+  <script src="templates/default/js/tabs.js"></script><!-- Must be loaded last -->
   <!-- Load page specific javascript -->
   <?php $lC_Template->loadPageScript($lC_Template->getModule()); ?>
 </body>

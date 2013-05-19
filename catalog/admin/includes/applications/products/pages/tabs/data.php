@@ -102,8 +102,8 @@ global $lC_Language, $lC_ObjectInfo, $tax_class_array;
         <div>
           <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_on_hand'); ?></b></label>
           <input type="text" name="products_quantity" id="products_quantity" value="<?php echo $lC_ObjectInfo->get('products_quantity'); ?>" class="input small-margin-right" style="width:60px;" />
-          <input type="text" name="products_sku_ean13" id="products_sku_ean13" value="<?php echo $lC_ObjectInfo->get('products_sku_ean13'); ?>" class="input" />
-          <b><?php echo $lC_Language->get('text_sku_ean13'); ?></b>
+          <input type="text" name="products_sku" id="products_sku" value="<?php echo $lC_ObjectInfo->get('products_sku'); ?>" class="input" />
+          <b><?php echo $lC_Language->get('text_sku'); ?></b>
         </div>
         <div class="small-margin-top">
           <input type="text" name="products_cost" id="products_cost" value="<?php //echo number_format($lC_ObjectInfo->get('products_cost'), DECIMAL_PLACES); ?>" class="input small-margin-right" disabled /> <b><?php echo $lC_Language->get('text_cost'); ?></b><?php echo lc_go_pro(); ?>

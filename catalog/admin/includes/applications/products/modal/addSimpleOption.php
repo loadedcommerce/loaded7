@@ -22,17 +22,17 @@ function addSimpleOption(id) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
-  
+  mask();
   function getNewOptionsRow(id, groups, entries, selected) {
     var groupTitle = '';
     var groupModule = '';
-    var groupSortOrder = '0';
+    //var groupSortOrder = '0';
     var groupLanguageID = '1';
     $.each(groups, function(key, val) {
       if (val.id == id) {
         groupTitle = val.title;
         groupModule = val.module;
-        groupSortOrder = val.sort_order;
+    //    groupSortOrder = val.sort_order;
         groupLanguageID = val.languages_id;
       }
     }); 
@@ -43,30 +43,25 @@ function addSimpleOption(id) {
       if (entry.title != undefined) {
         var check = 'entry=' + entry.id;
         if (selected.indexOf(check) > 0) {  // is item in the selected list
-          items += '<div>' + entry.title + '</div>';
-          itemsInput += '<input type="hidden" name="simple_options_entry[' + id + '][]" value="' + entry.title + '">';
+          items += '<div class="small"><span class="icon-right icon-blue with-small-padding"></span>' + entry.title + '</div>';
+          itemsInput += '<input type="hidden" name="simple_options_entry[' + id + '][' + entry.id + ']" value="' + entry.title + '">';
         }
       }
     });    
     
     var ref = Math.floor((1 + Math.random()) * 0x10000).toString(16);   
 
-    var row = '<tr id="tr-' + ref + '" style="cursor:pointer;" onclick="$(\'#drop' + ref + '\').toggle();">'+
-              '<td><img src="templates/default/img/icons/16/drag.png"></td>'+
-              '<td>' + groupTitle + '</td>'+
-              '<td>' + groupModule + '</td>'+
-              '<td>' + groupSortOrder + '</td>'+
-              '<td align="center"><span class="icon-cross icon-size2 icon-red" onclick="$(\'#tr-' + ref + '\').remove();$(\'#drop' + ref + '\').remove();"></span></td>'+
-              '</tr>'+
-              '<tr id="drop' + ref + '" class="row-drop" style="display:none;">'+
-              '  <td colspan="5" style="padding-left:52px;">'+
-              '    <span class="white">' + items + '</span>'+
-              '  </td>'+
-              '</tr>'+
-              '<input type="hidden" name="simple_options_group_name[' + id + ']" value="' + groupTitle + '">'+
-              '<input type="hidden" name="simple_options_group_type[' + id + ']" value="' + groupModule + '">'+
-              '<input type="hidden" name="simple_options_group_sort_order[' + id + ']" value="' + groupSortOrder + '">'+
-              '<input type="hidden" name="simple_options_group_status[' + id + ']" value="1">'+ itemsInput;
+    var row = '<tr id="tr-' + ref + '" style="cursor:pointer;">'+
+              '  <td><img src="templates/default/img/icons/16/drag.png"></td>'+
+              '  <td onclick="$(\'.drop' + ref + '\').toggle();">' + groupTitle + '<div class="small-margin-top drop' + ref + '" style="display:none;"><span>' + items + '</span></div></td>'+
+              '  <td onclick="$(\'.drop' + ref + '\').toggle();">' + groupModule + '</td>'+
+              '  <td class="sort" onclick="$(\'.drop' + ref + '\').toggle();"></td>'+
+              '  <td align="center"><span class="icon-cross icon-size2 icon-red" onclick="$(\'#tr-' + ref + '\').remove();$(\'#drop' + ref + '\').remove();"></span></td>'+
+              '  <input type="hidden" name="simple_options_group_name[' + id + ']" value="' + groupTitle + '">'+
+              '  <input type="hidden" name="simple_options_group_type[' + id + ']" value="' + groupModule + '">'+
+              '  <input class="sort" type="hidden" name="simple_options_group_sort_order[' + id + ']" value="0">'+
+              '  <input type="hidden" name="simple_options_group_status[' + id + ']" value="1">'+ itemsInput +
+              '</tr>';
               
     return row;
   }
@@ -74,6 +69,7 @@ function addSimpleOption(id) {
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=getSimpleOptionData'); ?>'
   $.getJSON(jsonLink,
     function (data) {
+      unmask();
       if (data.rpcStatus == -10) { // no session
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
         $(location).attr('href',url);

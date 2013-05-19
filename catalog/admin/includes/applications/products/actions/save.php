@@ -32,10 +32,10 @@
 
       if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
         
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
-die('end run');          
+//echo "<pre>";
+//print_r($_POST);
+//echo "</pre>";
+//die('end run');          
         $error = false;
 
         $has_variants = (isset($_POST['has_variants']) && $_POST['has_variants'] == 'on') ? true : false;   
@@ -48,7 +48,7 @@ die('end run');
                       'weight_class' => (isset($_POST['products_weight_class']) && $has_variants === false) ? $_POST['products_weight_class'] : '',
                       'status' => (isset($_POST['products_status']) && $_POST['products_status'] == 'on' && $has_variants === false) ? true : false,
                       'model' => (isset($_POST['products_model']) && $has_variants === false) ? $_POST['products_model'] : '',
-                      'sku_ean13' => (isset($_POST['products_sku_ean13']) && $has_variants === false) ? $_POST['products_sku_ean13'] : '',
+                      'sku' => (isset($_POST['products_sku']) && $has_variants === false) ? $_POST['products_sku'] : '',
                       'tax_class_id' => (isset($_POST['products_tax_class_id']) && $has_variants === false) ? $_POST['products_tax_class_id'] : 0,
                       'products_name' => $_POST['products_name'],
                       'products_description' => $_POST['products_description'],
@@ -56,18 +56,19 @@ die('end run');
                       'products_tags' => $_POST['products_tags'],
                       'products_url' => $_POST['products_url']);
 
-        if ( isset($_POST['attributes']) ) {
-          $data['attributes'] = $_POST['attributes'];
-        }
+        if ( isset($_POST['attributes']) ) $data['attributes'] = $_POST['attributes'];
+        if ( isset($_POST['categories']) ) $data['categories'] = $_POST['categories'];
+        if ( isset($_POST['localimages']) ) $data['localimages'] = $_POST['localimages'];
 
-        if ( isset($_POST['categories']) ) {
-          $data['categories'] = $_POST['categories'];
-        }
-      
-        if ( isset($_POST['localimages']) ) {
-          $data['localimages'] = $_POST['localimages'];
-        }
+        // simple options
+        if ( isset($_POST['simple_options_group_name']) ) $data['simple_options_group_name'] = $_POST['simple_options_group_name'];
+        if ( isset($_POST['simple_options_group_type']) ) $data['simple_options_group_type'] = $_POST['simple_options_group_type'];
+        if ( isset($_POST['simple_options_group_sort_order']) ) $data['simple_options_group_sort_order'] = $_POST['simple_options_group_sort_order'];
+        if ( isset($_POST['simple_options_group_status']) ) $data['simple_options_group_status'] = $_POST['simple_options_group_status'];
+        if ( isset($_POST['simple_options_group_price_modifier']) ) $data['simple_options_group_price_modifier'] = $_POST['simple_options_group_price_modifier'];
+        if ( isset($_POST['simple_options_entry']) ) $data['simple_options_entry'] = $_POST['simple_options_entry'];
 
+        // multi SKU
         if ($has_variants === true) {
           if ( isset($_POST['variants_status']) ) {
             $data['variants_status'] = $_POST['variants_status'];
@@ -89,8 +90,8 @@ die('end run');
             $data['variants_model'] = $_POST['variants_model'];
           }
 
-          if ( isset($_POST['variants_sku_ean13']) ) {
-            $data['variants_sku_ean13'] = $_POST['variants_sku_ean13'];
+          if ( isset($_POST['variants_sku']) ) {
+            $data['variants_sku'] = $_POST['variants_sku'];
           }
 
           if ( isset($_POST['variants_tax_class_id']) ) {

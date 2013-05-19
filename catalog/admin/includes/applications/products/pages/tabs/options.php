@@ -11,8 +11,28 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-global $lC_Language, $lC_ObjectInfo; 
+global $lC_Language, $pInfo; 
 ?>
+<style>
+body.dragging, body.dragging * {
+  cursor: move !important;
+}
+
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
+table.simple-table tr.placeholder {
+  position: relative;
+  /** More li styles **/
+}
+table.simple-table tr.placeholder:before {
+  position: absolute;
+  /** Define arrowhead **/
+}
+</style>
 <div id="section_options_content" class="with-padding">
   <div class="columns">
     <div class="twelve-columns">
@@ -22,11 +42,11 @@ global $lC_Language, $lC_ObjectInfo;
           
           <div id="optionsInvControlButtons" class="button-group small-margin-top">
             <!-- lc_options_inventory_control begin -->
-            <label for="ioc_radio_1" class="oicb button blue-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
+            <label for="ioc_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_1" value="1" />
               <?php echo $lC_Language->get('text_simple'); ?>
             </label>
-            <label for="ioc_radio_2" class="oicb button red-active<?php echo (isset($lC_ObjectInfo) && ($lC_ObjectInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
+            <label for="ioc_radio_2" class="oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_2" value="2" />
               <?php echo $lC_Language->get('text_multi_sku'); ?>
             </label>
@@ -35,6 +55,7 @@ global $lC_Language, $lC_ObjectInfo;
         </div>
       </div>
     </div>
+
     <div id="multiSkuContainer" class="twelve-columns" style="position:relative; display:none;">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_multi_sku_options'); ?></legend>
@@ -53,20 +74,16 @@ global $lC_Language, $lC_ObjectInfo;
         <table width="100%" style="" id="simpleOptionsTable" class="simple-table">
           <thead>
             <tr>
-              <th scope="col" class="align-left" width="16px"><img src="templates/default/img/icons/16/drag.png"></th>
+              <th scope="col" class="align-center" width="16px"><img style="vertical-align:middle;" src="templates/default/img/icons/16/drag.png"></th>
               <th scope="col" class="align-left">Name</th>
               <th scope="col" class="align-left">Type</th>
               <th scope="col" class="align-left">Sort</th>
               <th scope="col" class="align-center" width="50px">Remove</th>
             </tr>
           </thead>
-          
-          <tbody>
+          <tbody class="sorted_table">
           </tbody>
-        
         </table>
-        
-        
       </fieldset>    
     </div>
     
@@ -74,13 +91,50 @@ global $lC_Language, $lC_ObjectInfo;
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_bundle_products'); ?><?php echo lc_go_pro('info-spot on-right margin-left mid-margin-right'); ?></legend>
         <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewBundleOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
-
       </fieldset>     
-
     </div>
+
   </div>
 </div>
 <script>
+$(document).ready(function() {
+  _setSortOrder();
+  
+  $('.sorted_table').sortable({  
+    containerSelector: 'tbody',
+    itemSelector: 'tr',
+    placeholder: '<tr class="placeholder"/>',
+    tolerance: '1',
+    onDragStart: function (item, group, _super) {      
+      item.css({
+        height: item.height(),
+        width: item.width()
+      });
+      item.addClass("dragged");
+      $('body').addClass('dragging');
+    },
+    onDrop: function  (item, container, _super) { 
+      item.removeClass("dragged").removeAttr("style");
+      $("body").removeClass("dragging");
+
+      _setSortOrder();
+    }    
+  });
+});   
+
+function _setSortOrder() {
+  var order = 0;
+  $('#simpleOptionsTable tr').each(function () {
+    var sort = $(this).find('input[class=sort]');
+    var td = $(this).find('td[class=sort]');
+    if ($(sort.val()) != undefined) {
+      $(sort).val(order.toString());
+      $(td).text(order.toString());
+      order = parseInt(order) + 10;
+    }
+  });
+}
+
 $('input[name=inventory_control_radio_group]').click(function() {
   _updateInvControlType($(this).val());
 });
