@@ -34,6 +34,8 @@ if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
   echo "#payformIframe { min-width:480px; min-height:300px; }";
 } else {
   echo "#payformIframe { min-width:500px; min-height:300px; }";
+  echo "#checkout_shipping_col1 { width:28% !important; }";
+  echo "#checkout_shipping_col2 { width:71% !important; }";
 }
 ?>
 
