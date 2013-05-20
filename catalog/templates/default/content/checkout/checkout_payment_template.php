@@ -32,6 +32,8 @@ if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
   echo "#payformIframe { min-width:468px; min-height:580px; }";
 } else if ($lC_ShoppingCart->getBillingMethod('id') == 'cresecure') {
   echo "#payformIframe { min-width:480px; min-height:300px; }";
+} else {
+  echo "#payformIframe { min-width:500px; min-height:300px; }";
 }
 ?>
 
