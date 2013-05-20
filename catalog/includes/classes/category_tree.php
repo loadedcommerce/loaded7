@@ -145,7 +145,7 @@
           if ( $this->breadcrumb_usage === true ) {
             $category_link = $this->buildBreadcrumb($category_id);
           } else {
-            $category_link = $category_id;
+            $category_link =  $category_id;
           }
           
           $result .= ($this->hasChildren($category_id)) ? $this->child_start_string_with_children : $this->child_start_string;

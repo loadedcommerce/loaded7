@@ -42,20 +42,24 @@ $(document).ready(function() {
   $('.first-and-second-carousel').jcarousel();
   
   //mini cart slide toggle
-  $(".minicart_link").toggle(function() {
-     $('.cart_drop').slideDown(300);  
-     }, function(){
-     $('.cart_drop').slideUp(300);     
-  });  
+  $(".minicart_link").toggle(
+    function() {
+      $('.cart_drop').slideDown(300);  
+    }, function(){
+      $('.cart_drop').slideUp(300);     
+    }
+  );  
 
   //sub menu
-  $("ul.departments > li.menu_cont > a").toggle(function(){
-    $(this).addClass('active');
-    $(this).siblings('.side_sub_menu').slideDown(300);
+  $("ul.departments > li.menu_cont > a").toggle(
+    function(){
+      $(this).addClass('active');
+      $(this).siblings('.side_sub_menu').slideDown(300);
     }, function(){
-    $(this).removeClass('active');
-    $(this).siblings('.side_sub_menu').slideUp(300);
-  });
+      $(this).removeClass('active');
+      $(this).siblings('.side_sub_menu').slideUp(300);
+    }
+  );
   
   //style form select elements
   $("select").uniform();  
@@ -63,7 +67,6 @@ $(document).ready(function() {
   //toggle box
   $(".toggle_box > li:first-child .toggle_title, .toggle_box > li:first-child .toggle_content").addClass('active');
   $(".toggle_box > li > a.toggle_title").toggle(function(){
-                            
     $(this).addClass('active');
     $(this).siblings('.toggle_content').slideDown(300);
     }, function(){
@@ -71,9 +74,9 @@ $(document).ready(function() {
     $(this).siblings('.toggle_content').slideUp(300);  
   });  
   
-  //twitter feed   //replace "rohithpaul" with your Twitter ID
+  //twitter feed
   $('.twitter_feed').jTweetsAnywhere({
-    username: 'rohithpaul',
+    username: 'loadedcommerce',
     count: 1
   });
   
