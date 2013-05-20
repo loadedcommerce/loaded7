@@ -538,10 +538,15 @@ a.shortcut-marketing:before { background-position: -70px -355px; }
 a.shortcut-store:before { background-position: -70px -425px; }
 a.shortcut-reports:before { background-position: -70px -495px; }
 
+.selectContainer > span.select {
+  min-width: 140px !important;
+}
+#selectAction {
+  min-width: 145px !important;
+}
 .select.list-over > .select-arrow {
   z-index: 98;
-}
-
+} 
 .compact .select-search {
   right: 23px;
   padding: 3px 8px;
