@@ -61,7 +61,7 @@ $pContent .= '<p class="button-height inline-label">' .
              '</p>' .
              '<p class="button-height inline-label">' .
              '  <label for="group" class="label" style="width:30%;">' . $lC_Language->get('field_customer_group') . '</label>' .
-                lc_draw_pull_down_menu('group', null, null, 'class="select" id="editGroup"') .
+                lc_draw_pull_down_menu('group', null, null, 'class="select" id="editGroup" style="min-width:200px;"') .
              '</p>' .
              '<p class="button-height inline-label">' .
                '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
@@ -234,7 +234,7 @@ function getFormData(id) {
       $.each(data.groupsArray, function(val, text) {
         var selected = (data.customerData.customers_group_id == val) ? 'selected="selected"' : '';
         if(data.customerData.customers_group_id == val) {
-          $("#editGroup").next("span.select-value:first").text(text);
+          $("#editGroup").prevAll('.select-value:first').text(text);
         }
         $("#editGroup").append(
           $("<option " + selected + "></option>").val(val).html(text)
