@@ -29,7 +29,7 @@
                           'mode' => $_POST['categories_mode'],
                           'link_target' => ($_POST['categories_link_target'] == 'on') ? 1 : 0,
                           'custom_url' => $_POST['categories_custom_url'],
-                          'display_in_menu' => ($_POST['categories_display_in_menu'] == 'on') ? 1 : 0,
+                          'show_in_litsings' => ($_POST['categories_show_in_litsings'] == 'on') ? 1 : 0,
                           'name' => $_POST['categories_name'],
                           'menu_name' =>  $_POST['categories_menu_name'],
                           'blurb' =>  $_POST['categories_blurb'],

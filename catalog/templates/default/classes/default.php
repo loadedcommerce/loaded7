@@ -271,7 +271,7 @@ class lC_Default {
   * @return array
   */  
   public static function getCategoryListing() {
-    global $lC_Database, $lC_Language, $lC_Products, $lC_CategoryTree, $lC_Vqmod, $cPath, $cPath_array;
+    global $lC_Database, $lC_Language, $lC_Products, $lC_CategoryTree, $lC_Vqmod, $cPath, $cPath_array, $current_category_id;
     
     include_once($lC_Vqmod->modCheck('includes/classes/products.php'));
     
@@ -317,8 +317,32 @@ class lC_Default {
       if ((($rows / MAX_DISPLAY_CATEGORIES_PER_ROW) == floor($rows / MAX_DISPLAY_CATEGORIES_PER_ROW)) && ($rows != $number_of_categories)) {
         $output .= '  </tr>' . "\n";
         $output .= '  <tr>' . "\n";
-      }
+      }    
     }    
+    
+    return $output;
+  } 
+ /*
+  * Returns the current category information (i.e. description, blurb, meta data etc)
+  *
+  * @access public
+  * @return array
+  */  
+  public static function getCategoryDescription() {
+    global $lC_Database, $lC_Language, $current_category_id;
+    
+    $Qcategory = $lC_Database->query('select categories_description from :table_categories_description where categories_id = :categories_id and language_id = :language_id');
+    $Qcategory->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qcategory->bindInt(':categories_id', $current_category_id);
+    $Qcategory->bindInt(':language_id', $lC_Language->getID());
+    $Qcategory->execute();
+    
+    $output = '';
+    if ($Qcategory->value('categories_description') != '') {
+      $output .= '<div id="categories_description">';
+      $output .= $Qcategory->value('categories_description');
+      $output .= '</div>';
+    }
     
     return $output;
   } 

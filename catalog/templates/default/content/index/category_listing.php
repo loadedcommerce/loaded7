@@ -17,9 +17,10 @@
   <div class="content">
     <div class="short-code-column">
       <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-        <table border="0" width="100%" cellspacing="0" cellpadding="2">
-          <tr><?php echo lC_Default::getCategoryListing(); ?></tr>
-        </table>
+      <?php echo lC_Default::getCategoryDescription(); ?>
+      <table border="0" width="100%" cellspacing="0" cellpadding="2">
+        <tr><?php echo lC_Default::getCategoryListing(); ?></tr>
+      </table>
     </div>
     <div style="clear:both;">&nbsp;</div>
   </div>

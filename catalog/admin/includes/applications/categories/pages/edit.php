@@ -247,7 +247,7 @@
                           Put the bubble text here
                         </span>
                       </span>
-                      <input type="checkbox" class="switch medium" id="categories_display_in_menu" name="categories_display_in_menu"<?php echo ($lC_ObjectInfo->getInt('categories_display_in_menu') == 1) ? ' checked' : ''; ?>> <strong><?php echo $lC_Language->get('text_display_in_menu'); ?></strong>
+                      <input type="checkbox" class="switch medium" id="categories_show_in_litsings" name="categories_show_in_litsings"<?php echo ($lC_ObjectInfo->getInt('categories_show_in_litsings') == 1) ? ' checked' : ''; ?>> <strong><?php echo $lC_Language->get('text_show_in_litsings'); ?></strong>
                     </div>
                   </div>
                 </div>
