@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id: edit.php v1.0 2013-01-01 datazen $
+  $Id: new.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -11,34 +11,6 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-  if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
-    $lC_ObjectInfo = new lC_ObjectInfo(lC_Categories_Admin::get($_GET[$lC_Template->getModule()]));
-    $Qcd = $lC_Database->query('select * from :table_categories_description where categories_id = :categories_id');
-    $Qcd->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
-    $Qcd->bindInt(':categories_id', $lC_ObjectInfo->get('categories_id'));
-    $Qcd->execute();
-    $categories_name = array();
-    $categories_menu_name = array();
-    $categories_blurb = array();
-    $categories_description = array();
-    //$categories_keyword = array();
-    $categories_tags = array();
-    $categories_meta_title = array();
-    $categories_meta_keywords = array();
-    $categories_meta_description = array();
-    while ($Qcd->next()) {
-      $categories_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_name');
-      $categories_menu_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_menu_name');
-      $categories_blurb[$Qcd->valueInt('language_id')] = $Qcd->value('categories_blurb');
-      $categories_description[$Qcd->valueInt('language_id')] = $Qcd->value('categories_description');
-      //$categories_keyword[$Qcd->valueInt('language_id')] = $Qcd->value('categories_keyword');
-      $categories_tags[$Qcd->valueInt('language_id')] = $Qcd->value('categories_tags');
-      $categories_meta_title[$Qcd->valueInt('language_id')] = $Qcd->value('categories_meta_title');
-      $categories_meta_keywords[$Qcd->valueInt('language_id')] = $Qcd->value('categories_meta_keywords');
-      $categories_meta_description[$Qcd->valueInt('language_id')] = $Qcd->value('categories_meta_description');
-    }
-  }
-  
   $assignedCategoryTree = new lC_CategoryTree();
   $assignedCategoryTree->setBreadcrumbUsage(false);
   $assignedCategoryTree->setSpacerString('&nbsp;', 5);
@@ -46,7 +18,7 @@
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
 <style>
-.qq-upload-drop-area { left: 19%; min-height: 104px; position: absolute; width: 65%; top: -30px; }
+.qq-upload-drop-area { left: 19%; min-height: 104px; position: absolute; width: 65%; top: -190px; }
 .qq-upload-drop-area span { margin-top:-16px; }
 </style>
 <!-- Main content -->
@@ -64,7 +36,7 @@
     TD { padding: 5px 0 0 5px; }
   </style>
   <div class="with-padding-no-top">
-    <form name="category" id="category" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('categories_id') : '') . '&cid=' . $_GET['cid'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
+    <form name="category" id="category" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="category_tabs" class="side-tabs">
         <ul class="tabs">
           <li class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
@@ -93,21 +65,21 @@
                           <?php echo $lC_Language->get('field_name'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                         </label>
-                        <?php echo lc_draw_input_field('categories_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_name[$l['id']]) ? $categories_name[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
+                        <?php echo lc_draw_input_field('categories_name[' . $l['id'] . ']', null, 'class="required input full-width mid-margin-top"'); ?>
                       </p>
                       <p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_menu_name[' . $l['id'] . ']'; ?>">
                           <?php echo $lC_Language->get('field_menu_name'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                         </label>
-                        <?php echo lc_draw_input_field('categories_menu_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_menu_name[$l['id']]) ? $categories_menu_name[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
+                        <?php echo lc_draw_input_field('categories_menu_name[' . $l['id'] . ']', null, 'class="required input full-width mid-margin-top"'); ?>
                       </p>
                       <p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_blurb[' . $l['id'] . ']'; ?>">
                           <?php echo $lC_Language->get('field_blurb'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                         </label>
-                        <?php echo lc_draw_textarea_field('categories_blurb[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_blurb[$l['id']]) ? $categories_blurb[$l['id']] : null), null, 1, 'class="required input full-width mid-margin-top"'); ?>
+                        <?php echo lc_draw_textarea_field('categories_blurb[' . $l['id'] . ']', null, null, 1, 'class="required input full-width mid-margin-top"'); ?>
                       </p>
                       <p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_description[' . $l['id'] . ']'; ?>">
@@ -115,7 +87,7 @@
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                         </label>
                         <div style="margin-bottom:-6px;"></div>
-                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_description[$l['id']]) ? $categories_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding clEditorCategoriesDescription"'); ?>
+                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', null, null, 10, 'class="required input full-width autoexpanding clEditorCategoriesDescription"'); ?>
                         <span class="float-right small-margin-top small-margin-right"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
                       </p>
                       <br />
@@ -124,7 +96,7 @@
                           <?php echo $lC_Language->get('field_meta_keywords'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                         </label>
-                        <?php echo lc_draw_input_field('categories_meta_keywords[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_meta_keywords[$l['id']]) ? $categories_meta_keywords[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
+                        <?php echo lc_draw_input_field('categories_meta_keywords[' . $l['id'] . ']', null, 'class="required input full-width mid-margin-top"'); ?>
                       </p>
                     </div>
                     <div class="clear-both"></div>
@@ -138,11 +110,7 @@
                 <span class="strong margin-right"><?php echo $lC_Language->get('text_categories_image'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_category_image'), null); ?>   
                 <div style="padding-left:6px;" class="small-margin-top">
                   <div id="imagePreviewContainer" class="cat-image">
-                    <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
-                    <div class="cat-image align-center"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . $lC_ObjectInfo->get('categories_image'); ?>" style="max-width:100%;" /></div>
-                    <?php } else { ?>
-                    <div class="cat-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
-                    <?php } ?>
+                    <div class="cat-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /></div>
                   </div>
                 </div>   
                 <p class="thin" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
@@ -157,27 +125,21 @@
                     $('.qq-upload-button').hide();
                     $('.qq-upload-list').hide();
                   });
+                  
+                  function showImage() {
+                    alert(fileName);
+                  }
 
                   function createUploader2(){
                     var uploader = new qq.FileUploader({
                         element: document.getElementById('fileUploaderImageContainer'),
-                        action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('categories_id') . '&action=fileUpload&default=1'); ?>',
-                        onComplete: function(id, fileName, responseJSON){
-                          getImages();
+                        action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=&action=fileUpload'); ?>',
+                        onComplete: function(fileName, responseJSON){
+                          showImage();
                         },
                     });
                   }
                 </script>
-                <!--
-                <div id="category_image_display">
-                  <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
-                  <div class="prod-image align-center"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . $lC_ObjectInfo->get('categories_image'); ?>" style="max-width:100%;" /></div>
-                  <?php } else { ?>
-                  <div class="prod-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
-                  <?php } ?>
-                </div>
-                <p class="align-center margin-top"><?php echo $lC_Language->get('text_thumbnail_image'); ?></p>
-                -->
               </div>
             </div>
             <div class="columns">
@@ -201,13 +163,13 @@
                           array('text' => 'Custom Link', 'value' => 'override')
                         );
                         foreach ($modes_array as $mode) {
-                          echo '<option value="' . $mode['value'] . '"' . (($lC_ObjectInfo->get('categories_mode') == $mode['value']) ? ' selected' : '') . '>' . $mode['text'] . '</option>'; 
+                          echo '<option value="' . $mode['value'] . '">' . $mode['text'] . '</option>'; 
                         }
                       ?>
                       </select>
-                      <p id="categories_link_target_p" class="small-margin-top"<?php echo ($lC_ObjectInfo->get('categories_mode') != 'override') ? ' style="display:none;"' : ''; ?>><input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"<?php echo ($lC_ObjectInfo->getInt('categories_link_target') == 1) ? ' checked' : ''; ?>> <?php echo $lC_Language->get('text_new_window'); ?></p>
+                      <p id="categories_link_target_p" class="small-margin-top" style="display:none;"><input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"> <?php echo $lC_Language->get('text_new_window'); ?></p>
                     </div>
-                    <div class="mid-margin-top" id="categories_link_target_info"<?php echo ($lC_ObjectInfo->get('categories_mode') == 'override') ? ' style="display:none;"' : ''; ?>> 
+                    <div class="mid-margin-top" id="categories_link_target_info" style="display:none;"> 
                       <span class="info-spot on-left grey float-right small-margin-bottom">
                         <span class="icon-info-round"></span>
                         <span class="info-bubble">
@@ -215,14 +177,14 @@
                         </span>
                       </span>
                     </div>
-                    <div class="six-columns twelve-columns-mobile" id="categories_custom"<?php echo ($lC_ObjectInfo->get('categories_mode') != 'override') ? ' style="display:none;"' : ''; ?>>  
+                    <div class="six-columns twelve-columns-mobile" id="categories_custom" style="display:none;">  
                       <span class="info-spot on-left grey mid-margin-right">
                         <span class="icon-info-round"></span>
                         <span class="info-bubble">
                           Put the bubble text here
                         </span>
                       </span>
-                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"<?php echo ($lC_ObjectInfo->get('categories_mode') == 'override') ? ' value="' . $lC_ObjectInfo->get('categories_custom_url') . '"' : ''; ?>> &nbsp;<strong><?php echo $lC_Language->get('text_custom_link'); ?></strong>
+                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"> &nbsp;<strong><?php echo $lC_Language->get('text_custom_link'); ?></strong>
                     </div>
                   </div>
                   <div class="columns">
@@ -232,9 +194,7 @@
                         <option value="top">Top</option>
                         <?php
                           foreach ($assignedCategoryTree->getArray() as $value) {
-                            if ($lC_ObjectInfo->getInt('categories_id') != $value['id'] && lC_Categories_Admin::get_final_parent($value['id']) != $lC_ObjectInfo->getInt('categories_id')) {
-                              echo '<option final_parent="' . $pStr . '" value="' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
-                            }
+                            echo '<option value="' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
                           }
                         ?>
                       </select>
@@ -246,7 +206,7 @@
                           Put the bubble text here
                         </span>
                       </span>
-                      <input type="checkbox" class="switch medium" id="categories_show_in_listings" name="categories_show_in_listings"<?php echo ($lC_ObjectInfo->getInt('categories_show_in_listings') == 1) ? ' checked' : ''; ?>> <strong><?php echo $lC_Language->get('text_show_in_listings'); ?></strong>
+                      <input type="checkbox" class="switch medium" id="categories_show_in_listings" name="categories_show_in_listings" checked> <strong><?php echo $lC_Language->get('text_show_in_listings'); ?></strong>
                     </div>
                   </div>
                 </div>
@@ -290,7 +250,7 @@
                     </div>
                   </div>
                   <div class="nine-columns twelve-columns-mobile">
-                    <?php echo lc_draw_input_field('categories_content_file', null, 'id="categories_content_file" name="categories_content_file" class="input" style="min-width:250px;"' . (($lC_ObjectInfo->get('categories_content_file') != '') ? ' value="' . $lC_ObjectInfo->get('categories_content_file') . '"' : ' placeholder="/customhtml.php"') . '" disabled'); ?>
+                    <?php echo lc_draw_input_field('categories_content_file', null, 'id="categories_content_file" name="categories_content_file" class="input" style="min-width:250px;" placeholder="/customhtml.php" disabled'); ?>
                     <span class="info-spot on-left grey">
                       <small class="tag red-bg mid-margin-left margin-right">Pro</small>
                       <span class="info-bubble">
@@ -315,7 +275,6 @@
               <div class="columns no-margin-bottom">
                 <div class="six-columns twelve-columns-mobile">
                   <label class="label" for="<?php echo 'categories_slug'; ?>">
-                    <!--<small>Additional information</small>-->
                     <?php echo $lC_Language->get('field_slug'); ?>
                     <span class="info-spot on-left grey float-right small-margin-bottom">
                       <span class="icon-info-round"></span>
@@ -324,11 +283,10 @@
                       </span>
                     </span>
                   </label>
-                  <?php echo lc_draw_input_field('categories_slug', (isset($lC_ObjectInfo) && isset($categories_slug) ? $categories_slug : null), 'class="required input full-width mid-margin-top" placeholder="category-url-slug" disabled'); ?>
+                  <?php echo lc_draw_input_field('categories_slug', null, 'class="required input full-width mid-margin-top" placeholder="category-url-slug" disabled'); ?>
                 </div>
                 <div class="six-columns twelve-columns-mobile">
                   <label class="label" for="<?php echo 'categories_product_class'; ?>">
-                    <!--<small>Additional information</small>-->
                     <?php echo $lC_Language->get('field_product_class'); ?>
                     <span class="info-spot on-left grey">
                       <small class="tag red-bg mid-margin-left margin-right">Pro</small>
@@ -409,7 +367,7 @@
             </p>
           </div>
           <div id="floating-button-container-title" class="hidden">
-            <p class="white big-text small-margin-top"><?php echo $lC_ObjectInfo->get('categories_name'); ?></p>
+            <p class="white big-text small-margin-top"><?php echo $lC_Language->get('text_new_category'); ?></p>
           </div>
         </div>
       </div>

@@ -39,6 +39,8 @@
                           'meta_title' =>  $_POST['categories_meta_title'],
                           'meta_keywords' =>  $_POST['categories_meta_keywords'],
                           'meta_description' => $_POST['categories_meta_description'] );
+                          print_r($data);
+                          die();
            /*
             * Save the category information
             *

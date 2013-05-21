@@ -38,6 +38,7 @@ field_slug = URL Slug
 field_sort_order = Sort Order
 
 heading_title = Category Pages
+heading_title_new_category = New Category Page
 
 introduction_new_category = Please fill in the following information for the new category.
 introduction_edit_category = Please make the necessary changes for this category.
@@ -76,6 +77,7 @@ text_edit_category = Edit Category
 text_faq = FAQ
 text_mode = Mode
 text_move_category = Move Category
+text_new_category = New Category
 text_new_window = Open in New Window
 text_no_image = No Image
 text_page = Page

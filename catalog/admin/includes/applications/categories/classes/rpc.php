@@ -114,5 +114,33 @@ class lC_Categories_Admin_rpc {
 
     echo json_encode($result);
   }
+ /*
+  * Upload Category Image
+  * 
+  * @access public
+  * @return json
+  */
+  public static function fileUpload() {
+    global $lC_Database, $lC_Vqmod, $_module;
+
+    $lC_Image = new lC_Image_Admin();
+
+    require_once($lC_Vqmod->modCheck('includes/classes/ajax_upload.php'));
+
+    // list of valid extensions, ex. array("jpeg", "xml", "bmp")
+    $allowedExtensions = array('gif', 'jpg', 'jpeg', 'png');
+    // max file size in bytes
+    $sizeLimit = 10 * 1024 * 1024;
+
+    $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+    
+    $categories_image = $uploader->handleUpload('../images/categories/');
+
+    $result = array('result' => 1,
+                    'success' => true,
+                    'rpcStatus' => RPC_STATUS_SUCCESS);
+
+    echo json_encode($result);
+  } 
 }
 ?>
