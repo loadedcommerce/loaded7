@@ -886,6 +886,9 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
   color: #2D2B29;
   font-weight: bold;
 }
+.categoryListing img {
+  vertical-align: top;
+}
 
 #categories_description {
   margin-bottom: 20px;
