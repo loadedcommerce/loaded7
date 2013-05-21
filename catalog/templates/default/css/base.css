@@ -837,9 +837,46 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #success-order-totals { float: right; width: 49%; }
 #mobile-order-number-id { display: none; } 
 .mobile-order-number-id-span { float: right; border: 1px solid #ccc; padding: 7px; width: 120px; text-align: left; margin-top: -8px; }
+
 /*QR Code related */
 /*Prevent Long URL From Breaking Out of Container*/
 #qr-message {  -ms-word-break: break-all;  word-break: break-all; word-break: break-word;  -webkit-hyphens: auto;  -moz-hyphens: auto;  hyphens: auto;  display:none;  position:fixed;  bottom:25px;  right:25px;  width: 250px;  text-align:center;  background:#b8b2ac; padding:10px; }
 #qr-message strong {font-weight:bold;}
 .close-qr { background-color: #D52607;  border-radius: 9px 9px 9px 9px;  border-style: solid;  border-width: 1px;  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 1px 3px rgba(0, 0, 0, 0.75);  color: #FFFFFF;  font-family: verdana,Arial,Helvetica,sans-serif;  font-size: 11px;  font-weight: bold;  height: 16px;  right: -6px;  line-height: 16px;  min-width: 12px;  padding: 0 2px;  position: absolute;  text-align: center;  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);  top: -6px;  z-index: 1;  cursor: pointer;} 
 
+/* Categories II */
+.top-categories {
+  border-top-color: #873B7A;
+  white-space: nowrap;
+}
+.categories-li {
+  margin: -10px 0 -15px 0;
+}
+.categories-li a:hover {
+  background-color: #873B7A;
+  color: white;
+}
+.categories-li .current{
+  background-color: #873B7A;
+  color: white;  
+}
+.categories-li a {
+  display: block;
+  padding: 7px;
+  text-decoration: none;
+}
+.categories-sub li a {
+  padding-left: 20px;
+  background-color: white !important;
+  color: black !important;
+}
+.categories-li > ul > li .current {
+  background: url("../images/sub_arw.png") no-repeat scroll 4px center transparent;
+  color: #2D2B29;
+  font-weight: bold;
+}
+.categories-li > ul > li a:hover {
+  background: url("../images/sub_arw.png") no-repeat scroll 4px center transparent;
+  color: #2D2B29;
+  font-weight: bold;
+}
