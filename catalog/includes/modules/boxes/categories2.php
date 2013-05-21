@@ -39,6 +39,7 @@
       $lC_CategoryTree->setParentGroupStringTop('<ul id="top_categories" class="top-categories">', '</ul>');
       $lC_CategoryTree->setParentGroupString('<ul class="categories-sub">', '</ul>');
       $lC_CategoryTree->setChildStringWithChildren('<li class="categories-li">', '</li>');
+      $lC_CategoryTree->setChildString('<li class="categories-li">', '</li>');
       $lC_CategoryTree->setUseAria(true);
       
       // $lC_CategoryTree->setParentString('<ul class="side_sub_menu">', '</ul>');

@@ -387,7 +387,7 @@
           </div>
         </div>
       </div>
-      <?php echo lc_draw_hidden_field('sort_order', '10'); ?>
+      <?php echo lc_draw_hidden_field('sort_order', $lC_ObjectInfo->get('sort_order')); ?>
       <?php echo lc_draw_hidden_field('subaction', 'confirm'); ?>
     </form>
     <div class="clear-both"></div>

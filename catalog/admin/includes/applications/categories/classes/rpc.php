@@ -137,6 +137,7 @@ class lC_Categories_Admin_rpc {
     $categories_image = $uploader->handleUpload('../images/categories/');
 
     $result = array('result' => 1,
+                    'fileName' => $categories_image['filename'],
                     'success' => true,
                     'rpcStatus' => RPC_STATUS_SUCCESS);
 

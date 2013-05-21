@@ -127,16 +127,16 @@
                   });
                   
                   function showImage() {
-                    alert(fileName);
+                    //alert(fileName);
                   }
 
                   function createUploader2(){
                     var uploader = new qq.FileUploader({
                         element: document.getElementById('fileUploaderImageContainer'),
                         action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=&action=fileUpload'); ?>',
-                        onComplete: function(fileName, responseJSON){
-                          showImage();
-                        },
+                        //onComplete: function(fileName, responseJSON){
+                          //showImage();
+                        //},
                     });
                   }
                 </script>

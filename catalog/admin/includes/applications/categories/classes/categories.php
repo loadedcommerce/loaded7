@@ -162,10 +162,10 @@ class lC_Categories_Admin {
     $lC_Database->startTransaction();
 
     if ( is_numeric($id) ) {
-      $Qcat = $lC_Database->query('update :table_categories set parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_show_in_litsings = :categories_show_in_litsings, last_modified = now() where categories_id = :categories_id');
+      $Qcat = $lC_Database->query('update :table_categories set parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_show_in_listings = :categories_show_in_listings, last_modified = now() where categories_id = :categories_id');
       $Qcat->bindInt(':categories_id', $id);
     } else {
-      $Qcat = $lC_Database->query('insert into :table_categories (parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_show_in_litsings, date_added) values (:parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_show_in_litsings, now())');
+      $Qcat = $lC_Database->query('insert into :table_categories (parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_show_in_listings, date_added) values (:parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_show_in_listings, now())');
       $Qcat->bindInt(':parent_id', $data['parent_id']);
     }
 
@@ -175,7 +175,7 @@ class lC_Categories_Admin {
     $Qcat->bindValue(':categories_mode', $data['mode']);
     $Qcat->bindInt(':categories_link_target', $data['link_target']);
     $Qcat->bindValue(':categories_custom_url', $data['custom_url']);
-    $Qcat->bindInt(':categories_show_in_litsings', $data['show_in_litsings']);
+    $Qcat->bindInt(':categories_show_in_listings', $data['show_in_listings']);
     $Qcat->setLogging($_SESSION['module'], $id);
     $Qcat->execute();
     

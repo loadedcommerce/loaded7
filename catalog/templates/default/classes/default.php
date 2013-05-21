@@ -276,6 +276,7 @@ class lC_Default {
     include_once($lC_Vqmod->modCheck('includes/classes/products.php'));
     
     if (isset($cPath) && strpos($cPath, '_')) {
+      
       // check to see if there are deeper categories within the current category
       $category_links = array_reverse($cPath_array);
       for($i=0, $n=sizeof($category_links); $i<$n; $i++) {
@@ -299,7 +300,7 @@ class lC_Default {
         }
       }
     } else {
-      $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_image, c.parent_id from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id order by sort_order, cd.categories_name');
+      $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_show_in_listings = 1 order by sort_order, cd.categories_name');
       $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qcategories->bindInt(':parent_id', $current_category_id);
@@ -313,7 +314,13 @@ class lC_Default {
       $rows++;
       $width = (int)(100 / MAX_DISPLAY_CATEGORIES_PER_ROW) . '%';
       $exists = ($Qcategories->value('categories_image') != null) ? true : false;
-      $output .= '    <td style="text-align:center;" class="categoryListing" width="' . $width . '" valign="top">' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id'))), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no_image.png', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name')) . '</td>' . "\n";
+      $output .= '    <td style="text-align:center;" class="categoryListing" width="' . $width . '" valign="top">';
+      if ($Qcategories->value('categories_custom_url') != '') {
+        $output .= lc_link_object(lc_href_link($Qcategories->value('categories_custom_url'), ''), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no-image.png', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name'), (($Qcategories->value('categories_link_target') == 1) ? 'target="_blank"' : null));
+      } else {
+        $output .= lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id'))), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no_image.png', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name'), (($Qcategories->value('categories_link_target') == 1) ? 'target="_blank"' : null));
+      }
+      $output .= '</td>' . "\n";
       if ((($rows / MAX_DISPLAY_CATEGORIES_PER_ROW) == floor($rows / MAX_DISPLAY_CATEGORIES_PER_ROW)) && ($rows != $number_of_categories)) {
         $output .= '  </tr>' . "\n";
         $output .= '  <tr>' . "\n";
