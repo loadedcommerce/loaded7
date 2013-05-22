@@ -11,12 +11,8 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-global $lC_Language, $lC_Template, $lC_ObjectInfo; 
+global $lC_Language, $lC_Template, $pInfo; 
 ?>   
-<style>
-.files-list > li > a:hover { color: #0099FF; }
-.selected-menu b { color: #016cb3; }
-</style>
 <div id="section_images_content" class="with-padding">
   <div class="content-panel margin-bottom enabled-panels">
   
@@ -58,7 +54,7 @@ global $lC_Language, $lC_Template, $lC_ObjectInfo;
                   <div id="remoteFiles" style="white-space:nowrap;">
                     <span id="fileUploadField"></span>
                     <?php
-                    if ( isset($lC_ObjectInfo) ) {
+                    if ( isset($pInfo) ) {
                       ?>
                       <div id="fileUploaderContainer" class="small-margin-top">
                         <noscript>
@@ -78,7 +74,7 @@ global $lC_Language, $lC_Template, $lC_ObjectInfo;
                     <div id="showProgressGetLocalImages" style="display: none; float: right; padding-right: 10px;"><?php echo lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_retrieving_local_files'); ?></div>
                     <p><?php echo realpath('../images/products/_upload'); ?></p>
                     <?php
-                      if ( isset($lC_ObjectInfo) ) {
+                      if ( isset($pInfo) ) {
                         echo '<input type="button" value="Assign To Product" class="operationButton" onclick="assignLocalImages();" /><div id="showProgressAssigningLocalImages" style="display: none; padding-left: 10px;">' . lc_icon_admin('progress_ani.gif') . '&nbsp;' . $lC_Language->get('image_multiple_upload_progress') . '</div>';
                       }
                     ?>
@@ -86,7 +82,7 @@ global $lC_Language, $lC_Template, $lC_ObjectInfo;
                   
                 </div>
                 <?php
-                  if ( isset($lC_ObjectInfo) ) {
+                  if ( isset($pInfo) ) {
                     ?>
                     <div id="defaultImagesContainer">
                       <div id="defaultImages" style="overflow: auto;" class="small-margin-top"></div>
@@ -119,7 +115,7 @@ $(document).ready(function() {
 function createUploader(){
   var uploader = new qq.FileUploader({
       element: document.getElementById('fileUploaderContainer'),
-      action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=fileUpload&default=DEFAULT'); ?>',
+      action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=fileUpload&default=DEFAULT'); ?>',
       onComplete: function(id, fileName, responseJSON){
         getImages();
       },
@@ -198,7 +194,7 @@ function showImages(data) {
 
   $('#additionalOriginal').sortable({
     update: function(event, ui) {
-      $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=reorderImages'); ?>' + '&' + $(this).sortable('serialize'),
+      $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=reorderImages'); ?>' + '&' + $(this).sortable('serialize'),
         function (data) {
           getImagesOriginals();
           getImagesOthers();
@@ -221,7 +217,7 @@ function getImages() {
   getImagesOriginals(false);
   getImagesOthers(false);
 
-  $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=getImages'); ?>',
+  $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=getImages'); ?>',
     function (data) {
       showImages(data);
     }
@@ -235,7 +231,7 @@ function getImagesOriginals(makeCall) {
   $('#imagePreviewContainer').html('<p id="showProgressOriginal" align="center" class="large-margin-top"><span class="loader huge refreshing"></span></p>');
 
   if ( makeCall != false ) {
-    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=getImages&filter=originals'); ?>',
+    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=getImages&filter=originals'); ?>',
       function (data) {
         showImages(data);
       }
@@ -248,7 +244,7 @@ function getImagesOthers(makeCall) {
   $('#defaultOther').html('<div id="showProgressOther" style="float: left; padding-left: 10px;"><span class="loader on-dark small-margin-right"></span><?php echo $lC_Language->get('image_loading_from_server'); ?></div>');
 
   if ( makeCall != false ) {
-    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=getImages&filter=others'); ?>',
+    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=getImages&filter=others'); ?>',
       function (data) {
         showImages(data);
       }
@@ -259,7 +255,7 @@ function getImagesOthers(makeCall) {
 function removeImage(id) {
   $.modal.confirm('<?php echo $lC_Language->get('text_confirm_delete'); ?>', function() {
     var image = id.split('_');
-    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=deleteProductImage'); ?>' + '&image=' + image[1],
+    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=deleteProductImage'); ?>' + '&image=' + image[1],
       function (data) {
         getImages();
       }
@@ -271,7 +267,7 @@ function removeImage(id) {
 function setDefaultImage(id) {  
   $.modal.confirm('<?php echo $lC_Language->get('text_confirm_set_default'); ?>', function() {
     var image = id.split('_');
-    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=setDefaultImage'); ?>' + '&image=' + image[1],
+    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=setDefaultImage'); ?>' + '&image=' + image[1],
       function (data) {
         getImages();  
         showContent('default');
@@ -304,7 +300,7 @@ function getLocalImages() {
 }
 
 <?php
-if ( isset($lC_ObjectInfo) ) {
+if ( isset($pInfo) ) {
   ?>
   function assignLocalImages() {
     $('#showProgressAssigningLocalImages').css('display', 'inline');
@@ -315,7 +311,7 @@ if ( isset($lC_ObjectInfo) ) {
       selectedFiles += 'files[]=' + $(selected).text() + '&';
     });
 
-    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=assignLocalImages'); ?>' + '&' + selectedFiles,
+    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=assignLocalImages'); ?>' + '&' + selectedFiles,
       function (data) {
         $('#showProgressAssigningLocalImages').css('display', 'none');
         getLocalImages();

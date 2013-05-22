@@ -1,5 +1,21 @@
 /* admin product add/edit page specific css */
+
+/* content tab */
+#fileUploaderImageContainer .qq-upload-drop-area { left: 19%; min-height: 104px; position: absolute; width: 65%; top: -200px; }
+#fileUploaderImageContainer .qq-upload-drop-area span { margin-top:-16px; }
+
+/* images tab */
+.files-list > li > a:hover { color: #0099FF; }
+.selected-menu b { color: #016cb3; }
+
+/* options tab */
 body.dragging, body.dragging * { cursor: move !important; }
 .dragged { position: absolute; opacity: 0.5; z-index: 2000; }
 .placeholder { position: relative; }
 .placeholder:before { position: absolute; }
+
+/* pricing tab */
+#simpleOptionsPricingTable td {  }
+#simpleOptionsPricingTable input { width:55px; }
+#simpleOptionsPricingTable .inputs { width:80px; }
+#simpleOptionsPricingTable .element { padding-left:24px; vertical-align:middle; }

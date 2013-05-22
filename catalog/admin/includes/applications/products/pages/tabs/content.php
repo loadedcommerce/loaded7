@@ -12,16 +12,7 @@
   @license    http://loadedcommerce.com/license.html
 */
 global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyword, $products_tags; 
-
-//echo "<pre>";
-//print_r($pInfo);
-//echo "</pre>";
-  
 ?>
-<style>
-#fileUploaderImageContainer .qq-upload-drop-area { left: 19%; min-height: 104px; position: absolute; width: 65%; top: -200px; }
-#fileUploaderImageContainer .qq-upload-drop-area span { margin-top:-16px; }
-</style>
 <div id="section_general_content" class="with-padding">
   <div class="columns">
     <div class="new-row-mobile four-columns twelve-columns-mobile">
@@ -58,20 +49,20 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
                 <fieldset>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_name[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_name') . lc_show_info_bubble($lC_Language->get('info_bubble_content_name')); ?></label>
-                    <?php echo lc_draw_input_field('products_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null), 'id="products_name_' . $l['id'] . '" class="required input" style="width:96%;"'); ?>
+                    <?php echo lc_draw_input_field('products_name[' . $l['id'] . ']', (isset($pInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null), 'id="products_name_' . $l['id'] . '" class="required input" style="width:96%;"'); ?>
                   </p>
                   <p class="button-height block-label">
                   <label class="label" for="<?php echo 'products_description[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_description') . lc_show_info_bubble($lC_Language->get('info_bubble_content_description')); ?></label>
-                  <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'id="clEditorProductDescription_' . $l['id'] . '" style="width:96%;" class="required input with-editor"'); ?>
+                  <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($pInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'id="clEditorProductDescription_' . $l['id'] . '" style="width:96%;" class="required input with-editor"'); ?>
                   <p align="right" style="padding:0; margin:-10px 10px -10px 0; font-size:.9em;"><?php echo '<a href="javascript:toggleEditor(\'' . $l['id'] . '\');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></p>
                   </p>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_keyword[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_keyword') . lc_show_info_bubble($lC_Language->get('info_bubble_content_keyword')); ?></label>
-                    <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input" style="width:96%" id="products_keyword_' . $l['id'] . '"'); ?>
+                    <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($pInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input" style="width:96%" id="products_keyword_' . $l['id'] . '"'); ?>
                   </p>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_tags[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_tags') . lc_show_info_bubble($lC_Language->get('info_bubble_content_tags')); ?></label>
-                    <?php echo lc_draw_input_field('products_tags[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($products_tags[$l['id']]) ? $products_tags[$l['id']] : null), 'id="products_tags_' . $l['id'] . '" class="input" style="width:96%" maxlength="255"'); ?>
+                    <?php echo lc_draw_input_field('products_tags[' . $l['id'] . ']', (isset($pInfo) && isset($products_tags[$l['id']]) ? $products_tags[$l['id']] : null), 'id="products_tags_' . $l['id'] . '" class="input" style="width:96%" maxlength="255"'); ?>
                   </p>
                 </fieldset>
               </div>
@@ -143,30 +134,24 @@ $(document).ready(function() {
   createUploader2();
   $('#fileUploaderImageContainer .qq-upload-button').hide();
   $('#fileUploaderImageContainer .qq-upload-list').hide();
-});
-
-function createUploader2(){
-  var uploader = new qq.FileUploader({
-      element: document.getElementById('fileUploaderImageContainer'),
-      action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('products_id') . '&action=fileUpload&default=1'); ?>',
-      onComplete: function(id, fileName, responseJSON){
-        getImages();
-      },
-  });
-}
-
-
-
-$(document).ready(function() {    
   <?php               
   foreach ( $lC_Language->getAll() as $l ) {
     echo "toggleEditor('" . $l['id'] . "');";
   }
   ?>  
-
   $('#products_name_1').focus();
-  $(this).scrollTop(0);
+  $(this).scrollTop(0);  
 });
+
+function createUploader2(){
+  var uploader = new qq.FileUploader({
+      element: document.getElementById('fileUploaderImageContainer'),
+      action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=fileUpload&default=1'); ?>',
+      onComplete: function(id, fileName, responseJSON){
+        getImages();
+      },
+  });
+}
 
 function toggleEditor(id) {
   var selection = $("#clEditorProductDescription_" + id);

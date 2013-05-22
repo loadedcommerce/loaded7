@@ -271,12 +271,6 @@ global $lC_Language, $pInfo;
       </div>
     </div>                
   </fieldset>
-  <style>
-  #simpleOptionsPricingTable td {  }
-  #simpleOptionsPricingTable input { width:55px; }
-  #simpleOptionsPricingTable .inputs { width:80px; }
-  #simpleOptionsPricingTable .element { padding-left:24px; vertical-align:middle; }
-  </style>                                                 
   <dl id="simple-options-pricing-tab" class="accordion">
     <?php echo lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')); ?>
   </dl>  
