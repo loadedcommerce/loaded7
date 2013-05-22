@@ -243,3 +243,5 @@ update_message_text2 = released.
 
 site_maintenance_message_title = Maintenance Mode
 site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
+
+text_coming_soon = Pro Feature Coming Soon

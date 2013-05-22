@@ -36,32 +36,6 @@ class lC_Template_Admin extends lC_Template {
     return $object;
   }
   /*
-  * Load the Dialog DOM Windows
-  *
-  * @access public
-  * @return boolean
-  */
-  public function loadDialog($_module, $_sub = false) {
-    global $lC_Language, $lC_Template, $lC_Vqmod;
-
-    if ( is_dir('includes/applications/' . $_module . '/dialog') ) {
-      $pattern = '/(\w*)\.php$/';
-      $dir = opendir('includes/applications/' . $_module . '/dialog');
-      while( $file = readdir( $dir ) ) {
-        if ($file == '.'  || $file == '..') continue;
-        $match = array();
-        if ( preg_match($pattern, $file, $match) > 0 ) {
-          if ($_sub == true && strstr($match[0], '_')) {
-            include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/dialog/' . $match[0]));
-          } else if ($_sub == false && !strstr($match[0], '_')) {
-            include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/dialog/' . $match[0]));
-          }
-        }
-      }
-    }
-    return true;
-  }
-  /*
   * Load the Modal Windows
   *
   * @access public

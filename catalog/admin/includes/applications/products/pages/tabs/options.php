@@ -13,31 +13,6 @@
 */
 global $lC_Language, $pInfo; 
 ?>
-<style>
-body.dragging, body.dragging * {
-  cursor: move !important;
-}
-
-.dragged {
-  position: absolute;
-  opacity: 0.5;
-  z-index: 2000;
-}
-
-.placeholder {
-  position: relative;
-  /** More li styles **/
-}
-.placeholder:before {
-  position: absolute; 
-  /** Define arrowhead **/
-  width: 0; 
-  height: 0; 
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid red;
-}
-</style>
 <div id="section_options_content" class="with-padding">
   <div class="columns">
     <div class="twelve-columns">
@@ -54,7 +29,7 @@ body.dragging, body.dragging * {
             <label for="ioc_radio_2" class="oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_2" value="2" />
               <?php echo $lC_Language->get('text_multi_sku'); ?>
-            </label>
+            </label><?php echo lc_go_pro(); ?>
             <!-- lc_options_inventory_control end -->
           </div>
         </div>
@@ -66,8 +41,7 @@ body.dragging, body.dragging * {
         <legend class="legend"><?php echo $lC_Language->get('text_multi_sku_options'); ?></legend>
         <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewMultiSkuOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
         <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
-
-
+          <span class="thin"><?php echo $lC_Language->get('text_coming_soon'); ?>...</span>
         </div>
       </fieldset>
     </div>
@@ -80,10 +54,10 @@ body.dragging, body.dragging * {
           <thead>
             <tr>
               <th scope="col" class="align-center with-tooltip" data-tooltip-options='{"classes":["orange-gradient"],"position":"bottom"}' title="Drag & Drop Rows to Sort" width="16px"><img style="vertical-align:middle;" src="templates/default/img/icons/16/drag.png"></th>
-              <th scope="col" class="align-left">Name</th>
-              <th scope="col" class="align-left">Type</th>
-              <th scope="col" class="align-left">Sort</th>
-              <th scope="col" class="align-center" width="50px">Remove</th>
+              <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_name'); ?></th>
+              <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_type'); ?></th>
+              <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_sort'); ?></th>
+              <th scope="col" class="align-center" width="50px"><?php echo $lC_Language->get('table_heading_remove'); ?></th>
             </tr>
           </thead>
           <tbody class="sorted_table"><?php echo lC_Products_Admin::getSimpleOptionsContent($pInfo->get('simple_options')); ?></tbody>
@@ -95,6 +69,7 @@ body.dragging, body.dragging * {
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_bundle_products'); ?><?php echo lc_go_pro('info-spot on-right margin-left mid-margin-right'); ?></legend>
         <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewBundleOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
+        <span class="thin"><?php echo $lC_Language->get('text_coming_soon'); ?>...</span>
       </fieldset>     
     </div>
 
@@ -167,12 +142,10 @@ function _updateInvControlType(type) {
 }
 
 function addNewMultiSkuOption() {
-  alert('addNewMultiSkuOption() called');
+  alert('<span class="thin"><?php echo $lC_Language->get('text_coming_soon'); ?>...</span>');
 }
-
 
 function addNewBundleOption() {
-  alert('Coming Soon');
+  alert('<span class="thin"><?php echo $lC_Language->get('text_coming_soon'); ?>...</span>');
 }
-
 </script>
