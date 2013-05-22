@@ -288,9 +288,11 @@ $(document).ready(function() {
     // get the current menu width in case screen size has changed
     var menuWidth = $("#menu").width();
     // slide to the left
-    $('#profileInner').animate({
-      "marginLeft" : "-=" + menuWidth
-    });
+    if (!$('#profileInner').is(':animated')) {
+           $('#profileInner').animate({
+              "marginLeft" : "-=" + menuWidth
+     });           
+   }
     return false;
   });
   // profile right is clicked
