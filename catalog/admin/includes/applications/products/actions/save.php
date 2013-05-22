@@ -65,8 +65,8 @@
         if ( isset($_POST['simple_options_group_type']) ) $data['simple_options_group_type'] = $_POST['simple_options_group_type'];
         if ( isset($_POST['simple_options_group_sort_order']) ) $data['simple_options_group_sort_order'] = $_POST['simple_options_group_sort_order'];
         if ( isset($_POST['simple_options_group_status']) ) $data['simple_options_group_status'] = $_POST['simple_options_group_status'];
-        if ( isset($_POST['simple_options_group_price_modifier']) ) $data['simple_options_group_price_modifier'] = $_POST['simple_options_group_price_modifier'];
         if ( isset($_POST['simple_options_entry']) ) $data['simple_options_entry'] = $_POST['simple_options_entry'];
+        if ( isset($_POST['simple_options_entry_price_modifier']) ) $data['simple_options_entry_price_modifier'] = $_POST['simple_options_entry_price_modifier'];
 
         // multi SKU
         if ($has_variants === true) {

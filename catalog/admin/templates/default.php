@@ -557,10 +557,13 @@
   <script src="../ext/jquery/jquery.details.min.js"></script>
   <script src="../ext/jquery/jquery.blink.js"></script>
   <script src="../ext/jquery/jquery.loadmask.js"></script>
+  <script src="external/CLEditor/jquery.cleditor.min.js"></script>
+  <script src="external/CLEditor/jquery.cleditor.fullscreen.js"></script>
+  <script src="external/CLEditor/jquery.cleditor.advancedtable.js"></script>  
   <!-- Template functions -->
   <script src="templates/default/js/setup.js"></script>
   <script src="templates/default/js/float.js"></script>
-  <!-- script src="templates/default/js/accordions.js"></script -->
+  <script src="templates/default/js/accordions.js"></script>
   <script src="templates/default/js/auto-resizing.js"></script>
   <script src="templates/default/js/input.js"></script>
   <script src="templates/default/js/message.js"></script>
@@ -575,10 +578,7 @@
   <script src="templates/default/js/tooltip.js"></script>
   <script src="templates/default/js/confirm.js"></script>
   <script src="templates/default/js/fittext.js"></script>
-  <!-- script src="templates/default/js/agenda.js"></script -->
-  <script src="external/CLEditor/jquery.cleditor.min.js"></script>
-  <script src="external/CLEditor/jquery.cleditor.fullscreen.js"></script>
-  <script src="external/CLEditor/jquery.cleditor.advancedtable.js"></script>
+  <script src="templates/default/js/agenda.js"></script>
   <script src="templates/default/js/tabs.js"></script><!-- Must be loaded last -->
   <!-- Load page specific javascript -->
   <?php $lC_Template->loadPageScript($lC_Template->getModule()); ?>

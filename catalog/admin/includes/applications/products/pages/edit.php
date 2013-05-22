@@ -471,9 +471,9 @@ function getTaxClassOptionsString($id = null, $esc = false) {
         <ul class="tabs">
           <li id="tabHeaderSectionContent" class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
           <li id="tabHeaderSectionImages"><?php echo lc_link_object('#section_images_content', $lC_Language->get('section_images')); ?></li>
-          <li id="tabHeaderSectionPricing"><?php echo lc_link_object('#section_pricing_content', $lC_Language->get('section_pricing')); ?></li>
           <li id="tabHeaderSectionData"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
           <li id="tabHeaderSectionOptions"><?php echo lc_link_object('#section_options_content', $lC_Language->get('section_options')); ?></li>
+          <li id="tabHeaderSectionPricing"><?php echo lc_link_object('#section_pricing_content', $lC_Language->get('section_pricing')); ?></li>
           <li id="tabHeaderSectionShipping"><?php echo lc_link_object('#section_shipping_content', $lC_Language->get('section_shipping')); ?></li>
           <li id="tabHeaderSectionRelationships"><?php echo lc_link_object('#section_relationships_content', $lC_Language->get('section_relationships')); ?></li>
         </ul>
@@ -481,9 +481,9 @@ function getTaxClassOptionsString($id = null, $esc = false) {
           <?php 
           include('includes/applications/products/pages/tabs/content.php'); 
           include('includes/applications/products/pages/tabs/images.php');  
-          include('includes/applications/products/pages/tabs/pricing.php');
           include('includes/applications/products/pages/tabs/data.php'); 
           include('includes/applications/products/pages/tabs/options.php'); 
+          include('includes/applications/products/pages/tabs/pricing.php');
           include('includes/applications/products/pages/tabs/shipping.php'); 
           include('includes/applications/products/pages/tabs/relationships.php'); 
           ?> 

@@ -24,13 +24,18 @@ body.dragging, body.dragging * {
   z-index: 2000;
 }
 
-table.simple-table tr.placeholder {
+.placeholder {
   position: relative;
   /** More li styles **/
 }
-table.simple-table tr.placeholder:before {
-  position: absolute;
+.placeholder:before {
+  position: absolute; 
   /** Define arrowhead **/
+  width: 0; 
+  height: 0; 
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid red;
 }
 </style>
 <div id="section_options_content" class="with-padding">
@@ -74,7 +79,7 @@ table.simple-table tr.placeholder:before {
         <table width="100%" style="" id="simpleOptionsTable" class="simple-table">
           <thead>
             <tr>
-              <th scope="col" class="align-center" width="16px"><img style="vertical-align:middle;" src="templates/default/img/icons/16/drag.png"></th>
+              <th scope="col" class="align-center with-tooltip" data-tooltip-options='{"classes":["orange-gradient"],"position":"bottom"}' title="Drag & Drop Rows to Sort" width="16px"><img style="vertical-align:middle;" src="templates/default/img/icons/16/drag.png"></th>
               <th scope="col" class="align-left">Name</th>
               <th scope="col" class="align-left">Type</th>
               <th scope="col" class="align-left">Sort</th>
@@ -113,7 +118,7 @@ $(document).ready(function() {
       $('body').addClass('dragging');
     },
     onDrop: function  (item, container, _super) { 
-      item.removeClass("dragged").removeAttr("style");
+      item.removeClass("dragged");
       $("body").removeClass("dragging");
 
       _setSortOrder();

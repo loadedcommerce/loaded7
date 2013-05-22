@@ -11,6 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+global $lC_Currencies;
 ?>
 <style>
 #addSimpleOption { padding-bottom:20px; }
@@ -26,31 +27,41 @@ function addSimpleOption(id) {
   function getNewOptionsRow(id, groups, entries, selected) {
     var groupTitle = '';
     var groupModule = '';
-    //var groupSortOrder = '0';
     var groupLanguageID = '1';
     $.each(groups, function(key, val) {
       if (val.id == id) {
         groupTitle = val.title;
         groupModule = val.module;
-    //    groupSortOrder = val.sort_order;
         groupLanguageID = val.languages_id;
       }
     }); 
     
     var items = '';
     var itemsInput = '';
+    var pitemsInput = '';
+    var ref = Math.floor((1 + Math.random()) * 0x10000).toString(16);   
     $.each(entries, function(key, entry) {
       if (entry.title != undefined) {
+        var curSymbol = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
         var check = 'entry=' + entry.id;
         if (selected.indexOf(check) > 0) {  // is item in the selected list
           items += '<div class="small"><span class="icon-right icon-blue with-small-padding"></span>' + entry.title + '</div>';
           itemsInput += '<input type="hidden" name="simple_options_entry[' + id + '][' + entry.id + ']" value="' + entry.title + '">';
+          pitemsInput += '<tr class="trp-' + id + '">'+
+                         '  <td class="element">' + entry.title + '</td>'+
+                         '  <td>'+
+                         '    <div id="div_' + id + '_' + entry.id + '" class="icon-plus-round icon-green icon-size2" style="display:inline;">'+
+                         '      <div class="inputs" style="display:inline; padding:8px 0;">'+
+                         '        <span class="mid-margin-left no-margin-right">' + curSymbol + '</span>'+
+                         '        <input type="text" class="input-unstyled" value="' + entry.price_modifier.toFixed(2) + '" onblur="showSymbol(this, \'' + id + '_' + entry.id + '\');" id="simple_options_entry_price_modifier_' + id + '_' + entry.id + '" name="simple_options_entry_price_modifier[' + id + '][' + entry.id + ']">'+
+                         '      </div>'+
+                         '    </div>'+
+                         '  </td>'+
+                         '</tr>';
         }
       }
     });    
     
-    var ref = Math.floor((1 + Math.random()) * 0x10000).toString(16);   
-
     var row = '<tr id="tr-' + ref + '" style="cursor:pointer;">'+
               '  <td><img src="templates/default/img/icons/16/drag.png"></td>'+
               '  <td onclick="$(\'.drop' + ref + '\').toggle();">' + groupTitle + '<div class="small-margin-top drop' + ref + '" style="display:none;"><span>' + items + '</span></div></td>'+
@@ -63,8 +74,22 @@ function addSimpleOption(id) {
               '  <input type="hidden" name="simple_options_group_status[' + id + ']" value="1">'+ itemsInput +
               '</tr>';
               
-    return row;
-  }
+    var prow = '<tr id="trp-' + ref + '" class="trp-' + ref + '"><td width="100px" class="strong">' + groupTitle + '</td></tr>' + pitemsInput;
+     
+    // if the group already exists, remove it before adding
+    $("#simpleOptionsTable tr td:contains('" + groupTitle + "')").each(function() {
+      $(this).closest('tr').remove();
+    });
+    // also remove it on the pricing table
+    $("#simpleOptionsPricingTable tr td:contains('" + groupTitle + "')").each(function() {
+      $(this).closest('tr').remove();
+      $('.trp-' + id).remove();
+    });   
+    //          
+    $('#simpleOptionsTable > tbody').append(row);              
+    $('#simpleOptionsPricingTable > tbody').append(prow); 
+    //$('#simple-options-pricing-tab').refreshTabs();             
+  }   
   
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=getSimpleOptionData'); ?>'
   $.getJSON(jsonLink,
@@ -180,7 +205,7 @@ function addSimpleOption(id) {
                               if (bValid) {
 
                                 var sel = $('#seAdd').serialize();
-                                $('#simpleOptionsTable > tbody').append(getNewOptionsRow(groupID, data, edata, sel));
+                                getNewOptionsRow(groupID, data, edata, sel);
                                 win.closeModal();
                                 ewin.closeModal();
                                 _setSortOrder();

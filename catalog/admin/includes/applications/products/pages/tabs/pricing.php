@@ -14,7 +14,7 @@
 global $lC_Language, $pInfo; 
 ?>
 <div id="section_pricing_content" class="with-padding">
-  <fieldset class="fieldset fields-list">
+  <fieldset class="fieldset fields-list" style="padding-bottom:0;">
     <legend class="legend"><?php echo $lC_Language->get('text_pricing_overrides'); ?></legend>
     <div class="field-block button-height">
       <label for="products_base_price" class="label"><b><?php echo $lC_Language->get('text_base_price'); ?></b></label>
@@ -59,7 +59,7 @@ global $lC_Language, $pInfo;
     <!-- lc_qty_price_breaks begin -->
     <div class="field-block field-block-product button-height">
       <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_break_pricing'); ?></b></label>
-      <input onchange="$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_qty_price_breaks'), null, 'info-spot on-left grey margin-left'); ?>
+      <input onchange="$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_qty_price_breaks'), null, 'info-spot on-left grey margin-left'); ?>
       <span id="qty_breaks_number_of_break_points">
         <span class="number input">
           <button type="button" class="button number-down" disabled>-</button>
@@ -271,103 +271,34 @@ global $lC_Language, $pInfo;
       </div>
     </div>                
   </fieldset>
-  <!--<dl class="accordion same-height">
-  <dt>Retail Price</dt>
-  <dd>
-  <?php // if no options set ?>
-  <!-- Please Create your inventory Option
-  <?php //} else { ?>
-  <div class="left-column-200px margin-bottom clear-left with-mid-padding">
-  <div class="left-column">
-  IOption Set - SKU&nbsp;&nbsp;
-  <span class="info-spot on-left grey">
-  <span class="icon-info-round"></span>
-  <span class="info-bubble">
-  Put the bubble text here
-  </span>
-  </span>
-  </div>
-  <div class="right-column">
-  Price&nbsp;&nbsp;
-  <span class="info-spot on-left grey">
-  <span class="icon-info-round"></span>
-  <span class="info-bubble">
-  Put the bubble text here
-  </span>
-  </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  Special&nbsp;Price&nbsp;&nbsp;
-  <span class="info-spot on-left grey">
-  <span class="icon-info-round"></span>
-  <span class="info-bubble">
-  Put the bubble text here
-  </span>
-  </span>
-  </div>
-  </div>
-  <div class="left-column-200px margin-bottom clear-left with-mid-padding">
-  <?php //foreach() { ?>
-  <div class="left-column with-small-padding">
-  Red Medium - KSRM0001
-  </div>
-  <div class="right-column">
-  <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
-  <?php // if special price ?>
-  &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
-  <?php // } ?>
-  </div>
-  <div style="height:5px;"></div>
-  <div class="left-column with-small-padding silver-bg">
-  Red Large - KSRL0023
-  </div>
-  <div class="right-column">
-  <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
-  <?php // if special price ?>
-  &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
-  <?php // } ?>
-  </div>
-  <div style="height:5px;"></div>
-  <div class="left-column with-small-padding">
-  Red X Large - KSRXL0011
-  </div>
-  <div class="right-column">
-  <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
-  <?php // if special price ?>
-  &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
-  <?php // } ?>
-  </div>
-  <div style="height:5px;"></div>
-  <div class="left-column with-small-padding silver-bg">
-  Green Medium - KSGM0054
-  </div>
-  <div class="right-column">
-  <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
-  <?php // if special price ?>
-  &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
-  <?php // } ?>
-  </div>
-  <div style="height:5px;"></div>
-  <div class="left-column with-small-padding">
-  Green Large - KSGL0055
-  </div>
-  <div class="right-column">
-  <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
-  <?php // if special price ?>
-  &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
-  <?php // } ?>
-  </div>
-  <div style="height:5px;"></div>
-  <div class="left-column with-small-padding silver-bg">
-  Green X Large - KSGXL0167
-  </div>
-  <div class="right-column">
-  <input class="input" value="" name="" id="" style="width:60px;text-align:right;" />
-  <?php // if special price ?>
-  &nbsp;&nbsp;<input class="input" value="" name="" id="" style="width:60px;text-align:right;color:#ff0000;" />
-  <?php // } ?>
-  </div>
-  <div style="height:5px;"></div>
-  <?php //} //} ?>
-  </div>
-  </dd>
-  </dl>-->
+  <style>
+  #simpleOptionsPricingTable td {  }
+  #simpleOptionsPricingTable input { width:55px; }
+  #simpleOptionsPricingTable .inputs { width:80px; }
+  #simpleOptionsPricingTable .element { padding-left:24px; vertical-align:middle; }
+  </style>                                                 
+  <dl id="simple-options-pricing-tab" class="accordion">
+    <?php echo lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')); ?>
+  </dl>  
 </div>  
+<script>
+$(document).ready(function() {
+  _refreshSymbols();
+});
+
+function _refreshSymbols() {
+  $('#simpleOptionsPricingTable input').each(function(index, element) {
+    var id = $(this).attr("id").replace('simple_options_entry_price_modifier_', '');
+    showSymbol(element, id); 
+  });
+}
+
+function showSymbol(e, id) {
+  var val = $(e).val();
+  if (parseFloat(val) >= 0.0000) {
+    $('#div_' + id).removeClass('icon-red').removeClass('icon-minus-round').addClass('icon-green').addClass('icon-plus-round');   
+  } else {
+    $('#div_' + id).removeClass('icon-green').removeClass('icon-plus-round').addClass('icon-red').addClass('icon-minus-round');   
+  }
+}
+</script>
