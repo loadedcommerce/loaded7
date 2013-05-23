@@ -22,6 +22,7 @@ modal_heading_delete_customer_group = Delete Customer Group
 modal_heading_batch_delete_customer_group = Batch Delete Customer Groups
 
 field_name = Group Name:
+field_baseline_discount = Baseline Discount:
 field_set_as_default = Set as Default?
 
 introduction_new_customer_group = Please fill in the following information for the new customer group.

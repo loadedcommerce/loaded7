@@ -177,6 +177,18 @@ class lC_Customer_groups_Admin {
         }
       }
     }
+    
+    $Qgdata = $lC_Database->query('insert into :table_customers_groups_data (customers_group_id, baseline_discount) values (:customers_group_id, :baseline_discount)');
+    $Qgdata->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+    $Qgdata->bindInt(':customers_group_id', $customers_group_id);
+    $Qgdata->bindValue(':baseline_discount', $data['baseline_discount']);
+    $Qgdata->setLogging($_SESSION['module'], $customers_group_id);
+    $Qgdata->execute();
+
+    if ( $lC_Database->isError() ) {
+      $error = true;
+      break;
+    }    
 
     if ( $error === false ) {
       $lC_Database->commitTransaction();
@@ -207,12 +219,22 @@ class lC_Customer_groups_Admin {
     $Qgroups->bindInt(':customers_group_id', $id);
     $Qgroups->setLogging($_SESSION['module'], $id);
     $Qgroups->execute();
-
-    if ( !$lC_Database->isError() ) {
-      return true;
+    
+    if ( $lC_Database->isError() ) {
+      return false;
     }
 
-    return false;
+    $Qgdata = $lC_Database->query('delete from :table_customers_groups_data where customers_group_id = :customers_group_id');
+    $Qgdata->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+    $Qgdata->bindInt(':customers_group_id', $customers_group_id);
+    $Qgdata->setLogging($_SESSION['module'], $customers_group_id);
+    $Qgdata->execute();
+
+    if ( $lC_Database->isError() ) {
+      return false;
+    } 
+    
+    return true;
   }
  /*
   * Batch delete customer group records
