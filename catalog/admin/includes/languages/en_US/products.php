@@ -80,7 +80,7 @@ icon_preview_product = Click to Preview Product
 none = -- None --
 top_category = -- Top Category --
 all_products = -- All Products --
-more_product_information = For more information please visit this products <a href="http://%s" target="_blank">website</a>.
+more_product_information = For more information please visit this products <a href="%s" target="_blank">website</a>.
 product_date_added = This product was added to our catalog on %s.
 product_date_available = This product will be available for order on %s.
 status_enabled = Enabled
