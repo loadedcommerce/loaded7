@@ -48,14 +48,28 @@ $(document).ready(function() {
      $('.cart_drop').slideUp(300);     
   });  
 
-  //sub menu
-  $("ul.departments > li.menu_cont > a").toggle(function(){
-    $(this).addClass('active');
-    $(this).siblings('.side_sub_menu').slideDown(300);
-    }, function(){
-    $(this).removeClass('active');
-    $(this).siblings('.side_sub_menu').slideUp(300);
-  });
+  //sub menu 
+  $("ul.departments > li.menu_cont > a").toggle( 
+    function(){
+      if($(this).hasClass('active')) {
+         $(this).removeClass('active');          
+         $(this).siblings('.side_sub_menu').slideUp(300);      
+      } else {
+        $(this).addClass('active');
+        $(this).siblings('.side_sub_menu').slideDown(300);
+      }
+    },
+    function(){
+      if($(this).hasClass('active')) {
+         $(this).removeClass('active');          
+         $(this).siblings('.side_sub_menu').slideUp(300);      
+      } else {
+        $(this).addClass('active');
+        $(this).siblings('.side_sub_menu').slideDown(300);
+      }      
+  }
+  
+  );
   
   //style form select elements
   $("select").uniform();  
@@ -65,9 +79,11 @@ $(document).ready(function() {
   $(".toggle_box > li > a.toggle_title").toggle(function(){
                             
     $(this).addClass('active');
+    alert('three');
     $(this).siblings('.toggle_content').slideDown(300);
     }, function(){
     $(this).removeClass('active');
+    alert('four');
     $(this).siblings('.toggle_content').slideUp(300);  
   });  
   
