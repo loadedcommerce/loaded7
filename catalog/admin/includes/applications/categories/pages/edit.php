@@ -227,13 +227,16 @@
                   </div>
                   <div class="columns">
                     <div class="six-columns twelve-columns-mobile">
+                      <?php
+                        echo '[' . print_r(lC_Categories_Admin::getChildren($_GET['categories'])) . ']';
+                      ?>
                       <label class="label" for="parent_id"><b><?php echo $lC_Language->get('text_parent'); ?></b></label> 
                       <select class="select full-width" id="parent_id" name="parent_id">
                         <option value="top">Top</option>
                         <?php
                           foreach ($assignedCategoryTree->getArray() as $value) {
                             if ($lC_ObjectInfo->getInt('categories_id') != $value['id'] && lC_Categories_Admin::get_final_parent($value['id']) != $lC_ObjectInfo->getInt('categories_id')) {
-                              echo '<option final_parent="' . $pStr . '" value="' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
+                              echo '<option value="' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
                             }
                           }
                         ?>

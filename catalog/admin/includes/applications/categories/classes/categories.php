@@ -433,7 +433,13 @@ class lC_Categories_Admin {
 
     return $parentID;
   }
-  
+ /*
+  * Get final category parent ID
+  *
+  * @param integer $id The final parent category id
+  * @access public
+  * @return integer
+  */
   public static function get_final_parent($id = 0) {
     global $lC_Database;
     $loop = true;
@@ -442,7 +448,7 @@ class lC_Categories_Admin {
       $Qpath->bindTable(':table_categories', TABLE_CATEGORIES);
       $Qpath->bindInt(':categories_id', $id);
       $Qpath->execute();
-      if ($Qpath->value('parent_id') != 0) {
+      if ($Qpath->value('parent_id') > 0) {
         $cPath .= '_' . $Qpath->value('parent_id');
         $id = $Qpath->value('parent_id');
         continue;
@@ -453,6 +459,37 @@ class lC_Categories_Admin {
     }
     $cPath = array_reverse(explode("_", $cPath));
     return $cPath[0];
+  }
+  
+  public static function getChild($id){
+    global $lC_Database;
+    
+    $Qchild = $lC_Database->query('select categories_id from :table_categories where parent_id = :parent_id');
+    $Qchild->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qchild->bindInt(':parent_id', $id);
+    $Qchild->execute();
+    
+    $cat_id = array();
+    if ($Qchild->numberOfRows !== 0) {
+      $cat_id[] = $Qchild->value('categories_id');
+    }
+    
+    return $cat_id;
+  }
+
+  public static function getChildren($parent_id) {
+    $tree = array();
+    
+    if (!empty($parent_id)) {
+      $tree = lC_Categories_Admin::getChild($parent_id);
+      
+      foreach ($tree as $key => $val) {
+        $ids = lC_Categories_Admin::getChildren($val);
+        $tree = array_merge($tree, $ids);
+      }
+    }
+    
+    return $tree;
   }
                           
 }
