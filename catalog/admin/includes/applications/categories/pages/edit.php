@@ -227,17 +227,14 @@
                   </div>
                   <div class="columns">
                     <div class="six-columns twelve-columns-mobile">
-                      <?php
-                        echo '[' . print_r(lC_Categories_Admin::getChildren($_GET['categories'])) . ']';
-                      ?>
                       <label class="label" for="parent_id"><b><?php echo $lC_Language->get('text_parent'); ?></b></label> 
                       <select class="select full-width" id="parent_id" name="parent_id">
-                        <option value="top">Top</option>
+                        <option value="0"><?php echo $lC_Language->get('top_category'); ?></option>
                         <?php
                           foreach ($assignedCategoryTree->getArray() as $value) {
-                            if ($lC_ObjectInfo->getInt('categories_id') != $value['id'] && lC_Categories_Admin::get_final_parent($value['id']) != $lC_ObjectInfo->getInt('categories_id')) {
-                              echo '<option value="' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
-                            }
+                            //if ($lC_ObjectInfo->getInt('categories_id') != $value['id'] && lC_Categories_Admin::get_final_parent($value['id']) != $lC_ObjectInfo->getInt('categories_id')) {
+                            echo '<option value="' . $value['id'] . '"' . ( $lC_ObjectInfo->getInt('parent_id') == $value['id'] ? ' selected' : '') . ( (in_array($value['id'], lC_Categories_Admin::getChildren($_GET['categories']))) ? ' disabled' : '' ) . ( ($value['id'] == $lC_ObjectInfo->getInt('categories_id')) ? ' disabled' : '' ) . '>' . $value['title'] . '</option>' . "\n";
+                            //}
                           }
                         ?>
                       </select>
@@ -399,7 +396,7 @@
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
-              <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>">
+              <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . ($_GET['cid'] != '') ? 'categories=' . $_GET['cid'] : ''); ?>">
                 <span class="button-icon red-gradient glossy">
                   <span class="icon-cross"></span>
                 </span><?php echo $lC_Language->get('button_cancel'); ?>

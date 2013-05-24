@@ -483,7 +483,7 @@ class lC_Categories_Admin {
     if (!empty($parent_id)) {
       $tree = lC_Categories_Admin::getChild($parent_id);
       
-      foreach ($tree as $key => $val) {
+      foreach ($tree as $val) {
         $ids = lC_Categories_Admin::getChildren($val);
         $tree = array_merge($tree, $ids);
       }
