@@ -74,8 +74,53 @@
         <div class="clearfix tabs-content">
           <div id="section_general_content">
             <div class="columns with-padding">
-              <div class="nine-columns twelve-columns-mobile">
-                <div id="categoryLanguageTabs" class="standard-tabs at-bottom">
+              <div class="new-row-mobile four-columns twelve-columns-mobile">
+                <span class="strong margin-right"><?php echo $lC_Language->get('text_categories_image'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_category_image'), null); ?>   
+                <div style="padding-left:6px;" class="small-margin-top">
+                  <div id="imagePreviewContainer" class="cat-image">
+                    <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
+                    <div class="cat-image align-center"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . $lC_ObjectInfo->get('categories_image'); ?>" style="max-width:100%;" /></div>
+                    <?php } else { ?>
+                    <div class="cat-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
+                    <?php } ?>
+                  </div>
+                </div>   
+                <p class="thin" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
+                <div id="fileUploaderImageContainer" class="small-margin-top">
+                  <noscript>
+                    <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
+                  </noscript>
+                </div>
+                <script>
+                  $(document).ready(function() {
+                    createUploader2();
+                    $('.qq-upload-button').hide();
+                    $('.qq-upload-list').hide();
+                  });
+
+                  function createUploader2(){
+                    var uploader = new qq.FileUploader({
+                        element: document.getElementById('fileUploaderImageContainer'),
+                        action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('categories_id') . '&action=fileUpload&default=1'); ?>',
+                        onComplete: function(id, fileName, responseJSON){
+                          getImages();
+                        },
+                    });
+                  }
+                </script>
+                <!--
+                <div id="category_image_display">
+                  <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
+                  <div class="prod-image align-center"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . $lC_ObjectInfo->get('categories_image'); ?>" style="max-width:100%;" /></div>
+                  <?php } else { ?>
+                  <div class="prod-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
+                  <?php } ?>
+                </div>
+                <p class="align-center margin-top"><?php echo $lC_Language->get('text_thumbnail_image'); ?></p>
+                -->
+              </div>
+              <div class="new-row-mobile eight-columns twelve-columns-mobile">
+                <div id="categoryLanguageTabs" class="standard-tabs">
                   <ul class="tabs">
                   <?php
                     foreach ( $lC_Language->getAll() as $l ) {
@@ -133,51 +178,6 @@
                   ?>
                   </div>
                 </div>
-              </div>
-              <div class="three-columns twelve-columns-mobile">
-                <span class="strong margin-right"><?php echo $lC_Language->get('text_categories_image'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_category_image'), null); ?>   
-                <div style="padding-left:6px;" class="small-margin-top">
-                  <div id="imagePreviewContainer" class="cat-image">
-                    <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
-                    <div class="cat-image align-center"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . $lC_ObjectInfo->get('categories_image'); ?>" style="max-width:100%;" /></div>
-                    <?php } else { ?>
-                    <div class="cat-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
-                    <?php } ?>
-                  </div>
-                </div>   
-                <p class="thin" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
-                <div id="fileUploaderImageContainer" class="small-margin-top">
-                  <noscript>
-                    <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
-                  </noscript>
-                </div>
-                <script>
-                  $(document).ready(function() {
-                    createUploader2();
-                    $('.qq-upload-button').hide();
-                    $('.qq-upload-list').hide();
-                  });
-
-                  function createUploader2(){
-                    var uploader = new qq.FileUploader({
-                        element: document.getElementById('fileUploaderImageContainer'),
-                        action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('categories_id') . '&action=fileUpload&default=1'); ?>',
-                        onComplete: function(id, fileName, responseJSON){
-                          getImages();
-                        },
-                    });
-                  }
-                </script>
-                <!--
-                <div id="category_image_display">
-                  <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
-                  <div class="prod-image align-center"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . $lC_ObjectInfo->get('categories_image'); ?>" style="max-width:100%;" /></div>
-                  <?php } else { ?>
-                  <div class="prod-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
-                  <?php } ?>
-                </div>
-                <p class="align-center margin-top"><?php echo $lC_Language->get('text_thumbnail_image'); ?></p>
-                -->
               </div>
             </div>
             <div class="columns">
