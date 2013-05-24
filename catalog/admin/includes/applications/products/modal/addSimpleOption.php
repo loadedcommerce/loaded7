@@ -50,10 +50,10 @@ function addSimpleOption(id) {
           pitemsInput += '<tr class="trp-' + id + '">'+
                          '  <td class="element">' + entry.title + '</td>'+
                          '  <td>'+
-                         '    <div id="div_' + id + '_' + entry.id + '" class="icon-plus-round icon-green icon-size2" style="display:inline;">'+
+                         '    <div id="div_CGROUP_' + id + '_' + entry.id + '" class="icon-plus-round icon-green icon-size2" style="display:inline;">'+
                          '      <div class="inputs" style="display:inline; padding:8px 0;">'+
                          '        <span class="mid-margin-left no-margin-right">' + curSymbol + '</span>'+
-                         '        <input type="text" class="input-unstyled" value="' + entry.price_modifier.toFixed(2) + '" onblur="showSymbol(this, \'' + id + '_' + entry.id + '\');" id="simple_options_entry_price_modifier_' + id + '_' + entry.id + '" name="simple_options_entry_price_modifier[' + id + '][' + entry.id + ']">'+
+                         '        <input type="text" class="input-unstyled" value="' + entry.price_modifier.toFixed(2) + '" onblur="showSymbol(this, \'' + 'CGROUP_' + id + '_' + entry.id + '\');" id="simple_options_entry_price_modifier_CGROUP_' + id + '_' + entry.id + '" name="simple_options_entry_price_modifier[CGROUP][' + id + '][' + entry.id + ']">'+
                          '      </div>'+
                          '    </div>'+
                          '  </td>'+
@@ -67,7 +67,7 @@ function addSimpleOption(id) {
               '  <td onclick="$(\'.drop' + ref + '\').toggle();">' + groupTitle + '<div class="small-margin-top drop' + ref + '" style="display:none;"><span>' + items + '</span></div></td>'+
               '  <td onclick="$(\'.drop' + ref + '\').toggle();">' + groupModule + '</td>'+
               '  <td class="sort" onclick="$(\'.drop' + ref + '\').toggle();"></td>'+
-              '  <td align="center"><span class="icon-cross icon-size2 icon-red" style="cursor:pointer;" onclick="$(\'#tr-' + ref + '\').remove();$(\'#drop' + ref + '\').remove();"></span></td>'+
+              '  <td align="center"><span class="icon-cross icon-size2 icon-red" style="cursor:pointer;" onclick="$(\'#tr-' + ref + '\').remove();$(\'#drop' + ref + '\').remove();$(\'.trp-' + ref + '\').remove();"></span></td>'+
               '  <input type="hidden" name="simple_options_group_name[' + id + ']" value="' + groupTitle + '">'+
               '  <input type="hidden" name="simple_options_group_type[' + id + ']" value="' + groupModule + '">'+
               '  <input class="sort" type="hidden" name="simple_options_group_sort_order[' + id + ']" value="0">'+
@@ -86,9 +86,13 @@ function addSimpleOption(id) {
       $('.trp-' + id).remove();
     });   
     //          
-    $('#simpleOptionsTable > tbody').append(row);              
-    $('#simpleOptionsPricingTable > tbody').append(prow); 
-    //$('#simple-options-pricing-tab').refreshTabs();             
+    $('#simpleOptionsTable > tbody').append(row);
+    
+    var customerGroups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>; 
+    $.each(customerGroups.entries, function(key, val) { 
+      var regex = new RegExp('CGROUP', 'g');   
+      $('#tbody-' + val.customers_group_id).append(prow.replace(regex, val.customers_group_id)); 
+    });
   }   
   
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=getSimpleOptionData'); ?>'

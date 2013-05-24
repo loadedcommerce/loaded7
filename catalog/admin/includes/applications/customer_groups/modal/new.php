@@ -49,8 +49,8 @@ function newGroup() {
                    '      </div>'+
                    '      <div class="field-drop button-height black-inputs">'+
                    '        <label for="baseline" class="label" style="width:63%;"><?php echo $lC_Language->get('field_baseline_discount'); ?></label>'+
-                   '        <div class="inputs" style="width:26%">'+
-                   '          <span class="mid-margin-right float-right strong">%</span><?php echo lc_draw_input_field('baseline', null, 'class="input-unstyled small-margin-left strong" style="width:50%;"'); ?>'+
+                   '        <div class="inputs" style="width:28%">'+
+                   '          <span class="mid-margin-right float-right strong">%</span><?php echo lc_draw_input_field('baseline', '0.00', 'class="input-unstyled small-margin-left strong" style="width:50%;"'); ?>'+
                    '        </div>'+
                    '      </div>'+
                    '    </form>'+

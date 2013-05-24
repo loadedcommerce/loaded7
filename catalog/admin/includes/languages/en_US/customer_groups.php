@@ -12,6 +12,7 @@
 heading_title = Customer Groups
 
 table_heading_customer_groups = Customer Groups
+table_heading_baseline_discount = Baseline Discount
 table_heading_action = Action
 
 button_new_group = New Group

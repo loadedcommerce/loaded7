@@ -20,6 +20,7 @@
   </hgroup>
   <style>
   .dataColGroup { text-align: left; }
+  .dataColBase { text-align: right; }
   .dataColAction { text-align: right; }
   </style>
   <div class="with-padding-no-top">
@@ -28,6 +29,7 @@
       <thead>
         <tr>
           <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_customer_groups'); ?></th>
+          <th scope="col" class="align-right"><?php echo $lC_Language->get('table_heading_baseline_discount'); ?></th>
           <th scope="col" class="align-right">
            <span class="button-group compact" style="white-space:nowrap;">
              <a style="display:none;" href="javascript://" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access']['definitions'] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access']['definitions'] < 2) ? '#' : 'javascript://" onclick="newGroup(); return false;'); ?>" title="<?php echo $lC_Language->get('button_new_group'); ?>"></a>

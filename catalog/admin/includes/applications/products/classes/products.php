@@ -375,7 +375,7 @@ class lC_Products_Admin {
     while ($Qoptions->next()) {
       $data['simple_options'][] = $Qoptions->toArray();      
       
-      $Qvalues = $lC_Database->query('select sov.options_id, sov.values_id, sov.price_modifier, vv.title from :table_products_simple_options_values sov left join :table_products_variants_values vv on (sov.values_id = vv.id) where sov.options_id = :options_id and vv.languages_id = :languages_id');
+      $Qvalues = $lC_Database->query('select sov.options_id, sov.values_id, sov.price_modifier, sov.customers_group_id, vv.title from :table_products_simple_options_values sov left join :table_products_variants_values vv on (sov.values_id = vv.id) where sov.options_id = :options_id and vv.languages_id = :languages_id');
       $Qvalues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
       $Qvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
       $Qvalues->bindInt(':options_id', $Qoptions->valueInt('options_id'));
@@ -850,22 +850,24 @@ class lC_Products_Admin {
           }  
           
           // add the new option values
-          foreach ( $data['simple_options_entry'] as $options_id => $option_value ) {
-            
-            if ($options_id == $group_id) {
-              foreach ( $option_value as $values_id => $values_val ) {
-                $Qoptions = $lC_Database->query('insert into :table_products_simple_options_values (values_id, options_id, price_modifier) values (:values_id, :options_id, :price_modifier)');
-                $Qoptions->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-                $Qoptions->bindInt(':values_id', $values_id);
-                $Qoptions->bindInt(':options_id', $options_id);
-                $Qoptions->bindFloat(':price_modifier', (float)$data['simple_options_entry_price_modifier'][$options_id][$values_id]);
-                $Qoptions->setLogging($_SESSION['module'], $products_id);
-                $Qoptions->execute();
+          foreach ( $data['simple_options_entry_price_modifier'] as $customers_group_id => $options ) {
+            foreach ( $options as $options_id => $option_value ) {
+              if ($options_id == $group_id) {
+                foreach ( $option_value as $values_id => $price_modifier ) {
+                  $Qoptions = $lC_Database->query('insert into :table_products_simple_options_values (values_id, options_id, customers_group_id, price_modifier) values (:values_id, :options_id, :customers_group_id, :price_modifier)');
+                  $Qoptions->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+                  $Qoptions->bindInt(':values_id', $values_id);
+                  $Qoptions->bindInt(':options_id', $options_id);
+                  $Qoptions->bindInt(':customers_group_id', $customers_group_id);
+                  $Qoptions->bindFloat(':price_modifier', (float)$price_modifier);
+                  $Qoptions->setLogging($_SESSION['module'], $products_id);
+                  $Qoptions->execute();
 
-                if ( $lC_Database->isError() ) {
-                  $error = true;
-                  break 3;
-                }            
+                  if ( $lC_Database->isError() ) {
+                    $error = true;
+                    break 4;
+                  }            
+                }
               }
             }
           }
@@ -1446,10 +1448,30 @@ class lC_Products_Admin {
   * @return array
   */
   public static function getSimpleOptionData() {
-    return lC_Product_variants_Admin::getVariantGroups();
+    global $lC_Database;
+    
+    $vData = lC_Product_variants_Admin::getVariantGroups();
+    
+    $optionsArr = array();
+    foreach($vData as $key => $value) {
+      $Qoption = $lC_Database->query('select customers_group_id from :table_products_simple_options where options_id = :options_id limit 1');
+      $Qoption->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+      $Qoption->bindValue(':options_id', $value['id']);
+      $Qoption->execute();      
+      
+      $optionsArr[$key] = array('id' => $value['id'],
+                                'languages_id' => $value['languages_id'],
+                                'title' => $value['title'],
+                                'sort_order' => $value['title'],
+                                'module' => $value['module'],
+                                'customers_group_id' => $Qoption->valueInt('customers_group_id'));
+    }
+    $Qoption->freeResult();
+    
+    return $optionsArr;    
   } 
  /*
-  * Return the product variant entry data for options modal
+  * Return the product variant entry data for options wizard modal 
   *
   * @access public
   * @return array
@@ -1461,7 +1483,7 @@ class lC_Products_Admin {
     
     $optionsArr = array();
     foreach($veData as $key => $value) {
-      $Qoption = $lC_Database->query('select price_modifier from :table_products_simple_options_values where options_id = :options_id and languages_id = :languages_id');
+      $Qoption = $lC_Database->query('select price_modifier from :table_products_simple_options_values where options_id = :options_id limit 1');
       $Qoption->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
       $Qoption->bindValue(':options_id', $value['id']);
       $Qoption->bindValue(':languages_id', $value['languages_id']);
@@ -1490,33 +1512,6 @@ class lC_Products_Admin {
     $content .= self::_getSimpleOptionsTbody($options);
     
     return $content;
-  } 
- /*
-  *  Return the product simple options accordian price listing content
-  *
-  * @access public
-  * @return array
-  */
-  public static function getSimpleOptionsPricingContent($options = array()) {
-    global $lC_Language;
-    
-    $content = '';
-    $groups = lC_Customer_groups_Admin::getAll();
-    foreach($groups['entries'] as $key => $value) {
-      if ($value['customers_group_id'] == '1') {  // hardcoded to Retail for core
-        $content .= '<dt><span class="strong">' . $value['customers_group_name'] . '</span></dt>' .
-                    '<dd>' .
-                    '  <div class="with-padding">' .
-                    '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
-                    '    <table style="" id="simpleOptionsPricingTable" class="simple-table">' .
-                    '      <tbody>' . self::_getSimpleOptionsPricingTbody($options) . '</tbody>' .
-                    '    </table>' .
-                    '  </div>' .
-                    '</dd>';  
-      }
-    }
-    
-    return $content;
   }     
  /*
   * Return the product simple options tbody content
@@ -1529,12 +1524,12 @@ class lC_Products_Admin {
     $tbody = '';    
     if (isset($options) && !empty($options)) {
       foreach ($options as $key => $so) {
-        if (isset($so['title']) && $so['title'] != NULL) {
+        if ( (isset($so['title']) && $so['title'] != NULL)  ){
           $items = '';
           $itemsInput = '';    
 
           foreach ($options['values'] as $k => $v) {
-            if ($v['options_id'] == $so['options_id']) {
+            if (($v['options_id'] == $so['options_id']) && $v['customers_group_id'] == '1') {
               $items .= '<div class="small"><span class="icon-right icon-blue with-small-padding"></span>' . $v['title'] . '</div>';
               $itemsInput .= '<input type="hidden" name="simple_options_entry[' . $v['options_id'] . '][' . $v['values_id'] . ']" value="' . $v['title'] . '">';
             }
@@ -1557,7 +1552,31 @@ class lC_Products_Admin {
     
     return $tbody;    
   }
-  
+ /*
+  *  Return the product simple options accordian price listing content
+  *
+  * @access public
+  * @return array
+  */
+  public static function getSimpleOptionsPricingContent($options = array()) {
+    global $lC_Language;
+    
+    $content = '';
+    $groups = lC_Customer_groups_Admin::getAll();
+    foreach($groups['entries'] as $key => $value) {
+      $content .= '<dt><span class="strong">' . $value['customers_group_name'] . '</span></dt>' .
+                  '<dd>' .
+                  '  <div class="with-padding">' .
+                  '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
+                  '    <table style="" id="simpleOptionsPricingTable" class="simple-table">' .
+                  '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . self::_getSimpleOptionsPricingTbody($options, $value['customers_group_id']) . '</tbody>' .
+                  '    </table>' .
+                  '  </div>' .
+                  '</dd>';  
+    }
+    
+    return $content;
+  }  
  /*
   * Return the product simple options pricing content
   *
@@ -1565,24 +1584,24 @@ class lC_Products_Admin {
   * @access public
   * @return string
   */  
-  private static function _getSimpleOptionsPricingTbody($options = array()) {
+  private static function _getSimpleOptionsPricingTbody($options, $customers_group_id) {
     global $lC_Currencies;
     
     $tbody = '';    
     if (isset($options) && !empty($options)) {
       foreach ($options as $key => $so) {
-        if (isset($so['title']) && $so['title'] != NULL) {
+        if ((isset($so['title']) && $so['title'] != NULL)) {
           $items = '';
           foreach ($options['values'] as $k => $v) {
-            if ($v['options_id'] == $so['options_id']) {
+            if ($v['options_id'] == $so['options_id'] && $v['customers_group_id'] == $customers_group_id) {
               $mod = (isset($v['price_modifier']) && !empty($v['price_modifier'])) ? number_format($v['price_modifier'], DECIMAL_PLACES) : '0.00';
               $items .= '<tr class="trp-' . $v['options_id'] . '">' .
                         '  <td class="element">' . $v['title'] . '</td>' . 
                         '  <td>' .
-                        '    <div id="div_' . $v['options_id'] . '_' . $v['values_id'] . '" class="icon-plus-round icon-green icon-size2" style="display:inline;">' .
+                        '    <div id="div_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" class="icon-plus-round icon-green icon-size2" style="display:inline;">' .
                         '      <div class="inputs" style="display:inline; padding:8px 0;">' .
                         '        <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                        '        <input type="text" class="input-unstyled" value="' . $mod . '" onblur="showSymbol(this, \'' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['options_id'] . '][' . $v['values_id'] . ']">' .
+                        '        <input type="text" class="input-unstyled" value="' . $mod . '" onblur="showSymbol(this, \'' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['customers_group_id'] . '][' . $v['options_id'] . '][' . $v['values_id'] . ']">' .
                         '      </div>' .
                         '    </div>' .
                         '  </td>' .
@@ -1598,6 +1617,33 @@ class lC_Products_Admin {
     
     return $tbody;    
   }  
-  
+ /*
+  *  Return the product simple options accordian price listing content
+  *
+  * @access public
+  * @return array
+  */
+  public static function getGroupPricingContent($base_price) {
+    global $lC_Language, $lC_Currencies;
+    
+    $content = '';
+    $groups = lC_Customer_groups_Admin::getAll();
+    foreach($groups['entries'] as $key => $value) {
+
+      $discount = round((float)$base_price * ((float)$value['baseline_discount'] * .01), DECIMAL_PLACES); 
+      $discounted_price = $base_price - $discount;
+     
+      $content .= '<div>' .
+                  '  <label for="" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
+                  '  <input type="checkbox" name="enable_group_pricing[' . $value['customers_group_id'] . ']" class="switch margin-right" checked />' .
+                  '  <span class="nowrap">' .
+                  '    <input type="text" name="group_price[' . $value['customers_group_id'] . ']"" id="group_price_' . $value . '" value="' . $discounted_price . '" class="input small-margin-right disabled" style="width:60px;text-align:right;"/>' .
+                  '  </span>' . 
+                  '  <small class="input-info">Price<span class="tag glossy mid-margin-left">' . number_format($value['baseline_discount'], DECIMAL_PLACES) . '%</span><!-- if specials enabled /Special--></small>' . 
+                  '</div>';
+    }
+    
+    return $content;
+  }   
 }
 ?>

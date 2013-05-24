@@ -20,6 +20,7 @@ global $lC_Language, $pInfo;
       <label for="products_base_price" class="label"><b><?php echo $lC_Language->get('text_base_price'); ?></b></label>
       <input type="text" name="products_base_price" id="products_base_price" value="<?php echo number_format(lc_round($pInfo->get('products_price'), DECIMAL_PLACES), DECIMAL_PLACES);; ?>" class="input strong" onblur="$('#products_price0').val(this.value);" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_base_price'), null, 'info-spot on-left grey margin-left'); ?>
     </div>
+
     <!-- lc_group_pricing begin -->
     <div class="field-block field-block-product button-height">
       <label for="" class="label"><b><?php echo $lC_Language->get('text_group_pricing'); ?></b></label>
@@ -27,35 +28,10 @@ global $lC_Language, $pInfo;
       <?php echo lc_go_pro(); ?>
     </div>
     <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-      <div>
-        <label for="" class="label margin-right"><b>Retail</b></label>
-        <input type="checkbox" class="switch disabled margin-right" checked />
-        <span class="nowrap">
-          <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-          <!--PRO FEATURE if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
-        </span>
-        <small class="input-info">Price<!-- if specials enabled /Special--></small>
-      </div>
-      <div>
-        <label for="" class="label margin-right"><b>Wholesale</b></label>
-        <input type="checkbox" class="switch disabled margin-right" checked />
-        <span class="nowrap">
-          <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-          <!--PRO FEATURE if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
-        </span>
-        <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-      </div>
-      <div>
-        <label for="" class="label margin-right"><b>Employee</b></label>
-        <input type="checkbox" class="switch disabled margin-right" checked />
-        <span class="nowrap">
-          <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-          <!--PRO FEATURE if specials enabled <input type="text" name="" id="" value="" class="input small-margin-right" disabled style="width:60px;text-align:right;color:#ff0000;" />-->
-        </span>
-        <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-      </div> 
+      <?php echo lC_Products_Admin::getGroupPricingContent($pInfo->get('products_price')); ?>
     </div>
     <!-- lc_group_pricing end -->
+
     <!-- lc_qty_price_breaks begin -->
     <div class="field-block field-block-product button-height">
       <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_break_pricing'); ?></b></label>
@@ -271,9 +247,12 @@ global $lC_Language, $pInfo;
       </div>
     </div>                
   </fieldset>
+  
   <dl id="simple-options-pricing-tab" class="accordion">
     <?php echo lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')); ?>
-  </dl>  
+  </dl>
+  
+    
 </div>  
 <script>
 $(document).ready(function() {
