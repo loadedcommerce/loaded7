@@ -108,16 +108,6 @@
                     });
                   }
                 </script>
-                <!--
-                <div id="category_image_display">
-                  <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
-                  <div class="prod-image align-center"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . $lC_ObjectInfo->get('categories_image'); ?>" style="max-width:100%;" /></div>
-                  <?php } else { ?>
-                  <div class="prod-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
-                  <?php } ?>
-                </div>
-                <p class="align-center margin-top"><?php echo $lC_Language->get('text_thumbnail_image'); ?></p>
-                -->
               </div>
               <div class="new-row-mobile eight-columns twelve-columns-mobile">
                 <div id="categoryLanguageTabs" class="standard-tabs">
