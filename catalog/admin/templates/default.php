@@ -78,8 +78,8 @@
 
   <!-- Modernizr is always at top and first -->
   <script src="../ext/jquery/modernizr.custom.js"></script>
-  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-  <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="../ext/jquery/jquery-1.9.1.min.js"></script>
+  <script src="../ext/jquery/jquery.migrate-1.2.1.min.js"></script>
 
   <!-- For Modern Browsers -->
   <link rel="shortcut icon" href="templates/default/img/favicons/favicon.png?v=2">

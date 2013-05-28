@@ -48,8 +48,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     ?>
     <!-- Modernizr is always at top -->
     <script src="templates/default/javascript/modernizr-2.6.2-respond-1.1.0.min.js"></script> 
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="ext/jquery/jquery-1.9.1.min.js"></script>
+    <script src="ext/jquery/jquery.migrate-1.2.1.min.js"></script>
   </head>
 
   <body>
