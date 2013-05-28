@@ -32,21 +32,7 @@
 			// Box-sizing type
 		var boxSized = ( textarea.css('box-sizing') === 'border-box' || textarea.css('-webkit-box-sizing') === 'border-box' || textarea.css('-moz-box-sizing') === 'border-box' ),
 			boxPadding = boxSized ? 'padding-bottom:'+(textarea.parseCSSValue('padding-top')+textarea.parseCSSValue('padding-bottom'))+'px; ' : '',
-
-			// Some browsers break lines a little bit before the padding box
-			breakPadding = 0;
-			if ( $.browser.mozilla )
-			{
-				breakPadding = 8;
-			}
-			else if ( $.browser.opera )
-			{
-				breakPadding = 4;
-			}
-			else if ( $.browser.msie )
-			{
-				breakPadding = 2;
-			}
+			breakPadding = 8;
 
 		return $('<pre style="position: absolute; '+
 						'top:0; '+
@@ -158,6 +144,12 @@
 		// Start listening
 		textarea.on('input keyup', updatePre)
 				.on('blur', onBlur);
+	});
+
+	// For JS calls
+	doc.on('jsautoexpand', 'textarea', function()
+	{
+		resizeTextarea.call(this);
 	});
 
 })(jQuery, window, document);

@@ -40,7 +40,7 @@ function editEntry(id) {
                  '      <p><?php echo $lC_Language->get('introduction_new_tax_rate'); ?></p>'+
                  '      <p class="button-height inline-label">'+
                  '        <label for="tax_zone_id" class="label"><?php echo $lC_Language->get('field_tax_rate_zone_group'); ?></label>'+
-                 '        <?php echo lc_draw_pull_down_menu('tax_zone_id', null, null, 'class="input with-small-padding" id="editTaxZoneId"'); ?>'+
+                 '        <?php echo lc_draw_pull_down_menu('tax_zone_id', null, null, 'class="select" style = "width:73%" id="editTaxZoneId"'); ?>'+
                  '      </p>'+
                  '      <p class="button-height inline-label">'+
                  '        <label for="tax_description" class="label"><?php echo $lC_Language->get('field_tax_rate_description'); ?></label>'+
@@ -110,6 +110,9 @@ function editEntry(id) {
       $("#editTaxZoneId").empty();
       $.each(data.zonesArray, function(val, text) {
         var selected = (data.editFormData.tax_zone_id == val) ? 'selected="selected"' : '';
+        if(data.editFormData.tax_zone_id == val) {
+          $("#editTaxZoneId").closest("span + *").prevAll("span.select-value:first").text(text);         
+        }
         $("#editTaxZoneId").append(
           $('<option ' + selected + '></option>').val(val).html(text)
         );

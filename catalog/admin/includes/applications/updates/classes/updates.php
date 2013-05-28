@@ -535,6 +535,14 @@ class lC_Updates_Admin {
         }
       }
       
+      // verify 644 permissions on PHP files
+      try {
+        exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
+        self::log('##### UPDATED Permissions on PHP files to 644');
+      } catch ( Exception $e ) {  
+        self::log('*** Could Not Set Permissions on PHP files to 644');
+      }       
+      
       self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
     }
 

@@ -14,7 +14,7 @@
 ?>
 <!-- Title bar -->
 <header role="banner" id="title-bar">
-  <a id="logoRef" style="" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT); ?>"><img id="logoImg" style="" src="./templates/default/img/logo.png" border="0"></a>
+  <a id="logoRef" style="" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT); ?>"><img id="logoImg" src="./templates/default/img/logo.png" border="0"></a>
 </header>
 <?php
 if ( $lC_MessageStack->size('header') > 0 ) {

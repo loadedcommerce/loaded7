@@ -10,7 +10,7 @@
 	width: 230px;
 	text-align: center;
 	border-spacing: 0;
-	border-collapse: collapse;
+	border-collapse: separate;
 	background: #f0f4f7;
 	-webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
 	-moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);

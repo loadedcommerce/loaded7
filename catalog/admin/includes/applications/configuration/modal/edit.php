@@ -98,6 +98,7 @@ function editEntry(id) {
       });
       $("#editEntryConfigTitle").html('<strong>' + data.cData.configuration_title + '</strong>');
       $("#editEntryValueField").html(data.valueField).change();
+      $("#editEntryValueField").find("input[type=text]").addClass("input");
       $("#editEntryConfigDescription").html('<p class="message icon-info anthracite-gradient glossy margin-top full-width dark-stripes"> ' + data.cData.configuration_description + '</p>');
     }
   );

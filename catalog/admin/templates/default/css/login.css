@@ -102,7 +102,7 @@ form {
 		#login-title h1.login-title-image {
 			background: url(../img/login-title.png) no-repeat center center;
 			overflow: hidden;
-			height: 65px;
+			height: 55px;
 			text-align: left;
 			text-indent: -3000px;
 		}
