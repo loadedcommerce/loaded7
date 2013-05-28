@@ -118,11 +118,11 @@
                     }
                   ?>
                   </ul>
-                  <div class="clearfix tabs-content with-padding">
+                  <div class="clearfix tabs-content">
                   <?php
                     foreach ( $lC_Language->getAll() as $l ) {
                     ?>
-                    <div id="languageTabs_<?php echo $l['code']; ?>">
+                    <div id="languageTabs_<?php echo $l['code']; ?>" class="with-padding">
                       <p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_name[' . $l['id'] . ']'; ?>">
                           <?php echo $lC_Language->get('field_name'); ?>

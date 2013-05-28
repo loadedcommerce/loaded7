@@ -77,7 +77,7 @@ class lC_Categories_Admin {
       $cid = explode('_', $value['id']);
       $count = count($cid);
       $cid = end($cid);
-      if ($cid != $id && lC_Categories_Admin::get_final_parent($cid) != $id) {
+      if ($cid != $id && !in_array($cid, lC_Categories_Admin::getChildren($id))) {
         $categories_array[$cid] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $count-1) . ' ' . $value['title'];
       }
     }

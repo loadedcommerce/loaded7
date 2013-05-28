@@ -95,11 +95,11 @@ function moveCategory(id, name) {
           },
           buttonsLowPadding: true
       });
-      $("#new_category_id").empty();  // clear the old values
+      $("#new_category_id").empty(); // clear the old values
       $.each(data.categoriesArray, function(val, text) {
         var selected = (data.parentCategory == val) ? 'selected="selected"' : '';
         $("#new_category_id").append(
-           $("<option " + selected + "></option>").val(val).html(text)
+          $("<option " + selected + "></option>").val(val).html(text)
         );
       });
     }
