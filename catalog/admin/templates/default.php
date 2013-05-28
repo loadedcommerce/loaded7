@@ -134,7 +134,7 @@
   if ($lC_Template->hasPageWrapper()) {
     ?>
     <!-- Button to open/hide menu -->
-    <a href="#" id="open-menu"><span>Menu</span></a>
+    <a href="#" id="open-menu" class="open-menu-margin"><span>Menu</span></a>
 
     <!-- Button to open/hide shortcuts -->
     <a href="#" id="open-shortcuts"><span class="icon-thumbs"></span></a>
