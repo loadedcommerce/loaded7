@@ -33,7 +33,7 @@ $(document).ready(function() {
   if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
     $('#main-title > h1').attr('style', 'font-size:1.8em;');
     $('#main-title').attr('style', 'padding: 0 0 0 20px;');
-    $('#dataTable_info').attr('style', 'bottom: 42px; color:#4c4c4c;');
+    $('#dataTable_info').attr('style', 'bottom: 42px !important; color:#4c4c4c !important;');
     $('#dataTable_length').hide();
     $('#floating-button-container').hide();
     $('#actionText').hide();
