@@ -138,6 +138,45 @@
 			// Gather options
 		var settings = $.extend({}, wrapper.data('panel-options'), panel.data('panel-options')),
 
+			// Ajax options
+			ajaxOptions = $.extend({}, settings.ajax, options, {
+
+				url: url,
+				success: function(data, textStatus, jqXHR)
+				{
+					var back;
+
+					// Insert content if text/html
+					if ( typeof data === 'string' )
+					{
+						// Back button
+						back = target.closest('.panel-content').data('panel-back-button');
+						if (back)
+						{
+							target.children().not(back).remove();
+							target.append(data);
+						}
+						else
+						{
+							target.html(data);
+						}
+					}
+
+					// Callback in settings
+					if (settings.ajax && settings.ajax.success)
+					{
+						settings.ajax.success.call(target[0], data, textStatus, jqXHR);
+					}
+
+					// Callback in options
+					if (options && options.success)
+					{
+						options.success.call(target[0], data, textStatus, jqXHR);
+					}
+				}
+
+			}),
+
 			// Actual target
 			loadTarget = panel.children('.panel-load-target:first'),
 			target = loadTarget.length ? loadTarget : panel;
@@ -145,7 +184,7 @@
 		// Pre-callback
 		if (settings.onStartLoad)
 		{
-			if (settings.onStartLoad.call(target[0], settings) === false)
+			if (settings.onStartLoad.call(target[0], settings, ajaxOptions) === false)
 			{
 				return;
 			}
@@ -155,35 +194,12 @@
 		wrapper[isNav ? 'removeClass' : 'addClass']('show-panel-content');
 
 		// Load content
-		$.ajax(url, $.extend({}, settings.ajax, options, {
-
-			success: function(data, textStatus, jqXHR)
-			{
-				// Insert content if text/html
-				if ( typeof data === 'string' )
-				{
-					target.html(data);
-				}
-
-				// Callback in settings
-				if (settings.ajax && settings.ajax.success)
-				{
-					settings.ajax.success.call(target[0], data, textStatus, jqXHR);
-				}
-
-				// Callback in options
-				if (options && options.success)
-				{
-					options.success.call(target[0], data, textStatus, jqXHR);
-				}
-			}
-
-		}));
+		$.ajax(ajaxOptions);
 
 		// Store url and options
 		panel.data('content-panel-url', url);
 		panel.data('content-panel-options', options);
-	};
+	}
 
 	/**
 	 * Enable content panel JS features
@@ -196,10 +212,16 @@
 				panelContent = contentPanel.children('.panel-content'),
 				loadTarget, back, setMode;
 
+			// If already initialized
+			if (contentPanel.hasClass('enabled-panels'))
+			{
+				return;
+			}
+
 			// If valid
 			if (contentPanel.length > 0 && panelContent.length > 0)
 			{
-				// Enabled sliding panels on mobile
+				// Enable sliding panels on mobile
 				contentPanel.addClass('enabled-panels');
 
 				// Actual content block
@@ -215,6 +237,7 @@
 				{
 					back.prependTo(panelContent);
 				}
+				panelContent.data('panel-back-button', back);
 
 				// Behavior
 				back.click(function(event)

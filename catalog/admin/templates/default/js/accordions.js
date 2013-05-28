@@ -29,7 +29,7 @@
 			dl = dt.parent();
 
 		// Equalize height when needed
-		if (dl.hasClass('.same-height'))
+		if (dl.hasClass('same-height'))
 		{
 			dl.refreshAccordion();
 		}

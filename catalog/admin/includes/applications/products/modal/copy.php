@@ -111,7 +111,7 @@ function copyProduct(id, name) {
       i=0;
       $.each(data.categoriesArray, function(val, text) {
         if(i == 0) {
-          $("#new_category_id").closest("span + *").prevAll("span.select-value:first").text(text);
+          $("#new_category_id").next("span.select-value:first").text(text);
           i++;
         }
         $("#new_category_id").append(
