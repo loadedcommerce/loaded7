@@ -1448,27 +1448,7 @@ class lC_Products_Admin {
   * @return array
   */
   public static function getSimpleOptionData() {
-    global $lC_Database;
-    
-    $vData = lC_Product_variants_Admin::getVariantGroups();
-    
-    $optionsArr = array();
-    foreach($vData as $key => $value) {
-      $Qoption = $lC_Database->query('select customers_group_id from :table_products_simple_options where options_id = :options_id limit 1');
-      $Qoption->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
-      $Qoption->bindValue(':options_id', $value['id']);
-      $Qoption->execute();      
-      
-      $optionsArr[$key] = array('id' => $value['id'],
-                                'languages_id' => $value['languages_id'],
-                                'title' => $value['title'],
-                                'sort_order' => $value['title'],
-                                'module' => $value['module'],
-                                'customers_group_id' => $Qoption->valueInt('customers_group_id'));
-    }
-    $Qoption->freeResult();
-    
-    return $optionsArr;    
+    return lC_Product_variants_Admin::getVariantGroups();
   } 
  /*
   * Return the product variant entry data for options wizard modal 
