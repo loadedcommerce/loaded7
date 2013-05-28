@@ -78,7 +78,7 @@
 
   <!-- Modernizr is always at top and first -->
   <script src="../ext/jquery/modernizr.custom.js"></script>
-  <script src="../ext/jquery/jquery-1.8.3.min.js"></script>
+  <script src="../ext/jquery/jquery-1.9.1.min.js"></script>
 
   <!-- For Modern Browsers -->
   <link rel="shortcut icon" href="templates/default/img/favicons/favicon.png?v=2">
