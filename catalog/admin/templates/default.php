@@ -39,7 +39,7 @@
   <link rel="stylesheet" href="templates/default/css/reset.css?v=1">
   <link rel="stylesheet" href="templates/default/css/style.css?v=1">
   <link rel="stylesheet" href="templates/default/css/colors.css?v=1">
-  <link rel="stylesheet" href="templates/default/css/error.css?v=1">
+  <!-- link rel="stylesheet" href="templates/default/css/error.css?v=1" -->
   <link rel="stylesheet" media="print" href="templates/default/css/print.css?v=1">
   <!-- For progressively larger displays -->
   <link rel="stylesheet" media="only all and (min-width: 480px)" href="templates/default/css/480.css?v=1">
