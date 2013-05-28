@@ -55,6 +55,7 @@ $(document).ready(function() {
     function(){
       $(this).addClass('active');
       $(this).siblings('.side_sub_menu').slideDown(300);
+      window.location.href = $(this).attr('href');
     }, function(){
       $(this).removeClass('active');
       $(this).siblings('.side_sub_menu').slideUp(300);
