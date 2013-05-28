@@ -40,7 +40,7 @@ function newSpecial() {
                    '      <p><?php echo $lC_Language->get('introduction_new_special'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="products_id" class="label" style="width:50%;"><?php echo $lC_Language->get('field_product'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('products_id', null, null, 'class="input with-small-padding" onchange="getTaxClass();" style=width:73%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('products_id', null, null, 'class="select" onchange="getTaxClass();" style=width:73%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="specials_price" class="label" style="width:50%;"><?php echo $lC_Language->get('field_price_net_percentage'); ?></label>'+
@@ -125,7 +125,12 @@ function newSpecial() {
           buttonsLowPadding: true
       });
       $("#products_id").empty();
+      i = 0;
       $.each(data.specialsArray, function(key, val) {
+        if(i == 0) {
+          $("#products_id").closest("span + *").prevAll("span.select-value:first").text(val.text);
+          i++;
+        }
         $("#products_id").append(
           $("<option></option>").val(val.id).html(val.text)
         );

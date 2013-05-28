@@ -86,8 +86,16 @@
         $dateArr = explode('-', $date);
         $dateString = $dateArr[0] . '-' . $dateArr[1] . '-' . $dateArr[2];
       } else {
-        $dateArr = explode($delimiter, $date);
-        $dateString = $dateArr[2] . '-' . $dateArr[0] . '-' . $dateArr[1];
+        $dateArr = explode($delimiter, $date);        
+        $dateString = '';
+        if(!empty($dateArr[2])) {
+          $dateString .= $dateArr[2] . '-' ;
+        } 
+        $dateString .= ($dateArr[0] <  10 ? '0' : '').$dateArr[0];
+        if(!empty($dateArr[1])) {
+          $dateString .=  '-' . ($dateArr[1] <  10 ? '0' : '').$dateArr[1];
+        }
+        //$dateString = $dateArr[2] . '-' . $dateArr[0] . '-' . $dateArr[1];
       }
 
       return $dateString;

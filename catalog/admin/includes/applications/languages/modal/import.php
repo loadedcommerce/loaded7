@@ -39,7 +39,7 @@ function importLanguage() {
                    '      <p><?php echo $lC_Language->get('introduction_import_language'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="language_import" class="label" style="width:0px !important"><?php echo $lC_Language->get('field_language_selection'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('language_import', null, null, 'class="input with-small-padding"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('language_import', null, null, 'class="select" style = "width:30%"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="import_type" class="absolute-left"><strong><?php echo $lC_Language->get('field_import_type'); ?></strong></label>'+
@@ -84,7 +84,12 @@ function importLanguage() {
           buttonsLowPadding: true
       });
       $("#language_import").empty();
+      i=0;
       $.each(data.languagesArray, function(val, text) {
+        if(i == 0) {
+          $("#language_import").closest("span + *").prevAll("span.select-value:first").text(text);
+          i++;
+        }
         $("#language_import").append(
           $("<option></option>").val(val).html(text)
         );

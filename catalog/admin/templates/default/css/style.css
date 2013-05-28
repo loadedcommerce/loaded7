@@ -1,5 +1,5 @@
 /**
- * Base stylesheet
+ * Base stylesheet v1.5
  *
  * Content:
  * 1. Global
@@ -4515,41 +4515,4 @@ a:link {
 /* Hide but maintain layout */
 .invisible {
 	visibility: hidden;
-}
-
-/* Floating buttons menu */
-#floating-button-container-title {
-  position: absolute;
-  left: 370px;
-}
-
-#floating-button-container .bg {
-  background-color:#4c4c4c;
-  opacity: 0.75;
-  width: 100%;
-  border: 1px solid black;
-}
-
-#floating-menu-div {
-  position:absolute;
-  width:50%;
-  background-color:transparent;
-  top:80px;
-  right:0px;
-  padding: 5px 20px;
-}
-
-#floating-menu-div-listing {
-  position:absolute;
-  width:50%;
-  background-color:transparent;
-  top:43px;
-  right:0px;
-  padding: 5px 20px;
-}
-
-#mainMessageContainer { margin:50px 273px 0 84px }
-
-@media screen and (max-width: 991px) {
-  .hide-below-992 { display: none !important; } 
 }

@@ -50,7 +50,7 @@ function batchMove() {
                  '      <p><?php echo $lC_Language->get('introduction_batch_move_categories'); ?></p>'+
                  '      <p class="button-height inline-label">'+
                  '        <label for="new_category_id" class="label" style="width:125px;"><?php echo $lC_Language->get('field_parent_category'); ?></label>'+
-                 '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="input with-small-padding" id="moveNewCategoryId"'); ?>'+
+                 '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="select" style="width:93%;" id="moveNewCategoryId"'); ?>'+
                  '      </p>'+
                  '    </form>'+
                  '  </div>'+
@@ -96,6 +96,9 @@ function batchMove() {
       $("#moveNewCategoryId").empty();  // clear the old values
       $.each(data.categoriesArray, function(val, text) {
         var selected = (data.parentCategory == val) ? 'selected="selected"' : '';
+        if(data.parentCategory == val) {
+          $("#moveNewCategoryId").closest("span + *").prevAll("span.select-value:first").text(text);
+        }
         $("#moveNewCategoryId").append(
            $("<option " + selected + "></option>").val(val).html(text)
         );

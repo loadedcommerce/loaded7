@@ -30,29 +30,30 @@
 
 /* These styles define the columns size. They must be redefined for each responsive size */
 .column,
-.one-column,
+.one-column				{ width: 6.0833%; }
+.two-columns			{ width: 14.4167%; }
+.three-columns			{ width: 22.75%; }
+.four-columns			{ width: 31.0833%; }
+.five-columns			{ width: 39.4167%; }
+.six-columns			{ width: 47.75%; }
+.seven-columns			{ width: 56.0833%; }
+.eight-columns			{ width: 64.4167%; }
+.nine-columns			{ width: 72.72%; }
+.ten-columns			{ width: 81.0833%; }
+.eleven-columns			{ width: 89.4167%; }
+.twelve-columns			{ width: 97.75%; }
+
 .one-column-tablet		{ width: 6.0833%; }
-.two-columns,
 .two-columns-tablet		{ width: 14.4167%; }
-.three-columns,
 .three-columns-tablet	{ width: 22.75%; }
-.four-columns,
 .four-columns-tablet	{ width: 31.0833%; }
-.five-columns,
 .five-columns-tablet	{ width: 39.4167%; }
-.six-columns,
 .six-columns-tablet		{ width: 47.75%; }
-.seven-columns,
 .seven-columns-tablet	{ width: 56.0833%; }
-.eight-columns,
 .eight-columns-tablet	{ width: 64.4167%; }
-.nine-columns,
 .nine-columns-tablet	{ width: 72.72%; }
-.ten-columns,
 .ten-columns-tablet		{ width: 81.0833%; }
-.eleven-columns,
 .eleven-columns-tablet	{ width: 89.4167%; }
-.twelve-columns,
 .twelve-columns-tablet	{ width: 97.75%; }
 
 /* Line breaks to ensure correct float */
@@ -223,6 +224,9 @@ h2 {
 		overflow: hidden;
 		position: relative;
 		}
+		#shortcuts.with-legend > li {
+			padding-bottom: 20px;
+		}
 		#shortcuts > li:first-child {
 			margin-top: -5px;
 		}
@@ -231,7 +235,6 @@ h2 {
 		}
 		#shortcuts > li > a,
 		#shortcuts > li > span {
-			overflow: hidden;
 			text-indent: -3000px;
 			width: auto;
 			height: 70px;
@@ -255,22 +258,22 @@ h2 {
 				}
 
 			.shortcut-dashboard,	span.shortcut-dashboard	{ background-position: 0 0; }
-			.shortcut-orders,		span.shortcut-orders	{ background-position: 0 -70px; }
-			.shortcut-customers,		span.shortcut-customers	{ background-position: 0 -140px; }
-			.shortcut-content,		span.shortcut-content	{ background-position: 0 -210px; }
-			.shortcut-products,		span.shortcut-products	{ background-position: 0 -280px; }
-			.shortcut-marketing,		span.shortcut-marketing		{ background-position: 0 -350px; }
-			.shortcut-store,		span.shortcut-store	{ background-position: 0 -420px; }
-			.shortcut-reports,		span.shortcut-reports		{ background-position: 0 -490px; }
+			.shortcut-messages,		span.shortcut-messages	{ background-position: 0 -70px; }
+			.shortcut-agenda,		span.shortcut-agenda	{ background-position: 0 -140px; }
+			.shortcut-contacts,		span.shortcut-contacts	{ background-position: 0 -210px; }
+			.shortcut-medias,		span.shortcut-medias	{ background-position: 0 -280px; }
+			.shortcut-stats,		span.shortcut-stats		{ background-position: 0 -350px; }
+			.shortcut-settings,		span.shortcut-settings	{ background-position: 0 -420px; }
+			.shortcut-notes,		span.shortcut-notes		{ background-position: 0 -490px; }
 
 				body.reversed a.shortcut-dashboard	{ background-position: 68px 0; }
-				body.reversed a.shortcut-orders	{ background-position: 68px -70px; }
-				body.reversed a.shortcut-customers		{ background-position: 68px -140px; }
-				body.reversed a.shortcut-content	{ background-position: 68px -210px; }
-				body.reversed a.shortcut-products		{ background-position: 68px -280px; }
-				body.reversed a.shortcut-marketing		{ background-position: 68px -350px; }
-				body.reversed a.shortcut-store	{ background-position: 68px -420px; }
-				body.reversed a.shortcut-reports		{ background-position: 68px -490px; }
+				body.reversed a.shortcut-messages	{ background-position: 68px -70px; }
+				body.reversed a.shortcut-agenda		{ background-position: 68px -140px; }
+				body.reversed a.shortcut-contacts	{ background-position: 68px -210px; }
+				body.reversed a.shortcut-medias		{ background-position: 68px -280px; }
+				body.reversed a.shortcut-stats		{ background-position: 68px -350px; }
+				body.reversed a.shortcut-settings	{ background-position: 68px -420px; }
+				body.reversed a.shortcut-notes		{ background-position: 68px -490px; }
 
 			#shortcuts > li > a:before,
 			#shortcuts > li:after {
@@ -298,13 +301,13 @@ h2 {
 					}
 
 					a.shortcut-dashboard:before	{ background-position: -70px -5px; }
-					a.shortcut-orders:before	{ background-position: -70px -75px; }
-					a.shortcut-customers:before	{ background-position: -70px -145px; }
-					a.shortcut-content:before	{ background-position: -70px -215px; }
-					a.shortcut-products:before	{ background-position: -70px -285px; }
-					a.shortcut-marketing:before		{ background-position: -70px -355px; }
-					a.shortcut-store:before	{ background-position: -70px -425px; }
-					a.shortcut-reports:before		{ background-position: -70px -495px; }
+					a.shortcut-messages:before	{ background-position: -70px -75px; }
+					a.shortcut-agenda:before	{ background-position: -70px -145px; }
+					a.shortcut-contacts:before	{ background-position: -70px -215px; }
+					a.shortcut-medias:before	{ background-position: -70px -285px; }
+					a.shortcut-stats:before		{ background-position: -70px -355px; }
+					a.shortcut-settings:before	{ background-position: -70px -425px; }
+					a.shortcut-notes:before		{ background-position: -70px -495px; }
 
 				#shortcuts > li:after {
 					right: 0;
@@ -357,42 +360,114 @@ h2 {
 						transition: none;
 					}
 
+			.shortcut-legend {
+				position: absolute;
+				left: 0;
+				width: 68px;
+				bottom: 6px;
+				font-size: 11px;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				text-align: center;
+				text-indent: 0;
+				color: #999;
+				-webkit-transition: left 200ms, color 200ms;
+				-moz-transition: left 200ms, color 200ms;
+				-o-transition: left 200ms, color 200ms;
+				transition: left 200ms, color 200ms;
+				}
+				.no-generatedcontent .shortcut-legend {
+					bottom: 10px;
+				}
+				a > .shortcut-legend {
+					bottom: -14px;
+					}
+					.no-generatedcontent a > .shortcut-legend {
+						bottom: -10px;
+					}
+					li:hover > a > .shortcut-legend {
+						color: white;
+					}
+				body.reversed .shortcut-legend {
+					left: auto;
+					right: 0;
+					-webkit-transition: right 200ms, color 200ms;
+					-moz-transition: right 200ms, color 200ms;
+					-o-transition: right 200ms, color 200ms;
+					transition: right 200ms, color 200ms;
+					}
+					.no-generatedcontent body.reversed a > .shortcut-legend {
+						right: 68px;
+					}
+
 			.no-touch #shortcuts > li > a:hover,
-			#shortcuts > li.current > a,
-			.no-touch #shortcuts:hover > li.current:hover > a {
+			#shortcuts > .current > a,
+			.no-touch #shortcuts:hover > .current:hover > a {
 				margin-left: -68px;
 				}
-				.no-generatedcontent #shortcuts > li.current > a {
-					background-color: white;
+				.no-touch a:hover > .shortcut-legend,
+				#shortcuts > .current > a > .shortcut-legend,
+				.no-touch #shortcuts:hover > .current:hover > a > .shortcut-legend {
+					left: 68px;
 				}
+				.no-generatedcontent #shortcuts > .current > a {
+					background-color: white;
+					}
+					.no-generatedcontent #shortcuts > .current > a > .shortcut-legend {
+						bottom: -18px;
+					}
 				.no-touch body.reversed #shortcuts > li > a:hover,
-				body.reversed #shortcuts > li.current > a,
-				.no-touch body.reversed #shortcuts:hover > li.current:hover > a {
+				body.reversed #shortcuts > .current > a,
+				.no-touch body.reversed #shortcuts:hover > .current:hover > a {
 					margin-left: 0;
 					margin-right: -68px;
 					}
-					.no-generatedcontent body.reversed #shortcuts > li.current > a,
+					.no-touch body.reversed a:hover > .shortcut-legend,
+					body.reversed #shortcuts > .current > a > .shortcut-legend,
+					.no-touch body.reversed #shortcuts:hover >  .current:hover > a > .shortcut-legend {
+						left: auto;
+						right: 68px;
+					}
+					.no-generatedcontent body.reversed #shortcuts > .current > a,
 					.no-generatedcontent body.reversed #shortcuts > li > a:hover {
 						margin-left: -136px;
 						margin-right: 0;
-					}
+						}
+						.no-touch.no-generatedcontent body.reversed a:hover > .shortcut-legend,
+						.no-generatedcontent body.reversed #shortcuts > .current > a > .shortcut-legend,
+						.no-touch.no-generatedcontent body.reversed #shortcuts:hover >  .current:hover > a > .shortcut-legend {
+							right: 0;
+						}
 
-				.no-touch #shortcuts:hover > li.current > a {
+				.no-touch #shortcuts:hover > .current > a {
 					margin-left: -60px;
 					}
-					.no-touch.no-generatedcontent #shortcuts:hover > li.current > a {
-						margin-left: -68px;
+					.no-touch #shortcuts:hover > .current > a > .shortcut-legend {
+						left: 60px;
 					}
-					.no-touch body.reversed #shortcuts:hover > li.current > a {
+					.no-touch.no-generatedcontent #shortcuts:hover > .current > a {
+						margin-left: -68px;
+						}
+						.no-touch.no-generatedcontent #shortcuts:hover > .current > a > .shortcut-legend {
+							left: 68px;
+						}
+					.no-touch body.reversed #shortcuts:hover > .current > a {
 						margin-left: -8px;
 						margin-right: -60px;
 						}
-						.no-touch.no-generatedcontent body.reversed #shortcuts:hover > li.current > a {
+						.no-touch body.reversed #shortcuts:hover > .current > a > .shortcut-legend {
+							left: auto;
+							right: 60px;
+						}
+						.no-touch.no-generatedcontent body.reversed #shortcuts:hover > .current > a {
 							margin-left: -136px;
 							margin-right: 0;
-						}
+							}
+							.no-touch.no-generatedcontent body.reversed #shortcuts:hover > .current > a > .shortcut-legend {
+								right: 0;
+							}
 
-			#shortcuts > li.at-bottom {
+			#shortcuts > .at-bottom {
 				position: absolute;
 				left: 0;
 				bottom: 0;
@@ -535,9 +610,9 @@ h2 {
 	}
 	#main-title h1,
 	#main-title h2 {
-		-webkit-text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
-		-moz-text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
-		text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.25);
+		-webkit-text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+		-moz-text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+		text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
 		}
 		#main-title h2 {
 			font-size: 28px;

@@ -43,7 +43,7 @@ function moveCategory(id, name) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="new_category_id" class="label" style="width:33%;"><?php echo $lC_Language->get('field_parent_category'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="input with-small-padding"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="select" style="width:73%;"'); ?>'+
                    '      </p>'+
                    '    </form>'+
                    '  </div>'+
@@ -98,6 +98,9 @@ function moveCategory(id, name) {
       $("#new_category_id").empty();  // clear the old values
       $.each(data.categoriesArray, function(val, text) {
         var selected = (data.parentCategory == val) ? 'selected="selected"' : '';
+        if(data.parentCategory == val) {
+          $("#new_category_id").closest("span + *").prevAll("span.select-value:first").text(text);
+        }
         $("#new_category_id").append(
            $("<option " + selected + "></option>").val(val).html(text)
         );

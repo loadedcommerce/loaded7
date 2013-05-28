@@ -40,7 +40,7 @@ function editNewsletter(id) {
                    '      <p><?php echo $lC_Language->get('introduction_edit_newsletter'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="module" class="label"><?php echo $lC_Language->get('field_module'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('module', null, null, 'id="editModule" class="input with-small-padding"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('module', null, null, 'id="editModule" class="select" style="width:46%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="title" class="label"><?php echo $lC_Language->get('field_title'); ?></label>'+
@@ -104,6 +104,9 @@ function editNewsletter(id) {
       $("#editModule").html("");  // clear the old values
       $.each(data.modulesArray, function(val, text) {
         var selected = (data.module == val) ? 'selected="selected"' : '';
+        if(data.module == val) {
+          $("#editModule").closest("span + *").prevAll("span.select-value:first").text(text);
+        }
         $("#editModule").append(
           $('<option ' + selected + '></option>').val(val).html(text)
         );

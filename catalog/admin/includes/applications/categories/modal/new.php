@@ -40,7 +40,7 @@ function newCategory() {
                    '      <p><?php echo $lC_Language->get('introduction_new_category'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="parent_id" class="label" style="width:33%;"><?php echo $lC_Language->get('field_parent_category'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('parent_id', null, null, 'class="input with-small-padding"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('parent_id', null, null, 'class="select" style="width:73%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="categories_name" class="label" style="width:33%;"><?php echo $lC_Language->get('field_name'); ?></label>'+
@@ -95,6 +95,9 @@ function newCategory() {
       $("#parent_id").empty();  // clear the old values
       $.each(data.categoriesArray, function(val, text) {
         var selected = (data.parentCategory == val) ? 'selected="selected"' : '';
+        if(data.parentCategory == val) {
+          $("#parent_id").closest("span + *").prevAll("span.select-value:first").text(text);
+        }
         $("#parent_id").append(
            $("<option " + selected + "></option>").val(val).html(text)
         );
