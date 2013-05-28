@@ -540,7 +540,7 @@
 
   <!-- JavaScript at the bottom for fast page loading -->
   <script src="../ext/jquery/tinycon.min.js"></script>
-  <script src="../ext/jquery/jquery.validate.pack.js"></script>
+  <script src="../ext/jquery/jquery.validate.min.js"></script>
   <script src="../ext/jquery/jquery.tinysort.min.js"></script>
   <script src="../ext/jquery/jquery.easing.1.3.js"></script>
   <script src="../ext/jquery/jquery.jBreadCrumb.1.1.js"></script>

@@ -248,7 +248,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       ?>       
     </div>  
     <!-- JavaScript at the bottom for fast page loading -->
-    <script src="ext/jquery/jquery.validate.pack.js"></script>
+    <script src="ext/jquery/jquery.validate.min.js"></script>
     <script src="ext/jquery/jquery.easing.1.3.js"></script>
     <script src="ext/jquery/jquery.hoverIntent.min.js"></script>
     <script src="ext/jquery/jquery.liveSearch.js"></script>
