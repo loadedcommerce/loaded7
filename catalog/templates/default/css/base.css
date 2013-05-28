@@ -889,7 +889,15 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 .categoryListing img {
   vertical-align: top;
 }
-
 #categories_description {
-  margin-bottom: 20px;
+  border-top: 1px solid #873B7A;
+  margin: 0 -15px -10px 0;
+  padding: 15px 0 0 0;
+}
+
+#categories_description_inner {
+  margin: -15px 0 12px 0;
+  padding: 10px 0 10px 0;
+  line-height: 1.3em;
+  border-bottom: 1px solid #873B7A;  
 }

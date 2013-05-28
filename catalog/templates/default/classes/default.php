@@ -346,9 +346,7 @@ class lC_Default {
     
     $output = '';
     if ($Qcategory->value('categories_description') != '') {
-      $output .= '<div id="categories_description">';
       $output .= $Qcategory->value('categories_description');
-      $output .= '</div>';
     }
     
     return $output;
