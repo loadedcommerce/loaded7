@@ -1,5 +1,4 @@
 /**
- *
  * Block messages plugin
  *
  * Structural good practices from the article from Addy Osmani 'Essential jQuery plugin patterns'
@@ -87,7 +86,7 @@
 						count = found.children('.count');
 						if (count.length > 0)
 						{
-							count.text((parseInt(count.text()) || 1)+1);
+							count.text((parseInt(count.text(), 10) || 1)+1);
 						}
 						else
 						{
@@ -134,6 +133,16 @@
 			{
 				element.hide().slideDown(settings.animateSpeed);
 			}
+
+			// Delay
+			if (settings.autoClose)
+			{
+				setTimeout(function()
+				{
+					element.foldAndRemove();
+
+				}, settings.autoClose);
+			}
 		});
 
 		return all;
@@ -154,7 +163,7 @@
 			animate = message;
 			message = '';
 		}
-		animate = (animate || animate == undefined);
+		animate = (animate || animate === undefined);
 
 		this.each(function(i)
 		{
@@ -310,7 +319,13 @@
 		 * Should close and count bubbles be inside the message?
 		 * @var boolean
 		 */
-		inset: false
+		inset: false,
+
+		/**
+		 * Auto-close after specified delay (in milliseconds), or false to disable
+		 * @var int|boolean
+		 */
+		autoClose: false
 
 	};
 

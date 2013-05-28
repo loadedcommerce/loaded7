@@ -48,7 +48,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     ?>
     <!-- Modernizr is always at top -->
     <script src="templates/default/javascript/modernizr-2.6.2-respond-1.1.0.min.js"></script> 
-    <script src="ext/jquery/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   </head>
 
   <body>
@@ -248,7 +249,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       ?>       
     </div>  
     <!-- JavaScript at the bottom for fast page loading -->
-    <script src="ext/jquery/jquery.validate.pack.js"></script>
+    <script src="ext/jquery/jquery.validate.min.js"></script>
     <script src="ext/jquery/jquery.easing.1.3.js"></script>
     <script src="ext/jquery/jquery.hoverIntent.min.js"></script>
     <script src="ext/jquery/jquery.liveSearch.js"></script>

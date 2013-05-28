@@ -29,7 +29,7 @@ Custom Template CSS added by Loaded7 Dev Team
   margin-bottom: -25px; 
 }
 #profileLeft {
-  padding: 18px 0 0 2px !important;
+  padding: 14px 0 0 2px;
   cursor: pointer;
 }
 #profileRight {
@@ -68,6 +68,7 @@ Custom Template CSS added by Loaded7 Dev Team
 }
 .profile-edit-logout {
   margin-left: 90px;
+  position:fixed;
 }
 
 .mega-search-border {

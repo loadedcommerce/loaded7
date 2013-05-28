@@ -39,7 +39,7 @@
   <link rel="stylesheet" href="templates/default/css/reset.css?v=1">
   <link rel="stylesheet" href="templates/default/css/style.css?v=1">
   <link rel="stylesheet" href="templates/default/css/colors.css?v=1">
-  <link rel="stylesheet" href="templates/default/css/error.css?v=1">
+  <!-- link rel="stylesheet" href="templates/default/css/error.css?v=1" -->
   <link rel="stylesheet" media="print" href="templates/default/css/print.css?v=1">
   <!-- For progressively larger displays -->
   <link rel="stylesheet" media="only all and (min-width: 320px)" href="templates/default/css/320.css?v=1">
@@ -83,7 +83,8 @@
 
   <!-- Modernizr is always at top and first -->
   <script src="../ext/jquery/modernizr.custom.js"></script>
-  <script src="../ext/jquery/jquery-1.8.3.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
   <!-- For Modern Browsers -->
   <link rel="shortcut icon" href="templates/default/img/favicons/favicon.png?v=2">
@@ -545,7 +546,7 @@
 
   <!-- JavaScript at the bottom for fast page loading -->
   <script src="../ext/jquery/tinycon.min.js"></script>
-  <script src="../ext/jquery/jquery.validate.pack.js"></script>
+  <script src="../ext/jquery/jquery.validate.min.js"></script>
   <script src="../ext/jquery/jquery.tinysort.min.js"></script>
   <script src="../ext/jquery/jquery.easing.1.3.js"></script>
   <script src="../ext/jquery/jquery.jBreadCrumb.1.1.js"></script>
