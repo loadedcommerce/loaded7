@@ -40,6 +40,7 @@ field_sort_order = Sort Order
 heading_title = Category Pages
 heading_title_new_category = New Category Page
 
+info_bubble_category_image = Category Image
 introduction_new_category = Please fill in the following information for the new category.
 introduction_edit_category = Please make the necessary changes for this category.
 introduction_delete_category = Please verify the removal of this category and its sub-categories.

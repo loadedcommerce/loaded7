@@ -16,7 +16,8 @@
 global $lC_Vqmod;
 
 require_once($lC_Vqmod->modCheck('includes/applications/categories/classes/categories.php'));
-require_once($lC_Vqmod->modCheck('includes/classes/category_tree.php')); 
+require_once($lC_Vqmod->modCheck('includes/classes/category_tree.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/image.php')); 
 
 class lC_Categories_Admin_rpc {
  /*
@@ -124,7 +125,7 @@ class lC_Categories_Admin_rpc {
     global $lC_Database, $lC_Vqmod, $_module;
 
     $lC_Image = new lC_Image_Admin();
-
+    
     require_once($lC_Vqmod->modCheck('includes/classes/ajax_upload.php'));
 
     // list of valid extensions, ex. array("jpeg", "xml", "bmp")
@@ -135,7 +136,7 @@ class lC_Categories_Admin_rpc {
     $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
     
     $categories_image = $uploader->handleUpload('../images/categories/');
-
+    
     $result = array('result' => 1,
                     'fileName' => $categories_image['filename'],
                     'success' => true,

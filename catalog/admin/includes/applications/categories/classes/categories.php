@@ -162,14 +162,15 @@ class lC_Categories_Admin {
     $lC_Database->startTransaction();
 
     if ( is_numeric($id) ) {
-      $Qcat = $lC_Database->query('update :table_categories set parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_show_in_listings = :categories_show_in_listings, last_modified = now() where categories_id = :categories_id');
+      $Qcat = $lC_Database->query('update :table_categories set categories_image = :categories_image, parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_show_in_listings = :categories_show_in_listings, last_modified = now() where categories_id = :categories_id');
       $Qcat->bindInt(':categories_id', $id);
     } else {
-      $Qcat = $lC_Database->query('insert into :table_categories (parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_show_in_listings, date_added) values (:parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_show_in_listings, now())');
+      $Qcat = $lC_Database->query('insert into :table_categories (categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_show_in_listings, date_added) values (:categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_show_in_listings, now())');
       $Qcat->bindInt(':parent_id', $data['parent_id']);
     }
 
     $Qcat->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qcat->bindValue(':categories_image', $data['image']);
     $Qcat->bindInt(':parent_id', $data['parent_id']);
     $Qcat->bindInt(':sort_order', $data['sort_order']);
     $Qcat->bindValue(':categories_mode', $data['mode']);
@@ -206,23 +207,6 @@ class lC_Categories_Admin {
         if ( $lC_Database->isError() ) {
           $error = true;
           break;
-        }
-      }
-      
-      if ( $error === false ) {
-        $categories_image = new upload($data['image'], realpath('../' . DIR_WS_IMAGES . 'categories'));
-
-        if ( $categories_image->exists() && $categories_image->parse() && $categories_image->save() ) {
-          $Qcf = $lC_Database->query('update :table_categories set categories_image = :categories_image where categories_id = :categories_id');
-          $Qcf->bindTable(':table_categories', TABLE_CATEGORIES);
-          $Qcf->bindValue(':categories_image', $categories_image->filename);
-          $Qcf->bindInt(':categories_id', $category_id);
-          $Qcf->setLogging($_SESSION['module'], $category_id);
-          $Qcf->execute();
-
-          if ( $lC_Database->isError() ) {
-            $error = true;
-          }
         }
       }
     }

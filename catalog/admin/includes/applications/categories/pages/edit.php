@@ -46,7 +46,7 @@
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
 <style>
-.qq-upload-drop-area { left: 19%; min-height: 104px; position: absolute; width: 65%; top: -30px; }
+.qq-upload-drop-area { left: 19%; min-height: 104px; position: absolute; width: 65%; top: -195px; }
 .qq-upload-drop-area span { margin-top:-16px; }
 </style>
 <!-- Main content -->
@@ -77,12 +77,13 @@
               <div class="new-row-mobile four-columns twelve-columns-mobile">
                 <span class="strong margin-right"><?php echo $lC_Language->get('text_categories_image'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_category_image'), null); ?>   
                 <div style="padding-left:6px;" class="small-margin-top">
-                  <div id="imagePreviewContainer" class="cat-image">
+                  <div id="imagePreviewContainer" class="cat-image align-center">
                     <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
-                    <div class="cat-image align-center"><img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . $lC_ObjectInfo->get('categories_image'); ?>" style="max-width:100%;" /></div>
+                    <img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . $lC_ObjectInfo->get('categories_image'); ?>" style="max-width:100%;" />
                     <?php } else { ?>
-                    <div class="cat-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?></div>
+                    <img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?>
                     <?php } ?>
+                    <input type="hidden" id="categories_image" name="categories_image" value="<?php echo $lC_ObjectInfo->get('categories_image'); ?>">
                   </div>
                 </div>   
                 <p class="thin" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
@@ -93,18 +94,18 @@
                 </div>
                 <script>
                   $(document).ready(function() {
-                    createUploader2();
+                    createUploader();
                     $('.qq-upload-button').hide();
                     $('.qq-upload-list').hide();
                   });
 
-                  function createUploader2(){
+                  function createUploader(){
                     var uploader = new qq.FileUploader({
-                        element: document.getElementById('fileUploaderImageContainer'),
-                        action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('categories_id') . '&action=fileUpload&default=1'); ?>',
-                        onComplete: function(id, fileName, responseJSON){
-                          getImages();
-                        },
+                      element: document.getElementById('fileUploaderImageContainer'),
+                      action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('categories_id') . '&action=fileUpload'); ?>',
+                      onComplete: function(id, fileName, responseJSON){
+                        $('#imagePreviewContainer').html('<img src="<?php echo '../images/categories/'; ?>' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="categories_image" name="categories_image" value="' + fileName + '">');
+                      },
                     });
                   }
                 </script>
