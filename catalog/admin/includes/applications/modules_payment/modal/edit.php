@@ -58,7 +58,8 @@ function editModule(id) {
             '<?php echo $lC_Language->get('button_save'); ?>': {
               classes:  'blue-gradient glossy',
               click:    function(win) {
-                var nvp = $("#mEdit").serialize();
+                var regex = new RegExp('%25', 'g');
+                var nvp = $("#mEdit").serialize().replace(regex, 'P_CENT');
                 var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveModule&module=MODULE&BATCH'); ?>'
                 $.getJSON(jsonLink.replace('MODULE', id).replace('BATCH', nvp),
                   function (rdata) {
