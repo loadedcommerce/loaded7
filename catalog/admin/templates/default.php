@@ -121,9 +121,6 @@
   <meta name="application-name" content="Loaded Commerce Admin">
   <meta name="msapplication-tooltip" content="Loaded Commerce Cross-Platform Admin Template">
   <meta name="msapplication-starturl" content="<?php echo $_SERVER['PHP_SELF']; ?>">
-  <!-- These custom tasks are examples, you need to edit them to show actual pages -->
-  <meta name="msapplication-task" content="name=Agenda;action-uri=http://www.loadedcommerce.com;icon-uri=http://www.loadedcommerce.com/favicon.ico">
-  <meta name="msapplication-task" content="name=My profile;action-uri=http://www.loadedcommerce.com;icon-uri=http://www.loadedcommerce.com/favicon.ico">
 </head>
 
 <body class="clearfix with-menu with-shortcuts">
