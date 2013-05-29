@@ -890,14 +890,19 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
   vertical-align: top;
 }
 #categories_description {
-  border-top: 1px solid #873B7A;
+  /*border-top: 1px solid #873B7A;*/
   margin: 0 -15px -10px 0;
   padding: 15px 0 0 0;
 }
-
 #categories_description_inner {
   margin: -15px 0 12px 0;
   padding: 10px 0 10px 0;
-  line-height: 1.3em;
-  border-bottom: 1px solid #873B7A;  
+  font: 14px/1.5em 'Helvetica Neue', Helvetica, Arial, serif, sans-serif;
+  /*border-bottom: 1px solid #873B7A;*/
+}
+.categories_h1 {
+  margin: -14px 0 -15px 0;
+}
+.categories_listing {
+  padding-top: 10px;
 }

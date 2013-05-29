@@ -20,7 +20,7 @@ button.price_add {
 </style>
 <div class="full_page">
   <div class="content">
-    <h1 style="margin:-14px 0 -15px 0;"><?php echo $lC_Template->getPageTitle(); ?></h1> 
+    <h1 class="categories_h1"><?php echo $lC_Template->getPageTitle(); ?></h1> 
       <div id="categories_description">
       <?php 
         if (lC_Default::getCategoryDescription() != '') {
