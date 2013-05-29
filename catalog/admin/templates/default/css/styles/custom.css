@@ -603,14 +603,14 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 @media screen and (min-width: 992px) {
   .hide-below-992 { display: none !important; }
   #menu header .headerInner {
-    padding: 10px 0;
-    margin: -10px 0;
+    margin: -10px 0px;
+    padding: 15px 0 11px 0;
     -webkit-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
     -moz-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
     box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
   }
   #open-menu {
-    top: 37px;
+    top: 41px;
   } 
 } 
 
