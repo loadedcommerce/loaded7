@@ -57,7 +57,7 @@ class lC_Checkout_Payment_template extends lC_Template {
         $frameWidth = '450px';
         break;                                                                 
       default : // desktop
-        $frameWidth = '478px';
+        $frameWidth = '500px';
     }    
       
     return $frameWidth;
