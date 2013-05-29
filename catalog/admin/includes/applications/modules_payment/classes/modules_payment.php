@@ -117,7 +117,7 @@ class lC_Modules_payment_Admin {
     foreach ( $data['configuration'] as $key => $value ) {
       $Qupdate = $lC_Database->query('update :table_configuration set configuration_value = :configuration_value where configuration_key = :configuration_key');
       $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
-      $Qupdate->bindValue(':configuration_value', is_array($data['configuration'][$key]) ? implode(',', $data['configuration'][$key]) : $value);
+      $Qupdate->bindValue(':configuration_value', is_array($data['configuration'][$key]) ? implode(',', $data['configuration'][$key]) : str_replace('P_CENT', '%', $value));
       $Qupdate->bindValue(':configuration_key', $key);
       $Qupdate->setLogging($_SESSION['module']);
       $Qupdate->execute();
