@@ -21,7 +21,7 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
         <div style="padding-left:6px;" class="small-margin-top">
           <div id="imagePreviewContainer" class="prod-image"></div>
         </div>   
-        <p class="thin" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
+        <p class="thin margin-top" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
         <div id="fileUploaderImageContainer" class="small-margin-top">
           <noscript>
             <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
@@ -81,16 +81,16 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
       </div>
       <div class="new-row-mobile eight-columns twelve-columns-mobile">
         <div style="width:100%;">
-          <div style="float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
-            <span class="full-width">
+          <div style="width:48%; float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status margin-bottom">
+            <span>
               <span class="strong"><?php echo $lC_Language->get('field_base_price'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_base_price')); ?>
             </span>
             <?php echo lc_draw_input_field('products_price', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="font-size:2em;" class="input full-width" id="products_price0" onblur="$(\'#products_base_price\').val(this.value);"'); ?>
           </div>
-          <div style="float:left;width:2%;">&nbsp;</div>
-          <div style="float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
-            <span class="full-width">
-              <span class="strong"><?php echo $lC_Language->get('field_status'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_status')); ?>
+          
+          <div style="width:48%; float:right;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
+            <span>
+              <span class="strong"><?php echo $lC_Language->get('field_status'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_status'), null, 'info-spot on-left grey margin-left'); ?>
             </span><br />
             <span class="button-group">
               <label for="ps_radio_1" class="button blue-active">
@@ -101,17 +101,13 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
                 <input type="radio" name="products_status" id="ps_radio_2" value="inactive"<?php echo ((isset($pInfo) && $pInfo->getInt('products_status') == -1) ? ' checked' : ''); ?> />
                 <?php echo $lC_Language->get('field_status_inactive'); ?>
               </label>
-              <label for="ps_radio_3" class="button orange-active disabled">
-                <input type="radio" name="products_status" id="ps_radio_3" value="recurring"<?php echo ((isset($pInfo) && $pInfo->getInt('products_status') == 0) ? ' checked' : ''); ?> />
-                <?php echo $lC_Language->get('field_status_coming'); ?>
-              </label>
             </span>
           </div>                  
         </div>                  
       </div>
     </div>
   </div>
-  <div class="columns large-margin-top">
+  <!-- div class="columns large-margin-top">
     <div class="four-columns twelve-columns-mobile large-margin-bottom">
       <center><img src="images/prodchart.png" /></center>
     </div>
@@ -127,7 +123,7 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
       </span>
       <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo $pInfo->get('products_weight'); ?></b></p>              
     </div>
-  </div>
+  </div -->
 </div>    
 <script>
 $(document).ready(function() {
