@@ -167,6 +167,7 @@ global $lC_Language, $pInfo;
       </div>
     </div>
     <!-- lc_qty_price_breaks end --> 
+    
     <div class="field-block field-block-product button-height">
       <label for="specials-pricing-switch" class="label"><b><?php echo $lC_Language->get('text_special_pricing'); ?></b></label>
       <input onchange="$('#specials_pricing_container').toggle('300');" id="specials-pricing-switch" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($pInfo->get('products_special_price') != null) ? ' checked' : ''); ?> /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_specials'), null, 'info-spot on-left grey margin-left margin-right'); ?>
@@ -177,74 +178,25 @@ global $lC_Language, $pInfo;
         <div class="new-row-mobile twelve-columns twelve-columns-mobile">
           <input type="checkbox" class="switch<?php if ($pInfo->get('status') != -1) echo ' checked'; ?>" />
           <span class="input" style="background:#dd380d;">
-            <input name="" id="" value="<?php echo number_format($pInfo->get('products_special_price'), DECIMAL_PLACES); ?>" placeholder="Price or %" class="input-unstyled white strong align-right" />
+            <input name="products_special_price" id="products_special_price" value="<?php echo number_format($pInfo->get('products_special_price'), DECIMAL_PLACES); ?>" placeholder="Price or %" class="input-unstyled white strong align-right" />
           </span>
         </div>
         <div class="new-row-mobile twelve-columns twelve-columns-mobile margin-bottom">
           <span class="nowrap margin-right">
             <span class="input small-margin-top">
-              <input type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo $pInfo->get('products_special_start_date'); ?>" style="width:97px;" />
+              <input name="products_special_start_date" id="products_special_start_date" type="text" placeholder="Start" class="input-unstyled datepicker" value="<?php echo $pInfo->get('products_special_start_date'); ?>" style="width:97px;" />
             </span>
             <span class="icon-calendar icon-size2 small-margin-left"></span>
           </span>
           <span class="nowrap">
             <span class="input small-margin-top">
-              <input type="text" placeholder="End" class="input-unstyled datepicker" value="<?php echo $pInfo->get('products_special_expires_date'); ?>" style="width:97px;" />
+              <input name="products_special_expires_date" id="products_special_expires_date" type="text" placeholder="End" class="input-unstyled datepicker" value="<?php echo $pInfo->get('products_special_expires_date'); ?>" style="width:97px;" />
             </span>
             <span class="icon-calendar icon-size2 small-margin-left"></span>
           </span>
         </div>
       </div>
-
-      <label for="resize_height" class="label"><b>Special Wholesale Price</b></label>
-      <div class="columns margin-bottom" style="border-bottom:1px solid #dddddd;">
-        <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-          <input type="checkbox" class="switch disabled" />
-          <span class="input">
-            <input name="" id="" value="0.00" placeholder="Price or %" class="input-unstyled align-right white strong disabled" />
-          </span>
-          <?php echo lc_go_pro(); ?>
-        </div>
-        <div class="new-row-mobile twelve-columns twelve-columns-mobile margin-bottom">
-          <span class="nowrap margin-right">
-            <span class="input small-margin-top">
-              <input type="text" placeholder="Start" class="input-unstyled datepicker disabled" value="" style="width:97px;" />
-            </span>
-            <span class="icon-calendar icon-size2 small-margin-left"></span>
-          </span>
-          <span class="nowrap">
-            <span class="input small-margin-top">
-              <input type="text" placeholder="End" class="input-unstyled datepicker disabled" value="" style="width:97px;" />
-            </span>
-            <span class="icon-calendar icon-size2 small-margin-left"></span>
-          </span>
-        </div>
-      </div>
-
-      <label for="resize_height" class="label"><b>Special Employee Price</b></label>
-      <div class="columns margin-bottom" style="border-bottom:1px solid #dddddd;">
-        <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-          <input type="checkbox" class="switch disabled" />
-          <span class="input">
-            <input name="" id="" value="0.00" placeholder="Price or %" class="input-unstyled align-right white strong disabled" />
-          </span>
-          <?php echo lc_go_pro(); ?>
-        </div>
-        <div class="new-row-mobile twelve-columns twelve-columns-mobile margin-bottom">
-          <span class="nowrap margin-right">
-            <span class="input small-margin-top">
-              <input type="text" placeholder="Start" class="input-unstyled datepicker disabled" value="" style="width:97px;" />
-            </span>
-            <span class="icon-calendar icon-size2 small-margin-left"></span>
-          </span>
-          <span class="nowrap">
-            <span class="input small-margin-top">
-              <input type="text" placeholder="End" class="input-unstyled datepicker disabled" value="" style="width:97px;" />
-            </span>
-            <span class="icon-calendar icon-size2 small-margin-left"></span>
-          </span>
-        </div>
-      </div>
+      
     </div>                
   </fieldset>
   

@@ -20,7 +20,6 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $('#floating-menu-div-listing').fixFloat();
       // instantiate the datepicker
       $(".datepicker").glDatePicker({ zIndex: 100 });      
-      // js code here
     });
   </script>
   <?php

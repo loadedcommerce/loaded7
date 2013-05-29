@@ -15,7 +15,7 @@ global $lC_Vqmod, $lC_Template, $lC_Language;
 require_once($lC_Vqmod->modCheck('includes/applications/updates/classes/updates.php'));    
 ?>
 <script>
-$(document).ready(function() {
+$(document).ready(function() { 
   // set shortcuts current marker
   var loc = '<?php echo end(explode("/", $_SERVER['PHP_SELF'])); ?>';
   var noParams = '<?php echo (empty($_GET) ? true : false); ?>';
@@ -49,7 +49,7 @@ $(document).ready(function() {
     // remove the shortcuts active tab since most pages are not in the shortcuts menu.
     $("#shortcuts li").parent().find('li').removeClass("current");
   }
-
+         
   // set the current menu marker
   var cfg = false;
   $('#menu-content .big-menu a').each(function() {

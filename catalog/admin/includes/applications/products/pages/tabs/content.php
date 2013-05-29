@@ -49,20 +49,20 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
                 <fieldset>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_name[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_name') . lc_show_info_bubble($lC_Language->get('info_bubble_content_name')); ?></label>
-                    <?php echo lc_draw_input_field('products_name[' . $l['id'] . ']', (isset($pInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null), 'id="products_name_' . $l['id'] . '" class="required input" style="width:96%;"'); ?>
+                    <?php echo lc_draw_input_field('products_name[' . $l['id'] . ']', (isset($pInfo) && isset($products_name[$l['id']]) ? $products_name[$l['id']] : null), 'id="products_name_' . $l['id'] . '" class="required input" style="width:97%;"'); ?>
                   </p>
                   <p class="button-height block-label">
                   <label class="label" for="<?php echo 'products_description[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_description') . lc_show_info_bubble($lC_Language->get('info_bubble_content_description')); ?></label>
-                  <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($pInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'id="clEditorProductDescription_' . $l['id'] . '" style="width:96%;" class="required input with-editor"'); ?>
+                  <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($pInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'id="clEditorProductDescription_' . $l['id'] . '" style="width:97%;" class="required input with-editor"'); ?>
                   <p align="right" style="padding:0; margin:-10px 10px -10px 0; font-size:.9em;"><?php echo '<a href="javascript:toggleEditor(\'' . $l['id'] . '\');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></p>
                   </p>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_keyword[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_keyword') . lc_show_info_bubble($lC_Language->get('info_bubble_content_keyword')); ?></label>
-                    <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($pInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input" style="width:96%" id="products_keyword_' . $l['id'] . '"'); ?>
+                    <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($pInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input" style="width:97%" id="products_keyword_' . $l['id'] . '"'); ?>
                   </p>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_tags[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_tags') . lc_show_info_bubble($lC_Language->get('info_bubble_content_tags')); ?></label>
-                    <?php echo lc_draw_input_field('products_tags[' . $l['id'] . ']', (isset($pInfo) && isset($products_tags[$l['id']]) ? $products_tags[$l['id']] : null), 'id="products_tags_' . $l['id'] . '" class="input" style="width:96%" maxlength="255"'); ?>
+                    <?php echo lc_draw_input_field('products_tags[' . $l['id'] . ']', (isset($pInfo) && isset($products_tags[$l['id']]) ? $products_tags[$l['id']] : null), 'id="products_tags_' . $l['id'] . '" class="input" style="width:97%" maxlength="255"'); ?>
                   </p>
                 </fieldset>
               </div>
@@ -83,7 +83,7 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
         <div style="width:100%;">
           <div style="width:48%; float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status margin-bottom">
             <span>
-              <span class="strong"><?php echo $lC_Language->get('field_base_price'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_base_price')); ?>
+              <span class="strong"><?php echo $lC_Language->get('field_base_price'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_base_price'), 'margin:8px 6px 0 0;'); ?>
             </span>
             <?php echo lc_draw_input_field('products_price', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="font-size:2em;" class="input full-width" id="products_price0" onblur="$(\'#products_base_price\').val(this.value);"'); ?>
           </div>
@@ -132,7 +132,7 @@ $(document).ready(function() {
   $('#fileUploaderImageContainer .qq-upload-list').hide();
   <?php               
   foreach ( $lC_Language->getAll() as $l ) {
-    echo "toggleEditor('" . $l['id'] . "');";
+  //  echo "toggleEditor('" . $l['id'] . "');";
   }
   ?>  
   $('#products_name_1').focus();
@@ -159,7 +159,7 @@ function toggleEditor(id) {
     editor.$area.insertBefore(editor.$main); // Move the textarea out of the main div
     editor.$area.removeData("cleditor"); // Remove the cleditor pointer from the textarea
     editor.$main.remove(); // Remove the main div and all children from the DOM
-    $("#clEditorProductDescription_" + id).css('width', '96%').show();
+    $("#clEditorProductDescription_" + id).css('width', '97%').show();
   }
 }
 </script>
