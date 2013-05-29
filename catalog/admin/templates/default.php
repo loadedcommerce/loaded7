@@ -70,8 +70,6 @@
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables-tableTools.css?v=1">
   <!-- loading mask -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.loadmask.css?v=1">  
-  <!-- Google code prettifier -->
-  <link rel="stylesheet" href="../ext/jquery/google-code-prettify/sunburst.css?v=1">
 
   <!-- Load Page Specific CSS -->
   <?php echo $lC_Template->loadPageCss($lC_Template->getModule()); ?>

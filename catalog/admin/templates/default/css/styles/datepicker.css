@@ -1,204 +1,187 @@
+/*
+	glDatePicker default style
+
+	http: //code.gautamlad.com/glDatePicker/
+	https: //github.com/glad/glDatePicker/
+*/
+
 /* Calendar container div */
 .gldp-default {
-  position: absolute;
-  font-size: 12px;
-  }
-  .gldp-default.fixed {
-    width: 239px !important;
-    background-color: #F0F4F7;
-    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
-    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
-  }
-
-/* Core style for every cell */
-.gldp-default .core {
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  position: relative;
-  float: left;
-  padding: 0;
-  margin: 0;
-  text-align: center;
-  cursor: pointer;
-  background-color: #F0F4F7;
-  }
-  .gldp-default.fixed .core {
-    height: 32px !important;
-    line-height: 30px !important;
-    width: 35px !important;
-  }
-
-/* Cell border */
-.gldp-default .border {
-  border-style: solid;
-  border-width: 0;
-  border-color: #ececec;
+	float: left;
+	background-color: #F0F4F7;
+	border: 0;
+	-webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+	-moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
 }
 
-/* Month/Year text and select */
-.gldp-default .monyear,
-.gldp-default .monyear select {
-  -webkit-text-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.65);
-  -moz-text-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.65);
-  text-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.65);
-  }
-  .gldp-default .monyear.border {
-    border-color: #004795;
-  }
-  .gldp-default .monyear {
-    color: white;
-    white-space: nowrap;
-    font-weight: bold;
-    background: #00438d url(../../../img/old-browsers/colors/bg_blue-gradient.png) repeat-x;
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    background: -webkit-gradient(linear, left top, left bottom, from(#006aac), to(#00438d));
-    background: -webkit-linear-gradient(top, #006aac, #00438d);
-    background: -moz-linear-gradient(top, #006aac, #00438d);
-    background: -ms-linear-gradient(top, #006aac, #00438d);
-    background: -o-linear-gradient(top, #006aac, #00438d);
-    background: linear-gradient(top, #006aac, #00438d);
-    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    -webkit-text-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.65);
-    -moz-text-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.65);
-    text-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.65);
-  }
-  .gldp-default.fixed .monyear {
-    height: 40px !important;
-    line-height: 40px !important;
-    width: 36px !important;
-  }
-  .gldp-default.fixed .title {
-    width: 169px !important;
-  }
-
-/* Month/Year text */
-.gldp-default .monyear span {
-  margin: 0 3px;
-  font-size: 17px;
+/* Table style */
+.gldp-default table {
+	border-spacing: 0;
+	border-collapse: collapse;
+	background-color: #F0F4F7;
 }
 
-/* Prev/Next arrows */
-.gldp-default .prev-arrow,
-.gldp-default .next-arrow {
-  color: white;
-  }
-  .gldp-default .prev-arrow-off,
-  .gldp-default .next-arrow-off {
-    color: white;
-    opacity: 0.35;
-  }
-
-/* Days of the week */
-.gldp-default .dow,
-.gldp-default.fixed .dow {
-  font-size: 9px;
-  line-height: 20px !important;
-  height: 22px !important;
-  color: #666666;
-  font-weight: bold;
-  text-transform: uppercase;
-  background: #e4e7eb url(../../../img/old-browsers/colors/bg_white-gradient.png) repeat-x;
-  -webkit-background-size: 100% 100%;
-  -moz-background-size: 100% 100%;
-  -o-background-size: 100% 100%;
-  background-size: 100% 100%;
-  background: -webkit-gradient(linear, left top, left bottom, from(#f7f7fa), to(#e4e7eb));
-  background: -webkit-linear-gradient(top, #f7f7fa, #e4e7eb);
-  background: -moz-linear-gradient(top, #f7f7fa, #e4e7eb);
-  background: -ms-linear-gradient(top, #f7f7fa, #e4e7eb);
-  background: -o-linear-gradient(top, #f7f7fa, #e4e7eb);
-  background: linear-gradient(top, #f7f7fa, #e4e7eb);
-  -webkit-text-shadow: 0 1px 0 white;
-  -moz-text-shadow: 0 1px 0 white;
-  text-shadow: 0 1px 0 white;
-  }
-  .gldp-default .dow.border {
-    border-top-color: #c7c9ca;
-    border-bottom-color: #ced3d6;
-    margin-bottom: 1px;
-  }
-
-/* Weekdays */
-.gldp-default .mon,
-.gldp-default .tue,
-.gldp-default .wed,
-.gldp-default .thu,
-.gldp-default .fri {
-  font-weight: bold;
+/* Default row height */
+.gldp-default tr {
+	line-height: 30px;
 }
 
-/* Weekend days */
-.gldp-default .sat,
-.gldp-default .sun {
-  background-color: #fff;
-  color: #666;
-  font-weight: bold;
+/* Default style of cell */
+.gldp-default td {
+	margin: 0;
+	padding: 0;
+	width: 33px;
+	text-align: center;
 }
 
-/* Hover */
-.gldp-default .mon:hover,
-.gldp-default .tue:hover,
-.gldp-default .wed:hover,
-.gldp-default .thu:hover,
-.gldp-default .fri:hover,
-.gldp-default .sat:hover,
-.gldp-default .sun:hover {
-  background: #e5e5e5;
-  -webkit-text-shadow: 0 1px 0 white;
-  -moz-text-shadow: 0 1px 0 white;
-  text-shadow: 0 1px 0 white;
+.gldp-default-prevnext,
+.gldp-default-monyear {
+	color: white;
+	line-height: 38px;
+	white-space: nowrap;
+	font-weight: bold;
+	background: #00438d url(../../../img/old-browsers/colors/bg_blue-gradient.png) repeat-x;
+	-webkit-background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	-o-background-size: 100% 100%;
+	background-size: 100% 100%;
+	background: -webkit-gradient(linear, left top, left bottom, from(#006aac), to(#00438d));
+	background: -webkit-linear-gradient(top, #006aac, #00438d);
+	background: -moz-linear-gradient(top, #006aac, #00438d);
+	background: -ms-linear-gradient(top, #006aac, #00438d);
+	background: -o-linear-gradient(top, #006aac, #00438d);
+	background: linear-gradient(top, #006aac, #00438d);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+	-webkit-text-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.65);
+	-moz-text-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.65);
+	text-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.65);
+	}
+
+/* Previous and Next arrows */
+.gldp-default-prevnext {
+	cursor: pointer;
+	font-size: 12px;
+	border-top: 1px solid #004795;
+	border-right: 1px solid #004795;
+	border-bottom: 1px solid #004795;
+	}
+	.gldp-default-prevnext:first-child {
+		border-right: 0;
+		border-left: 1px solid #004795;
+	}
+
+/* Month Year title */
+.gldp-default-monyear {
+	border-top: 1px solid #004795;
+	border-bottom: 1px solid #004795;
+	font-size: 17px;
+	width: auto;
 }
 
-/* Selectable days that are outside of current month being shown */
-.gldp-default .outday,
-.gldp-default .outday:hover {
-  background-color: #f2f2f2;
-  color: #cfd1d2;
-  font-weight: normal;
-  cursor: default;
-}
+/* Days of the week (Sun, Mon, ...) */
+tr.gldp-default-dow {
+	font-size: 9px;
+	line-height: 20px;
+	color: #666666;
+	font-weight: bold;
+	text-transform: uppercase;
+	background: #e4e7eb url(../../../img/old-browsers/colors/bg_white-gradient.png) repeat-x;
+	-webkit-background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	-o-background-size: 100% 100%;
+	background-size: 100% 100%;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f7f7fa), to(#e4e7eb));
+	background: -webkit-linear-gradient(top, #f7f7fa, #e4e7eb);
+	background: -moz-linear-gradient(top, #f7f7fa, #e4e7eb);
+	background: -ms-linear-gradient(top, #f7f7fa, #e4e7eb);
+	background: -o-linear-gradient(top, #f7f7fa, #e4e7eb);
+	background: linear-gradient(top, #f7f7fa, #e4e7eb);
+	}
+	tr.gldp-default-dow > td {
+		padding-top: 1px;
+		-webkit-box-shadow: inset 0 2px 0 #c7c9ca;
+		-moz-box-shadow: inset 0 2px 0 #c7c9ca;
+		box-shadow: inset 0 2px 0 #c7c9ca;
+		-webkit-text-shadow: 0 1px 0 white;
+		-moz-text-shadow: 0 1px 0 white;
+		text-shadow: 0 1px 0 white;
+	}
 
-/* Non-Selectable days */
-.gldp-default .noday {
-  cursor: not-allowed !important;
-}
 
-/* Currently selected day */
-.gldp-default .selected {
-  background-color: #e5e5e5;
-  border-color: #c3c7ca;
-  font-weight: bold;
-  -webkit-text-shadow: 0 1px 0 white;
-  -moz-text-shadow: 0 1px 0 white;
-  text-shadow: 0 1px 0 white;
+.gldp-days {
+	border-top: 1px solid #ececec;
+	border-left: 1px solid #ececec;
+	font-size: 12px;
+	}
+	.gldp-default-dow + tr > .gldp-days {
+		border-top: 1px solid #ced3d6;
+	}
+	.gldp-days:first-child {
+		border-left: 0;
+	}
+
+/* Selectable days */
+.gldp-default-day,
+.gldp-default-day-hover {
+	font-weight: bold;
+	cursor: pointer;
+	}
+	.gldp-default-day {
+		color: #6c7174;
+	}
+	.gldp-default-day-hover {
+		background: #e5e5e5;
+		-webkit-text-shadow: 0 1px 0 white;
+		-moz-text-shadow: 0 1px 0 white;
+		text-shadow: 0 1px 0 white;
+	}
+
+/* Selected days */
+.gldp-default-selected {
+	background-color: #e5e5e5;
+	border: solid 1px #c3c7ca;
+	font-weight: bold;
+	-webkit-text-shadow: 0 1px 0 white;
+	-moz-text-shadow: 0 1px 0 white;
+	text-shadow: 0 1px 0 white;
 }
 
 /* Today */
-.gldp-default .today {
-  color: #fff;
-  font-weight: bold;
-  -webkit-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.65);
-  -moz-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.65);
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.65);
-  background-color: #004a95;
-  }
-  .gldp-default .today:hover {
-    background-color: #005dba;
-  }
+.gldp-default-today,
+.gldp-default-today-hover {
+	color: #fff;
+	cursor: pointer;
+	font-weight: bold;
+	-webkit-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.65);
+	-moz-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.65);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.65);
+	}
+	.gldp-default-today {
+		background-color: #004a95;
+	}
+	.gldp-default-today-hover {
+		background-color: #005dba;
+	}
 
-/* Special */
-.gldp-default .special {
-  color: #fff;
-  font-weight: bold;
-  background-color: #99c624;
-  }
-  .gldp-default .special:hover {
-    background-color: #A5D627;
-  }
+/* Weekends */
+.gldp-default-sat, .gldp-default-sun {
+	background-color: #fff;
+	color: #666;
+	font-weight: bold;
+}
+.gldp-default-sat-hover, .gldp-default-sun-hover {
+	background-color: #fff;
+	color: #004f8f;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+/* Non-selectable day.  Includes: previous/next month days and days that fall in the allowOld and endDate conditions */
+.gldp-default-noday {
+	background-color: #f2f2f2;
+	color: #cfd1d2;
+	cursor: wait;
+}
