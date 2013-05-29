@@ -75,15 +75,14 @@
   <link rel="stylesheet" href="external/CLEditor/jquery.cleditor.css">
   <!-- loading mask -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.loadmask.css?v=1">  
-  <!-- Google code prettifier -->
-  <link rel="stylesheet" href="../ext/jquery/google-code-prettify/sunburst.css?v=1">
   
   <!-- Load Page Specific CSS -->
   <?php echo $lC_Template->loadPageCss($lC_Template->getModule()); ?>
 
   <!-- Modernizr is always at top and first -->
   <script src="../ext/jquery/modernizr.custom.js"></script>
-  <script src="../ext/jquery/jquery-1.9.1.min.js"></script>
+  <!-- script src="../ext/jquery/jquery-1.9.1.min.js"></script -->
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>  
   <script src="../ext/jquery/jquery.migrate-1.2.1.min.js"></script>
   
   <!-- For Modern Browsers -->
