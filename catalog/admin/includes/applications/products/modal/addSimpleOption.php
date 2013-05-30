@@ -17,7 +17,7 @@ global $lC_Currencies;
 #addSimpleOption { padding-bottom:20px; }
 </style>
 <script>
-function addSimpleOption(id) {
+function addSimpleOption(editRow) {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -46,7 +46,7 @@ function addSimpleOption(id) {
         var check = 'entry=' + entry.id;
         if (selected.indexOf(check) > 0) {  // is item in the selected list
           items += '<div class="small"><span class="icon-right icon-blue with-small-padding"></span>' + entry.title + '</div>';
-          itemsInput += '<input type="hidden" name="simple_options_entry[' + id + '][' + entry.id + ']" value="' + entry.title + '">';
+          itemsInput += '<input type="hidden" id="simple_options_entry_' + id + '_' + entry.id + '" name="simple_options_entry[' + id + '][' + entry.id + ']" value="' + entry.title + '">';
           pitemsInput += '<tr class="trp-' + id + '">'+
                          '  <td class="element">' + entry.title + '</td>'+
                          '  <td>'+
@@ -61,18 +61,23 @@ function addSimpleOption(id) {
         }
       }
     });    
-    
-    var row = '<tr id="tr-' + ref + '" style="cursor:pointer;">'+
-              '  <td><img src="templates/default/img/icons/16/drag.png"></td>'+
-              '  <td onclick="$(\'.drop' + ref + '\').toggle();">' + groupTitle + '<div class="small-margin-top drop' + ref + '" style="display:none;"><span>' + items + '</span></div></td>'+
-              '  <td onclick="$(\'.drop' + ref + '\').toggle();">' + groupModule + '</td>'+
-              '  <td class="sort" onclick="$(\'.drop' + ref + '\').toggle();"></td>'+
-              '  <td align="center"><span class="icon-cross icon-size2 icon-red" style="cursor:pointer;" onclick="$(\'#tr-' + ref + '\').remove();$(\'#drop' + ref + '\').remove();$(\'.trp-' + ref + '\').remove();"></span></td>'+
+              
+    var row = '<tr id="tre-' + ref + '">'+
+              '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>'+
+              '  <td width="16px" style="cursor:pointer;" onclick="toggleItem(\'#drope' + ref + '\');"><span id="drope' + ref + '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>'+
+              '  <td width="40%">' + groupTitle + '<div class="small-margin-top dropall" id="drope' + ref + '" style="display:none;"><span>' + items + '</span></div></td>'+
+              '  <td width="30%">' + groupModule + '</td>'+
+              '  <td width="10%" class="sort"></td>'+
+              '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleStatus(this, \'' + id + '\');"><span class="icon-tick icon-size2 icon-green"></span></td>'+
+              '  <td width="15%" align="right">'+
+              '     <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="editOptionsEntry(\'' + id + '\')"></span>'+
+              '     <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeOptionsRow(\'' + id + '\');"></span>'+
+              '   </td>'+
               '  <input type="hidden" name="simple_options_group_name[' + id + ']" value="' + groupTitle + '">'+
               '  <input type="hidden" name="simple_options_group_type[' + id + ']" value="' + groupModule + '">'+
-              '  <input class="sort" type="hidden" name="simple_options_group_sort_order[' + id + ']" value="0">'+
-              '  <input type="hidden" name="simple_options_group_status[' + id + ']" value="1">'+ itemsInput +
-              '</tr>';
+              '  <input class="sort" type="hidden" name="simple_options_group_sort_order[' + id + ']" value="">'+
+              '  <input type="hidden" id="simple_options_group_status_' + id + '" name="simple_options_group_status[' + id + ']" value="1">' + itemsInput +
+              '</tr>';              
               
     var prow = '<tr id="trp-' + ref + '" class="trp-' + ref + '"><td width="100px" class="strong">' + groupTitle + '</td></tr>' + pitemsInput;
      
@@ -222,13 +227,17 @@ function addSimpleOption(id) {
                     }); 
                     
                     var entries = '';
+                    var row = (editRow != undefined) ? editRow : '';
                     $.each(edata, function(key, val) {
                       if (val.id != undefined) {
-                        entries += '<option value="' + val.id + '">' + val.title + '</option>';
+                        if ($("#simple_options_entry_" + row.toString() + "_" + val.id.toString()).length > 0) {
+                          entries += '<option selected="selected" value="' + val.id + '">' + val.title + '</option>';
+                        } else {
+                          entries += '<option value="' + val.id + '">' + val.title + '</option>';
+                        }
                       }
                     });
                     $("#entrySelectContainer").html('<select id="entry" name="entry" class="select check-list easy-multiple-selection full-width" multiple>' +  entries + '</select>').change();                    
-                
                   }
                 );                               
                 
@@ -239,9 +248,14 @@ function addSimpleOption(id) {
       });
       
       var options = '';
+      var row = (editRow != undefined) ? editRow : '';
       $.each(data, function(key, val) {
         if (val.id != undefined) {
-          options += '<option value="' + val.id + '">' + val.title + '</option>';
+          if (val.id == row) {
+            options += '<option selected="selected" value="' + val.id + '">' + val.title + '</option>';
+          } else {
+            options += '<option value="' + val.id + '">' + val.title + '</option>';
+          }
         }
       });
       $("#groupSelectContainer").html('<select id="group" name="group" class="select multiple check-list full-width">' +  options + '</select>').change();

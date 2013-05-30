@@ -49,15 +49,17 @@ global $lC_Language, $pInfo;
     <div id="simpleOptionsContainer" class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_simple_options'); ?></legend>
-        <span class="float-right" style="margin:-26px -8px 4px 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addSimpleOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
-        <table width="100%" style="" id="simpleOptionsTable" class="simple-table">
+        <span class="float-right" style="margin:-46px 0px 4px 0;"><a class="button icon-plus-round green-gradient glossy compact" href="javascript:void(0)" onclick="addSimpleOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
+        <table width="100%" style="margin-top:-8px;" id="simpleOptionsTable" class="simple-table">
           <thead>
             <tr>
-              <th scope="col" class="align-center with-tooltip" data-tooltip-options='{"classes":["orange-gradient"],"position":"bottom"}' title="Drag & Drop Rows to Sort" width="16px"><img style="vertical-align:middle;" src="templates/default/img/icons/16/drag.png"></th>
+              <th scope="col" class="align-center">&nbsp;</th>
+              <th scope="col" class="align-left with-tooltip" onclick="toggleAll();" data-tooltip-options='{"classes":["grey-gradient"],"position":"left"}' title="<?php echo $lC_Language->get('text_expand_collapse_all'); ?>" width="16px" style="cursor:pointer; font-size:1em;"><span id="toggle-all" class="icon-squared-plus icon-grey icon-size2"></span></th>
               <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_name'); ?></th>
               <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_type'); ?></th>
               <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_sort'); ?></th>
-              <th scope="col" class="align-center" width="50px"><?php echo $lC_Language->get('table_heading_remove'); ?></th>
+              <th scope="col" class="align-center"><?php echo $lC_Language->get('table_heading_on'); ?></th>
+              <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
             </tr>
           </thead>
           <tbody class="sorted_table"><?php echo lC_Products_Admin::getSimpleOptionsContent($pInfo->get('simple_options')); ?></tbody>
@@ -94,6 +96,7 @@ $(document).ready(function() {
     },
     onDrop: function  (item, container, _super) { 
       item.removeClass("dragged");
+      item.attr("style", "");
       $("body").removeClass("dragging");
 
       _setSortOrder();
@@ -138,6 +141,50 @@ function _updateInvControlType(type) {
     $('label[for=\'ioc_radio_2\']').addClass('active'); 
     $('#multiSkuContainer').show();   
     $('#simpleOptionsContainer').hide();        
+  }
+}
+
+function toggleStatus(e, id) {
+  var status = $('#simple_options_group_status_' + id).val();
+  if (status == '1') {
+    $('#simple_options_group_status_' + id).val('-1');
+    $(e).html('<span class="icon-cross icon-size2 icon-red"></span>');
+  } else {
+    $('#simple_options_group_status_' + id).val('1');
+    $(e).html('<span class="icon-tick icon-size2 icon-green"></span>');    
+  }
+}
+
+function removeOptionsRow(id) {
+  $.modal.confirm('<?php echo $lC_Language->get('text_remove_row'); ?>', function() {
+      $('#tre-' + id).remove();
+      $('.trp-' + id).remove();
+    }, function() {
+      return false;
+  });  
+}
+
+function toggleItem(item) {
+  var expand = $(item + '_span').hasClass('icon-squared-plus');
+  if (expand) {
+    $(item).slideDown();
+    $(item + '_span').removeClass('icon-squared-plus').addClass('icon-squared-minus');
+  } else {
+    $(item).slideUp();
+    $(item + '_span').removeClass('icon-squared-minus').addClass('icon-squared-plus');
+  }
+}
+
+function toggleAll() {
+  var expand = $('#toggle-all').hasClass('icon-squared-plus');
+  if (expand) {
+    $('.dropall').slideDown();
+    $('#toggle-all').removeClass('icon-squared-plus').addClass('icon-squared-minus');
+    $('.toggle-icon').removeClass('icon-squared-plus').addClass('icon-squared-minus');
+  } else {
+    $('.dropall').slideUp();
+    $('#toggle-all').removeClass('icon-squared-minus').addClass('icon-squared-plus');
+    $('.toggle-icon').removeClass('icon-squared-minus').addClass('icon-squared-plus');
   }
 }
 

@@ -1513,20 +1513,28 @@ class lC_Products_Admin {
           foreach ($options['values'] as $k => $v) {
             if (($v['options_id'] == $so['options_id']) && $v['customers_group_id'] == '1') {
               $items .= '<div class="small"><span class="icon-right icon-blue with-small-padding"></span>' . $v['title'] . '</div>';
-              $itemsInput .= '<input type="hidden" name="simple_options_entry[' . $v['options_id'] . '][' . $v['values_id'] . ']" value="' . $v['title'] . '">';
+              $itemsInput .= '<input type="hidden" id="simple_options_entry_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry[' . $v['options_id'] . '][' . $v['values_id'] . ']" value="' . $v['title'] . '">';
             }
           }
           
-          $tbody .= '<tr id="tre-' . $so['options_id'] .'" style="cursor:pointer;">' .
-                    '  <td><img src="templates/default/img/icons/16/drag.png"></td>' .
-                    '  <td onclick="$(\'.drope' . $so['options_id'] . '\').toggle();">' . $so['title'] . '<div class="small-margin-top drope' . $so['options_id'] . '" style="display:none;"><span>' . $items . '</span></div></td>' .
-                    '  <td onclick="$(\'.drope' . $so['options_id'] . '\').toggle();">' . $so['module'] . '</td>' .
-                    '  <td class="sort" onclick="$(\'.drope' . $so['options_id'] . '\').toggle();"></td>' .
-                    '  <td align="center"><span class="icon-cross icon-size2 icon-red" style="cursor:pointer;" onclick="$(\'#tre-' . $so['options_id'] . '\').remove();$(\'.trp-' . $so['options_id'] . '\').remove();"></span></td>' .
+          $statusIcon = (isset($so['status']) && $so['status'] == '1') ? '<span class="icon-tick icon-size2 icon-green"></span>' : '<span class="icon-cross icon-size2 icon-red"></span>';
+          
+          
+          $tbody .= '<tr id="tre-' . $so['options_id'] .'">' .
+                    '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
+                    '  <td width="16px" style="cursor:pointer;" onclick="toggleItem(\'#drope' . $so['options_id'] . '\');"><span id="drope' . $so['options_id'] . '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>' .
+                    '  <td width="40%">' . $so['title'] . '<div class="small-margin-top dropall" id="drope' . $so['options_id'] . '" style="display:none;"><span>' . $items . '</span></div></td>' .
+                    '  <td width="30%">' . $so['module'] . '</td>' .
+                    '  <td width="10%" class="sort"></td>' .
+                    '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleStatus(this, \'' . $so['options_id'] . '\');">' . $statusIcon . '</td>' .
+                    '  <td width="15%" align="right">
+                         <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addSimpleOption(\'' . $so['options_id'] . '\')"></span>
+                         <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeOptionsRow(\'' . $so['options_id'] . '\');"></span>
+                       </td>' .
                     '  <input type="hidden" name="simple_options_group_name[' . $so['options_id'] . ']" value="' . $so['title'] . '">' .
                     '  <input type="hidden" name="simple_options_group_type[' . $so['options_id'] . ']" value="' . $so['module'] . '">' .
                     '  <input class="sort" type="hidden" name="simple_options_group_sort_order[' . $so['options_id'] . ']" value="' . $so['sort_order'] . '">' .
-                    '  <input type="hidden" name="simple_options_group_status[' . $so['options_id'] . ']" value="1">'. $itemsInput  .
+                    '  <input type="hidden" id="simple_options_group_status_' . $so['options_id'] . '" name="simple_options_group_status[' . $so['options_id'] . ']" value="' . $so['status'] . '">' . $itemsInput  .
                     '</tr>';
         }
       }

@@ -119,8 +119,8 @@ table_heading_name = Name
 table_heading_type = Type
 table_heading_sort = Sort
 table_heading_status = Status
-table_heading_remove = Remove
-
+table_heading_action = Action
+table_heading_on = On
 
 text_additional_images = Additional Images
 text_add_handling_fee = Add Handling Fee
@@ -197,8 +197,9 @@ text_vendor_supplier = Vendor/Supplier
 text_warehouse = Warehouse
 text_width = Width
 text_zero_for_free_shipping = &nbsp;Enter 0 for Free Shipping
-
 text_drag_drop_to_replace = Drag & Drop Image to Replace
+text_expand_collapse_all = Expand/Collape All
+text_remove_row = Remove Row?
 
 info_bubble_content_image = Default Product Image
 info_bubble_content_name =  Product Name (required)

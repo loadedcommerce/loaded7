@@ -24,9 +24,9 @@ global $lC_Language, $pInfo;
     <!-- lc_group_pricing begin -->
     <div class="field-block field-block-product button-height">
       <label for="" class="label"><b><?php echo $lC_Language->get('text_group_pricing'); ?></b></label>
-      <input onchange="$('#groups_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_group_pricing'), null, 'info-spot on-left grey margin-left'); ?>
+      <input onchange="toggleSection('groups_pricing_container');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_group_pricing'), null, 'info-spot on-left grey margin-left'); ?>
       <?php echo lc_go_pro(); ?>
-      <div class="field-block-chevron-container float-right"><span class="icon-chevron-thin-down icon-size2"></span></div>
+      <div onclick="toggleSection('groups_pricing_container'); return false;" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="groups_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
     </div>
     <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
       <?php echo lC_Products_Admin::getGroupPricingContent($pInfo->get('products_price')); ?>
@@ -36,21 +36,18 @@ global $lC_Language, $pInfo;
     <!-- lc_qty_price_breaks begin -->
     <div class="field-block field-block-product button-height">
       <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_break_pricing'); ?></b></label>
-      <input onchange="$('#qty_breaks_pricing_container').toggle('300');" type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_qty_price_breaks'), null, 'info-spot on-left grey margin-left'); ?>
+      <input onchange="toggleSection('qty_breaks_pricing_container');" type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_qty_price_breaks'), null, 'info-spot on-left grey margin-left'); ?>
       <span id="qty_breaks_number_of_break_points">
-        <span class="number input">
-          <button type="button" class="button number-down" disabled>-</button>
-          <input type="text" value="3" size="3" class="input-unstyled" disabled />
-          <button type="button" class="button number-up" disabled>+</button>
-        </span>
         <?php echo lc_go_pro(); ?>
+        <div onclick="/* toggleSection('qty_breaks_pricing_container'); return false; */" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="qty_breaks_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
       </span>
     </div> 
+    
     <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
       <div id="" class="with-mid-padding" style="border-bottom:1px solid #dddddd; margin-left:-10px;">
         <label for="" class="label">
           <strong>Retail</strong>
-          <?php echo lc_go_pro(); ?>
+          <?php echo lc_go_pro(); ?>  
         </label>
         <div>
           <span style="white-space:nowrap;">
@@ -171,7 +168,9 @@ global $lC_Language, $pInfo;
     
     <div class="field-block field-block-product button-height">
       <label for="specials-pricing-switch" class="label"><b><?php echo $lC_Language->get('text_special_pricing'); ?></b></label>
-      <input onchange="$('#specials_pricing_container').toggle('300');" id="specials-pricing-switch" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($pInfo->get('products_special_price') != null) ? ' checked' : ''); ?> /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_specials'), null, 'info-spot on-left grey margin-left margin-right'); ?>
+      <input onchange="toggleSection('#specials_pricing_container');" id="specials-pricing-switch" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($pInfo->get('products_special_price') != null) ? ' checked' : ''); ?> /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_specials'), null, 'info-spot on-left grey margin-left margin-right'); ?>
+      <div onclick="toggleSection('specials_pricing_container'); return false;" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="specials_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
+
     </div>
     <div id="specials_pricing_container" class="field-drop button-height black-inputs no-margin-bottom"<?php echo (($pInfo->get('products_special_price') != null) ? ' style="display:block;"' : ' style="display:none;"'); ?>>
       <label for="resize_height" class="label"><b>Special Retail Price</b></label>
@@ -203,7 +202,7 @@ global $lC_Language, $pInfo;
   
   <dl id="simple-options-pricing-tab" class="accordion">
     <?php echo lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')); ?>
-  </dl>
+  </dl>     
   
     
 </div>  
@@ -225,6 +224,29 @@ function showSymbol(e, id) {
     $('#div_' + id).removeClass('icon-red').removeClass('icon-minus-round').addClass('icon-green').addClass('icon-plus-round');   
   } else {
     $('#div_' + id).removeClass('icon-green').removeClass('icon-plus-round').addClass('icon-red').addClass('icon-minus-round');   
+  }
+}
+
+function toggleSection(section, toggle) {
+  if (toggle != undefined) {
+    if (toggle == 'open') {
+      var open = false;
+    } else if (toggle == 'close') {
+      var open = true;
+    } else {
+      var open = $('#' + section).is(":visible");
+    }
+  } else {
+    var open = $('#' + section).is(":visible");
+  }
+  if (open) {
+    $('#' + section).slideUp('300');
+    $('#' + section + '_span').removeClass('icon-chevron-thin-up');
+    $('#' + section + '_span').addClass('icon-chevron-thin-down');
+  } else {
+    $('#' + section).slideDown('300');
+    $('#' + section + '_span').removeClass('icon-chevron-thin-down');
+    $('#' + section + '_span').addClass('icon-chevron-thin-up');        
   }
 }
 </script>
