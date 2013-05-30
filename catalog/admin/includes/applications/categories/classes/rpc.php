@@ -143,6 +143,21 @@ class lC_Categories_Admin_rpc {
                     'rpcStatus' => RPC_STATUS_SUCCESS);
 
     echo json_encode($result);
+  }
+ /*
+  * update category sorting
+  *
+  * @param array $_GET The categories sort_order_x to update
+  * @access public
+  * @return json
+  */
+  public static function cSort() {
+    $sort = lC_Categories_Admin::cSort($_GET);
+    if ($sort) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }  
+
+    echo json_encode($result);
   } 
 }
 ?>

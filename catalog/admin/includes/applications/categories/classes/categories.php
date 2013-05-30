@@ -44,7 +44,7 @@ class lC_Categories_Admin {
     while ( $Qcategories->next() ) {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcategories->value('categories_id') . '" id="' . $Qcategories->value('categories_id') . '"></td>';
       $category = '<td><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-folder icon-orange"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
-      $sort = $Qcategories->valueInt('sort_order');
+      $sort = '<td>' . $Qcategories->valueInt('sort_order') . '<input type="hidden" name="sort_order_' . $Qcategories->value('categories_id') . '" value="' . $Qcategories->valueInt('sort_order') . '" class="sort" /></td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id') . '&cid=' . (($_GET['categories']) ? $_GET['categories'] : 0) . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
                    <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="moveCategory(\'' . $Qcategories->value('categories_id') . '\', \'' . urlencode($Qcategories->valueProtected('categories_name')) . '\')"') . '" class="button icon-cloud-upload with-tooltip ' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_move') . '"></a>
@@ -474,6 +474,30 @@ class lC_Categories_Admin {
     }
     
     return $tree;
+  }
+ /*
+  * Update category sorting
+  * 
+  * @access public
+  * @return array
+  */
+  public static function cSort($data) {
+    global $lC_Database;
+    $cnt = 10;
+    foreach ($_GET as $key => $value) {
+      if ($key != 'categories' && $key != 'action' && $key != 'dataTable_length' && $key != 'selectAction' && $key != 'lCAdminID') { 
+        $keyParts = explode('_', $key);
+        
+        $Qupdate = $lC_Database->query('update :table_categories set sort_order = :sort_order, last_modified = now() where categories_id = :categories_id');
+        $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
+        $Qupdate->bindInt(':sort_order', $cnt);
+        $Qupdate->bindInt(':categories_id', $keyParts[2]);
+        $Qupdate->setLogging($_SESSION['module'], $id);
+        $Qupdate->execute();
+        $cnt = $cnt + 10;
+      }
+    }
+    return true;
   }
                           
 }

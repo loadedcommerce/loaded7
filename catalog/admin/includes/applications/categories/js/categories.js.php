@@ -14,16 +14,13 @@
 global $lC_Template;
 ?>
 <script>
-$(document).ready(function() {
-  // instantiate breadcrumb
-  $("#breadCrumb0").jBreadCrumb();
-
+function _refreshDataTable() {
   var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';            
   var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=getAll&media=MEDIA'); ?>';
-  var quickAdd = '<?php echo (isset($_GET['action']) && $_GET['action'] == 'quick_add') ? true : false; ?>';
      
   oTable = $('#dataTable').dataTable({
     "bProcessing": true,
+    "bDestroy": true,
     "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
     "sPaginationType": paginationType,  
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
@@ -34,7 +31,40 @@ $(document).ready(function() {
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();
-       
+}   
+  
+$(document).ready(function() {
+  _refreshDataTable();
+  $('.sorted_table').sortable({  
+    containerSelector: 'tbody',
+    itemSelector: 'tr',
+    placeholder: '<tr class="placeholder" />',
+    tolerance: '1',
+    onDragStart: function (item, group, _super) {
+      item.css({
+        height: item.height(),
+        width: item.width()
+      });
+      item.addClass("dragged");
+      $('body').addClass('dragging');
+    },
+    onDrop: function  (item, container, _super) { 
+      item.removeClass("dragged");
+      $("body").removeClass("dragging");
+      var nvp = $('#batch').serialize();
+      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=cSort&NVP'); ?>';
+      $.getJSON(jsonLink.replace('NVP', nvp),
+        function (data) {
+          _refreshDataTable();
+        }
+      );
+    }    
+  }); 
+  // instantiate breadcrumb
+  $("#breadCrumb0").jBreadCrumb();
+
+  var quickAdd = '<?php echo (isset($_GET['action']) && $_GET['action'] == 'quick_add') ? true : false; ?>';
+  
   if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
     $('#main-title > h1').attr('style', 'font-size:1.8em;');
     $('#main-title').attr('style', 'padding: 0 0 0 20px;');
@@ -47,13 +77,8 @@ $(document).ready(function() {
   } else {
     // instantiate floating menu
     $('#floating-menu-div-listing').fixFloat();
-  }     
-  var error = '<?php echo $_SESSION['error']; ?>';
-  if (error) {
-    var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
-    $.modal.alert(errmsg);
-  } 
-  
+  }
+    
   if (quickAdd) {
     newCategory();
   }

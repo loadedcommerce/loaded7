@@ -12,6 +12,12 @@
   @license    http://loadedcommerce.com/license.html
 */
 ?>
+<style>
+.dragging, .dragging * { cursor: move !important; }
+.dragged { position: absolute; opacity: 0.5; z-index: 2000; }
+.placeholder { position: relative; }
+.placeholder:before { position: absolute; }
+</style>
 <!-- Main content -->
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
@@ -29,7 +35,7 @@
   </style>
   <div class="with-padding-no-top">
     <form name="batch" id="batch" action="#" method="post">
-    <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
+    <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table" id="dataTable">
       <thead>
         <tr>
           <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
@@ -44,8 +50,7 @@
           </th>        
         </tr>
       </thead>
-      <tbody>
-      </tbody>
+      <tbody class="sorted_table"></tbody>
       <tfoot>
         <tr>
           <th colspan="4">&nbsp;</th>
@@ -94,9 +99,5 @@
     </div>
   </div>
 </section>
-<?php
-  if (isset($_SESSION['error'])) unset($_SESSION['error']);
-  if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']);
-  $lC_Template->loadModal($lC_Template->getModule());
-?>
+<?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <!-- End main content -->
