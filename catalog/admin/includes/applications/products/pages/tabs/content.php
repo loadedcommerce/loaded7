@@ -45,7 +45,7 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
             <?php
               foreach ( $lC_Language->getAll() as $l ) {
               ?>
-              <div id="languageTabs_<?php echo $l['code']; ?>">
+              <div style="min-height:530px;" id="languageTabs_<?php echo $l['code']; ?>">
                 <fieldset>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_name[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_name') . lc_show_info_bubble($lC_Language->get('info_bubble_content_name')); ?></label>
@@ -53,7 +53,7 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
                   </p>
                   <p class="button-height block-label">
                   <label class="label" for="<?php echo 'products_description[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_description') . lc_show_info_bubble($lC_Language->get('info_bubble_content_description')); ?></label>
-                  <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($pInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'id="clEditorProductDescription_' . $l['id'] . '" style="width:97%;" class="required input with-editor"'); ?>
+                  <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($pInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'id="ckEditorProductDescription_' . $l['id'] . '" style="width:97%;" class="required input full-width autoexpanding"'); ?>
                   <p align="right" style="padding:0; margin:-10px 10px -10px 0; font-size:.9em;"><?php echo '<a href="javascript:toggleEditor(\'' . $l['id'] . '\');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></p>
                   </p>
                   <p class="button-height block-label">
@@ -65,7 +65,7 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
                     <?php echo lc_draw_input_field('products_tags[' . $l['id'] . ']', (isset($pInfo) && isset($products_tags[$l['id']]) ? $products_tags[$l['id']] : null), 'id="products_tags_' . $l['id'] . '" class="input" style="width:97%" maxlength="255"'); ?>
                   </p>
                 </fieldset>
-              </div>
+              </div><div style="clear:both;"></div>
               <?php
               }
             ?>
@@ -131,8 +131,8 @@ $(document).ready(function() {
   $('#fileUploaderImageContainer .qq-upload-button').hide();
   $('#fileUploaderImageContainer .qq-upload-list').hide();
   <?php               
-  foreach ( $lC_Language->getAll() as $l ) {
-  //  echo "toggleEditor('" . $l['id'] . "');";
+  foreach ( $lC_Language->getAll() as $l ) {  
+    echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%'  });";
   }
   ?>  
   $('#products_name_1').focus();
@@ -150,16 +150,24 @@ function createUploader2(){
 }
 
 function toggleEditor(id) {
-  var selection = $("#clEditorProductDescription_" + id);
-  
+  var selection = $("#ckEditorProductDescription_" + id);
   if ($(selection).is(":visible")) {
-    $("#clEditorProductDescription_" + id).cleditor({width:"98%", height:"255"});
+    $('#ckEditorProductDescription_' + id).hide();
+    $('#cke_ckEditorProductDescription_' + id).show();
   } else {
-    var editor = $("#clEditorProductDescription_" + id).cleditor()[0];
-    editor.$area.insertBefore(editor.$main); // Move the textarea out of the main div
-    editor.$area.removeData("cleditor"); // Remove the cleditor pointer from the textarea
-    editor.$main.remove(); // Remove the main div and all children from the DOM
-    $("#clEditorProductDescription_" + id).css('width', '97%').show();
+    $('#ckEditorProductDescription_' + id).attr('style', 'width:99%');
+    $('#cke_ckEditorProductDescription_' + id).hide();
   }
 }
+
+function _disableCKEditor(textarea) {
+    // We cannot use getEditor() since it will throw an exception.
+    // http://ckeditor.com/blog/CKEditor_for_jQuery
+    var ck = textarea.eq(0).data('ckeditorInstance');
+    if (ck) {
+        ck.destroy();
+        ck = false;
+    }
+}
+
 </script>

@@ -26,6 +26,7 @@ global $lC_Language, $pInfo;
       <label for="" class="label"><b><?php echo $lC_Language->get('text_group_pricing'); ?></b></label>
       <input onchange="$('#groups_pricing_container').toggle('300');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_group_pricing'), null, 'info-spot on-left grey margin-left'); ?>
       <?php echo lc_go_pro(); ?>
+      <div class="field-block-chevron-container float-right"><span class="icon-chevron-thin-down icon-size2"></span></div>
     </div>
     <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
       <?php echo lC_Products_Admin::getGroupPricingContent($pInfo->get('products_price')); ?>
@@ -174,7 +175,7 @@ global $lC_Language, $pInfo;
     </div>
     <div id="specials_pricing_container" class="field-drop button-height black-inputs no-margin-bottom"<?php echo (($pInfo->get('products_special_price') != null) ? ' style="display:block;"' : ' style="display:none;"'); ?>>
       <label for="resize_height" class="label"><b>Special Retail Price</b></label>
-      <div class="columns margin-bottom" style="border-bottom:1px solid #dddddd;">
+      <div class="columns">
         <div class="new-row-mobile twelve-columns twelve-columns-mobile">
           <input type="checkbox" class="switch<?php if ($pInfo->get('status') != -1) echo ' checked'; ?>" />
           <span class="input" style="background:#dd380d;">

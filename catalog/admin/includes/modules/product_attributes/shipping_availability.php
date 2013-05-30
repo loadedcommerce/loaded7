@@ -36,7 +36,7 @@ class lC_ProductAttributes_shipping_availability extends lC_Product_attributes_A
     }
 
     if ( !empty($array) ) {
-      $string = lc_draw_pull_down_menu('attributes[' . self::getID() . ']', $array, $value, 'class="input with-small-padding full-width"');
+      $string = lc_draw_pull_down_menu('attributes[' . self::getID() . ']', $array, $value, 'class="select full-width"');
     }
 
     return $string;

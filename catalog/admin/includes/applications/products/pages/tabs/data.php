@@ -17,6 +17,7 @@ global $lC_Language, $pInfo, $tax_class_array;
   <fieldset class="fieldset">
     <legend class="legend"><?php echo $lC_Language->get('text_inventory_settings'); ?></legend>
     <div class="columns">
+    
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <div class="twelve-columns no-margin-bottom strong">
           <span><?php echo $lC_Language->get('field_model'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_model')); ?>
@@ -25,6 +26,17 @@ global $lC_Language, $pInfo, $tax_class_array;
           <input type="text" class="required input full-width" value="<?php echo (isset($pInfo) ? $pInfo->get('products_model') : null); ?>" id="products_model" name="products_model" />
         </div>
       </div>
+      
+      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
+        <div class="twelve-columns no-margin-bottom strong">
+          <span><?php echo $lC_Language->get('text_msrp'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_msrp')); ?>
+        </div>
+        <div class="twelve-columns no-margin-bottom small-margin-top">
+          <input type="text" class="required input full-width" value="<?php echo number_format($pInfo->get('products_msrp'), DECIMAL_PLACES); ?>" id="products_msrp" name="products_msrp" />
+        </div>
+      </div>      
+      
+      <?php /*
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <!-- lc_track_inventory_override begin -->
         <div class="twelve-columns no-margin-bottom strong">
@@ -49,16 +61,7 @@ global $lC_Language, $pInfo, $tax_class_array;
         </div>
         <!-- lc_track_inventory_override end -->
       </div>
-    </div>
-    <div class="columns">
-      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
-        <div class="twelve-columns no-margin-bottom strong">
-          <span><?php echo $lC_Language->get('text_msrp'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_msrp')); ?>
-        </div>
-        <div class="twelve-columns no-margin-bottom small-margin-top">
-          <input type="text" class="required input full-width" value="<?php echo number_format($pInfo->get('products_msrp'), DECIMAL_PLACES); ?>" id="products_msrp" name="products_msrp" />
-        </div>
-      </div>
+
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <!-- lc_vendor_supplier begin -->
         <div class="twelve-columns no-margin-bottom strong">
@@ -71,12 +74,14 @@ global $lC_Language, $pInfo, $tax_class_array;
         </div>
         <!-- lc_vendor_supplier end -->
       </div>
+      */ ?>
+      
     </div>
     <div class="columns">
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
         <!-- lc_inventory_control begin -->
         <div class="twelve-columns no-margin-bottom strong">
-          <span><?php echo $lC_Language->get('text_inventory_control'); ?></span><?php echo lc_go_pro(); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), 'margin-left:20px', 'info-spot info-spot on-right grey'); ?>
+          <span><?php echo $lC_Language->get('text_inventory_control'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), 'margin-left:8px', 'info-spot info-spot on-right grey'); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <span id=invControlButtons" class="button-group">
@@ -85,10 +90,10 @@ global $lC_Language, $pInfo, $tax_class_array;
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_1" value="1" />
               <?php echo $lC_Language->get('text_simple'); ?>
             </label>
-            <label for="ic_radio_2" class="oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
+            <label for="ic_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
               <!-- move onclick to function later maestro -->
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_2" value="2" />
-              <?php echo $lC_Language->get('text_multi_sku'); ?>
+              <?php echo $lC_Language->get('text_multi_sku') . lc_go_pro('info-spot on-left grey mid-margin-left mid-margin-right'); ?>
             </label>
           </span>
         </div>
@@ -105,9 +110,11 @@ global $lC_Language, $pInfo, $tax_class_array;
           <input type="text" name="products_sku" id="products_sku" value="<?php echo $pInfo->get('products_sku'); ?>" class="input" />
           <b><?php echo $lC_Language->get('text_sku'); ?></b>
         </div>
+        <?php /*
         <div class="small-margin-top">
           <input type="text" name="products_cost" id="products_cost" value="<?php //echo number_format($pInfo->get('products_cost'), DECIMAL_PLACES); ?>" class="input small-margin-right" disabled /> <b><?php echo $lC_Language->get('text_cost'); ?></b><?php echo lc_go_pro(); ?>
         </div>
+        */ ?>
       </div>
       <!-- lc_inventory_control_simple end -->                                       
       <div id="inventory_control_multi"<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? '' : ' style="display:none;"'); ?>>
@@ -140,10 +147,9 @@ global $lC_Language, $pInfo, $tax_class_array;
     <legend class="legend"><?php echo $lC_Language->get('text_management_settings'); ?></legend>
     <div class="columns no-margin-bottom">
     
-      <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
         <?php echo lC_Products_Admin::getProductAttributeModules('dataManagementSettings'); ?>
-      </div>
 
+      <?php /*
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">                  
         <div class="twelve-columns small-margin-bottom strong">
           <span><?php echo $lC_Language->get('text_product_class'); ?></span><?php echo lc_go_pro(); ?>
@@ -158,10 +164,11 @@ global $lC_Language, $pInfo, $tax_class_array;
             <option id="5" value="5">5th Class</option>
           </select>
         </div>
-
       </div>
+      */ ?>
     </div>
   </fieldset>
+  <?php /*
   <fieldset class="fieldset">
     <legend class="legend"><?php echo $lC_Language->get('text_product_details'); ?></legend>
     <div class="columns no-margin-bottom">
@@ -190,4 +197,5 @@ global $lC_Language, $pInfo, $tax_class_array;
       </div>
     </div>
   </fieldset>
+  */ ?>
 </div>

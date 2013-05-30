@@ -35,7 +35,7 @@ class lC_ProductAttributes_manufacturers extends lC_Product_attributes_Admin {
     }
 
     if ( !empty($array) ) {
-      $string = lc_draw_pull_down_menu('attributes[' . self::getID() . ']', $array, $value, 'class="input with-small-padding full-width"');
+      $string = lc_draw_pull_down_menu('attributes[' . self::getID() . ']', $array, $value, 'class="select full-width"');
     }
 
     return $string;

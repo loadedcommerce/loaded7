@@ -26,10 +26,10 @@ global $lC_Language, $pInfo;
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_1" value="1" />
               <?php echo $lC_Language->get('text_simple'); ?>
             </label>
-            <label for="ioc_radio_2" class="oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
+            <label for="ioc_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_2" value="2" />
-              <?php echo $lC_Language->get('text_multi_sku'); ?>
-            </label><?php echo lc_go_pro(); ?>
+              <?php echo $lC_Language->get('text_multi_sku') . lc_go_pro('info-spot on-left grey mid-margin-left mid-margin-right'); ?>
+            </label>
             <!-- lc_options_inventory_control end -->
           </div>
         </div>
@@ -64,7 +64,7 @@ global $lC_Language, $pInfo;
         </table>
       </fieldset>    
     </div>
-    
+    <?php /*
     <div id="bundleProductsContainer" class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_bundle_products'); ?><?php echo lc_go_pro('info-spot on-right margin-left mid-margin-right'); ?></legend>
@@ -72,7 +72,7 @@ global $lC_Language, $pInfo;
         <span class="thin"><?php echo $lC_Language->get('text_coming_soon'); ?>...</span>
       </fieldset>     
     </div>
-
+    */ ?>
   </div>
 </div>
 <script>

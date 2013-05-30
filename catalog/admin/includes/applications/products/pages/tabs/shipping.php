@@ -37,7 +37,7 @@ global $lC_Language, $pInfo, $weight_class_array;
               <?php echo lc_draw_pull_down_menu('products_weight_class', $weight_class_array, (isset($pInfo) ? $pInfo->get('products_weight_class') : SHIPPING_WEIGHT_UNIT), 'class="select full-width small-margin-top required"'); ?>
             </div>
           </div>
-          
+          <?php /*
           <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
             <div class="twelve-columns no-margin-bottom strong">
               <span><?php echo $lC_Language->get('field_non_shippable'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_shipping_non_shippable'), null, 'info-spot grey on-right mid-margin-left'); ?>
@@ -60,10 +60,11 @@ global $lC_Language, $pInfo, $weight_class_array;
               </div>
             </div>
           </div>  
-
+          */ ?>
         </div>
       </fieldset>
     </div>
+    <?php /*
     <div class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_order_fee_modifiers'); ?></legend>
@@ -87,15 +88,15 @@ global $lC_Language, $pInfo, $weight_class_array;
         </div>
       </fieldset>
     </div>
+    */ ?>
     <div class="twelve-columns">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_supplier_characteristics'); ?></legend>
         <div class="columns no-margin-bottom">
         
-          <div class="new-row-mobile six-colmns six-columns-tablet twelve-columns-mobile no-margin-bottom">
-            <?php echo lC_Products_Admin::getProductAttributeModules('shippingSupplierCharacteristics'); ?>
-          </div>
-          
+          <?php echo lC_Products_Admin::getProductAttributeModules('shippingSupplierCharacteristics'); ?>
+
+          <?php /*
           <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
             <div class="twelve-columns no-margin-bottom strong">
               <span><?php echo $lC_Language->get('text_warehouse'); ?></span><?php echo lc_go_pro('info-spot on-left grey mid-margin-left') . lc_show_info_bubble($lC_Language->get('info_bubble_shipping_date_expected'), 'margin-right:4px', 'info-spot on-left grey float-right'); ?>
@@ -116,7 +117,7 @@ global $lC_Language, $pInfo, $weight_class_array;
               </span>
             </div>
           </div>                
-          
+          */ ?>
         </div>
       </fieldset>
     </div>
