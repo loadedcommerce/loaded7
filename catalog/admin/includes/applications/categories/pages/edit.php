@@ -98,12 +98,11 @@
                     $('.qq-upload-button').hide();
                     $('.qq-upload-list').hide();
                   });
-
-                  function createUploader(){
+                  function createUploader() {
                     var uploader = new qq.FileUploader({
                       element: document.getElementById('fileUploaderImageContainer'),
                       action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('categories_id') . '&action=fileUpload'); ?>',
-                      onComplete: function(id, fileName, responseJSON){
+                      onComplete: function(id, fileName, responseJSON) {
                         $('#imagePreviewContainer').html('<img src="<?php echo '../images/categories/'; ?>' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="categories_image" name="categories_image" value="' + fileName + '">');
                       },
                     });

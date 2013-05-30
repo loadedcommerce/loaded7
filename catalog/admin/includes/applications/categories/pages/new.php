@@ -46,8 +46,39 @@
         <div class="clearfix tabs-content">
           <div id="section_general_content">
             <div class="columns with-padding">
-              <div class="nine-columns twelve-columns-mobile">
-                <div id="categoryLanguageTabs" class="standard-tabs at-bottom">
+              <div class="new-row-mobile four-columns twelve-columns-mobile">
+                <span class="strong margin-right"><?php echo $lC_Language->get('text_categories_image'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_category_image'), null); ?>   
+                <div style="padding-left:6px;" class="small-margin-top">
+                  <div id="imagePreviewContainer" class="cat-image align-center">
+                    <img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" />
+                    <input type="hidden" id="categories_image" name="categories_image" value="no-image.png">
+                  </div>
+                </div>   
+                <p class="thin" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
+                <div id="fileUploaderImageContainer" class="small-margin-top">
+                  <noscript>
+                    <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
+                  </noscript>
+                </div>
+                <script>
+                  $(document).ready(function() {
+                    createUploader();
+                    $('.qq-upload-button').hide();
+                    $('.qq-upload-list').hide();
+                  });
+                  function createUploader() {
+                    var uploader = new qq.FileUploader({
+                      element: document.getElementById('fileUploaderImageContainer'),
+                      action: '<?php echo lc_href_link_admin('rpc.php', 'action=fileUpload'); ?>',
+                      onComplete: function(id, fileName, responseJSON) {
+                        $('#imagePreviewContainer').html('<img src="<?php echo '../images/categories/'; ?>' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="categories_image" name="categories_image" value="' + fileName + '">');
+                      },
+                    });
+                  }
+                </script>
+              </div>
+              <div class="new-row-mobile eight-columns twelve-columns-mobile">
+                <div id="categoryLanguageTabs" class="standard-tabs">
                   <ul class="tabs">
                   <?php
                     foreach ( $lC_Language->getAll() as $l ) {
@@ -106,41 +137,6 @@
                   </div>
                 </div>
               </div>
-              <div class="three-columns twelve-columns-mobile">
-                <span class="strong margin-right"><?php echo $lC_Language->get('text_categories_image'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_category_image'), null); ?>   
-                <div style="padding-left:6px;" class="small-margin-top">
-                  <div id="imagePreviewContainer" class="cat-image">
-                    <div class="cat-image align-center"><img src="images/no-image.png" style="max-width: 100%; height: auto;" align="center" /></div>
-                  </div>
-                </div>   
-                <p class="thin" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
-                <div id="fileUploaderImageContainer" class="small-margin-top">
-                  <noscript>
-                    <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
-                  </noscript>
-                </div>
-                <script>
-                  $(document).ready(function() {
-                    createUploader2();
-                    $('.qq-upload-button').hide();
-                    $('.qq-upload-list').hide();
-                  });
-                  
-                  function showImage() {
-                    //alert(fileName);
-                  }
-
-                  function createUploader2(){
-                    var uploader = new qq.FileUploader({
-                        element: document.getElementById('fileUploaderImageContainer'),
-                        action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=&action=fileUpload'); ?>',
-                        //onComplete: function(fileName, responseJSON){
-                          //showImage();
-                        //},
-                    });
-                  }
-                </script>
-              </div>
             </div>
             <div class="columns">
               <div class="twelve-columns no-margin-bottom">
@@ -194,7 +190,8 @@
                         <option value="top">Top</option>
                         <?php
                           foreach ($assignedCategoryTree->getArray() as $value) {
-                            echo '<option value="' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
+                            $selected = ($value['id'] == $_GET['categories']) ? ' selected' : '';
+                            echo '<option value="' . $value['id'] . '"' . $selected . '>' . $value['title'] . '</option>' . "\n";
                           }
                         ?>
                       </select>
