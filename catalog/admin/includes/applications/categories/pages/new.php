@@ -18,7 +18,7 @@
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
 <style>
-.qq-upload-drop-area { left: 19%; min-height: 104px; position: absolute; width: 65%; top: -190px; }
+.qq-upload-drop-area { min-height: 150px; top: -185px; }
 .qq-upload-drop-area span { margin-top:-16px; }
 </style>
 <!-- Main content -->
@@ -54,16 +54,20 @@
                     <input type="hidden" id="categories_image" name="categories_image" value="no-image.png">
                   </div>
                 </div>   
-                <p class="thin" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
-                <div id="fileUploaderImageContainer" class="small-margin-top">
-                  <noscript>
-                    <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
-                  </noscript>
-                </div>
+                <p class="thin mid-margin-top" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
+                <center>
+                  <div id="fileUploaderImageContainer" class="small-margin-top">
+                    <noscript>
+                      <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
+                    </noscript>
+                  </div>
+                </center>
                 <script>
                   $(document).ready(function() {
                     createUploader();
-                    //$('.qq-upload-button').hide();
+                    var qqbuttonhtmlold = $('.qq-upload-button').html();
+                    var qqbuttonhtml = qqbuttonhtmlold.replace(/Upload a file/i, 'Upload');
+                    $('.qq-upload-button').html(qqbuttonhtml).css('text-decoration', 'underline').css('margin', '-31px -141px 0 -49px');
                     $('.qq-upload-list').hide();
                   });
                   function createUploader() {
