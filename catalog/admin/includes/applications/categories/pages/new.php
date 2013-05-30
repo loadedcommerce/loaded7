@@ -63,7 +63,7 @@
                 <script>
                   $(document).ready(function() {
                     createUploader();
-                    $('.qq-upload-button').hide();
+                    //$('.qq-upload-button').hide();
                     $('.qq-upload-list').hide();
                   });
                   function createUploader() {
