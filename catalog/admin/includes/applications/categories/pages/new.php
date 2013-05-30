@@ -355,7 +355,7 @@
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
-              <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>">
+              <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . ($_GET['categories'] != '') ? 'categories=' . $_GET['categories'] : ''); ?>">
                 <span class="button-icon red-gradient glossy">
                   <span class="icon-cross"></span>
                 </span><?php echo $lC_Language->get('button_cancel'); ?>
