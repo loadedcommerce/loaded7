@@ -63,7 +63,7 @@ $content .= '<p class="button-height inline-label">' .
             '</p>' .
             '<p class="button-height inline-label">' .
             '  <label for="group" class="label" style="width:30%;">' . $lC_Language->get('field_customer_group') . '</label>' .
-               lc_draw_pull_down_menu('group', null, null, 'class="input with-small-padding" style="width:73%;"') .
+               lc_draw_pull_down_menu('group', null, null, 'class="select" style="width:73%;"') .
             '</p>' .
             '<p class="button-height inline-label">' .
               '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
@@ -163,7 +163,12 @@ function newCustomer() {
           buttonsLowPadding: true
       });
       $("#group").html("");
+      i=0;
       $.each(data.groupsArray, function(val, text) {
+        if(i == 0) {
+          $("#group").closest("span + *").prevAll("span.select-value:first").text(text);
+          i++
+        }
         $("#group").append(
           $("<option></option>").val(val).html(text)
         );

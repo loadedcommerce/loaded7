@@ -286,8 +286,8 @@
 		}
 
 		// Not found
-		console.log('No default action specified for this target ('+target[0].nodeName+')');
-	};
+		//console.log('No default action specified for this target ('+target[0].nodeName+')');
+	}
 
 	/**
 	 * Confirmation defaults

@@ -99,10 +99,10 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:2px !important;');
     $('#mainMessageContainer').css('margin', '54px 4px 0px 74px');    
   } else if ($.template.mediaQuery.name === 'tablet-landscape') {  
-    $('#logoImg').attr('style', 'margin-top:-1px !important;');
+    $('#logoImg').attr('style', 'margin-top:2px !important;');
     $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   } else { // desktop
-    $('#logoImg').attr('style', 'margin-top:-1px !important;');
+    $('#logoImg').attr('style', 'margin-top:2px !important;');
     $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   }
   
@@ -296,9 +296,11 @@ $(document).ready(function() {
     // get the current menu width in case screen size has changed
     var menuWidth = $("#menu").width();
     // slide to the left
-    $('#profileInner').animate({
-      "marginLeft" : "-=" + menuWidth
-    });
+    if (!$('#profileInner').is(':animated')) {
+           $('#profileInner').animate({
+              "marginLeft" : "-=" + menuWidth
+     });           
+   }
     return false;
   });
   // profile right is clicked

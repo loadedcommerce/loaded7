@@ -31,7 +31,7 @@
       }
 
       if ( !empty($array) ) {
-        $string = lc_draw_pull_down_menu('attributes[' . self::getID() . ']', $array, $value, 'class="input with-small-padding"');
+        $string = lc_draw_pull_down_menu('attributes[' . self::getID() . ']', $array, $value, 'class="select" style = "width:25%"');
       }
 
       return $string;

@@ -53,7 +53,8 @@ $template = 'main_page';
 
   <!-- Modernizr is always at top and first -->
   <script src="templates/js/modernizr.custom.js"></script>
-  <script src="templates/js/jquery-1.7.2.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
   <!-- For Modern Browsers -->
   <link rel="shortcut icon" href="img/favicons/favicon.png">
@@ -103,7 +104,7 @@ $template = 'main_page';
   <script src="templates/js/scroll.js"></script>
   <script src="templates/js/tooltip.js"></script>
   <script src="templates/js/wizard.js"></script>
-  <script src="templates/js/jquery.validate.pack.js"></script>
+  <script src="templates/js/jquery.validate.min.js"></script>
 
   <script>
     $(document).ready(function() {

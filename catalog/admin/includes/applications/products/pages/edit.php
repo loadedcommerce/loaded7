@@ -782,7 +782,7 @@ function toggleEditor(id) {
                       <fieldset style="height: 100%;">
                         <p class="button-height">
                           <label for="tax_class0" class="label"><?php echo $lC_Language->get('field_tax_class'); ?></label>
-                          <?php echo lc_draw_pull_down_menu('products_tax_class_id', $tax_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_tax_class_id') : null), 'class="input with-small-padding" style="width:77%; float:right; margin-right:20px;" id="tax_class0" onchange="updateGross(\'products_price0\');"'); ?>
+                          <?php echo '<span style = "padding-left:18px"></span>'.lc_draw_pull_down_menu('products_tax_class_id', $tax_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_tax_class_id') : null), 'class="select" style="width:77%; float:right; margin-right:20px;" id="tax_class0" onchange="updateGross(\'products_price0\');"'); ?>
                         </p>
                         <p class="button-height">
                           <label for="products_price0" class="label"><?php echo $lC_Language->get('field_price_net'); ?></label>
@@ -836,7 +836,7 @@ function toggleEditor(id) {
                         </p>
                         <p class="button-height">
                           <label for="products_weight_class" class="label"><?php echo $lC_Language->get('field_weight_class'); ?></label>
-                          <?php echo lc_draw_pull_down_menu('products_weight_class', $weight_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_weight_class') : SHIPPING_WEIGHT_UNIT), 'class="input with-small-padding" style="width:77%; float:right;"'); ?>
+                          <?php echo '<span style = "padding-left:18px"></span>'.lc_draw_pull_down_menu('products_weight_class', $weight_class_array, (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('products_weight_class') : SHIPPING_WEIGHT_UNIT), 'class="select" style="width:76%; float:right;"'); ?>
                         </p>
                       </fieldset>
                     </td>

@@ -191,10 +191,10 @@
 					left:	'0%',
 					right:	(100-colSize)+'%',
 					marginLeft: '-1px'			// This is to hide left border
-				}
+				},
 
 				/* Workaround */
-				,{
+				{
 					step: function(now, fx)
 					{
 						var value;
@@ -205,7 +205,6 @@
 								value = firstCol.data('agenda-initial-'+fx.prop);
 								if (value)
 								{
-									console.log('init', fx.prop, value);
 									fx.now = value+((now-fx.start)/(fx.end-fx.start)*(fx.end-value));
 									firstCol.css(fx.prop, fx.now);
 									fx.start = value;
@@ -213,7 +212,6 @@
 								firstCol.data('agenda-fixed-'+fx.prop, true);
 							}
 						}
-						console.log(fx.prop, now);
 					}
 				}
 				/* End workaround */

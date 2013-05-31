@@ -222,7 +222,7 @@ class lC_Configuration_Admin {
                '  <span class="message-status" style="padding-top:14px;">' .
                '     <a href="javascript://" onclick="showGroup(\'' . (int)$group['configuration_group_id'] . '\', \'' . lc_output_string_protected($group['configuration_group_title']) . '\');" class="new-message" title=""></a>' .
                '   </span>' .
-               '   <a id="cfgLink' . (int)$group['configuration_group_id'] . '" href="javascript://" onclick="showGroup(\'' . (int)$group['configuration_group_id'] . '\', \'' . lc_output_string_protected($group['configuration_group_title']) . '\');">' .
+               '   <a id="cfgLink' . (int)$group['configuration_group_id'] . '" href="javascript://" onclick="showGroup(\'' . (int)$group['configuration_group_id'] . '\', \'' . str_replace("/", "-", lc_output_string_protected($group['configuration_group_title'])) . '\');">' .
                '     <br><strong>' . lc_output_string_protected($group['configuration_group_title']) . '</strong>' .
                '   </a>' .
                ' </li>';

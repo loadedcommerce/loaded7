@@ -1,13 +1,4 @@
 /**
- *
- * '||''|.                            '||
- *  ||   ||    ....  .... ...   ....   ||    ...   ... ...  ... ..
- *  ||    || .|...||  '|.  |  .|...||  ||  .|  '|.  ||'  ||  ||' ''
- *  ||    || ||        '|.|   ||       ||  ||   ||  ||    |  ||
- * .||...|'   '|...'    '|     '|...' .||.  '|..|'  ||...'  .||.
- *                                                  ||
- * --------------- By Display:inline ------------- '''' -----------
- *
  * Global template functions
  *
  * Content:
@@ -116,6 +107,12 @@
 			down  : 40
 		},
 
+		/**
+		 * Path to the respond.js folder
+		 * @var string
+		 */
+    respondPath: './ext/jquery/',
+
 		/*
 		 * Here are stored various informations about the current media queries according to screen size
 		 */
@@ -211,7 +208,7 @@
 	 */
 	yepnope({
 		test : Modernizr.mq('(min-width:0)'),
-		nope : ['./ext/jquery/respond.min.js']
+		nope : [$.template.respondPath+'respond.min.js']
 	});
 
 
@@ -304,8 +301,17 @@
 	fixedTest = $('<div style="position:fixed; top:0"></div>').appendTo(bod);
 	function _checkPositionFixed()
 	{
+		// Top position
+		var top = fixedTest.offset().top,
+			scroll = doc.scrollTop();
+		if (scroll < 2)
+		{
+			// Do not process if too small, it sometimes causes false positive
+			return;
+		}
+
 		// Test
-		if (fixedTest.offset().top != doc.scrollTop())
+		if (top != scroll)
 		{
 			// Define
 			supportFixed = false;
@@ -326,13 +332,14 @@
 			scrollFixed();
 
 			// Start watching
-			doc.on('scroll normalized-resize orientationchange', scrollFixed);
+			doc.on('scroll', scrollFixed);
+			win.on('normalized-resize orientationchange', scrollFixed);
 		}
 
 		// End detection
 		fixedTest.remove();
 		doc.off('scroll', _checkPositionFixed);
-	};
+	}
 	doc.on('scroll', _checkPositionFixed);
 
 	/**
@@ -388,7 +395,7 @@
 				}
 			}
 		});
-	};
+	}
 
 	/**
 	 * Detect an absolutely positioned element's bounds
@@ -406,7 +413,7 @@
 		});
 
 		// Detect
-		this.each(function(i)
+		this.each(function()
 		{
 			// Prepare
 			var element = $(this),
@@ -1078,76 +1085,76 @@
 			name:	'wrapAll',
 			clear:	false,
 			setup:	{ prepare: false,
-					  target: function() { return this.parent(); },
-					  self: true, subs: false }
+					target: function() { return this.parent(); },
+					self: true, subs: false }
 		},
 		{
 			name:	'wrapInner',
 			clear:	false,
 			setup:	{ prepare: false,
-					  target: function() { return this.children(); },
-					  self: true, subs: false }
+					target: function() { return this.children(); },
+					self: true, subs: false }
 		},
 		{
 			name:	'wrap',
 			clear:	false,
 			setup:	{ prepare: false,
-					  target: function() { return this.parent(); },
-					  self: true, subs: false }
+					target: function() { return this.parent(); },
+					self: true, subs: false }
 		},
 		{
 			name:	'unwrap',
 			clear:	{ target: function() { return this.parent(); },
-					  self: true, subs: false },
+					self: true, subs: false },
 			setup:	false
 		},
 		{
 			name:	'append',
 			clear:	false,
 			setup:	{ prepare: function() { return this.children(); },
-					  target: function(prepared) { return this.children().not(prepared); },
-					  self: true, subs: true }
+					target: function(prepared) { return this.children().not(prepared); },
+					self: true, subs: true }
 		},
 		{
 			name:	'prepend',
 			clear:	false,
 			setup:	{ prepare: function() { return this.children(); },
-					  target: function(prepared) { return this.children().not(prepared); },
-					  self: true, subs: true }
+					target: function(prepared) { return this.children().not(prepared); },
+					self: true, subs: true }
 		},
 		{
 			name:	'before',
 			clear:	false,
 			setup:	{ prepare: function() { return this.prevAll(); },
-					  target: function(prepared) { return this.prevAll().not(prepared); },
-					  self: true, subs: true }
+					target: function(prepared) { return this.prevAll().not(prepared); },
+					self: true, subs: true }
 		},
 		{
 			name:	'after',
 			clear:	false,
 			setup:	{ prepare: function() { return this.nextAll(); },
-					  target: function(prepared) { return this.nextAll().not(prepared); },
-					  self: true, subs: true }
+					target: function(prepared) { return this.nextAll().not(prepared); },
+					self: true, subs: true }
 		},
 		{
 			name:	'remove',
 			clear:	{ target: function() { return this; },
-					  self: true, subs: true },
+					self: true, subs: true },
 			setup:	false
 		},
 		{
 			name:	'empty',
 			clear:	{ target: function() { return this; },
-					  self: false, subs: true },
+					self: false, subs: true },
 			setup:	false
 		},
 		{
 			name:	'html',
 			clear:	{ target: function() { return this; },
-					  self: false, subs: true },
+					self: false, subs: true },
 			setup:	{ prepare: false,
-					  target: function() { return this; },
-					  self: true,  subs: false }
+					target: function() { return this; },
+					self: true,  subs: false }
 		}
 
 	], function()
@@ -1247,8 +1254,11 @@
 		{
 			var element = $(this),
 			functions = element.data('clearFunctions') || [];
-			functions[priority ? 'unshift' : 'push'](func);
-			element.addClass('withClearFunctions').data('clearFunctions', functions);
+			if (!functions.length || $.inArray(func, functions) < 0)
+			{
+				functions[priority ? 'unshift' : 'push'](func);
+				element.addClass('withClearFunctions').data('clearFunctions', functions);
+			}
 		});
 
 		return this;
@@ -1261,7 +1271,7 @@
 	 */
 	$.fn.removeClearFunction = function(func)
 	{
-		this.each(function(i)
+		this.each(function()
 		{
 			var element = $(this),
 				functions = element.data('clearFunctions') || [],
@@ -1414,7 +1424,7 @@
 					'paperclip':	'\'',
 					'reply':		'(',
 					'replay-all':	')',
-					'forward':		'*',
+					'fwd':			'*',
 					'user':			'+',
 					'users':		',',
 					'add-user':		'-',
@@ -1483,7 +1493,7 @@
 					'page-list':	'l',
 					'page':			'm',
 					'pages':		'n',
-					'marker':		'0',
+					'frame':		'o',
 					'pictures':		'p',
 					'movie':		'q',
 					'music':		'r',
@@ -1539,6 +1549,9 @@
 				// If valid icon name
 				if (iconMap[name])
 				{
+					// Remove existing icon
+					element.children('.icon-font:first').remove();
+
 					// Create replacement
 					element.prepend('<span class="font-icon'+(element.is(':empty') ? ' empty' : '')+'">'+iconMap[name]+'</span>');
 				}
@@ -1548,7 +1561,7 @@
 		// IE7 support
 		if ($.template.ie7)
 		{
-				// Before/after pseudo-elements
+			// Before/after pseudo-elements
 			var pseudo = {
 					'.bullet-list > li':		{ before: '<span class="bullet-list-before">k</span>' },
 					'.info-bubble':				{ before: '<span class="info-bubble-before"></span>' },
@@ -1624,7 +1637,7 @@
 					element.addClass('font-icon-empty');
 				}
 			});
-		};
+		}
 
 		return this;
 	});
@@ -1764,7 +1777,7 @@
 		}
 
 		return changed;
-	};
+	}
 
 	// Window resizing handling
 	function handleResize()
@@ -1817,6 +1830,9 @@
 		var menu = $('#menu'),
 			menuContent = $('#menu-content'),
 
+			// Used to handle fixed menu on mobiles
+			previousScroll = false,
+
 			// Function to watch menu size
 			watchMenuSize;
 
@@ -1844,7 +1860,6 @@
 		// Open/hide menu
 		$('#open-menu').on('touchend click', function(event)
 		{
-
 			event.preventDefault();
 
 			// Check if valid touch-click event
@@ -1859,16 +1874,56 @@
 			// If in wide screen mode, show/hide side menu, else open/close drop-down menu
 			bod.toggleClass($.template.mediaQuery.is('desktop') || $.template.mediaQuery.is('tablet-landscape') ? 'menu-hidden' : 'menu-open');
 
+			// If mobile layout, handle fixed title bar
+			if ($.template.mediaQuery.is('mobile') && bod.hasClass('menu-open') && bod.hasClass('fixed-title-bar'))
+			{
+				// Store current scroll
+				previousScroll = bod.scrollTop();
+
+				// Remove fixed bar class
+				bod.removeClass('fixed-title-bar');
+
+				// Scroll to top
+				bod.scrollTop(0);
+			}
+			else if (previousScroll !== false)
+			{
+				// Restore scroll
+				if ($.template.mediaQuery.is('mobile'))
+				{
+					bod.scrollTop(previousScroll);
+				}
+				previousScroll = false;
+
+				// Restore class
+				bod.addClass('fixed-title-bar');
+			}
+
 			// Refresh drop-down menu size if needed
 			watchMenuSize();
 		});
 
 		// Close drop-down menu
-		bod.on('click', function(event)
+		bod.children().on('click', function(event)
 		{
 			// Check if open, and if the click is not on the menu or on the open button
 			if (bod.hasClass('menu-open') && !$(event.target).closest('#open-menu, #menu').length)
 			{
+				// Fixed menu on mobile
+				if (previousScroll !== false)
+				{
+					// Restore scroll
+					if ($.template.mediaQuery.is('mobile'))
+					{
+						bod.scrollTop(previousScroll);
+					}
+					previousScroll = false;
+
+					// Restore class
+					bod.addClass('fixed-title-bar');
+				}
+
+				// Close menu
 				bod.removeClass('menu-open');
 			}
 		});
@@ -1882,6 +1937,20 @@
 			if (!$.template.processTouchClick(this, event))
 			{
 				return;
+			}
+
+			// Fixed menu on mobile
+			if (previousScroll !== false && bod.hasClass('menu-open'))
+			{
+				// Restore scroll
+				if ($.template.mediaQuery.is('mobile'))
+				{
+					bod.scrollTop(previousScroll);
+				}
+				previousScroll = false;
+
+				// Restore class
+				bod.addClass('fixed-title-bar');
 			}
 
 			// Close menu and open shortcuts
@@ -1932,7 +2001,7 @@
 						if (scrollMenu)
 						{
 							menu.removeCustomScroll();
-							scrollMenu= false;
+							scrollMenu = false;
 						}
 						if (scrollContent)
 						{
@@ -1946,7 +2015,7 @@
 						if (scrollMenu)
 						{
 							menu.removeCustomScroll();
-							scrollMenu= false;
+							scrollMenu = false;
 						}
 						if (!scrollContent)
 						{
@@ -1965,7 +2034,7 @@
 						if (!scrollMenu)
 						{
 							menu.customScroll();
-							scrollMenu= true;
+							scrollMenu = true;
 						}
 					}
 				};
@@ -1976,7 +2045,39 @@
 			// Bind
 			doc.on('change-query', updateMenuScroll);
 		}
-	}
+
+		// Support for webapp mode on iOS
+		if (('standalone' in window.navigator) && window.navigator.standalone)
+		{
+			$(document).on('click', 'a', function (event)
+			{
+				var link = $(this),
+					href = link.attr('href');
+
+				// Do not process anchors
+				if (!href || href.indexOf('#') === 0)
+				{
+					return;
+				}
+
+				// Do not process if AJAX navigation link
+				if (link.hasClass('navigable-ajax') || link.hasClass('navigable-ajax-loaded'))
+				{
+					return;
+				}
+
+				// Check target
+				if (!(/^[a-z+\.\-]+:/i).test(href) || href.indexOf(document.location.protocol+'//'+document.location.host) === 0)
+				{
+					// Prevent link opening
+					event.preventDefault();
+
+					// Open inside the webapp
+					document.location.href = href;
+				}
+			});
+		}
+	};
 
 	// Initial setup
 	doc.ready(function()
@@ -2036,6 +2137,69 @@
 			}
 		});
 	}
+	else
+	{
+		// Check to see if the bubble need to open on another side to fit in the screen
+		doc.on('mouseenter', '.info-spot', function(event)
+		{
+			var info = $(this),
+				bubble = info.children('.info-bubble');
+
+			// Check available space - horizontal
+			if (info.hasClass('on-left'))
+			{
+				if (bubble.offset().left < 0)
+				{
+					info.removeClass('on-left')
+						.data('info-spot-reverse-x', true);
+				}
+			}
+			else
+			{
+				if (bubble.offset().left+bubble.outerWidth() > $.template.viewportWidth)
+				{
+					info.addClass('on-left')
+						.data('info-spot-reverse-x', true);
+				}
+			}
+
+			// Check available space - vertical
+			if (info.hasClass('on-top'))
+			{
+				if (bubble.offset().top < doc.scrollTop())
+				{
+					info.removeClass('on-top')
+						.data('info-spot-reverse-y', true);
+				}
+			}
+			else
+			{
+				if (bubble.offset().top+bubble.outerHeight() > doc.scrollTop()+$.template.viewportHeight)
+				{
+					info.addClass('on-top')
+						.data('info-spot-reverse-y', true);
+				}
+			}
+
+
+		}).on('mouseleave', '.info-spot', function(event)
+		{
+			var info = $(this);
+
+			// Check if reversed on open
+			if (info.data('info-spot-reverse-x'))
+			{
+				info.toggleClass('on-left');
+				info.removeData('info-spot-reverse-x');
+			}
+			if (info.data('info-spot-reverse-y'))
+			{
+				info.toggleClass('on-top');
+				info.removeData('info-spot-reverse-y');
+			}
+
+		});
+	}
 
 	/*
 	 * CSS pointerEvent polyfill for tooltips
@@ -2077,7 +2241,7 @@
 	 *
 	 * @param jQuery target the jQuery object of the target element
 	 * @param function refreshFunc the function to refresh position (called with tracking element as 'this' and target as argument)
-	 * 				 			   If none, the tracking element will be aligned with its target
+	 *								If none, the tracking element will be aligned with its target
 	 */
 	$.fn.trackElement = function(target, refreshFunc)
 	{
@@ -2135,7 +2299,7 @@
 	$.fn.stopTracking = function(clearPos)
 	{
 		// Remove
-		this.each(function(i)
+		this.each(function()
 		{
 			var element = $(this),
 				tracked = element.data('tracked-element'),
@@ -2374,7 +2538,7 @@
 						{
 							callback.apply(this);
 						}
-					}
+					};
 				}
 
 				// Queue animation
@@ -2437,7 +2601,7 @@
 	/*
 	 * Add some easing functions if jQuery UI is not included
 	 */
-	if ($.easing.easeOutQuad == undefined)
+	if ($.easing.easeOutQuad === undefined)
 	{
 		$.easing.jswing = $.easing.swing;
 		$.extend($.easing,
@@ -2453,7 +2617,7 @@
 				return -c *(t/=d)*(t-2) + b;
 			},
 			easeInOutQuad: function (x, t, b, c, d) {
-				if ((t/=d/2) < 1) return c/2*t*t + b;
+				if ((t/=d/2) < 1) { return c/2*t*t + b; }
 				return -c/2 * ((--t)*(t-2) - 1) + b;
 			}
 		});

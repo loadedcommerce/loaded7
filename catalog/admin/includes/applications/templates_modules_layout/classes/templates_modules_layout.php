@@ -153,7 +153,7 @@ class lC_Templates_modules_layout_Admin {
     }
     if ( !empty($groups_array) ) {
       array_unshift($groups_array, array('id' => null, 'text' => $lC_Language->get('please_select')));
-      $result['groups_dropdown'] = lc_draw_pull_down_menu('group', $groups_array, null, 'class="input with-small-padding"') . '&nbsp;&nbsp;';
+      $result['groups_dropdown'] = lc_draw_pull_down_menu('group', $groups_array, null, 'class="select"') . '&nbsp;&nbsp;';
     }
 
     if ($id != null) {

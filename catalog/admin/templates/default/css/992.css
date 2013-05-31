@@ -46,9 +46,6 @@
 #title-bar ~ #main {
 	margin-top: 35px;
 	}
-	.with-menu #title-bar {
-		padding-right: 10px;
-	}
 	#title-bar ~ #menu,
 	#title-bar ~ #shortcuts {
 		top: 35px;
@@ -82,7 +79,7 @@ body.with-menu #main {
 			}
 
 #open-menu {
-	top: 35px;
+	top: 0;
 	right: 0;
 	padding: 10px 8px 11px;
 	}
@@ -200,7 +197,7 @@ body.with-menu #main {
 	#menu header {
 		padding-right: 36px;
 		}
-    body.reversed #menu header {
+		body.reversed #menu header {
 			padding-left: 36px;
 			padding-right: 12px;
 		}

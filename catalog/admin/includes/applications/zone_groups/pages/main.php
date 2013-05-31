@@ -23,7 +23,7 @@
   .dataColGroups { text-align: left; }
   .dataColEntries { text-align: left; }
   .dataColAction { text-align: right; }
-  .dataTables_info { bottom: 42px; color:#4c4c4c; }
+  .dataTables_info { position:absolute; bottom: 42px; color:#4c4c4c; }
   .selectContainer { position:absolute; bottom:29px; left:30px }
   </style>
   <div class="with-padding-no-top">

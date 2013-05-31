@@ -75,7 +75,7 @@ function editAdmin(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="access_group_id" class="label"><?php echo $lC_Language->get('field_access_group'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('access_group_id', $groupsSelectArr, null, 'id="edit-access_group_id" class="select blue-gradient check-list replacement"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('access_group_id', $groupsSelectArr, null, 'id="edit-access_group_id" class="select blue-gradient check-list replacement" style="min-width:200px;"'); ?>'+
                    '      </p>'+
                    '    </form>'+
                    '  </div>'+
