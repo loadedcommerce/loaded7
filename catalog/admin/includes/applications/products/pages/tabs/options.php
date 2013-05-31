@@ -128,19 +128,19 @@ function _updateInvControlType(type) {
   // remomve the active classes
   $('.oicb').removeClass('active');  
   if (type == '1') {
-    $('#inventory_control_simple').show('300');
-    $('#inventory_control_multi').hide('300');
+  //  $('#inventory_control_simple').show('300');
+  //  $('#inventory_control_multi').hide('300');
     $('label[for=\'ic_radio_1\']').addClass('active');
     $('label[for=\'ioc_radio_1\']').addClass('active'); 
-    $('#multiSkuContainer').hide();   
-    $('#simpleOptionsContainer').show();   
+//    $('#multiSkuContainer').hide();   
+ //   $('#simpleOptionsContainer').show();   
   } else if (type == '2') {   
-    $('#inventory_control_simple').hide('300');
-    $('#inventory_control_multi').show('300');
-    $('label[for=\'ic_radio_2\']').addClass('active');
-    $('label[for=\'ioc_radio_2\']').addClass('active'); 
-    $('#multiSkuContainer').show();   
-    $('#simpleOptionsContainer').hide();        
+  //  $('#inventory_control_simple').hide('300');
+  //  $('#inventory_control_multi').show('300');
+    $('label[for=\'ic_radio_1\']').addClass('active');
+    $('label[for=\'ioc_radio_1\']').addClass('active'); 
+ //   $('#multiSkuContainer').show();   
+ //   $('#simpleOptionsContainer').hide();        
   }
 }
 

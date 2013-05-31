@@ -24,9 +24,9 @@ global $lC_Language, $pInfo;
     <!-- lc_group_pricing begin -->
     <div class="field-block field-block-product button-height">
       <label for="" class="label"><b><?php echo $lC_Language->get('text_group_pricing'); ?></b></label>
-      <input onchange="toggleSection('groups_pricing_container');" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_group_pricing'), null, 'info-spot on-left grey margin-left'); ?>
+      <input type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_group_pricing'), null, 'info-spot on-left grey margin-left'); ?>
       <?php echo lc_go_pro(); ?>
-      <div onclick="toggleSection('groups_pricing_container'); return false;" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="groups_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
+      <div onclick="toggleSection('groups_pricing_container');" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="groups_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
     </div>
     <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
       <?php echo lC_Products_Admin::getGroupPricingContent($pInfo->get('products_price')); ?>
@@ -36,140 +36,20 @@ global $lC_Language, $pInfo;
     <!-- lc_qty_price_breaks begin -->
     <div class="field-block field-block-product button-height">
       <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_break_pricing'); ?></b></label>
-      <input onchange="toggleSection('qty_breaks_pricing_container');" type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_qty_price_breaks'), null, 'info-spot on-left grey margin-left'); ?>
+      <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_qty_price_breaks'), null, 'info-spot on-left grey margin-left'); ?>
       <span id="qty_breaks_number_of_break_points">
         <?php echo lc_go_pro(); ?>
-        <div onclick="/* toggleSection('qty_breaks_pricing_container'); return false; */" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="qty_breaks_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
+        <div style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="qty_breaks_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
       </span>
     </div> 
-    
     <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-      <div id="" class="with-mid-padding" style="border-bottom:1px solid #dddddd; margin-left:-10px;">
-        <label for="" class="label">
-          <strong>Retail</strong>
-          <?php echo lc_go_pro(); ?>  
-        </label>
-        <div>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-            <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-          </span>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.9, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
-            <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-            <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-          </span>
-        </div>
-        <div>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-            <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-          </span>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.875, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
-            <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-            <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-          </span>
-        </div>
-        <div> 
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-            <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-          </span>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.85, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
-            <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-            <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-          </span>
-        </div>
-      </div>
-
-      <div id="" class="with-mid-padding" style="border-bottom:1px solid #dddddd; margin-left:-10px;">
-        <label for="" class="label">
-          <strong>Wholesale</strong>
-          <?php echo lc_go_pro(); ?>
-        </label>
-        <div>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-            <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-          </span>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.85, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
-            <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-            <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-          </span>
-        </div>
-        <div>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-            <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-          </span>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.825, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
-            <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-            <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-          </span>
-        </div>
-        <div> 
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-            <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-          </span>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.8, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
-            <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-            <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-          </span>
-        </div>
-      </div>
-
-      <div id="" class="with-mid-padding" style="border-bottom:1px solid #dddddd; margin-left:-10px;">
-        <label for="" class="label">
-          <strong>Employee</strong>
-          <?php echo lc_go_pro(); ?>
-        </label>
-        <div>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="1" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-            <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-          </span>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.8, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
-            <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-            <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-          </span>
-        </div>
-        <div>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="10" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-            <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-          </span>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.775, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
-            <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-            <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-          </span>
-        </div>
-        <div> 
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="50" class="input small-margin-right" disabled style="width:60px;text-align:right;" />
-            <small class="input-info small-margin-right"><?php echo $lC_Language->get('text_qty'); ?></small>
-          </span>
-          <span style="white-space:nowrap;">
-            <input type="text" name="" id="" value="<?php echo number_format(lc_round($pInfo->get('products_price')*.75, DECIMAL_PLACES), DECIMAL_PLACES); ?>" class="input small-margin-right disabled" style="width:60px;text-align:right;" />
-            <!--<input type="text" name="" id="" value="" class="input small-margin-right" style="width:60px;text-align:right;color:#ff0000;" />-->
-            <small class="input-info"><?php echo $lC_Language->get('subsection_price'); ?><!-- if specials enabled /Special--></small>
-          </span>
-        </div>
-      </div>
     </div>
     <!-- lc_qty_price_breaks end --> 
     
     <div class="field-block field-block-product button-height">
       <label for="specials-pricing-switch" class="label"><b><?php echo $lC_Language->get('text_special_pricing'); ?></b></label>
-      <input onchange="toggleSection('#specials_pricing_container');" id="specials-pricing-switch" type="checkbox" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($pInfo->get('products_special_price') != null) ? ' checked' : ''); ?> /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_specials'), null, 'info-spot on-left grey margin-left margin-right'); ?>
-      <div onclick="toggleSection('specials_pricing_container'); return false;" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="specials_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
+      <input id="specials-pricing-switch" type="checkbox" class="switch wider specials-pricing" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($pInfo->get('products_special_price') != null) ? ' checked' : ''); ?> /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_specials'), null, 'info-spot on-left grey margin-left margin-right'); ?>
+      <div onclick="toggleSection('specials_pricing_container', 'caret');" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="specials_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
 
     </div>
     <div id="specials_pricing_container" class="field-drop button-height black-inputs no-margin-bottom"<?php echo (($pInfo->get('products_special_price') != null) ? ' style="display:block;"' : ' style="display:none;"'); ?>>
@@ -196,7 +76,6 @@ global $lC_Language, $pInfo;
           </span>
         </div>
       </div>
-      
     </div>                
   </fieldset>
   
@@ -227,18 +106,30 @@ function showSymbol(e, id) {
   }
 }
 
-function toggleSection(section, toggle) {
-  if (toggle != undefined) {
-    if (toggle == 'open') {
-      var open = false;
-    } else if (toggle == 'close') {
-      var open = true;
-    } else {
-      var open = $('#' + section).is(":visible");
+function toggleSection(section, from) {
+  
+  var open = $('#' + section).is(":visible");
+
+  if (from != 'caret') {
+  
+    if (section == 'groups_pricing_container') {
+    } else if (section == 'qty_breaks_pricing_container') {
+    } else if (section == 'specials_pricing_container') {
+      var chkd = $('.specials-pricing').hasClass('checked');
+
+alert(chkd);      
+  
+      if (chkd) {
+         open = false;
+      } else {
+         open = true;
+      }
     }
-  } else {
-    var open = $('#' + section).is(":visible");
+    
   }
+    
+    
+
   if (open) {
     $('#' + section).slideUp('300');
     $('#' + section + '_span').removeClass('icon-chevron-thin-up');

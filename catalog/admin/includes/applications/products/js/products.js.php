@@ -27,14 +27,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
   ?>
   <script>
     $(document).ready(function() {
-
       updateProductFilter();
-
-      var error = '<?php echo $_SESSION['error']; ?>';
-      if (error) {
-        var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
-        $.modal.alert(errmsg);
-      }
     });
 
     function doSelectFunction(e) {

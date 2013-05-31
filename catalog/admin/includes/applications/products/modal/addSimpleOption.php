@@ -70,7 +70,7 @@ function addSimpleOption(editRow) {
               '  <td width="10%" class="sort"></td>'+
               '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleStatus(this, \'' + id + '\');"><span class="icon-tick icon-size2 icon-green"></span></td>'+
               '  <td width="15%" align="right">'+
-              '     <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="editOptionsEntry(\'' + id + '\')"></span>'+
+              '     <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addSimpleOption(\'' + id + '\')"></span>'+
               '     <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeOptionsRow(\'' + id + '\');"></span>'+
               '   </td>'+
               '  <input type="hidden" name="simple_options_group_name[' + id + ']" value="' + groupTitle + '">'+
