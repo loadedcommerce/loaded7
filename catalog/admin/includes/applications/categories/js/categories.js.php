@@ -24,10 +24,12 @@ function _refreshDataTable() {
     "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
     "sPaginationType": paginationType,  
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-    "aaSorting": [[2,'asc']],
+    "aaSorting": [[4,'asc']],
     "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
-                  { "sWidth": "60%", "bSortable": true, "sClass": "dataColCategory" },
-                  { "sWidth": "20%", "bSortable": true, "sClass": "dataColSort hide-on-mobile-portrait" },
+                  { "sWidth": "45%", "bSortable": true, "sClass": "dataColCategory" },
+                  { "sWidth": "6%", "bSortable": true, "sClass": "dataColShow hide-on-mobile-portrait" },
+                  { "sWidth": "20%", "bSortable": true, "sClass": "dataColType hide-on-mobile-portrait" },
+                  { "sWidth": "9%", "bSortable": true, "sClass": "dataColSort hide-on-mobile-portrait" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();

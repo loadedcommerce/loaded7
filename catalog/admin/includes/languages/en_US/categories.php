@@ -64,6 +64,8 @@ section_data = Data
 section_categories = Relationships
 
 table_heading_categories = Categories
+table_heading_show = Show
+table_heading_mode = Mode
 table_heading_sort_order = Sort Order
 table_heading_action = Action
  
@@ -76,7 +78,6 @@ text_show_in_listings = Show in Listings
 text_drag_drop_to_replace = Drag & Drop or <font color="white">Upload</font>
 text_edit_category = Edit Category
 text_faq = FAQ
-text_mode = Mode
 text_move_category = Move Category
 text_new_category = New Category
 text_new_window = Open in New Window
