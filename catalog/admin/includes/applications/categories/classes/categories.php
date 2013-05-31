@@ -43,7 +43,7 @@ class lC_Categories_Admin {
 
     while ( $Qcategories->next() ) {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcategories->value('categories_id') . '" id="' . $Qcategories->value('categories_id') . '"></td>';
-      $category = '<td><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-folder icon-orange"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
+      $category = '<td><span class="icon-list" title="' . $lC_Language->get('text_sort') . '" style="cursor:move;"></span><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-folder icon-orange margin-left"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
       $sort = '<td>' . $Qcategories->valueInt('sort_order') . '<input type="hidden" name="sort_order_' . $Qcategories->value('categories_id') . '" value="' . $Qcategories->valueInt('sort_order') . '" class="sort" /></td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id') . '&cid=' . (($_GET['categories']) ? $_GET['categories'] : 0) . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
