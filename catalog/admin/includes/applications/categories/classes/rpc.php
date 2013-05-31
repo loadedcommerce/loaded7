@@ -59,6 +59,7 @@ class lC_Categories_Admin_rpc {
   public static function deleteCategory() {
     $result = array();
     $deleted = lC_Categories_Admin::delete($_GET['cid']);
+    lC_Cache::clear('category_tree');
     if ($deleted) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
@@ -75,6 +76,7 @@ class lC_Categories_Admin_rpc {
   public static function batchDelete() {
     $result = array();
     $deleted = lC_Categories_Admin::batchDelete($_GET['batch']);
+    lC_Cache::clear('category_tree');
     if ($deleted) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }  
@@ -92,6 +94,7 @@ class lC_Categories_Admin_rpc {
   public static function moveCategory() {
     $result = array();
     $moved = lC_Categories_Admin::move($_GET['cid'], $_GET['new_category_id']);
+    lC_Cache::clear('category_tree');
     if ($moved) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
@@ -109,6 +112,7 @@ class lC_Categories_Admin_rpc {
   public static function batchMove() {
     $result = array();
     $moved = lC_Categories_Admin::batchMove($_GET['batch'], $_GET['new_category_id']);
+    lC_Cache::clear('category_tree');
     if ($moved) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }  
@@ -153,11 +157,13 @@ class lC_Categories_Admin_rpc {
   */
   public static function cSort() {
     $sort = lC_Categories_Admin::cSort($_GET);
+    lC_Cache::clear('category_tree');
+    
     if ($sort) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }  
 
     echo json_encode($result);
-  } 
+  }
 }
 ?>
