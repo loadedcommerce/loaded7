@@ -155,7 +155,7 @@
                           array('text' => 'Category', 'value' => 'category'),
                           array('text' => 'Page', 'value' => 'page'),
                           array('text' => 'Link To: Specials', 'value' => 'specials'),
-                          array('text' => 'Link To: Featured', 'value' => 'featured'),
+                          //array('text' => 'Link To: Featured', 'value' => 'featured'),
                           array('text' => 'Link To: New Products', 'value' => 'new'),
                           array('text' => 'Link To: Search', 'value' => 'search'),
                           array('text' => 'Link To: Shopping Cart', 'value' => 'cart'),
@@ -167,15 +167,9 @@
                         }
                       ?>
                       </select>
-                      <p id="categories_link_target_p" class="small-margin-top" style="display:none;"><input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"> <?php echo $lC_Language->get('text_new_window'); ?></p>
-                    </div>
-                    <div class="mid-margin-top" id="categories_link_target_info" style="display:none;"> 
-                      <span class="info-spot on-left grey float-right small-margin-bottom">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
+                      <p id="categories_link_target_p" class="small-margin-top" style="display:none;">
+                        <input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"> <?php echo $lC_Language->get('text_new_window'); ?>
+                      </p>
                     </div>
                     <div class="six-columns twelve-columns-mobile" id="categories_custom" style="display:none;">  
                       <span class="info-spot on-left grey mid-margin-right">
@@ -184,7 +178,7 @@
                           Put the bubble text here
                         </span>
                       </span>
-                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"> &nbsp;<strong><?php echo $lC_Language->get('text_custom_link'); ?></strong>
+                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"> &nbsp;<span id="custom_url_text"><strong><?php echo $lC_Language->get('text_custom_link'); ?></strong></span>
                     </div>
                   </div>
                   <div class="columns">

@@ -98,10 +98,31 @@ function doSelectFunction(e) {
 
 function customCheck() {
   var cModeVal = $("#categories_mode").val();
-  if (cModeVal == 'override') {
+  if (cModeVal == 'specials' /*|| cModeVal == 'featured' */|| cModeVal == 'new' || cModeVal == 'search' || cModeVal == 'cart' || cModeVal == 'account' || cModeVal == 'override') {
     $("#categories_custom").show();
-    $("#categories_link_target_p").show();
     $("#categories_link_target_info").hide();
+    if (cModeVal != 'override') {
+      $("#categories_custom_url").attr('readonly', 'readonly');
+      $("#custom_url_text").hide();
+      if (cModeVal == 'specials') {
+        $("#categories_custom_url").val('products.php?specials');
+      //} else if (cModeVal == 'featured') {
+      //  $("#categories_custom_url").val('');
+      } else if (cModeVal == 'new') {
+        $("#categories_custom_url").val('products.php?new');
+      } else if (cModeVal == 'search') {
+        $("#categories_custom_url").val('search.php');
+      } else if (cModeVal == 'cart') {
+        $("#categories_custom_url").val('checkout.php');
+      } else if (cModeVal == 'account') {
+        $("#categories_custom_url").val('account.php');
+      }
+    } else {
+      $("#categories_link_target_p").show(); 
+      $("#categories_custom_url").removeAttr('readonly');
+      $("#categories_custom_url").val('');
+      $("#custom_url_text").show();
+    }
   } else {
     $("#categories_custom").hide();
     $("#categories_link_target_p").hide();

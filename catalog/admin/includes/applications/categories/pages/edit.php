@@ -187,7 +187,7 @@
                           array('text' => 'Category', 'value' => 'category'),
                           array('text' => 'Page', 'value' => 'page'),
                           array('text' => 'Link To: Specials', 'value' => 'specials'),
-                          array('text' => 'Link To: Featured', 'value' => 'featured'),
+                          //array('text' => 'Link To: Featured', 'value' => 'featured'),
                           array('text' => 'Link To: New Products', 'value' => 'new'),
                           array('text' => 'Link To: Search', 'value' => 'search'),
                           array('text' => 'Link To: Shopping Cart', 'value' => 'cart'),
@@ -199,24 +199,18 @@
                         }
                       ?>
                       </select>
-                      <p id="categories_link_target_p" class="small-margin-top"<?php echo ($lC_ObjectInfo->get('categories_mode') != 'override') ? ' style="display:none;"' : ''; ?>><input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"<?php echo ($lC_ObjectInfo->getInt('categories_link_target') == 1) ? ' checked' : ''; ?>> <?php echo $lC_Language->get('text_new_window'); ?></p>
+                      <p id="categories_link_target_p" class="small-margin-top"<?php echo ($lC_ObjectInfo->get('categories_mode') != 'override') ? ' style="display:none;"' : ''; ?>>
+                        <input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"<?php echo ($lC_ObjectInfo->getInt('categories_link_target') == 1) ? ' checked' : ''; ?>> <?php echo $lC_Language->get('text_new_window'); ?>
+                      </p>
                     </div>
-                    <div class="mid-margin-top" id="categories_link_target_info"<?php echo ($lC_ObjectInfo->get('categories_mode') == 'override') ? ' style="display:none;"' : ''; ?>> 
-                      <span class="info-spot on-left grey float-right small-margin-bottom">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
-                    </div>
-                    <div class="six-columns twelve-columns-mobile" id="categories_custom"<?php echo ($lC_ObjectInfo->get('categories_mode') != 'override') ? ' style="display:none;"' : ''; ?>>  
+                    <div class="six-columns twelve-columns-mobile" id="categories_custom"<?php echo ($lC_ObjectInfo->get('categories_custom_url') != '') ? '' : ' style="display:none;"'; ?>>  
                       <span class="info-spot on-left grey mid-margin-right">
                         <span class="icon-info-round"></span>
                         <span class="info-bubble">
                           Put the bubble text here
                         </span>
                       </span>
-                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"<?php echo ($lC_ObjectInfo->get('categories_mode') == 'override') ? ' value="' . $lC_ObjectInfo->get('categories_custom_url') . '"' : ''; ?>> &nbsp;<strong><?php echo $lC_Language->get('text_custom_link'); ?></strong>
+                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"<?php echo (($lC_ObjectInfo->get('categories_custom_url') != '') ? ' value="' . $lC_ObjectInfo->get('categories_custom_url') . '"' : '') . (($lC_ObjectInfo->get('categories_mode') != 'override') ? ' readonly="readonly"' : ''); ?>> &nbsp;<span id="custom_url_text"><strong><?php echo $lC_Language->get('text_custom_link'); ?></strong></span>
                     </div>
                   </div>
                   <div class="columns">
@@ -226,9 +220,7 @@
                         <option value="0"><?php echo $lC_Language->get('top_category'); ?></option>
                         <?php
                           foreach ($assignedCategoryTree->getArray() as $value) {
-                            //if ($lC_ObjectInfo->getInt('categories_id') != $value['id'] && lC_Categories_Admin::get_final_parent($value['id']) != $lC_ObjectInfo->getInt('categories_id')) {
                             echo '<option value="' . $value['id'] . '"' . ( $lC_ObjectInfo->getInt('parent_id') == $value['id'] ? ' selected' : '') . ( (in_array($value['id'], lC_Categories_Admin::getChildren($_GET['categories']))) ? ' disabled' : '' ) . ( ($value['id'] == $lC_ObjectInfo->getInt('categories_id')) ? ' disabled' : '' ) . '>' . $value['title'] . '</option>' . "\n";
-                            //}
                           }
                         ?>
                       </select>
