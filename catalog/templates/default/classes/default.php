@@ -479,5 +479,28 @@ class lC_Default {
     
     return $result;
   }
+ /*
+  * return the top cats for nav
+  *
+  * @access public
+  * @return array
+  */
+  public static function getTopCategories() {
+    global $lC_Database, $lC_Language;
+    
+    $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = 0 and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_show_in_listings = 1 order by sort_order, cd.categories_name');
+    $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qcategories->bindInt(':language_id', $lC_Language->getID());
+    $Qcategories->execute();
+    while ( $Qcategories->next() ) {
+      $topCategories[] = array('id' => $Qcategories->value('categories_id'),
+                               'name' => $Qcategories->value('categories_name'),
+                               'link_target' => $Qcategories->value('categories_link_target'),
+                               'custom_url' => $Qcategories->value('categories_custom_url'));
+    }
+    
+    return $topCategories;   
+  }
 }
 ?>

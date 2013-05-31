@@ -25,7 +25,7 @@ header .top_links > li a{ display:block; padding:16px 20px; line-height:100%; co
 header .top_links > li.highlight a { color:#fff; text-shadow:none;}
 
 header h1.logo{ float:left; padding:10px 0px;}
-header .header_search{ height:23px; width:230px; float:right; padding:3px; margin:30px 0px;  border:solid 1px #e1e1e1;  cursor:pointer;}
+header .header_search{ height:23px; width:260px; float:right; padding:3px; margin:-45px 0 0 0;  border:solid 1px #e1e1e1;  cursor:pointer;}
 header .header_search input{ background:none; border:0px; padding:4px; width:82%; color:#b4b4b4;}
 header .header_search button{background:url(../images/search_btn.png) no-repeat center; border:0px; width:20px; height:20px; float:right; margin:2px;}
 
@@ -39,10 +39,17 @@ nav .primary_nav > li > a{ display:block; padding: 12px 18px; line-height:100%; 
 .primary_nav > li > .current{color:#fff;}
 nav .primary_nav > li:hover > a{color:#fff;}
 nav .primary_nav li.active > a{ color:#fff;}
-nav .minicart{ float:right;margin:5px 0px 3px 0px; padding: 14px 10px 14px 40px; background:url(../images/cart_icon.png) no-repeat 7px center; position:relative; text-decoration:none;}
-nav .minicart a{ text-decoration:none;}
-nav .minicart span{ color:#a29b95;}
-nav .minicart span b{font-weight:bold;}
+.minicart{ 
+  float:right;
+  margin:10px 0 0 0; 
+  padding: 5px 10px 3px 34px; 
+  background:url(../images/cart_icon.png) no-repeat 7px center; 
+  position:relative; 
+  text-decoration:none;
+}
+.minicart a{ text-decoration:none;}
+.minicart span{ color:#a29b95;}
+.minicart span b{font-weight:bold;}
 
 /*-----------------------------------SUBMENU*/
 ul.sub_menu{position:absolute;top:40px; left:-4000px; background-color: rgba(255, 255, 255, 0.93); background:#fff\9; padding:15px 0px; z-index:100; width:980px; box-shadow:0px 5px 6px #999;border-top:solid 3px;}
@@ -489,7 +496,7 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 
 #currencySelect {
   float:right;
-  margin: 13px;
+  margin: 10px 0 0 0;
 }
 
 /********** Live Search styling start **********/
@@ -906,3 +913,6 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 .categories_listing {
   padding-top: 10px;
 }
+.clear-left { clear: left; }
+.clear-right { clear: right; }
+.clear-both { clear: both; }
