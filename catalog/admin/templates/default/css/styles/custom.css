@@ -694,7 +694,7 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 @media screen and (min-width: 1200px) {
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 992px) and (max-width: 1199px)  {
   .hide-below-992 { display: none !important; }
   #menu header .headerInner {
     margin: -10px 0px;
@@ -706,9 +706,6 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   #open-menu {
     top: 41px;
   } 
-} 
-
-@media screen and (min-width: 768px) {
 }
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
