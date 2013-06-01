@@ -48,7 +48,7 @@ $pContent .=  '<p class="button-height inline-label">' .
 if ( ACCOUNT_NEWSLETTER == '1' ) {
   $pContent .= '<p class="button-height inline-label">' .
                '  <label for="newsletter" class="label" style="width:30%;">' . $lC_Language->get('field_newsletter_subscription') . '</label>' .
-                  lc_draw_checkbox_field('newsletter', '1', true, 'id="editNewsletter" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
+                  lc_draw_checkbox_field('newsletter', null, true, 'id="editNewsletter" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
                '</p>';
 }
 $pContent .= '<p class="button-height inline-label">' .
@@ -65,7 +65,7 @@ $pContent .= '<p class="button-height inline-label">' .
              '</p>' .
              '<p class="button-height inline-label">' .
                '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
-                  lc_draw_checkbox_field('status', '1', true, 'id="editStatus" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
+                  lc_draw_checkbox_field('status', null, true, 'id="editStatus" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
              '</p>' .
              '<p class="button-height float-right">' .
              '  <a class="button margin-bottom" href="javascript://" onclick="saveCustomer(); return false;">' .
@@ -250,14 +250,14 @@ function getFormData(id) {
       $("#editDob").val(data.customerData.customers_dob_short);
       $("#editEmailAddress").val(data.customerData.customers_email_address);
       if (data.customerData.customers_newsletter == 1) {
-        $("#editNewsletter").attr('checked', true);
+        $("#editNewsletter").attr('checked', true).change();
       } else {
-        $("#editNewsletter").attr('checked', false);
+        $("#editNewsletter").attr('checked', false).change();
       }
       if (data.customerData.customers_status == 1) {
-        $("#editStatus").attr('checked', true);
+        $("#editStatus").attr('checked', true).change();
       } else {
-        $("#editStatus").attr('checked', false);
+        $("#editStatus").attr('checked', false).change();
       }
 
       // populate address book listing
