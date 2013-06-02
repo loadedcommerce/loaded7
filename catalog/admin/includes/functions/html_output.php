@@ -168,8 +168,22 @@
     return 'templates/' . $lC_Template->getCode() . '/img/icons/' . (!empty($group) ? $group . '/' : null) . $image;
   }
   
-  function lc_go_pro($style = 'info-spot on-left grey mid-margin-left') {
-    $html = '<span class="' . $style . '"><small class="tag red-bg">Pro</small><span class="info-bubble"><b>Go Pro!</b> and enjoy this feature!</span></span>';
+  function lc_go_pro($no_tooltip = false) {
+    global $lC_Language;
+
+    if ($no_tooltip) {
+      $html = '<span class="upsell-spot">' . 
+              '  <a href="javascript://" onclick="showUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
+              '    <small class="tag red-bg" title="' . $lC_Language->get('text_cick_for_info') . '">' . $lC_Language->get('text_pro') . '</small>' . 
+              '  </a>' .
+              '</span>';
+    } else {
+      $html = '<span class="upsell-spot">' . 
+              '  <a href="javascript://" onclick="showUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
+              '    <small class="tag red-bg with-tooltip" title="' . $lC_Language->get('text_cick_for_info') . '" data-tooltip-options=\'{"classes":["anthracite-gradient glossy small no-padding"],"position":"right"}\'>' . $lC_Language->get('text_pro') . '</small>' . 
+              '  </a>' .
+              '</span>';
+    }
     
     return $html;
   }

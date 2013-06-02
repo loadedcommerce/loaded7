@@ -118,14 +118,14 @@ function addSimpleOption(editRow) {
                    '    <form name="sAdd" id="sAdd" action="" method="post">'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="filter" class="label" style="width:47%"><?php echo $lC_Language->get('field_filter_by_class'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('filter', array(array('id' => '0', 'text' => 'Common')), null, 'style="width:81%;" class="input with-small-padding"') . lc_go_pro(); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('filter', array(array('id' => '0', 'text' => 'Common')), null, 'style="width:81%;" class="input with-small-padding"') . lc_go_pro(true); ?>'+
                    '      </p>'+
                    '      <p class="button-height block-label">'+
                    '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_group'); ?></label>'+
                    '        <span id="groupSelectContainer"></span>'+
                    '      </p>'+
                    '      <p class="button-height block-label no-margin-bottom strong">OR'+
-                   '        <div><a href="javsscript(void);" onclick="alert(\'Feature Not Present\');" class="button icon-plus-round green-gradient glossy"><?php echo $lC_Language->get('button_add_new_group'); ?></a><?php echo lc_go_pro(); ?></div>'+
+                   '        <div><a href="javsscript(void);" onclick="alert(\'Feature Not Present\');" class="button icon-plus-round green-gradient glossy"><?php echo $lC_Language->get('button_add_new_group'); ?></a><?php echo lc_go_pro(true); ?></div>'+
                    '      </p>'+                   
                    '    </form>'+
                    '  </div>'+
@@ -170,7 +170,7 @@ function addSimpleOption(editRow) {
                                  '    <form name="seAdd" id="seAdd" action="" method="post">'+
                                  '      <p class="button-height inline-label">'+
                                  '        <label for="filter" class="label" style="width:47%"><?php echo $lC_Language->get('field_filter_by_class'); ?></label>'+
-                                 '        <?php echo lc_draw_pull_down_menu('efilter', array(array('id' => '0', 'text' => 'Common')), null, 'style="width:81%;" class="input with-small-padding"') . lc_go_pro(); ?>'+
+                                 '        <?php echo lc_draw_pull_down_menu('efilter', array(array('id' => '0', 'text' => 'Common')), null, 'style="width:81%;" class="input with-small-padding"') . lc_go_pro(true); ?>'+
                                  '      </p>'+
                                  '      <p class="button-height block-label">'+
                                  '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_option_items'); ?></label>'+
@@ -178,7 +178,7 @@ function addSimpleOption(editRow) {
                                  '        <span id="entrySelectContainer"></span>'+
                                  '      </p>'+
                                  '      <p class="button-height block-label no-margin-bottom strong">OR'+
-                                 '        <div><a href="javsscript(void);" onclick="alert(\'Feature Not Present\');" class="button icon-plus-round green-gradient glossy"><?php echo $lC_Language->get('button_add_new_item'); ?></a><?php echo lc_go_pro(); ?></div>'+
+                                 '        <div><a href="javsscript(void);" onclick="alert(\'Feature Not Present\');" class="button icon-plus-round green-gradient glossy"><?php echo $lC_Language->get('button_add_new_item'); ?></a><?php echo lc_go_pro(true); ?></div>'+
                                  '      </p>'+                   
                                  '    </form>'+
                                  '  </div>'+

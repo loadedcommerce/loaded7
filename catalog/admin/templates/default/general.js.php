@@ -354,6 +354,47 @@ if ($(window).width() < 1380) {
   $("#product_tabs").removeClass("side-tabs");
   $("#product_tabs").addClass("standard-tabs");
 }
+  
+/* show the upsell spot modal */
+function showUpsellSpot(e) {  
+  
+  var title = $(e).closest('.field-block').find('.label').text();
+  var desc = $(e).closest('.field-block').find('.label').attr('upsell');
+  if (title == '') { 
+    title = $(e).closest('.button').text().replace('Pro', '').replace('B2B', '');
+    desc = $(e).closest('.button').attr('upsell');
+  }
+  
+  var text = '<style>.modal { padding:0; }</style>'+
+             '<div id="spotMainContainer" class="with-mid-padding no-margin anthracite" style="width:280px; min-height:200px; background-color:#fff; border:3px solid white; border-radius:4px 4px 4px 4px;">'+
+             '  <div id="spotMainOutline" class="relative with-mid-padding" min-height:180px; style="border:2px solid red; border-radius:4px 4px 4px 4px;">'+
+             '    <a onclick="closeUpsellSpot($(this).getModalWindow());" href="javascript://"><span onclick="closeUpsellSpot($(this).getModalWindow());" class="close">X</span></a>'+
+             '    <div id="spotMainHeader" class="align-left"><small class="tag red-bg"><?php echo $lC_Language->get('text_pro'); ?></small><span class="thin mid-margin-left">Feature Information</span>'+ 
+             '    </div>'+
+             '    <div id="spotMainTitle" class="align-left"><h3 class="align-left margin-top mid-margin-bottom">' + title + '</h3>'+
+             '    </div>'+
+             '    <div id="spotMainDesc" class="align-left">'+ desc +
+             '    </div>'+
+             '    <div id="spotMainButton" class="with-padding"><a href="javascript://" class="button huge red-gradient glossy ">Upgrade Now</a>'+
+             '    </div>'+
+             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="#" style="text-decoration:underline;">See Full Pro & B2B Feature List</a>'+
+             '    </div>'+
+             '    </div>';
+             '</div>';
+  $.modal({
+     contentBg: false,
+     contentAlign: 'center',
+     content: text,
+     resizable: false,
+     actions: {},
+     buttons: {}
+   });
+}
+
+/* close the upsell spot modal */
+function closeUpsellSpot(e) {
+  $(e).closeModal();  
+}
 
 /* toggle checkboxes on table listings */
 function toggleCheck() {
@@ -367,6 +408,7 @@ function toggleCheck() {
   });
 } 
 
+/* toggle the main big menus */
 function toggleChildMenu(section) {
   var isMainOpen = $('#mainMenuContainer').is(":visible");
   var settingsDisabled = '<?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? 0 : 1); ?>';
@@ -438,7 +480,6 @@ function mask() {
   } else { // desktop
     $('.loadmask-msg').css({'top':'300px'});
   }  
-  
 }
  
 function unmask() {
