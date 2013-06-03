@@ -53,7 +53,7 @@
     return this; // Returning 'this' to maintain chainability.
   };
   
-   $.fn.blink = function(options)
+   $.fn.blinkf = function(options)
     {
             var defaults = { delay:500 };
             var options = $.extend(defaults, options);
@@ -76,7 +76,7 @@
                     obj.attr("timerid", timerid);
             });
     }
-    $.fn.unblink = function(options) 
+    $.fn.unblinkf = function(options) 
     {
             var defaults = { visible:true };
             var options = $.extend(defaults, options);
