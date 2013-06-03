@@ -204,12 +204,7 @@
                       </p>
                     </div>
                     <div class="six-columns twelve-columns-mobile" id="categories_custom"<?php echo ($lC_ObjectInfo->get('categories_custom_url') != '') ? '' : ' style="display:none;"'; ?>>  
-                      <span class="info-spot on-left grey mid-margin-right">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
+                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                       <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"<?php echo (($lC_ObjectInfo->get('categories_custom_url') != '') ? ' value="' . $lC_ObjectInfo->get('categories_custom_url') . '"' : '') . (($lC_ObjectInfo->get('categories_mode') != 'override') ? ' readonly="readonly"' : ''); ?>> &nbsp;<span id="custom_url_text"><strong><?php echo $lC_Language->get('text_custom_link'); ?></strong></span>
                     </div>
                   </div>
