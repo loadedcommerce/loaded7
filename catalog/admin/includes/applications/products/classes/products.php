@@ -1522,14 +1522,14 @@ class lC_Products_Admin {
           
           $tbody .= '<tr id="tre-' . $so['options_id'] .'">' .
                     '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
-                    '  <td width="16px" style="cursor:pointer;" onclick="toggleItem(\'#drope' . $so['options_id'] . '\');"><span id="drope' . $so['options_id'] . '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>' .
+                    '  <td width="16px" style="cursor:pointer;" onclick="toggleSimpleOptionsRow(\'#drope' . $so['options_id'] . '\');"><span id="drope' . $so['options_id'] . '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>' .
                     '  <td width="40%">' . $so['title'] . '<div class="small-margin-top dropall" id="drope' . $so['options_id'] . '" style="display:none;"><span>' . $items . '</span></div></td>' .
                     '  <td width="30%">' . $so['module'] . '</td>' .
                     '  <td width="10%" class="sort"></td>' .
-                    '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleStatus(this, \'' . $so['options_id'] . '\');">' . $statusIcon . '</td>' .
+                    '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleSimpleOpitonsStatus(this, \'' . $so['options_id'] . '\');">' . $statusIcon . '</td>' .
                     '  <td width="15%" align="right">
                          <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addSimpleOption(\'' . $so['options_id'] . '\')"></span>
-                         <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeOptionsRow(\'' . $so['options_id'] . '\');"></span>
+                         <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeSimpleOptionsRow(\'' . $so['options_id'] . '\');"></span>
                        </td>' .
                     '  <input type="hidden" name="simple_options_group_name[' . $so['options_id'] . ']" value="' . $so['title'] . '">' .
                     '  <input type="hidden" name="simple_options_group_type[' . $so['options_id'] . ']" value="' . $so['module'] . '">' .
@@ -1591,7 +1591,6 @@ class lC_Products_Admin {
               if ($customers_group_id == '1') {
                 $mod = (isset($v['price_modifier']) && !empty($v['price_modifier'])) ? number_format($v['price_modifier'], DECIMAL_PLACES) : '0.00';
               } else {
-                
                 $mod = number_format(round(($basePrice * $baselineDiscount) * .01, DECIMAL_PLACES), DECIMAL_PLACES);
               }
               $items .= '<tr class="trp-' . $v['options_id'] . '">' .
@@ -1600,7 +1599,7 @@ class lC_Products_Admin {
                         '    <div id="div_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" class="icon-plus-round icon-green icon-size2" style="display:inline;">' .
                         '      <div class="inputs' . (($customers_group_id != '1') ? ' disabled' : '') . '" style="display:inline; padding:8px 0;">' .
                         '        <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                        '        <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $mod . '" onblur="showSymbol(this, \'' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['customers_group_id'] . '][' . $v['options_id'] . '][' . $v['values_id'] . ']" ' . (($customers_group_id != '1') ? ' DISABLED' : '') . '>' .
+                        '        <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $mod . '" onblur="showSimpleOptionsPricingSymbol(this, \'' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['customers_group_id'] . '][' . $v['options_id'] . '][' . $v['values_id'] . ']" ' . (($customers_group_id != '1') ? ' DISABLED' : '') . '>' .
                         '      </div>' .
                         '    </div>' .
                         '  </td>' .
@@ -1668,7 +1667,7 @@ class lC_Products_Admin {
                   '    <input type="checkbox" name="enable_group_pricing[' . $value['customers_group_id'] . ']" class="margin-right medium switch' . (($pInfo->get('status') != -1 && $value['customers_group_id'] == '1') ? ' checked' : ' disabled') . '" />' .
                   '    <div class="inputs' . (($value['customers_group_id'] == '1') ? '' : ' disabled grey') . '" style="display:inline; padding:8px 0;">' .
                   '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                  '      <input type="text" onfocus="this.select();" onchange="updateDiscountDisplay();" name="products_special_price[' . $value['customers_group_id'] . ']" id="products_special_price' . $value['customers_group_id'] . '" value="' . (($value['customers_group_id'] == '1') ? number_format($pInfo->get('products_special_price'), DECIMAL_PLACES) : '0.00') . '" class="sprice input-unstyled small-margin-right' . (($value['customers_group_id'] == '1') ? '' : ' grey disabled') . '" style="width:60px;"' . (($value['customers_group_id'] == '1') ? '' : ' READONLY') . '/>' .
+                  '      <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" name="products_special_price[' . $value['customers_group_id'] . ']" id="products_special_price' . $value['customers_group_id'] . '" value="' . (($value['customers_group_id'] == '1') ? number_format($pInfo->get('products_special_price'), DECIMAL_PLACES) : '0.00') . '" class="sprice input-unstyled small-margin-right' . (($value['customers_group_id'] == '1') ? '' : ' grey disabled') . '" style="width:60px;"' . (($value['customers_group_id'] == '1') ? '' : ' READONLY') . '/>' .
                   '    </div>' .
                   '    <small class="input-info mid-margin-left">' . $lC_Language->get('text_special_price') . (($value['customers_group_id'] == '1') ? '<span class="disctag tag glossy mid-margin-left">-' . number_format($discount, DECIMAL_PLACES) . '%</span>' : '') . '</small>' .
                   '  </div>' .

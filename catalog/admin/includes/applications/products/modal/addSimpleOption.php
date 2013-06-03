@@ -53,7 +53,7 @@ function addSimpleOption(editRow) {
                          '    <div id="div_CGROUP_' + id + '_' + entry.id + '" class="icon-plus-round icon-green icon-size2" style="display:inline;">'+
                          '      <div class="inputs" style="display:inline; padding:8px 0;">'+
                          '        <span class="mid-margin-left no-margin-right">' + curSymbol + '</span>'+
-                         '        <input type="text" class="input-unstyled" value="' + entry.price_modifier.toFixed(2) + '" onblur="showSymbol(this, \'' + 'CGROUP_' + id + '_' + entry.id + '\');" id="simple_options_entry_price_modifier_CGROUP_' + id + '_' + entry.id + '" name="simple_options_entry_price_modifier[CGROUP][' + id + '][' + entry.id + ']">'+
+                         '        <input type="text" class="input-unstyled" value="' + entry.price_modifier.toFixed(2) + '" onblur="showSimpleOptionsPricingSymbol(this, \'' + 'CGROUP_' + id + '_' + entry.id + '\');" id="simple_options_entry_price_modifier_CGROUP_' + id + '_' + entry.id + '" name="simple_options_entry_price_modifier[CGROUP][' + id + '][' + entry.id + ']">'+
                          '      </div>'+
                          '    </div>'+
                          '  </td>'+
@@ -64,14 +64,14 @@ function addSimpleOption(editRow) {
               
     var row = '<tr id="tre-' + ref + '">'+
               '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>'+
-              '  <td width="16px" style="cursor:pointer;" onclick="toggleItem(\'#drope' + ref + '\');"><span id="drope' + ref + '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>'+
+              '  <td width="16px" style="cursor:pointer;" onclick="toggleSimpleOptionsRow(\'#drope' + ref + '\');"><span id="drope' + ref + '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>'+
               '  <td width="40%">' + groupTitle + '<div class="small-margin-top dropall" id="drope' + ref + '" style="display:none;"><span>' + items + '</span></div></td>'+
               '  <td width="30%">' + groupModule + '</td>'+
               '  <td width="10%" class="sort"></td>'+
-              '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleStatus(this, \'' + id + '\');"><span class="icon-tick icon-size2 icon-green"></span></td>'+
+              '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleSimpleOpitonsStatus(this, \'' + id + '\');"><span class="icon-tick icon-size2 icon-green"></span></td>'+
               '  <td width="15%" align="right">'+
               '     <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addSimpleOption(\'' + id + '\')"></span>'+
-              '     <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeOptionsRow(\'' + id + '\');"></span>'+
+              '     <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeSimpleOptionsRow(\'' + id + '\');"></span>'+
               '   </td>'+
               '  <input type="hidden" name="simple_options_group_name[' + id + ']" value="' + groupTitle + '">'+
               '  <input type="hidden" name="simple_options_group_type[' + id + ']" value="' + groupModule + '">'+
@@ -217,7 +217,7 @@ function addSimpleOption(editRow) {
                                 getNewOptionsRow(groupID, data, edata, sel);
                                 win.closeModal();
                                 ewin.closeModal();
-                                _setSortOrder();
+                                _setSimpleOptionsSortOrder();
                                 
                               }                              
                             }

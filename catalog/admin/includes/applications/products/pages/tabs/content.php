@@ -11,7 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyword, $products_tags; 
+global $lC_Language, $pInfo, $products_description, $products_keyword, $products_tags; 
 ?>
 <div id="section_general_content" class="with-padding">
   <div class="columns">
@@ -29,7 +29,6 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
         </div>        
       </div>
     </div>
-    
     <div class="new-row-mobile eight-columns twelve-columns-mobile">             
       <div class="columns">
       
@@ -72,7 +71,6 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
           </div>
         </div>
       </div>
-      
     </div>
   </div>
   <div class="field-drop-product button-height black-inputs extreme-margin-bottom">
@@ -87,10 +85,9 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
             </span> 
             <div class="inputs large" style="font-size:2em; padding:8px 0;">
               <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
-              <?php echo lc_draw_input_field('products_price', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="font-size:1em; padding:4px; height:20px;" class="input-unstyled" onfocus="this.select();" id="products_price0" onchange="$(\'#products_base_price\').val(this.value); updateDiscountDisplay();"'); ?>
+              <?php echo lc_draw_input_field('products_price', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="font-size:1em; padding:4px; height:20px;" class="input-unstyled" onfocus="this.select();" id="products_price0" onchange="$(\'#products_base_price\').val(this.value); updatePricingDiscountDisplay();"'); ?>
             </div>              
           </div>
-          
           <div style="width:48%; float:right;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
             <span>
               <span class="strong"><?php echo $lC_Language->get('field_status'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_status'), null, 'info-spot on-left grey margin-left'); ?>
@@ -110,67 +107,4 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
       </div>
     </div>
   </div>
-  <!-- div class="columns large-margin-top">
-    <div class="four-columns twelve-columns-mobile large-margin-bottom">
-      <center><img src="images/prodchart.png" /></center>
-    </div>
-    <div class="four-columns twelve-columns-mobile"> 
-      <span class="full-width">
-        <span class="strong"><?php echo $lC_Language->get('field_model'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_model')); ?>
-      </span>
-      <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1)) ? $lC_Language->get('text_complex_variants') : (($pInfo->get('products_model') != '') ? $pInfo->get('products_model') : $lC_Language->get('text_no_model')); ?></b></p>             
-    </div>
-    <div class="four-columns twelve-columns-mobile">
-      <span class="full-width">
-        <span class="strong"><?php echo $lC_Language->get('field_weight'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_weight')); ?>
-      </span>
-      <p style="background-color:#cccccc;" class="with-small-padding small-margin-top"><b><?php echo $pInfo->get('products_weight'); ?></b></p>              
-    </div>
-  </div -->
-</div>    
-<script>
-$(document).ready(function() {
-  createUploader2();
-  $('#fileUploaderImageContainer .qq-upload-button').hide();
-  $('#fileUploaderImageContainer .qq-upload-list').hide();
-  <?php               
-  foreach ( $lC_Language->getAll() as $l ) {  
-    echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%'  });";
-  }
-  ?>  
-  $('#products_name_1').focus();
-  $(this).scrollTop(0);  
-});
-
-function createUploader2(){
-  var uploader = new qq.FileUploader({
-      element: document.getElementById('fileUploaderImageContainer'),
-      action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=fileUpload&default=1'); ?>',
-      onComplete: function(id, fileName, responseJSON){
-        getImages();
-      },
-  });
-}
-
-function toggleEditor(id) {
-  var selection = $("#ckEditorProductDescription_" + id);
-  if ($(selection).is(":visible")) {
-    $('#ckEditorProductDescription_' + id).hide();
-    $('#cke_ckEditorProductDescription_' + id).show();
-  } else {
-    $('#ckEditorProductDescription_' + id).attr('style', 'width:99%');
-    $('#cke_ckEditorProductDescription_' + id).hide();
-  }
-}
-
-function _disableCKEditor(textarea) {
-    // We cannot use getEditor() since it will throw an exception.
-    // http://ckeditor.com/blog/CKEditor_for_jQuery
-    var ck = textarea.eq(0).data('ckeditorInstance');
-    if (ck) {
-        ck.destroy();
-        ck = false;
-    }
-}
-
-</script>
+</div>

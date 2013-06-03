@@ -54,7 +54,7 @@ global $lC_Language, $pInfo;
           <thead>
             <tr>
               <th scope="col" class="align-center">&nbsp;</th>
-              <th scope="col" class="align-left with-tooltip" onclick="toggleAll();" data-tooltip-options='{"classes":["grey-gradient"],"position":"left"}' title="<?php echo $lC_Language->get('text_expand_collapse_all'); ?>" width="16px" style="cursor:pointer; font-size:1em;"><span id="toggle-all" class="icon-squared-plus icon-grey icon-size2"></span></th>
+              <th scope="col" class="align-left with-tooltip" onclick="toggleAllSimpleOptionsRows();" data-tooltip-options='{"classes":["grey-gradient"],"position":"left"}' title="<?php echo $lC_Language->get('text_expand_collapse_all'); ?>" width="16px" style="cursor:pointer; font-size:1em;"><span id="toggle-all" class="icon-squared-plus icon-grey icon-size2"></span></th>
               <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_name'); ?></th>
               <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_type'); ?></th>
               <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_sort'); ?></th>
@@ -79,7 +79,7 @@ global $lC_Language, $pInfo;
 </div>
 <script>
 $(document).ready(function() {
-  _setSortOrder();
+  _setSimpleOptionsSortOrder();
   
   $('.sorted_table').sortable({  
     containerSelector: 'tbody',
@@ -99,12 +99,12 @@ $(document).ready(function() {
       item.attr("style", "");
       $("body").removeClass("dragging");
 
-      _setSortOrder();
+      _setSimpleOptionsSortOrder();
     }    
   });
 });   
 
-function _setSortOrder() {
+function _setSimpleOptionsSortOrder() {
   var order = 0;
   $('#simpleOptionsTable tr').each(function () {
     var sort = $(this).find('input[class=sort]');
@@ -144,7 +144,7 @@ function _updateInvControlType(type) {
   }
 }
 
-function toggleStatus(e, id) {
+function toggleSimpleOpitonsStatus(e, id) {
   var status = $('#simple_options_group_status_' + id).val();
   if (status == '1') {
     $('#simple_options_group_status_' + id).val('-1');
@@ -155,7 +155,7 @@ function toggleStatus(e, id) {
   }
 }
 
-function removeOptionsRow(id) {
+function removeSimpleOptionsRow(id) {
   $.modal.confirm('<?php echo $lC_Language->get('text_remove_row'); ?>', function() {
       $('#tre-' + id).remove();
       $('.trp-' + id).remove();
@@ -164,7 +164,7 @@ function removeOptionsRow(id) {
   });  
 }
 
-function toggleItem(item) {
+function toggleSimpleOptionsRow(item) {
   var expand = $(item + '_span').hasClass('icon-squared-plus');
   if (expand) {
     $(item).slideDown();
@@ -175,7 +175,7 @@ function toggleItem(item) {
   }
 }
 
-function toggleAll() {
+function toggleAllSimpleOptionsRows() {
   var expand = $('#toggle-all').hasClass('icon-squared-plus');
   if (expand) {
     $('.dropall').slideDown();
@@ -186,13 +186,5 @@ function toggleAll() {
     $('#toggle-all').removeClass('icon-squared-minus').addClass('icon-squared-plus');
     $('.toggle-icon').removeClass('icon-squared-minus').addClass('icon-squared-plus');
   }
-}
-
-function addNewMultiSkuOption() {
-  alert('<span class="thin"><?php echo $lC_Language->get('text_coming_soon'); ?>...</span>');
-}
-
-function addNewBundleOption() {
-  alert('<span class="thin"><?php echo $lC_Language->get('text_coming_soon'); ?>...</span>');
 }
 </script>
