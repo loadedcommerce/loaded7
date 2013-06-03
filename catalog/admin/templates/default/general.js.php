@@ -306,6 +306,30 @@ $(document).ready(function() {
     return false;
   });
   
+  // added for h1 titles to auto fit window width
+  $.fn.fitText = function( kompressor, options ) {
+    // Setup options
+    var compressor = kompressor || 1,
+        settings = $.extend({
+          'minFontSize' : 14,
+          'maxFontSize' : 40
+        }, options);
+    return this.each(function(){
+      // Store the object
+      var $this = $(this);
+      // modified for Loaded7 
+      // Resizer() resizes items based on the object width divided by the compressor * 17
+      var resizer = function () {
+        $this.css('font-size', Math.max(Math.min($this.width() / (compressor*17), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
+      };
+      // do the magic.
+      resizer();
+      // Call on resize. Opera debounces their resize by default. 
+      $(window).on('resize', resizer);
+    });
+  };
+  $("h1").fitText();
+  
   // defeat Google Chrome form autofill and its yellow background
   if(navigator.userAgent.toLowerCase().indexOf("chrome") >= 0 || navigator.userAgent.toLowerCase().indexOf("safari") >= 0){
     window.setInterval(function(){

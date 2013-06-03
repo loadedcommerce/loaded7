@@ -505,12 +505,7 @@ li .message-menu {
 }
 
 #main-title h1 {
-  color: #B3B5B8 !important;
-  font-size: 40px !important;
-  line-height: 48px !important;
-  -webkit-text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25) !important;
-  -moz-text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25) !important;
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25) !important;
+  line-height: 48px;
 }
 
 #shortcuts > li > span {
