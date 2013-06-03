@@ -56,11 +56,19 @@ global $lC_Language, $lC_Currencies, $pInfo;
       <?php echo lC_Products_Admin::getSpecialPricingContent(); ?>
     </div>                
   </fieldset>
-  
-  <dl id="simple-options-pricing-tab" class="accordion">
-    <?php echo lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')); ?>
-  </dl>     
-  
+  <style>
+  .accordion > dt { 
+    background: -moz-linear-gradient(center top , #565656, #404040) repeat scroll 0 0 transparent;
+    border-color: #282E36;
+    color: white;
+  }
+  </style>
+  <fieldset class="fieldset large-margin-top">
+    <legend class="legend"><?php echo $lC_Language->get('text_options_pricing'); ?></legend>  
+    <dl id="simple-options-pricing-tab" class="accordion">
+      <?php echo lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')); ?>
+    </dl>     
+  </fieldset>
     
 </div>  
 <script>

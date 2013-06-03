@@ -23,7 +23,7 @@ global $lC_Language, $pInfo, $tax_class_array;
           <span><?php echo $lC_Language->get('field_model'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_model')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
-          <input type="text" class="required input full-width" value="<?php echo (isset($pInfo) ? $pInfo->get('products_model') : null); ?>" id="products_model" name="products_model" />
+          <input type="text" onfocus="this.select();" class="required input full-width" value="<?php echo (isset($pInfo) ? $pInfo->get('products_model') : null); ?>" id="products_model" name="products_model" />
         </div>
       </div>
       
@@ -32,7 +32,10 @@ global $lC_Language, $pInfo, $tax_class_array;
           <span><?php echo $lC_Language->get('text_msrp'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_msrp')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
-          <input type="text" class="required input full-width" value="<?php echo number_format($pInfo->get('products_msrp'), DECIMAL_PLACES); ?>" id="products_msrp" name="products_msrp" />
+          <div class="inputs" style="display:inline; padding:8px 0;">
+            <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
+            <input type="text" onfocus="this.select();" style="width:94%;" class="required input-unstyled" value="<?php echo number_format($pInfo->get('products_msrp'), DECIMAL_PLACES); ?>" id="products_msrp" name="products_msrp" />
+          </div>         
         </div>
       </div>      
       
@@ -138,7 +141,10 @@ global $lC_Language, $pInfo, $tax_class_array;
           <span><?php echo $lC_Language->get('text_base_price_with_tax'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_price_with_tax')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
-          <?php echo lc_draw_input_field('products_price_gross', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'class="required input full-width blue-gradient strong" id="products_price0_gross" READONLY'); ?>
+          <div class="inputs blue-gradient" style="display:inline; padding:8px 0;">
+            <span class="mid-margin-left no-margin-right strong"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
+            <?php echo lc_draw_input_field('products_price_gross', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="width:94%;" class="required input-unstyled strong" id="products_price0_gross" READONLY'); ?>
+          </div>         
         </div>
       </div>
     </div>

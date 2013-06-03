@@ -1575,23 +1575,32 @@ class lC_Products_Admin {
   * @return string
   */  
   private static function _getSimpleOptionsPricingTbody($options, $customers_group_id) {
-    global $lC_Currencies;
+    global $lC_Currencies, $pInfo;
     
-    $tbody = '';    
+    $gData = lC_Customer_groups_Admin::getData($customers_group_id);
+    $baselineDiscount = (float)$gData['baseline_discount'];
+    $basePrice = (float)$pInfo->get('products_price');
+
+    $tbody = '';  
     if (isset($options) && !empty($options)) {
       foreach ($options as $key => $so) {
         if ((isset($so['title']) && $so['title'] != NULL)) {
           $items = '';
           foreach ($options['values'] as $k => $v) {
             if ($v['options_id'] == $so['options_id'] && $v['customers_group_id'] == $customers_group_id) {
-              $mod = (isset($v['price_modifier']) && !empty($v['price_modifier'])) ? number_format($v['price_modifier'], DECIMAL_PLACES) : '0.00';
+              if ($customers_group_id == '1') {
+                $mod = (isset($v['price_modifier']) && !empty($v['price_modifier'])) ? number_format($v['price_modifier'], DECIMAL_PLACES) : '0.00';
+              } else {
+                
+                $mod = number_format(round(($basePrice * $baselineDiscount) * .01, DECIMAL_PLACES), DECIMAL_PLACES);
+              }
               $items .= '<tr class="trp-' . $v['options_id'] . '">' .
                         '  <td class="element">' . $v['title'] . '</td>' . 
                         '  <td>' .
                         '    <div id="div_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" class="icon-plus-round icon-green icon-size2" style="display:inline;">' .
-                        '      <div class="inputs" style="display:inline; padding:8px 0;">' .
+                        '      <div class="inputs' . (($customers_group_id != '1') ? ' disabled' : '') . '" style="display:inline; padding:8px 0;">' .
                         '        <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                        '        <input type="text" class="input-unstyled" value="' . $mod . '" onblur="showSymbol(this, \'' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['customers_group_id'] . '][' . $v['options_id'] . '][' . $v['values_id'] . ']">' .
+                        '        <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $mod . '" onblur="showSymbol(this, \'' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['customers_group_id'] . '][' . $v['options_id'] . '][' . $v['values_id'] . ']" ' . (($customers_group_id != '1') ? ' DISABLED' : '') . '>' .
                         '      </div>' .
                         '    </div>' .
                         '  </td>' .
@@ -1628,7 +1637,7 @@ class lC_Products_Admin {
                   '  <input type="checkbox" name="enable_group_pricing[' . $value['customers_group_id'] . ']" class="switch medium margin-right" checked />' .
                   '    <div class="inputs grey" style="display:inline; padding:8px 0;">' .
                   '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                  '      <input type="text" onfocus="this.select();" name="group_price[' . $value['customers_group_id'] . ']" id="group_price_' . $value['customers_group_id'] . '" value="' . $discounted_price . '" class="input-unstyled small-margin-right grey disabled" style="width:60px;" READONLY/>' .
+                  '      <input type="text" onfocus="this.select();" name="group_price[' . $value['customers_group_id'] . ']" id="group_price_' . $value['customers_group_id'] . '" value="' . number_format($discounted_price, DECIMAL_PLACES) . '" class="input-unstyled small-margin-right grey disabled" style="width:60px;" READONLY/>' .
                   '    </div>' .
                   '  <small class="input-info mid-margin-left">' . $lC_Language->get('text_price') . '<span class="tag glossy mid-margin-left">-' . number_format($value['baseline_discount'], DECIMAL_PLACES) . '%</span><!-- if specials enabled /Special--></small>' . 
                   '</div>';

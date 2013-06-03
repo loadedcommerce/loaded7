@@ -109,12 +109,12 @@ class lC_Customer_groups_Admin {
   */
   public static function getData($id) {
     global $lC_Database, $lC_Language;
-
-    $Qgroups = $lC_Database->query('select * from :table_customers_groups where customers_group_id = :customers_group_id and language_id = :language_id');
+    
+    $Qgroups = $lC_Database->query('select cg.*, cgd.* from :table_customers_groups cg left join :table_customers_groups_data cgd on (cg.customers_group_id = cgd.customers_group_id) where cg.customers_group_id = :customers_group_id and cg.language_id = :language_id order by cg.customers_group_name');
     $Qgroups->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
+    $Qgroups->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
     $Qgroups->bindInt(':customers_group_id', $id);
-    $Qgroups->bindInt(':language_id', $lC_Language->getID());
-    $Qgroups->execute();
+    $Qgroups->bindInt(':language_id', $lC_Language->getID());    
 
     $data = $Qgroups->toArray();
 
@@ -161,8 +161,6 @@ class lC_Customer_groups_Admin {
       $Qgroups->execute();
 
       if ( $lC_Database->isError() ) {
-die($lC_Database->getError());
-        
         $error = true;
         break;
       }
@@ -191,8 +189,6 @@ die($lC_Database->getError());
     $Qgdata->execute();
 
     if ( $lC_Database->isError() ) {
-die($lC_Database->getError());
-      
       $error = true;
     }    
 
@@ -227,8 +223,6 @@ die($lC_Database->getError());
     $Qgroups->execute();
     
     if ( $lC_Database->isError() ) {
-die($lC_Database->getError());
-      
       return false;
     }
 
@@ -239,8 +233,6 @@ die($lC_Database->getError());
     $Qgdata->execute();
 
     if ( $lC_Database->isError() ) {
-die($lC_Database->getError());
-      
       return false;
     } 
     

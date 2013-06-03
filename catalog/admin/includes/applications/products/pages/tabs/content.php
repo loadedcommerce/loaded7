@@ -80,12 +80,15 @@ global $lC_Language, $lC_Template, $pInfo, $products_description, $products_keyw
       <div class="new-row-mobile four-columns twelve-columns-mobile">
       </div>
       <div class="new-row-mobile eight-columns twelve-columns-mobile">
-        <div style="width:100%;">
+        <div style="width:100%;">      
           <div style="width:48%; float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status margin-bottom">
             <span>
               <span class="strong"><?php echo $lC_Language->get('field_base_price'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_base_price'), 'margin:8px 6px 0 0;'); ?>
-            </span>
-            <?php echo lc_draw_input_field('products_price', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="font-size:2em;" class="input full-width" id="products_price0" onchange="$(\'#products_base_price\').val(this.value); updateDiscountDisplay();"'); ?>
+            </span> 
+            <div class="inputs large" style="font-size:2em; padding:8px 0;">
+              <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
+              <?php echo lc_draw_input_field('products_price', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="font-size:1em; padding:4px; height:20px;" class="input-unstyled" onfocus="this.select();" id="products_price0" onchange="$(\'#products_base_price\').val(this.value); updateDiscountDisplay();"'); ?>
+            </div>              
           </div>
           
           <div style="width:48%; float:right;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">

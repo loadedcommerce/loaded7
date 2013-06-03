@@ -160,6 +160,7 @@ text_non_shippable_item = Non Shippable Item (Coming Soon)
 text_none = -- None --
 text_off = Off
 text_on = On
+text_options_pricing = Options Pricing
 text_order_fee_modifiers = Order Fee Modifiers
 text_price_breaks_above = and above &#61;
 text_price = Price

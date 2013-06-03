@@ -49,8 +49,8 @@ function editGroup(id) {
                    '      </div>'+
                    '      <div class="field-drop button-height black-inputs">'+
                    '        <label for="baseline" class="label" style="width:63%;"><?php echo $lC_Language->get('field_baseline_discount'); ?></label>'+
-                   '        <div class="inputs" style="width:28%">'+
-                   '          <span class="mid-margin-right float-right strong">%</span><?php echo lc_draw_input_field('baseline', null, 'class="input-unstyled small-margin-left strong" id="editBaseline" style="width:50%;"'); ?>'+
+                   '        <div class="inputs' + ((id == '1') ? ' disabled' : '') + '" style="width:28%">'+
+                   '          <span class="mid-margin-right float-right strong">%</span><input type="text" name="baseline" class="input-unstyled small-margin-left strong" id="editBaseline" onfocus="this.select();" style="width:50%;"' + ((id == '1') ? ' DISABLED' : '') + '>'+
                    '        </div>'+
                    '      </div>'+
                    '    </form>'+
@@ -110,12 +110,12 @@ function editGroup(id) {
       });
       $("#editGroupNamesContainer").html(data.editNames);
       $("#editGroupFormTable > tfoot").empty(); // clear the old values
-      if ( id != defaultId ) {
-        $("#editGroupDefault").html('<label for="default" class="label anthracite"><?php echo $lC_Language->get('field_set_as_default'); ?></label><?php echo lc_draw_checkbox_field('default', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>');
-        $("#editGroupDefaultContainer").addClass('field-block');
-      } else {
+   //   if ( id != defaultId ) {
+   //     $("#editGroupDefault").html('<label for="default" class="label anthracite"><?php echo $lC_Language->get('field_set_as_default'); ?></label><?php echo lc_draw_checkbox_field('default', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>');
+   //     $("#editGroupDefaultContainer").addClass('field-block');
+   //   } else {
         $("#editGroupDefaultContainer").removeClass('field-block');
-      }
+   //   }
       $('#editBaseline').val(data.editBaseline.toFixed(2));
     }
   );
