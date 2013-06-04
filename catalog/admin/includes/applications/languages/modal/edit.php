@@ -122,7 +122,8 @@ function editLanguage(id) {
                   }
                 }).form();
                 if (bValid) {
-                  var nvp = $("#lEdit").serialize();
+                  var regex = new RegExp('%25', 'g');
+                  var nvp = $("#lEdit").serialize().replace(regex, 'P_CENT');
                   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveLanguage&lid=LID&BATCH'); ?>'
                   $.getJSON(jsonLink.replace('LID', parseInt(id)).replace('BATCH', nvp),
                     function (rdata) {
