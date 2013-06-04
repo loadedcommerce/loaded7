@@ -16,6 +16,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
   ?>
   <script>
     $(document).ready(function() {
+      $("#languageTabs").parent().css('margin-bottom', '0'); 
       // instantiate floating menu
       $('#floating-menu-div-listing').fixFloat();
       // instantiate the datepicker
@@ -30,7 +31,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%'  });";
       }
       ?>  
-      $('#products_name_1').focus();
+      //$('#products_name_1').focus();
       $(this).scrollTop(0); 
            
       // IMAGES TAB
@@ -114,6 +115,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     function showContent(tab) { 
       $('.qq-upload-list').empty();
       if (tab == 'default') {
+        $(".panel-content").css('left', 0);
         $('#defaultImagesContainer').show();
         $('#additionalImagesContainer').hide();
         $('#images-gallery-trigger').addClass('with-right-arrow grey-arrow');
@@ -121,6 +123,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         $('#additional-gallery-trigger').removeClass('with-right-arrow grey-arrow');
         $('#additional-gallery-trigger > a').removeClass('selected-menu');    
       } else {
+        $(".panel-content").css('left', 0);
         $('#defaultImagesContainer').hide();
         $('#additionalImagesContainer').show();
         $('#images-gallery-trigger').removeClass('with-right-arrow grey-arrow');
@@ -334,6 +337,13 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         getLocalImages();
       }
       */
+    }
+    
+    function backToNav() {
+      var imagesPanelWidth = $(".panel-content").width();
+      //alert(imagesPanelWidth);
+      $(".panel-navigation").css('left', '0').css('right', '0');
+      $(".panel-content").css('left', imagesPanelWidth);
     } 
     
     /**

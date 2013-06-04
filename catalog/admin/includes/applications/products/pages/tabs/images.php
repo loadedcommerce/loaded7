@@ -15,7 +15,7 @@ global $lC_Language, $pInfo;
 ?>   
 <div id="section_images_content" class="with-padding">
   <div class="content-panel margin-bottom enabled-panels">
-    <div class="panel-navigation silver-gradient">
+    <div class="panel-navigation silver-gradient scrollable">
       <div class="panel-control"></div>
       <div class="scrollable custom-scroll">
         <div class="navigable">
@@ -36,8 +36,9 @@ global $lC_Language, $pInfo;
         </div> 
       </div>
     </div>
-    <div class="panel-content linen" style="height:auto">
+    <div class="panel-content linen scrollable" style="height:auto">
       <div class="panel-control align-right"></div>
+      <a href="javascript://" onclick="backToNav();"><div class="back"><span class="back-arrow"></span>Back</div></a>
       <div style="height: auto; position: relative;" class="scrollable with-padding custom-scroll">
         <div class="gallery" id="images-gallery">
           <table border="0" width="100%" cellspacing="0" cellpadding="2">

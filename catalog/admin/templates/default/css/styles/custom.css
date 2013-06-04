@@ -505,12 +505,7 @@ li .message-menu {
 }
 
 #main-title h1 {
-  color: #B3B5B8 !important;
-  font-size: 40px !important;
-  line-height: 48px !important;
-  -webkit-text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25) !important;
-  -moz-text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25) !important;
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25) !important;
+  line-height: 48px;
 }
 
 #shortcuts > li > span {
@@ -593,6 +588,7 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 .message-menu > li, li.message-menu {
   padding: 2px 30px 3px;
 }
+.description-content { padding: 10px 10px 20px 16px; }
 
 
 
@@ -600,7 +596,7 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 @media screen and (min-width: 1200px) {
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 992px) and (max-width: 1199px) {
   .hide-below-992 { display: none !important; }
   #menu header .headerInner {
     margin: -10px 0px;
@@ -614,14 +610,52 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   } 
 } 
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) and (max-width: 991px) {
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 480px) and (max-width: 767px) {
 }  
   
-@media screen and (min-width: 320px) {
+@media screen and (min-width: 320px) and (max-width: 479px) {
   #title-bar {
     height: 40px !important;
   }
+
+  /* Default shadows */
+  .button,
+  .button-group > .button:first-child,
+  .select-value,
+  .legend {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    }
+    .button-group > .button,
+    .select-arrow {
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+    .button,
+    .select-value,
+    .legend {
+      -webkit-text-shadow: none;
+      -moz-text-shadow: none;
+      text-shadow: none;
+    }
+    
+  .button-cancel, .button-save {
+    display:none;
+  }
+  #product_tabs { margin: -15px; }
+  #floating-menu-div-listing {
+    right: -10px;
+    top: 35px; 
+  }
+  #section_general_content { margin: -10px -10px -10px -13px; }
+  .description-content { padding: 0; }
+  .description-content fieldset { padding: 6px; }
+  .description-content fieldset input { width: 93% !important; }
+  #basprice_status_left { display: none; }
+  #section_images_content { margin: -15px; }
 }     
