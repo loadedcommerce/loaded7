@@ -187,14 +187,17 @@
             if ((strtoupper($next) == 'DROP T') || (strtoupper($next) == 'CREATE') || (strtoupper($next) == 'INSERT')) {
               $next = '';
 
-              $sql_query = substr($import_queries, 0, $i);
+              $sql_query = trim(substr($import_queries, 0, $i));
 
               if ($table_prefix !== -1) {
-                if (strtoupper(substr($sql_query, 0, 25)) == 'DROP TABLE IF EXISTS LC_') {
+                if (strtoupper(substr($sql_query, 0, 24)) == 'DROP TABLE IF EXISTS LC_') {
                   $sql_query = 'DROP TABLE IF EXISTS ' . $table_prefix . substr($sql_query, 24);
-                } elseif (strtoupper(substr($sql_query, 0, 17)) == 'CREATE TABLE LC_') {
+                } elseif (strtoupper(substr($sql_query, 0, 16)) == 'CREATE TABLE LC_') {
                   $sql_query = 'CREATE TABLE ' . $table_prefix . substr($sql_query, 16);
-                } elseif (strtoupper(substr($sql_query, 0, 16)) == 'INSERT INTO LC_') {
+                } elseif (strtoupper(substr($sql_query, 0, 30)) == 'CREATE TABLE IF NOT EXISTS LC_') {
+                  $sql_query = 'CREATE TABLE ' . $table_prefix . substr($sql_query, 30);                  
+                  $sql_query = str_replace(";", " DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;", $sql_query);
+                } elseif (strtoupper(substr($sql_query, 0, 15)) == 'INSERT INTO LC_') {
                   $sql_query = 'INSERT INTO ' . $table_prefix . substr($sql_query, 15);
                 }
               }
