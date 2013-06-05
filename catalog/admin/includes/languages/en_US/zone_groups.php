@@ -39,7 +39,7 @@ all_countries = All Countries
 all_zones = All Zones
 
 introduction_new_zone_group = Please fill in the following information for the new zone group.
-introduction_edit_zone_group = Please make the necessary changes for this zone goup.
+introduction_edit_zone_group = Please make the necessary changes for this zone group.
 introduction_delete_zone_group = Please verify the removal of this zone group and its entries.
 delete_warning_group_in_use_tax_rate = Warning: This zone group cannot be deleted as it is currently assigned to
 delete_warning_group_in_use_tax_rate_end = tax rates.
@@ -47,6 +47,6 @@ introduction_batch_delete_zone_groups = Please verify the removal of the selecte
 batch_delete_warning_group_in_use_tax_rate = Warning: The following zone groups could not be deleted as they are currently assigned to tax rates:
 
 introduction_new_zone_entry = Please fill in the following information for the new zone group entry.
-introduction_edit_zone_entry = Please make the necessary changes for this zone gorup entry.
+introduction_edit_zone_entry = Please make the necessary changes for this zone group entry.
 introduction_delete_zone_entry = Please verify the removal of the following zone group entry.
 introduction_batch_delete_zone_entries = Please verify the removal of the selected zone group entries.
