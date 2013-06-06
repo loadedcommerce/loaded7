@@ -12,7 +12,7 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS lc_address_book;
-CREATE TABLE IF NOT EXISTS lc_address_book (
+CREATE TABLE lc_address_book (
   address_book_id int(11) NOT NULL AUTO_INCREMENT,
   customers_id int(11) NOT NULL,
   entry_gender char(1) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS lc_address_book (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_administrators;
-CREATE TABLE IF NOT EXISTS lc_administrators (
+CREATE TABLE lc_administrators (
   id int(11) NOT NULL AUTO_INCREMENT,
   user_name varchar(255) NOT NULL,
   user_password varchar(40) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS lc_administrators (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_administrators_access;
-CREATE TABLE IF NOT EXISTS lc_administrators_access (
+CREATE TABLE lc_administrators_access (
   id int(11) NOT NULL AUTO_INCREMENT,
   administrators_id int(11) NOT NULL DEFAULT '0',
   administrators_groups_id int(11) NOT NULL DEFAULT '0',
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS lc_administrators_access (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_administrators_groups;
-CREATE TABLE IF NOT EXISTS lc_administrators_groups (
+CREATE TABLE lc_administrators_groups (
   id int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS lc_administrators_groups (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;;
 
 DROP TABLE IF EXISTS lc_administrators_log;
-CREATE TABLE IF NOT EXISTS lc_administrators_log (
+CREATE TABLE lc_administrators_log (
   id int(11) NOT NULL,
   module varchar(255) NOT NULL,
   module_action varchar(255) DEFAULT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS lc_administrators_log (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_banners;
-CREATE TABLE IF NOT EXISTS lc_banners (
+CREATE TABLE lc_banners (
   banners_id int(11) NOT NULL AUTO_INCREMENT,
   banners_title varchar(255) NOT NULL,
   banners_url varchar(255) NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS lc_banners (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_banners_history;
-CREATE TABLE IF NOT EXISTS lc_banners_history (
+CREATE TABLE lc_banners_history (
   banners_history_id int(11) NOT NULL AUTO_INCREMENT,
   banners_id int(11) NOT NULL DEFAULT '0',
   banners_shown int(11) NOT NULL DEFAULT '0',
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS lc_banners_history (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_categories;
-CREATE TABLE IF NOT EXISTS lc_categories (
+CREATE TABLE lc_categories (
   categories_id int(11) NOT NULL AUTO_INCREMENT,
   categories_image varchar(255) DEFAULT NULL,
   parent_id int(11) NOT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS lc_categories (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_categories_description;
-CREATE TABLE IF NOT EXISTS lc_categories_description (
+CREATE TABLE lc_categories_description (
   categories_id int(11) NOT NULL,
   language_id int(11) NOT NULL DEFAULT '1',
   categories_name varchar(255) NOT NULL,
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS lc_categories_description (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_configuration;
-CREATE TABLE IF NOT EXISTS lc_configuration (
+CREATE TABLE lc_configuration (
   configuration_id int(11) NOT NULL AUTO_INCREMENT,
   configuration_title varchar(255) NOT NULL,
   configuration_key varchar(255) NOT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS lc_configuration (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_configuration_group;
-CREATE TABLE IF NOT EXISTS lc_configuration_group (
+CREATE TABLE lc_configuration_group (
   configuration_group_id int(11) NOT NULL AUTO_INCREMENT,
   configuration_group_title varchar(255) NOT NULL,
   configuration_group_description varchar(255) NOT NULL,
@@ -154,13 +154,13 @@ CREATE TABLE IF NOT EXISTS lc_configuration_group (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_counter;
-CREATE TABLE IF NOT EXISTS lc_counter (
+CREATE TABLE lc_counter (
   startdate datetime DEFAULT NULL,
   counter int(11) DEFAULT NULL
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_countries;
-CREATE TABLE IF NOT EXISTS lc_countries (
+CREATE TABLE lc_countries (
   countries_id int(11) NOT NULL AUTO_INCREMENT,
   countries_name varchar(255) NOT NULL,
   countries_iso_code_2 char(2) NOT NULL,
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS lc_countries (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_credit_cards;
-CREATE TABLE IF NOT EXISTS lc_credit_cards (
+CREATE TABLE lc_credit_cards (
   id int(11) NOT NULL AUTO_INCREMENT,
   credit_card_name varchar(255) NOT NULL,
   pattern varchar(255) NOT NULL,
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS lc_credit_cards (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_currencies;
-CREATE TABLE IF NOT EXISTS lc_currencies (
+CREATE TABLE lc_currencies (
   currencies_id int(11) NOT NULL AUTO_INCREMENT,
   title varchar(255) NOT NULL,
   `code` char(3) NOT NULL,
@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS lc_currencies (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_customers;
-CREATE TABLE IF NOT EXISTS lc_customers (
+CREATE TABLE lc_customers (
   customers_id int(11) NOT NULL AUTO_INCREMENT,
   customers_group_id int(11) NOT NULL DEFAULT '1',
   customers_gender char(1) DEFAULT NULL,
@@ -218,7 +218,7 @@ CREATE TABLE IF NOT EXISTS lc_customers (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_customers_groups;
-CREATE TABLE IF NOT EXISTS lc_customers_groups (
+CREATE TABLE lc_customers_groups (
   customers_group_id int(11) NOT NULL AUTO_INCREMENT,
   language_id int(11) NOT NULL DEFAULT '1',
   customers_group_name varchar(255) NOT NULL,
@@ -226,8 +226,16 @@ CREATE TABLE IF NOT EXISTS lc_customers_groups (
   KEY idx_orders_status_name (customers_group_name)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_customers_groups_data;
+CREATE TABLE lc_customers_groups_data (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  customers_group_id int(11) NOT NULL DEFAULT '1',
+  baseline_discount decimal(5,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (id)
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_geo_zones;
-CREATE TABLE IF NOT EXISTS lc_geo_zones (
+CREATE TABLE lc_geo_zones (
   geo_zone_id int(11) NOT NULL AUTO_INCREMENT,
   geo_zone_name varchar(255) NOT NULL,
   geo_zone_description varchar(255) NOT NULL,
@@ -237,7 +245,7 @@ CREATE TABLE IF NOT EXISTS lc_geo_zones (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_languages;
-CREATE TABLE IF NOT EXISTS lc_languages (
+CREATE TABLE lc_languages (
   languages_id int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `code` varchar(5) NOT NULL,
@@ -256,7 +264,7 @@ CREATE TABLE IF NOT EXISTS lc_languages (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_languages_definitions;
-CREATE TABLE IF NOT EXISTS lc_languages_definitions (
+CREATE TABLE lc_languages_definitions (
   id int(11) NOT NULL AUTO_INCREMENT,
   languages_id int(11) NOT NULL,
   content_group varchar(255) NOT NULL,
@@ -269,7 +277,7 @@ CREATE TABLE IF NOT EXISTS lc_languages_definitions (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_manufacturers;
-CREATE TABLE IF NOT EXISTS lc_manufacturers (
+CREATE TABLE lc_manufacturers (
   manufacturers_id int(11) NOT NULL AUTO_INCREMENT,
   manufacturers_name varchar(255) NOT NULL,
   manufacturers_image varchar(255) DEFAULT NULL,
@@ -280,7 +288,7 @@ CREATE TABLE IF NOT EXISTS lc_manufacturers (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_manufacturers_info;
-CREATE TABLE IF NOT EXISTS lc_manufacturers_info (
+CREATE TABLE lc_manufacturers_info (
   manufacturers_id int(11) NOT NULL,
   languages_id int(11) NOT NULL,
   manufacturers_url varchar(255) NOT NULL,
@@ -290,7 +298,7 @@ CREATE TABLE IF NOT EXISTS lc_manufacturers_info (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_newsletters;
-CREATE TABLE IF NOT EXISTS lc_newsletters (
+CREATE TABLE lc_newsletters (
   newsletters_id int(11) NOT NULL AUTO_INCREMENT,
   title varchar(255) NOT NULL,
   content text NOT NULL,
@@ -303,7 +311,7 @@ CREATE TABLE IF NOT EXISTS lc_newsletters (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_newsletters_log;
-CREATE TABLE IF NOT EXISTS lc_newsletters_log (
+CREATE TABLE lc_newsletters_log (
   newsletters_id int(11) NOT NULL,
   email_address varchar(255) NOT NULL,
   date_sent datetime DEFAULT NULL,
@@ -312,7 +320,7 @@ CREATE TABLE IF NOT EXISTS lc_newsletters_log (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders;
-CREATE TABLE IF NOT EXISTS lc_orders (
+CREATE TABLE lc_orders (
   orders_id int(11) NOT NULL AUTO_INCREMENT,
   customers_id int(11) NOT NULL,
   customers_name varchar(255) NOT NULL,
@@ -366,7 +374,7 @@ CREATE TABLE IF NOT EXISTS lc_orders (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_products;
-CREATE TABLE IF NOT EXISTS lc_orders_products (
+CREATE TABLE lc_orders_products (
   orders_products_id int(11) NOT NULL AUTO_INCREMENT,
   orders_id int(11) NOT NULL,
   products_id int(11) NOT NULL,
@@ -379,7 +387,7 @@ CREATE TABLE IF NOT EXISTS lc_orders_products (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_products_download;
-CREATE TABLE IF NOT EXISTS lc_orders_products_download (
+CREATE TABLE lc_orders_products_download (
   orders_products_download_id int(11) NOT NULL AUTO_INCREMENT,
   orders_id int(11) NOT NULL,
   orders_products_id int(11) NOT NULL,
@@ -390,7 +398,7 @@ CREATE TABLE IF NOT EXISTS lc_orders_products_download (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_products_variants;
-CREATE TABLE IF NOT EXISTS lc_orders_products_variants (
+CREATE TABLE lc_orders_products_variants (
   id int(11) NOT NULL AUTO_INCREMENT,
   orders_id int(11) NOT NULL,
   orders_products_id int(11) NOT NULL,
@@ -401,7 +409,7 @@ CREATE TABLE IF NOT EXISTS lc_orders_products_variants (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_status;
-CREATE TABLE IF NOT EXISTS lc_orders_status (
+CREATE TABLE lc_orders_status (
   orders_status_id int(11) NOT NULL,
   language_id int(11) NOT NULL DEFAULT '1',
   orders_status_name varchar(255) NOT NULL,
@@ -410,7 +418,7 @@ CREATE TABLE IF NOT EXISTS lc_orders_status (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_status_history;
-CREATE TABLE IF NOT EXISTS lc_orders_status_history (
+CREATE TABLE lc_orders_status_history (
   orders_status_history_id int(11) NOT NULL AUTO_INCREMENT,
   orders_id int(11) NOT NULL,
   orders_status_id int(11) NOT NULL,
@@ -421,7 +429,7 @@ CREATE TABLE IF NOT EXISTS lc_orders_status_history (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_total;
-CREATE TABLE IF NOT EXISTS lc_orders_total (
+CREATE TABLE lc_orders_total (
   orders_total_id int(10) unsigned NOT NULL AUTO_INCREMENT,
   orders_id int(11) NOT NULL,
   title varchar(255) NOT NULL,
@@ -434,7 +442,7 @@ CREATE TABLE IF NOT EXISTS lc_orders_total (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_transactions_history;
-CREATE TABLE IF NOT EXISTS lc_orders_transactions_history (
+CREATE TABLE lc_orders_transactions_history (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   orders_id int(10) unsigned NOT NULL,
   transaction_code int(11) NOT NULL,
@@ -446,7 +454,7 @@ CREATE TABLE IF NOT EXISTS lc_orders_transactions_history (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_transactions_status;
-CREATE TABLE IF NOT EXISTS lc_orders_transactions_status (
+CREATE TABLE lc_orders_transactions_status (
   id int(10) unsigned NOT NULL,
   language_id int(10) unsigned NOT NULL,
   status_name varchar(255) NOT NULL,
@@ -455,7 +463,7 @@ CREATE TABLE IF NOT EXISTS lc_orders_transactions_status (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products;
-CREATE TABLE IF NOT EXISTS lc_products (
+CREATE TABLE lc_products (
   products_id int(11) NOT NULL AUTO_INCREMENT,
   parent_id int(11) NOT NULL DEFAULT '0',
   products_quantity int(11) NOT NULL DEFAULT '0',
@@ -475,7 +483,7 @@ CREATE TABLE IF NOT EXISTS lc_products (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_description;
-CREATE TABLE IF NOT EXISTS lc_products_description (
+CREATE TABLE lc_products_description (
   products_id int(11) NOT NULL AUTO_INCREMENT,
   language_id int(11) NOT NULL DEFAULT '1',
   products_name varchar(255) NOT NULL,
@@ -493,7 +501,7 @@ CREATE TABLE IF NOT EXISTS lc_products_description (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_images;
-CREATE TABLE IF NOT EXISTS lc_products_images (
+CREATE TABLE lc_products_images (
   id int(11) NOT NULL AUTO_INCREMENT,
   products_id int(11) NOT NULL,
   image varchar(255) NOT NULL,
@@ -505,7 +513,7 @@ CREATE TABLE IF NOT EXISTS lc_products_images (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_images_groups;
-CREATE TABLE IF NOT EXISTS lc_products_images_groups (
+CREATE TABLE lc_products_images_groups (
   id int(11) NOT NULL,
   language_id int(11) NOT NULL,
   title varchar(255) NOT NULL,
@@ -517,7 +525,7 @@ CREATE TABLE IF NOT EXISTS lc_products_images_groups (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_notifications;
-CREATE TABLE IF NOT EXISTS lc_products_notifications (
+CREATE TABLE lc_products_notifications (
   products_id int(11) NOT NULL,
   customers_id int(11) NOT NULL,
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -525,7 +533,7 @@ CREATE TABLE IF NOT EXISTS lc_products_notifications (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_pricing;
-CREATE TABLE IF NOT EXISTS lc_products_pricing (
+CREATE TABLE lc_products_pricing (
   products_id int(11) NOT NULL,
   group_id int(11) NOT NULL,
   tax_class_id int(11) NOT NULL,
@@ -536,15 +544,33 @@ CREATE TABLE IF NOT EXISTS lc_products_pricing (
   KEY products_id (products_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_customers_groups_data;
+CREATE TABLE lc_customers_groups_data (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  customers_group_id int(11) NOT NULL DEFAULT '1',
+  baseline_discount decimal(5,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (id)
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+DROP TABLE IF EXISTS lc_products_simple_options;
+CREATE TABLE lc_products_simple_options (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  options_id int(11) NOT NULL,
+  products_id int(11) NOT NULL,
+  sort_order int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_products_to_categories;
-CREATE TABLE IF NOT EXISTS lc_products_to_categories (
+CREATE TABLE lc_products_to_categories (
   products_id int(11) NOT NULL,
   categories_id int(11) NOT NULL,
   PRIMARY KEY (products_id,categories_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_variants;
-CREATE TABLE IF NOT EXISTS lc_products_variants (
+CREATE TABLE lc_products_variants (
   products_id int(10) unsigned NOT NULL,
   products_variants_values_id int(10) unsigned NOT NULL,
   default_combo tinyint(3) unsigned DEFAULT NULL,
@@ -552,7 +578,7 @@ CREATE TABLE IF NOT EXISTS lc_products_variants (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_variants_groups;
-CREATE TABLE IF NOT EXISTS lc_products_variants_groups (
+CREATE TABLE lc_products_variants_groups (
   id int(11) NOT NULL AUTO_INCREMENT,
   languages_id int(11) NOT NULL,
   title varchar(255) NOT NULL,
@@ -562,7 +588,7 @@ CREATE TABLE IF NOT EXISTS lc_products_variants_groups (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_variants_values;
-CREATE TABLE IF NOT EXISTS lc_products_variants_values (
+CREATE TABLE lc_products_variants_values (
   id int(11) NOT NULL AUTO_INCREMENT,
   languages_id int(11) NOT NULL,
   products_variants_groups_id int(11) NOT NULL,
@@ -573,7 +599,7 @@ CREATE TABLE IF NOT EXISTS lc_products_variants_values (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_product_attributes;
-CREATE TABLE IF NOT EXISTS lc_product_attributes (
+CREATE TABLE lc_product_attributes (
   id int(10) unsigned NOT NULL,
   products_id int(10) unsigned NOT NULL,
   languages_id int(10) unsigned NOT NULL,
@@ -583,7 +609,7 @@ CREATE TABLE IF NOT EXISTS lc_product_attributes (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_reviews;
-CREATE TABLE IF NOT EXISTS lc_reviews (
+CREATE TABLE lc_reviews (
   reviews_id int(11) NOT NULL AUTO_INCREMENT,
   products_id int(11) NOT NULL DEFAULT '0',
   customers_id int(11) DEFAULT NULL,
@@ -599,7 +625,7 @@ CREATE TABLE IF NOT EXISTS lc_reviews (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_sessions;
-CREATE TABLE IF NOT EXISTS lc_sessions (
+CREATE TABLE lc_sessions (
   id varchar(32) NOT NULL,
   expiry int(10) unsigned NOT NULL,
   `value` text NOT NULL,
@@ -607,7 +633,7 @@ CREATE TABLE IF NOT EXISTS lc_sessions (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_shipping_availability;
-CREATE TABLE IF NOT EXISTS lc_shipping_availability (
+CREATE TABLE lc_shipping_availability (
   id int(10) unsigned NOT NULL,
   languages_id int(10) unsigned NOT NULL,
   title varchar(255) NOT NULL,
@@ -616,7 +642,7 @@ CREATE TABLE IF NOT EXISTS lc_shipping_availability (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_shopping_carts;
-CREATE TABLE IF NOT EXISTS lc_shopping_carts (
+CREATE TABLE lc_shopping_carts (
   customers_id int(10) unsigned NOT NULL,
   item_id smallint(5) unsigned NOT NULL,
   products_id int(10) unsigned NOT NULL,
@@ -627,7 +653,7 @@ CREATE TABLE IF NOT EXISTS lc_shopping_carts (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_shopping_carts_custom_variants_values;
-CREATE TABLE IF NOT EXISTS lc_shopping_carts_custom_variants_values (
+CREATE TABLE lc_shopping_carts_custom_variants_values (
   shopping_carts_item_id smallint(5) unsigned NOT NULL,
   customers_id int(10) unsigned NOT NULL,
   products_id int(10) unsigned NOT NULL,
@@ -637,7 +663,7 @@ CREATE TABLE IF NOT EXISTS lc_shopping_carts_custom_variants_values (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_specials;
-CREATE TABLE IF NOT EXISTS lc_specials (
+CREATE TABLE lc_specials (
   specials_id int(11) NOT NULL AUTO_INCREMENT,
   products_id int(11) NOT NULL,
   specials_new_products_price decimal(15,4) NOT NULL DEFAULT '0.0000',
@@ -651,7 +677,7 @@ CREATE TABLE IF NOT EXISTS lc_specials (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_tax_class;
-CREATE TABLE IF NOT EXISTS lc_tax_class (
+CREATE TABLE lc_tax_class (
   tax_class_id int(11) NOT NULL AUTO_INCREMENT,
   tax_class_title varchar(255) NOT NULL,
   tax_class_description varchar(255) NOT NULL,
@@ -661,7 +687,7 @@ CREATE TABLE IF NOT EXISTS lc_tax_class (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_tax_rates;
-CREATE TABLE IF NOT EXISTS lc_tax_rates (
+CREATE TABLE lc_tax_rates (
   tax_rates_id int(11) NOT NULL AUTO_INCREMENT,
   tax_zone_id int(11) NOT NULL,
   tax_class_id int(11) NOT NULL,
@@ -674,7 +700,7 @@ CREATE TABLE IF NOT EXISTS lc_tax_rates (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_templates;
-CREATE TABLE IF NOT EXISTS lc_templates (
+CREATE TABLE lc_templates (
   id int(11) NOT NULL AUTO_INCREMENT,
   title varchar(255) NOT NULL,
   `code` varchar(255) NOT NULL,
@@ -687,7 +713,7 @@ CREATE TABLE IF NOT EXISTS lc_templates (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_templates_boxes;
-CREATE TABLE IF NOT EXISTS lc_templates_boxes (
+CREATE TABLE lc_templates_boxes (
   id int(11) NOT NULL AUTO_INCREMENT,
   title varchar(255) NOT NULL,
   `code` varchar(255) NOT NULL,
@@ -698,7 +724,7 @@ CREATE TABLE IF NOT EXISTS lc_templates_boxes (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_templates_boxes_to_pages;
-CREATE TABLE IF NOT EXISTS lc_templates_boxes_to_pages (
+CREATE TABLE lc_templates_boxes_to_pages (
   id int(11) NOT NULL AUTO_INCREMENT,
   templates_boxes_id int(11) NOT NULL,
   templates_id int(11) NOT NULL,
@@ -711,7 +737,7 @@ CREATE TABLE IF NOT EXISTS lc_templates_boxes_to_pages (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_updates_log;
-CREATE TABLE IF NOT EXISTS lc_updates_log (
+CREATE TABLE lc_updates_log (
   id int(11) NOT NULL AUTO_INCREMENT,
   action varchar(32) NOT NULL DEFAULT '',
   result varchar(128) NOT NULL DEFAULT '',
@@ -721,7 +747,7 @@ CREATE TABLE IF NOT EXISTS lc_updates_log (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_weight_classes;
-CREATE TABLE IF NOT EXISTS lc_weight_classes (
+CREATE TABLE lc_weight_classes (
   weight_class_id int(11) NOT NULL,
   weight_class_key varchar(4) NOT NULL,
   language_id int(11) NOT NULL,
@@ -730,14 +756,14 @@ CREATE TABLE IF NOT EXISTS lc_weight_classes (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_weight_classes_rules;
-CREATE TABLE IF NOT EXISTS lc_weight_classes_rules (
+CREATE TABLE lc_weight_classes_rules (
   weight_class_from_id int(11) NOT NULL,
   weight_class_to_id int(11) NOT NULL,
   weight_class_rule decimal(15,4) NOT NULL DEFAULT '0.0000'
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_whos_online;
-CREATE TABLE IF NOT EXISTS lc_whos_online (
+CREATE TABLE lc_whos_online (
   customer_id int(11) DEFAULT NULL,
   full_name varchar(255) NOT NULL,
   session_id varchar(128) NOT NULL,
@@ -748,7 +774,7 @@ CREATE TABLE IF NOT EXISTS lc_whos_online (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_zones;
-CREATE TABLE IF NOT EXISTS lc_zones (
+CREATE TABLE lc_zones (
   zone_id int(10) unsigned NOT NULL AUTO_INCREMENT,
   zone_country_id int(10) unsigned NOT NULL,
   zone_code varchar(255) NOT NULL,
@@ -761,7 +787,7 @@ CREATE TABLE IF NOT EXISTS lc_zones (
 
 
 DROP TABLE IF EXISTS lc_zones_to_geo_zones;
-CREATE TABLE IF NOT EXISTS lc_zones_to_geo_zones (
+CREATE TABLE lc_zones_to_geo_zones (
   association_id int(11) NOT NULL AUTO_INCREMENT,
   zone_country_id int(11) NOT NULL,
   zone_id int(11) DEFAULT NULL,
@@ -931,6 +957,22 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(154, 'Check Configuration File', 'SERVICE_DEBUG_CHECK_CONFIGURATION', '1', 'Show a warning if the configuration file is writeable.', 6, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(155, 'Check Sessions Directory', 'SERVICE_DEBUG_CHECK_SESSION_DIRECTORY', '1', 'Show a warning if the file-based session directory does not exist.', 6, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(156, 'Maximum Entries To Display', 'MODULE_CONTENT_NEW_PRODUCTS_MAX_DISPLAY', '6', 'Maximum number of new products to display', 6, 0, NULL, '2012-10-25 18:08:07', NULL, NULL);
+
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(1, 'My Store', 'General information about my store', 1, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(2, 'Minimum Values', 'The minimum values for functions / data', 2, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(3, 'Maximum Values', 'The maximum values for functions / data', 3, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(4, 'Images', 'Image parameters', 4, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(5, 'Customer Details', 'Customer account configuration', 5, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(6, 'Module Options', 'Hidden from configuration', 6, 0);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(7, 'Shipping/Packaging', 'Shipping options available at my store', 7, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(8, 'Product Listing', 'Product Listing    configuration options', 8, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(9, 'Stock', 'Stock configuration options', 9, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(12, 'E-Mail Options', 'General setting for E-Mail transport and HTML E-Mails', 12, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(13, 'Download', 'Downloadable products options', 13, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(16, 'Regulations', 'Regulation options', 16, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(17, 'Credit Cards', 'Credit card options', 17, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(18, 'Program Locations', 'Locations to certain programs on the server.', 18, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(19, 'Core Updates', 'Core update settings', 19, 1);
 
 INSERT INTO lc_countries VALUES (1,'Afghanistan','AF','AFG','');
 
@@ -5913,20 +5955,4 @@ INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, w
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(2, 'kg', 1, 'Kilogram(s)');
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(3, 'oz', 1, 'Ounce(s)');
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(4, 'lb', 1, 'Pound(s)');
-
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(1, 'My Store', 'General information about my store', 1, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(2, 'Minimum Values', 'The minimum values for functions / data', 2, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(3, 'Maximum Values', 'The maximum values for functions / data', 3, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(4, 'Images', 'Image parameters', 4, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(5, 'Customer Details', 'Customer account configuration', 5, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(6, 'Module Options', 'Hidden from configuration', 6, 0);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(7, 'Shipping/Packaging', 'Shipping options available at my store', 7, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(8, 'Product Listing', 'Product Listing    configuration options', 8, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(9, 'Stock', 'Stock configuration options', 9, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(12, 'E-Mail Options', 'General setting for E-Mail transport and HTML E-Mails', 12, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(13, 'Download', 'Downloadable products options', 13, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(16, 'Regulations', 'Regulation options', 16, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(17, 'Credit Cards', 'Credit card options', 17, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(18, 'Program Locations', 'Locations to certain programs on the server.', 18, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(19, 'Core Updates', 'Core update settings', 19, 1);
 
