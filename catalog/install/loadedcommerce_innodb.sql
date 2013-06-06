@@ -1,4 +1,4 @@
-#  $Id: loadedcommerce.sql v1.0 2012-12-04 datazen $
+#  $Id: loadedcommerce_innodb.sql v1.0 2012-12-04 datazen $
 #
 #  LoadedCommerce, Innovative eCommerce Solutions
 #  http://www.loadedcommerce.com
@@ -30,7 +30,7 @@ CREATE TABLE lc_address_book (
   entry_fax varchar(255) DEFAULT NULL,
   PRIMARY KEY (address_book_id),
   KEY idx_address_book_customers_id (customers_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_administrators;
 CREATE TABLE lc_administrators (
@@ -42,7 +42,7 @@ CREATE TABLE lc_administrators (
   image varchar(255) NOT NULL DEFAULT '',
   access_group_id int NOT NULL DEFAULT '0',
   PRIMARY KEY (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_administrators_access;
 CREATE TABLE lc_administrators_access (
@@ -52,7 +52,7 @@ CREATE TABLE lc_administrators_access (
   module varchar(255) NOT NULL DEFAULT '',
   `level` int NOT NULL DEFAULT '0',
   PRIMARY KEY (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_administrators_groups;
 CREATE TABLE lc_administrators_groups (
@@ -61,7 +61,7 @@ CREATE TABLE lc_administrators_groups (
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;;
 
 DROP TABLE IF EXISTS lc_administrators_log;
 CREATE TABLE lc_administrators_log (
@@ -76,7 +76,7 @@ CREATE TABLE lc_administrators_log (
   administrators_id int(11) NOT NULL,
   datestamp datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   KEY idx_administrators_log_id (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_banners;
 CREATE TABLE lc_banners (
@@ -94,7 +94,7 @@ CREATE TABLE lc_banners (
   date_status_change datetime DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (banners_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_banners_history;
 CREATE TABLE lc_banners_history (
@@ -104,7 +104,7 @@ CREATE TABLE lc_banners_history (
   banners_clicked int(11) NOT NULL DEFAULT '0',
   banners_history_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (banners_history_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_categories;
 CREATE TABLE lc_categories (
@@ -116,7 +116,7 @@ CREATE TABLE lc_categories (
   last_modified datetime DEFAULT NULL,
   PRIMARY KEY (categories_id),
   KEY idx_categories_parent_id (parent_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_categories_description;
 CREATE TABLE lc_categories_description (
@@ -125,7 +125,7 @@ CREATE TABLE lc_categories_description (
   categories_name varchar(255) NOT NULL,
   PRIMARY KEY (categories_id,language_id),
   KEY idx_categories_name (categories_name)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_configuration;
 CREATE TABLE lc_configuration (
@@ -141,7 +141,7 @@ CREATE TABLE lc_configuration (
   use_function varchar(255) DEFAULT NULL,
   set_function varchar(255) DEFAULT NULL,
   PRIMARY KEY (configuration_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_configuration_group;
 CREATE TABLE lc_configuration_group (
@@ -151,13 +151,13 @@ CREATE TABLE lc_configuration_group (
   sort_order int(11) DEFAULT NULL,
   visible int(11) DEFAULT '1',
   PRIMARY KEY (configuration_group_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_counter;
 CREATE TABLE lc_counter (
   startdate datetime DEFAULT NULL,
   counter int(11) DEFAULT NULL
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_countries;
 CREATE TABLE lc_countries (
@@ -168,7 +168,7 @@ CREATE TABLE lc_countries (
   address_format varchar(255) DEFAULT NULL,
   PRIMARY KEY (countries_id),
   KEY IDX_COUNTRIES_NAME (countries_name)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_credit_cards;
 CREATE TABLE lc_credit_cards (
@@ -178,7 +178,7 @@ CREATE TABLE lc_credit_cards (
   credit_card_status char(1) NOT NULL,
   sort_order int(11) DEFAULT NULL,
   PRIMARY KEY (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_currencies;
 CREATE TABLE lc_currencies (
@@ -191,7 +191,7 @@ CREATE TABLE lc_currencies (
   `value` float(13,8) DEFAULT NULL,
   last_updated datetime DEFAULT NULL,
   PRIMARY KEY (currencies_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_customers;
 CREATE TABLE lc_customers (
@@ -215,7 +215,7 @@ CREATE TABLE lc_customers (
   date_account_last_modified datetime DEFAULT NULL,
   global_product_notifications int(11) DEFAULT NULL,
   PRIMARY KEY (customers_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_customers_groups;
 CREATE TABLE lc_customers_groups (
@@ -224,7 +224,7 @@ CREATE TABLE lc_customers_groups (
   customers_group_name varchar(255) NOT NULL,
   PRIMARY KEY (customers_group_id,language_id),
   KEY idx_customers_group_name (customers_group_name)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_customers_groups_data;
 CREATE TABLE lc_customers_groups_data (
@@ -232,7 +232,7 @@ CREATE TABLE lc_customers_groups_data (
   customers_group_id int(11) NOT NULL DEFAULT '1',
   baseline_discount decimal(5,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_geo_zones;
 CREATE TABLE lc_geo_zones (
@@ -242,7 +242,7 @@ CREATE TABLE lc_geo_zones (
   last_modified datetime DEFAULT NULL,
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (geo_zone_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_languages;
 CREATE TABLE lc_languages (
@@ -261,7 +261,7 @@ CREATE TABLE lc_languages (
   parent_id int(11) DEFAULT NULL,
   sort_order int(11) DEFAULT NULL,
   PRIMARY KEY (languages_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_languages_definitions;
 CREATE TABLE lc_languages_definitions (
@@ -274,7 +274,7 @@ CREATE TABLE lc_languages_definitions (
   KEY IDX_LANGUAGES_DEFINITIONS_LANGUAGES (languages_id),
   KEY IDX_LANGUAGES_DEFINITIONS (languages_id,content_group),
   KEY IDX_LANGUAGES_DEFINITIONS_GROUPS (content_group)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_manufacturers;
 CREATE TABLE lc_manufacturers (
@@ -285,7 +285,7 @@ CREATE TABLE lc_manufacturers (
   last_modified datetime DEFAULT NULL,
   PRIMARY KEY (manufacturers_id),
   KEY IDX_MANUFACTURERS_NAME (manufacturers_name)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_manufacturers_info;
 CREATE TABLE lc_manufacturers_info (
@@ -295,7 +295,7 @@ CREATE TABLE lc_manufacturers_info (
   url_clicked int(11) NOT NULL DEFAULT '0',
   date_last_click datetime DEFAULT NULL,
   PRIMARY KEY (manufacturers_id,languages_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_newsletters;
 CREATE TABLE lc_newsletters (
@@ -308,7 +308,7 @@ CREATE TABLE lc_newsletters (
   `status` int(11) DEFAULT NULL,
   locked int(11) DEFAULT NULL,
   PRIMARY KEY (newsletters_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_newsletters_log;
 CREATE TABLE lc_newsletters_log (
@@ -317,7 +317,7 @@ CREATE TABLE lc_newsletters_log (
   date_sent datetime DEFAULT NULL,
   KEY IDX_NEWSLETTERS_LOG_NEWSLETTERS_ID (newsletters_id),
   KEY IDX_NEWSLETTERS_LOG_EMAIL_ADDRESS (email_address)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders;
 CREATE TABLE lc_orders (
@@ -371,7 +371,7 @@ CREATE TABLE lc_orders (
   currency char(3) DEFAULT NULL,
   currency_value decimal(14,6) DEFAULT NULL,
   PRIMARY KEY (orders_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_products;
 CREATE TABLE lc_orders_products (
@@ -384,7 +384,7 @@ CREATE TABLE lc_orders_products (
   products_tax decimal(7,4) NOT NULL DEFAULT '0.0000',
   products_quantity int(11) NOT NULL,
   PRIMARY KEY (orders_products_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_products_download;
 CREATE TABLE lc_orders_products_download (
@@ -395,7 +395,7 @@ CREATE TABLE lc_orders_products_download (
   download_maxdays int(11) NOT NULL,
   download_count int(11) NOT NULL,
   PRIMARY KEY (orders_products_download_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_products_variants;
 CREATE TABLE lc_orders_products_variants (
@@ -406,7 +406,7 @@ CREATE TABLE lc_orders_products_variants (
   value_title text NOT NULL,
   PRIMARY KEY (id),
   KEY idx_orders_products_variants_orders_products_ids (orders_id,orders_products_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_status;
 CREATE TABLE lc_orders_status (
@@ -415,7 +415,7 @@ CREATE TABLE lc_orders_status (
   orders_status_name varchar(255) NOT NULL,
   PRIMARY KEY (orders_status_id,language_id),
   KEY idx_orders_status_name (orders_status_name)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_status_history;
 CREATE TABLE lc_orders_status_history (
@@ -426,7 +426,7 @@ CREATE TABLE lc_orders_status_history (
   customer_notified int(11) DEFAULT NULL,
   comments text,
   PRIMARY KEY (orders_status_history_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_total;
 CREATE TABLE lc_orders_total (
@@ -439,7 +439,7 @@ CREATE TABLE lc_orders_total (
   sort_order int(11) NOT NULL,
   PRIMARY KEY (orders_total_id),
   KEY idx_orders_total_orders_id (orders_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_transactions_history;
 CREATE TABLE lc_orders_transactions_history (
@@ -451,7 +451,7 @@ CREATE TABLE lc_orders_transactions_history (
   date_added datetime DEFAULT NULL,
   PRIMARY KEY (id),
   KEY idx_orders_transactions_history_orders_id (orders_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_orders_transactions_status;
 CREATE TABLE lc_orders_transactions_status (
@@ -460,7 +460,7 @@ CREATE TABLE lc_orders_transactions_status (
   status_name varchar(255) NOT NULL,
   PRIMARY KEY (id,language_id),
   KEY idx_orders_transactions_status_name (status_name)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products;
 CREATE TABLE lc_products (
@@ -480,7 +480,7 @@ CREATE TABLE lc_products (
   has_children int(11) DEFAULT NULL,
   PRIMARY KEY (products_id),
   KEY idx_products_date_added (products_date_added)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_description;
 CREATE TABLE lc_products_description (
@@ -498,7 +498,7 @@ CREATE TABLE lc_products_description (
   PRIMARY KEY (products_id,language_id),
   KEY products_name (products_name),
   KEY products_description_keyword (products_keyword)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_images;
 CREATE TABLE lc_products_images (
@@ -510,7 +510,7 @@ CREATE TABLE lc_products_images (
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (id),
   KEY products_images_products_id (products_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_images_groups;
 CREATE TABLE lc_products_images_groups (
@@ -522,7 +522,7 @@ CREATE TABLE lc_products_images_groups (
   size_height int(11) DEFAULT NULL,
   force_size tinyint(1) DEFAULT NULL,
   PRIMARY KEY (id,language_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_notifications;
 CREATE TABLE lc_products_notifications (
@@ -530,7 +530,7 @@ CREATE TABLE lc_products_notifications (
   customers_id int(11) NOT NULL,
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (products_id,customers_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_pricing;
 CREATE TABLE lc_products_pricing (
@@ -542,7 +542,7 @@ CREATE TABLE lc_products_pricing (
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   KEY idx_products_pricing_group_id (group_id),
   KEY idx_products_pricing_products_id (products_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_simple_options;
 CREATE TABLE lc_products_simple_options (
@@ -552,7 +552,7 @@ CREATE TABLE lc_products_simple_options (
   sort_order int(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_simple_options_values;
 CREATE TABLE lc_products_simple_options_values (
@@ -565,14 +565,14 @@ CREATE TABLE lc_products_simple_options_values (
   KEY idx_products_simple_options_values_customers_group_id (customers_group_id),
   KEY idx_products_simple_options_values_values_id (values_id),
   KEY idx_products_simple_options_values_options_id (options_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_to_categories;
 CREATE TABLE lc_products_to_categories (
   products_id int(11) NOT NULL,
   categories_id int(11) NOT NULL,
   PRIMARY KEY (products_id,categories_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_variants;
 CREATE TABLE lc_products_variants (
@@ -580,7 +580,7 @@ CREATE TABLE lc_products_variants (
   products_variants_values_id int(10) unsigned NOT NULL,
   default_combo tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (products_id,products_variants_values_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_variants_groups;
 CREATE TABLE lc_products_variants_groups (
@@ -590,7 +590,7 @@ CREATE TABLE lc_products_variants_groups (
   sort_order int(11) NOT NULL,
   module varchar(255) NOT NULL,
   PRIMARY KEY (id,languages_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_variants_values;
 CREATE TABLE lc_products_variants_values (
@@ -601,7 +601,7 @@ CREATE TABLE lc_products_variants_values (
   sort_order int(11) NOT NULL,
   PRIMARY KEY (id,languages_id),
   KEY idx_products_variants_values_groups_id (products_variants_groups_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_product_attributes;
 CREATE TABLE lc_product_attributes (
@@ -611,7 +611,7 @@ CREATE TABLE lc_product_attributes (
   `value` text NOT NULL,
   KEY idx_pa_id_products_id (id,products_id),
   KEY idx_pa_languages_id (languages_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_reviews;
 CREATE TABLE lc_reviews (
@@ -627,7 +627,7 @@ CREATE TABLE lc_reviews (
   reviews_read int(11) NOT NULL DEFAULT '0',
   reviews_status tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (reviews_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_sessions;
 CREATE TABLE lc_sessions (
@@ -635,7 +635,7 @@ CREATE TABLE lc_sessions (
   expiry int(10) unsigned NOT NULL,
   `value` text NOT NULL,
   PRIMARY KEY (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_shipping_availability;
 CREATE TABLE lc_shipping_availability (
@@ -644,7 +644,7 @@ CREATE TABLE lc_shipping_availability (
   title varchar(255) NOT NULL,
   css_key varchar(255) DEFAULT NULL,
   PRIMARY KEY (id,languages_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_shopping_carts;
 CREATE TABLE lc_shopping_carts (
@@ -655,7 +655,7 @@ CREATE TABLE lc_shopping_carts (
   date_added datetime DEFAULT NULL,
   KEY idx_sc_customers_id (customers_id),
   KEY idx_sc_customers_id_products_id (customers_id,products_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_shopping_carts_custom_variants_values;
 CREATE TABLE lc_shopping_carts_custom_variants_values (
@@ -665,7 +665,7 @@ CREATE TABLE lc_shopping_carts_custom_variants_values (
   products_variants_values_id int(10) unsigned NOT NULL,
   products_variants_values_text text NOT NULL,
   KEY idx_sccvv_customers_id_products_id (customers_id,products_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_specials;
 CREATE TABLE lc_specials (
@@ -679,7 +679,7 @@ CREATE TABLE lc_specials (
   date_status_change datetime DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (specials_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_tax_class;
 CREATE TABLE lc_tax_class (
@@ -689,7 +689,7 @@ CREATE TABLE lc_tax_class (
   last_modified datetime DEFAULT NULL,
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (tax_class_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_tax_rates;
 CREATE TABLE lc_tax_rates (
@@ -702,7 +702,7 @@ CREATE TABLE lc_tax_rates (
   last_modified datetime DEFAULT NULL,
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (tax_rates_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_templates;
 CREATE TABLE lc_templates (
@@ -715,7 +715,7 @@ CREATE TABLE lc_templates (
   css_based tinyint(4) DEFAULT NULL,
   `medium` varchar(255) DEFAULT NULL,
   PRIMARY KEY (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_templates_boxes;
 CREATE TABLE lc_templates_boxes (
@@ -726,7 +726,7 @@ CREATE TABLE lc_templates_boxes (
   author_www varchar(255) DEFAULT NULL,
   modules_group varchar(255) NOT NULL,
   PRIMARY KEY (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_templates_boxes_to_pages;
 CREATE TABLE lc_templates_boxes_to_pages (
@@ -739,7 +739,7 @@ CREATE TABLE lc_templates_boxes_to_pages (
   page_specific int(11) DEFAULT NULL,
   PRIMARY KEY (id),
   KEY templates_boxes_id (templates_boxes_id,templates_id,content_page,boxes_group)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_updates_log;
 CREATE TABLE lc_updates_log (
@@ -749,7 +749,7 @@ CREATE TABLE lc_updates_log (
   `user` varchar(64) NOT NULL DEFAULT '',
   dateCreated datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_weight_classes;
 CREATE TABLE lc_weight_classes (
@@ -758,14 +758,14 @@ CREATE TABLE lc_weight_classes (
   language_id int(11) NOT NULL,
   weight_class_title varchar(255) NOT NULL,
   PRIMARY KEY (weight_class_id,language_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_weight_classes_rules;
 CREATE TABLE lc_weight_classes_rules (
   weight_class_from_id int(11) NOT NULL,
   weight_class_to_id int(11) NOT NULL,
   weight_class_rule decimal(15,4) NOT NULL DEFAULT '0.0000'
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_whos_online;
 CREATE TABLE lc_whos_online (
@@ -776,7 +776,7 @@ CREATE TABLE lc_whos_online (
   time_entry varchar(14) NOT NULL,
   time_last_click varchar(14) NOT NULL,
   last_page_url text NOT NULL
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_zones;
 CREATE TABLE lc_zones (
@@ -788,7 +788,7 @@ CREATE TABLE lc_zones (
   KEY idx_zones_country_id (zone_country_id),
   KEY idx_zones_code (zone_code),
   KEY idx_zones_name (zone_name)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 DROP TABLE IF EXISTS lc_zones_to_geo_zones;
@@ -800,7 +800,7 @@ CREATE TABLE lc_zones_to_geo_zones (
   last_modified datetime DEFAULT NULL,
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (association_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 INSERT INTO lc_administrators_groups (id, `name`, date_added, last_modified) VALUES(1, 'Top Administrator', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
