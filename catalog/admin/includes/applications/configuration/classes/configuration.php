@@ -80,15 +80,23 @@ class lC_Configuration_Admin {
     $result['cData'] = array();
     if (isset($id) && $id != null) {
       $result['cData'] = lC_Configuration_Admin::getData($id);
-
+      
       if ( !lc_empty($result['cData']['set_function']) ) {
-        $result['valueField'] = lc_call_user_func($result['cData']['set_function'], $result['cData']['configuration_value'], $result['cData']['configuration_key']);
+        if ($result['cData']['configuration_key'] == 'STORE_ZONE') {
+          if (lc_store_country_has_zones() == 1) { 
+            $result['valueField'] = lc_call_user_func($result['cData']['set_function'], $result['cData']['configuration_value'], $result['cData']['configuration_key']);
+          } else {
+            $result['valueField'] = lc_draw_input_field('configuration[' . $result['cData']['configuration_key'] . ']', $result['cData']['configuration_value'], 'style="width:96%"');
+          }
+        } else { 
+          $result['valueField'] = lc_call_user_func($result['cData']['set_function'], $result['cData']['configuration_value'], $result['cData']['configuration_key']);
+        }
       } else {
         $result['valueField'] = lc_draw_input_field('configuration[' . $result['cData']['configuration_key'] . ']', $result['cData']['configuration_value'], 'style="width:96%"');
       }
 
     }
-
+    
     return $result;
   }
  /*
