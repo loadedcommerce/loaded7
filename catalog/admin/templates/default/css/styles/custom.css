@@ -589,7 +589,10 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   padding: 2px 30px 3px;
 }
 
-
+select.input {
+  border:1px solid #999; 
+  background:#f9f9f9;
+}
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
