@@ -544,14 +544,6 @@ CREATE TABLE lc_products_pricing (
   KEY products_id (products_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-DROP TABLE IF EXISTS lc_customers_groups_data;
-CREATE TABLE lc_customers_groups_data (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  customers_group_id int(11) NOT NULL DEFAULT '1',
-  baseline_discount decimal(5,2) NOT NULL DEFAULT '0.00',
-  PRIMARY KEY (id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
-
 DROP TABLE IF EXISTS lc_products_simple_options;
 CREATE TABLE lc_products_simple_options (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -560,6 +552,19 @@ CREATE TABLE lc_products_simple_options (
   sort_order int(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (id)
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+DROP TABLE IF EXISTS lc_products_simple_options_values;
+CREATE TABLE lc_products_simple_options_values (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  customers_group_id int(11) NOT NULL DEFAULT '1',
+  values_id int(11) NOT NULL,
+  options_id int(11) NOT NULL,
+  price_modifier decimal(15,4) NOT NULL DEFAULT '0.0000',
+  PRIMARY KEY (id),
+  KEY customers_group_id (customers_group_id),
+  KEY values_id (values_id),
+  KEY options_id (options_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products_to_categories;
