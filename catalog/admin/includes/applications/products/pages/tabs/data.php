@@ -89,7 +89,7 @@ global $lC_Language, $pInfo, $tax_class_array;
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <div class="inputs blue-gradient" style="display:inline; padding:8px 0;">
             <span class="mid-margin-left no-margin-right strong"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
-            <?php echo lc_draw_input_field('products_price_gross', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="width:94%;" class="required input-unstyled strong" id="products_price0_gross" READONLY'); ?>
+            <?php echo lc_draw_input_field('products_price_gross', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="width:94%;" class="required input-unstyled strong products-price-gross" id="products_price0_gross" READONLY'); ?>
           </div>         
         </div>
       </div>

@@ -589,7 +589,7 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   padding: 2px 30px 3px;
 }
 .description-content { padding: 10px 10px 20px 16px; }
-
+.cat_rel_td { line-height: 1.5em; }
 
 
 /* needed for custom media query settings */
@@ -614,13 +614,50 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 }
 
 @media screen and (min-width: 480px) and (max-width: 767px) {
+  /* Default shadows */
+  .button,
+  .button-group > .button:first-child,
+  .select-value,
+  .legend {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    }
+    .button-group > .button,
+    .select-arrow {
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+    .button,
+    .select-value,
+    .legend {
+      -webkit-text-shadow: none;
+      -moz-text-shadow: none;
+      text-shadow: none;
+    }
+  #product_tabs { margin: -15px; }
+  #floating-menu-div-listing {
+    right: -10px;
+    top: 35px; 
+  }
+  #section_general_content { margin: -10px -10px -10px -13px; }
+  #section_images_content { margin: -15px; }
+  #section_data_content { margin: -15px; }
+  #section_options_content { margin: -15px; }
+  #section_pricing_content { margin: -15px; }
+  #section_shipping_content { margin: -15px; }
+  #section_relationships_content { margin: -15px; }
+  .description-content { padding: 0; }
+  .description-content fieldset { padding: 6px; }
+  .description-content fieldset input { width: 93% !important; }
+  #basprice_status_left { display: none; }
+  .cat_rel_td { line-height: 2.8em; }
+  #products_msrp { width: 93% !important; }
+  .products-price-gross { width: 93% !important; }
 }  
   
 @media screen and (min-width: 320px) and (max-width: 479px) {
-  #title-bar {
-    height: 40px !important;
-  }
-
   /* Default shadows */
   .button,
   .button-group > .button:first-child,
@@ -653,9 +690,17 @@ a.shortcut-reports:before { background-position: -70px -495px; }
     top: 35px; 
   }
   #section_general_content { margin: -10px -10px -10px -13px; }
+  #section_images_content { margin: -15px; }
+  #section_data_content { margin: -15px; }
+  #section_options_content { margin: -15px; }
+  #section_pricing_content { margin: -15px; }
+  #section_shipping_content { margin: -15px; }
+  #section_relationships_content { margin: -15px; }
   .description-content { padding: 0; }
   .description-content fieldset { padding: 6px; }
   .description-content fieldset input { width: 93% !important; }
   #basprice_status_left { display: none; }
-  #section_images_content { margin: -15px; }
+  .cat_rel_td { line-height: 2.8em; }
+  #products_msrp { width: 89% !important; }
+  .products-price-gross { width: 89% !important; }
 }     
