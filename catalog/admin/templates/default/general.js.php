@@ -99,10 +99,10 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:2px !important;');
     $('#mainMessageContainer').css('margin', '54px 4px 0px 74px');    
   } else if ($.template.mediaQuery.name === 'tablet-landscape') {  
-    $('#logoImg').attr('style', 'margin-top:-1px !important;');
+    $('#logoImg').attr('style', 'margin-top:2px !important;');
     $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   } else { // desktop
-    $('#logoImg').attr('style', 'margin-top:-1px !important;');
+    $('#logoImg').attr('style', 'margin-top:2px !important;');
     $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   }
   
@@ -144,26 +144,26 @@ $(document).ready(function() {
     });
     // when a key is pressed 
     $("*").keypress(function(e){
-      // first check if the escape key has been presed
-      $(document).keydown(function(e){
-        var code = e.keyCode ? e.keyCode : e.which;
-        if (code == 27) {
-          disableKeyCombo = false; 
-          $('#li-search').removeClass("current");
-          $('#li-messages').removeClass("current");
-          $('#li-add').removeClass("current");
-          $('#li-settings').removeClass("current");
-          $('#addContainer').hide();
-          $('#searchContainer').hide();
-          $('#messagesContainer').hide();
-          $('#settingsContainer').hide();
-          $('#mainMenuContainer').show();
-          $('#recentContainer').show();
-          $('body').focus();
-        }
-      });
       // if the disable var is false we continue
       if (!disableKeyCombo == true) {
+        // first check if the escape key has been presed
+        $(document).keydown(function(e){
+          var code = e.keyCode ? e.keyCode : e.which;
+          if (code == 27) {
+            disableKeyCombo = false; 
+            $('#li-search').removeClass("current");
+            $('#li-messages').removeClass("current");
+            $('#li-add').removeClass("current");
+            $('#li-settings').removeClass("current");
+            $('#addContainer').hide();
+            $('#searchContainer').hide();
+            $('#messagesContainer').hide();
+            $('#settingsContainer').hide();
+            $('#mainMenuContainer').show();
+            $('#recentContainer').show();
+            $('body').focus();
+          }
+        });
         // check to see if a modal is open currently by it's class attribute
         var modalClass = $('#modals').attr('class');
         // if the modal's class is not with-blocker we can continue
@@ -288,9 +288,11 @@ $(document).ready(function() {
     // get the current menu width in case screen size has changed
     var menuWidth = $("#menu").width();
     // slide to the left
-    $('#profileInner').animate({
-      "marginLeft" : "-=" + menuWidth
-    });
+    if (!$('#profileInner').is(':animated')) {
+           $('#profileInner').animate({
+              "marginLeft" : "-=" + menuWidth
+     });           
+   }
     return false;
   });
   // profile right is clicked
@@ -303,6 +305,30 @@ $(document).ready(function() {
     });
     return false;
   });
+  
+  // added for h1 titles to auto fit window width
+  $.fn.fitText = function( kompressor, options ) {
+    // Setup options
+    var compressor = kompressor || 1,
+        settings = $.extend({
+          'minFontSize' : 14,
+          'maxFontSize' : 40
+        }, options);
+    return this.each(function(){
+      // Store the object
+      var $this = $(this);
+      // modified for Loaded7 
+      // Resizer() resizes items based on the object width divided by the compressor * 17
+      var resizer = function () {
+        $this.css('font-size', Math.max(Math.min($this.width() / (compressor*17), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
+      };
+      // do the magic.
+      resizer();
+      // Call on resize. Opera debounces their resize by default. 
+      $(window).on('resize', resizer);
+    });
+  };
+  $("h1").fitText();
   
   // defeat Google Chrome form autofill and its yellow background
   if(navigator.userAgent.toLowerCase().indexOf("chrome") >= 0 || navigator.userAgent.toLowerCase().indexOf("safari") >= 0){

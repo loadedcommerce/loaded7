@@ -38,7 +38,7 @@ class lC_Configuration_Admin_rpc {
   * @return json
   */
   public static function getFormData() {
-    $result = lC_Configuration_Admin::getFormData($_GET['cid']);
+    $result = lC_Configuration_Admin::getFormData($_GET['cid']); 
     if (!isset($result['rpcStatus'])) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }

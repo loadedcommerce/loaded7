@@ -1,5 +1,4 @@
 /**
- *
  * Form inputs styling plugin
  *
  * Structural good practices from the article from Addy Osmani 'Essential jQuery plugin patterns'
@@ -60,17 +59,17 @@
 			// Create replacement
 			if (element.hasClass('switch'))
 			{
-				replacement = $('<span class="'+this.className+checked+disabled+' replacement"'+title+' tabindex="'+tabIndex+'">'+
-									  '<span class="switch-on"><span>'+(element.data('text-on') || settings.textOn)+'</span></span>'+
-									  '<span class="switch-off"><span>'+(element.data('text-off') || settings.textOff)+'</span></span>'+
-									  '<span class="switch-button"></span>'+
-								  '</span>');
+				replacement = $('<span class="'+this.className.replace(/validate\[.*\]/, '')+checked+disabled+' replacement"'+title+' tabindex="'+tabIndex+'">'+
+									'<span class="switch-on"><span>'+(element.data('text-on') || settings.textOn)+'</span></span>'+
+									'<span class="switch-off"><span>'+(element.data('text-off') || settings.textOff)+'</span></span>'+
+									'<span class="switch-button"></span>'+
+								'</span>');
 			}
 			else
 			{
-				replacement = $('<span class="'+this.className+checked+disabled+' replacement"'+title+' tabindex="'+tabIndex+'">'+
-									 '<span class="check-knob"></span>'+
-								 '</span>');
+				replacement = $('<span class="'+this.className.replace(/validate\[.*\]/, '')+checked+disabled+' replacement"'+title+' tabindex="'+tabIndex+'">'+
+									'<span class="check-knob"></span>'+
+								'</span>');
 			}
 
 			// Prevent the element from being focusable by keyboard
@@ -87,7 +86,7 @@
 
 			// Move select inside replacement, and remove styling
 			element.detach().appendTo(replacement).data('initial-classes', this.className);
-			this.className = '';
+			this.className = (this.className.indexOf('validate[') > -1) ? this.className.match(/validate\[.*\]/)[0] : '';
 
 			// Re-enable DOM watching if required
 			if (isWatching)
@@ -167,7 +166,7 @@
 			else
 			{
 				// Check if width has been set in the element styling
-				if (this.style.width != '' && this.style.width != 'auto')
+				if (this.style.width !== '' && this.style.width != 'auto')
 				{
 					extraWidth = showAsMultiple ? 0 : -26;
 				}
@@ -195,12 +194,12 @@
 					{
 						extraWidth += $.fn.customScroll ? 6 : 20;
 					}
-				}
 
-				// Extra width for safari
-				if (navigator.userAgent.match(/Safari/))
-				{
-					extraWidth += $.template.iPhone ? 6 : 23;
+					// Extra width for safari
+					if (navigator.userAgent.match(/Safari/) && !navigator.userAgent.match(/Chrome/))
+					{
+						extraWidth += $.template.iPhone ? 6 : 23;
+					}
 				}
 
 				// Final width string
@@ -212,8 +211,8 @@
 			{
 				// Create
 				select = $('<span class="'+this.className.replace(/validate\[.*\]/, '').replace(/(\s*)select(\s*)/, '$1selectMultiple$2')+disabled+' replacement"'+title+widthString+' tabindex="'+tabIndex+'">'+
-							   '<span class="drop-down"></span>'+
-						   '</span>')
+								'<span class="drop-down"></span>'+
+							'</span>')
 				.insertAfter(element)
 				.data('replaced', element);
 
@@ -245,10 +244,10 @@
 			{
 				// Create
 				select = $('<span class="'+this.className.replace(/validate\[.*\]/, '')+disabled+' replacement"'+title+widthString+' tabindex="'+tabIndex+'">'+
-							   '<span class="select-value"></span>'+
-							   '<span class="select-arrow">'+($.template.ie7 ? '<span class="select-arrow-before"></span><span class="select-arrow-after"></span>' : '')+'</span>'+
-							   '<span class="drop-down"></span>'+
-						   '</span>')
+								'<span class="select-value"></span>'+
+								'<span class="select-arrow">'+($.template.ie7 ? '<span class="select-arrow-before"></span><span class="select-arrow-after"></span>' : '')+'</span>'+
+								'<span class="drop-down"></span>'+
+							'</span>')
 				.insertAfter(element)
 				.data('replaced', element)
 				.on('select-prepare-open', _refreshSelectValues); // Load at first opening to reduce startup load
@@ -296,12 +295,12 @@
 			// Prevent the element from being focusable by keyboard
 			this.tabIndex = -1;
 
-			// Add clear function
-			element.addClearFunction(_removeSelectReplacement);
-
 			// Move select inside replacement, and remove styling
 			element.detach().appendTo(select).data('initial-classes', this.className);
 			this.className = (this.className.indexOf('validate[') > -1) ? this.className.match(/validate\[.*\]/)[0] : '';
+
+			// Add clear function
+			element.addClearFunction(_removeSelectReplacement);
 
 			// Store settings
 			select.data('select-settings', settings);
@@ -311,10 +310,10 @@
 			 * - it is displayed as multiple (even if simple) OR
 			 * - it is multiple (no overlaying UI in most OS) OR
 			 * - The setting styledList is on AND
-			 * 		- This is not a touch device OR
-			 * 		- This is a touch device AND the setting styledOnTouch is:
-			 * 			- true OR
-			 * 			- null and the select has the class 'check-list'
+			 *      - This is not a touch device OR
+			 *      - This is a touch device AND the setting styledOnTouch is:
+			 *          - true OR
+			 *          - null and the select has the class 'check-list'
 			 *
 			 * Ew. Now I need to get another brain.
 			 */
@@ -343,7 +342,7 @@
 	$.fn.styleSelect.defaults = {
 		/**
 		 * False to use system's drop-down UI, true to use style's drop-downs
-		 * @var boolean|null
+		 * @var boolean
 		 */
 		styledList: true,
 
@@ -433,7 +432,7 @@
 			isWatching = $.template.disableDOMWatch();
 
 			// Create styling
-			styling = $('<span class="input '+this.className+disabled+'">'+
+			styling = $('<span class="input '+this.className.replace(/validate\[.*\]/, '')+disabled+'">'+
 							'<span class="file-text">'+element.val()+'</span>'+
 							'<span class="button compact'+blackInput+'">'+(multiple ? settings.textMultiple : settings.textSingle)+'</span>'+
 						'</span>');
@@ -478,16 +477,6 @@
 	 */
 	$.fn.setNumber = function(value)
 	{
-		// Check value
-		if (typeof value !== 'number')
-		{
-			value = parseFloat(value);
-			if (isNaN(value))
-			{
-				value = 0;
-			}
-		}
-
 		return this.each(function(i)
 		{
 			var input;
@@ -539,8 +528,8 @@
 			// Options
 			options = _getNumberOptions(input);
 
-			// Current value
-			value = parseFloat(input.val());
+			// Remove format
+			value = _unformatNumberValue(input.val(), options);
 
 			// Check if numeric
 			if (isNaN(value))
@@ -601,16 +590,49 @@
 		}
 
 		return options;
-	};
+	}
+
+	/**
+	 * Helper function: remove user format of a number value according to options
+	 * @param value the value
+	 * @param object options the validated options
+	 * @return number the valid value
+	 */
+	function _unformatNumberValue(value, options)
+	{
+		if (typeof value !== 'number')
+		{
+			if (options.thousandsSep.length)
+			{
+				value = value.replace(options.thousandsSep, '');
+			}
+			if (options.decimalPoint !== '.')
+			{
+				value = value.replace(options.decimalPoint, '.');
+			}
+			value = parseFloat(value);
+			if (isNaN(value))
+			{
+				value = 0;
+			}
+		}
+
+		return value;
+	}
 
 	/**
 	 * Helper function: format a number value according to options
 	 * @param value the value
 	 * @param object options the validated options
-	 * @return number the valid value
+	 * @return number|string the valid value
 	 */
 	function _formatNumberValue(value, options)
 	{
+		var parts;
+
+		// Remove format
+		value = _unformatNumberValue(value, options);
+
 		// Round value
 		value = Math.round(value/options.precision)*options.precision;
 
@@ -624,8 +646,17 @@
 			value = Math.min(value, options.max);
 		}
 
-		return value;
-	};
+		// Format value
+		parts = value.toString().split('.');
+
+		// Thousands separator
+		if (options.thousandsSep.length && parts[0].length > 3)
+		{
+			parts[0] = parts[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, options.thousandsSep);
+		}
+
+		return parts.join(options.decimalPoint);
+	}
 
 	/*
 	 * Options for number inputs
@@ -660,7 +691,19 @@
 		 * For instance, use 1 for rounded nombers, 0.25 to user quarter increments...
 		 * @var number
 		 */
-		precision: 1
+		precision: 1,
+
+		/**
+		 * Character used for decimal point
+		 * @var string
+		 */
+		decimalPoint: '.',
+
+		/**
+		 * Character used for thousands separator
+		 * @var string
+		 */
+		thousandsSep: ''
 	};
 
 	/**
@@ -672,7 +715,7 @@
 	{
 		var nodeName = element[0].nodeName.toLowerCase();
 		return (nodeName === 'input' || nodeName === 'select' || nodeName === 'textarea' || nodeName === 'button');
-	};
+	}
 
 	/**
 	 * Enable a form input, and update the styled UI
@@ -788,10 +831,19 @@
 		// Placeholder polyfill
 		if (!Modernizr.input.placeholder)
 		{
-			elements.findIn(self, children, 'input[placeholder]').each(function(i)
+			elements.findIn(self, children, 'input[placeholder][type!="password"]').each(function(i)
 			{
-				var input = $(this);
-				input.addClass('placeholder').val(input.attr('placeholder'));
+				var input = $(this),
+					placeholder = input.attr('placeholder');
+
+				// Mark and add data for validation plugin
+				input.addClass('placeholder').attr('data-validation-placeholder', placeholder);
+
+				// Fill if empty
+				if ($.trim(input.val()) === '')
+				{
+					input.val(placeholder);
+				}
 			});
 		}
 
@@ -826,9 +878,9 @@
 	function _openSelect(select, onHover, event)
 	{
 		var replaced = select.data('replaced'),
-			settings = select.data('select-settings'),
+			settings = select.data('select-settings') || {},
 			list = select.children('.drop-down'),
-			placeholder,
+			formAttr, form, placeholder,
 			addedClasses = [], inheritParent,
 			scrollParents, hasFocus,
 			position, listOffset,
@@ -836,15 +888,18 @@
 			listExtra, availableHeight,
 			fixedSize = false,
 			search = false, searchSpan, searchField,
-			isWatching;
+			date = new Date(), time = date.getTime(),
+			isWatching, updateList, onBlur;
+
+		// Prevent event default
+		if (event)
+		{
+			event.preventDefault();
+		}
 
 		// Do not handle if disabled
 		if (select.closest('.disabled').length > 0 || (replaced && replaced.is(':disabled')))
 		{
-			if (event)
-			{
-				event.preventDefault();
-			}
 			return;
 		}
 
@@ -854,6 +909,13 @@
 			return;
 		}
 
+		// Parent form
+		if (replaced)
+		{
+			formAttr = replaced.attr('form');
+			form = (!formAttr || formAttr === '') ? replaced.closest('form') : $('#'+formAttr);
+		}
+
 		// If not open yet
 		if (!select.hasClass('open') && list.length > 0)
 		{
@@ -861,7 +923,7 @@
 			scrollParents = select.parents('.custom-scroll');
 
 			// Add class if the select is in a top-level element
-			if (select.closest('.modal, .notification').length > 0)
+			if (select.closest('.modal, .notification, .tooltip').length > 0)
 			{
 				select.addClass('over');
 			}
@@ -937,9 +999,10 @@
 
 			// Prepare and open
 			select.removeClass('reversed')
-				  .trigger('select-prepare-open')
-				  .addClass('open')
-				  .trigger('select-open');
+				.trigger('select-prepare-open')
+				.addClass('open')
+				.trigger('select-open')
+				.on('click', _preventSelectClick);
 
 			/*
 			 * Search field
@@ -1026,7 +1089,7 @@
 			listExtra = listHeight-list.height();
 
 			// Function to refresh position on resize/scroll
-			function updateList()
+			updateList = function()
 			{
 				var scrollPos;
 
@@ -1100,17 +1163,15 @@
 			};
 
 			// Function to handle focus loss
-			function onBlur(event)
+			onBlur = function(event)
 			{
-				// Check if valid touch-click event
-				if (!$.template.processTouchClick(this, event))
-				{
-					return;
-				}
-
 				// Remove events
 				win.off('resize', updateList);
 				doc.off('scroll', onBlur);
+				if (form)
+				{
+					form.off('submit', onBlur);
+				}
 				scrollParents.off('scroll', onBlur);
 				if (onHover && !$.template.touchOs)
 				{
@@ -1158,12 +1219,13 @@
 
 				// Put element back in place
 				select.stopTracking(true)
-					  .removeClass('over')
-					  .detach()
-					  .insertAfter(placeholder)
-					  .trigger('select-prepare-close')
-					  .removeClass('open')
-					  .trigger('select-close');
+					.off('click', _preventSelectClick)
+					.removeClass('over')
+					.detach()
+					.insertAfter(placeholder)
+					.trigger('select-prepare-close')
+					.removeClass('open')
+					.trigger('select-close');
 				placeholder.remove();
 
 				// Re-enable DOM watching if required
@@ -1186,6 +1248,10 @@
 			updateList();
 			win.on('resize', updateList);
 			doc.on('scroll', onBlur);
+			if (form)
+			{
+				form.on('submit', onBlur);
+			}
 			scrollParents.on('scroll', onBlur);
 			if (onHover && !$.template.touchOs)
 			{
@@ -1193,10 +1259,20 @@
 			}
 			else
 			{
-				doc.on('touchend click', onBlur);
+				doc.on('click', onBlur);
 			}
 		}
-	};
+	}
+
+	/**
+	 * Prevent the click event from bubbling when open
+	 *
+	 * @return void
+	 */
+	function _preventSelectClick(event)
+	{
+		event.preventDefault();
+	}
 
 	/**
 	 * Refresh select values
@@ -1239,6 +1315,12 @@
 					{
 						classes.push('in-group');
 					}
+
+					// If disabled
+					if (this.disabled)
+					{
+						classes.push('disabled');
+					}
 				}
 
 				// Empty text
@@ -1251,7 +1333,7 @@
 					.appendTo(list)
 					.data('select-value', this);
 			});
-			list.children('span').on('touchend click', _clickSelectValue);
+			list.children('span').not('.disabled').on('touchend click', _clickSelectValue);
 
 			// Re-enable DOM watching if required
 			if (isWatching)
@@ -1262,7 +1344,7 @@
 			// Remove binding
 			select.off('select-prepare-open', _refreshSelectValues);
 		}
-	};
+	}
 
 	/**
 	 * Select a list value
@@ -1305,7 +1387,7 @@
 				// Multiple selects require a last one selected option, except if marked
 				if (!select.hasClass('allow-empty'))
 				{
-					// Only change the option wasn't selected, of if there is at least one other selected option
+					// Only change if the option wasn't selected, or if there is at least one other selected option
 					if (!selected || (selected && (value = replaced.val()) && value.length > 1))
 					{
 						// Update select
@@ -1331,21 +1413,20 @@
 			{
 				// Get current value
 				value = replaced.val();
-				if (multiple && value == null)
+				if (multiple && (value === null || value === undefined))
 				{
 					value = [];
 				}
 
 				// Compare depending on mode
-				if ((multiple && (value.length !== 1 || value[0] !== replacedOption.value))
-					|| (!multiple && value !== replacedOption.value))
+				if ((multiple && (value.length !== 1 || value[0] !== replacedOption.value)) || (!multiple && value !== replacedOption.value))
 				{
 					// Update select
 					replaced.val(replacedOption.value).trigger('change');
 				}
 			}
 		}
-	};
+	}
 
 	/**
 	 * Set the select replacement text according to options
@@ -1359,7 +1440,7 @@
 	function _updateSelectValueText(select, values, dataText, defaultText)
 	{
 		// If no user value, use default
-		if (dataText == null)
+		if (!dataText)
 		{
 			dataText = defaultText;
 		}
@@ -1379,7 +1460,7 @@
 		{
 			select.children('.select-value').addClass('alt').html(dataText.replace('%d', values.length));
 		}
-	};
+	}
 
 	/**
 	 * Get a select selected value index
@@ -1417,7 +1498,7 @@
 		}
 
 		return selectedIndex;
-	};
+	}
 
 	/**
 	 * Clean delete of a radio/checkbox replacement
@@ -1447,7 +1528,7 @@
 		this.tabIndex = select[0].tabIndex;
 
 		// Remove select from replacement and restore classes
-		element.detach().insertBefore(replacement);
+		element.detach().insertBefore(replacement).css('display', '');
 		this.className = element.data('initial-classes');
 		element.removeData('initial-classes');
 
@@ -1456,7 +1537,7 @@
 
 		// Delete replacement
 		replacement.remove();
-	};
+	}
 
 	/**
 	 * Clean delete of a select replacement
@@ -1493,7 +1574,7 @@
 		this.tabIndex = select[0].tabIndex;
 
 		// Remove select from replacement and restore classes
-		element.detach().insertBefore(select);
+		element.detach().insertBefore(select).css('display', '');
 		this.className = element.data('initial-classes');
 		element.removeData('initial-classes');
 
@@ -1508,7 +1589,7 @@
 
 		// Delete select
 		select.remove();
-	};
+	}
 
 	/**
 	 * Clean delete of a file input replacement
@@ -1531,7 +1612,7 @@
 
 		// Delete styling
 		parent.remove();
-	};
+	}
 
 	/********************************************************/
 	/*        Event delegation for template elements        */
@@ -1542,47 +1623,65 @@
 	 * @see http://api.jquery.com/on/
 	 */
 
-	// IE7/8 only triggers 'change' on blur and does not handle change on 'click' for hidden elements, so we need to use a workaround
-	if ($.template.ie7 || $.template.ie8)
+	doc.on('click', 'label', function(event)
 	{
-		doc.on('click', 'label', function(event)
+		var label = $(this),
+			element = $('#'+this.htmlFor),
+			replacement;
+
+		// If no input, exit
+		if (element.length === 0)
 		{
-			var label = $(this),
-				element = $('#'+this.htmlFor).filter(':checkbox, :radio'),
-				replacement;
+			return;
+		}
 
-			// If not a checkbox/radio, exit
-			if (element.length === 0)
-			{
-				return;
-			}
+		// Replacement
+		replacement = element.data('replacement');
 
-			// If replaced
-			replacement = element.data('replacement');
-			if (replacement)
+		// IE7/8 only triggers 'change' on blur and does not handle change on 'click' for hidden elements, so we need to use a workaround
+		if ($.template.ie7 || $.template.ie8)
+		{
+			// If checkbox/radio
+			if (element.is(':checkbox, :radio'))
 			{
-				// Trigger event
-				replacement.trigger('click');
-				return;
-			}
-
-			// If checkable is included in label
-			if (label.hasClass('button') && element.closest('label').is(label))
-			{
-				// Do not handle if disabled
-				if (element.closest('.disabled').length > 0 || element.is(':disabled'))
+				// If replaced
+				if (replacement)
 				{
+					// Trigger event
+					replacement.trigger('click');
 					return;
 				}
 
-				// Check if state can be changed
-				if (element.is(':checkbox') || !element.prop('checked'))
+				// If checkable is included in label
+				if (label.hasClass('button') && element.closest('label').is(label))
 				{
-					element.prop('checked', !element.prop('checked')).trigger('change');
+					// Do not handle if disabled
+					if (element.closest('.disabled').length > 0 || element.is(':disabled'))
+					{
+						return;
+					}
+
+					// Check if state can be changed
+					if (element.is(':checkbox') || !element.prop('checked'))
+					{
+						element.prop('checked', !element.prop('checked')).trigger('change');
+					}
 				}
+
+				return;
 			}
-		});
-	}
+		}
+
+		// If hidden select
+		if (element.is('select'))
+		{
+			// Only process if hidden
+			if (replacement && element.is(':hidden'))
+			{
+				replacement.focus();
+			}
+		}
+	});
 
 	// Change radio/checkboxes
 	doc.on('click', 'span.switch, span.radio, span.checkbox', function(event)
@@ -1683,7 +1782,7 @@
 		document.onselectstart = function()
 		{
 			return false;
-		}
+		};
 
 		// Add class to prevent animation
 		switchEl.addClass('dragging');
@@ -1715,7 +1814,7 @@
 
 			// Drag is effective
 			dragged = true;
-		};
+		}
 		doc.on(touchEvent ? 'touchmove' : 'mousemove', watchMouse);
 
 		// Watch for mouseup/touchend
@@ -1744,10 +1843,7 @@
 			}
 
 			// Re-enable text selection
-			if (ieSelectStart)
-			{
-				document.onselectstart = ieSelectStart;
-			}
+			document.onselectstart = ieSelectStart ? ieSelectStart : null;
 
 			// If dragged, update value
 			if (dragged)
@@ -1771,7 +1867,7 @@
 				// Click event is not trigerred for touch devices when touch events were handled
 				switchEl.click();
 			}
-		};
+		}
 		doc.on(touchEvent ? 'touchend' : 'mouseup', endDrag);
 	});
 
@@ -1787,19 +1883,6 @@
 		{
 			// Update style
 			replacement[checked ? 'addClass' : 'removeClass']('checked');
-
-			// If radio, refresh others without triggering 'change'
-			if (this.type === 'radio')
-			{
-				$('input[name="'+this.name+'"]:radio').not(this).each(function(i)
-				{
-					var replacement = $(this).data('replacement');
-					if (replacement)
-					{
-						replacement[this.checked ? 'addClass' : 'removeClass']('checked');
-					}
-				});
-			}
 		}
 		// Button labels
 		else if (element.parent().is('label.button'))
@@ -1852,6 +1935,12 @@
 			return;
 		}
 
+		// IE7-8 focus handle is different from modern browsers
+		if ($.template.ie7 || $.template.ie8)
+		{
+			doc.find('.focus').not(element).blur();
+		}
+
 		// Show focus
 		element.addClass('focus');
 
@@ -1860,18 +1949,16 @@
 		 */
 		handleKeysEvents = function(event)
 		{
-			switch (event.keyCode)
+			if (event.keyCode == $.template.keys.space)
 			{
-				case $.template.keys.space:
-					// If radio, do not allow uncheck as this may leave all radios unchecked
-					if (!replaced.is(':radio') || !replaced[0].checked)
-					{
-						// Change replaced state, listener will update style
-						replaced[0].checked = !replaced[0].checked;
-						replaced.change();
-					}
-					event.preventDefault();
-					break;
+				// If radio, do not allow uncheck as this may leave all radios unchecked
+				if (!replaced.is(':radio') || !replaced[0].checked)
+				{
+					// Change replaced state, listener will update style
+					replaced[0].checked = !replaced[0].checked;
+					replaced.change();
+				}
+				event.preventDefault();
 			}
 		};
 
@@ -1882,12 +1969,12 @@
 			element.removeClass('focus');
 
 			// Clear data
-			element.data('checkableBlurFunction', onBlur);
+			element.removeData('checkableBlurFunction');
 
 			// Stop listening
 			doc.off('keydown', handleKeysEvents);
 			element.off('blur', onBlur);
-		};
+		}
 
 		// Store for external calls
 		element.data('checkableBlurFunction', onBlur);
@@ -1895,6 +1982,25 @@
 		// Start listening
 		element.on('blur', onBlur);
 		doc.on('keydown', handleKeysEvents);
+	});
+
+	// Textareas focus
+	doc.on('focus', 'textarea', function(event)
+	{
+		var element = $(this);
+
+		// IE7-8 focus handle is different from modern browsers
+		if ($.template.ie7 || $.template.ie8)
+		{
+			doc.find('.focus').not(element).blur();
+		}
+
+		// Styling
+		element.addClass('focus');
+
+	}).on('blur', 'textarea', function()
+	{
+		$(this).removeClass('focus');
 	});
 
 	// Inputs focus
@@ -1924,6 +2030,12 @@
 
 			// Done, even if no replacement
 			return;
+		}
+
+		// IE7-8 focus handle is different from modern browsers
+		if ($.template.ie7 || $.template.ie8)
+		{
+			doc.find('.focus').not(input).blur();
 		}
 
 		// Placeholder polyfill
@@ -1988,7 +2100,7 @@
 		// Not for radios and checkboxes
 		if (this.type === 'radio' || this.type === 'checkbox')
 		{
-			var replacement = input.data('replacement');
+			replacement = input.data('replacement');
 
 			// Update visual style
 			if (replacement)
@@ -2001,7 +2113,7 @@
 		}
 
 		// Placeholder polyfill
-		if (!Modernizr.input.placeholder && input.attr('placeholder') && input.val() === '')
+		if (!Modernizr.input.placeholder && input.attr('placeholder') && input.val() === '' && input.attr('type') != 'password')
 		{
 			input.addClass('placeholder').val(input.attr('placeholder'));
 		}
@@ -2020,6 +2132,24 @@
 			input.setNumber(input.val());
 		}
 	});
+
+	// Placehoder support
+	if (!Modernizr.input.placeholder)
+	{
+		// Empty placehoder on form submit
+		doc.on('submit', 'form', function(event)
+		{
+			$(this).find('input.placeholder').each(function()
+			{
+				var input = $(this);
+
+				if (input.attr('placeholder') && input.val() === input.attr('placeholder'))
+				{
+					input.val('');
+				}
+			});
+		});
+	}
 
 	// File inputs
 	doc.on('change', '.file > input[type="file"]', function(event)
@@ -2162,19 +2292,16 @@
 					}
 				}
 
-				// If open, update selected element
-				if (select.hasClass('open') || select.hasClass('selectMultiple'))
+				// Update selected element
+				select.children('.drop-down').children('a, span').each(function()
 				{
-					select.children('.drop-down').children('a, span').each(function()
+					var option = $(this),
+						selectValue = option.data('select-value');
+					if (selectValue)
 					{
-						var option = $(this),
-							selectValue = option.data('select-value');
-						if (selectValue)
-						{
-							option[selectValue.selected ? 'addClass' : 'removeClass']('selected');
-						}
-					});
-				}
+						option[selectValue.selected ? 'addClass' : 'removeClass']('selected');
+					}
+				});
 			}
 		}
 	});
@@ -2504,7 +2631,7 @@
 			// Stop listening
 			doc.off('keydown', handleKeysEvents);
 			select.off('blur', onBlur);
-		};
+		}
 
 		// Store for external calls
 		select.data('selectBlurFunction', onBlur);
@@ -2562,6 +2689,6 @@
 
 		// Listen for end of validation
 		form.on('jqv.form.result', validateEnd);
-	})
+	});
 
 })(jQuery, window, document);

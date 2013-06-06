@@ -1,5 +1,4 @@
 /**
- *
  * Tooltip plugin
  *
  * Structural good practices from the article from Addy Osmani 'Essential jQuery plugin patterns'
@@ -44,7 +43,7 @@
 		}
 
 		return _standardTooltipsDiv;
-	};
+	}
 
 	/**
 	 * Internal reference: the div holding tooltips over modals and notifications
@@ -65,7 +64,7 @@
 		}
 
 		return _overTooltipsDiv;
-	};
+	}
 
 	/**
 	 * Check if a content is valid
@@ -75,7 +74,7 @@
 	function _isValidContent(content)
 	{
 		return ((content instanceof jQuery) || typeof content === 'function' || (typeof content === 'string' && $.trim(content).length > 0));
-	};
+	}
 
 	/**
 	 * Parse the content or try to extract it from the element
@@ -97,6 +96,16 @@
 		content = target.data('tooltip-content');
 		if (_isValidContent(content))
 		{
+			// Clear
+			if (target[0].title && target[0].title.length)
+			{
+				target[0].title = '';
+				target.data('tooltip-title', {
+					value:		content,
+					element:	target[0]
+				});
+			}
+
 			return content;
 		}
 
@@ -136,10 +145,10 @@
 
 		// No content
 		return false;
-	};
+	}
 
 	/**
-	 * Restore element's title is needed
+	 * Restore element's title if needed
 	 * @param jQuery target the target element
 	 * @return void
 	 */
@@ -152,7 +161,7 @@
 			title.element.title = title.value;
 			target.removeData('tooltip-title');
 		}
-	};
+	}
 
 	/**
 	 * Display a tooltip over an element. If the page is not yet ready, delay the tooltip until it is ready.
@@ -247,7 +256,7 @@
 					{
 						// Abort tooltip
 						abort();
-					}
+					};
 
 					// Bind
 					target.on('mouseleave', onMouseleave);
@@ -261,7 +270,7 @@
 					{
 						// Abort tooltip
 						abort();
-					}
+					};
 
 					// Bind
 					doc.on('click touchend', onBlur);
@@ -337,7 +346,7 @@
 					settings,
 
 					// Objects
-					div, tooltip, arrow, optionHolder,
+					parent, tooltip, arrow, optionHolder,
 
 					// Dom working
 					dom, domHidden = false, placeholder,
@@ -468,7 +477,25 @@
 				}
 
 				// Init
-				div = (target.closest('.notification, .modal').length > 0) ? _getOverTooltipsDiv() : _getStandardTooltipsDiv();
+				if ( settings.local )
+				{
+					// Search closest block parent
+					parent = target.parent();
+					while ( !parent.is( 'body' ) && parent.css( 'display' ) !== 'block' )
+					{
+						parent = parent.parent();
+					}
+
+					// Make it positionned
+					if ( parent.css( 'position' ) !== 'absolute' && parent.css( 'position' ) !== 'fixed' )
+					{
+						parent.addClass( 'relative' );
+					}
+				}
+				else
+				{
+					parent = (target.closest('.notification, .modal').length > 0) ? _getOverTooltipsDiv() : _getStandardTooltipsDiv();
+				}
 				animateDistance = (settings.animate && !skipAnimation) ? settings.animateMove : 0;
 
 				// If exclusive, remove existing one
@@ -483,8 +510,8 @@
 
 				// Create element
 				noPointerEvents = settings.noPointerEvents ? ' no-pointer-events' : '';
-				tooltip = $('<div class="message '+settings.classes.join(' ')+noPointerEvents+'">'+content+'</div>')
-							.appendTo(div)
+				tooltip = $('<div class="message tooltip '+settings.classes.join(' ')+noPointerEvents+'">'+content+'</div>')
+							.appendTo(parent)
 							.data('tooltip-target', target);
 
 				// Dom content
@@ -533,7 +560,7 @@
 				}
 
 				// Function to update position
-				updatePosition = function(target)
+				updatePosition = function()
 				{
 					var targetpos = target.offset(),
 						targetWidth = target.outerWidth(),
@@ -542,7 +569,7 @@
 						tooltipHeight = tooltip.outerHeight(),
 						docWidth = $.template.viewportWidth,
 						docHeight = $.template.viewportHeight,
-						top, left, offset,
+						top, left, offset, position,
 						arrowExtraOffset = 0;
 
 					switch (settings.position)
@@ -692,11 +719,28 @@
 							break;
 					}
 
-					// Set positions
-					tooltip.offset({
-						top: top,
-						left: left
-					});
+					// If local
+					if ( settings.local )
+					{
+						// Local coordinates
+						position = parent.offset();
+						top -= position.top;
+						left -= position.left;
+
+						// Set position
+						tooltip.css({
+							top: top + 'px',
+							left: left + 'px'
+						});
+					}
+					else
+					{
+						// Set position
+						tooltip.offset({
+							top: top,
+							left: left
+						});
+					}
 					if (settings.position === 'left' || settings.position === 'right')
 					{
 						arrow.css('margin-top', (arrowExtraOffset === 0) ? '' : (arrowOffset+arrowExtraOffset)+'px');
@@ -705,7 +749,7 @@
 					{
 						arrow.css('margin-left', (arrowExtraOffset === 0) ? '' : (arrowOffset+arrowExtraOffset)+'px');
 					}
-				}
+				};
 
 				// Watch movement (will set position)
 				tooltip.trackElement(target, updatePosition);
@@ -722,7 +766,7 @@
 					};
 
 					// Move
-					if (animateDistance != 0)
+					if (animateDistance !== 0)
 					{
 						switch (settings.position)
 						{
@@ -857,7 +901,7 @@
 					{
 						// Remove tooltip
 						removeTooltip();
-					}
+					};
 
 					// Bind
 					target.on('mouseleave', onMouseleave);
@@ -869,7 +913,7 @@
 					// Prevent inner click propagation
 					tooltip.on('click touchend', function(event)
 					{
-						event.preventDefault();
+						event.stopPropagation();
 					});
 
 					// Callback function
@@ -883,7 +927,7 @@
 
 						// Remove tooltip
 						removeTooltip();
-					}
+					};
 
 					// Bind
 					doc.on('click touchend', onBlur);
@@ -897,7 +941,7 @@
 					{
 						// Remove tooltip
 						removeTooltip();
-					}
+					};
 
 					// Bind
 					tooltip.on('click touchend', onClick);
@@ -946,7 +990,7 @@
 				{
 					return;
 				}
-			};
+			}
 		});
 
 		return this;
@@ -979,6 +1023,8 @@
 
 			}, options));
 		});
+
+		return this;
 	};
 
 	/**
@@ -991,6 +1037,12 @@
 		 * @var string
 		 */
 		position: 'top',
+
+		/**
+		 * Should the tooltip be inserted locally (in the element's parent) or globally
+		 * @var boolean
+		 */
+		local: false,
 
 		/**
 		 * Space between tooltip and the target element

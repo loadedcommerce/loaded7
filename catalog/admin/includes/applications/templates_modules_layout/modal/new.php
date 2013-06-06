@@ -42,11 +42,11 @@ function newModule() {
                    '      <p><?php echo $lC_Language->get('introduction_new_template_layout_module'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="box" class="label"><?php echo $lC_Language->get('field_module'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('box', null, null, 'class="input with-small-padding"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('box', null, null, 'class="select" style="width:100%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="content_page" class="label"><?php echo $lC_Language->get('field_pages'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('content_page', $pages_array, null, 'class="input with-small-padding"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('content_page', $pages_array, null, 'class="select" style="width:100%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="page_specific" class="label"><?php echo $lC_Language->get('field_page_specific'); ?></label>'+
@@ -126,13 +126,23 @@ function newModule() {
         return false;
       }
       $("#box").empty();
+      i=0;
       $.each(data.boxes_array, function(val, text) {
+        if(i == 0) {
+          $("#box").closest("span + *").prevAll("span.select-value:first").text(text);
+          i++;
+        }
         $("#box").append(
           $("<option></option>").val(val).html(text)
         );
       });
       $("#content_page").empty();
+      i=0;
       $.each(data.pages_array, function(val, text) {
+        if(i == 0) {
+          $("#content_page").closest("span + *").prevAll("span.select-value:first").text(text.text); 
+          i++;
+        }
         $("#content_page").append(
           $("<option></option>").val(text.id).html(text.text)
         );

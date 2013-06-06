@@ -12,19 +12,24 @@
   @license    http://loadedcommerce.com/license.html
 
 */
-ini_set('display_errors', 1);
-
 require_once('includes/applications/updates/classes/updates.php'); 
  
 class lC_Updates_Admin_run_after extends lC_Updates_Admin {
 
-  public function __constructor() {
-  }
+  public static function process() {
+    parent::log('##### RUNAFTER PROCESS STARTED');
+
+    self::updateDB();
+
+    parent::log('##### RUNAFTER PROCESS COMPLETE');
+  } 
   
-  public function process() {
+  public static function updateDB() {
+    global $lC_Database;
     
-    parent::log('##### RUNAFTER PROCESS');
-  }  
-  
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `lc_banners` ADD `banners_target` INT( 1 ) NOT NULL DEFAULT '1' AFTER `banners_url`");
+    parent::log("Database Update: ALTER IGNORE TABLE `lc_banners` ADD `banners_target` INT( 1 ) NOT NULL DEFAULT '1' AFTER `banners_url`");
+    
+  } 
 }  
 ?>

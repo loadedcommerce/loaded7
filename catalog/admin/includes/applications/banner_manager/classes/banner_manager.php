@@ -244,7 +244,7 @@ class lC_Banner_manager_Admin {
   */
   public static function save($id = null, $data) {
     global $lC_Database;
-   
+    
     $error = false;
 
     if ( empty($data['html_text']) && empty($data['image_local']) && !empty($data['image']) ) {
@@ -254,24 +254,25 @@ class lC_Banner_manager_Admin {
         $error = true;
       }
     }
-
+    
     if ( $error === false ) {
       $image_location = (!empty($data['image_local']) ? $data['image_local'] : (isset($image) ? $data['image_target'] . $image->filename : null));
 
       if ( is_numeric($id) ) {
-        $Qbanner = $lC_Database->query('update :table_banners set banners_title = :banners_title, banners_url = :banners_url, banners_image = :banners_image, banners_group = :banners_group, banners_html_text = :banners_html_text, expires_date = :expires_date, expires_impressions = :expires_impressions, date_scheduled = :date_scheduled, status = :status where banners_id = :banners_id');
+        $Qbanner = $lC_Database->query('update :table_banners set banners_title = :banners_title, banners_url = :banners_url, banners_target = :banners_target, banners_image = :banners_image, banners_group = :banners_group, banners_html_text = :banners_html_text, expires_date = :expires_date, expires_impressions = :expires_impressions, date_scheduled = :date_scheduled, status = :status where banners_id = :banners_id');
         $Qbanner->bindInt(':banners_id', $id);
       } else {
-        $Qbanner = $lC_Database->query('insert into :table_banners (banners_title, banners_url, banners_image, banners_group, banners_html_text, expires_date, expires_impressions, date_scheduled, status, date_added) values (:banners_title, :banners_url, :banners_image, :banners_group, :banners_html_text, :expires_date, :expires_impressions, :date_scheduled, :status, now())');
+        $Qbanner = $lC_Database->query('insert into :table_banners (banners_title, banners_url, banners_target, banners_image, banners_group, banners_html_text, expires_date, expires_impressions, date_scheduled, status, date_added) values (:banners_title, :banners_url, :banners_target, :banners_image, :banners_group, :banners_html_text, :expires_date, :expires_impressions, :date_scheduled, :status, now())');
       }
-
+      
       $Qbanner->bindTable(':table_banners', TABLE_BANNERS);
       $Qbanner->bindValue(':banners_title', $data['title']);
       $Qbanner->bindValue(':banners_url', $data['url']);
+      $Qbanner->bindInt(':banners_target', (($data['target'] === true) ? 1 : 0));
       $Qbanner->bindValue(':banners_image', $image_location);
       $Qbanner->bindValue(':banners_group', (!empty($data['group_new']) ? $data['group_new'] : $data['group']));
       $Qbanner->bindValue(':banners_html_text', $data['html_text']);
-
+      
       if ( empty($data['date_expires']) ) {
         $Qbanner->bindRaw(':expires_date', 'null');
         $Qbanner->bindInt(':expires_impressions', $data['expires_impressions']);
@@ -287,7 +288,7 @@ class lC_Banner_manager_Admin {
         $Qbanner->bindValue(':date_scheduled', lC_DateTime::toDateTime($data['date_scheduled']));
         $Qbanner->bindInt(':status', (lC_DateTime::toDateTime($data['date_scheduled']) > @date('Y-m-d') ? 0 : (($data['status'] === true) ? 1 : 0)));
       }
-
+      
       $Qbanner->setLogging($_SESSION['module'], $id);
       $Qbanner->execute();
 

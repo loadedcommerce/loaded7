@@ -215,16 +215,15 @@ table.dataTable tr.even td.sorting_3 { background-color: #ededed; }
 	font-size: 2em;
 	line-height: 1em;
 	margin: -0.5em -0.077em -0.5em -0.077em;
-	vertical-align: -0.077em;
 	}
 	.paginate_disabled_previous:before,
 	.paginate_enabled_previous:before {
-		content: 'Å';
+		content: "\f09f";
 		margin-right: 5px;
 	}
 	.paginate_disabled_next:after,
 	.paginate_enabled_next:after {
-		content: 'Ä';
+		content: "\f09e";
 		margin-left: 5px;
 	}
 
