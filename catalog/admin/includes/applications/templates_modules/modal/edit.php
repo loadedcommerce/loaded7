@@ -78,6 +78,7 @@ function editModule(id) {
           buttonsLowPadding: true
       });
       $("#editModuleFormKeys").html(data.keys);
+      $("#editModuleFormKeys").find("input[type=text]").addClass("input");
       if ($.template.mediaQuery.isSmallerThan('desktop')) {
         $('.modal').attr('style', 'top:20% !important; left: 25%;  margin-left: -50px;');  
       } 

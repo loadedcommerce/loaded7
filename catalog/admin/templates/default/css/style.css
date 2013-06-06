@@ -1,5 +1,5 @@
 /**
- * Base stylesheet
+ * Base stylesheet v1.5
  *
  * Content:
  * 1. Global
@@ -1846,327 +1846,486 @@ li.message-menu {
 /********************************************************/
 
 @font-face {
-	font-family: 'EntypoRegular';
-	src: url('Entypo/entypo-webfont.eot');
-	src: url('Entypo/entypo-webfont.eot?#iefix') format('embedded-opentype'),
-		 url('Entypo/entypo-webfont.woff') format('woff'),
-		 url('Entypo/entypo-webfont.ttf') format('truetype'),
-		 url('Entypo/entypo-webfont.svg#EntypoRegular') format('svg');
-	font-weight: normal;
-	font-style: normal;
+  font-family: 'EntypoRegular';
+  src: url('Entypo/entypo-webfont.eot');
+  src: url('Entypo/entypo-webfont.eot?#iefix') format('embedded-opentype'),
+     url('Entypo/entypo-webfont.woff') format('woff'),
+     url('Entypo/entypo-webfont.ttf') format('truetype'),
+     url('Entypo/entypo-webfont.svg#EntypoRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 [class^="icon-"]:before, [class*=" icon-"]:before {
-	display: inline-block;
-	font-weight: normal;
-	font-style: normal;
-	font-family: 'EntypoRegular';
-	font-size: 2em;
-	line-height: 1em;
-	margin: -0.5em 0.115em -0.5em -0.077em;
-	vertical-align: -0.077em;
-	}
-	.button.icon:before, .button > .icon:before,
-	.button-icon.icon:before, .button-icon > .icon:before {
-		font-size: 2.3em;
-		margin-top: -0.65em;
-		margin-bottom: -0.65em;
-		vertical-align: -0.133em;
-	}
+  display: inline-block;
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'EntypoRegular';
+  font-size: 2em;
+  line-height: 1em;
+  margin: -0.5em 0.115em -0.5em -0.077em;
+  }
+  .button.icon:before, .button > .icon:before,
+  .button-icon.icon:before, .button-icon > .icon:before {
+    font-size: 2.3em;
+    margin-top: -0.65em;
+    margin-bottom: -0.65em;
+  }
 
-	/* Sizes */
-	.icon-size2:before {
-		font-size: 3.5em;
-		margin-top: -1.25em;
-		margin-bottom: -1.25em;
-		vertical-align: -0.132em;
-	}
-	.icon-size3:before {
-		font-size: 4.5em;
-		margin-top: -1.75em;
-		margin-bottom: -1.75em;
-		vertical-align: -0.171em;
-	}
-	.icon-size4:before {
-		font-size: 7em;
-		margin-top: -3em;
-		margin-bottom: -3em;
-		vertical-align: middle;
-	}
-	.icon-size5:before {
-		font-size: 10em;
-		margin-top: -4.5em;
-		margin-bottom: -4.5em;
-		vertical-align: middle;
-	}
+  /* Sizes */
+  .icon-size2:before {
+    font-size: 3.5em;
+    margin-top: -1.25em;
+    margin-bottom: -1.25em;
+    vertical-align: middle;
+  }
+  .icon-size3:before {
+    font-size: 4.5em;
+    margin-top: -1.75em;
+    margin-bottom: -1.75em;
+    vertical-align: middle;
+  }
+  .icon-size4:before {
+    font-size: 7em;
+    margin-top: -3em;
+    margin-bottom: -3em;
+    vertical-align: middle;
+  }
+  .icon-size5:before {
+    font-size: 10em;
+    margin-top: -4.5em;
+    margin-bottom: -4.5em;
+    vertical-align: middle;
+  }
 
-	/* IE9 goes crazy with relative font-sizes */
-	.ie9 .icon-size2:before,
-	.ie9 .icon-size3:before,
-	.ie9 .icon-size4:before,
-	.ie9 .icon-size5:before {
-		font-size: 0.25em;
-	}
+  /* IE9 and 10 go crazy with relative font-sizes */
+  :root .icon-size2:before,
+  :root .icon-size3:before,
+  :root .icon-size4:before,
+  :root .icon-size5:before {
+    font-size: 0.25em \0/IE9; /* Ugly hack, but this is the only solution to target IE10 */
+  }
 
-	/* Empty icons */
-	[class^="icon-"]:empty:before,
-	[class*=" icon-"]:empty:before {
-		margin-right: -0.077em;
-		margin-left: -0.077em;
-	}
+  /* Empty icons */
+  [class^="icon-"]:empty:before,
+  [class*=" icon-"]:empty:before {
+    margin-right: -0.077em;
+    margin-left: -0.077em;
+  }
 
-	/* IE7 */
-	.font-icon {
-		font-weight: normal;
-		font-style: normal;
-		font-family: 'EntypoRegular';
-		font-size: 2em;
-		margin: -0.5em 0.115em -0.5em -0.077em;
-		vertical-align: middle;
-		}
-		.font-icon.empty {
-			margin-right: -2px;
-			margin-left: -2px;
-		}
-		/* Sizes */
-		.icon-size2 > .font-icon {
-			font-size: 3.5em;
-			margin-top: -1.25em;
-			margin-bottom: -1.25em;
-			vertical-align: -0.132em;
-		}
-		.icon-size3 > .font-icon {
-			font-size: 4.5em;
-			margin-top: -1.75em;
-			margin-bottom: -1.75em;
-			vertical-align: -0.171em;
-		}
-		.icon-size4 > .font-icon {
-			font-size: 7em;
-			margin-top: -3em;
-			margin-bottom: -3em;
-			vertical-align: middle;
-		}
-		.icon-size5 > .font-icon {
-			font-size: 10em;
-			margin-top: -4.5em;
-			margin-bottom: -4.5em;
-			vertical-align: middle;
-		}
+  /* IE7 */
+  .font-icon {
+    font-weight: normal;
+    font-style: normal;
+    font-family: 'EntypoRegular';
+    font-size: 2em;
+    margin: -0.5em 0.115em -0.5em -0.077em;
+    vertical-align: middle;
+    }
+    .font-icon.empty {
+      margin-right: -2px;
+      margin-left: -2px;
+    }
+    /* Sizes */
+    .icon-size2 > .font-icon {
+      font-size: 3.5em;
+      margin-top: -1.25em;
+      margin-bottom: -1.25em;
+      vertical-align: middle;
+    }
+    .icon-size3 > .font-icon {
+      font-size: 4.5em;
+      margin-top: -1.75em;
+      margin-bottom: -1.75em;
+      vertical-align: middle;
+    }
+    .icon-size4 > .font-icon {
+      font-size: 7em;
+      margin-top: -3em;
+      margin-bottom: -3em;
+      vertical-align: middle;
+    }
+    .icon-size5 > .font-icon {
+      font-size: 10em;
+      margin-top: -4.5em;
+      margin-bottom: -4.5em;
+      vertical-align: middle;
+    }
 
-	/* IE8 */
-	[class^="icon-"].font-icon-empty:before,
-	[class*=" icon-"].font-icon-empty:before {
-		margin-right: -0.077em;
-		margin-left: -0.077em;
-	}
+  /* IE8 */
+  [class^="icon-"].font-icon-empty:before,
+  [class*=" icon-"].font-icon-empty:before {
+    margin-right: -0.077em;
+    margin-left: -0.077em;
+  }
 
 .left-icon {
-	padding-left: 20px;
-	position: relative;
-	min-height: 16px;
-	}
-	.wrapped.left-icon {
-		padding-left: 30px;
-	}
-	.boxed.left-icon {
-		padding-left: 36px;
-	}
+  padding-left: 20px;
+  position: relative;
+  min-height: 16px;
+  }
+  .wrapped.left-icon {
+    padding-left: 30px;
+  }
+  .boxed.left-icon {
+    padding-left: 36px;
+  }
 .big-left-icon {
-	padding-left: 38px;
-	position: relative;
-	min-height: 32px;
-	}
-	.wrapped.big-left-icon {
-		padding-left: 48px;
-	}
-	.boxed.big-left-icon {
-		padding-left: 54px;
-	}
+  padding-left: 38px;
+  position: relative;
+  min-height: 32px;
+  }
+  .wrapped.big-left-icon {
+    padding-left: 48px;
+  }
+  .boxed.big-left-icon {
+    padding-left: 54px;
+  }
 .huge-left-icon {
-	padding-left: 68px;
-	position: relative;
-	min-height: 64px;
-	}
-	.wrapped.huge-left-icon {
-		padding-left: 78px;
-	}
-	.boxed.huge-left-icon {
-		padding-left: 84px;
-	}
+  padding-left: 68px;
+  position: relative;
+  min-height: 64px;
+  }
+  .wrapped.huge-left-icon {
+    padding-left: 78px;
+  }
+  .boxed.huge-left-icon {
+    padding-left: 84px;
+  }
 
-	.left-icon:before,
-	.big-left-icon:before,
-	.huge-left-icon:before {
-		position: absolute;
-		display: block;
-		margin: 0;
-		}
-		.left-icon:before {
-			top: 0;
-			left: -1px;
-			font-size: 30px;
-			line-height: 18px;
-			}
-			.wrapped.left-icon:before {
-				top: 10px;
-				left: 9px;
-			}
-			.boxed.left-icon:before {
-				top: 16px;
-				left: 15px;
-			}
-		.big-left-icon:before {
-			top: -1px;
-			left: -2px;
-			font-size: 60px;
-			line-height: 36px;
-			}
-			.wrapped.big-left-icon:before {
-				top: 9px;
-				left: 8px;
-			}
-			.boxed.big-left-icon:before {
-				top: 15px;
-				left: 14px;
-			}
-		.huge-left-icon:before {
-			top: -3px;
-			left: -5px;
-			font-size: 120px;
-			line-height: 72px;
-			}
-			.wrapped.huge-left-icon:before {
-				top: 7px;
-				left: 5px;
-			}
-			.boxed.huge-left-icon:before {
-				top: 13px;
-				left: 11px;
-			}
+  .left-icon:before,
+  .big-left-icon:before,
+  .huge-left-icon:before {
+    position: absolute;
+    display: block;
+    margin: 0;
+    }
+    .left-icon:before {
+      top: 0;
+      left: -1px;
+      font-size: 30px;
+      line-height: 18px;
+      }
+      .wrapped.left-icon:before {
+        top: 10px;
+        left: 9px;
+      }
+      .boxed.left-icon:before {
+        top: 16px;
+        left: 15px;
+      }
+    .big-left-icon:before {
+      top: -1px;
+      left: -2px;
+      font-size: 60px;
+      line-height: 36px;
+      }
+      .wrapped.big-left-icon:before {
+        top: 9px;
+        left: 8px;
+      }
+      .boxed.big-left-icon:before {
+        top: 15px;
+        left: 14px;
+      }
+    .huge-left-icon:before {
+      top: -3px;
+      left: -5px;
+      font-size: 120px;
+      line-height: 72px;
+      }
+      .wrapped.huge-left-icon:before {
+        top: 7px;
+        left: 5px;
+      }
+      .boxed.huge-left-icon:before {
+        top: 13px;
+        left: 11px;
+      }
 
-	.icon-phone:before				{ content: '!'; }
-	.icon-mobile:before				{ content: '"'; }
-	.icon-tag:before				{ content: '#'; }
-	.icon-directions:before			{ content: '$'; }
-	.icon-mail:before				{ content: '%'; }
-	.icon-pencil:before				{ content: '&'; }
-	.icon-paperclip:before			{ content: '\''; }
-	.icon-reply:before				{ content: '('; }
-	.icon-replay-all:before			{ content: ')'; }
-	.icon-fwd:before				{ content: '*'; }
-	.icon-user:before				{ content: '+'; }
-	.icon-users:before				{ content: ','; }
-	.icon-add-user:before			{ content: '-'; }
-	.icon-card:before				{ content: '.'; }
-	.icon-extract:before			{ content: '/'; }
-	.icon-marker:before				{ content: '0'; }
-	.icon-map:before				{ content: '1'; }
-	.icon-compass:before			{ content: '2'; }
-	.icon-arrow:before				{ content: '3'; }
-	.icon-target:before				{ content: '4'; }
-	.icon-path:before				{ content: '5'; }
-	.icon-heart:before				{ content: '6'; }
-	.icon-star:before				{ content: '7'; }
-	.icon-like:before				{ content: '8'; }
-	.icon-chat:before				{ content: '9'; }
-	.icon-speech:before				{ content: ':'; }
-	.icon-quote:before				{ content: ';'; }
-	.icon-printer:before			{ content: '<'; }
-	.icon-bell:before				{ content: '='; }
-	.icon-link:before				{ content: '>'; }
-	.icon-flag:before				{ content: '?'; }
-	.icon-gear:before				{ content: '@'; }
-	.icon-flashlight:before			{ content: 'A'; }
-	.icon-cup:before				{ content: 'B'; }
-	.icon-price-tag:before			{ content: 'C'; }
-	.icon-camera:before				{ content: 'D'; }
-	.icon-moon:before				{ content: 'E'; }
-	.icon-palette:before			{ content: 'F'; }
-	.icon-leaf:before				{ content: 'G'; }
-	.icon-music-note:before			{ content: 'H'; }
-	.icon-bag:before				{ content: 'I'; }
-	.icon-plane:before				{ content: 'J'; }
-	.icon-buoy:before				{ content: 'K'; }
-	.icon-rain:before				{ content: 'L'; }
-	.icon-eye:before				{ content: 'M'; }
-	.icon-clock:before				{ content: 'N'; }
-	.icon-mic:before				{ content: 'O'; }
-	.icon-calendar:before			{ content: 'P'; }
-	.icon-lightning:before			{ content: 'Q'; }
-	.icon-hourglass:before			{ content: 'R'; }
-	.icon-rss:before				{ content: 'S'; }
-	.icon-wifi:before				{ content: 'T'; }
-	.icon-lock:before				{ content: 'U'; }
-	.icon-unlock:before				{ content: 'V'; }
-	.icon-tick:before				{ content: 'W'; }
-	.icon-cross:before				{ content: 'X'; }
-	.icon-minus-round:before		{ content: 'Y'; }
-	.icon-plus-round:before			{ content: 'Z'; }
-	.icon-cross-round:before		{ content: '['; }
-	.icon-minus:before				{ content: '\\'; }
-	.icon-plus:before				{ content: ']'; }
-	.icon-forbidden:before			{ content: '^'; }
-	.icon-info:before				{ content: '_'; }
-	.icon-info-round:before			{ content: '`'; }
-	.icon-question:before			{ content: 'a'; }
-	.icon-question-round:before		{ content: 'b'; }
-	.icon-warning:before			{ content: 'c'; }
-	.icon-redo:before				{ content: 'd'; }
-	.icon-undo:before				{ content: 'e'; }
-	.icon-swap:before				{ content: 'f'; }
-	.icon-revert:before				{ content: 'g'; }
-	.icon-refresh:before			{ content: 'h'; }
-	.icon-list:before				{ content: 'i'; }
-	.icon-list-add:before			{ content: 'j'; }
-	.icon-thumbs:before				{ content: 'k'; }
-	.icon-page-list:before			{ content: 'l'; }
-	.icon-page:before				{ content: 'm'; }
-	.icon-pages:before				{ content: 'n'; }
-	.icon-frame:before				{ content: 'o'; }
-	.icon-pictures:before			{ content: 'p'; }
-	.icon-movie:before				{ content: 'q'; }
-	.icon-music:before				{ content: 'r'; }
-	.icon-folder:before				{ content: 's'; }
-	.icon-drawer:before				{ content: 't'; }
-	.icon-trash:before				{ content: 'u'; }
-	.icon-outbox:before				{ content: 'v'; }
-	.icon-inbox:before				{ content: 'w'; }
-	.icon-download:before			{ content: 'x'; }
-	.icon-cloud:before				{ content: 'y'; }
-	.icon-cloud-upload:before		{ content: 'z'; }
-	.icon-play:before				{ content: '{'; }
-	.icon-pause:before				{ content: '|'; }
-	.icon-record:before				{ content: '~'; }
-	.icon-forward:before			{ content: 'Ä'; }
-	.icon-backward:before			{ content: 'Å'; }
-	.icon-previous:before			{ content: 'Ç'; }
-	.icon-next:before				{ content: 'É'; }
-	.icon-expand:before				{ content: 'Ñ'; }
-	.icon-reduce:before				{ content: 'Ö'; }
-	.icon-volume:before				{ content: 'Ü'; }
-	.icon-loud:before				{ content: 'á'; }
-	.icon-mute:before				{ content: 'à'; }
-	.icon-left-fat:before			{ content: 'â'; }
-	.icon-down-fat:before			{ content: 'ä'; }
-	.icon-up-fat:before				{ content: 'ã'; }
-	.icon-right-fat:before			{ content: 'å'; }
-	.icon-left:before				{ content: 'ç'; }
-	.icon-down:before				{ content: 'é'; }
-	.icon-up:before					{ content: 'è'; }
-	.icon-right:before				{ content: 'ê'; }
-	.icon-left-round:before			{ content: 'ë'; }
-	.icon-down-round:before			{ content: 'í'; }
-	.icon-up-round:before			{ content: 'ì'; }
-	.icon-right-round:before		{ content: 'î'; }
-	.icon-home:before				{ content: 'ï'; }
-	.icon-ribbon:before				{ content: 'ñ'; }
-	.icon-read:before				{ content: 'ó'; }
-	.icon-new-tab:before			{ content: 'ò'; }
-	.icon-search:before				{ content: 'ô'; }
-	.icon-ellipsis:before			{ content: 'ö'; }
-	.icon-bullet-list:before		{ content: '®'; }
-	.icon-creative-commons:before	{ content: '©'; }
-
+  .icon-plus:before { content: '\f016'; }
+  .icon-minus:before { content: '\f019'; }
+  .icon-info:before { content: '\f01e'; }
+  .icon-left-thin:before { content: '\f08d'; }
+  .icon-up-thin:before { content: '\f08f'; }
+  .icon-right-thin:before { content: '\f08e'; }
+  .icon-down-thin:before { content: '\f08c'; }
+  .icon-level-up:before { content: '\f094'; }
+  .icon-level-down:before { content: '\f093'; }
+  .icon-switch:before { content: '\f097'; }
+  .icon-infinity:before { content: '\f0c3'; }
+  .icon-squared-plus:before { content: '\f018'; }
+  .icon-squared-minus:before { content: '\f01b'; }
+  .icon-home:before { content: '\f022'; }
+  .icon-keyboard:before { content: '\f03b'; }
+  .icon-erase:before { content: '\f0c4'; }
+  .icon-pause:before { content: '\f09a'; }
+  .icon-forward:before { content: '\f09e'; }
+  .icon-backward:before { content: '\f09f'; }
+  .icon-next:before { content: '\f09c'; }
+  .icon-previous:before { content: '\f09d'; }
+  .icon-hourglass:before { content: '\f064'; }
+  .icon-stop:before { content: '\f099'; }
+  .icon-triangle-up:before { content: '\f087'; }
+  .icon-play:before { content: '\f098'; }
+  .icon-triangle-right:before { content: '\f086'; }
+  .icon-triangle-down:before { content: '\f084'; }
+  .icon-triangle-left:before { content: '\f085'; }
+  .icon-adjust:before { content: '\f068'; }
+  .icon-cloud:before { content: '\f0b3'; }
+  .icon-star:before { content: '\f008'; }
+  .icon-star-empty:before { content: '\f009'; }
+  .icon-cup:before { content: '\f047'; }
+  .icon-list:before { content: '\f011'; }
+  .icon-moon:before { content: '\f0b6'; }
+  .icon-heart-empty:before { content: '\f007'; }
+  .icon-heart:before { content: '\f006'; }
+  .icon-music-note:before { content: '\f000'; }
+  .icon-beamed-note:before { content: '\f001'; }
+  .icon-thumbs:before { content: '\f010'; }
+  .icon-flag:before { content: '\f02b'; }
+  .icon-tools:before { content: '\f057'; }
+  .icon-gear:before { content: '\f056'; }
+  .icon-warning:before { content: '\f03f'; }
+  .icon-lightning:before { content: '\f0b5'; }
+  .icon-record:before { content: '\f09b'; }
+  .icon-thunder-cloud:before { content: '\f0b4'; }
+  .icon-voicemail:before { content: '\f0c9'; }
+  .icon-plane:before { content: '\f0b7'; }
+  .icon-mail:before { content: '\f005'; }
+  .icon-pencil:before { content: '\f037'; }
+  .icon-feather:before { content: '\f038'; }
+  .icon-tick:before { content: '\f012'; }
+  .icon-cross:before { content: '\f013'; }
+  .icon-cross-round:before { content: '\f014'; }
+  .icon-squared-cross:before { content: '\f015'; }
+  .icon-question:before { content: '\f01c'; }
+  .icon-quote:before { content: '\f034'; }
+  .icon-plus-round:before { content: '\f017'; }
+  .icon-minus-round:before { content: '\f01a'; }
+  .icon-right:before { content: '\f082'; }
+  .icon-arrow:before { content: '\f045'; }
+  .icon-fwd:before { content: '\f033'; }
+  .icon-undo:before { content: '\f090'; }
+  .icon-redo:before { content: '\f091'; }
+  .icon-left:before { content: '\f081'; }
+  .icon-up:before { content: '\f083'; }
+  .icon-down:before { content: '\f080'; }
+  .icon-list-add:before { content: '\f0a7'; }
+  .icon-numbered-list:before { content: '\f0a6'; }
+  .icon-left-fat:before { content: '\f089'; }
+  .icon-right-fat:before { content: '\f08a'; }
+  .icon-up-fat:before { content: '\f08b'; }
+  .icon-down-fat:before { content: '\f088'; }
+  .icon-add-user:before { content: '\f00c'; }
+  .icon-question-round:before { content: '\f01d'; }
+  .icon-info-round:before { content: '\f01f'; }
+  .icon-eye:before { content: '\f027'; }
+  .icon-price-tag:before { content: '\f028'; }
+  .icon-cloud-upload:before { content: '\f030'; }
+  .icon-reply:before { content: '\f031'; }
+  .icon-reply-all:before { content: '\f032'; }
+  .icon-code:before { content: '\f035'; }
+  .icon-extract:before { content: '\f036'; }
+  .icon-printer:before { content: '\f039'; }
+  .icon-refresh:before { content: '\f03a'; }
+  .icon-speech:before { content: '\f03c'; }
+  .icon-chat:before { content: '\f03d'; }
+  .icon-card:before { content: '\f041'; }
+  .icon-directions:before { content: '\f042'; }
+  .icon-marker:before { content: '\f043'; }
+  .icon-map:before { content: '\f044'; }
+  .icon-compass:before { content: '\f046'; }
+  .icon-trash:before { content: '\f048'; }
+  .icon-page:before { content: '\f049'; }
+  .icon-page-list-inverted:before { content: '\f04d'; }
+  .icon-pages:before { content: '\f04a'; }
+  .icon-frame:before { content: '\f04b'; }
+  .icon-drawer:before { content: '\f052'; }
+  .icon-rss:before { content: '\f054'; }
+  .icon-path:before { content: '\f058'; }
+  .icon-cart:before { content: '\f05a'; }
+  .icon-shareable:before { content: '\f059'; }
+  .icon-login:before { content: '\f05d'; }
+  .icon-logout:before { content: '\f05e'; }
+  .icon-volume:before { content: '\f062'; }
+  .icon-expand:before { content: '\f06a'; }
+  .icon-reduce:before { content: '\f06b'; }
+  .icon-new-tab:before { content: '\f06c'; }
+  .icon-publish:before { content: '\f06d'; }
+  .icon-browser:before { content: '\f06e'; }
+  .icon-arrow-combo:before { content: '\f06f'; }
+  .icon-pie-chart:before { content: '\f0c5'; }
+  .icon-language:before { content: '\f0cb'; }
+  .icon-air:before { content: '\f0cf'; }
+  .icon-database:before { content: '\f0d4'; }
+  .icon-drive:before { content: '\f0d5'; }
+  .icon-bucket:before { content: '\f0d6'; }
+  .icon-thermometer:before { content: '\f0d7'; }
+  .icon-down-round:before { content: '\f070'; }
+  .icon-left-round:before { content: '\f071'; }
+  .icon-right-round:before { content: '\f072'; }
+  .icon-up-round:before { content: '\f073'; }
+  .icon-chevron-down:before { content: '\f074'; }
+  .icon-chevron-left:before { content: '\f075'; }
+  .icon-chevron-right:before { content: '\f076'; }
+  .icon-chevron-up:before { content: '\f077'; }
+  .icon-chevron-small-down:before { content: '\f078'; }
+  .icon-chevron-small-left:before { content: '\f079'; }
+  .icon-chevron-small-right:before { content: '\f07a'; }
+  .icon-chevron-small-up:before { content: '\f07b'; }
+  .icon-chevron-thin-down:before { content: '\f07c'; }
+  .icon-chevron-thin-left:before { content: '\f07d'; }
+  .icon-chevron-thin-right:before { content: '\f07e'; }
+  .icon-chevron-thin-up:before { content: '\f07f'; }
+  .icon-progress-0:before { content: '\f0a0'; }
+  .icon-progress-1:before { content: '\f0a1'; }
+  .icon-progress-2:before { content: '\f0a2'; }
+  .icon-progress-3:before { content: '\f0a3'; }
+  .icon-back-in-time:before { content: '\f0ab'; }
+  .icon-network:before { content: '\f0ae'; }
+  .icon-mailbox:before { content: '\f0b0'; }
+  .icon-download:before { content: '\f0b1'; }
+  .icon-buoy:before { content: '\f0ba'; }
+  .icon-tag:before { content: '\f0bb'; }
+  .icon-dot:before { content: '\f0be'; }
+  .icon-two-dots:before { content: '\f0bf'; }
+  .icon-ellipsis:before { content: '\f0c0'; }
+  .icon-suitcase:before { content: '\f0bd'; }
+  .icon-flow-cascade:before { content: '\f0d9'; }
+  .icon-flow-branch:before { content: '\f0da'; }
+  .icon-flow-tree:before { content: '\f0db'; }
+  .icon-flow-line:before { content: '\f0dc'; }
+  .icon-flow-parallel:before { content: '\f0dd'; }
+  .icon-brush:before { content: '\f0c1'; }
+  .icon-paper-plane:before { content: '\f0b8'; }
+  .icon-magnet:before { content: '\f0c2'; }
+  .icon-gauge:before { content: '\f0df'; }
+  .icon-traffic-cone:before { content: '\f0e0'; }
+  .icon-creative-commons:before { content: '\f0e1'; }
+  .icon-cc-by:before { content: '\f0e2'; }
+  .icon-cc-nc:before { content: '\f0e3'; }
+  .icon-cc-nc-eu:before { content: '\f0e4'; }
+  .icon-cc-nc-jp:before { content: '\f0e5'; }
+  .icon-cc-sa:before { content: '\f0e6'; }
+  .icon-cc-nd:before { content: '\f0e7'; }
+  .icon-cc-pd:before { content: '\f0e8'; }
+  .icon-cc-zero:before { content: '\f0e9'; }
+  .icon-cc-share:before { content: '\f0ea'; }
+  .icon-cc-remix:before { content: '\f0eb'; }
+  .icon-github:before { content: '\f0ec'; }
+  .icon-github-circled:before { content: '\f0ed'; }
+  .icon-flickr:before { content: '\f0ee'; }
+  .icon-flickr-circled:before { content: '\f0ef'; }
+  .icon-vimeo:before { content: '\f0f0'; }
+  .icon-vimeo-circled:before { content: '\f0f1'; }
+  .icon-twitter:before { content: '\f0f2'; }
+  .icon-twitter-circled:before { content: '\f0f3'; }
+  .icon-facebook:before { content: '\f0f4'; }
+  .icon-facebook-circled:before { content: '\f0f5'; }
+  .icon-facebook-squared:before { content: '\f0f6'; }
+  .icon-gplus:before { content: '\f0f7'; }
+  .icon-gplus-circled:before { content: '\f0f8'; }
+  .icon-pinterest:before { content: '\f0f9'; }
+  .icon-pinterest-circled:before { content: '\f0fa'; }
+  .icon-tumblr:before { content: '\f0fb'; }
+  .icon-tumblr-circled:before { content: '\f0fc'; }
+  .icon-linkedin:before { content: '\f0fd'; }
+  .icon-linkedin-circled:before { content: '\f0fe'; }
+  .icon-dribbble:before { content: '\f0ff'; }
+  .icon-dribbble-circled:before { content: '\f100'; }
+  .icon-stumbleupon:before { content: '\f101'; }
+  .icon-stumbleupon-circled:before { content: '\f102'; }
+  .icon-lastfm:before { content: '\f103'; }
+  .icon-lastfm-circled:before { content: '\f104'; }
+  .icon-rdio:before { content: '\f105'; }
+  .icon-rdio-circled:before { content: '\f106'; }
+  .icon-spotify:before { content: '\f107'; }
+  .icon-spotify-circled:before { content: '\f108'; }
+  .icon-qq:before { content: '\f109'; }
+  .icon-instagrem:before { content: '\f10a'; }
+  .icon-dropbox:before { content: '\f10b'; }
+  .icon-evernote:before { content: '\f10c'; }
+  .icon-flattr:before { content: '\f10d'; }
+  .icon-skype:before { content: '\f10e'; }
+  .icon-skype-circled:before { content: '\f10f'; }
+  .icon-renren:before { content: '\f110'; }
+  .icon-sina-weibo:before { content: '\f111'; }
+  .icon-paypal:before { content: '\f112'; }
+  .icon-picasa:before { content: '\f113'; }
+  .icon-soundcloud:before { content: '\f114'; }
+  .icon-mixi:before { content: '\f115'; }
+  .icon-behance:before { content: '\f116'; }
+  .icon-google-circles:before { content: '\f117'; }
+  .icon-vkontakte:before { content: '\f118'; }
+  .icon-smashing:before { content: '\f119'; }
+  .icon-db-shape:before { content: '\f11b'; }
+  .icon-bullet-list:before { content: '\f11a'; }
+  .icon-db-logo:before { content: '\f11c'; }
+  .icon-pictures:before { content: '\f00e'; }
+  .icon-globe:before { content: '\f0b2'; }
+  .icon-leaf:before { content: '\f0b9'; }
+  .icon-graduation-cap:before { content: '\f0ca'; }
+  .icon-mic:before { content: '\f05f'; }
+  .icon-palette:before { content: '\f0a5'; }
+  .icon-ticket:before { content: '\f0cc'; }
+  .icon-movie:before { content: '\f00d'; }
+  .icon-target:before { content: '\f0a4'; }
+  .icon-music:before { content: '\f002'; }
+  .icon-trophy:before { content: '\f0a9'; }
+  .icon-like:before { content: '\f02c'; }
+  .icon-unlike:before { content: '\f02d'; }
+  .icon-bag:before { content: '\f05b'; }
+  .icon-user:before { content: '\f00a'; }
+  .icon-users:before { content: '\f00b'; }
+  .icon-light-bulb:before { content: '\f065'; }
+  .icon-new:before { content: '\f040'; }
+  .icon-water:before { content: '\f0cd'; }
+  .icon-droplet:before { content: '\f0ce'; }
+  .icon-credit-card:before { content: '\f0d0'; }
+  .icon-monitor:before { content: '\f0ac'; }
+  .icon-briefcase:before { content: '\f0bc'; }
+  .icon-save:before { content: '\f0d1'; }
+  .icon-cd:before { content: '\f0af'; }
+  .icon-folder:before { content: '\f051'; }
+  .icon-page-list:before { content: '\f04c'; }
+  .icon-calendar:before { content: '\f05c'; }
+  .icon-line-graph:before { content: '\f0c6'; }
+  .icon-bar-graph:before { content: '\f0c7'; }
+  .icon-clipboard:before { content: '\f0d2'; }
+  .icon-paperclip:before { content: '\f024'; }
+  .icon-ribbons:before { content: '\f02a'; }
+  .icon-book:before { content: '\f050'; }
+  .icon-read:before { content: '\f04f'; }
+  .icon-phone:before { content: '\f055'; }
+  .icon-megaphone:before { content: '\f0d3'; }
+  .icon-outbox:before { content: '\f02f'; }
+  .icon-inbox:before { content: '\f02e'; }
+  .icon-box:before { content: '\f053'; }
+  .icon-newspaper:before { content: '\f04e'; }
+  .icon-mobile:before { content: '\f0ad'; }
+  .icon-wifi:before { content: '\f0a8'; }
+  .icon-camera:before { content: '\f00f'; }
+  .icon-swap:before { content: '\f095'; }
+  .icon-loop:before { content: '\f096'; }
+  .icon-cycle:before { content: '\f092'; }
+  .icon-light-down:before { content: '\f066'; }
+  .icon-light-up:before { content: '\f067'; }
+  .icon-mute:before { content: '\f060'; }
+  .icon-loud:before { content: '\f061'; }
+  .icon-battery:before { content: '\f0aa'; }
+  .icon-search:before { content: '\f003'; }
+  .icon-key:before { content: '\f0d8'; }
+  .icon-lock:before { content: '\f025'; }
+  .icon-unlock:before { content: '\f026'; }
+  .icon-bell:before { content: '\f03e'; }
+  .icon-ribbon:before { content: '\f029'; }
+  .icon-link:before { content: '\f023'; }
+  .icon-revert:before { content: '\f021'; }
+  .icon-flashlight:before { content: '\f004'; }
+  .icon-area-graph:before { content: '\f0c8'; }
+  .icon-clock:before { content: '\f063'; }
+  .icon-rocket:before { content: '\f0de'; }
+  .icon-forbidden:before { content: '\f069'; }
 
 /********************************************************/
 /*               14. Main layout elements               */
@@ -4515,41 +4674,4 @@ a:link {
 /* Hide but maintain layout */
 .invisible {
 	visibility: hidden;
-}
-
-/* Floating buttons menu */
-#floating-button-container-title {
-  position: absolute;
-  left: 370px;
-}
-
-#floating-button-container .bg {
-  background-color:#4c4c4c;
-  opacity: 0.75;
-  width: 100%;
-  border: 1px solid black;
-}
-
-#floating-menu-div {
-  position:absolute;
-  width:50%;
-  background-color:transparent;
-  top:80px;
-  right:0px;
-  padding: 5px 20px;
-}
-
-#floating-menu-div-listing {
-  position:absolute;
-  width:50%;
-  background-color:transparent;
-  top:43px;
-  right:0px;
-  padding: 5px 20px;
-}
-
-#mainMessageContainer { margin:50px 273px 0 84px }
-
-@media screen and (max-width: 991px) {
-  .hide-below-992 { display: none !important; } 
 }

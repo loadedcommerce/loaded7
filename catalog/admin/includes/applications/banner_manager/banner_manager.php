@@ -58,9 +58,10 @@ class lC_Application_Banner_manager extends lC_Template_Admin {
 
     if ( !empty($_GET['action']) && !($_SESSION['error']) ) {
       switch ( $_GET['action'] ) {
-         case 'save':  
+         case 'save':
            $data = array('title' => $_POST['title'],
                          'url' => $_POST['url'],
+                         'target' => (isset($_POST['target']) && ($_POST['target'] == 'on') ? true : false),
                          'group' => (isset($_POST['group']) ? $_POST['group'] : null),
                          'group_new' => $_POST['group_new'],
                          'image' => (isset($_FILES['image']) ? $_FILES['image'] : null),

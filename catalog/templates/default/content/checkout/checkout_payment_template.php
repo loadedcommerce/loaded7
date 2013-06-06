@@ -11,7 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-$secureUrl = substr($lC_Payment->iframe_action_url, 0, strpos($lC_Payment->iframe_action_url, '?'));
+$secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->iframe_action_url, 0, strpos($lC_Payment->iframe_action_url, '?')) : ($lC_Payment->hasRelayURL()) ?  $lC_Payment->iframe_relay_url : NULL ;
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
@@ -25,7 +25,6 @@ $secureUrl = substr($lC_Payment->iframe_action_url, 0, strpos($lC_Payment->ifram
 #paymentTemplateContainer .arrow-container { margin-top:15px; }
 #paymentTemplateContainer .arrow-down { border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid gray; float: right; height: 0; width: 0; margin:13px 0 0 6px; }
 #paymentTemplateContainer .arrow-up { border-bottom: 10px solid gray; border-left: 10px solid transparent; border-right: 10px solid transparent; float: right; height: 0; width: 0; margin:13px 0 0 6px; } 
-
 #loadingContainer { position:absolute; right:250px; }
 #iloader { margin:100px 0 0 0px; }
 <?php 
@@ -33,6 +32,10 @@ if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
   echo "#payformIframe { min-width:468px; min-height:580px; }";
 } else if ($lC_ShoppingCart->getBillingMethod('id') == 'cresecure') {
   echo "#payformIframe { min-width:480px; min-height:300px; }";
+} else {
+  echo "#payformIframe { min-width:500px; min-height:300px; }";
+  echo "#checkout_shipping_col1 { width:28% !important; }";
+  echo "#checkout_shipping_col2 { width:71% !important; }";
 }
 ?>
 
@@ -47,7 +50,7 @@ and (max-device-width : 480px) {
 /* Mobile (portrait) ----------- */
 @media only screen 
 and (max-width : 320px) {
-  #payformIframe { min-width:300px; min-height:380px; }
+  #payformIframe { min-width:320px; min-height:380px; }
   #checkoutConfirmationDetails {width: 96% !important; }
 }
 
@@ -140,14 +143,19 @@ only screen and (min-device-pixel-ratio : 1.5) {
                 <h3><?php echo $lC_Language->get('bill_to_address'); ?></h3>
                 <span style="float:right;"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span> <span id="bill-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?></span>
               </div>
+              <?php
+                //echo '[' . $_SESSION['mediaType'] . '][' . $_SESSION['mediaSize'] . ']<br>';
+              ?>
             </div>
-            
             <div id="checkout_shipping_col2" style="width:67%; float:right; margin-right:-4px">
               <div id="checkoutConfirmationDetails"> 
                 <div id="loadingContainer"><p id="iloader"></p></div>
-                <?php
-                if (isset($lC_Payment->iframe_action_url) && $lC_Payment->iframe_action_url != NULL) {
-                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true"></iframe>';
+                <?php  
+                if ($lC_Payment->hasIframeURL()) {
+                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
+                } else if ($lC_Payment->hasRelayURL()) { 
+                  echo '<form name="pmtForm" id="pmtForm" action="' . $lC_Payment->iframe_relay_url . '" target="pmtFrame" method="post">' . lC_Checkout_Payment_template::rePost() . '</form>' . "\n";        
+                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="' . lC_Checkout_Payment_template::getIframeWidth() . '" height="550px" scrolling="no" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 
                 } else {
                   echo '[[FORM INSERT]]'; 
                 }
@@ -170,5 +178,11 @@ function hideLoader() {
 $(function() {
   $('#iloader').activity({segments: 12, width: 5.5, space: 6, length: 13, color: '#252525', speed: 1.5});
 });
+
+<?php
+if ($lC_Payment->hasRelayURL()) {
+  echo "window.onload = function(){ document.forms['pmtForm'].submit(); };";
+}
+?>
 </script>
 <!--content/checkout/checkout_payment_template.php end-->

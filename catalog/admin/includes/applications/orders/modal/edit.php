@@ -155,7 +155,7 @@ function editOrder(id) {
                    '          <table border="0" width="100%" cellspacing="0" cellpadding="2" id="statusHistoryTable">'+
                    '            <tr>'+
                    '              <td><?php echo $lC_Language->get('field_status'); ?></td>'+
-                   '              <td><?php echo lc_draw_pull_down_menu('status', null, null, 'class="input with-small-padding" id="orderStatus"'); ?></td>'+
+                   '              <td><?php echo lc_draw_pull_down_menu('status', null, null, 'class="select" style="width: 73%" id="orderStatus"'); ?></td>'+
                    '            </tr>'+
                    '            <tr>'+
                    '              <td valign="top" width="30%"><?php echo $lC_Language->get('field_add_comment'); ?></td>'+
@@ -190,7 +190,7 @@ function editOrder(id) {
             '<?php echo $lC_Language->get('button_orders_invoice'); ?>': {
               classes:  'glossy',
               click:    function(win) { 
-                url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&oid=OID&action=invoice'); ?>';
+                url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&oid=OID&action=invoice'); ?>';
                 window.open(url.replace('OID', id));                
                 win.closeModal(); 
               }
@@ -198,7 +198,7 @@ function editOrder(id) {
             '<?php echo $lC_Language->get('button_orders_packaging_slip'); ?>': {
               classes:  'glossy',
               click:    function(win) { 
-                url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&oid=OID&action=packaging_slip'); ?>';
+                url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&oid=OID&action=packaging_slip'); ?>';
                 window.open(url.replace('OID', id));
                 win.closeModal(); 
               }
@@ -237,10 +237,14 @@ function editOrder(id) {
       $("#orderStatus").empty();
       $.each(data.ordersStatusArray, function(val, text) {
         var selected = (data.orderStatusID == val) ? 'selected="selected"' : '';
+        if(data.orderStatusID == val) {
+          $("#orderStatus").closest("span + *").prevAll("span.select-value:first").text(text);
+        }
         $("#orderStatus").append(
           $("<option " + selected + "></option>").val(val).html(text)
         );
       });
+      $("[name=comment]").val(""); 
     }
   );
 }

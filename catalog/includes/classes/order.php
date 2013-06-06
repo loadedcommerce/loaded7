@@ -102,7 +102,7 @@
 
     function insert($status = 1) {
       global $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Tax;
-          
+         
       if (isset($_SESSION['prepOrderID'])) {
         $_prep = explode('-', $_SESSION['prepOrderID']);
 

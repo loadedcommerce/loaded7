@@ -8,7 +8,7 @@ Custom Template CSS added by Loaded7 Dev Team
   font-size: 14px;
   line-height: 14px;
   color: #b2b2b2;
-  background: #31363a url(../img/old-browsers/style/bg_profile.png) repeat-x;
+  background: #31363a url(../../img/old-browsers/style/bg_profile.png) repeat-x;
   -webkit-background-size: 100% 100%;
   -moz-background-size: 100% 100%;
   -o-background-size: 100% 100%;
@@ -20,21 +20,24 @@ Custom Template CSS added by Loaded7 Dev Team
   background: -o-linear-gradient( top, #383e42, #31363a );
   background: linear-gradient( top, #383e42, #31363a );
   overflow: hidden;
-  width:100%;
+  width: 100%;
+  padding: 0 !important;
 }
 .profile50 { 
-  float:left; 
-  width:50%; 
+  float: left; 
+  width: 50%;
+  margin-bottom: -25px; 
 }
 #profileLeft {
-  padding:25px 10px 0px 10px;
+  padding: 14px 0 0 2px;
   cursor: pointer;
 }
 #profileRight {
-  padding:30px 0px 0px 0px;
+  margin-bottom: 104px;
+  padding: 20px 0 0 0;
 }
 .profileRightBr {
-  margin-bottom:6px;
+  margin-bottom: 6px;
 }
 .prf-top-bot-10 {
   margin-top: 10px !important;
@@ -42,7 +45,7 @@ Custom Template CSS added by Loaded7 Dev Team
 }
 #profile .user-icon {
   float: left;
-  margin: 0 10px 0 -2px;
+  margin: 0 10px 0 14px !important;
 }
 #profile .name {
   display: block;
@@ -50,7 +53,7 @@ Custom Template CSS added by Loaded7 Dev Team
   line-height: 22px;
   color: white;
   margin-bottom: 4px;
-  overflow:hidden; 
+  overflow: hidden; 
   text-overflow: ellipsis;
   height: 47px;
 }
@@ -66,13 +69,14 @@ Custom Template CSS added by Loaded7 Dev Team
 .profile-edit-logout {
   margin-left: 90px;
 }
+
 .mega-search-border {
   -webkit-border-radius: 18px;
   -moz-border-radius: 18px;
   border-radius: 18px;
 }
 
-.progress.full-width {
+.progress .full-width {
   width: 100% !important;
 }
 
@@ -113,4 +117,506 @@ Custom Template CSS added by Loaded7 Dev Team
   top: -6px;
   z-index: 1;
   cursor: pointer;
+}
+
+.with-menu #title-bar {
+  padding-right: 10px;
+}
+
+.messageStack { 
+  margin-bottom: -10px; 
+  padding-top: 24px 
 } 
+
+.with-padding-no-top  { 
+  padding: 0 20px 20px 20px !important; 
+} 
+
+.list > li {
+  border-top: none !important;
+}
+
+.list .spaced > li {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 -1px 0 rgba(0, 0, 0, 0.25) inset !important;
+}
+
+.list > li > .white-link-with-pad {
+  color: white;
+  font-size: 14px !important;
+  font-weight: bold;
+  padding: 18px 0 18px 15px !important;
+}
+.list > li > span { 
+  color: white; 
+}
+.icon-pad-right { 
+  padding-right: 8px; 
+}
+.icon-pad-left { 
+  padding-left: 8px; 
+}
+.megaSearch { 
+  padding: 15px 10px 15px 10px; 
+  /*border-bottom: 1px dotted #cccccc;*/
+}
+
+#quick-set-container > summary:before {
+  content: '';
+}
+
+#menu-footer .w-mark { 
+  height:182px; 
+  background: url('../../img/logo-grill.png'); 
+}  
+#versionInfo { 
+  position:relative; 
+  padding:2px; 
+}
+#versionBg { 
+  height:84px; 
+  background: #fff url('../../img/logo-version.png') no-repeat center; 
+}
+#versionText { position:absolute; bottom:7px; left:130px }
+
+
+#menu header {
+  text-transform: none;
+} 
+
+#access > li .current {
+  background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.37)), to(rgba(255, 255, 255, 0)), color-stop(0.04, rgba(255, 255, 255, 0.31)), color-stop(0.44, rgba(255, 255, 255, 0.15)), color-stop(0.49, rgba(255, 255, 255, 0.11)), color-stop(0.5, rgba(255, 255, 255, 0.02)));
+  background: -webkit-linear-gradient( top, rgba(255,255,255,0.37), rgba(255,255,255,0.31) 4%, rgba(255,255,255,0.15) 44%, rgba(255,255,255,0.11) 49%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0));
+  background: -moz-linear-gradient( top, rgba(255,255,255,0.37), rgba(255,255,255,0.31) 4%, rgba(255,255,255,0.15) 44%, rgba(255,255,255,0.11) 49%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0));
+  background: -ms-linear-gradient( top, rgba(255,255,255,0.37), rgba(255,255,255,0.31) 4%, rgba(255,255,255,0.15) 44%, rgba(255,255,255,0.11) 49%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0));
+  background: -o-linear-gradient( top, rgba(255,255,255,0.37), rgba(255,255,255,0.31) 4%, rgba(255,255,255,0.15) 44%, rgba(255,255,255,0.11) 49%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0));
+  background: linear-gradient( top, rgba(255,255,255,0.37), rgba(255,255,255,0.31) 4%, rgba(255,255,255,0.15) 44%, rgba(255,255,255,0.11) 49%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0));
+}
+
+.title-menu {
+  margin: -2px;
+  min-height: 0;
+  list-style-type: none;
+}
+.title-menu > li,
+li .title-menu {
+  padding: 1px 8px 3px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: normal;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  box-shadow: 6px 0 4px -4px #222222 inset;   
+  -moz-box-shadow: 6px 0 4px -4px #222222 inset;   
+  -webkit-box-shadow: 6px 0 4px -4px #222222 inset;
+}
+
+.title-menu-2 {
+  margin: 0;
+  min-height: 0;
+  list-style-type: none;
+  background-color: white;
+}
+.title-menu-2 > li,
+li .title-menu-2 {
+  padding: 5px 8px 3px 8px;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: normal;
+  color: #515151;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid #222222;
+  box-shadow: 6px 0 4px -4px #222222 inset;   
+  -moz-box-shadow: 6px 0 4px -4px #222222 inset;   
+  -webkit-box-shadow: 6px 0 4px -4px #222222 inset;
+}
+.title-menu-2 > li > a,
+li .title-menu-2 > a {
+  display: block;
+  margin: -2px -8px;
+  padding: 2px 8px;
+  color: #515151;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+/* Quick Add Container */
+.add-container-icon { 
+  width:25px; 
+  margin:0 auto 0 auto; 
+  float:left; 
+}
+
+.calendar-menu > li,
+li .calendar-menu {
+  padding: 10px 10px 0 50px !important;
+}
+
+/* Orders menu */
+.orders-menu {
+  margin: 0;
+  min-height: 0;
+  list-style-type: none;
+  -webkit-text-shadow: none;
+  -moz-text-shadow: none;
+  text-shadow: none;
+}
+.orders-menu > li,
+li .orders-menu {
+  padding: 10px 10px 0 57px !important;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: normal;
+  min-height: 40px;
+  line-height: 14px;
+}
+.orders-menu > li > a,
+li .orders-menu > a {
+  display: block;
+  margin: -10px -10px -10px -46px;
+  padding: 10px 14px 10px 24px;
+  color: inherit;
+}
+.orders-menu > li time,
+li .orders-menu time {
+  float: left;
+  display: block;
+  margin: 6px 1px 0 -26px;
+  height: 30px;
+  vertical-align: top;
+  color: #CCCCCC;
+  color: rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 12px;
+}
+.orders-menu > li time > b,
+li .orders-menu time > b {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 26px;
+  line-height: 28px;
+  margin-bottom: -3px;
+}
+.orders-menu > li small,
+li .orders-menu small {
+  display: block;
+}
+
+/* Customers menu */
+.customers-menu {
+  margin: 0;
+  min-height: 0;
+  list-style-type: none;
+  -webkit-text-shadow: none;
+  -moz-text-shadow: none;
+  text-shadow: none;
+}
+.customers-menu > li, 
+li .customers-menu {
+  padding: 10px 10px 0 57px !important;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: normal;
+  min-height: 40px;
+  line-height: 14px;
+}
+.customers-menu > li > a, 
+li .customers-menu > a {
+  display: block;
+  margin: -10px -10px -10px -46px;
+  padding: 10px 14px 10px 24px;
+  color: inherit;
+}
+.customers-menu > li time, 
+li .customers-menu time {
+  float: left;
+  display: block;
+  margin: 6px 10px 0 -26px;
+  height: 30px;
+  vertical-align: top;
+  color: #CCCCCC;
+  color: rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 12px;
+}
+.customers-menu > li time > b, 
+li .customers-menu time > b {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 26px;
+  line-height: 28px;
+  margin-bottom: -3px;
+}
+.customers-menu > li small, 
+li .customers-menu small {
+  display: block;
+}
+
+/* Products menu */
+.products-menu {
+  margin: 0;
+  min-height: 0;
+  list-style-type: none;
+  -webkit-text-shadow: none;
+  -moz-text-shadow: none;
+  text-shadow: none;
+}
+.products-menu > li, 
+li .products-menu {
+  padding: 10px 10px 1px 50px !important;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: normal;
+  min-height: 40px;
+  line-height: 14px;
+}
+.products-menu > li > a, 
+li.products-menu > a {
+  display: block;
+  margin: -10px -10px -10px -46px;
+  padding: 10px 14px 10px 24px;
+  color: inherit;
+}
+.products-menu > li time, 
+li .products-menu time {
+  float: left;
+  display: block;
+  margin: 6px 10px 0 -26px;
+  height: 30px;
+  vertical-align: top;
+  color: #CCCCCC;
+  color: rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 12px;
+}
+.products-menu > li time > b, 
+li .products-menu time > b {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 26px;
+  line-height: 28px;
+  margin-bottom: -3px;
+}
+.products-menu > li small, 
+li .products-menu small {
+  display: block;
+}
+
+/* Messages menu */
+.message-menu > li, 
+li .message-menu {
+  padding: 2px 30px 3px 30px; 
+}
+
+.collapsible .big-menu > li > ul, 
+.collapsible li .big-menu > ul,
+.collapsible .big-menu > li > ul, 
+.collapsible .big-menu > li > .load,
+.collapsible li .big-menu > .load, 
+.collapsible .big-menu > li > .load {
+  margin: 16px -15px -26px;
+}
+
+.button .full-width-slider {
+  width: 96%;
+  margin: 0;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#tooltips .message,
+#tooltips-over .message {
+  position: absolute;
+  white-space: nowrap;
+  max-width: 600px;
+}
+
+#floating-button-container-title {
+  position: absolute;
+  left: 370px;
+}
+#floating-button-container .bg {
+  background-color:#4c4c4c;
+  opacity: 0.75;
+  width: 100%;
+  border: 1px solid black;
+}
+#floating-menu-div {
+  position:absolute;
+  width:50%;
+  background-color:transparent;
+  top:80px;
+  right:0px;
+  padding: 5px 20px;
+}
+#floating-menu-div-listing {
+  position:absolute;
+  width:50%;
+  background-color:transparent;
+  top:43px;
+  right:0px;
+  padding: 5px 20px;
+}
+
+#mainMessageContainer { margin:50px 273px 0 84px }
+
+#container {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -132px 0 0 -160px !important;
+  width: 284px;
+  padding: 8px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+#container > div {
+  padding: 12px;
+  -webkit-border-top-left-radius: 0;
+  -webkit-border-top-right-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+#login-title h1.login-title-image {
+  height: 65px !important;
+} 
+
+#form-block {
+  margin: -12px 0 0 -12px;
+  width: 260px;
+}
+#form-block.scratch-metal input {
+  width: 158px !important;
+}
+
+#main-title h1 {
+  line-height: 48px;
+}
+
+#shortcuts > li > span {
+  overflow: hidden;
+}
+.shortcut-orders, span.shortcut-orders { background-position: 0 -70px; }
+.shortcut-customers, span.shortcut-customers { background-position: 0 -140px; }
+.shortcut-content, span.shortcut-content { background-position: 0 -210px; }
+.shortcut-products, span.shortcut-products { background-position: 0 -280px; }
+.shortcut-marketing, span.shortcut-marketing { background-position: 0 -350px; }
+.shortcut-store, span.shortcut-store { background-position: 0 -420px; }
+.shortcut-reports, span.shortcut-reports { background-position: 0 -490px; }
+body.reversed a.shortcut-orders { background-position: 68px -70px; }
+body.reversed a.shortcut-customers { background-position: 68px -140px; }
+body.reversed a.shortcut-content { background-position: 68px -210px; }
+body.reversed a.shortcut-products { background-position: 68px -280px; }
+body.reversed a.shortcut-marketing { background-position: 68px -350px; }
+body.reversed a.shortcut-store { background-position: 68px -420px; }
+body.reversed a.shortcut-reports { background-position: 68px -490px; }
+a.shortcut-orders:before { background-position: -70px -75px; }
+a.shortcut-customers:before { background-position: -70px -145px; }
+a.shortcut-content:before { background-position: -70px -215px; }
+a.shortcut-products:before { background-position: -70px -285px; }
+a.shortcut-marketing:before { background-position: -70px -355px; }
+a.shortcut-store:before { background-position: -70px -425px; }
+a.shortcut-reports:before { background-position: -70px -495px; }
+
+.selectContainer > span.select {
+  min-width: 140px !important;
+}
+#selectAction {
+  min-width: 145px !important;
+}
+.select.list-over > .select-arrow {
+  z-index: 98;
+} 
+.compact .select-search {
+  right: 23px;
+  padding: 3px 8px;
+}
+.select-search > span {
+  display: block;
+  position: absolute;
+  left: 10px;
+  top: 6px;
+  right: 10px;
+  bottom: 6px;
+  color: #cccccc;
+  line-height: 16px;
+}
+.compact .select-search > span {
+  display: block;
+  position: absolute;
+  left: 8px;
+  top: 3px;
+  right: 8px;
+  bottom: 3px;
+}
+.select-search > input {
+  border: 0;
+  background: transparent;
+  margin: -6px -10px;
+  padding: 6px 10px;
+  width: 100%;
+  line-height: 16px;
+  height: 16px;
+  position: relative;
+  z-index: 101;
+  vertical-align: 2px;
+}
+.compact .select-search > input {
+  margin: -3px -8px;
+  padding: 3px 8px;
+}
+
+#logoImg {
+  margin-left: -65px;
+}
+
+.message-menu > li, li.message-menu {
+  padding: 2px 30px 3px;
+}
+
+
+
+/* needed for custom media query settings */
+@media screen and (min-width: 1200px) {
+}
+
+@media screen and (min-width: 992px) {
+  .hide-below-992 { display: none !important; }
+  #menu header .headerInner {
+    margin: -10px 0px;
+    padding: 15px 0 11px 0;
+    -webkit-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
+    -moz-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
+    box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
+  }
+  #open-menu {
+    top: 41px;
+  } 
+} 
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 480px) {
+}  
+  
+@media screen and (min-width: 320px) {
+  #title-bar {
+    height: 40px !important;
+  }
+}     

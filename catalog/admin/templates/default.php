@@ -22,7 +22,6 @@ ini_set('display_errors', 1);
 <!--[if (IE 9)&!(IEMobile)]><html class="no-js ie9" lang="en"><![endif]-->
 <!--[if (gt IE 9)|(gt IEMobile 7)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
-  <?php ini_set('default_charset', 'UTF-8'); ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -34,13 +33,14 @@ ini_set('display_errors', 1);
   <!-- http://davidbcalhoun.com/2010/viewport-metatag -->
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- http://www.kylejlarson.com/blog/2012/iphone-5-web-design/ -->
+  <meta name="viewport" content="user-scalable=0, initial-scale=1.0">  
 
   <!-- For all browsers -->
   <link rel="stylesheet" href="templates/default/css/reset.css?v=1">
   <link rel="stylesheet" href="templates/default/css/style.css?v=1">
   <link rel="stylesheet" href="templates/default/css/colors.css?v=1">
-  <link rel="stylesheet" href="templates/default/css/error.css?v=1">
   <link rel="stylesheet" media="print" href="templates/default/css/print.css?v=1">
   <!-- For progressively larger displays -->
   <link rel="stylesheet" media="only all and (min-width: 480px)" href="templates/default/css/480.css?v=1">
@@ -71,35 +71,47 @@ ini_set('display_errors', 1);
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables-tableTools.css?v=1">
   <!-- loading mask -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.loadmask.css?v=1">  
-  <!-- Google code prettifier -->
-  <link rel="stylesheet" href="../ext/jquery/google-code-prettify/sunburst.css?v=1">
 
   <!-- Load Page Specific CSS -->
   <?php echo $lC_Template->loadPageCss($lC_Template->getModule()); ?>
 
   <!-- Modernizr is always at top and first -->
   <script src="../ext/jquery/modernizr.custom.js"></script>
-  <script src="../ext/jquery/jquery-1.8.3.min.js"></script>
-
+  <script src="../ext/jquery/jquery-1.9.1.min.js"></script>
+  <script src="../ext/jquery/jquery.migrate-1.2.1.min.js"></script>
+  
   <!-- For Modern Browsers -->
   <link rel="shortcut icon" href="templates/default/img/favicons/favicon.png?v=2">
   <!-- For everything else -->
   <link rel="shortcut icon" href="templates/default/img/favicons/favicon.ico?v=2">
-  <!-- For retina screens -->
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="templates/default/img/favicons/apple-touch-icon-retina.png">
-  <!-- For iPad 1-->
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="templates/default/img/favicons/apple-touch-icon-ipad.png">
-  <!-- For iPhone 3G, iPod Touch and Android -->
-  <link rel="apple-touch-icon-precomposed" href="templates/default/img/favicons/apple-touch-icon.png">
 
   <!-- iOS web-app metas -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+  <!-- iPhone ICON -->
+  <link rel="apple-touch-icon" href="templates/default/img/favicons/apple-touch-icon.png" sizes="57x57">
+  <!-- iPad ICON -->
+  <link rel="apple-touch-icon" href="templates/default/img/favicons/apple-touch-icon-ipad.png" sizes="72x72">
+  <!-- iPhone (Retina) ICON -->
+  <link rel="apple-touch-icon" href="templates/default/img/favicons/apple-touch-icon-retina.png" sizes="114x114">
+  <!-- iPad (Retina) ICON -->
+  <link rel="apple-touch-icon" href="templates/default/img/favicons/apple-touch-icon-ipad-retina.png" sizes="144x144">
 
-  <!-- Startup image for web apps -->
-  <link rel="apple-touch-startup-image" href="templates/default/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
-  <link rel="apple-touch-startup-image" href="templates/default/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
-  <link rel="apple-touch-startup-image" href="templates/default/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+  <!-- iPhone SPLASHSCREEN (320x460) -->
+  <link rel="apple-touch-startup-image" href="templates/default/img/splash/iphone.png" media="(device-width: 320px)">
+  <!-- iPhone (Retina) SPLASHSCREEN (640x960) -->
+  <link rel="apple-touch-startup-image" href="templates/default/img/splash/iphone-retina.png" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)">
+  <!-- iPhone 5 SPLASHSCREEN (640×1096) -->
+  <link rel="apple-touch-startup-image" href="templates/default/img/splash/iphone5.png" media="(device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
+  <!-- iPad (portrait) SPLASHSCREEN (748x1024) -->
+  <link rel="apple-touch-startup-image" href="templates/default/img/splash/ipad-portrait.png" media="(device-width: 768px) and (orientation: portrait)">
+  <!-- iPad (landscape) SPLASHSCREEN (768x1004) -->
+  <link rel="apple-touch-startup-image" href="templates/default/img/splash/ipad-landscape.png" media="(device-width: 768px) and (orientation: landscape)">
+  <!-- iPad (Retina, portrait) SPLASHSCREEN (2048x1496) -->
+  <link rel="apple-touch-startup-image" href="templates/default/img/ipad-portrait-retina.png" media="(device-width: 1536px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2)">
+  <!-- iPad (Retina, landscape) SPLASHSCREEN (1536x2008) -->
+  <link rel="apple-touch-startup-image" href="templates/default/img/ipad-landscape-retina.png" media="(device-width: 1536px)  and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2)">
 
   <!-- Microsoft clear type rendering -->
   <meta http-equiv="cleartype" content="on">
@@ -108,9 +120,6 @@ ini_set('display_errors', 1);
   <meta name="application-name" content="Loaded Commerce Admin">
   <meta name="msapplication-tooltip" content="Loaded Commerce Cross-Platform Admin Template">
   <meta name="msapplication-starturl" content="<?php echo $_SERVER['PHP_SELF']; ?>">
-  <!-- These custom tasks are examples, you need to edit them to show actual pages -->
-  <meta name="msapplication-task" content="name=Agenda;action-uri=http://www.loadedcommerce.com;icon-uri=http://www.loadedcommerce.com/favicon.ico">
-  <meta name="msapplication-task" content="name=My profile;action-uri=http://www.loadedcommerce.com;icon-uri=http://www.loadedcommerce.com/favicon.ico">
 </head>
 
 <body class="clearfix with-menu with-shortcuts">
@@ -135,7 +144,7 @@ ini_set('display_errors', 1);
   if ($lC_Template->hasPageWrapper()) {
     ?>
     <!-- Button to open/hide menu -->
-    <a href="#" id="open-menu"><span>Menu</span></a>
+    <a href="#" id="open-menu" class="open-menu-margin"><span>Menu</span></a>
 
     <!-- Button to open/hide shortcuts -->
     <a href="#" id="open-shortcuts"><span class="icon-thumbs"></span></a>
@@ -252,7 +261,7 @@ ini_set('display_errors', 1);
           <section>
             <div id="addContainerLinks">
               <ul class="list spaced">
-                <li class="anthracite-gradient">
+                <!--<li class="anthracite-gradient">
                   <span class="list-count grey with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_order'); ?>">o</span>
                   <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_order_title'); ?>">
                     <div class="add-container-icon">
@@ -262,7 +271,7 @@ ini_set('display_errors', 1);
                       <?php echo $lC_Language->get('quick_add_order'); ?>
                     </div>
                   </a>
-                </li>
+                </li>-->
                 <li class="anthracite-gradient">
                   <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>">c</span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_customer_title'); ?>">
@@ -455,7 +464,7 @@ ini_set('display_errors', 1);
         </div>
       </div>
       
-      <div id="recentContainer" class="hide-below-992">
+      <!--<div id="recentContainer" class="hide-below-992">
         <section>
           <ul class="title-menu">
             <li>Recent Events</li>
@@ -493,9 +502,9 @@ ini_set('display_errors', 1);
             </li>
           </ul>
         </section>
-      </div>
+      </div>-->
       
-      <footer id="menu-footer" class="hide-below-992">
+      <footer id="menu-footer">
         <!-- QR Code -->
         <div style="margin:-15px; padding:10px 20px 14px 10px; width:100%; height:32px; margin-bottom:0px;">
           <a id="qrcode-tooltip">
@@ -510,8 +519,13 @@ ini_set('display_errors', 1);
          <a class="close-qr" title="Hide message" onclick="$('#qr-message').hide('500');"><span style="color:#fff;">X</span></a>
          <?php 
           $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
+          if(empty($_GET) === false && !array_key_exists($lC_Session->getName(),$_GET)) {     
+            $qrcode_url .= '&'.$lC_Session->getName().'='.$lC_Session->getID();
+          } else if(!isset($_GET) || empty($_GET)){
+            $qrcode_url .= '?'.$lC_Session->getName().'='.$lC_Session->getID();
+          }
           $BarcodeQR->url($qrcode_url);
-          $BarcodeQR->draw(230, '../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png');
+          $BarcodeQR->draw(200, '../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png');
           echo '<h5>QR Code</h5><img src="../includes/work/qrcode/a' . $_SESSION['admin']['id'] . '.png" /><br /><h6>Current URL</h6><p>' . $qrcode_url . '</p>';
          ?>
          </div>
@@ -536,7 +550,7 @@ ini_set('display_errors', 1);
 
   <!-- JavaScript at the bottom for fast page loading -->
   <script src="../ext/jquery/tinycon.min.js"></script>
-  <script src="../ext/jquery/jquery.validate.pack.js"></script>
+  <script src="../ext/jquery/jquery.validate.min.js"></script>
   <script src="../ext/jquery/jquery.tinysort.min.js"></script>
   <script src="../ext/jquery/jquery.easing.1.3.js"></script>
   <script src="../ext/jquery/jquery.jBreadCrumb.1.1.js"></script>

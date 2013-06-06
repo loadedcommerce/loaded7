@@ -25,4 +25,3 @@ Based on a 3rd generation e-commerce platform, Loaded 7 includes new mobile resp
 <li>Version 7.0.0.1.2 - released 14-January-2013</li>
 <li>Version 7.0.0.1.1 - released 05-January-2013</li>
 </ul>
- 

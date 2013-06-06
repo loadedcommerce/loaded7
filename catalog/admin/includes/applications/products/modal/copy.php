@@ -44,7 +44,7 @@ function copyProduct(id, name) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="new_category_id" class="label" style="width:40%"><?php echo $lC_Language->get('field_copy_to_category'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="input with-small-padding"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="select" style="width:73%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="copy_as" class="label" style="width:40%"><?php echo $lC_Language->get('field_copy_method'); ?></label>'+
@@ -108,7 +108,12 @@ function copyProduct(id, name) {
       });
       $("#categoryPath").html(data.categoryPath);
       $("#new_category_id").empty();  // clear the old values
+      i=0;
       $.each(data.categoriesArray, function(val, text) {
+        if(i == 0) {
+          $("#new_category_id").next("span.select-value:first").text(text);
+          i++;
+        }
         $("#new_category_id").append(
            $("<option></option>").val(val).html(text)
         );

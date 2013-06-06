@@ -48,7 +48,7 @@ $pContent .=  '<p class="button-height inline-label">' .
 if ( ACCOUNT_NEWSLETTER == '1' ) {
   $pContent .= '<p class="button-height inline-label">' .
                '  <label for="newsletter" class="label" style="width:30%;">' . $lC_Language->get('field_newsletter_subscription') . '</label>' .
-                  lc_draw_checkbox_field('newsletter', '1', true, 'id="editNewsletter" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
+                  lc_draw_checkbox_field('newsletter', null, true, 'id="editNewsletter" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
                '</p>';
 }
 $pContent .= '<p class="button-height inline-label">' .
@@ -61,11 +61,11 @@ $pContent .= '<p class="button-height inline-label">' .
              '</p>' .
              '<p class="button-height inline-label">' .
              '  <label for="group" class="label" style="width:30%;">' . $lC_Language->get('field_customer_group') . '</label>' .
-                lc_draw_pull_down_menu('group', null, null, 'class="input with-small-padding" style="width:73%;" id="editGroup"') .
+                lc_draw_pull_down_menu('group', null, null, 'class="select" id="editGroup" style="min-width:200px;"') .
              '</p>' .
              '<p class="button-height inline-label">' .
                '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
-                  lc_draw_checkbox_field('status', '1', true, 'id="editStatus" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
+                  lc_draw_checkbox_field('status', null, true, 'id="editStatus" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
              '</p>' .
              '<p class="button-height float-right">' .
              '  <a class="button margin-bottom" href="javascript://" onclick="saveCustomer(); return false;">' .
@@ -127,7 +127,7 @@ if ( ACCOUNT_STATE > -1 ) {
 }     
 $aContent .=  '<p class="button-height inline-label">' .
               '  <label for="ab_country_id" class="label" style="width:30%;">' . $lC_Language->get('field_country') . '</label>' .
-              lc_draw_pull_down_menu('ab_country_id', null, STORE_COUNTRY, 'class="input with-small-padding" style="width:73%;" onchange="updateZones();"') .
+              lc_draw_pull_down_menu('ab_country_id', null, STORE_COUNTRY, 'class="select" onchange="updateZones();"') .
               '</p>';         
 if ( ACCOUNT_TELEPHONE > -1 ) {
   $aContent .=  '<p class="button-height inline-label">' .
@@ -160,6 +160,7 @@ $aContent .= '  <p class="button-height float-right">' .
 ?>
 <style>
 #editCustomer { padding-bottom:20px; }
+.list > li > span { color: #666666; }
 </style>
 <script>
 function editCustomer(id) {
@@ -187,7 +188,6 @@ function editCustomer(id) {
                '          <div id="addressListContainer"></div>'+
                '        </div>'+
                '        <?php echo $aContent; ?>'+
-
                '      </form>'+
                '    </div>'+
                '    <span id="abParentId" style="display:none;"></span>'+
@@ -233,6 +233,9 @@ function getFormData(id) {
       $("#editGroup").empty();
       $.each(data.groupsArray, function(val, text) {
         var selected = (data.customerData.customers_group_id == val) ? 'selected="selected"' : '';
+        if(data.customerData.customers_group_id == val) {
+          $("#editGroup").prevAll('.select-value:first').text(text);
+        }
         $("#editGroup").append(
           $("<option " + selected + "></option>").val(val).html(text)
         );
@@ -247,14 +250,14 @@ function getFormData(id) {
       $("#editDob").val(data.customerData.customers_dob_short);
       $("#editEmailAddress").val(data.customerData.customers_email_address);
       if (data.customerData.customers_newsletter == 1) {
-        $("#editNewsletter").attr('checked', true);
+        $("#editNewsletter").attr('checked', true).change();
       } else {
-        $("#editNewsletter").attr('checked', false);
+        $("#editNewsletter").attr('checked', false).change();
       }
       if (data.customerData.customers_status == 1) {
-        $("#editStatus").attr('checked', true);
+        $("#editStatus").attr('checked', true).change();
       } else {
-        $("#editStatus").attr('checked', false);
+        $("#editStatus").attr('checked', false).change();
       }
 
       // populate address book listing
@@ -268,6 +271,9 @@ function getFormData(id) {
       $.each(data.countriesArray, function(val, text) {
         var storeCountry = '<?php echo STORE_COUNTRY; ?>';
         var selected = (storeCountry == val) ? 'selected="selected"' : '';
+        if(storeCountry == val) {
+          $("#ab_country_id").closest("span + *").prevAll("span.select-value:first").text(text);
+        }
         $("#ab_country_id").append(
           $("<option " + selected + "></option>").val(val).html(text)
         );
@@ -524,7 +530,8 @@ function updateZones(selected) {
         }
       } else {
         $("#abState").html(data.abZonesDropdown);
-        if (selected != undefined) {
+        if (selected != undefined) {          
+          $("#ab_state").closest("span + *").prevAll("span.select-value:first").text(selected);
           $("#ab_state").val( selected ).attr('selected', true);
         }
         $("#formProcessing").fadeOut('slow');

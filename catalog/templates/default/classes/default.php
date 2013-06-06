@@ -392,9 +392,10 @@ class lC_Default {
   * @access public
   * @return boolean
   */
-  public static function setMediaType($type) {
+  public static function setMediaType($type, $size) {
     
     $_SESSION['mediaType'] = $type;
+    $_SESSION['mediaSize'] = $size;
     
     return true;   
   }  

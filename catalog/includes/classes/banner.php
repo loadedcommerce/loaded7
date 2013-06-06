@@ -206,7 +206,9 @@
         if ( !lc_empty($Qbanner->value('banners_html_text')) ) {
           $banner_string = $Qbanner->value('banners_html_text');
         } else {
-          $banner_string = lc_link_object(lc_href_link(FILENAME_REDIRECT, 'action=banner&goto=' . $Qbanner->valueInt('banners_id')), lc_image(DIR_WS_IMAGES . $Qbanner->value('banners_image'), $Qbanner->value('banners_title')), 'target="_blank"');
+          $banner_string = lc_link_object(lc_href_link(FILENAME_REDIRECT, 'action=banner&goto=' . $Qbanner->valueInt('banners_id')), lc_image(DIR_WS_IMAGES . $Qbanner->value('banners_image'), $Qbanner->value('banners_title')), ($Qbanner->valueInt('banners_target')===1)  ?   ' target="_blank" '  :  ' target="_self" ');
+
+          
         }
 
         $this->_updateDisplayCount($Qbanner->valueInt('banners_id'));
