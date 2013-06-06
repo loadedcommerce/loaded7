@@ -60,7 +60,12 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       }
 
       if ($lC_Database->isError() === false) {
-        $sql_file = $dir_fs_www_root . '/loadedcommerce.sql';
+        
+        if ($_GET['class'] == 'mysqli_innodb') {
+          $sql_file = $dir_fs_www_root . '/loadedcommerce_innodb.sql';
+        } else {
+          $sql_file = $dir_fs_www_root . '/loadedcommerce.sql';
+        }
 
         $lC_Database->importSQL($sql_file, $db['DB_DATABASE'], $db['DB_TABLE_PREFIX']);
       }
