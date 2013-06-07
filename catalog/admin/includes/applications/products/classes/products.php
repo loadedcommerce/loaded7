@@ -1458,7 +1458,7 @@ class lC_Products_Admin {
   * @access public
   * @return array
   */
-  public static function getSimpleOptionEntryData($eData) {
+  public static function getSimpleOptionEntryData($eData) { 
     global $lC_Database;
     
     $veData = lC_Product_variants_Admin::getVariantEntries($eData['group']);

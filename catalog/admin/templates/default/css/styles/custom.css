@@ -660,7 +660,7 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 }  
   
 @media screen and (min-width: 320px) and (max-width: 479px) {
-  .hide-below-480 { display: none; }
+  .hide-below-480 { display: none !important; }
   /* Default shadows */
   .button,
   .button-group > .button:first-child,
@@ -704,8 +704,8 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   .description-content fieldset input { width: 93% !important; }
   #basprice_status_left { display: none; }
   .cat_rel_td { line-height: 2.8em; }
-  #products_msrp { width: 89% !important; }
-  .products-price-gross { width: 89% !important; }
+  #products_msrp { width: 88% !important; }
+  .products-price-gross { width: 88% !important; }
   .simple-table { background-color: transparent; }
   #simpleOptionsTable { margin: -10px -15px 0 -20px !important; }
 }     
