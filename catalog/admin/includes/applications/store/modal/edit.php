@@ -37,13 +37,13 @@ function editAddon(id, name) {
           content: '<span id="logo-image"></span>'+
                    '<fieldset class="fieldset fields-list">'+
                    '  <form name="mEdit" id="mEdit" autocomplete="off" action="" method="post">'+
-                   '    <div class="field-block" id="editAddonFormKeys">'+
+                   '    <div class="field-block relative" id="editAddonFormKeys">'+
                    '    </div>'+
                    '  </form>'+
                    '</fieldset>',
           title: '<?php echo sprintf($lC_Language->get('modal_heading_setup_addon'), 'TITLE'); ?>'.replace('TITLE', name.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } )),
           width: 500,
-          scrolling: false,
+          scrolling: true,
           actions: {
             'Close' : {
               color: 'red',

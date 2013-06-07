@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>After QTY input, add QOH</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="templates/default/content/products/info.php">
+    <operation info="After QTY input, add QOH">
+      <search position="after"><![CDATA[
+        <?php echo lc_draw_input_field('quantity'); ?>
+      ]]></search>         
+      <add><![CDATA[
+        <span id="qtyContainer" style="margin-left:10px;"><?php echo (($lC_Product->getQuantity() > 0) ? lc_image('images/icons/success.gif') : lc_image('images/icons/error.gif') ) .  ' <b>' . $lC_Product->getQuantity() . '</b> ' . $lC_Language->get('test_addon_one_text_on_hand'); ?></span>
+      ]]></add>
+    </operation>
+  </file> 
+</modification>

@@ -95,7 +95,7 @@ class lC_Store_Admin {
           $keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input"');
         }
       }
-      $keys .= '&nbsp;<span class="icon-info-round icon-blue with-tooltip with-small-padding" style="cursor:pointer;" title="' . $Qkey->value('configuration_description') . '" data-tooltip-options=\'{"classes":["blue-gradient"]}\'></span><br /><br />';
+      $keys .= '<span class="info-spot on-left margin-left"><span class="icon-info-round icon-silver"></span><span class="info-bubble">' . $Qkey->value('configuration_description') . '</span></span><br /><br />';
       $cnt++;
     }
     $result['keys'] = substr($keys, 0, strrpos($keys, '<br /><br />'));
@@ -156,18 +156,16 @@ class lC_Store_Admin {
   */
   public static function drawMenu() {
     foreach ( self::getAllTypes() as $key => $type ) {
-      
-      $menu .= '<li style="cursor:pointer;" onclick="showAddonType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\'); return false;" class="message-menu ' . 'store-menu-' . strtolower($type['text']) . '" id="menuType' . ucwords($type['text']) . '">' .
-               '  <span class="message-status" style="padding-top:14px;"></span>' .
-               '   <a id="menuLink' . (int)$type['id'] . '">' .
+      $menu .= '<li style="cursor:pointer;" class="message-menu store-menu-' . strtolower($type['text']) . '" id="menuType' . ucwords($type['text']) . '">' . 
+               '  <a href="javascript://" class="" id="menuLink' . (int)$type['id'] . '" onclick="showAddonType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');">' . 
+               '    <span class="message-status" style="padding-top:14px;"></span>' .
                '     <br><strong>' . lc_output_string_protected($type['text']) . '</strong>' .
                '   </a>' .
-               ' </li>';
+               ' </li>';               
     }
 
     return $menu;
   }
-  
  /*
   * Get all the app store types
   *
@@ -259,7 +257,10 @@ class lC_Store_Admin {
     $addons = array();
     foreach ( $lC_DirectoryListing->getFiles() as $addon ) { 
       $ao = utility::cleanArr($addon);
-      if ($ao['name'] == 'inc/bootstrap.php') continue;
+
+      if ($ao['name'] == 'inc/addon.inc.php') continue;
+      if (!stristr($ao['name'], 'controller.php')) continue;      
+      
       $class = substr($ao['name'], 0, strpos($ao['name'], '/'));   
       if (file_exists(DIR_FS_CATALOG . 'addons/' . $ao['name'])) {
         include_once(DIR_FS_CATALOG . 'addons/' . $ao['name']);

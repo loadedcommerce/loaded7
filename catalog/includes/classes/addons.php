@@ -20,7 +20,7 @@ class lC_Addons {
   
   protected function _initialize() {
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
-    $lC_DirectoryListing->setRecursive(true);
+    $lC_DirectoryListing->setRecursive(false);
     $lC_DirectoryListing->setIncludeDirectories(false);
   //  $lC_DirectoryListing->setAddDirectoryToFilename(true);
     $lC_DirectoryListing->setCheckExtension('php');
@@ -28,8 +28,10 @@ class lC_Addons {
     
     $enabled = '';
     foreach ( $lC_DirectoryListing->getFiles() as $addon ) { 
-      $ao = utility::cleanArr($addon);
-      if ($ao['name'] == 'bootstrap.php') continue;
+      $ao = utility::cleanArr($addon);  
+
+      if ($ao['name'] == 'addon.inc.php') continue;
+      if ($ao['name'] != 'controller.php') continue;
 
       $nameArr = explode('/', $ao['path']);
       $class = $nameArr[count($nameArr)-2];

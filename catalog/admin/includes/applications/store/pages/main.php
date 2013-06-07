@@ -24,12 +24,18 @@
 .version-tag { position:absolute; right:-10px; bottom:-6px; opacity:0.5; }
 .tag { font-size:.8em; }
 #dataTable TD { border: none; cursor: pointer; }
-.store-type-selected { border-left-width: 4px !important; border-color: #00569c !important; padding-left:7px !important; }
-.message-status > a, .message-status > span { height:0 !important; }
+
+/* nav menu */
+.store-type-selected { border-left-width: 4px !important; border-color: #00569c !important; padding-left:27px !important; height: 28px !important; }
+.message-menu > li > a, li.message-menu > a { margin: -3px -65px -10px -30px; min-height: 0; }
+.message-menu > li > a:hover, .no-touch li.message-menu > a:hover { min-height: 28px; }
+.message-menu > li, li.message-menu { line-height: 10px; }
+
+.info-bubble { min-width: 280px !important; }
 <?php
 $typesArr = lC_Store_Admin::getAllTypes();
 foreach ($typesArr as $key => $value) {
-  echo ".store-menu-" . strtolower($value['text']) . " { background: url('templates/default/img/icons/16/" . $value['icon'] . "') no-repeat scroll 8px 15px transparent !important; }";
+  echo ".store-menu-" . strtolower($value['text']) . " { background-size:16px 16px !important; background: url('templates/default/img/icons/16/" . $value['icon'] . "') no-repeat scroll 8px 15px transparent !important; }";
 }
 ?>   
 </style>
@@ -74,20 +80,22 @@ foreach ($typesArr as $key => $value) {
     </div><div style="clear:both;"></div>
   </hgroup>
 
-  <div class="with-padding">
+  <div class="with-padding">  
     <!-- main panel -->
     <div class="content-panel margin-bottom">
+    
       <!-- menu nav panel -->
-      <div class="panel-navigation silver-gradient" style=overflow:hidden;">
+      <div class="panel-navigation silver-gradient">
         <div class="panel-control"><p align="center" class="big-text small-margin-left">Type</p></div>
-        <div class="panel-load-target scrollable" style="height:490px">
+        <div class="panel-load-target scrollable" style="height:450px">
           <div class="navigable">
             <ul class="unstyled-list open-on-panel-content">
               <?php echo lC_Store_Admin::drawMenu(); ?>
             </ul>
           </div>
         </div>
-      </div>
+      </div>    
+    
       <!-- content panel -->
       <div class="panel-content">
         <div class="panel-control">
@@ -107,7 +115,8 @@ foreach ($typesArr as $key => $value) {
         </div>
       </div>
       <!-- content panel eof-->
-    </div>
+      
+    </div>  
   </div>
 </section>
 <?php $lC_Template->loadModal($lC_Template->getModule()); ?>
