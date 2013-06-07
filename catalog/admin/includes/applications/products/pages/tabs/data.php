@@ -50,7 +50,7 @@ global $lC_Language, $pInfo, $tax_class_array;
             </label>
             <label upsell="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ic_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_2" value="2" />
-              <?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left">' . lc_go_pro() . '</span>'; ?>
+              <?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left float-right">' . lc_go_pro() . '</span>'; ?>
             </label>
           </span>
         </div>
@@ -62,8 +62,7 @@ global $lC_Language, $pInfo, $tax_class_array;
         <div>
           <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_on_hand'); ?></b></label>
           <input type="text" name="products_quantity" id="products_quantity" value="<?php echo $pInfo->get('products_quantity'); ?>" class="input small-margin-right" style="width:60px;" />
-          <input type="text" name="products_sku" id="products_sku" value="<?php echo $pInfo->get('products_sku'); ?>" class="input" />
-          <b><?php echo $lC_Language->get('text_sku'); ?></b>
+          <input type="text" name="products_sku" id="products_sku" placeholder="<?php echo $lC_Language->get('text_sku'); ?>" value="<?php echo $pInfo->get('products_sku'); ?>" class="input" />
         </div>
       </div>
       <div id="inventory_control_multi"<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? '' : ' style="display:none;"'); ?>>

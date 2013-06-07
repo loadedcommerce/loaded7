@@ -589,7 +589,9 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   padding: 2px 30px 3px;
 }
 .description-content { padding: 10px 10px 20px 16px; }
-.cat_rel_td { line-height: 1.5em; }
+.cat_rel_td { line-height: 2.0em; }
+
+.no-wrap { white-space: nowrap; }
 
 
 /* needed for custom media query settings */
@@ -607,10 +609,14 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   }
   #open-menu {
     top: 41px;
-  } 
+  }
+  #products_msrp { width: 90% !important; }
+  .products-price-gross { width: 90% !important; } 
 } 
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
+  #products_msrp { width: 90% !important; }
+  .products-price-gross { width: 90% !important; }
 }
 
 @media screen and (min-width: 480px) and (max-width: 767px) {
