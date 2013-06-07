@@ -82,6 +82,7 @@ function editAddon(id, name) {
       $("#logo-image").html(data.desc);   
       $("#editAddonFormKeys").html(data.keys);   
       $(".label").addClass('small-margin-top');   
+      $.modal.all.centerModal();
     }
   );
 }

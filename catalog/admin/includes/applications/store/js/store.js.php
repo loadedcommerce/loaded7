@@ -15,7 +15,8 @@ global $lC_Template, $lC_Language;
 ?>
 <script>
 $(document).ready(function() {
-  showAddonType('0', 'Payment');  
+  showAddonType('0', 'Payment'); 
+  $(this).scrollTop(0); 
 });
 
 $('input[name=sortby]').click(function() {

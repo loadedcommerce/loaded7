@@ -61,6 +61,9 @@ class lC_Store_Admin {
   public static function getData($name) {    
     global $lC_Database, $lC_Language, $lC_Vqmod;
 
+    require($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
+    $lC_Currencies = new lC_Currencies();
+    
     $result = array();
 
     include_once(DIR_FS_CATALOG . 'addons/' . $name . '/controller.php');
@@ -92,7 +95,17 @@ class lC_Store_Admin {
         if (stristr($key, 'password')) {
           $keys .= lc_draw_password_field('configuration[' . $key . ']', 'class="input"', $Qkey->value('configuration_value'));
         } else {
-          $keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input"');
+          if ($S) {
+            $keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input"');
+          } else {
+            //$keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input"');
+            
+            $keys .= '<div class="inputs" style="display:inline; padding:8px 0;">' .
+                     '  <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
+                        lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input-unstyled" onfocus="this.select();"') .
+                     '</div>'; 
+            
+          }
         }
       }
       $keys .= '<span class="info-spot on-left margin-left"><span class="icon-info-round icon-silver"></span><span class="info-bubble">' . $Qkey->value('configuration_description') . '</span></span><br /><br />';
