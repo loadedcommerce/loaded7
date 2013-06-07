@@ -23,6 +23,11 @@ function addSimpleOption(editRow) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
+  var hasVariants = '<?php echo (count(lC_Product_variants_Admin::getVariantGroups()) > 0) ? '1' : '0'; ?>';
+  if (hasVariants == 0) {
+    $.modal.alert('<?php echo $lC_Language->get('ms_error_no_variant_groups');?>');
+    return false;
+  }
   mask();
   function getNewOptionsRow(id, groups, entries, selected) {
     var groupTitle = '';

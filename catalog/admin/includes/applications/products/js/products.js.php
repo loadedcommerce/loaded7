@@ -354,7 +354,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       var order = 0;
       $('#simpleOptionsTable tr').each(function () {
         var sort = $(this).find('input[class=sort]');
-        var td = $(this).find('td[class=sort]');
+        var td = $(this).find('td[class="sort hide-below-480"]');
         if ($(sort.val()) != undefined) {
           $(sort).val(order.toString());
           $(td).text(order.toString());

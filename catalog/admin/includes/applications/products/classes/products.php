@@ -486,7 +486,7 @@ class lC_Products_Admin {
       $Qcategories->setLogging($_SESSION['module'], $products_id);
       $Qcategories->execute();
 
-      if ( $lC_Database->isError() ) {
+      if ( $lC_Database->isError() ) { 
         $error = true;
       } else {
         if ( isset($data['categories']) && !empty($data['categories']) ) {

@@ -660,7 +660,7 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 }  
   
 @media screen and (min-width: 320px) and (max-width: 479px) {
-  .hide-below-480 { display: none !important; }
+  .hide-below-480 { display: none; }
   /* Default shadows */
   .button,
   .button-group > .button:first-child,

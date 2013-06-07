@@ -82,6 +82,7 @@ ms_error_product_keyword_empty = Error: This product has an empty product key wh
 ms_error_product_keyword_exists = This field is required and must be <u>one unique word</u> containing letters and numbers, and can be separated by underscores (_) and minus symbols (-) only.
 ms_error_product_keyword_invalid = Error: This product keyword is invalid. Product keywords must be one word containing letters and numbers (a-zA-Z0-9), and can be separated by underscores (_) and minus symbols (-) only.
 ms_error_check_all_lang_tabs = Check all language tabs for errors!
+ms_error_no_variant_groups = You must setup at least one Variant Group before using Simple Options.
 ms_warning_image_processor_not_available = Warning: An image processor is not available. Please install and check the location of ImageMagicks "convert" program in the Configuration -> Configuration -> Program Locations section.
 
 section_general = Content
