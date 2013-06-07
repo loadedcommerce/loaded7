@@ -479,7 +479,7 @@ CREATE TABLE lc_products (
   products_price decimal(15,4) NOT NULL DEFAULT '0.0000',
   products_cost decimal(15,4) NOT NULL DEFAULT '0.0000',
   products_msrp decimal(15,4) NOT NULL DEFAULT '0.0000',
-  products_model varchar(255) NOT NULL,
+  products_model varchar(255) DEFAULT NULL,
   products_sku varchar(255) DEFAULT NULL,
   products_date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   products_last_modified datetime DEFAULT NULL,
