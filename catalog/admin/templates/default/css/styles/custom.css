@@ -595,6 +595,8 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
+  #products_msrp { width: 92% !important; }
+  .products-price-gross { width: 92% !important; }
 }
 
 @media screen and (min-width: 992px) and (max-width: 1199px) {
