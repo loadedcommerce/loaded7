@@ -56,8 +56,8 @@ global $lC_Language, $pInfo;
               <th scope="col" class="align-center">&nbsp;</th>
               <th scope="col" class="align-left with-tooltip" onclick="toggleAllSimpleOptionsRows();" data-tooltip-options='{"classes":["grey-gradient"],"position":"left"}' title="<?php echo $lC_Language->get('text_expand_collapse_all'); ?>" width="16px" style="cursor:pointer; font-size:1em;"><span id="toggle-all" class="icon-squared-plus icon-grey icon-size2"></span></th>
               <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_name'); ?></th>
-              <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_type'); ?></th>
-              <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_sort'); ?></th>
+              <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_type'); ?></th>
+              <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_sort'); ?></th>
               <th scope="col" class="align-center"><?php echo $lC_Language->get('table_heading_on'); ?></th>
               <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
             </tr>

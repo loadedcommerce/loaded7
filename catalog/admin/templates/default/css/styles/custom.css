@@ -655,9 +655,12 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   .cat_rel_td { line-height: 2.8em; }
   #products_msrp { width: 93% !important; }
   .products-price-gross { width: 93% !important; }
+  .simple-table { background-color: transparent; }
+  #simpleOptionsTable { margin: -10px -15px 0 -15px !important; }
 }  
   
 @media screen and (min-width: 320px) and (max-width: 479px) {
+  .hide-below-480 { display: none; }
   /* Default shadows */
   .button,
   .button-group > .button:first-child,
@@ -703,4 +706,6 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   .cat_rel_td { line-height: 2.8em; }
   #products_msrp { width: 89% !important; }
   .products-price-gross { width: 89% !important; }
+  .simple-table { background-color: transparent; }
+  #simpleOptionsTable { margin: -10px -15px 0 -20px !important; }
 }     
