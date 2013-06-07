@@ -18,7 +18,9 @@ class Per_Item_Shipping extends lC_Addon {
   /*
   * Class constructor
   */
-  public function Per_Item_Shipping() {  
+  public function Per_Item_Shipping() {    
+    global $lC_Language;
+    
    /**
     * The addon type
     */    
@@ -26,15 +28,15 @@ class Per_Item_Shipping extends lC_Addon {
    /**
     * The addon class name
     */    
-    $this->_code = 'Per_Item_Shipping';    
+    $this->_code = 'item';    
    /**
     * The addon title used in the addons store listing
     */     
-    $this->_title = 'Per Item Shipping';
+    $this->_title = $lC_Language->get('shipping_item_title');
    /**
     * The addon description used in the addons store listing
     */     
-    $this->_description = 'Charge flat rate shipping on a per item basis.  Includes optional Handling Fee.';
+    $this->_description = $lC_Language->get('shipping_item_description');
    /**
     * The developers name
     */    
@@ -54,7 +56,7 @@ class Per_Item_Shipping extends lC_Addon {
    /**
     * The addon enable/disable switch
     */    
-    $this->_enabled = (defined('MODULE_ADDONS_' . strtoupper($this->_code) . '_STATUS') && @constant('MODULE_ADDONS_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;      
+    $this->_enabled = (defined('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;      
    /**
     * Initialize if enabled
     */   
@@ -69,7 +71,7 @@ class Per_Item_Shipping extends lC_Addon {
   * @return boolean
   */
   public function isInstalled() {
-    return (bool)defined('MODULE_ADDONS_' . strtoupper($this->_code) . '_STATUS');
+    return (bool)defined('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS');
   }
  /**
   * Install the addon
@@ -80,12 +82,12 @@ class Per_Item_Shipping extends lC_Addon {
   public function install() {
     global $lC_Database;
 
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable AddOn', 'MODULE_ADDONS_" . strtoupper($this->_code) . "_STATUS', '-1', 'Do you want to enable this addon?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Shipping Cost', 'MODULE_ADDONS_" . strtoupper($this->_code) . "_COST', '2.50', 'The shipping cost will be multiplied by the number of items in an order that uses this shipping method.', '6', '0', now())");
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Handling Fee', 'MODULE_ADDONS_" . strtoupper($this->_code) . "_HANDLING', '0', 'Handling fee for this shipping method.', '6', '0', now())");
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Tax Class', 'MODULE_ADDONS_" . strtoupper($this->_code) . "_TAX_CLASS', '0', 'Use the following tax class on the shipping fee.', '6', '0', 'lc_cfg_use_get_tax_class_title', 'lc_cfg_set_tax_classes_pull_down_menu(class=\"select\",', now())");
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Shipping Zone', 'MODULE_ADDONS_" . strtoupper($this->_code) . "_ZONE', '0', 'If a zone is selected, only enable this shipping method for that zone.', '6', '0', 'lc_cfg_use_get_zone_class_title', 'lc_cfg_set_zone_classes_pull_down_menu(class=\"select\",', now())");
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Sort Order', 'MODULE_ADDONS_" . strtoupper($this->_code) . "_SORT_ORDER', '0', 'Sort order of display.', '6', '0', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable AddOn', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_STATUS', '-1', 'Do you want to enable this addon?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Shipping Cost', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_COST', '2.50', 'The shipping cost will be multiplied by the number of items in an order that uses this shipping method.', '6', '0', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Handling Fee', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_HANDLING', '0', 'Handling fee for this shipping method.', '6', '0', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Tax Class', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_TAX_CLASS', '0', 'Use the following tax class on the shipping fee.', '6', '0', 'lc_cfg_use_get_tax_class_title', 'lc_cfg_set_tax_classes_pull_down_menu(class=\"select\",', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Shipping Zone', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_ZONE', '0', 'If a zone is selected, only enable this shipping method for that zone.', '6', '0', 'lc_cfg_use_get_zone_class_title', 'lc_cfg_set_zone_classes_pull_down_menu(class=\"select\",', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Sort Order', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_SORT_ORDER', '0', 'Sort order of display.', '6', '0', now())");
    
   }
  /**
@@ -96,12 +98,12 @@ class Per_Item_Shipping extends lC_Addon {
   */
   public function getKeys() {
     if (!isset($this->_keys)) {
-      $this->_keys = array('MODULE_ADDONS_' . strtoupper($this->_code) . '_STATUS',
-                           'MODULE_ADDONS_' . strtoupper($this->_code) . '_COST',
-                           'MODULE_ADDONS_' . strtoupper($this->_code) . '_HANDLING',
-                           'MODULE_ADDONS_' . strtoupper($this->_code) . '_TAX_CLASS',
-                           'MODULE_ADDONS_' . strtoupper($this->_code) . '_ZONE',
-                           'MODULE_ADDONS_' . strtoupper($this->_code) . '_SORT_ORDER');      
+      $this->_keys = array('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS',
+                           'ADDONS_SHIPPING_' . strtoupper($this->_code) . '_COST',
+                           'ADDONS_SHIPPING_' . strtoupper($this->_code) . '_HANDLING',
+                           'ADDONS_SHIPPING_' . strtoupper($this->_code) . '_TAX_CLASS',
+                           'ADDONS_SHIPPING_' . strtoupper($this->_code) . '_ZONE',
+                           'ADDONS_SHIPPING_' . strtoupper($this->_code) . '_SORT_ORDER');      
     }
 
     return $this->_keys;
@@ -134,7 +136,27 @@ class Per_Item_Shipping extends lC_Addon {
       lC_Cache::clear('languages');
     }
     
-  }   
+  }  
+ /**
+  * Return the sipping quote
+  *
+  * @access public
+  * @return array
+  */   
+  public function quote() {
+      global $lC_Language, $lC_ShoppingCart;
+
+      $this->quotes = array('id' => $this->_code,
+                            'module' => $this->_title,
+                            'methods' => array(array('id' => $this->_code,
+                                                     'title' => $lC_Language->get('shipping_item_method'),
+                                                     'cost' => (MODULE_SHIPPING_ITEM_COST * $lC_ShoppingCart->numberOfItems()) + MODULE_SHIPPING_ITEM_HANDLING)),
+                            'tax_class_id' => $this->tax_class);
+
+      if (!empty($this->icon)) $this->quotes['icon'] = lc_image($this->icon, $this->_title);
+
+      return $this->quotes;
+    }   
  /**
   * Initialize the Add-On
   *
@@ -151,6 +173,8 @@ class Per_Item_Shipping extends lC_Addon {
       $lC_Language->injectAddonDefinitions(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml');
     }
   }  
+  
+  
 
 }
 ?>

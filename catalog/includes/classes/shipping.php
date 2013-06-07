@@ -37,7 +37,7 @@ class lC_Shipping {
     }
 
     $Qmodules->freeResult();
-
+    
     if (empty($this->_modules) === false) {
       if ((empty($module) === false) && in_array(substr($module, 0, strpos($module, '_')), $this->_modules)) {
         $this->_selected_module = $module;
@@ -59,6 +59,11 @@ class lC_Shipping {
 
       usort($this->_modules, array('lC_Shipping', '_usortModules'));
     }
+    
+
+    // ADDONS: Include addons shipping group
+    
+    
     if (empty($_GET) === false) {
       $first_array = array_slice($_GET, 0, 1);
       $_module = lc_sanitize_string(basename(key($first_array)));

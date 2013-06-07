@@ -3,12 +3,12 @@
   <definitions>
     <definition>
       <key>shipping_item_title</key>
-      <value><![CDATA[Per Item]]></value>
+      <value><![CDATA[Per Item Shipping]]></value>
       <group>modules-shipping</group>
     </definition>
     <definition>
       <key>shipping_item_description</key>
-      <value><![CDATA[Per Item]]></value>
+      <value><![CDATA[Charge flat rate shipping on a per item basis.  Includes optional Handling Fee.]]></value>
       <group>modules-shipping</group>
     </definition>
     <definition>
