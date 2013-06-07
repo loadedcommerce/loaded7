@@ -590,9 +590,8 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 }
 .description-content { padding: 10px 10px 20px 16px; }
 .cat_rel_td { line-height: 2.0em; }
-
 .no-wrap { white-space: nowrap; }
-
+#title-bar { height: 40px !important; }
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
