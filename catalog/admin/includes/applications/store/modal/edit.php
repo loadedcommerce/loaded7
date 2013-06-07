@@ -83,6 +83,7 @@ function editAddon(id, name) {
       $("#editAddonFormKeys").html(data.keys);   
       $(".label").addClass('small-margin-top');   
       $.modal.all.centerModal();
+      
     }
   );
 }

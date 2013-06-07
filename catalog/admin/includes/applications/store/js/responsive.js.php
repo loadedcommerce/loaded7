@@ -17,10 +17,12 @@
 $(document).on('init-queries', function() {
   if ($.template.mediaQuery.isSmallerThan('mobile-landscape')) {  // mobile-portrait
     $('.hide-on-mobile-portrait').hide();
+    $('#uninstallButton').empty();
   }       
 }).on('enter-query-mobile-landscape', function() {
     $('.hide-on-mobile-portrait').show(); 
+    $('#uninstallButton').html('Uninstall');
 }).on('quit-query-mobile-landscape', function() {
-    $('.hide-on-mobile-portrait').hide(); 
+    $('#uninstallButton').empty();
 });
 </script>

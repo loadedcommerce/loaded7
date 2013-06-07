@@ -76,6 +76,7 @@ function updateWindowSize() {
     $('#storeSearchContainer').css('width', '100%').removeClass('no-margin-bottom').addClass('margin-top margin-bottom');    
     $('#storeFilterContainer').css('width', '100%');    
     $('#storeSearchContainerInput').removeClass('no-padding');
+    $('#uninstallButton').empty();
   } else if ($.template.mediaQuery.name === 'mobile-landscape') { 
     if (winW > 464) { // small tablet portrait 600x800
       $('#storeHeaderRightContainer').css('width', '100%');    

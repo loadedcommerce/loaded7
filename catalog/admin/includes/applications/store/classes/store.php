@@ -59,10 +59,9 @@ class lC_Store_Admin {
   * @return array
   */
   public static function getData($name) {    
-    global $lC_Database, $lC_Language, $lC_Vqmod;
+    global $lC_Database, $lC_Language, $lC_Vqmod, $lC_Currencies;
 
-    require($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
-    $lC_Currencies = new lC_Currencies();
+ini_set('display_errors', 1);    
     
     $result = array();
 
@@ -76,7 +75,7 @@ class lC_Store_Admin {
                              <div class="strong">' . $addon->getAddonTitle() . '</div>
                              <div>' . lc_image('../images/stars_' . $addon->getAddonRating() . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon->getAddonRating()), null, null, 'class="mid-margin-top small-margin-bottom"') . '</div>
                              <div><small>' . $addon->getAddonAuthor() . '</small></div>
-                             <div style="position:absolute; right:0; top:0;"><button onclick="uninstallAddon(\'' . $addon->getAddonCode() . '\',\'' . urlencode($addon->getAddonTitle()) . '\');" class="button icon-undo red-gradient glossy">Uninstall</button></div>
+                             <div style="position:absolute; right:0; top:0;"><button id="uninstallButton" onclick="uninstallAddon(\'' . $addon->getAddonCode() . '\',\'' . urlencode($addon->getAddonTitle()) . '\');" class="button icon-undo red-gradient glossy">Uninstall</button></div>
                            </div>
                          </div>
                        </div>';
@@ -93,18 +92,15 @@ class lC_Store_Admin {
         $keys .= lc_call_user_func($Qkey->value('set_function'), $Qkey->value('configuration_value'), $key);
       } else {
         if (stristr($key, 'password')) {
-          $keys .= lc_draw_password_field('configuration[' . $key . ']', 'class="input"', $Qkey->value('configuration_value'));
+          $keys .= lc_draw_password_field('configuration[' . $key . ']', 'class="input" onfocus="this.select();"', $Qkey->value('configuration_value'));
         } else {
-          if ($S) {
-            $keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input"');
-          } else {
-            //$keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input"');
-            
+          if (stristr($key, '_COST') || stristr($key, '_HANDLING') || stristr($key, '_PRICE') || stristr($key, '_FEE')) {
             $keys .= '<div class="inputs" style="display:inline; padding:8px 0;">' .
                      '  <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                        lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input-unstyled" onfocus="this.select();"') .
+                        lc_draw_input_field('configuration[' . $key . ']', number_format($Qkey->value('configuration_value'), DECIMAL_PLACES), 'class="input-unstyled" onfocus="this.select();"') .
                      '</div>'; 
-            
+          } else {
+            $keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input" onfocus="this.select();"');
           }
         }
       }
