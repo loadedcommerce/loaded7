@@ -12,15 +12,13 @@
   @license    http://loadedcommerce.com/license.html
 */
 require_once(DIR_FS_CATALOG . 'addons/inc/addon.inc.php');
-//require_once(DIR_FS_CATALOG . 'addons/Per_Item_Shipping/classes/admin.php');
 
 class Per_Item_Shipping extends lC_Addon {
   /*
   * Class constructor
   */
   public function Per_Item_Shipping() {    
-    global $lC_Language;
-    
+    global $lC_Language;    
    /**
     * The addon type
     */    
@@ -28,15 +26,21 @@ class Per_Item_Shipping extends lC_Addon {
    /**
     * The addon class name
     */    
-    $this->_code = 'item';    
+    $this->_code = 'Per_Item_Shipping';    
+   /**
+    * Inject the language definitions if they exist
+    */ 
+    if (file_exists(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml')) {        
+      $lC_Language->injectAddonDefinitions(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml');
+    }    
    /**
     * The addon title used in the addons store listing
     */     
-    $this->_title = $lC_Language->get('shipping_item_title');
+    $this->_title = $lC_Language->get('addon_shipping_item_title');
    /**
     * The addon description used in the addons store listing
     */     
-    $this->_description = $lC_Language->get('shipping_item_description');
+    $this->_description = $lC_Language->get('addon_shipping_item_description');
    /**
     * The developers name
     */    
@@ -57,12 +61,6 @@ class Per_Item_Shipping extends lC_Addon {
     * The addon enable/disable switch
     */    
     $this->_enabled = (defined('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;      
-   /**
-    * Initialize if enabled
-    */   
-    if ($this->_enabled) {
-      $this->_initialize();
-    }
   }
  /**
   * Checks to see if the addon has been installed
@@ -137,44 +135,5 @@ class Per_Item_Shipping extends lC_Addon {
     }
     
   }  
- /**
-  * Return the sipping quote
-  *
-  * @access public
-  * @return array
-  */   
-  public function quote() {
-      global $lC_Language, $lC_ShoppingCart;
-
-      $this->quotes = array('id' => $this->_code,
-                            'module' => $this->_title,
-                            'methods' => array(array('id' => $this->_code,
-                                                     'title' => $lC_Language->get('shipping_item_method'),
-                                                     'cost' => (MODULE_SHIPPING_ITEM_COST * $lC_ShoppingCart->numberOfItems()) + MODULE_SHIPPING_ITEM_HANDLING)),
-                            'tax_class_id' => $this->tax_class);
-
-      if (!empty($this->icon)) $this->quotes['icon'] = lc_image($this->icon, $this->_title);
-
-      return $this->quotes;
-    }   
- /**
-  * Initialize the Add-On
-  *
-  * @access private
-  * @return void
-  */  
-  private function _initialize() {
-    global $lC_Language;
-    
-   /**
-    * Inject the language definitions if they exist
-    */ 
-    if (file_exists(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml')) {        
-      $lC_Language->injectAddonDefinitions(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml');
-    }
-  }  
-  
-  
-
 }
 ?>

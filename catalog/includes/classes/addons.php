@@ -18,21 +18,44 @@ class lC_Addons {
     $this->_initialize();
   }
   
+  public function getActiveAddons($type = null) {
+    if (!isset($_SESSION['lC_Addons_data'])) $this->_initialize();
+
+    $addons = array();
+    foreach($_SESSION['lC_Addons_data'] as $addon => $data) {
+      if ($data['enabled']) {
+        if ($type != null) {
+          if ($data['type'] == $type) {
+            $addons[$addon] = $data;
+          }
+        } else {
+          $addons[$addon] = $data;
+        }
+      } 
+    }
+
+echo "<pre>$addons ";
+print_r($addons);
+echo "</pre>";
+die('11');
+    return $addons;
+  }
+  
   protected function _initialize() {
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
-    $lC_DirectoryListing->setRecursive(false);
+    $lC_DirectoryListing->setRecursive(true);
     $lC_DirectoryListing->setIncludeDirectories(false);
   //  $lC_DirectoryListing->setAddDirectoryToFilename(true);
     $lC_DirectoryListing->setCheckExtension('php');
     $lC_DirectoryListing->setStats(true);
     
     $enabled = '';
+    $lC_Addons_data = array();
     foreach ( $lC_DirectoryListing->getFiles() as $addon ) { 
       $ao = utility::cleanArr($addon);  
 
-      if ($ao['name'] == 'addon.inc.php') continue;
       if ($ao['name'] != 'controller.php') continue;
-
+      
       $nameArr = explode('/', $ao['path']);
       $class = $nameArr[count($nameArr)-2];
 
@@ -54,6 +77,17 @@ class lC_Addons {
         if ($addon['enabled']) {
           $enabled .= $addon['path'] . ';';
         }
+        
+        $_SESSION['lC_Addons_data'][$class] = array('type' => $GLOBALS[$class]->getAddonType(),
+                                                    'title' => $GLOBALS[$class]->getAddonTitle(),
+                                                    'description' => $GLOBALS[$class]->getAddonDescription(),
+                                                    'rating' => $GLOBALS[$class]->getAddonRating(),
+                                                    'author' => $GLOBALS[$class]->getAddonAuthor(),
+                                                    'thumbnail' => $GLOBALS[$class]->getAddonThumbnail(),
+                                                    'version' => $GLOBALS[$class]->getAddonVersion(),
+                                                    'installed' => $GLOBALS[$class]->isInstalled(),
+                                                    'enabled' => $GLOBALS[$class]->isEnabled(),
+                                                    'valid' => $GLOBALS[$class]->isValid()); 
       }
     }
     if ($enabled != '') $enabled = substr($enabled, 0, -1);

@@ -60,8 +60,6 @@ class lC_Store_Admin {
   */
   public static function getData($name) {    
     global $lC_Database, $lC_Language, $lC_Vqmod, $lC_Currencies;
-
-ini_set('display_errors', 1);    
     
     $result = array();
 
@@ -112,7 +110,6 @@ ini_set('display_errors', 1);
 
     return $result;
   }  
-  
  /*
   * Save the addon information
   *
@@ -304,7 +301,7 @@ ini_set('display_errors', 1);
     if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
       //$lC_Language->injectDefinitions(DIR_FS_CATALOG . 'addons/' . $key . '.xml');
 
-      include(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
+      include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
 
       $addon = $key;
       $addon = new $addon();
@@ -332,7 +329,7 @@ ini_set('display_errors', 1);
     if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
       //$lC_Language->injectDefinitions('modules/payment/' . $key . '.xml');
 
-      include(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
+      include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
 
       $addon = new $key();
       $addon->remove();

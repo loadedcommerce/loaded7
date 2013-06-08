@@ -10,32 +10,47 @@
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
-*/
+*/     
+require_once(DIR_FS_CATALOG . 'includes/classes/addons.php');
+
 class lC_Shipping {
+  
   var $_modules = array(),
       $_selected_module,
       $_quotes = array(),
       $_group = 'shipping';
 
   // class constructor
-  function lC_Shipping($module = '') {
+  public function lC_Shipping($module = '') {
     global $lC_Database, $lC_Language, $lC_Vqmod;
 
     $this->_quotes =& $_SESSION['lC_ShoppingCart_data']['shipping_quotes'];
 
-    $Qmodules = $lC_Database->query('select code from :table_templates_boxes where modules_group = "shipping"');
+    $Qmodules = $lC_Database->query("select code, modules_group from :table_templates_boxes where modules_group = 'shipping' or modules_group LIKE '%shipping|%'");
     $Qmodules->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
     $Qmodules->setCache('modules-shipping');
     $Qmodules->execute();
 
     while ($Qmodules->next()) {
-      if (!file_exists('includes/modules/shipping/' . $Qmodules->value('code') . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1)))) {
-        $this->removeModule($Qmodules->value('code'));
-        continue;
-      }
-      $this->_modules[] = $Qmodules->value('code');
+      if ($Qmodules->value('modules_group') == 'shipping') {
+        if (!file_exists('includes/modules/shipping/' . $Qmodules->value('code') . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1)))) {
+          $this->removeModule($Qmodules->value('code'));
+          continue;
+        }
+        $this->_modules[] = $Qmodules->value('code');
+      } else { // addons
+        $addon = end(explode("|", $Qmodules->value('modules_group')));
+        $module = $Qmodules->value('code'); 
+        
+        if (!file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/modules/shipping/' . $module . '.php')) {
+          $this->removeModule($Qmodules->value('code'));
+          continue;
+        }
+        $this->_modules[] = $Qmodules->value('code') . '|' . $addon;        
+          
+      }        
     }
-
+    
     $Qmodules->freeResult();
     
     if (empty($this->_modules) === false) {
@@ -47,10 +62,20 @@ class lC_Shipping {
       $lC_Language->load('modules-shipping');
 
       foreach ($this->_modules as $module) {
+        if (strstr($module, '|')) {
+          $mArr = explode('|', $module);
+          $module = $mArr[0];
+          $addon = $mArr[1];
+        }
+        
         $module_class = 'lC_Shipping_' . $module;
 
         if (class_exists($module_class) === false) {
-          include($lC_Vqmod->modCheck('includes/modules/shipping/' . $module . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1))));
+          if (file_exists('includes/modules/shipping/' . $module . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1)))) {
+            include($lC_Vqmod->modCheck('includes/modules/shipping/' . $module . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1))));
+          } else if (file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/modules/shipping/' . $module . '.php')) { // addons
+            include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/' . $addon . '/modules/shipping/' . $module . '.php'));
+          }
         }
 
         $GLOBALS[$module_class] = new $module_class();
@@ -58,11 +83,7 @@ class lC_Shipping {
       }
 
       usort($this->_modules, array('lC_Shipping', '_usortModules'));
-    }
-    
-
-    // ADDONS: Include addons shipping group
-    
+    } 
     
     if (empty($_GET) === false) {
       $first_array = array_slice($_GET, 0, 1);
@@ -74,40 +95,40 @@ class lC_Shipping {
   }
 
 // class methods
-  function removeModule($code) {
+  public function removeModule($code) {
     global $lC_Database;
     
-    $Qmd = $lC_Database->query('delete from :table_templates_boxes where code = :code and modules_group = "shipping"');
+    $Qmd = $lC_Database->query("delete from :table_templates_boxes where code = :code and modules_group LIKE 'shipping'");
     $Qmd->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
     $Qmd->bindValue(':code', $code);
     $Qmd->execute();    
   }
 
-  function getCode() {
+  public function getCode() {
     return $this->_code;
   }
 
-  function getTitle() {
+  public function getTitle() {
     return $this->_title;
   }
 
-  function getDescription() {
+  public function getDescription() {
     return $this->_description;
   }
 
-  function isEnabled() {
+  public function isEnabled() {
     return $this->_status;
   }
 
-  function getSortOrder() {
+  public function getSortOrder() {
     return $this->_sort_order;
   }
 
-  function hasQuotes() {
+  public function hasQuotes() {
     return !empty($this->_quotes);
   }
 
-  function numberOfQuotes() {
+  public function numberOfQuotes() {
     $total_quotes = 0;
 
     foreach ($this->_quotes as $quotes) {
@@ -117,14 +138,18 @@ class lC_Shipping {
     return $total_quotes;
   }
 
-  function getQuotes() {
+  public function getQuotes() {
     return $this->_quotes;
   }
 
-  function getQuote($module = '') {
+  public function getQuote($module = '') {
     if (empty($module)) {
       $module = $this->_selected_module;
     }
+    if (strstr($module, '|')) {
+      $mArr = explode('|', $module);
+      $module = $mArr[0];
+    }    
 
     list($module_id, $method_id) = explode('_', $module);
 
@@ -149,7 +174,7 @@ class lC_Shipping {
     return $rate;
   }
 
-  function getCheapestQuote() {
+  public function getCheapestQuote() {
     $rate = array();
 
     foreach ($this->_quotes as $quote) {
@@ -172,13 +197,17 @@ class lC_Shipping {
     return $rate;
   }
 
-  function hasActive() {
+  public function hasActive() {
     static $has_active;
 
     if (isset($has_active) === false) {
       $has_active = false;
 
       foreach ($this->_modules as $module) {
+        if (strstr($module, '|')) {
+          $mArr = explode('|', $module);
+          $module = $mArr[0];
+        }        
         if ($GLOBALS['lC_Shipping_' . $module]->isEnabled()) {
           $has_active = true;
           break;
@@ -189,7 +218,7 @@ class lC_Shipping {
     return $has_active;
   }
 
-  function _calculate() {
+  private function _calculate() {
     $this->_quotes = array();
 
     if (is_array($this->_modules)) {
@@ -199,6 +228,10 @@ class lC_Shipping {
         $include_quotes[] = 'lC_Shipping_free';
       } else {
         foreach ($this->_modules as $module) {
+          if (strstr($module, '|')) {
+            $mArr = explode('|', $module);
+            $module = $mArr[0];
+          }          
           if ($GLOBALS['lC_Shipping_' . $module]->isEnabled()) {
             $include_quotes[] = 'lC_Shipping_' . $module;
           }
@@ -215,12 +248,16 @@ class lC_Shipping {
     }
   }
 
-  function _usortModules($a, $b) {
+  private function _usortModules($a, $b) {   
+    if (strstr($a, '|')) {
+      $mArr = explode('|', $a);
+      $a = $mArr[0];
+    }
     if ($GLOBALS['lC_Shipping_' . $a]->getSortOrder() == $GLOBALS['lC_Shipping_' . $b]->getSortOrder()) {
       return strnatcasecmp($GLOBALS['lC_Shipping_' . $a]->getTitle(), $GLOBALS['lC_Shipping_' . $a]->getTitle());
     }
 
     return ($GLOBALS['lC_Shipping_' . $a]->getSortOrder() < $GLOBALS['lC_Shipping_' . $b]->getSortOrder()) ? -1 : 1;
-  }
+  }  
 }
 ?>

@@ -11,12 +11,10 @@
   @copyright  (c) 2013 Loaded Commerce Team
   @license    http://loadedcommerce.com/license.html
 */
-include_once(DIR_FS_CATALOG . 'addons/Per_Item_Shipping/controller.php');
-
 class lC_Shipping_item extends lC_Shipping {
 
   var $_title,
-      $_code,
+      $_code = 'item',
       $_status = false,
       $_sort_order;
 
@@ -24,27 +22,24 @@ class lC_Shipping_item extends lC_Shipping {
   public function lC_Shipping_item() {
     global $lC_Language;
     
-    $Per_Item_Shipping = new Per_Item_Shipping();
-
-    $this->_code = $Per_Item_Shipping->_code;
-    $this->_title = $Per_Item_Shipping->_title;
-    $this->_description = $Per_Item_Shipping->_description;
-    $this->_status = (defined('ADDONS_SHIPPING_ITEM_STATUS') && (ADDONS_SHIPPING_ITEM_STATUS == 'True') ? true : false);
-    $this->_sort_order = (defined('ADDONS_SHIPPING_ITEM_SORT_ORDER') ? ADDONS_SHIPPING_ITEM_SORT_ORDER : null);
+    $this->_title = $lC_Language->get('shipping_item_title');
+    $this->_description = $lC_Language->get('shipping_item_description');
+    $this->_status = (defined('ADDONS_SHIPPING_PER_ITEM_SHIPPING_STATUS') && (ADDONS_SHIPPING_PER_ITEM_SHIPPING_STATUS == '1') ? true : false);
+    $this->_sort_order = (defined('ADDONS_SHIPPING_PER_ITEM_SHIPPING_SORT_ORDER') ? ADDONS_SHIPPING_PER_ITEM_SHIPPING_SORT_ORDER : null);
   }
 
   // class methods
   public function initialize() {
     global $lC_Database, $lC_ShoppingCart;
 
-    $this->tax_class = ADDONS_SHIPPING_ITEM_TAX_CLASS;
+    $this->tax_class = ADDONS_SHIPPING_PER_ITEM_SHIPPING_TAX_CLASS;
 
-    if ( ($this->_status === true) && ((int)ADDONS_SHIPPING_ITEM_ZONE > 0) ) {
+    if ( ($this->_status === true) && ((int)ADDONS_SHIPPING_PER_ITEM_SHIPPING_ZONE > 0) ) {
       $check_flag = false;
 
       $Qcheck = $lC_Database->query('select zone_id from :table_zones_to_geo_zones where geo_zone_id = :geo_zone_id and zone_country_id = :zone_country_id order by zone_id');
       $Qcheck->bindTable(':table_zones_to_geo_zones', TABLE_ZONES_TO_GEO_ZONES);
-      $Qcheck->bindInt(':geo_zone_id', ADDONS_SHIPPING_ITEM_ZONE);
+      $Qcheck->bindInt(':geo_zone_id', ADDONS_SHIPPING_PER_ITEM_SHIPPING_ZONE);
       $Qcheck->bindInt(':zone_country_id', $lC_ShoppingCart->getShippingAddress('country_id'));
       $Qcheck->execute();
 
@@ -71,7 +66,7 @@ class lC_Shipping_item extends lC_Shipping {
                           'module' => $this->_title,
                           'methods' => array(array('id' => $this->_code,
                                                    'title' => $lC_Language->get('shipping_item_method'),
-                                                   'cost' => (ADDONS_SHIPPING_ITEM_COST * $lC_ShoppingCart->numberOfItems()) + ADDONS_SHIPPING_ITEM_HANDLING)),
+                                                   'cost' => (ADDONS_SHIPPING_PER_ITEM_SHIPPING_COST * $lC_ShoppingCart->numberOfItems()) + ADDONS_SHIPPING_PER_ITEM_SHIPPING_HANDLING)),
                           'tax_class_id' => $this->tax_class);
 
     if (!empty($this->icon)) $this->quotes['icon'] = lc_image($this->icon, $this->_title);
