@@ -18,34 +18,10 @@ class lC_Addons {
     $this->_initialize();
   }
   
-  public function getActiveAddons($type = null) {
-    if (!isset($_SESSION['lC_Addons_data'])) $this->_initialize();
-
-    $addons = array();
-    foreach($_SESSION['lC_Addons_data'] as $addon => $data) {
-      if ($data['enabled']) {
-        if ($type != null) {
-          if ($data['type'] == $type) {
-            $addons[$addon] = $data;
-          }
-        } else {
-          $addons[$addon] = $data;
-        }
-      } 
-    }
-
-echo "<pre>$addons ";
-print_r($addons);
-echo "</pre>";
-die('11');
-    return $addons;
-  }
-  
   protected function _initialize() {
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
     $lC_DirectoryListing->setRecursive(true);
     $lC_DirectoryListing->setIncludeDirectories(false);
-  //  $lC_DirectoryListing->setAddDirectoryToFilename(true);
     $lC_DirectoryListing->setCheckExtension('php');
     $lC_DirectoryListing->setStats(true);
     

@@ -11,8 +11,10 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-require_once(DIR_FS_CATALOG . 'addons/inc/addon.inc.php');
+// include the addon class (this is NOT the addons class; notice there is no `s` in the class name)
+require_once(DIR_FS_CATALOG . 'includes/classes/addon.php');
 
+// your addon must extend lC_Addon
 class Free_Shipping extends lC_Addon {
   /*
   * Class constructor
@@ -20,7 +22,8 @@ class Free_Shipping extends lC_Addon {
   public function Free_Shipping() {    
     global $lC_Language;    
    /**
-    * The addon type
+    * The addon type (category)
+    * valid types; payment, shipping, themes, checkout, catalog, admin, reports, connectors, other 
     */    
     $this->_type = 'shipping';
    /**

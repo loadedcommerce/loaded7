@@ -16,6 +16,7 @@ class lC_Shipping_item extends lC_Shipping {
   var $_title,
       $_code = 'item',
       $_status = false,
+      $_icon,
       $_sort_order;
 
   // class constructor
