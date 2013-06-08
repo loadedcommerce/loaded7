@@ -21,6 +21,7 @@ abstract class lC_Addon {
             $_description,
             $_rating = '5',
             $_author,
+            $_authorWWW,
             $_thumbnail,
             $_version,
             $_compatibility,
@@ -58,6 +59,10 @@ abstract class lC_Addon {
   public function getAddonAuthor() {
     return $this->_author;
   }  
+  
+  public function getAddonAuthorWWW() {
+    return $this->_authorWWW;
+  }    
   
   public function getAddonThumbnail() {
     return $this->_thumbnail;

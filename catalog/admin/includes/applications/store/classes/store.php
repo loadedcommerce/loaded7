@@ -299,7 +299,6 @@ class lC_Store_Admin {
     global $lC_Database, $lC_Language, $lC_Vqmod;
 
     if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
-      //$lC_Language->injectDefinitions(DIR_FS_CATALOG . 'addons/' . $key . '.xml');
 
       include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
 
@@ -307,11 +306,35 @@ class lC_Store_Admin {
       $addon = new $addon();
 
       $addon->install();
+      
+      $modules_group = $addon->getAddonType() . '|' . $key;
+      
+      $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType());
+      $lC_DirectoryListing->setCheckExtension('php');
+      
+      $code = '';
+      foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
+        if (isset($ao['name'])) {
+          $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
+          break;  
+        }        
+      }
 
-      lC_Cache::clear('modules-addons');
-      lC_Cache::clear('configuration');
+      if (empty($code) === false) {     
+        $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
+        $Qinstall->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+        $Qinstall->bindValue(':title', $addon->getAddonTitle());
+        $Qinstall->bindValue(':code', $code);
+        $Qinstall->bindValue(':author_name', $addon->getAddonAuthor());
+        $Qinstall->bindValue(':author_www', $addon->getAddonAuthorWWW());
+        $Qinstall->bindValue(':modules_group', $modules_group);
+        $Qinstall->execute();
 
-      return true;
+        lC_Cache::clear('modules-addons');
+        lC_Cache::clear('configuration');
+
+        return true;
+      }
     }
 
     return false;
@@ -327,12 +350,37 @@ class lC_Store_Admin {
     global $lC_Database, $lC_Language, $lC_Vqmod;
 
     if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
-      //$lC_Language->injectDefinitions('modules/payment/' . $key . '.xml');
 
       include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
 
       $addon = new $key();
       $addon->remove();
+      
+      $modules_group = $addon->getAddonType() . '|' . $key;
+      
+      $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType());
+      $lC_DirectoryListing->setCheckExtension('php');
+      
+      $code = '';
+      foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
+        if (isset($ao['name'])) {
+          $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
+          break;  
+        }        
+      }      
+      
+      $Qdel = $lC_Database->query('delete from :table_templates_boxes where code = :code and modules_group = :modules_group');
+      $Qdel->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+      $Qdel->bindValue(':code', $code);
+      $Qdel->bindValue(':modules_group', $addon->getAddonType() . '|' . $key);
+      $Qdel->execute();
+
+      if ($addon->hasKeys()) {
+        $Qdel = $lC_Database->query('delete from :table_configuration where configuration_key in (":configuration_key")');
+        $Qdel->bindTable(':table_configuration', TABLE_CONFIGURATION);
+        $Qdel->bindRaw(':configuration_key', implode('", "', $addon->getKeys()));
+        $Qdel->execute();
+      }      
 
       lC_Cache::clear('modules-addons');
       lC_Cache::clear('configuration');

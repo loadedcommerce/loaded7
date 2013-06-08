@@ -46,6 +46,10 @@ class Per_Item_Shipping extends lC_Addon {
     */    
     $this->_author = 'Loaded Commerce, LLC';
    /**
+    * The developers web address
+    */    
+    $this->_authorWWW = 'http://www.loadedcommerce.com';    
+   /**
     * The addon version
     */     
     $this->_version = '1.0.0';
