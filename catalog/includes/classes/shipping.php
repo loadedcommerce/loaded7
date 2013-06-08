@@ -26,7 +26,7 @@ class lC_Shipping {
 
     $this->_quotes =& $_SESSION['lC_ShoppingCart_data']['shipping_quotes'];
 
-    $Qmodules = $lC_Database->query("select code, modules_group from :table_templates_boxes where modules_group = 'shipping' or modules_group LIKE '%shipping|%'");
+    $Qmodules = $lC_Database->query("select code, modules_group from :table_templates_boxes where modules_group LIKE '%shipping%'");
     $Qmodules->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
     $Qmodules->setCache('modules-shipping');
     $Qmodules->execute();
@@ -46,7 +46,10 @@ class lC_Shipping {
           $this->removeModule($Qmodules->value('code'));
           continue;
         }
-        $this->_modules[] = $Qmodules->value('code') . '|' . $addon;        
+        
+        if ($_SESSION['lC_Addons_data'][$addon]['enabled'] == '1') {
+          $this->_modules[] = $Qmodules->value('code') . '|' . $addon;        
+        }
           
       }        
     }
@@ -67,7 +70,7 @@ class lC_Shipping {
           $module = $mArr[0];
           $addon = $mArr[1];
         }
-        
+
         $module_class = 'lC_Shipping_' . $module;
 
         if (class_exists($module_class) === false) {
@@ -77,7 +80,7 @@ class lC_Shipping {
             include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/' . $addon . '/modules/shipping/' . $module . '.php'));
           }
         }
-
+        
         $GLOBALS[$module_class] = new $module_class();
         $GLOBALS[$module_class]->initialize();
       }
@@ -248,11 +251,10 @@ class lC_Shipping {
     }
   }
 
-  private function _usortModules($a, $b) {   
-    if (strstr($a, '|')) {
-      $mArr = explode('|', $a);
-      $a = $mArr[0];
-    }
+  private function _usortModules($a, $b) {
+    if (strstr($a, '|')) $a = substr($a, 0, strpos($a, '|'));
+    if (strstr($b, '|')) $b = substr($b, 0, strpos($b, '|'));
+   
     if ($GLOBALS['lC_Shipping_' . $a]->getSortOrder() == $GLOBALS['lC_Shipping_' . $b]->getSortOrder()) {
       return strnatcasecmp($GLOBALS['lC_Shipping_' . $a]->getTitle(), $GLOBALS['lC_Shipping_' . $a]->getTitle());
     }
