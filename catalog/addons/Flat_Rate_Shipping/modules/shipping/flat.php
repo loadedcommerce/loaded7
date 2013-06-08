@@ -25,7 +25,7 @@ class lC_Shipping_flat extends lC_Shipping {
 
     $this->_title = $lC_Language->get('shipping_flat_title');
     $this->_description = $lC_Language->get('shipping_flat_description');
-    $this->_status = (defined('ADDONS_SHIPPING_FLAT_RATE_SHIPPING_STATUS') && (ADDONS_SHIPPING_FLAT_RATE_SHIPPING_STATUS == 'True') ? true : false);
+    $this->_status = (defined('ADDONS_SHIPPING_FLAT_RATE_SHIPPING_STATUS') && (ADDONS_SHIPPING_FLAT_RATE_SHIPPING_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('ADDONS_SHIPPING_FLAT_RATE_SHIPPING_SORT_ORDER') ? ADDONS_SHIPPING_FLAT_RATE_SHIPPING_SORT_ORDER : null);
   }
 
@@ -60,7 +60,7 @@ class lC_Shipping_flat extends lC_Shipping {
     }
   }
 
-  publc function quote() {
+  public function quote() {
     global $lC_Language;
 
     $this->quotes = array('id' => $this->_code,
