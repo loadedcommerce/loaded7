@@ -16,8 +16,8 @@ class lC_Shipping_free extends lC_Shipping {
   var $_title,
       $_code = 'free',
       $_status = false,
-      $_icon,
-      $_sort_order;
+      $_icon = '',
+      $_sort_order = 0;
 
   // class constructor
   public function lC_Shipping_free() {
