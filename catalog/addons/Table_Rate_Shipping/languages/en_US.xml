@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>addon_shipping_table_title</key>
+      <value><![CDATA[Table Rate Shipping]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>addon_shipping_table_description</key>
+      <value><![CDATA[Charge variable shipping rates based on cost or weight.  Includes optional Handling Fee.]]></value>
+      <group>modules-shipping</group>
+    </definition>  
+    <definition>
+      <key>shipping_table_title</key>
+      <value><![CDATA[Table Rate]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_table_description</key>
+      <value><![CDATA[Table Rate]]></value>
+      <group>modules-shipping</group>
+    </definition>
+    <definition>
+      <key>shipping_table_method</key>
+      <value><![CDATA[Best Way]]></value>
+      <group>modules-shipping</group>
+    </definition>
+  </definitions>
+</language>

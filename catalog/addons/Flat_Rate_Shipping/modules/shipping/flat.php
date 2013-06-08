@@ -25,22 +25,22 @@ class lC_Shipping_flat extends lC_Shipping {
 
     $this->_title = $lC_Language->get('shipping_flat_title');
     $this->_description = $lC_Language->get('shipping_flat_description');
-    $this->_status = (defined('MODULE_SHIPPING_FLAT_RATE_SHIPPING_STATUS') && (MODULE_SHIPPING_FLAT_RATE_SHIPPING_STATUS == 'True') ? true : false);
-    $this->_sort_order = (defined('MODULE_SHIPPING_FLAT_RATE_SHIPPING_SORT_ORDER') ? MODULE_SHIPPING_FLAT_RATE_SHIPPING_SORT_ORDER : null);
+    $this->_status = (defined('ADDONS_SHIPPING_FLAT_RATE_SHIPPING_STATUS') && (ADDONS_SHIPPING_FLAT_RATE_SHIPPING_STATUS == 'True') ? true : false);
+    $this->_sort_order = (defined('ADDONS_SHIPPING_FLAT_RATE_SHIPPING_SORT_ORDER') ? ADDONS_SHIPPING_FLAT_RATE_SHIPPING_SORT_ORDER : null);
   }
 
   // class methods
   public function initialize() {
     global $lC_Database, $lC_ShoppingCart;
 
-    $this->tax_class = MODULE_SHIPPING_FLAT_RATE_SHIPPING_TAX_CLASS;
+    $this->tax_class = ADDONS_SHIPPING_FLAT_RATE_SHIPPING_TAX_CLASS;
 
-    if ( ($this->_status === true) && ((int)MODULE_SHIPPING_FLAT_RATE_SHIPPING_ZONE > 0) ) {
+    if ( ($this->_status === true) && ((int)ADDONS_SHIPPING_FLAT_RATE_SHIPPING_ZONE > 0) ) {
       $check_flag = false;
 
       $Qcheck = $lC_Database->query('select zone_id from :table_zones_to_geo_zones where geo_zone_id = :geo_zone_id and zone_country_id = :zone_country_id order by zone_id');
       $Qcheck->bindTable(':table_zones_to_geo_zones', TABLE_ZONES_TO_GEO_ZONES);
-      $Qcheck->bindInt(':geo_zone_id', MODULE_SHIPPING_FLAT_RATE_SHIPPING_ZONE);
+      $Qcheck->bindInt(':geo_zone_id', ADDONS_SHIPPING_FLAT_RATE_SHIPPING_ZONE);
       $Qcheck->bindInt(':zone_country_id', $lC_ShoppingCart->getShippingAddress('country_id'));
       $Qcheck->execute();
 
@@ -67,7 +67,7 @@ class lC_Shipping_flat extends lC_Shipping {
                           'module' => $this->_title,
                           'methods' => array(array('id' => $this->_code,
                                                    'title' => $lC_Language->get('shipping_flat_method'),
-                                                   'cost' => MODULE_SHIPPING_FLAT_RATE_SHIPPING_COST)),
+                                                   'cost' => ADDONS_SHIPPING_FLAT_RATE_SHIPPING_COST)),
                           'tax_class_id' => $this->tax_class);
 
     if (!empty($this->icon)) $this->quotes['icon'] = lc_image($this->icon, $this->_title);
