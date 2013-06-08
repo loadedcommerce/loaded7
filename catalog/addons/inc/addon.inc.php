@@ -85,5 +85,34 @@ abstract class lC_Addon {
 
     return $has_keys;
   }  
+ /**
+  * Remove the module configuration keys
+  *
+  * @access public
+  * @return array
+  */  
+  public function remove() {
+    global $lC_Database, $lC_Language;
+
+    if ($this->hasKeys()) {
+      $Qdel = $lC_Database->query('delete from :table_configuration where configuration_key in (":configuration_key")');
+      $Qdel->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $Qdel->bindRaw(':configuration_key', implode('", "', $this->getKeys()));
+      $Qdel->execute();
+    }
+
+    if (file_exists(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml')) {
+      foreach ($lC_Language->extractAddonDefinitions(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml') as $def) {
+        $Qdel = $lC_Database->query('delete from :table_languages_definitions where definition_key = :definition_key and content_group = :content_group');
+        $Qdel->bindTable(':table_languages_definitions', TABLE_LANGUAGES_DEFINITIONS);
+        $Qdel->bindValue(':definition_key', $def['key']);
+        $Qdel->bindValue(':content_group', $def['group']);
+        $Qdel->execute();
+      }
+
+      lC_Cache::clear('languages');
+    }
+    
+  }  
 }
 ?>
