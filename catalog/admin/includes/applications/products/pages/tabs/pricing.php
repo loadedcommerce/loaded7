@@ -21,7 +21,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
       <label for="products_base_price" class="label"><b><?php echo $lC_Language->get('text_base_price'); ?></b></label>
       <div class="inputs" style="display:inline; padding:8px 0;">
         <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
-        <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" class="input-unstyled" name="products_base_price" id="products_base_price" value="<?php echo number_format(lc_round($pInfo->get('products_price'), DECIMAL_PLACES), DECIMAL_PLACES);; ?>" class="input strong" onblur="$('#products_price0').val(this.value);" />
+        <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" class="input-unstyled" name="products_base_price" id="products_base_price" value="<?php echo (isset($pInfo) ? number_format(lc_round($pInfo->get('products_price'), DECIMAL_PLACES), DECIMAL_PLACES) : null); ?>" class="input strong" onblur="$('#products_price0').val(this.value);" />
       </div>    
       <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_base_price'), null, 'info-spot on-left grey margin-left'); ?>
     </div>
@@ -33,7 +33,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
       <div onclick="togglePricingSection(this, 'groups_pricing_container');" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="groups_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
     </div>
     <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-      <?php echo lC_Products_Admin::getGroupPricingContent($pInfo->get('products_price')); ?>
+      <?php echo (isset($pInfo) ? lC_Products_Admin::getGroupPricingContent($pInfo->get('products_price')) : null); ?>
     </div>
 
     <div class="field-block field-block-product button-height">
@@ -49,11 +49,11 @@ global $lC_Language, $lC_Currencies, $pInfo;
     
     <div class="field-block field-block-product button-height">
       <label for="specials-pricing-switch" class="label"><b><?php echo $lC_Language->get('text_special_pricing'); ?></b></label>
-      <input id="specials-pricing-switch" onchange="togglePricingSection(this, 'specials_pricing_container');" type="checkbox" class="switch wider specials-pricing" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (($pInfo->get('products_special_price') != null) ? ' checked' : ''); ?> /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_specials'), null, 'info-spot on-left grey margin-left margin-right'); ?>
+      <input id="specials-pricing-switch" onchange="togglePricingSection(this, 'specials_pricing_container');" type="checkbox" class="switch wider specials-pricing" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (isset($pInfo) && ($pInfo->get('products_special_price') != null) ? ' checked' : ''); ?> /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_specials'), null, 'info-spot on-left grey margin-left margin-right'); ?>
       <div onclick="togglePricingSection(this, 'specials_pricing_container');" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="specials_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
     </div>
-    <div id="specials_pricing_container" class="field-drop button-height black-inputs no-margin-bottom"<?php echo (($pInfo->get('products_special_price') != null) ? ' style="display:block;"' : ' style="display:none;"'); ?>>
-      <?php echo lC_Products_Admin::getSpecialPricingContent(); ?>
+    <div id="specials_pricing_container" class="field-drop button-height black-inputs no-margin-bottom"<?php echo (isset($pInfo) && ($pInfo->get('products_special_price') != null) ? ' style="display:block;"' : ' style="display:none;"'); ?>>
+      <?php echo (isset($pInfo) ? lC_Products_Admin::getSpecialPricingContent() : null); ?>
     </div>                
   </fieldset>
   <style>
@@ -66,7 +66,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
   <fieldset class="fieldset large-margin-top">
     <legend class="legend"><?php echo $lC_Language->get('text_options_pricing'); ?></legend>  
     <dl id="simple-options-pricing-tab" class="accordion">
-      <?php echo lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')); ?>
+      <?php echo (isset($pInfo) ? lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')) : null); ?>
     </dl>     
   </fieldset>
 </div> 

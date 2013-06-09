@@ -62,7 +62,7 @@ global $lC_Language, $pInfo;
               <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
             </tr>
           </thead>
-          <tbody class="sorted_table"><?php echo lC_Products_Admin::getSimpleOptionsContent($pInfo->get('simple_options')); ?></tbody>
+          <tbody class="sorted_table"><?php echo (isset($pInfo) ? lC_Products_Admin::getSimpleOptionsContent($pInfo->get('simple_options')) : null); ?></tbody>
         </table>
       </fieldset>    
     </div>
