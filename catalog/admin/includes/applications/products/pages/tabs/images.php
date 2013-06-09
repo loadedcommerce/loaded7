@@ -26,12 +26,14 @@ global $lC_Language, $pInfo;
                 <b><?php echo $lC_Language->get('text_product_images'); ?></b>
               </a>            
             </li>
+            <?php if ($pInfo) { ?>
             <li id="additional-gallery-trigger">     
               <a class="file-link" href="javascript://" onclick="showContent('additional');">
                 <span class="icon file-jpg"></span>
                 <b><?php echo $lC_Language->get('text_additional_images'); ?></b>
               </a>            
-            </li>            
+            </li>
+            <?php } ?>            
           </ul>
         </div> 
       </div>
@@ -46,7 +48,7 @@ global $lC_Language, $pInfo;
               <td width="100%" height="100%" valign="top">
                 <div class="message white-gradient margin-bottom" style="min-height:37px;">
                   <div style="float: right;">
-                    <?php echo $lC_Language->get('text_product_image_drag_n_drop'); ?>
+                    <?php echo (isset($pInfo) ? $lC_Language->get('text_product_image_drag_n_drop') : null); ?>
                     <!--<a href="#" id="remoteFilesLink" onclick="switchImageFilesView('remote');" style="font-weight:bolder; color:#000;"><?php echo $lC_Language->get('image_remote_upload'); ?></a> | <a href="#" id="localFilesLink" onclick="switchImageFilesView('local');" style="color:#000;"><?php echo $lC_Language->get('image_local_files'); ?></a>-->
                   </div>
                   

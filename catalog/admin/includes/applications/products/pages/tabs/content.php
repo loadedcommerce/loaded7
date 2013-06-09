@@ -96,7 +96,11 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
             </span><br />
             <span class="button-group">
               <label for="ps_radio_1" class="button blue-active">
-                <input type="radio" name="products_status" id="ps_radio_1" value="active"<?php echo ((isset($pInfo) && $pInfo->getInt('products_status') == 1) ? ' checked' : ''); ?> />
+                <?php if (isset($pInfo)) { ?>
+                  <input type="radio" name="products_status" id="ps_radio_1" value="active"<?php echo ($pInfo->getInt('products_status') == 1 ? ' checked' : ''); ?> />
+                <?php } else { ?>
+                  <input type="radio" name="products_status" id="ps_radio_1" value="active" checked />
+                <?php } ?>
                 <?php echo $lC_Language->get('field_status_active'); ?>
               </label>
               <label for="ps_radio_2" class="button red-active">
