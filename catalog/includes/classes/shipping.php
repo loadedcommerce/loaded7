@@ -53,7 +53,7 @@ class lC_Shipping {
           
       }        
     }
-    
+   
     $Qmodules->freeResult();
     
     if (empty($this->_modules) === false) {
@@ -92,7 +92,9 @@ class lC_Shipping {
       $first_array = array_slice($_GET, 0, 1);
       $_module = lc_sanitize_string(basename(key($first_array)));
     }
+
     if ( empty($this->_quotes) || $_module == 'shipping') {
+      echo '[calc]';
       $this->_calculate();
     }
   }
@@ -227,14 +229,15 @@ class lC_Shipping {
     if (is_array($this->_modules)) {
       $include_quotes = array();
 
-      if (defined('MODULE_SHIPPING_FREE_STATUS') && isset($GLOBALS['lC_Shipping_free']) && $GLOBALS['lC_Shipping_free']->isEnabled()) {
+      if (defined('ADDONS_SHIPPING_FREE_SHIPPING_STATUS') && isset($GLOBALS['lC_Shipping_free']) && $GLOBALS['lC_Shipping_free']->isEnabled()) {
         $include_quotes[] = 'lC_Shipping_free';
       } else {
         foreach ($this->_modules as $module) {
           if (strstr($module, '|')) {
             $mArr = explode('|', $module);
             $module = $mArr[0];
-          }          
+          }      
+              
           if ($GLOBALS['lC_Shipping_' . $module]->isEnabled()) {
             $include_quotes[] = 'lC_Shipping_' . $module;
           }
