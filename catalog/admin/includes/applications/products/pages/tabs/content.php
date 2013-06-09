@@ -15,6 +15,7 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
 ?>
 <div id="section_general_content" class="with-padding">
   <div class="columns">
+    <?php if ($pInfo) { ?>
     <div class="new-row-mobile four-columns twelve-columns-mobile">
       <div class="twelve-columns">
         <span class="strong margin-right"><?php echo $lC_Language->get('text_product_image'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_image'), null); ?>   
@@ -29,7 +30,8 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
         </div>        
       </div>
     </div>
-    <div class="new-row-mobile eight-columns twelve-columns-mobile">             
+    <?php } ?>
+    <div class="new-row-mobile <?php echo (isset($pInfo) ? 'eight' : 'twelve'); ?>-columns twelve-columns-mobile">             
       <div class="columns">
       
         <div id="languageTabs" class="standard-tabs same-height no-margin-bottom" style="width:99%;">

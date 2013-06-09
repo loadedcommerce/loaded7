@@ -23,7 +23,9 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $(".datepicker").glDatePicker({ zIndex: 100 }); 
 
       // CONTENT TAB
+      <?php if ($pInfo) { ?>
       createUploader2();
+      <?php } ?>
       $('#fileUploaderImageContainer .qq-upload-button').hide();
       $('#fileUploaderImageContainer .qq-upload-list').hide();
       <?php               
@@ -71,20 +73,21 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       
                 
     });
-    
+    <?php if ($pInfo) { ?>
     /**
      * CONTENT TAB
      * 
     /* create the uploader instance on content tab */
     function createUploader2(){
       var uploader = new qq.FileUploader({
-          element: document.getElementById('fileUploaderImageContainer'),
-          action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=fileUpload&default=1'); ?>',
-          onComplete: function(id, fileName, responseJSON){
-            getImages();
-          },
+        element: document.getElementById('fileUploaderImageContainer'),
+        action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=fileUpload&default=1'); ?>',
+        onComplete: function(id, fileName, responseJSON){
+          getImages();
+        },
       });
     }
+    <?php } ?>
 
     function toggleEditor(id) {
       var selection = $("#ckEditorProductDescription_" + id);
@@ -103,11 +106,11 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
    /* create the uploader instance for images tab */
     function createUploader(){
       var uploader = new qq.FileUploader({
-          element: document.getElementById('fileUploaderContainer'),
-          action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=fileUpload&default=DEFAULT'); ?>',
-          onComplete: function(id, fileName, responseJSON){
-            getImages();
-          },
+        element: document.getElementById('fileUploaderContainer'),
+        action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=fileUpload&default=DEFAULT'); ?>',
+        onComplete: function(id, fileName, responseJSON){
+          getImages();
+        },
       });
     }
 

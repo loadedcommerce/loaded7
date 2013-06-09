@@ -62,6 +62,7 @@ global $lC_Language, $pInfo;
                       </div>
                       <?php
                     } else {
+                      echo '<div id="fileUploaderContainer" style="display:none;"></div>';
                       echo lc_draw_file_field('products_image', null, 'class="file"');
                     }
                     ?>                              

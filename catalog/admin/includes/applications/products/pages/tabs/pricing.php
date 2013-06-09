@@ -33,7 +33,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
       <div onclick="togglePricingSection(this, 'groups_pricing_container');" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="groups_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
     </div>
     <div id="groups_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-      <?php echo (isset($pInfo) ? lC_Products_Admin::getGroupPricingContent($pInfo->get('products_price')) : null); ?>
+      <?php echo lC_Products_Admin::getGroupPricingContent(isset($pInfo) ? $pInfo->get('products_price') : null); ?>
     </div>
 
     <div class="field-block field-block-product button-height">
@@ -47,14 +47,16 @@ global $lC_Language, $lC_Currencies, $pInfo;
     <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
     </div>
     
+    <?php if ($pInfo) { ?>
     <div class="field-block field-block-product button-height">
       <label for="specials-pricing-switch" class="label"><b><?php echo $lC_Language->get('text_special_pricing'); ?></b></label>
       <input id="specials-pricing-switch" onchange="togglePricingSection(this, 'specials_pricing_container');" type="checkbox" class="switch wider specials-pricing" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo (isset($pInfo) && ($pInfo->get('products_special_price') != null) ? ' checked' : ''); ?> /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_specials'), null, 'info-spot on-left grey margin-left margin-right'); ?>
       <div onclick="togglePricingSection(this, 'specials_pricing_container');" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="specials_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
     </div>
     <div id="specials_pricing_container" class="field-drop button-height black-inputs no-margin-bottom"<?php echo (isset($pInfo) && ($pInfo->get('products_special_price') != null) ? ' style="display:block;"' : ' style="display:none;"'); ?>>
-      <?php echo (isset($pInfo) ? lC_Products_Admin::getSpecialPricingContent() : null); ?>
-    </div>                
+      <?php echo lC_Products_Admin::getSpecialPricingContent(); ?>
+    </div>
+    <?php } ?>                
   </fieldset>
   <style>
   .accordion > dt { 
@@ -66,7 +68,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
   <fieldset class="fieldset large-margin-top">
     <legend class="legend"><?php echo $lC_Language->get('text_options_pricing'); ?></legend>  
     <dl id="simple-options-pricing-tab" class="accordion">
-      <?php echo (isset($pInfo) ? lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')) : null); ?>
+      <?php //if ($pInfo) echo lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')); ?>
     </dl>     
   </fieldset>
 </div> 
