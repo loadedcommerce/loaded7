@@ -12,12 +12,13 @@
   @license    http://loadedcommerce.com/license.html
 */
 class lC_Shipping_table extends lC_Shipping {
-
-  var $_title,
-      $_code = 'table',
-      $_status = false,
-      $_icon = '',
-      $_sort_order;
+  
+  public $icon = '';
+  
+  protected $_title,
+            $_code = 'table',
+            $_status = false,
+            $_sort_order;
 
   // class constructor
   public function lC_Shipping_table() {

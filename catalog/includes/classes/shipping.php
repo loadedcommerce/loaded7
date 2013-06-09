@@ -94,7 +94,6 @@ class lC_Shipping {
     }
 
     if ( empty($this->_quotes) || $_module == 'shipping') {
-      echo '[calc]';
       $this->_calculate();
     }
   }

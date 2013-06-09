@@ -12,6 +12,7 @@
   @license    http://loadedcommerce.com/license.html
 */
 class lC_Shipping_zones extends lC_Shipping {
+  
   public $icon = '',
          $num_zones;
 
