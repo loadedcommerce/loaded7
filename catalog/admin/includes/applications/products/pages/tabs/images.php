@@ -40,7 +40,7 @@ global $lC_Language, $pInfo;
     </div>
     <div class="panel-content linen scrollable" style="height:auto">
       <div class="panel-control align-right"></div>
-      <a href="javascript://" onclick="backToNav();"><div class="back"><span class="back-arrow"></span>Back</div></a>
+      <a href="javascript://" onclick="backToNav();" class="imagesBackNav"><div class="back"><span class="back-arrow"></span>Back</div></a>
       <div style="height: auto; position: relative;" class="scrollable with-padding custom-scroll">
         <div class="gallery" id="images-gallery">
           <table border="0" width="100%" cellspacing="0" cellpadding="2">

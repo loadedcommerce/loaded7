@@ -593,6 +593,10 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 .no-wrap { white-space: nowrap; }
 #title-bar { height: 40px !important; }
 
+.imagesBackNav { display: none; }
+
+
+
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
   #products_msrp { width: 92% !important; }
@@ -664,6 +668,7 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   .products-price-gross { width: 93% !important; }
   .simple-table { background-color: transparent; }
   #simpleOptionsTable { margin: -10px -15px 0 -15px !important; }
+  .imagesBackNav { display: block; }
 }  
   
 @media screen and (min-width: 320px) and (max-width: 479px) {
@@ -715,4 +720,5 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   .products-price-gross { width: 88% !important; }
   .simple-table { background-color: transparent; }
   #simpleOptionsTable { margin: -10px -15px 0 -20px !important; }
+  .imagesBackNav { display: block; }
 }     
