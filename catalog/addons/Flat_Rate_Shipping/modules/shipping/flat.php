@@ -12,12 +12,13 @@
   @license    http://loadedcommerce.com/license.html
 */
 class lC_Shipping_flat extends lC_Shipping {
-
-  var $_title,
-      $_code = 'flat',
-      $_status = false,
-      $_icon = '',
-      $_sort_order;
+  
+  public $icon = '';
+  
+  protected $_title,
+            $_code = 'flat',
+            $_status = false,
+            $_sort_order;
 
   // class constructor
   public function lC_Shipping_flat() {

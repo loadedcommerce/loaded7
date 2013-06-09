@@ -13,11 +13,12 @@
 */
 class lC_Shipping_item extends lC_Shipping {
 
-  var $_title,
-      $_code = 'item',
-      $_status = false,
-      $_icon = '',
-      $_sort_order;
+  public $icon = '';
+
+  protected $_title,
+            $_code = 'item',
+            $_status = false,
+            $_sort_order;
 
   // class constructor
   public function lC_Shipping_item() {
