@@ -28,7 +28,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $('#fileUploaderImageContainer .qq-upload-list').hide();
       <?php               
       foreach ( $lC_Language->getAll() as $l ) {  
-        echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%'  });";
+        echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
       }
       ?>  
       //$('#products_name_1').focus();
@@ -79,7 +79,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     function createUploader2(){
       var uploader = new qq.FileUploader({
           element: document.getElementById('fileUploaderImageContainer'),
-          action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=fileUpload&default=1'); ?>',
+          action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=fileUpload&default=1'); ?>',
           onComplete: function(id, fileName, responseJSON){
             getImages();
           },
@@ -104,7 +104,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     function createUploader(){
       var uploader = new qq.FileUploader({
           element: document.getElementById('fileUploaderContainer'),
-          action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=fileUpload&default=DEFAULT'); ?>',
+          action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=fileUpload&default=DEFAULT'); ?>',
           onComplete: function(id, fileName, responseJSON){
             getImages();
           },
@@ -185,7 +185,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
 
       $('#additionalOriginal').sortable({
         update: function(event, ui) {
-          $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=reorderImages'); ?>' + '&' + $(this).sortable('serialize'),
+          $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=reorderImages'); ?>' + '&' + $(this).sortable('serialize'),
             function (data) {
               getImagesOriginals();
               getImagesOthers();
@@ -208,7 +208,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       getImagesOriginals(false);
       getImagesOthers(false);
 
-      $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=getImages'); ?>',
+      $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=getImages'); ?>',
         function (data) {
           showImages(data);
         }
@@ -222,7 +222,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $('#imagePreviewContainer').html('<p id="showProgressOriginal" align="center" class="large-margin-top"><span class="loader huge refreshing"></span></p>');
 
       if ( makeCall != false ) {
-        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=getImages&filter=originals'); ?>',
+        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=getImages&filter=originals'); ?>',
           function (data) {
             showImages(data);
           }
@@ -235,7 +235,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $('#defaultOther').html('<div id="showProgressOther" style="float: left; padding-left: 10px;"><span class="loader on-dark small-margin-right"></span><?php echo $lC_Language->get('image_loading_from_server'); ?></div>');
 
       if ( makeCall != false ) {
-        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=getImages&filter=others'); ?>',
+        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=getImages&filter=others'); ?>',
           function (data) {
             showImages(data);
           }
@@ -246,7 +246,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     function removeImage(id) {
       $.modal.confirm('<?php echo $lC_Language->get('text_confirm_delete'); ?>', function() {
         var image = id.split('_');
-        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=deleteProductImage'); ?>' + '&image=' + image[1],
+        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=deleteProductImage'); ?>' + '&image=' + image[1],
           function (data) {
             getImages();
           }
@@ -258,7 +258,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     function setDefaultImage(id) {  
       $.modal.confirm('<?php echo $lC_Language->get('text_confirm_set_default'); ?>', function() {
         var image = id.split('_');
-        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=setDefaultImage'); ?>' + '&image=' + image[1],
+        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=setDefaultImage'); ?>' + '&image=' + image[1],
           function (data) {
             getImages();  
             showContent('default');
@@ -302,7 +302,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           selectedFiles += 'files[]=' + $(selected).text() + '&';
         });
 
-        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=assignLocalImages'); ?>' + '&' + selectedFiles,
+        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=assignLocalImages'); ?>' + '&' + selectedFiles,
           function (data) {
             $('#showProgressAssigningLocalImages').css('display', 'none');
             getLocalImages();
