@@ -53,7 +53,7 @@ global $lC_Language, $pInfo;
                   </div>
                   
                   <div id="remoteFiles" style="white-space:nowrap;">
-                    <span id="fileUploadField"></span>
+                    <span id="fileUploadField" style="width:90%;"></span>
                     <?php
                     if ( isset($pInfo) ) {
                       ?>
