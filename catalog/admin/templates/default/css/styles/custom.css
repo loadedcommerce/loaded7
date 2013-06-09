@@ -669,6 +669,7 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   .simple-table { background-color: transparent; }
   #simpleOptionsTable { margin: -10px -15px 0 -15px !important; }
   .imagesBackNav { display: block; }
+  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
 }  
   
 @media screen and (min-width: 320px) and (max-width: 479px) {
@@ -721,4 +722,5 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   .simple-table { background-color: transparent; }
   #simpleOptionsTable { margin: -10px -15px 0 -20px !important; }
   .imagesBackNav { display: block; }
+  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
 }     

@@ -562,10 +562,10 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "bDestroy": true,
             "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
-                          { "sWidth": "55%", "bSortable": true, "sClass": "dataColProducts" },
+                          { "sWidth": "50%", "bSortable": true, "sClass": "dataColProducts" },
                           { "sWidth": "15%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },
                           { "sWidth": "10%", "bSortable": true, "sClass": "dataColQty hide-on-tablet" },
-                          { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
+                          { "sWidth": "25%", "bSortable": false, "sClass": "dataColAction" }]
           }); 
           $('#dataTable').responsiveTable();
                
