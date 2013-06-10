@@ -15,7 +15,7 @@
 */   
 abstract class lC_Addon { 
 
-  public    $_type,
+  protected $_type,
             $_code,
             $_title,
             $_description,

@@ -13,7 +13,7 @@
 */
 ?>
 <script>
-function installAddon(id) {
+function installAddon(id, type) {
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=installAddon&name=NAME'); ?>'
   $.getJSON(jsonLink.replace('NAME', id),
     function (data) {
@@ -26,6 +26,7 @@ function installAddon(id) {
         return false;
       }
       oTable.fnReloadAjax();
+      editAddon(id, type);
     }
   );
 }

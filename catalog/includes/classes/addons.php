@@ -13,36 +13,22 @@
 */
 class lC_Addons {
 
-  private $_data;
-  
   // class contructor 
   public function __construct() {
     
-    if (array_key_exists('login', $_GET)) return false;
-
-    if ( !isset($_SESSION['lC_Addons_data']) ) {
-      $this->_initialize();
+    if (empty($_GET) === false) {
+      $first_array = array_slice($_GET, 0, 1);
+      $module = lc_sanitize_string(basename(key($first_array)));    
+    
+      if (array_key_exists('login', $_GET)) return false;
     }
 
-    $this->_data = $_SESSION['lC_Addons_data'];
-  } 
-  
-  // class methods
-  public function getAll() {
-    return $this->_data;
-  } 
-  
-  public function isEnabled($addon) {
-    return ($_SESSION['lC_Addons_data'][$addon]['enabled'] == '1');
-  }
-  
-  public function reset() {
-    if (isset($_SESSION['lC_Addons_data'])) unset($_SESSION['lC_Addons_data']);
     $this->_initialize();
-  }
+  } 
   
   // private methods
-  protected function _initialize() {
+  private function _initialize() {
+    global $lC_Vqmod;
     
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
     $lC_DirectoryListing->setRecursive(true);
@@ -61,36 +47,22 @@ class lC_Addons {
       $class = $nameArr[count($nameArr)-2];
 
       if (file_exists($ao['path'])) {
-        include_once($ao['path']);
+        include_once($lC_Vqmod->modCheck($ao['path']));
         $GLOBALS[$class] = new $class();
-        $addon['code'] = substr($ao['name'], 0, strpos($ao['name'], '/'));
-        $addon['type'] = $GLOBALS[$class]->getAddonType();
-        $addon['title'] = $GLOBALS[$class]->getAddonTitle();
-        $addon['description'] = $GLOBALS[$class]->getAddonDescription();
-        $addon['rating'] = $GLOBALS[$class]->getAddonRating();
-        $addon['author'] = $GLOBALS[$class]->getAddonAuthor();
-        $addon['authorWWW'] = $GLOBALS[$class]->getAddonAuthorWWW();
-        $addon['thumbnail'] = $GLOBALS[$class]->getAddonThumbnail();
-        $addon['version'] = $GLOBALS[$class]->getAddonVersion();
-        $addon['compatibility'] = $GLOBALS[$class]->getCompatibility();
-        $addon['installed'] = $GLOBALS[$class]->isInstalled();
-        $addon['enabled'] = $GLOBALS[$class]->isEnabled();
         
-        $_SESSION['lC_Addons_data'][$class] = array('type' => $addon['type'],
-                                                    'title' => $addon['title'],
-                                                    'description' => $addon['description'],
-                                                    'rating' => $addon['rating'],
-                                                    'author' => $addon['author'],
-                                                    'authorWWW' => $addon['authorWWW'],
-                                                    'thumbnail' => $addon['thumbnail'],
-                                                    'version' => $addon['version'],
-                                                    'compatibility' => $addon['compatibility'],
-                                                    'installed' => $addon['installed'],
-                                                    'enabled' => $addon['enabled']);  
+        $_SESSION['lC_Addons_data'][$class] = array('type' => $GLOBALS[$class]->getAddonType(),
+                                                    'title' => $GLOBALS[$class]->getAddonTitle(),
+                                                    'description' => $GLOBALS[$class]->getAddonDescription(),
+                                                    'rating' => $GLOBALS[$class]->getAddonRating(),
+                                                    'author' => $GLOBALS[$class]->getAddonAuthor(),
+                                                    'authorWWW' => $GLOBALS[$class]->getAddonAuthorWWW(),
+                                                    'thumbnail' => $GLOBALS[$class]->getAddonThumbnail(),
+                                                    'version' => $GLOBALS[$class]->getAddonVersion(),
+                                                    'compatibility' => $GLOBALS[$class]->getCompatibility(),
+                                                    'installed' => $GLOBALS[$class]->isInstalled(),
+                                                    'enabled' => $GLOBALS[$class]->isEnabled());  
         
-        if ($addon['enabled']) {
-          $enabled .= $addon['path'] . ';';
-        }  
+        if ($GLOBALS[$class]->isEnabled()) $enabled .= $addon['path'] . ';';
       }
     }   
        

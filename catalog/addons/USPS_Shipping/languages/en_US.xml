@@ -13,7 +13,7 @@
     </definition>  
     <definition>
       <key>shipping_usps_title</key>
-      <value><![CDATA[United States Postal Service]]></value>
+      <value><![CDATA[U.S. Postal Service]]></value>
       <group>modules-shipping</group>
     </definition>
     <definition>

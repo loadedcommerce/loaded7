@@ -88,7 +88,7 @@ class lC_Shipping_usps extends lC_Shipping {
     global $lC_Language, $lC_ShoppingCart;
 
     $this->_setMachinable('False');
-    $this->_setContainer('None');
+    $this->_setContainer('');
     $this->_setSize('REGULAR');
 
     // usps doesnt accept zero weight
@@ -155,7 +155,7 @@ class lC_Shipping_usps extends lC_Shipping {
     global $lC_ShoppingCart;
 
     if ($lC_ShoppingCart->getShippingAddress('country_id') == SHIPPING_ORIGIN_COUNTRY) {
-      $request  = '<RateV4Request USERID="' . ADDONS_SHIPPING_USPS_SHIPPING_USERID . '"><Revision>2</Revision>';
+      $request  = '<RateV4Request USERID="' . ADDONS_SHIPPING_USPS_SHIPPING_USERID . '">';
       $services_count = 0;
 
       if (isset($this->service)) {
@@ -183,37 +183,34 @@ class lC_Shipping_usps extends lC_Shipping {
 
       $request = 'API=RateV4&XML=' . urlencode($request);
     } else {
-      $request  = '<RateV2Request USERID="' . ADDONS_SHIPPING_USPS_SHIPPING_USERID . '">' .
+      $request  = '<IntlRateV2Request USERID="' . ADDONS_SHIPPING_USPS_SHIPPING_USERID . '">' .
                   '<Package ID="0">' .
                   '<Pounds>' . $this->pounds . '</Pounds>' .
                   '<Ounces>' . $this->ounces . '</Ounces>' .
                   '<MailType>Package</MailType>' .
                   '<Country>' . $this->countries[$lC_ShoppingCart->getShippingAddress('country_iso_code_2')] . '</Country>' .
                   '</Package>' .
-                  '</RateV2Request>';
+                  '</IntlRateV2Request>';
 
       $request = 'API=IntlRateV2&XML=' . urlencode($request);
     }
 
     switch (ADDONS_SHIPPING_USPS_SHIPPING_SERVER) {
       case 'Production': $usps_server = 'http://production.shippingapis.com/ShippingAPI.dll';
-                         $api_dll = 'ShippingAPI.dll';
                          break;
       case 'Test':
       default:           $usps_server = 'http://testing.shippingapis.com/ShippingAPITest.dll';
-                         $api_dll = 'ShippingAPITest.dll';
                          break;
     }
-    
-echo htmlentities($usps_server . '?' . $request) . '<br><br>';    
 
-    $response = transport::getResponse(array('url' => $usps_server . '?' . $request, 'method' => 'get'));
-    
-echo htmlentities($response);
-die();    
+    $result = transport::getResponse(array('url' => $usps_server . '?' . $request, 'method' => 'get'));
+
+    $response = utility::xml2arr($result);
 
     $rates = array();
+    
     if ($lC_ShoppingCart->getShippingAddress('country_id') == SHIPPING_ORIGIN_COUNTRY) {
+      /*
       if (sizeof($response) == '1') {
         if (preg_match('/<Error>/', $response[0])) {
           $number = preg_match('/<Number>(.*)</Number>/', $response[0], $regs);
@@ -224,18 +221,13 @@ die();
           return array('error' => $number . ' - ' . $description);
         }
       }
-
-      $n = sizeof($response);
-      for ($i=0; $i<$n; $i++) {
-        if (strpos($response[$i], '<Postage>')) {
-          $service = preg_match('/<Service>(.*)</Service>/', $response[$i], $regs);
-          $service = $regs[1];
-          $postage = preg_match('/<Postage>(.*)</Postage>/', $response[$i], $regs);
-          $postage = $regs[1];
-
-          $rates[] = array($service => $postage);
-        }
+      */
+      foreach ($response['RateV4Response']['Package'] as $key => $rate) {
+        if (is_array($rate['Postage'])) {
+          $rates[] = array('<div class="moduleSubRow" style="margin-left:6px;">' . substr($rate['Postage']['MailService'], 0, strpos($rate['Postage']['MailService'], '&lt;')) . '</div>' => $rate['Postage']['Rate']);
+        }  
       }
+      
     } else {
       if (preg_match('/<Error>/', $response[0])) {
         $number = preg_match('/<Number>(.*)</Number>/', $response[0], $regs);

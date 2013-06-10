@@ -2181,7 +2181,9 @@
 			/* Redraw the table */
 			oSettings._iDisplayStart = 0;
 			_fnCalculateEnd( oSettings );
-			_fnDraw( oSettings );
+      
+      
+			setTimeout('_fnDraw( oSettings )', 500);
 			
 			/* Rebuild search array 'offline' */
 			_fnBuildSearchArray( oSettings, 0 );
