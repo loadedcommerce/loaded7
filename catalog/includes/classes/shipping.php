@@ -22,16 +22,17 @@ class lC_Shipping {
 
   // class constructor
   public function lC_Shipping($module = '') {
-    global $lC_Database, $lC_Language, $lC_Vqmod;
+    global $lC_Database, $lC_Language, $lC_Addons, $lC_Vqmod;
 
     $this->_quotes =& $_SESSION['lC_ShoppingCart_data']['shipping_quotes'];
 
     $Qmodules = $lC_Database->query("select code, modules_group from :table_templates_boxes where modules_group LIKE '%shipping%'");
     $Qmodules->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-    $Qmodules->setCache('modules-shipping');
+    //$Qmodules->setCache('modules-shipping');
     $Qmodules->execute();
 
     while ($Qmodules->next()) {
+      
       if ($Qmodules->value('modules_group') == 'shipping') {
         if (!file_exists('includes/modules/shipping/' . $Qmodules->value('code') . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1)))) {
           $this->removeModule($Qmodules->value('code'));
@@ -53,7 +54,7 @@ class lC_Shipping {
           
       }        
     }
-   
+    
     $Qmodules->freeResult();
     
     if (empty($this->_modules) === false) {
@@ -235,7 +236,7 @@ class lC_Shipping {
           if (strstr($module, '|')) {
             $mArr = explode('|', $module);
             $module = $mArr[0];
-          }      
+          }   
               
           if ($GLOBALS['lC_Shipping_' . $module]->isEnabled()) {
             $include_quotes[] = 'lC_Shipping_' . $module;

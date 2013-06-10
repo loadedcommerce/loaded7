@@ -1,6 +1,6 @@
 <?php
-/**
-  $Id: addons.php v1.0 2013-01-01 datazen $
+/*
+  $Id: cache.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -13,18 +13,43 @@
 */
 class lC_Addons {
 
-  // class constructor
-  public function lC_Addons() {
+  private $_data;
+  
+  // class contructor 
+  public function __construct() {
+    
+    if (array_key_exists('login', $_GET)) return false;
+
+    if ( !isset($_SESSION['lC_Addons_data']) ) {
+      $this->_initialize();
+    }
+
+    $this->_data = $_SESSION['lC_Addons_data'];
+  } 
+  
+  // class methods
+  public function getAll() {
+    return $this->_data;
+  } 
+  
+  public function isEnabled($addon) {
+    return ($_SESSION['lC_Addons_data'][$addon]['enabled'] == '1');
+  }
+  
+  public function reset() {
+    if (isset($_SESSION['lC_Addons_data'])) unset($_SESSION['lC_Addons_data']);
     $this->_initialize();
   }
   
+  // private methods
   protected function _initialize() {
+    
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
     $lC_DirectoryListing->setRecursive(true);
     $lC_DirectoryListing->setIncludeDirectories(false);
     $lC_DirectoryListing->setCheckExtension('php');
     $lC_DirectoryListing->setStats(true);
-    
+      
     $enabled = '';
     $lC_Addons_data = array();
     foreach ( $lC_DirectoryListing->getFiles() as $addon ) { 
@@ -44,28 +69,31 @@ class lC_Addons {
         $addon['description'] = $GLOBALS[$class]->getAddonDescription();
         $addon['rating'] = $GLOBALS[$class]->getAddonRating();
         $addon['author'] = $GLOBALS[$class]->getAddonAuthor();
+        $addon['authorWWW'] = $GLOBALS[$class]->getAddonAuthorWWW();
         $addon['thumbnail'] = $GLOBALS[$class]->getAddonThumbnail();
         $addon['version'] = $GLOBALS[$class]->getAddonVersion();
+        $addon['compatibility'] = $GLOBALS[$class]->getCompatibility();
         $addon['installed'] = $GLOBALS[$class]->isInstalled();
         $addon['enabled'] = $GLOBALS[$class]->isEnabled();
-        $addon['valid'] = $GLOBALS[$class]->isValid();        
+        
+        $_SESSION['lC_Addons_data'][$class] = array('type' => $addon['type'],
+                                                    'title' => $addon['title'],
+                                                    'description' => $addon['description'],
+                                                    'rating' => $addon['rating'],
+                                                    'author' => $addon['author'],
+                                                    'authorWWW' => $addon['authorWWW'],
+                                                    'thumbnail' => $addon['thumbnail'],
+                                                    'version' => $addon['version'],
+                                                    'compatibility' => $addon['compatibility'],
+                                                    'installed' => $addon['installed'],
+                                                    'enabled' => $addon['enabled']);  
         
         if ($addon['enabled']) {
           $enabled .= $addon['path'] . ';';
-        }
-        
-        $_SESSION['lC_Addons_data'][$class] = array('type' => $GLOBALS[$class]->getAddonType(),
-                                                    'title' => $GLOBALS[$class]->getAddonTitle(),
-                                                    'description' => $GLOBALS[$class]->getAddonDescription(),
-                                                    'rating' => $GLOBALS[$class]->getAddonRating(),
-                                                    'author' => $GLOBALS[$class]->getAddonAuthor(),
-                                                    'thumbnail' => $GLOBALS[$class]->getAddonThumbnail(),
-                                                    'version' => $GLOBALS[$class]->getAddonVersion(),
-                                                    'installed' => $GLOBALS[$class]->isInstalled(),
-                                                    'enabled' => $GLOBALS[$class]->isEnabled(),
-                                                    'valid' => $GLOBALS[$class]->isValid()); 
+        }  
       }
-    }
+    }   
+       
     if ($enabled != '') $enabled = substr($enabled, 0, -1);
     if (!file_exists(DIR_FS_WORK . 'cache/addons.cache')) {
       file_put_contents(DIR_FS_WORK . 'cache/addons.cache', serialize($enabled));

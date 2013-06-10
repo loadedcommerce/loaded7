@@ -13,6 +13,8 @@
 
   @function The lC_Updater_Admin class manages zM services
 */
+require_once(DIR_FS_CATALOG . 'includes/classes/addons.php');
+
 class lC_Store_Admin { 
  /*
   * Returns the addons datatable data for listings
@@ -141,6 +143,7 @@ class lC_Store_Admin {
     if ( $error === false ) {
       $lC_Database->commitTransaction();
 
+      self::_resetAddons();
       lC_Cache::clear('vqmods');
       lC_Cache::clear('vqmoda');
       lC_Cache::clear('configuration');
@@ -330,8 +333,10 @@ class lC_Store_Admin {
         $Qinstall->bindValue(':modules_group', $modules_group);
         $Qinstall->execute();
 
+        self::_resetAddons();
         lC_Cache::clear('modules-addons');
         lC_Cache::clear('configuration');
+        lC_Cache::clear('addons');
 
         return true;
       }
@@ -382,13 +387,19 @@ class lC_Store_Admin {
         $Qdel->execute();
       }      
 
+      self::_resetAddons();
       lC_Cache::clear('modules-addons');
       lC_Cache::clear('configuration');
-
+      lC_Cache::clear('addons');
+      
       return true;
     }
 
     return false;
-  }  
+  } 
+  
+  private static function _resetAddons() {
+    if (isset($_SESSION['lC_Addons_data'])) unset($_SESSION['lC_Addons_data']);
+  }   
 }
 ?>
