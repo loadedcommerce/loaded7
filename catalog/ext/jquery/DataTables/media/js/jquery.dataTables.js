@@ -1360,7 +1360,7 @@
 		 */
 		function _fnDraw( oSettings )
 		{
-			/* Provide a pre-callback function which can be used to cancel the draw is false is returned */
+      /* Provide a pre-callback function which can be used to cancel the draw is false is returned */
 			var aPreDraw = _fnCallbackFire( oSettings, 'aoPreDrawCallback', 'preDraw', [oSettings] );
 			if ( $.inArray( false, aPreDraw ) !== -1 )
 			{
@@ -1489,8 +1489,11 @@
 
 				anRows[ iRowCount ].appendChild( nTd );
 			}
-
-			/* Header and footer callbacks */
+      
+      // added for responsive on server side processing of datatables
+      $('#dataTable').responsiveTable();
+      
+      /* Header and footer callbacks */
 			_fnCallbackFire( oSettings, 'aoHeaderCallback', 'header', [ $(oSettings.nTHead).children('tr')[0],
 				_fnGetDataMaster( oSettings ), oSettings._iDisplayStart, oSettings.fnDisplayEnd(), oSettings.aiDisplay ] );
 
@@ -1567,16 +1570,19 @@
 			{
 				/* Sorting will refilter and draw for us */
 				_fnSort( oSettings, oSettings.oPreviousSearch );
+        alert('1');
 			}
 			else if ( oSettings.oFeatures.bFilter )
 			{
 				/* Filtering will redraw for us */
 				_fnFilterComplete( oSettings, oSettings.oPreviousSearch );
+        alert('2');      
 			}
 			else
 			{
 				_fnCalculateEnd( oSettings );
 				_fnDraw( oSettings );
+        alert('3');
 			}
 		}
 
@@ -9229,7 +9235,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "<span class='hide-below-480'>Showing </span>_START_ to _END_ of _TOTAL_ entries",
 
 
 			/**
@@ -9248,7 +9254,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			"sInfoEmpty": "<span class='hide-below-480'>Showing </span>0 to 0 of 0 entries",
 
 
 			/**

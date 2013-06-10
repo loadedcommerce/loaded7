@@ -12,15 +12,15 @@
   @license    http://loadedcommerce.com/license.html
 */
 global $lC_Template;
-$cSearch = (isset($_GET['cID']) && $_GET['cID'] != null ? '&cSearch=' . $_GET['cID'] : null);
+$cSearch = (isset($_GET['cID']) && $_GET['cID'] != null ? '&cSearch=' . $_GET['cID'] : null); 
 ?>
 <script>
   $(document).ready(function() {
     var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';            
     var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA' . $cSearch); ?>';
     var quickAdd = '<?php echo (isset($_GET['action']) && $_GET['action'] == 'quick_add') ? true : false; ?>';
-    
-  oTable = $('#dataTable').dataTable({
+  
+    oTable = $('#dataTable').dataTable({
       "bProcessing": true,
       "bServerSide": true,
       "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
@@ -35,7 +35,6 @@ $cSearch = (isset($_GET['cID']) && $_GET['cID'] != null ? '&cSearch=' . $_GET['c
                     { "sWidth": "10%", "bSortable": true, "sClass": "hide-on-tablet hide-on-mobile dataColDate" },
                     { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
     });
-    $('#dataTable').responsiveTable();
         
     setTimeout('hideElements()', 800); // because of server-side processing we need to delay for race condition
          

@@ -547,7 +547,7 @@
   <script src="../ext/jquery/fileuploader.js"></script> 
   <script src="../ext/jquery/jquery-ui-sortable.min.js"></script> 
   <script src="../ext/jquery/glDatePicker/glDatePicker.min.js"></script>
-  <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.min.js"></script>
+  <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.js"></script>
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.reloadAjax.js"></script>
   <script src="../ext/jquery/jquery.details.min.js"></script>
   <script src="../ext/jquery/jquery.blink.js"></script>
