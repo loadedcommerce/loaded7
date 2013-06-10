@@ -225,9 +225,9 @@ class lC_Products_Admin {
       $result['previewHtml'] .= '  </table>';
       $result['previewHtml'] .= '  <p>' . $lC_Image->show($lC_ObjectInfo->get('image'), $products_name[$l['id']], 'align="right" hspace="5" vspace="5"', 'product_info') . $products_description[$l['id']] . '</p>';
       if ( !empty($products_url[$l['id']]) ) {
-        $result['previewHtml'] .= '<p>' . sprintf($lC_Language->get('more_product_information'), lc_output_string_protected($products_url[$l['id']])) . '</p>';
+        $result['previewHtml'] .= '<p>' . sprintf($lC_Language->get('text_more_product_information'), lc_output_string_protected($products_url[$l['id']])) . '</p>';
       }
-      $result['previewHtml'] .= '<p align="center">' . sprintf($lC_Language->get('product_date_added'), lC_DateTime::getLong($lC_ObjectInfo->get('products_date_added'))) . '</p>';
+      $result['previewHtml'] .= '<p align="center">' . sprintf($lC_Language->get('text_product_date_added'), lC_DateTime::getLong($lC_ObjectInfo->get('products_date_added'))) . '</p>';
       $result['previewHtml'] .= '</div>';
     }
 

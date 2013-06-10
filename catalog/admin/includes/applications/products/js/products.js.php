@@ -134,8 +134,16 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         $('#additional-gallery-trigger').addClass('with-right-arrow grey-arrow');  
         $('#additional-gallery-trigger > a').addClass('selected-menu');  
       }
-    }   
-
+    }
+    
+    // added to check if image file exists
+    function checkImageExists(file){
+      return $.ajax({
+        url: file,
+        type: 'HEAD'
+      });
+    }
+          
     function showImages(data) {
       for ( i=0; i < data.entries.length; i++ ) {
         var entry = data.entries[i];
@@ -152,7 +160,11 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         if ( entry[6] == '1' ) { // default_flag         
           var newdiv = '<span id="image_' + entry[0] + '" style="' + style + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
           newdiv += '<img class="framed" src="<?php echo '../images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /><br />' + entry[3];
-          var prevdiv = '<img src="<?php echo '../images/products/large/'; ?>' + entry[2] + '" border="0" style="max-width:100%;" />';
+          checkImageExists('../images/products/large/' + entry[2]).done(function() {
+            $('#imagePreviewContainer').html('<img src="<?php echo '../images/products/large/'; ?>' + entry[2] + '" style="max-width:100%;" />');
+          }).fail(function() {
+            $('#imagePreviewContainer').html('<img src="<?php echo '../images/no-image.png'; ?>" style="max-width:100%;" />');
+          });
           if ( entry[1] == '1' ) {    
             newdiv += '<div class="show-on-parent-hover" style="position:relative;"><span class="button-group compact children-tooltip" style="position:absolute; top:-42px; left:11px;"><a href="javascript://" class="button icon-play orange-gradient" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showImage(\'' + entry[4] + '\', \'' + entry[7] + '\', \'' + entry[8] + '\');"></a><a href="#" class="button icon-cross red-gradient" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
           } else {
@@ -183,8 +195,6 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           }
         }      
       }
-      
-      $('#imagePreviewContainer').html(prevdiv);
 
       $('#additionalOriginal').sortable({
         update: function(event, ui) {
