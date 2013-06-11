@@ -187,9 +187,9 @@ class lC_Categories_Admin {
 
       foreach ( $lC_Language->getAll() as $l ) {
         if ( is_numeric($id) ) {
-          $Qcd = $lC_Database->query('update :table_categories_description set categories_name = :categories_name, categories_menu_name = :categories_menu_name, categories_blurb = :categories_blurb, categories_description = :categories_description, categories_tags = :categories_tags, categories_meta_title = :categories_meta_title, categories_meta_keywords = :categories_meta_keywords, categories_meta_description = :categories_meta_description where categories_id = :categories_id and language_id = :language_id');
+          $Qcd = $lC_Database->query('update :table_categories_description set categories_name = :categories_name, categories_menu_name = :categories_menu_name, categories_blurb = :categories_blurb, categories_description = :categories_description, categories_tags = :categories_tags where categories_id = :categories_id and language_id = :language_id');
         } else {
-          $Qcd = $lC_Database->query('insert into :table_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags, categories_meta_title, categories_meta_keywords, categories_meta_description) values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_tags, :categories_meta_title, :categories_meta_keywords, :categories_meta_description)');
+          $Qcd = $lC_Database->query('insert into :table_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_tags)');
         }
 
         $Qcd->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
@@ -200,9 +200,6 @@ class lC_Categories_Admin {
         $Qcd->bindValue(':categories_blurb', $data['blurb'][$l['id']]);
         $Qcd->bindValue(':categories_description', $data['description'][$l['id']]);
         $Qcd->bindValue(':categories_tags', $data['tags'][$l['id']]);
-        $Qcd->bindValue(':categories_meta_title', $data['meta_title'][$l['id']]);
-        $Qcd->bindValue(':categories_meta_keywords', $data['meta_keywords'][$l['id']]);
-        $Qcd->bindValue(':categories_meta_description', $data['meta_description'][$l['id']]);
         $Qcd->setLogging($_SESSION['module'], $category_id);
         $Qcd->execute();
 

@@ -127,11 +127,11 @@
                       </p>
                       <br />
                       <p class="button-height block-label">
-                        <label class="label" for="<?php echo 'categories_meta_keywords[' . $l['id'] . ']'; ?>">
-                          <?php echo $lC_Language->get('field_meta_keywords'); ?>
+                        <label class="label" for="<?php echo 'categories_tags[' . $l['id'] . ']'; ?>">
+                          <?php echo $lC_Language->get('field_tags'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                         </label>
-                        <?php echo lc_draw_input_field('categories_meta_keywords[' . $l['id'] . ']', null, 'class="required input full-width mid-margin-top"'); ?>
+                        <?php echo lc_draw_input_field('categories_tags[' . $l['id'] . ']', null, 'class="required input full-width mid-margin-top"'); ?>
                       </p>
                     </div>
                     <div class="clear-both"></div>
@@ -185,7 +185,7 @@
                     <div class="six-columns twelve-columns-mobile">
                       <label class="label" for="parent_id"><b><?php echo $lC_Language->get('text_parent'); ?></b></label> 
                       <select class="select full-width" id="parent_id" name="parent_id">
-                        <option value="top">Top</option>
+                        <option value="0">Top</option>
                         <?php
                           foreach ($assignedCategoryTree->getArray() as $value) {
                             $selected = ($value['id'] == $_GET['categories']) ? ' selected' : '';

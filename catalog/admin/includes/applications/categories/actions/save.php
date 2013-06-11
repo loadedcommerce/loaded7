@@ -34,11 +34,7 @@
                           'menu_name' =>  $_POST['categories_menu_name'],
                           'blurb' =>  $_POST['categories_blurb'],
                           'description' =>  $_POST['categories_description'],
-                          //'keyword' =>  $_POST['categories_keyword'],
-                          'tags' =>  $_POST['categories_tags'],
-                          'meta_title' =>  $_POST['categories_meta_title'],
-                          'meta_keywords' =>  $_POST['categories_meta_keywords'],
-                          'meta_description' => $_POST['categories_meta_description'] );
+                          'tags' =>  $_POST['categories_tags'] );
            /*
             * Save the category information
             *
