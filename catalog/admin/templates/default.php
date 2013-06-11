@@ -247,7 +247,7 @@
                 <ul class="inputs mega-search-border">
                   <li>
                     <span class="icon-search mid-margin-left"></span>
-                    <input class="input-unstyled" type="text" onkeyup="search(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q" id="megaSearch">
+                    <input class="input-unstyled noEnterSubmit" type="text" onkeyup="search(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q" id="megaSearch">
                   </li>
                 </ul>
               </form>
