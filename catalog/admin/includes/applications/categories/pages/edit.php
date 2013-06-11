@@ -21,21 +21,13 @@
     $categories_menu_name = array();
     $categories_blurb = array();
     $categories_description = array();
-    //$categories_keyword = array();
     $categories_tags = array();
-    $categories_meta_title = array();
-    $categories_meta_keywords = array();
-    $categories_meta_description = array();
     while ($Qcd->next()) {
       $categories_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_name');
       $categories_menu_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_menu_name');
       $categories_blurb[$Qcd->valueInt('language_id')] = $Qcd->value('categories_blurb');
       $categories_description[$Qcd->valueInt('language_id')] = $Qcd->value('categories_description');
-      //$categories_keyword[$Qcd->valueInt('language_id')] = $Qcd->value('categories_keyword');
       $categories_tags[$Qcd->valueInt('language_id')] = $Qcd->value('categories_tags');
-      $categories_meta_title[$Qcd->valueInt('language_id')] = $Qcd->value('categories_meta_title');
-      $categories_meta_keywords[$Qcd->valueInt('language_id')] = $Qcd->value('categories_meta_keywords');
-      $categories_meta_description[$Qcd->valueInt('language_id')] = $Qcd->value('categories_meta_description');
     }
   }
   
@@ -159,11 +151,11 @@
                       </p>
                       <br />
                       <p class="button-height block-label">
-                        <label class="label" for="<?php echo 'categories_meta_keywords[' . $l['id'] . ']'; ?>">
-                          <?php echo $lC_Language->get('field_meta_keywords'); ?>
+                        <label class="label" for="<?php echo 'categories_tags[' . $l['id'] . ']'; ?>">
+                          <?php echo $lC_Language->get('field_tags'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                         </label>
-                        <?php echo lc_draw_input_field('categories_meta_keywords[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_meta_keywords[$l['id']]) ? $categories_meta_keywords[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
+                        <?php echo lc_draw_input_field('categories_tags[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_tags[$l['id']]) ? $categories_tags[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
                       </p>
                     </div>
                     <div class="clear-both"></div>
@@ -203,16 +195,21 @@
                         <input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"<?php echo ($lC_ObjectInfo->getInt('categories_link_target') == 1) ? ' checked' : ''; ?>> <?php echo $lC_Language->get('text_new_window'); ?>
                       </p>
                     </div>
-                    <div class="six-columns twelve-columns-mobile" id="categories_custom"<?php echo ($lC_ObjectInfo->get('categories_custom_url') != '') ? '' : ' style="display:none;"'; ?>>  
-                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
+                    <div class="six-columns twelve-columns-mobile">  
+                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey no-margin-left small-margin-right'); ?>
+                      <span id="categories_custom">
+                      <?php if ($lC_ObjectInfo->get('categories_custom_url') != '') { ?>
                       <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"<?php echo (($lC_ObjectInfo->get('categories_custom_url') != '') ? ' value="' . $lC_ObjectInfo->get('categories_custom_url') . '"' : '') . (($lC_ObjectInfo->get('categories_mode') != 'override') ? ' readonly="readonly"' : ''); ?>> &nbsp;<span id="custom_url_text"><strong><?php echo $lC_Language->get('text_custom_link'); ?></strong></span>
+                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey mid-margin-left'); ?>
+                      <?php } ?>
+                      </span>
                     </div>
                   </div>
                   <div class="columns">
                     <div class="six-columns twelve-columns-mobile">
                       <label class="label" for="parent_id"><b><?php echo $lC_Language->get('text_parent'); ?></b></label> 
                       <select class="select full-width" id="parent_id" name="parent_id">
-                        <option value="0"><?php echo $lC_Language->get('top_category'); ?></option>
+                        <option value="0"><?php echo $lC_Language->get('text_top_category'); ?></option>
                         <?php
                           foreach ($assignedCategoryTree->getArray() as $value) {
                             echo '<option value="' . $value['id'] . '"' . ( $lC_ObjectInfo->getInt('parent_id') == $value['id'] ? ' selected' : '') . ( (in_array($value['id'], lC_Categories_Admin::getChildren($_GET['categories']))) ? ' disabled' : '' ) . ( ($value['id'] == $lC_ObjectInfo->getInt('categories_id')) ? ' disabled' : '' ) . '>' . $value['title'] . '</option>' . "\n";
@@ -221,12 +218,7 @@
                       </select>
                     </div>
                     <div class="six-columns twelve-columns-mobile small-margin-top">  
-                      <span class="info-spot on-left grey mid-margin-right">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
+                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey mid-margin-right'); ?>
                       <input type="checkbox" class="switch medium" id="categories_show_in_listings" name="categories_show_in_listings"<?php echo ($lC_ObjectInfo->getInt('categories_show_in_listings') == 1) ? ' checked' : ''; ?>> <strong><?php echo $lC_Language->get('text_show_in_listings'); ?></strong>
                     </div>
                   </div>
@@ -245,12 +237,7 @@
                     <p class="mid-margin-bottom">
                       <input type="radio" class="radio small-margin-right" name="categories_page_type" value="html" checked disabled>
                       <?php echo $lC_Language->get('text_standard_html_page'); ?>  
-                      <span class="info-spot on-left grey large-margin-left">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
+                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey mid-margin-left'); ?>
                     </p>
                     <p class="mid-margin-bottom">
                       <input type="radio" class="radio small-margin-right" name="categories_page_type" value="photo" disabled>
@@ -278,12 +265,7 @@
                         <b>Go Pro!</b> and enjoy this feature!
                       </span>
                     </span>  
-                    <span class="info-spot on-left grey large-margin-left">
-                      <span class="icon-info-round"></span>
-                      <span class="info-bubble">
-                        Put the bubble text here
-                      </span>
-                    </span>
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey large-margin-left'); ?>
                     <p class="small-margin-top"><?php echo $lC_Language->get('text_path_to_file'); ?></p>
                   </div>
                 </div>
@@ -298,12 +280,7 @@
                   <label class="label" for="<?php echo 'categories_slug'; ?>">
                     <!--<small>Additional information</small>-->
                     <?php echo $lC_Language->get('field_slug'); ?>
-                    <span class="info-spot on-left grey float-right small-margin-bottom">
-                      <span class="icon-info-round"></span>
-                      <span class="info-bubble">
-                        Put the bubble text here
-                      </span>
-                    </span>
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                   </label>
                   <?php echo lc_draw_input_field('categories_slug', (isset($lC_ObjectInfo) && isset($categories_slug) ? $categories_slug : null), 'class="required input full-width mid-margin-top" placeholder="category-url-slug" disabled'); ?>
                 </div>
@@ -317,12 +294,7 @@
                         <b>Go Pro!</b> and enjoy this feature!
                       </span>
                     </span>  
-                    <span class="info-spot on-left grey float-right small-margin-bottom">
-                      <span class="icon-info-round"></span>
-                      <span class="info-bubble">
-                        Put the bubble text here
-                      </span>
-                    </span>
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                   </label>
                   <select class="select full-width mid-margin-top" id="categories_product_class" name="categories_product_class" disabled>
                     <option>Common</option>
@@ -337,17 +309,12 @@
                   <p class="margin-bottom">
                     <label class="label" for="categories_access_levels"><?php echo $lC_Language->get('field_access_levels'); ?></label>
                     <span class="info-spot on-left grey">
-                      <small class="tag orange-bg mid-margin-left margin-right">Pro</small>
+                      <small class="tag orange-bg mid-margin-left margin-right"><?php echo $lC_Language->get('text_b2b'); ?></small>
                       <span class="info-bubble">
-                        <b>Go Pro!</b> and enjoy this feature!
+                        <b>Get B2B!</b> and enjoy this feature!
                       </span>
                     </span>  
-                    <span class="info-spot on-left grey large-margin-left">
-                      <span class="icon-info-round"></span>
-                      <span class="info-bubble">
-                        Put the bubble text here
-                      </span>
-                    </span>  
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey large-margin-left'); ?>  
                   </p>
                   <p class="margin-left">
                     <input type="checkbox" class="checkbox small-margin-right" disabled> <?php echo $lC_Language->get('access_levels_retail'); ?>

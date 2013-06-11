@@ -353,7 +353,15 @@ $(document).ready(function() {
   
   $("#qrcode-tooltip").click(function() {
     $("#qr-message").show("500");
-  });        
+  });
+  
+  if ($(window).width() < 1380) {
+    $("#category_tabs").removeClass("side-tabs");
+    $("#category_tabs").addClass("standard-tabs");
+  } if ($(window).width() >= 1380) {
+    $("#category_tabs").removeClass("standard-tabs");
+    $("#category_tabs").addClass("side-tabs");
+  }        
      
 });
 

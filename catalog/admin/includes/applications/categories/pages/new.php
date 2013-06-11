@@ -185,7 +185,7 @@
                     <div class="six-columns twelve-columns-mobile">
                       <label class="label" for="parent_id"><b><?php echo $lC_Language->get('text_parent'); ?></b></label> 
                       <select class="select full-width" id="parent_id" name="parent_id">
-                        <option value="0">Top</option>
+                        <option value="0"><?php echo $lC_Language->get('text_top_category'); ?></option>
                         <?php
                           foreach ($assignedCategoryTree->getArray() as $value) {
                             $selected = ($value['id'] == $_GET['categories']) ? ' selected' : '';

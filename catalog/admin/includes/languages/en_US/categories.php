@@ -69,7 +69,7 @@ table_heading_mode = Mode
 table_heading_sort_order = Sort Order
 table_heading_action = Action
  
-top_category = -- Top --
+text_b2b = B2B
 text_category = Category
 text_categories = Categories
 text_categories_image  = Image Preview
@@ -88,5 +88,6 @@ text_path_to_file = path to file from site root
 text_photo_album = Photo Album
 text_standard_html_page = Standard HTML Page
 text_thumbnail_image = Thumbnail Image
-text_to_parent = to which parent category? 
-text_toggle_html_editor = Toggle HTML Editor
+text_to_parent = to which parent category?
+text_toggle_html_editor = Toggle HTML Editor 
+text_top_category = -- Top --
