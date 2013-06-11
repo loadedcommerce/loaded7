@@ -293,8 +293,7 @@ function toggleAddressForm(reset) {
       $("#addAddress").show();
       $('#li-toggle').hide();
     }
-  } else {
-    $("#personalForm")[0].reset();
+  } else {    
     $("#addressBookForm")[0].reset();
     $("#addresBookPersonal").show();
     $("#addAddress").hide();
