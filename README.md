@@ -1,4 +1,4 @@
-<h1>Loaded Commerce 7</h1> 
+<h1>Loaded Commerce 7</h1>
 <h2>A Responsive Ecommerce Web Application</h2>
 
 Based on a 3rd generation e-commerce platform, Loaded 7 includes new mobile responsive template in both admin and catalog. 
