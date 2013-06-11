@@ -582,5 +582,9 @@
   <script src="templates/default/js/tabs.js"></script>    <!-- Must be loaded last -->
   <!-- Load page specific javascript -->
   <?php $lC_Template->loadPageScript($lC_Template->getModule()); ?>
+
+  <!-- Load page specific search box delay javascript -->
+  <?php $lC_Template->loadPageSearchBoxDelayScript($lC_Template->getModule()); ?>
+
 </body>
 </html>
