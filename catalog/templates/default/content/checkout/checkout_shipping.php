@@ -124,13 +124,13 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
                               $counter = 0;
                               foreach ($quotes['methods'] as $methods) {
                                 if ($quotes['id'] . '_' . $methods['id'] == $lC_ShoppingCart->getShippingMethod('id')) {
-                                  echo '          <tr id="defaultSelected" class="moduleRowSelected" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
+                                  echo '<tr id="defaultSelected" class="moduleRowSelected" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
                                 } else {
-                                  echo '          <tr class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
+                                  echo '<tr class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
                                 }
                               ?>
                               <td width="10">&nbsp;</td>
-                              <td width="75%"><?php echo $methods['title']; ?></td>
+                              <td width="75%"><div class="moduleSubRow" style="margin-left:10px;"><?php echo $methods['title']; ?></div></td>
                               <?php
                                 if ( ($lC_Shipping->numberOfQuotes() > 1) || (sizeof($quotes['methods']) > 1) ) {
                                 ?>

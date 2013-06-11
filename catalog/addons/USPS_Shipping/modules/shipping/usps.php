@@ -183,12 +183,26 @@ class lC_Shipping_usps extends lC_Shipping {
 
       $request = 'API=RateV4&XML=' . urlencode($request);
     } else {
+      
+      $POBoxFlag = (preg_match("/^\s*((?:P(?:OST)?.?\s*(?:O(?:FF(?:ICE)?)?)?.?\s*(?:B(?:IN|OX)?)?)+|(?:B(?:IN|OX)+\s+)+)\s*\d+/i", $lC_ShoppingCart->getShippingAddress('street_address'))) ? 'Y' : 'N';
+      
       $request  = '<IntlRateV2Request USERID="' . ADDONS_SHIPPING_USPS_SHIPPING_USERID . '">' .
                   '<Package ID="0">' .
                   '<Pounds>' . $this->pounds . '</Pounds>' .
                   '<Ounces>' . $this->ounces . '</Ounces>' .
                   '<MailType>Package</MailType>' .
+                  '<GXG>' . 
+                  '  <POBoxFlag>' . $POBoxFlag . '</POBoxFlag>' .
+                  '  <GiftFlag>N</GiftFlag>' .
+                  '</GXG>' . 
+                  '<ValueOfContents>' . $lC_ShoppingCart->getTotal() . '</ValueOfContents>' .
                   '<Country>' . $this->countries[$lC_ShoppingCart->getShippingAddress('country_iso_code_2')] . '</Country>' .
+                  '<Container>RECTANGULAR</Container>' .
+                  '<Size>LARGE</Size>' .
+                  '<Width>12</Width>' .
+                  '<Length>12</Length>' .
+                  '<Height>6</Height>' .
+                  '<Girth>0</Girth>' .
                   '</Package>' .
                   '</IntlRateV2Request>';
 
@@ -203,71 +217,40 @@ class lC_Shipping_usps extends lC_Shipping {
                          break;
     }
 
-    $result = transport::getResponse(array('url' => $usps_server . '?' . $request, 'method' => 'get'));
-
-    $response = utility::xml2arr($result);
+    $xmlResponse = transport::getResponse(array('url' => $usps_server . '?' . $request, 'method' => 'get'));
+    $response = utility::xml2arr($xmlResponse);
 
     $rates = array();
-    
     if ($lC_ShoppingCart->getShippingAddress('country_id') == SHIPPING_ORIGIN_COUNTRY) {
-      /*
       if (sizeof($response) == '1') {
-        if (preg_match('/<Error>/', $response[0])) {
-          $number = preg_match('/<Number>(.*)</Number>/', $response[0], $regs);
-          $number = $regs[1];
-          $description = preg_match('/<Description>(.*)</Description>/', $response[0], $regs);
-          $description = $regs[1];
-
-          return array('error' => $number . ' - ' . $description);
+        if (is_array($response['Error'])) {
+          return array('error' => $response['Error']['Number'] . ' - ' . $response['Error']['Description']);
         }
       }
-      */
-      foreach ($response['RateV4Response']['Package'] as $key => $rate) {
-        if (is_array($rate['Postage'])) {
-          $rates[] = array('<div class="moduleSubRow" style="margin-left:6px;">' . substr($rate['Postage']['MailService'], 0, strpos($rate['Postage']['MailService'], '&lt;')) . '</div>' => $rate['Postage']['Rate']);
-        }  
+      if (is_array($response['RateV4Response']['Package'])) {
+        foreach ($response['RateV4Response']['Package'] as $key => $rate) {
+          if (is_array($rate['Postage'])) {
+            $rates[] = array(substr($rate['Postage']['MailService'], 0, strpos($rate['Postage']['MailService'], '&lt;')) => $rate['Postage']['Rate']);
+          }  
+        }                                                                
       }
-      
     } else {
-      if (preg_match('/<Error>/', $response[0])) {
-        $number = preg_match('/<Number>(.*)</Number>/', $response[0], $regs);
-        $number = $regs[1];
-        $description = preg_match('/<Description>(.*)</Description>/', $response[0], $regs);
-        $description = $regs[1];
-
-        return array('error' => $number . ' - ' . $description);
+      if (is_array($response['Error'])) {
+        return array('error' => $response['Error']['Number'] . ' - ' . $response['Error']['Description']);
       } else {
-        $body = $response[0];
-        $services = array();
-        while (true) {
-          if ($start = strpos($body, '<Service ID=')) {
-            $body = substr($body, $start);
-            $end = strpos($body, '</Service>');
-            $services[] = substr($body, 0, $end+10);
-            $body = substr($body, $end+9);
-          } else {
-            break;
-          }
-        }
-
-        $size = sizeof($services);
-        for ($i=0, $n=$size; $i<$n; $i++) {
-          if (strpos($services[$i], '<Postage>')) {
-            $service = preg_match('/<SvcDescription>(.*)</SvcDescription>/', $services[$i], $regs);
-            $service = $regs[1];
-            $postage = preg_match('/<Postage>(.*)</Postage>/', $services[$i], $regs);
-            $postage = $regs[1];
-
-            if (isset($this->service) && ($service != $this->service) ) {
-              continue;
+        if (is_array($response['IntlRateV2Response']['Package'])) {
+          foreach ($response['IntlRateV2Response']['Package'] as $svcArr) {
+            if (is_array($svcArr)) {
+              foreach($svcArr as $svc) {
+                if (isset($svc['Postage'])) {  
+                  $rates[] = array(substr($svc['SvcDescription'], 0, strpos($svc['SvcDescription'], '&lt;')) => $svc['Postage']);
+                }
+              }
             }
-
-            $rates[] = array($service => $postage);
           }
         }
       }
     }
-
     return ((sizeof($rates) > 0) ? $rates : false);
   }
 
