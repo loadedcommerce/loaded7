@@ -23,7 +23,7 @@
         <?php 
           foreach ($lC_Language->getAll() as $value) {
             echo ' ' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('language', 'currency')) . '&language=' . $value['code'], 'AUTO'), $lC_Language->showImage($value['code'])) . ' ';
-          }
+          }                                                                          
         ?>
       </div>
       <ul id="topLinks" class="top_links">
@@ -46,9 +46,9 @@
     <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>logo.png" /></a></h1>
     <?php
     
-//foreach ($_SESSION['lC_Addons_data'] as $addon => $data) {
-//  echo $addon . ' [' . $data['enabled'] . ']<br>';
-//}    
+foreach ($_SESSION['lC_Addons_data'] as $addon => $data) {
+  echo $addon . ' [' . $data['enabled'] . ']<br>';
+}    
     
       if (!empty($content_left)) {
       ?>

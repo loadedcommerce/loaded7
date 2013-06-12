@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>addon_payment_cresecure_title</key>
+      <value><![CDATA[CRE Secure Payments]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>addon_payment_cresecure_description</key>
+      <value><![CDATA[The Turnkey PCI Solution That Delivers Everything You Need: Security, Control, Customer Effectiveness.]]></value>
+      <group>modules-payment</group>
+    </definition>    
+    <definition>
+      <key>payment_cresecure_title</key>
+      <value><![CDATA[CRE Secure Payments]]></value>
+      <group>modules-payment</group>
+    </definition>
+    <definition>
+      <key>payment_cresecure_method_title</key>
+      <value><![CDATA[<img src="addons/CRE_Secure_Payments/images/payment/cresecure-small.png" style="vertical-align:middle"> Payments]]></value>
+      <group>modules-payment</group>
+    </definition>   
+    <definition>
+      <key>payment_cresecure_blurb</key>
+      <value><![CDATA[Your payment is protected by CRE Secure. Checkout with Confidence.]]></value>
+      <group>modules-payment</group>
+    </definition>      
+  </definitions>
+</language>
