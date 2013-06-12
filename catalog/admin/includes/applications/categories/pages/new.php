@@ -82,7 +82,7 @@
                 </script>
               </div>
               <div class="new-row-mobile eight-columns twelve-columns-mobile">
-                <div id="categoryLanguageTabs" class="standard-tabs">
+                <div id="languageTabs" class="standard-tabs">
                   <ul class="tabs">
                   <?php
                     foreach ( $lC_Language->getAll() as $l ) {

@@ -682,6 +682,9 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 .message-menu > li, li.message-menu {
   padding: 2px 30px 3px;
 }
+#title-bar {
+  height: 40px !important;
+}
 
 
 
@@ -713,19 +716,22 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   .field-drop-tabs {
     padding: 13px 20px 17px 85px !important;
   }
+  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
+  #category_tabs { margin: 0 -15px -15px -15px; }
+  #languageTabs { margin: 0 -15px 0 -15px; }
 }
 
 @media screen and (min-width: 320px) and (max-width: 479px) {
   .field-drop-tabs {
     padding: 13px 20px 17px 85px !important;
   }
-}
-     
-@media screen and (min-width: 480px) {
+  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
+  #category_tabs { margin: 0 -15px -15px -15px; }
+  #languageTabs { margin: 0 -15px 0 -15px; }
 }  
   
-@media screen and (min-width: 320px) {
-  #title-bar {
-    height: 40px !important;
-  }
+@media screen and (max-width: 319px) {
+  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
+  #category_tabs { margin: 0 -15px -15px -15px; }
+  #languageTabs { margin: 0 -15px 0 -15px; }
 }
