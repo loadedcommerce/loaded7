@@ -20,12 +20,12 @@ class lC_Payment_moneyorder extends lC_Payment {
   */  
   protected $_title;
  /**
-  * The moneyordere of the payment module
+  * The class of the payment module
   *
   * @var string
   * @access protected
   */  
-  protected $_moneyorder = 'moneyorder';
+  protected $_code = 'moneyorder';
  /**
   * The status of the module
   *
@@ -55,20 +55,20 @@ class lC_Payment_moneyorder extends lC_Payment {
     
     $this->_title = $lC_Language->get('payment_moneyorder_title');
     $this->_method_title = $lC_Language->get('payment_moneyorder_method_title');
-    $this->_status = (defined('ADDONS_PAYMENT_MONEYORDER_STATUS') && (ADDONS_PAYMENT_MONEYORDER_STATUS == '1') ? true : false);
-    $this->_sort_order = (defined('ADDONS_PAYMENT_MONEYORDER_SORT_ORDER') ? ADDONS_PAYMENT_MONEYORDER_SORT_ORDER : null);    
+    $this->_status = (defined('ADDONS_PAYMENT_MONEY_ORDER_STATUS') && (ADDONS_PAYMENT_MONEY_ORDER_STATUS == '1') ? true : false);
+    $this->_sort_order = (defined('ADDONS_PAYMENT_MONEY_ORDER_SORT_ORDER') ? ADDONS_PAYMENT_MONEY_ORDER_SORT_ORDER : null);    
 
     if ($this->_status === true) {
-      if ((int)ADDONS_PAYMENT_MONEYORDER_ORDER_STATUS_ID > 0) {
-        $this->order_status = ADDONS_PAYMENT_MONEYORDER_ORDER_STATUS_ID;
+      if ((int)ADDONS_PAYMENT_MONEY_ORDER_ORDER_STATUS_ID > 0) {
+        $this->order_status = ADDONS_PAYMENT_MONEY_ORDER_ORDER_STATUS_ID;
       }
 
-      if ((int)ADDONS_PAYMENT_MONEYORDER_ZONE > 0) {
+      if ((int)ADDONS_PAYMENT_MONEY_ORDER_ZONE > 0) {
         $check_flag = false;
 
         $Qcheck = $lC_Database->query('select zone_id from :table_zones_to_geo_zones where geo_zone_id = :geo_zone_id and zone_country_id = :zone_country_id order by zone_id');
         $Qcheck->bindTable(':table_zones_to_geo_zones', TABLE_ZONES_TO_GEO_ZONES);
-        $Qcheck->bindInt(':geo_zone_id', ADDONS_PAYMENT_MONEYORDER_ZONE);
+        $Qcheck->bindInt(':geo_zone_id', ADDONS_PAYMENT_MONEY_ORDER_ZONE);
         $Qcheck->bindInt(':zone_country_id', $lC_ShoppingCart->getBillingAddress('country_id'));
         $Qcheck->execute();
 
@@ -95,7 +95,7 @@ class lC_Payment_moneyorder extends lC_Payment {
   * @return array
   */  
   public function selection() {
-    return array('id' => $this->_moneyorder,
+    return array('id' => $this->_code,
                  'module' => '<div class="paymentSelectionTitle">' . $this->_method_title . '</div>');
   }
  /**
@@ -107,7 +107,7 @@ class lC_Payment_moneyorder extends lC_Payment {
   public function process() {
     global $lC_Language;
     
-    $this->email_footer = sprintf($lC_Language->get('payment_moneyorder_email_footer'), ADDONS_PAYMENT_MONEYORDER_PAYTO, STORE_NAME_ADDRESS);
+    $this->email_footer = sprintf($lC_Language->get('payment_moneyorder_email_footer'), ADDONS_PAYMENT_MONEY_ORDER_PAYTO, STORE_NAME_ADDRESS);
     $this->_order_id = lC_Order::insert();
     lC_Order::process($this->_order_id, $this->order_status);
   }

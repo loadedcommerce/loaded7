@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: shipping.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions

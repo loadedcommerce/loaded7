@@ -54,7 +54,7 @@ class lC_Payment_cod extends lC_Payment {
     global $lC_Database, $lC_Language, $lC_ShoppingCart;
     
     $this->_title = $lC_Language->get('payment_cod_title');
-    //$this->_method_title = $lC_Language->get('payment_cod_method_title');
+    $this->_method_title = $lC_Language->get('payment_cod_method_title');
     $this->_status = (defined('ADDONS_PAYMENT_CASH_ON_DELIVERY_STATUS') && (ADDONS_PAYMENT_CASH_ON_DELIVERY_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('ADDONS_PAYMENT_CASH_ON_DELIVERY_SORT_ORDER') ? ADDONS_PAYMENT_CASH_ON_DELIVERY_SORT_ORDER : null);    
 
