@@ -723,4 +723,8 @@ a.shortcut-reports:before { background-position: -70px -495px; }
   #simpleOptionsTable { margin: -10px -15px 0 -20px !important; }
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
+}  
+  
+@media screen and (max-width: 319px) {
+  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
 }     
