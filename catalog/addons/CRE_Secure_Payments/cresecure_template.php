@@ -11,7 +11,7 @@
   @copyright  (c) 2013 Loaded Commerce Team
   @license    http://loadedcommerce.com/license.html
 */ 
-require('includes/application_top.php');
+require('../../includes/application_top.php');
 ?>
 <html>
 <head>
@@ -35,9 +35,10 @@ require('includes/application_top.php');
 #payment-buttons-container { width: 40%; float:right; margin-top:10px; }
 #payment-button { color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#873b7a !important; border:0px; line-height:100%; cursor:pointer; vertical-align:middle; }
 #cancel { font-size:.8em; font-family:Arial,Helvetica,sans-serif; }
-.error_message { background-color: transparent !important; color: #544F4B !important; font-weight: normal !important; font-family:Arial,Helvetica,sans-serif !important; }
-#error_message { border-radius: 1px 1px 1px 1px; font-size: 11px; margin: -19px 21px 15px -10px; padding: 10px 5px; width: auto; background: none repeat scroll 0 0 #FFE3E2; border: 1px solid #D84646; }
-#error_message span { display: block; padding: 6px 0 6px 40px !important; background: url("<?php echo lc_href_link('templates/default/images/shortcodes/error.png', null, 'SSL', null, null, true); ?>") no-repeat scroll left center transparent !important; }
+.error_message { font-family: Arial,Helvetica,sans-serif !important; font-size: 0.75em !important; font-weight: bold !important; background-color:transparent !important; color:red !important; }
+#error_message { margin-bottom:14px; }
+/* #error_message { border-radius: 1px 1px 1px 1px; font-size: 11px; margin: -19px 21px 15px -10px; padding: 10px 5px; width: auto; background: none repeat scroll 0 0 #FFE3E2; border: 1px solid #D84646; }
+/*#error_message span { display: block; padding: 6px 0 6px 40px !important; background: url("<?php //echo lc_href_link('templates/default/images/shortcodes/error.png', null, 'SSL', null, null, true); ?>") no-repeat scroll left center transparent !important; }*/
 #payment-processing { font-family:Arial,Helvetica,sans-serif !important; right: 28px; bottom:-37px !important; }
 
 /* Mobile (landscape) ----------- */

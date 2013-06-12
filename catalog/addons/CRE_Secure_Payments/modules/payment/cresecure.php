@@ -361,7 +361,7 @@ class lC_Payment_cresecure extends lC_Payment {
     $response = transport::getResponse(array('url' => $uid_action_url, 'method' => 'post', 'parameters' => $uid_action_params));   
 
     $params = substr($response, strpos($response, 'uID='));         
-                                  
+             
     return $params;
   }  
 }
