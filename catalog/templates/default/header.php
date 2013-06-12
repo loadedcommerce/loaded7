@@ -124,25 +124,41 @@
         $topNav = lC_Default::getTopCategories();
         foreach ($topNav as $menuItem) {
           if ($menuItem['custom_url'] != '') {
-            echo '<li><a href="' . lc_href_link($menuItem['custom_url'], '', 'NONSSL') . '">' . $menuItem['name'] . '</a></li>';
+            if ($menuItem['mode'] == 'override') {
+              echo '<li><a href="' . $menuItem['custom_url'] . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
+            } else {
+              echo '<li><a href="' . lc_href_link($menuItem['custom_url'], '', 'NONSSL') . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
+            }
           } else {
-            echo '<li><a href="' . lc_href_link(FILENAME_DEFAULT, 'cPath=' . $menuItem['id'], 'NONSSL') . '">' . $menuItem['name'] . '</a></li>';
+            echo '<li><a href="' . lc_href_link(FILENAME_DEFAULT, 'cPath=' . $menuItem['id'], 'NONSSL') . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
           }
         }
       ?>
     </ul>
     <script>
       $(document).ready(function() {
-          var loc = '<?php echo end(explode("/", $_SERVER['REQUEST_URI'])); ?>';
-          if (loc == '' || loc == 'index.php') {
-            $('#navHome').addClass('current');  
-          } else {
-            $('#primaryNav li a').each(function() {
-                if (this.href.indexOf(loc) != -1) {
-                  $(this).addClass('current');
-                }
-            });
-          }
+        var loc = '<?php echo end(explode("/", $_SERVER['REQUEST_URI'])); ?>';
+        if (loc == '' || loc == 'index.php') {
+          $('#navHome').addClass('current');  
+        } else {
+          $('#primaryNav li a').each(function() {
+            var urlStr = this.href.split('/').pop();
+            if (loc.indexOf("index.php") != -1) {
+              if (urlStr == loc) {
+                $(this).addClass('current');
+              }
+            } else if (loc.indexOf("products.php") != -1) {
+              if (urlStr == loc) {
+                $(this).addClass('current');
+              }
+            } else {
+              var str = loc.split("?");
+              if (urlStr.match(str[0])) {
+                $(this).addClass('current'); 
+              }
+            }
+          });
+        }
       });      
     </script>
   </nav>
