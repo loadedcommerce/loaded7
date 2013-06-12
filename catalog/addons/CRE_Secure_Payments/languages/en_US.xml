@@ -18,7 +18,7 @@
     </definition>
     <definition>
       <key>payment_cresecure_method_title</key>
-      <value><![CDATA[<img src="addons/CRE_Secure_Payments/images/payment/cresecure-small.png" style="vertical-align:middle"> Payments]]></value>
+      <value><![CDATA[<img src="addons/CRE_Secure_Payments/images/cresecure-small.png" style="vertical-align:middle"> Payments]]></value>
       <group>modules-payment</group>
     </definition>   
     <definition>

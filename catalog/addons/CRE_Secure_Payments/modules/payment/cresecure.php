@@ -335,7 +335,7 @@ class lC_Payment_cresecure extends lC_Payment {
                                'sess_name' => session_name(),
                                'ip_address' => $_SERVER["REMOTE_ADDR"],
                                'return_url' => lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true),
-                               'content_template_url' => (getenv('HTTPS') == 'on') ? lc_href_link('cresecure_template.php', '', 'SSL', true, true, true) : null,
+                               'content_template_url' => (getenv('HTTPS') == 'on') ? lc_href_link('addons/CRE_Secure_Payments/cresecure_template.php', '', 'SSL', true, true, true) : null,
                                'customer_company' => $lC_ShoppingCart->getBillingAddress('company'),
                                'customer_firstname' => $lC_ShoppingCart->getBillingAddress('firstname'),
                                'customer_lastname' => $lC_ShoppingCart->getBillingAddress('lastname'),

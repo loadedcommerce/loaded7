@@ -17,12 +17,7 @@
       <group>modules-payment</group>
     </definition>
     <definition>
-      <key>payment_moneyorder_description</key>
-      <value><![CDATA[Check or Money Order]]></value>
-      <group>modules-payment</group>
-    </definition>
-    <definition>
-      <key>payment_moneyorder_method</key>
+      <key>payment_moneyorder_method_title</key>
       <value><![CDATA[Check or Money Order]]></value>
       <group>modules-payment</group>
     </definition>

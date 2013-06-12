@@ -46,9 +46,9 @@
     <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>logo.png" /></a></h1>
     <?php
     
-foreach ($_SESSION['lC_Addons_data'] as $addon => $data) {
-  echo $addon . ' [' . $data['enabled'] . ']<br>';
-}    
+//foreach ($_SESSION['lC_Addons_data'] as $addon => $data) {
+//  echo $addon . ' [' . $data['enabled'] . ']<br>';
+//}    
     
       if (!empty($content_left)) {
       ?>
