@@ -685,6 +685,7 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 #title-bar {
   height: 40px !important;
 }
+.cursor-pointer { cursor: pointer; }
 
 
 

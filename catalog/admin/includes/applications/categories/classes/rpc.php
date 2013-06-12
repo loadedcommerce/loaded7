@@ -165,5 +165,22 @@ class lC_Categories_Admin_rpc {
 
     echo json_encode($result);
   }
+ /*
+  * update category show in listings
+  *
+  * @param int $_GET the category id and new value of the show in listings 
+  * @access public
+  * @return json
+  */
+  public static function updateShowInListings() {
+    $show = lC_Categories_Admin::updateShowInListings($_GET['cid'], $_GET['val']);
+    lC_Cache::clear('category_tree');
+    
+    if ($show) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }  
+
+    echo json_encode($result);
+  }
 }
 ?>

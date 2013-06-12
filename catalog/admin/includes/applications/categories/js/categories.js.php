@@ -147,4 +147,15 @@ function toggleEditor(id) {
     $(".clEditorCategoriesDescription").show();
   }
 }
+
+function updateShowInListings(id, val) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateShowInListings&cid=CID&val=VAL'); ?>';
+  $.getJSON(jsonLink.replace('CID', id).replace('VAL', val));
+  if (val == 1) {               
+    $("#show_in_listings_" + id).html('<span class="icon-list icon-size2 icon-green cursor-pointer"></span>');
+  } else {
+    $("#show_in_listings_" + id).html('<span class="icon-forbidden icon-size2 icon-red cursor-pointer"></span>');
+  }
+  _refreshDataTable();
+}
 </script>

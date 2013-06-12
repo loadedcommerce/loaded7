@@ -44,7 +44,7 @@ class lC_Categories_Admin {
     while ( $Qcategories->next() ) {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcategories->value('categories_id') . '" id="' . $Qcategories->value('categories_id') . '"></td>';
       $category = '<td><span class="icon-list icon-size2" title="' . $lC_Language->get('text_sort') . '" style="cursor:move;"></span><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-folder icon-orange margin-left"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
-      $show = '<td><center>' . (($Qcategories->valueInt('categories_show_in_listings') == 1) ? '<span class="icon-list icon-size2 icon-green"></span>' : '<span class="icon-forbidden icon-size2 icon-red"></span>') . '</center></td>';
+      $show = '<td><center id="show_in_listings_' . $Qcategories->value('categories_id') . '" onclick="updateShowInListings(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_show_in_listings') == 1) ? 0 : 1) . '\');">' . (($Qcategories->valueInt('categories_show_in_listings') == 1) ? '<span class="icon-list icon-size2 icon-green cursor-pointer"></span>' : '<span class="icon-forbidden icon-size2 icon-red cursor-pointer"></span>') . '</center></td>';
       $type = '<td>' . $lC_Language->get('text_mode_' . $Qcategories->value('categories_mode')) . '</td>';
       $sort = '<td>' . $Qcategories->valueInt('sort_order') . '<input type="hidden" name="sort_order_' . $Qcategories->value('categories_id') . '" value="' . $Qcategories->valueInt('sort_order') . '" class="sort" /></td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">
@@ -517,6 +517,23 @@ class lC_Categories_Admin {
     $Qupdate->freeResult();
 
     return $nextsort;
+  }
+ /*
+  * update category show in listings db entry
+  * 
+  * @access public
+  * @return true or fales
+  */
+  public static function updateShowInListings($id, $val) {
+    global $lC_Database;
+    
+    $Qupdate = $lC_Database->query('update :table_categories set categories_show_in_listings = :categories_show_in_listings where categories_id = :categories_id');
+    $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qupdate->bindInt(':categories_show_in_listings', $val);
+    $Qupdate->bindInt(':categories_id', $id);
+    $Qupdate->execute();
+
+    return true;
   }
                           
 }
