@@ -498,6 +498,26 @@ class lC_Categories_Admin {
     }
     return true;
   }
+ /*
+  * get next category sort for new entry
+  * 
+  * @access public
+  * @return int
+  */
+  public static function nextSort() {
+    global $lC_Database;
+    
+    $Qupdate = $lC_Database->query('select sort_order from :table_categories where parent_id = :parent_id order by sort_order desc limit 1');
+    $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qupdate->bindInt(':parent_id', ($_GET['categories'] != '') ? $_GET['categories'] : 0);
+    $Qupdate->execute();
+    
+    $nextsort = ($Qupdate->value('sort_order') + 10);
+
+    $Qupdate->freeResult();
+
+    return $nextsort;
+  }
                           
 }
 ?>

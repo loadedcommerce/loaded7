@@ -340,8 +340,11 @@
           </div>
         </div>
       </div>
-      <?php echo lc_draw_hidden_field('sort_order', '10'); ?>
-      <?php echo lc_draw_hidden_field('subaction', 'confirm'); ?>
+      <?php
+        $next_sort = lC_Categories_Admin::nextSort(); 
+        echo lc_draw_hidden_field('sort_order', $next_sort); 
+        echo lc_draw_hidden_field('subaction', 'confirm'); 
+      ?>
     </form>
     <div class="clear-both"></div>
     <div id="floating-button-container" class="six-columns twelve-columns-tablet">
