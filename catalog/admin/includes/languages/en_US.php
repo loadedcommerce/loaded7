@@ -241,6 +241,7 @@ text_mode_new = Link To: New Products
 text_mode_search = Link To: Search Page
 text_mode_cart = Link To: Shopping Cart
 text_mode_account = Link To: My Account
+text_mode_info = Link To: Info
 text_mode_override = Custom Link
 
 update_message_title = Updates are Available!

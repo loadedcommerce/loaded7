@@ -48,6 +48,14 @@ introduction_move_category = Please select which parent this category should be 
 introduction_batch_delete_categories = Please verify the removal of the selected categories and their sub-categories.
 introduction_batch_move_categories = Please choose which parent the selected categories should be moved to.
 
+link_to_specials = Link To: Specials
+link_to_featured = Link To: Featured Products
+link_to_new = Link To: New Products
+link_to_search = Link To: Search
+link_to_cart = Link To: Shopping Cart
+link_to_account = Link To: My Account
+link_to_info = Link To: Info Listing
+
 modal_heading_new_category = New Category
 modal_heading_edit_category = Edit Category
 modal_heading_delete_category = Delete Category

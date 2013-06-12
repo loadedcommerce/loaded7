@@ -151,6 +151,10 @@
               if (urlStr == loc) {
                 $(this).addClass('current');
               }
+            } else if (loc.indexOf("info.php") != -1) {
+              if (urlStr == loc) {
+                $(this).addClass('current');
+              }
             } else {
               var str = loc.split("?");
               if (urlStr.match(str[0])) {

@@ -29,7 +29,7 @@ function _refreshDataTable() {
                   { "sWidth": "35%", "bSortable": true, "sClass": "dataColCategory" },
                   { "sWidth": "6%", "bSortable": true, "sClass": "dataColShow hide-on-mobile", "sType": "string" },
                   { "sWidth": "30%", "bSortable": true, "sClass": "dataColType hide-on-mobile" },
-                  { "sWidth": "9%", "bSortable": true, "sClass": "dataColSort hide-on-mobile" },
+                  { "sWidth": "9%", "bSortable": true, "sClass": "dataColSort hide-on-mobile", "sType": "numeric" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();
@@ -98,7 +98,7 @@ function doSelectFunction(e) {
 
 function customCheck() {
   var cModeVal = $("#categories_mode").val();
-  if (cModeVal == 'specials' /*|| cModeVal == 'featured' */|| cModeVal == 'new' || cModeVal == 'search' || cModeVal == 'cart' || cModeVal == 'account' || cModeVal == 'override') {
+  if (cModeVal == 'specials' /*|| cModeVal == 'featured' */|| cModeVal == 'new' || cModeVal == 'search' || cModeVal == 'cart' || cModeVal == 'account' || cModeVal == 'info' || cModeVal == 'override') {
     $("#categories_custom").show();
     $("#categories_link_target_info").hide();
     if (cModeVal != 'override') {
@@ -116,6 +116,8 @@ function customCheck() {
         $("#categories_custom_url").val('checkout.php');
       } else if (cModeVal == 'account') {
         $("#categories_custom_url").val('account.php');
+      } else if (cModeVal == 'info') {
+        $("#categories_custom_url").val('info.php');
       }
     } else {
       $("#categories_link_target_p").show(); 
