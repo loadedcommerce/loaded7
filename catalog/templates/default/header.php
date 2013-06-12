@@ -135,36 +135,6 @@
         }
       ?>
     </ul>
-    <script>
-      $(document).ready(function() {
-        var loc = '<?php echo end(explode("/", $_SERVER['REQUEST_URI'])); ?>';
-        if (loc == '' || loc == 'index.php') {
-          $('#navHome').addClass('current');  
-        } else {
-          $('#primaryNav li a').each(function() {
-            var urlStr = this.href.split('/').pop();
-            if (loc.indexOf("index.php") != -1) {
-              if (urlStr == loc) {
-                $(this).addClass('current');
-              }
-            } else if (loc.indexOf("products.php") != -1) {
-              if (urlStr == loc) {
-                $(this).addClass('current');
-              }
-            } else if (loc.indexOf("info.php") != -1) {
-              if (urlStr == loc) {
-                $(this).addClass('current');
-              }
-            } else {
-              var str = loc.split("?");
-              if (urlStr.match(str[0])) {
-                $(this).addClass('current'); 
-              }
-            }
-          });
-        }
-      });      
-    </script>
   </nav>
 </div>
 <!--header.php end-->

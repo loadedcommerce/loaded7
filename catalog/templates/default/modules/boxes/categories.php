@@ -14,6 +14,7 @@
 $_SESSION['setCategoriesMaximumLevel'] = 2; // set max levels = 2
 $cPathArr = explode('_', $_GET['cPath']);
 $cPathTop = $cPathArr[0];
+$cLoc = end(explode("/", $_SERVER['REQUEST_URI']));
 ?>
 <!--modules/boxes/categories.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
@@ -30,6 +31,10 @@ $(document).ready(function() {
     }
     if (cPath == this.href.substr(this.href.indexOf('cPath='))) {
       $(this).addClass('current');    
+    }
+    var cLoc = this.href.split('/').pop();
+    if (cLoc == '<?php echo end(explode("/", $_SERVER['REQUEST_URI'])); ?>') {
+      $(this).addClass('active current');
     }
   });
 });      
