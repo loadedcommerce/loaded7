@@ -34,7 +34,7 @@ header .header_search button{background:url(../images/search_btn.png) no-repeat 
 nav .primary_nav{ display:inline-block;margin:5px 2px 3px 0px; position:relative;}
 nav .primary_nav li{ float:left;}
 nav .primary_nav > li{ margin-right:2px;}
-nav .primary_nav > li > a{ display:block; padding: 12px 18px; line-height:100%; font-size:16px; font-weight:bold; color:#544f4b; text-decoration:none; text-transform:uppercase;}
+nav .primary_nav > li > a{ display:block; padding: 12px 16px; line-height:100%; font-size:16px; font-weight:bold; color:#544f4b; text-decoration:none; text-transform:uppercase;}
 .primary_nav > li > a:hover{color:#fff;}
 .primary_nav > li > .current{color:#fff;}
 nav .primary_nav > li:hover > a{color:#fff;}

@@ -43,7 +43,7 @@ class lC_Categories_Admin {
 
     while ( $Qcategories->next() ) {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcategories->value('categories_id') . '" id="' . $Qcategories->value('categories_id') . '"></td>';
-      $category = '<td><span class="icon-list icon-size2" title="' . $lC_Language->get('text_sort') . '" style="cursor:move;"></span><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-folder icon-orange margin-left"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
+      $category = '<td><span class="icon-list icon-size2" title="' . $lC_Language->get('text_sort') . '" style="cursor:move;"></span><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-' . lC_Categories_Admin::getCategoryIcon($Qcategories->value('categories_mode')) . ' margin-left"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
       $show = '<td><center id="show_in_listings_' . $Qcategories->value('categories_id') . '" onclick="updateShowInListings(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_show_in_listings') == 1) ? 0 : 1) . '\');">' . (($Qcategories->valueInt('categories_show_in_listings') == 1) ? '<span class="icon-list icon-size2 icon-green cursor-pointer"></span>' : '<span class="icon-forbidden icon-size2 icon-red cursor-pointer"></span>') . '</center></td>';
       $type = '<td>' . $lC_Language->get('text_mode_' . $Qcategories->value('categories_mode')) . '</td>';
       $sort = '<td>' . $Qcategories->valueInt('sort_order') . '<input type="hidden" name="sort_order_' . $Qcategories->value('categories_id') . '" value="' . $Qcategories->valueInt('sort_order') . '" class="sort" /></td>';
@@ -534,6 +534,36 @@ class lC_Categories_Admin {
     $Qupdate->execute();
 
     return true;
+  }
+ /*
+  * get category icon
+  * 
+  * @access public
+  * @return string
+  */
+  public static function getCategoryIcon($type) {
+    
+    if ($type == 'category') {
+      $icon = 'folder icon-orange';
+    } else if ($type == 'page') {
+      $icon = 'page-list icon-black';
+    } else if ($type == 'specials') {
+      $icon = 'price-tag icon-red';
+    } else if ($type == 'featured') {
+      $icon = 'star icon-orange';
+    } else if ($type == 'new') {
+      $icon = 'new icon-green';
+    } else if ($type == 'search') {
+      $icon = 'search icon-black';
+    } else if ($type == 'cart') {
+      $icon = 'bag icon-orange';
+    } else if ($type == 'account') {
+      $icon = 'user icon-anthracite';
+    } else if ($type == 'override') {
+      $icon = 'globe icon-blue';
+    }
+
+    return $icon;
   }
                           
 }
