@@ -277,16 +277,14 @@
               <legend class="legend"><?php echo $lC_Language->get('field_management_settings'); ?></legend>
               <div class="columns no-margin-bottom">
                 <div class="six-columns twelve-columns-mobile">
-                  <label class="label" for="<?php echo 'categories_slug'; ?>">
-                    <!--<small>Additional information</small>-->
-                    <?php echo $lC_Language->get('field_slug'); ?>
+                  <label class="label" for="<?php echo 'categories_keyword'; ?>">
+                    <?php echo $lC_Language->get('field_keyword'); ?>
                     <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                   </label>
-                  <?php echo lc_draw_input_field('categories_slug', (isset($lC_ObjectInfo) && isset($categories_slug) ? $categories_slug : null), 'class="required input full-width mid-margin-top" placeholder="category-url-slug" disabled'); ?>
+                  <?php echo lc_draw_input_field('categories_keyword', (isset($lC_ObjectInfo) && isset($categories_keyword) ? $categories_keyword : null), 'class="required input full-width mid-margin-top"'); ?>
                 </div>
                 <div class="six-columns twelve-columns-mobile">
                   <label class="label" for="<?php echo 'categories_product_class'; ?>">
-                    <!--<small>Additional information</small>-->
                     <?php echo $lC_Language->get('field_product_class'); ?>
                     <span class="info-spot on-left grey">
                       <small class="tag red-bg mid-margin-left margin-right">Pro</small>
