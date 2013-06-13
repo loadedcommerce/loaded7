@@ -15,7 +15,14 @@ global $lC_Template, $lC_Language;
 ?>
 <script>
 $(document).ready(function() {
-  showAddonType('0', 'Payment'); 
+  
+  var sel = '<?php echo $_GET['type']; ?>';
+  if (sel != '') {
+    if (sel == 'payment') showAddonType('0', 'Payment');   
+    if (sel == 'shipping') showAddonType('1', 'Shipping');   
+  } else { 
+    showAddonType('0', 'Payment'); 
+  }
   $(this).scrollTop(0); 
 });
 
@@ -26,6 +33,7 @@ $('input[name=sortby]').click(function() {
 });
 
 function showAddonType(id, text) {
+  
   var filter = $('input[name=sortby]:radio:checked').val();
   var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&aid=AID&action=getAll&type=TYPE&media=MEDIA&filter=FILTER'); ?>';
   oTable = $('#dataTable').dataTable({
