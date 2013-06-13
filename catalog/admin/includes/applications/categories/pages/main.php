@@ -28,6 +28,8 @@
   <style>
   .dataColCheck { text-align: center; }
   .dataColCategory { text-align: left; }
+  .dataColStatus { text-align: center; }
+  .dataColMode { text-align: left; }
   .dataColSort { text-align: left; }
   .dataColAction { text-align: right; }
   .dataTables_info { bottom: 42px; color:#4c4c4c; }

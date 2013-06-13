@@ -300,7 +300,7 @@ class lC_Default {
         }
       }
     } else {
-      $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_show_in_listings = 1 order by sort_order, cd.categories_name');
+      $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 order by sort_order, cd.categories_name');
       $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qcategories->bindInt(':parent_id', $current_category_id);
@@ -488,7 +488,7 @@ class lC_Default {
   public static function getTopCategories() {
     global $lC_Database, $lC_Language;
     
-    $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_link_target, c.categories_custom_url, c.categories_mode from :table_categories c, :table_categories_description cd where c.parent_id = 0 and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_show_in_listings = 1 order by sort_order, cd.categories_name');
+    $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_link_target, c.categories_custom_url, c.categories_mode from :table_categories c, :table_categories_description cd where c.parent_id = 0 and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 and c.categories_visibility_nav = 1 order by sort_order, cd.categories_name');
     $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
     $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
     $Qcategories->bindInt(':language_id', $lC_Language->getID());

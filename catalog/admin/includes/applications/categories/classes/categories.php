@@ -164,10 +164,10 @@ class lC_Categories_Admin {
     $lC_Database->startTransaction();
 
     if ( is_numeric($id) ) {
-      $Qcat = $lC_Database->query('update :table_categories set categories_image = :categories_image, parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_show_in_listings = :categories_show_in_listings, last_modified = now() where categories_id = :categories_id');
+      $Qcat = $lC_Database->query('update :table_categories set categories_image = :categories_image, parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_status = :categories_status, categories_visibility_nav = :categories_visibility_nav, categories_visibility_box = :categories_visibility_box, last_modified = now() where categories_id = :categories_id');
       $Qcat->bindInt(':categories_id', $id);
     } else {
-      $Qcat = $lC_Database->query('insert into :table_categories (categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_show_in_listings, date_added) values (:categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_show_in_listings, now())');
+      $Qcat = $lC_Database->query('insert into :table_categories (categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added) values (:categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_status, :categories_visibility_nav, :categories_visibility_box, now())');
       $Qcat->bindInt(':parent_id', $data['parent_id']);
     }
 
@@ -178,7 +178,9 @@ class lC_Categories_Admin {
     $Qcat->bindValue(':categories_mode', $data['mode']);
     $Qcat->bindInt(':categories_link_target', $data['link_target']);
     $Qcat->bindValue(':categories_custom_url', $data['custom_url']);
-    $Qcat->bindInt(':categories_show_in_listings', $data['show_in_listings']);
+    $Qcat->bindInt(':categories_status', $data['status']);
+    $Qcat->bindInt(':categories_visibility_nav', $data['nav']);
+    $Qcat->bindInt(':categories_visibility_box', $data['box']);
     $Qcat->setLogging($_SESSION['module'], $id);
     $Qcat->execute();
     

@@ -82,7 +82,6 @@ text_category = Category
 text_categories = Categories
 text_categories_image  = Image Preview
 text_custom_link  = Custom Link
-text_show_in_listings = Show in Listings
 text_drag_drop_to_replace = Drag & Drop or <font color="white">Upload</font>
 text_edit_category = Edit Category
 text_faq = FAQ

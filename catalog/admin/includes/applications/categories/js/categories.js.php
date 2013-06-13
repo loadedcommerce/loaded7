@@ -27,9 +27,9 @@ function _refreshDataTable() {
     "aaSorting": [[4,'asc']],
     "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
                   { "sWidth": "35%", "bSortable": true, "sClass": "dataColCategory" },
-                  { "sWidth": "6%", "bSortable": true, "sClass": "dataColShow hide-on-mobile", "sType": "string" },
-                  { "sWidth": "30%", "bSortable": true, "sClass": "dataColType hide-on-mobile" },
-                  { "sWidth": "9%", "bSortable": true, "sClass": "dataColSort hide-on-mobile", "sType": "numeric" },
+                  { "sWidth": "6%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile", "sType": "string" },
+                  { "sWidth": "30%", "bSortable": true, "sClass": "dataColMode hide-on-mobile" },
+                  { "sWidth": "9%", "bSortable": true, "sClass": "dataColSort hide-on-mobile" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();
