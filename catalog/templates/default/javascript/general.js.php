@@ -119,7 +119,9 @@ $(document).ready(function() {
     $('#primaryNav li a').each(function() {
       var urlStr = this.href.split('/').pop();
       if (loc.indexOf("index.php") != -1) {
-        if (urlStr == loc) {
+        var locPath = loc.split('?').pop();
+        var urlPath = urlStr.split('?').pop();
+        if (urlStr == loc || (locPath.search(urlPath) != -1 && this.href.search('<?php echo HTTP_SERVER; ?>') != -1)) {
           $(this).addClass('current');
         }
       } else if (loc.indexOf("products.php") != -1) {
