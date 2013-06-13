@@ -45,6 +45,10 @@ class Paypal_Payments_Advanced extends lC_Addon {
     */     
     $this->_description = $lC_Language->get('addon_payment_paypal_adv_description');
    /**
+    * The addon blurb used in the addons store listing
+    */     
+    $this->_blurb = $lC_Language->get('addon_payment_paypal_adv_blurb');    
+   /**
     * The developers name
     */    
     $this->_author = 'Loaded Commerce, LLC';

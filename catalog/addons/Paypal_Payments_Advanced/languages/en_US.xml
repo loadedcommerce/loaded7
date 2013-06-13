@@ -8,24 +8,29 @@
     </definition>
     <definition>
       <key>addon_payment_paypal_adv_description</key>
-      <value><![CDATA[PayPal Payments Advanced / Payflow Link</h3><p class="big-message margin-bottom orange-gradient anthracite"><span class="big-message-icon icon-speech icon-red"></span><strong class="red">IMPORTANT:</strong>&nbsp;&nbsp;Please enable the Secure Token option at<br><a class="blue" target="_blank" href="https://manager.paypal.com"><u>manager.paypal.com</u></a> under Hosted Pages > Setup > Security Options.</p>]]></value>
+      <value><![CDATA[Accept credit cards and PayPal directly on your website. Keep customers on your site for the entire checkout process without the full burden of protecting their financial data. <a target="_blank" href="https://www.paypal.com/webapps/mpp/referral/paypal-payments-advanced?partner_id=QXM5AQKDYTXQS"><small><i><u>Learn More</u></i></small></a>]]></value>
       <group>modules-payment</group>
-    </definition>  
+    </definition> 
+    <definition>
+      <key>addon_payment_paypal_adv_blurb</key>
+      <value><![CDATA[<p class="big-message margin-bottom orange-gradient anthracite"><span class="big-message-icon icon-speech icon-red"></span><strong class="red">IMPORTANT:</strong>&nbsp;&nbsp;Please enable the Secure Token option at<br><a class="blue" target="_blank" href="https://manager.paypal.com"><u>manager.paypal.com</u></a> under Hosted Pages > Setup > Security Options.</p>]]></value>
+      <group>modules-payment</group>
+    </definition>      
     <definition>
       <key>payment_paypal_adv_title</key>
       <value><![CDATA[PayPal Payments Advanced (includes Express Checkout) <a target="_blank" href="https://www.paypal.com/webapps/mpp/referral/paypal-payments-advanced?partner_id=QXM5AQKDYTXQS"><small><i><u>Learn More</u></i></small></a>]]></value>
       <group>modules-payment</group>
-    </definition>  
-    <definition>
-      <key>payment_paypal_adv_method_blurb</key>
-      <value><![CDATA[Pay with PayPal - The faster, safer way to pay.]]></value>
-      <group>modules-payment</group>
-    </definition>  
+    </definition>       
     <definition>
       <key>payment_paypal_adv_method_title</key>
-      <value><![CDATA[Secure Payments by <img src="images/payment/paypal-small.png" style="vertical-align:middle"><br />Pay with PayPal - The faster, safer way to pay.]]></value>
+      <value><![CDATA[Credit Card]]></value>
       <group>modules-payment</group>
     </definition> 
+    <definition>
+      <key>payment_paypal_adv_method_blurb</key>
+      <value><![CDATA[powered by <img src="addons/Paypal_Payments_Advanced/images/paypal-small.png" style="vertical-align:middle">]]></value>
+      <group>modules-payment</group>
+    </definition>     
     <definition>   
       <key>payment_paypal_adv_error_server</key>
       <value><![CDATA[ERROR: There was no response from the PayPal server. Please try again.]]></value>

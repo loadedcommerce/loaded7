@@ -29,20 +29,6 @@ class lC_Payment_paypal_adv extends lC_Payment {
   */  
   protected $_code = 'paypal_adv';
  /**
-  * The developers name
-  *
-  * @var string
-  * @access protected
-  */  
-  protected $_author_name = 'Loaded Commerce';
- /**
-  * The developers address
-  *
-  * @var string
-  * @access protected
-  */  
-  protected $_author_www = 'http://www.loadedcommerce.com';
- /**
   * The status of the module
   *
   * @var boolean
@@ -86,10 +72,10 @@ class lC_Payment_paypal_adv extends lC_Payment {
 
     $this->_title = $lC_Language->get('payment_paypal_adv_title'); // admin listing title
     $this->_method_title = $lC_Language->get('payment_paypal_adv_method_title'); // public sidebar title 
-    $this->_status = (defined('MODULE_PAYMENT_PAYPAL_ADV_STATUS') && (MODULE_PAYMENT_PAYPAL_ADV_STATUS == '1') ? true : false);
-    $this->_sort_order = (defined('MODULE_PAYMENT_PAYPAL_ADV_SORT_ORDER') ? MODULE_PAYMENT_PAYPAL_ADV_SORT_ORDER : null);
+    $this->_status = (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_STATUS') && (ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_STATUS == '1') ? true : false);
+    $this->_sort_order = (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_SORT_ORDER') ? ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_SORT_ORDER : null);
 
-    if (defined('MODULE_PAYMENT_PAYPAL_ADV_STATUS')) {
+    if (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_STATUS')) {
       $this->initialize();
     }
   }
@@ -102,19 +88,19 @@ class lC_Payment_paypal_adv extends lC_Payment {
   public function initialize() {
     global $lC_Database, $lC_Language, $order;
 
-    if ((int)MODULE_PAYMENT_PAYPAL_ADV_ORDER_STATUS_ID > 0) {
-      $this->order_status = MODULE_PAYMENT_PAYPAL_ADV_ORDER_STATUS_ID;
+    if ((int)ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_ORDER_STATUS_ID > 0) {
+      $this->order_status = ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_ORDER_STATUS_ID;
     }
     
-    if ((int)MODULE_PAYMENT_PAYPAL_ADV_ORDER_STATUS_COMPLETE_ID > 0) {
-      $this->_order_status_complete = MODULE_PAYMENT_PAYPAL_ADV_ORDER_STATUS_COMPLETE_ID;
+    if ((int)ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_ORDER_STATUS_COMPLETE_ID > 0) {
+      $this->_order_status_complete = ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_ORDER_STATUS_COMPLETE_ID;
     }    
 
     if (is_object($order)) $this->update_status();
     
-    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
+    if (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE == '1') {
       $this->_ec_redirect_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';  // sandbox url
-      if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'C') {
+      if (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE == 'C') {
         $this->form_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true);  // payment page
         $this->iframe_action_url = 'https://pilot-payflowlink.paypal.com?SECURETOKEN=' . $_SESSION['cartSync']['SECURETOKEN'] . '&SECURETOKENID=' . $_SESSION['cartSync']['SECURETOKENID'] . '&MODE=TEST';  
       } else {
@@ -122,7 +108,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
       }
     } else {
       $this->_ec_redirect_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';  // production url
-      if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'C') {
+      if (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE == 'C') {
         $this->form_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true);  // payment page
         $this->iframe_action_url = 'https://payflowlink.paypal.com?SECURETOKEN=' . $_SESSION['cartSync']['SECURETOKEN'] . '&SECURETOKENID=' . $_SESSION['cartSync']['SECURETOKENID'];  
       } else {
@@ -140,12 +126,12 @@ class lC_Payment_paypal_adv extends lC_Payment {
   public function update_status() {
     global $lC_Database, $order;
 
-    if ( ($this->_status === true) && ((int)MODULE_PAYMENT_PAYPAL_ADV_ZONE > 0) ) {
+    if ( ($this->_status === true) && ((int)ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_ZONE > 0) ) {
       $check_flag = false;
 
       $Qcheck = $lC_Database->query('select zone_id from :table_zones_to_geo_zones where geo_zone_id = :geo_zone_id and zone_country_id = :zone_country_id order by zone_id');
       $Qcheck->bindTable(':table_zones_to_geo_zones', TABLE_ZONES_TO_GEO_ZONES);
-      $Qcheck->bindInt(':geo_zone_id', MODULE_PAYMENT_PAYPAL_ADV_ZONE);
+      $Qcheck->bindInt(':geo_zone_id', ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_ZONE);
       $Qcheck->bindInt(':zone_country_id', $order->billing['country']['id']);
       $Qcheck->execute();
 
@@ -174,7 +160,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     global $lC_Language;
 
     $selection = array('id' => $this->_code,
-                       'module' => '<div class="payment-selection">' . sprintf($lC_Language->get('payment_paypal_adv_payment_title'), lc_image('images/payment/paypal-small.png', null, null, null, 'style="vertical-align:middle;"')) . '<span>' . lc_image('images/payment/paypal-cards.png', null, null, null, 'style="vertical-align:middle;"') . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_adv_payment_blurb') . '</div>');    
+                       'module' => '<div class="payment-selection">' . $lC_Language->get('payment_paypal_adv_method_title') . '<span>' . lc_image('images/payment/paypal-cards.png', null, null, null, 'style="vertical-align:middle;"') . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_adv_method_blurb') . '</div>');    
     
     return $selection;
   }
@@ -218,7 +204,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     $_SESSION['cartSync']['SECURETOKEN'] = $response['SECURETOKEN'];                      
     $_SESSION['cartSync']['SECURETOKENID'] = $response['SECURETOKENID'];
                          
-    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {                            
+    if (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE == '1') {                            
       $process_button_string .= lc_draw_hidden_field('MODE', 'TEST');
     }
     
@@ -312,7 +298,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
   */ 
   public function check() {
     if (!isset($this->_check)) {
-      $this->_check = defined('MODULE_PAYMENT_PAYPAL_ADV_STATUS');
+      $this->_check = defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_STATUS');
     }
 
     return $this->_check;
@@ -399,10 +385,10 @@ class lC_Payment_paypal_adv extends lC_Payment {
   * @return string
   */
   private function _getUserParams() {
-    return "USER=" . MODULE_PAYMENT_PAYPAL_ADV_USER .
-           "&VENDOR=" . MODULE_PAYMENT_PAYPAL_ADV_MERCH .
-           "&PARTNER=" . MODULE_PAYMENT_PAYPAL_ADV_PARTNER .
-           "&PWD=" . MODULE_PAYMENT_PAYPAL_ADV_PASSWORD;
+    return "USER=" . ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_USER .
+           "&VENDOR=" . ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_MERCH .
+           "&PARTNER=" . ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_PARTNER .
+           "&PWD=" . ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_PASSWORD;
   }
  /**
   * Perform the Express Checkout post process
@@ -492,14 +478,14 @@ class lC_Payment_paypal_adv extends lC_Payment {
   private function _doExpressCheckoutPayment($token, $payerID) {
     global $lC_ShoppingCart, $lC_Currencies, $lC_Language, $lC_MessageStack;
      
-    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
+    if (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE == '1') {
       $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
     } else {
       $action_url = 'https://payflowpro.paypal.com';  // production url
     }     
 
-    $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
-    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
+    $transType = (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TRXTYPE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TRXTYPE == 'Authorization') ? 'A' : 'S';
+    $returnUrl = (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
 
     $postData = $this->_getUserParams() .  
                 "&TRXTYPE=" . $transType . 
@@ -535,14 +521,14 @@ class lC_Payment_paypal_adv extends lC_Payment {
   private function _getExpressCheckoutDetails($token) {
     global $lC_ShoppingCart, $lC_Currencies, $lC_Language, $lC_MessageStack;
      
-    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
+    if (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE == '1') {
       $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
     } else {
       $action_url = 'https://payflowpro.paypal.com';  // production url
     }     
 
-    $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
-    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
+    $transType = (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TRXTYPE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TRXTYPE == 'Authorization') ? 'A' : 'S';
+    $returnUrl = (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
 
     $postData = $this->_getUserParams() .  
                 "&TRXTYPE=" . $transType . 
@@ -576,7 +562,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     global $lC_ShoppingCart, $lC_Currencies, $lC_Language, $lC_MessageStack, $lC_Customer;
     $lC_Language->load('modules-payment');
      
-    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
+    if (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE == '1') {
       $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
     } else {
       $action_url = 'https://payflowpro.paypal.com';  // production url
@@ -602,7 +588,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
       if ($ot['code'] == 'tax') $taxTotal = (float)$ot['value'];
     }         
 
-    $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
+    $transType = (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TRXTYPE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TRXTYPE == 'Authorization') ? 'A' : 'S';
     $postData = $this->_getUserParams() .  
                 "&TRXTYPE=" . $transType . 
                 "&TENDER=P" . 
@@ -660,7 +646,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
   private function _getSecureToken() {   
     global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer, $lC_MessageStack;
         
-    if (defined('MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE') && MODULE_PAYMENT_PAYPAL_ADV_TEST_MODE == '1') {
+    if (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEST_MODE == '1') {
       $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
     } else {
       $action_url = 'https://payflowpro.paypal.com';  // production url
@@ -687,9 +673,9 @@ class lC_Payment_paypal_adv extends lC_Payment {
     }
 
     $secureTokenId = uniqid('', true); 
-    $transType = (defined('MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE') && MODULE_PAYMENT_PAYPAL_ADV_TRXTYPE == 'Authorization') ? 'A' : 'S';
-    $template = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'C') ? 'MINLAYOUT' : ((MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'B') ? 'TEMPLATEB' : 'TEMPLATEA');
-    $returnUrl = (defined('MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE') && MODULE_PAYMENT_PAYPAL_ADV_TEMPLATE == 'C') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
+    $transType = (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TRXTYPE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TRXTYPE == 'Authorization') ? 'A' : 'S';
+    $template = (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE == 'C') ? 'MINLAYOUT' : ((ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE == 'B') ? 'TEMPLATEB' : 'TEMPLATEA');
+    $returnUrl = (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE == 'C') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
 
     // switch to mofile if iframe and media=mobile
     $mediaType = (isset($_SESSION['mediaType']) && $_SESSION['mediaType'] != NULL) ? $_SESSION['mediaType'] : 'desktop';

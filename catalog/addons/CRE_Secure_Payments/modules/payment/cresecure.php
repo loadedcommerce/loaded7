@@ -172,7 +172,7 @@ class lC_Payment_cresecure extends lC_Payment {
     global $lC_Language;
 
     $selection = array('id' => $this->_code,
-                       'module' => '<div class="payment-selection">' . $this->_method_title . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_cresecure_blurb') . '</div>');    
+                       'module' => '<div class="payment-selection">' . $this->_method_title . '<span>' . $this->_card_images . '</span></div><div class="payment-selection-title">' . $lC_Language->get('payment_cresecure_method_blurb') . '</div>');    
     
     return $selection;
   }

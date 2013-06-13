@@ -8,7 +8,7 @@
     </definition>
     <definition>
       <key>addon_payment_cresecure_description</key>
-      <value><![CDATA[The Turnkey PCI Solution That Delivers Everything You Need: Security, Control, Customer Effectiveness.]]></value>
+      <value><![CDATA[A level one PCI DSS-certified service providing a hosted payment page that utilizes patent-pending HTML cloning technology to deliver a more consistent experience for the online consumer.]]></value>
       <group>modules-payment</group>
     </definition>    
     <definition>
@@ -18,12 +18,12 @@
     </definition>
     <definition>
       <key>payment_cresecure_method_title</key>
-      <value><![CDATA[<img src="addons/CRE_Secure_Payments/images/cresecure-small.png" style="vertical-align:middle"> Payments]]></value>
+      <value><![CDATA[Credit Card]]></value>
       <group>modules-payment</group>
     </definition>   
     <definition>
-      <key>payment_cresecure_blurb</key>
-      <value><![CDATA[Your payment is protected by CRE Secure. Checkout with Confidence.]]></value>
+      <key>payment_cresecure_method_blurb</key>
+      <value><![CDATA[powered by <img src="addons/CRE_Secure_Payments/images/cresecure-small.png" style="vertical-align:middle">]]></value>
       <group>modules-payment</group>
     </definition>      
   </definitions>

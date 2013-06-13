@@ -27,20 +27,6 @@ class lC_Payment_loadedpayments extends lC_Payment {
   */
   protected $_code = 'loadedpayments';
  /**
-  * The developers name
-  *
-  * @var string
-  * @access protected
-  */
-  protected $_author_name = 'Loaded Commerce';
- /**
-  * The developers address
-  *
-  * @var string
-  * @access protected
-  */
-  protected $_author_www = 'http://www.loadedcommerce.com';
- /**
   * The status of the module
   *
   * @var boolean
@@ -90,10 +76,10 @@ class lC_Payment_loadedpayments extends lC_Payment {
 
     $this->_title = $lC_Language->get('payment_loadedpayments_title');
     $this->_method_title = $lC_Language->get('payment_loadedpayments_method_title');
-    $this->_status = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_STATUS') && (MODULE_PAYMENT_LOADEDPAYMENTS_STATUS == '1') ? true : false);
-    $this->_sort_order = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_SORT_ORDER') ? MODULE_PAYMENT_LOADEDPAYMENTS_SORT_ORDER : null);
+    $this->_status = (defined('ADDONS_PAYMENT_LOADED_PAYMENTS_STATUS') && (ADDONS_PAYMENT_LOADED_PAYMENTS_STATUS == '1') ? true : false);
+    $this->_sort_order = (defined('ADDONS_PAYMENT_LOADED_PAYMENTS_SORT_ORDER') ? ADDONS_PAYMENT_LOADED_PAYMENTS_SORT_ORDER : null);
 
-    if (defined('MODULE_PAYMENT_LOADEDPAYMENTS_STATUS')) {
+    if (defined('ADDONS_PAYMENT_LOADED_PAYMENTS_STATUS')) {
       $this->initialize();
     }
   }
@@ -106,17 +92,17 @@ class lC_Payment_loadedpayments extends lC_Payment {
   public function initialize() {
     global $lC_Database, $lC_Language, $order;
 
-    if ((int)MODULE_PAYMENT_LOADEDPAYMENTS_ORDER_STATUS_ID > 0) {
-      $this->order_status = MODULE_PAYMENT_LOADEDPAYMENTS_ORDER_STATUS_ID;
+    if ((int)ADDONS_PAYMENT_LOADED_PAYMENTS_ORDER_STATUS_ID > 0) {
+      $this->order_status = ADDONS_PAYMENT_LOADED_PAYMENTS_ORDER_STATUS_ID;
     }
 
-    if ((int)MODULE_PAYMENT_LOADEDPAYMENTS_ORDER_STATUS_COMPLETE_ID > 0) {
-      $this->_order_status_complete = MODULE_PAYMENT_LOADEDPAYMENTS_ORDER_STATUS_COMPLETE_ID;
+    if ((int)ADDONS_PAYMENT_LOADED_PAYMENTS_ORDER_STATUS_COMPLETE_ID > 0) {
+      $this->_order_status_complete = ADDONS_PAYMENT_LOADED_PAYMENTS_ORDER_STATUS_COMPLETE_ID;
     }
 
     if (is_object($order)) $this->update_status();
 
-    if (defined('MODULE_PAYMENT_LOADEDPAYMENTS_TESTMODE') && MODULE_PAYMENT_LOADEDPAYMENTS_TESTMODE == '1') {
+    if (defined('ADDONS_PAYMENT_LOADED_PAYMENTS_TESTMODE') && ADDONS_PAYMENT_LOADED_PAYMENTS_TESTMODE == '1') {
       $this->iframe_relay_url = 'https://uat.payleap.com/plcheckout.aspx';  // sandbox url
     } else {
       $this->iframe_relay_url = 'https://secure1.payleap.com/plcheckout.aspx';  // production url
@@ -144,12 +130,12 @@ class lC_Payment_loadedpayments extends lC_Payment {
   public function update_status() {
     global $lC_Database, $order;
 
-    if ( ($this->_status === true) && ((int)MODULE_PAYMENT_LOADEDPAYMENTS_ZONE > 0) ) {
+    if ( ($this->_status === true) && ((int)ADDONS_PAYMENT_LOADED_PAYMENTS_ZONE > 0) ) {
       $check_flag = false;
 
       $Qcheck = $lC_Database->query('select zone_id from :table_zones_to_geo_zones where geo_zone_id = :geo_zone_id and zone_country_id = :zone_country_id order by zone_id');
       $Qcheck->bindTable(':table_zones_to_geo_zones', TABLE_ZONES_TO_GEO_ZONES);
-      $Qcheck->bindInt(':geo_zone_id', MODULE_PAYMENT_LOADEDPAYMENTS_ZONE);
+      $Qcheck->bindInt(':geo_zone_id', ADDONS_PAYMENT_LOADED_PAYMENTS_ZONE);
       $Qcheck->bindInt(':zone_country_id', $order->billing['country']['id']);
       $Qcheck->execute();
 
@@ -209,8 +195,8 @@ class lC_Payment_loadedpayments extends lC_Payment {
   public function process_button() {
     global $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Customer;  
 
-    $loginid = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_USERNAME')) ? MODULE_PAYMENT_LOADEDPAYMENTS_USERNAME : '';
-    $transactionkey = (defined('MODULE_PAYMENT_LOADEDPAYMENTS_TRANSKEY')) ? MODULE_PAYMENT_LOADEDPAYMENTS_TRANSKEY : '';  
+    $loginid = (defined('ADDONS_PAYMENT_LOADED_PAYMENTS_USERNAME')) ? ADDONS_PAYMENT_LOADED_PAYMENTS_USERNAME : '';
+    $transactionkey = (defined('ADDONS_PAYMENT_LOADED_PAYMENTS_TRANSKEY')) ? ADDONS_PAYMENT_LOADED_PAYMENTS_TRANSKEY : '';  
     $amount = $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode());
     $sequence = rand(1, 1000); // a sequence number is randomly generated
     $timestamp = time(); // a timestamp is generated
@@ -243,7 +229,7 @@ class lC_Payment_loadedpayments extends lC_Payment {
                              lc_draw_hidden_field('hideAddress', 'T') . "\n" .
                              lc_draw_hidden_field('isRelayResponse', 'T') . "\n" .
                              lc_draw_hidden_field('relayResponseURL', lc_href_link('iredirect.php', '', 'SSL', true, true, true)) . "\n" .
-                             lc_draw_hidden_field('styleSheetURL', lc_href_link('includes/modules/payment/loadedpayments/loadedpayments.css', '', 'SSL', true, true, true)) . "\n";
+                             lc_draw_hidden_field('styleSheetURL', lc_href_link('addons/Loaded_Payments/loadedpayments.css', '', 'SSL', true, true, true)) . "\n";
       
     return $process_button_string;
   }
@@ -307,7 +293,7 @@ class lC_Payment_loadedpayments extends lC_Payment {
   */
   public function check() {
     if (!isset($this->_check)) {
-      $this->_check = defined('MODULE_PAYMENT_LOADEDPAYMENTS_STATUS');
+      $this->_check = defined('ADDONS_PAYMENT_LOADED_PAYMENTS_STATUS');
     }
 
     return $this->_check;

@@ -8,7 +8,7 @@
     </definition>
     <definition>
       <key>addon_payment_cod_description</key>
-      <value><![CDATA[Cash on Delivery.]]></value>
+      <value><![CDATA[Accept Cash on Delivery as payment.]]></value>
       <group>modules-payment</group>
     </definition>  
     <definition>

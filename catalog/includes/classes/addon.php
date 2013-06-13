@@ -19,6 +19,7 @@ abstract class lC_Addon {
             $_code,
             $_title,
             $_description,
+            $_blurb,
             $_rating = '5',
             $_author,
             $_authorWWW,
@@ -50,7 +51,11 @@ abstract class lC_Addon {
   
   public function getAddonDescription() {
     return $this->_description;
-  }  
+  } 
+  
+  public function getAddonBlurb() {
+    return $this->_blurb;
+  }    
   
   public function getAddonRating() {
     return $this->_rating;

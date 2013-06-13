@@ -68,6 +68,8 @@ class lC_Store_Admin {
     include_once(DIR_FS_CATALOG . 'addons/' . $name . '/controller.php');
     $addon = new $name();
 
+    $blurb = ($addon->getAddonBlurb()) ? $addon->getAddonBlurb() : null;
+    
     $result['desc'] = '<div class="margin-bottom" style="width:100%;">
                          <div class="float-left margin-right">' . $addon->getAddonThumbnail() . '</div>
                            <div style="width:90%;">
@@ -76,7 +78,7 @@ class lC_Store_Admin {
                              <div><small>' . $addon->getAddonAuthor() . '</small></div>
                              <div style="position:absolute; right:0; top:0;"><button id="uninstallButton" onclick="uninstallAddon(\'' . $addon->getAddonCode() . '\',\'' . urlencode($addon->getAddonTitle()) . '\');" class="button icon-undo red-gradient glossy">Uninstall</button></div>
                            </div>
-                         </div>
+                         </div>' . $blurb . '
                        </div>';
          
     $cnt = 0;
