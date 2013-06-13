@@ -4,33 +4,33 @@
     <definition>
       <key>addon_shipping_free_title</key>
       <value><![CDATA[Free Shipping]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>addon_shipping_free_description</key>
       <value><![CDATA[Free shipping for orders over a set amount.]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>  
     <definition>
       <key>shipping_free_title</key>
       <value><![CDATA[Free Shipping]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>shipping_free_description</key>
       <value><![CDATA[Free Shipping]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>shipping_free_method</key>
       <value><![CDATA[Best Way]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     
     <definition>
       <key>shipping_free_for_amount</key>
       <value><![CDATA[for orders over %s]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>    
   </definitions>
 </language>

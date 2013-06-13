@@ -4,27 +4,27 @@
     <definition>
       <key>addon_shipping_flat_title</key>
       <value><![CDATA[Flat Rate Shipping]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>addon_shipping_flat_description</key>
       <value><![CDATA[Charge flat rate shipping on a per order basis.]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>  
     <definition>
       <key>shipping_flat_title</key>
       <value><![CDATA[Flat Rate]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>shipping_flat_description</key>
       <value><![CDATA[Flat Rate]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>shipping_flat_method</key>
       <value><![CDATA[Best Way]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
   </definitions>
 </language>

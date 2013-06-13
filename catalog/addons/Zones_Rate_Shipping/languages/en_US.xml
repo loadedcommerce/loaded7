@@ -4,37 +4,37 @@
     <definition>
       <key>addon_shipping_zones_title</key>
       <value><![CDATA[Zone Rate Shipping]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>addon_shipping_zones_description</key>
       <value><![CDATA[Zone rate shipping based on a group of maximum order weights.  Includes optional Handling Fee.]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>  
     <definition>
       <key>shipping_zones_title</key>
       <value><![CDATA[Zone Rates]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>shipping_zones_description</key>
       <value><![CDATA[Zone Rates]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>shipping_zones_method</key>
       <value><![CDATA[Shipping to]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>shipping_zones_invalid_zone</key>
       <value><![CDATA[No shipping available to the selected country]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>shipping_zones_undefined_rate</key>
       <value><![CDATA[The shipping rate cannot be determined at this time]]></value>
-      <group>modules-shipping</group>
+      <group>checkout</group>
     </definition>    
   </definitions>
 </language>

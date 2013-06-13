@@ -4,27 +4,27 @@
     <definition>
       <key>addon_payment_cod_title</key>
       <value><![CDATA[Cash On Delivery]]></value>
-      <group>modules-payment</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>addon_payment_cod_description</key>
       <value><![CDATA[Accept Cash on Delivery as payment.]]></value>
-      <group>modules-payment</group>
+      <group>checkout</group>
     </definition>  
     <definition>
       <key>payment_cod_title</key>
       <value><![CDATA[Cash On Delivery]]></value>
-      <group>modules-payment</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>payment_cod_method_title</key>
       <value><![CDATA[Cash On Delivery]]></value>
-      <group>modules-payment</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>payment_cod_method</key>
       <value><![CDATA[Cash On Delivery]]></value>
-      <group>modules-payment</group>
+      <group>checkout</group>
     </definition>
   </definitions>
 </language>

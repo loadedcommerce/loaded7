@@ -4,27 +4,27 @@
     <definition>
       <key>addon_payment_loadedpayments_title</key>
       <value><![CDATA[Loaded Payments]]></value>
-      <group>modules-payment</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>addon_payment_loadedpayments_description</key>
       <value><![CDATA[Provided in partnership with PayLeap, the Loaded Payments Secure Payment Gateway includes everything you need to accept credit cards online through your website, virtual terminal and over the phone.]]></value>
-      <group>modules-payment</group>
+      <group>checkout</group>
     </definition>  
     <definition>
       <key>payment_loadedpayments_title</key>
       <value><![CDATA[Loaded Payments]]></value>
-      <group>modules-payment</group>
+      <group>checkout</group>
     </definition>
     <definition>
       <key>payment_loadedpayments_method_title</key>
       <value><![CDATA[Credit Card]]></value>
-      <group>modules-payment</group>
+      <group>checkout</group>
     </definition> 
     <definition>
       <key>payment_loadedpayments_method_blurb</key>
       <value><![CDATA[powered by <img src="addons/Loaded_Payments/images/loadedpayments-small.png" style="vertical-align:middle">]]></value>
-      <group>modules-payment</group>
+      <group>checkout</group>
     </definition>       
   </definitions>
 </language>

@@ -29,10 +29,6 @@ abstract class lC_Addon {
             $_enabled,
             $_valid;
   
-  final public function isValid() {
-    return true;
-  }  
-  
   public function isEnabled() {
     return $this->_enabled;
   }   

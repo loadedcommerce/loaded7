@@ -128,7 +128,53 @@ class lC_Payment {
     return $this->_method_title;
   }  
   
+  public function getJavascriptBlock() {
+  } 
+
   public function getJavascriptBlocks() {
+    global $lC_Language;
+
+    $js = '';
+    if (is_array($this->_modules)) {
+      $js = '<script><!-- ' . "\n" .
+            'function check_form() {' . "\n" .   
+            '  var error = 0;' . "\n" .
+            '  var error_message = "' . $lC_Language->get('js_error') . '";' . "\n" .
+            '  var payment_value = null;' . "\n" .
+            '  if (document.checkout_payment.payment_method.length) {' . "\n" .
+            '    for (var i=0; i<document.checkout_payment.payment_method.length; i++) {' . "\n" .
+            '      if (document.checkout_payment.payment_method[i].checked) {' . "\n" .
+            '        payment_value = document.checkout_payment.payment_method[i].value;' . "\n" .
+            '      }' . "\n" .
+            '    }' . "\n" .
+            '  } else if (document.checkout_payment.payment_method.checked) {' . "\n" .
+            '    payment_value = document.checkout_payment.payment_method.value;' . "\n" .
+            '  } else if (document.checkout_payment.payment_method.value) {' . "\n" .
+            '    payment_value = document.checkout_payment.payment_method.value;' . "\n" .
+            '  }' . "\n\n";
+
+      foreach ($this->_modules as $module) {
+        if (strstr($module, '|')) $module = substr($module, 0, strpos($module, '|'));
+        if ($GLOBALS['lC_Payment_' . $module]->isEnabled()) {
+          $js .= $GLOBALS['lC_Payment_' . $module]->getJavascriptBlock();
+        }
+      }
+
+      $js .= "\n" . '  if (payment_value == null) {' . "\n" .
+             '    error_message = error_message + "' . $lC_Language->get('js_no_payment_module_selected') . '\n";' . "\n" .
+             '    error = 1;' . "\n" .
+             '  }' . "\n\n" .
+             '  if (error == 1) {' . "\n" .
+             '    alert(error_message);' . "\n" .
+             '    return false;' . "\n" .
+             '  } else {' . "\n" .
+             '    return true;' . "\n" .
+             '  }' . "\n" .
+             '}' . "\n" .
+             '//--></script>' . "\n";
+    }
+
+    return $js;
   }    
 
   public function isEnabled() {
