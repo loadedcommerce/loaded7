@@ -62,24 +62,6 @@
                     </noscript>
                   </div>
                 </center>
-                <script>
-                  $(document).ready(function() {
-                    createUploader();
-                    var qqbuttonhtmlold = $('.qq-upload-button').html();
-                    var qqbuttonhtml = qqbuttonhtmlold.replace(/Upload a file/i, 'Upload');
-                    $('.qq-upload-button').html(qqbuttonhtml).css('text-decoration', 'underline').css('margin', '-31px -141px 0 -49px');
-                    $('.qq-upload-list').hide();
-                  });
-                  function createUploader() {
-                    var uploader = new qq.FileUploader({
-                      element: document.getElementById('fileUploaderImageContainer'),
-                      action: '<?php echo lc_href_link_admin('rpc.php', 'action=fileUpload'); ?>',
-                      onComplete: function(id, fileName, responseJSON) {
-                        $('#imagePreviewContainer').html('<img src="<?php echo '../images/categories/'; ?>' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="categories_image" name="categories_image" value="' + fileName + '">');
-                      },
-                    });
-                  }
-                </script>
               </div>
               <div class="new-row-mobile eight-columns twelve-columns-mobile">
                 <div id="languageTabs" class="standard-tabs">
@@ -122,7 +104,7 @@
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                         </label>
                         <div style="margin-bottom:-6px;"></div>
-                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', null, null, 10, 'class="required input full-width autoexpanding clEditorCategoriesDescription"'); ?>
+                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', null, null, 10, 'id="ckEditorCategoriesDescription_' . $l['id'] . '" style="width:97%;" class="required input full-width autoexpanding"'); ?>
                         <span class="float-right small-margin-top small-margin-right"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
                       </p>
                       <br />
@@ -210,11 +192,11 @@
                       <label class="label" for="categories_visibility"><b><?php echo $lC_Language->get('text_visibility'); ?></b></label>
                       <span class="button-group" id="categories_visibility">
                         <label class="button blue-active" for="categories_visibility_nav">
-                          <input type="checkbox" value="0" id="categories_visibility_nav" name="categories_visibility_nav">
+                          <input type="checkbox" id="categories_visibility_nav" name="categories_visibility_nav">
                           <?php echo $lC_Language->get('text_visibility_nav'); ?>
                         </label>
                         <label class="button blue-active" for="categories_visibility_box">
-                          <input type="checkbox" checked="" value="1" id="categories_visibility_box" name="categories_visibility_box">
+                          <input type="checkbox" checked="" id="categories_visibility_box" name="categories_visibility_box">
                           <?php echo $lC_Language->get('text_visibility_box'); ?>
                         </label>
                       </span>

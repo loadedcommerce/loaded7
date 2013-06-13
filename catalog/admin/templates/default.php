@@ -68,8 +68,6 @@
   <!-- DataTables -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables-tableTools.css?v=1">
-  <!-- CLEditor -->
-  <link rel="stylesheet" href="external/CLEditor/jquery.cleditor.css">
   <!-- loading mask -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.loadmask.css?v=1">  
 
@@ -562,6 +560,7 @@
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.reloadAjax.js"></script>
   <script src="../ext/jquery/jquery.details.min.js"></script>
   <script src="../ext/jquery/jquery.blink.js"></script>
+  <script src="../ext/jquery/ckeditor/ckeditor.js"></script>
   <script src="../ext/jquery/jquery.loadmask.js"></script>
   <!-- Template functions -->
   <script src="templates/default/js/setup.js"></script>
@@ -583,10 +582,6 @@
   <!-- script src="templates/default/js/agenda.js"></script -->
   <script src="templates/default/js/tabs.js"></script>    <!-- Must be loaded last -->
   
-  <!-- CLEditor -->
-  <script src="external/CLEditor/jquery.cleditor.min.js"></script>
-  <script src="external/CLEditor/jquery.cleditor.fullscreen.js"></script>
-  <script src="external/CLEditor/jquery.cleditor.advancedtable.js"></script>
   <!-- Load page specific javascript -->
   <?php $lC_Template->loadPageScript($lC_Template->getModule()); ?>
 </body>

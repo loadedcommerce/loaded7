@@ -88,21 +88,7 @@
                 </center>
                 <script>
                   $(document).ready(function() {
-                    createUploader();
-                    var qqbuttonhtmlold = $('.qq-upload-button').html();
-                    var qqbuttonhtml = qqbuttonhtmlold.replace(/Upload a file/i, 'Upload');
-                    $('.qq-upload-button').html(qqbuttonhtml).css('text-decoration', 'underline').css('margin', '-19px -141px 0 -50px');
-                    $('.qq-upload-list').hide();
                   });
-                  function createUploader() {
-                    var uploader = new qq.FileUploader({
-                      element: document.getElementById('fileUploaderImageContainer'),
-                      action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $lC_ObjectInfo->getInt('categories_id') . '&action=fileUpload'); ?>',
-                      onComplete: function(id, fileName, responseJSON) {
-                        $('#imagePreviewContainer').html('<img src="<?php echo '../images/categories/'; ?>' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="categories_image" name="categories_image" value="' + fileName + '">');
-                      },
-                    });
-                  }
                 </script>
               </div>
               <div class="new-row-mobile eight-columns twelve-columns-mobile">
@@ -146,8 +132,8 @@
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null); ?>
                         </label>
                         <div style="margin-bottom:-6px;"></div>
-                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_description[$l['id']]) ? $categories_description[$l['id']] : null), null, 10, 'class="required input full-width autoexpanding clEditorCategoriesDescription"'); ?>
-                        <span class="float-right small-margin-top small-margin-right"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
+                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_description[$l['id']]) ? $categories_description[$l['id']] : null), null, 10, 'id="ckEditorCategoriesDescription_' . $l['id'] . '" style="width:97%;" class="required input full-width autoexpanding"'); ?>
+                        <span class="float-right small-margin-top small-margin-right"><?php echo '<a href="javascript:toggleEditor(\'' . $l['id'] . '\');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
                       </p>
                       <br />
                       <p class="button-height block-label">

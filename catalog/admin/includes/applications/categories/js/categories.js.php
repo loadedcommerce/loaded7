@@ -11,7 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-global $lC_Template;
+global $lC_Template, $lC_Language, $lC_ObjectInfo;
 ?>
 <script>  
 function _refreshDataTable() {
@@ -85,8 +85,28 @@ $(document).ready(function() {
     newCategory();
   }
   
-  $(".clEditorCategoriesDescription").cleditor({width:"99%", height:"255"});
+  createUploader();
+  var qqbuttonhtmlold = $('.qq-upload-button').html();
+  var qqbuttonhtml = qqbuttonhtmlold.replace(/Upload a file/i, 'Upload');
+  $('.qq-upload-button').html(qqbuttonhtml).css('text-decoration', 'underline').css('margin', '-19px -141px 0 -50px');
+  $('.qq-upload-list').hide();
+  
+  <?php
+    foreach ( $lC_Language->getAll() as $l ) {  
+      echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+    }
+  ?>
 });
+                  
+function createUploader() {
+  var uploader = new qq.FileUploader({
+    element: document.getElementById('fileUploaderImageContainer'),
+    action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
+    onComplete: function(id, fileName, responseJSON) {
+      $('#imagePreviewContainer').html('<img src="../images/categories/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="categories_image" name="categories_image" value="' + fileName + '">');
+    },
+  });
+}
 
 function doSelectFunction(e) {
   if (e.value == 'delete') {
@@ -135,21 +155,6 @@ function customCheck() {
   }
 }
 
-function toggleEditor(id) {
-  var editorHidden = $(".clEditorCategoriesDescription").is(":visible");
-  if (editorHidden) {
-    //alert('show');
-    $(".clEditorCategoriesDescription").cleditor({width:"99%", height:"255"});
-  } else {
-    //alert('hide');
-    var editor = $(".clEditorCategoriesDescription").cleditor()[0];
-    editor.$area.insertBefore(editor.$main); // Move the textarea out of the main div
-    editor.$area.removeData("cleditor"); // Remove the cleditor pointer from the textarea
-    editor.$main.remove(); // Remove the main div and all children from the DOM
-    $(".clEditorCategoriesDescription").show();
-  }
-}
-
 function updateStatus(id, val) {
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateStatus&cid=CID&val=VAL'); ?>';
   $.getJSON(jsonLink.replace('CID', id).replace('VAL', val));
@@ -159,6 +164,17 @@ function updateStatus(id, val) {
   } else {               
     $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'1\')');
     $("#status_" + id).html('<span class="icon-forbidden icon-size2 icon-red cursor-pointer"></span>');
+  }
+}
+
+function toggleEditor(id) {
+  var selection = $("#ckEditorCategoriesDescription_" + id);
+  if ($(selection).is(":visible")) {
+    $('#ckEditorCategoriesDescription_' + id).hide();
+    $('#cke_ckEditorCategoriesDescription_' + id).show();
+  } else {
+    $('#ckEditorCategoriesDescription_' + id).attr('style', 'width:99%');
+    $('#cke_ckEditorCategoriesDescription_' + id).hide();
   }
 }
 </script>
