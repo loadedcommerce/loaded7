@@ -10,6 +10,8 @@
 #  @license    http://loadedcommerce.com/license.html
 
 access_modules_title = Modules
+access_modules_payment_title = Payment Modules
+access_modules_shipping_title = Shipping Modules
 access_modules_order_total_title = Order Total Modules
 access_modules_geoip_title = GeoIP Modules
 access_services_title = Service Modules
