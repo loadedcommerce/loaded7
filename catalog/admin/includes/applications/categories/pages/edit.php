@@ -220,7 +220,24 @@
                     </div>
                     <div class="six-columns twelve-columns-mobile small-margin-top">  
                       <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey mid-margin-right'); ?>
-                      <input type="checkbox" class="switch medium" id="categories_show_in_listings" name="categories_show_in_listings"<?php echo ($lC_ObjectInfo->getInt('categories_show_in_listings') == 1) ? ' checked' : ''; ?>> <strong><?php echo $lC_Language->get('text_show_in_listings'); ?></strong>
+                      <input type="checkbox" class="switch medium" id="categories_status" name="categories_status"<?php echo ($lC_ObjectInfo->getInt('categories_show_in_listings') == 1) ? ' checked' : ''; ?>> <strong><?php echo $lC_Language->get('text_status'); ?></strong>
+                    </div>
+                  </div>
+                  <div class="columns">
+                    <div class="six-columns twelve-columns-mobile">
+                      <label class="label" for="categories_visibility"><b><?php echo $lC_Language->get('text_visibility'); ?></b></label>
+                      <span class="button-group" id="categories_visibility">
+                        <label class="button blue-active" for="categories_visibility_nav">
+                          <input type="checkbox" value="0" id="categories_visibility_nav" name="categories_visibility_nav">
+                          <?php echo $lC_Language->get('text_show_top_nav'); ?>
+                        </label>
+                        <label class="button blue-active" for="categories_visibility_box">
+                          <input type="checkbox" checked="" value="1" id="categories_visibility_box" name="categories_visibility_box">
+                          <?php echo $lC_Language->get('text_show_infobox'); ?>
+                        </label>
+                      </span>
+                    </div>
+                    <div class="six-columns twelve-columns-mobile">
                     </div>
                   </div>
                 </div>
