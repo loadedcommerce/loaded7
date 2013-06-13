@@ -754,8 +754,8 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 .moduleRow td { padding: 6px 0; }
 .moduleRowOver td { padding: 6px 0; }
 .moduleRowOver { background-color: #f7f7f7; cursor:pointer; }
-.moduleRowSelected td { padding: 10px 0 !important; background-color: #e7e7e7; }
-#defaultSelected td { padding: 10px 0px; } 
+.moduleRowSelected td { padding: 6px 0 !important; background-color: #e7e7e7; }
+#defaultSelected td { padding: 6px 0px; } 
 
 /* checkout payment */
 .payment-selection { margin-top:5px; }

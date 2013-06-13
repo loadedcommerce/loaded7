@@ -68,6 +68,7 @@ class Table_Rate_Shipping extends lC_Addon {
     * The addon enable/disable switch
     */    
     $this->_enabled = (defined('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;      
+    $this->_rating = '3';      
   }
  /**
   * Checks to see if the addon has been installed

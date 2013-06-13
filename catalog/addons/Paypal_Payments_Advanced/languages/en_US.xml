@@ -3,7 +3,7 @@
   <definitions>
     <definition>
       <key>addon_payment_paypal_adv_title</key>
-      <value><![CDATA[PayPal Payments Advanced]]></value>
+      <value><![CDATA[PayPal Advanced]]></value>
       <group>modules-payment</group>
     </definition>
     <definition>

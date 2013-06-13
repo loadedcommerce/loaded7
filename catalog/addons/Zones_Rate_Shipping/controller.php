@@ -69,7 +69,8 @@ class Zones_Rate_Shipping extends lC_Addon {
    /**
     * The addon enable/disable switch
     */    
-    $this->_enabled = (defined('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;      
+    $this->_enabled = (defined('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;  
+    $this->_rating = '3';      
    /**
     * The number of zones needed; also needs to match the value in the module
     */     

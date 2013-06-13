@@ -256,7 +256,9 @@ class lC_Store_Admin {
   * @access public
   * @return array
   */
-  public static function getInstalledAddons() {    
+  public static function getInstalledAddons() {   
+    global $lC_Vqmod;
+     
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
     $lC_DirectoryListing->setRecursive(true);
     $lC_DirectoryListing->setIncludeDirectories(false);
@@ -267,13 +269,11 @@ class lC_Store_Admin {
     $addons = array();
     foreach ( $lC_DirectoryListing->getFiles() as $addon ) { 
       $ao = utility::cleanArr($addon);
-
-      if ($ao['name'] == 'inc/addon.inc.php') continue;
       if (!stristr($ao['name'], 'controller.php')) continue;      
       
       $class = substr($ao['name'], 0, strpos($ao['name'], '/'));   
       if (file_exists(DIR_FS_CATALOG . 'addons/' . $ao['name'])) {
-        include_once(DIR_FS_CATALOG . 'addons/' . $ao['name']);
+        include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/' . $ao['name']));
         $GLOBALS[$class] = new $class();
         $addon['code'] = substr($ao['name'], 0, strpos($ao['name'], '/'));
         $addon['type'] = $GLOBALS[$class]->getAddonType();
@@ -281,17 +281,20 @@ class lC_Store_Admin {
         $addon['description'] = $GLOBALS[$class]->getAddonDescription();
         $addon['rating'] = $GLOBALS[$class]->getAddonRating();
         $addon['author'] = $GLOBALS[$class]->getAddonAuthor();
+        $addon['authorWWW'] = $GLOBALS[$class]->getAddonAuthorWWW();
         $addon['thumbnail'] = $GLOBALS[$class]->getAddonThumbnail();
         $addon['version'] = $GLOBALS[$class]->getAddonVersion();
+        $addon['compatibility'] = $GLOBALS[$class]->getCompatibility();
         $addon['installed'] = $GLOBALS[$class]->isInstalled();
         $addon['enabled'] = $GLOBALS[$class]->isEnabled();
-        $addon['valid'] = $GLOBALS[$class]->isValid();        
         $addons[] = $addon;
       }
     }
+    
+    usort($addons, "self::_usortAddonsByRating");   
 
     return $addons;
-  }
+  }  
  /*
   * Install the addon module
   *
@@ -398,9 +401,25 @@ class lC_Store_Admin {
 
     return false;
   } 
-  
+ /*
+  * Reset the addons data array
+  *
+  * @access public
+  * @return void
+  */
   private static function _resetAddons() {
     if (isset($_SESSION['lC_Addons_data'])) unset($_SESSION['lC_Addons_data']);
-  }   
+  } 
+ /*
+  * Sort addons listing by rating
+  *
+  * @param array  $a  The first comparator
+  * @param array  $b  The second comparator
+  * @access public
+  * @return integer
+  */  
+  private static function _usortAddonsByRating($a, $b) {
+    return $a['rating'] == $b['rating'] ? 0 : $a['rating'] > $b['rating'] ? -1 : 1;
+  }    
 }
 ?>
