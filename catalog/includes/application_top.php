@@ -19,21 +19,26 @@ if ( file_exists('includes/local/config.php') ) {
   include('includes/local/config.php');
 }
 
-// include server parameters
-require('includes/config.php');
+// check for config, include server parameters or go to install
+if (is_file('includes/config.php')) {  
+  require('includes/config.php');
+}
+
+// redirect to the installation module if DB_SERVER is empty
+if (!defined(DB_SERVER)) {
+  if (is_dir('install')) {
+    header('Location: install/index.php');
+  } else {
+    echo 'Your install directory does not exist!';
+    die();
+  }
+}
 
 // set the level of error reporting
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 //ini_set("display_errors", 1);
 ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
-
-// redirect to the installation module if DB_SERVER is empty
-if (strlen(DB_SERVER) < 1) {
-  if (is_dir('install')) {
-    header('Location: install/index.php');
-  }
-}
 
 // virtual hook system
 require_once('ext/vqmod/vqmod.php');
