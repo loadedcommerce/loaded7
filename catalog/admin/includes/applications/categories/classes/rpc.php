@@ -172,11 +172,11 @@ class lC_Categories_Admin_rpc {
   * @access public
   * @return json
   */
-  public static function updateShowInListings() {
-    $show = lC_Categories_Admin::updateShowInListings($_GET['cid'], $_GET['val']);
+  public static function updateStatus() {
+    $status = lC_Categories_Admin::updateStatus($_GET['cid'], $_GET['val']);
     lC_Cache::clear('category_tree');
     
-    if ($show) {
+    if ($tatus) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }  
 

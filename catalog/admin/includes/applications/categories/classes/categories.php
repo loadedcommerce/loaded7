@@ -44,7 +44,7 @@ class lC_Categories_Admin {
     while ( $Qcategories->next() ) {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcategories->value('categories_id') . '" id="' . $Qcategories->value('categories_id') . '"></td>';
       $category = '<td><span class="icon-list icon-size2" title="' . $lC_Language->get('text_sort') . '" style="cursor:move;"></span><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-' . lC_Categories_Admin::getCategoryIcon($Qcategories->value('categories_mode')) . ' margin-left"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
-      $show = '<td><center id="show_in_listings_' . $Qcategories->value('categories_id') . '" onclick="updateShowInListings(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_show_in_listings') == 1) ? 0 : 1) . '\');">' . (($Qcategories->valueInt('categories_show_in_listings') == 1) ? '<span class="icon-list icon-size2 icon-green cursor-pointer"></span>' : '<span class="icon-forbidden icon-size2 icon-red cursor-pointer"></span>') . '</center></td>';
+      $status = '<td><center id="status_' . $Qcategories->value('categories_id') . '" onclick="updateStatus(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_status') == 1) ? 0 : 1) . '\');">' . (($Qcategories->valueInt('categories_status') == 1) ? '<span class="icon-list icon-size2 icon-green cursor-pointer"></span>' : '<span class="icon-forbidden icon-size2 icon-red cursor-pointer"></span>') . '</center></td>';
       $mode = '<td>' . $lC_Language->get('text_mode_' . $Qcategories->value('categories_mode')) . '</td>';
       $sort = '<td>' . $Qcategories->valueInt('sort_order') . '<input type="hidden" name="sort_order_' . $Qcategories->value('categories_id') . '" value="' . $Qcategories->valueInt('sort_order') . '" class="sort" /></td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">
@@ -52,7 +52,7 @@ class lC_Categories_Admin {
                    <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="moveCategory(\'' . $Qcategories->value('categories_id') . '\', \'' . urlencode($Qcategories->valueProtected('categories_name')) . '\')"') . '" class="button icon-cloud-upload with-tooltip ' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_move') . '"></a>
                    <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="deleteCategory(\'' . $Qcategories->value('categories_id') . '\', \'' . urlencode($Qcategories->valueProtected('categories_name')) . '\')"') . '" class="button icon-trash with-tooltip ' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
-      $result['aaData'][] = array("$check", "$category", "$show", "$mode", "$sort", "$action");
+      $result['aaData'][] = array("$check", "$category", "$status", "$mode", "$sort", "$action");
       $result['entries'][] = $Qcategories->toArray();
     }
 
@@ -524,12 +524,12 @@ class lC_Categories_Admin {
   * @access public
   * @return true or fales
   */
-  public static function updateShowInListings($id, $val) {
+  public static function updateStatus($id, $val) {
     global $lC_Database;
     
-    $Qupdate = $lC_Database->query('update :table_categories set categories_show_in_listings = :categories_show_in_listings where categories_id = :categories_id');
+    $Qupdate = $lC_Database->query('update :table_categories set categories_status = :categories_status where categories_id = :categories_id');
     $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
-    $Qupdate->bindInt(':categories_show_in_listings', $val);
+    $Qupdate->bindInt(':categories_status', $val);
     $Qupdate->bindInt(':categories_id', $id);
     $Qupdate->execute();
 

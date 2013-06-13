@@ -202,7 +202,7 @@
                           Put the bubble text here
                         </span>
                       </span>
-                      <input type="checkbox" class="switch medium" id="categories_status" name="categories_status" checked> <strong><?php echo $lC_Language->get('text_status'); ?></strong>
+                      <input type="checkbox" class="switch medium" id="categories_status" name="categories_status" checked=""> <strong><?php echo $lC_Language->get('text_status'); ?></strong>
                     </div>
                   </div>
                   <div class="columns">
@@ -211,11 +211,11 @@
                       <span class="button-group" id="categories_visibility">
                         <label class="button blue-active" for="categories_visibility_nav">
                           <input type="checkbox" value="0" id="categories_visibility_nav" name="categories_visibility_nav">
-                          <?php echo $lC_Language->get('text_show_top_nav'); ?>
+                          <?php echo $lC_Language->get('text_visibility_nav'); ?>
                         </label>
                         <label class="button blue-active" for="categories_visibility_box">
                           <input type="checkbox" checked="" value="1" id="categories_visibility_box" name="categories_visibility_box">
-                          <?php echo $lC_Language->get('text_show_infobox'); ?>
+                          <?php echo $lC_Language->get('text_visibility_box'); ?>
                         </label>
                       </span>
                     </div>

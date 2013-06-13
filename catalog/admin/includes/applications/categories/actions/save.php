@@ -29,11 +29,14 @@
                           'mode' => $_POST['categories_mode'],
                           'link_target' => ($_POST['categories_link_target'] == 'on') ? 1 : 0,
                           'custom_url' => $_POST['categories_custom_url'],
-                          'show_in_listings' => ($_POST['categories_show_in_listings'] == 'on') ? 1 : 0,
+                          'status' => ($_POST['categories_status'] == 'on') ? 1 : 0,
+                          'nav' => ($_POST['categories_visibility_nav'] == 'on') ? 1 : 0,
+                          'box' => ($_POST['categories_visibility_box'] == 'on') ? 1 : 0,
                           'name' => $_POST['categories_name'],
                           'menu_name' =>  $_POST['categories_menu_name'],
                           'blurb' =>  $_POST['categories_blurb'],
                           'description' =>  $_POST['categories_description'],
+                          'keyword' =>  $_POST['categories_keyword'],
                           'tags' =>  $_POST['categories_tags'] );
            /*
             * Save the category information
