@@ -682,18 +682,19 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 .message-menu > li, li.message-menu {
   padding: 2px 30px 3px;
 }
+
 #title-bar {
   height: 40px !important;
 }
 .cursor-pointer { cursor: pointer; }
+
 .description-content { padding: 10px 10px 20px 16px; }
 .cat_rel_td { line-height: 2.0em; }
+
 .no-wrap { white-space: nowrap; }
 #title-bar { height: 40px !important; }
 
 .imagesBackNav { display: none; }
-
-/* fix for Chrome selects */
 select.input {
   border:1px solid #999; 
   background:#f0f0f0;
@@ -733,11 +734,12 @@ select.input {
   }
   #products_msrp { width: 90% !important; }
   .products-price-gross { width: 90% !important; } 
-}
+} 
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
   .field-drop-tabs {
     padding: 13px 20px 17px 85px !important;
+  }
   #products_msrp { width: 90% !important; }
   .products-price-gross { width: 90% !important; }
 }
@@ -765,16 +767,14 @@ select.input {
       -moz-text-shadow: none;
       text-shadow: none;
     }
+  .field-drop-tabs {
+    padding: 13px 20px 17px 85px !important;
+  }
   #product_tabs { margin: -15px; }
   #floating-menu-div-listing {
     right: -10px;
     top: 35px; 
   }
-  .field-drop-tabs {
-    padding: 13px 20px 17px 85px !important;
-  }
-  #category_tabs { margin: 0 -15px -15px -15px; }
-  #languageTabs { margin: 0 -15px 0 -15px; }  
   #section_general_content { margin: -10px -10px -10px -13px; }
   #section_images_content { margin: -15px; }
   #section_data_content { margin: -15px; }
@@ -793,12 +793,11 @@ select.input {
   #simpleOptionsTable { margin: -10px -15px 0 -15px !important; }
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
+  #category_tabs { margin: 0 -15px -15px -15px; }
+  #languageTabs { margin: 0 -15px 0 -15px; }
 }  
   
 @media screen and (max-width: 479px) {
-  #category_tabs { margin: 0 -15px -15px -15px; }
-  #languageTabs { margin: 0 -15px 0 -15px; }
-
   .hide-below-480 { display: none; }
   /* Default shadows */
   .button,
@@ -822,7 +821,11 @@ select.input {
       -moz-text-shadow: none;
       text-shadow: none;
     }
-    
+
+  .field-drop-tabs {
+    padding: 13px 20px 17px 85px !important;
+  }
+      
   .button-text {
     display:none;
   }
@@ -854,6 +857,12 @@ select.input {
   .simple-table { background-color: transparent; }
   #simpleOptionsTable { margin: -10px -15px 0 -20px !important; }
   .imagesBackNav { display: block; }
+  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
+  #category_tabs { margin: 0 -15px -15px -15px; }
+  #languageTabs { margin: 0 -15px 0 -15px; }
+}  
+  
+@media screen and (max-width: 319px) {
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
   #category_tabs { margin: 0 -15px -15px -15px; }
   #languageTabs { margin: 0 -15px 0 -15px; }
