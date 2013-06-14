@@ -162,10 +162,10 @@ function updateStatus(id, val) {
   $.getJSON(jsonLink.replace('CID', id).replace('VAL', val));
   if (val == 1) {               
     $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'0\')');
-    $("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer"></span>');
+    $("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable_category'); ?>"></span>');
   } else {               
     $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'1\')');
-    $("#status_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer"></span>');
+    $("#status_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_enable_category'); ?>"></span>');
   }
 }
 
@@ -189,7 +189,7 @@ function updateVisibilityBox(id, val) {
     $("#box_" + id).html('<span class="icon-browser icon-size2 icon-green cursor-pointer with-tooltip"></span>');
   } else {               
     $("#box_" + id).attr('onclick', 'updateVisibilityBox(\'' + id + '\', \'1\')');
-    $("#box_" + id).html('<span class="icon-browser icon-size2 icon-silver cursor-pointer with-tooltip"></span>');
+    $("#box_" + id).html('<span class="icon-browser icon-size2 icon-silver cursor-pointer with-tooltip">></span>');
   }
 }
 
