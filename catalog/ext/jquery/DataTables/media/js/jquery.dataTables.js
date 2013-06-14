@@ -1570,19 +1570,16 @@
 			{
 				/* Sorting will refilter and draw for us */
 				_fnSort( oSettings, oSettings.oPreviousSearch );
-        alert('1');
 			}
 			else if ( oSettings.oFeatures.bFilter )
 			{
 				/* Filtering will redraw for us */
 				_fnFilterComplete( oSettings, oSettings.oPreviousSearch );
-        alert('2');      
 			}
 			else
 			{
 				_fnCalculateEnd( oSettings );
 				_fnDraw( oSettings );
-        alert('3');
 			}
 		}
 
