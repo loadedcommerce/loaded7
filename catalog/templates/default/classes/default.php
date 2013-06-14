@@ -356,7 +356,7 @@ class lC_Default {
   * @access public
   * @return string
   */
-  public static function getZonesField(){
+  public static function getZonesField() {
     global $lC_Database, $lC_Language, $lC_Template, $entry_state_has_zones;
 
     if ( (isset($_GET['new']) && ($_GET['new'] == 'save')) || (isset($_GET['edit']) && ($_GET['edit'] == 'save')) || (isset($_GET[$lC_Template->getModule()]) && ($_GET[$lC_Template->getModule()] == 'process')) ) {
@@ -501,6 +501,22 @@ class lC_Default {
     }
     
     return $topCategories;   
+  }
+ /*
+  * return the top cats for nav
+  *
+  * @access public
+  * @return array
+  */
+  public static function getCategoriesStatus($id) {
+    global $lC_Database;
+    
+    $Qcategories = $lC_Database->query('select categories_status from :table_categories where categories_id = :categories_id');
+    $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qcategories->bindInt(':id', $id);
+    $Qcategories->execute();
+    
+    return $result;   
   }
 }
 ?>

@@ -131,16 +131,5 @@
     public function getData($keyword) {
       return $this->_data[$keyword];
     }
-
-/**
- * Return status from the current category
- *
- * @access public
- * @return int
- */
-
-    public function isEnabled($id) {
-      return $this->_data[$status];
-    }
   }
 ?>

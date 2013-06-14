@@ -23,7 +23,7 @@
 
     /* Class constructor */
     function lC_Index_Index() {
-      global $lC_Database, $lC_Services, $lC_Language, $lC_Breadcrumb, $cPath, $cPath_array, $current_category_id, $lC_Category;
+      global $lC_Database, $lC_Services, $lC_Language, $lC_Breadcrumb, $cPath, $cPath_array, $current_category_id, $lC_CategoryTree, $lC_Category;
 
       $this->_page_title = sprintf($lC_Language->get('index_heading'), STORE_NAME);
       $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
@@ -52,7 +52,7 @@
         $lC_Category = new lC_Category($current_category_id);
         
         // added to check for category status and show not found page
-        if ( $lC_Category->isEnabled($current_category_id) ) {
+        if ( $lC_CategoryTree->getStatus($current_category_id) == 1 ) {
           // categry is enabled move on
           $this->_page_title = $lC_Category->getTitle();
 
