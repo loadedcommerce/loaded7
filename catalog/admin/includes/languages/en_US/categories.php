@@ -73,6 +73,7 @@ section_categories = Relationships
 
 table_heading_categories = Categories
 table_heading_status = Status
+table_heading_visibility = Visibility
 table_heading_mode = Mode
 table_heading_sort_order = Sort Order
 table_heading_action = Action

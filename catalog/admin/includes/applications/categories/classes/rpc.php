@@ -166,17 +166,51 @@ class lC_Categories_Admin_rpc {
     echo json_encode($result);
   }
  /*
-  * update category show in listings
+  * update category status
   *
-  * @param int $_GET the category id and new value of the show in listings 
+  * @param int $_GET the category id and new value of the status 
   * @access public
   * @return json
   */
   public static function updateStatus() {
     $status = lC_Categories_Admin::updateStatus($_GET['cid'], $_GET['val']);
-    lC_Cache::clear('category_tree');
     
-    if ($tatus) {
+    if ($status) {
+      lC_Cache::clear('category_tree');
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }  
+
+    echo json_encode($result);
+  }
+ /*
+  * update category show in top nav
+  *
+  * @param int $_GET the category id and new value of the show in top nav 
+  * @access public
+  * @return json
+  */
+  public static function updateVisibilityNav() {
+    $status = lC_Categories_Admin::updateVisibilityNav($_GET['cid'], $_GET['val']);
+    
+    if ($status) {
+      lC_Cache::clear('category_tree');
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }  
+
+    echo json_encode($result);
+  }
+ /*
+  * update category show in infobox
+  *
+  * @param int $_GET the category id and new value of the show in infobox 
+  * @access public
+  * @return json
+  */
+  public static function updateVisibilityBox() {
+    $status = lC_Categories_Admin::updateVisibilityBox($_GET['cid'], $_GET['val']);
+    
+    if ($status) {
+      lC_Cache::clear('category_tree');
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }  
 

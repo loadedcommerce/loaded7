@@ -44,7 +44,15 @@ class lC_Categories_Admin {
     while ( $Qcategories->next() ) {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcategories->value('categories_id') . '" id="' . $Qcategories->value('categories_id') . '"></td>';
       $category = '<td><span class="icon-list icon-size2" title="' . $lC_Language->get('text_sort') . '" style="cursor:move;"></span><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-' . lC_Categories_Admin::getCategoryIcon($Qcategories->value('categories_mode')) . ' margin-left"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
-      $status = '<td><center id="status_' . $Qcategories->value('categories_id') . '" onclick="updateStatus(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_status') == 1) ? 0 : 1) . '\');">' . (($Qcategories->valueInt('categories_status') == 1) ? '<span class="icon-list icon-size2 icon-green cursor-pointer"></span>' : '<span class="icon-forbidden icon-size2 icon-red cursor-pointer"></span>') . '</center></td>';
+      $status = '<td><span class="align-center" id="status_' . $Qcategories->value('categories_id') . '" onclick="updateStatus(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_status') == 1) ? 0 : 1) . '\');">' . (($Qcategories->valueInt('categories_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer"></span>') . '</span></td>';
+      $visibility = '<td>' .
+                    '  <span class="align-center margin-right" id="nav_' . $Qcategories->value('categories_id') . '" onclick="updateVisibilityNav(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_visibility_nav') == 1) ? 0 : 1) . '\');">' . 
+                         (($Qcategories->valueInt('categories_visibility_nav') == 1) ? '<span class="icon-directions icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_hide_in_nav') . '"></span>' : '<span class="icon-directions icon-size2 icon-silver cursor-pointer with-tooltip" title="' . $lC_Language->get('text_show_in_nav') . '"></span>') . 
+                    '  </span>' . 
+                    '  <span class="align-center" id="box_' . $Qcategories->value('categories_id') . '" onclick="updateVisibilityBox(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_visibility_box') == 1) ? 0 : 1) . '\');">' . 
+                         (($Qcategories->valueInt('categories_visibility_box') == 1) ? '<span class="icon-browser icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_hide_in_box') . '"></span>' : '<span class="icon-browser icon-size2 icon-silver cursor-pointer with-tooltip" title="' . $lC_Language->get('text_show_in_box') . '"></span>') . 
+                    '  </span>' .  
+                    '</td>';
       $mode = '<td>' . $lC_Language->get('text_mode_' . $Qcategories->value('categories_mode')) . '</td>';
       $sort = '<td>' . $Qcategories->valueInt('sort_order') . '<input type="hidden" name="sort_order_' . $Qcategories->value('categories_id') . '" value="' . $Qcategories->valueInt('sort_order') . '" class="sort" /></td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">
@@ -52,7 +60,7 @@ class lC_Categories_Admin {
                    <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="moveCategory(\'' . $Qcategories->value('categories_id') . '\', \'' . urlencode($Qcategories->valueProtected('categories_name')) . '\')"') . '" class="button icon-cloud-upload with-tooltip ' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_move') . '"></a>
                    <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="deleteCategory(\'' . $Qcategories->value('categories_id') . '\', \'' . urlencode($Qcategories->valueProtected('categories_name')) . '\')"') . '" class="button icon-trash with-tooltip ' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
-      $result['aaData'][] = array("$check", "$category", "$status", "$mode", "$sort", "$action");
+      $result['aaData'][] = array("$check", "$category", "$status", "$visibility", "$mode", "$sort", "$action");
       $result['entries'][] = $Qcategories->toArray();
     }
 
@@ -521,10 +529,10 @@ class lC_Categories_Admin {
     return $nextsort;
   }
  /*
-  * update category show in listings db entry
+  * update category status db entry
   * 
   * @access public
-  * @return true or fales
+  * @return true or false
   */
   public static function updateStatus($id, $val) {
     global $lC_Database;
@@ -534,7 +542,41 @@ class lC_Categories_Admin {
     $Qupdate->bindInt(':categories_status', $val);
     $Qupdate->bindInt(':categories_id', $id);
     $Qupdate->execute();
-
+      
+    return true;
+  }
+ /*
+  * update category show in top nav db entry
+  * 
+  * @access public
+  * @return true or false
+  */
+  public static function updateVisibilityNav($id, $val) {
+    global $lC_Database;
+    
+    $Qupdate = $lC_Database->query('update :table_categories set categories_visibility_nav = :categories_visibility_nav where categories_id = :categories_id');
+    $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qupdate->bindInt(':categories_visibility_nav', $val);
+    $Qupdate->bindInt(':categories_id', $id);
+    $Qupdate->execute();
+      
+    return true;
+  }
+ /*
+  * update category show in infobox db entry
+  * 
+  * @access public
+  * @return true or false
+  */
+  public static function updateVisibilityBox($id, $val) {
+    global $lC_Database;
+    
+    $Qupdate = $lC_Database->query('update :table_categories set categories_visibility_box = :categories_visibility_box where categories_id = :categories_id');
+    $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qupdate->bindInt(':categories_visibility_box', $val);
+    $Qupdate->bindInt(':categories_id', $id);
+    $Qupdate->execute();
+      
     return true;
   }
  /*
@@ -558,7 +600,7 @@ class lC_Categories_Admin {
     } else if ($type == 'search') {
       $icon = 'search icon-black';
     } else if ($type == 'cart') {
-      $icon = 'bag icon-orange';
+      $icon = 'cart icon-orange';
     } else if ($type == 'account') {
       $icon = 'user icon-anthracite';
     } else if ($type == 'info') {

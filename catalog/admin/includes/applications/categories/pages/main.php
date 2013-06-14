@@ -29,6 +29,7 @@
   .dataColCheck { text-align: center; }
   .dataColCategory { text-align: left; }
   .dataColStatus { text-align: center; }
+  .dataColVisibility { text-align: center; }
   .dataColMode { text-align: left; }
   .dataColSort { text-align: left; }
   .dataColAction { text-align: right; }
@@ -43,6 +44,7 @@
           <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
           <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_categories'); ?></th>
           <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_status'); ?></th>
+          <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_visibility'); ?></th>
           <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_mode'); ?></th>
           <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_sort_order'); ?></th>
           <th scope="col" class="align-right">

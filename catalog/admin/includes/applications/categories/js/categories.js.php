@@ -24,11 +24,12 @@ function _refreshDataTable() {
     "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
     "sPaginationType": paginationType,  
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-    "aaSorting": [[4,'asc']],
+    "aaSorting": [[5,'asc']],
     "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
-                  { "sWidth": "35%", "bSortable": true, "sClass": "dataColCategory" },
-                  { "sWidth": "6%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile", "sType": "string" },
-                  { "sWidth": "30%", "bSortable": true, "sClass": "dataColMode hide-on-mobile" },
+                  { "sWidth": "30%", "bSortable": true, "sClass": "dataColCategory" },
+                  { "sWidth": "7%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile", "sType": "string" },
+                  { "sWidth": "9%", "bSortable": false, "sClass": "dataColVisibility hide-on-mobile" },
+                  { "sWidth": "25%", "bSortable": true, "sClass": "dataColMode hide-on-mobile" },
                   { "sWidth": "9%", "bSortable": true, "sClass": "dataColSort hide-on-mobile" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
   });
@@ -84,7 +85,7 @@ $(document).ready(function() {
   if (quickAdd) {
     newCategory();
   }
-  
+  <?php if ($_GET['save']) { ?>
   createUploader();
   var qqbuttonhtmlold = $('.qq-upload-button').html();
   var qqbuttonhtml = qqbuttonhtmlold.replace(/Upload a file/i, 'Upload');
@@ -96,6 +97,7 @@ $(document).ready(function() {
       echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
     }
   ?>
+  <?php } ?>
 });
                   
 function createUploader() {
@@ -160,10 +162,34 @@ function updateStatus(id, val) {
   $.getJSON(jsonLink.replace('CID', id).replace('VAL', val));
   if (val == 1) {               
     $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'0\')');
-    $("#status_" + id).html('<span class="icon-list icon-size2 icon-green cursor-pointer"></span>');
+    $("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer"></span>');
   } else {               
     $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'1\')');
-    $("#status_" + id).html('<span class="icon-forbidden icon-size2 icon-red cursor-pointer"></span>');
+    $("#status_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer"></span>');
+  }
+}
+
+function updateVisibilityNav(id, val) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateVisibilityNav&cid=CID&val=VAL'); ?>';
+  $.getJSON(jsonLink.replace('CID', id).replace('VAL', val));
+  if (val == 1) {               
+    $("#nav_" + id).attr('onclick', 'updateVisibilityNav(\'' + id + '\', \'0\')');
+    $("#nav_" + id).html('<span class="icon-directions icon-size2 icon-green cursor-pointer with-tooltip"></span>');
+  } else {               
+    $("#nav_" + id).attr('onclick', 'updateVisibilityNav(\'' + id + '\', \'1\')');
+    $("#nav_" + id).html('<span class="icon-directions icon-size2 icon-silver cursor-pointer with-tooltip"></span>');
+  }
+}
+
+function updateVisibilityBox(id, val) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateVisibilityBox&cid=CID&val=VAL'); ?>';
+  $.getJSON(jsonLink.replace('CID', id).replace('VAL', val));
+  if (val == 1) {               
+    $("#box_" + id).attr('onclick', 'updateVisibilityBox(\'' + id + '\', \'0\')');
+    $("#box_" + id).html('<span class="icon-browser icon-size2 icon-green cursor-pointer with-tooltip"></span>');
+  } else {               
+    $("#box_" + id).attr('onclick', 'updateVisibilityBox(\'' + id + '\', \'1\')');
+    $("#box_" + id).html('<span class="icon-browser icon-size2 icon-silver cursor-pointer with-tooltip"></span>');
   }
 }
 
