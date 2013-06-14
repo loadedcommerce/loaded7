@@ -19,6 +19,8 @@ class lC_Language_Admin extends lC_Language {
 
   /* Public methods */
   public function loadIniFile($filename = null, $comment = '#', $language_code = null) {
+    global $lC_Addons;
+    
     if ( is_null($language_code) ) {
       $language_code = $this->_code;
     }
@@ -43,6 +45,7 @@ class lC_Language_Admin extends lC_Language {
       }
 
       $contents = file('includes/languages/' . $language_code . '/' . $filename);
+      
     }
 
     $ini_array = array();
@@ -69,6 +72,19 @@ class lC_Language_Admin extends lC_Language {
     unset($contents);
 
     $this->_definitions = array_merge($this->_definitions, $ini_array);
+    
+    // include the addons language defines
+    if (isset($lC_Addons)) {    
+      $aoArr = $lC_Addons->getAddons('enabled');
+      if (is_array($aoArr)) {
+        foreach ($aoArr as $ao => $aoData) {
+          $file = DIR_FS_CATALOG . 'addons/' . $ao . '/languages/' . $language_code . '.xml';
+          if (file_exists($file)) {
+            $this->injectAddonDefinitions($file, $language_code);
+          }
+        }
+      }    
+    }  
   }
 
   public function injectDefinitions($file, $language_code = null) {
