@@ -30,7 +30,7 @@ if (!defined('DB_SERVER') && DB_SERVER != NULL) {
 
 // set the level of error reporting
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
-//ini_set("display_errors", 1);
+ini_set("display_errors", 1);
 ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
 
@@ -90,8 +90,15 @@ $Qcfg->freeResult();
 require($lC_Vqmod->modCheck('includes/functions/general.php'));
 require($lC_Vqmod->modCheck('includes/functions/html_output.php'));
 
+// include directory listing class
+require($lC_Vqmod->modCheck('includes/classes/directory_listing.php'));
+
 // include and start the services
 require($lC_Vqmod->modCheck('includes/classes/services.php'));
 $lC_Services = new lC_Services();
 $lC_Services->startServices();
+
+// instantiate the addons class
+require($lC_Vqmod->modCheck('includes/classes/addons.php'));
+$lC_Addons = new lC_Addons();
 ?>

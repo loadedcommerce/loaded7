@@ -1,4 +1,5 @@
 /**
+
  * Styles override for 1200+ pixels screens
  */
 
@@ -36,4 +37,8 @@
 }
 .new-row-desktop {
 	clear: left;
+}
+
+.baseprice-status {
+  width: 49%;
 }

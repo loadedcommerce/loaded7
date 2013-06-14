@@ -8,10 +8,13 @@
   define('HTTPS_COOKIE_PATH', '/catalog/');
   define('DIR_WS_HTTP_CATALOG', '/catalog/');
   define('DIR_WS_HTTPS_CATALOG', '/catalog/');
+  define('DIR_WS_HTTP_ADMIN', '/catalog/admin/');
+  define('DIR_WS_HTTPS_ADMIN', '/catalog/admin/');  
   define('DIR_WS_IMAGES', 'images/');
 
   define('DIR_WS_DOWNLOAD_PUBLIC', 'pub/');
   define('DIR_FS_CATALOG', '/home/user/www/catalog/');
+  define('DIR_FS_ADMIN', '/home/user/www/catalog/admin/');
   define('DIR_FS_WORK', '/home/user/www/catalog/includes/work/');
   define('DIR_FS_DOWNLOAD', DIR_FS_CATALOG . 'download/');
   define('DIR_FS_DOWNLOAD_PUBLIC', DIR_FS_CATALOG . 'pub/');

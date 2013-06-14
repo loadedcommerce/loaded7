@@ -19,11 +19,7 @@
 
     $select_array = explode(',', substr($select_array, 6, -1));
 
-    if (isset($_GET['plugins'])) {
-      $name = (!empty($key) ? 'plugins[' . $key . ']' : 'plugins_value');
-    } else {
-      $name = (!empty($key) ? 'configuration[' . $key . ']' : 'configuration_value');
-    }
+    $name = (!empty($key) ? 'configuration[' . $key . ']' : 'configuration_value');
 
     for ($i=0, $n=sizeof($select_array); $i<$n; $i++) {
       $value = trim($select_array[$i]);

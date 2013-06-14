@@ -30,7 +30,7 @@ function selectRowEffect(object, buttonSelect) {
   object.className = 'moduleRowSelected';
   selected = object;
 
-// one button is not an array
+  // one button is not an array
   if (document.checkout_address.address[0]) {
     document.checkout_address.address[buttonSelect].checked=true;
   } else {
@@ -38,45 +38,39 @@ function selectRowEffect(object, buttonSelect) {
   }
 }
 
- $(document).ready(function() {    
-   $('#payment_address_form').click(function(){
-     $('#checkoutPaymentAddressDetails').show('drop');
-   });
+$(document).ready(function() {    
+ $('#payment_address_form').click(function(){
+   $('#checkoutPaymentAddressDetails').show('drop');
  });
-  
+});
 
-  $('#checkout_address').submit(function() {
+$('#checkout_address').submit(function() {
+ if ($("#checkoutPaymentAddressDetails").is(':visible')) {
+   var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
+   var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
+   jQuery.validator.messages.required = "";
+   var bValid = $("#checkout_address").validate({
+       rules: {
+         firstname: { minlength: fnameMin, required: true },
+         lastname: { minlength: lnameMin, required: true },
+         street_address: { required: true },
+         city: { required: true },
+       },
+       invalidHandler: function(e, validator) {
+         var errors = validator.numberOfInvalids();
+         if (errors) {
+           $("#errDiv").show().delay(5000).fadeOut('slow');
+         } else {
+           $("#errDiv").hide();
+         }
+         return false;
+       }
+   }).form();
 
-if($("#checkoutPaymentAddressDetails").is(':visible')) {
-
-
-    var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
-    var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
-    jQuery.validator.messages.required = "";
-    var bValid = $("#checkout_address").validate({
-      rules: {
-        firstname: { minlength: fnameMin, required: true },
-        lastname: { minlength: lnameMin, required: true },
-        street_address: { required: true },
-        city: { required: true },
-      },
-      invalidHandler: function(e, validator) {
-        var errors = validator.numberOfInvalids();
-        if (errors) {
-          $("#errDiv").show().delay(5000).fadeOut('slow');
-        } else {
-          $("#errDiv").hide();
-        }
-        return false;
-      }
-    }).form();
-
-    if (bValid) {      
-      $('#checkout_address').submit();
-    }
-    return false;
-} 
-  }); 
-
-
+   if (bValid) {      
+     $('#checkout_address').submit();
+   }
+   return false;
+ } 
+}); 
 </script>
