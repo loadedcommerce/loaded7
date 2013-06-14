@@ -13,13 +13,14 @@
 */
 
   function lc_cfg_set_zones_pulldown_menu($default, $key = null) {
+    global $lC_Database;
     
     $css_class = 'class="input with-small-padding"';
     $args = func_get_args();
     if(count($args) > 2 &&  strpos($args[0], 'class') !== false ) {
       $css_class = $args[0];
       $default = $args[1];
-      $key  = $args[2];
+      $key = $args[2];
     }
 
     if (isset($_GET['plugins'])) {
@@ -29,10 +30,15 @@
     }
 
     $zones_array = array();
-
-    foreach (lC_Address::getZones() as $zone) {
+    
+    $Qcountry = $lC_Database->query('select configuration_value from :table_configuration where configuration_key = :configuration_key');
+    $Qcountry->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qcountry->bindValue(':configuration_key', 'STORE_COUNTRY');
+    $Qcountry->execute();
+    
+    foreach (lC_Address::getZones($Qcountry->value('configuration_value')) as $zone) {
       $zones_array[] = array('id' => $zone['id'],
-                             'text' => $zone['name'],
+                             'text' => utf8_decode($zone['name']),
                              'group' => $zone['country_name']);
     }
 

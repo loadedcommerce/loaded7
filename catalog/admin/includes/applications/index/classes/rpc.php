@@ -217,6 +217,22 @@ class lC_Index_Admin_rpc {
     $result['rpcStatus'] = RPC_STATUS_SUCCESS;
 
     echo json_encode($result);
+  }
+ /*
+  * Save the customer information (update)
+  *
+  * @param integer $_GET['cid'] The customer id used on update
+  * @param array $_GET An array containing the customer information
+  * @access public
+  * @return json
+  */
+  public static function updateCustomer() {
+    $result = lC_Customers_Admin::save($_GET['cid'], $_GET);
+    if (!isset($result['rpcStatus'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
   } 
 }
 ?>

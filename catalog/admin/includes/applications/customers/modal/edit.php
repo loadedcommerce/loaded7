@@ -61,7 +61,7 @@ $pContent .= '<p class="button-height inline-label">' .
              '</p>' .
              '<p class="button-height inline-label">' .
              '  <label for="group" class="label" style="width:30%;">' . $lC_Language->get('field_customer_group') . '</label>' .
-                lc_draw_pull_down_menu('group', null, null, 'class="select" id="editGroup" style="min-width:200px;"') .
+                lc_draw_pull_down_menu('group', null, null, 'class="select" style="width:73%;" id="editGroup"') .
              '</p>' .
              '<p class="button-height inline-label">' .
                '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
@@ -127,7 +127,7 @@ if ( ACCOUNT_STATE > -1 ) {
 }     
 $aContent .=  '<p class="button-height inline-label">' .
               '  <label for="ab_country_id" class="label" style="width:30%;">' . $lC_Language->get('field_country') . '</label>' .
-              lc_draw_pull_down_menu('ab_country_id', null, STORE_COUNTRY, 'class="select" onchange="updateZones();"') .
+              lc_draw_pull_down_menu('ab_country_id', null, STORE_COUNTRY, 'class="select" style="width:73%;" onchange="updateZones();"') .
               '</p>';         
 if ( ACCOUNT_TELEPHONE > -1 ) {
   $aContent .=  '<p class="button-height inline-label">' .
@@ -234,7 +234,7 @@ function getFormData(id) {
       $.each(data.groupsArray, function(val, text) {
         var selected = (data.customerData.customers_group_id == val) ? 'selected="selected"' : '';
         if(data.customerData.customers_group_id == val) {
-          $("#editGroup").prevAll('.select-value:first').text(text);
+          $("#editGroup").closest("span + *").prevAll("span.select-value:first").text(text);
         }
         $("#editGroup").append(
           $("<option " + selected + "></option>").val(val).html(text)
@@ -251,13 +251,17 @@ function getFormData(id) {
       $("#editEmailAddress").val(data.customerData.customers_email_address);
       if (data.customerData.customers_newsletter == 1) {
         $("#editNewsletter").attr('checked', true);
+        $("#editNewsletter").parent().addClass("checked");
       } else {
         $("#editNewsletter").attr('checked', false);
+        $("#editNewsletter").parent().removeClass("checked");
       }
       if (data.customerData.customers_status == 1) {
         $("#editStatus").attr('checked', true);
+        $("#editStatus").parent().addClass("checked");
       } else {
         $("#editStatus").attr('checked', false);
+        $("#editStatus").parent().removeClass("checked");
       }
 
       // populate address book listing
@@ -293,8 +297,7 @@ function toggleAddressForm(reset) {
       $("#addAddress").show();
       $('#li-toggle').hide();
     }
-  } else {
-    $("#personalForm")[0].reset();
+  } else {    
     $("#addressBookForm")[0].reset();
     $("#addresBookPersonal").show();
     $("#addAddress").hide();
@@ -354,7 +357,10 @@ function saveCustomer() {
           return false;
         } else {
          modalMessage('Changes Saved');
-         oTable.fnReloadAjax();
+         var modPage = '<?php echo $lC_Template->getModule(); ?>';
+         if (modPage == 'customers') {
+           oTable.fnReloadAjax();
+         }
          // get new form data
          getFormData(cid);
         }
