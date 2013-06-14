@@ -348,6 +348,7 @@
                          'name' => $info['name'],
                          'parent_id' => $parent,
                          'image' => $info['image'],
+                         'status' => $info['status'],
                          'count' => $info['count']
                         );
           }
