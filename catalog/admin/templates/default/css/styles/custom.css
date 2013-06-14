@@ -855,4 +855,6 @@ select.input {
   #simpleOptionsTable { margin: -10px -15px 0 -20px !important; }
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
-}       
+  #category_tabs { margin: 0 -15px -15px -15px; }
+  #languageTabs { margin: 0 -15px 0 -15px; }
+}

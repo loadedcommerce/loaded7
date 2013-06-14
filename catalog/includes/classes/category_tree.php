@@ -339,6 +339,17 @@
 
       return FALSE;
     }
+
+    function getStatus($id) {
+      foreach ($this->_data as $parent => $categories) {
+        foreach ($categories as $category_id => $info) {
+          if ($id == $category_id) {
+            $result = $info['status'];
+          }
+        }
+      }
+      return $result;
+    }
         
     function getData($id) {
       foreach ($this->_data as $parent => $categories) {
@@ -348,6 +359,7 @@
                          'name' => $info['name'],
                          'parent_id' => $parent,
                          'image' => $info['image'],
+                         'status' => $info['status'],
                          'count' => $info['count']
                         );
           }

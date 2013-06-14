@@ -85,11 +85,11 @@ $(document).ready(function() {
   if (quickAdd) {
     newCategory();
   }
-  <?php if ($_GET['save']) { ?>
+  <?php if ($_GET['action'] != '') { ?>
   createUploader();
   var qqbuttonhtmlold = $('.qq-upload-button').html();
   var qqbuttonhtml = qqbuttonhtmlold.replace(/Upload a file/i, 'Upload');
-  $('.qq-upload-button').html(qqbuttonhtml).css('text-decoration', 'underline').css('margin', '-19px -141px 0 -50px');
+  $('.qq-upload-button').html(qqbuttonhtml);
   $('.qq-upload-list').hide();
   
   <?php
@@ -121,8 +121,9 @@ function doSelectFunction(e) {
 function customCheck() {
   var cModeVal = $("#categories_mode").val();
   if (cModeVal == 'specials' /*|| cModeVal == 'featured' */|| cModeVal == 'new' || cModeVal == 'search' || cModeVal == 'cart' || cModeVal == 'account' || cModeVal == 'info' || cModeVal == 'override') {
-    $("#categories_custom").show();
+    $("#categories_custom_url").show();
     $("#categories_link_target_info").hide();
+    $("#categories_link_target_p").hide(); 
     if (cModeVal != 'override') {
       $("#categories_custom_url").attr('readonly', 'readonly');
       $("#custom_url_text").hide();
@@ -189,7 +190,7 @@ function updateVisibilityBox(id, val) {
     $("#box_" + id).html('<span class="icon-browser icon-size2 icon-green cursor-pointer with-tooltip"></span>');
   } else {               
     $("#box_" + id).attr('onclick', 'updateVisibilityBox(\'' + id + '\', \'1\')');
-    $("#box_" + id).html('<span class="icon-browser icon-size2 icon-silver cursor-pointer with-tooltip">></span>');
+    $("#box_" + id).html('<span class="icon-browser icon-size2 icon-silver cursor-pointer with-tooltip"></span>');
   }
 }
 
