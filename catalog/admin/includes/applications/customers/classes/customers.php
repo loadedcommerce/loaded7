@@ -388,7 +388,7 @@ class lC_Customers_Admin {
   * @access public
   * @return boolean
   */
-  public static function save($id = null, $data, $send_email = true) {
+  public static function save($id = null, $data, $send_email = true) { 
     global $lC_Database, $lC_Language, $lC_DateTime;
 
     $error = false;
@@ -449,8 +449,8 @@ class lC_Customers_Admin {
       $Qcustomer->bindValue(':customers_lastname', $data['lastname']);
       $Qcustomer->bindValue(':customers_email_address', $data['email_address']);
       $Qcustomer->bindValue(':customers_dob', $dob);
-      $Qcustomer->bindInt(':customers_newsletter', (($data['newsletter'] == 'on') ? true : false));
-      $Qcustomer->bindInt(':customers_status', (($data['status'] == 'on') ? true : false));
+      $Qcustomer->bindInt(':customers_newsletter', $data['newsletter']);
+      $Qcustomer->bindInt(':customers_status', $data['status']);
       $Qcustomer->bindInt(':customers_group_id', $data['group']);
       $Qcustomer->setLogging($_SESSION['module'], $id);
       $Qcustomer->execute();

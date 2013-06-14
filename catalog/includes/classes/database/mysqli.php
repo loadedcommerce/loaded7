@@ -26,7 +26,7 @@
         $this->connect();
       }
     }
-
+    
     function connect() {
       if (defined('USE_PCONNECT') && (USE_PCONNECT == 'true')) {
         $connect_function = 'mysqli_pconnect';
@@ -40,7 +40,9 @@
         if ( version_compare(mysqli_get_server_info($this->link), '5.0.2') >= 0 ) {
           $this->simpleQuery('set session sql_mode="STRICT_ALL_TABLES"');
         }
-
+        
+        $this->link->set_charset("utf8");
+        
         return true;
       } else {
         $this->setError(mysqli_connect_error(), mysqli_connect_errno());
@@ -104,7 +106,7 @@
         if ($debug === true) {
           $time_start = $this->getMicroTime();
         }
-
+       
         $resource = @mysqli_query($this->link, $query);
 
         if ($debug === true) {
