@@ -20,8 +20,15 @@ button.price_add {
 </style>
 <div class="full_page">
   <div class="content">
-    <!-- h1><?php echo $lC_Template->getPageTitle(); ?></h1 --> 
-    <div class="products_list products_slider">
+    <h1 class="categories_h1"><?php echo $lC_Template->getPageTitle(); ?></h1> 
+      <div id="categories_description">
+      <?php 
+        if (lC_Default::getCategoryDescription() != '') {
+          echo '<div id="categories_description_inner">' . lC_Default::getCategoryDescription() . '</div>'; 
+        }
+      ?>
+      </div>
+      <div class="products_list products_slider">
       <?php 
       if (PRODUCT_LIST_FILTER == '1') echo lC_Default::getManufacturerFilter();
       $Qlisting = lC_Default::getProductsListingSql();

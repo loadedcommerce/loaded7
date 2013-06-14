@@ -1,5 +1,5 @@
 <?php
-/*
+  /*
   $Id: index.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -10,16 +10,16 @@
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
-*/
+  */
 
   class lC_Index_Index extends lC_Template {
 
     /* Private variables */
     var $_module = 'index',
-        $_group = 'index',
-        $_page_title,
-        $_page_contents = 'index.php',
-        $_page_image = 'table_background_default.gif';
+    $_group = 'index',
+    $_page_title,
+    $_page_contents = 'index.php',
+    $_page_image = 'table_background_default.gif';
 
     /* Class constructor */
     function lC_Index_Index() {
@@ -80,22 +80,22 @@
             $this->_process();
           }
         }
-          $this->addOGPTags('site_name', STORE_NAME);
-          $this->addOGPTags('type', 'website');
-          $this->addOGPTags('title', $this->_page_title);
-          $this->addOGPTags('description', $this->_page_title);
-          $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, 'cPath=' . $_GET['cPath'], 'NONSSL',false,true,true));
-          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
-          if ( $lC_Category->hasImage() ) {
-            $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . DIR_WS_IMAGES . $this->_page_image);
-          }
-      }  else {
-          $this->addOGPTags('site_name', STORE_NAME);
-          $this->addOGPTags('type', 'website');
-          $this->addOGPTags('title', $this->_page_title);
-          $this->addOGPTags('description', $this->_page_title);
-          $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, '', 'NONSSL',false,true,true));
-          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
+        $this->addOGPTags('site_name', STORE_NAME);
+        $this->addOGPTags('type', 'website');
+        $this->addOGPTags('title', $this->_page_title);
+        $this->addOGPTags('description', $this->_page_title);
+        $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, 'cPath=' . $_GET['cPath'], 'NONSSL',false,true,true));
+        $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
+        if ( $lC_Category->hasImage() ) {
+          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . DIR_WS_IMAGES . $this->_page_image);
+        }
+      } else {
+        $this->addOGPTags('site_name', STORE_NAME);
+        $this->addOGPTags('type', 'website');
+        $this->addOGPTags('title', $this->_page_title);
+        $this->addOGPTags('description', $this->_page_title);
+        $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, '', 'NONSSL',false,true,true));
+        $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
       }
     }
 

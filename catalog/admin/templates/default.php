@@ -13,7 +13,7 @@
 
   Based on the Developr theme
 */
-ini_set('display_errors', 1);
+
 ?>
 <!DOCTYPE html>
 <!--[if IEMobile 7]><html class="no-js iem7 oldie"><![endif]-->
@@ -71,8 +71,6 @@ ini_set('display_errors', 1);
   <!-- DataTables -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables-tableTools.css?v=1">
-  <!-- CLEditor -->
-  <link rel="stylesheet" href="external/CLEditor/jquery.cleditor.css">
   <!-- loading mask -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.loadmask.css?v=1">  
   

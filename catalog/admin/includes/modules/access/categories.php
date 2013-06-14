@@ -14,7 +14,7 @@
 
   class lC_Access_Categories extends lC_Access {
     var $_module = 'categories',
-        $_group = 'products',
+        $_group = 'content',
         $_icon = 'folder_red.png',
         $_title,
         $_sort_order = 100;
