@@ -14,14 +14,9 @@
 // start the timer for the page parse time log
 define('PAGE_PARSE_START_TIME', microtime());
 
-// set the local configuration parameters - mainly for developers
-if ( file_exists('includes/local/config.php') ) {
-  include('includes/local/config.php');
-}
-
 // check for config, include server parameters or go to install
-if (is_file('includes/config.php')) {  
-  require('includes/config.php');
+if (is_file(__DIR__ . '/config.php')) {  
+  require(__DIR__ . '/config.php');
 }
 
 // redirect to the installation module if DB_SERVER is empty
