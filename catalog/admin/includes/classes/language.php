@@ -73,7 +73,7 @@ class lC_Language_Admin extends lC_Language {
 
     $this->_definitions = array_merge($this->_definitions, $ini_array);
     
-    // include the addons language defines
+    // inject the addons language defines
     if (isset($lC_Addons)) {    
       $aoArr = $lC_Addons->getAddons('enabled');
       if (is_array($aoArr)) {
