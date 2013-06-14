@@ -3,7 +3,7 @@
   <definitions>
     <definition>
       <key>addon_shipping_usps_title</key>
-      <value><![CDATA[United States Postal Service]]></value>
+      <value><![CDATA[U.S. Postal Service]]></value>
       <group>checkout</group>
     </definition>
     <definition>
