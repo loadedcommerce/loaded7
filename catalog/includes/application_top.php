@@ -15,17 +15,16 @@
 define('PAGE_PARSE_START_TIME', microtime());
 
 // check for config, include server parameters or go to install
-if (is_file(__DIR__ . '/config.php')) {  
-  require(__DIR__ . '/config.php');
+if (File_exists(__DIR__ . '/config.php')) {
+  @require(__DIR__ . '/config.php');
 }
 
 // redirect to the installation module if DB_SERVER is empty
-if (!defined(DB_SERVER)) {
+if (!defined('DB_SERVER') && DB_SERVER != NULL) {
   if (is_dir('install')) {
     header('Location: install/index.php');
   } else {
-    echo 'Your install directory does not exist!';
-    die();
+    die('Install directory does not exist!');
   }
 }
 
