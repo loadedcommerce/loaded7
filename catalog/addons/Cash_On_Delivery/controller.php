@@ -31,12 +31,6 @@ class Cash_On_Delivery extends lC_Addon {
     */    
     $this->_code = 'Cash_On_Delivery';    
    /**
-    * Inject the language definitions if they exist
-    */ 
-    if (file_exists(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml')) {        
-      $lC_Language->injectAddonDefinitions(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml');
-    }    
-   /**
     * The addon title used in the addons store listing
     */     
     $this->_title = $lC_Language->get('addon_payment_cod_title');

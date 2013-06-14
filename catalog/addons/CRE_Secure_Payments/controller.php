@@ -29,13 +29,7 @@ class CRE_Secure_Payments extends lC_Addon {
    /**
     * The addon class name
     */    
-    $this->_code = 'CRE_Secure_Payments';    
-   /**
-    * Inject the language definitions if they exist
-    */ 
-    if (file_exists(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml')) {        
-      $lC_Language->injectAddonDefinitions(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml');
-    }    
+    $this->_code = 'CRE_Secure_Payments';        
    /**
     * The addon title used in the addons store listing
     */     

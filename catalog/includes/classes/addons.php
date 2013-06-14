@@ -12,6 +12,8 @@
   @license    http://loadedcommerce.com/license.html
 */
 class lC_Addons {
+  
+  private $_data;
 
   // class contructor 
   public function __construct() {
@@ -27,6 +29,23 @@ class lC_Addons {
       $this->_initialize();
   //  }
   } 
+  
+  public function getAddons($flag = '') {
+    if (!is_array($this->_data)) {
+      $this->_initialize();
+    }
+    if ($flag == 'enabled') {
+      $dArr = array();
+      foreach($this->_data as $ao => $aoData) {
+        if ($aoData['enabled'] == true) $dArr[$ao] = $aoData;
+      } 
+      $data = $dArr;
+    } else {
+      $data = $this->_data; 
+    }
+    
+    return $data;
+  }
   
   // private methods
   private function _initialize() {
@@ -72,6 +91,8 @@ class lC_Addons {
     if (!file_exists(DIR_FS_WORK . 'cache/addons.cache')) {
       file_put_contents(DIR_FS_WORK . 'cache/addons.cache', serialize($enabled));
     }
+    
+    $this->_data = $_SESSION['lC_Addons_data'];
   }
 }
 ?>
