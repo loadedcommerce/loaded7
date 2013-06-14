@@ -15,11 +15,12 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
 ?>
 <div id="section_general_content" class="with-padding">
   <div class="columns">
+    <?php if ($pInfo) { ?>
     <div class="new-row-mobile four-columns twelve-columns-mobile">
       <div class="twelve-columns">
         <span class="strong margin-right"><?php echo $lC_Language->get('text_product_image'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_image'), null); ?>   
         <div style="padding-left:6px;" class="small-margin-top">
-          <div id="imagePreviewContainer" class="prod-image"></div>
+          <div id="imagePreviewContainer" class="prod-image align-center"></div>
         </div>   
         <p class="thin margin-top" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
         <div id="fileUploaderImageContainer" class="small-margin-top">
@@ -29,7 +30,8 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
         </div>        
       </div>
     </div>
-    <div class="new-row-mobile eight-columns twelve-columns-mobile">             
+    <?php } ?>
+    <div class="new-row-mobile <?php echo (isset($pInfo) ? 'eight' : 'twelve'); ?>-columns twelve-columns-mobile">             
       <div class="columns">
       
         <div id="languageTabs" class="standard-tabs same-height no-margin-bottom" style="width:99%;">
@@ -40,7 +42,7 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
               }
             ?>
           </ul>
-          <div class="tabs-content" style="padding:10px 10px 20px 16px;">
+          <div class="tabs-content description-content">
             <?php
               foreach ( $lC_Language->getAll() as $l ) {
               ?>
@@ -75,26 +77,30 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
   </div>
   <div class="field-drop-product button-height black-inputs extreme-margin-bottom">
     <div class="columns">
-      <div class="new-row-mobile four-columns twelve-columns-mobile">
+      <div id="basprice_status_left" class="new-row-mobile four-columns twelve-columns-mobile">
       </div>
       <div class="new-row-mobile eight-columns twelve-columns-mobile">
-        <div style="width:100%;">      
-          <div style="width:48%; float:left;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status margin-bottom">
+        <div class="columns">      
+          <div class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet six-columns margin-bottom">
             <span>
               <span class="strong"><?php echo $lC_Language->get('field_base_price'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_base_price'), 'margin:8px 6px 0 0;'); ?>
             </span> 
-            <div class="inputs large" style="font-size:2em; padding:8px 0;">
+            <div class="inputs large" style="font-size:1.8em; padding:8px 0;">
               <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
-              <?php echo lc_draw_input_field('products_price', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="font-size:1em; padding:4px; height:20px;" class="input-unstyled" onfocus="this.select();" id="products_price0" onchange="$(\'#products_base_price\').val(this.value); updatePricingDiscountDisplay();"'); ?>
+              <?php echo lc_draw_input_field('products_price', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="font-size:1em; padding:4px; height:20px; width:80%;" class="input-unstyled" onfocus="this.select();" id="products_price0" onchange="$(\'#products_base_price\').val(this.value); updatePricingDiscountDisplay();"'); ?>
             </div>              
           </div>
-          <div style="width:48%; float:right;" class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet baseprice-status">
+          <div class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet six-columns">
             <span>
               <span class="strong"><?php echo $lC_Language->get('field_status'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_status'), null, 'info-spot on-left grey margin-left'); ?>
             </span><br />
             <span class="button-group">
               <label for="ps_radio_1" class="button blue-active">
-                <input type="radio" name="products_status" id="ps_radio_1" value="active"<?php echo ((isset($pInfo) && $pInfo->getInt('products_status') == 1) ? ' checked' : ''); ?> />
+                <?php if (isset($pInfo)) { ?>
+                  <input type="radio" name="products_status" id="ps_radio_1" value="active"<?php echo ($pInfo->getInt('products_status') == 1 ? ' checked' : ''); ?> />
+                <?php } else { ?>
+                  <input type="radio" name="products_status" id="ps_radio_1" value="active" checked />
+                <?php } ?>
                 <?php echo $lC_Language->get('field_status_active'); ?>
               </label>
               <label for="ps_radio_2" class="button red-active">

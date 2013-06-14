@@ -90,6 +90,21 @@ class lC_Template_Admin extends lC_Template {
     }
 
     return true;
+  }
+  /*
+  * Load the page specific search box delay javascript
+  *
+  * @access public
+  * @return boolean
+  */
+  public function loadPageSearchBoxDelayScript($_module) {
+    global $lC_Vqmod;
+    
+    if ( file_exists('includes/applications/' . $_module . '/js/responsive.js.php') ) {
+      include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/js/jquery.dataTables.delay.min.js.php'));
+    }
+
+    return true;
   }    
   /*
   * Load the page specific CSS

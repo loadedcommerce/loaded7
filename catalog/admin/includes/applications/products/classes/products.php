@@ -225,9 +225,9 @@ class lC_Products_Admin {
       $result['previewHtml'] .= '  </table>';
       $result['previewHtml'] .= '  <p>' . $lC_Image->show($lC_ObjectInfo->get('image'), $products_name[$l['id']], 'align="right" hspace="5" vspace="5"', 'product_info') . $products_description[$l['id']] . '</p>';
       if ( !empty($products_url[$l['id']]) ) {
-        $result['previewHtml'] .= '<p>' . sprintf($lC_Language->get('more_product_information'), lc_output_string_protected($products_url[$l['id']])) . '</p>';
+        $result['previewHtml'] .= '<p>' . sprintf($lC_Language->get('text_more_product_information'), lc_output_string_protected($products_url[$l['id']])) . '</p>';
       }
-      $result['previewHtml'] .= '<p align="center">' . sprintf($lC_Language->get('product_date_added'), lC_DateTime::getLong($lC_ObjectInfo->get('products_date_added'))) . '</p>';
+      $result['previewHtml'] .= '<p align="center">' . sprintf($lC_Language->get('text_product_date_added'), lC_DateTime::getLong($lC_ObjectInfo->get('products_date_added'))) . '</p>';
       $result['previewHtml'] .= '</div>';
     }
 
@@ -486,7 +486,7 @@ class lC_Products_Admin {
       $Qcategories->setLogging($_SESSION['module'], $products_id);
       $Qcategories->execute();
 
-      if ( $lC_Database->isError() ) {
+      if ( $lC_Database->isError() ) { 
         $error = true;
       } else {
         if ( isset($data['categories']) && !empty($data['categories']) ) {
@@ -1458,7 +1458,7 @@ class lC_Products_Admin {
   * @access public
   * @return array
   */
-  public static function getSimpleOptionEntryData($eData) {
+  public static function getSimpleOptionEntryData($eData) { 
     global $lC_Database;
     
     $veData = lC_Product_variants_Admin::getVariantEntries($eData['group']);
@@ -1524,8 +1524,8 @@ class lC_Products_Admin {
                     '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
                     '  <td width="16px" style="cursor:pointer;" onclick="toggleSimpleOptionsRow(\'#drope' . $so['options_id'] . '\');"><span id="drope' . $so['options_id'] . '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>' .
                     '  <td width="40%">' . $so['title'] . '<div class="small-margin-top dropall" id="drope' . $so['options_id'] . '" style="display:none;"><span>' . $items . '</span></div></td>' .
-                    '  <td width="30%">' . $so['module'] . '</td>' .
-                    '  <td width="10%" class="sort"></td>' .
+                    '  <td width="30%" class="hide-below-480">' . $so['module'] . '</td>' .
+                    '  <td width="10%" class="sort hide-below-480"></td>' .
                     '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleSimpleOpitonsStatus(this, \'' . $so['options_id'] . '\');">' . $statusIcon . '</td>' .
                     '  <td width="15%" align="right">
                          <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addSimpleOption(\'' . $so['options_id'] . '\')"></span>
@@ -1638,7 +1638,7 @@ class lC_Products_Admin {
                   '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
                   '      <input type="text" onfocus="this.select();" name="group_price[' . $value['customers_group_id'] . ']" id="group_price_' . $value['customers_group_id'] . '" value="' . number_format($discounted_price, DECIMAL_PLACES) . '" class="input-unstyled small-margin-right grey disabled" style="width:60px;" READONLY/>' .
                   '    </div>' .
-                  '  <small class="input-info mid-margin-left">' . $lC_Language->get('text_price') . '<span class="tag glossy mid-margin-left">-' . number_format($value['baseline_discount'], DECIMAL_PLACES) . '%</span><!-- if specials enabled /Special--></small>' . 
+                  '  <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_price') . '<span class="tag glossy mid-margin-left">-' . number_format($value['baseline_discount'], DECIMAL_PLACES) . '%</span><!-- if specials enabled /Special--></small>' . 
                   '</div>';
     }
     
@@ -1669,7 +1669,7 @@ class lC_Products_Admin {
                   '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
                   '      <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" name="products_special_price[' . $value['customers_group_id'] . ']" id="products_special_price' . $value['customers_group_id'] . '" value="' . (($value['customers_group_id'] == '1') ? number_format($pInfo->get('products_special_price'), DECIMAL_PLACES) : '0.00') . '" class="sprice input-unstyled small-margin-right' . (($value['customers_group_id'] == '1') ? '' : ' grey disabled') . '" style="width:60px;"' . (($value['customers_group_id'] == '1') ? '' : ' READONLY') . '/>' .
                   '    </div>' .
-                  '    <small class="input-info mid-margin-left">' . $lC_Language->get('text_special_price') . (($value['customers_group_id'] == '1') ? '<span class="disctag tag glossy mid-margin-left">-' . number_format($discount, DECIMAL_PLACES) . '%</span>' : '') . '</small>' .
+                  '    <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_special_price') . (($value['customers_group_id'] == '1') ? '<span class="disctag tag glossy mid-margin-left">-' . number_format($discount, DECIMAL_PLACES) . '%</span>' : '') . '</small>' .
                   '  </div>' .
                   '  <div class="new-row-mobile twelve-columns twelve-columns-mobile">' .
                   '    <span class="nowrap margin-right">' .

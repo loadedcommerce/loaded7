@@ -13,6 +13,7 @@
 */
 if ($lC_NavigationHistory->hasSnapshot()) {
   $origin_href = $lC_NavigationHistory->getSnapshotURL();
+  $href_parts = explode("?", $origin_href);
   $lC_NavigationHistory->resetSnapshot();
 } else {
   $origin_href = lc_href_link(FILENAME_DEFAULT);
@@ -25,7 +26,7 @@ if ($lC_NavigationHistory->hasSnapshot()) {
     <p><?php echo sprintf($lC_Language->get('success_account_created'), lc_href_link(FILENAME_INFO, 'contact')); ?></p>
     <div style="clear:both;">&nbsp;</div> 
     <div class="action_buttonbar">
-      <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
+      <span class="buttonRight"><a href="<?php echo lc_href_link((($href_parts[1] == 'shipping=') ? FILENAME_CHECKOUT : FILENAME_DEFAULT), (($href_parts[1] == 'shipping=') ? $href_parts[1] : '')); ?>"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
     </div>
   </div>
 </div>

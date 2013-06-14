@@ -15,7 +15,7 @@ global $lC_Language, $pInfo;
 ?>   
 <div id="section_images_content" class="with-padding">
   <div class="content-panel margin-bottom enabled-panels">
-    <div class="panel-navigation silver-gradient">
+    <div class="panel-navigation silver-gradient scrollable">
       <div class="panel-control"></div>
       <div class="scrollable custom-scroll">
         <div class="navigable">
@@ -26,18 +26,21 @@ global $lC_Language, $pInfo;
                 <b><?php echo $lC_Language->get('text_product_images'); ?></b>
               </a>            
             </li>
+            <?php if ($pInfo) { ?>
             <li id="additional-gallery-trigger">     
               <a class="file-link" href="javascript://" onclick="showContent('additional');">
                 <span class="icon file-jpg"></span>
                 <b><?php echo $lC_Language->get('text_additional_images'); ?></b>
               </a>            
-            </li>            
+            </li>
+            <?php } ?>            
           </ul>
         </div> 
       </div>
     </div>
-    <div class="panel-content linen" style="height:auto">
+    <div class="panel-content linen scrollable" style="height:auto">
       <div class="panel-control align-right"></div>
+      <a href="javascript://" onclick="backToNav();" class="imagesBackNav"><div class="back"><span class="back-arrow"></span>Back</div></a>
       <div style="height: auto; position: relative;" class="scrollable with-padding custom-scroll">
         <div class="gallery" id="images-gallery">
           <table border="0" width="100%" cellspacing="0" cellpadding="2">
@@ -45,12 +48,12 @@ global $lC_Language, $pInfo;
               <td width="100%" height="100%" valign="top">
                 <div class="message white-gradient margin-bottom" style="min-height:37px;">
                   <div style="float: right;">
-                    <?php echo $lC_Language->get('text_product_image_drag_n_drop'); ?>
+                    <?php echo (isset($pInfo) ? $lC_Language->get('text_product_image_drag_n_drop') : null); ?>
                     <!--<a href="#" id="remoteFilesLink" onclick="switchImageFilesView('remote');" style="font-weight:bolder; color:#000;"><?php echo $lC_Language->get('image_remote_upload'); ?></a> | <a href="#" id="localFilesLink" onclick="switchImageFilesView('local');" style="color:#000;"><?php echo $lC_Language->get('image_local_files'); ?></a>-->
                   </div>
                   
                   <div id="remoteFiles" style="white-space:nowrap;">
-                    <span id="fileUploadField"></span>
+                    <span id="fileUploadField" style="width:90%;"></span>
                     <?php
                     if ( isset($pInfo) ) {
                       ?>
@@ -61,6 +64,7 @@ global $lC_Language, $pInfo;
                       </div>
                       <?php
                     } else {
+                      echo '<div id="fileUploaderContainer" style="display:none;"></div>';
                       echo lc_draw_file_field('products_image', null, 'class="file"');
                     }
                     ?>                              

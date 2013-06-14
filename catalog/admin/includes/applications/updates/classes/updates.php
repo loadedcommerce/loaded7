@@ -383,7 +383,6 @@ class lC_Updates_Admin {
   * @return boolean
   */    
   public static function applyPackage() {
-    
     $phar_can_open = true;
 
     $meta = array();
@@ -407,7 +406,6 @@ class lC_Updates_Admin {
       if (is_array($meta['delete']) && count($meta['delete']) > 0) {
         foreach ( $meta['delete'] as $file ) {
           $directory = realpath(DIR_FS_CATALOG) . '/';
-
           if ( file_exists($directory . $file) ) {
             if ( is_dir($directory . $file) ) {
               if ( rename($directory . $file, $directory . dirname($file) . '/.CU_' . basename($file)) ) {
@@ -509,42 +507,21 @@ class lC_Updates_Admin {
       trigger_error('Please review the update log at: ' . DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
     }
 
-    if ( $phar_can_open === true ) {
-      // execute run after script if exists
-      if (file_exists(DIR_FS_WORK . 'updates/' . $meta['runAfter'] . 'controller.php')) {
-        include_once(DIR_FS_WORK . 'updates/' . $meta['runAfter'] . 'controller.php');
-        
-        if ( method_exists('lC_Updates_Admin_run_after', 'process') ) {
-          $results = call_user_func(array('lC_Updates_Admin_run_after', 'process'));      
-
-          if ( !empty($results) ) {
-            self::log('##### RAN AFTER');
-
-            foreach ( $results as $r ) {
-              self::log($r);
-            }
-          }
-
-          self::log('##### CLEANUP');
-
-          if ( self::rmdir_r(DIR_FS_WORK . 'updates/' . $meta['runAfter']) ) {
-            self::log('Deleted: ' . DIR_FS_WORK . 'updates/' . $meta['runAfter']);
-          } else {
-            self::log('*** Could Not Delete: ' . DIR_FS_WORK . 'updates/' . $meta['runAfter']);
-          }
-        }
-      }
-      
-      // verify 644 permissions on PHP files
-      try {
-        exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
-        self::log('##### UPDATED Permissions on PHP files to 644');
-      } catch ( Exception $e ) {  
-        self::log('*** Could Not Set Permissions on PHP files to 644');
-      }       
-      
-      self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
+    // execute run after script if exists
+    if (file_exists(DIR_FS_WORK . 'updates/runAfter/controller.php')) {
+      include_once(DIR_FS_WORK . 'updates/runAfter/controller.php');
+      lC_Updates_Admin_run_after::process();      
     }
+    
+    // verify 644 permissions on PHP files
+    try {
+      exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
+      self::log('##### UPDATED Permissions on PHP files to 644');
+    } catch ( Exception $e ) {  
+      self::log('*** Could Not Set Permissions on PHP files to 644');
+    }       
+    
+    self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
 
     return $phar_can_open;
   }

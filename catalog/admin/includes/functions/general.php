@@ -384,6 +384,25 @@
     return $data;
 
   }
+  
+  function lc_store_country_has_zones() {
+    global $lC_Database;
+    
+    $QcountryId = $lC_Database->query('select configuration_value from :table_configuration where configuration_key = :configuration_key');
+    $QcountryId->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $QcountryId->bindValue(':configuration_key', 'STORE_COUNTRY');
+    $QcountryId->execute();
+    
+    $Qcountry = $lC_Database->query('select zone_id from :table_zones where zone_country_id = :zone_country_id limit 1');
+    $Qcountry->bindTable(':table_zones', TABLE_ZONES);
+    $Qcountry->bindValue(':zone_country_id', $QcountryId->value('configuration_value'));
+    $Qcountry->execute();
+    
+    $result = ($Qcountry->value('zone_id')) ? 1 : 0;
+    
+    return $result;
+    
+  }
 
   function lc_get_country_data($countries_id = null, $countries_name = null, $countries_iso2 = null, $countries_iso3 = null) {
     global $lC_Database; 

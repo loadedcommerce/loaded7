@@ -14,26 +14,25 @@
 // start the timer for the page parse time log
 define('PAGE_PARSE_START_TIME', microtime());
 
-// set the local configuration parameters - mainly for developers
-if ( file_exists('includes/local/config.php') ) {
-  include('includes/local/config.php');
+// check for config, include server parameters or go to install
+if (File_exists(__DIR__ . '/config.php')) {
+  @require(__DIR__ . '/config.php');
 }
 
-// include server parameters
-require('includes/config.php');
+// redirect to the installation module if DB_SERVER is empty
+if (!defined('DB_SERVER') && DB_SERVER != NULL) {
+  if (is_dir('install')) {
+    header('Location: install/index.php');
+  } else {
+    die('Install directory does not exist!');
+  }
+}
 
 // set the level of error reporting
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 //ini_set("display_errors", 1);
 ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
-
-// redirect to the installation module if DB_SERVER is empty
-if (strlen(DB_SERVER) < 1) {
-  if (is_dir('install')) {
-    header('Location: install/index.php');
-  }
-}
 
 // virtual hook system
 require_once('ext/vqmod/vqmod.php');

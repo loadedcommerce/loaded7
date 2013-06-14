@@ -16,21 +16,24 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
   ?>
   <script>
     $(document).ready(function() {
+      $("#languageTabs").parent().css('margin-bottom', '0'); 
       // instantiate floating menu
       $('#floating-menu-div-listing').fixFloat();
       // instantiate the datepicker
       $(".datepicker").glDatePicker({ zIndex: 100 }); 
 
       // CONTENT TAB
+      <?php if ($pInfo) { ?>
       createUploader2();
+      <?php } ?>
       $('#fileUploaderImageContainer .qq-upload-button').hide();
       $('#fileUploaderImageContainer .qq-upload-list').hide();
       <?php               
       foreach ( $lC_Language->getAll() as $l ) {  
-        echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%'  });";
+        echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
       }
       ?>  
-      $('#products_name_1').focus();
+      //$('#products_name_1').focus();
       $(this).scrollTop(0); 
            
       // IMAGES TAB
@@ -70,20 +73,21 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       
                 
     });
-    
+    <?php if ($pInfo) { ?>
     /**
      * CONTENT TAB
      * 
     /* create the uploader instance on content tab */
     function createUploader2(){
       var uploader = new qq.FileUploader({
-          element: document.getElementById('fileUploaderImageContainer'),
-          action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=fileUpload&default=1'); ?>',
-          onComplete: function(id, fileName, responseJSON){
-            getImages();
-          },
+        element: document.getElementById('fileUploaderImageContainer'),
+        action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=fileUpload&default=1'); ?>',
+        onComplete: function(id, fileName, responseJSON){
+          getImages();
+        },
       });
     }
+    <?php } ?>
 
     function toggleEditor(id) {
       var selection = $("#ckEditorProductDescription_" + id);
@@ -102,11 +106,11 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
    /* create the uploader instance for images tab */
     function createUploader(){
       var uploader = new qq.FileUploader({
-          element: document.getElementById('fileUploaderContainer'),
-          action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=fileUpload&default=DEFAULT'); ?>',
-          onComplete: function(id, fileName, responseJSON){
-            getImages();
-          },
+        element: document.getElementById('fileUploaderContainer'),
+        action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=fileUpload&default=DEFAULT'); ?>',
+        onComplete: function(id, fileName, responseJSON){
+          getImages();
+        },
       });
     }
 
@@ -114,6 +118,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     function showContent(tab) { 
       $('.qq-upload-list').empty();
       if (tab == 'default') {
+        $(".panel-content").css('left', 0);
         $('#defaultImagesContainer').show();
         $('#additionalImagesContainer').hide();
         $('#images-gallery-trigger').addClass('with-right-arrow grey-arrow');
@@ -121,6 +126,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         $('#additional-gallery-trigger').removeClass('with-right-arrow grey-arrow');
         $('#additional-gallery-trigger > a').removeClass('selected-menu');    
       } else {
+        $(".panel-content").css('left', 0);
         $('#defaultImagesContainer').hide();
         $('#additionalImagesContainer').show();
         $('#images-gallery-trigger').removeClass('with-right-arrow grey-arrow');
@@ -128,8 +134,16 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         $('#additional-gallery-trigger').addClass('with-right-arrow grey-arrow');  
         $('#additional-gallery-trigger > a').addClass('selected-menu');  
       }
-    }   
-
+    }
+    
+    // added to check if image file exists
+    function checkImageExists(file){
+      return $.ajax({
+        url: file,
+        type: 'HEAD'
+      });
+    }
+          
     function showImages(data) {
       for ( i=0; i < data.entries.length; i++ ) {
         var entry = data.entries[i];
@@ -146,7 +160,11 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         if ( entry[6] == '1' ) { // default_flag         
           var newdiv = '<span id="image_' + entry[0] + '" style="' + style + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
           newdiv += '<img class="framed" src="<?php echo '../images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /><br />' + entry[3];
-          var prevdiv = '<img src="<?php echo '../images/products/large/'; ?>' + entry[2] + '" border="0" style="max-width:100%;" />';
+          checkImageExists('../images/products/large/' + entry[2]).done(function() {
+            $('#imagePreviewContainer').html('<img src="<?php echo '../images/products/large/'; ?>' + entry[2] + '" style="max-width:100%;" />');
+          }).fail(function() {
+            $('#imagePreviewContainer').html('<img src="<?php echo '../images/no-image.png'; ?>" style="max-width:100%;" />');
+          });
           if ( entry[1] == '1' ) {    
             newdiv += '<div class="show-on-parent-hover" style="position:relative;"><span class="button-group compact children-tooltip" style="position:absolute; top:-42px; left:11px;"><a href="javascript://" class="button icon-play orange-gradient" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showImage(\'' + entry[4] + '\', \'' + entry[7] + '\', \'' + entry[8] + '\');"></a><a href="#" class="button icon-cross red-gradient" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
           } else {
@@ -177,12 +195,10 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           }
         }      
       }
-      
-      $('#imagePreviewContainer').html(prevdiv);
 
       $('#additionalOriginal').sortable({
         update: function(event, ui) {
-          $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=reorderImages'); ?>' + '&' + $(this).sortable('serialize'),
+          $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=reorderImages'); ?>' + '&' + $(this).sortable('serialize'),
             function (data) {
               getImagesOriginals();
               getImagesOthers();
@@ -191,6 +207,10 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         }
       });
 
+      setTimeout('_clearProgressIndicators()', 500);
+    }
+    
+    function _clearProgressIndicators() {
       if ( $('#showProgressOriginal').css('display') != 'none') {
         $('#showProgressOriginal').css('display', 'none');
       }
@@ -205,7 +225,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       getImagesOriginals(false);
       getImagesOthers(false);
 
-      $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=getImages'); ?>',
+      $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=getImages'); ?>',
         function (data) {
           showImages(data);
         }
@@ -219,7 +239,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $('#imagePreviewContainer').html('<p id="showProgressOriginal" align="center" class="large-margin-top"><span class="loader huge refreshing"></span></p>');
 
       if ( makeCall != false ) {
-        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=getImages&filter=originals'); ?>',
+        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=getImages&filter=originals'); ?>',
           function (data) {
             showImages(data);
           }
@@ -232,7 +252,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $('#defaultOther').html('<div id="showProgressOther" style="float: left; padding-left: 10px;"><span class="loader on-dark small-margin-right"></span><?php echo $lC_Language->get('image_loading_from_server'); ?></div>');
 
       if ( makeCall != false ) {
-        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=getImages&filter=others'); ?>',
+        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=getImages&filter=others'); ?>',
           function (data) {
             showImages(data);
           }
@@ -243,7 +263,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     function removeImage(id) {
       $.modal.confirm('<?php echo $lC_Language->get('text_confirm_delete'); ?>', function() {
         var image = id.split('_');
-        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=deleteProductImage'); ?>' + '&image=' + image[1],
+        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=deleteProductImage'); ?>' + '&image=' + image[1],
           function (data) {
             getImages();
           }
@@ -255,7 +275,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     function setDefaultImage(id) {  
       $.modal.confirm('<?php echo $lC_Language->get('text_confirm_set_default'); ?>', function() {
         var image = id.split('_');
-        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=setDefaultImage'); ?>' + '&image=' + image[1],
+        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=setDefaultImage'); ?>' + '&image=' + image[1],
           function (data) {
             getImages();  
             showContent('default');
@@ -299,7 +319,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           selectedFiles += 'files[]=' + $(selected).text() + '&';
         });
 
-        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $pInfo->getInt('products_id') . '&action=assignLocalImages'); ?>' + '&' + selectedFiles,
+        $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=assignLocalImages'); ?>' + '&' + selectedFiles,
           function (data) {
             $('#showProgressAssigningLocalImages').css('display', 'none');
             getLocalImages();
@@ -334,6 +354,13 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         getLocalImages();
       }
       */
+    }
+    
+    function backToNav() {
+      var imagesPanelWidth = $(".panel-content").width();
+      //alert(imagesPanelWidth);
+      $(".panel-navigation").css('left', '0').css('right', '0');
+      $(".panel-content").css('left', imagesPanelWidth);
     } 
     
     /**
@@ -344,7 +371,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       var order = 0;
       $('#simpleOptionsTable tr').each(function () {
         var sort = $(this).find('input[class=sort]');
-        var td = $(this).find('td[class=sort]');
+        var td = $(this).find('td[class="sort hide-below-480"]');
         if ($(sort.val()) != undefined) {
           $(sort).val(order.toString());
           $(td).text(order.toString());
@@ -549,10 +576,10 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "bDestroy": true,
             "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
-                          { "sWidth": "55%", "bSortable": true, "sClass": "dataColProducts" },
+                          { "sWidth": "50%", "bSortable": true, "sClass": "dataColProducts" },
                           { "sWidth": "15%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },
                           { "sWidth": "10%", "bSortable": true, "sClass": "dataColQty hide-on-tablet" },
-                          { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
+                          { "sWidth": "25%", "bSortable": false, "sClass": "dataColAction" }]
           }); 
           $('#dataTable').responsiveTable();
                

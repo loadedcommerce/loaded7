@@ -29,6 +29,7 @@ $(document).ready(function() {
                   { "sWidth": "20%", "bSortable": true, "sClass": "dataColDate hide-on-tablet" },
                   { "sWidth": "15%", "bSortable": false, "sClass": "dataColAction" }]
   });
+  oTable.dataTable().fnSetFilteringDelay(500);
   $('#dataTable').responsiveTable();
       
   setTimeout('hideElements()', 500); // because of server-side processing we need to delay for race condition

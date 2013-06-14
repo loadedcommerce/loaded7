@@ -32,7 +32,7 @@ global $lC_Language, $pInfo, $tax_class_array;
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <div class="inputs" style="display:inline; padding:8px 0;">
             <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
-            <input type="text" onfocus="this.select();" style="width:94%;" class="required input-unstyled" value="<?php echo number_format($pInfo->get('products_msrp'), DECIMAL_PLACES); ?>" id="products_msrp" name="products_msrp" />
+            <input type="text" onfocus="this.select();" style="width:94%;" class="required input-unstyled" value="<?php echo (isset($pInfo) ? number_format($pInfo->get('products_msrp'), DECIMAL_PLACES) : null); ?>" id="products_msrp" name="products_msrp" />
           </div>         
         </div>
       </div>      
@@ -50,7 +50,7 @@ global $lC_Language, $pInfo, $tax_class_array;
             </label>
             <label upsell="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ic_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_2" value="2" />
-              <?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left">' . lc_go_pro() . '</span>'; ?>
+              <?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left float-right">' . lc_go_pro() . '</span>'; ?>
             </label>
           </span>
         </div>
@@ -61,9 +61,8 @@ global $lC_Language, $pInfo, $tax_class_array;
       <div id="inventory_control_simple"<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' style="display:none;"' : ''); ?>>
         <div>
           <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_on_hand'); ?></b></label>
-          <input type="text" name="products_quantity" id="products_quantity" value="<?php echo $pInfo->get('products_quantity'); ?>" class="input small-margin-right" style="width:60px;" />
-          <input type="text" name="products_sku" id="products_sku" value="<?php echo $pInfo->get('products_sku'); ?>" class="input" />
-          <b><?php echo $lC_Language->get('text_sku'); ?></b>
+          <input type="text" name="products_quantity" id="products_quantity" value="<?php echo (isset($pInfo) ? $pInfo->get('products_quantity') : null); ?>" class="input small-margin-right" style="width:60px;" />
+          <input type="text" name="products_sku" id="products_sku" placeholder="<?php echo $lC_Language->get('text_sku'); ?>" value="<?php echo (isset($pInfo) ? $pInfo->get('products_sku') : null); ?>" class="input" />
         </div>
       </div>
       <div id="inventory_control_multi"<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? '' : ' style="display:none;"'); ?>>
@@ -89,7 +88,7 @@ global $lC_Language, $pInfo, $tax_class_array;
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <div class="inputs blue-gradient" style="display:inline; padding:8px 0;">
             <span class="mid-margin-left no-margin-right strong"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
-            <?php echo lc_draw_input_field('products_price_gross', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="width:94%;" class="required input-unstyled strong" id="products_price0_gross" READONLY'); ?>
+            <?php echo lc_draw_input_field('products_price_gross', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="width:94%;" class="required input-unstyled strong products-price-gross" id="products_price0_gross" READONLY'); ?>
           </div>         
         </div>
       </div>
