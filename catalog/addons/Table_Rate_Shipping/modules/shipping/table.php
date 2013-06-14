@@ -25,7 +25,7 @@ class lC_Shipping_table extends lC_Shipping {
     global $lC_Language;
 
     $this->_title = $lC_Language->get('shipping_table_title');
-    $this->_description = $lC_Language->get('shipping_table_description');
+  //  $this->_description = $lC_Language->get('shipping_table_description');
     $this->_status = (defined('ADDONS_SHIPPING_TABLE_RATE_SHIPPING_STATUS') && (ADDONS_SHIPPING_TABLE_RATE_SHIPPING_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('ADDONS_SHIPPING_TABLE_RATE_SHIPPING_SORT_ORDER') ? ADDONS_SHIPPING_TABLE_RATE_SHIPPING_SORT_ORDER : null);
   }

@@ -250,7 +250,7 @@
 
       foreach ($this->extractAddonDefinitions($file) as $def) {
         $this->_definitions[$def['key']] = $def['value'];
-      }
+      }                        
     }    
     
     public function &extractAddonDefinitions($xml) {

@@ -23,7 +23,9 @@ class lC_Addons {
       if (array_key_exists('login', $_GET)) return false;
     }
 
-    $this->_initialize();
+  //  if ( !isset($_SESSION['lC_Addons_data']) ) {
+      $this->_initialize();
+  //  }
   } 
   
   // private methods
@@ -69,7 +71,7 @@ class lC_Addons {
     if ($enabled != '') $enabled = substr($enabled, 0, -1);
     if (!file_exists(DIR_FS_WORK . 'cache/addons.cache')) {
       file_put_contents(DIR_FS_WORK . 'cache/addons.cache', serialize($enabled));
-    }    
+    }
   }
 }
 ?>

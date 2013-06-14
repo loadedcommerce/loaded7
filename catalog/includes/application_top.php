@@ -88,12 +88,12 @@ while ($Qcfg->next()) {
   define($Qcfg->value('cfgKey'), $Qcfg->value('cfgValue'));
 }
 
-$Qcfg->freeResult();    
+$Qcfg->freeResult();     
                 
 // include functions
 require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/functions/general.php'));
 require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/functions/html_output.php'));
-
+                              
 // include and start the services
 require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/services.php'));
 $lC_Services = new lC_Services();

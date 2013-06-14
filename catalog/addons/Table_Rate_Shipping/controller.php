@@ -31,12 +31,6 @@ class Table_Rate_Shipping extends lC_Addon {
     */    
     $this->_code = 'Table_Rate_Shipping';    
    /**
-    * Inject the language definitions if they exist
-    */ 
-    if (file_exists(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml')) {  
-      $lC_Language->injectAddonDefinitions(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml');
-    }    
-   /**
     * The addon title used in the addons store listing
     */     
     $this->_title = $lC_Language->get('addon_shipping_table_title');
@@ -69,7 +63,12 @@ class Table_Rate_Shipping extends lC_Addon {
     */    
     $this->_enabled = (defined('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;      
     $this->_rating = '3';      
+   /**
+    * Inject the language definitions if they exist
+    */ 
+    $this->getDefinitions();
   }
+  
  /**
   * Checks to see if the addon has been installed
   *
