@@ -119,6 +119,100 @@ Custom Template CSS added by Loaded7 Dev Team
   cursor: pointer;
 }
 
+  .field-drop-tabs + .field-block {
+    padding-top: 20px;
+    }
+    .field-drop-tabs + .field-block.button-height {
+      padding-top: 18px;
+    }
+  .field-drop-tabs .label {
+    display: block;
+    padding: 0;
+    color: #999999;
+    font-weight: bold;
+    margin: 0;
+    }
+
+/* Field drop */
+.field-drop-tabs {
+  padding: 18px 0px;
+  line-height: 24px;
+  margin: 0 -1px;
+  -webkit-box-shadow: inset 0 1px 10px black;
+  -moz-box-shadow: inset 0 1px 10px black;
+  box-shadow: inset 0 1px 10px black;
+  position: relative;
+  }
+  .field-drop-tabs.button-height {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .field-drop-tabs:first-child,
+  .fields-list legend:first-child + .field-drop-tabs {
+    margin-top: -22px;
+    -webkit-background-clip: padding-box;
+  }
+  .field-drop-tabs:last-child {
+    margin-bottom: -20px;
+    -webkit-background-clip: padding-box;
+    }
+    /* IE7 */
+    .field-drop-tabs.last-child {
+      margin-bottom: -20px;
+    }
+  .field-drop-tabs + .field-drop-tabs {
+    border-top: 1px solid #666666;
+  }
+  .field-block + .field-drop-tabs {
+    margin-top: 20px;
+  }
+  .field-drop-tabs .label b,
+  .field-drop-tabs .label strong {
+    color: white;
+  }
+  .field-drop-tabs:after {
+    display: block;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: white;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 100px;
+  }
+    .field-drop-tabs .label {
+      float: left;
+      text-align: right;
+      margin: 0 0 0 -210px;
+      width: 150px;
+    }
+
+  /* Field drop */
+  .field-drop-tabs {
+    padding: 13px 30px 17px 230px;
+  }
+  .field-drop-tabs .label {
+    width: 190px;
+  }
+  .field-drop-tabs:after {
+    left: 236px;
+  }
+  
+
+.field-drop-tabs {
+  background: #3c4044 url(../img/textures/grid.png) !important;
+  background: url(../img/textures/grid.png), -webkit-gradient(linear, left top, left bottom, from(#6d7073), to(#3c4044)) !important;
+  background: url(../img/textures/grid.png), -webkit-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), -moz-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), -ms-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), -o-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), linear-gradient(top, #6d7073, #3c4044) !important;
+  color: #afafaf;
+  }
+  .field-drop-tabs b, .field-drop-tabs strong {
+    color: white;
+  }
 .with-menu #title-bar {
   padding-right: 10px;
 }
@@ -588,8 +682,15 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 .message-menu > li, li.message-menu {
   padding: 2px 30px 3px;
 }
+
+#title-bar {
+  height: 40px !important;
+}
+.cursor-pointer { cursor: pointer; }
+
 .description-content { padding: 10px 10px 20px 16px; }
 .cat_rel_td { line-height: 2.0em; }
+
 .no-wrap { white-space: nowrap; }
 #title-bar { height: 40px !important; }
 
@@ -636,6 +737,9 @@ select.input {
 } 
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
+  .field-drop-tabs {
+    padding: 13px 20px 17px 85px !important;
+  }
   #products_msrp { width: 90% !important; }
   .products-price-gross { width: 90% !important; }
 }
@@ -663,6 +767,9 @@ select.input {
       -moz-text-shadow: none;
       text-shadow: none;
     }
+  .field-drop-tabs {
+    padding: 13px 20px 17px 85px !important;
+  }
   #product_tabs { margin: -15px; }
   #floating-menu-div-listing {
     right: -10px;
@@ -686,6 +793,8 @@ select.input {
   #simpleOptionsTable { margin: -10px -15px 0 -15px !important; }
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
+  #category_tabs { margin: 0 -15px -15px -15px; }
+  #languageTabs { margin: 0 -15px 0 -15px; }
 }  
   
 @media screen and (max-width: 479px) {
@@ -712,7 +821,11 @@ select.input {
       -moz-text-shadow: none;
       text-shadow: none;
     }
-    
+
+  .field-drop-tabs {
+    padding: 13px 20px 17px 85px !important;
+  }
+      
   .button-text {
     display:none;
   }
@@ -745,8 +858,12 @@ select.input {
   #simpleOptionsTable { margin: -10px -15px 0 -20px !important; }
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
+  #category_tabs { margin: 0 -15px -15px -15px; }
+  #languageTabs { margin: 0 -15px 0 -15px; }
 }  
   
 @media screen and (max-width: 319px) {
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
-}     
+  #category_tabs { margin: 0 -15px -15px -15px; }
+  #languageTabs { margin: 0 -15px 0 -15px; }
+}
