@@ -33,10 +33,10 @@ $(document).ready(function() {
   } else if (module == 'orders') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-orders").addClass('current');   
-  } else if (module == 'content') {
+  } else if (module == 'categories' || module == 'content') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-content").addClass('current'); 
-  } else if (module == 'categories' || module == 'specials' || module == 'manufacturers' || module == 'reviews' || (module.indexOf('product') != -1) ) {
+  } else if (module == 'specials' || module == 'manufacturers' || module == 'reviews' || (module.indexOf('product') != -1) ) {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-products").addClass('current');
   } else if (module == 'banner_manager' || module == 'newsletters') {
@@ -99,10 +99,10 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:2px !important;');
     $('#mainMessageContainer').css('margin', '54px 4px 0px 74px');    
   } else if ($.template.mediaQuery.name === 'tablet-landscape') {  
-    $('#logoImg').attr('style', 'margin-top:2px !important;');
+    $('#logoImg').attr('style', 'margin-top:-1px !important;');
     $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   } else { // desktop
-    $('#logoImg').attr('style', 'margin-top:2px !important;');
+    $('#logoImg').attr('style', 'margin-top:-1px !important;');
     $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   }
   
@@ -270,6 +270,14 @@ $(document).ready(function() {
     var menuWidthResized = $("#menu").width();
     $("#profileInner").css({'width':menuWidthResized * 2});
     $('#profileInner').css({"margin-left":"0px"});
+    // if window width drops below 1280px change category edit tabs from side to top
+    if ($(window).width() < 1380) {
+      $("#category_tabs").removeClass("side-tabs");
+      $("#category_tabs").addClass("standard-tabs");
+    } if ($(window).width() >= 1380) {
+      $("#category_tabs").removeClass("standard-tabs");
+      $("#category_tabs").addClass("side-tabs");
+    }
   });
   
   // profile left is clicked
@@ -345,8 +353,22 @@ $(document).ready(function() {
   
   $("#qrcode-tooltip").click(function() {
     $("#qr-message").show("500");
-  });        
+  });
+  
+  if ($(window).width() < 1380) {
+    $("#category_tabs").removeClass("side-tabs");
+    $("#category_tabs").addClass("standard-tabs");
+  } if ($(window).width() >= 1380) {
+    $("#category_tabs").removeClass("standard-tabs");
+    $("#category_tabs").addClass("side-tabs");
+  }        
      
+});
+
+// added to prevent enter key on megasearch
+$('.noEnterSubmit').keypress(function(e){
+  if (e.which == 13) return false;
+  if (e.which == 13) e.preventDefault();
 });
 
 // turn off maintenance mode

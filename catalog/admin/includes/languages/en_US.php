@@ -231,6 +231,25 @@ tooltip_messages = Messages (m)
 tooltip_settings = Settings (s) / Main Menu (escape)
 
 text_version = Version
+text_sort = Sort
+text_mode = Mode
+text_mode_category = Category
+text_mode_page = Page
+text_mode_specials = Link To: Specials
+text_mode_featured = Link To: Featured Products
+text_mode_new = Link To: New Products
+text_mode_search = Link To: Search Page
+text_mode_cart = Link To: Shopping Cart
+text_mode_account = Link To: My Account
+text_mode_info = Link To: Info
+text_mode_override = Custom Link 
+
+text_hide_in_nav = Click to hide in Top Nav
+text_hide_in_box = Click to hide in Infobox
+text_show_in_nav = Click to show in Top Nav
+text_show_in_box = Click to show in Infobox
+text_enable_category = Click to enable Category
+text_disable_category = Click to disable Category
 
 update_message_title = Updates are Available!
 update_message_text1 = New version

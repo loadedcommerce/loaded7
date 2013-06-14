@@ -110,8 +110,14 @@ DROP TABLE IF EXISTS lc_categories;
 CREATE TABLE lc_categories (
   categories_id int(11) NOT NULL AUTO_INCREMENT,
   categories_image varchar(255) DEFAULT NULL,
-  parent_id int(11) NOT NULL,
+  parent_id int(11) NOT NULL DEFAULT '0',
   sort_order int(11) DEFAULT NULL,
+  categories_mode varchar(128) DEFAULT NULL,
+  categories_link_target tinyint(1) DEFAULT '0',
+  categories_custom_url varchar(255) DEFAULT NULL,
+  categories_status tinyint(1) DEFAULT NULL,
+  categories_visibility_nav tinyint(1) DEFAULT '0',
+  categories_visibility_box tinyint(1) DEFAULT '1',
   date_added datetime DEFAULT NULL,
   last_modified datetime DEFAULT NULL,
   PRIMARY KEY (categories_id),
@@ -119,10 +125,15 @@ CREATE TABLE lc_categories (
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_categories_description;
-CREATE TABLE lc_categories_description (
+CREATE TABLE IF NOT EXISTS lc_categories_description (
   categories_id int(11) NOT NULL,
   language_id int(11) NOT NULL DEFAULT '1',
   categories_name varchar(255) NOT NULL,
+  categories_menu_name varchar(255) DEFAULT NULL,
+  categories_blurb mediumtext,
+  categories_description text,
+  categories_keyword text,
+  categories_tags varchar(255) DEFAULT NULL,
   PRIMARY KEY (categories_id,language_id),
   KEY idx_categories_name (categories_name)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -468,7 +479,10 @@ CREATE TABLE lc_products (
   parent_id int(11) NOT NULL DEFAULT '0',
   products_quantity int(11) NOT NULL DEFAULT '0',
   products_price decimal(15,4) NOT NULL DEFAULT '0.0000',
-  products_model varchar(255) NOT NULL,
+  products_cost decimal(15,4) NOT NULL DEFAULT '0.0000',
+  products_msrp decimal(15,4) NOT NULL DEFAULT '0.0000',
+  products_model varchar(255) DEFAULT NULL,
+  products_sku varchar(255) DEFAULT NULL,
   products_date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   products_last_modified datetime DEFAULT NULL,
   products_weight decimal(5,2) NOT NULL DEFAULT '0.00',
