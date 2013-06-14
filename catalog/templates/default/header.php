@@ -1,15 +1,15 @@
 <?php
 /**  
-*  $Id: header.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+  $Id: header.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     Loaded Commerce Team
+  @copyright  (c) 2013 Loaded Commerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 ?>
 <!--header.php start-->
@@ -23,7 +23,7 @@
         <?php 
           foreach ($lC_Language->getAll() as $value) {
             echo ' ' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('language', 'currency')) . '&language=' . $value['code'], 'AUTO'), $lC_Language->showImage($value['code'])) . ' ';
-          }
+          }                                                                          
         ?>
       </div>
       <ul id="topLinks" class="top_links">
@@ -45,6 +45,11 @@
     </div>
     <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>logo.png" /></a></h1>
     <?php
+    
+//foreach ($_SESSION['lC_Addons_data'] as $addon => $data) {
+//  echo $addon . ' [' . $data['enabled'] . ']<br>';
+//}    
+    
       if (!empty($content_left)) {
       ?>
       <button class="button brown_btn browse-catalog" style="display:none; padding:10px 10px 25px 10px !important;" type="button" id="browse-catalog">Browse Catalog</button>
