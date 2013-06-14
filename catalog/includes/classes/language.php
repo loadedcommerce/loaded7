@@ -51,8 +51,6 @@ class lC_Language {
 
   /* Public methods */
   public function load($key, $language_code = null) {
-ini_set('display_errors', 1);
-    
     global $lC_Database, $lC_Addons;
 
     if ( is_null($language_code) ) {
