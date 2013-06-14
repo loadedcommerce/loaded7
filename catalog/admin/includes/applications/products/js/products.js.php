@@ -207,6 +207,10 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         }
       });
 
+      setTimeout('_clearProgressIndicators()', 500);
+    }
+    
+    function _clearProgressIndicators() {
       if ( $('#showProgressOriginal').css('display') != 'none') {
         $('#showProgressOriginal').css('display', 'none');
       }

@@ -599,6 +599,8 @@ select.input {
   background:#f0f0f0;
 }
 
+/* fix for icon-cross centering */
+.icon-cross { padding-left:2px; }
 
 
 /* needed for custom media query settings */
@@ -686,7 +688,7 @@ select.input {
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
 }  
   
-@media screen and (min-width: 320px) and (max-width: 479px) {
+@media screen and (max-width: 479px) {
   .hide-below-480 { display: none; }
   /* Default shadows */
   .button,
@@ -711,9 +713,15 @@ select.input {
       text-shadow: none;
     }
     
-  .button-cancel, .button-save {
+  .button-text {
     display:none;
   }
+  
+  .button > .button-icon { 
+    margin: -1px -14px -1px -12px;
+    border-radius: 4px 4px 4px 4px;
+  }
+  
   #product_tabs { margin: -15px; }
   #floating-menu-div-listing {
     right: -10px;
