@@ -18,8 +18,11 @@
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
 <style>
+.qq-upload-button { margin: -31px -141px 0 -50px; }
 .qq-upload-drop-area { min-height: 150px; top: -185px; }
 .qq-upload-drop-area span { margin-top:-16px; }
+    LABEL { font-weight:bold; }
+    TD { padding: 5px 0 0 5px; }
 </style>
 <!-- Main content -->
 <section role="main" id="main">
@@ -31,10 +34,6 @@
       }
     ?>
   </hgroup>
-  <style>
-    LABEL { font-weight:bold; }
-    TD { padding: 5px 0 0 5px; }
-  </style>
   <div class="with-padding-no-top">
     <form name="category" id="category" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="category_tabs" class="side-tabs">
@@ -154,14 +153,10 @@
                         <input type="checkbox" class="checkbox" id="categories_link_target" name="categories_link_target"> <?php echo $lC_Language->get('text_new_window'); ?>
                       </p>
                     </div>
-                    <div class="six-columns twelve-columns-mobile" id="categories_custom" style="display:none;">  
-                      <span class="info-spot on-left grey mid-margin-right">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
-                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"> &nbsp;<span id="custom_url_text"><strong><?php echo $lC_Language->get('text_custom_link'); ?></strong></span>
+                    <div class="six-columns twelve-columns-mobile">  
+                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey'); ?>
+                      <input style="display:none;" type="text" class="input mid-margin-left" id="categories_custom_url" name="categories_custom_url"> &nbsp;
+                      <span id="custom_url_text" style="display:none;"><strong><?php echo $lC_Language->get('text_custom_link'); ?></strong></span>
                     </div>
                   </div>
                   <div class="columns">
@@ -177,29 +172,27 @@
                         ?>
                       </select>
                     </div>
-                    <div class="six-columns twelve-columns-mobile small-margin-top">  
-                      <span class="info-spot on-left grey mid-margin-right">
-                        <span class="icon-info-round"></span>
-                        <span class="info-bubble">
-                          Put the bubble text here
-                        </span>
-                      </span>
-                      <input type="checkbox" class="switch medium" id="categories_status" name="categories_status" checked=""> <strong><?php echo $lC_Language->get('text_status'); ?></strong>
-                    </div>
-                  </div>
-                  <div class="columns">
-                    <div class="six-columns twelve-columns-mobile">
-                      <label class="label" for="categories_visibility"><b><?php echo $lC_Language->get('text_visibility'); ?></b></label>
+                    <div class="six-columns twelve-columns-mobile small-margin-top">                                                                                        
+                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey mid-margin-right'); ?> 
                       <span class="button-group" id="categories_visibility">
+                        <?php if ($_GET['categories'] == 0) { ?>
                         <label class="button blue-active" for="categories_visibility_nav">
                           <input type="checkbox" id="categories_visibility_nav" name="categories_visibility_nav">
                           <?php echo $lC_Language->get('text_visibility_nav'); ?>
                         </label>
-                        <label class="button blue-active" for="categories_visibility_box">
+                        <?php } ?>
+                        <label class="button blue-active mid-margin-right" for="categories_visibility_box">
                           <input type="checkbox" checked="" id="categories_visibility_box" name="categories_visibility_box">
                           <?php echo $lC_Language->get('text_visibility_box'); ?>
                         </label>
                       </span>
+                      <strong><?php echo $lC_Language->get('text_visibility'); ?></strong>
+                    </div>
+                  </div>
+                  <div class="columns">
+                    <div class="six-columns twelve-columns-mobile">
+                      <label class="label" for="categories_visibility"><b><?php echo $lC_Language->get('text_status'); ?></b></label>
+                      <input type="checkbox" class="switch" id="categories_status" name="categories_status" checked="">
                     </div>
                     <div class="six-columns twelve-columns-mobile">
                     </div>

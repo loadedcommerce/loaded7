@@ -38,8 +38,11 @@
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
 <style>
+.qq-upload-button { margin: -19px -141px 0 -50px; }
 .qq-upload-drop-area { min-height: 150px; top: -200px; }
 .qq-upload-drop-area span { margin-top:-16px; }
+    LABEL { font-weight:bold; }
+    TD { padding: 5px 0 0 5px; }
 </style>
 <!-- Main content -->
 <section role="main" id="main">
@@ -51,10 +54,6 @@
       }
     ?>
   </hgroup>
-  <style>
-    LABEL { font-weight:bold; }
-    TD { padding: 5px 0 0 5px; }
-  </style>
   <div class="with-padding-no-top">
     <form name="category" id="category" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('categories_id') : '') . '&cid=' . $_GET['cid'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="category_tabs" class="side-tabs">
@@ -78,7 +77,7 @@
                     <input type="hidden" id="categories_image" name="categories_image" value="<?php echo $lC_ObjectInfo->get('categories_image'); ?>">
                   </div>
                 </div>   
-                <p class="thin mid-margin-top no-margin-bottom" align="center" style=""><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
+                <p class="thin mid-margin-top no-margin-bottom" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
                 <center>
                   <div id="fileUploaderImageContainer" class="small-margin-top">
                     <noscript>
@@ -206,22 +205,26 @@
                     </div>
                     <div class="six-columns twelve-columns-mobile small-margin-top">  
                       <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey mid-margin-right'); ?>
-                      <input type="checkbox" class="switch medium" id="categories_status" name="categories_status"<?php echo ($lC_ObjectInfo->getInt('categories_status') == 1) ? ' checked' : ''; ?>> <strong><?php echo $lC_Language->get('text_status'); ?></strong>
-                    </div>
-                  </div>
-                  <div class="columns">
-                    <div class="six-columns twelve-columns-mobile">
-                      <label class="label" for="categories_visibility"><b><?php echo $lC_Language->get('text_visibility'); ?></b></label>
                       <span class="button-group" id="categories_visibility">
+                        <?php if ($lC_ObjectInfo->getInt('parent_id') == 0) { ?>
                         <label class="button blue-active" for="categories_visibility_nav">
                           <input type="checkbox"<?php echo ($lC_ObjectInfo->getInt('categories_visibility_nav') == 1) ? ' checked=""' : ''; ?> id="categories_visibility_nav" name="categories_visibility_nav">
                           <?php echo $lC_Language->get('text_visibility_nav'); ?>
                         </label>
+                        <?php } ?>
                         <label class="button blue-active" for="categories_visibility_box">
                           <input type="checkbox"<?php echo ($lC_ObjectInfo->getInt('categories_visibility_box') == 1) ? ' checked=""' : ''; ?> id="categories_visibility_box" name="categories_visibility_box">
                           <?php echo $lC_Language->get('text_visibility_box'); ?>
                         </label>
                       </span>
+                      <strong class="small-margin-left"><?php echo $lC_Language->get('text_visibility'); ?></strong><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey margin-left'); ?>
+                    </div>
+                  </div>
+                  <div class="columns">
+                    <div class="six-columns twelve-columns-mobile">
+                      <label class="label" for="categories_status"><b><?php echo $lC_Language->get('text_status'); ?></b></label>
+                      <input type="checkbox" class="switch" id="categories_status" name="categories_status"<?php echo ($lC_ObjectInfo->getInt('categories_status') == 1) ? ' checked' : ''; ?>>
+                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey margin-left'); ?>
                     </div>
                     <div class="six-columns twelve-columns-mobile">
                     </div>
