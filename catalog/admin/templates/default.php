@@ -247,7 +247,7 @@
                 <ul class="inputs mega-search-border">
                   <li>
                     <span class="icon-search mid-margin-left"></span>
-                    <input class="input-unstyled" type="text" onkeyup="search(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q" id="megaSearch">
+                    <input class="input-unstyled noEnterSubmit" type="text" onkeyup="search(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q" id="megaSearch">
                   </li>
                 </ul>
               </form>
@@ -556,7 +556,7 @@
   <script src="../ext/jquery/fileuploader.js"></script> 
   <script src="../ext/jquery/jquery-ui-sortable.min.js"></script> 
   <script src="../ext/jquery/glDatePicker/glDatePicker.min.js"></script>
-  <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.min.js"></script>
+  <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.js"></script>
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.reloadAjax.js"></script>
   <script src="../ext/jquery/jquery.details.min.js"></script>
   <script src="../ext/jquery/jquery.blink.js"></script>

@@ -349,6 +349,12 @@ $(document).ready(function() {
      
 });
 
+// added to prevent enter key on megasearch
+$('.noEnterSubmit').keypress(function(e){
+  if (e.which == 13) return false;
+  if (e.which == 13) e.preventDefault();
+});
+
 // turn off maintenance mode
 $("#mainMessageContainer").click(function(){
   $('#mainMessageContainer p').removeClass('icon-warning icon-black').html('<span class="loader on-dark small-margin-right" style="margin-left:-4px"></span><?php echo $lC_Language->get('site_maintenance_message_text'); ?>');
