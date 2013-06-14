@@ -591,46 +591,35 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 
 select.input {
   border:1px solid #999; 
-  background:#f9f9f9;
+  background:#f0f0f0;
 }
-
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
-  #menu header .headerInner {
-    padding: 10px 0;
-    margin: -10px 0;
-    -webkit-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
-    -moz-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
-    box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
-  }
-  #open-menu {
-    top: 41px;
-  }
 }
 
-@media screen and (min-width: 992px) and (max-width: 1199px) {
+@media screen and (min-width: 992px) {
+  .hide-below-992 { display: none !important; }
   #menu header .headerInner {
-    padding: 10px 0;
-    margin: -10px 0;
+    margin: -10px 0px;
+    padding: 15px 0 11px 0;
     -webkit-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
     -moz-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
     box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
   }
   #open-menu {
     top: 41px;
-  }
+  } 
 } 
 
-@media screen and (min-width: 768px) and (max-width: 991px) {
+@media screen and (min-width: 768px) {
 }
 
-@media screen and (min-width: 480px) and (max-width: 767px) {
-  .hide-below-768 { display: none; }
-  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
+@media screen and (min-width: 480px) {
 }  
   
-@media screen and (min-width: 320px) and (max-width: 479px) {
-  .hide-below-480 { display: none; }
-  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
-}
+@media screen and (min-width: 320px) {
+  #title-bar {
+    height: 40px !important;
+  }
+}     

@@ -20,7 +20,7 @@
         $_definitions = array();
 
     /* Class constructor */
-    function lC_Language() {
+    public function lC_Language() {
       global $lC_Database;
 
       $Qlanguages = $lC_Database->query('select * from :table_languages order by sort_order, name');
@@ -50,7 +50,7 @@
     }
 
     /* Public methods */
-    function load($key, $language_code = null) {
+    public function load($key, $language_code = null) {
       global $lC_Database;
 
       if ( is_null($language_code) ) {
@@ -75,7 +75,7 @@
       $Qdef->freeResult();
     }
 
-    function get($key) {
+    public function get($key) {
       if (isset($this->_definitions[$key])) {
         return $this->_definitions[$key];
       }
@@ -83,7 +83,7 @@
       return $key;
     }
 
-    function set($code = '') {
+    public function set($code = '') {
       $this->_code = $code;
 
       if (empty($this->_code)) {
@@ -109,7 +109,7 @@
       }
     }
 
-    function getBrowserSetting() {
+    public function getBrowserSetting() {
       if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && !empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
         $browser_languages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
@@ -163,15 +163,15 @@
       return false;
     }
 
-    function exists($code) {
+    public function exists($code) {
       return array_key_exists($code, $this->_languages);
     }
 
-    function getAll() {
+    public function getAll() {
       return $this->_languages;
     }
 
-    function getData($key, $language = '') {
+    public function getData($key, $language = '') {
       if (empty($language)) {
         $language = $this->_code;
       }
@@ -179,7 +179,7 @@
       return $this->_languages[$language][$key];
     }
 
-    function getCodeFromID($id) {
+    public function getCodeFromID($id) {
       foreach ($this->_languages as $code => $lang) {
         if ($lang['id'] == $id) {
           return $code;
@@ -187,27 +187,27 @@
       }
     }
 
-    function getID() {
+    public function getID() {
       return $this->_languages[$this->_code]['id'];
     }
 
-    function getName() {
+    public function getName() {
       return $this->_languages[$this->_code]['name'];
     }
 
-    function getCode() {
+    public function getCode() {
       return $this->_code;
     }
 
-    function getLocale() {
+    public function getLocale() {
       return $this->_languages[$this->_code]['locale'];
     }
 
-    function getCharacterSet() {
+    public function getCharacterSet() {
       return $this->_languages[$this->_code]['charset'];
     }
 
-    function getDateFormatShort($with_time = false) {
+    public function getDateFormatShort($with_time = false) {
       if ($with_time === true) {
         return $this->_languages[$this->_code]['date_format_short'] . ' ' . $this->getTimeFormat();
       }
@@ -215,31 +215,62 @@
       return $this->_languages[$this->_code]['date_format_short'];
     }
 
-    function getDateFormatLong() {
+    public function getDateFormatLong() {
       return $this->_languages[$this->_code]['date_format_long'];
     }
 
-    function getTimeFormat() {
+    public function getTimeFormat() {
       return $this->_languages[$this->_code]['time_format'];
     }
 
-    function getTextDirection() {
+    public function getTextDirection() {
       return $this->_languages[$this->_code]['text_direction'];
     }
 
-    function getCurrencyID() {
+    public function getCurrencyID() {
       return $this->_languages[$this->_code]['currencies_id'];
     }
 
-    function getNumericDecimalSeparator() {
+    public function getNumericDecimalSeparator() {
       return $this->_languages[$this->_code]['numeric_separator_decimal'];
     }
 
-    function getNumericThousandsSeparator() {
+    public function getNumericThousandsSeparator() {
       return $this->_languages[$this->_code]['numeric_separator_thousands'];
     }
+    
+    public function injectAddonDefinitions($file, $language_code = null) {
+      if ( is_null($language_code) ) {
+        $language_code = $this->_code;
+      }
 
-    function showImage($code = null, $width = '16', $height = '10', $parameters = null) {
+      if ( $this->_languages[$language_code]['parent_id'] > 0 ) {
+        $this->injectAddonDefinitions($file, $this->getCodeFromID($this->_languages[$language_code]['parent_id']));
+      }
+
+      foreach ($this->extractAddonDefinitions($file) as $def) {
+        $this->_definitions[$def['key']] = $def['value'];
+      }                        
+    }    
+    
+    public function &extractAddonDefinitions($xml) {
+      $definitions = array();
+      if ( file_exists($xml) ) {
+        $lC_XML = new lC_XML(file_get_contents($xml));
+
+        $definitions = $lC_XML->toArray();
+
+        if (isset($definitions['language']['definitions']['definition'][0]) === false) {
+          $definitions['language']['definitions']['definition'] = array($definitions['language']['definitions']['definition']);
+        }
+
+        $definitions = $definitions['language']['definitions']['definition'];
+      }
+
+      return $definitions;
+    }    
+
+    public function showImage($code = null, $width = '16', $height = '10', $parameters = null) {
       if ( empty($code) ) {
         $code = $this->_code;
       }
