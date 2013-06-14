@@ -692,6 +692,8 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 #title-bar { height: 40px !important; }
 
 .imagesBackNav { display: none; }
+
+/* fix for Chrome selects */
 select.input {
   border:1px solid #999; 
   background:#f0f0f0;
@@ -741,20 +743,6 @@ select.input {
 }
 
 @media screen and (min-width: 480px) and (max-width: 767px) {
-  .field-drop-tabs {
-    padding: 13px 20px 17px 85px !important;
-  }
-  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
-  #category_tabs { margin: 0 -15px -15px -15px; }
-  #languageTabs { margin: 0 -15px 0 -15px; }
-
-  .field-drop-tabs {
-    padding: 13px 20px 17px 85px !important;
-  }
-  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
-  #category_tabs { margin: 0 -15px -15px -15px; }
-  #languageTabs { margin: 0 -15px 0 -15px; }
-@media screen and (min-width: 480px) and (max-width: 767px) {
   /* Default shadows */
   .button,
   .button-group > .button:first-child,
@@ -782,6 +770,11 @@ select.input {
     right: -10px;
     top: 35px; 
   }
+  .field-drop-tabs {
+    padding: 13px 20px 17px 85px !important;
+  }
+  #category_tabs { margin: 0 -15px -15px -15px; }
+  #languageTabs { margin: 0 -15px 0 -15px; }  
   #section_general_content { margin: -10px -10px -10px -13px; }
   #section_images_content { margin: -15px; }
   #section_data_content { margin: -15px; }
@@ -802,8 +795,7 @@ select.input {
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
 }  
   
-@media screen and (max-width: 319px) {
-  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
+@media screen and (max-width: 479px) {
   #category_tabs { margin: 0 -15px -15px -15px; }
   #languageTabs { margin: 0 -15px 0 -15px; }
 
@@ -863,8 +855,4 @@ select.input {
   #simpleOptionsTable { margin: -10px -15px 0 -20px !important; }
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
-}  
-  
-@media screen and (max-width: 319px) {
-  #dataTable_wrapper { margin: 0 -15px -15px -15px; }
-}     
+}       
