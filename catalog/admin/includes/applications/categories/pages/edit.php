@@ -353,12 +353,14 @@
               <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . ($_GET['cid'] != '') ? 'categories=' . $_GET['cid'] : ''); ?>">
                 <span class="button-icon red-gradient glossy">
                   <span class="icon-cross"></span>
-                </span><?php echo $lC_Language->get('button_cancel'); ?>
+                </span>
+                <span class="button-text"><?php echo $lC_Language->get('button_cancel'); ?></span>
               </a>&nbsp;
               <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#category\').submit();'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
-                </span><?php echo $lC_Language->get('button_save'); ?>
+                </span>
+                <span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span> 
               </a>&nbsp;
             </p>
           </div>
