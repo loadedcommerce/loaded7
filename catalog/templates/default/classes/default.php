@@ -271,7 +271,7 @@ class lC_Default {
   * @return array
   */  
   public static function getCategoryListing() {
-    global $lC_Database, $lC_Language, $lC_Products, $lC_CategoryTree, $lC_Vqmod, $cPath, $cPath_array;
+    global $lC_Database, $lC_Language, $lC_Products, $lC_CategoryTree, $lC_Vqmod, $cPath, $cPath_array, $current_category_id;
     
     include_once($lC_Vqmod->modCheck('includes/classes/products.php'));
     
@@ -279,7 +279,7 @@ class lC_Default {
       // check to see if there are deeper categories within the current category
       $category_links = array_reverse($cPath_array);
       for($i=0, $n=sizeof($category_links); $i<$n; $i++) {
-        $Qcategories = $lC_Database->query('select count(*) as total from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id');
+        $Qcategories = $lC_Database->query('select count(*) as total from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1');
         $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
         $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
         $Qcategories->bindInt(':parent_id', $category_links[$i]);
@@ -289,7 +289,7 @@ class lC_Default {
         if ($Qcategories->valueInt('total') < 1) {
           // do nothing, go through the loop
         } else {
-          $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_image, c.parent_id from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id order by sort_order, cd.categories_name');
+          $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_image, c.parent_id from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 order by sort_order, cd.categories_name');
           $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
           $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
           $Qcategories->bindInt(':parent_id', $category_links[$i]);
@@ -299,7 +299,7 @@ class lC_Default {
         }
       }
     } else {
-      $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_image, c.parent_id from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id order by sort_order, cd.categories_name');
+      $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 order by sort_order, cd.categories_name');
       $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qcategories->bindInt(':parent_id', $current_category_id);
@@ -313,12 +313,40 @@ class lC_Default {
       $rows++;
       $width = (int)(100 / MAX_DISPLAY_CATEGORIES_PER_ROW) . '%';
       $exists = ($Qcategories->value('categories_image') != null) ? true : false;
-      $output .= '    <td style="text-align:center;" class="categoryListing" width="' . $width . '" valign="top">' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id'))), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no_image.png', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name')) . '</td>' . "\n";
+      $output .= '    <td style="text-align:center;" class="categoryListing" width="' . $width . '" valign="top">';
+      if ($Qcategories->value('categories_custom_url') != '') {
+        $output .= lc_link_object(lc_href_link($Qcategories->value('categories_custom_url'), ''), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no-image.png', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name'), (($Qcategories->value('categories_link_target') == 1) ? 'target="_blank"' : null));
+      } else {
+        $output .= lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id'))), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no_image.png', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name'), (($Qcategories->value('categories_link_target') == 1) ? 'target="_blank"' : null));
+      }
+      $output .= '</td>' . "\n";
       if ((($rows / MAX_DISPLAY_CATEGORIES_PER_ROW) == floor($rows / MAX_DISPLAY_CATEGORIES_PER_ROW)) && ($rows != $number_of_categories)) {
         $output .= '  </tr>' . "\n";
         $output .= '  <tr>' . "\n";
-      }
+      }    
     }    
+    
+    return $output;
+  } 
+ /*
+  * Returns the current category information (i.e. description, blurb, meta data etc)
+  *
+  * @access public
+  * @return array
+  */  
+  public static function getCategoryDescription() {
+    global $lC_Database, $lC_Language, $current_category_id;
+    
+    $Qcategory = $lC_Database->query('select categories_description from :table_categories_description where categories_id = :categories_id and language_id = :language_id');
+    $Qcategory->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qcategory->bindInt(':categories_id', $current_category_id);
+    $Qcategory->bindInt(':language_id', $lC_Language->getID());
+    $Qcategory->execute();
+    
+    $output = '';
+    if ($Qcategory->value('categories_description') != '') {
+      $output .= $Qcategory->value('categories_description');
+    }
     
     return $output;
   } 
@@ -328,7 +356,7 @@ class lC_Default {
   * @access public
   * @return string
   */
-  public static function getZonesField(){
+  public static function getZonesField() {
     global $lC_Database, $lC_Language, $lC_Template, $entry_state_has_zones;
 
     if ( (isset($_GET['new']) && ($_GET['new'] == 'save')) || (isset($_GET['edit']) && ($_GET['edit'] == 'save')) || (isset($_GET[$lC_Template->getModule()]) && ($_GET[$lC_Template->getModule()] == 'process')) ) {
@@ -449,6 +477,46 @@ class lC_Default {
     $result['Qlisting'] = $Qlisting;
     
     return $result;
+  }
+ /*
+  * return the top cats for nav
+  *
+  * @access public
+  * @return array
+  */
+  public static function getTopCategories() {
+    global $lC_Database, $lC_Language;
+    
+    $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_link_target, c.categories_custom_url, c.categories_mode from :table_categories c, :table_categories_description cd where c.parent_id = 0 and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 and c.categories_visibility_nav = 1 order by sort_order, cd.categories_name');
+    $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qcategories->bindInt(':language_id', $lC_Language->getID());
+    $Qcategories->execute();
+    while ( $Qcategories->next() ) {
+      $topCategories[] = array('id' => $Qcategories->value('categories_id'),
+                               'name' => $Qcategories->value('categories_name'),
+                               'link_target' => $Qcategories->value('categories_link_target'),
+                               'custom_url' => $Qcategories->value('categories_custom_url'),
+                               'mode' => $Qcategories->value('categories_mode'));
+    }
+    
+    return $topCategories;   
+  }
+ /*
+  * return the top cats for nav
+  *
+  * @access public
+  * @return array
+  */
+  public static function getCategoriesStatus($id) {
+    global $lC_Database;
+    
+    $Qcategories = $lC_Database->query('select categories_status from :table_categories where categories_id = :categories_id');
+    $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qcategories->bindInt(':id', $id);
+    $Qcategories->execute();
+    
+    return $result;   
   }
 }
 ?>

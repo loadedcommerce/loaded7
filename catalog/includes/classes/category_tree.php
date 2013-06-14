@@ -77,7 +77,7 @@
       if ( $lC_Cache->read('category_tree-' . $lC_Language->getCode(), 720) ) {
         $this->_data = $lC_Cache->getCache();
       } else {
-        $Qcategories = $lC_Database->query('select c.categories_id, c.parent_id, c.categories_image, cd.categories_name from :table_categories c, :table_categories_description cd where c.categories_id = cd.categories_id and cd.language_id = :language_id order by c.parent_id, c.sort_order, cd.categories_name');
+        $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, cd.categories_name, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_id = cd.categories_id and cd.language_id = :language_id order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
         $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
         $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
         $Qcategories->bindInt(':language_id', $lC_Language->getID());
@@ -85,8 +85,15 @@
 
         while ( $Qcategories->next() ) {
           $this->_data[$Qcategories->valueInt('parent_id')][$Qcategories->valueInt('categories_id')] = array('name' => $Qcategories->value('categories_name'),
+                                                                                                             'menu_name' => $Qcategories->value('categories_menu_name'),
                                                                                                              'image' => $Qcategories->value('categories_image'),
-                                                                                                             'count' => 0);
+                                                                                                             'count' => 0,
+                                                                                                             'mode' => $Qcategories->value('categories_mode'),
+                                                                                                             'link_target' => $Qcategories->valueInt('categories_link_target'),
+                                                                                                             'custom_url' => $Qcategories->value('categories_custom_url'),
+                                                                                                             'status' => $Qcategories->valueInt('categories_status'),
+                                                                                                             'nav' => $Qcategories->valueInt('categories_visibility_nav'),
+                                                                                                             'box' => $Qcategories->valueInt('categories_visibility_box'));
         }
 
         if ( $this->_show_total_products === true ) {
@@ -137,62 +144,65 @@
  */
   
     protected function _buildBranch($parent_id, $level = 0) {    
-      
       $result = ($parent_id == 0) ? $this->parent_group_start_string_0 : $this->parent_group_start_string;
-      
       if ( isset($this->_data[$parent_id]) ) {
         foreach ( $this->_data[$parent_id] as $category_id => $category ) {
-          if ( $this->breadcrumb_usage === true ) {
-            $category_link = $this->buildBreadcrumb($category_id);
-          } else {
-            $category_link = $category_id;
-          }
-          
-          $result .= ($this->hasChildren($category_id)) ? $this->child_start_string_with_children : $this->child_start_string;
-          
-          if ( isset($this->_data[$category_id]) ) {
-            $result .= $this->parent_start_string;
-          }
-
-          if ( $level === 0 ) {
-            $result .= $this->root_start_string;
-          }
-
-          if ( ($this->follow_cpath === true) && in_array($category_id, $this->cpath_array) ) {
-            $link_title = $this->cpath_start_string . $category['name'] . $this->cpath_end_string;
-          } else {
-            $link_title = $category['name'];
-          }
-
-          $result .= str_repeat($this->spacer_string, $this->spacer_multiplier * $level) . $this->bullet_string . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $category_link), $link_title);
-
-          if ( $this->_show_total_products === true ) {
-            $result .= $this->category_product_count_start_string . $category['count'] . $this->category_product_count_end_string;
-          }
-
-          if ( $level === 0 ) {
-            $result .= $this->root_end_string;
-          }
-
-          if ( isset($this->_data[$category_id]) ) {
-            $result .= $this->parent_end_string;
-          }     
-          
-          if ($this->use_aria === false) $result .= ($this->hasChildren($category_id)) ? $this->child_end_string_with_children : $this->child_end_string;
-
-          if ( isset($this->_data[$category_id]) && (($this->max_level == '0') || ($this->max_level > $level+1)) ) {
-            if ( $this->follow_cpath === true ) {
-              // commented out below due to hindering the loading of the full category tree store side :: maestro
-              //if ( in_array($category_id, $this->cpath_array) ) {
-                $result .= $this->_buildBranch($category_id, $level+1);
-              //}
+          if ($category['status'] === 1 && $category['box'] === 1) {
+            if ( $this->breadcrumb_usage === true ) {
+              $category_link = $this->buildBreadcrumb($category_id);
             } else {
-              $result .= $this->_buildBranch($category_id, $level+1);
+              $category_link = $category_id;
             }
+            
+            $result .= ($this->hasChildren($category_id)) ? $this->child_start_string_with_children : $this->child_start_string;
+            
+            if ( isset($this->_data[$category_id]) ) {
+              $result .= $this->parent_start_string;
+            }
+
+            if ( $level === 0 ) {
+              $result .= $this->root_start_string;
+            }
+
+            if ( ($this->follow_cpath === true) && in_array($category_id, $this->cpath_array) ) {
+              $link_title = $this->cpath_start_string . (($category['menu_name'] != '') ? $category['menu_name'] : $category['name']) . $this->cpath_end_string;
+            } else {
+              $link_title = (($category['menu_name'] != '') ? $category['menu_name'] : $category['name']);
+            }
+            
+            if ($category['custom_url']) {
+              $result .= str_repeat($this->spacer_string, $this->spacer_multiplier * $level) . $this->bullet_string . lc_link_object(lc_href_link($category['custom_url']), $link_title, ($category['link_target'] === 1) ? 'target="_blank"' : '');
+            } else {
+              $result .= str_repeat($this->spacer_string, $this->spacer_multiplier * $level) . $this->bullet_string . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $category_link), $link_title, ($category['link_target'] === 1) ? 'target="_blank"' : '');
+            }
+
+            if ( $this->_show_total_products === true ) {
+              $result .= $this->category_product_count_start_string . $category['count'] . $this->category_product_count_end_string;
+            }
+
+            if ( $level === 0 ) {
+              $result .= $this->root_end_string;
+            }
+
+            if ( isset($this->_data[$category_id]) ) {
+              $result .= $this->parent_end_string;
+            }     
+            
+            if ($this->use_aria === false) $result .= ($this->hasChildren($category_id)) ? $this->child_end_string_with_children : $this->child_end_string;
+
+            if ( isset($this->_data[$category_id]) && (($this->max_level == '0') || ($this->max_level > $level+1)) ) {
+              if ( $this->follow_cpath === true ) {
+                // commented out below due to hindering the loading of the full category tree store side
+                //if ( in_array($category_id, $this->cpath_array) ) {
+                  $result .= $this->_buildBranch($category_id, $level+1);
+                //}
+              } else {
+                $result .= $this->_buildBranch($category_id, $level+1);
+              }
+            }
+
+            if ($this->use_aria === true) $result .= ($this->hasChildren($category_id)) ? $this->child_end_string_with_children : $this->child_end_string;
           }
-
-          if ($this->use_aria === true) $result .= ($this->hasChildren($category_id)) ? $this->child_end_string_with_children : $this->child_end_string;
-
         }
       }
 
@@ -329,6 +339,17 @@
 
       return FALSE;
     }
+
+    function getStatus($id) {
+      foreach ($this->_data as $parent => $categories) {
+        foreach ($categories as $category_id => $info) {
+          if ($id == $category_id) {
+            $result = $info['status'];
+          }
+        }
+      }
+      return $result;
+    }
         
     function getData($id) {
       foreach ($this->_data as $parent => $categories) {
@@ -338,6 +359,7 @@
                          'name' => $info['name'],
                          'parent_id' => $parent,
                          'image' => $info['image'],
+                         'status' => $info['status'],
                          'count' => $info['count']
                         );
           }

@@ -13,6 +13,7 @@
 
   Based on the Developr theme
 */
+
 ?>
 <!DOCTYPE html>
 <!--[if IEMobile 7]><html class="no-js iem7 oldie"><![endif]-->
@@ -42,6 +43,7 @@
   <link rel="stylesheet" href="templates/default/css/colors.css?v=1">
   <link rel="stylesheet" media="print" href="templates/default/css/print.css?v=1">
   <!-- For progressively larger displays -->
+  <link rel="stylesheet" media="only all and (min-width: 320px)" href="templates/default/css/320.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 480px)" href="templates/default/css/480.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 768px)" href="templates/default/css/768.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 992px)" href="templates/default/css/992.css?v=1">
@@ -55,6 +57,7 @@
   <!-- Additional styles -->
   <link rel="stylesheet" href="templates/default/css/styles/agenda.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/dashboard.css?v=1">
+  <link rel="stylesheet" href="templates/default/css/styles/files.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/form.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/validate.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/modal.css?v=1">
@@ -63,14 +66,14 @@
   <link rel="stylesheet" href="templates/default/css/styles/table.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/datepicker.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/breadcrumb.css?v=1">
-  <link rel="stylesheet" href="templates/default/css/styles/fileuploader.css?v=1">
+  <link rel="stylesheet" href="templates/default/css/styles/fileuploader.css?v=1"> 
   <link rel="stylesheet" href="templates/default/css/styles/custom.css?v=1">
   <!-- DataTables -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables-tableTools.css?v=1">
   <!-- loading mask -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.loadmask.css?v=1">  
-
+  
   <!-- Load Page Specific CSS -->
   <?php echo $lC_Template->loadPageCss($lC_Template->getModule()); ?>
 
@@ -165,10 +168,10 @@
       <li id="sc-dashboard" class="current"><a href="./" class="shortcut-dashboard" title="<?php echo $lC_Language->get('icon_dashboard'); ?>"><?php echo $lC_Language->get('icon_dashboard'); ?></a></li>
       <li id="sc-orders"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders'); ?>" class="shortcut-orders" title="<?php echo $lC_Language->get('icon_orders'); ?>"><?php echo $lC_Language->get('icon_orders'); ?></a></li>
       <li id="sc-customers"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers'); ?>" class="shortcut-customers" title="<?php echo $lC_Language->get('icon_customers'); ?>"><?php echo $lC_Language->get('icon_customers'); ?></a></li>
-      <!-- li id="sc-content"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories'); ?>" class="shortcut-content" title="<?php echo $lC_Language->get('icon_content'); ?>"><?php echo $lC_Language->get('icon_content'); ?></a></li -->
+      <li id="sc-content"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories'); ?>" class="shortcut-content" title="<?php echo $lC_Language->get('icon_content'); ?>"><?php echo $lC_Language->get('icon_content'); ?></a></li>
       <li id="sc-products"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products'); ?>" class="shortcut-products" title="<?php echo $lC_Language->get('icon_products'); ?>"><?php echo $lC_Language->get('icon_products'); ?></a></li>
       <li id="sc-marketing"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager'); ?>" class="shortcut-marketing" title="<?php echo $lC_Language->get('icon_marketing'); ?>"><?php echo $lC_Language->get('icon_marketing'); ?></a></li>
-      <!-- li id="sc-store" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="hidden"'); ?>><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'store'); ?>" class="shortcut-store" title="<?php echo $lC_Language->get('icon_app_store'); ?>"><?php echo $lC_Language->get('icon_app_store'); ?></a></li -->
+      <li id="sc-store" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="hidden"'); ?>><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'store'); ?>" class="shortcut-store" title="<?php echo $lC_Language->get('icon_app_store'); ?>"><?php echo $lC_Language->get('icon_app_store'); ?></a></li>
       <li id="sc-reports"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'statistics'); ?>" class="shortcut-reports" title="<?php echo $lC_Language->get('icon_reports'); ?>"><?php echo $lC_Language->get('icon_reports'); ?></a></li>
     </ul>
 
@@ -247,7 +250,7 @@
                 <ul class="inputs mega-search-border">
                   <li>
                     <span class="icon-search mid-margin-left"></span>
-                    <input class="input-unstyled" type="text" onkeyup="search(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q" id="megaSearch">
+                    <input class="input-unstyled noEnterSubmit" type="text" onkeyup="search(this.value);" autocomplete="off" placeholder="<?php echo $lC_Language->get('search_placeholder'); ?>" value="" name="q" id="megaSearch">
                   </li>
                 </ul>
               </form>
@@ -554,17 +557,18 @@
   <script src="../ext/jquery/jquery.easing.1.3.js"></script>
   <script src="../ext/jquery/jquery.jBreadCrumb.1.1.js"></script>
   <script src="../ext/jquery/fileuploader.js"></script> 
-  <script src="../ext/jquery/jquery-ui-sortable.min.js"></script> 
+  <script src="../ext/jquery/jquery-sortable.js"></script> 
   <script src="../ext/jquery/glDatePicker/glDatePicker.min.js"></script>
-  <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.min.js"></script>
+  <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.js"></script>
   <script src="../ext/jquery/DataTables/media/js/jquery.dataTables.reloadAjax.js"></script>
   <script src="../ext/jquery/jquery.details.min.js"></script>
   <script src="../ext/jquery/jquery.blink.js"></script>
   <script src="../ext/jquery/jquery.loadmask.js"></script>
+  <script src="../ext/jquery/ckeditor/ckeditor.js"></script>
   <!-- Template functions -->
   <script src="templates/default/js/setup.js"></script>
   <script src="templates/default/js/float.js"></script>
-  <!-- script src="templates/default/js/accordions.js"></script -->
+  <script src="templates/default/js/accordions.js"></script>
   <script src="templates/default/js/auto-resizing.js"></script>
   <script src="templates/default/js/input.js"></script>
   <script src="templates/default/js/message.js"></script>
@@ -578,9 +582,14 @@
   <script src="templates/default/js/progress-slider.js"></script>
   <script src="templates/default/js/tooltip.js"></script>
   <script src="templates/default/js/confirm.js"></script>
-  <!-- script src="templates/default/js/agenda.js"></script -->
-  <script src="templates/default/js/tabs.js"></script>    <!-- Must be loaded last -->
+  <script src="templates/default/js/fittext.js"></script>
+  <script src="templates/default/js/agenda.js"></script>
+  <script src="templates/default/js/tabs.js"></script><!-- Must be loaded last -->
   <!-- Load page specific javascript -->
   <?php $lC_Template->loadPageScript($lC_Template->getModule()); ?>
+
+  <!-- Load page specific search box delay javascript -->
+  <?php $lC_Template->loadPageSearchBoxDelayScript($lC_Template->getModule()); ?>
+
 </body>
 </html>
