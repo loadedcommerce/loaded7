@@ -123,7 +123,7 @@ function customCheck() {
   if (cModeVal == 'specials' /*|| cModeVal == 'featured' */|| cModeVal == 'new' || cModeVal == 'search' || cModeVal == 'cart' || cModeVal == 'account' || cModeVal == 'info' || cModeVal == 'override') {
     $("#categories_custom_url").show();
     $("#categories_link_target_info").hide();
-      $("#categories_link_target_p").hide(); 
+    $("#categories_link_target_p").hide(); 
     if (cModeVal != 'override') {
       $("#categories_custom_url").attr('readonly', 'readonly');
       $("#custom_url_text").hide();

@@ -184,10 +184,9 @@
                     <div class="six-columns twelve-columns-mobile">  
                       <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey no-margin-left small-margin-right'); ?>
                       <span id="categories_custom">
-                      <?php if ($lC_ObjectInfo->get('categories_custom_url') != '') { ?>
-                      <input type="text" class="input" id="categories_custom_url" name="categories_custom_url"<?php echo (($lC_ObjectInfo->get('categories_custom_url') != '') ? ' value="' . $lC_ObjectInfo->get('categories_custom_url') . '"' : '') . (($lC_ObjectInfo->get('categories_mode') != 'override') ? ' readonly="readonly"' : ''); ?>> &nbsp;<span id="custom_url_text"><strong><?php echo $lC_Language->get('text_custom_link'); ?></strong></span>
-                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_'), null, 'on-left grey mid-margin-left'); ?>
-                      <?php } ?>
+                      <input<?php echo ($lC_ObjectInfo->get('categories_custom_url') != '') ? '' : ' style="display:none;"'; ?> type="text" class="input" id="categories_custom_url" name="categories_custom_url"<?php echo (($lC_ObjectInfo->get('categories_custom_url') != '') ? ' value="' . $lC_ObjectInfo->get('categories_custom_url') . '"' : '') . (($lC_ObjectInfo->get('categories_mode') != 'override') ? ' readonly="readonly"' : ''); ?>> &nbsp;
+                      <span<?php echo ($lC_ObjectInfo->get('categories_custom_url') != '') ? '' : ' style="display:none;"'; ?> id="custom_url_text">
+                      <strong><?php echo $lC_Language->get('text_custom_link'); ?></strong></span>
                       </span>
                     </div>
                   </div>
@@ -232,7 +231,7 @@
                 </div>
               </div>
             </div>
-            <div class="columns with-padding no-margin-bottom">
+            <div class="columns with-padding no-margin-bottom margin-top">
               <div class="twelve-columns no-margin-top no-margin-bottom">
                 <div class="columns no-margin-left">
                   <div class="three-columns twelve-columns-mobile"> 
