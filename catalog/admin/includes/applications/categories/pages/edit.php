@@ -360,7 +360,7 @@
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
                 </span>
-                <span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span>
+                <span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span> 
               </a>&nbsp;
             </p>
           </div>
