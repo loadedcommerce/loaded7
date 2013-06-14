@@ -99,10 +99,10 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:2px !important;');
     $('#mainMessageContainer').css('margin', '54px 4px 0px 74px');    
   } else if ($.template.mediaQuery.name === 'tablet-landscape') {  
-    $('#logoImg').attr('style', 'margin-top:2px !important;');
+    $('#logoImg').attr('style', 'margin-top:-1px !important;');
     $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   } else { // desktop
-    $('#logoImg').attr('style', 'margin-top:2px !important;');
+    $('#logoImg').attr('style', 'margin-top:-1px !important;');
     $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   }
   
@@ -390,6 +390,24 @@ function showUpsellSpot(e) {
      buttons: {}
    });
 }
+// added to prevent enter key on megasearch
+$('.noEnterSubmit').keypress(function(e){
+  if (e.which == 13) return false;
+  if (e.which == 13) e.preventDefault();
+});
+
+// turn off maintenance mode
+$("#mainMessageContainer").click(function(){
+  $('#mainMessageContainer p').removeClass('icon-warning icon-black').html('<span class="loader on-dark small-margin-right" style="margin-left:-4px"></span><?php echo $lC_Language->get('site_maintenance_message_text'); ?>');
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'updates' . '&action=setMaintMode&s=MODE'); ?>'
+  $.getJSON(jsonLink.replace('MODE', 'off').replace('&amp;', '&'),
+    function (data) {
+      $('#main').removeClass('no-margin-top');
+      $('#mainMessageContainer').slideUp();
+      return true;
+    }
+  );  
+});
 
 /* close the upsell spot modal */
 function closeUpsellSpot(e) {
