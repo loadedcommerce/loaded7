@@ -75,7 +75,7 @@ class lC_Language_Admin extends lC_Language {
     
     // inject the addons language defines
     if (isset($lC_Addons)) {    
-      $aoArr = $lC_Addons->getAddons('enabled');
+      $aoArr = $lC_Addons->getAddons();
       if (is_array($aoArr)) {
         foreach ($aoArr as $ao => $aoData) {
           $file = DIR_FS_CATALOG . 'addons/' . $ao . '/languages/' . $language_code . '.xml';
