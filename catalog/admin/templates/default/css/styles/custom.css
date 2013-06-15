@@ -734,6 +734,7 @@ select.input {
   }
   #products_msrp { width: 90% !important; }
   .products-price-gross { width: 90% !important; } 
+  .hide-on-tablet { display:none; }
 } 
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
@@ -742,6 +743,7 @@ select.input {
   }
   #products_msrp { width: 90% !important; }
   .products-price-gross { width: 90% !important; }
+  .hide-on-tablet { display:none; }
 }
 
 @media screen and (min-width: 480px) and (max-width: 767px) {
@@ -795,6 +797,9 @@ select.input {
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
   #category_tabs { margin: 0 -15px -15px -15px; }
   #languageTabs { margin: 0 -15px 0 -15px; }
+  .dataColThumb  > div { margin-left:15px !important; } 
+  .icon-search { margin-left:4px !important; }  
+  .hide-on-mobile { display:none; }
 }  
   
 @media screen and (max-width: 479px) {
@@ -860,6 +865,14 @@ select.input {
   #dataTable_wrapper { margin: 0 -15px -15px -15px; }
   #category_tabs { margin: 0 -15px -15px -15px; }
   #languageTabs { margin: 0 -15px 0 -15px; }
+  
+  #storeFilterContainer { margin-left: 14px !important; }
+  #addonsPanelContainer { padding: 0 4px !important; }
+  #uninstallButton { right:10px; top:65px;  }
+  .dataColTitle > div { margin-left:15px !important; } 
+  .hide-on-mobile { display:none; }
+  input { width: 73%; }
+  
 }  
   
 @media screen and (max-width: 319px) {
