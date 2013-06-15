@@ -654,6 +654,8 @@ function toggleEditor(id) {
       height: 1px;
     }
     
+    .qq-upload-button { margin-top: 10px; }
+    
     form.dataForm fieldset legend { padding: 3px 5px; border-bottom: 1px solid black; font-weight: bold; width: 99%; }
     LABEL { font-weight:bold; }
     TD { padding: 5px 0 0 5px; }

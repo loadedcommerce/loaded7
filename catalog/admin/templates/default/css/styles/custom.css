@@ -794,7 +794,7 @@ select.input {
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 30px -15px -15px -15px; }
   #category_tabs { margin: 30px -15px -15px -15px; }
-  #languageTabs { margin: 0 -15px 0 -15px; }
+  #languageTabs { margin: 0 0 0 9px; }
   #breadCrumbContainer { top: 50px; left: 21px; }
 }  
   
@@ -860,13 +860,13 @@ select.input {
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 30px -15px -15px -15px; }
   #category_tabs { margin: 30px -15px -15px -15px; }
-  #languageTabs { margin: 0 -15px 0 -15px; }
+  #languageTabs { margin: 0 0 0 5px; }
   #breadCrumbContainer { top: 50px; left: 21px; }
 }  
   
 @media screen and (max-width: 319px) {
   #dataTable_wrapper { margin: 30px -15px -15px -15px; }
   #category_tabs { margin: 30px -15px -15px -15px; }
-  #languageTabs { margin: 0 -15px 0 -15px; }
+  #languageTabs { margin: 0 0 0 5px; }
   #breadCrumbContainer { top: 50px; left: 21px; }
 }
