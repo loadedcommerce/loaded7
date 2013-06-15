@@ -22,7 +22,7 @@ class lC_Payment {
 
   // class constructor
   public function lC_Payment($module = '') {
-    global $lC_Database, $lC_Language, $lC_Vqmod;
+    global $lC_Database, $lC_Language, $lC_ShoppingCart, $lC_Vqmod;
 
     include_once($lC_Vqmod->modCheck(dirname(__FILE__) . '/credit_card.php'));
 
@@ -64,6 +64,7 @@ class lC_Payment {
       if ((empty($module) === false) && in_array($module, $mArr)) {
         $this->selected_module = 'lC_Payment_' . $module;
       }
+      if ($lC_ShoppingCart->getBillingMethod('id') != NULL) $this->selected_module = 'lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id');
 
       $lC_Language->load('modules-payment');
 
@@ -224,6 +225,14 @@ class lC_Payment {
   }
 
   public function process() {
+    global $lC_ShoppingCart;
+    
+    if ($lC_ShoppingCart->getBillingMethod('id') != NULL) $this->selected_module = 'lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id');
+
+//echo '[' . $lC_ShoppingCart->getBillingMethod('id') . ']<br>';    
+//echo '[' . $this->selected_module . ']<br>';    
+//die('pmt process');
+    
     if (is_array($this->_modules)) {
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         return $GLOBALS[$this->selected_module]->process();
