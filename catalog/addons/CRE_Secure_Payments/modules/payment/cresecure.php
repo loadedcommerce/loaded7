@@ -357,7 +357,7 @@ class lC_Payment_cresecure extends lC_Payment {
                                'delivery_postal_code' => $lC_ShoppingCart->getShippingAddress('postcode'),
                                'delivery_country' => $lC_ShoppingCart->getShippingAddress('country_iso_code_3'),  
                                'form' => 'mage');   
-                                  
+                             
     $response = transport::getResponse(array('url' => $uid_action_url, 'method' => 'post', 'parameters' => $uid_action_params));   
 
     $params = substr($response, strpos($response, 'uID='));         
