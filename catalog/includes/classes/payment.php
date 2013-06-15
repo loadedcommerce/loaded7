@@ -21,8 +21,8 @@ class lC_Payment {
       $order_status = DEFAULT_ORDERS_STATUS_ID;
 
   // class constructor
-  public function lC_Payment($module = '') {
-    global $lC_Database, $lC_Language, $lC_ShoppingCart, $lC_Vqmod;
+  public function lC_Payment($_module = '') {
+    global $lC_Database, $lC_Language, $lC_Vqmod;
 
     include_once($lC_Vqmod->modCheck(dirname(__FILE__) . '/credit_card.php'));
 
@@ -61,11 +61,10 @@ class lC_Payment {
         if (strstr($m, '|')) $m = substr($m, 0, strpos($m, '|'));
         $mArr[] = $m;
       }
-      if ((empty($module) === false) && in_array($module, $mArr)) {
-        $this->selected_module = 'lC_Payment_' . $module;
+      if ((empty($_module) === false) && in_array($_module, $mArr)) {
+        $this->selected_module = 'lC_Payment_' . $_module;
       }
-      if ($lC_ShoppingCart->getBillingMethod('id') != NULL) $this->selected_module = 'lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id');
-
+   
       $lC_Language->load('modules-payment');
 
       foreach ($this->_modules as $modules) {      
@@ -90,16 +89,16 @@ class lC_Payment {
 
       usort($this->_modules, array('lC_Payment', '_usortModules'));
 
-      if ( (!empty($module)) && (in_array($module, $mArr)) && (isset($GLOBALS['lC_Payment_' . $module]->form_action_url)) ) {
-        $this->form_action_url = $GLOBALS['lC_Payment_' . $module]->form_action_url;
+      if ( (!empty($_module)) && (in_array($_module, $mArr)) && (isset($GLOBALS['lC_Payment_' . $_module]->form_action_url)) ) {
+        $this->form_action_url = $GLOBALS['lC_Payment_' . $_module]->form_action_url;
       }
       
-      if ( (!empty($module)) && (in_array($module, $mArr)) && (isset($GLOBALS['lC_Payment_' . $module]->iframe_action_url)) ) {
-        $this->iframe_action_url = $GLOBALS['lC_Payment_' . $module]->iframe_action_url;
+      if ( (!empty($_module)) && (in_array($_module, $mArr)) && (isset($GLOBALS['lC_Payment_' . $_module]->iframe_action_url)) ) {
+        $this->iframe_action_url = $GLOBALS['lC_Payment_' . $_module]->iframe_action_url;
       }   
       
-      if ( (!empty($module)) && (in_array($module, $mArr)) && (isset($GLOBALS['lC_Payment_' . $module]->iframe_relay_url)) ) {
-        $this->iframe_relay_url = $GLOBALS['lC_Payment_' . $module]->iframe_relay_url;
+      if ( (!empty($_module)) && (in_array($_module, $mArr)) && (isset($GLOBALS['lC_Payment_' . $_module]->iframe_relay_url)) ) {
+        $this->iframe_relay_url = $GLOBALS['lC_Payment_' . $_module]->iframe_relay_url;
       }              
     }
   }
@@ -225,14 +224,6 @@ class lC_Payment {
   }
 
   public function process() {
-    global $lC_ShoppingCart;
-    
-    if ($lC_ShoppingCart->getBillingMethod('id') != NULL) $this->selected_module = 'lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id');
-
-//echo '[' . $lC_ShoppingCart->getBillingMethod('id') . ']<br>';    
-//echo '[' . $this->selected_module . ']<br>';    
-//die('pmt process');
-    
     if (is_array($this->_modules)) {
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         return $GLOBALS[$this->selected_module]->process();
@@ -249,10 +240,6 @@ class lC_Payment {
   }
 
   public function hasActionURL() {
-    global $lC_ShoppingCart;
-    
-    if ($lC_ShoppingCart->getBillingMethod('id') != NULL) $this->selected_module = 'lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id');
-    
     if (is_array($this->_modules)) {     
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         if (isset($GLOBALS[$this->selected_module]->form_action_url) && (empty($GLOBALS[$this->selected_module]->form_action_url) === false)) {
@@ -269,10 +256,6 @@ class lC_Payment {
   }
 
   public function hasIframeURL() {
-    global $lC_ShoppingCart;
-    
-    if ($lC_ShoppingCart->getBillingMethod('id') != NULL) $this->selected_module = 'lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id');
-    
     if (is_array($this->_modules)) { 
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         if (isset($GLOBALS[$this->selected_module]->iframe_action_url) && (empty($GLOBALS[$this->selected_module]->iframe_action_url) === false)) {
@@ -289,10 +272,6 @@ class lC_Payment {
   }
 
   public function hasRelayURL() {
-    global $lC_ShoppingCart;
-    
-    if ($lC_ShoppingCart->getBillingMethod('id') != NULL) $this->selected_module = 'lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id');
-    
     if (is_array($this->_modules)) {
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         if (isset($GLOBALS[$this->selected_module]->iframe_relay_url) && (empty($GLOBALS[$this->selected_module]->iframe_relay_url) === false)) {

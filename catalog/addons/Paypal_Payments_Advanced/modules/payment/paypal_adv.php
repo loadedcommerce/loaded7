@@ -230,7 +230,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
           // ec step1 success
           unset($_SESSION['PPEC_TOKEN']);
           // set the skip payment flag
-          $_SESSION['PPEC_SKIP_PAYMENT'] = TRUE;          
+          $_SESSION['SKIP_PAYMENT_PAGE'] = TRUE;          
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'));
         }
       } else { // customer clicked cancel 
@@ -286,7 +286,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
     // unset the ppec sesssion
     if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
     if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
-    if (isset($_SESSION['PPEC_SKIP_PAYMENT'] )) unset($_SESSION['PPEC_SKIP_PAYMENT']);
+    if (isset($_SESSION['SKIP_PAYMENT_PAGE'] )) unset($_SESSION['SKIP_PAYMENT_PAGE']);
     
     if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
   } 
@@ -367,7 +367,7 @@ class lC_Payment_paypal_adv extends lC_Payment {
       }
       if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
       if (isset($_SESSION['PPEC_PAYDATA'])) unset($_SESSION['PPEC_PAYDATA']);
-      if (isset($_SESSION['PPEC_SKIP_PAYMENT'])) unset($_SESSION['PPEC_SKIP_PAYMENT']);
+      if (isset($_SESSION['SKIP_PAYMENT_PAGE'])) unset($_SESSION['SKIP_PAYMENT_PAGE']);
       return false;
     }
     
