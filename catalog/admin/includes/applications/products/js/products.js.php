@@ -518,7 +518,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       if (divIsOpen) {
         $('#' + section).slideUp('300');
       } else {
-        if (switchIsEnabled) {
+        if (switchIsEnabled && divIsOpen) {
           $('#' + section).slideUp('300');
         } else {
           $('#' + section).slideDown('300');

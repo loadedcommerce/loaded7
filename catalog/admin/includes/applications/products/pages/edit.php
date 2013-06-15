@@ -454,6 +454,7 @@ function getTaxClassOptionsString($id = null, $esc = false) {
 <!-- Main content -->
 <style>
 .legend { font-weight:bold; font-size: 1.1em; }
+.qq-upload-button { margin: 38px 0 -15px 0;; }
 </style>
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
