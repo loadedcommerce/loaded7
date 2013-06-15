@@ -18,7 +18,7 @@
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
 <style>
-.qq-upload-button { margin: -31px -141px 0 -50px; }
+.qq-upload-button { margin: -38px -142px 0 -50px; background: transparent; border-bottom: none; color: #666666; }
 .qq-upload-drop-area { min-height: 150px; top: -185px; }
 .qq-upload-drop-area span { margin-top:-16px; }
     LABEL { font-weight:bold; }
