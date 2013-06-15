@@ -51,7 +51,7 @@ foreach ($typesArr as $key => $value) {
             <form method="post" action="storeSearch" name="storeSearch">
               <ul class="inputs mega-search-border">
                 <li>
-                  <span class="icon-search mid-margin-left"></span>
+                  <span class="icon-search"></span>
                   <input type="text" id="storeSearch" name="s" value="" placeholder="Search" autocomplete="off" class="input-unstyled">
                 </li>
               </ul>
@@ -80,7 +80,7 @@ foreach ($typesArr as $key => $value) {
     </div><div style="clear:both;"></div>
   </hgroup>
 
-  <div class="with-padding">  
+  <div id="addonsPanelContainer" class="with-padding">  
     <!-- main panel -->
     <div class="content-panel margin-bottom">
     
