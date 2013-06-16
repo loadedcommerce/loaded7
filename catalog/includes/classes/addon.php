@@ -102,10 +102,10 @@ abstract class lC_Addon {
  /**
   * Remove the module configuration keys
   *
-  * @access protected
+  * @access public
   * @return array
   */  
-  protected function remove() {
+  public function remove() {
     global $lC_Database, $lC_Language;
 
     if ($this->hasKeys()) {

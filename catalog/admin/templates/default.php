@@ -13,7 +13,6 @@
 
   Based on the Developr theme
 */
-
 ?>
 <!DOCTYPE html>
 <!--[if IEMobile 7]><html class="no-js iem7 oldie"><![endif]-->

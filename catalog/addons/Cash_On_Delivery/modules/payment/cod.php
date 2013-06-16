@@ -87,7 +87,7 @@ class lC_Payment_cod extends lC_Payment {
         }
       }
     }
-  }
+  }   
  /**
   * Return the payment selections array
   *

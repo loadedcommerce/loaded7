@@ -25,13 +25,17 @@ class lC_Checkout_Shipping extends lC_Template {
     global $lC_Database, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Shipping, $lC_MessageStack, $lC_Vqmod;
        
     require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));
-
+           
+    /*VQMOD-002*/
+    
     // ppec intercept
     if (isset($_GET['ppec']) && $_GET['ppec'] == 'process') {
       // setExpressCheckout()
-      include_once('includes/classes/order.php');
-      include_once('includes/classes/payment.php');
-      include_once('includes/modules/payment/paypal_adv.php');
+      include_once(DIR_FS_CATALOG . 'includes/classes/order.php');
+      include_once(DIR_FS_CATALOG . 'includes/classes/payment.php');
+      
+      include_once(DIR_FS_CATALOG . 'addons/Paypal_Payments_Advanced/modules/payment/paypal_adv.php');
+      
       $ppec = new lC_Payment_paypal_adv();
       $_SESSION['PPEC_TOKEN'] = $ppec->setExpressCheckout(); 
       if (!$_SESSION['PPEC_TOKEN']) {
