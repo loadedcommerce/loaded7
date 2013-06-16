@@ -118,10 +118,10 @@ $(document).ready(function() {
   } else {
     $('#primaryNav li a').each(function() {
       var urlStr = this.href.split('/').pop();
+      var urlPath = urlStr.split('?').pop();
+      var locPath = loc.split('?').pop();
       if (loc.indexOf("index.php") != -1) {
-        var locPath = loc.split('?').pop();
-        var urlPath = urlStr.split('?').pop();
-        if (urlStr == loc || (locPath.search(urlPath) != -1 && this.href.search('<?php echo HTTP_SERVER; ?>') != -1)) {
+        if ((locPath.search(urlPath) != -1 && this.href.search('<?php echo HTTP_SERVER; ?>') != -1)) {
           $(this).addClass('current');
         }
       } else if (loc.indexOf("products.php") != -1) {
@@ -129,7 +129,7 @@ $(document).ready(function() {
           $(this).addClass('current');
         }
       } else if (loc.indexOf("info.php") != -1) {
-        if (urlStr == loc) {
+        if (urlStr == loc || (loc.search(urlPath) != -1 && this.href.search('<?php echo HTTP_SERVER; ?>') != -1)) {
           $(this).addClass('current');
         }
       } else {
