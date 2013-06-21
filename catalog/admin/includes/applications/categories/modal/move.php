@@ -22,8 +22,8 @@ function moveCategory(id, name) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
   }
-  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=getFormData'); ?>'
-  $.getJSON(jsonLink,
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&cid=CID&action=getFormData'); ?>'
+  $.getJSON(jsonLink.replace('CID', parseInt(id)),
     function (data) {
       if (data.rpcStatus == -10) { // no session
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
@@ -43,7 +43,7 @@ function moveCategory(id, name) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="new_category_id" class="label" style="width:33%;"><?php echo $lC_Language->get('field_parent_category'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="select" style="width:73%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="input with-small-padding"'); ?>'+
                    '      </p>'+
                    '    </form>'+
                    '  </div>'+
@@ -95,14 +95,11 @@ function moveCategory(id, name) {
           },
           buttonsLowPadding: true
       });
-      $("#new_category_id").empty();  // clear the old values
+      $("#new_category_id").empty(); // clear the old values
       $.each(data.categoriesArray, function(val, text) {
         var selected = (data.parentCategory == val) ? 'selected="selected"' : '';
-        if(data.parentCategory == val) {
-          $("#new_category_id").closest("span + *").prevAll("span.select-value:first").text(text);
-        }
         $("#new_category_id").append(
-           $("<option " + selected + "></option>").val(val).html(text)
+          $("<option " + selected + "></option>").val(val).html(text)
         );
       });
     }

@@ -368,6 +368,28 @@ class utility {
     return $out;
   }
  /**
+  * Sort a multidimensional array by key value.
+  *
+  * @param array $data        The data array to sort
+  * @param array $sortKey     The value key to sort on
+  * @param array $sortFlags   The ksort flags; default is SORT_ASC
+  * @access public
+  * @return array
+  */    
+  public static function sortByKeyValue($data, $sortKey, $sortFlags = SORT_ASC) {
+    if (empty($data) or empty($sortKey)) return $data;
+
+    $ordered = array();
+    foreach ($data as $key => $value) {
+        $ordered[$value[$sortKey]] = $value;
+    }
+
+    ksort($ordered, $sortFlags);
+
+    return array_values($ordered); // array_values() added for identical result with multisort
+}  
+  
+ /**
   * Return the product version
   *
   * @access public

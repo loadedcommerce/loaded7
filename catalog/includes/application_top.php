@@ -35,7 +35,7 @@ ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
 
 // virtual hook system
-require_once('ext/vqmod/vqmod.php');
+require_once(DIR_FS_CATALOG . 'ext/vqmod/vqmod.php');
 $lC_Vqmod = new VQMod();
   
 // set the type of request (secure or not)
@@ -48,27 +48,27 @@ if ($request_type == 'NONSSL') {
 }
 
 // compatibility work-around logic for PHP4
-require($lC_Vqmod->modCheck('includes/functions/compatibility.php'));
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/functions/compatibility.php'));
 
 // include the list of project filenames
-require($lC_Vqmod->modCheck('includes/filenames.php'));
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/filenames.php'));
 
 // include the list of project database tables
-require($lC_Vqmod->modCheck('includes/database_tables.php'));
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/database_tables.php'));
 
 // include the utility class
-require($lC_Vqmod->modCheck('includes/classes/utility.php'));     
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/utility.php'));     
 
 // initialize the message stack for output messages
-require($lC_Vqmod->modCheck('includes/classes/message_stack.php'));
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/message_stack.php'));
 $lC_MessageStack = new lC_MessageStack();
 
 // initialize the cache class
-require($lC_Vqmod->modCheck('includes/classes/cache.php'));
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/cache.php'));
 $lC_Cache = new lC_Cache();
 
 // include the database class
-require($lC_Vqmod->modCheck('includes/classes/database.php'));
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/database.php'));
 
 // make a connection to the database... now
 $lC_Database = lC_Database::connect(DB_SERVER, DB_SERVER_USERNAME, DB_SERVER_PASSWORD);
@@ -87,11 +87,18 @@ while ($Qcfg->next()) {
 $Qcfg->freeResult();
 
 // include functions
-require($lC_Vqmod->modCheck('includes/functions/general.php'));
-require($lC_Vqmod->modCheck('includes/functions/html_output.php'));
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/functions/general.php'));
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/functions/html_output.php'));
+
+// include directory listing class
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/directory_listing.php'));
 
 // include and start the services
-require($lC_Vqmod->modCheck('includes/classes/services.php'));
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/services.php'));
 $lC_Services = new lC_Services();
 $lC_Services->startServices();
+
+// instantiate the addons class
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
+$lC_Addons = new lC_Addons();
 ?>

@@ -26,10 +26,10 @@
       
       $this->_subgroups = array(array('icon' => 'payment.png',
                                       'title' => $lC_Language->get('access_modules_payment_title'),
-                                      'identifier' => '?modules_payment'),
+                                      'identifier' => '?store&type=payment'),
                                 array('icon' => 'shipping.png',
                                       'title' => $lC_Language->get('access_modules_shipping_title'),
-                                      'identifier' => '?modules_shipping'),       
+                                      'identifier' => '?store&type=shipping'),       
                                 array('icon' => 'calculator.png',
                                       'title' => $lC_Language->get('access_modules_order_total_title'),
                                       'identifier' => '?modules_order_total'),  
