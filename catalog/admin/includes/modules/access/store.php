@@ -17,7 +17,7 @@
         $_group = 'hidden',
         $_icon = '',
         $_title,
-        $_sort_order = 100;
+        $_sort_order = 10;
 
     function lC_Access_Store() {
       global $lC_Language;
