@@ -356,13 +356,13 @@ function saveCustomer() {
           }
           return false;
         } else {
-         modalMessage('Changes Saved');
-         var modPage = '<?php echo $lC_Template->getModule(); ?>';
-         if (modPage == 'customers') {
-           oTable.fnReloadAjax();
-         }
-         // get new form data
-         getFormData(cid);
+          modalMessage('<?php echo $lC_Language->get('text_changes_saved'); ?>');
+          var modPage = '<?php echo $lC_Template->getModule(); ?>';
+          if (modPage == 'customers') {
+            oTable.fnReloadAjax();
+          }
+          // get new form data
+          getFormData(cid);
         }
       }
     );
@@ -438,6 +438,9 @@ function saveAddress() {
           getFormData(cid);
           // show the address listing
           toggleAddressForm();
+          // added to clear form after successful save
+          $("#addressBookForm")[0].reset();
+          modalMessage('<?php echo $lC_Language->get('text_new_address_saved'); ?>');
         }
       }
     );
