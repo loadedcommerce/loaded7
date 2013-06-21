@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: addons.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -13,89 +13,46 @@
 */
 global $lC_Vqmod;
 
-include($lC_Vqmod->modCheck('../includes/classes/addons.php'));
+require($lC_Vqmod->modCheck('../includes/classes/addons.php'));
 
 class lC_Addons_Admin extends lC_Addons {
-  var $_group = 'addons';
 
-  // class methods
-  function hasKeys() {
-    static $has_keys;
+ // class contructor 
+  public function __construct() {
+    if (array_key_exists('login', $_GET)) return false;
+    $this->_init();
+  } 
+  
+  // private methods
+  private function _init() {
+    global $lC_Vqmod;
+    
+    $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
+    $lC_DirectoryListing->setRecursive(true);
+    $lC_DirectoryListing->setIncludeDirectories(false);
+    $lC_DirectoryListing->setCheckExtension('php');
+    $lC_DirectoryListing->setStats(true);
+      
+    $enabled = '';
+    foreach ( $lC_DirectoryListing->getFiles() as $addon ) { 
+      
+      $ao = utility::cleanArr($addon);  
+      if ($ao['name'] != 'controller.php') continue;
+      
+      $nameArr = explode('/', $ao['path']);
+      $class = $nameArr[count($nameArr)-2];
 
-    if (isset($has_keys) === false) {
-      $has_keys = (sizeof($this->getKeys()) > 0) ? true : false;
-    }
-
-    return $has_keys;
-  }
-
-  function install() {
-    global $lC_Database, $lC_Language;
-
-    $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
-    $Qinstall->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-    $Qinstall->bindValue(':title', $this->_title);
-    $Qinstall->bindValue(':code', $this->_code);
-    $Qinstall->bindValue(':author_name', $this->_author_name);
-    $Qinstall->bindValue(':author_www', $this->_author_www);
-    $Qinstall->bindValue(':modules_group', $this->_group);
-    $Qinstall->execute();
-
-    foreach ($lC_Language->getAll() as $key => $value) {
-      if (file_exists('../includes/languages/' . $key . '/modules/' . $this->_group . '/' . $this->_code . '.xml')) {
-        foreach ($lC_Language->extractDefinitions($key . '/modules/' . $this->_group . '/' . $this->_code . '.xml') as $def) {
-          $Qcheck = $lC_Database->query('select id from :table_languages_definitions where definition_key = :definition_key and content_group = :content_group and languages_id = :languages_id limit 1');
-          $Qcheck->bindTable(':table_languages_definitions', TABLE_LANGUAGES_DEFINITIONS);
-          $Qcheck->bindValue(':definition_key', $def['key']);
-          $Qcheck->bindValue(':content_group', $def['group']);
-          $Qcheck->bindInt(':languages_id', $value['id']);
-          $Qcheck->execute();
-
-          if ($Qcheck->numberOfRows() === 1) {
-            $Qdef = $lC_Database->query('update :table_languages_definitions set definition_value = :definition_value where definition_key = :definition_key and content_group = :content_group and languages_id = :languages_id');
-          } else {
-            $Qdef = $lC_Database->query('insert into :table_languages_definitions (languages_id, content_group, definition_key, definition_value) values (:languages_id, :content_group, :definition_key, :definition_value)');
-          }
-          $Qdef->bindTable(':table_languages_definitions', TABLE_LANGUAGES_DEFINITIONS);
-          $Qdef->bindInt(':languages_id', $value['id']);
-          $Qdef->bindValue(':content_group', $def['group']);
-          $Qdef->bindValue(':definition_key', $def['key']);
-          $Qdef->bindValue(':definition_value', $def['value']);
-          $Qdef->execute();
-        }
+      if (file_exists($ao['path'])) {
+        include_once($lC_Vqmod->modCheck($ao['path']));
+        $GLOBALS[$class] = new $class();
+        if ($GLOBALS[$class]->isEnabled()) $enabled .= $addon['path'] . ';';
       }
-    }
-
-    lC_Cache::clear('languages');
-  }
-
-  function remove() {
-    global $lC_Database, $lC_Language;
-
-    $Qdel = $lC_Database->query('delete from :table_templates_boxes where code = :code and modules_group = :modules_group');
-    $Qdel->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-    $Qdel->bindValue(':code', $this->_code);
-    $Qdel->bindValue(':modules_group', $this->_group);
-    $Qdel->execute();
-
-    if ($this->hasKeys()) {
-      $Qdel = $lC_Database->query('delete from :table_configuration where configuration_key in (":configuration_key")');
-      $Qdel->bindTable(':table_configuration', TABLE_CONFIGURATION);
-      $Qdel->bindRaw(':configuration_key', implode('", "', $this->getKeys()));
-      $Qdel->execute();
-    }
-
-    if (file_exists('../includes/languages/' . $lC_Language->getCode() . '/modules/' . $this->_group . '/' . $this->_code . '.xml')) {
-      foreach ($lC_Language->extractDefinitions($lC_Language->getCode() . '/modules/' . $this->_group . '/' . $this->_code . '.xml') as $def) {
-        $Qdel = $lC_Database->query('delete from :table_languages_definitions where definition_key = :definition_key and content_group = :content_group');
-        $Qdel->bindTable(':table_languages_definitions', TABLE_LANGUAGES_DEFINITIONS);
-        $Qdel->bindValue(':definition_key', $def['key']);
-        $Qdel->bindValue(':content_group', $def['group']);
-        $Qdel->execute();
-      }
-
-      lC_Cache::clear('languages');
-    }
-  }
+    }   
+       
+    if ($enabled != '') $enabled = substr($enabled, 0, -1);
+    if (!file_exists(DIR_FS_WORK . 'cache/addons.cache')) {
+      file_put_contents(DIR_FS_WORK . 'cache/addons.cache', serialize($enabled));
+    }    
+  }  
 }
 ?>

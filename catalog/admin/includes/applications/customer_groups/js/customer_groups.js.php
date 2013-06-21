@@ -22,7 +22,8 @@ $(document).ready(function() {
     "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
     "sPaginationType": paginationType, 
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
-    "aoColumns": [{ "sWidth": "80%", "bSortable": true, "sClass": "dataColGroup" },
+    "aoColumns": [{ "sWidth": "60%", "bSortable": true, "sClass": "dataColGroup" },
+                  { "sWidth": "20%", "bSortable": true, "sClass": "dataColBase" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();

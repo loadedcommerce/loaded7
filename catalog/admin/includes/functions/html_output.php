@@ -167,4 +167,30 @@
 
     return 'templates/' . $lC_Template->getCode() . '/img/icons/' . (!empty($group) ? $group . '/' : null) . $image;
   }
+  
+  function lc_go_pro($no_tooltip = false) {
+    global $lC_Language;
+
+    if ($no_tooltip) {
+      $html = '<span class="upsell-spot">' . 
+              '  <a href="javascript://" onclick="showUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
+              '    <small class="tag red-bg" title="' . $lC_Language->get('text_cick_for_info') . '">' . $lC_Language->get('text_pro') . '</small>' . 
+              '  </a>' .
+              '</span>';
+    } else {
+      $html = '<span class="upsell-spot">' . 
+              '  <a href="javascript://" onclick="showUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
+              '    <small class="tag red-bg with-tooltip" title="' . $lC_Language->get('text_cick_for_info') . '" data-tooltip-options=\'{"classes":["anthracite-gradient glossy small no-padding"],"position":"right"}\'>' . $lC_Language->get('text_pro') . '</small>' . 
+              '  </a>' .
+              '</span>';
+    }
+    
+    return $html;
+  }
+  
+  function lc_show_info_bubble($msg, $styleA = 'margin-right:6px;', $classA = 'on-left grey float-right', $classB = 'blue-bg', $minWidth = '180px') {
+    $html = '<span style="' . $styleA . '" class="info-spot ' . $classA . '"><span class="icon-info-round"></span><span style="min-width:' . $minWidth . ';" class="info-bubble ' . $classB . '">' . $msg . '</span></span>';
+    
+    return $html;    
+  }
 ?>

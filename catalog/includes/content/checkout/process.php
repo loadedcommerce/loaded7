@@ -21,7 +21,7 @@ class lC_Checkout_Process extends lC_Template {
     global $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_NavigationHistory, $lC_Payment, $lC_Vqmod;
     
     require($lC_Vqmod->modCheck('includes/classes/address_book.php'));
-   
+
     if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL && isset($_GET['token']) && $_GET['token'] == $_SESSION['PPEC_TOKEN']) {  
     } else {
       if ($lC_Customer->isLoggedOn() === false) {
@@ -46,8 +46,9 @@ class lC_Checkout_Process extends lC_Template {
              
     // load selected payment module
     include($lC_Vqmod->modCheck('includes/classes/payment.php'));
-    
-    if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL && isset($_GET['token']) && $_GET['token'] == $_SESSION['PPEC_TOKEN']) {  
+
+    /*VQMOD-003*/
+    if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL && isset($_GET['token']) && $_GET['token'] == $_SESSION['PPEC_TOKEN']) { 
       $lC_Payment = new lC_Payment('paypal_adv');
       $lC_ShoppingCart->setBillingMethod(array('id' => 'paypal_adv', 'title' => $GLOBALS['lC_Payment_paypal_adv']->getMethodTitle()));
       
@@ -62,7 +63,6 @@ class lC_Checkout_Process extends lC_Template {
     } else {
       $lC_Payment = new lC_Payment($lC_ShoppingCart->getBillingMethod('id'));
     }
-            
     if ($lC_Payment->hasActive() && ($lC_ShoppingCart->hasBillingMethod() === false)) {
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
     }
@@ -79,7 +79,13 @@ class lC_Checkout_Process extends lC_Template {
     $lC_ShoppingCart->reset(true);
 
     // unregister session variables used during checkout
-    unset($_SESSION['comments']);
+    if (isset($_SESSION['comments'])) unset($_SESSION['comments']);
+    if (isset($_SESSION['cartSync'])) unset($_SESSION['cartSync']);
+    
+    /*VQMOD-004*/
+    if (isset($_SESSION['PPEC_TOKEN'])) unset($_SESSION['PPEC_TOKEN']);
+    if (isset($_SESSION['PPEC_PROCESS'])) unset($_SESSION['PPEC_PROCESS']);
+    if (isset($_SESSION['PPEC_PAYDATA'])) unset($_SESSION['PPEC_PAYDATA']);
 
     lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'success', 'SSL'));
   }
