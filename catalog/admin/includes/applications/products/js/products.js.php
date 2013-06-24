@@ -31,6 +31,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $('.qq-upload-button').first().attr('id', 'qq-upload-button2');
       $('#qq-upload-button2').removeAttr('class');
       $('#qq-upload-button2').removeAttr('style');
+      $('#qq-upload-button2 input').css('right', '125px').css('font-size', '8px');
       $('.qq-upload-list').hide();
       <?php } ?>
       //$('#fileUploaderImageContainer .qq-upload-button').hide();
@@ -214,7 +215,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         }
       });
 
-      setTimeout('_clearProgressIndicators()', 500);
+      setTimeout('_clearProgressIndicators()', 1000);
     }
     
     function _clearProgressIndicators() {
@@ -237,6 +238,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           showImages(data);
         }
       );
+      $(".qq-upload-drop-area").hide();
     }
 
     function getImagesOriginals(makeCall) {
