@@ -77,6 +77,8 @@ $(document).ready(function() {
     } else if (module.indexOf("templates_modules_layout") != -1 && document.location.href.indexOf("set=content") != -1) {
       $("#big-menu_templates_modules_layout").addClass('current navigable-current').change();
       cfg = true;
+    } else if (module.indexOf("products") != -1 && document.location.href.indexOf("products") != -1) {
+      $("#big-menu_product_catalog").addClass('current navigable-current').change();
     } else if (module.indexOf("product_variants") != -1 && document.location.href.indexOf("product_variants") != -1) {
       $("#big-menu_product_variants").addClass('current navigable-current').change();
     } else if (module.indexOf("statistics") != -1 && document.location.href.indexOf("statistics") != -1) {

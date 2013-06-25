@@ -25,9 +25,17 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       // CONTENT TAB
       <?php if ($pInfo) { ?>
       createUploader2();
+      var qqbuttonhtmlold = $('.qq-upload-button').html();
+      var qqbuttonhtml = qqbuttonhtmlold.replace(/Upload a file/i, 'Upload');
+      $('.qq-upload-button').html(qqbuttonhtml);
+      $('.qq-upload-button').first().attr('id', 'qq-upload-button2');
+      $('#qq-upload-button2').removeAttr('class');
+      $('#qq-upload-button2').removeAttr('style');
+      $('#qq-upload-button2 input').css('right', '125px').css('font-size', '8px');
+      $('.qq-upload-list').hide();
       <?php } ?>
-      $('#fileUploaderImageContainer .qq-upload-button').hide();
-      $('#fileUploaderImageContainer .qq-upload-list').hide();
+      //$('#fileUploaderImageContainer .qq-upload-button').hide();
+      //$('#fileUploaderImageContainer .qq-upload-list').hide();
       <?php               
       foreach ( $lC_Language->getAll() as $l ) {  
         echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
@@ -207,7 +215,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         }
       });
 
-      setTimeout('_clearProgressIndicators()', 500);
+      setTimeout('_clearProgressIndicators()', 1000);
     }
     
     function _clearProgressIndicators() {
@@ -230,6 +238,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           showImages(data);
         }
       );
+      $(".qq-upload-drop-area").hide();
     }
 
     function getImagesOriginals(makeCall) {
@@ -518,7 +527,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       if (divIsOpen) {
         $('#' + section).slideUp('300');
       } else {
-        if (switchIsEnabled) {
+        if (switchIsEnabled && divIsOpen) {
           $('#' + section).slideUp('300');
         } else {
           $('#' + section).slideDown('300');
