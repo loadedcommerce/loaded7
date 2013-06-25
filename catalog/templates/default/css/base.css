@@ -2,6 +2,9 @@ body{
   font-family:Arial, Helvetica, sans-serif; color:#544f4b;
 }
 
+em { font-style: italic; }
+strong { font-weight: bold; }
+
 /*LAYOUT*/
 .wrapper{}
 header, nav, section, footer{ width:980px; margin:0px auto;}
@@ -915,4 +918,4 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 }
 .clear-left { clear: left; }
 .clear-right { clear: right; }
-.clear-both { clear: both; }
+.clear-both { clear: both; } 
