@@ -56,8 +56,8 @@
           CFG_STORE_OWNER_FIRST_NAME: { required: true },
           CFG_STORE_OWNER_LAST_NAME: { required: true },
           CFG_STORE_NAME: { required: true },
-          CFG_STORE_OWNER_EMAIL_ADDRESS: { required: true },
-          CFG_ADMINISTRATOR_USERNAME: { required: true },
+          CFG_STORE_OWNER_EMAIL_ADDRESS: { required: true, email: true },
+          CFG_ADMINISTRATOR_USERNAME: { required: true, email: true },
           CFG_ADMINISTRATOR_PASSWORD: { required: true },
         },
         invalidHandler: function() {
