@@ -59,7 +59,7 @@
       <tbody class="sorted_table"></tbody>
       <tfoot>
         <tr>
-          <th colspan="6">&nbsp;</th>
+          <th colspan="7">&nbsp;</th>
         </tr>
       </tfoot>
     </table>
