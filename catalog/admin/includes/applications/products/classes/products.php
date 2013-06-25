@@ -1583,7 +1583,7 @@ class lC_Products_Admin {
     
     $gData = lC_Customer_groups_Admin::getData($customers_group_id);
     $baselineDiscount = (float)$gData['baseline_discount'];
-    $basePrice = (float)$pInfo->get('products_price');
+    $basePrice = (isset($pInfo)) ? (float)$pInfo->get('products_price') : 0.00;
 
     $tbody = '';  
     if (isset($options) && !empty($options)) {
@@ -1663,9 +1663,9 @@ class lC_Products_Admin {
     $groups = lC_Customer_groups_Admin::getAll();
     foreach($groups['entries'] as $key => $value) {
       
-      $base = (float)$pInfo->get('products_price');
-      $special = (float)$pInfo->get('products_special_price');
-      $discount = round( ((($base - $special) / $base) * 100), DECIMAL_PLACES); 
+      $base = (isset($pInfo)) ? (float)$pInfo->get('products_price') : 0.00;
+      $special = (isset($pInfo)) ? (float)$pInfo->get('products_special_price') : 0.00;
+      $discount = (isset($base) && $base > 0.00) ? round( ((($base - $special) / $base) * 100), DECIMAL_PLACES) : 0.00; 
      
       $content .= '<label for="" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
                   '<div class="columns">' .
