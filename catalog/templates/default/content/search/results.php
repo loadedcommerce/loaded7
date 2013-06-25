@@ -25,7 +25,7 @@
       }
       ?>
       <div id="searchResultsActions">
-        <span class="buttonLeft"><a href="javascript: history.go(-1);" style="text-decoration:none;"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+        <span class="buttonLeft"><a href="javascript: history.go(-1);" style="text-decoration:none;"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
       </div>
       <div style="clear:both;"></div>
     </div>

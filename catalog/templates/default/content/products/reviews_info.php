@@ -40,7 +40,7 @@ if ($lC_MessageStack->size('reviews') > 0) {
       <?php
         if ($lC_Reviews->is_enabled === true) {
         ?>
-        <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+        <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
         <?php
         }
       ?>
