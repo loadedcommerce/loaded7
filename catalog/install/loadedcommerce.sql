@@ -5960,6 +5960,7 @@ INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width,
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(4, 1, 'Large', 'large', 375, 300, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(5, 1, 'Mini', 'mini', 50, 40, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 600, 450, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(7, 1, 'Extra', 'extra', 50, 50, 0); 
 
 INSERT INTO lc_tax_class VALUES (1, 'Taxable Goods', 'The following types of products are included non-food, services, etc', now(), now());
 
