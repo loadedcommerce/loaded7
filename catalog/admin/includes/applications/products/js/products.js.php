@@ -152,10 +152,12 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       });
     }
           
-    function showImages(data) {
+    function showImages(data) {  
+      var defaultImage = 'test'; 
+      
       for ( i=0; i < data.entries.length; i++ ) {
         var entry = data.entries[i];
-        var style = 'width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px; margin: 10px; padding: 10px; float: left; text-align: center; border-radius: 5px;';
+        var style = 'width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px; margin: 10px; padding: 10px; float: left; text-align: center; border-radius: 5px;';  
         if ( entry[1] == '1' ) { // original (products_images_groups_id)
           style += ' background-color: #535252;';
           var onmouseover = 'this.style.backgroundColor=\'#656565\';';
@@ -168,11 +170,9 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         if ( entry[6] == '1' ) { // default_flag         
           var newdiv = '<span id="image_' + entry[0] + '" style="' + style + '" onmouseover="' + onmouseover + '" onmouseout="' + onmouseout + '">';
           newdiv += '<img class="framed" src="<?php echo '../images/products/mini/'; ?>' + entry[2] + '" border="0" height="<?php echo $lC_Image->getHeight('mini'); ?>" alt="' + entry[2] + '" title="' + entry[5] + ' bytes" style="max-width: <?php echo $lC_Image->getWidth('mini') + 20; ?>px;" /><br />' + entry[3];
-          checkImageExists('../images/products/large/' + entry[2]).done(function() {
-            $('#imagePreviewContainer').html('<img src="<?php echo '../images/products/large/'; ?>' + entry[2] + '" style="max-width:100%;" />');
-          }).fail(function() {
-            $('#imagePreviewContainer').html('<img src="<?php echo '../images/no-image.png'; ?>" style="max-width:100%;" />');
-          });
+          
+          defaultImage = entry[2];
+          
           if ( entry[1] == '1' ) {    
             newdiv += '<div class="show-on-parent-hover" style="position:relative;"><span class="button-group compact children-tooltip" style="position:absolute; top:-42px; left:11px;"><a href="javascript://" class="button icon-play orange-gradient" title="<?php echo $lC_Language->get('icon_preview'); ?>" onclick="showImage(\'' + entry[4] + '\', \'' + entry[7] + '\', \'' + entry[8] + '\');"></a><a href="#" class="button icon-cross red-gradient" onclick="removeImage(\'image_' + entry[0] + '\');" title="<?php echo $lC_Language->get('icon_delete'); ?>"></a></span></div>';
           } else {
@@ -203,7 +203,13 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           }
         }      
       }
-
+      
+      checkImageExists('../images/products/large/' + defaultImage).done(function() {
+        $('#imagePreviewContainer').html('<img src="<?php echo '../images/products/large/'; ?>' + defaultImage + '" style="max-width:100%;" />');
+      }).fail(function() {
+        $('#imagePreviewContainer').html('<img src="<?php echo '../images/no-image.png'; ?>" style="max-width:100%;" />');
+      });       
+      
       $('#additionalOriginal').sortable({
         update: function(event, ui) {
           $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=reorderImages'); ?>' + '&' + $(this).sortable('serialize'),
@@ -213,7 +219,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             }
           );
         }
-      });
+      });  
 
       setTimeout('_clearProgressIndicators()', 1000);
     }
@@ -234,7 +240,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       getImagesOthers(false);
 
       $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=getImages'); ?>',
-        function (data) {
+        function (data) {   
           showImages(data);
         }
       );
