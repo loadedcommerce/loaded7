@@ -50,7 +50,7 @@ if ($lC_MessageStack->size('reviews') > 0) {
       </div>
       <div style="clear:both;">&nbsp;</div>
       <div id="newReviewActions" class="action_buttonbar">
-        <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'reviews&' . $lC_Product->getID()); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+        <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'reviews&' . $lC_Product->getID()); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
         <span class="buttonRight"><a onclick="$('#reviews_new').submit();"><button class="button brown_btn" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
       </div>
       <div style="clear:both;"></div>

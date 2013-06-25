@@ -80,7 +80,7 @@
       </div>
       <div style="clear:both;">&nbsp;</div>
       <div id="accountHistoryActions" class="action_buttonbar">
-        <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+        <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
         <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_go_shopping'); ?></button></a></span>
       </div>        
       <div style="clear:both;"></div>

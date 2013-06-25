@@ -164,7 +164,7 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
                   }
                 ?>
                 <div id="shippingActions">
-                  <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, '', 'SSL'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+                  <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, '', 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
                   <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
                 </div>
               </div>
