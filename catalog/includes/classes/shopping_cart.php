@@ -882,7 +882,7 @@ class lC_ShoppingCart {
   public function setBillingMethod($billing_array) {
     $this->_billing_method = $billing_array;
 
-    $this->_calculate();
+    $this->_calculate(false);
   }
 
   public function getBillingMethod($key = null) {
@@ -1041,7 +1041,7 @@ class lC_ShoppingCart {
         } else {
           $lC_Shipping = new lC_Shipping($this->getShippingMethod('id'));
           $this->setShippingMethod($lC_Shipping->getQuote(), false);
-        }
+        } 
       }
 
       if ( !class_exists('lC_OrderTotal') ) {

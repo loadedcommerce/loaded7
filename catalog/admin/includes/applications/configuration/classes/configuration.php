@@ -54,7 +54,7 @@ class lC_Configuration_Admin {
 
       $action = '<td class="align-right vertical-center">' .
                 '  <span class="button-group compact" title="' . $_SESSION['admin']['access']['configuration']. '">' .
-                '    <a href="javascript://" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? " disabled" : NULL) . '"' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? NULL : ' onclick="editEntry(\'' . $Qcfg->valueInt('configuration_id') . '\')"') . '><span class="hide-on-mobile">' .  ((stristr($view, 'mobile-')) ? NULL : $lC_Language->get('icon_edit')) . '</span></a>' .
+                '    <a href="javascript://" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? " disabled" : NULL) . '"' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? NULL : ' onclick="editEntry(\'' . $Qcfg->valueInt('configuration_id') . '\')"') . '><span>' .  ((stristr($view, 'mobile-')) ? NULL : $lC_Language->get('icon_edit')) . '</span></a>' .
                 '  </span>' .
                 '</td>';
 

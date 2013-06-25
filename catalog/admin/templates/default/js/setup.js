@@ -111,7 +111,7 @@
 		 * Path to the respond.js folder
 		 * @var string
 		 */
-    respondPath: './ext/jquery/',
+    respondPath: 'js/',
 
 		/*
 		 * Here are stored various informations about the current media queries according to screen size

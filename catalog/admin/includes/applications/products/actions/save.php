@@ -18,24 +18,37 @@
 
       parent::__construct();
     
-      $this->_page_contents = 'edit.php';
-
+      if (isset($_GET['old']) && $_GET['old'] == 'old') {
+        $this->_page_contents = 'edit.old.php';
+      } else {
+        $this->_page_contents = 'edit.php';
+      }
+          
+      
       if ( (lc_empty(CFG_APP_IMAGEMAGICK_CONVERT) || !@file_exists(CFG_APP_IMAGEMAGICK_CONVERT)) && !lC_Image_Admin::hasGDSupport() ) {
         $_SESSION['error'] = true;                                                                                            
         $_SESSION['errmsg'] = $lC_Language->get('ms_warning_image_processor_not_available');
       }
 
       if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
+        
+//echo "<pre>";
+//print_r($_POST);
+//echo "</pre>";
+//die('end run');          
         $error = false;
 
         $has_variants = (isset($_POST['has_variants']) && $_POST['has_variants'] == 'on') ? true : false;   
 
         $data = array('quantity' => (isset($_POST['products_quantity']) && $has_variants === false) ? $_POST['products_quantity'] : 0,
+                      'cost' => (is_numeric($_POST['products_cost']) && $has_variants === false) ? $_POST['products_cost'] : 0,
                       'price' => (is_numeric($_POST['products_price']) && $has_variants === false) ? $_POST['products_price'] : 0,
+                      'msrp' => (is_numeric($_POST['products_msrp']) && $has_variants === false) ? $_POST['products_msrp'] : 0,
                       'weight' => (isset($_POST['products_weight']) && $has_variants === false) ? $_POST['products_weight'] : 0,
                       'weight_class' => (isset($_POST['products_weight_class']) && $has_variants === false) ? $_POST['products_weight_class'] : '',
                       'status' => (isset($_POST['products_status']) && $_POST['products_status'] == 'on' && $has_variants === false) ? true : false,
                       'model' => (isset($_POST['products_model']) && $has_variants === false) ? $_POST['products_model'] : '',
+                      'sku' => (isset($_POST['products_sku']) && $has_variants === false) ? $_POST['products_sku'] : '',
                       'tax_class_id' => (isset($_POST['products_tax_class_id']) && $has_variants === false) ? $_POST['products_tax_class_id'] : 0,
                       'products_name' => $_POST['products_name'],
                       'products_description' => $_POST['products_description'],
@@ -43,29 +56,42 @@
                       'products_tags' => $_POST['products_tags'],
                       'products_url' => $_POST['products_url']);
 
-        if ( isset($_POST['attributes']) ) {
-          $data['attributes'] = $_POST['attributes'];
-        }
+        if ( isset($_POST['attributes']) ) $data['attributes'] = $_POST['attributes'];
+        if ( isset($_POST['categories']) ) $data['categories'] = $_POST['categories'];
+        if ( isset($_POST['localimages']) ) $data['localimages'] = $_POST['localimages'];
 
-        if ( isset($_POST['categories']) ) {
-          $data['categories'] = $_POST['categories'];
-        }
-      
-        if ( isset($_POST['localimages']) ) {
-          $data['localimages'] = $_POST['localimages'];
-        }
+        // simple options
+        if ( isset($_POST['simple_options_group_name']) ) $data['simple_options_group_name'] = $_POST['simple_options_group_name'];
+        if ( isset($_POST['simple_options_group_type']) ) $data['simple_options_group_type'] = $_POST['simple_options_group_type'];
+        if ( isset($_POST['simple_options_group_sort_order']) ) $data['simple_options_group_sort_order'] = $_POST['simple_options_group_sort_order'];
+        if ( isset($_POST['simple_options_group_status']) ) $data['simple_options_group_status'] = $_POST['simple_options_group_status'];
+        if ( isset($_POST['simple_options_entry']) ) $data['simple_options_entry'] = $_POST['simple_options_entry'];
+        if ( isset($_POST['simple_options_entry_price_modifier']) ) $data['simple_options_entry_price_modifier'] = $_POST['simple_options_entry_price_modifier'];
 
+        // multi SKU
         if ($has_variants === true) {
           if ( isset($_POST['variants_status']) ) {
             $data['variants_status'] = $_POST['variants_status'];
+          }
+
+          if ( isset($_POST['variants_cost']) ) {
+            $data['variants_cost'] = $_POST['variants_cost'];
           }
 
           if ( isset($_POST['variants_price']) ) {
             $data['variants_price'] = $_POST['variants_price'];
           }
 
+          if ( isset($_POST['variants_msrp']) ) {
+            $data['variants_msrp'] = $_POST['variants_msrp'];
+          }
+
           if ( isset($_POST['variants_model']) ) {
             $data['variants_model'] = $_POST['variants_model'];
+          }
+
+          if ( isset($_POST['variants_sku']) ) {
+            $data['variants_sku'] = $_POST['variants_sku'];
           }
 
           if ( isset($_POST['variants_tax_class_id']) ) {

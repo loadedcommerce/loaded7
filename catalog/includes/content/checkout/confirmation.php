@@ -60,18 +60,17 @@
 
       // load the selected payment module
       include($lC_Vqmod->modCheck('includes/classes/payment.php'));
-      
       $lC_Payment = new lC_Payment((isset($_POST['payment_method']) ? $_POST['payment_method'] : $lC_ShoppingCart->getBillingMethod('id')));
 
       if (isset($_POST['payment_method'])) {
         $lC_ShoppingCart->setBillingMethod(array('id' => $_POST['payment_method'], 'title' => $GLOBALS['lC_Payment_' . $_POST['payment_method']]->getMethodTitle()));
       }
-
+     
       if ( $lC_Payment->hasActive() && ((isset($GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]) === false) || (isset($GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]) && is_object($GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]) && ($GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->isEnabled() === false))) ) {
         $lC_MessageStack->add('checkout_payment', $lC_Language->get('error_no_payment_module_selected'), 'error');
       }
 
-      if (isset($_SESSION['PPEC_SKIP_PAYMENT']) && $_SESSION['PPEC_SKIP_PAYMENT'] == '1') { 
+      if (isset($_SESSION['SKIP_PAYMENT_PAGE']) && $_SESSION['SKIP_PAYMENT_PAGE'] == '1') { 
       } else {
         if ($lC_MessageStack->size('checkout_payment') > 0) {
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));

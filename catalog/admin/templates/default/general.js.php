@@ -15,7 +15,7 @@ global $lC_Vqmod, $lC_Template, $lC_Language;
 require_once($lC_Vqmod->modCheck('includes/applications/updates/classes/updates.php'));    
 ?>
 <script>
-$(document).ready(function() {
+$(document).ready(function() { 
   // set shortcuts current marker
   var loc = '<?php echo end(explode("/", $_SERVER['PHP_SELF'])); ?>';
   var noParams = '<?php echo (empty($_GET) ? true : false); ?>';
@@ -49,7 +49,7 @@ $(document).ready(function() {
     // remove the shortcuts active tab since most pages are not in the shortcuts menu.
     $("#shortcuts li").parent().find('li').removeClass("current");
   }
-
+         
   // set the current menu marker
   var cfg = false;
   $('#menu-content .big-menu a').each(function() {
@@ -99,10 +99,10 @@ $(document).ready(function() {
     $('#logoImg').attr('style', 'margin-top:2px !important;');
     $('#mainMessageContainer').css('margin', '54px 4px 0px 74px');    
   } else if ($.template.mediaQuery.name === 'tablet-landscape') {  
-    $('#logoImg').attr('style', 'margin-top:-1px !important;');
+    $('#logoImg').attr('style', 'margin-top:2px !important;');
     $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   } else { // desktop
-    $('#logoImg').attr('style', 'margin-top:-1px !important;');
+    $('#logoImg').attr('style', 'margin-top:2px !important;');
     $('#mainMessageContainer').css('margin', '50px 273px 0 84px');    
   }
   
@@ -222,35 +222,27 @@ $(document).ready(function() {
           var liAddClass = $('#li-add').attr("class");
           if (liAddClass == 'current') {
             if (code == 111) { // o for new (O)rder
-              //alert('new order');
               //window.location.href = '';
             };
             if (code == 99) { // c for new (C)ustomer
-              //alert('new customer');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>';
             };
             if (code == 103) { // g for new cate(G)ory
-              //alert('new category');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>';
             };
             if (code == 112) { // p for new (P)roduct
-              //alert('new product');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>';
             };
             if (code == 108) { // l for new specia(L)
-              //alert('new special');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>';
             };
             if (code == 116) { // t for new manufac(T)urer
-              //alert('new manufacturer');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>';
             };
             if (code == 98) { // b for new (B)anner
-              //alert('new banner');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>';
             };
             if (code == 110) { // n for new (N)ewsletter
-              //alert('new newsletter');
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>';
             };
           }
@@ -260,23 +252,27 @@ $(document).ready(function() {
   });
   // end shortcut key additions
   
-  // profile slate addition
   // get the menu width
   var menuWidth = $("#menu").width();
   // apply twice the menu width to the inner div
   $("#profileInner").css({'width':menuWidth * 2});
   // on screen resize get the new menu width and apply it for click functions
   $(window).resize(function() {
+    // get the visible menu width
     var menuWidthResized = $("#menu").width();
+    // set profile inner width twice that of the visible menu
     $("#profileInner").css({'width':menuWidthResized * 2});
+    // reset the left margin to 0px on window resizing
     $('#profileInner').css({"margin-left":"0px"});
     // if window width drops below 1280px change category edit tabs from side to top
     if ($(window).width() < 1380) {
       $("#category_tabs").removeClass("side-tabs");
       $("#category_tabs").addClass("standard-tabs");
+      $("#product_tabs").removeClass("side-tabs").addClass("standard-tabs");
     } if ($(window).width() >= 1380) {
       $("#category_tabs").removeClass("standard-tabs");
       $("#category_tabs").addClass("side-tabs");
+      $("#product_tabs").removeClass("standard-tabs").addClass("side-tabs");
     }
   });
   
@@ -365,6 +361,47 @@ $(document).ready(function() {
      
 });
 
+// check width of window for product edit tabs placement
+if ($(window).width() < 1380) {
+  $("#product_tabs").removeClass("side-tabs");
+  $("#product_tabs").addClass("standard-tabs");
+}
+  
+/* show the upsell spot modal */
+function showUpsellSpot(e) {  
+  
+  var title = $(e).closest('.field-block').find('.label').text();
+  var desc = $(e).closest('.field-block').find('.label').attr('upsell');
+  if (title == '') { 
+    title = $(e).closest('.button').text().replace('Pro', '').replace('B2B', '');
+    desc = $(e).closest('.button').attr('upsell');
+  }
+  
+  var text = '<style>.modal { padding:0; }</style>'+
+             '<div id="spotMainContainer" class="with-mid-padding no-margin anthracite" style="width:280px; min-height:200px; background-color:#fff; border:3px solid white; border-radius:4px 4px 4px 4px;">'+
+             '  <div id="spotMainOutline" class="relative with-mid-padding" min-height:180px; style="border:2px solid red; border-radius:4px 4px 4px 4px;">'+
+             '    <a onclick="closeUpsellSpot($(this).getModalWindow());" href="javascript://"><span onclick="closeUpsellSpot($(this).getModalWindow());" class="close">X</span></a>'+
+             '    <div id="spotMainHeader" class="align-left"><small class="tag red-bg"><?php echo $lC_Language->get('text_pro'); ?></small><span class="thin mid-margin-left">Feature Information</span>'+ 
+             '    </div>'+
+             '    <div id="spotMainTitle" class="align-left"><h3 class="align-left margin-top mid-margin-bottom">' + title + '</h3>'+
+             '    </div>'+
+             '    <div id="spotMainDesc" class="align-left">'+ desc +
+             '    </div>'+
+             '    <div id="spotMainButton" class="with-padding"><a href="javascript://" class="button huge red-gradient glossy ">Upgrade Now</a>'+
+             '    </div>'+
+             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="#" style="text-decoration:underline;">See Full Pro & B2B Feature List</a>'+
+             '    </div>'+
+             '    </div>';
+             '</div>';
+  $.modal({
+     contentBg: false,
+     contentAlign: 'center',
+     content: text,
+     resizable: false,
+     actions: {},
+     buttons: {}
+   });
+}
 // added to prevent enter key on megasearch
 $('.noEnterSubmit').keypress(function(e){
   if (e.which == 13) return false;
@@ -384,6 +421,11 @@ $("#mainMessageContainer").click(function(){
   );  
 });
 
+/* close the upsell spot modal */
+function closeUpsellSpot(e) {
+  $(e).closeModal();  
+}
+
 /* toggle checkboxes on table listings */
 function toggleCheck() {
   checked = $("#check-all").is(':checked');
@@ -396,6 +438,7 @@ function toggleCheck() {
   });
 } 
 
+/* toggle the main big menus */
 function toggleChildMenu(section) {
   var isMainOpen = $('#mainMenuContainer').is(":visible");
   var settingsDisabled = '<?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? 0 : 1); ?>';
@@ -467,7 +510,6 @@ function mask() {
   } else { // desktop
     $('.loadmask-msg').css({'top':'300px'});
   }  
-  
 }
  
 function unmask() {

@@ -146,5 +146,22 @@
 
       return $this->currencies[$code]['id'];
     }
+    
+    function getSymbolLeft() {
+      foreach ($this->currencies as $key => $value) {
+        if ($key == DEFAULT_CURRENCY) {
+          return $value['symbol_left'];
+        }
+      }
+    }   
+    
+    function getSymbolRight() {
+      foreach ($this->currencies as $key => $value) {
+        if ($key == DEFAULT_CURRENCY) {
+          return $value['symbol_right'];
+        }
+      }
+    }     
+    
   }
 ?>

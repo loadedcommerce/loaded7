@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>addon_shipping_usps_title</key>
+      <value><![CDATA[U.S. Postal Service]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>addon_shipping_usps_description</key>
+      <value><![CDATA[Rate quotes retrieved automatically via the United Postal Service API.  You will need to have <a href="http://www.uspsprioritymail.com/et_regcert.html" target="_blank"><u>registered an account</u></a> with USPS to use this module. USPS expects you to use pounds as weight measure for your products.]]></value>
+      <group>checkout</group>
+    </definition>  
+    <definition>
+      <key>shipping_usps_title</key>
+      <value><![CDATA[U.S. Postal Service]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_description</key>
+      <value><![CDATA[United States Postal Service]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_method</key>
+      <value><![CDATA[Best Way]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>shipping_usps_error</key>
+      <value><![CDATA[An error occured with the USPS shipping calculations.<br />If you prefer to use USPS as your shipping method, please contact the store owner.]]></value>
+      <group>checkout</group>
+    </definition>    
+  </definitions>
+</language>

@@ -11,7 +11,6 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-ini_set('display_errors', 1);
 global $lC_Template, $lC_Language, $checkArr, $backupArr;
 ?>
 <script>
