@@ -68,7 +68,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
   <fieldset class="fieldset large-margin-top">
     <legend class="legend"><?php echo $lC_Language->get('text_options_pricing'); ?></legend>  
     <dl id="simple-options-pricing-tab" class="accordion">
-      <?php //if ($pInfo) echo lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')); ?>
+      <?php echo ( ($pInfo) ? lC_Products_Admin::getSimpleOptionsPricingContent($pInfo->get('simple_options')) : lC_Products_Admin::getSimpleOptionsPricingContent() ); ?>
     </dl>     
   </fieldset>
 </div> 
