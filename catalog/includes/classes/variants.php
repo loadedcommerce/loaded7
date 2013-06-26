@@ -42,6 +42,24 @@
         return call_user_func(array('lC_Variants_' . $module, 'parse'), $data);
       }
     }
+    
+    static public function parseSimpleOptions($module, $data) {
+      global $lC_Vqmod;
+      
+      if ( !class_exists('lC_Variants_' . $module) ) {
+        if (file_exists(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php')) {
+          include($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'includes/modules/variants/' . basename($module) . '.php'));
+        } else if ( file_exists(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php') ) {
+          include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/modules/variants/' . basename($module) . '.php'));
+        }
+      }
+
+      $data['simple_option'] = true;
+
+      if ( class_exists('lC_Variants_' . $module) ) {   
+        return call_user_func(array('lC_Variants_' . $module, 'parse'), $data);
+      }
+    }    
 
     static public function getGroupTitle($module, $data) {
       global $lC_Vqmod;
