@@ -1197,8 +1197,19 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
         params['qqfile'] = name;
         var queryString = qq.obj2url(params, this._options.action);
         
+        // added by maestro ('defaultImagesContainer' is only on products pages in admin)
+        function getUrlVars() {
+          var vars = {};
+          var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+          });
+          return vars;
+        }
+        
         // added by datazen
-        var isDefault = (document.getElementById('defaultImagesContainer').style.display != "none") ? '1' : '0';        
+        if (getUrlVars()["products"]) { // check if we are on products pages
+          var isDefault = (document.getElementById('defaultImagesContainer').style.display != "none") ? '1' : '0';        
+        }
         
         xhr.open("POST", queryString.replace('DEFAULT', isDefault), true);
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
