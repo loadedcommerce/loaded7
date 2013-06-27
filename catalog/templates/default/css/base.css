@@ -412,7 +412,7 @@ div.selector {
   padding-left: 10px;
   height:16px;
   position: relative;
-  width:112px;
+  width:152px !important;
   background-color:#fff;
 }
 div.selector select {
@@ -421,7 +421,7 @@ div.selector select {
   left: 0;
   position: absolute;
   top: 0;
-  width: 125px;
+  width: 165px !important;
   height:22px;
 }
 div.selector select option {
@@ -437,7 +437,7 @@ div.selector span {
   position: absolute;
   right: 0;
   top: 0;
-  width: 119px;
+  width: 159px !important;
   color:#818181;
 }
 
@@ -919,3 +919,11 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 .clear-left { clear: left; }
 .clear-right { clear: right; }
 .clear-both { clear: both; } 
+
+.variant_sel {
+    padding: 5px;
+    width: 100%;
+}
+.variant_sel > label {
+    width: 14%;
+}

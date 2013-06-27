@@ -1,19 +1,38 @@
 <?php
 /**  
-*  $Id: info.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+  $Id: info.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     Loaded Commerce Team
+  @copyright  (c) 2013 Loaded Commerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 ?>
 <!--content/products/info.php start-->
 <script>
+$(document).ready(function() {
+  refreshPrice();
+});
+
+function refreshPrice() {
+  var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
+  var basePrice = '<?php echo $lC_Product->getBasePrice(); ?>';
+
+  var priceModTotal = 0;
+  $('#simpleOptionsBlock select > option:selected').each(function() {
+    priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
+  }); 
+
+  var adjPrice = (parseFloat(basePrice) + parseFloat(priceModTotal));
+  var adjPriceFormatted = currencySymbolLeft + adjPrice.toFixed(<?php echo DECIMAL_PLACES; ?>);
+  
+  $('#productInfoPrice').html('<big>' + adjPriceFormatted + '</big>');
+}
+
 function refreshVariants() {
   var price = null;
   var availability = null;
@@ -148,28 +167,55 @@ function refreshVariants() {
       }
       ?>      
     </div>
-    <div style="clear:both;">    
+    
+    
+    <div style="clear:both;">   
+    
       <?php
-        if ( $lC_Product->hasVariants() ) {
-      ?>
-      <div class="variant_info" id="variantsBlock">
-        <?php
-          foreach ( $lC_Product->getVariants() as $group_id => $value ) {
-            echo lC_Variants::parse($value['module'], $value);
-          }
-          echo lC_Variants::defineJavascript($lC_Product->getVariants(false));
+      if ( $lC_Product->hasSimpleOptions() ) {
         ?>
-      </div>
+        <div class="variant_info" id="simpleOptionsBlock">
+          <?php
+            $module = '';
+            foreach ( $lC_Product->getSimpleOptions() as $group_id => $value ) {
+              if (is_array($value) && !empty($value)) {
+                foreach($value as $key => $data) {
+                  if (isset($data['module']) && $data['module'] != '') {
+                    $module = $data['module'];
+                  }
+                }
+              }
+              echo lC_Variants::parseSimpleOptions($module, $value);
+
+            }
+            //echo lC_Variants::defineJavascript($lC_Product->getVariants(false));
+          ?>
+        </div>
+        <?php
+      }
+      ?>    
+     
       <?php
+      if ( $lC_Product->hasVariants() ) {
+        ?>
+        <div class="variant_info" id="variantsBlock">
+          <?php
+            foreach ( $lC_Product->getVariants() as $group_id => $value ) {
+              echo lC_Variants::parse($value['module'], $value);
+            }
+            echo lC_Variants::defineJavascript($lC_Product->getVariants(false));
+          ?>
+        </div>
+        <?php
         }
       ?>
+      
       <div class="qty_info">
         <div class="quantity">
           <label><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
           <?php echo lc_draw_input_field('quantity'); ?>
         </div>
       </div>
-
     </div>
     <div class="add_to_buttons">
       <a onclick="$('#cart_quantity').submit();" id="add_to_cart" class="button"><button class="add_cart"><?php echo $lC_Language->get('button_add_to_cart'); ?></button></a>
