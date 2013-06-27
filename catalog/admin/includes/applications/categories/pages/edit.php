@@ -38,11 +38,10 @@
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
 <style>
-.qq-upload-button { margin: -26px -142px 0 -50px; background: transparent; border-bottom: none; color: #666666; }
-.qq-upload-drop-area { min-height: 150px; top: -200px; }
-.qq-upload-drop-area span { margin-top:-16px; }
-    LABEL { font-weight:bold; }
-    TD { padding: 5px 0 0 5px; }
+  .qq-upload-drop-area { min-height: 100px; top: -200px; }
+  .qq-upload-drop-area span { margin-top:-16px; }
+  LABEL { font-weight:bold; }
+  TD { padding: 5px 0 0 5px; }
 </style>
 <!-- Main content -->
 <section role="main" id="main">
@@ -85,10 +84,6 @@
                     </noscript>
                   </div>
                 </center>
-                <script>
-                  $(document).ready(function() {
-                  });
-                </script>
               </div>
               <div class="new-row-mobile eight-columns twelve-columns-mobile">
                 <div id="languageTabs" class="standard-tabs">
