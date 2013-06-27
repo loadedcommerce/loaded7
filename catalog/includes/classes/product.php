@@ -12,9 +12,10 @@
   @license    http://loadedcommerce.com/license.html
 */
 class lC_Product {
-  var $_data = array();
+  protected $_data = array();
 
-  function __construct($id) {
+  public function __construct($id) {
+ini_set('display_errors', 1);    
     global $lC_Database, $lC_Services, $lC_Language, $lC_Image;
 
     if ( !empty($id) ) {
@@ -144,6 +145,42 @@ class lC_Product {
             }
           }
         }
+        
+        // simple options
+        $QsimpleOptions = $lC_Database->query("select * from :table_products_simple_options where products_id = :products_id and status = '1' order by sort_order");
+        $QsimpleOptions->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+        $QsimpleOptions->bindInt(':products_id', $this->_data['master_id']);        
+        $QsimpleOptions->execute();
+               
+        while ( $QsimpleOptions->next() ) {
+          $QsimpleOptionsValues = $lC_Database->query('select values_id, price_modifier from :table_products_simple_options_values where options_id = :options_id and customers_group_id = :customers_group_id');
+          $QsimpleOptionsValues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+          $QsimpleOptionsValues->bindInt(':options_id', $QsimpleOptions->valueInt('options_id'));
+          $QsimpleOptionsValues->bindInt(':customers_group_id', '1');
+          $QsimpleOptionsValues->execute();   
+           
+          while ( $QsimpleOptionsValues->next() ) {
+            $Qvariants = $lC_Database->query('select pvg.title as group_title, pvg.module, pvv.title as value_title from :table_products_variants_groups pvg, :table_products_variants_values pvv where pvg.id = :options_id and pvv.id = :values_id and pvv.languages_id = :languages_id and pvv.products_variants_groups_id = pvg.id and pvg.languages_id = :languages_id limit 1');
+            $Qvariants->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
+            $Qvariants->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+            $Qvariants->bindInt(':options_id', $QsimpleOptions->valueInt('options_id'));
+            $Qvariants->bindInt(':values_id', $QsimpleOptionsValues->valueInt('values_id'));
+            $Qvariants->bindInt(':languages_id', $lC_Language->getID());
+            $Qvariants->bindInt(':languages_id', $lC_Language->getID());
+            $Qvariants->execute();
+            
+            $this->_data['simple_options'][$this->_data['master_id']]['values'][$QsimpleOptions->valueInt('options_id')][$QsimpleOptionsValues->valueInt('values_id')] = array('value_id' => $QsimpleOptionsValues->valueInt('values_id'),
+                                                                                                                                                                               'group_id' => $QsimpleOptions->valueInt('options_id'),
+                                                                                                                                                                               'group_title' => $Qvariants->value('group_title'),
+                                                                                                                                                                               'value_title' => $Qvariants->value('value_title'),
+                                                                                                                                                                               'sort_order' => $QsimpleOptions->valueInt('sort_order'),
+                                                                                                                                                                               'price_modifier' => $QsimpleOptionsValues->valueDecimal('price_modifier'),
+                                                                                                                                                                               'module' => $Qvariants->value('module'));
+            $Qvariants->freeResult();                                                                                                                                                                               
+          } 
+          $QsimpleOptionsValues->freeResult();     
+        }
+        $QsimpleOptions->freeResult();
 
         $this->_data['attributes'] = array();
 
@@ -171,11 +208,11 @@ class lC_Product {
     }
   }
 
-  function isValid() {
+  public function isValid() {
     return !empty($this->_data);
   }
 
-  function getData($key = null) {
+  public function getData($key = null) {
     if ( isset($this->_data[$key]) ) {
       return $this->_data[$key];
     }
@@ -183,50 +220,51 @@ class lC_Product {
     return $this->_data;
   }
 
-  function getID() {
+  public function getID() {
     return $this->_data['id'];
   }
 
-  function getMasterID() {
+  public function getMasterID() {
     return $this->_data['master_id'];
   }
 
-  function getTitle() {
+  public function getTitle() {
     return $this->_data['name'];
   }
 
-  function getDescription() {
+  public function getDescription() {
     return $this->_data['description'];
   }
 
-  function hasModel() {
+  public function hasModel() {
     return (isset($this->_data['model']) && !empty($this->_data['model']));
   }
 
-  function getModel() {
+  public function getModel() {
     return $this->_data['model'];
   }
 
-  function hasKeyword() {
+  public function hasKeyword() {
     return (isset($this->_data['keyword']) && !empty($this->_data['keyword']));
   }
 
-  function getKeyword() {
+  public function getKeyword() {
     return $this->_data['keyword'];
   }
 
-  function hasTags() {
+  public function hasTags() {
     return (isset($this->_data['tags']) && !empty($this->_data['tags']));
   }
 
-  function getTags() {
+  public function getTags() {
     return $this->_data['tags'];
   }
 
-  function getPrice() {
+  public function getBasePrice() {
+    return $this->_data['price'];
   }
   
-  function getPriceBreak($qty = 1) {
+  public function getPriceBreak($qty = 1) {
     $base_price = $this->_data['price'];  
        
     if (isset($this->_data['price_breaks'])) {
@@ -241,7 +279,7 @@ class lC_Product {
     return $base_price;        
   }   
   
-  function getTaxClassID($qty = 1) {
+  public function getTaxClassID($qty = 1) {
     $tax_class_id = $this->_data['tax_class_id'];     
     if (isset($this->_data['price_breaks'])) {
       reset($this->_data['price_breaks']);
@@ -255,7 +293,7 @@ class lC_Product {
     return $tax_class_id;        
   }         
 
-  function getPriceFormated($with_special = false) {
+  public function getPriceFormated($with_special = false) {
     global $lC_Services, $lC_Specials, $lC_Currencies;
 
     if (($with_special === true) && $lC_Services->isStarted('specials') && ($new_price = $lC_Specials->getPrice($this->_data['id'])) && ($lC_Specials->getPrice($this->_data['id']) < $this->getPriceBreak())  ) {
@@ -272,7 +310,7 @@ class lC_Product {
     return $price;
   }
 
-  function getVariantMinPrice() {
+  public function getVariantMinPrice() {
     $price = null;
 
     foreach ( $this->_data['variants'] as $variant ) {
@@ -284,7 +322,7 @@ class lC_Product {
     return ( $price !== null ) ? $price : 0;
   }
 
-  function getVariantMaxPrice() {
+  public function getVariantMaxPrice() {
     $price = 0;
 
     foreach ( $this->_data['variants'] as $variant ) {
@@ -296,7 +334,7 @@ class lC_Product {
     return $price;
   }
 
-  function getQuantity() {
+  public function getQuantity() {
     $quantity = $this->_data['quantity'];
 
     if ( $this->hasVariants() ) {
@@ -309,7 +347,7 @@ class lC_Product {
     return $quantity;
   }
 
-  function getWeight() {
+  public function getWeight() {
     global $lC_Weight;
 
     $weight = 0;
@@ -333,11 +371,11 @@ class lC_Product {
     return $weight;
   }
 
-  function hasManufacturer() {
+  public function hasManufacturer() {
     return ( $this->_data['manufacturers_id'] > 0 );
   }
 
-  function getManufacturer() {
+  public function getManufacturer() {
     global $lC_Vqmod;
     
     if ( !class_exists('lC_Manufacturer') ) {
@@ -349,19 +387,19 @@ class lC_Product {
     return $lC_Manufacturer->getTitle();
   }
 
-  function getManufacturerID() {
+  public function getManufacturerID() {
     return $this->_data['manufacturers_id'];
   }
 
-  function getCategoryID() {
+  public function getCategoryID() {
     return $this->_data['category_id'];
   }
 
-  function getImages() {
+  public function getImages() {
     return $this->_data['images'];
   }
 
-  function hasImage() {
+  public function hasImage() {
     foreach ($this->_data['images'] as $image) {
       if ($image['default_flag'] == '1') {
         return true;
@@ -369,7 +407,7 @@ class lC_Product {
     }
   }
 
-  function getImage() {
+  public function getImage() {
     if (isset($this->_data['images'])) {
       foreach ($this->_data['images'] as $image) {
         if ($image['default_flag'] == '1') {
@@ -379,27 +417,35 @@ class lC_Product {
     }
   }
 
-  function hasURL() {
+  public function hasURL() {
     return (isset($this->_data['url']) && !empty($this->_data['url']));
   }
 
-  function getURL() {
+  public function getURL() {
     return $this->_data['url'];
   }
 
-  function getDateAvailable() {
+  public function getDateAvailable() {
     return false; //$this->_data['date_available'];
   }
 
-  function getDateAdded() {
+  public function getDateAdded() {
     return $this->_data['date_added'];
   }
+  
+  public function hasSimpleOptions() {
+    return (isset($this->_data['simple_options']) && !empty($this->_data['simple_options']));
+  }  
 
-  function hasVariants() {
+  public function getSimpleOptions() {
+    return $this->_data['simple_options'][$this->_data['master_id']]['values'];
+  }  
+  
+  public function hasVariants() {
     return (isset($this->_data['variants']) && !empty($this->_data['variants']));
   }
-
-  function getVariants($filter_duplicates = true) {
+  
+  public function getVariants($filter_duplicates = true) {
     if ( $filter_duplicates === true ) {
       $values_array = array();
 
@@ -452,11 +498,11 @@ class lC_Product {
     return $this->_data['variants'];
   }
 
-  function variantExists($variant) {
+  public function variantExists($variant) {
     return is_numeric($this->getProductVariantID($variant));
   }
 
-  function getProductVariantID($variant) {
+  public function getProductVariantID($variant) {
     $_product_id = false;
 
     $_size = sizeof($variant);
@@ -486,11 +532,11 @@ class lC_Product {
     return $_product_id;
   }
 
-  function hasAttribute($code) {
+  public function hasAttribute($code) {
     return isset($this->_data['attributes'][$code]);
   }
 
-  function getAttribute($code) {
+  public function getAttribute($code) {
     global $lC_Vqmod;
     
     if ( !class_exists('lC_ProductAttributes_' . $code) ) {
@@ -504,7 +550,7 @@ class lC_Product {
     }
   }
 
-  function checkEntry($id) {
+  public function checkEntry($id) {
     global $lC_Database;
 
     $Qproduct = $lC_Database->query('select p.products_id from :table_products p');
@@ -525,7 +571,7 @@ class lC_Product {
     return ( $Qproduct->numberOfRows() === 1 );
   }
 
-  function incrementCounter() {
+  public function incrementCounter() {
     global $lC_Database, $lC_Language;
 
     $Qupdate = $lC_Database->query('update :table_products_description set products_viewed = products_viewed+1 where products_id = :products_id and language_id = :language_id');
@@ -535,7 +581,7 @@ class lC_Product {
     $Qupdate->execute();
   }
 
-  function numberOfImages() {
+  public function numberOfImages() {
     return sizeof($this->_data['images']);
   }
 
