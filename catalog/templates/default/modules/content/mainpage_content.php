@@ -13,7 +13,7 @@
 */
 ?>
 <!--modules/content/mainpage_banner.php start-->
-<div class="category_banner">
+<div class="mainpage_content">
   <?php echo $lC_Box->getContent(); ?>
 </div>
 <!--modules/content/mainpage_banner.php end-->
