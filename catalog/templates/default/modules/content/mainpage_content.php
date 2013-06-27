@@ -12,8 +12,8 @@
 *  @license    http://loadedcommerce.com/license.html
 */
 ?>
-<!--modules/content/mainpage_banner.php start-->
+<!--modules/content/mainpage_content.php start-->
 <div class="mainpage_content">
   <?php echo $lC_Box->getContent(); ?>
 </div>
-<!--modules/content/mainpage_banner.php end-->
+<!--modules/content/mainpage_content.php end-->
