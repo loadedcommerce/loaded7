@@ -25,14 +25,6 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       // CONTENT TAB
       <?php if ($pInfo) { ?>
       createUploader2();
-      var qqbuttonhtmlold = $('.qq-upload-button').html();
-      var qqbuttonhtml = qqbuttonhtmlold.replace(/Upload a file/i, 'Upload');
-      $('.qq-upload-button').html(qqbuttonhtml);
-      $('.qq-upload-button').first().attr('id', 'qq-upload-button2');
-      $('#qq-upload-button2').removeAttr('class');
-      $('#qq-upload-button2').removeAttr('style');
-      $('#qq-upload-button2 input').css('right', '125px').css('font-size', '8px');
-      $('.qq-upload-list').hide();
       <?php } ?>
       //$('#fileUploaderImageContainer .qq-upload-button').hide();
       //$('#fileUploaderImageContainer .qq-upload-list').hide();
