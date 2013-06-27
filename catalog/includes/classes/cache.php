@@ -124,7 +124,7 @@
     public static function clear($key) {
       
       $key_length = strlen($key);
-
+      
       $d = dir(DIR_FS_WORK . 'cache/');
 
       while ( ($entry = $d->read()) !== false ) {

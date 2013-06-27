@@ -11,7 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-$secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->iframe_action_url, 0, strpos($lC_Payment->iframe_action_url, '?')) : ($lC_Payment->hasRelayURL()) ?  $lC_Payment->iframe_relay_url : NULL ;
+$secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
@@ -152,9 +152,9 @@ only screen and (min-device-pixel-ratio : 1.5) {
                 <div id="loadingContainer"><p id="iloader"></p></div>
                 <?php  
                 if ($lC_Payment->hasIframeURL()) {
-                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->iframe_action_url . '" scrolling="no" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
+                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->getIframeURL() . '" scrolling="no" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
                 } else if ($lC_Payment->hasRelayURL()) { 
-                  echo '<form name="pmtForm" id="pmtForm" action="' . $lC_Payment->iframe_relay_url . '" target="pmtFrame" method="post">' . lC_Checkout_Payment_template::rePost() . '</form>' . "\n";        
+                  echo '<form name="pmtForm" id="pmtForm" action="' . $lC_Payment->getRelayURL() . '" target="pmtFrame" method="post">' . lC_Checkout_Payment_template::rePost() . '</form>' . "\n";        
                   echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="' . lC_Checkout_Payment_template::getIframeWidth() . '" height="550px" scrolling="no" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 
                 } else {
                   echo '[[FORM INSERT]]'; 

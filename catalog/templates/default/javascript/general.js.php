@@ -42,33 +42,24 @@ $(document).ready(function() {
   $('.first-and-second-carousel').jcarousel();
   
   //mini cart slide toggle
-  $(".minicart_link").toggle(function() {
-     $('.cart_drop').slideDown(300);  
-     }, function(){
-     $('.cart_drop').slideUp(300);     
-  });  
+  $(".minicart_link").toggle(
+    function() {
+      $('.cart_drop').slideDown(300);  
+    }, function(){
+      $('.cart_drop').slideUp(300);     
+    }
+  );  
 
-  //sub menu 
-  $("ul.departments > li.menu_cont > a").toggle( 
+  //sub menu
+  $("ul.departments > li.menu_cont > a").toggle(
     function(){
-      if($(this).hasClass('active')) {
-         $(this).removeClass('active');          
-         $(this).siblings('.side_sub_menu').slideUp(300);      
-      } else {
-        $(this).addClass('active');
-        $(this).siblings('.side_sub_menu').slideDown(300);
-      }
-    },
-    function(){
-      if($(this).hasClass('active')) {
-         $(this).removeClass('active');          
-         $(this).siblings('.side_sub_menu').slideUp(300);      
-      } else {
-        $(this).addClass('active');
-        $(this).siblings('.side_sub_menu').slideDown(300);
-      }      
-  }
-  
+      $(this).addClass('active');
+      $(this).siblings('.side_sub_menu').slideDown(300);
+      window.location.href = $(this).attr('href');
+    }, function(){
+      $(this).removeClass('active');
+      $(this).siblings('.side_sub_menu').slideUp(300);
+    }
   );
   
   //style form select elements
@@ -77,19 +68,16 @@ $(document).ready(function() {
   //toggle box
   $(".toggle_box > li:first-child .toggle_title, .toggle_box > li:first-child .toggle_content").addClass('active');
   $(".toggle_box > li > a.toggle_title").toggle(function(){
-                            
     $(this).addClass('active');
-    alert('three');
     $(this).siblings('.toggle_content').slideDown(300);
     }, function(){
     $(this).removeClass('active');
-    alert('four');
     $(this).siblings('.toggle_content').slideUp(300);  
   });  
   
-  //twitter feed   //replace "rohithpaul" with your Twitter ID
+  //twitter feed
   $('.twitter_feed').jTweetsAnywhere({
-    username: 'rohithpaul',
+    username: 'loadedcommerce',
     count: 1
   });
   
@@ -122,7 +110,36 @@ $(document).ready(function() {
   });
   
   // run this last - determine media type
-  setTimeout('_setMediaType()', 1000);  
+  setTimeout('_setMediaType()', 1000);
+  
+  var loc = '<?php echo end(explode("/", $_SERVER['REQUEST_URI'])); ?>';
+  if (loc == '' || loc == 'index.php') {
+    $('#navHome').addClass('current');  
+  } else {
+    $('#primaryNav li a').each(function() {
+      var urlStr = this.href.split('/').pop();
+      var urlPath = urlStr.split('?').pop();
+      var locPath = loc.split('?').pop();
+      if (loc.indexOf("index.php") != -1) {
+        if ((locPath.search(urlPath) != -1 && this.href.search('<?php echo HTTP_SERVER; ?>') != -1)) {
+          $(this).addClass('current');
+        }
+      } else if (loc.indexOf("products.php") != -1) {
+        if (urlStr == loc) {
+          $(this).addClass('current');
+        }
+      } else if (loc.indexOf("info.php") != -1) {
+        if (urlStr == loc || (loc.search(urlPath) != -1 && this.href.search('<?php echo HTTP_SERVER; ?>') != -1)) {
+          $(this).addClass('current');
+        }
+      } else {
+        var str = loc.split("?");
+        if (urlStr.match(str[0])) {
+          $(this).addClass('current'); 
+        }
+      }
+    });
+  }  
 
 });
 

@@ -21,7 +21,7 @@
     </div>
     <div style="clear:both;">&nbsp;</div>
     <div id="infoConditionsActions" class="action_buttonbar">
-      <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+      <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
       <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
     </div>
     <div style="clear:both;"></div>

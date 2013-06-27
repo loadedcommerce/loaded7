@@ -43,14 +43,25 @@ class lC_Categories_Admin {
 
     while ( $Qcategories->next() ) {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcategories->value('categories_id') . '" id="' . $Qcategories->value('categories_id') . '"></td>';
-      $category = '<td><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-folder icon-orange"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
-      $sort = $Qcategories->valueInt('sort_order');
+      $category = '<td><span class="icon-list icon-size2" title="' . $lC_Language->get('text_sort') . '" style="cursor:move;"></span><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-' . lC_Categories_Admin::getCategoryIcon($Qcategories->value('categories_mode')) . ' margin-left"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
+      $status = '<td><span class="align-center" id="status_' . $Qcategories->value('categories_id') . '" onclick="updateStatus(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_status') == 1) ? 0 : 1) . '\');">' . (($Qcategories->valueInt('categories_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_category') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_category') . '"></span>') . '</span></td>';
+      $visibility = '<td>' .
+                    (($Qcategories->valueInt('parent_id') == 0) ? 
+                    '  <span class="align-center margin-right" id="nav_' . $Qcategories->value('categories_id') . '" onclick="updateVisibilityNav(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_visibility_nav') == 1) ? 0 : 1) . '\');">' . 
+                         (($Qcategories->valueInt('categories_visibility_nav') == 1) ? '<span class="icon-directions icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_hide_in_nav') . '"></span>' : '<span class="icon-directions icon-size2 icon-silver cursor-pointer with-tooltip" title="' . $lC_Language->get('text_show_in_nav') . '"></span>') . 
+                    '  </span>' : '') . 
+                    '  <span class="align-center" id="box_' . $Qcategories->value('categories_id') . '" onclick="updateVisibilityBox(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_visibility_box') == 1) ? 0 : 1) . '\');">' . 
+                         (($Qcategories->valueInt('categories_visibility_box') == 1) ? '<span class="icon-browser icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_hide_in_box') . '"></span>' : '<span class="icon-browser icon-size2 icon-silver cursor-pointer with-tooltip" title="' . $lC_Language->get('text_show_in_box') . '"></span>') . 
+                    '  </span>' .  
+                    '</td>';
+      $mode = '<td>' . $lC_Language->get('text_mode_' . $Qcategories->value('categories_mode')) . '</td>';
+      $sort = '<td>' . $Qcategories->valueInt('sort_order') . '<input type="hidden" name="sort_order_' . $Qcategories->value('categories_id') . '" value="' . $Qcategories->valueInt('sort_order') . '" class="sort" /></td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">
-                   <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 3) ? '#' : 'javascript://" onclick="editCategory(\'' . $Qcategories->value('categories_id') . '\')') . '" class="button icon-pencil ' . ((int)($_SESSION['admin']['access']['languages'] < 3) ? 'disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id') . '&cid=' . (($_GET['categories']) ? $_GET['categories'] : 0) . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
                    <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="moveCategory(\'' . $Qcategories->value('categories_id') . '\', \'' . urlencode($Qcategories->valueProtected('categories_name')) . '\')"') . '" class="button icon-cloud-upload with-tooltip ' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_move') . '"></a>
                    <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="deleteCategory(\'' . $Qcategories->value('categories_id') . '\', \'' . urlencode($Qcategories->valueProtected('categories_name')) . '\')"') . '" class="button icon-trash with-tooltip ' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
-      $result['aaData'][] = array("$check", "$category", "$sort", "$action");
+      $result['aaData'][] = array("$check", "$category", "$status", "$visibility", "$mode", "$sort", "$action");
       $result['entries'][] = $Qcategories->toArray();
     }
 
@@ -67,16 +78,19 @@ class lC_Categories_Admin {
   */
   public static function formData($id = null, $parent = null) {
     global $lC_Language, $_module;
-
+    
     $lC_Language->loadIniFile('categories.php');
     $lC_CategoryTree = new lC_CategoryTree_Admin();
-
+    
     $result = array();
     $categories_array = array('0' => $lC_Language->get('top_category'));
     foreach ( $lC_CategoryTree->getArray() as $value ) {
       $cid = explode('_', $value['id']);
+      $count = count($cid);
       $cid = end($cid);
-      $categories_array[$cid] = $value['title'];
+      if ($cid != $id && !in_array($cid, lC_Categories_Admin::getChildren($id))) {
+        $categories_array[$cid] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $count-1) . ' ' . $value['title'];
+      }
     }
     $result['categoriesArray'] = $categories_array;
 
@@ -130,7 +144,7 @@ class lC_Categories_Admin {
     $Qcategories->execute();
 
     $data = $Qcategories->toArray();
-
+    
     $data['childs_count'] = sizeof($lC_CategoryTree->getChildren($Qcategories->valueInt('categories_id'), $dummy = array()));
     $data['products_count'] = $lC_CategoryTree->getNumberOfProducts($Qcategories->valueInt('categories_id'));
 
@@ -159,55 +173,50 @@ class lC_Categories_Admin {
     $lC_Database->startTransaction();
 
     if ( is_numeric($id) ) {
-      $Qcat = $lC_Database->query('update :table_categories set sort_order = :sort_order, last_modified = now() where categories_id = :categories_id');
+      $Qcat = $lC_Database->query('update :table_categories set categories_image = :categories_image, parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_status = :categories_status, categories_visibility_nav = :categories_visibility_nav, categories_visibility_box = :categories_visibility_box, last_modified = now() where categories_id = :categories_id');
       $Qcat->bindInt(':categories_id', $id);
     } else {
-      $Qcat = $lC_Database->query('insert into :table_categories (parent_id, sort_order, date_added) values (:parent_id, :sort_order, now())');
+      $Qcat = $lC_Database->query('insert into :table_categories (categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added) values (:categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_status, :categories_visibility_nav, :categories_visibility_box, now())');
       $Qcat->bindInt(':parent_id', $data['parent_id']);
     }
 
     $Qcat->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qcat->bindValue(':categories_image', $data['image']);
+    $Qcat->bindInt(':parent_id', $data['parent_id']);
     $Qcat->bindInt(':sort_order', $data['sort_order']);
+    $Qcat->bindValue(':categories_mode', $data['mode']);
+    $Qcat->bindInt(':categories_link_target', $data['link_target']);
+    $Qcat->bindValue(':categories_custom_url', $data['custom_url']);
+    $Qcat->bindInt(':categories_status', $data['status']);
+    $Qcat->bindInt(':categories_visibility_nav', $data['nav']);
+    $Qcat->bindInt(':categories_visibility_box', $data['box']);
     $Qcat->setLogging($_SESSION['module'], $id);
     $Qcat->execute();
-
+    
     if ( !$lC_Database->isError() ) {
       $category_id = (is_numeric($id)) ? $id : $lC_Database->nextID();
 
       foreach ( $lC_Language->getAll() as $l ) {
         if ( is_numeric($id) ) {
-          $Qcd = $lC_Database->query('update :table_categories_description set categories_name = :categories_name where categories_id = :categories_id and language_id = :language_id');
+          $Qcd = $lC_Database->query('update :table_categories_description set categories_name = :categories_name, categories_menu_name = :categories_menu_name, categories_blurb = :categories_blurb, categories_description = :categories_description, categories_tags = :categories_tags where categories_id = :categories_id and language_id = :language_id');
         } else {
-          $Qcd = $lC_Database->query('insert into :table_categories_description (categories_id, language_id, categories_name) values (:categories_id, :language_id, :categories_name)');
+          $Qcd = $lC_Database->query('insert into :table_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_tags)');
         }
 
         $Qcd->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
         $Qcd->bindInt(':categories_id', $category_id);
         $Qcd->bindInt(':language_id', $l['id']);
         $Qcd->bindValue(':categories_name', $data['name'][$l['id']]);
+        $Qcd->bindValue(':categories_menu_name', $data['menu_name'][$l['id']]);
+        $Qcd->bindValue(':categories_blurb', $data['blurb'][$l['id']]);
+        $Qcd->bindValue(':categories_description', $data['description'][$l['id']]);
+        $Qcd->bindValue(':categories_tags', $data['tags'][$l['id']]);
         $Qcd->setLogging($_SESSION['module'], $category_id);
         $Qcd->execute();
 
         if ( $lC_Database->isError() ) {
           $error = true;
           break;
-        }
-      }
-
-      if ( $error === false ) {
-        $categories_image = new upload($data['image'], realpath('../' . DIR_WS_IMAGES . 'categories'));
-
-        if ( $categories_image->exists() && $categories_image->parse() && $categories_image->save() ) {
-          $Qcf = $lC_Database->query('update :table_categories set categories_image = :categories_image where categories_id = :categories_id');
-          $Qcf->bindTable(':table_categories', TABLE_CATEGORIES);
-          $Qcf->bindValue(':categories_image', $categories_image->filename);
-          $Qcf->bindInt(':categories_id', $category_id);
-          $Qcf->setLogging($_SESSION['module'], $category_id);
-          $Qcf->execute();
-
-          if ( $lC_Database->isError() ) {
-            $error = true;
-          }
         }
       }
     }
@@ -418,5 +427,191 @@ class lC_Categories_Admin {
 
     return $parentID;
   }
+ /*
+  * Get final category parent ID
+  *
+  * @param integer $id The final parent category id
+  * @access public
+  * @return integer
+  */
+  public static function get_final_parent($id = 0) {
+    global $lC_Database;
+    $loop = true;
+    while ($loop === true) {
+      $Qpath = $lC_Database->query('select parent_id from :table_categories where categories_id = :categories_id');
+      $Qpath->bindTable(':table_categories', TABLE_CATEGORIES);
+      $Qpath->bindInt(':categories_id', $id);
+      $Qpath->execute();
+      if ($Qpath->value('parent_id') > 0) {
+        $cPath .= '_' . $Qpath->value('parent_id');
+        $id = $Qpath->value('parent_id');
+        continue;
+      }
+      $Qpath->freeResult();
+      $loop = false;
+      break;
+    }
+    $cPath = array_reverse(explode("_", $cPath));
+    return $cPath[0];
+  }
+  
+  public static function getChild($id){
+    global $lC_Database;
+    
+    $Qchild = $lC_Database->query('select categories_id from :table_categories where parent_id = :parent_id');
+    $Qchild->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qchild->bindInt(':parent_id', $id);
+    $Qchild->execute();
+    
+    $cat_id = array();
+    if ($Qchild->numberOfRows !== 0) {
+      $cat_id[] = $Qchild->value('categories_id');
+    }
+    
+    return $cat_id;
+  }
+
+  public static function getChildren($parent_id) {
+    $tree = array();
+    
+    if (!empty($parent_id)) {
+      $tree = lC_Categories_Admin::getChild($parent_id);
+      
+      foreach ($tree as $val) {
+        $ids = lC_Categories_Admin::getChildren($val);
+        $tree = array_merge($tree, $ids);
+      }
+    }
+    
+    return $tree;
+  }
+ /*
+  * Update category sorting
+  * 
+  * @access public
+  * @return array
+  */
+  public static function cSort($data) {
+    global $lC_Database;
+    $cnt = 10;
+    foreach ($_GET as $key => $value) {
+      if ($key != 'categories' && $key != 'action' && $key != 'dataTable_length' && $key != 'selectAction' && $key != 'lCAdminID') { 
+        $keyParts = explode('_', $key);
+        
+        $Qupdate = $lC_Database->query('update :table_categories set sort_order = :sort_order, last_modified = now() where categories_id = :categories_id');
+        $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
+        $Qupdate->bindInt(':sort_order', $cnt);
+        $Qupdate->bindInt(':categories_id', $keyParts[2]);
+        $Qupdate->setLogging($_SESSION['module'], $id);
+        $Qupdate->execute();
+        $cnt = $cnt + 10;
+      }
+    }
+    return true;
+  }
+ /*
+  * get next category sort for new entry
+  * 
+  * @access public
+  * @return int
+  */
+  public static function nextSort() {
+    global $lC_Database;
+    
+    $Qupdate = $lC_Database->query('select sort_order from :table_categories where parent_id = :parent_id order by sort_order desc limit 1');
+    $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qupdate->bindInt(':parent_id', ($_GET['categories'] != '') ? $_GET['categories'] : 0);
+    $Qupdate->execute();
+    
+    $nextsort = ($Qupdate->value('sort_order') + 10);
+
+    $Qupdate->freeResult();
+
+    return $nextsort;
+  }
+ /*
+  * update category status db entry
+  * 
+  * @access public
+  * @return true or false
+  */
+  public static function updateStatus($id, $val) {
+    global $lC_Database;
+    
+    $Qupdate = $lC_Database->query('update :table_categories set categories_status = :categories_status where categories_id = :categories_id');
+    $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qupdate->bindInt(':categories_status', $val);
+    $Qupdate->bindInt(':categories_id', $id);
+    $Qupdate->execute();
+      
+    return true;
+  }
+ /*
+  * update category show in top nav db entry
+  * 
+  * @access public
+  * @return true or false
+  */
+  public static function updateVisibilityNav($id, $val) {
+    global $lC_Database;
+    
+    $Qupdate = $lC_Database->query('update :table_categories set categories_visibility_nav = :categories_visibility_nav where categories_id = :categories_id');
+    $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qupdate->bindInt(':categories_visibility_nav', $val);
+    $Qupdate->bindInt(':categories_id', $id);
+    $Qupdate->execute();
+      
+    return true;
+  }
+ /*
+  * update category show in infobox db entry
+  * 
+  * @access public
+  * @return true or false
+  */
+  public static function updateVisibilityBox($id, $val) {
+    global $lC_Database;
+    
+    $Qupdate = $lC_Database->query('update :table_categories set categories_visibility_box = :categories_visibility_box where categories_id = :categories_id');
+    $Qupdate->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qupdate->bindInt(':categories_visibility_box', $val);
+    $Qupdate->bindInt(':categories_id', $id);
+    $Qupdate->execute();
+      
+    return true;
+  }
+ /*
+  * get category icon
+  * 
+  * @access public
+  * @return string
+  */
+  public static function getCategoryIcon($type) {
+    
+    if ($type == 'category') {
+      $icon = 'folder icon-orange';
+    } else if ($type == 'page') {
+      $icon = 'page-list icon-black';
+    } else if ($type == 'specials') {
+      $icon = 'price-tag icon-red';
+    } else if ($type == 'featured') {
+      $icon = 'star icon-orange';
+    } else if ($type == 'new') {
+      $icon = 'new icon-green';
+    } else if ($type == 'search') {
+      $icon = 'search icon-black';
+    } else if ($type == 'cart') {
+      $icon = 'cart icon-orange';
+    } else if ($type == 'account') {
+      $icon = 'user icon-anthracite';
+    } else if ($type == 'info') {
+      $icon = 'question-round icon-blue';
+    } else if ($type == 'override') {
+      $icon = 'globe icon-blue';
+    }
+
+    return $icon;
+  }
+                          
 }
 ?>

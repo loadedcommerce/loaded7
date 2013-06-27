@@ -70,8 +70,6 @@
   <!-- DataTables -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables.css?v=1">
   <link rel="stylesheet" href="templates/default/css/styles/jquery.dataTables-tableTools.css?v=1">
-  <!-- CLEditor -->
-  <link rel="stylesheet" href="external/CLEditor/jquery.cleditor.css">
   <!-- loading mask -->
   <link rel="stylesheet" href="templates/default/css/styles/jquery.loadmask.css?v=1">  
   
@@ -169,10 +167,10 @@
       <li id="sc-dashboard" class="current"><a href="./" class="shortcut-dashboard" title="<?php echo $lC_Language->get('icon_dashboard'); ?>"><?php echo $lC_Language->get('icon_dashboard'); ?></a></li>
       <li id="sc-orders"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders'); ?>" class="shortcut-orders" title="<?php echo $lC_Language->get('icon_orders'); ?>"><?php echo $lC_Language->get('icon_orders'); ?></a></li>
       <li id="sc-customers"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers'); ?>" class="shortcut-customers" title="<?php echo $lC_Language->get('icon_customers'); ?>"><?php echo $lC_Language->get('icon_customers'); ?></a></li>
-      <!-- li id="sc-content"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories'); ?>" class="shortcut-content" title="<?php echo $lC_Language->get('icon_content'); ?>"><?php echo $lC_Language->get('icon_content'); ?></a></li -->
+      <li id="sc-content"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories'); ?>" class="shortcut-content" title="<?php echo $lC_Language->get('icon_content'); ?>"><?php echo $lC_Language->get('icon_content'); ?></a></li>
       <li id="sc-products"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products'); ?>" class="shortcut-products" title="<?php echo $lC_Language->get('icon_products'); ?>"><?php echo $lC_Language->get('icon_products'); ?></a></li>
       <li id="sc-marketing"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager'); ?>" class="shortcut-marketing" title="<?php echo $lC_Language->get('icon_marketing'); ?>"><?php echo $lC_Language->get('icon_marketing'); ?></a></li>
-      <!-- li id="sc-store" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="hidden"'); ?>><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'store'); ?>" class="shortcut-store" title="<?php echo $lC_Language->get('icon_app_store'); ?>"><?php echo $lC_Language->get('icon_app_store'); ?></a></li -->
+      <li id="sc-store" <?php echo (($_SESSION['admin']['access']['configuration'] > 0) ? NULL : 'class="hidden"'); ?>><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'store'); ?>" class="shortcut-store" title="<?php echo $lC_Language->get('icon_app_store'); ?>"><?php echo $lC_Language->get('icon_app_store'); ?></a></li>
       <li id="sc-reports"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'statistics'); ?>" class="shortcut-reports" title="<?php echo $lC_Language->get('icon_reports'); ?>"><?php echo $lC_Language->get('icon_reports'); ?></a></li>
     </ul>
 
@@ -443,10 +441,8 @@
         <div id="settingsContainer" style="display:none;">
           <section class="navigable">
             <ul id="big-menu-settings-ul" class="big-menu blue-gradient">
+              <li><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'store'); ?>"><?php echo $lC_Language->get('menu_title_addons'); ?></a></li>
               <?php echo $output->drawBigMenu('configuration', 'blue-gradient'); ?>
-              <!-- li><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'store'); ?>"><?php echo $lC_Language->get('menu_title_addons'); ?></a></li>
-              <li><a href="http://www.loadedcommerce.com/additional-serials-p-360.html?CDpath=216_295" target="_blank"><?php echo $lC_Language->get('menu_title_license_management'); ?></a></li>
-              <li><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'updates'); ?>"><?php echo $lC_Language->get('menu_title_core_update'); ?></a></li -->
               <li><a href="http://support.loadedcommerce.com" target="_blank"><?php echo $lC_Language->get('menu_title_report_issues'); ?></a></li>
               <li><a href="http://www.loadedcommerce.com/support-memberships-pc-175_198.html" target="_blank"><?php echo $lC_Language->get('menu_title_get_help'); ?></a></li>
             </ul>
