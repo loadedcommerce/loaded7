@@ -76,7 +76,7 @@ $lC_Order = new lC_Order($_GET['oid']);
         <td><table border="0" cellspacing="0" cellpadding="2">
             <tr>
               <td><b><?php echo $lC_Language->get('subsection_payment_method'); ?></b></td>
-              <td><?php echo $lC_Order->getPaymentMethod(); ?></td>
+              <td>&nbsp;<?php echo $lC_Order->getPaymentMethod(); ?></td>
             </tr>
           </table></td>
       </tr>
@@ -87,26 +87,30 @@ $lC_Order = new lC_Order($_GET['oid']);
         <td><table border="0" width="100%" cellspacing="0" cellpadding="2" class="dataTable">
             <thead>
               <tr>
-                <th colspan="2"><?php echo $lC_Language->get('table_heading_products'); ?></th>
-                <th><?php echo $lC_Language->get('table_heading_product_model'); ?></th>
-                <th><?php echo $lC_Language->get('table_heading_tax'); ?></th>
-                <th><?php echo $lC_Language->get('table_heading_price_net'); ?></th>
-                <th><?php echo $lC_Language->get('table_heading_price_gross'); ?></th>
-                <th><?php echo $lC_Language->get('table_heading_total_net'); ?></th>
-                <th><?php echo $lC_Language->get('table_heading_total_gross'); ?></th>
+                <th align="left" colspan="2"><?php echo $lC_Language->get('table_heading_products'); ?></th>
+                <th align="left"><?php echo $lC_Language->get('table_heading_product_model'); ?></th>
+                <th align="right"><?php echo $lC_Language->get('table_heading_tax'); ?></th>
+                <th align="right"><?php echo $lC_Language->get('table_heading_price_net'); ?></th>
+                <th align="right"><?php echo $lC_Language->get('table_heading_price_gross'); ?></th>
+                <th align="right"><?php echo $lC_Language->get('table_heading_total_net'); ?></th>
+                <th align="right"><?php echo $lC_Language->get('table_heading_total_gross'); ?></th>
               </tr>
             </thead>
             <tbody>
               <?php
                 foreach ($lC_Order->getProducts() as $product) {
-                  echo '        <tr>' . "\n" .
-                  '          <td valign="top" align="right">' . $product['quantity'] . '&nbsp;x</td>' . "\n" .
-                  '          <td valign="top">' . $product['name'];
+                  echo '<tr>' . "\n" .
+                       '  <td colspan="2" align="left" valign="top">' . $product['quantity'] . '&nbsp;x&nbsp;' . "\n" . $product['name'];
                   if (isset($product['attributes']) && (sizeof($product['attributes']) > 0)) {
                     foreach ($product['attributes'] as $attribute) {
-                      echo '<br /><nobr>&nbsp;&nbsp;&nbsp;' . $attribute['option'] . ': ' . $attribute['value'] . '</nobr>';
+                      echo '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $attribute['option'] . ': ' . $attribute['value'] . '</i></span></nobr>';
                     }
                   }
+                  if ( isset($product['options']) && is_array($product['options']) && ( sizeof($product['options']) > 0 ) ) {
+                    foreach ( $product['options'] as $key => $val ) {
+                      echo '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
+                    }
+                  }                  
                   echo '          </td>' . "\n" .
                   '          <td valign="top">' . $product['model'] . '</td>' . "\n";
                   echo '          <td align="right" valign="top">' . $lC_Tax->displayTaxRateValue($product['tax']) . '</td>' . "\n" .

@@ -15,7 +15,6 @@ class lC_Product {
   protected $_data = array();
 
   public function __construct($id) {
-ini_set('display_errors', 1);    
     global $lC_Database, $lC_Services, $lC_Language, $lC_Image;
 
     if ( !empty($id) ) {
