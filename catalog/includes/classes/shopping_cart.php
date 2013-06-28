@@ -96,7 +96,7 @@ class lC_ShoppingCart {
         $Qproduct->bindInt(':customers_id', $lC_Customer->getID());
         $Qproduct->bindInt(':products_id', $data['id']);
         $Qproduct->execute();
-
+        
         if ( $Qproduct->numberOfRows() > 0 && $data['meta_data'] == $Qproduct->value('meta_data')) {
           $Qupdate = $lC_Database->query('update :table_shopping_carts set quantity = :quantity where customers_id = :customers_id and item_id = :item_id');
           $Qupdate->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
@@ -194,8 +194,13 @@ class lC_ShoppingCart {
                                                                   'date_added' => lC_DateTime::getShort($Qproducts->value('date_added')),
                                                                   'weight_class_id' => $Qproducts->valueInt('products_weight_class'));
 
+                                                                  
         $this->_contents[$Qproducts->valueInt('item_id')]['simple_options'] = unserialize($Qproducts->value('meta_data'));                                                                    
 
+//echo "<pre>options ";
+//print_r($this->_contents[$Qproducts->valueInt('item_id')]['simple_options']);
+//echo "</pre>";
+//die('44');        
         if ( $Qproducts->valueInt('parent_id') > 0 ) {
           $Qcheck = $lC_Database->query('select products_status from :table_products where products_id = :products_id');
           $Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
@@ -409,20 +414,20 @@ class lC_ShoppingCart {
           }
         }
 
-          $this->_contents[$item_id] = array('item_id' => $item_id,
-                                             'id' => $product_id,
-                                             'parent_id' => $Qproduct->valueInt('parent_id'),
-                                             'name' => $Qdescription->value('products_name'),
-                                             'model' => $Qproduct->value('products_model'),
-                                             'keyword' => $Qdescription->value('products_keyword'),
-                                             'description' => $Qdescription->value('products_description'),
-                                             'image' => $image,
-                                             'price' => $price,
-                                             'quantity' => $quantity,
-                                             'weight' => $Qproduct->value('products_weight'),
-                                             'tax_class_id' => $tax_class_id,
-                                             'date_added' => lC_DateTime::getShort(lC_DateTime::getNow()),
-                                             'weight_class_id' => $Qproduct->valueInt('products_weight_class'));                                           
+        $this->_contents[$item_id] = array('item_id' => $item_id,
+                                           'id' => $product_id,
+                                           'parent_id' => $Qproduct->valueInt('parent_id'),
+                                           'name' => $Qdescription->value('products_name'),
+                                           'model' => $Qproduct->value('products_model'),
+                                           'keyword' => $Qdescription->value('products_keyword'),
+                                           'description' => $Qdescription->value('products_description'),
+                                           'image' => $image,
+                                           'price' => $price,
+                                           'quantity' => $quantity,
+                                           'weight' => $Qproduct->value('products_weight'),
+                                           'tax_class_id' => $tax_class_id,
+                                           'date_added' => lC_DateTime::getShort(lC_DateTime::getNow()),
+                                           'weight_class_id' => $Qproduct->valueInt('products_weight_class'));                                           
 
         // simple options
         if (isset($_POST['simple_options']) && empty($_POST['simple_options']) === false) {
