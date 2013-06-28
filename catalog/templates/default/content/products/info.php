@@ -167,10 +167,7 @@ function refreshVariants() {
       }
       ?>      
     </div>
-    
-    
     <div style="clear:both;">   
-    
       <?php
       if ( $lC_Product->hasSimpleOptions() ) {
         ?>
@@ -188,14 +185,11 @@ function refreshVariants() {
               echo lC_Variants::parseSimpleOptions($module, $value);
 
             }
-            //echo lC_Variants::defineJavascript($lC_Product->getVariants(false));
           ?>
         </div>
         <?php
       }
-      ?>    
-     
-      <?php
+
       if ( $lC_Product->hasVariants() ) {
         ?>
         <div class="variant_info" id="variantsBlock">
@@ -209,7 +203,6 @@ function refreshVariants() {
         <?php
         }
       ?>
-      
       <div class="qty_info">
         <div class="quantity">
           <label><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>

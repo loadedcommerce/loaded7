@@ -59,7 +59,12 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
                     foreach ( $lC_ShoppingCart->getVariant($products['item_id']) as $variant) {
                       echo '<br />- ' . $variant['group_title'] . ': ' . $variant['value_title'];
                     }
-                  }              
+                  }   
+                  if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
+                    foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
+                      echo '<br /><span style="font-size:.9em;">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</span>';
+                    }
+                  }                             
                 ?>
               </td>
               <td class="align_center vline hide-on-320"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td> 

@@ -216,7 +216,8 @@ class lC_Success {
                                        'quantity' => $QorderProducts->valueInt('products_quantity'),
                                        'name' => $QorderProducts->value('products_name'),
                                        'model' => $QorderProducts->value('products_model'),
-                                       'price' => $QorderProducts->value('products_price'));
+                                       'price' => $QorderProducts->value('products_price'),
+                                       'options' => unserialize($QorderProducts->value('products_simple_options_meta_data')));
     }
     
     return $orders_products_array;

@@ -354,9 +354,16 @@ class lC_Orders_Admin {
                                     <td valign="top">' . $products['name'];
       if ( isset($products['attributes']) && is_array($products['attributes']) && ( sizeof($products['attributes']) > 0 ) ) {
         foreach ( $products['attributes'] as $attributes ) {
-          $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;&nbsp;<i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></nobr>';
+          $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span style="font-size:.9em;"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
         }
       }
+      
+      if ( isset($products['options']) && is_array($products['options']) && ( sizeof($products['options']) > 0 ) ) {
+        foreach ( $products['options'] as $key => $val ) {
+          $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
+        }
+      }
+            
       $result['orderProducts'] .= '</td>
                                    <td valign="top">' . $products['model'] . '</td>
                                    <td valign="top" align="right" width="60px">' . $lC_Tax->displayTaxRateValue($products['tax']) . '</td>

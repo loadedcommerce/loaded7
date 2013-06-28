@@ -88,14 +88,18 @@
             <tbody>
               <?php
                 foreach ($lC_Order->getProducts() as $product) {
-                  echo '        <tr>' . "\n" .
-                  '          <td colspan="2" align="left" valign="top">' . $product['quantity'] . '&nbsp;x' . "\n" .
-                  '          ' . $product['name'];
+                  echo '<tr>' . "\n" .
+                       '  <td colspan="2" align="left" valign="top">' . $product['quantity'] . '&nbsp;x&nbsp;' . "\n" . $product['name'];
                   if (isset($product['attributes']) && (sizeof($product['attributes']) > 0)) {
                     foreach ($product['attributes'] as $attribute) {
-                      echo '<br /><nobr>&nbsp;&nbsp;&nbsp;' . $attribute['option'] . ': ' . $attribute['value'] . '</nobr>';
+                      echo '<br />nobr>&nbsp;&nbsp;- <span class="small"><i>' . $attribute['option'] . ': ' . $attribute['value'] . '</i></span></nobr>';
                     }
                   }
+                  if ( isset($product['options']) && is_array($product['options']) && ( sizeof($product['options']) > 0 ) ) {
+                    foreach ( $product['options'] as $key => $val ) {
+                      echo '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
+                    }
+                  }                  
                   echo '          </td>' . "\n" .
                   '          <td valign="top">' . $product['model'] . '</td>' . "\n";
                   '        </tr>' . "\n";
