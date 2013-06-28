@@ -197,10 +197,6 @@ class lC_ShoppingCart {
                                                                   
         $this->_contents[$Qproducts->valueInt('item_id')]['simple_options'] = unserialize($Qproducts->value('meta_data'));                                                                    
 
-//echo "<pre>options ";
-//print_r($this->_contents[$Qproducts->valueInt('item_id')]['simple_options']);
-//echo "</pre>";
-//die('44');        
         if ( $Qproducts->valueInt('parent_id') > 0 ) {
           $Qcheck = $lC_Database->query('select products_status from :table_products where products_id = :products_id');
           $Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
