@@ -23,11 +23,11 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
           <div id="imagePreviewContainer" class="prod-image align-center"></div>
         </div>   
         <p class="thin margin-top" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
-        <div id="fileUploaderImageContainer" class="small-margin-top">
+        <center style="margin-top:-12px;"><div id="fileUploaderImageContainer" class="small-margin-top">
           <noscript>
             <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
           </noscript>
-        </div>        
+        </div></center>        
       </div>
     </div>
     <?php } ?>
