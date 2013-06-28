@@ -85,9 +85,9 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                       <?php
                       }
                       foreach ($lC_ShoppingCart->getProducts() as $products) {
-                        echo '              <tr class="confirmation-products-listing-row">' . "\n" .
-                        '                <td width="30"><b>' . $products['quantity'] . '&nbsp;x&nbsp;</b></td>' . "\n" .
-                        '                <td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
+                        echo '<tr class="confirmation-products-listing-row">' . "\n" .
+                             '  <td width="30"><b>' . $products['quantity'] . '&nbsp;x&nbsp;</b></td>' . "\n" .
+                             '  <td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
                         if ( (STOCK_CHECK == '1') && !$lC_ShoppingCart->isInStock($products['item_id']) ) {
                           echo '<span class="markProductOutOfStock">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>';
                         }
@@ -96,6 +96,11 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                             echo '<br />- ' . $variant['group_title'] . ': ' . $variant['value_title'];
                           }
                         }
+                        if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
+                          foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
+                            echo '<br /><span style="font-size:.9em;">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</span>';
+                          }
+                        }                        
                         echo '</td>' . "\n";
                         if ($lC_ShoppingCart->numberOfTaxGroups() > 1) {
                           echo '                <td style="float:right;"><b>' . lC_Tax::displayTaxRateValue($products['tax']) . '</b></td>' . "\n";

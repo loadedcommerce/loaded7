@@ -28,14 +28,14 @@ class lC_Variants_pull_down_menu extends lC_Variants_Abstract {
       foreach($data as $key => $val) {
         $price_ind = ((float)$val['price_modifier'] < 0.00) ? '-' : '+';
         $price_formatted = ((float)$val['price_modifier'] != 0.00) ? $price_ind . $lC_Currencies->format(number_format($val['price_modifier'], DECIMAL_PLACES), $lC_Currencies->getCode()) : null;
-        $options .= '<option modifier="' . $val['price_modifier'] . '" value="' . $val['value_id'] . '">' . $val['value_title'] . ' ' . $price_formatted . '</option>';  
+        $options .= '<option modifier="' . $val['price_modifier'] . '" value="' . $val['value_id'] . '">' . $val['value_title'] . ' ' . $price_formatted . '</option>'; 
         $group_id = $val['group_id'];
         $group_title = $val['group_title'];
       }
       
       $string = '<div class="variant_sel">' . 
                 '  <label>' . $group_title . '</label>' . 
-                '  <select style="width:165px !important;" onchange="refreshPrice();" id="simple_options_' . $group_id . '" name="simple_options[' . $group_id . ']">' . $options . '</select>' .
+                '  <select style="width:165px !important;" onchange="refreshPrice();" id="simple_options_' . $group_id . '" name="simple_options[' . $group_id . ']">' . $options . '</select>' . 
                 '</div>';      
       
     } else {
