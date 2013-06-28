@@ -93,11 +93,6 @@ $(document).ready(function() {
   }
   <?php if ($_GET['action'] != '') { ?>
   createUploader();
-  var qqbuttonhtmlold = $('.qq-upload-button').html();
-  var qqbuttonhtml = qqbuttonhtmlold.replace(/Upload a file/i, 'Upload');
-  $('.qq-upload-button').html(qqbuttonhtml);
-  $('.qq-upload-list').hide();
-  
   <?php
     foreach ( $lC_Language->getAll() as $l ) {  
       echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
