@@ -286,8 +286,8 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_category'); ?>">g</span>
-                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_category_title'); ?>">
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_category'); ?>">g</span>                  
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=new'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_category_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-list icon-white icon-pad-right"></i>
                     </div> 

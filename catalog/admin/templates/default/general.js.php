@@ -231,7 +231,7 @@ $(document).ready(function() {
             };
             if (code == 103) { // g for new cate(G)ory
               //alert('new category');
-              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>';
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=new'); ?>';
             };
             if (code == 112) { // p for new (P)roduct
               //alert('new product');
