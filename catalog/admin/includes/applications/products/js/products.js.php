@@ -38,7 +38,9 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
            
       // IMAGES TAB
       createUploader();
+      <?php if ($pInfo) { ?>
       getImages();
+      <?php } ?>
       //getLocalImages();  
       $('#images-gallery-trigger').addClass('with-right-arrow grey-arrow');
             
