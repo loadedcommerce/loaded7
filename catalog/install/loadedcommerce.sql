@@ -394,6 +394,7 @@ CREATE TABLE lc_orders_products (
   products_price decimal(15,4) NOT NULL DEFAULT '0.0000',
   products_tax decimal(7,4) NOT NULL DEFAULT '0.0000',
   products_quantity int(11) NOT NULL,
+  products_simple_options_meta_data varchar(1024) DEFAULT NULL,
   PRIMARY KEY (orders_products_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -666,6 +667,7 @@ CREATE TABLE lc_shopping_carts (
   item_id smallint(5) unsigned NOT NULL,
   products_id int(10) unsigned NOT NULL,
   quantity smallint(5) unsigned NOT NULL,
+  meta_data varchar(1024) DEFAULT NULL,
   date_added datetime DEFAULT NULL,
   KEY idx_sc_customers_id (customers_id),
   KEY idx_sc_customers_id_products_id (customers_id,products_id)
