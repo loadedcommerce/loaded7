@@ -230,7 +230,7 @@ $(document).ready(function() {
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>';
             };
             if (code == 103) { // g for new cate(G)ory
-              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=quick_add'); ?>';
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=new'); ?>';
             };
             if (code == 112) { // p for new (P)roduct
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>';

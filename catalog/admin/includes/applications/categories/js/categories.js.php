@@ -66,8 +66,6 @@ $(document).ready(function() {
   // instantiate breadcrumb
   $("#breadCrumb0").jBreadCrumb();
 
-  var quickAdd = '<?php echo (isset($_GET['action']) && $_GET['action'] == 'quick_add') ? true : false; ?>';
-  
   <?php if (!$_GET['action']) { ?>
     if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {  
       $('#floating-button-container').hide();
@@ -86,10 +84,6 @@ $(document).ready(function() {
   } else {
     // instantiate floating menu
     $('#floating-menu-div-listing').fixFloat();
-  }
-    
-  if (quickAdd) {
-    newCategory();
   }
   <?php if ($_GET['action'] != '') { ?>
   createUploader();
