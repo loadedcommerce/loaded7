@@ -35,7 +35,7 @@ class lC_Variants_pull_down_menu extends lC_Variants_Abstract {
       
       $string = '<div class="variant_sel">' . 
                 '  <label>' . $group_title . '</label>' . 
-                '  <select style="width:165px !important;" onchange="refreshPrice();" id="simple_options_' . $group_id . '" name="simple_options[' . $group_id . ']">' . $options . '</select>' . 
+                '  <select style="width:165px !important;" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '" name="simple_options[' . $group_id . ']">' . $options . '</select>' . 
                 '</div>';      
       
     } else {

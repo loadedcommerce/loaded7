@@ -23,10 +23,23 @@ function refreshPrice() {
   var basePrice = '<?php echo $lC_Product->getBasePrice(); ?>';
 
   var priceModTotal = 0;
+  // loop thru any options select fields
   $('#simpleOptionsBlock select > option:selected').each(function() {
     priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
   }); 
-
+  
+  // loop thru any options radio fields
+  $('#simpleOptionsBlock input:radio:checked').each(function() {
+    priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
+  }); 
+  
+  // loop thru any options text fields
+  $('#simpleOptionsBlock input[type="text"]').each(function() {
+    if($(this).val()) {
+      priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
+    }
+  });  
+  
   var adjPrice = (parseFloat(basePrice) + parseFloat(priceModTotal));
   var adjPriceFormatted = currencySymbolLeft + adjPrice.toFixed(<?php echo DECIMAL_PLACES; ?>);
   
