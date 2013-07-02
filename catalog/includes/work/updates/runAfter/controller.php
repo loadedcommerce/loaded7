@@ -77,7 +77,12 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "categories` ADD `categories_visibility_nav` TINYINT( 1 ) DEFAULT '0' AFTER `categories_status`");
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "categories` ADD `categories_visibility_box` TINYINT( 1 ) DEFAULT '1' AFTER `categories_visibility_nav`");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "categories` ADD `categories_visibility_box` TINYINT( 1 ) DEFAULT '1' AFTER `categories_visibility_nav`");
-
+    
+    $lC_Database->simpleQuery("UPDATE IGNORE `" . $pf . "configuration_group` SET `configuration_group_title` = 'Checkout', `configuration_group_description` = 'Checkout settings' where `configuration_group_id` = '19'");
+    parent::log("Database Update: UPDATE IGNORE `" . $pf . "configuration_group` SET `configuration_group_title` = 'Checkout', `configuration_group_description` = 'Checkout settings' where `configuration_group_id` = '19'");    
+    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES ('Supress Non-Mobile Payment Modules', 'CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES', '-1', 'Suppress non-mobile payment modules in catalog when being viewed in mobile format.', 19, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))')");
+    parent::log("Database Update: INSERT IGNORE INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES ('Supress Non-Mobile Payment Modules', 'CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES', '-1', 'Suppress non-mobile payment modules in catalog when being viewed in mobile format.', 19, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))')");
+    
   } 
 }  
 ?>

@@ -1,4 +1,4 @@
-#  $Id: loadedcommerce_innodb.sql v1.0 2012-12-04 datazen $
+#  $Id: loadedcommerce.sql v1.0 2012-12-04 datazen $
 #
 #  LoadedCommerce, Innovative eCommerce Solutions
 #  http://www.loadedcommerce.com
@@ -394,6 +394,7 @@ CREATE TABLE lc_orders_products (
   products_price decimal(15,4) NOT NULL DEFAULT '0.0000',
   products_tax decimal(7,4) NOT NULL DEFAULT '0.0000',
   products_quantity int(11) NOT NULL,
+  products_simple_options_meta_data varchar(1024) DEFAULT NULL,
   PRIMARY KEY (orders_products_id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -666,6 +667,7 @@ CREATE TABLE lc_shopping_carts (
   item_id smallint(5) unsigned NOT NULL,
   products_id int(10) unsigned NOT NULL,
   quantity smallint(5) unsigned NOT NULL,
+  meta_data varchar(1024) DEFAULT NULL,
   date_added datetime DEFAULT NULL,
   KEY idx_sc_customers_id (customers_id),
   KEY idx_sc_customers_id_products_id (customers_id,products_id)
@@ -976,6 +978,7 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(154, 'Check Configuration File', 'SERVICE_DEBUG_CHECK_CONFIGURATION', '1', 'Show a warning if the configuration file is writeable.', 6, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(155, 'Check Sessions Directory', 'SERVICE_DEBUG_CHECK_SESSION_DIRECTORY', '1', 'Show a warning if the file-based session directory does not exist.', 6, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(156, 'Maximum Entries To Display', 'MODULE_CONTENT_NEW_PRODUCTS_MAX_DISPLAY', '6', 'Maximum number of new products to display', 6, 0, NULL, '2012-10-25 18:08:07', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(157, 'Suppress Non-Mobile Payment Modules', 'CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES', '-1', 'Suppress non-mobile payment modules in catalog when being viewed in mobile format.', 19, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(1, 'My Store', 'General information about my store', 1, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(2, 'Minimum Values', 'The minimum values for functions / data', 2, 1);
@@ -991,7 +994,7 @@ INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(16, 'Regulations', 'Regulation options', 16, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(17, 'Credit Cards', 'Credit card options', 17, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(18, 'Program Locations', 'Locations to certain programs on the server.', 18, 1);
-INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(19, 'Core Updates', 'Core update settings', 19, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(19, 'Checkout', 'Checkout settings', 19, 1);
 
 INSERT INTO lc_countries VALUES (1,'Afghanistan','AF','AFG','');
 
@@ -5960,6 +5963,7 @@ INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width,
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(4, 1, 'Large', 'large', 375, 300, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(5, 1, 'Mini', 'mini', 50, 40, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 600, 450, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(7, 1, 'Extra', 'extra', 50, 50, 0); 
 
 INSERT INTO lc_tax_class VALUES (1, 'Taxable Goods', 'The following types of products are included non-food, services, etc', now(), now());
 
