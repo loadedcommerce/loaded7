@@ -83,7 +83,7 @@ text_category = Category
 text_categories = Categories
 text_categories_image  = Image Preview
 text_custom_link  = Custom Link
-text_drag_drop_to_replace = Drag & Drop or <font color="white">Upload</font>
+text_drag_drop_to_replace = Drag & Drop or&nbsp;
 text_edit_category = Edit Category
 text_faq = FAQ
 text_move_category = Move Category

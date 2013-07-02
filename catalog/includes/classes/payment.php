@@ -11,6 +11,8 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+require_once(DIR_FS_CATALOG . 'includes/classes/addons.php');
+
 class lC_Payment {
   var $selected_module;
 
@@ -19,102 +21,123 @@ class lC_Payment {
       $order_status = DEFAULT_ORDERS_STATUS_ID;
 
   // class constructor
-  function lC_Payment($module = '') {
+  public function lC_Payment($_module = '') {
     global $lC_Database, $lC_Language, $lC_Vqmod;
 
     include_once($lC_Vqmod->modCheck(dirname(__FILE__) . '/credit_card.php'));
 
-    $Qmodules = $lC_Database->query('select code from :table_templates_boxes where modules_group = "payment"');
+    $Qmodules = $lC_Database->query("select code, modules_group from :table_templates_boxes where modules_group LIKE '%payment%'");
     $Qmodules->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-    $Qmodules->setCache('modules-payment');
+ //   $Qmodules->setCache('modules-payment');
     $Qmodules->execute();
 
     while ($Qmodules->next()) {
-      if (!file_exists('includes/modules/payment/' . $Qmodules->value('code') . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1)))) {
-        $this->removeModule($Qmodules->value('code'));
-        continue;
-      }
-      $this->_modules[] = $Qmodules->value('code');
+      if ($Qmodules->value('modules_group') == 'payment') {
+        if (!file_exists('includes/modules/payment/' . $Qmodules->value('code') . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1)))) {
+          $this->removeModule($Qmodules->value('code'));
+          continue;
+        }
+        $this->_modules[] = $Qmodules->value('code');
+      } else { // addons
+        $addon = end(explode("|", $Qmodules->value('modules_group')));
+        $module = $Qmodules->value('code'); 
+        
+        if (!file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/modules/payment/' . $module . '.php')) {
+          $this->removeModule($Qmodules->value('code'));
+          continue;
+        }
+        
+        if ($_SESSION['lC_Addons_data'][$addon]['enabled'] == '1') {
+          $this->_modules[] = $Qmodules->value('code') . '|' . $addon;        
+        }
+      }         
     }
-
+    
     $Qmodules->freeResult();
-
-    if (empty($this->_modules) === false) {
-      if ((empty($module) === false) && in_array($module, $this->_modules)) {
-        $this->_modules = array($module);
-        $this->selected_module = 'lC_Payment_' . $module;
+                                 
+    if (empty($this->_modules) === false) {  
+      $mArr = array();
+      foreach ($this->_modules as $m) {
+        if (strstr($m, '|')) $m = substr($m, 0, strpos($m, '|'));
+        $mArr[] = $m;
       }
-
+      if ((empty($_module) === false) && in_array($_module, $mArr)) {
+        $this->selected_module = 'lC_Payment_' . $_module;
+      }
+   
       $lC_Language->load('modules-payment');
 
-      foreach ($this->_modules as $modules) {
-        
-        include($lC_Vqmod->modCheck('includes/modules/payment/' . $modules . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1))));
+      foreach ($this->_modules as $modules) {      
+        if (strstr($modules, '|')) {
+          $mArr = explode('|', $modules);
+          $modules = $mArr[0];
+          $addon = $mArr[1];
+        }        
 
         $module_class = 'lC_Payment_' . $modules;
-
+        
+        if (class_exists($module_class) === false) {
+          if (file_exists('includes/modules/payment/' . $modules . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1)))) {
+            include($lC_Vqmod->modCheck('includes/modules/payment/' . $modules . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1))));
+          } else if (file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/modules/payment/' . $modules . '.php')) { // addons
+            include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/' . $addon . '/modules/payment/' . $modules . '.php'));
+          }
+        }
+        
         $GLOBALS[$module_class] = new $module_class();
       }
 
       usort($this->_modules, array('lC_Payment', '_usortModules'));
 
-        if ( (!empty($module)) && (in_array($module, $this->_modules)) && (isset($GLOBALS['lC_Payment_' . $module]->form_action_url)) ) {
-          $this->form_action_url = $GLOBALS['lC_Payment_' . $module]->form_action_url;
-        }
-        
-        if ( (!empty($module)) && (in_array($module, $this->_modules)) && (isset($GLOBALS['lC_Payment_' . $module]->iframe_action_url)) ) {
-          $this->iframe_action_url = $GLOBALS['lC_Payment_' . $module]->iframe_action_url;
-        }   
-        
-        if ( (!empty($module)) && (in_array($module, $this->_modules)) && (isset($GLOBALS['lC_Payment_' . $module]->iframe_relay_url)) ) {
-          $this->iframe_relay_url = $GLOBALS['lC_Payment_' . $module]->iframe_relay_url;
-        }              
+      if ( (!empty($_module)) && (in_array($_module, $mArr)) && (isset($GLOBALS['lC_Payment_' . $_module]->form_action_url)) ) {
+        $this->form_action_url = $GLOBALS['lC_Payment_' . $_module]->form_action_url;
       }
+      
+      if ( (!empty($_module)) && (in_array($_module, $mArr)) && (isset($GLOBALS['lC_Payment_' . $_module]->iframe_action_url)) ) {
+        $this->iframe_action_url = $GLOBALS['lC_Payment_' . $_module]->iframe_action_url;
+      }   
+      
+      if ( (!empty($_module)) && (in_array($_module, $mArr)) && (isset($GLOBALS['lC_Payment_' . $_module]->iframe_relay_url)) ) {
+        $this->iframe_relay_url = $GLOBALS['lC_Payment_' . $_module]->iframe_relay_url;
+      }              
     }
+  }
  
-  function removeModule($code) {
+  public function removeModule($code) {
     global $lC_Database;
     
-    $Qmd = $lC_Database->query('delete from :table_templates_boxes where code = :code and modules_group = "payment"');
+    $Qmd = $lC_Database->query("delete from :table_templates_boxes where code = :code and modules_group LIKE '%payment%'");
     $Qmd->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
     $Qmd->bindValue(':code', $code);
     $Qmd->execute();    
   }  
 
-  function getCode() {
+  public function getCode() {
     return $this->_code;
   }
 
-  function getTitle() {
+  public function getTitle() {
     return $this->_title;
   }
 
-  function getDescription() {
+  public function getDescription() {
     return $this->_description;
   }
 
-  function getMethodTitle() {
+  public function getMethodTitle() {
     return $this->_method_title;
-  }      
+  }  
+  
+  public function getJavascriptBlock() {
+  } 
 
-  function isEnabled() {
-    return $this->_status;
-  }
-
-  function getSortOrder() {
-    return $this->_sort_order;
-  }     
-
-  function getJavascriptBlock() {
-  }
-
-  function getJavascriptBlocks() {
+  public function getJavascriptBlocks() {
     global $lC_Language;
 
     $js = '';
     if (is_array($this->_modules)) {
-      $js = '<script type="text/javascript"><!-- ' . "\n" .
-            'function check_form() {' . "\n" .
+      $js = '<script><!-- ' . "\n" .
+            'function check_form() {' . "\n" .   
             '  var error = 0;' . "\n" .
             '  var error_message = "' . $lC_Language->get('js_error') . '";' . "\n" .
             '  var payment_value = null;' . "\n" .
@@ -131,6 +154,7 @@ class lC_Payment {
             '  }' . "\n\n";
 
       foreach ($this->_modules as $module) {
+        if (strstr($module, '|')) $module = substr($module, 0, strpos($module, '|'));
         if ($GLOBALS['lC_Payment_' . $module]->isEnabled()) {
           $js .= $GLOBALS['lC_Payment_' . $module]->getJavascriptBlock();
         }
@@ -151,12 +175,21 @@ class lC_Payment {
     }
 
     return $js;
+  }    
+
+  public function isEnabled() {
+    return $this->_status;
   }
 
-  function selection() {
+  public function getSortOrder() {
+    return $this->_sort_order;
+  }     
+
+  public function selection() {
     $selection_array = array();
 
     foreach ($this->_modules as $module) {
+      if (strstr($module, '|')) $module = substr($module, 0, strpos($module, '|'));
       if ($GLOBALS['lC_Payment_' . $module]->isEnabled()) {
         $selection = $GLOBALS['lC_Payment_' . $module]->selection();
         if (is_array($selection)) $selection_array[] = $selection;
@@ -166,7 +199,7 @@ class lC_Payment {
     return $selection_array;
   }
 
-  function pre_confirmation_check() {
+  public function pre_confirmation_check() {
     if (is_array($this->_modules)) {
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         $GLOBALS[$this->selected_module]->pre_confirmation_check();
@@ -174,7 +207,7 @@ class lC_Payment {
     }
   }
 
-  function confirmation() {
+  public function confirmation() {
     if (is_array($this->_modules)) {
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         return $GLOBALS[$this->selected_module]->confirmation();
@@ -182,7 +215,7 @@ class lC_Payment {
     }
   }
 
-  function process_button() {
+  public function process_button() {
     if (is_array($this->_modules)) {
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         return $GLOBALS[$this->selected_module]->process_button();
@@ -190,7 +223,7 @@ class lC_Payment {
     }
   }
 
-  function process() {
+  public function process() {
     if (is_array($this->_modules)) {
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         return $GLOBALS[$this->selected_module]->process();
@@ -198,7 +231,7 @@ class lC_Payment {
     }
   }
 
-  function get_error() {
+  public function get_error() {
     if (is_array($this->_modules)) {
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         return $GLOBALS[$this->selected_module]->get_error();
@@ -206,8 +239,8 @@ class lC_Payment {
     }
   }
 
-  function hasActionURL() {
-    if (is_array($this->_modules)) {
+  public function hasActionURL() {
+    if (is_array($this->_modules)) {     
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         if (isset($GLOBALS[$this->selected_module]->form_action_url) && (empty($GLOBALS[$this->selected_module]->form_action_url) === false)) {
           return true;
@@ -218,12 +251,12 @@ class lC_Payment {
     return false;
   }
 
-  function getActionURL() {
+  public function getActionURL() {
     return $GLOBALS[$this->selected_module]->form_action_url;
   }
 
-  function hasIframeURL() {
-    if (is_array($this->_modules)) {
+  public function hasIframeURL() {
+    if (is_array($this->_modules)) { 
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         if (isset($GLOBALS[$this->selected_module]->iframe_action_url) && (empty($GLOBALS[$this->selected_module]->iframe_action_url) === false)) {
           return true;
@@ -234,11 +267,11 @@ class lC_Payment {
       return false;
   }
 
-  function getIframeURL() {
+  public function getIframeURL() {   
     return $GLOBALS[$this->selected_module]->iframe_action_url;
   }
 
-  function hasRelayURL() {
+  public function hasRelayURL() {
     if (is_array($this->_modules)) {
       if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
         if (isset($GLOBALS[$this->selected_module]->iframe_relay_url) && (empty($GLOBALS[$this->selected_module]->iframe_relay_url) === false)) {
@@ -250,17 +283,18 @@ class lC_Payment {
     return false;
   }
 
-  function getRelayURL() {
+  public function getRelayURL() {  
     return $GLOBALS[$this->selected_module]->iframe_relay_url;
   }
 
-  function hasActive() {
+  public function hasActive() {
     static $has_active;
 
     if (isset($has_active) === false) {
       $has_active = false;
 
       foreach ($this->_modules as $module) {
+        if (strstr($module, '|')) $module = substr($module, 0, strpos($module, '|'));
         if ($GLOBALS['lC_Payment_' . $module]->isEnabled()) {
           $has_active = true;
           break;
@@ -271,13 +305,14 @@ class lC_Payment {
     return $has_active;
   }
     
-  function numberOfActive() {
+  public function numberOfActive() {
     static $active;
 
     if (isset($active) === false) {
       $active = 0;
 
       foreach ($this->_modules as $module) {
+        if (strstr($module, '|')) $module = substr($module, 0, strpos($module, '|'));
         if ($GLOBALS['lC_Payment_' . $module]->isEnabled()) {
           $active++;
         }
@@ -287,7 +322,10 @@ class lC_Payment {
     return $active;
   }
    
-  function _usortModules($a, $b) {
+  private function _usortModules($a, $b) {
+    if (strstr($a, '|')) $a = substr($a, 0, strpos($a, '|'));
+    if (strstr($b, '|')) $b = substr($b, 0, strpos($b, '|'));
+        
     if ($GLOBALS['lC_Payment_' . $a]->getSortOrder() == $GLOBALS['lC_Payment_' . $b]->getSortOrder()) {
       return strnatcasecmp($GLOBALS['lC_Payment_' . $a]->getTitle(), $GLOBALS['lC_Payment_' . $a]->getTitle());
     }

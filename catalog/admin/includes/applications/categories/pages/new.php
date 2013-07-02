@@ -18,11 +18,11 @@
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
 <style>
-.qq-upload-button { margin: -31px -141px 0 -50px; }
-.qq-upload-drop-area { min-height: 150px; top: -185px; }
-.qq-upload-drop-area span { margin-top:-16px; }
-    LABEL { font-weight:bold; }
-    TD { padding: 5px 0 0 5px; }
+  .qq-upload-button { margin-top: -12px; }
+  .qq-upload-drop-area { min-height: 100px; top: -185px; }
+  .qq-upload-drop-area span { margin-top:-16px; }
+  LABEL { font-weight:bold; }
+  TD { padding: 5px 0 0 5px; }
 </style>
 <!-- Main content -->
 <section role="main" id="main">
@@ -348,12 +348,14 @@
               <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . ($_GET['categories'] != '') ? 'categories=' . $_GET['categories'] : ''); ?>">
                 <span class="button-icon red-gradient glossy">
                   <span class="icon-cross"></span>
-                </span><?php echo $lC_Language->get('button_cancel'); ?>
+                </span>
+                <span class="button-text"><?php echo $lC_Language->get('button_cancel'); ?></span>
               </a>&nbsp;
               <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#category\').submit();'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
-                </span><?php echo $lC_Language->get('button_save'); ?>
+                </span>
+                <span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span>
               </a>&nbsp;
             </p>
           </div>

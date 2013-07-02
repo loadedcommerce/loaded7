@@ -75,13 +75,9 @@
             $Qparent->bindInt(':parent_id', $current_category_id);
             $Qparent->execute();
 
-            if ($Qparent->numberOfRows() > 0) {
-              $this->_page_contents = 'category_listing.php';
-            } else {
-              $this->_page_contents = 'product_listing.php';
-
-              $this->_process();
-            }
+            $this->_page_contents = 'category_listing.php';
+            
+            $this->_process();
           }
           $this->addOGPTags('site_name', STORE_NAME);
           $this->addOGPTags('type', 'website');

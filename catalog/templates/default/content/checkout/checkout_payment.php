@@ -14,6 +14,14 @@
 if ($lC_MessageStack->size('checkout_payment') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('checkout_payment', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
 }
+
+//unset($_SESSION['PPEC_PROCESS']);
+//unset($_SESSION['PPEC_PAYDATA']);
+//unset($_SESSION['cartSync']);
+//echo "<pre>";
+//print_r($lC_Payment);
+//echo "</pre>";
+
 ?>
 <!--content/checkout/checkout_payment.php start-->
 <div id="checkout_payment_details" class="full_page">
@@ -200,7 +208,7 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                 <br />
                 <div style="clear:both;"></div>
                 <div id="checkoutPaymentActions">
-                  <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+                  <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
                   <span class="buttonRight"><a onclick="$('#checkout_payment').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
                 </div>
                 <div style="clear:both;"></div>

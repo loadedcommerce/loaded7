@@ -12,6 +12,7 @@
   @license    http://loadedcommerce.com/license.html
 
 */
+global $lC_Customer;
 ?>
 <script>
 var selected;
@@ -29,7 +30,7 @@ function selectRowEffect(object, buttonSelect) {
   object.className = 'moduleRowSelected';
   selected = object;
 
-// one button is not an array
+  // one button is not an array
   if (document.checkout_shipping.shipping_mod_sel[0]) {
     document.checkout_shipping.shipping_mod_sel[buttonSelect].checked=true;
   } else {
@@ -38,16 +39,16 @@ function selectRowEffect(object, buttonSelect) {
 }
 
 <?php
-global $lC_Customer;
- if ($lC_Customer->hasDefaultAddress() == false) {
-?>
+if ($lC_Customer->hasDefaultAddress() == false) {
+  ?>
   jQuery(window).load (function () { 
-      $('#checkoutShippingAddressDetails').show();
-      $('#shipping_address_form').hide();
+    $('#checkoutShippingAddressDetails').show();
+    $('#shipping_address_form').hide();
   });
-<?php
+  <?php
 }
 ?>
+
 $('#checkout_address').submit(function() {
   // validate if form is visible
   if($("#checkoutShippingAddressDetails").is(':visible')) { 

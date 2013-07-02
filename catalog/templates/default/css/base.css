@@ -2,6 +2,9 @@ body{
   font-family:Arial, Helvetica, sans-serif; color:#544f4b;
 }
 
+em { font-style: italic; }
+strong { font-weight: bold; }
+
 /*LAYOUT*/
 .wrapper{}
 header, nav, section, footer{ width:980px; margin:0px auto;}
@@ -409,7 +412,7 @@ div.selector {
   padding-left: 10px;
   height:16px;
   position: relative;
-  width:112px;
+  width:152px !important;
   background-color:#fff;
 }
 div.selector select {
@@ -418,7 +421,7 @@ div.selector select {
   left: 0;
   position: absolute;
   top: 0;
-  width: 125px;
+  width: 165px !important;
   height:22px;
 }
 div.selector select option {
@@ -434,7 +437,7 @@ div.selector span {
   position: absolute;
   right: 0;
   top: 0;
-  width: 119px;
+  width: 159px !important;
   color:#818181;
 }
 
@@ -758,11 +761,11 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
   margin-left: 0;
 }
 
-.moduleRow td { padding: 10px 0; }
-.moduleRowOver td { padding: 10px 0; }
+.moduleRow td { padding: 6px 0; }
+.moduleRowOver td { padding: 6px 0; }
 .moduleRowOver { background-color: #f7f7f7; cursor:pointer; }
-.moduleRowSelected td { padding: 10px 0 !important; background-color: #e7e7e7; }
-#defaultSelected td { padding: 10px 0px; } 
+.moduleRowSelected td { padding: 6px 0 !important; background-color: #e7e7e7; }
+#defaultSelected td { padding: 6px 0px; } 
 
 /* checkout payment */
 .payment-selection { margin-top:5px; }
@@ -915,4 +918,12 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 }
 .clear-left { clear: left; }
 .clear-right { clear: right; }
-.clear-both { clear: both; }
+.clear-both { clear: both; } 
+
+.variant_sel {
+    padding: 5px;
+    width: 100%;
+}
+.variant_sel > label {
+    width: 14%;
+}

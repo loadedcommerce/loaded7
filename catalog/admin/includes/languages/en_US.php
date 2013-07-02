@@ -35,12 +35,13 @@ text_with_selected = With Selected:
 text_version_info = Version Info
 
 menu_title_addons = Add Ons
-menu_title_app_store = App Store
+menu_title_app_store = Add Ons
 menu_title_license_management = License Management
 menu_title_core_update = Core Update
 menu_title_report_issues = Report Issues
 menu_title_get_help = Get Help
 
+button_add = Add
 button_add_new = Add New
 button_approve = Approve
 button_back = Back
@@ -50,6 +51,7 @@ button_close = Close
 button_continue = Continue
 button_copy = Copy
 button_delete = Delete
+button_done = Done
 button_execute = Execute
 button_export = Export
 button_go = Global
@@ -61,6 +63,7 @@ button_login = Login
 button_move = Move
 button_new_file = New File
 button_new_folder = New Folder
+button_next = Next
 button_ok = OK
 button_orders_invoice = Invoice
 button_orders_packaging_slip = Packaging Slip
@@ -81,7 +84,7 @@ button_no = No
 button_info = Info
 
 icon_all = All
-icon_app_store = App Store
+icon_app_store = Add Ons
 icon_preview = Preview
 icon_backup = Backup
 icon_checkbox_ticked =
@@ -116,6 +119,7 @@ icon_nav_back = Previous
 icon_nav_back_grey =
 icon_nav_forward = Next
 icon_nav_forward_grey =
+icon_make_default = Make Default
 icon_marketing = Marketing
 icon_new = New
 icon_new_file = New File
@@ -231,6 +235,7 @@ tooltip_messages = Messages (m)
 tooltip_settings = Settings (s) / Main Menu (escape)
 
 text_version = Version
+text_confirm_delete = Confirm Delete?
 text_sort = Sort
 text_mode = Mode
 text_mode_category = Category
@@ -257,3 +262,8 @@ update_message_text2 = released.
 
 site_maintenance_message_title = Maintenance Mode
 site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
+
+text_coming_soon = Pro Feature Coming Soon
+text_cick_for_info = &nbsp;Click for Info&nbsp;
+text_pro = Pro
+text_b2b = B2B

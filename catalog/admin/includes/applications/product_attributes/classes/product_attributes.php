@@ -18,6 +18,7 @@ abstract class lC_Product_attributes_Admin {
   * Protected variables
   */
   protected $_title;
+  protected $_section;
  /*
   * Declares abstract function to be extended through inheritance
   *
@@ -30,7 +31,7 @@ abstract class lC_Product_attributes_Admin {
   */
   public function __construct() {
     global $lC_Language;
-
+    
     $lC_Language->loadIniFile('modules/product_attributes/' . $this->getCode() . '.php');
 
     $this->_title = $lC_Language->get('product_attributes_' . $this->getCode() . '_title');
@@ -112,6 +113,16 @@ abstract class lC_Product_attributes_Admin {
   public function getTitle() {
     return $this->_title;
   }
+ /*
+  * Return the product attribute section
+  *
+  * @param string $_section The section of the product page which displays the attribute
+  * @access public
+  * @return string
+  */
+  public function getSection() {
+    return $this->_section;
+  }  
  /*
   * Check to see if attribute module is installed
   *

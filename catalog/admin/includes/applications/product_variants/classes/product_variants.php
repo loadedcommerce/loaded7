@@ -477,5 +477,54 @@ class lC_Product_variants_Admin {
 
     return $result;
   }
+  
+ /*
+  * Retutn the variant groups
+  *
+  * @access public
+  * @return array
+  */
+  public static function getVariantGroups() {
+    global $lC_Database, $lC_Language;
+
+    $Qgroups = $lC_Database->query('select * from :table_products_variants_groups where languages_id = :languages_id');
+    $Qgroups->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
+    $Qgroups->bindInt(':languages_id', $lC_Language->getID());
+    $Qgroups->execute();
+
+    $groups = array();
+    while ($Qgroups->next()) {
+      $groups[] = $Qgroups->toArray();
+    }
+    
+    $Qgroups->freeResult();
+    
+    return $groups;
+  } 
+  
+ /*
+  * Retutn the variant entries
+  *
+  * @access public
+  * @return array
+  */
+  public static function getVariantEntries($id) {
+    global $lC_Database, $lC_Language;
+
+    $Qvalues = $lC_Database->query('select * from :table_products_variants_values where products_variants_groups_id = :products_variants_groups_id and languages_id = :languages_id');
+    $Qvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+    $Qvalues->bindInt(':products_variants_groups_id', $id);
+    $Qvalues->bindInt(':languages_id', $lC_Language->getID());
+    $Qvalues->execute();
+
+    $entries = array();
+    while ($Qvalues->next()) {
+      $entries[] = $Qvalues->toArray();
+    }
+    
+    $Qvalues->freeResult();
+    
+    return $entries;
+  }   
 }
 ?>

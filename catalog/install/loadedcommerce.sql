@@ -394,6 +394,7 @@ CREATE TABLE lc_orders_products (
   products_price decimal(15,4) NOT NULL DEFAULT '0.0000',
   products_tax decimal(7,4) NOT NULL DEFAULT '0.0000',
   products_quantity int(11) NOT NULL,
+  products_simple_options_meta_data varchar(1024) DEFAULT NULL,
   PRIMARY KEY (orders_products_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -666,6 +667,7 @@ CREATE TABLE lc_shopping_carts (
   item_id smallint(5) unsigned NOT NULL,
   products_id int(10) unsigned NOT NULL,
   quantity smallint(5) unsigned NOT NULL,
+  meta_data varchar(1024) DEFAULT NULL,
   date_added datetime DEFAULT NULL,
   KEY idx_sc_customers_id (customers_id),
   KEY idx_sc_customers_id_products_id (customers_id,products_id)
@@ -5960,6 +5962,7 @@ INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width,
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(4, 1, 'Large', 'large', 375, 300, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(5, 1, 'Mini', 'mini', 50, 40, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 600, 450, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(7, 1, 'Extra', 'extra', 50, 50, 0); 
 
 INSERT INTO lc_tax_class VALUES (1, 'Taxable Goods', 'The following types of products are included non-food, services, etc', now(), now());
 

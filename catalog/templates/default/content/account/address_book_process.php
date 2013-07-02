@@ -49,7 +49,7 @@ if ($lC_MessageStack->size('address_book') > 0) {
                 $back_link = lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL');
               }
             ?>
-            <span class="buttonLeft"><a href="<?php echo $back_link; ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+            <span class="buttonLeft"><a href="<?php echo $back_link; ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
             <span class="buttonRight"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_update'); ?></button></span>
             <div style="clear:both;"></div> 
           </div>
@@ -58,7 +58,7 @@ if ($lC_MessageStack->size('address_book') > 0) {
       } else {
         ?>
         <div id="addressBookProcessActions" class="action_buttonbar">
-          <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+          <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
         </div>        
         <div style="clear:both;"></div>
         <?php

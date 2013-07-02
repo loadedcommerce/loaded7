@@ -37,16 +37,26 @@ function editGroup(id) {
       $.modal({
           content: '<div id="editGroup">'+
                    '  <div id="editGroupForm">'+
+                   '    <p><?php echo $lC_Language->get('introduction_edit_customer_group'); ?></p>'+
+                   '    <fieldset class="fieldset fields-list">'+
                    '    <form name="osEdit" id="osEdit" autocomplete="off" action="" method="post">'+
-                   '      <p><?php echo $lC_Language->get('introduction_edit_customer_group'); ?></p>'+
-                   '      <p class="button-height inline-label">'+
-                   '        <label for="group_name" class="label"><?php echo $lC_Language->get('field_name'); ?></label>'+
+                   '      <div class="field-block button-height">'+
+                   '        <label for="name" class="label anthracite"><?php echo $lC_Language->get('field_name'); ?></label>'+
                    '        <span id="editGroupNamesContainer"></span>'+
-                   '      </p>'+
-                   '      <p class="button-height inline-label" id="editGroupDefault"></p>'+
+                   '      </div>'+
+                   '      <div id="editGroupDefaultContainer" class="field-block button-height margin-bottom">'+
+                   '        <span id="editGroupDefault"></span>'+
+                   '      </div>'+
+                   '      <div class="field-drop button-height black-inputs">'+
+                   '        <label for="baseline" class="label" style="width:63%;"><?php echo $lC_Language->get('field_baseline_discount'); ?></label>'+
+                   '        <div class="inputs' + ((id == '1') ? ' disabled' : '') + '" style="width:28%">'+
+                   '          <span class="mid-margin-right float-right strong">%</span><input type="text" name="baseline" class="input-unstyled small-margin-left strong" id="editBaseline" onfocus="this.select();" style="width:50%;"' + ((id == '1') ? ' DISABLED' : '') + '>'+
+                   '        </div>'+
+                   '      </div>'+
                    '    </form>'+
+                   '    </fieldset>'+
                    '  </div>'+
-                   '</div>',
+                   '</div>',        
           title: '<?php echo $lC_Language->get('modal_heading_edit_customer_group'); ?>',
           width: 500,
           scrolling: false,
@@ -100,9 +110,13 @@ function editGroup(id) {
       });
       $("#editGroupNamesContainer").html(data.editNames);
       $("#editGroupFormTable > tfoot").empty(); // clear the old values
-      if ( id != defaultId ) {
-        $("#editGroupDefault").html('<label for="default" class="label"><?php echo $lC_Language->get('field_set_as_default'); ?></label><?php echo '&nbsp;' . lc_draw_checkbox_field('default', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>');
-      }
+   //   if ( id != defaultId ) {
+   //     $("#editGroupDefault").html('<label for="default" class="label anthracite"><?php echo $lC_Language->get('field_set_as_default'); ?></label><?php echo lc_draw_checkbox_field('default', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>');
+   //     $("#editGroupDefaultContainer").addClass('field-block');
+   //   } else {
+        $("#editGroupDefaultContainer").removeClass('field-block');
+   //   }
+      $('#editBaseline').val(data.editBaseline.toFixed(2));
     }
   );
 }

@@ -107,3 +107,6 @@ You can now take part in the various services we have to offer you. Some of thes
 For help with any of our online services please e-mail us at: %s
 
 Please note: This account has been created for you by the store owner. Please use your e-mail address with the following password as your login account: %s
+
+text_new_address_saved = New Address Saved
+text_changes_saved = Changes Saved

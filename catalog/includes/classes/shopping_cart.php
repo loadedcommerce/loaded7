@@ -91,13 +91,13 @@ class lC_ShoppingCart {
       }
 
       if ( $db_action == 'check' ) {
-        $Qproduct = $lC_Database->query('select item_id, quantity from :table_shopping_carts where customers_id = :customers_id and products_id = :products_id');
+        $Qproduct = $lC_Database->query('select item_id, meta_data, quantity from :table_shopping_carts where customers_id = :customers_id and products_id = :products_id');
         $Qproduct->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
         $Qproduct->bindInt(':customers_id', $lC_Customer->getID());
         $Qproduct->bindInt(':products_id', $data['id']);
         $Qproduct->execute();
-
-        if ( $Qproduct->numberOfRows() > 0 ) {
+        
+        if ( $Qproduct->numberOfRows() > 0 && $data['meta_data'] == $Qproduct->value('meta_data')) {
           $Qupdate = $lC_Database->query('update :table_shopping_carts set quantity = :quantity where customers_id = :customers_id and item_id = :item_id');
           $Qupdate->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
           $Qupdate->bindInt(':quantity', $data['quantity'] + $Qproduct->valueInt('quantity'));
@@ -116,13 +116,16 @@ class lC_ShoppingCart {
         $Qid->execute();
 
         $db_item_id = $Qid->valueInt('item_id') + 1;
-
-        $Qnew = $lC_Database->query('insert into :table_shopping_carts (customers_id, item_id, products_id, quantity, date_added) values (:customers_id, :item_id, :products_id, :quantity, :date_added)');
+       
+        $meta_data = (is_array($data['simple_options']) && empty($data['simple_options']) === false) ? $data['simple_options'] : array();
+        
+        $Qnew = $lC_Database->query('insert into :table_shopping_carts (customers_id, item_id, products_id, quantity, meta_data, date_added) values (:customers_id, :item_id, :products_id, :quantity, :meta_data, :date_added)');
         $Qnew->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
         $Qnew->bindInt(':customers_id', $lC_Customer->getID());
         $Qnew->bindInt(':item_id', $db_item_id);
         $Qnew->bindInt(':products_id', $data['id']);
         $Qnew->bindInt(':quantity', $data['quantity']);
+        $Qnew->bindInt(':meta_data', serialize($meta_data));
         $Qnew->bindRaw(':date_added', 'now()');
         $Qnew->execute();
 
@@ -143,24 +146,24 @@ class lC_ShoppingCart {
       }
     }
 
-// reset per-session cart contents, but not the database contents
+    // reset per-session cart contents, but not the database contents
     $this->reset();
 
     $_delete_array = array();
 
-    $Qproducts = $lC_Database->query('select sc.item_id, sc.products_id, sc.quantity, sc.date_added, p.parent_id, p.products_price, p.products_model, p.products_tax_class_id, p.products_weight, p.products_weight_class, p.products_status from :table_shopping_carts sc, :table_products p where sc.customers_id = :customers_id and sc.products_id = p.products_id order by sc.date_added desc');
+    $Qproducts = $lC_Database->query('select sc.item_id, sc.products_id, sc.quantity, sc.meta_data, sc.date_added, p.parent_id, p.products_price, p.products_model, p.products_tax_class_id, p.products_weight, p.products_weight_class, p.products_status from :table_shopping_carts sc, :table_products p where sc.customers_id = :customers_id and sc.products_id = p.products_id order by sc.date_added desc');
     $Qproducts->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindInt(':customers_id', $lC_Customer->getID());
     $Qproducts->execute();
 
-      while ( $Qproducts->next() ) {
-        if ( $Qproducts->valueInt('products_status') === 1 ) {
-          $Qdesc = $lC_Database->query('select products_name, products_keyword, products_description from :table_products_description where products_id = :products_id and language_id = :language_id');
-          $Qdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-          $Qdesc->bindInt(':products_id', ($Qproducts->valueInt('parent_id') > 0) ? $Qproducts->valueInt('parent_id') : $Qproducts->valueInt('products_id'));
-          $Qdesc->bindInt(':language_id', $lC_Language->getID());
-          $Qdesc->execute();
+    while ( $Qproducts->next() ) {
+      if ( $Qproducts->valueInt('products_status') === 1 ) {
+        $Qdesc = $lC_Database->query('select products_name, products_keyword, products_description from :table_products_description where products_id = :products_id and language_id = :language_id');
+        $Qdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $Qdesc->bindInt(':products_id', ($Qproducts->valueInt('parent_id') > 0) ? $Qproducts->valueInt('parent_id') : $Qproducts->valueInt('products_id'));
+        $Qdesc->bindInt(':language_id', $lC_Language->getID());
+        $Qdesc->execute();
 
         $Qimage = $lC_Database->query('select image from :table_products_images where products_id = :products_id and default_flag = :default_flag');
         $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
@@ -176,20 +179,23 @@ class lC_ShoppingCart {
           }
         }
 
-          $this->_contents[$Qproducts->valueInt('item_id')] = array('item_id' => $Qproducts->valueInt('item_id'),
-                                                                    'id' => $Qproducts->valueInt('products_id'),
-                                                                    'parent_id' => $Qproducts->valueInt('parent_id'),
-                                                                    'model' => $Qproducts->value('products_model'),
-                                                                    'name' => $Qdesc->value('products_name'),
-                                                                    'keyword' => $Qdesc->value('products_keyword'),
-                                                                    'description' => $Qdesc->value('products_description'),
-                                                                    'image' => ($Qimage->numberOfRows() === 1) ? $Qimage->value('image') : '',
-                                                                    'price' => $price,
-                                                                    'quantity' => $Qproducts->valueInt('quantity'),
-                                                                    'weight' => $Qproducts->value('products_weight'),
-                                                                    'tax_class_id' => $Qproducts->valueInt('products_tax_class_id'),
-                                                                    'date_added' => lC_DateTime::getShort($Qproducts->value('date_added')),
-                                                                    'weight_class_id' => $Qproducts->valueInt('products_weight_class'));
+        $this->_contents[$Qproducts->valueInt('item_id')] = array('item_id' => $Qproducts->valueInt('item_id'),
+                                                                  'id' => $Qproducts->valueInt('products_id'),
+                                                                  'parent_id' => $Qproducts->valueInt('parent_id'),
+                                                                  'model' => $Qproducts->value('products_model'),
+                                                                  'name' => $Qdesc->value('products_name'),
+                                                                  'keyword' => $Qdesc->value('products_keyword'),
+                                                                  'description' => $Qdesc->value('products_description'),
+                                                                  'image' => ($Qimage->numberOfRows() === 1) ? $Qimage->value('image') : '',
+                                                                  'price' => $price,
+                                                                  'quantity' => $Qproducts->valueInt('quantity'),
+                                                                  'weight' => $Qproducts->value('products_weight'),
+                                                                  'tax_class_id' => $Qproducts->valueInt('products_tax_class_id'),
+                                                                  'date_added' => lC_DateTime::getShort($Qproducts->value('date_added')),
+                                                                  'weight_class_id' => $Qproducts->valueInt('products_weight_class'));
+
+                                                                  
+        $this->_contents[$Qproducts->valueInt('item_id')]['simple_options'] = unserialize($Qproducts->value('meta_data'));                                                                    
 
         if ( $Qproducts->valueInt('parent_id') > 0 ) {
           $Qcheck = $lC_Database->query('select products_status from :table_products where products_id = :products_id');
@@ -227,10 +233,10 @@ class lC_ShoppingCart {
                 }
 
                 $this->_contents[$Qproducts->valueInt('item_id')]['variants'][] = array('group_id' => $Qvariant->valueInt('group_id'),
-                                                                                        'value_id' => $Qvariant->valueInt('value_id'),
-                                                                                        'group_title' => $group_title,
-                                                                                        'value_title' => $value_title,
-                                                                                        'has_custom_value' => $has_custom_value);
+                  'value_id' => $Qvariant->valueInt('value_id'),
+                  'group_title' => $group_title,
+                  'value_title' => $value_title,
+                  'has_custom_value' => $has_custom_value);
               }
             } else {
               $_delete_array[] = $Qproducts->valueInt('item_id');
@@ -404,28 +410,68 @@ class lC_ShoppingCart {
           }
         }
 
-          $this->_contents[$item_id] = array('item_id' => $item_id,
-                                             'id' => $product_id,
-                                             'parent_id' => $Qproduct->valueInt('parent_id'),
-                                             'name' => $Qdescription->value('products_name'),
-                                             'model' => $Qproduct->value('products_model'),
-                                             'keyword' => $Qdescription->value('products_keyword'),
-                                             'description' => $Qdescription->value('products_description'),
-                                             'image' => $image,
-                                             'price' => $price,
-                                             'quantity' => $quantity,
-                                             'weight' => $Qproduct->value('products_weight'),
-                                             'tax_class_id' => $tax_class_id,
-                                             'date_added' => lC_DateTime::getShort(lC_DateTime::getNow()),
-                                             'weight_class_id' => $Qproduct->valueInt('products_weight_class'));                                           
+        $this->_contents[$item_id] = array('item_id' => $item_id,
+                                           'id' => $product_id,
+                                           'parent_id' => $Qproduct->valueInt('parent_id'),
+                                           'name' => $Qdescription->value('products_name'),
+                                           'model' => $Qproduct->value('products_model'),
+                                           'keyword' => $Qdescription->value('products_keyword'),
+                                           'description' => $Qdescription->value('products_description'),
+                                           'image' => $image,
+                                           'price' => $price,
+                                           'quantity' => $quantity,
+                                           'weight' => $Qproduct->value('products_weight'),
+                                           'tax_class_id' => $tax_class_id,
+                                           'date_added' => lC_DateTime::getShort(lC_DateTime::getNow()),
+                                           'weight_class_id' => $Qproduct->valueInt('products_weight_class'));                                           
 
+        // simple options
+        if (isset($_POST['simple_options']) && empty($_POST['simple_options']) === false) {
+          
+          $total_modifier = 0.00;
+          
+          foreach($_POST['simple_options'] as $options_id => $values_id) {
+            
+            $QsimpleOptionsValues = $lC_Database->query('select price_modifier from :table_products_simple_options_values where options_id = :options_id and values_id = :values_id and customers_group_id = :customers_group_id');
+            $QsimpleOptionsValues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+            $QsimpleOptionsValues->bindInt(':options_id', $options_id);
+            $QsimpleOptionsValues->bindInt(':values_id', $values_id);
+            $QsimpleOptionsValues->bindInt(':customers_group_id', '1');
+            $QsimpleOptionsValues->execute();  
+            
+            $Qvariants = $lC_Database->query('select pvg.title as group_title, pvg.module, pvv.title as value_title from :table_products_variants_groups pvg, :table_products_variants_values pvv where pvg.id = :options_id and pvv.id = :values_id and pvv.languages_id = :languages_id and pvv.products_variants_groups_id = pvg.id and pvg.languages_id = :languages_id limit 1');
+            $Qvariants->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
+            $Qvariants->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+            $Qvariants->bindInt(':options_id', $options_id);
+            $Qvariants->bindInt(':values_id', $values_id);
+            $Qvariants->bindInt(':languages_id', $lC_Language->getID());
+            $Qvariants->bindInt(':languages_id', $lC_Language->getID());
+            $Qvariants->execute();
+            
+            $this->_contents[$item_id]['simple_options'][] = array('value_id' => $values_id,
+                                                                   'group_id' => $options_id,
+                                                                   'group_title' => $Qvariants->value('group_title'),
+                                                                   'value_title' => $Qvariants->value('value_title'),
+                                                                   'price_modifier' => $QsimpleOptionsValues->valueDecimal('price_modifier'));
+                                                                   
+            $total_modifier = (float)$total_modifier + (float)$QsimpleOptionsValues->valueDecimal('price_modifier');                                                                   
+                                                                   
+            $QsimpleOptionsValues->freeResult();                      
+            $Qvariants->freeResult();                      
+          }
+          
+          $this->_contents[$item_id]['price'] = (float)$price + (float)$total_modifier;
+        
+        }                                             
+                                             
         if ( $lC_Customer->isLoggedOn() ) {
-          $Qnew = $lC_Database->query('insert into :table_shopping_carts (customers_id, item_id, products_id, quantity, date_added) values (:customers_id, :item_id, :products_id, :quantity, :date_added)');
+          $Qnew = $lC_Database->query('insert into :table_shopping_carts (customers_id, item_id, products_id, quantity, meta_data, date_added) values (:customers_id, :item_id, :products_id, :quantity, :meta_data, :date_added)');
           $Qnew->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
           $Qnew->bindInt(':customers_id', $lC_Customer->getID());
           $Qnew->bindInt(':item_id', $item_id);
           $Qnew->bindInt(':products_id', $product_id);
           $Qnew->bindInt(':quantity', $quantity);
+          $Qnew->bindValue(':meta_data', serialize($this->_contents[$item_id]['simple_options']));
           $Qnew->bindRaw(':date_added', 'now()');
           $Qnew->execute();
         }
@@ -463,6 +509,7 @@ class lC_ShoppingCart {
             }
           }
         }
+
       }
 
       $this->_cleanUp();
@@ -691,6 +738,16 @@ class lC_ShoppingCart {
 
     return $this->_content_type;
   }
+  
+  public function hasSimpleOptions($item_id) {
+    return isset($this->_contents[$item_id]['simple_options']) && !empty($this->_contents[$item_id]['simple_options']);
+  }
+
+  public function getSimpleOptions($item_id) {
+    if ( isset($this->_contents[$item_id]['simple_options']) && !empty($this->_contents[$item_id]['simple_options']) ) {
+      return $this->_contents[$item_id]['simple_options'];
+    }
+  }  
 
   public function isVariant($item_id) {
     return isset($this->_contents[$item_id]['variants']) && !empty($this->_contents[$item_id]['variants']);
@@ -882,7 +939,7 @@ class lC_ShoppingCart {
   public function setBillingMethod($billing_array) {
     $this->_billing_method = $billing_array;
 
-    $this->_calculate();
+    $this->_calculate(false);
   }
 
   public function getBillingMethod($key = null) {
@@ -1041,7 +1098,7 @@ class lC_ShoppingCart {
         } else {
           $lC_Shipping = new lC_Shipping($this->getShippingMethod('id'));
           $this->setShippingMethod($lC_Shipping->getQuote(), false);
-        }
+        } 
       }
 
       if ( !class_exists('lC_OrderTotal') ) {

@@ -73,7 +73,7 @@ if ($lC_MessageStack->size('tell_a_friend') > 0) {
   </div>
   <div style="clear:both;">&nbsp;</div>
   <div id="productTellAFriendActions" class="action_buttonbar">
-    <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+    <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
     <span class="buttonRight"><a onclick="$('#tell_a_friend').submit();"><button class="button brown_btn" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
   </div>
   <div style="clear:both;"></div>

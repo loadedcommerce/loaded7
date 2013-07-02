@@ -70,6 +70,13 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                       echo '              <tr class="success-products-listing-row">' . "\n" .
                            '                <td width="30"><b>' . $products['quantity'] . '&nbsp;x&nbsp;</b></td>' . "\n" .
                            '                <td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
+                           
+                      if ( is_array($products['options']) && empty($products['options']) === false ) {
+                        foreach ( $products['options'] as $key => $val) {
+                          echo '<br /><span class="confirmation-products-listing-model">- ' . $val['group_title'] . ': ' . $val['value_title'] . '</span>';
+                        }
+                      }                           
+                           
                       if ( lC_Success::isVariant($products['id']) === true ) {
                         foreach ( lC_Success::getVariants($products['id']) as $variant) {
                           echo '<br /><span class="confirmation-products-listing-model">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</span>';

@@ -111,8 +111,8 @@ if ( !isset($_SESSION['admin']) && (basename($_SERVER['PHP_SELF']) != FILENAME_R
   unset($redirect);
 }
 
-require($lC_Vqmod->modCheck('includes/classes/directory_listing.php'));
 require($lC_Vqmod->modCheck('includes/classes/access.php'));
+require($lC_Vqmod->modCheck('../includes/classes/directory_listing.php'));
 require($lC_Vqmod->modCheck('../includes/classes/address.php'));
 require($lC_Vqmod->modCheck('../includes/classes/weight.php'));
 require($lC_Vqmod->modCheck('../includes/classes/xml.php'));
@@ -156,6 +156,10 @@ $BarcodeQR = new BarcodeQR();
 
 // templates general class
 require($lC_Vqmod->modCheck('templates/default/classes/general.php'));
+
+// instantiate the addons class
+require('includes/classes/addons.php');
+$lC_Addons = new lC_Addons_Admin();
 
 // check if a default currency is set
 if (!defined('DEFAULT_CURRENCY')) {
