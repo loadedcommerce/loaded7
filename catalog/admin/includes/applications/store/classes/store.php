@@ -25,6 +25,8 @@ class lC_Store_Admin {
   public static function getAll() {
     global $lC_Database, $lC_Language, $_module;
     
+    $lC_Language->loadIniFile('store.php');
+
     $media = $_GET['media'];
     
     $type = (isset($_GET['type']) && $_GET['type'] != NULL) ? strtolower($_GET['type']) : NULL;
@@ -36,8 +38,9 @@ class lC_Store_Admin {
     foreach ( $Qaddons as $key => $addon ) {
       
       if ($type != NULL && $type == $addon['type']) {
+        $mobileEnabled = (isset($addon['mobile']) && $addon['mobile'] == true) ? '<span class="mid-margin-left icon-mobile icon-blue with-tooltip" title="' . $lC_Language->get('text_mobile_enabled') . '" style="vertical-align:-40%;"></span>' : '';
         $thumb = '<div style="position:relative;">' . $addon['thumbnail'] . '<div class="version-tag"><span class="tag black-gradient">' . $addon['version'] . '</span></div></div>';
-        $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom"') . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . '</small>';
+        $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom"') . $mobileEnabled . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . '</small>';
         $desc = substr($addon['description'], 0, 300) . '...';     
        
         if ($addon['installed'] == '1') { 
@@ -286,6 +289,7 @@ class lC_Store_Admin {
         $addon['version'] = $GLOBALS[$class]->getAddonVersion();
         $addon['compatibility'] = $GLOBALS[$class]->getCompatibility();
         $addon['installed'] = $GLOBALS[$class]->isInstalled();
+        $addon['mobile'] = $GLOBALS[$class]->isMobileEnabled();
         $addon['enabled'] = $GLOBALS[$class]->isEnabled();
         $addons[] = $addon;
       }
