@@ -46,17 +46,17 @@ class lC_Payment {
           $this->removeModule($Qmodules->value('code'));
           continue;
         }
-        
+
         if ($_SESSION['lC_Addons_data'][$addon]['enabled'] == '1') {
-          if (defined('CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES') && CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES == '1') { 
+          if (defined('CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES') && CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES == '1' && (strstr($_SESSION['mediaType'], 'mobile-') || strstr($_SESSION['mediaType'], 'tablet-')) ) { 
             if ($_SESSION['lC_Addons_data'][$addon]['mobile'] == true) {
               $this->_modules[] = $Qmodules->value('code') . '|' . $addon;        
-            }  
+            }
           } else {
             $this->_modules[] = $Qmodules->value('code') . '|' . $addon;        
           }
         }
-      }         
+      }
     }
     
     $Qmodules->freeResult();
