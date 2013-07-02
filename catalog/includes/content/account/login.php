@@ -59,8 +59,10 @@ class lC_Account_Login extends lC_Template {
         $Qupdate->bindRaw(':date_last_logon', 'now()');
         $Qupdate->bindInt(':customers_id', $lC_Customer->getID());
         $Qupdate->execute();
-
-        $lC_ShoppingCart->synchronizeWithDatabase();
+        
+        if ($lC_ShoppingCart->hasContents() === false) {
+          $lC_ShoppingCart->synchronizeWithDatabase();
+        }
 
         $lC_NavigationHistory->removeCurrentPage();
 

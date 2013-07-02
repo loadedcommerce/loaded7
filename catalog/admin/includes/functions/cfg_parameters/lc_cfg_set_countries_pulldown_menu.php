@@ -15,12 +15,6 @@
   function lc_cfg_set_countries_pulldown_menu($default, $key = null) {
 
     $css_class = 'class="input with-small-padding"';
-    $args = func_get_args();
-    if(count($args) > 2 &&  strpos($args[0], 'class') !== false ) {
-      $css_class = $args[0];
-      $default = $args[1];
-      $key  = $args[2];
-    }
 
     if (isset($_GET['plugins'])) {
       $name = (!empty($key) ? 'plugins[' . $key . ']' : 'plugins_value');

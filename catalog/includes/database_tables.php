@@ -33,6 +33,7 @@
   define('TABLE_CURRENCIES', DB_TABLE_PREFIX . 'currencies');
   define('TABLE_CUSTOMERS', DB_TABLE_PREFIX . 'customers');
   define('TABLE_CUSTOMERS_GROUPS', DB_TABLE_PREFIX . 'customers_groups');
+  define('TABLE_CUSTOMERS_GROUPS_DATA', DB_TABLE_PREFIX . 'customers_groups_data');
   define('TABLE_GEO_ZONES', DB_TABLE_PREFIX . 'geo_zones');
   define('TABLE_LANGUAGES', DB_TABLE_PREFIX . 'languages');
   define('TABLE_LANGUAGES_DEFINITIONS', DB_TABLE_PREFIX . 'languages_definitions');
@@ -59,9 +60,9 @@
   define('TABLE_PRODUCTS_TO_CATEGORIES', DB_TABLE_PREFIX . 'products_to_categories');
   define('TABLE_PRODUCTS_VARIANTS', DB_TABLE_PREFIX . 'products_variants');
   define('TABLE_PRODUCTS_VARIANTS_GROUPS', DB_TABLE_PREFIX . 'products_variants_groups');
-  define('TABLE_PRODUCTS_VARIANTS_GROUPS_LANG', DB_TABLE_PREFIX . 'products_variants_groups_lang');
   define('TABLE_PRODUCTS_VARIANTS_VALUES', DB_TABLE_PREFIX . 'products_variants_values');
-  define('TABLE_PRODUCTS_VARIANTS_VALUES_LANG', DB_TABLE_PREFIX . 'products_variants_values_lang');
+  define('TABLE_PRODUCTS_SIMPLE_OPTIONS', DB_TABLE_PREFIX . 'products_simple_options');
+  define('TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES', DB_TABLE_PREFIX . 'products_simple_options_values');  
   define('TABLE_REVIEWS', DB_TABLE_PREFIX . 'reviews');
   define('TABLE_SESSIONS', DB_TABLE_PREFIX . 'sessions');
   define('TABLE_SHIPPING_AVAILABILITY', DB_TABLE_PREFIX . 'shipping_availability');

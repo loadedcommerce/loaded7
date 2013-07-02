@@ -34,6 +34,8 @@
 
       if ( isset($lC_Product) ) {
         $quantity = (isset($_POST['quantity']) && !empty($_POST['quantity'])) ? (int)$_POST['quantity'] : 1;
+        
+        
         if ( $lC_Product->hasVariants() ) {
           if ( isset($_POST['variants']) && is_array($_POST['variants']) && !empty($_POST['variants']) ) {
             if ( $lC_Product->variantExists($_POST['variants']) ) {

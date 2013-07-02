@@ -1,15 +1,15 @@
 <?php
 /**  
-*  $Id: checkout_confirmation.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+  $Id: checkout_confirmation.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     Loaded Commerce Team
+  @copyright  (c) 2013 Loaded Commerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 if ($lC_MessageStack->size('checkout_payment') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('checkout_payment', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
@@ -85,9 +85,9 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                       <?php
                       }
                       foreach ($lC_ShoppingCart->getProducts() as $products) {
-                        echo '              <tr class="confirmation-products-listing-row">' . "\n" .
-                        '                <td width="30"><b>' . $products['quantity'] . '&nbsp;x&nbsp;</b></td>' . "\n" .
-                        '                <td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
+                        echo '<tr class="confirmation-products-listing-row">' . "\n" .
+                             '  <td width="30"><b>' . $products['quantity'] . '&nbsp;x&nbsp;</b></td>' . "\n" .
+                             '  <td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
                         if ( (STOCK_CHECK == '1') && !$lC_ShoppingCart->isInStock($products['item_id']) ) {
                           echo '<span class="markProductOutOfStock">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>';
                         }
@@ -96,6 +96,11 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                             echo '<br />- ' . $variant['group_title'] . ': ' . $variant['value_title'];
                           }
                         }
+                        if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
+                          foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
+                            echo '<br /><span style="font-size:.9em;">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</span>';
+                          }
+                        }                        
                         echo '</td>' . "\n";
                         if ($lC_ShoppingCart->numberOfTaxGroups() > 1) {
                           echo '                <td style="float:right;"><b>' . lC_Tax::displayTaxRateValue($products['tax']) . '</b></td>' . "\n";
@@ -184,6 +189,7 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
               ?>
               <div style="clear:both;"></div>
               <?php
+              
               if ($lC_Payment->hasActionURL()) {
                 //$form_action_url = ($lC_Payment->hasIframeURL()) ?  $lC_Payment->getIframeURL() : $lC_Payment->getActionURL();
                 $form_action_url = $lC_Payment->getActionURL();
@@ -249,7 +255,7 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                 ?>
                 <div style="clear:both;"></div>
                 <div id="checkoutConfirmationActions">
-                  <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span>
+                  <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
                   <span class="buttonRight"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_confirm_order'); ?></button></span>
                 </div>
                 <div style="clear:both;"></div>

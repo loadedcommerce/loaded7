@@ -152,7 +152,10 @@ class lC_Products_Admin_rpc {
   * @return json
   */
   public static function validateKeyword() {
-    $validated = lC_Products_Admin::validate($_GET['products_keyword'], $_GET['pid']);
+    $data = str_replace('%5B', '[', $_GET);
+    $data = str_replace('%5D', ']', $data);
+    
+    $validated = lC_Products_Admin::validate($data['products_keyword'], $data['pid']);
 
     echo json_encode($validated);
   }
@@ -187,7 +190,9 @@ class lC_Products_Admin_rpc {
                                        $group['code'],
                                        lc_href_link($lC_Image->getAddress($Qimages->value('image'), $group['code']), null, 'NONSSL', false, false, true),
                                        number_format(@filesize(DIR_FS_CATALOG . DIR_WS_IMAGES . 'products/' . $group['code'] . '/' . $Qimages->value('image'))),
-                                       $Qimages->valueInt('default_flag'));
+                                       $Qimages->valueInt('default_flag'),
+                                       $lC_Image->getWidth($group['code']),
+                                       $lC_Image->getHeight($group['code']));
         }
       }
     }
@@ -335,7 +340,12 @@ class lC_Products_Admin_rpc {
           $Qcheck->execute();
 
           if ( $Qcheck->numberOfRows() === 1 ) {
-            $default_flag = 0;
+            // is default image uploaded, remove the old default image first.
+            if (isset($_GET['default']) && $_GET['default'] == '1') {
+              $lC_Image->delete($Qcheck->value('id'));
+            } else {
+              $default_flag = 0;
+            }
           }
 
           $Qimage = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added) values (:products_id, :image, :default_flag, :sort_order, :date_added)');
@@ -363,5 +373,31 @@ class lC_Products_Admin_rpc {
 
     echo json_encode($result);
   }
+  
+ /*
+  * Return the variant group data for use on simple options modal
+  *
+  * @access public
+  * @return json
+  */
+  public static function getSimpleOptionData() {
+    $result = lC_Products_Admin::getSimpleOptionData();
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+
+    echo json_encode($result);
+  } 
+ /*
+  * Return the variant entry data for use on simple options modal
+  *
+  * @access public
+  * @return json
+  */
+  public static function getSimpleOptionEntryData() {
+    $result = lC_Products_Admin::getSimpleOptionEntryData($_GET);
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+
+    echo json_encode($result);
+  }     
+  
 }
 ?>

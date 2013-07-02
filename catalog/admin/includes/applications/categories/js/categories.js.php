@@ -29,9 +29,9 @@ function _refreshDataTable() {
                   { "sWidth": "30%", "bSortable": true, "sClass": "dataColCategory" },
                   { "sWidth": "7%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile", "sType": "string" },
                   { "sWidth": "9%", "bSortable": false, "sClass": "dataColVisibility hide-on-mobile" },
-                  { "sWidth": "25%", "bSortable": true, "sClass": "dataColMode hide-on-mobile" },
+                  { "sWidth": "20%", "bSortable": true, "sClass": "dataColMode hide-on-mobile" },
                   { "sWidth": "9%", "bSortable": true, "sClass": "dataColSort hide-on-mobile" },
-                  { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
+                  { "sWidth": "25%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();
 }   
@@ -66,14 +66,18 @@ $(document).ready(function() {
   // instantiate breadcrumb
   $("#breadCrumb0").jBreadCrumb();
 
-  var quickAdd = '<?php echo (isset($_GET['action']) && $_GET['action'] == 'quick_add') ? true : false; ?>';
+  <?php if (!$_GET['action']) { ?>
+    if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {  
+      $('#floating-button-container').hide();
+    }
+  <?php } ?>
   
   if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
     $('#main-title > h1').attr('style', 'font-size:1.8em;');
     $('#main-title').attr('style', 'padding: 0 0 0 20px;');
     $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
     $('#dataTable_length').hide();
-    $('#floating-button-container').hide();
+    $('#floating-menu-div-listing').fixFloat();
     $('#actionText').hide();
     $('.on-mobile').show();
     $('.selectContainer').hide();
@@ -81,17 +85,8 @@ $(document).ready(function() {
     // instantiate floating menu
     $('#floating-menu-div-listing').fixFloat();
   }
-    
-  if (quickAdd) {
-    newCategory();
-  }
   <?php if ($_GET['action'] != '') { ?>
   createUploader();
-  var qqbuttonhtmlold = $('.qq-upload-button').html();
-  var qqbuttonhtml = qqbuttonhtmlold.replace(/Upload a file/i, 'Upload');
-  $('.qq-upload-button').html(qqbuttonhtml);
-  $('.qq-upload-list').hide();
-  
   <?php
     foreach ( $lC_Language->getAll() as $l ) {  
       echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%' });";

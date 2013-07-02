@@ -49,7 +49,7 @@ to make sure all content in the buffer is compressed and sent to the client
   function startService($service) {
     global $lC_Vqmod;
     
-    include($lC_Vqmod->modCheck('includes/modules/services/' . $service . '.php'));
+    include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/modules/services/' . $service . '.php'));
 
     if (@call_user_func(array('lC_Services_' . $service, 'start'))) {
       $this->started_services[] = $service;
@@ -57,7 +57,7 @@ to make sure all content in the buffer is compressed and sent to the client
   }
 
   function stopService($service) {
-    @call_user_func(array('lC_Services_' . $service, 'stop'));
+    @call_user_func(array(DIR_FS_CATALOG . 'lC_Services_' . $service, 'stop'));
   }
 
 

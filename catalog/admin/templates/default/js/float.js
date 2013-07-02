@@ -36,8 +36,8 @@
           repositionMe = false;
         }
 
-        leftOffset = (menuOpen) ? '370px;' : '110px';
-        rightOffset = (menuOpen) ? '259px' : '0px';
+        leftOffset = (menuOpen) ? '15px;' : '110px';
+        rightOffset = (menuOpen) ? '-20px' : '0px';
 
         if(fixMe){
           var cssObj = {

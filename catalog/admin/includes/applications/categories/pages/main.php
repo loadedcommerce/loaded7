@@ -59,7 +59,7 @@
       <tbody class="sorted_table"></tbody>
       <tfoot>
         <tr>
-          <th colspan="6">&nbsp;</th>
+          <th colspan="7">&nbsp;</th>
         </tr>
       </tfoot>
     </table>
@@ -89,7 +89,6 @@
                 <?php
               }
               ?>
-              <!--<a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="newCategory(); return false;'); ?>">-->
               <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($_GET['categories']) ? $_GET['categories'] : '') . '&action=new')); ?>">
                 <span class="button-icon green-gradient">
                   <span class="icon-plus"></span>

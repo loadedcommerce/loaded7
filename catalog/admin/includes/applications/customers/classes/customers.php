@@ -394,7 +394,7 @@ class lC_Customers_Admin {
     $error = false;
     $result = array();
 
-    if (!is_numeric($id)) {
+    if (!is_numeric($id)||is_numeric($id)) {
       // check that email doesnt exist
       $Qcheck = $lC_Database->query('select customers_id from :table_customers where customers_email_address = :customers_email_address');
       if ( isset($id) && is_numeric($id) ) {

@@ -11,6 +11,10 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+global $lC_Vqmod;
+
+require($lC_Vqmod->modCheck('includes/applications/store/classes/store.php'));
+
 class lC_Application_Store extends lC_Template_Admin {
   /*
   * Protected variables

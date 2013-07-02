@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>addon_shipping_item_title</key>
+      <value><![CDATA[Per Item Shipping]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>addon_shipping_item_description</key>
+      <value><![CDATA[Charge flat rate shipping on a per item basis.  Includes optional Handling Fee.]]></value>
+      <group>checkout</group>
+    </definition>  
+    <definition>
+      <key>shipping_item_title</key>
+      <value><![CDATA[Per Item]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>shipping_item_description</key>
+      <value><![CDATA[Per Item]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>shipping_item_method</key>
+      <value><![CDATA[Best Way]]></value>
+      <group>checkout</group>
+    </definition>
+  </definitions>
+</language>

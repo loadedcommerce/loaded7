@@ -38,7 +38,7 @@ require('../includes/classes/xml.php');
 
 session_start();
 
-require('../admin/includes/classes/directory_listing.php');
+require('../includes/classes/directory_listing.php');
 
 require('includes/classes/language.php');
 $lC_Language = new lC_LanguageInstall();

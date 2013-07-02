@@ -15,11 +15,7 @@
   function lc_cfg_set_credit_cards_checkbox_field($default, $key = null) {
     global $lC_Database;
 
-    if (isset($_GET['plugins'])) {
-      $name = (empty($key)) ? 'plugins_value' : 'plugins[' . $key . '][]';
-    } else {
-      $name = (empty($key)) ? 'configuration_value' : 'configuration[' . $key . '][]';
-    }
+    $name = (empty($key)) ? 'configuration_value' : 'configuration[' . $key . '][]';
 
     $cc_array = array();
 

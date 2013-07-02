@@ -9,4 +9,6 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-product_attributes_shipping_availability_title = Shipping Availability
+product_attributes_shipping_availability_title = Days to Ship
+
+info_bubble_attributes_shipping_availability_text = Product Shipping Availability

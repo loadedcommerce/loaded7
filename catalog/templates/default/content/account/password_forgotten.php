@@ -30,7 +30,7 @@ if ($lC_MessageStack->size('password_forgotten') > 0) {
       </div> 
       <div style="clear:both;">&nbsp;</div>
       <div id="accountPasswordForgottentActions" class="action_buttonbar">
-        <span class="buttonLeft"><a href="javascript: history.go(-1)" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a></span> 
+        <span class="buttonLeft"><a href="javascript: history.go(-1)" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span> 
         <span class="buttonRight"><a onclick="$('#password_forgotten').submit();" class="noDecoration"><button class="button brown_btn" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
       </div> 
       <div style="clear:both;"></div>
