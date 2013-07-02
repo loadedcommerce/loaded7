@@ -30,7 +30,14 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       //$('#fileUploaderImageContainer .qq-upload-list').hide();
       <?php               
       foreach ( $lC_Language->getAll() as $l ) {  
-        echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+        echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { 
+        height: 200, 
+        width: '99%',
+        filebrowserBrowseUrl: '/browser/browse.php',
+        filebrowserUploadUrl: '/uploader/upload.php',
+        filebrowserWindowWidth: '640',
+        filebrowserWindowHeight: '480'
+        });";
       }
       ?>  
       //$('#products_name_1').focus();
