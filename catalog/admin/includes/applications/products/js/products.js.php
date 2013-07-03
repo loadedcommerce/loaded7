@@ -28,11 +28,17 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       <?php } ?>
       //$('#fileUploaderImageContainer .qq-upload-button').hide();
       //$('#fileUploaderImageContainer .qq-upload-list').hide();
-      <?php               
-      foreach ( $lC_Language->getAll() as $l ) {  
-        echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser',contentsCss: '../templates/default/css/base.css',stylesSet: [] });";
-      }
-      ?>  
+      <?php 
+        if(USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
+          foreach ( $lC_Language->getAll() as $l ) {  
+            echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser',contentsCss: '../templates/default/css/base.css',stylesSet: [] });";
+          }
+        } else {
+          foreach ( $lC_Language->getAll() as $l ) {  
+            echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+          }
+        }
+      ?>
       //$('#products_name_1').focus();
       $(this).scrollTop(0); 
            

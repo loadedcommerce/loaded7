@@ -561,7 +561,9 @@
   <script src="../ext/jquery/jquery.details.min.js"></script>
   <script src="../ext/jquery/jquery.blink.js"></script>
   <script src="../ext/jquery/jquery.loadmask.js"></script>
+  <?php if(ENABLE_EDITOR == '1') { ?>
   <script src="../ext/jquery/ckeditor/ckeditor.js"></script>
+  <?php } ?>
   <!-- Template functions -->
   <script src="templates/default/js/setup.js"></script>
   <script src="templates/default/js/float.js"></script>
