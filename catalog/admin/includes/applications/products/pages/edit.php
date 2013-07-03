@@ -524,7 +524,7 @@ function getTaxClassOptionsString($id = null, $esc = false) {
                 <option id="save" value="save">Save</option>
                 <option id="apply_changes" value="apply_changes">Apply</option>
               </select>&nbsp;-->
-              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#product\').submit();'); ?>">
+              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="validateForm();'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
                 </span><span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span>
@@ -570,13 +570,12 @@ function validateForm(e) {
         <?php
       }
       ?>
-    }
-    
-    
+    } 
   }).form();
+  $("#languageTabs").refreshTabs();
   if (bValid) {
     $(e).submit();
-  }
+  } 
 
   return false;
 }           
