@@ -55,7 +55,6 @@ info_bubble_categories_page_type = Category Page Type
 info_bubble_categories_content_file = Category Content File
 info_bubble_categories_product_class = Category Product Class
  
- 
 introduction_new_category = Please fill in the following information for the new category.
 introduction_edit_category = Please make the necessary changes for this category.
 introduction_delete_category = Please verify the removal of this category and its sub-categories.
