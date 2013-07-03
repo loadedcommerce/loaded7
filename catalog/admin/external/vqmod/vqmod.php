@@ -457,6 +457,8 @@ class VQModLog {
     if(empty($this->_logs) || $this->_vqmod->logging == false) {
       return;
     }
+    
+    if (!$this->logging) return;
 
     $logPath = DIR_FS_CATALOG . date('D') . '-admin.log';
           

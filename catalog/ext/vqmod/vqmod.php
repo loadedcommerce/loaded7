@@ -457,6 +457,8 @@ class VQModLog {
       return;
     }
 
+    if (!$this->logging) return;
+
     $logPath = $this->_vqmod->path($this->_vqmod->logFolder . date('D') . '.log', true);
           
     $txt = array();
