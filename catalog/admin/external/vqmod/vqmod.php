@@ -460,7 +460,7 @@ class VQModLog {
     
     if (!$this->logging) return;
 
-    $logPath = DIR_FS_CATALOG . date('D') . '-admin.log';
+    $logPath = DIR_FS_WORK . 'logs/' . date('D') . '-admin.log';
           
     $txt = array();
     $txt[] = str_repeat('-', 10) . ' Date: ' . date('Y-m-d H:i:s') . ' ~ IP : ' . (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'N/A') . ' ' . str_repeat('-', 10);
