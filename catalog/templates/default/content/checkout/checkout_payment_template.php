@@ -12,6 +12,7 @@
 *  @license    http://loadedcommerce.com/license.html
 */
 $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
+echo '[' . $lC_ShoppingCart->getBillingMethod('id') . ']<br>';
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
@@ -28,10 +29,20 @@ $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(),
 #loadingContainer { position:absolute; right:250px; }
 #iloader { margin:100px 0 0 0px; }
 <?php 
+// common
+$fHeight = '550px';
+$fScroll = 'no';
+
 if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
   echo "#payformIframe { min-width:468px; min-height:580px; }";
 } else if ($lC_ShoppingCart->getBillingMethod('id') == 'cresecure') {
   echo "#payformIframe { min-width:480px; min-height:300px; }";
+} else if ($lC_ShoppingCart->getBillingMethod('id') == 'authorizenet_cc') {
+  $fHeight = '400px';
+  $fScroll = 'auto';
+  echo "#payformIframe { min-width:468px; min-height:280px; }";
+  echo "#checkout_shipping_col1 { width:28% !important; }";
+  echo "#checkout_shipping_col2 { width:71% !important; }";  
 } else {
   echo "#payformIframe { min-width:500px; min-height:300px; }";
   echo "#checkout_shipping_col1 { width:28% !important; }";
@@ -152,10 +163,10 @@ only screen and (min-device-pixel-ratio : 1.5) {
                 <div id="loadingContainer"><p id="iloader"></p></div>
                 <?php  
                 if ($lC_Payment->hasIframeURL()) {
-                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->getIframeURL() . '" scrolling="no" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
+                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->getIframeURL() . '" scrolling="' . $fScroll . '" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
                 } else if ($lC_Payment->hasRelayURL()) { 
                   echo '<form name="pmtForm" id="pmtForm" action="' . $lC_Payment->getRelayURL() . '" target="pmtFrame" method="post">' . lC_Checkout_Payment_template::rePost() . '</form>' . "\n";        
-                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="' . lC_Checkout_Payment_template::getIframeWidth() . '" height="550px" scrolling="no" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 
+                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="' . lC_Checkout_Payment_template::getIframeWidth() . '" height="' . $fHeight . '" scrolling="' . $fScroll . '" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 
                 } else {
                   echo '[[FORM INSERT]]'; 
                 }
