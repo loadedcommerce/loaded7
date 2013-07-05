@@ -163,6 +163,9 @@ $Qadmin->execute();
 
     if (file_exists($dir_fs_document_root . 'includes/config.php') && !is_writeable($dir_fs_document_root . 'includes/config.php')) {
       @chmod($dir_fs_document_root . 'includes/config.php', 0777);
+    } else {
+      @touch($dir_fs_document_root . 'includes/config.php');
+      @chmod($dir_fs_document_root . 'includes/config.php', 0777);
     }
 
     if (file_exists($dir_fs_document_root . 'includes/config.php') && is_writeable($dir_fs_document_root . 'includes/config.php')) {
@@ -179,10 +182,10 @@ $Qadmin->execute();
     } else {
       ?>       
       <div class="noticeBox">
-        <?php echo sprintf($lC_Language->get('error_configuration_file_not_writeable'), $dir_fs_document_root . 'includes/config.php'); ?>
-        <p align="right"><?php echo '<input type="image" src="templates/' . $template . '/languages/' . $lC_Language->getCode() . '/images/buttons/retry.gif" border="0" alt="' . $lC_Language->get('image_button_retry') . '" />'; ?></p>
-        <?php echo $lC_Language->get('error_configuration_file_alternate_method'); ?>
-        <?php echo lc_draw_textarea_field('contents', $file_contents, 60, 5, 'readonly="readonly" style="width: 100%; height: 120px;"', false); ?>
+        <p><?php echo sprintf($lC_Language->get('error_configuration_file_not_writeable'), $dir_fs_document_root . 'includes/config.php'); ?></p>
+        <p><?php echo $lC_Language->get('error_configuration_file_alternate_method'); ?></p>
+        <p align="right"><?php echo '<input class="button blue-gradient glossy" type="submit" value="Retry" />'; ?></p>
+        <p><?php echo lc_draw_textarea_field('contents', $file_contents, 60, 5, 'readonly="readonly" style="width: 100%; height: 120px;"', false); ?></p>
       </div>
       <?php
         foreach ($_POST as $key => $value) {
