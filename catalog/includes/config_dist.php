@@ -1,6 +1,6 @@
 <?php
-  define('HTTP_SERVER', 'http://www.mystore.com');
-  define('HTTPS_SERVER', 'https://www.mystore.com');
+  define('HTTP_SERVER', '');
+  define('HTTPS_SERVER', '');
   define('ENABLE_SSL', true);
   define('HTTP_COOKIE_DOMAIN', 'www.mystore.com');
   define('HTTPS_COOKIE_DOMAIN', 'www.mystore.com');
