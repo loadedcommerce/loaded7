@@ -27,11 +27,16 @@ abstract class lC_Addon {
             $_version,
             $_compatibility,
             $_enabled,
+            $_mobile_enabled,
             $_valid;
     
   public function isEnabled() {
     return $this->_enabled;
-  }   
+  }  
+  
+  public function isMobileEnabled() {
+    return $this->_mobile_enabled;
+  }    
   
   public function getAddonType() {
     return $this->_type;

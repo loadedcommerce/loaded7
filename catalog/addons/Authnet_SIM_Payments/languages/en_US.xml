@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>addon_payment_authnet_title</key>
+      <value><![CDATA[Authorize.Net Payments]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>addon_payment_authnet_description</key>
+      <value><![CDATA[The Authorize.Net Payment Gateway can handle all the steps in the secure transaction process - payment data collection, data submission and the response to the customer - while keeping Authorize.Net virtually transparent.]]></value>
+      <group>checkout</group>
+    </definition>  
+    <definition>
+      <key>payment_authnet_title</key>
+      <value><![CDATA[Authorize.Net Payments]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>payment_authnet_method_title</key>
+      <value><![CDATA[Credit Card]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>payment_authnet_method_blurb</key>
+      <value><![CDATA[powered by <img src="addons/Authnet_SIM_Payments/images/authnet-small.png" style="vertical-align:middle">]]></value>
+      <group>checkout</group>
+    </definition>       
+  </definitions>
+</language>
