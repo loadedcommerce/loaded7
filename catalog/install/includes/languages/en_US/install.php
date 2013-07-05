@@ -55,8 +55,8 @@ param_store_owner_last_name = Last Name
 param_store_owner_last_name_description = The last name of the store owner that is presented to the public.
 param_store_owner_email_address = Store Owner E-Mail
 param_store_owner_email_address_description = The e-mail address of the store owner that is presented to the public.
-param_administrator_username = Admin Username
-param_administrator_username_description = The administrator username to use for the administration tool.
+param_administrator_email = Admin Email
+param_administrator_email_description = The administrator email to use for the administration tool login.
 param_administrator_password = Admin Password
 param_administrator_password_description = The password to use for the administrator account.
 
@@ -88,3 +88,6 @@ rpc_work_directory_configured = Working directory successfully configured.
 rpc_database_sample_data_importing = The sample data is now being imported into the database. Please be patient during this procedure.
 rpc_database_sample_data_imported = Database sample data imported successfully.
 rpc_database_sample_data_import_error = There was a problem importing the database sample data. The following error occured: <b>%s</b>. Please verify the database server and try again.
+
+error_configuration_file_not_writeable = SORRY! Your "includes/config.php" file write was not successful. Please follw the directions below before proceeding.
+error_configuration_file_alternate_method = Please copy and save the code from the box below into a file named "config.php" then upload it to your server into the "includes/" folder of the Catalog Root where you started the installation from and click retry.

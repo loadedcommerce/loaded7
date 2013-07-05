@@ -57,7 +57,7 @@
           CFG_STORE_OWNER_LAST_NAME: { required: true },
           CFG_STORE_NAME: { required: true },
           CFG_STORE_OWNER_EMAIL_ADDRESS: { required: true, email: true },
-          CFG_ADMINISTRATOR_USERNAME: { required: true, email: true },
+          CFG_ADMINISTRATOR_EMAIL: { required: true, email: true },
           CFG_ADMINISTRATOR_PASSWORD: { required: true },
         },
         invalidHandler: function() {
@@ -127,8 +127,8 @@
       <?php echo lc_draw_input_field('CFG_STORE_OWNER_EMAIL_ADDRESS', null, 'class="input" style="width:93%;"'); ?>
     </div> 
     <div class="field-block button-height">
-      <label for="CFG_ADMINISTRATOR_USERNAME" class="label"><b><?php echo $lC_Language->get('param_administrator_username'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_administrator_username_description'); ?>"></span></label>
-      <?php echo lc_draw_input_field('CFG_ADMINISTRATOR_USERNAME', null, 'class="input" style="width:93%;"'); ?>
+      <label for="CFG_ADMINISTRATOR_EMAIL" class="label"><b><?php echo $lC_Language->get('param_administrator_email'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_administrator_email_description'); ?>"></span></label>
+      <?php echo lc_draw_input_field('CFG_ADMINISTRATOR_EMAIL', null, 'class="input" style="width:93%;"'); ?>
     </div>
     <div class="field-block button-height">
       <label for="CFG_ADMINISTRATOR_PASSWORD" class="label"><b><?php echo $lC_Language->get('param_administrator_password'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_administrator_password_description'); ?>"></span></label>
