@@ -90,7 +90,7 @@ $(document).ready(function() {
   <?php
     if(USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
       foreach ( $lC_Language->getAll() as $l ) {  
-        echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser',contentsCss: '../templates/default/css/base.css',stylesSet: []  });";
+        echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser', contentsCss: '../templates/" . $lC_Template->getCode($lC_Template->getID) . "/css/styles.css', stylesSet: [] });";
       }
     } else {
       foreach ( $lC_Language->getAll() as $l ) {  
