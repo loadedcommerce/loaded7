@@ -522,7 +522,7 @@ function getTaxClassOptionsString($id = null, $esc = false) {
                 <option id="save" value="save">Save</option>
                 <option id="apply_changes" value="apply_changes">Apply</option>
               </select>&nbsp;-->
-              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="validateForm();'); ?>">
+              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="validateForm(\'#product\');'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
                 </span><span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span>
@@ -537,44 +537,3 @@ function getTaxClassOptionsString($id = null, $esc = false) {
     </div>
   </div>
 </section>
-<script>
-function validateForm(e) {
-  // turn off messages
-  jQuery.validator.messages.required = "";
-
-  var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
-  var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateKeyword&pid=PID'); ?>';
-  var bValid = $("#product").validate({
-    invalidHandler: function() {
-    },
-    rules: {
-      <?php
-      foreach ( $lC_Language->getAll() as $l ) {
-        ?>
-        'products_keyword[<?php echo $l['id']; ?>]': {
-          required: true,
-          remote: jsonVKUrl.replace('PID', pid),
-        },
-        <?php
-      }
-      ?>
-    },
-    
-    messages: {
-      <?php
-      foreach ( $lC_Language->getAll() as $l ) {
-        ?>
-        "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
-        <?php
-      }
-      ?>
-    } 
-  }).form();
-  $("#languageTabs").refreshTabs();
-  if (bValid) {
-    $(e).submit();
-  } 
-
-  return false;
-}           
-</script>

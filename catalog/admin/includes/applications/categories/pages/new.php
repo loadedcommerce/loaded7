@@ -39,8 +39,8 @@
       <div id="category_tabs" class="side-tabs">
         <ul class="tabs">
           <li class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
-          <li id="tabHeaderSectionDataContent"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
-          <li><?php echo lc_link_object('#section_categories_content', $lC_Language->get('section_categories')); ?></li>
+          <!--<li id="tabHeaderSectionDataContent"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
+          <li><?php echo lc_link_object('#section_categories_content', $lC_Language->get('section_categories')); ?></li>-->
         </ul>
         <div class="clearfix tabs-content">
           <div id="section_general_content">
@@ -107,13 +107,13 @@
                         <span class="float-right small-margin-top small-margin-right"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
                       </p>
                       <br />
-                      <p class="button-height block-label">
+                      <!--<p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_keyword[' . $l['id'] . ']'; ?>">
                           <?php echo $lC_Language->get('field_keyword'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_keyword'), null); ?>
                         </label>
                         <?php echo lc_draw_input_field('categories_keyword[' . $l['id'] . ']', null, 'class="input full-width mid-margin-top" placeholder="' . $lC_Language->get('categories_keyword_placeholder') . '" disabled'); ?>
-                      </p>                      
+                      </p>-->                      
                       <p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_tags[' . $l['id'] . ']'; ?>">
                           <?php echo $lC_Language->get('field_tags'); ?>
@@ -208,7 +208,7 @@
                 </div>
               </div>
             </div>
-            <div class="columns with-padding no-margin-bottom">
+            <!--<div class="columns with-padding no-margin-bottom">
               <div class="twelve-columns no-margin-top no-margin-bottom">
                 <div class="columns no-margin-left">
                   <div class="three-columns twelve-columns-mobile"> 
@@ -248,9 +248,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div>-->
           </div>
-          <div id="section_data_content" class="with-padding">
+          <!--<div id="section_data_content" class="with-padding">
             <fieldset class="fieldset">
               <legend class="legend"><?php echo $lC_Language->get('field_management_settings'); ?></legend>
               <div class="columns no-margin-bottom">
@@ -266,7 +266,7 @@
                 </div>
               </div>
             </fieldset>
-            <!--<fieldset class="fieldset">
+            <fieldset class="fieldset">
               <legend class="legend"><?php echo $lC_Language->get('field_access_settings'); ?></legend>
               <div class="columns no-margin-bottom">
                 <div class="six-columns twelve-columns-mobile">
@@ -287,11 +287,11 @@
                 </div>
                 <div class="six-columns twelve-columns-mobile"></div>
               </div>
-            </fieldset>-->
+            </fieldset>
           </div>
           <div id="section_categories_content" class="with-padding"> 
             Relationships (Later Phase)
-          </div>
+          </div>-->
         </div>
       </div>
       <?php
