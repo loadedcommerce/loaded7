@@ -20,7 +20,7 @@ if (File_exists(__DIR__ . '/config.php')) {
 }
 
 // redirect to the installation module if DB_SERVER is empty
-if (!defined('DB_SERVER') && DB_SERVER != NULL) {
+if (!defined('DB_SERVER') || (defined('DB_SERVER') && DB_SERVER == '')) {
   if (is_dir('install')) {
     header('Location: install/index.php');
   } else {
