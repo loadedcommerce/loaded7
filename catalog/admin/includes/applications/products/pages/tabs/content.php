@@ -59,7 +59,7 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
                   </p>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_keyword[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_keyword') . lc_show_info_bubble($lC_Language->get('info_bubble_content_keyword')); ?></label>
-                    <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($pInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="input" style="width:97%" id="products_keyword_' . $l['id'] . '"'); ?>
+                    <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($pInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="required input" style="width:97%" id="products_keyword_' . $l['id'] . '"'); ?>
                   </p>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_tags[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_tags') . lc_show_info_bubble($lC_Language->get('info_bubble_content_tags')); ?></label>
@@ -87,7 +87,7 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
             </span> 
             <div class="inputs large" style="font-size:1.8em; padding:8px 0;">
               <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
-              <?php echo lc_draw_input_field('products_price', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="font-size:1em; padding:4px; height:20px; width:80%;" class="input-unstyled" onfocus="this.select();" id="products_price0" onchange="$(\'#products_base_price\').val(this.value); updatePricingDiscountDisplay();"'); ?>
+              <?php echo lc_draw_input_field('products_price', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="font-size:1em; padding:4px; height:20px; width:80%;" class="required input-unstyled" onfocus="this.select();" id="products_price0" onchange="$(\'#products_base_price\').val(this.value); updatePricingDiscountDisplay();"'); ?>
             </div>              
           </div>
           <div class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet six-columns">

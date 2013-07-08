@@ -17,7 +17,7 @@ class lC_Payment {
   var $selected_module;
 
   var $_modules = array(),
-      $_group = 'payment',
+      $_group = 'payment',                                                               
       $order_status = DEFAULT_ORDERS_STATUS_ID;
 
   // class constructor
@@ -46,12 +46,18 @@ class lC_Payment {
           $this->removeModule($Qmodules->value('code'));
           continue;
         }
-        
+
         if ($_SESSION['lC_Addons_data'][$addon]['enabled'] == '1') {
-          $this->_modules[] = $Qmodules->value('code') . '|' . $addon;        
+          if (defined('CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES') && CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES == '1' && (strstr($_SESSION['mediaType'], 'mobile-') || strstr($_SESSION['mediaType'], 'tablet-')) ) { 
+            if ($_SESSION['lC_Addons_data'][$addon]['mobile'] == true) {
+              $this->_modules[] = $Qmodules->value('code') . '|' . $addon;        
+            }
+          } else {
+            $this->_modules[] = $Qmodules->value('code') . '|' . $addon;        
+          }
         }
-      }         
-    }
+      }
+    }  
     
     $Qmodules->freeResult();
                                  
@@ -75,7 +81,7 @@ class lC_Payment {
         }        
 
         $module_class = 'lC_Payment_' . $modules;
-        
+            
         if (class_exists($module_class) === false) {
           if (file_exists('includes/modules/payment/' . $modules . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1)))) {
             include($lC_Vqmod->modCheck('includes/modules/payment/' . $modules . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1))));
@@ -99,7 +105,7 @@ class lC_Payment {
       
       if ( (!empty($_module)) && (in_array($_module, $mArr)) && (isset($GLOBALS['lC_Payment_' . $_module]->iframe_relay_url)) ) {
         $this->iframe_relay_url = $GLOBALS['lC_Payment_' . $_module]->iframe_relay_url;
-      }              
+      }                      
     }
   }
  

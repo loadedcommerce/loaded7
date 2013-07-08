@@ -199,4 +199,44 @@ function toggleEditor(id) {
     $('#cke_ckEditorCategoriesDescription_' + id).hide();
   }
 }
+
+function validateForm(e) {
+  // turn off messages
+  jQuery.validator.messages.required = "";
+
+  //var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
+  //var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateKeyword&pid=PID'); ?>';
+  var bValid = $("#category").validate({
+    invalidHandler: function() {
+    },
+    rules: {
+      <?php
+      foreach ( $lC_Language->getAll() as $l ) {
+        ?>
+        'categories_name[<?php echo $l['id']; ?>]': {
+          required: true,
+          //remote: jsonVKUrl.replace('PID', pid),
+        },
+        <?php
+      }
+      ?>
+    },
+    
+    messages: {
+      <?php
+      foreach ( $lC_Language->getAll() as $l ) {
+        ?>
+        //"products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
+        <?php
+      }
+      ?>
+    } 
+  }).form();
+  $("#languageTabs").refreshTabs();
+  if (bValid) {
+    $(e).submit();
+  } 
+
+  return false;
+}           
 </script>

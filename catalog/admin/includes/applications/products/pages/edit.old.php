@@ -11,8 +11,6 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-error_reporting(E_ALL & ~E_NOTICE);
-ini_set("display_errors", 1);
 
 if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
   $lC_ObjectInfo = new lC_ObjectInfo(lC_Products_Admin::get($_GET[$lC_Template->getModule()]));

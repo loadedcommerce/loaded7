@@ -81,6 +81,7 @@ class lC_Addons {
                                                     'version' => $GLOBALS[$class]->getAddonVersion(),
                                                     'compatibility' => $GLOBALS[$class]->getCompatibility(),
                                                     'installed' => $GLOBALS[$class]->isInstalled(),
+                                                    'mobile' => $GLOBALS[$class]->isMobileEnabled(),
                                                     'enabled' => $GLOBALS[$class]->isEnabled());  
         
         if ($GLOBALS[$class]->isEnabled()) $enabled .= $addon['path'] . ';';

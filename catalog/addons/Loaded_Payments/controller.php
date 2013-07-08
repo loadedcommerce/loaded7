@@ -59,6 +59,10 @@ class Loaded_Payments extends lC_Addon {
     */     
     $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/loadedpayments.png');
    /**
+    * The mobile capability of the addon
+    */ 
+    $this->_mobile_enabled = true;    
+   /**
     * The addon enable/disable switch
     */    
     $this->_enabled = (defined('ADDONS_PAYMENT_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_PAYMENT_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;      
