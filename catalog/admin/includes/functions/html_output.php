@@ -22,9 +22,9 @@
 
   function lc_href_link_admin($page = null, $parameters = null) {
     if (ENABLE_SSL === true) {
-      $link = HTTPS_SERVER . DIR_WS_HTTPS_CATALOG . 'admin/';
+      $link = HTTPS_SERVER . DIR_WS_HTTPS_CATALOG . DIR_WS_ADMIN;
     } else {
-      $link = HTTP_SERVER . DIR_WS_HTTP_CATALOG . 'admin/';
+      $link = HTTP_SERVER . DIR_WS_HTTP_CATALOG . DIR_WS_ADMIN;
     }
 
     $link .= $page;
