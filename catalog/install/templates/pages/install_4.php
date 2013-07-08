@@ -48,7 +48,7 @@ if (!empty($_POST['CFG_STORE_OWNER_NAME']) && !empty($_POST['CFG_STORE_OWNER_EMA
 
 $Qcheck = $lC_Database->query('select user_name from :table_administrators where user_name = :user_name');
 $Qcheck->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
-$Qcheck->bindValue(':user_name', $_POST['CFG_ADMINISTRATOR_USERNAME']);
+$Qcheck->bindValue(':user_name', $_POST['CFG_ADMINISTRATOR_EMAIL']);
 $Qcheck->execute();
 
 if ($Qcheck->numberOfRows()) {
@@ -59,7 +59,7 @@ if ($Qcheck->numberOfRows()) {
 
 $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
 $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($_POST['CFG_ADMINISTRATOR_PASSWORD'])));
-$Qadmin->bindValue(':user_name', $_POST['CFG_ADMINISTRATOR_USERNAME']);
+$Qadmin->bindValue(':user_name', $_POST['CFG_ADMINISTRATOR_EMAIL']);
 $Qadmin->bindValue(':first_name', $_POST['CFG_STORE_OWNER_FIRST_NAME']);
 $Qadmin->bindValue(':last_name', $_POST['CFG_STORE_OWNER_LAST_NAME']);
 $Qadmin->bindInt(':access_group_id', 1);
