@@ -25,26 +25,27 @@ class lC_Coupons_Admin {
 
     $media = $_GET['media'];
     
-    /*$Qcoupons = $lC_Database->query('select * :table_coupons');
+    $Qcoupons = $lC_Database->query('select c.coupons_id, c.coupons_code, c.coupons_reward, c.coupons_minimum_order, c.uses_per_coupon, c.uses_per_customer, c.restrict_to_products, c.restrict_to_categories, c.restrict_to_customers, c.coupons_status, cd.coupons_name from :table_coupons c, :table_coupons_description cd where c.coupons_id = cd.coupons_id and cd.language_id = :language_id order by c.date_created desc');
     $Qcoupons->bindTable(':table_coupons', TABLE_COUPONS);
     $Qcoupons->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
     $Qcoupons->bindInt(':language_id', $lC_Language->getID());
-    $Qcoupons->execute();*/
-
-    //$result = array('aaData' => array());
-    //while ( $Qcoupons->next() ) {
-      $check = '<td><input class="batch" type="checkbox" name="batch[]" value="1" id="1"></td>';
-      $name = '<td>Welcome Code</td>';
-      $code = '<td>welcome</td>';
-      $reward = '<td>10% Discount</td>';
-      $limits = '<td>Over $100</td>';
-      $restrictions = '<td>None</td>';
+    $Qcoupons->execute();
+    
+    $result = array('aaData' => array());
+    while ( $Qcoupons->next() ) {
+      $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcoupons->valueInt('coupons_id') . '" id="' . $Qcoupons->valueInt('coupons_id') . '"></td>';
+      $name = '<td>' . $Qcoupons->value('coupons_name') . '</td>';
+      $code = '<td>' . $Qcoupons->value('coupons_code') . '</td>';
+      $reward = '<td>' . $Qcoupons->value('coupons_reward') . '</td>';
+      $limits = '<td>Limits</td>';
+      $restrictions = '<td>Restrictions</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editCoupon(\'1\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCoupon(\'1\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
       $result['aaData'][] = array("$check", "$name", "$code", "$reward", "$limits", "$restrictions", "$action");
-    //}
+      
+    }
 
     $Qspecials->freeResult;
 
