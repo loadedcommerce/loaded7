@@ -31,7 +31,9 @@ maximum_file_upload_size = Max: %s
 
 text_top = Top
 text_hello = Hello
-text_with_selected = With Selected:
+text_with_selected = With Selected
+text_delete = Delete
+text_move = Move
 text_version_info = Version Info
 
 menu_title_addons = Add Ons
