@@ -95,14 +95,7 @@ $(document).ready(function() {
   createUploader();
   <?php
     foreach ( $lC_Language->getAll() as $l ) {  
-      echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { 
-      height: 200, 
-      width: '99%', 
-      filebrowserBrowseUrl: '/browser/browse.php',
-      filebrowserUploadUrl: '/uploader/upload.php',
-      filebrowserWindowWidth: '640',
-      filebrowserWindowHeight: '480'
-      });";
+      echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', filebrowserImageUploadUrl : '../ext/jquery/ckeditor/ck_upload.php' });";
     }
   ?>
   <?php } ?>
