@@ -17,7 +17,7 @@ class lC_Payment {
   var $selected_module;
 
   var $_modules = array(),
-      $_group = 'payment',
+      $_group = 'payment',                                                               
       $order_status = DEFAULT_ORDERS_STATUS_ID;
 
   // class constructor
@@ -57,7 +57,7 @@ class lC_Payment {
           }
         }
       }
-    }
+    }  
     
     $Qmodules->freeResult();
                                  
@@ -81,7 +81,7 @@ class lC_Payment {
         }        
 
         $module_class = 'lC_Payment_' . $modules;
-        
+            
         if (class_exists($module_class) === false) {
           if (file_exists('includes/modules/payment/' . $modules . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1)))) {
             include($lC_Vqmod->modCheck('includes/modules/payment/' . $modules . '.' . substr(basename(__FILE__), (strrpos(basename(__FILE__), '.')+1))));
@@ -105,7 +105,7 @@ class lC_Payment {
       
       if ( (!empty($_module)) && (in_array($_module, $mArr)) && (isset($GLOBALS['lC_Payment_' . $_module]->iframe_relay_url)) ) {
         $this->iframe_relay_url = $GLOBALS['lC_Payment_' . $_module]->iframe_relay_url;
-      }              
+      }                      
     }
   }
  

@@ -308,7 +308,7 @@ class lC_Store_Admin {
   */
   public static function install($key) {
     global $lC_Database, $lC_Language, $lC_Vqmod;
-
+    
     if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
 
       include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
@@ -319,16 +319,18 @@ class lC_Store_Admin {
       $addon->install();
       
       $modules_group = $addon->getAddonType() . '|' . $key;
-      
-      $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType());
-      $lC_DirectoryListing->setCheckExtension('php');
-      
-      $code = '';
-      foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
-        if (isset($ao['name'])) {
-          $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
-          break;  
-        }        
+
+      $code = $addon->getAddonType(); 
+      if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType())) {
+        $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType());
+        $lC_DirectoryListing->setCheckExtension('php');
+            
+        foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
+          if (isset($ao['name'])) {
+            $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
+            break;  
+          }        
+        }
       }
 
       if (empty($code) === false) {     
@@ -340,7 +342,7 @@ class lC_Store_Admin {
         $Qinstall->bindValue(':author_www', $addon->getAddonAuthorWWW());
         $Qinstall->bindValue(':modules_group', $modules_group);
         $Qinstall->execute();
-
+        
         self::_resetAddons();
         lC_Cache::clear('modules-addons');
         lC_Cache::clear('configuration');
