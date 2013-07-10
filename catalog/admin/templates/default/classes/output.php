@@ -19,7 +19,7 @@ class output {
   }
   
   public function drawBigMenu($_section = NULL, $_class = NULL) {
-    global $lC_Access;
+    global $lC_Access, $lC_Language;
 
     $access = array();
     if ( isset($_SESSION['admin']) ) {
@@ -60,6 +60,12 @@ class output {
       $output .= '  <ul class="big-menu ' . $_class . '">';
 
       foreach ( $links as $link) {
+        
+        if ($link['title'] == $lC_Language->get('access_orders_title') ||
+            $link['title'] == $lC_Language->get('access_customers_title')) {
+          $link['title'] .= ' ' . $lC_Language->get('text_list');
+        }
+        
         if (count($link['subgroups']) > 1 && $link['module'] != 'configuration') {
           $output .= '<li class="with-right-arrow">';
           $output .= '<span><span class="list-count">' . count($link['subgroups']) . '</span>' . $link['title'] . '</span>';
