@@ -76,7 +76,7 @@ class lC_Coupons_Admin {
         $Qcustname->execute();
     
         while ( $Qcustname->next() ) {
-          $rtCustString .= '' . $Qcustname->value('customers_firstname') . ' ' . $Qcustname->value('customers_lastname') . '';
+          $rtCustString .= '<small class="tag orange-bg no-wrap">' . $Qcustname->value('customers_firstname') . ' ' . $Qcustname->value('customers_lastname') . '</small> ';
         }
       }
       
@@ -84,7 +84,7 @@ class lC_Coupons_Admin {
       $name = '<td>' . $Qcoupons->value('coupons_name') . '</td>';
       $code = '<td>' . $Qcoupons->value('coupons_code') . '</td>';
       $reward = '<td>' . $lC_Currencies->format($Qcoupons->value('coupons_reward')) . '</td>';
-      $limits = '<td>' . (($Qcoupons->value('uses_per_customer') > 0 || $Qcoupons->value('uses_per_coupon') > 0) ? (($Qcoupons->value('uses_per_customer') > 0) ? '<small class="tag orange-bg no-wrap">' . $Qcoupons->value('uses_per_customer') . ' ' . $lC_Language->get('text_per_customer') .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_coupon') > 0) ? '<small class="tag red-bg no-wrap">' . $Qcoupons->value('uses_per_coupon') . ' ' . $lC_Language->get('text_per_coupon') . '</small>' : null) : '<small class="tag green-bg no-wrap">None</small>') . '</td>';
+      $limits = '<td>' . (($Qcoupons->value('uses_per_customer') > 0 || $Qcoupons->value('uses_per_coupon') > 0) ? (($Qcoupons->value('uses_per_customer') > 0) ? '<small class="tag orange-bg no-wrap">' . $Qcoupons->value('uses_per_customer') . ' ' . $lC_Language->get('text_per_customer') .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_coupon') > 0) ? '<small class="tag red-bg no-wrap">' . $Qcoupons->value('uses_per_coupon') . ' ' . $lC_Language->get('text_per_coupon') . '</small>' : null) : '<small class="tag green-bg no-wrap" title="' . $lC_Language->get('text_no_restrictions') . '">' . $lC_Language->get('text_none') . '</small>') . '</td>';
       $restrictions = '<td>' . ((!empty($rtProdsString) || !empty($rtCatsString) || !empty($rtCustString)) ? $rtProdsString . ' ' . $rtCatsString . ' ' . $rtCustString : '<small class="tag green-bg no-wrap">' . $lC_Language->get('text_none') . '</small>') . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
