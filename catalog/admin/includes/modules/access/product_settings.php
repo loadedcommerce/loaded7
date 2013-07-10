@@ -17,7 +17,7 @@
         $_group = 'products',
         $_icon = 'products.png',
         $_title,
-        $_sort_order = 600;
+        $_sort_order = 800;
 
     function lC_Access_Product_settings() {
       global $lC_Language;

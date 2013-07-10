@@ -9,6 +9,6 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-access_product_settings_title = Product Settings
+access_product_settings_title = Settings
 access_weight_classes_title = Weight Classes
 access_image_groups_title = Image Groups
