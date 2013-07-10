@@ -88,8 +88,14 @@ $(document).ready(function() {
   <?php if ($_GET['action'] != '') { ?>
   createUploader();
   <?php
-    foreach ( $lC_Language->getAll() as $l ) {  
-      echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', filebrowserImageUploadUrl : '../ext/jquery/ckeditor/ck_upload.php' });";
+    if(USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
+      foreach ( $lC_Language->getAll() as $l ) {  
+        echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser', contentsCss: '../templates/" . $lC_Template->getCode($lC_Template->getID) . "/css/styles.css', stylesSet: [] });";
+      }
+    } else {
+      foreach ( $lC_Language->getAll() as $l ) {  
+        echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+      }
     }
   ?>
   <?php } ?>
