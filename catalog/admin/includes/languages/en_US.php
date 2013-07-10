@@ -269,3 +269,6 @@ text_coming_soon = Pro Feature Coming Soon
 text_cick_for_info = &nbsp;Click for Info&nbsp;
 text_pro = Pro
 text_b2b = B2B
+text_none = None
+text_per_coupon = Per Coupon
+text_per_customer = Per Customer

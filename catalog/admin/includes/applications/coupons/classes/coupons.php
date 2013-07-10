@@ -33,12 +33,59 @@ class lC_Coupons_Admin {
     
     $result = array('aaData' => array());
     while ( $Qcoupons->next() ) {
+      
+      // get restrictions arrays
+      $restrictToProdsArr = explode(",", $Qcoupons->value('restrict_to_products'));
+      $restrictToCatsArr = explode(",", $Qcoupons->value('restrict_to_categories'));
+      $restrictToCustArr = explode(",", $Qcoupons->value('restrict_to_customers'));
+      
+      // set products restrictions array string
+      $rtProdsString = '';
+      foreach ($restrictToProdsArr as $rtProdsID) {
+        $Qprodname = $lC_Database->query('select products_name from :table_products_description where products_id = :products_id and language_id = :language_id limit 1');
+        $Qprodname->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $Qprodname->bindInt(':products_id', $rtProdsID);
+        $Qprodname->bindInt(':language_id', $lC_Language->getID());
+        $Qprodname->execute();
+    
+        while ( $Qprodname->next() ) {
+          $rtProdsString .= '<small class="tag blue-bg no-wrap">' . $Qprodname->value('products_name') . '</small> ';
+        }
+      }
+      
+      // set categories restrictions array string
+      $rtCatsString = '';
+      foreach ($restrictToCatsArr as $rtCatsID) {
+        $Qcatname = $lC_Database->query('select categories_name from :table_categories_description where categories_id = :categories_id and language_id = :language_id limit 1');
+        $Qcatname->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+        $Qcatname->bindInt(':categories_id', $rtCatsID);
+        $Qcatname->bindInt(':language_id', $lC_Language->getID());
+        $Qcatname->execute();
+    
+        while ( $Qcatname->next() ) {
+          $rtCatsString .= '<small class="tag white-bg no-wrap">' . $Qcatname->value('categories_name') . '</small> ';
+        }
+      }
+      
+      // set customers restrictions array string
+      $rtCustString = '';
+      foreach ($restrictToCustArr as $rtCustID) {
+        $Qcustname = $lC_Database->query('select customers_firstname, customers_lastname from :table_customers where customers_id = :customers_id limit 1');
+        $Qcustname->bindTable(':table_customers', TABLE_CUSTOMERS);
+        $Qcustname->bindInt(':customers_id', $rtCustID);
+        $Qcustname->execute();
+    
+        while ( $Qcustname->next() ) {
+          $rtCustString .= '' . $Qcustname->value('customers_firstname') . ' ' . $Qcustname->value('customers_lastname') . '';
+        }
+      }
+      
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcoupons->valueInt('coupons_id') . '" id="' . $Qcoupons->valueInt('coupons_id') . '"></td>';
       $name = '<td>' . $Qcoupons->value('coupons_name') . '</td>';
       $code = '<td>' . $Qcoupons->value('coupons_code') . '</td>';
-      $reward = '<td>' . $Qcoupons->value('coupons_reward') . '</td>';
-      $limits = '<td>Limits</td>';
-      $restrictions = '<td>Restrictions</td>';
+      $reward = '<td>' . $lC_Currencies->format($Qcoupons->value('coupons_reward')) . '</td>';
+      $limits = '<td>' . (($Qcoupons->value('uses_per_customer') > 0 || $Qcoupons->value('uses_per_coupon') > 0) ? (($Qcoupons->value('uses_per_customer') > 0) ? '<small class="tag orange-bg no-wrap">' . $Qcoupons->value('uses_per_customer') . ' ' . $lC_Language->get('text_per_customer') .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_coupon') > 0) ? '<small class="tag red-bg no-wrap">' . $Qcoupons->value('uses_per_coupon') . ' ' . $lC_Language->get('text_per_coupon') . '</small>' : null) : '<small class="tag green-bg no-wrap">None</small>') . '</td>';
+      $restrictions = '<td>' . ((!empty($rtProdsString) || !empty($rtCatsString) || !empty($rtCustString)) ? $rtProdsString . ' ' . $rtCatsString . ' ' . $rtCustString : '<small class="tag green-bg no-wrap">' . $lC_Language->get('text_none') . '</small>') . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
