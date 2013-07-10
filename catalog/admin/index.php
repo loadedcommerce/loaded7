@@ -38,7 +38,7 @@ require($lC_Vqmod->modCheck('includes/applications/' . $_SESSION['module'] . '/'
 $lC_Template = lC_Template_Admin::setup($_SESSION['module']);
 $lC_Template->set('default');
 
-define(DIR_WS_TEMPLATE_IMAGES, HTTPS_SERVER . DIR_WS_HTTPS_CATALOG . 'admin/templates/default/images/');
+define(DIR_WS_TEMPLATE_IMAGES, HTTPS_SERVER . DIR_WS_HTTPS_CATALOG . DIR_WS_ADMIN . 'templates/default/images/');
 
 require($lC_Vqmod->modCheck('templates/default.php'));
 

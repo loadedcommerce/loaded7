@@ -19,8 +19,8 @@ final class VQMod {
   public $logFolder;
   public $vqCachePath;
   public $modCache;
-  public $protectedFilelist = 'admin/external/vqmod/vqprotect.txt';
-  public $pathReplaces = 'admin/external/vqmod/pathReplaces.php';
+  public $protectedFilelist;
+  public $pathReplaces;
   public $logging = false;
   public $log;
   public $fileModding = false;
@@ -39,6 +39,8 @@ final class VQMod {
     $this->vqCachePath = 'includes/work/cache/vqmod/';
     $this->modCache = 'includes/work/cache/vqmoda.cache';    
     $this->directorySeparator = defined('DIRECTORY_SEPARATOR') ? DIRECTORY_SEPARATOR : '/';
+    $this->protectedFilelist = DIR_WS_HTTPS_CATALOG . 'external/vqmod/vqprotect.txt';
+    $this->pathReplaces = DIR_WS_HTTPS_CATALOG . 'external/vqmod/pathReplaces.php';
 
     if(!$path){
       $path = dirname(dirname(__FILE__));
