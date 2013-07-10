@@ -24,6 +24,7 @@
   .dataColAction { text-align: right; }
   .dataTables_info { position:absolute; bottom:42px; color:#4c4c4c; }
   .selectContainer { position:absolute; bottom:29px; left:30px }
+  small.tag { text-transform: none; font-size: 11px; }
   </style>
   <div class="with-padding-no-top">
     <form name="batch" id="batch" action="#" method="post">
@@ -70,6 +71,11 @@
                 <span class="button-icon green-gradient">
                   <span class="icon-plus"></span>
                 </span><?php echo $lC_Language->get('button_new_coupon'); ?>
+              </a>&nbsp;
+              <a upsell="<?php echo $lC_Language->get('text_new_rule_upsell_desc'); ?>" class="button" href="javascript://" onclick="showUpsellSpot(this); return false;">
+                <span class="button-icon green-gradient">
+                  <span class="icon-plus"></span>
+                </span><?php echo $lC_Language->get('button_new_rule'); ?><small class="tag red-gradient small-margin-left">Pro</small>
               </a>&nbsp;
             </p>
           </div>

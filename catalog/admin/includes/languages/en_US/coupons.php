@@ -10,7 +10,9 @@
 #  @license    http://loadedcommerce.com/license.html
 
 heading_title = Coupon Manager
+
 button_new_coupon = New Coupon
+button_new_rule = New Rule
 
 delete_error_item_prohibited = Error: The default item cannot be removed.
 delete_error_item_in_use = Error: This item is currently assigned to
@@ -30,3 +32,4 @@ introduction_batch_delete_coupons = Please verify the removal of the selected it
 
 table_heading_items = Items
 table_heading_action = Action
+text_new_rule_upsell_desc = New Rule Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. 

@@ -276,3 +276,6 @@ text_category_restriction = Category Restriction
 text_customer_restriction = Customer Restriction
 text_per_coupon = Per Coupon
 text_per_customer = Per Customer
+text_start_date = From
+text_expire_date = To
+text_minimum_order = Min Order

@@ -26,7 +26,7 @@ $(document).ready(function() {
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
                   { "sWidth": "20%", "bSortable": true, "sClass": "dataColName" },
-                  { "sWidth": "10%", "bSortable": true, "sClass": "dataColCode hide-on-mobile" },
+                  { "sWidth": "10%", "bSortable": true, "sClass": "dataColCode hide-on-tablet" },
                   { "sWidth": "10%", "bSortable": true, "sClass": "dataColReward hide-on-mobile-portrait" },
                   { "sWidth": "20%", "bSortable": true, "sClass": "dataColLimits hide-on-mobile" },
                   { "sWidth": "20%", "bSortable": true, "sClass": "dataColRestrictions hide-on-mobile" },
