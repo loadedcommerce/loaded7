@@ -229,7 +229,7 @@ class lC_Payment_payleappayments extends lC_Payment {
                              lc_draw_hidden_field('hideAddress', 'T') . "\n" .
                              lc_draw_hidden_field('isRelayResponse', 'T') . "\n" .
                              lc_draw_hidden_field('relayResponseURL', lc_href_link('iredirect.php', '', 'SSL', true, true, true)) . "\n" .
-                             lc_draw_hidden_field('styleSheetURL', lc_href_link('addons/Loaded_Payments/payleappayments.css', '', 'SSL', true, true, true)) . "\n";
+                             lc_draw_hidden_field('styleSheetURL', lc_href_link('addons/Payleap_Payments/payleappayments.css', '', 'SSL', true, true, true)) . "\n";
       
     return $process_button_string;
   }
