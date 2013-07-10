@@ -30,7 +30,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       //$('#fileUploaderImageContainer .qq-upload-list').hide();
       <?php               
       foreach ( $lC_Language->getAll() as $l ) {  
-        echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+        echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%', filebrowserImageUploadUrl : '../ext/jquery/ckeditor/ck_upload.php' });";
       }
       ?>  
       //$('#products_name_1').focus();
