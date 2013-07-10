@@ -152,6 +152,8 @@ class lC_Template_Admin extends lC_Template {
       $ok = TRUE;
     } else if ($_module == 'product_attributes' && $_SESSION['admin']['access']['modules'] > 0) {
       $ok = TRUE;
+    } else if ($_module == 'product_variants' && $_SESSION['admin']['access']['option_manager'] > 0) {
+      $ok = TRUE;      
     }
 
     return $ok;

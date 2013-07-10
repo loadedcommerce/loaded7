@@ -14,10 +14,10 @@
 
   class lC_Access_Images extends lC_Access {
     var $_module = 'images',
-        $_group = 'tools',
+        $_group = 'content',
         $_icon = 'image.png',
         $_title,
-        $_sort_order = 600;
+        $_sort_order = 200;
 
     function lC_Access_Images() {
       global $lC_Language;
