@@ -36,7 +36,7 @@ class output {
           if ($key != 'configuration' && $key != 'tools' && $key != 'store') continue;
           $newArr[$key] = $value;
         }
-        $access = ksort($newArr);
+        $access = $newArr;
         break;
 
       default:  // main big menu
