@@ -29,10 +29,11 @@ class output {
 
     switch ($_section) {
       case 'configuration':  // settings menu
+      case 'tools':  // settings menu
         $mOpenClass = 'cfg-open';
         $newArr = array();
         foreach($access as $key => $value) {
-          if ($key != 'configuration' && $key != 'store') continue;
+          if ($key != 'configuration' && $key != 'tools' && $key != 'store') continue;
           $newArr[$key] = $value;
         }
         $access = $newArr;
@@ -42,7 +43,7 @@ class output {
         $mOpenClass = '';
         $newArr = array();
         foreach($access as $key => $value) {
-          if ($key == 'configuration' || $key == 'store') continue;
+          if ($key != 'configuration' && $key != 'tools' && $key != 'store') { } else { continue; }
           $newArr[$key] = $value;
         }
         $access = $newArr;
