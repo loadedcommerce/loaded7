@@ -9,4 +9,4 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-access_services_title = Service Modules
+access_services_title = Service
