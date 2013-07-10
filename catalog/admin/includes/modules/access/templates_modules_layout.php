@@ -17,7 +17,7 @@
         $_group = 'configuration',
         $_icon = 'windows.png',
         $_title,
-        $_sort_order = 1300;
+        $_sort_order = 1100;
 
     function lC_Access_Templates_modules_layout() {
       global $lC_Language;
