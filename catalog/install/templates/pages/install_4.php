@@ -141,8 +141,7 @@ $Qadmin->execute();
     '  define(\'HTTPS_COOKIE_PATH\', \'' . $https_catalog . '\');' . "\n" .
     '  define(\'DIR_WS_HTTP_CATALOG\', \'' . $http_catalog . '\');' . "\n" .
     '  define(\'DIR_WS_HTTPS_CATALOG\', \'' . $https_catalog . '\');' . "\n" .
-    '  define(\'DIR_WS_HTTP_ADMIN\', \'' . $http_catalog . 'admin/\');' . "\n" .
-    '  define(\'DIR_WS_HTTPS_ADMIN\', \'' . $https_catalog . 'admin/\');' . "\n" .    
+    '  define(\'DIR_WS_ADMIN\', \'admin/\');' . "\n" .    
     '  define(\'DIR_WS_IMAGES\', \'images/\');' . "\n\n" .
     '  define(\'DIR_WS_DOWNLOAD_PUBLIC\', \'pub/\');' . "\n" .
     '  define(\'DIR_FS_CATALOG\', \'' . $dir_fs_document_root . '\');' . "\n" .

@@ -31,7 +31,7 @@ class lC_Shipping_zones extends lC_Shipping {
     $this->_sort_order = (defined('ADDONS_SHIPPING_ZONES_RATE_SHIPPING_SORT_ORDER') ? ADDONS_SHIPPING_ZONES_RATE_SHIPPING_SORT_ORDER : null);
 
     // CUSTOMIZE THIS SETTING FOR THE NUMBER OF ZONES NEEDED
-    // also needs to match the value at zenmerchant/admin/includes/modules/shipping/zones.php
+    // also needs to match the value in admin/includes/modules/shipping/zones.php
     $this->num_zones = 1;
   }
 

@@ -707,8 +707,8 @@ function toggleEditor(id) {
                 while ( $Qattributes->next() ) {
                   $module = basename($Qattributes->value('code'));
                   if ( !class_exists('lC_ProductAttributes_' . $module) ) {
-                    if ( file_exists(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php') ) {
-                      include(DIR_FS_CATALOG . 'admin/includes/modules/product_attributes/' . $module . '.php');
+                    if ( file_exists(DIR_FS_ADMIN . 'includes/modules/product_attributes/' . $module . '.php') ) {
+                      include(DIR_FS_ADMIN . 'includes/modules/product_attributes/' . $module . '.php');
                     }
                   }
                   if ( class_exists('lC_ProductAttributes_' . $module) ) {

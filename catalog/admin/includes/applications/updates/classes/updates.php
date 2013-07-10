@@ -318,6 +318,10 @@ class lC_Updates_Admin {
 
       if (is_array($meta['delete']) && count($meta['delete']) > 0) {
         foreach ( $meta['delete'] as $file ) {
+          
+          // update the path with admin config value to account for a different admin/ dir
+          $file = str_replace('admin/', DIR_WS_ADMIN, $file);
+          
           if ( file_exists(realpath(DIR_FS_CATALOG) . '/' . $file) ) {
             if ( is_dir(realpath(DIR_FS_CATALOG) . '/' . $file) ) {
               $DL = new DirectoryListing(realpath(DIR_FS_CATALOG) . '/' . $file);
