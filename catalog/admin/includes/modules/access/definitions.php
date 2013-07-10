@@ -23,14 +23,7 @@
       global $lC_Language;
 
       $this->_title = $lC_Language->get('access_definitions_title');
-      
-      $this->_subgroups = array(array('icon' => 'image_groups.png',
-                                      'title' => $lC_Language->get('access_image_groups_title'),
-                                      'identifier' => '?image_groups'),                                       
-                                array('icon' => 'weight.png',
-                                      'title' => $lC_Language->get('access_weight_classes_title'),
-                                      'identifier' => '?weight_classes')
-                                      );      
+     
     }
   }
 ?>
