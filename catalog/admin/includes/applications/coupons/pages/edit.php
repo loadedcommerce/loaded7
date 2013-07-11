@@ -70,7 +70,7 @@
                     </span>
                   </div>              
                   <div class="new-row-mobile six-columns twelve-columns-mobile align-right">
-                    <input type="checkbox" name="coupons_status" id="coupons_status" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->get('coupons_status') == 1) ? ' checked' : null); ?> />
+                    <input type="checkbox" name="coupons_status" id="coupons_status" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->get('coupons_status') != 1) ? null : ' checked'); ?> />
                   </div>
                 </div>
               </div>
