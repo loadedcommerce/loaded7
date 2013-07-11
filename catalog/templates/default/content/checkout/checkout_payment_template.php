@@ -12,7 +12,6 @@
 *  @license    http://loadedcommerce.com/license.html
 */
 $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
-echo '[' . $_SESSION['mediaType'] . ']<br>';
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
@@ -41,12 +40,8 @@ if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
   $fHeight = '400px';
   $fScroll = 'auto';
   echo "#payformIframe { min-width:468px; min-height:280px; }";
-//  echo "#checkout_shipping_col1 { width:28% !important; }";
-//  echo "#checkout_shipping_col2 { width:71% !important; }";  
 } else {
   echo "#payformIframe { min-width:500px; min-height:300px; }";
-//  echo "#checkout_shipping_col1 { width:28% !important; }";
-//  echo "#checkout_shipping_col2 { width:71% !important; }";
 }
 ?>
 
