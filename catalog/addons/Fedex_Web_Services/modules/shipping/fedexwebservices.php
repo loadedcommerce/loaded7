@@ -35,10 +35,10 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
 
     $this->icon = DIR_FS_CATALOG . 'addons/Fedex_Web_Services/images/fedex-small.png';
 
-    $this->_title = $lC_Language->get('shipping_fedexwebservices_title');
-    $this->_description = $lC_Language->get('shipping_fedexwebservices_description');
-    $this->_status = (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SHIPPING_STATUS') && (ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SHIPPING_STATUS == '1') ? true : false);
-    $this->_sort_order = (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SHIPPING_SORT_ORDER') ? ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SHIPPING_SORT_ORDER : null);
+    $this->_title = $lC_Language->get('shipping_fedex_title');
+    $this->_description = $lC_Language->get('shipping_fedex_description');
+    $this->_status = (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_STATUS') && (ADDONS_SHIPPING_FEDEX_WEB_SERVICES_STATUS == '1') ? true : false);
+    $this->_sort_order = (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SORT_ORDER') ? ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SORT_ORDER : null);
     $this->_handling_fee = (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_HANDLING_FEE') ? ADDONS_SHIPPING_FEDEX_WEB_SERVICES_HANDLING_FEE : null);
     $this->_weight_type = (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_WEIGHT') ? ADDONS_SHIPPING_FEDEX_WEB_SERVICES_WEIGHT : null);
     $this->_fedex_key = (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_KEY') ? ADDONS_SHIPPING_FEDEX_WEB_SERVICES_KEY : null);
@@ -87,77 +87,18 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
         $this->_status = false;
       }
     }
-
-    $types = array('Express' => 'EXPRESS',
-                         'First Class' => 'First-Class Mail',
-                         'Priority' => 'Priority',
-                         'Parcel' => 'Parcel');
-
-    $this->intl_types = array('GXG Document' => 'Global Express Guaranteed Document Service',
-                              'GXG Non-Document' => 'Global Express Guaranteed Non-Document Service',
-                              'Express' => 'Global Express Mail (EMS)',
-                              'Priority Lg' => 'Global Priority Mail - Flat-rate Envelope (Large)',
-                              'Priority Sm' => 'Global Priority Mail - Flat-rate Envelope (Small)',
-                              'Priority Var' => 'Global Priority Mail - Variable Weight Envelope (Single)',
-                              'Airmail Letter' => 'Airmail Letter-post',
-                              'Airmail Parcel' => 'Airmail Parcel Post',
-                              'Surface Letter' => 'Economy (Surface) Letter-post',
-                              'Surface Post' => 'Economy (Surface) Parcel Post');
-
-    $this->countries = $this->country_list();
   }
 
-  public function quote_old() {
-    global $lC_Language, $lC_ShoppingCart;
-
-    $this->_setMachinable('False');
-    $this->_setContainer('');
-    $this->_setSize('REGULAR');
-
-    // fedexwebservices doesnt accept zero weight
-    $shipping_weight = ($lC_ShoppingCart->getShippingBoxesWeight() < 0.1 ? 0.1 : $lC_ShoppingCart->getShippingBoxesWeight());
-    $shipping_pounds = floor ($shipping_weight);
-    $shipping_ounces = round(16 * ($shipping_weight - floor($shipping_weight)));
-    $this->_setWeight($shipping_pounds, $shipping_ounces);
-
-    $fedexwebservicesQuote = $this->_getQuote();
-
-    if (is_array($fedexwebservicesQuote)) {
-      if (isset($fedexwebservicesQuote['error'])) {
-        $this->quotes = array('module' => $this->_title,
-                              'error' => $fedexwebservicesQuote['error']);
-      } else {
-        $this->quotes = array('id' => $this->_code,
-                              'module' => $this->_title . ' (' . $lC_ShoppingCart->numberOfShippingBoxes() . ' x ' . $shipping_weight . 'lbs)',
-                              'tax_class_id' => $this->_tax_class);
-
-        $methods = array();
-        $size = sizeof($fedexwebservicesQuote);
-        for ($i=0; $i<$size; $i++) {
-          list($type, $cost) = each($fedexwebservicesQuote[$i]);
-
-          $methods[] = array('id' => $type,
-                             'title' => ((isset($types[$type])) ? $types[$type] : $type),
-                             'cost' => ($cost + ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SHIPPING_HANDLING) * $lC_ShoppingCart->numberOfShippingBoxes());
-        }
-
-        $this->quotes['methods'] = $methods;
-      }
-    } else {
-      $this->quotes = array('module' => $this->_title,
-                            'error' => $lC_Language->get('shipping_fedexwebservices_error'));
-    }
-
-    if (!empty($this->icon)) $this->quotes['icon'] = lc_image($this->icon, $this->_title);
-
-    return $this->quotes;
-  }
-  
   public function quote($method = '') {
     global $lC_Database, $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Tax;
 
     require_once(DIR_FS_CATALOG . 'addons/Fedex_Web_Services/lib/fedex-common.php');  // comment out and test - you likely do not need this line
-    $path_to_wsdl = DIR_FS_CATALOG . 'addons/Fedex_Web_Services/lib/wsdl/RateService_v9.wsdl';
+    
+    if (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SERVER') && ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SERVER == 'Test') {
+      $path_to_wsdl = DIR_FS_CATALOG . 'addons/Fedex_Web_Services/lib/wsdl/RateService_v10_test.wsdl';
+    } else {
+      $path_to_wsdl = DIR_FS_CATALOG . 'addons/Fedex_Web_Services/lib/wsdl/RateService_v10.wsdl';
+    }    
     
     ini_set("soap.wsdl_cache_enabled", "0");
     $client = new SoapClient($path_to_wsdl, array('trace' => 1));
@@ -207,7 +148,9 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
     $street_address = $lC_ShoppingCart->getShippingAddress('street_address');
     $street_address2 = $lC_ShoppingCart->getShippingAddress('suburb');
     $city = $lC_ShoppingCart->getShippingAddress('city');
-    $state = tep_get_zone_code($lC_ShoppingCart->getShippingAddress('country_id'), $lC_ShoppingCart->getShippingAddress('zone_id'), '');
+    
+    $state = $lC_ShoppingCart->getShippingAddress('zone_code');
+    
     if ($state == "QC") $state = "PQ";
     $postcode = str_replace(array(' ', '-'), '', $lC_ShoppingCart->getShippingAddress('postcode'));
     $country_code = $lC_ShoppingCart->getShippingAddress('country_iso_code_2');
@@ -219,8 +162,8 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
     $request['WebAuthenticationDetail'] = array('UserCredential' =>
                                           array('Key' => $this->_fedex_key, 'Password' => $this->_fedex_pwd));
     $request['ClientDetail'] = array('AccountNumber' => $this->_fedex_act_num, 'MeterNumber' => $this->_fedex_meter_num);
-    $request['TransactionDetail'] = array('CustomerTransactionId' => ' *** Rate Request v9 using PHP ***');
-    $request['Version'] = array('ServiceId' => 'crs', 'Major' => '9', 'Intermediate' => '0', 'Minor' => '0');
+    $request['TransactionDetail'] = array('CustomerTransactionId' => ' *** Rate Request v10 using PHP ***');
+    $request['Version'] = array('ServiceId' => 'crs', 'Major' => '10', 'Intermediate' => '0', 'Minor' => '0');
     $request['ReturnTransitAndCommit'] = true;
     $request['RequestedShipment']['DropoffType'] = $this->_setDropOff(); // valid values REGULAR_PICKUP, REQUEST_COURIER, ...
     $request['RequestedShipment']['ShipTimestamp'] = date('c');
@@ -234,7 +177,7 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
                                                      'City' => utf8_encode(ADDONS_SHIPPING_FEDEX_WEB_SERVICES_CITY),
                                                      'StateOrProvinceCode' => ADDONS_SHIPPING_FEDEX_WEB_SERVICES_STATE,
                                                      'PostalCode' => ADDONS_SHIPPING_FEDEX_WEB_SERVICES_POSTAL,
-                                                     'CountryCode' => $this->country));          
+                                                     'CountryCode' => $this->_country));          
 
     $request['RequestedShipment']['Recipient'] = array('Address' => array (
                              'StreetLines' => array(utf8_encode($street_address), utf8_encode($street_address2)), // customer street address
@@ -249,7 +192,7 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
 
     $request['RequestedShipment']['ShippingChargesPayment'] = array('PaymentType' => 'SENDER',
                                                                     'Payor' => array('AccountNumber' => $this->_fedex_act_num, // payor's account number
-                                                                    'CountryCode' => $this->country));
+                                                                    'CountryCode' => $this->_country));
     $request['RequestedShipment']['RateRequestTypes'] = 'LIST';
     $request['RequestedShipment']['PackageDetail'] = 'INDIVIDUAL_PACKAGES';
     $request['RequestedShipment']['RequestedPackageLineItems'] = array();
@@ -351,8 +294,18 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
     if (ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SIGNATURE_OPTION >= 0 && $totals >= ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SIGNATURE_OPTION) { 
       $request['RequestedShipment']['SpecialServicesRequested'] = 'SIGNATURE_OPTION'; 
     }
+    
+    
+echo "<pre>request ";
+print_r($request);
+echo "</pre>";
 
     $response = $client->getRates($request);
+    
+echo "<pre>";
+print_r($response);
+echo "</pre>";
+die();     
 
     if ($response->HighestSeverity != 'FAILURE' && $response->HighestSeverity != 'ERROR' && is_array($response->RateReplyDetails) || is_object($response->RateReplyDetails)) {
       if (is_object($response->RateReplyDetails)) {
