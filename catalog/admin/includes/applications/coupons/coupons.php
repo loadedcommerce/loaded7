@@ -13,6 +13,12 @@
 
   @function The lC_Application_Coupons class manages the coupons GUI
 */
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('includes/applications/coupons/classes/coupons.php'));
+require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
+$lC_Currencies = new lC_Currencies();
+
 class lC_Application_Coupons extends lC_Template_Admin {
  /*
   * Protected variables
