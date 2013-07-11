@@ -27,6 +27,9 @@ introduction_delete_item = Please verify the removal of this item.
 introduction_batch_delete_coupons = Please verify the removal of the selected items.
 
 section_general = Content
+section_details = Details
+section_limits = Use Limits
+section_restrictions = Restrictions
 
 table_heading_items = Items
 table_heading_action = Action
