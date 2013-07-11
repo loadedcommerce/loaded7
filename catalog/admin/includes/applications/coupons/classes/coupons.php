@@ -25,7 +25,7 @@ class lC_Coupons_Admin {
 
     $media = $_GET['media'];
     
-    $Qcoupons = $lC_Database->query('select c.coupons_id, c.coupons_code, c.coupons_reward, c.coupons_minimum_order, c.coupons_start_date, c.coupons_expire_date, c.uses_per_coupon, c.uses_per_customer, c.restrict_to_products, c.restrict_to_categories, c.restrict_to_customers, c.coupons_status, cd.coupons_name from :table_coupons c, :table_coupons_description cd where c.coupons_id = cd.coupons_id and cd.language_id = :language_id order by c.date_created desc');
+    $Qcoupons = $lC_Database->query('select c.coupons_id, c.coupons_code, c.coupons_reward, c.coupons_minimum_order, c.coupons_start_date, c.coupons_expires_date, c.uses_per_coupon, c.uses_per_customer, c.restrict_to_products, c.restrict_to_categories, c.restrict_to_customers, c.coupons_status, cd.coupons_name from :table_coupons c, :table_coupons_description cd where c.coupons_id = cd.coupons_id and cd.language_id = :language_id order by c.date_created desc');
     $Qcoupons->bindTable(':table_coupons', TABLE_COUPONS);
     $Qcoupons->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
     $Qcoupons->bindInt(':language_id', $lC_Language->getID());
@@ -84,7 +84,7 @@ class lC_Coupons_Admin {
       $name = '<td>' . $Qcoupons->value('coupons_name') . '</td>';
       $code = '<td>' . $Qcoupons->value('coupons_code') . '</td>';
       $reward = '<td>' . $lC_Currencies->format($Qcoupons->value('coupons_reward')) . '</td>';
-      $limits = '<td>' . (($Qcoupons->value('coupons_minimum_order') > 0 || $Qcoupons->value('uses_per_customer') > 0 || $Qcoupons->value('uses_per_coupon') > 0 || $Qcoupons->value('coupons_start_date') != '0000-00-00 00:00:00' || $Qcoupons->value('coupons_expire_date') != '0000-00-00 00:00:00') ? (($Qcoupons->value('coupons_minimum_order') > 0) ? '<small class="tag purple-bg no-wrap">' . $lC_Language->get('text_minimum_order') . ': ' . $lC_Currencies->format($Qcoupons->value('coupons_minimum_order')) .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_customer') > 0) ? '<small class="tag orange-bg no-wrap">' . $Qcoupons->value('uses_per_customer') . ' ' . $lC_Language->get('text_per_customer') .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_coupon') > 0) ? '<small class="tag red-bg no-wrap">' . $Qcoupons->value('uses_per_coupon') . ' ' . $lC_Language->get('text_per_coupon') . '</small>' : null) . ' ' . (($Qcoupons->value('coupons_start_date') != '0000-00-00 00:00:00') ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_start_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('coupons_start_date')) . '</small>' : null) . ' ' . (($Qcoupons->value('coupons_expire_date') != '0000-00-00 00:00:00') ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_expire_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('coupons_expire_date')) . '</small>' : null) : '<small class="tag green-bg no-wrap" title="' . $lC_Language->get('text_no_restrictions') . '">' . $lC_Language->get('text_none') . '</small>') . '</td>';
+      $limits = '<td>' . (($Qcoupons->value('coupons_minimum_order') > 0 || $Qcoupons->value('uses_per_customer') > 0 || $Qcoupons->value('uses_per_coupon') > 0 || $Qcoupons->value('coupons_start_date') != '0000-00-00 00:00:00' || $Qcoupons->value('coupons_expires_date') != '0000-00-00 00:00:00') ? (($Qcoupons->value('coupons_minimum_order') > 0) ? '<small class="tag purple-bg no-wrap">' . $lC_Language->get('text_minimum_order') . ': ' . $lC_Currencies->format($Qcoupons->value('coupons_minimum_order')) .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_customer') > 0) ? '<small class="tag orange-bg no-wrap">' . $Qcoupons->value('uses_per_customer') . ' ' . $lC_Language->get('text_per_customer') .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_coupon') > 0) ? '<small class="tag red-bg no-wrap">' . $Qcoupons->value('uses_per_coupon') . ' ' . $lC_Language->get('text_per_coupon') . '</small>' : null) . ' ' . (($Qcoupons->value('coupons_start_date') != '0000-00-00 00:00:00') ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_start_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('coupons_start_date')) . '</small>' : null) . ' ' . (($Qcoupons->value('coupons_expires_date') != '0000-00-00 00:00:00') ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_expire_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('coupons_expires_date')) . '</small>' : null) : '<small class="tag green-bg no-wrap" title="' . $lC_Language->get('text_no_restrictions') . '">' . $lC_Language->get('text_none') . '</small>') . '</td>';
       $restrictions = '<td>' . ((!empty($rtProdsString) || !empty($rtCatsString) || !empty($rtCustString)) ? $rtProdsString . ' ' . $rtCatsString . ' ' . $rtCustString : '<small class="tag green-bg no-wrap">' . $lC_Language->get('text_none') . '</small>') . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
@@ -139,25 +139,24 @@ class lC_Coupons_Admin {
   * @return array
   */
   public static function getData($id) {
-    /*global $lC_Database, $lC_Language, $lC_Currencies, $lC_DateTime;
+    global $lC_Database, $lC_Language, $lC_Currencies, $lC_DateTime;
 
-    $Qspecial = $lC_Database->query('select p.products_id, pd.products_name, p.products_price, s.specials_id, s.specials_new_products_price, s.specials_date_added, s.specials_last_modified, s.start_date, s.expires_date, s.date_status_change, s.status from :table_products p, :table_specials s, :table_products_description pd where s.specials_id = :specials_id and s.products_id = p.products_id and p.products_id = pd.products_id and pd.language_id = :language_id limit 1');
-    $Qspecial->bindTable(':table_specials', TABLE_SPECIALS);
-    $Qspecial->bindTable(':table_products', TABLE_PRODUCTS);
-    $Qspecial->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-    $Qspecial->bindInt(':specials_id', $id);
-    $Qspecial->bindInt(':language_id', $lC_Language->getID());
-    $Qspecial->execute();
+    $Qcoupon = $lC_Database->query('select * from :table_coupons c, :table_coupons_description cd where c.coupons_id = cd.coupons_id and cd.language_id = :language_id limit 1');
+    $Qcoupon->bindTable(':table_coupons', TABLE_COUPONS);
+    $Qcoupon->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
+    $Qcoupon->bindInt(':coupons_id', $id);
+    $Qcoupon->bindInt(':language_id', $lC_Language->getID());
+    $Qcoupon->execute();
 
-    $data = $Qspecial->toArray();
+    $data = $Qcoupon->toArray();
 
-    $data['products_price_formatted'] = $lC_Currencies->format($Qspecial->value('products_price'));
-    $data['start_date_formatted'] = lC_DateTime::getShort($Qspecial->value('start_date'));
-    $data['expires_date_formatted'] = lC_DateTime::getShort($Qspecial->value('expires_date'));
+    $data['coupons_reward'] = $lC_Currencies->format($Qcoupon->value('coupons_reward'));
+    $data['coupons_start_date'] = lC_DateTime::getShort($Qcoupon->value('coupons_start_date'));
+    $data['coupons_expires_date'] = lC_DateTime::getShort($Qcoupon->value('coupons_expires_date'));
 
     $Qspecial->freeResult();
 
-    return $data;*/
+    return $data;
   }
  /*
   * Save the coupons information

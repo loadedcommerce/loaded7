@@ -35,8 +35,6 @@ $(document).ready(function() {
   $('#dataTable').responsiveTable();
        
   if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
-    $('#main-title > h1').attr('style', 'font-size:1.8em;');
-    $('#main-title').attr('style', 'padding: 0 0 0 20px;');
     $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
     $('#dataTable_length').hide();
     $('#floating-button-container').hide();
@@ -55,7 +53,16 @@ $(document).ready(function() {
   
   if (quickAdd) {
     newCoupon();
-  }
+  }  
+  
+  <?php 
+    if ($_GET['action'] != '') {
+      foreach ( $lC_Language->getAll() as $l ) {  
+        echo "CKEDITOR.replace('ckEditorCouponsDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+      }
+    } 
+  ?>
+  
 });
 
 function getTaxClass(cid) {
@@ -79,5 +86,53 @@ function getTaxClass(cid) {
       $("#taxClassRate").html(tdata.taxClassRate);
     }
   );
+}
+
+function toggleEditor(id) {
+  var selection = $("#ckEditorCouponsDescription_" + id);
+  if ($(selection).is(":visible")) {
+    $('#ckEditorCouponsDescription_' + id).hide();
+    $('#cke_ckEditorCouponsDescription_' + id).show();
+  } else {
+    $('#ckEditorCouponsDescription_' + id).attr('style', 'width:99%');
+    $('#cke_ckEditorCouponsDescription_' + id).hide();
+  }
+}
+
+function validateForm(e) {
+  // turn off messages
+  jQuery.validator.messages.required = "";
+
+  var bValid = $("#coupon").validate({
+    invalidHandler: function() {
+    },
+    rules: {
+      <?php
+      foreach ( $lC_Language->getAll() as $l ) {
+        ?>
+        'coupons_name[<?php echo $l['id']; ?>]': {
+          required: true,
+        },
+        <?php
+      }
+      ?>
+    },
+    
+    messages: {
+      <?php
+      foreach ( $lC_Language->getAll() as $l ) {
+        ?>
+        //"products_keyword[<?php //echo $l['id']; ?>]": "<?php //echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
+        <?php
+      }
+      ?>
+    } 
+  }).form();
+  $("#languageTabs").refreshTabs();
+  if (bValid) {
+    $(e).submit();
+  } 
+
+  return false;
 }
 </script>
