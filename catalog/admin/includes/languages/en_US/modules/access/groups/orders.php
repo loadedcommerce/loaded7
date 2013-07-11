@@ -1,4 +1,4 @@
-#  $Id: modules_payment.php v1.0 2013-01-01 datazen $
+#  $Id: orders.php v1.0 2013-01-01 datazen $
 #
 #  LoadedCommerce, Innovative eCommerce Solutions
 #  http://www.loadedcommerce.com
@@ -9,4 +9,4 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-access_modules_payment_title = Payment
+access_group_orders_title = Orders

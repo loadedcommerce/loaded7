@@ -9,4 +9,4 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-access_modules_order_total_title = Order Total Modules
+access_modules_order_total_title = Order Total

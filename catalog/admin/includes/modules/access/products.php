@@ -17,16 +17,13 @@
         $_group = 'products',
         $_icon = 'products.png',
         $_title,
-        $_sort_order = 200;
+        $_sort_order = 100;
 
     function lC_Access_Products() {
       global $lC_Language;
 
       $this->_title = $lC_Language->get('access_products_title');
 
-      $this->_subgroups = array(array('icon' => 'package.png',
-                                      'title' => $lC_Language->get('access_products_new_title'),
-                                      'identifier' => 'action=save'));
     }
   }
 ?>

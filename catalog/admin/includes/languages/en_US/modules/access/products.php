@@ -9,5 +9,5 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-access_products_title = Product Catalog
+access_products_title = Products
 access_products_new_title = New Product

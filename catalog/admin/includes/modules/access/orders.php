@@ -14,7 +14,7 @@
 
   class lC_Access_Orders extends lC_Access {
     var $_module = 'orders',
-        $_group = 'sales',
+        $_group = 'orders',
         $_icon = 'orders.png',
         $_title,
         $_sort_order = 100;

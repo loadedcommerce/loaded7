@@ -17,7 +17,7 @@
         $_group = 'configuration',
         $_icon = 'configuration.png',
         $_title,
-        $_sort_order = 200;
+        $_sort_order = 100;
 
     function lC_Access_Configuration() {
       global $lC_Database, $lC_Language;
@@ -30,11 +30,11 @@
       $Qgroups->bindTable(':table_configuration_group', TABLE_CONFIGURATION_GROUP);
       $Qgroups->execute();
 
-      while ($Qgroups->next()) {
-        $this->_subgroups[] = array('icon' => 'configure.png',
-                                    'title' => $Qgroups->value('configuration_group_title'),
-                                    'identifier' => 'gID=' . $Qgroups->valueInt('configuration_group_id'));
-      }
+//      while ($Qgroups->next()) {
+//        $this->_subgroups[] = array('icon' => 'configure.png',
+//                                    'title' => $Qgroups->value('configuration_group_title'),
+//                                    'identifier' => 'gID=' . $Qgroups->valueInt('configuration_group_id'));
+//      }
     }
   }
 ?>

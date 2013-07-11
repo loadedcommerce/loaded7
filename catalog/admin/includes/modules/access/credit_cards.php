@@ -17,7 +17,7 @@
         $_group = 'configuration',
         $_icon = 'cards.png',
         $_title,
-        $_sort_order = 400;
+        $_sort_order = 700;
 
     function lC_Access_Credit_cards() {
       global $lC_Language;
