@@ -358,9 +358,15 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
     }
 
     // po box hack
-    if (preg_match('/^P\.?\s?O\.?\s+?BOX/i', $lC_ShoppingCart->getShippingAddress('street_address')) || (preg_match('/^P\.?\s?O\.?\s+?BOX/i', $lC_ShoppingCart->getShippingAddress('suburb')))) {
-    $this->quotes = array('module' => $this->_title,
-                          'error' => '<font size=+1 color=red><b>Federal Express cannot ship to Post Office Boxes.<b></font><br>Use the Change Address button and use a FedEx accepted street address.'); }
+    if (preg_match("/^P(.+)O(.+)BOX/i", $order->delivery['street_address']) || 
+        preg_match("/^PO BOX/i",$order->delivery['street_address']) || 
+        preg_match("/^P(.+)O(.+)BOX/i", $order->delivery['suburb']) || 
+        preg_match("/^[A-Z]PO/i", $order->delivery['street_address']) || 
+        preg_match("/^[A-Z]PO/i",$order->delivery['suburb'])) {
+          
+      $this->quotes = array('module' => $this->_title,
+                          'error' => '<font size=+1 color=red><b>Federal Express cannot ship to Post Office Boxes.<b></font><br>Use the Change Address button and use a FedEx accepted street address.'); 
+    }
 
     if (!empty($this->icon)) $this->quotes['icon'] = lc_image($this->icon, $this->_title, null, null, 'style="vertical-align:-35%;"');
 

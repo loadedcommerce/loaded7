@@ -39,6 +39,10 @@ class Fedex_Web_Services extends lC_Addon {
     */     
     $this->_description = $lC_Language->get('addon_shipping_fedex_description');
    /**
+    * The addon blurb used in the addons store listing
+    */  
+    $this->_blurb = (!(@extension_loaded('soap'))) ? $lC_Language->get('addon_shipping_fedex_blurb') : null;
+   /**
     * The developers name
     */    
     $this->_author = 'Loaded Commerce, LLC';
@@ -117,6 +121,8 @@ class Fedex_Web_Services extends lC_Addon {
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Shipping Zone', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_ZONE', '0', 'If a zone is selected, only enable this shipping method for that zone.', '6', '0', 'lc_cfg_use_get_zone_class_title', 'lc_cfg_set_zone_classes_pull_down_menu(class=\"select\",', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Tax Class', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_TAX_CLASS', '0', 'Use the following tax class on the shipping fee.', '6', '0', 'lc_cfg_use_get_tax_class_title', 'lc_cfg_set_tax_classes_pull_down_menu(class=\"select\",', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Sort Order', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_SORT_ORDER', '0', 'Sort order of display.', '6', '0', now())");
+    
+    $this->_installSQL();
   }
  /**
   * Return the configuration parameter keys an an array
@@ -165,6 +171,28 @@ class Fedex_Web_Services extends lC_Addon {
     }
 
     return $this->_keys;
-  }    
+  }
+ /**
+  * remove the add-on module and SQL
+  *
+  * @access public
+  */ 
+  public function remove() {
+    global $lC_Database;
+
+    parent::remove();
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE " . TABLE_PRODUCTS . " DROP `products_ready_to_ship`, DROP `products_ship_sep`");
+  }   
+ /**
+  * install the addon SQL
+  *
+  * @access private
+  */  
+  private function _installSQL() {
+    global $lC_Database;
+    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE " . TABLE_PRODUCTS . " ADD `products_ready_to_ship` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `products_ordered`, ADD `products_ship_sep` TINYINT( 1 ) NOT NULL DEFAULT '0' AFTER `products_ready_to_ship`");
+  }      
 }
 ?>

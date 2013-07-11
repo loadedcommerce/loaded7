@@ -7,6 +7,11 @@
       <group>checkout</group>
     </definition>
     <definition>
+      <key>addon_shipping_fedex_blurb</key>
+      <value><![CDATA[<p class="big-message margin-bottom orange-gradient anthracite"><span class="big-message-icon icon-speech icon-red"></span><strong class="red">IMPORTANT:</strong> The SOAP extension was not found on your server.  This add-on requires PHP 5.3+ with the SOAP extension installed.  <br><br><a href="http://php.net/manual/en/book.soap.php" target="_blank"><u>Click Here</u></a> to read details on the SOAP extension.</p>]]></value>
+      <group>checkout</group>
+    </definition>     
+    <definition>
       <key>addon_shipping_fedex_description</key>
       <value><![CDATA[Get Rates and Transit Times for all available FedEx® services before you ship.]]></value>
       <group>checkout</group>
