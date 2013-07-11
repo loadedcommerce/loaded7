@@ -13,12 +13,12 @@
     </definition>  
     <definition>
       <key>shipping_fedex_title</key>
-      <value><![CDATA[FedEx Web Services]]></value>
+      <value><![CDATA[Federal Express]]></value>
       <group>checkout</group>
-    </definition>
+    </definition>   
     <definition>
       <key>shipping_fedex_description</key>
-      <value><![CDATA[FedEx Web Services]]></value>
+      <value><![CDATA[FedEx Shipping]]></value>
       <group>checkout</group>
     </definition>
     <definition>

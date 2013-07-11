@@ -11,8 +11,6 @@
   @copyright  (c) 2013 Loaded Commerce Team
   @license    http://loadedcommerce.com/license.html
 */
-require_once(DIR_FS_CATALOG . 'includes/classes/transport.php');  
-
 class lC_Shipping_fedexwebservices extends lC_Shipping {
   
   public $icon;
@@ -33,7 +31,7 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
   public function lC_Shipping_fedexwebservices() {
     global $lC_Language;
 
-    $this->icon = DIR_FS_CATALOG . 'addons/Fedex_Web_Services/images/fedex-small.png';
+    $this->icon = DIR_WS_CATALOG . 'addons/Fedex_Web_Services/images/fedex-small.png';
 
     $this->_title = $lC_Language->get('shipping_fedex_title');
     $this->_description = $lC_Language->get('shipping_fedex_description');
@@ -92,9 +90,9 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
   public function quote($method = '') {
     global $lC_Database, $lC_Language, $lC_ShoppingCart, $lC_Currencies, $lC_Tax;
 
-    require_once(DIR_FS_CATALOG . 'addons/Fedex_Web_Services/lib/fedex-common.php');  // comment out and test - you likely do not need this line
+    require_once(DIR_FS_CATALOG . 'addons/Fedex_Web_Services/lib/fedex-common.php');
     
-    if (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SERVER') && ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SERVER == 'Test') {
+    if (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SERVER') && ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SERVER == 'TEST') {
       $path_to_wsdl = DIR_FS_CATALOG . 'addons/Fedex_Web_Services/lib/wsdl/RateService_v10_test.wsdl';
     } else {
       $path_to_wsdl = DIR_FS_CATALOG . 'addons/Fedex_Web_Services/lib/wsdl/RateService_v10.wsdl';
@@ -279,11 +277,14 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
       
       $shipping_weight = ($lC_ShoppingCart->getShippingBoxesWeight() < 0.1 ? 0.1 : $lC_ShoppingCart->getShippingBoxesWeight());
       $shipping_num_boxes = ceil((float)$shipping_weight / (float)SHIPPING_MAX_WEIGHT);
+      if ($shipping_num_boxes <= 0) $shipping_num_boxes = 1;
 
       for ($i=0; $i < $shipping_num_boxes; $i++) {
-        $request['RequestedShipment']['RequestedPackageLineItems'][] = array('Weight' => array('Value' => $shipping_weight,
+        $request['RequestedShipment']['RequestedPackageLineItems'][] = array('GroupPackageCount' => $shipping_num_boxes,
+                                                                             'Weight' => array('Value' => $shipping_weight,
                                                                                                'Units' => $this->_weight_type));
       }
+      
     }
     $request['RequestedShipment']['PackageCount'] = $shipping_num_boxes;
     
@@ -295,26 +296,16 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
       $request['RequestedShipment']['SpecialServicesRequested'] = 'SIGNATURE_OPTION'; 
     }
     
-    
-echo "<pre>request ";
-print_r($request);
-echo "</pre>";
-
     $response = $client->getRates($request);
-    
-echo "<pre>";
-print_r($response);
-echo "</pre>";
-die();     
 
     if ($response->HighestSeverity != 'FAILURE' && $response->HighestSeverity != 'ERROR' && is_array($response->RateReplyDetails) || is_object($response->RateReplyDetails)) {
       if (is_object($response->RateReplyDetails)) {
         $response->RateReplyDetails = get_object_vars($response->RateReplyDetails);
       }
 
-      $show_box_weight = " (Total items: " . $shipping_num_boxes . ' pcs. Total weight: ' . number_format($shipping_weight * $shipping_num_boxes, 2) . ' ' . strtolower($this->_weight_type) . 's.)';
+      //$show_box_weight = " (Total items: " . $shipping_num_boxes . ' pcs. Total weight: ' . number_format($shipping_weight * $shipping_num_boxes, 2) . ' ' . strtolower($this->_weight_type) . 's.)';
       $this->quotes = array('id' => $this->_code,
-                            'module' => $this->_title . $show_box_weight,
+                            'module' => $this->_title,
                             'info' => '');
 
       $methods = array();
@@ -351,8 +342,8 @@ die();
         $this->quotes['tax'] = $lC_Tax->getTaxRate($this->_tax_class);
       }
     } else {
-//      $message = 'Error in processing transaction.<br /><br />';
-      $message = '<strong>Please enter a ZIP Code to obtain your shipping quote.</strong><br />Or possibly:<br />If no rate is shown, the heavy weight of the item(s) in your Shopping Cart suggests a <strong>Request for Freight Quote</strong>, rather than FedEx Ground service, is recommended.';
+      $message = 'Error requesting rates from server.<br /><br />';
+      //$message = '<strong>Please enter a ZIP Code to obtain your shipping quote.</strong><br />Or possibly:<br />If no rate is shown, the heavy weight of the item(s) in your Shopping Cart suggests a <strong>Request for Freight Quote</strong>, rather than FedEx Ground service, is recommended.';
       foreach ($response -> Notifications as $notification) {
         if(is_array($response -> Notifications)) {
           $message .= $notification->Severity;
@@ -369,9 +360,9 @@ die();
     // po box hack
     if (preg_match('/^P\.?\s?O\.?\s+?BOX/i', $lC_ShoppingCart->getShippingAddress('street_address')) || (preg_match('/^P\.?\s?O\.?\s+?BOX/i', $lC_ShoppingCart->getShippingAddress('suburb')))) {
     $this->quotes = array('module' => $this->_title,
-                          'error' => '<font size=+1 color=red><b>Federal Express cannot ship to Post Office Boxes.<b></font><br>Use the Change Address button above to use a FedEx accepted street address.'); }
+                          'error' => '<font size=+1 color=red><b>Federal Express cannot ship to Post Office Boxes.<b></font><br>Use the Change Address button and use a FedEx accepted street address.'); }
 
-    if (!empty($this->icon)) $this->quotes['icon'] = lc_image($this->icon, $this->_title);
+    if (!empty($this->icon)) $this->quotes['icon'] = lc_image($this->icon, $this->_title, null, null, 'style="vertical-align:-35%;"');
 
     return $this->quotes;
   }  
