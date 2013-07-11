@@ -21,10 +21,38 @@ dialog_heading_batch_delete_items = Batch Delete Items
 field_name = Name
 field_description = Description
 
+info_bubble_name = Name Info
+info_bubble_description = Description Info
+info_bubble_redemption_code = Redemption Code Info
+info_bubble_price_or_percent = Price or Percentage Info
+info_bubble_free_shipping = Free Shipping Info
+info_bubble_free_product = Free Product Info
+info_bubble_purchase_over = Purchase Over Info
+info_bubble_total_uses = Total Uses Info
+info_bubble_uses_per_customer = Uses Per Customer Info
+info_bubble_dates = Dates Info
+info_bubble_proucts_restrictions = Products Restrictions Info
+info_bubble_customers_restrictions = Customers Restrictions Info
+info_bubble_groups_restrictions = Groups Restrictions Info
+
 introduction_new_item = Please fill in the following information for the new item.
 introduction_edit_item = Please make the necessary changes for this item.
 introduction_delete_item = Please verify the removal of this item.
 introduction_batch_delete_coupons = Please verify the removal of the selected items.
+
+label_redemption_code = Redemption Code
+label_reward = Reward
+label_purchase_over = Purchase Over
+label_total_uses = Total Uses
+label_uses_per_customer = Uses Per Customer
+label_dates = Dates
+label_products = Products
+label_customers = Customers
+label_groups = Groups
+
+legend_coupon_details = Coupon Details
+legend_use_limits = Use Limits
+legend_restrictions = Restrictions
 
 section_general = Content
 section_details = Details
@@ -34,5 +62,15 @@ section_restrictions = Restrictions
 table_heading_items = Items
 table_heading_action = Action
 
+text_coupon = Coupon
+text_rule = Rule
 text_new_rule_upsell_desc = New Rule Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. 
 text_toggle_html_editor = Toggle Editor
+text_new_coupon = New Coupon
+
+text_discount = Discount
+text_free_shipping = Free Shipping
+text_free_product = Free Product
+text_start = Start
+text_end = End
+text_price_or_percent = Price or %

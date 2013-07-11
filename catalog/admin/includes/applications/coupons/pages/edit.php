@@ -73,14 +73,14 @@
                       <p class="button-height block-label">
                         <label class="label" for="<?php echo 'coupons_name[' . $l['id'] . ']'; ?>">
                           <?php echo $lC_Language->get('field_name'); ?>
-                          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_coupons_name'), null); ?>
+                          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_name'), null); ?>
                         </label>
                         <?php echo lc_draw_input_field('coupons_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($coupons_name[$l['id']]) ? $coupons_name[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
                       </p>
                       <p class="button-height block-label">
                         <label class="label" for="<?php echo 'coupons_description[' . $l['id'] . ']'; ?>">
                           <?php echo $lC_Language->get('field_description'); ?>
-                          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_coupons_description'), null); ?>
+                          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_description'), null); ?>
                         </label>
                         <div style="margin-bottom:-6px;"></div>
                         <?php echo lc_draw_textarea_field('coupons_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($coupons_description[$l['id']]) ? $coupons_description[$l['id']] : null), null, 10, 'id="ckEditorCouponsDescription_' . $l['id'] . '" class="input full-width autoexpanding"'); ?>
@@ -99,21 +99,73 @@
           <div id="section_details">
             <div class="columns with-padding">
               <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-                Coupon Details
+                <fieldset class="fieldset fields-list">
+                  <legend class="legend"><?php echo $lC_Language->get('legend_coupon_details'); ?></legend>
+                  <div class="field-block button-height margin-bottom">
+                    <label for="" class="label"><b><?php echo $lC_Language->get('label_redemption_code'); ?></b></label>
+                    <input type="text" name="" id="" value="" class="input">
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_redemption_code'), null, 'info-spot on-left grey margin-left'); ?>
+                  </div>
+                  <div class="field-drop button-height black-inputs">
+                    <label for="" class="label"><b><?php echo $lC_Language->get('label_reward'); ?></b></label>
+                    <input type="text" name="" id="" value="" class="input">
+                    <small class="input-info"><?php echo $lC_Language->get('text_price_or_percent'); ?></small>
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_price_or_percent'), null, 'info-spot on-left grey margin-left'); ?>
+                  </div>
+                </fieldset>
               </div>
             </div>
           </div>
           <div id="section_limits">
             <div class="columns with-padding">
               <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-                Use Limits
+                <fieldset class="fieldset fields-list">
+                  <legend class="legend"><?php echo $lC_Language->get('legend_use_limits'); ?></legend>
+                  <div class="field-block button-height">
+                    <label for="" class="label"><b><?php echo $lC_Language->get('label_purchase_over'); ?></b></label>
+                    <input type="text" name="" id="" value="" class="input">
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_purchase_over'), null, 'info-spot on-left grey margin-left'); ?>
+                  </div>
+                  <div class="field-block button-height margin-bottom">
+                    <label for="" class="label"><b><?php echo $lC_Language->get('label_total_uses'); ?></b></label>
+                    <input type="text" name="" id="" value="" class="input">
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_total_uses'), null, 'info-spot on-left grey margin-left'); ?>
+                  </div>
+                  <div class="field-block button-height">
+                    <label for="" class="label"><b><?php echo $lC_Language->get('label_uses_per_customer'); ?></b></label>
+                    <input type="text" name="" id="" value="" class="input">
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_uses_per_customer'), null, 'info-spot on-left grey margin-left'); ?>
+                  </div>
+                  <div class="field-block button-height margin-bottom">
+                    <label for="" class="label"><b><?php echo $lC_Language->get('label_dates'); ?></b></label>
+                    <input type="text" name="" id="" value="" class="input">
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_dates'), null, 'info-spot on-left grey margin-left'); ?>
+                  </div>
+                </fieldset>
               </div>
             </div>
           </div>
           <div id="section_restrictions">
             <div class="columns with-padding">
               <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-                Restrictions
+                <fieldset class="fieldset fields-list">
+                  <legend class="legend"><?php echo $lC_Language->get('legend_restrictions'); ?><?php echo lc_go_pro(); ?></legend>
+                  <div class="field-block button-height">
+                    <label for="" class="label"><b><?php echo $lC_Language->get('label_products'); ?></b></label>
+                    <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_proucts_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
+                  </div>
+                  <div class="field-block button-height">
+                    <label for="" class="label"><b><?php echo $lC_Language->get('label_customers'); ?></b></label>
+                    <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_customers_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
+                  </div>
+                  <div class="field-block button-height margin-bottom">
+                    <label for="" class="label"><b><?php echo $lC_Language->get('label_groups'); ?></b><small class="tag orange-bg small-margin-left">B2B</small></label>
+                    <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />
+                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_groups_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
+                  </div>
+                </fieldset>
               </div>
             </div>
           </div>    
@@ -127,7 +179,7 @@
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
-              <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . ($_GET['cid'] != '') ? 'coupons=' . $_GET['cid'] : ''); ?>">
+              <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>">
                 <span class="button-icon red-gradient glossy">
                   <span class="icon-cross"></span>
                 </span>
@@ -142,7 +194,7 @@
             </p>
           </div>
           <div id="floating-button-container-title" class="hidden">
-            <p class="white big-text small-margin-top"><?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_name') : 'New Coupon'); ?></p>
+            <p class="white big-text small-margin-top"><?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_name') : $lC_Language->get('text_new_coupon')); ?></p>
           </div>
         </div>
       </div>
