@@ -303,9 +303,9 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
         $response->RateReplyDetails = get_object_vars($response->RateReplyDetails);
       }
 
-      //$show_box_weight = " (Total items: " . $shipping_num_boxes . ' pcs. Total weight: ' . number_format($shipping_weight * $shipping_num_boxes, 2) . ' ' . strtolower($this->_weight_type) . 's.)';
+      $show_box_weight = " (" . $shipping_num_boxes . ' x ' . number_format($shipping_weight * $shipping_num_boxes, 2) . ' ' . strtolower($this->_weight_type) . 's.)';
       $this->quotes = array('id' => $this->_code,
-                            'module' => $this->_title,
+                            'module' => $this->_title . $show_box_weight,
                             'info' => '');
 
       $methods = array();
