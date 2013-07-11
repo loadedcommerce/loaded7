@@ -17,7 +17,7 @@
         $_group = 'configuration',
         $_icon = 'currencies.png',
         $_title,
-        $_sort_order = 500;
+        $_sort_order = 400;
 
     function lC_Access_Currencies() {
       global $lC_Language;

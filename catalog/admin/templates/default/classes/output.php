@@ -19,7 +19,7 @@ class output {
   }
   
   public function drawBigMenu($_section = NULL, $_class = NULL) {
-    global $lC_Access;
+    global $lC_Access, $lC_Language;
 
     $access = array();
     if ( isset($_SESSION['admin']) ) {
@@ -29,10 +29,11 @@ class output {
 
     switch ($_section) {
       case 'configuration':  // settings menu
+      case 'tools':  // settings menu
         $mOpenClass = 'cfg-open';
         $newArr = array();
         foreach($access as $key => $value) {
-          if ($key != 'configuration' && $key != 'store') continue;
+          if ($key != 'configuration' && $key != 'tools' && $key != 'store') continue;
           $newArr[$key] = $value;
         }
         $access = $newArr;
@@ -42,13 +43,21 @@ class output {
         $mOpenClass = '';
         $newArr = array();
         foreach($access as $key => $value) {
-          if ($key == 'configuration' || $key == 'store') continue;
+          if ($key != 'configuration' && $key != 'tools' && $key != 'store') { } else { continue; }
           $newArr[$key] = $value;
         }
-        $access = $newArr;
+        
+        // custom sort
+        $access = array();
+        if (array_key_exists('orders', $newArr)) $access['orders'] = $newArr['orders'];
+        if (array_key_exists('customers', $newArr)) $access['customers'] = $newArr['customers'];
+        if (array_key_exists('products', $newArr)) $access['products'] = $newArr['products'];
+        if (array_key_exists('content', $newArr)) $access['content'] = $newArr['content'];
+        if (array_key_exists('marketing', $newArr)) $access['marketing'] = $newArr['marketing'];
+        if (array_key_exists('reports', $newArr)) $access['reports'] = $newArr['reports'];
+        if (array_key_exists('hidden', $newArr)) $access['hidden'] = $newArr['hidden'];
     }
 
-    ksort($access);
     $output = '';
     foreach ( $access as $group => $links ) {
       ksort($links);
@@ -60,6 +69,13 @@ class output {
       $output .= '  <ul class="big-menu ' . $_class . '">';
 
       foreach ( $links as $link) {
+        
+        if ($link['title'] == $lC_Language->get('access_orders_title') ||
+            $link['title'] == $lC_Language->get('access_products_title') ||
+            $link['title'] == $lC_Language->get('access_customers_title')) {
+          $link['title'] .= ' ' . $lC_Language->get('text_list');
+        }
+        
         if (count($link['subgroups']) > 1 && $link['module'] != 'configuration') {
           $output .= '<li class="with-right-arrow">';
           $output .= '<span><span class="list-count">' . count($link['subgroups']) . '</span>' . $link['title'] . '</span>';

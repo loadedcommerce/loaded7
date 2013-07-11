@@ -91,8 +91,8 @@ class lC_Countries_Admin {
                </td>';
       $total = '<td>' . $Qzones->valueInt('total_zones') . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editCountry(\'' . $Qcountries->valueInt('countries_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCountry(\'' . $Qcountries->valueInt('countries_id') . '\', \'' . urlencode($Qcountries->valueProtected('countries_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   <a href="' . ((int)($_SESSION['admin']['access']['locale'] < 3) ? '#' : 'javascript://" onclick="editCountry(\'' . $Qcountries->valueInt('countries_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['locale'] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   <a href="' . ((int)($_SESSION['admin']['access']['locale'] < 4) ? '#' : 'javascript://" onclick="deleteCountry(\'' . $Qcountries->valueInt('countries_id') . '\', \'' . urlencode($Qcountries->valueProtected('countries_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['locale'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
 
       $result['aaData'][] = array("$check", "$name", "$code", "$total", "$action");
