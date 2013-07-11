@@ -63,6 +63,8 @@ $(document).ready(function() {
     } 
   ?>
   
+  $('.datepicker').glDatePicker({ zIndex: 100 });
+  
 });
 
 function getTaxClass(cid) {
