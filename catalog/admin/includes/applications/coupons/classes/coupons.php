@@ -82,6 +82,7 @@ class lC_Coupons_Admin {
       
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcoupons->valueInt('coupons_id') . '" id="' . $Qcoupons->valueInt('coupons_id') . '"></td>';
       $name = '<td>' . $Qcoupons->value('coupons_name') . '</td>';
+      $status = '<td><span id="status_' . $Qcoupons->value('coupons_id') . '" onclick="updateStatus(\'' . $Qcoupons->value('coupons_id') . '\', \'' . (($Qcoupons->value('coupons_status') == 1) ? 0 : 1) . '\');">' . (($Qcoupons->valueInt('coupons_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_coupon') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_coupon') . '"></span>') . '</span></td>';
       $code = '<td>' . $Qcoupons->value('coupons_code') . '</td>';
       $reward = '<td>' . $lC_Currencies->format($Qcoupons->value('coupons_reward')) . '</td>';
       $limits = '<td>' . (($Qcoupons->value('coupons_minimum_order') > 0 || $Qcoupons->value('uses_per_customer') > 0 || $Qcoupons->value('uses_per_coupon') > 0 || $Qcoupons->value('coupons_start_date') != '0000-00-00 00:00:00' || $Qcoupons->value('coupons_expires_date') != '0000-00-00 00:00:00') ? (($Qcoupons->value('coupons_minimum_order') > 0) ? '<small class="tag purple-bg no-wrap">' . $lC_Language->get('text_minimum_order') . ': ' . $lC_Currencies->format($Qcoupons->value('coupons_minimum_order')) .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_customer') > 0) ? '<small class="tag orange-bg no-wrap">' . $Qcoupons->value('uses_per_customer') . ' ' . $lC_Language->get('text_per_customer') .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_coupon') > 0) ? '<small class="tag red-bg no-wrap">' . $Qcoupons->value('uses_per_coupon') . ' ' . $lC_Language->get('text_per_coupon') . '</small>' : null) . ' ' . (($Qcoupons->value('coupons_start_date') != '0000-00-00 00:00:00') ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_start_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('coupons_start_date')) . '</small>' : null) . ' ' . (($Qcoupons->value('coupons_expires_date') != '0000-00-00 00:00:00') ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_expire_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('coupons_expires_date')) . '</small>' : null) : '<small class="tag green-bg no-wrap" title="' . $lC_Language->get('text_no_restrictions') . '">' . $lC_Language->get('text_none') . '</small>') . '</td>';
@@ -91,7 +92,7 @@ class lC_Coupons_Admin {
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="copyCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\')') . '" class="button icon-pages with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_copy') . '"></a>
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
-      $result['aaData'][] = array("$check", "$name", "$code", "$reward", "$limits", "$restrictions", "$action");
+      $result['aaData'][] = array("$check", "$name", "$status", "$code", "$reward", "$limits", "$restrictions", "$action");
       
     }
 
@@ -238,6 +239,23 @@ class lC_Coupons_Admin {
       lC_Specials_Admin::delete($id);
     }
     return true;*/
+  }
+ /*
+  * update coupon status db entry
+  * 
+  * @access public
+  * @return true or false
+  */
+  public static function updateStatus($id, $val) {
+    global $lC_Database;
+    
+    $Qupdate = $lC_Database->query('update :table_coupons set coupons_status = :coupons_status where coupons_id = :coupons_id');
+    $Qupdate->bindTable(':table_coupons', TABLE_COUPONS);
+    $Qupdate->bindInt(':coupons_status', $val);
+    $Qupdate->bindInt(':coupons_id', $id);
+    $Qupdate->execute();
+      
+    return true;
   }
 }
 ?>

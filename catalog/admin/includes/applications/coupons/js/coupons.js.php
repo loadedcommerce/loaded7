@@ -25,34 +25,18 @@ $(document).ready(function() {
     "sPaginationType": paginationType, 
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
-                  { "sWidth": "20%", "bSortable": true, "sClass": "dataColName" },
+                  { "sWidth": "16%", "bSortable": true, "sClass": "dataColName" },
+                  { "sWidth": "7%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile", "sType": "string" },
                   { "sWidth": "10%", "bSortable": true, "sClass": "dataColCode hide-on-tablet" },
-                  { "sWidth": "10%", "bSortable": true, "sClass": "dataColReward hide-on-mobile-portrait" },
-                  { "sWidth": "20%", "bSortable": true, "sClass": "dataColLimits hide-on-mobile" },
-                  { "sWidth": "20%", "bSortable": true, "sClass": "dataColRestrictions hide-on-mobile" },
+                  { "sWidth": "7%", "bSortable": true, "sClass": "dataColReward hide-on-mobile-portrait" },
+                  { "sWidth": "20%", "bSortable": false, "sClass": "dataColLimits hide-on-mobile" },
+                  { "sWidth": "20%", "bSortable": false, "sClass": "dataColRestrictions hide-on-mobile" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();
-       
-  if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
-    $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
-    $('#dataTable_length').hide();
-    $('#floating-button-container').hide();
-    $('#actionText').hide();
-    $('.on-mobile').show();
-    $('.selectContainer').hide();
-  } else {
-    // instantiate floating menu
-    $('#floating-menu-div-listing').fixFloat();
-  } 
-  var error = '<?php echo $_SESSION['error']; ?>';
-  if (error) {
-    var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
-    $.modal.alert(errmsg);
-  } 
   
   if (quickAdd) {
-    //newCoupon();
+    newCoupon();
   }  
   
   <?php 
@@ -63,9 +47,21 @@ $(document).ready(function() {
     } 
   ?>
   
-  //$('.datepicker').glDatePicker({ zIndex: 100 });
+  $('.datepicker').glDatePicker({ zIndex: 100 });
   
 });
+
+function updateStatus(id, val) {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateStatus&cid=CID&val=VAL'); ?>';
+  $.getJSON(jsonLink.replace('CID', id).replace('VAL', val));
+  if (val == 1) {               
+    $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'0\')');
+    $("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable_coupon'); ?>"></span>');
+  } else {               
+    $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'1\')');
+    $("#status_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_enable_coupon'); ?>"></span>');
+  }
+}
 
 function toggleEditor(id) {
   var selection = $("#ckEditorCouponsDescription_" + id);

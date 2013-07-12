@@ -20,7 +20,12 @@
   </hgroup>
   <style>
   .dataColCheck { text-align: center; }
-  .dataColTitle {  }
+  .dataColName {  }
+  .dataColStatus { text-align: center; }
+  .dataColCode {  }
+  .dataColReward {  }
+  .dataColLimit {  }
+  .dataColRestriction {  }
   .dataColAction { text-align: right; }
   .dataTables_info { position:absolute; bottom:42px; color:#4c4c4c; }
   .selectContainer { position:absolute; bottom:29px; left:30px }
@@ -33,6 +38,7 @@
         <tr>
           <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
           <th scope="col">Coupons</th>
+          <th scope="col">Status</th>
           <th scope="col">Code</th>
           <th scope="col">Reward</th>
           <th scope="col">Use Limits</th>
@@ -50,7 +56,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="7">&nbsp;</th>
+          <th colspan="8">&nbsp;</th>
         </tr>
       </tfoot>
     </table>

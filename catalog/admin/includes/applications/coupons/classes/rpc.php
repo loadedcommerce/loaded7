@@ -30,5 +30,21 @@ class lC_Coupons_Admin_rpc {
 
     echo json_encode($result);
   }
+ /*
+  * update coupon status
+  *
+  * @param int $_GET the coupon id and new value of the status 
+  * @access public
+  * @return json
+  */
+  public static function updateStatus() {
+    $status = lC_Coupons_Admin::updateStatus($_GET['cid'], $_GET['val']);
+    
+    if ($status) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }  
+
+    echo json_encode($result);
+  }
 }
 ?>
