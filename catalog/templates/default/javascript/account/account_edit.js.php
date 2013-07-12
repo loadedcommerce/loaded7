@@ -15,7 +15,7 @@
 ?>
 <!-- Account Edit Validations -->
 <script>
-$('#account_edit').submit(function() {
+function validateForm() {
   var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
   var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
   var emailMin = '<?php echo ACCOUNT_EMAIL_ADDRESS; ?>';
@@ -41,7 +41,7 @@ $('#account_edit').submit(function() {
     $('#account_edit').submit();
   }
   return false;
-});
+}
 
   // <![CDATA[       
   var opts = {     
