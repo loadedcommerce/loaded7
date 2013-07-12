@@ -31,7 +31,9 @@ maximum_file_upload_size = Max: %s
 
 text_top = Top
 text_hello = Hello
-text_with_selected = With Selected:
+text_with_selected = With Selected
+text_delete = Delete
+text_move = Move
 text_version_info = Version Info
 
 menu_title_addons = Add Ons
@@ -255,6 +257,8 @@ text_show_in_nav = Click to show in Top Nav
 text_show_in_box = Click to show in Infobox
 text_enable_category = Click to enable Category
 text_disable_category = Click to disable Category
+text_enable_coupon = Click to Enable Coupon
+text_disable_coupon = Click to Disable Coupon
 
 update_message_title = Updates are Available!
 update_message_text1 = New version
@@ -268,3 +272,13 @@ text_cick_for_info = &nbsp;Click for Info&nbsp;
 text_pro = Pro
 text_b2b = B2B
 text_list = List
+text_none = None
+text_no_restriction = No Restriction
+text_product_restriction = Product Restriction
+text_category_restriction = Category Restriction
+text_customer_restriction = Customer Restriction
+text_per_coupon = Per Coupon
+text_per_customer = Per Customer
+text_start_date = From
+text_expire_date = To
+text_minimum_order = Min Order

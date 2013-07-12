@@ -29,6 +29,8 @@
   define('TABLE_COUNTER', DB_TABLE_PREFIX . 'counter');
   define('TABLE_COUNTER_HISTORY', DB_TABLE_PREFIX . 'counter_history');
   define('TABLE_COUNTRIES', DB_TABLE_PREFIX . 'countries');
+  define('TABLE_COUPONS', DB_TABLE_PREFIX . 'coupons');
+  define('TABLE_COUPONS_DESCRIPTION', DB_TABLE_PREFIX . 'coupons_description');
   define('TABLE_CREDIT_CARDS', DB_TABLE_PREFIX . 'credit_cards');
   define('TABLE_CURRENCIES', DB_TABLE_PREFIX . 'currencies');
   define('TABLE_CUSTOMERS', DB_TABLE_PREFIX . 'customers');

@@ -151,7 +151,7 @@
     <a href="#" id="open-shortcuts"><span class="icon-thumbs"></span></a>
     <?php
   }
-
+  
   // load the main content
   if ($lC_Template->isAuthorized($lC_Template->getModule())) {
     require($lC_Vqmod->modCheck('includes/applications/' . $lC_Template->getModule() . '/pages/' . $lC_Template->getPageContentsFilename()));
