@@ -17,7 +17,7 @@ if ($lC_MessageStack->size('contact') > 0) {
 ?>
 <!--content/info/info_contact.php start-->
 <div id="infoContact" class="full_page">
-  <form name="contact" action="<?php echo lc_href_link(FILENAME_INFO, 'contact=process'); ?>" method="post" enctype="multipart/form-data" id="contact">
+  <form name="contact" action="<?php echo lc_href_link(FILENAME_INFO, 'contact=process', 'SSL'); ?>" method="post" enctype="multipart/form-data" id="contact">
     <div class="short-code-column">
       <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
       <div id="errDiv" class="short-code msg error" style="margin-bottom:10px; display:none;"> <span><?php echo $lC_Language->get('form_validation_error'); ?></span> </div>
@@ -32,7 +32,7 @@ if ($lC_MessageStack->size('contact') > 0) {
         <?php 
         $contact_name = '';
         $contact_email = '';
-        $contact_button = '<a onclick="$(\'#contact\').submit();" class="noDecoration"><button class="button brown_btn" type="submit">' . $lC_Language->get('button_continue') . '</button></a>';
+        $contact_button = '<button class="button purple_btn" type="submit" onclick="validateForm;">' . $lC_Language->get('button_continue') . '</button>';
         if (isset($_GET['contact']) && ($_GET['contact'] == 'success')) {
             echo $lC_Language->get('contact_email_sent_successfully');
             $contact_button = '<a href="' . lc_href_link(FILENAME_DEFAULT) . '" class="noDecoration"><button class="button brown_btn" type="button">' . $lC_Language->get('button_continue') . '</button></a>';
