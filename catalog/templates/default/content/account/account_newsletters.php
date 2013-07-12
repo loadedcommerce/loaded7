@@ -34,7 +34,7 @@
         <div style="clear:both;">&nbsp;</div>
         <div id="accountNewslettersActions" class="action_buttonbar">
           <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span> 
-          <span class="buttonRight"><a onclick="$('#account_newsletter').submit();"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_update'); ?></button></a></span>
+          <span class="buttonRight"><a onclick="$('#account_newsletter').submit();"><button class="button purple_btn" type="button"><?php echo $lC_Language->get('button_update'); ?></button></a></span>
         </div> 
         <div style="clear:both;"></div>
       </div>

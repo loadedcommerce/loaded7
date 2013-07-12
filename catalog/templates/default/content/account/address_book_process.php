@@ -50,7 +50,7 @@ if ($lC_MessageStack->size('address_book') > 0) {
               }
             ?>
             <span class="buttonLeft"><a href="<?php echo $back_link; ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
-            <span class="buttonRight"><button class="button purple_btn" type="submit" onclick="validateForm();"><?php echo $lC_Language->get('button_update'); ?></button></span>
+            <span class="buttonRight"><button class="button purple_btn" type="submit" onclick="validateForm();"><?php echo $lC_Language->get('button_continue'); ?></button></span>
             <div style="clear:both;"></div> 
           </div>
         </form>
