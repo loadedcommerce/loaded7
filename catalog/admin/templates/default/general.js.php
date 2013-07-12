@@ -79,6 +79,8 @@ $(document).ready(function() {
       cfg = true;
     } else if (module.indexOf("products") != -1 && document.location.href.indexOf("products") != -1) {
       $("#big-menu_product_catalog").addClass('current navigable-current').change();
+    } else if (module.indexOf("coupons") != -1 && document.location.href.indexOf("coupons") != -1) {
+      $("#big-menu_coupon_manager").addClass('current navigable-current').change();
     } else if (module.indexOf("product_variants") != -1 && document.location.href.indexOf("product_variants") != -1) {
       $("#big-menu_product_variants").addClass('current navigable-current').change();
     } else if (module.indexOf("statistics") != -1 && document.location.href.indexOf("statistics") != -1) {
