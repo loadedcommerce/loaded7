@@ -171,22 +171,18 @@ $(window).resize(function() {
 function _setMediaType() {
   var winW = $(window).width();
   
-  if (winW < 321) {
-    mtype = 'mobile-portrait'; //320 x 480
-  } else if (winW > 320 && winW < 601) {
-    if (winW > 463) {
-      mtype = 'small-tablet-portrait'; //600 x 800
-    } else {
-      mtype = 'mobile-landscape'; //480 x 320
-    }
-  } else if (winW > 601 && winW < 769) {  
-    mtype = 'tablet-portrait'; //768 x 1024   
-  } else if (winW > 769 && winW < 1025) {
-    if (winW < 784) {
-      mtype = 'small-tablet-landscape'; //800 x 600
-    } else {    
-      mtype = 'tablet-landscape'; //1024 x 768    
-    }
+  if (winW <= 320) {
+    mtype = 'mobile-portrait'; //320
+  } else if (winW > 320 && winW <= 480) {
+    mtype = 'mobile-landscape'; //480
+  } else if (winW > 480 && winW <= 600) {
+    mtype = 'small-tablet-portrait'; //600
+  } else if (winW > 600 && winW <= 768) {  
+    mtype = 'tablet-portrait'; //768   
+  } else if (winW > 768 && winW <= 800) {
+    mtype = 'small-tablet-landscape'; //800
+  } else if (winW > 800 && winW <= 1024) {
+    mtype = 'tablet-landscape'; //1024    
   } else if (winW > 1024) {
     mtype = 'desktop';    
   }
