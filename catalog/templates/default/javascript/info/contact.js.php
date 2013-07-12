@@ -15,7 +15,7 @@
 */ 
 ?>
 <script>
-$('#contact').submit(function() {
+function validateForm() {
   var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
   var emailMin = '<?php echo ACCOUNT_EMAIL_ADDRESS; ?>';
   jQuery.validator.messages.required = "";
@@ -40,5 +40,5 @@ $('#contact').submit(function() {
     $('#contact').submit();
   }
   return false;
-});
+}
 </script>

@@ -64,12 +64,12 @@ if ($lC_MessageStack->size('create') > 0) {
   </div>
   <div class="action_buttonbar clear">
     <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'login'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
-    <span class="buttonRight"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_signup'); ?></button></span>
+    <span class="buttonRight"><button class="button purple_btn" type="submit" onclick="validateForm();"><?php echo $lC_Language->get('button_signup'); ?></button></span>
   </div>    
   </form>
 </div>
 <script>
-$('#create').submit(function() {
+function validateForm() {
   var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
   var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
   var emailMin = '<?php echo ACCOUNT_EMAIL_ADDRESS; ?>';
@@ -109,6 +109,6 @@ $('#create').submit(function() {
     $('#create').submit();
   }
   return false;
-});
+}
 </script>
 <!--content/account/create.php end-->

@@ -14,32 +14,32 @@
   @function The lC_Default class manages default template functions
 */
 ?>
-  <script>
-  $('#address_book').submit(function() {
-    var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
-    var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
-    jQuery.validator.messages.required = "";
-    var bValid = $("#address_book").validate({
-      rules: {
-        firstname: { minlength: fnameMin, required: true },
-        lastname: { minlength: lnameMin, required: true },
-        street_address: { required: true },
-        city: { required: true },
-      },
-      invalidHandler: function(e, validator) {
-        var errors = validator.numberOfInvalids();
-        if (errors) {
-          $("#errDiv").show().delay(5000).fadeOut('slow');
-        } else {
-          $("#errDiv").hide();
-        }
-        return false;
+<script>
+function validateForm() {
+  var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
+  var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
+  jQuery.validator.messages.required = "";
+  var bValid = $("#address_book").validate({
+    rules: {
+      firstname: { minlength: fnameMin, required: true },
+      lastname: { minlength: lnameMin, required: true },
+      street_address: { required: true },
+      city: { required: true },
+    },
+    invalidHandler: function(e, validator) {
+      var errors = validator.numberOfInvalids();
+      if (errors) {
+        $("#errDiv").show().delay(5000).fadeOut('slow');
+      } else {
+        $("#errDiv").hide();
       }
-    }).form();
-
-    if (bValid) {      
-      $('#address_book').submit();
+      return false;
     }
-    return false;
-  }); 
-  </script>
+  }).form();
+
+  if (bValid) {      
+    $('#address_book').submit();
+  }
+  return false;
+}
+</script>
