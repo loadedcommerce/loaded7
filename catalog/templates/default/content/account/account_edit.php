@@ -52,7 +52,7 @@ if ($lC_MessageStack->size('account_edit') > 0) {
       <div style="clear:both;"></div>
       <div id="accountEditActions" class="action_buttonbar"  style="margin-top:10px;"> 
         <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span> 
-        <span class="buttonRight"><a onclick="$('#account_edit').submit();" class="noDecoration"><button class="button brown_btn" type="submit"><?php echo $lC_Language->get('button_update'); ?></button></a></span> 
+        <span class="buttonRight"><button class="button brown_purple" type="button" onclick=validateForm();"><?php echo $lC_Language->get('button_update'); ?></button></span> 
       </div>
       <div style="clear:both;"></div>
     </div>
