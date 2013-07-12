@@ -52,7 +52,7 @@ $(document).ready(function() {
   } 
   
   if (quickAdd) {
-    newCoupon();
+    //newCoupon();
   }  
   
   <?php 
@@ -63,32 +63,9 @@ $(document).ready(function() {
     } 
   ?>
   
-  $('.datepicker').glDatePicker({ zIndex: 100 });
+  //$('.datepicker').glDatePicker({ zIndex: 100 });
   
 });
-
-function getTaxClass(cid) {
-  if (cid != null) {
-    var id = cid;
-  } else {
-    var id = $("#products").val();
-  }
-  var link = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getTaxClass&cid=CID'); ?>'
-  var jsonLink = link.replace('CID', id);
-  $.getJSON(jsonLink,
-    function (tdata) {
-      if (tdata.rpcStatus == -10) { // no session
-        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-        $(location).attr('href',url);
-      }
-      if (tdata.rpcStatus != 1) {
-        alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
-        return false;
-      }
-      $("#taxClassRate").html(tdata.taxClassRate);
-    }
-  );
-}
 
 function toggleEditor(id) {
   var selection = $("#ckEditorCouponsDescription_" + id);

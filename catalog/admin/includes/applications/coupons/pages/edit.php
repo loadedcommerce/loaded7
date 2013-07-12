@@ -44,7 +44,7 @@
     ?>
   </hgroup>
   <div class="with-padding-no-top">
-    <form name="coupon" id="coupon" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('coupons_id') : '') . '&cid=' . $_GET['cid'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
+    <form name="coupon" id="coupon" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('coupons_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="coupon_tabs" class="side-tabs">
         <ul class="tabs">
           <li class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
@@ -59,12 +59,12 @@
                 <div class="columns">              
                   <div class="new-row-mobile six-columns twelve-columns-mobile">
                     <span class="button-group">
-                      <label for="coupon_mode_coupon" class="button blue-active">
-                        <input type="radio" name="coupon_mode" id="coupon_mode_coupon" value="coupon" checked>
+                      <label for="coupons_mode_coupon" class="button blue-active">
+                        <input type="radio" name="coupons_mode" id="coupons_mode_coupon" value="coupon" checked>
                         <?php echo $lC_Language->get('text_coupon'); ?>
                       </label>
-                      <label for="coupon_mode_rule" class="button green-active disabled">
-                        <input type="radio" name="coupon_mode" id="coupon_mode_rule" value="rule" disabled>
+                      <label for="coupons_mode_rule" class="button green-active disabled">
+                        <input type="radio" name="coupons_mode" id="coupons_mode_rule" value="rule" disabled>
                         <?php echo $lC_Language->get('text_rule') . lc_go_pro(); ?>
                       </label>
                     </span>

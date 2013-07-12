@@ -95,41 +95,9 @@ class lC_Coupons_Admin {
       
     }
 
-    $Qspecials->freeResult;
+    $Qcoupons->freeResult;
 
     return $result;
-  }
- /*
-  * Return the data used on the dialog forms
-  *
-  * @access public
-  * @return array
-  */
-  public static function formData() {
-    /*global $lC_Database, $lC_Language, $lC_Currencies;
-
-    $result = array();
-    $specials_array = array();
-    $specials_array2 = array();
-    $Qspecials = $lC_Database->query('select p.products_id, p.products_price, p.products_tax_class_id, pd.products_name, s.specials_new_products_price from :table_products p left join :table_specials s on (p.products_id = s.products_id), :table_products_description pd where p.products_id = pd.products_id and pd.language_id = :language_id and p.has_children = 0 order by pd.products_name');
-    $Qspecials->bindTable(':table_products', TABLE_PRODUCTS);
-    $Qspecials->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-    $Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
-    $Qspecials->bindInt(':language_id', $lC_Language->getID());
-    $Qspecials->execute();
-    while ( $Qspecials->next() ) {
-      if ( $Qspecials->valueDecimal('specials_new_products_price') < 1 ) {
-        $specials_array[] = array('id' => $Qspecials->valueInt('products_id'),
-                                  'text' => $Qspecials->value('products_name') . ' (' . $lC_Currencies->format($Qspecials->value('products_price')) . ')',
-                                  'tax_class_id' => $Qspecials->valueInt('products_tax_class_id'));
-
-      }
-    }
-    $result['specialsArray'] = $specials_array;
-
-    $Qspecials->freeResult();
-
-    return $result;*/
   }
  /*
   * Get the coupons information
@@ -166,53 +134,75 @@ class lC_Coupons_Admin {
   * @return array
   */
   public static function save($id = null, $data) {
-    /*global $lC_Database, $lC_DateTime;
-
+    global $lC_Database, $lC_Language;
+    
+    $coupon_id = '';
     $error = false;
 
-    $Qproduct = $lC_Database->query('select products_price from :table_products where products_id = :products_id limit 1');
-    $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
-    $Qproduct->bindInt(':products_id', $data['products_id']);
-    $Qproduct->execute();
+    $lC_Database->startTransaction();
 
-    $specials_price = $data['specials_price'];
-
-    if ( substr($specials_price, -1) == '%' ) {
-      $specials_price = $Qproduct->valueDecimal('products_price') - (((double)$specials_price / 100) * $Qproduct->valueDecimal('products_price'));
+    if ( is_numeric($id) ) {
+      $Qcoupon = $lC_Database->query('update :table_coupons set coupons_type = :coupons_type, coupons_mode = :coupons_mode, coupons_code = :coupons_code, coupons_reward = :coupons_reward, coupons_purchase_over = :coupons_purchase_over, coupons_start_date = :coupons_start_date, coupons_expires_date = :coupons_expires_date, uses_per_coupon = :uses_per_coupon, uses_per_customer = :uses_per_customer, restrict_to_products = :restrict_to_products, restrict_to_categories = :restrict_to_categories, restrict_to_customers = :restrict_to_customers, coupons_status = :coupons_status, date_modified = now(), coupons_sale_exclude = :coupons_sale_exclude where coupons_id = :coupons_id');
+      $Qcoupon->bindInt(':coupons_id', $id);
+    } else {
+      $Qcoupon = $lC_Database->query('insert into :table_coupons (coupons_type, coupons_mode, coupons_code, coupons_reward, coupons_purchase_over, coupons_start_date, coupons_expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, coupons_status, date_created, date_modified, coupons_sale_exclude) values (:coupons_type, :coupons_mode, :coupons_code, :coupons_reward, :coupons_purchase_over, :coupons_start_date, :coupons_expires_date, :uses_per_coupon, :uses_per_customer, :restrict_to_products, :restrict_to_categories, :restrict_to_customers, :coupons_status, now(), now(), :coupons_sale_exclude)');
     }
-    if ( ( $specials_price < '0.00' ) || ( $specials_price >= $Qproduct->valueDecimal('products_price') ) ) {
-      $result['rpcStatus'] = -1;
-      $error = true;
-    }
+     
+    // insert/update the coupons table
+    $Qcoupon->bindTable(':table_coupons', TABLE_COUPONS);
+    $Qcoupon->bindValue(':coupons_type', $data['coupons_type']);
+    $Qcoupon->bindValue(':coupons_mode', $data['coupons_mode']);
+    $Qcoupon->bindValue(':coupons_code', $data['coupons_code']);
+    $Qcoupon->bindValue(':coupons_reward', $data['coupons_reward']);
+    $Qcoupon->bindValue(':coupons_purchase_over', $data['coupons_purchase_over']);
+    $Qcoupon->bindDate(':coupons_start_date', $data['coupons_start_date']);
+    $Qcoupon->bindDate(':coupons_expires_date', $data['coupons_expires_date']);
+    $Qcoupon->bindInt(':uses_per_coupon', $data['uses_per_coupon']);
+    $Qcoupon->bindInt(':uses_per_customer', $data['uses_per_customer']);
+    $Qcoupon->bindValue(':restrict_to_products', $data['restrict_to_products']);
+    $Qcoupon->bindValue(':restrict_to_categories', $data['restrict_to_categories']);
+    $Qcoupon->bindValue(':restrict_to_customers', $data['restrict_to_customers']);
+    $Qcoupon->bindInt(':coupons_status', $data['coupons_status']);
+    $Qcoupon->bindInt(':coupons_sale_exclude', $data['coupons_sale_exclude']);
+    $Qcoupon->setLogging($_SESSION['module'], $id);
+    $Qcoupon->execute();
+    
+    // insert/update the coupons description table
+    if ( !$lC_Database->isError() ) {
+      $coupon_id = (is_numeric($id)) ? $id : $lC_Database->nextID();
+      
+      foreach ( $lC_Language->getAll() as $l ) {
+        if ( is_numeric($id) ) {
+          $Qcoupondescription = $lC_Database->query('update :table_coupons_description set coupons_name = :coupons_name, coupons_description = :coupons_description where coupons_id = :coupons_id and language_id = :language_id');
+          $Qcoupondescription->bindInt(':coupons_id', $coupon_id);
+        } else {
+          $Qcoupondescription = $lC_Database->query('insert into :table_coupons_description (coupons_id, language_id, coupons_name, coupons_description) values (:coupons_id, :language_id, :coupons_name, :coupons_description)');
+          $Qcoupondescription->bindInt(':coupons_id', $coupon_id);
+        }
 
-    if ( $data['expires_date'] < $data['start_date'] ) {
-      $result['rpcStatus'] = -2;
-      $error = true;
+        $Qcoupondescription->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
+        $Qcoupondescription->bindInt(':language_id', $l['id']);
+        $Qcoupondescription->bindValue(':coupons_name', $data['coupons_name'][$l['id']]);
+        $Qcoupondescription->bindValue(':coupons_description', $data['coupons_description'][$l['id']]);
+        $Qcoupondescription->setLogging($_SESSION['module'], $coupon_id);
+        $Qcoupondescription->execute();
+        
+        if ( $lC_Database->isError() ) {
+          $error = true;
+          break;
+        }
+      }
     }
-
+    
     if ( $error === false ) {
-      if ( is_numeric($id) ) {
-        $Qspecial = $lC_Database->query('update :table_specials set specials_new_products_price = :specials_new_products_price, specials_last_modified = now(), expires_date = :expires_date, start_date = :start_date, status = :status where specials_id = :specials_id');
-        $Qspecial->bindInt(':specials_id', $id);
-      } else {
-        $Qspecial = $lC_Database->query('insert into :table_specials (products_id, specials_new_products_price, specials_date_added, expires_date, start_date, status) values (:products_id, :specials_new_products_price, now(), :expires_date, :start_date, :status)');
-        $Qspecial->bindInt(':products_id', $data['products_id']);
-      }
+      $lC_Database->commitTransaction();
 
-      $Qspecial->bindTable(':table_specials', TABLE_SPECIALS);
-      $Qspecial->bindValue(':specials_new_products_price', $specials_price);
-      $Qspecial->bindDate(':expires_date', (strstr($data['specials_expires_date'], '/')) ? lC_DateTime::toDateTime($data['specials_expires_date']) : $data['specials_expires_date']);
-      $Qspecial->bindDate(':start_date', (strstr($data['specials_start_date'], '/')) ? lC_DateTime::toDateTime($data['specials_start_date']) : $data['specials_start_date']);
-      $Qspecial->bindInt(':status', $data['specials_status']);
-      $Qspecial->setLogging($_SESSION['module'], $id);
-      $Qspecial->execute();
-
-      if ( $lC_Database->isError() ) {
-        $result['rpcStatus'] = -3;
-      }
+      return true;
     }
 
-    return $result;*/
+    $lC_Database->rollbackTransaction();
+
+    return false;
   }
  /*
   * Delete the coupons record
@@ -248,32 +238,6 @@ class lC_Coupons_Admin {
       lC_Specials_Admin::delete($id);
     }
     return true;*/
-  }
- /*
-  * Return the tax rate for a coupon
-  *
-  * @param integer $id The product id
-  * @access public
-  * @return array
-  */
-  public static function getTax($id) {
-    /*global $lC_Database, $lC_Tax, $lC_Vqmod;
-
-    require_once($lC_Vqmod->modCheck('includes/classes/tax.php'));
-    $lC_Tax = new lC_Tax_Admin();
-
-    $result = array();
-    $Qspecials = $lC_Database->query('select products_tax_class_id from :table_products where products_id = :products_id');
-    $Qspecials->bindTable(':table_products', TABLE_PRODUCTS);
-    $Qspecials->bindInt(':products_id', $id);
-    $Qspecials->execute();
-
-    $result['taxClassId'] = $Qspecials->valueInt('products_tax_class_id');
-    $result['taxClassRate'] = $lC_Tax->getTaxRate($Qspecials->valueInt('products_tax_class_id'));
-
-    $Qspecials->freeResult();
-
-    return $result;*/
   }
 }
 ?>
