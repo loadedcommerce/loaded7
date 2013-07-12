@@ -15,7 +15,7 @@
 ?>
 <!-- Account Password Validations -->
 <script>
-$('#account_password').submit(function() {
+function validateForm() {
   var passwdLength = '<?php echo ACCOUNT_PASSWORD; ?>';
 
   jQuery.validator.messages.required = "";
@@ -37,11 +37,9 @@ $('#account_password').submit(function() {
   }).form();
 
   if (bValid) {      
-    //$('#account_password').submit();
-    return true;
+    $('#account_password').submit();
   }
   return false;
-});
-
+}
 </script>
 <!-- Account Password Validations end -->
