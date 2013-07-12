@@ -170,7 +170,7 @@
                   }
                 ?>
                 <div id="shippingActions">
-                  <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
+                  <span class="buttonRight"><button class="button purple_btn" type="submit" onclick="validateForm();"><?php echo $lC_Language->get('continue_checkout'); ?></button></span>
                   <span style="float:left"><button class="button purple_btn" name="shipping_address_form" type="button" id="shipping_address_form" style="display:none;"><?php echo $lC_Language->get('show_address_form'); ?></button></span>
                 </div>
               </form>
