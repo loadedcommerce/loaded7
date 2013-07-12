@@ -34,7 +34,7 @@ if ($lC_MessageStack->size('login') > 0) {
         <li><?php echo sprintf($lC_Language->get('login_returning_customer_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, 'password_forgotten', 'SSL')); ?></li>
       </ul>
       <div>
-        <button class="button purple_btn" type="button" onclick=validateForm();"><?php echo $lC_Language->get('button_sign_in'); ?></button>
+        <button class="button purple_btn" type="button" onclick="validateForm();"><?php echo $lC_Language->get('button_sign_in'); ?></button>
       </div>
       </form>
     <!-- /div>
