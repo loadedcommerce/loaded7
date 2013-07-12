@@ -36,10 +36,8 @@ info_bubble_proucts_restrictions = Products Restrictions Info
 info_bubble_customers_restrictions = Customers Restrictions Info
 info_bubble_groups_restrictions = Groups Restrictions Info
 
-introduction_new_item = Please fill in the following information for the new item.
-introduction_edit_item = Please make the necessary changes for this item.
-introduction_delete_item = Please verify the removal of this item.
-introduction_batch_delete_coupons = Please verify the removal of the selected items.
+introduction_delete_coupon = Please verify the removal of this coupon.
+introduction_batch_delete_coupons = Please verify the removal of the selected coupons.
 
 label_redemption_code = Redemption Code
 label_reward = Reward
@@ -55,6 +53,9 @@ label_groups = Groups
 legend_coupon_details = Coupon Details
 legend_use_limits = Use Limits
 legend_restrictions = Restrictions
+
+modal_heading_delete_coupon = Delete Coupon
+modal_heading_batch_delete_coupons = Batch Delete Coupons
 
 section_general = Content
 section_details = Details

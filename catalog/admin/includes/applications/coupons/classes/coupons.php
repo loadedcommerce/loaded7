@@ -90,7 +90,7 @@ class lC_Coupons_Admin {
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcoupons->valueInt('coupons_id') . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="copyCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\')') . '" class="button icon-pages with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_copy') . '"></a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\', \'' . $Qcoupons->value('coupons_name') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
       $result['aaData'][] = array("$check", "$name", "$status", "$code", "$reward", "$limits", "$restrictions", "$action");
       
@@ -213,19 +213,25 @@ class lC_Coupons_Admin {
   * @return boolean
   */
   public static function delete($id) {
-    /*global $lC_Database;
+    global $lC_Database;
 
-    $Qspecial = $lC_Database->query('delete from :table_specials where specials_id = :specials_id');
-    $Qspecial->bindTable(':table_specials', TABLE_SPECIALS);
-    $Qspecial->bindInt(':specials_id', $id);
-    $Qspecial->setLogging($_SESSION['module'], $id);
-    $Qspecial->execute();
+    $Qcoupon = $lC_Database->query('delete from :table_coupons where coupons_id = :coupons_id');
+    $Qcoupon->bindTable(':table_coupons', TABLE_COUPONS);
+    $Qcoupon->bindInt(':coupons_id', $id);
+    $Qcoupon->setLogging($_SESSION['module'], $id);
+    $Qcoupon->execute();
+
+    $Qcoupon = $lC_Database->query('delete from :table_coupons_description where coupons_id = :coupons_id');
+    $Qcoupon->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
+    $Qcoupon->bindInt(':coupons_id', $id);
+    $Qcoupon->setLogging($_SESSION['module'], $id);
+    $Qcoupon->execute();
 
     if ( !$lC_Database->isError() ) {
       return true;
     }
 
-    return false;*/
+    return false;
   }
  /*
   * Batch delete coupons records
@@ -235,10 +241,10 @@ class lC_Coupons_Admin {
   * @return boolean
   */
   public static function batchDelete($batch) {
-    /*foreach ( $batch as $id ) {
-      lC_Specials_Admin::delete($id);
+    foreach ( $batch as $id ) {
+      lC_Coupons_Admin::delete($id);
     }
-    return true;*/
+    return true;
   }
  /*
   * update coupon status db entry

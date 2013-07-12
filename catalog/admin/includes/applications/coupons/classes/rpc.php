@@ -26,7 +26,40 @@ class lC_Coupons_Admin_rpc {
   */
   public static function getAll() {  
     $result = lC_Coupons_Admin::getAll();
+    
     $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+
+    echo json_encode($result);
+  } 
+ /*
+  * Delete the coupon record
+  *
+  * @param integer $_GET['cid'] The coupons id to delete
+  * @access public
+  * @return json
+  */
+  public static function deleteCoupon() {
+    $deleted = lC_Coupons_Admin::delete($_GET['cid']);
+    
+    if ($deleted) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }
+ /*
+  * Batch delete coupon records
+  *
+  * @param array $_GET['batch'] The coupons id's to delete
+  * @access public
+  * @return json
+  */
+  public static function batchDelete() {
+    $deleted = lC_Coupons_Admin::batchDelete($_GET['batch']);
+    
+    if ($deleted) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }  
 
     echo json_encode($result);
   }

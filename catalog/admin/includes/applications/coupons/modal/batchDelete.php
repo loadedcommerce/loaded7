@@ -14,7 +14,7 @@
 ?>
 <script>
 function batchDelete() {
-  $("#selectAction option:first").attr('selected','selected');
+  $("#selectAction option:first").attr('selected', 'selected');
   $('#check-all').attr('checked', false);
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 4) {
@@ -25,18 +25,18 @@ function batchDelete() {
   var pattern = /batch/gi;
   if (values.match(pattern) == null) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_nothing_to_delete');?>');
-    $(".select option:first").attr('selected','selected');
+    $(".select option:first").attr('selected', 'selected');
     return false;
   }
   $.modal({
     content: '<div id="batchDelete">'+
              '  <div id="batchDeleteConfirm">'+
-             '    <p id="batchDeleteConfirmMessage"><?php echo $lC_Language->get('introduction_batch_delete_specials'); ?>'+
+             '    <p id="batchDeleteConfirmMessage"><?php echo $lC_Language->get('introduction_batch_delete_coupons'); ?>'+
              '      <p><b>' + decodeURI(name.replace(/\+/g, '%20')) + '</b></p>'+
              '    </p>'+
              '  </div>'+
              '</div>',
-    title: '<?php echo $lC_Language->get('modal_heading_batch_delete_specials'); ?>',
+    title: '<?php echo $lC_Language->get('modal_heading_batch_delete_coupons'); ?>',
     width: 300,
     scrolling: false,
     actions: {
@@ -53,7 +53,7 @@ function batchDelete() {
       '<?php echo $lC_Language->get('button_delete'); ?>': {
         classes:  'blue-gradient glossy',
         click:    function(win) {
-          var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=batchDeleteEntries&BATCH'); ?>';
+          var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=batchDelete&BATCH'); ?>';
           $.getJSON(jsonLink.replace('BATCH', values),
             function (data) {
               if (data.rpcStatus == -10) { // no session

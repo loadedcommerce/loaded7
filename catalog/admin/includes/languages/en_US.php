@@ -257,6 +257,8 @@ text_show_in_nav = Click to show in Top Nav
 text_show_in_box = Click to show in Infobox
 text_enable_category = Click to enable Category
 text_disable_category = Click to disable Category
+text_enable_coupon = Click to Enable Coupon
+text_disable_coupon = Click to Disable Coupon
 
 update_message_title = Updates are Available!
 update_message_text1 = New version
