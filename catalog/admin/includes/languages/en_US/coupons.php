@@ -57,8 +57,8 @@ legend_restrictions = Restrictions
 modal_heading_delete_coupon = Delete Coupon
 modal_heading_batch_delete_coupons = Batch Delete Coupons
 
-section_general = Content
-section_details = Details
+section_details = Coupon Details
+section_rewards = Rewards
 section_limits = Use Limits
 section_restrictions = Restrictions
 

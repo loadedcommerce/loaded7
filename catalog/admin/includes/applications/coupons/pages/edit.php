@@ -47,13 +47,13 @@
     <form name="coupon" id="coupon" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('coupons_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="coupon_tabs" class="side-tabs">
         <ul class="tabs">
-          <li class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
-          <li><?php echo lc_link_object('#section_details', $lC_Language->get('section_details')); ?></li>
+          <li class="active"><?php echo lc_link_object('#section_details', $lC_Language->get('section_details')); ?></li>
+          <li><?php echo lc_link_object('#section_rewards', $lC_Language->get('section_rewards')); ?></li>
           <li><?php echo lc_link_object('#section_limits', $lC_Language->get('section_limits')); ?></li>
           <li><?php echo lc_link_object('#section_restrictions', $lC_Language->get('section_restrictions')); ?></li>
         </ul>
         <div class="clearfix tabs-content">
-          <div id="section_general_content">
+          <div id="section_details">
             <div class="columns with-padding">              
               <div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">
                 <div class="columns">              
@@ -114,7 +114,7 @@
               </div>
             </div>
           </div>
-          <div id="section_details">
+          <div id="section_rewards">
             <div class="columns with-padding">
               <div class="new-row-mobile twelve-columns twelve-columns-mobile">
                 <fieldset class="fieldset fields-list">
