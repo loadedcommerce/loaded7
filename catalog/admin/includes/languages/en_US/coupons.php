@@ -36,6 +36,7 @@ info_bubble_proucts_restrictions = Products Restrictions Info
 info_bubble_customers_restrictions = Customers Restrictions Info
 info_bubble_groups_restrictions = Groups Restrictions Info
 
+introduction_copy_coupon = Please update the Name and Code of this coupon as needed before confirming.
 introduction_delete_coupon = Please verify the removal of this coupon.
 introduction_batch_delete_coupons = Please verify the removal of the selected coupons.
 
@@ -54,6 +55,7 @@ legend_coupon_details = Coupon Details
 legend_use_limits = Use Limits
 legend_restrictions = Restrictions
 
+modal_heading_copy_coupon = Copy Coupon
 modal_heading_delete_coupon = Delete Coupon
 modal_heading_batch_delete_coupons = Batch Delete Coupons
 
