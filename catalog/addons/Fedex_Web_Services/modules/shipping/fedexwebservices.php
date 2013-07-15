@@ -334,7 +334,7 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
       }
 
       // begin sort order control - low to high is set, comment out for high to low sort
-      usort($methods, array( $this,'_usortModules'));
+      usort($methods, array( $this,'_usortMethods'));
 
       $this->quotes['methods'] = $methods;
       
