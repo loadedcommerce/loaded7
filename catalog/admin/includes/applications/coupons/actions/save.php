@@ -28,7 +28,7 @@
                       'coupons_mode' => $_POST['coupons_mode'],
                       'coupons_code' => $_POST['coupons_code'],
                       'coupons_reward' => str_replace("$", "", $_POST['coupons_reward']),
-                      'coupons_purchase_over' => str_replace("$", "", $_POST['coupons_purchase_over']),                      
+                      'coupons_purchase_over' => ($_POST['coupons_purchase_over'] != '') ? str_replace("$", "", $_POST['coupons_purchase_over']) : null,                      
                       'coupons_start_date' => ((strstr($_POST['coupons_start_date'], '/')) ? lC_DateTime::toDateTime($_POST['coupons_start_date']) : $_POST['coupons_start_date']),                      
                       'coupons_expires_date' => ((strstr($_POST['coupons_expires_date'], '/')) ? lC_DateTime::toDateTime($_POST['coupons_expires_date']) : $_POST['coupons_expires_date']),
                       'uses_per_coupon' => $_POST['uses_per_coupon'],

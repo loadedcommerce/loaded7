@@ -155,7 +155,7 @@ class lC_Coupons_Admin {
     $Qcoupon->bindValue(':coupons_mode', $data['coupons_mode']);
     $Qcoupon->bindValue(':coupons_code', $data['coupons_code']);
     $Qcoupon->bindValue(':coupons_reward', $data['coupons_reward']);
-    $Qcoupon->bindValue(':coupons_purchase_over', $data['coupons_purchase_over']);
+    $Qcoupon->bindInt(':coupons_purchase_over', (($data['coupons_purchase_over'] > 0) ? $data['coupons_purchase_over'] : null));
     $Qcoupon->bindDate(':coupons_start_date', (($data['coupons_start_date'] != '') ? $data['coupons_start_date'] : null));
     $Qcoupon->bindDate(':coupons_expires_date', (($data['coupons_expires_date'] != '') ? $data['coupons_expires_date'] : null));
     $Qcoupon->bindInt(':uses_per_coupon', $data['uses_per_coupon']);
