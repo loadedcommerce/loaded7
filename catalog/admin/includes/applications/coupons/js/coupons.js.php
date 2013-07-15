@@ -30,7 +30,7 @@ $(document).ready(function() {
                   { "sWidth": "10%", "bSortable": true, "sClass": "dataColCode hide-on-tablet" },
                   { "sWidth": "10%", "bSortable": true, "sClass": "dataColReward hide-on-mobile-portrait" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColLimits hide-on-mobile" },
-                  //{ "sWidth": "%", "bSortable": false, "sClass": "dataColRestrictions hide-on-mobile" }, added back in later phase
+                  { "sWidth": "%", "bSortable": false, "sClass": "dataColRestrictions hide-on-mobile" }, 
                   { "sWidth": "25%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();

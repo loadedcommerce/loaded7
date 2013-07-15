@@ -281,4 +281,4 @@ text_per_coupon = Per Coupon
 text_per_customer = Per Customer
 text_start_date = From
 text_expire_date = To
-text_minimum_order = Min Order
+text_purchase_over = Minimum Purchase
