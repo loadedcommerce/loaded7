@@ -85,7 +85,7 @@ class lC_Coupons_Admin {
       $status = '<td><span id="status_' . $Qcoupons->value('coupons_id') . '" onclick="updateStatus(\'' . $Qcoupons->value('coupons_id') . '\', \'' . (($Qcoupons->value('coupons_status') == 1) ? 0 : 1) . '\');">' . (($Qcoupons->valueInt('coupons_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_coupon') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_coupon') . '"></span>') . '</span></td>';
       $code = '<td>' . $Qcoupons->value('coupons_code') . '</td>';
       $reward = '<td>' . $lC_Currencies->format($Qcoupons->value('coupons_reward')) . '</td>';
-      $limits = '<td>' . (($Qcoupons->value('coupons_minimum_order') > 0 || $Qcoupons->value('uses_per_customer') > 0 || $Qcoupons->value('uses_per_coupon') > 0 || $Qcoupons->value('coupons_start_date') != '0000-00-00 00:00:00' || $Qcoupons->value('coupons_expires_date') != '0000-00-00 00:00:00') ? (($Qcoupons->value('coupons_minimum_order') > 0) ? '<small class="tag purple-bg no-wrap">' . $lC_Language->get('text_minimum_order') . ': ' . $lC_Currencies->format($Qcoupons->value('coupons_minimum_order')) .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_customer') > 0) ? '<small class="tag orange-bg no-wrap">' . $Qcoupons->value('uses_per_customer') . ' ' . $lC_Language->get('text_per_customer') .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_coupon') > 0) ? '<small class="tag red-bg no-wrap">' . $Qcoupons->value('uses_per_coupon') . ' ' . $lC_Language->get('text_per_coupon') . '</small>' : null) . ' ' . (($Qcoupons->value('coupons_start_date') != '0000-00-00 00:00:00') ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_start_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('coupons_start_date')) . '</small>' : null) . ' ' . (($Qcoupons->value('coupons_expires_date') != '0000-00-00 00:00:00') ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_expire_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('coupons_expires_date')) . '</small>' : null) : '<small class="tag green-bg no-wrap" title="' . $lC_Language->get('text_no_restrictions') . '">' . $lC_Language->get('text_none') . '</small>') . '</td>';
+      $limits = '<td>' . (($Qcoupons->value('coupons_minimum_order') > 0 || $Qcoupons->value('uses_per_customer') > 0 || $Qcoupons->value('uses_per_coupon') > 0 || $Qcoupons->value('coupons_start_date') != '0000-00-00 00:00:00' || $Qcoupons->value('coupons_expires_date') != '0000-00-00 00:00:00') ? (($Qcoupons->value('coupons_minimum_order') > 0) ? '<small class="tag purple-bg no-wrap">' . $lC_Language->get('text_minimum_order') . ': ' . $lC_Currencies->format($Qcoupons->value('coupons_minimum_order')) .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_customer') > 0) ? '<small class="tag orange-bg no-wrap">' . $Qcoupons->value('uses_per_customer') . ' ' . $lC_Language->get('text_per_customer') .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_coupon') > 0) ? '<small class="tag red-bg no-wrap">' . $Qcoupons->value('uses_per_coupon') . ' ' . $lC_Language->get('text_per_coupon') . '</small>' : null) . ' ' . (($Qcoupons->value('coupons_start_date') != null) ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_start_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('coupons_start_date')) . '</small>' : null) . ' ' . (($Qcoupons->value('coupons_expires_date') != null) ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_expire_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('coupons_expires_date')) . '</small>' : null) : '<small class="tag green-bg no-wrap" title="' . $lC_Language->get('text_no_restrictions') . '">' . $lC_Language->get('text_none') . '</small>') . '</td>';
       $restrictions = '<td>' . ((!empty($rtProdsString) || !empty($rtCatsString) || !empty($rtCustString)) ? $rtProdsString . ' ' . $rtCatsString . ' ' . $rtCustString : '<small class="tag green-bg no-wrap">' . $lC_Language->get('text_none') . '</small>') . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcoupons->valueInt('coupons_id') . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
@@ -118,9 +118,9 @@ class lC_Coupons_Admin {
     $data = $Qcoupon->toArray();
 
     $data['coupons_reward'] = $lC_Currencies->format($Qcoupon->value('coupons_reward'));
-    $data['coupons_purchase_over'] = $lC_Currencies->format($Qcoupon->value('coupons_purchase_over'));
-    $data['coupons_start_date'] = lC_DateTime::getShort($Qcoupon->value('coupons_start_date'));
-    $data['coupons_expires_date'] = lC_DateTime::getShort($Qcoupon->value('coupons_expires_date'));
+    $data['coupons_purchase_over'] = ($Qcoupon->value('coupons_purchase_over') > 0) ? $lC_Currencies->format($Qcoupon->value('coupons_purchase_over')) : null;
+    $data['coupons_start_date'] = ($Qcoupon->value('coupons_start_date') != null) ? lC_DateTime::getShort($Qcoupon->value('coupons_start_date')) : null;
+    $data['coupons_expires_date'] = ($Qcoupon->value('coupons_expires_date') != null) ? lC_DateTime::getShort($Qcoupon->value('coupons_expires_date')) : null;
     
     $Qcoupon->freeResult();
 
@@ -156,8 +156,8 @@ class lC_Coupons_Admin {
     $Qcoupon->bindValue(':coupons_code', $data['coupons_code']);
     $Qcoupon->bindValue(':coupons_reward', $data['coupons_reward']);
     $Qcoupon->bindValue(':coupons_purchase_over', $data['coupons_purchase_over']);
-    $Qcoupon->bindDate(':coupons_start_date', $data['coupons_start_date']);
-    $Qcoupon->bindDate(':coupons_expires_date', $data['coupons_expires_date']);
+    $Qcoupon->bindDate(':coupons_start_date', (($data['coupons_start_date'] != '') ? $data['coupons_start_date'] : null));
+    $Qcoupon->bindDate(':coupons_expires_date', (($data['coupons_expires_date'] != '') ? $data['coupons_expires_date'] : null));
     $Qcoupon->bindInt(':uses_per_coupon', $data['uses_per_coupon']);
     $Qcoupon->bindInt(':uses_per_customer', $data['uses_per_customer']);
     $Qcoupon->bindValue(':restrict_to_products', $data['restrict_to_products']);
