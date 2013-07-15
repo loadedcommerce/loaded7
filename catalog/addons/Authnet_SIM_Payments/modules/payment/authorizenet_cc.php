@@ -221,34 +221,10 @@ class lC_Payment_authorizenet_cc extends lC_Payment {
     if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
   }
 
-  private function _hmac($key, $data) {
-    if (function_exists('mhash') && defined('MHASH_MD5')) {
-      return bin2hex(mhash(MHASH_MD5, $data, $key));
-    }
-
-    // RFC 2104 HMAC implementation for php.
-    // Creates an md5 HMAC.
-    // Eliminates the need to install mhash to compute a HMAC
-    // Hacked by Lance Rushing
-
-    $b = 64; // byte length for md5
-    if (strlen($key) > $b) {
-      $key = pack("H*",md5($key));
-    }
-
-    $key = str_pad($key, $b, chr(0x00));
-    $ipad = str_pad('', $b, chr(0x36));
-    $opad = str_pad('', $b, chr(0x5c));
-    $k_ipad = $key ^ $ipad ;
-    $k_opad = $key ^ $opad;
-
-    return md5($k_opad . pack("H*",md5($k_ipad . $data)));
-  }
-
   private function _InsertFP($loginid, $x_tran_key, $amount, $sequence, $currency = '') {
     $tstamp = time();
 
-    $fingerprint = $this->_hmac($x_tran_key, $loginid . '^' . $sequence . '^' . $tstamp . '^' . $amount . '^' . $currency);
+    $fingerprint = hash_hmac("md5", $loginid . '^' . $sequence . '^' . $tstamp . '^' . $amount . '^' . $currency, $x_tran_key); 
 
     return lc_draw_hidden_field('x_fp_sequence', $sequence) .
     lc_draw_hidden_field('x_fp_timestamp', $tstamp) .
