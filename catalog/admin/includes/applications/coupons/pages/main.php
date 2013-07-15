@@ -25,7 +25,7 @@
   .dataColCode {  }
   .dataColReward {  }
   .dataColLimit {  }
-  .dataColRestriction {  }
+  /*.dataColRestriction {  }*/
   .dataColAction { text-align: right; }
   .dataTables_info { position:absolute; bottom:42px; color:#4c4c4c; }
   .selectContainer { position:absolute; bottom:29px; left:30px }
@@ -37,12 +37,12 @@
       <thead>
         <tr>
           <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
-          <th scope="col">Coupons</th>
-          <th scope="col">Status</th>
-          <th scope="col">Code</th>
-          <th scope="col">Reward</th>
-          <th scope="col">Use Limits</th>
-          <th scope="col">Restrictions</th>
+          <th scope="col"><?php echo $lC_Language->get('table_heading_name'); ?></th>
+          <th scope="col"><?php echo $lC_Language->get('table_heading_status'); ?></th>
+          <th scope="col"><?php echo $lC_Language->get('table_heading_code'); ?></th>
+          <th scope="col"><?php echo $lC_Language->get('table_heading_reward'); ?></th>
+          <th scope="col"><?php echo $lC_Language->get('table_heading_limits'); ?></th>
+          <!--<th scope="col"><?php echo $lC_Language->get('table_heading_restrictions'); ?></th>-->
           <th scope="col" class="align-right">
            <span class="button-group compact" style="white-space:nowrap;">
              <a style="display:none;" href="javascript://" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="newCoupon(); return false;'); ?>" title="<?php echo $lC_Language->get('button_new_coupon'); ?>"></a>

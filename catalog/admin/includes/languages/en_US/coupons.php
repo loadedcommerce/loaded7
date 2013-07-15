@@ -64,7 +64,12 @@ section_rewards = Rewards
 section_limits = Use Limits
 section_restrictions = Restrictions
 
-table_heading_items = Items
+table_heading_name = Coupon
+table_heading_status = Status
+table_heading_code = Code
+table_heading_reward = Reward
+table_heading_limits = Use Limits
+table_heading_restrictions = Restrictions
 table_heading_action = Action
 
 text_coupon = Coupon

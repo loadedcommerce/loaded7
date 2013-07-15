@@ -25,13 +25,13 @@ $(document).ready(function() {
     "sPaginationType": paginationType, 
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
-                  { "sWidth": "16%", "bSortable": true, "sClass": "dataColName" },
-                  { "sWidth": "7%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile", "sType": "string" },
+                  { "sWidth": "25%", "bSortable": true, "sClass": "dataColName" },
+                  { "sWidth": "10%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile", "sType": "string" },
                   { "sWidth": "10%", "bSortable": true, "sClass": "dataColCode hide-on-tablet" },
-                  { "sWidth": "7%", "bSortable": true, "sClass": "dataColReward hide-on-mobile-portrait" },
+                  { "sWidth": "10%", "bSortable": true, "sClass": "dataColReward hide-on-mobile-portrait" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColLimits hide-on-mobile" },
-                  { "sWidth": "20%", "bSortable": false, "sClass": "dataColRestrictions hide-on-mobile" },
-                  { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
+                  //{ "sWidth": "%", "bSortable": false, "sClass": "dataColRestrictions hide-on-mobile" }, added back in later phase
+                  { "sWidth": "25%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();
   
