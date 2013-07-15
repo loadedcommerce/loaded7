@@ -787,11 +787,11 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #address_details li { margin: 10px 0; }
 .embed-form input { height: 26px; padding-left:4px; }
 .embed-form h3 { font-family: sans-serif !important; font-size: 1.3em; margin-bottom: 15px; }
-#uniform-country.selector { height: 22px; padding: 0px 3px 3px 0px; width: 100% !important; margin: 0 0 10px 0; overflow:hidden }
-#uniform-country select { color: #000; font-size: 12px; height: 29px; top: -1px; width: 100% !important; overflow:hidden}
-#uniform-country span { color: #000; font-size: 12px; height: 22px; top: 4px; width: 99%!important; overflow:hidden}
-#uniform-zones.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
-#uniform-zones select { color: #000; font-size: 12px; height: 29px; top: -1px; width: 100%; }
+#uniform-country.selector { height: 22px; padding: 3px 3px 3px 0px; width: 99.2% !important; margin: 0 0 10px 0; overflow:hidden}
+#uniform-country select { color: #000; font-size: 12px; height: 29px; top: -1px; width: 100% !important; overflow:hidden }
+#uniform-country span { color: #000; font-size: 12px; height: 22px; width: 99%!important; top: 3px; overflow:hidden }
+#uniform-zones.selectors { height: 22px;  width: 101%; margin: 0 0 10px 0; display: inline-block; }
+#uniform-zones select { color: #000; font-size: 12px; height: 29px; top: -1px; overflow:hidden; width: 100%; }
 .padding-right-15 { padding-right: 15px; }
 .cart-edit { float:right; padding-right:10px; }
 .colorWhite { color: #fff !important; }
