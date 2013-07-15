@@ -92,7 +92,7 @@ class lC_Shipping_fedexwebservices extends lC_Shipping {
 
     require_once(DIR_FS_CATALOG . 'addons/Fedex_Web_Services/lib/fedex-common.php');
     
-    if (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SERVER') && ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SERVER == 'TEST') {
+    if (defined('ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SERVER') && strtoupper(ADDONS_SHIPPING_FEDEX_WEB_SERVICES_SERVER) == 'TEST') {
       $path_to_wsdl = DIR_FS_CATALOG . 'addons/Fedex_Web_Services/lib/wsdl/RateService_v10_test.wsdl';
     } else {
       $path_to_wsdl = DIR_FS_CATALOG . 'addons/Fedex_Web_Services/lib/wsdl/RateService_v10.wsdl';
