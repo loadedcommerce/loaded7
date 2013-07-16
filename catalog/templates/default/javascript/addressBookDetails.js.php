@@ -35,7 +35,7 @@ function getZonesDropdown(country, zone) {
       }
       $('#uniform-zones').html(data.zonesHtml).change();
       if ($.browser.mozilla) $('#uniform-zones select').attr( "style", "padding-top:6px" );
-      if (data.single == '1') $('#uniform-zones').attr('style', 'padding:0 3 3 0;');
+      if (data.single == '1') $('#uniform-zones').attr('style', 'padding:0px 3px 3px 0px;');
       if ($.browser.mozilla) $('#uniform-zones select').each(function(){
          var valu = $(this).attr('value');
           if( $('option:selected', this).val() != ''  ) valu = $('option:selected',this).text();
