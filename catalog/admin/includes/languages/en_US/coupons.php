@@ -18,22 +18,23 @@ button_new_rule = New Rule
 dialog_heading_delete_item = Delete Item
 dialog_heading_batch_delete_items = Batch Delete Items
 
-info_bubble_name = Enter the language specific Name of the Coupon.<br /><br />This field is for 
-info_bubble_switch = Enable or Disable the Coupon. "Disabled" will not allow the use of the Coupon by Customers. 
-info_bubble_redemption_code = You can enter your own code here, or leave blank for an auto generated one.
+info_bubble_name = Enter the language specific Name of the coupon.<br /><br />This field is for 
+info_bubble_switch = Enable or disable the coupon. "Disabled" will not allow the use of the coupon by customers. 
+info_bubble_redemption_code = You can enter your own Code here, or leave blank for an auto generated one.
 info_bubble_price_or_percent = The value of the discount for the coupon, either fixed or add a % on the end for a percentage discount.
-info_bubble_free_shipping = This enables the Coupon to allow Free Shipping on an order.<br /><br /><b>Note</b>: This overrides the Coupon Reward above but respects the minimum order value.
+info_bubble_free_shipping = This enables the coupon to allow Free Shipping on an order.<br /><br /><b>Note</b>: This overrides the coupon reward above but respects the minimum order value.
 info_bubble_free_product = The Free Product selection is coming soon as a Pro Add On.
-info_bubble_purchase_over = The minimum Order Amount required before the coupon is valid and can be redeemed by the Customer.
-info_bubble_uses_per_coupon = The maximum number of times the Coupon can be used.<br /><br />Leave this field blank if you want no limit.
-info_bubble_uses_per_customer = The maximum number of times the Coupon can be used by each individual Customer.<br /><br />Leave this field blank if you want no limit.
-info_bubble_start_date = The starting date the Coupon will be valid from.
-info_bubble_expires_date =  The date the Coupon expires.
+info_bubble_purchase_over = The minimum order amount required before the coupon is valid and can be redeemed by the customer.
+info_bubble_uses_per_coupon = The maximum number of times the coupon can be used.<br /><br />Leave this field blank if you want no limit.
+info_bubble_uses_per_customer = The maximum number of times the coupon can be used by each individual customer.<br /><br />Leave this field blank if you want no limit.
+info_bubble_start_date = The starting date the coupon will be valid from.
+info_bubble_expires_date =  The date the coupon expires.
 info_bubble_proucts_restrictions = Product Restrictions will be coming soon as a part of a Pro Add On.
 info_bubble_customers_restrictions = Customer Restrictions will be coming soon as a part of a Pro Add On.
 info_bubble_groups_restrictions = Group Restrictions will be coming soon as a part of a B2B Add On.
 
-introduction_copy_coupon = Please update the Name and Code of this coupon as needed before confirming.
+introduction_copy_coupon = Please verify the copy of the coupon 
+introduction_copy_coupon_note = <b>NOTE</b>: You will need to edit this new coupons Name and Code. 
 introduction_delete_coupon = Please verify the removal of this coupon.
 introduction_batch_delete_coupons = Please verify the removal of the selected coupons.
 

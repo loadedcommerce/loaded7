@@ -79,5 +79,21 @@ class lC_Coupons_Admin_rpc {
 
     echo json_encode($result);
   }
+ /*
+  * copy coupon
+  *
+  * @param int $_GET the coupon id and create a copy in the database 
+  * @access public
+  * @return json
+  */
+  public static function copyCoupon() {
+    $copy = lC_Coupons_Admin::copyCoupon($_GET['cid']);
+    
+    if ($copy) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }  
+
+    echo json_encode($result);
+  }
 }
 ?>

@@ -22,17 +22,8 @@ function copyCoupon(id, name, code) {
   $.modal({
     content: '<div id="copyCoupon">'+
              '  <div id="copyConfirm">'+
-             '    <p id="copyConfirmMessage"><?php echo $lC_Language->get('introduction_copy_coupon'); ?>'+
-             '      <p><b>' + decodeURI(name.replace(/\+/g, '%20').replace(/\%3A/g, ':')) + '</b></p>'+
-             '    </p>'+
-             '    <p>'+
-             '      <label for="name">Name</label>'+
-             '      <input type="text" name="name" id="name" value="' + name + '_1" class="input full-width">'+
-             '    </p>'+
-             '    <p>'+
-             '      <label for="name">Code</label>'+
-             '      <input type="text" name="code" id="code" value="' + code + '_1" class="input full-width">'+
-             '    </p>'+
+             '    <p id="copyConfirmMessage"><?php echo $lC_Language->get('introduction_copy_coupon'); ?> "<b>' + decodeURI(name.replace(/\+/g, '%20').replace(/\%3A/g, ':')) + '</b>"</p>'+
+             '    <p><?php echo $lC_Language->get('introduction_copy_coupon_note'); ?></p>'+
              '  </div>'+
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_copy_coupon'); ?>',
@@ -49,11 +40,11 @@ function copyCoupon(id, name, code) {
         classes:  'glossy',
         click:    function(win) { win.closeModal(); }
       },
-      '<?php echo $lC_Language->get('button_save'); ?>': {
+      '<?php echo $lC_Language->get('button_copy'); ?>': {
         classes:  'blue-gradient glossy',
         click:    function(win) {
-          var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=copyCoupon&cid=CID&name=NAME&code=CODE'); ?>';
-          $.getJSON(jsonLink.replace('CID', id).replace('NAME', $("#name").val()).replace('CODE', $("#code").val()),
+          var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=copyCoupon&cid=CID'); ?>';
+          $.getJSON(jsonLink.replace('CID', id),
             function (data) {
               if (data.rpcStatus == -10) { // no session
                 var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";

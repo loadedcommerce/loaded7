@@ -206,6 +206,80 @@ class lC_Coupons_Admin {
     return false;
   }
  /*
+  * Copy the coupon
+  *
+  * @param integer $id The coupons id used on copy
+  * @param array $data An array containing the coupons information
+  * @access public
+  * @return array
+  */
+  public static function copyCoupon($id) {
+    global $lC_Database, $lC_Language;
+    
+    $error = false;
+
+    $lC_Database->startTransaction();
+
+    // copy the data from the desired coupon into a new row
+    $Qcoupon = $lC_Database->query('insert into :table_coupons (coupons_type, coupons_mode, coupons_code, coupons_reward, coupons_purchase_over, coupons_start_date, coupons_expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, coupons_status, date_created, date_modified, coupons_sale_exclude) select coupons_type, coupons_mode, coupons_code, coupons_reward, coupons_purchase_over, coupons_start_date, coupons_expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, coupons_status, date_created, date_modified, coupons_sale_exclude from :table_coupons_from where coupons_id = :coupons_id');
+    $Qcoupon->bindTable(':table_coupons', TABLE_COUPONS);
+    $Qcoupon->bindTable(':table_coupons_from', TABLE_COUPONS);
+    $Qcoupon->bindInt(':coupons_id', $id);
+    $Qcoupon->setLogging($_SESSION['module'], $lC_Database->nextID());
+    $Qcoupon->execute();
+    
+    $new_id = $lC_Database->nextID();
+    
+    // get the coupons code to update
+    $Qoldcode = $lC_Database->query('select coupons_code from :table_coupons where coupons_id = :coupons_id');
+    $Qoldcode->bindTable(':table_coupons', TABLE_COUPONS);
+    $Qoldcode->bindInt(':coupons_id', $new_id);
+    $Qoldcode->execute();
+     
+    // update the new coupons code
+    $Qcouponcode = $lC_Database->query('update :table_coupons set coupons_code = :coupons_code where coupons_id = :coupons_id');
+    $Qcouponcode->bindTable(':table_coupons', TABLE_COUPONS);
+    $Qcouponcode->bindInt(':coupons_id', $new_id);
+    $Qcouponcode->bindValue(':coupons_code', $Qoldcode->value('coupons_code') . '_1');
+    $Qcouponcode->execute();
+    
+    // update the coupons description table
+    if ( !$lC_Database->isError() ) {
+      foreach ( $lC_Language->getAll() as $l ) {
+        // get values to copy from
+        $Qolddescription = $lC_Database->query('select coupons_name from :table_coupons_description where coupons_id = :coupons_id and language_id = :language_id');
+        $Qolddescription->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
+        $Qolddescription->bindInt(':coupons_id', $id);
+        $Qolddescription->bindInt(':language_id', $l['id']);
+        $Qolddescription->execute();
+         
+        // insert to new coupon description
+        $Qcoupondescription = $lC_Database->query('insert into :table_coupons_description (coupons_id, language_id, coupons_name) values (:coupons_id, :language_id, :coupons_name)');
+        $Qcoupondescription->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
+        $Qcoupondescription->bindInt(':coupons_id', $new_id);
+        $Qcoupondescription->bindInt(':language_id', $l['id']);
+        $Qcoupondescription->bindValue(':coupons_name', $Qolddescription->value('coupons_name') . '_1');
+        $Qcoupondescription->setLogging($_SESSION['module'], $coupon_id);
+        $Qcoupondescription->execute();
+        
+        if ( $lC_Database->isError() ) {
+          $error = true;
+          break;
+        }
+      }
+    }
+    
+    if ( $error === false ) {
+      $lC_Database->commitTransaction();
+
+      return true;
+    }
+
+    $lC_Database->rollbackTransaction();
+
+    return false;
+  }
+ /*
   * Delete the coupons record
   *
   * @param integer $id The coupons id to delete
