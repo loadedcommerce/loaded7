@@ -81,7 +81,7 @@
                     </label>
                     <?php echo lc_draw_input_field('coupons_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($coupons_name[$l['id']]) ? $coupons_name[$l['id']] : null), 'class="required input-unstyled" style="width:80%;"'); ?>
                   </span>
-                  <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_name') . ' ' . $l['name'], null, 'grey on-left margin-left'); ?>
+                  <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_name') . ': <b>' . $l['name'] . '</b>', null, 'grey on-left margin-left'); ?>
                 </p>  
               <?php
                 }

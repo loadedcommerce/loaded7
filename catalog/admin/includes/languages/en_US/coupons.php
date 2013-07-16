@@ -18,7 +18,7 @@ button_new_rule = New Rule
 dialog_heading_delete_item = Delete Item
 dialog_heading_batch_delete_items = Batch Delete Items
 
-info_bubble_name = Enter the language specific Name of the Coupon. This filed is 
+info_bubble_name = Enter the language specific Name of the Coupon.<br /><br />This field is for 
 info_bubble_switch = Enable or Disable the Coupon. "Disabled" will not allow the use of the Coupon by Customers. 
 info_bubble_redemption_code = You can enter your own code here, or leave blank for an auto generated one.
 info_bubble_price_or_percent = The value of the discount for the coupon, either fixed or add a % on the end for a percentage discount.
