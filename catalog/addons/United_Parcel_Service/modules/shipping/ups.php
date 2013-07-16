@@ -126,7 +126,7 @@ class lC_Shipping_ups extends lC_Shipping {
     if ( (is_array($upsQuote)) && (sizeof($upsQuote) > 0) ) {
       
       $this->quotes = array('id' => $this->_code,
-                            'module' => $this->_title . ' (' . $shipping_num_boxes . ' x ' . $shipping_weight . 'lbs)');
+                            'module' => $this->_title . ' (' . $shipping_num_boxes . ' x ' . $shipping_weight . ' lbs)');
                             
       $methods = array();
       $allowed_methods = $this->_getAllowedMethods();
