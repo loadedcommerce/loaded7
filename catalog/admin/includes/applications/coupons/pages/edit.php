@@ -62,6 +62,7 @@
             </div>              
             <div class="new-row-mobile six-columns twelve-columns-mobile align-right" id="coupons_switch">
               <input type="checkbox" name="coupons_status" id="coupons_status" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->get('coupons_status') != 1) ? null : ' checked'); ?> />
+              <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_switch'), null, 'info-spot on-left grey mid-margin-left'); ?>
             </div>
           </div>
         </div>
@@ -78,9 +79,9 @@
                     <label class="button silver-gradient glossy" for="<?php echo 'coupons_name[' . $l['id'] . ']'; ?>">
                       <?php echo $lC_Language->showImage($l['code']); ?>
                     </label>
-                    <?php echo lc_draw_input_field('coupons_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($coupons_name[$l['id']]) ? $coupons_name[$l['id']] : null), 'class="required input-unstyled"'); ?>
+                    <?php echo lc_draw_input_field('coupons_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($coupons_name[$l['id']]) ? $coupons_name[$l['id']] : null), 'class="required input-unstyled" style="width:80%;"'); ?>
                   </span>
-                  <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_name'), null, 'grey on-left margin-left'); ?>
+                  <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_name') . ' ' . $l['name'], null, 'grey on-left margin-left'); ?>
                 </p>  
               <?php
                 }

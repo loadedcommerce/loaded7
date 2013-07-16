@@ -86,6 +86,12 @@ function validateForm(e) {
         <?php
       }
       ?>
+      'coupons_code': {
+        required: true,
+      },
+      'coupons_reward': {
+        required: true,
+      },
     },
     
     messages: {

@@ -703,6 +703,10 @@ select.input {
 /* fix for icon-cross centering */
 .icon-cross { padding-left:2px; }
 
+/* added to force red border in drop area inputs, spans, etc on validation error */
+input.error { border: 2px solid red !important; }
+textarea.error { border: 2px solid red !important; }
+select.error { border: 2px solid red !important; }
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
