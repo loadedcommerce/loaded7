@@ -18,9 +18,6 @@ button_new_rule = New Rule
 dialog_heading_delete_item = Delete Item
 dialog_heading_batch_delete_items = Batch Delete Items
 
-field_name = Name
-field_description = Description
-
 info_bubble_name = Name Info
 info_bubble_description = Description Info
 info_bubble_redemption_code = Redemption Code Info
@@ -50,6 +47,7 @@ label_expires_date = End Date
 label_products = Products
 label_customers = Customers
 label_groups = Groups
+label_name_description = Name/Description
 
 legend_coupon_details = Coupon Details
 legend_use_limits = Use Limits

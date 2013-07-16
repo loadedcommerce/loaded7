@@ -29,7 +29,7 @@
   .dataColAction { text-align: right; }
   .dataTables_info { position:absolute; bottom:42px; color:#4c4c4c; }
   .selectContainer { position:absolute; bottom:29px; left:30px }
-  small.tag { text-transform: none; font-size: 11px; }
+  small.tag { text-transform: none; font-size: 11px; line-height: 20px !important; }
   </style>
   <div class="with-padding-no-top">
     <form name="batch" id="batch" action="#" method="post">

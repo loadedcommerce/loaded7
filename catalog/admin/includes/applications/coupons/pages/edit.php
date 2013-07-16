@@ -45,181 +45,152 @@
   </hgroup>
   <div class="with-padding-no-top">
     <form name="coupon" id="coupon" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('coupons_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
-      <div id="coupon_tabs" class="side-tabs">
-        <ul class="tabs">
-          <li class="active"><?php echo lc_link_object('#section_details', $lC_Language->get('section_details')); ?></li>
-          <li><?php echo lc_link_object('#section_rewards', $lC_Language->get('section_rewards')); ?></li>
-          <li><?php echo lc_link_object('#section_limits', $lC_Language->get('section_limits')); ?></li>
-          <li><?php echo lc_link_object('#section_restrictions', $lC_Language->get('section_restrictions')); ?></li>
-        </ul>
-        <div class="clearfix tabs-content">
-          <div id="section_details">
-            <div class="columns with-padding">              
-              <div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">
-                <div class="columns">              
-                  <div class="new-row-mobile six-columns twelve-columns-mobile">
-                    <span class="button-group">
-                      <label for="coupons_mode_coupon" class="button blue-active">
-                        <input type="radio" name="coupons_mode" id="coupons_mode_coupon" value="coupon" checked>
-                        <?php echo $lC_Language->get('text_coupon'); ?>
-                      </label>
-                      <label for="coupons_mode_rule" class="button green-active disabled">
-                        <input type="radio" name="coupons_mode" id="coupons_mode_rule" value="rule" disabled>
-                        <?php echo $lC_Language->get('text_rule') . lc_go_pro(); ?>
-                      </label>
-                    </span>
-                  </div>              
-                  <div class="new-row-mobile six-columns twelve-columns-mobile align-right">
-                    <input type="checkbox" name="coupons_status" id="coupons_status" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->get('coupons_status') != 1) ? null : ' checked'); ?> />
-                  </div>
-                </div>
-              </div>
-              <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-                <div id="languageTabs" class="standard-tabs">
-                  <ul class="tabs">
-                  <?php
-                    foreach ( $lC_Language->getAll() as $l ) {
-                      echo '<li>' . lc_link_object('#languageTabs_' . $l['code'], $lC_Language->showImage($l['code']) . '&nbsp;' . $l['name']) . '</li>';
-                    }
-                  ?>
-                  </ul>
-                  <div class="clearfix tabs-content">
-                  <?php
-                    foreach ( $lC_Language->getAll() as $l ) {
-                    ?>
-                    <div id="languageTabs_<?php echo $l['code']; ?>" class="with-padding mid-margin-bottom">
-                      <p class="button-height block-label">
-                        <label class="label" for="<?php echo 'coupons_name[' . $l['id'] . ']'; ?>">
-                          <?php echo $lC_Language->get('field_name'); ?>
-                          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_name'), null); ?>
-                        </label>
-                        <?php echo lc_draw_input_field('coupons_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($coupons_name[$l['id']]) ? $coupons_name[$l['id']] : null), 'class="required input full-width mid-margin-top"'); ?>
-                      </p>
-                      <p class="button-height block-label">
-                        <label class="label" for="<?php echo 'coupons_description[' . $l['id'] . ']'; ?>">
-                          <?php echo $lC_Language->get('field_description'); ?>
-                          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_description'), null); ?>
-                        </label>
-                        <div style="margin-bottom:-6px;"></div>
-                        <?php echo lc_draw_textarea_field('coupons_description[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($coupons_description[$l['id']]) ? $coupons_description[$l['id']] : null), null, 10, 'id="ckEditorCouponsDescription_' . $l['id'] . '" class="input full-width autoexpanding"'); ?>
-                        <span class="float-right small-margin-top small-margin-right"><?php echo '<a href="javascript:toggleEditor(\'' . $l['id'] . '\');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
-                      </p>
-                    </div>
-                    <div class="clear-both"></div>
-                    <?php
-                    }
-                  ?>
-                  </div>
-                </div>
-              </div>
+      <div class="columns with-padding">
+                    
+        <div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">
+          <div class="columns">              
+            <div class="new-row-mobile six-columns twelve-columns-mobile">
+              <span class="button-group">
+                <label for="coupons_mode_coupon" class="button blue-active">
+                  <input type="radio" name="coupons_mode" id="coupons_mode_coupon" value="coupon" checked>
+                  <?php echo $lC_Language->get('text_coupon'); ?>
+                </label>
+                <label for="coupons_mode_rule" class="button green-active disabled">
+                  <input type="radio" name="coupons_mode" id="coupons_mode_rule" value="rule" disabled>
+                  <?php echo $lC_Language->get('text_rule') . lc_go_pro(); ?>
+                </label>
+              </span>
+            </div>              
+            <div class="new-row-mobile six-columns twelve-columns-mobile align-right" id="coupons_switch">
+              <input type="checkbox" name="coupons_status" id="coupons_status" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo ((isset($lC_ObjectInfo) && $lC_ObjectInfo->get('coupons_status') != 1) ? null : ' checked'); ?> />
             </div>
           </div>
-          <div id="section_rewards">
-            <div class="columns with-padding">
-              <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-                <fieldset class="fieldset fields-list">
-                  <legend class="legend"><?php echo $lC_Language->get('legend_coupon_details'); ?></legend>
-                  <div class="field-block button-height margin-bottom">
-                    <label for="coupons_code" class="label"><b><?php echo $lC_Language->get('label_redemption_code'); ?></b></label>
-                    <input type="text" name="coupons_code" id="coupons_code" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_code') : null); ?>" class="input">
-                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_redemption_code'), null, 'info-spot on-left grey margin-left'); ?>
-                  </div>
-                  <div class="field-drop button-height black-inputs">
-                    <div>
-                      <label for="coupons_type_reward" class="label"><b><?php echo $lC_Language->get('label_reward'); ?></b></label>
-                      <input type="radio" id="coupons_type_reward" class="radio mid-margin-right small-margin-left checked">
-                      <input type="text" name="coupons_reward" id="coupons_reward" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_reward') : null); ?>" class="input">
-                      <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_price_or_percent'); ?></span>
-                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_price_or_percent'), null, 'info-spot on-left grey margin-left'); ?>
-                    </div>
-                    <div class="mid-margin-top">
-                      <label for="coupons_type_free_shipping" class="label"></label>
-                      <input type="radio" id="coupons_type_free_shipping" class="radio mid-margin-right small-margin-left disabled" onchange="alert('-1');">
-                      <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_shipping'); ?></span>
-                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_shipping'), null, 'info-spot on-left grey margin-left'); ?>
-                    </div>
-                    <div class="mid-margin-top">
-                      <label for="coupons_type_free_product" class="label"></label>
-                      <input type="radio" id="coupons_type_free_product" class="radio mid-margin-right small-margin-left disabled" onchange="alert('-2')">
-                      <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_product'); ?></span>
-                      <span class="small-margin-left"><?php echo lc_go_pro(); ?></span>
-                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_product'), null, 'info-spot on-left grey margin-left'); ?>
-                    </div>
-                    <input type="hidden" name="coupons_type" id="coupons_type" value="R">
-                  </div>
-                </fieldset>
-              </div>
-            </div>
-          </div>
-          <div id="section_limits">
-            <div class="columns with-padding">
-              <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-                <fieldset class="fieldset fields-list">
-                  <legend class="legend"><?php echo $lC_Language->get('legend_use_limits'); ?></legend>
-                  <div class="field-block button-height">
-                    <label for="coupons_purchase_over" class="label"><b><?php echo $lC_Language->get('label_purchase_over'); ?></b></label>
-                    <input type="text" name="coupons_purchase_over" id="coupons_purchase_over" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_purchase_over') : null); ?>" class="input">
-                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_purchase_over'), null, 'info-spot on-left grey margin-left'); ?>
-                  </div>
-                  <div class="field-block button-height margin-bottom">
-                    <label for="uses_per_coupon" class="label"><b><?php echo $lC_Language->get('label_uses_per_coupon'); ?></b></label>
-                    <input type="text" name="uses_per_coupon" id="uses_per_coupon" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('uses_per_coupon') : null); ?>" class="input">
-                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_uses_per_coupon'), null, 'info-spot on-left grey margin-left'); ?>
-                  </div>
-                  <div class="field-block button-height">
-                    <label for="uses_per_customer" class="label"><b><?php echo $lC_Language->get('label_uses_per_customer'); ?></b></label>
-                    <input type="text" name="uses_per_customer" id="uses_per_customer" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('uses_per_customer') : null); ?>" class="input">
-                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_uses_per_customer'), null, 'info-spot on-left grey margin-left'); ?>
-                  </div>
-                  <div class="field-block button-height">
-                    <label for="coupons_start_date" class="label"><b><?php echo $lC_Language->get('label_start_date'); ?></b></label>
-                    <div>
-                      <span class="input">
-                        <span class="icon-calendar"></span>
-                        <input type="text" name="coupons_start_date" id="coupons_start_date" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_start_date') : null); ?>" class="input-unstyled datepicker" style="max-width:147px;">
-                      </span>
-                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_start_date'), null, 'info-spot on-left grey margin-left'); ?>
-                    </div>
-                  </div>
-                  <div class="field-block button-height">
-                    <label for="coupons_expires_date" class="label"><b><?php echo $lC_Language->get('label_expires_date'); ?></b></label>
-                    <div>
-                      <span class="input">
-                        <span class="icon-calendar"></span>
-                        <input type="text" name="coupons_expires_date" id="coupons_expires_date" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_expires_date') : null); ?>" class="input-unstyled datepicker" style="max-width:147px;">
-                      </span>
-                      <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_expires_date'), null, 'info-spot on-left grey margin-left'); ?>
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-            </div>
-          </div>
-          <div id="section_restrictions">
-            <div class="columns with-padding">
-              <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-                <fieldset class="fieldset fields-list">
-                  <legend class="legend"><?php echo $lC_Language->get('legend_restrictions'); ?><?php echo lc_go_pro(); ?></legend>
-                  <div class="field-block button-height">
-                    <label for="" class="label"><b><?php echo $lC_Language->get('label_products'); ?></b></label>
-                    <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />
-                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_proucts_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
-                  </div>
-                  <div class="field-block button-height">
-                    <label for="" class="label"><b><?php echo $lC_Language->get('label_customers'); ?></b></label>
-                    <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />
-                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_customers_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
-                  </div>
-                  <div class="field-block button-height margin-bottom">
-                    <label for="" class="label"><b><?php echo $lC_Language->get('label_groups'); ?></b><small class="tag orange-bg small-margin-left">B2B</small></label>
-                    <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />
-                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_groups_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
-                  </div>
-                </fieldset>
-              </div>
-            </div>
-          </div>    
         </div>
+        
+        <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+          <fieldset class="fieldset fields-list">
+            <legend class="legend"><?php echo $lC_Language->get('legend_coupon_details'); ?></legend>
+            
+            <div class="field-block button-height margin-bottom">
+              <label for="coupons_code" class="label"><b><?php echo $lC_Language->get('label_name_description'); ?></b></label>
+              <?php
+                foreach ( $lC_Language->getAll() as $l ) {
+              ?>
+                 <p> 
+                  <span class="input" style="width:80%;">
+                    <label class="button silver-gradient glossy" for="<?php echo 'coupons_name[' . $l['id'] . ']'; ?>">
+                      <?php echo $lC_Language->showImage($l['code']); ?>
+                    </label>
+                    <?php echo lc_draw_input_field('coupons_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($coupons_name[$l['id']]) ? $coupons_name[$l['id']] : null), 'class="required input-unstyled"'); ?>
+                  </span>
+                  <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_name'), null, 'grey on-left margin-left'); ?>
+                </p>
+                <!--<span class="input">  
+                  <label class="label" for="">
+                    
+                    
+                  
+                  </label>
+                </span>-->  
+              <?php
+                }
+              ?>
+            </div>            
+            
+            <div class="field-block button-height margin-bottom">
+              <label for="coupons_code" class="label"><b><?php echo $lC_Language->get('label_redemption_code'); ?></b></label>
+              <input type="text" name="coupons_code" id="coupons_code" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_code') : null); ?>" class="input">
+              <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_redemption_code'), null, 'info-spot on-left grey margin-left'); ?>
+            </div>
+            <div class="field-drop button-height black-inputs">
+              <div>
+                <label for="coupons_type_reward" class="label"><b><?php echo $lC_Language->get('label_reward'); ?></b></label>
+                <input type="radio" id="coupons_type_reward" class="radio mid-margin-right small-margin-left checked">
+                <input type="text" name="coupons_reward" id="coupons_reward" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_reward') : null); ?>" class="input">
+                <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_price_or_percent'); ?></span>
+                <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_price_or_percent'), null, 'info-spot on-left grey margin-left'); ?>
+              </div>
+              <div class="mid-margin-top">
+                <label for="coupons_type_free_shipping" class="label"></label>
+                <input type="radio" id="coupons_type_free_shipping" class="radio mid-margin-right small-margin-left disabled" onchange="alert('-1');">
+                <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_shipping'); ?></span>
+                <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_shipping'), null, 'info-spot on-left grey margin-left'); ?>
+              </div>
+              <div class="mid-margin-top">
+                <label for="coupons_type_free_product" class="label"></label>
+                <input type="radio" id="coupons_type_free_product" class="radio mid-margin-right small-margin-left disabled" onchange="alert('-2')">
+                <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_product'); ?></span>
+                <span class="small-margin-left"><?php echo lc_go_pro(); ?></span>
+                <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_product'), null, 'info-spot on-left grey margin-left'); ?>
+              </div>
+              <input type="hidden" name="coupons_type" id="coupons_type" value="R">
+            </div>
+          </fieldset>
+        </div>
+        
+        
+        <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+          <fieldset class="fieldset fields-list">
+            <legend class="legend"><?php echo $lC_Language->get('legend_use_limits'); ?></legend>
+            <div class="field-block button-height">
+              <label for="coupons_purchase_over" class="label"><b><?php echo $lC_Language->get('label_purchase_over'); ?></b></label>
+              <input type="text" name="coupons_purchase_over" id="coupons_purchase_over" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_purchase_over') : null); ?>" class="input">
+              <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_purchase_over'), null, 'info-spot on-left grey margin-left'); ?>
+            </div>
+            <div class="field-block button-height margin-bottom">
+              <label for="uses_per_coupon" class="label"><b><?php echo $lC_Language->get('label_uses_per_coupon'); ?></b></label>
+              <input type="text" name="uses_per_coupon" id="uses_per_coupon" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('uses_per_coupon') : null); ?>" class="input">
+              <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_uses_per_coupon'), null, 'info-spot on-left grey margin-left'); ?>
+            </div>
+            <div class="field-block button-height">
+              <label for="uses_per_customer" class="label"><b><?php echo $lC_Language->get('label_uses_per_customer'); ?></b></label>
+              <input type="text" name="uses_per_customer" id="uses_per_customer" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('uses_per_customer') : null); ?>" class="input">
+              <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_uses_per_customer'), null, 'info-spot on-left grey margin-left'); ?>
+            </div>
+            <div class="field-block button-height">
+              <label for="coupons_start_date" class="label"><b><?php echo $lC_Language->get('label_start_date'); ?></b></label>
+              <div>
+                <span class="input">
+                  <span class="icon-calendar"></span>
+                  <input type="text" name="coupons_start_date" id="coupons_start_date" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_start_date') : null); ?>" class="input-unstyled datepicker" style="max-width:147px;">
+                </span>
+                <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_start_date'), null, 'info-spot on-left grey margin-left'); ?>
+              </div>
+            </div>
+            <div class="field-block button-height">
+              <label for="coupons_expires_date" class="label"><b><?php echo $lC_Language->get('label_expires_date'); ?></b></label>
+              <div>
+                <span class="input">
+                  <span class="icon-calendar"></span>
+                  <input type="text" name="coupons_expires_date" id="coupons_expires_date" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_expires_date') : null); ?>" class="input-unstyled datepicker" style="max-width:147px;">
+                </span>
+                <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_expires_date'), null, 'info-spot on-left grey margin-left'); ?>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+              
+        <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+          <fieldset class="fieldset fields-list">
+            <legend class="legend"><?php echo $lC_Language->get('legend_restrictions'); ?><?php echo lc_go_pro(); ?></legend>
+            <div class="field-block button-height">
+              <label for="" class="label"><b><?php echo $lC_Language->get('label_products'); ?></b></label>
+              <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />
+              <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_proucts_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
+            </div>
+            <div class="field-block button-height">
+              <label for="" class="label"><b><?php echo $lC_Language->get('label_customers'); ?></b></label>
+              <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />
+              <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_customers_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
+            </div>
+            <div class="field-block button-height margin-bottom">
+              <label for="" class="label"><b><?php echo $lC_Language->get('label_groups'); ?></b><small class="tag orange-bg small-margin-left">B2B</small></label>
+              <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />
+              <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_groups_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
+            </div>
+          </fieldset>
+        </div>
+        
       </div>
       <?php echo lc_draw_hidden_field('subaction', 'confirm'); ?>
     </form>
