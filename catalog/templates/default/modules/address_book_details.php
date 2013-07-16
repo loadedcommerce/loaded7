@@ -56,19 +56,17 @@ if ($lC_MessageStack->size('address') > 0) {
         if (ACCOUNT_STATE > -1) {
         ?>
         <li>
-          <div id="uniform-zones" class="selectors">   
+          <div id="uniform-zones" class="selector">   
           </div>
         </li>
         <?php
         }
       ?>
       <li>
-         
           <?php 
             echo lc_draw_label(null, null, 'country') . lc_draw_pull_down_menu('country', $countries_array, (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY), 'onchange="getZonesDropdown(this.value)" style="padding-top:6px;"');
           ?>
-    
-      </li>
+     </li>
       <?php
         if (ACCOUNT_POST_CODE > -1) {
           echo '<li>' . lc_draw_label('', null, 'postcode', (ACCOUNT_POST_CODE > 0)) . ' ' . lc_draw_input_field('postcode', (isset($Qentry) ? $Qentry->value('entry_postcode') : null), 'placeholder="' . $lC_Language->get('field_customer_post_code') . '" class="txt ' . ((ACCOUNT_POST_CODE > 0) ? 'required' : null) . '" style="width:99%;"') . '</li>';
