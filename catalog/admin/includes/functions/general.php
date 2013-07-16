@@ -339,17 +339,31 @@
  */
 
   function lc_validate_password($plain, $encrypted) {
-    if (!empty($plain) && !empty($encrypted)) {
-// split apart the hash / salt
-      $stack = explode(':', $encrypted);
+    if (!empty($plain) && !empty($encrypted)) {  
+      if (strstr($encrypted, '::')) {  // sha256 hash
+        // split apart the hash / salt
+        $stack = explode('::', $encrypted);
 
-      if (sizeof($stack) != 2) {
-        return false;
-      }
+        if (sizeof($stack) != 2) {
+          return false;
+        }
 
-      if (md5($stack[1] . $plain) == $stack[0]) {
-        return true;
-      }
+        if (hash('sha256', $stack[1] . $plain) == $stack[0]) {
+          return true;
+        }      
+      
+      } else { // legacy md5 hash - will be removed in production release       
+        // split apart the hash / salt
+        $stack = explode(':', $encrypted);
+
+        if (sizeof($stack) != 2) {
+          return false;
+        }
+
+        if (md5($stack[1] . $plain) == $stack[0]) {
+          return true;
+        }
+      }  
     }
 
     return false;
