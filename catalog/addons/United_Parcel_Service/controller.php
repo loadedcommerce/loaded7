@@ -35,6 +35,10 @@ class United_Parcel_Service extends lC_Addon {
     */     
     $this->_title = $lC_Language->get('addon_shipping_ups_title');
    /**
+    * The addon blurb used in the addons store listing
+    */     
+    $this->_blurb = $lC_Language->get('addon_shipping_ups_blurb');    
+   /**
     * The addon description used in the addons store listing
     */     
     $this->_description = $lC_Language->get('addon_shipping_ups_description');
