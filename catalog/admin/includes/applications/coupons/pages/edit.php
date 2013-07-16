@@ -46,7 +46,6 @@
   <div class="with-padding-no-top">
     <form name="coupon" id="coupon" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('coupons_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div class="columns with-padding">
-                    
         <div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">
           <div class="columns">              
             <div class="new-row-mobile six-columns twelve-columns-mobile">
@@ -66,11 +65,9 @@
             </div>
           </div>
         </div>
-        
         <div class="new-row-mobile twelve-columns twelve-columns-mobile">
           <fieldset class="fieldset fields-list">
             <legend class="legend"><?php echo $lC_Language->get('legend_coupon_details'); ?></legend>
-            
             <div class="field-block button-height margin-bottom">
               <label for="coupons_code" class="label"><b><?php echo $lC_Language->get('label_name_description'); ?></b></label>
               <?php
@@ -84,19 +81,11 @@
                     <?php echo lc_draw_input_field('coupons_name[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($coupons_name[$l['id']]) ? $coupons_name[$l['id']] : null), 'class="required input-unstyled"'); ?>
                   </span>
                   <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_name'), null, 'grey on-left margin-left'); ?>
-                </p>
-                <!--<span class="input">  
-                  <label class="label" for="">
-                    
-                    
-                  
-                  </label>
-                </span>-->  
+                </p>  
               <?php
                 }
               ?>
-            </div>            
-            
+            </div>
             <div class="field-block button-height margin-bottom">
               <label for="coupons_code" class="label"><b><?php echo $lC_Language->get('label_redemption_code'); ?></b></label>
               <input type="text" name="coupons_code" id="coupons_code" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_code') : null); ?>" class="input">
@@ -127,8 +116,6 @@
             </div>
           </fieldset>
         </div>
-        
-        
         <div class="new-row-mobile twelve-columns twelve-columns-mobile">
           <fieldset class="fieldset fields-list">
             <legend class="legend"><?php echo $lC_Language->get('legend_use_limits'); ?></legend>
@@ -169,7 +156,6 @@
             </div>
           </fieldset>
         </div>
-              
         <div class="new-row-mobile twelve-columns twelve-columns-mobile">
           <fieldset class="fieldset fields-list">
             <legend class="legend"><?php echo $lC_Language->get('legend_restrictions'); ?><?php echo lc_go_pro(); ?></legend>
@@ -190,7 +176,6 @@
             </div>
           </fieldset>
         </div>
-        
       </div>
       <?php echo lc_draw_hidden_field('subaction', 'confirm'); ?>
     </form>

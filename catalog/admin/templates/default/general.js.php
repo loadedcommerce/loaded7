@@ -153,6 +153,7 @@ $(document).ready(function() {
         // first check if the escape key has been presed
         $(document).keydown(function(e){
           var code = e.keyCode ? e.keyCode : e.which;
+          //alert(code);
           if (code == 27) {
             disableKeyCombo = false; 
             $('#li-search').removeClass("current");
@@ -173,6 +174,7 @@ $(document).ready(function() {
         // if the modal's class is not with-blocker we can continue
         if (modalClass != 'with-blocker') {
           var code = e.keyCode ? e.keyCode : e.which;
+          //alert(code);
           if (code == 32) { // space for mega search menu
             $('#li-add').removeClass("current");
             $('#li-messages').removeClass("current");
@@ -239,6 +241,9 @@ $(document).ready(function() {
             };
             if (code == 108) { // l for new specia(L)
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>';
+            };
+            if (code == 117) { // u for new Co(U)pon
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'coupons&action=save'); ?>';
             };
             if (code == 116) { // t for new manufac(T)urer
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>';

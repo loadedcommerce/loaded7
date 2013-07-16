@@ -34,18 +34,24 @@ $(document).ready(function() {
                   { "sWidth": "25%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();
+
+  <?php if (!$_GET['action']) { ?>
+  if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {  
+    $('#floating-button-container').hide();
+  }
+  <?php } ?>
   
-  if (quickAdd) {
-    newCoupon();
-  }  
-  
-  <?php 
-    if ($_GET['action'] != '') {
-      foreach ( $lC_Language->getAll() as $l ) {  
-        echo "CKEDITOR.replace('ckEditorCouponsDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
-      }
-    } 
-  ?>
+  if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
+    $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
+    $('#dataTable_length').hide();
+    $('#floating-menu-div-listing').fixFloat();
+    $('#actionText').hide();
+    $('.on-mobile').show();
+    $('.selectContainer').hide();
+  } else {
+    // instantiate floating menu
+    $('#floating-menu-div-listing').fixFloat();
+  }
   
   $('.datepicker').glDatePicker({ zIndex: 100 });
   
@@ -60,17 +66,6 @@ function updateStatus(id, val) {
   } else {               
     $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'1\')');
     $("#status_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_enable_coupon'); ?>"></span>');
-  }
-}
-
-function toggleEditor(id) {
-  var selection = $("#ckEditorCouponsDescription_" + id);
-  if ($(selection).is(":visible")) {
-    $('#ckEditorCouponsDescription_' + id).hide();
-    $('#cke_ckEditorCouponsDescription_' + id).show();
-  } else {
-    $('#ckEditorCouponsDescription_' + id).attr('style', 'width:99%');
-    $('#cke_ckEditorCouponsDescription_' + id).hide();
   }
 }
 
