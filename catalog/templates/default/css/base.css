@@ -791,7 +791,7 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #uniform-zones.selector { height: 26px; padding: 0px 4px 3px 0px; width: 99.2% !important; margin: 0 0 10px 0; }
 #uniform-country.selector  { height: 26px; padding: 0px 4px 3px 0px; width: 99% !important; margin: 0 0 10px 0; }
 #uniform-country select, #uniform-zones select { color: #000; font-size: 12px; height: 29px; top: -1px; width: 100% !important; overflow:hidden }
-#uniform-country span, #uniform-zones span { color: #000; font-size: 12px; height: 22px; width: 99%!important; top: 3px; left:5px; overflow:hidden }
+#uniform-country span, #uniform-zones span { color: #000; font-size: 12px; height: 22px; width: 98%!important; top: 3px; left:5px; overflow:hidden }
 .padding-right-15 { padding-right: 15px; }
 .cart-edit { float:right; padding-right:10px; }
 .colorWhite { color: #fff !important; }
