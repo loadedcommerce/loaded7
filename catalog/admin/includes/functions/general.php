@@ -404,34 +404,6 @@
     
   }
 
-  function lc_get_country_data($countries_id = null, $countries_name = null, $countries_iso2 = null, $countries_iso3 = null) {
-    global $lC_Database; 
-
-    if ($countries_id == null && $country_name == null && $country_iso2 == null && $country_iso3 == null) return false;
-
-    if ($countries_id != null) {
-      $Qcountry = $lC_Database->query('select * from :table_countries where countries_id = :countries_id limit 1');
-      $Qcountry->bindInt(':countries_id', $countries_id);
-    } else if ($countries_name != null) {
-      $Qcountry = $lC_Database->query('select * from :table_countries where countries_name = :countries_name limit 1');
-      $Qcountry->bindInt(':countries_name', $countries_name);
-    } else if ($countries_iso2 != null) {    
-      $Qcountry = $lC_Database->query('select * from :table_countries where countries_iso_code_2 = :countries_iso2 limit 1');
-      $Qcountry->bindInt(':countries_iso_code_2', $countries_iso2);
-    } else if ($countries_iso3 != null) {    
-      $Qcountry = $lC_Database->query('select * from :table_countries where countries_iso_code_3 = :countries_iso3 limit 1');
-      $Qcountry->bindInt(':countries_iso_code_3', $countries_iso3);
-    }
-    $Qcountry->bindTable(':table_countries', TABLE_COUNTRIES);
-    $Qcountry->execute();
-
-    $data = $Qcountry->toArray();
-    
-    $Qcountry->freeResult();
-
-    return $data;
-  }
-
   function lc_get_weight_class_data($weight_class_id = null) {
     global $lC_Database; 
 

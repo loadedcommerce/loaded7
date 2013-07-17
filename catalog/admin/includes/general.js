@@ -199,7 +199,7 @@ function htmlSpecialChars(string) {
   return $('<span>').text(string).html();
 };
 
-/* Javascript version of zM_Tax::displayTaxRateValue() */
+/* Javascript version of lC_Tax::displayTaxRateValue() */
 
 function displayTaxRateValue(value, padding) {
   if ( padding == null ) {
