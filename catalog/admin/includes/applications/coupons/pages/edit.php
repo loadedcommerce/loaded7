@@ -92,26 +92,40 @@
               <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_redemption_code'), null, 'info-spot on-left grey margin-left'); ?>
             </div>
             <div class="field-drop button-height black-inputs">
+              <?php
+                if (isset($lC_ObjectInfo)) {
+                  if ($lC_ObjectInfo->get('coupons_type') == 'T') {
+                    $type = 'T';
+                  } else if ($lC_ObjectInfo->get('coupons_type') == 'R') {
+                    $type = 'R';
+                  } else if ($lC_ObjectInfo->get('coupons_type') == 'S') {
+                    $type = 'S';
+                  } else if ($lC_ObjectInfo->get('coupons_type') == 'P') {
+                    $type = 'P';
+                  }
+                }
+              ?>
               <div>
                 <label for="coupons_type_reward" class="label"><b><?php echo $lC_Language->get('label_reward'); ?></b></label>
-                <input type="radio" name="coupons_type" id="coupons_type_reward" class="radio mid-margin-right small-margin-left checked">
+                <input type="radio" name="coupons_type_radio" id="coupons_type_reward" class="radio mid-margin-right small-margin-left<?php echo ($type == 'T' || $type == 'R') ? ' checked' : null; ?>" onchange="$('#coupons_type').val('');">
                 <input type="text" name="coupons_reward" id="coupons_reward" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_reward') : null); ?>" class="input">
                 <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_price_or_percent'); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_price_or_percent'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
               <div class="mid-margin-top">
                 <label for="coupons_type_free_shipping" class="label"></label>
-                <input type="radio" name="coupons_type" id="coupons_type_free_shipping" class="radio mid-margin-right small-margin-left disabled" value="S" onchange="$('#coupons_reward').val('');">
+                <input type="radio" name="coupons_type_radio" id="coupons_type_free_shipping" class="radio mid-margin-right small-margin-left disabled<?php echo ($type == 'S') ? ' checked' : null; ?>" onchange="$('#coupons_reward').val('');$('#coupons_type').val('S');">
                 <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_shipping'); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_shipping'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
               <div class="mid-margin-top">
                 <label for="coupons_type_free_product" class="label"></label>
-                <input type="radio" name="coupons_type" id="coupons_type_free_product" class="radio mid-margin-right small-margin-left disabled" value="P" onchange="$('#coupons_reward').val('');">
+                <input type="radio" name="coupons_type_radio" id="coupons_type_free_product" class="radio mid-margin-right small-margin-left disabled<?php echo ($type == 'P') ? ' checked' : null; ?>" onchange="$('#coupons_reward').val('');$('#coupons_type').val('P');">
                 <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_product'); ?></span>
                 <span class="small-margin-left"><?php echo lc_go_pro(); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_product'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
+              <input type="hidden" name="coupons_type" id="coupons_type" value="<?php echo $type; ?>" />
             </div>
           </fieldset>
         </div>

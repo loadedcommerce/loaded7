@@ -22,7 +22,7 @@
 
       if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
         
-        if ($_POST['coupons_type'] == null) { // not free shipping or free product
+        if ($_POST['coupons_reward'] != null) { // not free shipping or free product
           // percentage or cash reward 
           (strstr($_POST['coupons_reward'], '%')) ? $_POST['coupons_type'] = 'T' : $_POST['coupons_type'] = 'R';
         }
@@ -32,7 +32,7 @@
         $data = array('coupons_type' => $_POST['coupons_type'],
                       'coupons_mode' => $_POST['coupons_mode'],
                       'coupons_code' => ($_POST['coupons_code'] != '') ? $_POST['coupons_code'] : substr(str_shuffle(str_repeat('ABCEFGHJKLMNPRSTUVWXYZabcdefghjklmnpqrstuvwxyz23456789',7)),0,7),
-                      'coupons_reward' => str_replace("%", "", $_POST['coupons_reward']),
+                      'coupons_reward' => ($_POST['coupons_reward'] != null) ? str_replace("%", "", str_replace("$", "", $_POST['coupons_reward'])) : 0,
                       'coupons_purchase_over' => ($_POST['coupons_purchase_over'] != '') ? str_replace("$", "", $_POST['coupons_purchase_over']) : null,                      
                       'coupons_start_date' => ((strstr($_POST['coupons_start_date'], '/')) ? lC_DateTime::toDateTime($_POST['coupons_start_date']) : $_POST['coupons_start_date']),                      
                       'coupons_expires_date' => ((strstr($_POST['coupons_expires_date'], '/')) ? lC_DateTime::toDateTime($_POST['coupons_expires_date']) : $_POST['coupons_expires_date']),
@@ -43,8 +43,7 @@
                       'restrict_to_customers' => $_POST['restrict_to_customers'],
                       'coupons_status' => (isset($_POST['coupons_status']) && $_POST['coupons_status'] == 'on') ? 1 : 0,
                       'coupons_sale_exclude' => (isset($_POST['coupons_sale_exclude']) && $_POST['coupons_sale_exclude'] == 'on') ? 1 : 0,
-                      'coupons_name' => $_POST['coupons_name'],
-                      'coupons_description' => $_POST['coupons_description']);
+                      'coupons_name' => $_POST['coupons_name']);
                       
         if ( $error === false ) {
           if ( lC_Coupons_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data) ) {

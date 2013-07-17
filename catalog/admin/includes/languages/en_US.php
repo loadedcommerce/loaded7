@@ -295,3 +295,5 @@ text_per_customer = Per Customer
 text_start_date = From
 text_expire_date = To
 text_purchase_over = Minimum Purchase
+text_free_shipping = Free Shipping
+text_free_product = Free Product
