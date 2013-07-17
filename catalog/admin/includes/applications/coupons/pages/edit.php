@@ -45,7 +45,7 @@
   <div class="with-padding-no-top">
     <form name="coupon" id="coupon" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('coupons_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div class="columns with-padding">
-        <div class="new-row-mobile twelve-columns twelve-columns-mobile no-margin-bottom">
+        <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom">
           <div class="columns">              
             <div class="new-row-mobile six-columns twelve-columns-mobile">
               <span class="button-group">
