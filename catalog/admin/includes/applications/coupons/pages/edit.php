@@ -44,7 +44,7 @@
   </hgroup>
   <div class="with-padding-no-top">
     <form name="coupon" id="coupon" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('coupons_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
-      <div class="columns with-padding">
+      <div id="coupon_div" class="columns with-padding">
         <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom">
           <div class="columns">              
             <div class="new-row-mobile six-columns twelve-columns-mobile">
@@ -65,7 +65,7 @@
             </div>
           </div>
         </div>
-        <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+        <div class="new-row-mobile twelve-columns twelve-columns-mobile" id="coupons_content">
           <fieldset class="fieldset fields-list">
             <legend class="legend"><?php echo $lC_Language->get('legend_coupon_details'); ?></legend>
             <div class="field-block button-height margin-bottom">
@@ -129,7 +129,7 @@
             </div>
           </fieldset>
         </div>
-        <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+        <div class="new-row-mobile twelve-columns twelve-columns-mobile" id="coupons_limits">
           <fieldset class="fieldset fields-list">
             <legend class="legend"><?php echo $lC_Language->get('legend_use_limits'); ?></legend>
             <div class="field-block button-height">
@@ -169,7 +169,7 @@
             </div>
           </fieldset>
         </div>
-        <div class="new-row-mobile twelve-columns twelve-columns-mobile">
+        <div class="new-row-mobile twelve-columns twelve-columns-mobile" id="coupons_restrictions">
           <fieldset class="fieldset fields-list">
             <legend class="legend"><?php echo $lC_Language->get('legend_restrictions'); ?><?php echo lc_go_pro(); ?></legend>
             <div class="field-block button-height">
