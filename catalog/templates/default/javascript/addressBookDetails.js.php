@@ -50,4 +50,9 @@ function getZonesDropdown(country, zone) {
     }
   );
 }
+$("#uniform-zones").change(function(){
+var selectedValue = $(this).find(":selected").val();
+$("#uniform-zones").find("span:first").text(selectedValue);
+});
+
 </script>
