@@ -22,12 +22,17 @@
 
       if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
         
+        if ($_POST['coupons_type'] == null) { // not free shipping or free product
+          // percentage or cash reward 
+          (strstr($_POST['coupons_reward'], '%')) ? $_POST['coupons_type'] = 'T' : $_POST['coupons_type'] = 'R';
+        }
+        
         $error = false;
 
         $data = array('coupons_type' => $_POST['coupons_type'],
                       'coupons_mode' => $_POST['coupons_mode'],
                       'coupons_code' => ($_POST['coupons_code'] != '') ? $_POST['coupons_code'] : substr(str_shuffle(str_repeat('ABCEFGHJKLMNPRSTUVWXYZabcdefghjklmnpqrstuvwxyz23456789',7)),0,7),
-                      'coupons_reward' => str_replace("$", "", $_POST['coupons_reward']),
+                      'coupons_reward' => str_replace("%", "", $_POST['coupons_reward']),
                       'coupons_purchase_over' => ($_POST['coupons_purchase_over'] != '') ? str_replace("$", "", $_POST['coupons_purchase_over']) : null,                      
                       'coupons_start_date' => ((strstr($_POST['coupons_start_date'], '/')) ? lC_DateTime::toDateTime($_POST['coupons_start_date']) : $_POST['coupons_start_date']),                      
                       'coupons_expires_date' => ((strstr($_POST['coupons_expires_date'], '/')) ? lC_DateTime::toDateTime($_POST['coupons_expires_date']) : $_POST['coupons_expires_date']),

@@ -24,7 +24,6 @@
       $coupons_description[$Qcd->valueInt('language_id')] = $Qcd->value('coupons_description');
     }
   }
-
   $lC_Template->loadModal($lC_Template->getModule());
 ?>
 <style>
@@ -95,25 +94,24 @@
             <div class="field-drop button-height black-inputs">
               <div>
                 <label for="coupons_type_reward" class="label"><b><?php echo $lC_Language->get('label_reward'); ?></b></label>
-                <input type="radio" id="coupons_type_reward" class="radio mid-margin-right small-margin-left checked">
+                <input type="radio" name="coupons_type" id="coupons_type_reward" class="radio mid-margin-right small-margin-left checked">
                 <input type="text" name="coupons_reward" id="coupons_reward" value="<?php echo (isset($lC_ObjectInfo) ? $lC_ObjectInfo->get('coupons_reward') : null); ?>" class="input">
                 <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_price_or_percent'); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_price_or_percent'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
               <div class="mid-margin-top">
                 <label for="coupons_type_free_shipping" class="label"></label>
-                <input type="radio" id="coupons_type_free_shipping" class="radio mid-margin-right small-margin-left disabled" onchange="alert('-1');">
+                <input type="radio" name="coupons_type" id="coupons_type_free_shipping" class="radio mid-margin-right small-margin-left disabled" value="S" onchange="$('#coupons_reward').val('');">
                 <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_shipping'); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_shipping'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
               <div class="mid-margin-top">
                 <label for="coupons_type_free_product" class="label"></label>
-                <input type="radio" id="coupons_type_free_product" class="radio mid-margin-right small-margin-left disabled" onchange="alert('-2')">
+                <input type="radio" name="coupons_type" id="coupons_type_free_product" class="radio mid-margin-right small-margin-left disabled" value="P" onchange="$('#coupons_reward').val('');">
                 <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_product'); ?></span>
                 <span class="small-margin-left"><?php echo lc_go_pro(); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_product'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
-              <input type="hidden" name="coupons_type" id="coupons_type" value="R">
             </div>
           </fieldset>
         </div>
