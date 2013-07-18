@@ -927,3 +927,4 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 .variant_sel > label {
     width: 14%;
 }
+.no-wrap { white-space: nowrap; }
