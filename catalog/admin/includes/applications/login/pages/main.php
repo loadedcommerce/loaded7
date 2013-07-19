@@ -22,7 +22,7 @@
         <form method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=process'); ?>" id="form-login" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('heading_title'); ?>" accept-charset="utf-8">
           <ul class="inputs black-input large">
             <!-- The autocomplete="off" attributes is the only way to prevent webkit browsers from filling the inputs with yellow -->
-            <li><span class="icon-user mid-margin-right"></span><input type="text" onfocus="$('#form-wrapper').clearMessages();" name="user_name" id="user_name" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('field_email'); ?>" autocomplete="on"></li>
+            <li><span class="icon-user mid-margin-right"></span><input type="text" onfocus="$('#form-wrapper').clearMessages();" name="user_name" id="user_name" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('field_username'); ?>" autocomplete="on"></li>
             <li><span class="icon-lock mid-margin-right"></span><input type="password" onfocus="$('#form-wrapper').clearMessages();" name="user_password" id="user_password" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('field_password'); ?>" autocomplete="on"></li>
           </ul>
           <p class="button-height align-center">
@@ -30,7 +30,7 @@
           </p>
         </form> 
         
-        <form method="post" action="" id="form-password" class="input-wrapper orange-gradient glossy" title="Lost Password?">
+        <form method="post" action="" id="form-password" class="input-wrapper orange-gradient glossy" title="Forgot Password?">
           <p class="message">
             If you can't remember your password, fill the input below with your e-mail and we'll send you a new one:
             <span class="block-arrow"><span></span></span>
