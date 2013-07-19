@@ -32,7 +32,7 @@
         <tr>
           <th scope="col" class="hide-on-mobile align-left"><?php echo $lC_Language->get('table_heading_last_name'); ?></th>
           <th scope="col" class="hide-on-mobile align-left"><?php echo $lC_Language->get('table_heading_first_name'); ?></th>
-          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_user_name'); ?></th>
+          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_email'); ?></th>
           <th scope="col" class="hide-on-tablet align-left"><?php echo $lC_Language->get('table_heading_access_group'); ?></th>
           <th scope="col" class="align-right">
            <span class="button-group compact">
