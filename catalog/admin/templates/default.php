@@ -151,7 +151,7 @@
     <a href="#" id="open-shortcuts"><span class="icon-thumbs"></span></a>
     <?php
   }
-
+  
   // load the main content
   if ($lC_Template->isAuthorized($lC_Template->getModule())) {
     require($lC_Vqmod->modCheck('includes/applications/' . $lC_Template->getModule() . '/pages/' . $lC_Template->getPageContentsFilename()));
@@ -263,7 +263,7 @@
             <div id="addContainerLinks">
               <ul class="list spaced">
                 <!--<li class="anthracite-gradient">
-                  <span class="list-count grey with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_order'); ?>">o</span>
+                  <span class="list-count grey with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_order'); ?>"><?php echo $lC_Language->get('quick_add__trigger'); ?></span>
                   <a href="#<?php //echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_order_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-price-tag icon-grey icon-pad-right"></i>
@@ -274,7 +274,7 @@
                   </a>
                 </li>-->
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>">c</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_customer'); ?>"><?php echo $lC_Language->get('quick_add_customer_trigger'); ?></span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_customer_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-user icon-white icon-pad-right"></i>
@@ -285,7 +285,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_category'); ?>">g</span>                  
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_category'); ?>"><?php echo $lC_Language->get('quick_add_category_trigger'); ?></span>                  
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'categories&action=new'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_category_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-list icon-white icon-pad-right"></i>
@@ -296,7 +296,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_product'); ?>">p</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_product'); ?>"><?php echo $lC_Language->get('quick_add_product_trigger'); ?></span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products&action=save'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_product_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-bag icon-white icon-pad-right"></i>
@@ -307,7 +307,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_special'); ?>">l</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_special'); ?>"><?php echo $lC_Language->get('quick_add_special_trigger'); ?></span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_special_title'); ?>">
                     <div class="add-container-icon">
                     <i class="icon-tag icon-white icon-pad-right"></i>
@@ -318,7 +318,18 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_manufacturer'); ?>">t</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_coupon'); ?>"><?php echo $lC_Language->get('quick_add_coupon_trigger'); ?></span>
+                  <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'coupons&action=save'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_coupon_title'); ?>">
+                    <div class="add-container-icon">
+                      <i class="icon-ticket icon-white icon-pad-right"></i>
+                    </div> 
+                    <div class="float-left">
+                      <?php echo $lC_Language->get('quick_add_coupon'); ?>
+                    </div>
+                  </a>
+                </li>
+                <li class="anthracite-gradient">
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_manufacturer'); ?>"><?php echo $lC_Language->get('quick_add_manufacturer_trigger'); ?></span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_manufacturer_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-printer icon-white icon-pad-right"></i>
@@ -329,7 +340,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_banner'); ?>">b</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_banner'); ?>"><?php echo $lC_Language->get('quick_add_banner_trigger'); ?></span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'banner_manager&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_banner_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-flag icon-white icon-pad-right"></i>
@@ -340,7 +351,7 @@
                   </a>
                 </li>
                 <li class="anthracite-gradient">
-                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_newsletter'); ?>">n</span>
+                  <span class="list-count with-tooltip tooltip-left grey" title="<?php echo $lC_Language->get('quick_add_new_newsletter'); ?>"><?php echo $lC_Language->get('quick_add_newsletter_trigger'); ?></span>
                   <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'newsletters&action=quick_add'); ?>" class="list-link white-link-with-pad with-tooltip" title="<?php echo $lC_Language->get('quick_add_newsletter_title'); ?>">
                     <div class="add-container-icon">
                       <i class="icon-read icon-white icon-pad-right"></i>

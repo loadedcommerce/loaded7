@@ -703,6 +703,10 @@ select.input {
 /* fix for icon-cross centering */
 .icon-cross { padding-left:2px; }
 
+/* added to force red border in drop area inputs, spans, etc on validation error */
+input.error { border: 2px solid red !important; }
+textarea.error { border: 2px solid red !important; }
+select.error { border: 2px solid red !important; }
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
@@ -874,7 +878,11 @@ select.input {
   .dataColTitle > div { margin-left:15px !important; } 
   .hide-on-mobile { display:none; }
   input { width: 73%; }
-  
+  #coupons_switch { float: left !important; text-align: left !important; }
+  #coupon_div { margin: -20px -60px 0 -20px !important; }
+  #coupons_content { margin: 0 -15px 15px !important; }
+  #coupons_limits { margin: 0 -15px 15px !important; }
+  #coupons_restrictions { margin: 0 -15px 0 !important; }
 }  
   
 @media screen and (max-width: 319px) {
