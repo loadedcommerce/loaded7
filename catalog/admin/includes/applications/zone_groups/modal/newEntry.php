@@ -41,11 +41,11 @@ function newEntry(zid) {
                    '      <p><?php echo $lC_Language->get('introduction_new_zone_entry'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="zone_country_id" class="label"><?php echo $lC_Language->get('field_country'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('zone_country_id', null, null, 'onchange="updateZones();" class="select" style = "width:73%'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('zone_country_id', null, null, 'onchange="updateZones();" class="input" style = "width:73%'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="zone_id" class="label"><?php echo $lC_Language->get('field_zone'); ?></label>'+
-                   '        <?php echo  lc_draw_pull_down_menu('zone_id', null, null, 'class="select" style = "width:73%'); ?>'+
+                   '        <?php echo  lc_draw_pull_down_menu('zone_id', null, null, 'class="input" style = "width:73%'); ?>'+
                    '      </p>'+
                    '    </form>'+
                    '  </div>'+
