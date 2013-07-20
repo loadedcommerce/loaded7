@@ -165,19 +165,15 @@
             }
 
             if ( ($this->follow_cpath === true) && in_array($category_id, $this->cpath_array) ) {
-              $link_title = $this->cpath_start_string . (($category['menu_name'] != '') ? $category['menu_name'] : $category['name']) . $this->cpath_end_string;
+              $link_title = $this->cpath_start_string . (($category['menu_name'] != '') ? $category['menu_name'] : $category['name']) . (( $this->_show_total_products === true ) ? $this->category_product_count_start_string . $category['count'] . $this->category_product_count_end_string . $this->cpath_end_string : null);
             } else {
-              $link_title = (($category['menu_name'] != '') ? $category['menu_name'] : $category['name']);
+              $link_title = (($category['menu_name'] != '') ? $category['menu_name'] : $category['name']) . (( $this->_show_total_products === true ) ? $this->category_product_count_start_string . $category['count'] . $this->category_product_count_end_string : null);
             }
             
             if ($category['custom_url']) {
               $result .= str_repeat($this->spacer_string, $this->spacer_multiplier * $level) . $this->bullet_string . lc_link_object(lc_href_link($category['custom_url']), $link_title, ($category['link_target'] === 1) ? 'target="_blank"' : '');
             } else {
               $result .= str_repeat($this->spacer_string, $this->spacer_multiplier * $level) . $this->bullet_string . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $category_link), $link_title, ($category['link_target'] === 1) ? 'target="_blank"' : '');
-            }
-
-            if ( $this->_show_total_products === true ) {
-              $result .= $this->category_product_count_start_string . $category['count'] . $this->category_product_count_end_string;
             }
 
             if ( $level === 0 ) {
