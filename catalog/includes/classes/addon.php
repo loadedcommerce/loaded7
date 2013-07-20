@@ -128,10 +128,9 @@ abstract class lC_Addon {
         $Qdel->bindValue(':content_group', $def['group']);
         $Qdel->execute();
       }
-
+      
       lC_Cache::clear('languages');
     }
-    
   }  
 }
 ?>

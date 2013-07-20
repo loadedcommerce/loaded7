@@ -13,11 +13,11 @@ heading_title = Login
 
 modal_heading_admin_login = Administrator Login
 
-introduction = Use a valid username and password to gain access to the administration console.
+introduction = Use a valid email and password to gain access to the administration console.
 
 text_forgot_password = Forgot Password?
 
-field_username = Username:
+field_email = Email:
 field_password = Password:
 
 button_login = Login
