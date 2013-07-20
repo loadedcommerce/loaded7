@@ -24,7 +24,7 @@ class lC_Login_Admin_rpc {
   * @access public
   * @return json
   */
-  public static function validateLogin() { 
+  public static function validateLogin() {
     $result = array();
     $result['rpcStatus'] = 0;
     $validated = lC_Login_Admin::validate($_GET['user_name'], $_GET['user_password']);

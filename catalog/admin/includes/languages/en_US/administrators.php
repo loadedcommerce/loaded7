@@ -19,7 +19,7 @@ table_heading_group_name = Group Name
 table_heading_total_members = Members
 table_heading_last_name = Last Name
 table_heading_first_name = First Name
-table_heading_user_name = User Name
+table_heading_email = Email
 table_heading_access_group = Access Group
 table_heading_action = Actions
 
@@ -28,7 +28,7 @@ modal_heading_edit_administrator = Edit Administrator
 modal_heading_delete_administrator = Delete Administrator
 modal_heading_delete_administrator_group = Delete Administrator Group
 
-field_username = User Name:
+field_username = Email:
 field_password = Password:
 field_group_name = Group Name:
 field_quick_set = Quick Set:

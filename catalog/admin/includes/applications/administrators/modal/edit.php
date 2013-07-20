@@ -97,12 +97,11 @@ function editAdmin(id) {
             '<?php echo $lC_Language->get('button_save'); ?>': {
               classes:  'blue-gradient glossy',
               click:    function(win) {
-
               var bValid = $("#aEdit").validate({
                 rules: {
                   first_name: { required: true },
                   last_name: { required: true },
-                  user_name: { required: true }
+                  user_name: { required: true, email: true }
                 },
                 invalidHandler: function() {
                 }
