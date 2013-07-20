@@ -12,7 +12,6 @@
 *  @license    http://loadedcommerce.com/license.html
 */
 $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
-echo '[' . $_SESSION['mediaType'] . ']<br>';
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
