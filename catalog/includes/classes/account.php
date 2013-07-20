@@ -215,10 +215,19 @@
 
       if ( $Qcheck->numberOfRows() === 1 ) {
         if ( (strlen($password) > 0) && (strlen($Qcheck->value('customers_password')) > 0) ) {
-          $stack = explode(':', $Qcheck->value('customers_password'));
-
-          if ( sizeof($stack) === 2 ) {
-            return ( md5($stack[1] . $password) == $stack[0] );
+          
+          $encrypted = $Qcheck->value('customers_password');
+          
+          if (strstr($encrypted, '::')) {  // sha256 hash
+            $stack = explode('::', $encrypted);
+            if (sizeof($stack) === 2) {
+              return ( hash('sha256', $stack[1] . $password) == $stack[0] );
+            }      
+          } else { // legacy md5 hash - will be removed in production release           
+            $stack = explode(':', $encrypted);
+            if ( sizeof($stack) === 2 ) {
+              return ( md5($stack[1] . $password) == $stack[0] );
+            }
           }
         }
       }

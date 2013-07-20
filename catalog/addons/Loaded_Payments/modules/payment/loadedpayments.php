@@ -200,7 +200,7 @@ class lC_Payment_loadedpayments extends lC_Payment {
     $amount = $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode());
     $sequence = rand(1, 1000); // a sequence number is randomly generated
     $timestamp = time(); // a timestamp is generated
-    $fingerprint = hash_hmac("md5", $loginid . "" . $amount . "" . $sequence . "" . $timestamp . "", $transactionkey); 
+    $fingerprint = hash_hmac("md5", $loginid . $amount . $sequence . $timestamp, $transactionkey); 
 
     $process_button_string = lc_draw_hidden_field('loginid', $loginid) . "\n" .
                              lc_draw_hidden_field('transactionkey', $transactionkey) . "\n" .

@@ -383,14 +383,11 @@ if (!function_exists('lc_get_ip_address')) {
 if (!function_exists('lc_encrypt_string')) {
   function lc_encrypt_string($plain) {
     $password = '';
-
     for ($i=0; $i<10; $i++) {
       $password .= lc_rand();
     }
-
-    $salt = substr(md5($password), 0, 2);
-
-    $password = md5($salt . $plain) . ':' . $salt;
+    $salt = substr(hash('sha256', $password), 0, 2);
+    $password = hash('sha256', $salt . $plain) . '::' . $salt;
 
     return $password;
   }
