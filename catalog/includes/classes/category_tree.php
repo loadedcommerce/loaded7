@@ -165,9 +165,9 @@
             }
 
             if ( ($this->follow_cpath === true) && in_array($category_id, $this->cpath_array) ) {
-              $link_title = $this->cpath_start_string . (($category['menu_name'] != '') ? $category['menu_name'] : $category['name']) . (( $this->_show_total_products === true ) ? $this->category_product_count_start_string . $category['count'] . $this->category_product_count_end_string . $this->cpath_end_string : null);
+              $link_title = $this->cpath_start_string . (($category['menu_name'] != '') ? $category['menu_name'] : $category['name']) . (($category['mode'] == 'category') ? (( $this->_show_total_products === true ) ? $this->category_product_count_start_string . $category['count'] . $this->category_product_count_end_string . $this->cpath_end_string : null) : null);
             } else {
-              $link_title = (($category['menu_name'] != '') ? $category['menu_name'] : $category['name']) . (( $this->_show_total_products === true ) ? $this->category_product_count_start_string . $category['count'] . $this->category_product_count_end_string : null);
+              $link_title = (($category['menu_name'] != '') ? $category['menu_name'] : $category['name']) . (($category['mode'] == 'category') ? (( $this->_show_total_products === true ) ? $this->category_product_count_start_string . $category['count'] . $this->category_product_count_end_string : null) : null);
             }
             
             if ($category['custom_url']) {
