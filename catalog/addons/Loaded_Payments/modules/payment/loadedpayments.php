@@ -286,7 +286,7 @@ class lC_Payment_loadedpayments extends lC_Payment {
     }
   }
  /**
-  * Check the status of the pasyment module
+  * Check the status of the payment module
   *
   * @access public
   * @return boolean
