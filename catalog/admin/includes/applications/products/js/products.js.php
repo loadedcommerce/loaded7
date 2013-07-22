@@ -28,14 +28,20 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       <?php } ?>
       //$('#fileUploaderImageContainer .qq-upload-button').hide();
       //$('#fileUploaderImageContainer .qq-upload-list').hide();
-      <?php 
-        if(USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
-          foreach ( $lC_Language->getAll() as $l ) {  
-            echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser',contentsCss: '../templates/default/css/base.css',stylesSet: [] });";
+      <?php
+        if (ENABLE_EDITOR == '1') { 
+          if (USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
+            foreach ( $lC_Language->getAll() as $l ) {  
+              echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser',contentsCss: '../templates/default/css/base.css',stylesSet: [] });";
+            }
+          } else {
+            foreach ( $lC_Language->getAll() as $l ) {  
+              echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+            }
           }
         } else {
           foreach ( $lC_Language->getAll() as $l ) {  
-            echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+            echo '$("#ckEditorProductDescription_' . $l['id'] . '").css("height", "200px").css("width", "99.8%");';
           }
         }
       ?>
@@ -543,6 +549,52 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       setTimeout(function() {  
         _updatePricingDivChevrons();
       }, 500);
+    }
+    
+    function validateForm(e) {
+      // turn off messages
+      jQuery.validator.messages.required = "";
+
+      var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
+      var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateKeyword&pid=PID'); ?>';
+      var bValid = $("#product").validate({
+        invalidHandler: function() {
+        },
+        rules: {
+          <?php
+          foreach ( $lC_Language->getAll() as $l ) {
+            ?>
+            'products_name_<?php echo $l['id']; ?>': {
+              required: true,
+            },
+            'ckEditorProductDescription_<?php echo $l['id']; ?>': {
+              required: true,
+            },
+            'products_keyword[<?php echo $l['id']; ?>]': {
+              required: true,
+              remote: jsonVKUrl.replace('PID', pid),
+            },
+            <?php
+          }
+          ?>
+        },
+        
+        messages: {
+          <?php
+          foreach ( $lC_Language->getAll() as $l ) {
+            ?>
+            "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
+            <?php
+          }
+          ?>
+        } 
+      }).form();
+      $("#languageTabs").refreshTabs();
+      if (bValid) {
+        $(e).submit();
+      } 
+
+      return false;
     }        
     
   </script>

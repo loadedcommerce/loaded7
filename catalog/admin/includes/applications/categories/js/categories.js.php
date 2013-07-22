@@ -88,13 +88,19 @@ $(document).ready(function() {
   <?php if ($_GET['action'] != '') { ?>
   createUploader();
   <?php
-    if(USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
-      foreach ( $lC_Language->getAll() as $l ) {  
-        echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser', contentsCss: '../templates/" . $lC_Template->getCode($lC_Template->getID) . "/css/styles.css', stylesSet: [] });";
+    if (ENABLE_EDITOR == '1') { 
+      if (USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
+        foreach ( $lC_Language->getAll() as $l ) {  
+          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser', contentsCss: '../templates/" . $lC_Template->getCode($lC_Template->getID) . "/css/styles.css', stylesSet: [] });";
+        }
+      } else {
+        foreach ( $lC_Language->getAll() as $l ) {  
+          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+        }
       }
     } else {
       foreach ( $lC_Language->getAll() as $l ) {  
-        echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+        echo '$("#ckEditorCategoriesDescription_' . $l['id'] . '").css("height", "200px").css("width", "99.8%");';
       }
     }
   ?>
