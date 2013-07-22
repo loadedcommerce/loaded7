@@ -42,7 +42,7 @@ function editAddon(id, name) {
                    '  </form>'+
                    '</fieldset>',
           title: '<?php echo sprintf($lC_Language->get('modal_heading_setup_addon'), 'TITLE'); ?>'.replace('TITLE', name.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } )),
-          width: 500,
+          width: 530,
           scrolling: true,
           actions: {
             'Close' : {

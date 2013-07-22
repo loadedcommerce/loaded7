@@ -38,7 +38,8 @@
 
       $this->_page_title = $lC_Language->get('payment_address_heading');
 
-      $this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_payment_address.js');
+      //$this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_payment_address.js');
+      $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
       $this->addJavascriptPhpFilename('includes/form_check.js.php');
 
       // if no billing destination address was selected, use their own address as default
