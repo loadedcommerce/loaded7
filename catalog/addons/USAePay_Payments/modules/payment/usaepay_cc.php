@@ -206,7 +206,7 @@ class lC_Payment_usaepay_cc extends lC_Payment {
       $process_button_string .= lc_draw_hidden_field($data_key, $data_value) . "\n";
     }
 
-    if(!empty(ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SOURCE_PIN)) {
+    if(ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SOURCE_PIN != '') {
       $process_button_string .= lc_draw_hidden_field('UMhash', $hash) . "\n";
     }
 
