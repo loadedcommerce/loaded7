@@ -18,7 +18,7 @@
     </definition>
     <definition>
       <key>payment_usaepay_method_title</key>
-      <value><![CDATA[Credit Card]]></value>
+      <value><![CDATA[USAePay Credit Card]]></value>
       <group>checkout</group>
     </definition> 
     <definition>
