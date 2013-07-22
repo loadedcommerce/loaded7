@@ -101,7 +101,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
 }
 </style>
 <div id="paymentTemplateContainer" class="full_page">
-  <h5><?php echo $lC_Language->get('text_checkout'); ?></h5>
+  <h5><?php echo $lC_Language->get('text_checkout'); ?>wwwww</h5>
   <div class="checkout_steps">
     <ol id="checkoutSteps">
       <li class="first-checkout-li"> <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>">
