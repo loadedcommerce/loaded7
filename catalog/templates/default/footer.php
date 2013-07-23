@@ -105,10 +105,10 @@
     if ($lC_Customer->isLoggedOn() === true) {
       $_SESSION['email_passthru'] = $_SESSION['lC_Customer_data']['email_address'];
       $BarcodeQR->draw(230, 'includes/work/qrcode/c' .  $lC_Customer->id . '.png');
-      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/c' . $lC_Customer->id . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . $qrcode_url_add . '</p>';
+      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/c' . $lC_Customer->id . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . '</p>';
     } else {
       $BarcodeQR->draw(230, 'includes/work/qrcode/g' .  $lC_Session->getID() . '.png');
-      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . $qrcode_url_add . '</p>';
+      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . '</p>';
     }
     ?>
     </div>
