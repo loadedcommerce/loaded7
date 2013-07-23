@@ -120,6 +120,7 @@ $(document).ready(function() {
       var urlStr = this.href.split('/').pop();
       var urlPath = urlStr.split('?').pop();
       var locPath = loc.split('?').pop();
+      //var cPath = locPath.split('&')[0];
       if (loc.indexOf("index.php") != -1) {
         if ((locPath.search(urlPath) != -1 && this.href.search('<?php echo HTTP_SERVER; ?>') != -1)) {
           $(this).addClass('current');

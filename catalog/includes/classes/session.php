@@ -141,14 +141,25 @@
         }
 
         lc_redirect(lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false));
-      } else if (isset($_GET['lCsid']) && $_GET['lCsid'] != NULL && basename($_SERVER['PHP_SELF']) == 'checkout.php' && stristr($_SERVER['REQUEST_URI'], 'payment_template')) {
+      } else if (isset($_GET['lCsid']) && $_GET['lCsid'] != NULL) {
+        if (basename($_SERVER['PHP_SELF']) != 'checkout.php') {
+          $this->_is_started = true;
+          $this->_id = $_GET['lCsid'];
+          session_id($_GET['lCsid']);
+          session_start();
 
-        $this->_is_started = true;
-        $this->_id = $_GET['lCsid'];
-        session_id($_GET['lCsid']);
-        session_start();
-        
-        return true;
+          return true;
+        } else if (isset($_GET['qr']) && $_GET['qr'] == 1) {
+          $this->_is_started = true;
+          $this->_id = $_GET['lCsid'];
+          session_id($_GET['lCsid']);
+          session_start();
+          
+          $_SESSION['lC_Customer_data'] = null;
+          $_SESSION['lC_Customer_data']['email_address'] = $_GET['email'];
+
+          return true;
+        } 
       } else if (isset($_GET['lCAdminID']) && $_GET['lCAdminID'] != NULL ) {
 
         $this->_is_started = true;
@@ -157,10 +168,10 @@
         session_start();
         
         return true;
-      } else if ( session_start() ) {
+      } else if ( session_start() ) { 
         $this->_is_started = true;
         $this->_id = session_id();
-
+        
         return true;
       }
 

@@ -93,23 +93,22 @@
    <div id="qr-message">
     <a class="close-qr" title="Hide message" onclick="$('#qr-message').hide('500');"><span style="color:#fff;">X</span></a>
     <?php 
-    require('./includes/classes/BarcodeQR.php');
-    $BarcodeQR = new BarcodeQR();
-    $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
+      require('./includes/classes/BarcodeQR.php');
+      $BarcodeQR = new BarcodeQR();
+      $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
 
-    if ($_SESSION['lC_Customer_data']['email_address']) {     
-      $qrcode_url_add = (stristr($qrcode_url, "?") ? '&' : '?') . $lC_Session->getName() . '=' . $lC_Session->getID();
-    } 
-    
-    $BarcodeQR->url($qrcode_url . $qrcode_url_add);
-    if ($lC_Customer->isLoggedOn() === true) {
-      $_SESSION['email_passthru'] = $_SESSION['lC_Customer_data']['email_address'];
-      $BarcodeQR->draw(230, 'includes/work/qrcode/c' .  $lC_Customer->id . '.png');
-      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/c' . $lC_Customer->id . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . '</p>';
-    } else {
-      $BarcodeQR->draw(230, 'includes/work/qrcode/g' .  $lC_Session->getID() . '.png');
-      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . '</p>';
-    }
+      if ($_SESSION['lC_Customer_data']['email_address']) {     
+        $qrcode_url_add = (stristr($qrcode_url, "?") ? '&' : '?') . $lC_Session->getName() . '=' . $lC_Session->getID() . '&email=' . $_SESSION['lC_Customer_data']['email_address'] . '&qr=1';
+      } 
+      
+      $BarcodeQR->url($qrcode_url . $qrcode_url_add);
+      if ($lC_Customer->isLoggedOn() === true) {
+        $BarcodeQR->draw(230, 'includes/work/qrcode/c' .  $lC_Customer->id . '.png');
+        echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/c' . $lC_Customer->id . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . $qrcode_url_add . '</p>';
+      } else {
+        $BarcodeQR->draw(230, 'includes/work/qrcode/g' .  $lC_Session->getID() . '.png');
+        echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . $qrcode_url_add . '</p>';
+      }
     ?>
     </div>
     <script>
