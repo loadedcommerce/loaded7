@@ -36,7 +36,7 @@ DROP TABLE IF EXISTS lc_administrators;
 CREATE TABLE lc_administrators (
   id int(11) NOT NULL AUTO_INCREMENT,
   user_name varchar(255) NOT NULL,
-  user_password varchar(40) NOT NULL,
+  user_password varchar(128) NOT NULL,
   first_name varchar(64) NOT NULL DEFAULT '',
   last_name varchar(64) NOT NULL DEFAULT '',
   image varchar(255) NOT NULL DEFAULT '',
