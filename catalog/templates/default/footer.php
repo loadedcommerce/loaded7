@@ -97,19 +97,18 @@
     $BarcodeQR = new BarcodeQR();
     $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
 
-    if(empty($_GET) === false && !array_key_exists($lC_Session->getName(),$_GET)) {     
-      $qrcode_url .= '&'.$lC_Session->getName().'='.$lC_Session->getID();
-    } else if(!isset($_GET) || empty($_GET)){
-      $qrcode_url .= '?'.$lC_Session->getName().'='.$lC_Session->getID();
-    }
+    if ($_SESSION['lC_Customer_data']['email_address']) {     
+      $qrcode_url_add = (stristr($qrcode_url, "?") ? '&' : '?') . $lC_Session->getName() . '=' . $lC_Session->getID() . '&email=' . $_SESSION['lC_Customer_data']['email_address'];
+    } 
 
-    $BarcodeQR->url($qrcode_url);
+    $BarcodeQR->url($qrcode_url . $qrcode_url_add);
     if ($lC_Customer->isLoggedOn() === true) {
+      $_SESSION['email_passthru'] = $_SESSION['lC_Customer_data']['email_address'];
       $BarcodeQR->draw(230, 'includes/work/qrcode/c' .  $lC_Customer->id . '.png');
-      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/c' . $lC_Customer->id . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . '</p>';
+      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/c' . $lC_Customer->id . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . $qrcode_url_add . '</p>';
     } else {
       $BarcodeQR->draw(230, 'includes/work/qrcode/g' .  $lC_Session->getID() . '.png');
-      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . '</p>';
+      echo '<strong>QR Code</strong><br /><br /><img src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" /><br /><br /><strong>Current URL</strong><p>' . $qrcode_url . $qrcode_url_add . '</p>';
     }
     ?>
     </div>
