@@ -60,8 +60,10 @@ class lC_Zone_groups_Admin {
     $Qgroups->bindTable(':table_geo_zones', TABLE_GEO_ZONES);
     $Qgroups->execute();
 
-    $result['zonesArray'] = $Qgroups->toArray();
-
+    while ( $Qgroups->next() ) {
+      $result['zonesArray'][] = $Qgroups->toArray();
+    }
+    
     $Qgroups->freeResult();
 
     return $result;
