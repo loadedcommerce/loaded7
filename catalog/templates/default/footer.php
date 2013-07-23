@@ -98,9 +98,9 @@
     $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
 
     if ($_SESSION['lC_Customer_data']['email_address']) {     
-      $qrcode_url_add = (stristr($qrcode_url, "?") ? '&' : '?') . $lC_Session->getName() . '=' . $lC_Session->getID() . '&email=' . $_SESSION['lC_Customer_data']['email_address'];
+      $qrcode_url_add = (stristr($qrcode_url, "?") ? '&' : '?') . $lC_Session->getName() . '=' . $lC_Session->getID();
     } 
-
+    
     $BarcodeQR->url($qrcode_url . $qrcode_url_add);
     if ($lC_Customer->isLoggedOn() === true) {
       $_SESSION['email_passthru'] = $_SESSION['lC_Customer_data']['email_address'];
