@@ -30,14 +30,11 @@ class lC_Payment_usaepay_cc extends lC_Payment {
 
     switch (ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SERVER) {
       case 'Production':
-      case 'production':
-        $this->iframe_relay_url = 'https://www.usaepay.com/gate';
+        $this->form_action_url = 'https://www.usaepay.com/interface/epayform/';
         break;
 
-      case 'Test':
-      case 'test':
       default:
-        $this->iframe_relay_url = 'https://sandbox.usaepay.com/gate';
+        $this->form_action_url = 'https://sandbox.usaepay.com/interface/epayform/';
         break;
     }
 
@@ -53,7 +50,7 @@ class lC_Payment_usaepay_cc extends lC_Payment {
 
     $Qcredit_cards->freeResult();
 
-    $this->form_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) ;  
+    //$this->form_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) ;  
 
     if ($this->_status === true) {
       if ((int)ADDONS_PAYMENT_USAEPAY_PAYMENTS_ORDER_STATUS_ID > 0) {
@@ -140,36 +137,31 @@ class lC_Payment_usaepay_cc extends lC_Payment {
   }
 
   public function process_button() {
-    global $lC_Database, $lC_Session, $lC_MessageStack, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_CreditCard;
-    // $url = 'process&'.session_name().'='.session_id();    
+    global $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart;
 
-
-
-
-
-    $umcommand = ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRXTYPE ;
-    $pin = ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SOURCE_PIN;
-    $amount = $lC_ShoppingCart->getTotal() ;
-    $invoice = $order_id ;
-    $hashseed = mktime ();   // mktime returns the current time in seconds since epoch.
+    $umcommand = (defined('ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRXTYPE') && ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRXTYPE == 'Capture') ? 'capture' : 'sale';
+    $pin = (defined('ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SOURCE_PIN') && ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SOURCE_PIN != '') ? ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SOURCE_PIN : NULL;
+    $amount = $lC_ShoppingCart->getTotal();
+    $hashseed = mktime();   // mktime returns the current time in seconds since epoch.
     $hashdata = $umcommand . ":" . $pin . ":" . $amount . ":" . $invoice . ":" . $hashseed ; 
-    $hash = md5 ( $hashdata );   // php includes a built-in md5 function that will create the hash
+    $hash = md5( $hashdata );   // php includes a built-in md5 function that will create the hash
 
-    $order_id = lC_Order::insert();  
+    $order_id = lC_Order::insert();
+    $invoice = $order_id ;
     
     $data =  array(
             'UMkey' => ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SOURCE_KEY,            
             'UMcommand' => $umcommand,
             'UMamount' => $amount,
-            'UMinvoice' => $order_id,
+            'UMinvoice' => $invoice,
             'UMorderid' => $order_id,
-            'UMshipping' => '',
-            'UMdiscount' => '',
-            'UMsubtotal' => '',
-            'UMcurrency' => $this->get_Currency_Numeric_Code($lC_Currencies->getCode()),
+        //    'UMshipping' => '',
+        //    'UMdiscount' => '',
+        //    'UMsubtotal' => '',
+            'UMcurrency' => $this->_getCurrencyNumericCode($lC_Currencies->getCode()),
             'UMname' => $lC_Customer->getName(),
-            'UMstreet' => '1234 Main Street',
-            'UMzip' => '90036',
+            'UMstreet' => $lC_ShoppingCart->getBillingAddress('street_address'),
+            'UMzip' => $lC_ShoppingCart->getBillingAddress('postcode'),
             'UMdescription' => 'Online Order',
             'UMcomments' => '',
             'UMip' => lc_get_ip_address(),            
@@ -192,15 +184,13 @@ class lC_Payment_usaepay_cc extends lC_Payment {
             'UMshipzip' => $lC_ShoppingCart->getShippingAddress('postcode'),
             'UMshipcountry' => $lC_ShoppingCart->getShippingAddress('country_iso_code_2'),
             'UMshipphone' => $lC_ShoppingCart->getShippingAddress('telephone_number') ,
-            'UMsoftware' => 'USAePay PHP API v1.6.13',
-            'x_show_form' => 'PAYMENT_FORM',
-            'x_relay_response' => 'TRUE',
-            'x_relay_url' => lc_href_link(FILENAME_IREDIRECT, '', 'NONSSL', true, true, true),
-            'x_header_html_payment_form' => $this->customCss()            
-          );
+            'UMsoftware' => 'Loaded Commerce v' . utility::getVersion(),
+            'UMredir' => lc_href_link(FILENAME_IREDIRECT, '', 'NONSSL', true, true, true)
+          );  
 
-
-
+    if (defined('ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SERVER') && ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SERVER == 'Test') {
+      $data['UMtestmode'] = '1';
+    }
     
     foreach ($data as $data_key => $data_value) {
       $process_button_string .= lc_draw_hidden_field($data_key, $data_value) . "\n";
@@ -212,9 +202,9 @@ class lC_Payment_usaepay_cc extends lC_Payment {
 
     $i = 0;
     foreach ($lC_ShoppingCart->getProducts() as $product) {
-      $process_button_string .= lc_draw_hidden_field('UMline'.$i.'name', $product['name']) . "\n";
-      $process_button_string .= lc_draw_hidden_field('UMline'.$i.'cost', $product['price']) . "\n";
-      $process_button_string .= lc_draw_hidden_field('UMline'.$i.'qty', $product['quantity']) . "\n";
+      $process_button_string .= lc_draw_hidden_field('UMline' . $i . 'name', $product['name']) . "\n";
+      $process_button_string .= lc_draw_hidden_field('UMline' . $i . 'cost', $product['price']) . "\n";
+      $process_button_string .= lc_draw_hidden_field('UMline' . $i . 'qty', $product['quantity']) . "\n";
       $i++;
     }    
 
@@ -255,7 +245,7 @@ class lC_Payment_usaepay_cc extends lC_Payment {
     if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
   }
 
-  private function get_Currency_Numeric_Code($countries_iso_code_3 = 'USD') {
+  private function _getCurrencyNumericCode($countries_iso_code_3 = 'USD') {
     $currency_numeric_code =  array(
       'AFA' => '971',
       'AWG' => '533',

@@ -3,7 +3,7 @@
   <definitions>
     <definition>
       <key>addon_payment_usaepay_title</key>
-      <value><![CDATA[USAePay Payments Payments]]></value>
+      <value><![CDATA[USAePay Payments]]></value>
       <group>checkout</group>
     </definition>
     <definition>
@@ -13,17 +13,17 @@
     </definition>  
     <definition>
       <key>payment_usaepay_title</key>
-      <value><![CDATA[USAePay Payments Payments]]></value>
+      <value><![CDATA[USAePay Payments]]></value>
       <group>checkout</group>
     </definition>
     <definition>
       <key>payment_usaepay_method_title</key>
-      <value><![CDATA[USAePay Credit Card]]></value>
+      <value><![CDATA[Credit Card]]></value>
       <group>checkout</group>
     </definition> 
     <definition>
       <key>payment_usaepay_method_blurb</key>
-      <value><![CDATA[powered by <img src="addons/USAePay_Payments/images/USAePay-small.png" style="vertical-align:middle">]]></value>
+      <value><![CDATA[powered by <img src="addons/USAePay_Payments/images/USAePay-small.png" style="vertical-align:middle;">]]></value>
       <group>checkout</group>
     </definition>       
   </definitions>
