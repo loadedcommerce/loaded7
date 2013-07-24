@@ -21,8 +21,7 @@
     doors = topDoor.add(botDoor),
 
     // Switch
-    // formSwitch = $('<div id="form-switch"><span class="button-group"></span></div>').appendTo(formBlock).children(),
-    formSwitch = '',
+    formSwitch = $('<div id="form-switch"><span class="button-group"></span></div>').appendTo(formBlock).children(),
 
     // Current form
     hash = (document.location.hash.length > 1) ? document.location.hash.substring(1) : false,
@@ -40,6 +39,8 @@
     maxHeight = false,
     blocHeight;
 
+    /******* EDIT THIS SECTION *******/
+
     /*
     * Login
     * These functions will handle the login process through AJAX
@@ -48,18 +49,14 @@
       // Values
       var login = $.trim($('#user_name').val()),
       pass = $.trim($('#user_password').val());
-      
+
+      // Stop normal behavior
+      event.preventDefault();
+
       // Check inputs
       if (login.length === 0) {
         // Display message
-        displayError('Please fill in your email');
-        return false;
-      } else if (!/^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(login)) {
-        // Remove empty email message if displayed
-        formWrapper.clearMessages('Please fill in your email');
-
-        // Display message
-        displayError('Email is not valid');
+        displayError('Please fill in your login');
         return false;
       } else if (pass.length === 0) {
         // Remove empty login message if displayed
@@ -72,39 +69,57 @@
         // Remove previous messages
         formWrapper.clearMessages();
 
-        // Show progress 
-        displayLoading('<?php echo $lC_Language->get('ms_authenticating'); ?>');    
+        // Show progress
+        //displayLoading('Checking credentials...');
 
-        // Stop normal behavior
-        $("#form-login").bind("submit", preventDefault(event));
+        /*
+        * This is where you may do your AJAX call, for instance:
+        * $.ajax(url, {
+        *     data: {
+        *       login:  login,
+        *       pass:  pass
+        *     },
+        *     success: function(data)
+        *     {
+        *       if (data.logged)
+        *       {
+        *         document.location.href = 'index.html';
+        *       }
+        *       else
+        *       {
+        *         formWrapper.clearMessages();
+        *         displayError('Invalid user/password, please try again');
+        *       }
+        *     },
+        *     error: function()
+        *     {
+        *       formWrapper.clearMessages();
+        *       displayError('Error while contacting server, please try again');
+        *     }
+        * });
+        */
 
-        var nvp = $("#form-login").serialize();
-        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateLogin&NVP'); ?>'; 
-        $.getJSON(jsonLink.replace('NVP', nvp),        
-          function (data) {  
-            if (data.rpcStatus == 1) { 
-              $("#form-login").unbind("submit", preventDefault(event)).submit();
-              return true;                  
-            } 
-            displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
-            return false;
-          }              
-        );
+        // Simulate server-side check
+        setTimeout(function() {
+          document.location.href = './'
+        }, 2000);
       }
-    });   
+    });
 
     /*
     * Password recovery
     */
     $('#form-password').submit(function(event) {
       // Values
-      var mail = $.trim($('#mail').val());
+      var pass_email = $.trim($('#password_email').val());
+      // Stop normal behavior
+      event.preventDefault();
 
       // Check inputs
-      if (mail.length === 0) {
+      if (pass_email.length === 0) {
         // Display message
         displayError('Please fill in your email');
-      } else if (!/^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(mail)) {
+      } else if (!/^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(pass_email)) {
         // Remove empty email message if displayed
         formWrapper.clearMessages('Please fill in your email');
 
@@ -116,10 +131,7 @@
         formWrapper.clearMessages();
 
         // Show progress
-        displayLoading('Sending credentials...');
-
-        // Stop normal behavior
-        event.preventDefault();
+        //displayLoading('Sending credentials...');
 
         /*
         * This is where you may do your AJAX call
@@ -128,58 +140,40 @@
         // Simulate server-side check
         setTimeout(function() {
           document.location.href = './'
-          }, 2000);
+        }, 2000);
       }
     });
 
     /*
     * Register
     */
-    $('#form-register').submit(function(event) {
+    $('#form-activate').submit(function(event) {
       // Values
-      var name = $.trim($('#name-register').val()),
-      mail = $.trim($('#mail-register').val()),
-      login = $.trim($('#login-register').val()),
-      pass = $.trim($('#pass-register').val());
+      var serial = $.trim($('#serial').val());
 
       // Remove previous messages
       formWrapper.clearMessages();
 
+      // Stop normal behavior
+      event.preventDefault();
+
       // Check inputs
-      if (name.length === 0) {
+      if (serial.length === 0) {
         // Display message
-        displayError('Please fill in your name');
-        return false;
-      } else if (mail.length === 0) {
-        // Display message
-        displayError('Please fill in your email');
-        return false;
-      } else if (!/^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(mail)) {
-        // Display message
-        displayError('Email is not valid');
-        return false;
-      } else if (login.length === 0) {
-        // Display message
-        displayError('Please fill in your login');
-        return false;
-      } else if (pass.length === 0) {
-        // Display message
-        displayError('Please fill in your password');
+        displayError('Please enter your Pro Serial');
         return false;
       } else {
         // Show progress
-        displayLoading('Registering...');
-
-        // Stop normal behavior
-        event.preventDefault();
+        //displayLoading('Registering...');
 
         /*
         * This is where you may do your AJAX call
         */
+
         // Simulate server-side check
         setTimeout(function() {
           document.location.href = './'
-          }, 2000);
+        }, 2000);
       }
     });
 
@@ -205,11 +199,9 @@
       }
 
       // Button in the switch
-      /*          
       form.data('button', $('<a href="#'+this.id+'" class="button anthracite-gradient'+color+(active ? ' active' : '')+'">'+this.title+'</a>')
-      .appendTo(formSwitch)
-      .data('form', form));
-      */
+        .appendTo(formSwitch)
+        .data('form', form));
       // If active
       if (active) {
         // Store
@@ -246,122 +238,112 @@
     // Register and first call
     $(window).bind('normalized-resize', handleLoginResize);
     handleLoginResize();
-    /*
     // Switch behavior
     formSwitch.on('click', 'a', function(event) {
-    var link = $(this),
-    form = link.data('form'),
-    previousForm = currentForm;
+      var link = $(this),
+      form = link.data('form'),
+      previousForm = currentForm;
 
-    event.preventDefault();
-    if (link.hasClass('active')) {
-    return;
-    }
+      event.preventDefault();
+      if (link.hasClass('active')) {
+        return;
+      }
 
-    // Refresh forms sizes
-    forms.each(function(i) {
-    var form = $(this),
-    hidden = form.is(':hidden'),
-    height = form.show().outerHeight();
+      // Refresh forms sizes
+      forms.each(function(i) {
+        var form = $(this),
+        hidden = form.is(':hidden'),
+        height = form.show().outerHeight();
 
-    // Store size
-    form.data('height', height);
+        // Store size
+        form.data('height', height);
 
-    // If not active
-    if (hidden) {
-    // Hide for now
-    form.hide();
-    }
+        // If not active
+        if (hidden) {
+          // Hide for now
+          form.hide();
+        }
+      });
+
+      // Clear messages
+      formWrapper.clearMessages();
+
+      // If an animation is already running
+      if (animInt) {
+        clearTimeout(animInt);
+      }
+      formViewport.stop(true);
+
+      // Update active button
+      currentForm.data('button').removeClass('active');
+      link.addClass('active');
+
+      // Set as current
+      currentForm = form;
+
+      // if CSS transitions are available
+      if (doc.hasClass('csstransitions')) {
+        // Close doors - step 1
+        doors.removeClass('door-closed').addClass('door-down');
+        animInt = setTimeout(function() {
+          // Close doors, step 2
+          doors.addClass('door-closed');
+          animInt = setTimeout(function() {
+            // Hide previous form
+            previousForm.hide();
+
+            // Show target form
+            form.show();
+
+            // Center layout
+            centerForm(form, true);
+
+            // Height of viewport
+            formViewport.animate({
+              height: form.data('height')+'px'
+            }, function() {
+              // Open doors, step 1
+              doors.removeClass('door-closed');
+              animInt = setTimeout(function() {
+                // Open doors - step 2
+                doors.removeClass('door-down');
+              }, 300);
+            });
+          }, 300);
+        }, 300);
+      } else {
+        // Close doors
+        topDoor.animate({ top: '0%' }, 300);
+        botDoor.animate({ top: '50%' }, 300, function() {
+          // Hide previous form
+          previousForm.hide();
+
+          // Show target form
+          form.show();
+
+          // Center layout
+          centerForm(form, true);
+
+          // Height of viewport
+          formViewport.animate({
+            height: form.data('height')+'px'
+          }, {
+            /* IE7 is a bit buggy, we must force redraw */
+            step: function(now, fx) {
+              topDoor.hide().show();
+              botDoor.hide().show();
+              formSwitch.hide().show();
+            },             
+            complete: function() {
+              // Open doors
+              topDoor.animate({ top: '-50%' }, 300);
+              botDoor.animate({ top: '105%' }, 300);
+              formSwitch.hide().show();
+            }
+          });
+        });
+      }
     });
-
-    // Clear messages
-    formWrapper.clearMessages();
-
-    // If an animation is already running
-    if (animInt) {
-    clearTimeout(animInt);
-    }
-    formViewport.stop(true);
-
-    // Update active button
-    currentForm.data('button').removeClass('active');
-    link.addClass('active');
-
-    // Set as current
-    currentForm = form;
-
-    // if CSS transitions are available
-    if (doc.hasClass('csstransitions')) {
-    // Close doors - step 1
-    doors.removeClass('door-closed').addClass('door-down');
-    animInt = setTimeout(function() {
-    // Close doors, step 2
-    doors.addClass('door-closed');
-    animInt = setTimeout(function() {
-    // Hide previous form
-    previousForm.hide();
-
-    // Show target form
-    form.show();
-
-    // Center layout
-    centerForm(form, true);
-
-    // Height of viewport
-    formViewport.animate({
-    height: form.data('height')+'px'
-    }, function()
-    {
-    // Open doors, step 1
-    doors.removeClass('door-closed');
-    animInt = setTimeout(function()
-    {
-    // Open doors - step 2
-    doors.removeClass('door-down');
-    }, 300);
-    });
-    }, 300);
-    }, 300);
-    } else {
-    // Close doors
-    topDoor.animate({ top: '0%' }, 300);
-    botDoor.animate({ top: '50%' }, 300, function()
-    {
-    // Hide previous form
-    previousForm.hide();
-
-    // Show target form
-    form.show();
-
-    // Center layout
-    centerForm(form, true);
-
-    // Height of viewport
-    formViewport.animate({
-    height: form.data('height')+'px'
-    }, {
-
-    /* IE7 is a bit buggy, we must force redraw */
-    /*
-    step: function(now, fx)
-    {
-    topDoor.hide().show();
-    botDoor.hide().show();
-    formSwitch.hide().show();
-    },
-
-    complete: function()
-    {
-    // Open doors
-    topDoor.animate({ top: '-50%' }, 300);
-    botDoor.animate({ top: '105%' }, 300);
-    formSwitch.hide().show();
-    }
-    });
-    });
-    }
-    });
-    */
     // Initial vertical adjust
     centerForm(currentForm, false);
 
