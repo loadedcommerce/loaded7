@@ -37,7 +37,7 @@ if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
   echo "#payformIframe { min-width:500px; margin-left:14px; min-height:580px; }";
 } else if ($lC_ShoppingCart->getBillingMethod('id') == 'cresecure') {
   echo "#payformIframe { min-width:480px; min-height:300px; }";
-} else if ($lC_ShoppingCart->getBillingMethod('id') == 'authorizenet_cc') {
+} else if ($lC_ShoppingCart->getBillingMethod('id') == 'authorizenet_cc' || $lC_ShoppingCart->getBillingMethod('id') == 'usaepay_cc' ) {
   $fHeight = '400px';
   $fScroll = 'auto';
   echo "#checkout_shipping_col1 { width:28% !important; }";
@@ -101,7 +101,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
 }
 </style>
 <div id="paymentTemplateContainer" class="full_page">
-  <h5><?php echo $lC_Language->get('text_checkout'); ?>wwwww</h5>
+  <h5><?php echo $lC_Language->get('text_checkout'); ?></h5>
   <div class="checkout_steps">
     <ol id="checkoutSteps">
       <li class="first-checkout-li"> <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>">
