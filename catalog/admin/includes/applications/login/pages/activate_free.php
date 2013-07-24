@@ -1,6 +1,6 @@
 <?php
   /*
-  $Id: change_success.php v1.0 2013-01-01 datazen $
+  $Id: activate_free.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -19,7 +19,7 @@
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
-        <form method="post" action="" id="form-submit-password" class="input-wrapper blue-gradient glossy" title="Forgot Password?">
+        <form method="post" action="" id="form-activate-free" class="input-wrapper blue-gradient glossy" title="Activate Free Features">
           <h3 class="align-center">Change Password</h3>
           <p class="mid-margin-bottom small-margin-left">For login: sal@loaded7.com</p>
           <ul class="inputs black-input medium">
