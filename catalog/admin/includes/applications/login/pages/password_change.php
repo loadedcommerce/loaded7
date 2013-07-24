@@ -1,6 +1,6 @@
 <?php
   /*
-  $Id: reset_password.php v1.0 2013-01-01 datazen $
+  $Id: password_change.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -19,7 +19,7 @@
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
-        <form method="post" action="" id="form-reset-password" class="input-wrapper blue-gradient glossy" title="Reset Password">
+        <form method="post" action="" id="form-password-change" class="input-wrapper blue-gradient glossy">
           <h3 class="align-center">Change Password</h3>
           <p class="mid-margin-bottom small-margin-left">For login: sal@loaded7.com</p>
           <ul class="inputs black-input medium">
@@ -36,3 +36,37 @@
   </div>
   <p class="anthracite" align="center" style="line-height:1.5;">Copyright &copy; <?php echo @date("Y"); ?> <a class="anthracite" href="http://www.loaded7.com">Loaded Commerce</a><br /><?php echo $lC_Language->get('text_version') . ' ' . utility::getVersion(); ?></p>
 </div>
+<script>
+  $(document).ready(function() {
+    var doc = $('html').addClass('js-login'),
+    container = $('#container'),
+    formWrapper = $('#form-wrapper'),
+    formBlock = $('#form-block'),
+    formViewport = $('#form-viewport'),
+    forms = formViewport.children('form'),
+
+    // Doors
+    topDoor = $('<div id="top-door" class="form-door"><div></div></div>').appendTo(formViewport),
+    botDoor = $('<div id="bot-door" class="form-door"><div></div></div>').appendTo(formViewport),
+    doors = topDoor.add(botDoor),
+
+    // Switch
+    formSwitch = '',
+
+    // Current form
+    hash = (document.location.hash.length > 1) ? document.location.hash.substring(1) : false,
+
+    // If layout is centered
+    centered,
+
+    // Store current form
+    currentForm,
+
+    // Animation interval
+    animInt,
+
+    // Work vars
+    maxHeight = false,
+    blocHeight;
+  });
+</script>

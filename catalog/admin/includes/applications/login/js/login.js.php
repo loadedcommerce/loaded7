@@ -8,36 +8,8 @@
     // Elements
     $('body').removeClass('clearfix with-menu with-shortcuts');
     $('html').addClass('linen');
-    var doc = $('html').addClass('js-login'),
-    container = $('#container'),
-    formWrapper = $('#form-wrapper'),
-    formBlock = $('#form-block'),
-    formViewport = $('#form-viewport'),
-    forms = formViewport.children('form'),
 
-    // Doors
-    topDoor = $('<div id="top-door" class="form-door"><div></div></div>').appendTo(formViewport),
-    botDoor = $('<div id="bot-door" class="form-door"><div></div></div>').appendTo(formViewport),
-    doors = topDoor.add(botDoor),
-
-    // Switch
-    formSwitch = $('<div id="form-switch"><span class="button-group"></span></div>').appendTo(formBlock).children(),
-
-    // Current form
-    hash = (document.location.hash.length > 1) ? document.location.hash.substring(1) : false,
-
-    // If layout is centered
-    centered,
-
-    // Store current form
-    currentForm,
-
-    // Animation interval
-    animInt,
-
-    // Work vars
-    maxHeight = false,
-    blocHeight;
+    // var doc moved to each file for formSwitch control per view
 
     /******* EDIT THIS SECTION *******/
 

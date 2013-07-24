@@ -19,7 +19,7 @@ class lC_Application_Login_Actions_activate_pro extends lC_Application_Login {
 
     parent::__construct();
     
-    // pro code here
+    // activate_pro code here
   }
 }
 ?>

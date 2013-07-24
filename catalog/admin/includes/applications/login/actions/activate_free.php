@@ -19,7 +19,7 @@ class lC_Application_Login_Actions_activate_free extends lC_Application_Login {
 
     parent::__construct();
 
-    // free code here
+    // activate_free code here
   }
 }
 ?>
