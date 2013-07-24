@@ -14,12 +14,17 @@
   @function The lC_Application_Login_Actions_activate_free class controls the login action
 */
 class lC_Application_Login_Actions_activate_free extends lC_Application_Login {
+    
+  /*
+  * Protected variables
+  */
+  protected $_page_contents = 'activate_free.php'; 
+  
   public function __construct() {
     global $lC_Database, $lC_Language, $lC_MessageStack;
 
     parent::__construct();
-
-    // activate_free code here
   }
+  
 }
 ?>

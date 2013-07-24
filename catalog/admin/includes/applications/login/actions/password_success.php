@@ -14,12 +14,17 @@
   @function The lC_Application_Login_Actions_password_success class controls the login action
 */
 class lC_Application_Login_Actions_password_success extends lC_Application_Login {
+    
+  /*
+  * Protected variables
+  */
+  protected $_page_contents = 'password_success.php'; 
+  
   public function __construct() {
     global $lC_Database, $lC_Language, $lC_MessageStack;
 
     parent::__construct();
-    
-    // password_success code here
   }
+  
 }
 ?>

@@ -19,7 +19,7 @@ class lC_Application_Login extends lC_Template_Admin {
   */
   protected $_module = 'login',
             $_page_title,
-            $_page_contents = 'reset_password.php';
+            $_page_contents = 'main.php';
  /*
   * Class constructor
   */
