@@ -300,9 +300,9 @@ ul.breadcrumb li img { }
 #totals-table td strong { font-weight:bold; }
 #totals-table .total { font-size:16px; font-weight:bold; }
 
-.checkout_tax{ margin-top:25px; font-size:14px;}
-.checkout_tax .shipping_tax{ width:620px; border:solid 1px #e0e0e0; border-width:2px 0px; float:left; padding:12px 0px 10px;}
-.checkout_tax h4{ color:#544f4b; font-size:14px; font-weight:bold; padding-bottom:10px; font-family:Arial, Helvetica, sans-serif;}
+.checkout_tax{ margin-top:20px; font-size:14px;}
+.checkout_tax .shipping_tax{ width:45%; border:solid 1px #e0e0e0; border-width:2px 0px; float:left; padding:0 10px 10px; min-height:140px; }
+.checkout_tax h4{ color:#544f4b; font-size:14px; font-weight:bold; padding-top:10px; padding-bottom:10px; font-family:Arial, Helvetica, sans-serif; }
 .checkout_tax p{ font-size:14px; padding-bottom:15px;}
 .checkout_tax .shipping_tax label{ display:inline-block; width:100px; float:left; color:#544f4b; padding:5px 0px; margin-bottom:20px; clear:right;}
 .checkout_tax .shipping_tax input[type="text"]{ border:1px solid #D7D7D7; padding:4px; width:175px;}
@@ -311,7 +311,7 @@ ul.breadcrumb li img { }
 .checkout_tax .shipping_tax .selector select{ width:213px;}
 .checkout_tax .shipping_tax .brown_btn{ float:right; margin-top:5px;}
 
-.checkout_discount{ float:right; width:305px;border:solid 1px #e0e0e0; border-width:2px 0px; padding:14px 16px 16px; background:url(../images/cart_coupon.png) no-repeat right bottom #f9f8f6;}
+.checkout_discount{ float:right; width:45%; border:solid 1px #e0e0e0; border-width:2px 0px; padding:0 10px 10px; background:url(../images/cart_coupon.png) no-repeat right bottom #f9f8f6; min-height:140px; margin-right:-10px; }
 .checkout_discount input[type="text"]{ border:1px solid #D7D7D7; padding:4px; width:205px;}
 .checkout_discount .brown_btn{ float:left; margin-top:22px;}
 

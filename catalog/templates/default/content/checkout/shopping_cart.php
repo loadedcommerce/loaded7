@@ -111,8 +111,8 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
       <button type="button" onclick="location='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="checkout"><?php echo $lC_Language->get('button_checkout'); ?></button>
       <span class="buttonRight padding-right-15"><button type="button" class="continue" onclick="$('#shopping_cart').submit();"><?php echo $lC_Language->get('button_update'); ?></button></span>
     </div>
-    <!--
     <div class="checkout_tax">
+      <!--
       <div class="shipping_tax">
         <h4>Estimate Shipping and Tax</h4>
         <p>Enter your destination to get a shipping estimate.</p>
@@ -125,14 +125,16 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
         <select><option>Vancouver</option></select>
         <button type="button" title="" class="brown_btn">Get a Quote</button>
       </div>
+      -->
       <div class="checkout_discount">
-        <h4>Discount codes</h4>
-        <p>Enter your coupon code if you have one.</p>
-        <input type="text">
-        <button type="button" title="" class="brown_btn">Apply Coupon</button>
+        <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
+        <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
+        <form name="coupon" id="coupon" action="">
+          <input type="text" name="" id="">
+        </form>
+        <button type="button" class="brown_btn" onclick=""><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
       </div>
     </div>
-     -->
     <?php
   } else {  
     ?>
