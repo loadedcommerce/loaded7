@@ -181,6 +181,7 @@ class lC_Payment_usaepay_cc extends lC_Payment {
             'UMshipcountry' => $lC_ShoppingCart->getShippingAddress('country_iso_code_2'),
             'UMshipphone' => $lC_ShoppingCart->getShippingAddress('telephone_number') ,
             'UMsoftware' => 'Loaded Commerce v' . utility::getVersion(),
+            'UMredir' => lc_href_link(FILENAME_IREDIRECT, '', 'NONSSL', true, true, true),
             'UMredirApproved' => lc_href_link(FILENAME_IREDIRECT, '', 'NONSSL', true, true, true),
             'UMredirDeclined' => lc_href_link(FILENAME_IREDIRECT, '', 'NONSSL', true, true, true)
           );  
@@ -212,15 +213,17 @@ class lC_Payment_usaepay_cc extends lC_Payment {
     global $lC_Database, $lC_MessageStack;
 
     $error = false;
-    $code = (isset($_POST['x_response_code']) && $_POST['x_response_code'] != '') ? preg_replace('/[^0-9]/', '', $_POST['x_response_code']) : NULL;
-    $msg = (isset($_POST['error']) && $_POST['error'] != NULL) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_POST['error']) : NULL;
-    $order_id = (isset($_POST['x_invoice_num']) && $_POST['x_invoice_num'] != NULL) ? preg_replace('/[^0-9]\:\|\[\]/', '', $_POST['x_invoice_num']) : 0;
+    $status = (isset($_POST['UMstatus']) && $_POST['UMstatus'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_POST['UMstatus']) : NULL;
+    $code = (isset($_POST['UMauthCode']) && $_POST['UMauthCode'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_POST['UMauthCode']) : NULL;
+    $msg = (isset($_POST['UMerror']) && $_POST['UMerror'] != NULL) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_POST['UMerror']) : NULL;
+    $order_id = (isset($_POST['UMinvoice']) && $_POST['UMinvoice'] != NULL) ? preg_replace('/[^0-9]\:\|\[\]/', '', $_POST['UMinvoice']) : 0;
 
-    if ($code == '1') { // success    
+    if ($status == 'Approved') { // success    
       lC_Order::process($order_id, $this->order_status);
     } else {
       $error = true;
-      $lC_MessageStack->add('checkout_payment', $code . ' - ' . $msg);
+      $error_code = (isset($_POST['UMerrorcode']) && $_POST['UMerrorcode'] != '') ? preg_replace('/[^0-9]/', '', $_POST['UMauthCode']) : NULL;      
+      $lC_MessageStack->add('checkout_payment', $error_code . ' - ' . $msg);
       lC_Order::remove($order_id);
     } 
     
