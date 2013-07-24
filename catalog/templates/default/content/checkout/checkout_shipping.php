@@ -167,8 +167,16 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
                   <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, '', 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
                   <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
                 </div>
+                <div class="checkout_discount checkout_discount_stream">
+                  <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
+                  <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
+                  <form name="coupon" id="coupon" action="">
+                    <input type="text" name="" id="">
+                  </form><br />
+                  <button type="button" class="brown_btn" onclick=""><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
+                </div>
+                <div style="clear:both;"></div> 
               </div>
-              <div style="clear:both;"></div>
             </div>
           </div>
         </li>

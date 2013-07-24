@@ -312,6 +312,8 @@ ul.breadcrumb li img { }
 .checkout_tax .shipping_tax .brown_btn{ float:right; margin-top:5px;}
 
 .checkout_discount{ float:right; width:45%; border:solid 1px #e0e0e0; border-width:2px 0px; padding:0 10px 10px; background:url(../images/cart_coupon.png) no-repeat right bottom #f9f8f6; min-height:140px; margin-right:-10px; }
+.checkout_discount_stream h4 { padding: 10px 0; }
+.checkout_discount_stream { margin: 15px 0 0; min-width: 95%; }
 .checkout_discount input[type="text"]{ border:1px solid #D7D7D7; padding:4px; width:205px;}
 .checkout_discount .brown_btn{ float:left; margin-top:22px;}
 
