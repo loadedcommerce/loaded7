@@ -24,8 +24,6 @@ class lC_Payment {
   public function lC_Payment($_module = '') {
     global $lC_Database, $lC_Language, $lC_Vqmod;
 
-    include_once($lC_Vqmod->modCheck(dirname(__FILE__) . '/credit_card.php'));
-
     $Qmodules = $lC_Database->query("select code, modules_group from :table_templates_boxes where modules_group LIKE '%payment%'");
     $Qmodules->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
  //   $Qmodules->setCache('modules-payment');

@@ -246,7 +246,7 @@ CREATE TABLE lc_customers (
   customers_default_address_id int(11) DEFAULT NULL,
   customers_telephone varchar(255) DEFAULT NULL,
   customers_fax varchar(255) DEFAULT NULL,
-  customers_password varchar(40) DEFAULT NULL,
+  customers_password varchar(128) DEFAULT NULL,
   customers_newsletter char(1) DEFAULT NULL,
   customers_status int(11) DEFAULT NULL,
   customers_ip_address varchar(15) DEFAULT NULL,
