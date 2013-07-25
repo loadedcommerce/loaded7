@@ -14,10 +14,10 @@
 class lC_Coupons {
   public $is_enabled = false;
 
-  private $_contents = array();
+  protected $_contents = array();
   
   // class constructor
-  public function lC_Coupons() {
+  public function __construct() {
     $this->is_enabled = (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED))) ? true : false;
     
     if ($this->is_enabled) {
@@ -36,14 +36,21 @@ class lC_Coupons {
          
     if (is_array($cInfo) && empty($cInfo) === false) {    
       if (lC_Coupons::isValid($cInfo)) {
-        $this->_contents[$code] = array('title' => $cInfo['name'],
-                                        'total' => $discount);        
+
+        $name = $cInfo['name'];
+        $discount = $cInfo['reward'];
+
+        $_SESSION['lC_Coupons_data']['contents'][$code] = array('title' => $name . ' (' . $code . ')',
+                                                                'total' => $discount);  
+        return 1;                                              
       } else {
         // coupon not valid
+        return -3
       }
     
     } else {
       // coupon not found
+      return -2
     }   
           
   }
