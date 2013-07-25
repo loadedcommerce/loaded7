@@ -19,7 +19,7 @@
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
-        <form id="form-password-change" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=password_change'); ?>" class="input-wrapper blue-gradient glossy" method="post">
+        <form id="form-password-change" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=password_success'); ?>" class="input-wrapper blue-gradient glossy" method="post">
           <h3 class="align-center"><?php echo $lC_Language->get('heading_change_password'); ?></h3>
           <p class="mid-margin-bottom small-margin-left"><?php echo $lC_Language->get('text_for_login'); ?>: email@here.com</p>
           <ul class="inputs black-input medium">
@@ -116,7 +116,7 @@
         $("#form-password-change").bind("submit", preventDefault(event));
 
         var nvp = $("#form-password-change").serialize();
-        alert('password change');
+        alert('change password');
         /////////////////////////////////////////////////////////////////////////////////////////////////////
         // update me if needed for password change specific needs
         /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,6 +132,9 @@
           }              
         );*/
         /////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        // temporary testing - go to password change success page
+        $("#form-password-change").unbind("submit", preventDefault(event)).submit();
       }
     });
     /******* END OF EDIT SECTION *******/

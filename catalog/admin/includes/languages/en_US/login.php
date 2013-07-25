@@ -11,6 +11,10 @@
 
 heading_title = Login
 heading_change_password = Change Password
+heading_lost_password = Password Email Sent
+heading_change_password = Change Password
+heading_pro_success = Product Registration
+heading_free_success = Product Registration
 
 button_activate_free = Activate Free Features
 button_activate_pro = Activate Pro Features
@@ -19,6 +23,8 @@ button_lost_password = Lost password
 button_register = Register
 button_submit = Submit
 button_submit_activate = Submit and Activate
+button_back_to_login = Back to Login
+button_enter_admin = Enter Admin
 
 placeholder_activation_email = Email:
 placeholder_username = Email:
@@ -51,8 +57,12 @@ text_confirm_password = Please confirm your password.
 text_enter_pro_serial = Please enter your Pro Serial.
 text_activate_free_features = Activate Free Features
 text_free_core_activation = Free Core Activation
+text_pro_registration_success = Pro Registration Success!
+text_free_core_activation_success = Free Core Activation Success!
 text_domain = Domain
+text_serial = Serial
 text_adult_content = Adult Content
+text_lost_password_instructions = We have sent an email with instructions on how to change your admin password. Please allow a few minutes for it to arrive. If you do not see it shortly please check your spam or junk folders.
 
 title_register = Register
 title_lost_password = Lost Password

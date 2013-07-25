@@ -27,7 +27,7 @@
           </ul>
           <button type="submit" class="button glossy green-gradient full-width" id="login"><?php echo $lC_Language->get('button_login'); ?></button>
         </form>
-        <form id="form-password" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=forgot_password'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_lost_password'); ?>?">
+        <form id="form-lost-password" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=lost_password'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_lost_password'); ?>?">
           <p class="message">
             <?php echo $lC_Language->get('text_send_new_password_instructions'); ?>
             <span class="block-arrow"><span></span></span>
@@ -37,7 +37,7 @@
           </ul>
           <button type="submit" class="button glossy green-gradient full-width" id="lost-password"><?php echo $lC_Language->get('button_lost_password'); ?></button>
         </form>
-        <form id="form-activate" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_pro'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
+        <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
           <h3 class="align-center">Product Registration</h3>
           <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>"><button type="button" class="button glossy green-gradient full-width" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button></a>
           <p class="align-center mid-margin-top"><?php echo $lC_Language->get('text_or'); ?></p>
@@ -149,9 +149,9 @@
     /*
     * Password recovery
     */
-    $('#form-password').submit(function(event) {
+    $('#form-lost-password').submit(function(event) {
       // Values
-      var pass_email = $.trim($('#password_email').val());
+      var email = $.trim($('#password_email').val());
       
       // Remove previous messages
       formWrapper.clearMessages();
@@ -160,10 +160,10 @@
       event.preventDefault();
 
       // Check inputs
-      if (pass_email.length === 0) {
+      if (email.length === 0) {
         // Display message
         displayError('<?php echo $lC_Language->get('text_enter_email'); ?>');
-      } else if (!/^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(pass_email)) {
+      } else if (!/^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(email)) {
         // Remove empty email message if displayed
         formWrapper.clearMessages('<?php echo $lC_Language->get('text_enter_email'); ?>');
 
@@ -178,16 +178,16 @@
         displayLoading('<?php echo $lC_Language->get('ms_authenticating'); ?>');
 
         // Stop normal behavior
-        $("#form-password").bind("submit", preventDefault(event));
+        $("#form-lost-password").bind("submit", preventDefault(event));
 
-        var nvp = $("#form-password").serialize();
-        alert('send email');
+        var nvp = $("#form-lost-password").serialize();
+        alert('send lost password email');
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /*var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=sendEmail&NVP'); ?>'; 
+        /*var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=lostPassword&NVP'); ?>'; 
         $.getJSON(jsonLink.replace('NVP', nvp),        
           function (data) {  
             if (data.rpcStatus == 1) { 
-              $("#form-password").unbind("submit", preventDefault(event)).submit();
+              $("#form-lost-password").unbind("submit", preventDefault(event)).submit();
               return true;                  
             } 
             //displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
@@ -195,13 +195,16 @@
           }              
         );*/
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        // temporary testing - go to lost password notification/instruction page
+        $("#form-lost-password").unbind("submit", preventDefault(event)).submit();
       }
     });
 
     /*
     * Register
     */
-    $('#form-activate').submit(function(event) {
+    $('#form-activate-pro').submit(function(event) {
       // Values
       var serial = $.trim($('#serial').val());
 
@@ -224,17 +227,17 @@
         displayLoading('<?php echo $lC_Language->get('ms_authenticating'); ?>');
 
         // Stop normal behavior
-        $("#form-activate").bind("submit", preventDefault(event));
+        $("#form-activate-pro").bind("submit", preventDefault(event));
 
-        var nvp = $("#form-activate").serialize();
-        alert('activate pro');
+        var nvp = $("#form-activate-pro").serialize();
+        alert('activate pro serial');
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // here we call the API via rpc and validate the serial (I think?)
         /*var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=activatePro&NVP'); ?>'; 
         $.getJSON(jsonLink.replace('NVP', nvp),        
           function (data) {  
             if (data.rpcStatus == 1) { 
-              $("#form-password").unbind("submit", preventDefault(event)).submit();
+              $("#form-activate-pro").unbind("submit", preventDefault(event)).submit();
               return true;                  
             } 
             //displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
@@ -242,6 +245,9 @@
           }              
         );*/
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        // temporary testing - go to pro success page
+        $("#form-activate-pro").unbind("submit", preventDefault(event)).submit();
       }
     }); 
     /******* END OF EDIT SECTION *******//*

@@ -11,7 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 
-  @function The lC_Application_Login_Actions_password_change class controls the login action
+  @function The lC_Application_Login_Actions_password_change class
 */
 class lC_Application_Login_Actions_password_change extends lC_Application_Login {
     
@@ -22,7 +22,7 @@ class lC_Application_Login_Actions_password_change extends lC_Application_Login 
   
   public function __construct() {
     global $lC_Database, $lC_Language, $lC_MessageStack;
-
+    
     parent::__construct();
   }
   

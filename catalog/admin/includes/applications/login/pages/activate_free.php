@@ -19,7 +19,7 @@
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
-        <form id="form-activate-free" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>" class="input-wrapper blue-gradient glossy" method="post">
+        <form id="form-activate-free" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=free_success'); ?>" class="input-wrapper blue-gradient glossy" method="post">
           <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('text_activate_free_features'); ?></h3>
           <p class="align-center no-margin-top"><b><?php echo $lC_Language->get('text_free_core_activation'); ?></b></p>
           <p class="message"><?php echo $lC_Language->get('text_domain'); ?>: thisdomain.ext</p>
@@ -113,6 +113,9 @@
           }              
         );*/
         /////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        // temporary testing - go to free success page
+        $("#form-activate-free").unbind("submit", preventDefault(event)).submit();
       }
     });
     

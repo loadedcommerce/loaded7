@@ -1,6 +1,6 @@
 <?php
   /*
-  $Id: password_success.php v1.0 2013-01-01 datazen $
+  $Id: lost_password.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -19,13 +19,10 @@
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
-        <form id="form-password-success" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>" class="input-wrapper blue-gradient glossy" method="post">
-          <h3 class="align-center"><?php echo $lC_Language->get('text_password_success'); ?></h3>
-          <p class="message margin-bottom"><?php echo $lC_Language->get('text_success_message_1'); ?></p>
-          <p class="message large-margin-bottom"><?php echo $lC_Language->get('text_success_message_2'); ?></p>
-          <p class="align-center mid-margin-bottom">
-            <button type="submit" class="button glossy full-width green-gradient" id="submit-password"><?php echo $lC_Language->get('button_login'); ?></button>
-          </p>
+        <form id="form-lost-password" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>" class="input-wrapper blue-gradient glossy" method="post">
+          <h3 class="align-center"><?php echo $lC_Language->get('heading_lost_password'); ?></h3>
+          <p class="message no-margin-top"><?php echo $lC_Language->get('text_lost_password_instructions'); ?></p>
+          <p class=" align-center mid-margin-bottom"><button type="submit" class="button glossy green-gradient full-width"><?php echo $lC_Language->get('button_back_to_login'); ?></button></p>
         </form>
       </div>
     </div>

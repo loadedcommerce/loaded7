@@ -1,6 +1,6 @@
 <?php
   /*
-  $Id: password_success.php v1.0 2013-01-01 datazen $
+  $Id: pro_success.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -19,13 +19,12 @@
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
-        <form id="form-password-success" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>" class="input-wrapper blue-gradient glossy" method="post">
-          <h3 class="align-center"><?php echo $lC_Language->get('text_password_success'); ?></h3>
-          <p class="message margin-bottom"><?php echo $lC_Language->get('text_success_message_1'); ?></p>
-          <p class="message large-margin-bottom"><?php echo $lC_Language->get('text_success_message_2'); ?></p>
-          <p class="align-center mid-margin-bottom">
-            <button type="submit" class="button glossy full-width green-gradient" id="submit-password"><?php echo $lC_Language->get('button_login'); ?></button>
-          </p>
+        <form id="form-pro-success" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT); ?>" class="input-wrapper blue-gradient glossy" method="post">
+          <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_pro_success'); ?></h3>
+          <p class="align-center small-margin-left"><?php echo $lC_Language->get('text_pro_registration_success'); ?></p>
+          <p class="small-margin-left"><?php echo $lC_Language->get('text_domain'); ?>: thisdomain.ext</p>
+          <p class="small-margin-left"><?php echo $lC_Language->get('text_serial'); ?>: pro1222243</p>
+          <p class="align-center small-margin-bottom"><button type="submit" class="button glossy green-gradient full-width"><?php echo $lC_Language->get('button_enter_admin'); ?></button></p>
         </form>
       </div>
     </div>
@@ -44,6 +43,14 @@
     formBlock = $('#form-block'),
     formViewport = $('#form-viewport'),
     forms = formViewport.children('form'),
+
+    // Doors
+    topDoor = $('<div id="top-door" class="form-door"><div></div></div>').appendTo(formViewport),
+    botDoor = $('<div id="bot-door" class="form-door"><div></div></div>').appendTo(formViewport),
+    doors = topDoor.add(botDoor),
+
+    // Switch
+    formSwitch = '',
 
     // Current form
     hash = (document.location.hash.length > 1) ? document.location.hash.substring(1) : false,

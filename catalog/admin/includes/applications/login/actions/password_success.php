@@ -11,7 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 
-  @function The lC_Application_Login_Actions_password_success class controls the login action
+  @function The lC_Application_Login_Actions_password_success class
 */
 class lC_Application_Login_Actions_password_success extends lC_Application_Login {
     
