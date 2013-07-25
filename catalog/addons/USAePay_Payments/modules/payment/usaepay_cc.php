@@ -181,9 +181,7 @@ class lC_Payment_usaepay_cc extends lC_Payment {
             'UMshipcountry' => $lC_ShoppingCart->getShippingAddress('country_iso_code_2'),
             'UMshipphone' => $lC_ShoppingCart->getShippingAddress('telephone_number') ,
             'UMsoftware' => 'Loaded Commerce v' . utility::getVersion(),
-            'UMredir' => lc_href_link(FILENAME_IREDIRECT, '', 'NONSSL', true, true, true),
-            'UMredirApproved' => lc_href_link(FILENAME_IREDIRECT, '', 'NONSSL', true, true, true),
-            'UMredirDeclined' => lc_href_link(FILENAME_IREDIRECT, '', 'NONSSL', true, true, true)
+            'UMredirApproved' => lc_href_link(FILENAME_IREDIRECT, '', 'NONSSL', true, true, true)
           );  
 
     if (defined('ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SERVER') && ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SERVER == 'Test') {
