@@ -19,17 +19,15 @@
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
-        <form method="post" action="" id="form-activate-free" class="input-wrapper blue-gradient glossy" title="Activate Free Features">
-          <h3 class="align-center">Activate Free Features</h3>
-          <p class="mid-margin-bottom small-margin-left">For login: sal@loaded7.com</p>
-          <ul class="inputs black-input medium">
-            <i class="icon-tick icon-green align-right" style="position:absolute; top:85px; right:25px;"></i>
-            <li class="with-small-padding small-margin-left small-margin-right"><span class="icon-lock small-margin-right"></span><input type="password" name="password" id="password" value="" class="input-unstyled with-small-padding" placeholder="Enter password" autocomplete="off"></li>
-            <i class="icon-cross icon-red align-right" style="position:absolute; top:125px; right:25px;"></i>
-            <li class="with-small-padding small-margin-left small-margin-right"><span class="icon-lock small-margin-right"></span><input type="password" name="passwordconfirm" id="passwordconfirm" value="" class="input-unstyled" placeholder="Repeat password" autocomplete="off"></li>
+        <form id="form-activate-free" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>" class="input-wrapper blue-gradient glossy" method="post">
+          <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('text_activate_free_features'); ?></h3>
+          <p class="align-center no-margin-top"><b><?php echo $lC_Language->get('text_free_core_activation'); ?></b></p>
+          <p class="message"><?php echo $lC_Language->get('text_domain'); ?>: thisdomain.ext</p>
+          <ul class="inputs black-input large">
+            <li><span class="icon-mail mid-margin-right"></span><input type="email" name="activation_email" id="activation_email" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_activation_email'); ?>" autocomplete="off"></li>
           </ul>
-          <p class="margin-bottom small-margin-left align-center">min chars 6, mixed case, 1 number</p>
-          <p class=" align-center mid-margin-bottom"><button type="submit" class="button glossy align-center" id="submit-password">Submit</button></p>
+          <p class="large-margin-top large-margin-bottom mid-margin-left"><span class="margin-top"><?php echo $lC_Language->get('text_adult_content'); ?>: </span><input type="checkbox" class="switch" data-text-on="YES" data-text-off="NO"></p>
+          <p class="align-center small-margin-bottom"><button type="submit" class="button glossy green-gradient full-width" id="submit-password"><?php echo $lC_Language->get('button_submit_activate'); ?></button></p>
         </form>
       </div>
     </div>
@@ -71,8 +69,7 @@
 
     // Work vars
     maxHeight = false,
-    blocHeight;
-    
+    blocHeight;    
     
     /******* EDIT THIS SECTION *******/
 
@@ -81,35 +78,42 @@
     * These functions will handle the login process through AJAX
     */
     $('#form-activate-free').submit(function(event) {
-      alert('ping');
       // Values
-      /*var login = $.trim($('#user_name').val()),
-      pass = $.trim($('#user_password').val());
+      var email = $.trim($('#activation_email').val());
 
       // Stop normal behavior
       event.preventDefault();
 
       // Check inputs
-      if (login.length === 0) {
+      if (email.length === 0) {
         // Display message
-        displayError('Please fill in your login');
-        return false;
-      } else if (pass.length === 0) {
-        // Remove empty login message if displayed
-        formWrapper.clearMessages('Please fill in your login');
-
-        // Display message
-        displayError('Please fill in your password');
+        displayError('<?php echo $lC_Language->get('text_enter_email'); ?>');
         return false;
       } else {
         // Remove previous messages
         formWrapper.clearMessages();
 
-        // Simulate server-side check
-        setTimeout(function() {
-          document.location.href = './'
-        }, 2000);
-      }*/
+        // Stop normal behavior
+        $("#form-activate-free").bind("submit", preventDefault(event));
+
+        var nvp = $("#form-activate-free").serialize();
+        alert('activate free');
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        // update me if needed for free activation needs
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /*var jsonLink = '<?php //echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=activateFree&NVP'); ?>'; 
+        $.getJSON(jsonLink.replace('NVP', nvp),        
+          function (data) {  
+            if (data.rpcStatus == 1) { 
+              $("#form-activate-free").unbind("submit", preventDefault(event)).submit();
+              return true;                  
+            } 
+            displayError('<?php //echo $lC_Language->get('ms_error_login_invalid'); ?>');   
+            return false;
+          }              
+        );*/
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+      }
     });
     
     /******* END OF EDIT SECTION *******/

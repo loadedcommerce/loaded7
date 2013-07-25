@@ -19,17 +19,13 @@
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
-        <form method="post" action="" id="form-password-success" class="input-wrapper blue-gradient glossy" title="Success!">
-          <h3 class="align-center">Success!</h3>
-          <p class="mid-margin-bottom small-margin-left">For login: sal@loaded7.com</p>
-          <ul class="inputs black-input medium">
-            <i class="icon-tick icon-green align-right" style="position:absolute; top:85px; right:25px;"></i>
-            <li class="with-small-padding small-margin-left small-margin-right"><span class="icon-lock small-margin-right"></span><input type="password" name="password" id="password" value="" class="input-unstyled with-small-padding" placeholder="Enter password" autocomplete="off"></li>
-            <i class="icon-cross icon-red align-right" style="position:absolute; top:125px; right:25px;"></i>
-            <li class="with-small-padding small-margin-left small-margin-right"><span class="icon-lock small-margin-right"></span><input type="password" name="passwordconfirm" id="passwordconfirm" value="" class="input-unstyled" placeholder="Repeat password" autocomplete="off"></li>
-          </ul>
-          <p class="margin-bottom small-margin-left align-center">min chars 6, mixed case, 1 number</p>
-          <p class=" align-center mid-margin-bottom"><button type="submit" class="button glossy align-center" id="submit-password">Submit</button></p>
+        <form id="form-password-success" class="input-wrapper blue-gradient glossy" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT); ?>">
+          <h3 class="align-center"><?php echo $lC_Language->get('text_password_success'); ?></h3>
+          <p class="message margin-bottom"><?php echo $lC_Language->get('text_success_message_1'); ?></p>
+          <p class="message large-margin-bottom"><?php echo $lC_Language->get('text_success_message_2'); ?></p>
+          <p class="align-center mid-margin-bottom">
+            <button type="submit" class="button glossy full-width green-gradient" id="submit-password"><?php echo $lC_Language->get('button_login'); ?></button>
+          </p>
         </form>
       </div>
     </div>
@@ -64,45 +60,6 @@
     // Work vars
     maxHeight = false,
     blocHeight;
-    
-    /******* EDIT THIS SECTION *******/
-
-    /*
-    * Change Password Success!
-    * These functions will handle the login process through AJAX
-    */
-    $('#form-password-success').submit(function(event) {
-      alert('ping');
-      // Values
-      /*var login = $.trim($('#user_name').val()),
-      pass = $.trim($('#user_password').val());
-
-      // Stop normal behavior
-      event.preventDefault();
-
-      // Check inputs
-      if (login.length === 0) {
-        // Display message
-        displayError('Please fill in your login');
-        return false;
-      } else if (pass.length === 0) {
-        // Remove empty login message if displayed
-        formWrapper.clearMessages('Please fill in your login');
-
-        // Display message
-        displayError('Please fill in your password');
-        return false;
-      } else {
-        // Remove previous messages
-        formWrapper.clearMessages();
-
-        // Simulate server-side check
-        setTimeout(function() {
-          document.location.href = './'
-        }, 2000);
-      }*/
-    });
-    /******* END OF EDIT SECTION *******/
     
     // Prepare forms
     forms.each(function(i) {

@@ -10,28 +10,49 @@
 #  @license    http://loadedcommerce.com/license.html
 
 heading_title = Login
+heading_change_password = Change Password
 
 button_activate_free = Activate Free Features
 button_activate_pro = Activate Pro Features
 button_login = Login
 button_lost_password = Lost password
 button_register = Register
+button_submit = Submit
+button_submit_activate = Submit and Activate
 
+placeholder_activation_email = Email:
 placeholder_username = Email:
 placeholder_password = Password:
 placeholder_password_email = Email:
 placeholder_pro_serial = Input Pro Serial Here
+placeholder_enter_password = Enter Password
+placeholder_confirm_password = Confirm Password
 
 introduction = Use a valid email and password to gain access to the administration console.
 
 modal_heading_admin_login = Administrator Login
 ms_authenticating = Authenticating...
+ms_updating_password = Updating password...
 ms_success_logged_out = Success: You have been successfully logged out of this system.
 ms_error_login_invalid = <strong>Authentication failed! Please try again.</strong>
 
 text_send_new_password_instructions = If you have lost your password, enter your e-mail below and you will receive reset instructions shortly:
 text_register_instructions = Please enter your Product Serial below:
 text_or = Or
+text_for_login = For Login
+text_password_instructions = min chars 6, mixed case, 1 number
+text_password_success = Success!
+text_success_message_1 = You have successfully reset your password.
+text_success_message_2 = Please login to access your admin.
+text_enter_email = Please enter your email.
+text_invalid_email = Please enter a valid email.
+text_enter_password = Please enter your password.
+text_confirm_password = Please confirm your password.
+text_enter_pro_serial = Please enter your Pro Serial.
+text_activate_free_features = Activate Free Features
+text_free_core_activation = Free Core Activation
+text_domain = Domain
+text_adult_content = Adult Content
 
 title_register = Register
 title_lost_password = Lost Password

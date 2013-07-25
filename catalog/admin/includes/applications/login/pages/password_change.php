@@ -19,17 +19,29 @@
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
-        <form method="post" action="" id="form-password-change" class="input-wrapper blue-gradient glossy">
-          <h3 class="align-center">Change Password</h3>
-          <p class="mid-margin-bottom small-margin-left">For login: sal@loaded7.com</p>
+        <form id="form-password-change" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=password_change'); ?>" class="input-wrapper blue-gradient glossy" method="post">
+          <h3 class="align-center"><?php echo $lC_Language->get('heading_change_password'); ?></h3>
+          <p class="mid-margin-bottom small-margin-left"><?php echo $lC_Language->get('text_for_login'); ?>: email@here.com</p>
           <ul class="inputs black-input medium">
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <!-- code these to be hidden on load, and turn to green check when password meets validation parameters -->
             <i class="icon-tick icon-green align-right" style="position:absolute; top:85px; right:25px;"></i>
-            <li class="with-small-padding small-margin-left small-margin-right"><span class="icon-lock small-margin-right"></span><input type="password" name="password" id="password" value="" class="input-unstyled with-small-padding" placeholder="Enter password" autocomplete="off"></li>
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <li class="with-small-padding small-margin-left small-margin-right">
+              <span class="icon-lock small-margin-right"></span>
+              <input type="password" name="password" id="password" value="" class="input-unstyled with-small-padding" placeholder="<?php echo $lC_Language->get('placeholder_enter_password'); ?>" autocomplete="off">
+            </li>
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <!-- code these to be hidden on load, and turn to green check when password meets validation parameters -->
             <i class="icon-cross icon-red align-right" style="position:absolute; top:125px; right:25px;"></i>
-            <li class="with-small-padding small-margin-left small-margin-right"><span class="icon-lock small-margin-right"></span><input type="password" name="passwordconfirm" id="passwordconfirm" value="" class="input-unstyled" placeholder="Repeat password" autocomplete="off"></li>
+            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <li class="with-small-padding small-margin-left small-margin-right">
+              <span class="icon-lock small-margin-right"></span>
+              <input type="password" name="passwordconfirm" id="passwordconfirm" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_confirm_password'); ?>" autocomplete="off">
+            </li>
           </ul>
-          <p class="margin-bottom small-margin-left align-center">min chars 6, mixed case, 1 number</p>
-          <p class=" align-center mid-margin-bottom"><button type="submit" class="button glossy align-center" id="submit-password">Submit</button></p>
+          <p class="margin-bottom small-margin-left align-center"><?php echo $lC_Language->get('text_password_instructions'); ?></p>
+          <p class=" align-center mid-margin-bottom"><button type="submit" class="button glossy green-gradient full-width" id="submit-password"><?php echo $lC_Language->get('button_submit'); ?></button></p>
         </form>
       </div>
     </div>
@@ -72,35 +84,55 @@
     * These functions will handle the login process through AJAX
     */
     $('#form-password-change').submit(function(event) {
-      alert('ping');
       // Values
-      /*var login = $.trim($('#user_name').val()),
-      pass = $.trim($('#user_password').val());
+      var pass = $.trim($('#password').val()),
+      passconfirm = $.trim($('#passwordconfirm').val());
 
       // Stop normal behavior
       event.preventDefault();
 
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
+      // need to determine if we need configuration settings to validate password formatting against.... //
+      // ie, minimum length, uppercase, sybols, numbers etc etc, none exist to my knowledge currently??? //
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
+      
       // Check inputs
-      if (login.length === 0) {
+      if (pass.length === 0) {
         // Display message
-        displayError('Please fill in your login');
+        displayError('<?php echo $lC_Language->get('text_enter_password'); ?>');
         return false;
-      } else if (pass.length === 0) {
+      } else if (passconfirm.length === 0) {
         // Remove empty login message if displayed
-        formWrapper.clearMessages('Please fill in your login');
+        formWrapper.clearMessages('<?php echo $lC_Language->get('text_enter_password'); ?>');
 
         // Display message
-        displayError('Please fill in your password');
+        displayError('<?php echo $lC_Language->get('text_confirm_password'); ?>');
         return false;
       } else {
         // Remove previous messages
         formWrapper.clearMessages();
 
-        // Simulate server-side check
-        setTimeout(function() {
-          document.location.href = './'
-        }, 2000);
-      }*/
+        // Stop normal behavior
+        $("#form-password-change").bind("submit", preventDefault(event));
+
+        var nvp = $("#form-password-change").serialize();
+        alert('password change');
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        // update me if needed for password change specific needs
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /*var jsonLink = '<?php //echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=passwordChange&NVP'); ?>'; 
+        $.getJSON(jsonLink.replace('NVP', nvp),        
+          function (data) {  
+            if (data.rpcStatus == 1) { 
+              $("#form-password-change").unbind("submit", preventDefault(event)).submit();
+              return true;                  
+            } 
+            displayError('<?php //echo $lC_Language->get('ms_error_login_invalid'); ?>');   
+            return false;
+          }              
+        );*/
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+      }
     });
     /******* END OF EDIT SECTION *******/
     

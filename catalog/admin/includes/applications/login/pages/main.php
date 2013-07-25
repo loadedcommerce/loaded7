@@ -19,18 +19,14 @@
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
-       
         <form id="form-login" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=process'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('heading_title'); ?>" accept-charset="utf-8">
           <ul class="inputs black-input large">
             <!-- The autocomplete="off" attributes is the only way to prevent webkit browsers from filling the inputs with yellow -->
             <li><span class="icon-user mid-margin-right"></span><input type="text" onfocus="$('#form-wrapper').clearMessages();" name="user_name" id="user_name" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_username'); ?>" autocomplete="on"></li>
             <li><span class="icon-lock mid-margin-right"></span><input type="password" onfocus="$('#form-wrapper').clearMessages();" name="user_password" id="user_password" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password'); ?>" autocomplete="on"></li>
           </ul>
-          <p class="button-height align-center">
-            <button type="submit" class="button glossy" id="login"><?php echo $lC_Language->get('button_login'); ?></button><br />
-          </p>
-        </form> 
-        
+          <button type="submit" class="button glossy green-gradient full-width" id="login"><?php echo $lC_Language->get('button_login'); ?></button>
+        </form>
         <form id="form-password" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=forgot_password'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_lost_password'); ?>?">
           <p class="message">
             <?php echo $lC_Language->get('text_send_new_password_instructions'); ?>
@@ -41,17 +37,15 @@
           </ul>
           <button type="submit" class="button glossy green-gradient full-width" id="lost-password"><?php echo $lC_Language->get('button_lost_password'); ?></button>
         </form>
-        
         <form id="form-activate" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_pro'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
           <h3 class="align-center">Product Registration</h3>
-          <button type="button" class="button glossy green-gradient full-width" id="activate-free" onclick="javascript:alert('You should try Pro you WUSS!');"><?php echo $lC_Language->get('button_activate_free'); ?></button>
+          <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>"><button type="button" class="button glossy green-gradient full-width" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button></a>
           <p class="align-center mid-margin-top"><?php echo $lC_Language->get('text_or'); ?></p>
           <ul class="inputs black-input large">
             <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="serial" id="serial" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
           </ul>
           <button type="submit" class="button glossy red-gradient full-width" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button>
         </form>
-        
       </div>
     </div>
   </div>
@@ -109,59 +103,46 @@
       var login = $.trim($('#user_name').val()),
       pass = $.trim($('#user_password').val());
 
+      // Remove previous messages
+      formWrapper.clearMessages();
+
       // Stop normal behavior
       event.preventDefault();
 
       // Check inputs
       if (login.length === 0) {
         // Display message
-        displayError('Please fill in your login');
+        displayError('<?php echo $lC_Language->get('text_enter_email'); ?>');
         return false;
       } else if (pass.length === 0) {
         // Remove empty login message if displayed
-        formWrapper.clearMessages('Please fill in your login');
+        formWrapper.clearMessages('<?php echo $lC_Language->get('text_enter_email'); ?>');
 
         // Display message
-        displayError('Please fill in your password');
+        displayError('<?php echo $lC_Language->get('text_enter_password'); ?>');
         return false;
       } else {
         // Remove previous messages
         formWrapper.clearMessages();
 
-        // Show progress
-        //displayLoading('Checking credentials...');
+        // Show progress 
+        displayLoading('<?php echo $lC_Language->get('ms_authenticating'); ?>');    
 
-        /*
-        * This is where you may do your AJAX call, for instance:
-        * $.ajax(url, {
-        *     data: {
-        *       login:  login,
-        *       pass:  pass
-        *     },
-        *     success: function(data)
-        *     {
-        *       if (data.logged)
-        *       {
-        *         document.location.href = 'index.html';
-        *       }
-        *       else
-        *       {
-        *         formWrapper.clearMessages();
-        *         displayError('Invalid user/password, please try again');
-        *       }
-        *     },
-        *     error: function()
-        *     {
-        *       formWrapper.clearMessages();
-        *       displayError('Error while contacting server, please try again');
-        *     }
-        * });
-        */
+        // Stop normal behavior
+        $("#form-login").bind("submit", preventDefault(event));
 
-        // Simulate server-side check
-        setTimeout(function() {
-          document.location.href = './'
-        }, 2000);
+        var nvp = $("#form-login").serialize();
+        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateLogin&NVP'); ?>'; 
+        $.getJSON(jsonLink.replace('NVP', nvp),        
+          function (data) {  
+            if (data.rpcStatus == 1) { 
+              $("#form-login").unbind("submit", preventDefault(event)).submit();
+              return true;                  
+            } 
+            displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
+            return false;
+          }              
+        );
       }
     });
 
@@ -171,35 +152,49 @@
     $('#form-password').submit(function(event) {
       // Values
       var pass_email = $.trim($('#password_email').val());
+      
+      // Remove previous messages
+      formWrapper.clearMessages();
+
       // Stop normal behavior
       event.preventDefault();
 
       // Check inputs
       if (pass_email.length === 0) {
         // Display message
-        displayError('Please fill in your email');
+        displayError('<?php echo $lC_Language->get('text_enter_email'); ?>');
       } else if (!/^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(pass_email)) {
         // Remove empty email message if displayed
-        formWrapper.clearMessages('Please fill in your email');
+        formWrapper.clearMessages('<?php echo $lC_Language->get('text_enter_email'); ?>');
 
         // Display message
-        displayError('Email is not valid');
+        displayError('<?php echo $lC_Language->get('text_invalid_email'); ?>');
         return false;
       } else {
         // Remove previous messages
         formWrapper.clearMessages();
 
         // Show progress
-        //displayLoading('Sending credentials...');
+        displayLoading('<?php echo $lC_Language->get('ms_authenticating'); ?>');
 
-        /*
-        * This is where you may do your AJAX call
-        */
+        // Stop normal behavior
+        $("#form-password").bind("submit", preventDefault(event));
 
-        // Simulate server-side check
-        setTimeout(function() {
-          document.location.href = './'
-        }, 2000);
+        var nvp = $("#form-password").serialize();
+        alert('send email');
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /*var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=sendEmail&NVP'); ?>'; 
+        $.getJSON(jsonLink.replace('NVP', nvp),        
+          function (data) {  
+            if (data.rpcStatus == 1) { 
+              $("#form-password").unbind("submit", preventDefault(event)).submit();
+              return true;                  
+            } 
+            //displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
+            //return false;
+          }              
+        );*/
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       }
     });
 
@@ -219,20 +214,34 @@
       // Check inputs
       if (serial.length === 0) {
         // Display message
-        displayError('Please enter your Pro Serial');
+        displayError('<?php echo $lC_Language->get('text_enter_pro_serial'); ?>');
         return false;
       } else {
+        // Remove previous messages
+        formWrapper.clearMessages();
+        
         // Show progress
-        //displayLoading('Registering...');
+        displayLoading('<?php echo $lC_Language->get('ms_authenticating'); ?>');
 
-        /*
-        * This is where you may do your AJAX call
-        */
+        // Stop normal behavior
+        $("#form-activate").bind("submit", preventDefault(event));
 
-        // Simulate server-side check
-        setTimeout(function() {
-          document.location.href = './'
-        }, 2000);
+        var nvp = $("#form-activate").serialize();
+        alert('activate pro');
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // here we call the API via rpc and validate the serial (I think?)
+        /*var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=activatePro&NVP'); ?>'; 
+        $.getJSON(jsonLink.replace('NVP', nvp),        
+          function (data) {  
+            if (data.rpcStatus == 1) { 
+              $("#form-password").unbind("submit", preventDefault(event)).submit();
+              return true;                  
+            } 
+            //displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
+            //return false;
+          }              
+        );*/
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       }
     }); 
     /******* END OF EDIT SECTION *******//*
