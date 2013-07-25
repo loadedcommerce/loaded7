@@ -14,6 +14,7 @@
   @method The lC_Default_rpc class is for AJAX remote program control
 */
 require_once($lC_Vqmod->modCheck('templates/default/classes/default.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/coupons.php'));
 
 class lC_Default_rpc {
  /*
@@ -64,6 +65,34 @@ class lC_Default_rpc {
   public static function setMediaType() {
     $result = array();
     if (lC_Default::setMediaType($_GET['type'], $_GET['size'])) {
+      $result['rpcStatus'] = '1';
+    }
+    
+    echo json_encode($result);
+  }   
+ /*
+  * Add a coupon to the stack
+  *
+  * @access public
+  * @return json
+  */
+  public static function addCoupon() {
+    $result = array();
+    if (lC_Coupons::addEntry($_GET['code'])) {
+      $result['rpcStatus'] = '1';
+    }
+    
+    echo json_encode($result);
+  } 
+ /*
+  * Remove a coupon to the stack
+  *
+  * @access public
+  * @return json
+  */
+  public static function removeCoupon() {
+    $result = array();
+    if (lC_Coupons::removeEntry($_GET['code'])) {
       $result['rpcStatus'] = '1';
     }
     

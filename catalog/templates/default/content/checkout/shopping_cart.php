@@ -130,9 +130,9 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
         <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
         <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
         <form name="coupon" id="coupon" action="">
-          <input type="text" name="" id="">
+          <input type="text" name="coupon_code" id="coupon_code">
         </form>
-        <button type="button" class="brown_btn" onclick=""><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
+        <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
       </div>
     </div>
     <?php

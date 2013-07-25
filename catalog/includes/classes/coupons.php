@@ -18,15 +18,15 @@ class lC_Coupons {
   
   // class constructor
   public function lC_Coupons() {
-    $this->is_enabled = (defined('SERVICE_COUPONS_ENABLE_COUPONS') && SERVICE_COUPONS_ENABLE_COUPONS == '1') ? true : false;
+    $this->is_enabled = (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED))) ? true : false;
     
- /*   if ($this->is_enabled) {
+    if ($this->is_enabled) {
       if ( !isset($_SESSION['lC_Coupons_data']) ) {
         $_SESSION['lC_Coupons_data'] = array('contents' => array());
       }
 
       $this->_contents =& $_SESSION['lC_Coupons_data']['contents'];     
-    }*/
+    }
   }
   
   // public methods

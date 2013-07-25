@@ -200,7 +200,30 @@ function _setMediaType() {
   return mtype;
 }
 
-$(window).resize(function() {
-  _setMediaType();
-});
+function addCoupon() {
+  code = $('#coupon_code').val();
+  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=addCoupon&code=CODE', 'AUTO'); ?>';   
+  $.getJSON(jsonLink.replace('CODE', code).replace('&amp;', '&'),
+    function (data) {
+      if (data.rpcStatus != 1) {
+        alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
+
+    }
+  );  
+}
+
+function removeCoupon(code) {
+  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=removeCoupon&code=CODE', 'AUTO'); ?>';   
+  $.getJSON(jsonLink.replace('CODE', code).replace('&amp;', '&'),
+    function (data) {
+      if (data.rpcStatus != 1) {
+        alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
+
+    }
+  );  
+}
 </script>
