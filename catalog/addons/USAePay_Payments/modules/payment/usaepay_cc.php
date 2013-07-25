@@ -35,6 +35,7 @@ class lC_Payment_usaepay_cc extends lC_Payment {
 
       default:
         $this->iframe_relay_url = 'https://sandbox.usaepay.com/interface/epayform/';
+        //$this->form_action_url = 'https://sandbox.usaepay.com/interface/epayform/';
         break;
     }
 
@@ -142,7 +143,7 @@ class lC_Payment_usaepay_cc extends lC_Payment {
     $order_id = lC_Order::insert();
     $invoice = $order_id ;
 
-    $umcommand = (defined('ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRXTYPE') && ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRXTYPE == 'Capture') ? 'capture' : 'sale';
+    $umcommand = (defined('ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRXTYPE') && ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRXTYPE == 'Authorization-Only') ? 'authonly' : 'sale';    
     $pin = (defined('ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SOURCE_PIN') && ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SOURCE_PIN != '') ? ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SOURCE_PIN : NULL;
     $amount = $lC_ShoppingCart->getTotal();
     $hashseed = mktime();   // mktime returns the current time in seconds since epoch.
@@ -209,7 +210,6 @@ class lC_Payment_usaepay_cc extends lC_Payment {
 
   public function process() {
     global $lC_Database, $lC_MessageStack;
-
     $error = false;
     $status = (isset($_POST['UMstatus']) && $_POST['UMstatus'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_POST['UMstatus']) : NULL;
     $code = (isset($_POST['UMauthCode']) && $_POST['UMauthCode'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_POST['UMauthCode']) : NULL;
