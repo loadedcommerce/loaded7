@@ -32,17 +32,20 @@ class lC_Coupons {
   // public methods
   public function addEntry($code) {
     
-    $cData = $this->_get($code);
+    $cInfo = lC_Coupons::getData($code);
+         
+    if (is_array($cInfo) && empty($cInfo) === false) {    
+      if (lC_Coupons::isValid($cInfo)) {
+        $this->_contents[$code] = array('title' => $cInfo['name'],
+                                        'total' => $discount);        
+      } else {
+        // coupon not valid
+      }
     
-echo "<pre>cData ";
-print_r($cData);
-echo "</pre>";
-die();    
-
-    if (is_array($cData) && empty($cData) === false) {    
-      $this->_contents[$code] = array('title' => $cData['name'],
-                                      'total' => $discount);     
-    }
+    } else {
+      // coupon not found
+    }   
+          
   }
   
   public function removeEntry($code) {
@@ -63,18 +66,22 @@ die();
     return !empty($this->_contents);
   }  
   
-  private function _get($code) {
+  public static function getData($code, $status = 1) {
     global $lC_Database, $lC_Language;
 
-    $Qcoupons = $lC_Database->query('select * from :table_coupons c left join :table_coupons_description cd on (c.coupons_id = cd.coupons_id) where c.code = :code and cd.language_id = :language_id limit 1');
+    $Qcoupons = $lC_Database->query('select * from :table_coupons c left join :table_coupons_description cd on (c.coupons_id = cd.coupons_id) where c.code = :code and c.status = :status and cd.language_id = :language_id limit 1');
     $Qcoupons->bindTable(':table_coupons', TABLE_COUPONS);
     $Qcoupons->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
-    $Qcoupons->bindInt(':code', $code);
-    $Qcoupons->bindInt(':language_id', $lC_Language->getCode());
+    $Qcoupons->bindValue(':code', $code);
+    $Qcoupons->bindInt(':status', $status);
+    $Qcoupons->bindInt(':language_id', $lC_Language->getID());
     $Qcoupons->execute();   
     
     return (is_array($Qcoupons->toArray())) ? $Qcoupons->toArray() : false;     
-  }  
-
+  } 
+  
+  public static function isValid($cInfo) {
+    return true;
+  }
 }
 ?>
