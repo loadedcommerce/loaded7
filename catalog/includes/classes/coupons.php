@@ -20,13 +20,13 @@ class lC_Coupons {
   public function lC_Coupons() {
     $this->is_enabled = (defined('SERVICE_COUPONS_ENABLE_COUPONS') && SERVICE_COUPONS_ENABLE_COUPONS == '1') ? true : false;
     
-    if ($this->is_enabled) {
+ /*   if ($this->is_enabled) {
       if ( !isset($_SESSION['lC_Coupons_data']) ) {
         $_SESSION['lC_Coupons_data'] = array('contents' => array());
       }
 
       $this->_contents =& $_SESSION['lC_Coupons_data']['contents'];     
-    }
+    }*/
   }
   
   // public methods
@@ -73,7 +73,7 @@ die();
     $Qcoupons->bindInt(':language_id', $lC_Language->getCode());
     $Qcoupons->execute();   
     
-    return (is_array($Qcoupons->toArray()) ? $Qcoupons->toArray() : false;     
+    return (is_array($Qcoupons->toArray())) ? $Qcoupons->toArray() : false;     
   }  
 
 }

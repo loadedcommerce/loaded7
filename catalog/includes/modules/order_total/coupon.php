@@ -30,7 +30,7 @@ class lC_OrderTotal_coupon extends lC_OrderTotal {
     $this->_sort_order = (defined('MODULE_ORDER_TOTAL_COUPON_SORT_ORDER') ? MODULE_ORDER_TOTAL_COUPON_SORT_ORDER : null);
   }
 
-  function process() {
+  function process() {  
     global $lC_Coupons, $lC_Currencies;
 
     foreach ($lC_Coupons->getAll() as $code => $val) {
