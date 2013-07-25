@@ -184,32 +184,25 @@ CREATE TABLE lc_countries (
 DROP TABLE IF EXISTS lc_coupons;
 CREATE TABLE IF NOT EXISTS lc_coupons (
   coupons_id int(11) NOT NULL AUTO_INCREMENT,
-  coupons_type char(1) NOT NULL DEFAULT 'R',
-  coupons_mode varchar(32) NOT NULL DEFAULT 'coupon',
-  coupons_code varchar(32) DEFAULT NULL,
-  coupons_reward decimal(8,4) NOT NULL DEFAULT '0.0000',
-  coupons_purchase_over decimal(8,4) NOT NULL DEFAULT '0.0000',
-  coupons_start_date datetime DEFAULT NULL,
-  coupons_expires_date datetime DEFAULT NULL,
+  type enum("R","T","S","P") NOT NULL DEFAULT 'R',
+  name varchar(1024) NOT NULL DEFAULT '',
+  languages_id int(11) NOT NULL DEFAULT '0',
+  mode varchar(32) NOT NULL DEFAULT 'coupon',
+  code varchar(32) DEFAULT NULL,
+  reward decimal(8,4) NOT NULL DEFAULT '0.0000',
+  purchase_over decimal(8,4) NOT NULL DEFAULT '0.0000',
+  start_date datetime DEFAULT NULL,
+  expires_date datetime DEFAULT NULL,
   uses_per_coupon int(11) NOT NULL DEFAULT '0',
   uses_per_customer int(11) NOT NULL DEFAULT '0',
-  restrict_to_products text,
-  restrict_to_categories text,
-  restrict_to_customers text,
-  coupons_status tinyint(1) NOT NULL DEFAULT '1',
+  restrict_to_products varchar(1024) DEFAULT NULL,
+  restrict_to_categories varchar(1024) DEFAULT NULL,
+  restrict_to_customers varchar(1024) DEFAULT NULL,
+  status tinyint(1) NOT NULL DEFAULT '1',
   date_created datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   date_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  coupons_sale_exclude tinyint(1) NOT NULL DEFAULT '0',
+  sale_exclude tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (coupons_id)
-) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
-
-DROP TABLE IF EXISTS lc_coupons_description;
-CREATE TABLE lc_coupons_description (
-  coupons_id int(11) NOT NULL DEFAULT '0',
-  language_id int(11) NOT NULL DEFAULT '0',
-  coupons_name varchar(255) NOT NULL DEFAULT '',
-  coupons_description text,
-  PRIMARY KEY (coupons_id,language_id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_credit_cards;
