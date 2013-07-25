@@ -31,17 +31,15 @@ class lC_OrderTotal_coupon extends lC_OrderTotal {
   }
 
   function process() {
-    global $lC_ShoppingCart, $lC_Currencies;
+    global $lC_Coupons, $lC_Currencies;
 
-    $key = 'Discount Coupon';
-    $value = -10.99;
- //   foreach ($lC_ShoppingCart->getCoupons() as $key => $value) {
- //     if ($value > 0) {
-        $this->output[] = array('title' => $key . ':',
-                                'text' => $lC_Currencies->format($value),
-                                'value' => $value);
- //     }
- //   }
+    foreach ($lC_Coupons->getAll() as $code => $val) {
+      if ($value > 0) {
+        $this->output[] = array('title' => $val['title'] . '(' . $code . '):',
+                                'text' => $lC_Currencies->format($val['total']),
+                                'value' => $val['total']);
+      }
+    }
   }
 }
 ?>
