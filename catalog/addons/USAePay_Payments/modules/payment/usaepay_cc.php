@@ -35,7 +35,6 @@ class lC_Payment_usaepay_cc extends lC_Payment {
 
       default:
         $this->iframe_relay_url = 'https://sandbox.usaepay.com/interface/epayform/';
-        //$this->form_action_url = 'https://sandbox.usaepay.com/interface/epayform/';
         break;
     }
 
