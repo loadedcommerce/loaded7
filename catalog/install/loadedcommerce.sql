@@ -184,9 +184,7 @@ CREATE TABLE lc_countries (
 DROP TABLE IF EXISTS lc_coupons;
 CREATE TABLE IF NOT EXISTS lc_coupons (
   coupons_id int(11) NOT NULL AUTO_INCREMENT,
-  type enum("R","T","S","P") NOT NULL DEFAULT 'R',
-  name varchar(1024) NOT NULL DEFAULT '',
-  languages_id int(11) NOT NULL DEFAULT '0',
+  `type` enum('R','T','S','P') NOT NULL DEFAULT 'R',
   mode varchar(32) NOT NULL DEFAULT 'coupon',
   code varchar(32) DEFAULT NULL,
   reward decimal(8,4) NOT NULL DEFAULT '0.0000',
@@ -198,11 +196,19 @@ CREATE TABLE IF NOT EXISTS lc_coupons (
   restrict_to_products varchar(1024) DEFAULT NULL,
   restrict_to_categories varchar(1024) DEFAULT NULL,
   restrict_to_customers varchar(1024) DEFAULT NULL,
-  status tinyint(1) NOT NULL DEFAULT '1',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   date_created datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   date_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   sale_exclude tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (coupons_id)
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+DROP TABLE IF EXISTS lc_coupons_description;
+CREATE TABLE lc_coupons_description (
+  coupons_id int(11) NOT NULL DEFAULT '0',
+  language_id int(11) NOT NULL DEFAULT '1',
+  name varchar(1024) NOT NULL DEFAULT '',
+  PRIMARY KEY (coupons_id,language_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_credit_cards;
