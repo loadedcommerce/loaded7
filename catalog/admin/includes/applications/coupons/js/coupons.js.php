@@ -80,7 +80,7 @@ function validateForm(e) {
       <?php
       foreach ( $lC_Language->getAll() as $l ) {
         ?>
-        'coupons_name[<?php echo $l['id']; ?>]': {
+        'name[<?php echo $l['id']; ?>]': {
           required: true,
         },
         <?php
