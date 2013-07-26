@@ -209,7 +209,14 @@ function addCoupon() {
         alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
-
+      if (data.rpcStatus == -2) {
+        alert('<?php echo $lC_Language->get('ms_error_coupon_not_found'); ?>');
+        return false;
+      }
+      if (data.rpcStatus == -3) {
+        alert('<?php echo $lC_Language->get('ms_error_coupon_not_valid'); ?>');
+        return false;
+      }
     }
   );  
 }
@@ -222,7 +229,6 @@ function removeCoupon(code) {
         alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
-
     }
   );  
 }

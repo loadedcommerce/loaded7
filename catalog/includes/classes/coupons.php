@@ -45,19 +45,19 @@ class lC_Coupons {
         return 1;                                              
       } else {
         // coupon not valid
-        return -3
+        return -3;
       }
     
     } else {
       // coupon not found
-      return -2
+      return -2;
     }   
           
   }
   
   public function removeEntry($code) {
-    if (array_key_exists($code, $this->_contents)) {    
-      unset($this->_contents[$code]);
+    if (array_key_exists($code, $_SESSION['lC_Coupons_data']['contents'])) {    
+      unset($_SESSION['lC_Coupons_data']['contents'][$code]);
     }    
   }
   
