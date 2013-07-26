@@ -3,12 +3,12 @@
   <definitions>
     <definition>
       <key>addon_shipping_zones_title</key>
-      <value><![CDATA[Zone Rate Shipping]]></value>
+      <value><![CDATA[Zones Rate Shipping]]></value>
       <group>checkout</group>
     </definition>
     <definition>
       <key>addon_shipping_zones_description</key>
-      <value><![CDATA[Zone rate shipping based on a group of maximum order weights.  Includes optional Handling Fee.]]></value>
+      <value><![CDATA[Zones Rate Shipping based on a group of maximum order weights. Includes optional Handling Fee.]]></value>
       <group>checkout</group>
     </definition> 
     <definition>
@@ -18,13 +18,13 @@
     </definition>   
     <definition>
       <key>shipping_zones_title</key>
-      <value><![CDATA[Zone Rates]]></value>
+      <value><![CDATA[Zones Rate]]></value>
       <group>checkout</group>
     </definition>
 
     <definition>
       <key>shipping_zones_description</key>
-      <value><![CDATA[Zone Rates]]></value>
+      <value><![CDATA[Zones Rate]]></value>
       <group>checkout</group>
     </definition>
     <definition>
