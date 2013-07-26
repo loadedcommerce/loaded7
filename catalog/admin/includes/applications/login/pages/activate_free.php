@@ -22,7 +22,7 @@
         <form id="form-activate-free" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=free_success'); ?>" class="input-wrapper blue-gradient glossy" method="post">
           <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('text_activate_free_features'); ?></h3>
           <p class="align-center no-margin-top"><b><?php echo $lC_Language->get('text_free_core_activation'); ?></b></p>
-          <p class="message"><?php echo $lC_Language->get('text_domain'); ?>: thisdomain.ext</p>
+          <p class="small-margin-left small-margin-right"><?php echo $lC_Language->get('text_domain'); ?>: thisdomain.ext</p>
           <ul class="inputs black-input large">
             <li><span class="icon-mail mid-margin-right"></span><input type="email" name="activation_email" id="activation_email" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_activation_email'); ?>" autocomplete="off"></li>
           </ul>

@@ -28,17 +28,17 @@
           <button type="submit" class="button glossy green-gradient full-width" id="login"><?php echo $lC_Language->get('button_login'); ?></button>
         </form>
         <form id="form-lost-password" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=lost_password'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_lost_password'); ?>?">
-          <p class="message">
+          <p class="small-margin-left small-margin-right">
             <?php echo $lC_Language->get('text_send_new_password_instructions'); ?>
             <span class="block-arrow"><span></span></span>
           </p>
           <ul class="inputs black-input large">
             <li><span class="icon-mail mid-margin-right"></span><input type="email" name="password_email" id="password_email" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password_email'); ?>" autocomplete="off"></li>
           </ul>
-          <button type="submit" class="button glossy green-gradient full-width" id="lost-password"><?php echo $lC_Language->get('button_lost_password'); ?></button>
+          <button type="submit" class="button glossy green-gradient full-width" id="lost-password"><?php echo $lC_Language->get('button_submit'); ?></button>
         </form>
         <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
-          <h3 class="align-center">Product Registration</h3>
+          <h3 class="align-center"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
           <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>"><button type="button" class="button glossy green-gradient full-width" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button></a>
           <p class="align-center mid-margin-top"><?php echo $lC_Language->get('text_or'); ?></p>
           <ul class="inputs black-input large">

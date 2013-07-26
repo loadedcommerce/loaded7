@@ -1,6 +1,6 @@
 <?php
   /*
-  $Id: password_success.php v1.0 2013-01-01 datazen $
+  $Id: lost_password_confirm.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -19,13 +19,10 @@
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
-        <form id="form-password-success" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>" class="input-wrapper blue-gradient glossy" method="post">
-          <h3 class="align-center"><?php echo $lC_Language->get('text_password_success'); ?></h3>
-          <p class="small-margin-left small-margin-right margin-bottom"><?php echo $lC_Language->get('text_success_message_1'); ?></p>
-          <p class="small-margin-left small-margin-right large-margin-bottom"><?php echo $lC_Language->get('text_success_message_2'); ?></p>
-          <p class="align-center mid-margin-bottom">
-            <button type="submit" class="button glossy full-width green-gradient" id="submit-password"><?php echo $lC_Language->get('button_login'); ?></button>
-          </p>
+        <form id="form-lost-password-confirm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=password_change'); ?>" class="input-wrapper blue-gradient glossy" method="post">
+          <h3 class="align-center"><?php echo $lC_Language->get('heading_lost_password'); ?></h3>
+          <p class="message no-margin-top"><?php echo $lC_Language->get('text_lost_password_instructions'); ?></p>
+          <p class=" align-center mid-margin-bottom"><button type="submit" class="button glossy green-gradient full-width"><?php echo $lC_Language->get('button_back_to_login'); ?></button></p>
         </form>
       </div>
     </div>
@@ -60,6 +57,66 @@
     // Work vars
     maxHeight = false,
     blocHeight;
+    
+    /******* EDIT THIS SECTION *******/
+
+    /*
+    * Login
+    * These functions will handle the login process through AJAX
+    */
+    $('#form-lost-password-confirm').submit(function(event) {
+      // Values
+      var login = $.trim($('#user_name').val()),
+      pass = $.trim($('#user_password').val());
+
+      // Remove previous messages
+      formWrapper.clearMessages();
+
+      // Stop normal behavior
+      event.preventDefault();
+
+      // Check inputs
+      if (login.length === 0) {
+        // Display message
+        displayError('<?php echo $lC_Language->get('text_enter_email'); ?>');
+        return false;
+      } else if (pass.length === 0) {
+        // Remove empty login message if displayed
+        formWrapper.clearMessages('<?php echo $lC_Language->get('text_enter_email'); ?>');
+
+        // Display message
+        displayError('<?php echo $lC_Language->get('text_enter_password'); ?>');
+        return false;
+      } else {
+        // Remove previous messages
+        formWrapper.clearMessages();
+
+        // Show progress 
+        displayLoading('<?php echo $lC_Language->get('ms_authenticating'); ?>');    
+
+        // Stop normal behavior
+        $("#form-lost-password-confirm").bind("submit", preventDefault(event));
+
+        var nvp = $("#form-lost-password-confirm").serialize();
+        alert('confirm lost password key');
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /*var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=lostPasswordConfirmKey&NVP'); ?>'; 
+        $.getJSON(jsonLink.replace('NVP', nvp),        
+          function (data) {  
+            if (data.rpcStatus == 1) { 
+              $("#form-lost-password-confirm").unbind("submit", preventDefault(event)).submit();
+              return true;                  
+            } 
+            //displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
+            //return false;
+          }              
+        );*/
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        // temporary testing - go to lost password confirm key page
+        $("#form-lost-password-confirm").unbind("submit", preventDefault(event)).submit();
+      }
+    });
     
     // Prepare forms
     forms.each(function(i) {

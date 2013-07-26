@@ -20,7 +20,7 @@
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
         <form id="form-free-success" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT); ?>" class="input-wrapper blue-gradient glossy" method="post">
-          <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_free_success'); ?></h3>
+          <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
           <p class="align-center small-margin-left"><b><?php echo $lC_Language->get('text_free_core_activation_success'); ?></b></p>
           <p class="small-margin-left"><?php echo $lC_Language->get('text_domain'); ?>: thisdomain.ext</p>
           <p class="small-margin-left"><?php echo $lC_Language->get('text_serial'); ?>: core4544322</p>
