@@ -11,7 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-
+ 
 /**
  * The lC_Session class manages the session data and custom storage handlers
  */
@@ -141,14 +141,28 @@
         }
 
         lc_redirect(lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false));
-      } else if (isset($_GET['lCsid']) && $_GET['lCsid'] != NULL && basename($_SERVER['PHP_SELF']) != 'checkout.php' && basename($_SERVER['PHP_SELF']) != 'account.php') {
+      } else if (isset($_GET['lCsid']) && $_GET['lCsid'] != NULL && isset($_GET['qr']) && $_GET['qr'] == '1') {
+        
         $this->_is_started = true;
         $this->_id = $_GET['lCsid'];
         session_id($_GET['lCsid']);
         session_start();
+        
+        unset($_SESSION['lC_Customer_data']);
+        $_SESSION['lC_Customer_data']['email_address'] = $_GET['email'];
+       
+        return true;
+      } /*else if (isset($_GET['lCsid']) && $_GET['lCsid'] != NULL && basename($_SERVER['PHP_SELF']) != 'checkout.php' && basename($_SERVER['PHP_SELF']) != 'account.php') {
+        $this->_is_started = true;
+        $this->_id = $_GET['lCsid'];
+        session_id($_GET['lCsid']);
+        session_start();
+        
+        unset($_SESSION['lC_Customer_data']);
+        $_SESSION['lC_Customer_data']['email_address'] = $_GET['email'];
 
         return true;
-      } else if (isset($_GET['lCAdminID']) && $_GET['lCAdminID'] != NULL ) {
+      } */else if (isset($_GET['lCAdminID']) && $_GET['lCAdminID'] != NULL ) {
 
         $this->_is_started = true;
         $this->_id = $_GET['lCAdminID'];

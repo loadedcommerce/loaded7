@@ -99,6 +99,8 @@
 
       if ($_SESSION['lC_Customer_data']['email_address']) {     
         $qrcode_url_add = (stristr($qrcode_url, "?") ? '&' : '?') . $lC_Session->getName() . '=' . $lC_Session->getID() . '&email=' . $_SESSION['lC_Customer_data']['email_address'] . '&qr=1';
+      } else {
+        $qrcode_url_add = (stristr($qrcode_url, "?") ? '&' : '?') . $lC_Session->getName() . '=' . $lC_Session->getID();
       } 
       
       $BarcodeQR->url($qrcode_url . $qrcode_url_add);
