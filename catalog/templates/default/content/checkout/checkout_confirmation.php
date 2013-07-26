@@ -61,6 +61,12 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                 <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span>
                 <p><?php echo $lC_ShoppingCart->getBillingMethod('title'); ?></p>
               </div>
+              <div id="order-comments-block">
+                <h3><?php echo $lC_Language->get('order_comment_title'); ?></h3>
+                <div id="confirmation-order-comment-inner">
+                  <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), null, null, 'placeholder="' . $lC_Language->get('text_add_comment_to_order') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('text_add_comment_to_order') . '\'" style="height:47px; width:98%"'); ?>
+                </div>
+              </div>
             </div>
             <div id="checkout_shipping_col2" style="width:60%; float:right;">
               <!-- placement for order reference number later <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span> -->
@@ -87,7 +93,7 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                       foreach ($lC_ShoppingCart->getProducts() as $products) {
                         echo '<tr class="confirmation-products-listing-row">' . "\n" .
                              '  <td width="30"><b>' . $products['quantity'] . '&nbsp;x&nbsp;</b></td>' . "\n" .
-                             '  <td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
+                             '  <td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model purple">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
                         if ( (STOCK_CHECK == '1') && !$lC_ShoppingCart->isInStock($products['item_id']) ) {
                           echo '<span class="markProductOutOfStock">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>';
                         }
@@ -103,10 +109,10 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                         }                        
                         echo '</td>' . "\n";
                         if ($lC_ShoppingCart->numberOfTaxGroups() > 1) {
-                          echo '                <td style="float:right;"><b>' . lC_Tax::displayTaxRateValue($products['tax']) . '</b></td>' . "\n";
+                          echo '<td style="float:right;"><b>' . lC_Tax::displayTaxRateValue($products['tax']) . '</b></td>' . "\n";
                         }
-                        echo '                <td style="float:right;"><b>' . $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']) . '</b></td>' . "\n" .
-                        '              </tr>' . "\n";
+                        echo '<td style="float:right;">' . $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']) . '</td>' . "\n" .
+                        '</tr>' . "\n";
                       }
                     ?>
                   </table>
@@ -114,38 +120,23 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
               </div>
               <div style="clear:both;"></div>
               <div class="col2-set" id="discount-code-order-total">
-                <div id="confirmation-discount-code">
-                  <h3><?php //echo $lC_Language->get('discount_code_title'); ?></h3>
-                  <div id="confirmation-discount-code-inner">
-                    <!-- Discount Code input field goes here -->
-                  </div>
-                  <div id="confirmation-discount-code-button">
-                    <!-- Discount button goes here
-                    <a href="#" class="sc-button small grey colorWhite noDecoration buttonRight">
-                    <?php echo $lC_Language->get('apply_discount_code'); ?>
-                    </a>
-                    -->
-                  </div>
-                </div>
+
                 <div id="confirmation-order-totals">
-                  <h3><?php echo $lC_Language->get('order_totals_title'); ?></h3>
                   <!--ORDER TOTAL LISTING STARTS-->
-                  <div id="ot-container">
+                  <table id="totals-table">
+                    <tbody>                  
                     <?php 
                       foreach ($lC_ShoppingCart->getOrderTotals() as $module) { 
-                        if ($module['code'] != 'total') {
                         ?>
-                        <div class="ot-block" id="<?php echo $module['code']; ?>">
-                          <label><?php echo $module['title']; ?></label>
-                          <span><?php echo $module['text']; ?></span>
-                        </div>
-                        <div style="clear:both;"></div>
+                        <tr>
+                          <td class="align_right<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>" style="padding-right:10px;"><?php echo $module['title']; ?></td>
+                          <td class="align_right<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>"><?php echo $module['text']; ?></td>
+                        </tr>                        
                         <?php 
-                        }
                       } 
                     ?>
-                  </div>
-                  <div style="clear:both;"></div>
+                    </tbody>
+                  </table>                    
                 </div>
               </div>
               <?php
@@ -205,35 +196,7 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                 echo $lC_Payment->process_button();
               }
               ?>
-                <div class="col2-set" id="order-comment-grand-total">
-                  <div id="confirmation-order-comment">
-                    <h3><?php echo $lC_Language->get('order_comment_title'); ?></h3>
-                    <div id="confirmation-order-comment-inner">
-                      <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), null, null, 'placeholder="' . $lC_Language->get('text_add_comment_to_order') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('text_add_comment_to_order') . '\'" style="height:47px; width:98%"'); ?>
-                    </div>
-                  </div>
-                  <div id="confirmation-grand-total">
-                    <h3><?php echo $lC_Language->get('order_total_title'); ?></h3>
-                    <div id="confirmation-grand-total-inner">
-                      <div id="ot-container">
-                        <?php 
-                          foreach ($lC_ShoppingCart->getOrderTotals() as $module) { 
-                            if ($module['code'] == 'total') {
-                            ?>
-                            <div class="ot-block" id="<?php echo $module['code']; ?>">
-                              <label><?php echo $module['title']; ?></label>
-                              <span><?php echo $module['text']; ?></span>
-                            </div>
-                            <div style="clear:both;"></div>
-                            <?php 
-                            }
-                          } 
-                        ?>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div style="clear:both;"></div>
+
                 <?php
                   if (DISPLAY_CONDITIONS_ON_CHECKOUT == '1') {
                   ?>              

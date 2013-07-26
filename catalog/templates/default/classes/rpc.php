@@ -90,8 +90,10 @@ class lC_Default_rpc {
   * @return json
   */
   public static function removeCoupon() {
+    global $lC_Coupons;
+    
     $result = array();
-    if (lC_Coupons::removeEntry($_GET['code'])) {
+    if ($lC_Coupons->removeEntry($_GET['code'])) {
       $result['rpcStatus'] = '1';
     }
     

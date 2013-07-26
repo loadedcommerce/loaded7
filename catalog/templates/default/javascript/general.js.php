@@ -13,7 +13,7 @@
  
   @function The lC_Default class manages default template functions
 */
-global $lC_Language; 
+global $lC_Template, $lC_Language, $lC_ShoppingCart; 
 ?>
 <script>
 $(document).ready(function() {
@@ -201,27 +201,33 @@ function _setMediaType() {
 }
 
 function addCoupon() {
-  code = $('#coupon_code').val();
+  var code = $('#coupon_code').val();
+  var module = '<?php echo $lC_Template->getModule(); ?>';
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=addCoupon&code=CODE', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('CODE', code).replace('&amp;', '&'),
     function (data) {
-      if (data.rpcStatus != 1) {
-        alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-        return false;
-      }
       if (data.rpcStatus == -2) {
         alert('<?php echo $lC_Language->get('ms_error_coupon_not_found'); ?>');
+        $('#coupon_code').val('');
         return false;
       }
       if (data.rpcStatus == -3) {
         alert('<?php echo $lC_Language->get('ms_error_coupon_not_valid'); ?>');
+        $('#coupon_code').val('');        
         return false;
       }
+      if (data.rpcStatus != 1) {
+        alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        $('#coupon_code').val('');        
+        return false;
+      }
+      if (module == 'cart') $('#shopping_cart').submit();
     }
   );  
 }
 
 function removeCoupon(code) {
+  var module = '<?php echo $lC_Template->getModule(); ?>';
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=removeCoupon&code=CODE', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('CODE', code).replace('&amp;', '&'),
     function (data) {
@@ -229,6 +235,8 @@ function removeCoupon(code) {
         alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
+      if (module == 'cart') $('#shopping_cart').submit();
+      
     }
   );  
 }

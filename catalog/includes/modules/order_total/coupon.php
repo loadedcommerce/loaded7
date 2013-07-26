@@ -27,19 +27,15 @@ class lC_OrderTotal_coupon extends lC_OrderTotal {
     $this->_title = $lC_Language->get('order_total_coupon_title');
     $this->_description = $lC_Language->get('order_total_coupon_description');
     $this->_status = (defined('MODULE_ORDER_TOTAL_COUPON_STATUS') && (MODULE_ORDER_TOTAL_COUPON_STATUS == 'true') ? true : false);
-    $this->_sort_order = (defined('MODULE_ORDER_TOTAL_COUPON_SORT_ORDER') ? MODULE_ORDER_TOTAL_COUPON_SORT_ORDER : null);
+    $this->_sort_order = (defined('MODULE_ORDER_TOTAL_COUPON_SORT_ORDER') ? MODULE_ORDER_TOTAL_COUPON_SORT_ORDER : null);   
   }
 
   function process() {  
     global $lC_Coupons, $lC_Currencies;
-
-echo "<pre>getAll ";
-print_r($lC_Coupons->getAll());
-echo "</pre>"; 
-die('888');   
+           
     foreach ($lC_Coupons->getAll() as $code => $val) {
-      if ($value > 0) {
-        $this->output[] = array('title' => $val['title'] . '(' . $code . '):',
+      if ($val['total'] > 0) {
+        $this->output[] = array('title' => $val['title'] . ':&nbsp;<span onclick="removeCoupon(\'' . $code . '\');" style="white-space:nowrap; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/default/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '</span>',
                                 'text' => $lC_Currencies->format($val['total']),
                                 'value' => $val['total']);
       }

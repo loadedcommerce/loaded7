@@ -295,7 +295,7 @@ ul.breadcrumb li img { }
 #shopping-cart-table tr td a.edit{color:#544F4B;}
 
 .totals{ float:right; display:inline-block; width:100%; padding:17px 0px; margin-right:20px;}
-#totals-table { width:4%; float:right; font-size:14px; color:#544f4b; white-space: nowrap;}
+#totals-table { float:right; color:#544f4b; white-space: nowrap;}
 #totals-table td { padding: 8px 0px; }
 #totals-table td strong { font-weight:bold; }
 #totals-table .total { font-size:16px; font-weight:bold; }
@@ -816,7 +816,8 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #ship-to-address-block { padding: 10px; margin-top: -10px; }
 #ship-to-address-block h3 { margin-top: 15px; }
 #checkoutShippingAddressDetails h3 { margin: 15px 0 0 10px; }
-#bill-to-address-block { padding: 10px; margin-bottom: 10px; }
+#bill-to-address-block { padding: 0px 10px; margin-bottom: 10px; }
+#order-comments-block { padding: 0px 10px; margin-bottom: 10px; }
 #shipping-method-block { padding: 10px; margin-bottom: 20px; background-color: #F7F7F7; }
 #shipping-method-block p { padding-top: 10px; }
 #payment-method-block { padding: 10px; margin-bottom: 20px; background-color: #F7F7F7; }
@@ -825,7 +826,7 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #confirmation-discount-code { float: left; width: 49%; }
 #confirmation-discount-code-inner { float: left; width: 100%; /*border: 1px solid #E7DED5;*/ margin-bottom: 10px; }
 #confirmation-discount-code-button { float: right; }
-#confirmation-order-totals { float: right; width: 49%; margin-bottom: 10px; }
+#confirmation-order-totals { float: right; width: 49%; margin-bottom: 10px; padding-right:12px; }
 #confirmation-order-totals #ot-container {  }
 #confirmation-order-totals h3 {  }
 #confirmation-order-comment { float: left; width: 48%; margin-bottom: 5px; }
@@ -930,3 +931,7 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
     width: 14%;
 }
 .no-wrap { white-space: nowrap; }
+
+.sc_sub_total { font-weight:bold; }
+.sc_total { font-weight:bold; font-size:1.3em; color: #873B7A; padding: 20px 0 10px 10px !important; }
+.purple { color: #873B7A; }

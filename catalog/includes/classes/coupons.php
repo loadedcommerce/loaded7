@@ -35,19 +35,14 @@ class lC_Coupons {
     
     $cInfo = $lC_Coupons->_getData($code);
          
-echo "<pre>";
-print_r($cInfo);
-echo "</pre>";
-die('11');
-         
     if (is_array($cInfo) && empty($cInfo) === false) {    
       if ($lC_Coupons->_isValid($cInfo)) {
 
         $name = $cInfo['name'];
         $discount = $cInfo['reward'];
 
-        $_SESSION['lC_Coupons_data']['contents'][$code] = array('title' => $name . ' (' . $code . ')',
-                                                                'total' => $discount);  
+        $this->_contents[$code] = array('title' => $name . ' (' . $code . ')',
+                                        'total' => $discount);  
         return 1;                                              
       } else {
         // coupon not valid
@@ -62,9 +57,10 @@ die('11');
   }
   
   public function removeEntry($code) {
-    if (array_key_exists($code, $_SESSION['lC_Coupons_data']['contents'])) {    
-      unset($_SESSION['lC_Coupons_data']['contents'][$code]);
+    if (array_key_exists($code, $this->_contents)) {    
+      unset($this->_contents[$code]);
     }    
+    return true;
   }
   
   public function reset() {
