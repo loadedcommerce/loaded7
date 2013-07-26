@@ -33,6 +33,10 @@ class lC_OrderTotal_coupon extends lC_OrderTotal {
   function process() {  
     global $lC_Coupons, $lC_Currencies;
 
+echo "<pre>getAll ";
+print_r($lC_Coupons->getAll());
+echo "</pre>"; 
+die('888');   
     foreach ($lC_Coupons->getAll() as $code => $val) {
       if ($value > 0) {
         $this->output[] = array('title' => $val['title'] . '(' . $code . '):',

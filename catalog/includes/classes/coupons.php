@@ -14,7 +14,7 @@
 class lC_Coupons {
   public $is_enabled = false;
 
-  protected $_contents = array();
+  private $_contents = array();
   
   // class constructor
   public function __construct() {
@@ -31,11 +31,17 @@ class lC_Coupons {
   
   // public methods
   public function addEntry($code) {
+    global $lC_Coupons;
     
-    $cInfo = lC_Coupons::getData($code);
+    $cInfo = $lC_Coupons->_getData($code);
+         
+echo "<pre>";
+print_r($cInfo);
+echo "</pre>";
+die('11');
          
     if (is_array($cInfo) && empty($cInfo) === false) {    
-      if (lC_Coupons::isValid($cInfo)) {
+      if ($lC_Coupons->_isValid($cInfo)) {
 
         $name = $cInfo['name'];
         $discount = $cInfo['reward'];
@@ -73,7 +79,7 @@ class lC_Coupons {
     return !empty($this->_contents);
   }  
   
-  public static function getData($code, $status = 1) {
+  private function _getData($code, $status = 1) {
     global $lC_Database, $lC_Language;
 
     $Qcoupons = $lC_Database->query('select * from :table_coupons c left join :table_coupons_description cd on (c.coupons_id = cd.coupons_id) where c.code = :code and c.status = :status and cd.language_id = :language_id limit 1');
@@ -87,7 +93,7 @@ class lC_Coupons {
     return (is_array($Qcoupons->toArray())) ? $Qcoupons->toArray() : false;     
   } 
   
-  public static function isValid($cInfo) {
+  private function _isValid($cInfo) {
     return true;
   }
 }
