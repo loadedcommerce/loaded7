@@ -72,9 +72,16 @@ class Zones_Rate_Shipping extends lC_Addon {
    /**
     * The number of zones needed; also needs to match the value in the module
     */
-    if (defined('ADDONS_SHIPPING_ZONE_RATE_SHIPPING_NUMBER_OF_ZONES') && ADDONS_SHIPPING_ZONE_RATE_SHIPPING_NUMBER_OF_ZONES != NULL) ? (int)ADDONS_SHIPPING_ZONE_RATE_SHIPPING_NUMBER_OF_ZONES : 1;
-    $this->num_zones = ADDONS_SHIPPING_ZONES_RATE_SHIPPING_NUMBER_OF_ZONES;
-  }
+    if(defined('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_NUMBER_OF_ZONES')){
+
+      $this->num_zones = ADDONS_SHIPPING_ZONES_RATE_SHIPPING_NUMBER_OF_ZONES;
+    }else{
+
+      define('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_NUMBER_OF_ZONES', '1');
+      $this->num_zones = 1;
+    }
+
+   }
  /**
   * Checks to see if the addon has been installed
   *
@@ -96,10 +103,11 @@ class Zones_Rate_Shipping extends lC_Addon {
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable AddOn', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_STATUS', '-1', 'Do you want to enable this addon?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Tax Class', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_TAX_CLASS', '0', 'Use the following tax class on the shipping fee.', '6', '0', 'lc_cfg_use_get_tax_class_title', 'lc_cfg_set_tax_classes_pull_down_menu(class=\"select\",', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Sort Order', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_SORT_ORDER', '0', 'Sort order of display.', '6', '0', now())");
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Number of World Zones', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_NUMBER_OF_ZONES', '1', 'Number of World Zones to use.', '7', '0', 'lc_cfg_get_num_pulldown_menu', 'lc_cfg_set_num_pulldown_menu()', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Module weight Unit', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_WEIGHT_UNIT', '2', 'What unit of weight does this shipping module use?.', '6', '0', 'lC_Weight::getTitle', 'lc_cfg_set_weight_classes_pulldown_menu', now())");
     
     if (!defined("ADDONS_SHIPPING_" . strtoupper($this->_code) . "_NUMBER_OF_ZONES")) {
-      $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('Number of World Zones', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_NUMBER_OF_ZONES', '1', 'Number of World Zones to use.', '7', '0', 'lc_cfg_set_num_pulldown_menu()', now())");
+      $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Number of World Zones', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_NUMBER_OF_ZONES', '1', 'Number of World Zones to use.', '7', '0', now())");
+    
     }
 
     for ($i = 1; $i <= $this->num_zones; $i++) {
@@ -134,7 +142,7 @@ class Zones_Rate_Shipping extends lC_Addon {
 
         for ($i=1; $i<=$this->num_zones; $i++) {
 
-          if(!defined('ADDONS_' . strtoupper($this->_code) . 'SHIPPING_COUNTRIES_'.$i)){ 
+          if(!defined('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_COUNTRIES_'.$i)){ 
 
             $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Zone " . $i ." Countries', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_COUNTRIES_" . $i ."', '" . $default_countries . "', 'Comma separated list of two character ISO country codes that are part of Zone " . $i . ".', '6', '0', now())");
             $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Zone " . $i ." Shipping Table', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_TABLE_" . $i ."', '3:8.50,7:10.50,99:20.00', 'Shipping rates to Zone " . $i . " destinations based on a group of maximum order weights. Example: 3:8.50,7:10.50,... Weights less than or equal to 3 would cost 8.50 for Zone " . $i . " destinations.', '6', '0', now())");

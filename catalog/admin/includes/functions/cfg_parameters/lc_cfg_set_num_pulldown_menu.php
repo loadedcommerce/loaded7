@@ -15,7 +15,7 @@
     global $lC_Database;
     
     $css_class = 'class="input with-small-padding"';
-
+    
     $name = (empty($key)) ? 'configuration_value' : 'configuration[' . $key . ']';
 
     $i = 0;
