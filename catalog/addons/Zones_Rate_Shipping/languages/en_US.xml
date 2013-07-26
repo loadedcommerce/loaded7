@@ -10,12 +10,18 @@
       <key>addon_shipping_zones_description</key>
       <value><![CDATA[Zone rate shipping based on a group of maximum order weights.  Includes optional Handling Fee.]]></value>
       <group>checkout</group>
-    </definition>  
+    </definition> 
+    <definition>
+      <key>addon_shipping_zones_blurb</key>
+      <value><![CDATA[<p class="big-message margin-bottom orange-gradient anthracite"><span class="big-message-icon icon-speech icon-red"></span><strong class="red">IMPORTANT:</strong>&nbsp;&nbsp;You can increase the number of zones by visiting Admin > Setup > Configuration > Shipping/Packaging.  Make sure to Uninstall and re-install the add-on to get the updated number of zones.</p>]]></value>
+      <group>checkout</group>
+    </definition>   
     <definition>
       <key>shipping_zones_title</key>
       <value><![CDATA[Zone Rates]]></value>
       <group>checkout</group>
     </definition>
+
     <definition>
       <key>shipping_zones_description</key>
       <value><![CDATA[Zone Rates]]></value>
