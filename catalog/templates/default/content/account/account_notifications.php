@@ -15,22 +15,21 @@
 <!--content/account/account_notifications.php start-->
 <div class="full_page">
   <div class="content">
-    <!-- Need to get with Scott on class code to support newsletter data for customer -->
-    <form name="account_newsletter" id="account_newsletter" action="#" method="post">
+    <form name="account_notifications" id="account_notifications" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'notifications=save', 'SSL'); ?>" method="post">
       <div class="short-code-column">
         <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-        <h4><?php echo $lC_Language->get('newsletter_product_notifications_global'); ?></h4>
+        <h4><?php echo $lC_Language->get('product_notifications_global'); ?></h4>
         <div> 
           <div>
             <div class="borderPadMe">
               <table border="0" width="100%" cellspacing="0" cellpadding="2">
                 <tr>
                   <td width="30"><?php echo lc_draw_checkbox_field('product_global', '1', $Qglobal->value('global_product_notifications')); ?></td>
-                  <td><b><?php echo lc_draw_label($lC_Language->get('newsletter_product_notifications_global'), 'product_global'); ?></b></td>
+                  <td><b><?php echo lc_draw_label($lC_Language->get('product_notifications_global'), 'product_global'); ?></b></td>
                 </tr>
                 <tr>
                   <td width="30">&nbsp;</td>
-                  <td><?php echo $lC_Language->get('newsletter_product_notifications_global_description'); ?></td>
+                  <td><?php echo $lC_Language->get('product_notifications_global_description'); ?></td>
                 </tr>
               </table>
             </div>
@@ -39,14 +38,14 @@
               ?> 
               <div style="clear:both;"></div>
               <div style="background-color:#FFFFFF;">
-                <h4><?php echo $lC_Language->get('newsletter_product_notifications_products'); ?></h4>
+                <h4><?php echo $lC_Language->get('product_notifications_products'); ?></h4>
                 <div class="borderPadMe">
                   <?php
                     if ($lC_Template->hasCustomerProductNotifications($lC_Customer->getID())) {
                     ?>
                     <table border="0" width="100%" cellspacing="0" cellpadding="2">
                       <tr>
-                        <td colspan="2"><?php echo $lC_Language->get('newsletter_product_notifications_products_description'); ?></td>
+                        <td colspan="2"><?php echo $lC_Language->get('product_notifications_products_description'); ?></td>
                       </tr>
                       <?php
                         $Qproducts = $lC_Template->getListing();
@@ -64,7 +63,7 @@
                     </table>
                     <?php
                     } else {
-                      echo $lC_Language->get('newsletter_product_notifications_products_none');
+                      echo $lC_Language->get('product_notifications_products_none');
                     }
                   ?>
                 </div>
@@ -76,7 +75,7 @@
           <div style="clear:both;">&nbsp;</div>    
           <div id="accountNotificationsActions" class="action_buttonbar">
             <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span> 
-            <span class="buttonRight"><a onclick="$('#account_notifications').submit();"><button class="button purple_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
+            <span class="buttonRight"><a onclick="$('#account_notifications').submit();"><button class="button purple_btn" type="button"><?php echo $lC_Language->get('button_save'); ?></button></a></span>
           </div> 
           <div style="clear:both;"></div> 
         </div>
