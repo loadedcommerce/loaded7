@@ -190,7 +190,7 @@ class lC_Order {
       $Qtotals = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values (:orders_id, :title, :text, :value, :class, :sort_order)');
       $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
       $Qtotals->bindInt(':orders_id', $insert_id);
-      $Qtotals->bindValue(':title', $module['title']);
+      $Qtotals->bindValue(':title', strip_tags($module['title']));
       $Qtotals->bindValue(':text', $module['text']);
       $Qtotals->bindValue(':value', $module['value']);
       $Qtotals->bindValue(':class', $module['code']);
@@ -395,7 +395,7 @@ class lC_Order {
       $Qtotals = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values (:orders_id, :title, :text, :value, :class, :sort_order)');
       $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
       $Qtotals->bindInt(':orders_id', $order_id);
-      $Qtotals->bindValue(':title', $module['title']);
+      $Qtotals->bindValue(':title', strip_tags($module['title']));
       $Qtotals->bindValue(':text', $module['text']);
       $Qtotals->bindValue(':value', $module['value']);
       $Qtotals->bindValue(':class', $module['code']);

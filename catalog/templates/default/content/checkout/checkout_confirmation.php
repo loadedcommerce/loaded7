@@ -14,6 +14,14 @@
 if ($lC_MessageStack->size('checkout_payment') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('checkout_payment', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
 }
+
+echo "<pre>coupon ";
+print_r($lC_Coupons->getAll());
+echo "</pre>";
+echo "<pre>sc-ot ";
+print_r($lC_ShoppingCart->getOrderTotals());
+echo "</pre>";
+
 ?>
 <!--content/checkout/checkout_confirmation.php start-->
 <div id="checkout_confirmation_details" class="full_page">
@@ -221,16 +229,16 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                   <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
                   <span class="buttonRight"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_confirm_order'); ?></button></span>
                 </div>
+                </form>
                 <div class="checkout_discount checkout_discount_stream">
                   <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
                   <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
-                  <form name="coupon" id="coupon" action="">
-                    <input type="text" name="" id="">
+                  <form name="coupon" id="coupon" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <input type="text" name="coupon_code" id="coupon_code">
                   </form><br />
-                  <button type="button" class="brown_btn" onclick=""><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
+                  <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
                 </div>
                 <div style="clear:both;"></div>
-              </form>
             </div>
           </div>
         </div>

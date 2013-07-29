@@ -31,7 +31,7 @@ class lC_Coupons {
   
   // public methods
   public function addEntry($code) {
-    global $lC_Coupons;
+    global $lC_Coupons, $lC_ShoppingCart;
     
     $cInfo = $lC_Coupons->_getData($code);
          
@@ -39,10 +39,15 @@ class lC_Coupons {
       if ($lC_Coupons->_isValid($cInfo)) {
 
         $name = $cInfo['name'];
-        $discount = $cInfo['reward'];
+        $discount = $this->_calculate($cInfo['reward']);
 
         $this->_contents[$code] = array('title' => $name . ' (' . $code . ')',
-                                        'total' => $discount);  
+                                        'total' => $discount); 
+                                        
+        $this->_refreshCouponOrderTotals();
+        
+        $lC_ShoppingCart->addToTotal($discount);
+        
         return 1;                                              
       } else {
         // coupon not valid
@@ -57,8 +62,17 @@ class lC_Coupons {
   }
   
   public function removeEntry($code) {
-    if (array_key_exists($code, $this->_contents)) {    
+    global $lC_ShoppingCart;
+    
+    if (array_key_exists($code, $this->_contents)) {
+    
+      $discount = (float)$this->_contents[$code]['total'] * -1;
+      
       unset($this->_contents[$code]);
+
+      $this->_refreshCouponOrderTotals();      
+      
+      $lC_ShoppingCart->addToTotal($discount);
     }    
     return true;
   }
@@ -91,6 +105,48 @@ class lC_Coupons {
   
   private function _isValid($cInfo) {
     return true;
+  }
+  
+  private function _calculate($cInfo) {
+    return -10.00;
+  }  
+   
+  private function _refreshCouponOrderTotals() {
+    global $lC_Coupons, $lC_ShoppingCart, $lC_Currencies;
+    
+    // remove coupon OT entries
+    foreach ($lC_ShoppingCart->getOrderTotals() as $key => $module) {
+      if ($module['code'] == 'coupon') {
+        if (is_array($_SESSION['lC_ShoppingCart_data']['order_totals'][$key])) unset( $_SESSION['lC_ShoppingCart_data']['order_totals'][$key]);
+      }
+    }
+
+    // add back the entries
+    foreach ($lC_Coupons->getAll() as $code => $val) {
+      if ($val['total'] > 0) {
+        $_SESSION['lC_ShoppingCart_data']['order_totals'][] = array('code' => 'coupon',
+                                                                    'title' => $val['title'] . ':&nbsp;<span onclick="removeCoupon(\'' . $code . '\');" style="white-space:nowrap; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/default/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '</span>',
+                                                                    'text' => $lC_Currencies->format($val['total']),
+                                                                    'value' => $val['total'],
+                                                                    'sort_order' => (int)MODULE_ORDER_TOTAL_COUPON_SORT_ORDER);
+      }
+    } 
+    
+    // sort the array
+    $i = 0;
+    $otArr = array();
+    foreach ($lC_ShoppingCart->getOrderTotals() as $key => $module) {
+      if ($module['code'] == 'coupon') {
+        $sort = (int)MODULE_ORDER_TOTAL_COUPON_SORT_ORDER + $i;
+        $i++;
+      } else {
+        $sort = $module['sort_order'];
+      }
+      $otArr[$sort] = $module;
+    } 
+    ksort($otArr); 
+    
+    $_SESSION['lC_ShoppingCart_data']['order_totals'] = $otArr;   
   }
 }
 ?>
