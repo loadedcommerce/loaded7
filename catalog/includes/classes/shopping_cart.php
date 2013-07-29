@@ -60,9 +60,13 @@ class lC_ShoppingCart {
     $this->_order_totals =& $_SESSION['lC_ShoppingCart_data']['order_totals'];
   }
 
-  public function refresh() {
-    if ( !isset($_SESSION['cartID']) ) {
-      $this->_calculate();
+  public function refresh($recalc = false) {
+    if ($recalc !== false) {
+      $this->_calculate(true, true);
+    } else {
+      if (!isset($_SESSION['cartID'])) {
+        $this->_calculate();
+      }
     }
   }
 
@@ -971,6 +975,10 @@ class lC_ShoppingCart {
   public function addTaxAmount($amount) {
     $this->_tax += $amount;
   }
+  
+  public function addDiscountAmount($amount) {
+    $this->_discount += $amount;
+  }  
 
   public function numberOfTaxGroups() {
     return sizeof($this->_tax_groups);
@@ -991,6 +999,10 @@ class lC_ShoppingCart {
   public function addToTotal($amount) {
     $this->_total += $amount;
   }
+  
+  public function subtractFromTotal($amount) {
+    $this->_total -= $amount;
+  }  
 
   public function getOrderTotals() {
     return $this->_order_totals;
@@ -1028,8 +1040,8 @@ class lC_ShoppingCart {
     }
   }
 
-  private function _calculate($set_shipping = true) {
-    global $lC_Currencies, $lC_Tax, $lC_Weight, $lC_Shipping, $lC_Database, $lC_OrderTotal, $lC_Services, $lC_Vqmod;
+  private function _calculate($set_shipping = true, $generate_id = true) {
+    global $lC_Currencies, $lC_Tax, $lC_Weight, $lC_Shipping, $lC_Database, $lC_OrderTotal, $lC_Services, $lC_Coupons, $lC_Vqmod;
 
     $this->_sub_total = 0;
     $this->_total = 0;
@@ -1041,7 +1053,7 @@ class lC_ShoppingCart {
     $this->_shipping_quotes = array();
     $this->_order_totals = array();
 
-    $_SESSION['cartID'] = $this->generateCartID();
+    if ($generate_id) $_SESSION['cartID'] = $this->generateCartID();
 
     if ( $this->hasContents() ) {
       foreach ( $this->_contents as $data ) {
@@ -1070,6 +1082,14 @@ class lC_ShoppingCart {
           $this->_tax_groups[$tax_description] += $tax_amount;
         } else {
           $this->_tax_groups[$tax_description] = $tax_amount;
+        }
+      }
+      
+      // coupons
+      if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED))) {
+        if ($lC_Coupons->hasContents()) {
+          $discount = $lC_Coupons->getTotalDiscount();
+          $this->_total -= $discount;
         }
       }
       

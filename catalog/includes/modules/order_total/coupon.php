@@ -34,7 +34,7 @@ class lC_OrderTotal_coupon extends lC_OrderTotal {
     global $lC_Coupons, $lC_Currencies;
            
     foreach ($lC_Coupons->getAll() as $code => $val) {
-      if ($val['total'] > 0) {
+      if ($val['total'] > 0) {               
         $this->output[] = array('title' => $val['title'] . ' <span onclick="removeCoupon(\'' . $code . '\');" style="white-space:nowrap; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/default/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '</span>',
                                 'text' => $lC_Currencies->format($val['total']),
                                 'value' => $val['total']);

@@ -31,7 +31,7 @@ class lC_Coupons {
   
   // public methods
   public function addEntry($code) {
-    global $lC_Coupons, $lC_ShoppingCart;
+    global $lC_Coupons, $lC_ShoppingCart, $lC_OrderTotal;
     
     $cInfo = $lC_Coupons->_getData($code);
          
@@ -39,15 +39,15 @@ class lC_Coupons {
       if ($lC_Coupons->_isValid($cInfo)) {
 
         $name = $cInfo['name'];
-        $discount = $this->_calculate($cInfo['reward']);
+        $discount = 10.00;
 
         $this->_contents[$code] = array('title' => $name . ' (' . $code . ')',
                                         'total' => $discount); 
-                                        
+
         $this->_refreshCouponOrderTotals();
-        
-        $lC_ShoppingCart->addToTotal($discount);
-        
+                                        
+        $lC_ShoppingCart->refresh(true);
+
         return 1;                                              
       } else {
         // coupon not valid
@@ -64,17 +64,24 @@ class lC_Coupons {
   public function removeEntry($code) {
     global $lC_ShoppingCart;
     
-    if (array_key_exists($code, $this->_contents)) {
-    
-      $discount = (float)$this->_contents[$code]['total'] * -1;
-      
+    if (array_key_exists($code, $this->_contents)) {    
       unset($this->_contents[$code]);
-
-      $this->_refreshCouponOrderTotals();      
-      
-      $lC_ShoppingCart->addToTotal($discount);
+      $this->_refreshCouponOrderTotals();
+      $lC_ShoppingCart->refresh(true);
     }    
+
     return true;
+  }
+  
+  public function getTotalDiscount() {
+    global $lC_ShoppingCart;
+    
+    $dTotal = 0;
+    foreach ($this->_contents as $key => $module) {
+      $dTotal += (float)$module['total'];
+    }    
+
+    return $dTotal;
   }
   
   public function reset() {
@@ -105,10 +112,12 @@ class lC_Coupons {
   
   private function _isValid($cInfo) {
     return true;
-  }
+  }   
   
-  private function _calculate($cInfo) {
-    return -10.00;
+  private function _calculate() {
+    $ret = (float)-10.00;
+    
+    return $ret;
   }  
    
   private function _refreshCouponOrderTotals() {
