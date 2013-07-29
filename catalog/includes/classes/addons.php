@@ -11,6 +11,8 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+require_once(DIR_FS_CATALOG . 'includes/classes/addon.php');
+
 class lC_Addons {
   
   private $_data;
