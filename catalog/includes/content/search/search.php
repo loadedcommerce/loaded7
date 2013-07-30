@@ -49,7 +49,7 @@ class lC_Search_Search extends lC_Template {
     global $lC_Language, $lC_MessageStack, $lC_Search, $Qlisting, $lC_Vqmod;
 
     require_once($lC_Vqmod->modCheck('includes/classes/search.php'));
-    if (isset($_GET['datefrom'])){
+    if (isset($_GET['datefrom']) && $_GET['datefrom'] != ''){
       $dateParts = explode("/", $_GET['datefrom']);
       if (isset($_GET['datefrom']) && checkdate($dateParts[0], $dateParts[1], $dateParts[2])) {
         $data['datefrom'] = @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2]);
@@ -58,7 +58,7 @@ class lC_Search_Search extends lC_Template {
       }
     }
 
-    if (isset($_GET['dateto'])){
+    if (isset($_GET['dateto']) && $_GET['dateto'] != ''){
       $dateParts = explode("/", $_GET['dateto']);
       if (isset($_GET['dateto']) && checkdate($dateParts[0], $dateParts[1], $dateParts[2])) {
         $data['dateto'] = @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2]);
