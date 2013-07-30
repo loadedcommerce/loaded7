@@ -39,7 +39,12 @@ define('RPC_STATUS_NO_ACTION', -70);
 define('RPC_STATUS_ACTION_NONEXISTENT', -71); 
 
 if ( !isset($_SESSION['admin']) ) {
-  if (isset($_GET['action']) && $_GET['action'] == 'validateLogin' || isset($_GET['action']) && $_GET['action'] == 'lostPasswordConfirmEmail' || isset($_GET['action']) && $_GET['action'] == 'lostPasswordConfirmKey') {
+  if ( // the following need no session to proceed
+      isset($_GET['action']) && $_GET['action'] == 'validateLogin' || 
+      isset($_GET['action']) && $_GET['action'] == 'lostPasswordConfirmEmail' || 
+      isset($_GET['action']) && $_GET['action'] == 'lostPasswordConfirmKey' ||  
+      isset($_GET['action']) && $_GET['action'] == 'passwordChange'
+      ) {
   } else {     
     echo json_encode(array('rpcStatus' => RPC_STATUS_NO_SESSION));
     exit;

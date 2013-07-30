@@ -21,7 +21,7 @@
       <div id="form-viewport">
         <form id="form-password-change" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=password_success'); ?>" class="input-wrapper blue-gradient glossy" method="post">
           <h3 class="align-center"><?php echo $lC_Language->get('heading_change_password'); ?></h3>
-          <p class="mid-margin-bottom small-margin-left"><?php echo $lC_Language->get('text_for_login'); ?>: email@here.com</p>
+          <p class="mid-margin-bottom small-margin-left"><?php echo $lC_Language->get('text_for_login'); ?>: <?php echo $_SESSION['user_confirmed_email']; ?></p>
           <ul class="inputs black-input medium">
             <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
             <!-- code these to be hidden on load, and turn to green check when password meets validation parameters -->
@@ -40,6 +40,7 @@
               <input type="password" name="passwordconfirm" id="passwordconfirm" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_confirm_password'); ?>" autocomplete="off" onkeyup="comparePass(this.value);">
             </li>
           </ul>
+          <input type="hidden" name="email" id="email" value="<?php echo $_SESSION['user_confirmed_email']; ?>">
           <p class="margin-bottom small-margin-left align-center"><?php echo $lC_Language->get('text_password_instructions_1') . ' ' . ACCOUNT_PASSWORD . ' ' . $lC_Language->get('text_password_instructions_2'); ?></p>
           <p class=" align-center mid-margin-bottom"><button type="submit" class="button glossy green-gradient full-width" id="submit-password" disabled><?php echo $lC_Language->get('button_submit'); ?></button></p>
         </form>
@@ -114,25 +115,20 @@
         $("#form-password-change").bind("submit", preventDefault(event));
 
         var nvp = $("#form-password-change").serialize();
-        alert('change password');
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        // update me if needed for password change specific needs
-        /////////////////////////////////////////////////////////////////////////////////////////////////////
-        /*var jsonLink = '<?php //echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=passwordChange&NVP'); ?>'; 
+        
+        // change the password, log the user in and continue to success page
+        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=passwordChange&NVP'); ?>'; 
         $.getJSON(jsonLink.replace('NVP', nvp),        
           function (data) {  
             if (data.rpcStatus == 1) { 
               $("#form-password-change").unbind("submit", preventDefault(event)).submit();
               return true;                  
             } 
-            displayError('<?php //echo $lC_Language->get('ms_error_login_invalid'); ?>');   
+            displayError('<?php echo $lC_Language->get('ms_error_password_change'); ?>');   
             return false;
           }              
-        );*/
+        );
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        // temporary testing - go to password change success page
-        $("#form-password-change").unbind("submit", preventDefault(event)).submit();
       }
     });
     /******* END OF EDIT SECTION *******/ 

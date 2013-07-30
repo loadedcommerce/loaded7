@@ -43,6 +43,7 @@ ms_success_logged_out = Success: You have been successfully logged out of this s
 ms_error_login_invalid = <strong>Authentication failed! Please try again.</strong>
 ms_error_user_invalid = No such user exists. Please try again.
 ms_error_key_invalid = The verification key you entered is invalid. Please try again.
+ms_error_password_change = There was an error. Please try again.
 
 text_send_new_password_instructions = If you have lost your password, enter your e-mail below and you will receive reset instructions shortly:
 text_register_instructions = Please enter your Product Serial below:
@@ -52,7 +53,7 @@ text_password_instructions_1 = Min chars
 text_password_instructions_2 = , Mixed case, 1 Number
 text_password_success = Success!
 text_success_message_1 = You have successfully reset your password.
-text_success_message_2 = Please login to access your admin.
+text_success_message_2 = Please continue to access your admin.
 text_enter_email = Please enter your email.
 text_invalid_email = Please enter a valid email.
 text_enter_password = Please enter your password.

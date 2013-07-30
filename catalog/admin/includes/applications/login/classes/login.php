@@ -62,7 +62,7 @@ class lC_Login_Admin {
       $Qsetkey->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
       $Qsetkey->bindValue(':user_name', $email);
       $Qsetkey->bindValue(':verify_key', Utility::generateUID());
-      $Qsetkey->setLogging($_SESSION['module'], 'login');
+      $Qsetkey->setLogging($_SESSION['module'], $email);
       $Qsetkey->execute();
       
       if ( !$lC_Database->isError() ) {
@@ -116,6 +116,49 @@ class lC_Login_Admin {
       }
     } else {
       $_SESSION['verify_key_valid'] = false;
+      return false;
+    }
+  }
+ /*
+  * Change the password and log the user in
+  *
+  * @access public
+  * @return array
+  */
+  public static function passwordChange($pass, $email) { 
+    global $lC_Database;
+    
+    $lC_Database->startTransaction();
+    
+    // update the password
+    $Qpass = $lC_Database->query('update :table_administrators set user_password = :user_password where user_name = :user_name');
+    $Qpass->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+    $Qpass->bindValue(':user_password', lc_encrypt_string(trim($pass)));
+    $Qpass->bindValue(':user_name', $email);
+    $Qpass->setLogging($_SESSION['module'], $email);
+    $Qpass->execute();
+    
+    // successful password update, move on
+    if ( !$lC_Database->isError() ) {
+      $lC_Database->commitTransaction();
+      
+      // get user info
+      $Qadmin = $lC_Database->query('select * from :table_administrators where user_name = :user_name');
+      $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+      $Qadmin->bindValue(':user_name', $email);
+      $Qadmin->execute();
+      
+      // set session info
+      $_SESSION['admin'] = array('id' => $Qadmin->valueInt('id'),
+                                 'firstname' => $Qadmin->value('first_name'),
+                                 'lastname' => $Qadmin->value('last_name'),
+                                 'username' => $Qadmin->value('user_name'),
+                                 'password' => $Qadmin->value('user_pasword'),
+                                 'access' => lC_Access::getUserLevels($Qadmin->valueInt('access_group_id')));
+      return true;
+    } else {
+      $lC_Database->rollbackTransaction();
+      
       return false;
     }
   }

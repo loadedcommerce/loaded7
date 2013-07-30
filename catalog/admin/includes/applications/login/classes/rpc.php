@@ -37,24 +37,6 @@ class lC_Login_Admin_rpc {
   }
   
  /*
-  * Change the admin password 
-  *
-  * @access public
-  * @return json
-  */
-  public static function passwordChange() {
-    $result = array();
-    $result['rpcStatus'] = 0;
-    $validated = lC_Login_Admin::passwordChange($_GET['pass']);
-    if ($validated) {
-      $result['rpcStatus'] = 1;
-    }
-
-    echo json_encode($result);
-    exit();
-  }
-  
- /*
   * Send the admin lost password email
   *
   * @access public
@@ -100,6 +82,24 @@ class lC_Login_Admin_rpc {
     $result = array();
     $result['rpcStatus'] = 0;
     $validated = lC_Login_Admin::lostPasswordConfirmKey($_GET['key'], $_GET['email']);
+    if ($validated) {
+      $result['rpcStatus'] = 1;
+    }
+
+    echo json_encode($result);
+    exit();
+  }
+  
+ /*
+  * Check to verify the lost password key before sending to change password screen 
+  *
+  * @access public
+  * @return json
+  */
+  public static function passwordChange() {
+    $result = array();
+    $result['rpcStatus'] = 0;
+    $validated = lC_Login_Admin::passwordChange($_GET['password'], $_GET['email']);
     if ($validated) {
       $result['rpcStatus'] = 1;
     }
