@@ -13,7 +13,7 @@
 */
 if ($lC_MessageStack->size('checkout_shipping') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('checkout_shipping', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
-}
+} 
 ?>
 <!--content/checkout/checkout_shipping.php start-->
 <div id="checkout_shipping_details" class="full_page">
@@ -57,7 +57,6 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
                   }
                 ?>            
               </div>
-              <div style="padding:10px; display:hidden;" class="show-on-mobile mobile-coupon-tip">You will be able to apply coupons on the confirmation page.</div>
               <div id="checkout_shipping_col1" style="width:35%; float:left;">
                 <div id="ship-to-address-block">
                   <h3><?php echo $lC_Language->get('ship_to_address'); ?></h3>
@@ -80,7 +79,6 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
                     <div style="clear:both;"></div>
                     <?php } ?>
                 </div>
-                <div style="padding:10px;" class="hide-on-mobile">You will be able to apply coupons on the confirmation page.</div>
               </div>
               <div id="checkout_shipping_col2" style="width:60%; float:right;">
                 <?php

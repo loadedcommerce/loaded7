@@ -62,7 +62,7 @@ class lC_ShoppingCart {
 
   public function refresh($recalc = false) {
     if ($recalc !== false) {
-      $this->_calculate(true, true);
+      $this->_calculate(false, false);
     } else {
       if (!isset($_SESSION['cartID'])) {
         $this->_calculate();
@@ -1084,7 +1084,7 @@ class lC_ShoppingCart {
           $this->_tax_groups[$tax_description] = $tax_amount;
         }
       }
-      
+           
       // coupons
       if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED))) {
         if ($lC_Coupons->hasContents()) {

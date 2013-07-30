@@ -191,7 +191,7 @@ class lC_Order {
       $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
       $Qtotals->bindInt(':orders_id', $insert_id);
       $Qtotals->bindValue(':title', strip_tags($module['title']));
-      $Qtotals->bindValue(':text', $module['text']);
+      $Qtotals->bindValue(':text', strip_tags($module['text']));
       $Qtotals->bindValue(':value', $module['value']);
       $Qtotals->bindValue(':class', $module['code']);
       $Qtotals->bindInt(':sort_order', $module['sort_order']);
@@ -396,7 +396,7 @@ class lC_Order {
       $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
       $Qtotals->bindInt(':orders_id', $order_id);
       $Qtotals->bindValue(':title', strip_tags($module['title']));
-      $Qtotals->bindValue(':text', $module['text']);
+      $Qtotals->bindValue(':text', strip_tags($module['text']));
       $Qtotals->bindValue(':value', $module['value']);
       $Qtotals->bindValue(':class', $module['code']);
       $Qtotals->bindInt(':sort_order', $module['sort_order']);

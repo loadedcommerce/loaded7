@@ -44,9 +44,8 @@ class lC_Coupons {
         $this->_contents[$code] = array('title' => $name . ' (' . $code . ')',
                                         'total' => $discount); 
 
-        $this->_refreshCouponOrderTotals();
-                                        
         $lC_ShoppingCart->refresh(true);
+        $this->_refreshCouponOrderTotals();
 
         return 1;                                              
       } else {
@@ -66,8 +65,9 @@ class lC_Coupons {
     
     if (array_key_exists($code, $this->_contents)) {    
       unset($this->_contents[$code]);
-      $this->_refreshCouponOrderTotals();
       $lC_ShoppingCart->refresh(true);
+      $this->_refreshCouponOrderTotals();
+
     }    
 
     return true;
@@ -90,6 +90,25 @@ class lC_Coupons {
   
   public function getAll() {
     return $this->_contents;
+  }
+  
+  public function save($data) {
+    global $lC_Database, $lC_Customer;
+
+    if ( is_numeric($id) ) {
+      $Qredeemed = $lC_Database->query('update :table_coupons_redeemed set coupons_id = :coupons_id, customers_id = :customers_id, redeem_date = now(), redeem_ip = :redeem_ip, order_id = :order_id where coupons_id = :coupons_id and order_id = :order_id');
+    } else {
+      $Qredeemed = $lC_Database->query('insert into :table_coupons_redeemed (coupons_id, customers_id, redeem_date, redeem_ip, order_id) values (:coupons_id, :customers_id, now(), :redeem_ip, :order_id)');
+    }    
+
+    $Qredeemed->bindTable(':table_coupons_redeemed', TABLE_COUPONS_REDEEMED);
+    $Qredeemed->bindInt(':coupons_id', $data['coupons_id']);
+    $Qredeemed->bindInt(':customers_id', $lC_Customer->getID());
+    $Qredeemed->bindValue(':redeem_ip', lc_get_ip_address());
+    $Qredeemed->bindInt(':order_id', $data['order_id']);
+    $Qredeemed->execute();
+
+    return ( $Qredeemed->affectedRows() === 1 );    
   }
   
   public function hasContents() {
@@ -134,8 +153,8 @@ class lC_Coupons {
     foreach ($lC_Coupons->getAll() as $code => $val) {
       if ($val['total'] > 0) {
         $_SESSION['lC_ShoppingCart_data']['order_totals'][] = array('code' => 'coupon',
-                                                                    'title' => $val['title'] . ':&nbsp;<span onclick="removeCoupon(\'' . $code . '\');" style="white-space:nowrap; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/default/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '</span>',
-                                                                    'text' => $lC_Currencies->format($val['total']),
+                                                                    'title' => $val['title'],
+                                                                    'text' => '<span onclick="removeCoupon(\'' . $code . '\');" style="padding:0; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/default/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '&nbsp;' . $lC_Currencies->format($val['total']) . '</span>',
                                                                     'value' => $val['total'],
                                                                     'sort_order' => (int)MODULE_ORDER_TOTAL_COUPON_SORT_ORDER);
       }
