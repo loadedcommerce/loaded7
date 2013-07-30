@@ -241,6 +241,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>button_save</key>
+      <value><![CDATA[Save]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>apply_discount_code</key>
       <value><![CDATA[Apply Code]]></value>
       <group>general</group>
@@ -776,37 +781,37 @@
       <group>account</group>
     </definition>
     <definition>
-      <key>newsletter_product_notifications</key>
+      <key>product_notifications</key>
       <value><![CDATA[My Product Notifications]]></value>
       <group>account</group>
     </definition>
     <definition>
-      <key>newsletter_product_notifications_description</key>
+      <key>product_notifications_description</key>
       <value><![CDATA[The product notification list allows you to stay up to date on products you find of interest.<br /><br />To be up to date on all product changes, select <b>Global Product Notifications</b>.]]></value>
       <group>account</group>
     </definition>
     <definition>
-      <key>newsletter_product_notifications_global</key>
+      <key>product_notifications_global</key>
       <value><![CDATA[Global Product Notifications]]></value>
       <group>account</group>
     </definition>
     <definition>
-      <key>newsletter_product_notifications_global_description</key>
+      <key>product_notifications_global_description</key>
       <value><![CDATA[Recieve notifications on all available products.]]></value>
       <group>account</group>
     </definition>
     <definition>
-      <key>newsletter_product_notifications_products</key>
+      <key>product_notifications_products</key>
       <value><![CDATA[Product Notifications]]></value>
       <group>account</group>
     </definition>
     <definition>
-      <key>newsletter_product_notifications_products_description</key>
+      <key>product_notifications_products_description</key>
       <value><![CDATA[To remove a product notification, clear the products checkbox and click on Continue.]]></value>
       <group>account</group>
     </definition>
     <definition>
-      <key>newsletter_product_notifications_products_none</key>
+      <key>product_notifications_products_none</key>
       <value><![CDATA[There are currently no products marked to be notified on.<br /><br />To add products to your product notification list, click on the notification link available on the detailed product information page.]]></value>
       <group>account</group>
     </definition>
