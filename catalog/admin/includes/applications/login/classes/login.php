@@ -71,7 +71,10 @@ class lC_Login_Admin {
         $_SESSION['user_not_exists'] = null;
         $_SESSION['user_confirmed_email'] = $email;
         
-        // send off email here      
+        // send verification email
+        //$email_text .= sprintf($lC_Language->get('email_password_reminder_body'), getenv('REMOTE_ADDR'), STORE_NAME, $password, STORE_OWNER_EMAIL_ADDRESS);
+
+        //lc_email($Qcheck->valueProtected('customers_firstname') . ' ' . $Qcheck->valueProtected('customers_lastname'), $Qcheck->valueProtected('customers_email_address'), sprintf($lC_Language->get('email_password_reminder_subject'), STORE_NAME), $email_text, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
         
         return true;
       } else {
