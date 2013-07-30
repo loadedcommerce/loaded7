@@ -75,7 +75,7 @@
                   foreach (lC_Success::getOrderProducts($oID) as $products) {
                     echo '<tr class="success-products-listing-row">' . "\n" .
                          '<td width="30"><b>' . $products['quantity'] . '&nbsp;x&nbsp;</b></td>' . "\n" .
-                         '<td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
+                         '<td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model purple">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
 
                     if ( is_array($products['options']) && empty($products['options']) === false ) {
                       foreach ( $products['options'] as $key => $val) {
@@ -124,7 +124,7 @@
                   $products_displayed = array();
                   for ($i=0, $n=sizeof($products_array); $i<$n; $i++) {
                     if (!in_array($products_array[$i]['id'], $products_displayed)) {
-                      echo '<div class="productsNotifications">' . lc_draw_checkbox_field('notify[]', $products_array[$i]['id']) . ' ' . $products_array[$i]['text'] . '</div>';
+                      echo '<div class="productsNotifications">' . lc_draw_checkbox_field('notify[]', $products_array[$i]['id']) . ' <b>' . $products_array[$i]['text'] . '</b></div>';
                       $products_displayed[] = $products_array[$i]['id'];
                     }
                   }
