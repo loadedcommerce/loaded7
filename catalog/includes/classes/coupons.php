@@ -92,23 +92,40 @@ class lC_Coupons {
     return $this->_contents;
   }
   
-  public function save($data) {
+  public function redeem($code, $order_id) {
     global $lC_Database, $lC_Customer;
+    
+    if ($code == null) return false;
+    
+    $cInfo = $this->_getData($code);  
+    
+    if (isset($cInfo['coupons_id']) && empty($cInfo['coupons_id']) === false) {
+    
+      $Qchk = $lC_Database->query('select id from :table_coupons_redeemed where coupons_id = :coupons_id and order_id = :order_id limit 1)');
+      $Qchk->bindTable(':table_coupons_redeemed', TABLE_COUPONS_REDEEMED);
+      $Qchk->bindInt(':coupons_id', $cInfo['coupons_id']);
+      $Qchk->bindInt(':order_id', $order_id);
+      $Qchk->execute();
+      
+      if ($Qchk->numberOfRows() > 0) {
+        $Qredeemed = $lC_Database->query('update :table_coupons_redeemed set coupons_id = :coupons_id, customers_id = :customers_id, redeem_date = now(), redeem_ip = :redeem_ip, order_id = :order_id where coupons_id = :coupons_id and order_id = :order_id ');
+      } else {
+        $Qredeemed = $lC_Database->query('insert into :table_coupons_redeemed (coupons_id, customers_id, redeem_date, redeem_ip, order_id) values (:coupons_id, :customers_id, now(), :redeem_ip, :order_id)');
+      }
+      
+      $Qredeemed->bindTable(':table_coupons_redeemed', TABLE_COUPONS_REDEEMED);
+      $Qredeemed->bindInt(':coupons_id', $cInfo['coupons_id']);
+      $Qredeemed->bindInt(':customers_id', $lC_Customer->getID());
+      $Qredeemed->bindValue(':redeem_ip', lc_get_ip_address());
+      $Qredeemed->bindInt(':order_id', $order_id);
+      $Qredeemed->execute();
 
-    if ( is_numeric($id) ) {
-      $Qredeemed = $lC_Database->query('update :table_coupons_redeemed set coupons_id = :coupons_id, customers_id = :customers_id, redeem_date = now(), redeem_ip = :redeem_ip, order_id = :order_id where coupons_id = :coupons_id and order_id = :order_id');
-    } else {
-      $Qredeemed = $lC_Database->query('insert into :table_coupons_redeemed (coupons_id, customers_id, redeem_date, redeem_ip, order_id) values (:coupons_id, :customers_id, now(), :redeem_ip, :order_id)');
-    }    
-
-    $Qredeemed->bindTable(':table_coupons_redeemed', TABLE_COUPONS_REDEEMED);
-    $Qredeemed->bindInt(':coupons_id', $data['coupons_id']);
-    $Qredeemed->bindInt(':customers_id', $lC_Customer->getID());
-    $Qredeemed->bindValue(':redeem_ip', lc_get_ip_address());
-    $Qredeemed->bindInt(':order_id', $data['order_id']);
-    $Qredeemed->execute();
-
-    return ( $Qredeemed->affectedRows() === 1 );    
+      $Qchk->freeResult();
+      
+      return ( $Qredeemed->affectedRows() === 1 );    
+    }
+    
+    return false;
   }
   
   public function hasContents() {
@@ -134,7 +151,7 @@ class lC_Coupons {
   }   
   
   private function _calculate() {
-    $ret = (float)-10.00;
+    $ret = 10.00;
     
     return $ret;
   }  

@@ -14,7 +14,7 @@
 if ($lC_MessageStack->size('shopping_cart') > 0) {
   if (isset($_SESSION['messageToStack']) && $_SESSION['messageToStack'] != NULL) $lC_MessageStack = new lC_MessageStack();
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('shopping_cart', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
-}
+}  
 ?>
 <!--content/checkout/shopping_cart.php start-->
 <div id="shopping_cart_content" class="full_page">

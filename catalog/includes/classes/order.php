@@ -101,7 +101,7 @@ class lC_Order {
   }
 
   public function insert($status = 1) {
-    global $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Tax;
+    global $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Coupons, $lC_Tax;
        
     if (isset($_SESSION['prepOrderID'])) {
       $_prep = explode('-', $_SESSION['prepOrderID']);
@@ -131,7 +131,7 @@ class lC_Order {
       $payment_method = $GLOBALS['lC_Payment_' . $lC_ShoppingCart->getBillingMethod('id')]->getCode();
     } else if (isset($_SESSION['cartSync']['paymentMethod']) && $_SESSION['cartSync']['paymentMethod'] != NULL) {
       $payment_method = $_SESSION['cartSync']['paymentMethod'];
-    }      
+    }    
     
     $Qorder = $lC_Database->query('insert into :table_orders (customers_id, customers_name, customers_company, customers_street_address, customers_suburb, customers_city, customers_postcode, customers_state, customers_state_code, customers_country, customers_country_iso2, customers_country_iso3, customers_telephone, customers_email_address, customers_address_format, customers_ip_address, delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state, delivery_state_code, delivery_country, delivery_country_iso2, delivery_country_iso3, delivery_address_format, billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state, billing_state_code, billing_country, billing_country_iso2, billing_country_iso3, billing_address_format, payment_method, payment_module, date_purchased, orders_status, currency, currency_value) values (:customers_id, :customers_name, :customers_company, :customers_street_address, :customers_suburb, :customers_city, :customers_postcode, :customers_state, :customers_state_code, :customers_country, :customers_country_iso2, :customers_country_iso3, :customers_telephone, :customers_email_address, :customers_address_format, :customers_ip_address, :delivery_name, :delivery_company, :delivery_street_address, :delivery_suburb, :delivery_city, :delivery_postcode, :delivery_state, :delivery_state_code, :delivery_country, :delivery_country_iso2, :delivery_country_iso3, :delivery_address_format, :billing_name, :billing_company, :billing_street_address, :billing_suburb, :billing_city, :billing_postcode, :billing_state, :billing_state_code, :billing_country, :billing_country_iso2, :billing_country_iso3, :billing_address_format, :payment_method, :payment_module, now(), :orders_status, :currency, :currency_value)');
     $Qorder->bindTable(':table_orders', TABLE_ORDERS);
@@ -190,13 +190,13 @@ class lC_Order {
       $Qtotals = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values (:orders_id, :title, :text, :value, :class, :sort_order)');
       $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
       $Qtotals->bindInt(':orders_id', $insert_id);
-      $Qtotals->bindValue(':title', strip_tags($module['title']));
-      $Qtotals->bindValue(':text', strip_tags($module['text']));
+      $Qtotals->bindValue(':title', $module['title']);
+      $Qtotals->bindValue(':text', strip_tags(str_replace('&nbsp;', '', $module['text'])));
       $Qtotals->bindValue(':value', $module['value']);
       $Qtotals->bindValue(':class', $module['code']);
       $Qtotals->bindInt(':sort_order', $module['sort_order']);
       $Qtotals->execute();
-    }
+    }    
 
     $Qstatus = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments)');
     $Qstatus->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
@@ -205,8 +205,6 @@ class lC_Order {
     $Qstatus->bindInt(':customer_notified', '0');
     $Qstatus->bindValue(':comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : ''));
     $Qstatus->execute();
-
-    
 
     foreach ($lC_ShoppingCart->getProducts() as $products) {
       $Qproducts = $lC_Database->query('insert into :table_orders_products (orders_id, products_id, products_model, products_name, products_price, products_tax, products_quantity, products_simple_options_meta_data) values (:orders_id, :products_id, :products_model, :products_name, :products_price, :products_tax, :products_quantity, :products_simple_options_meta_data)');
@@ -271,7 +269,7 @@ class lC_Order {
   }
   
   public function process($order_id, $status_id = '') {
-    global $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Tax;
+    global $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Coupons, $lC_Tax;
 
     if (empty($status_id) || (is_numeric($status_id) === false)) {
       $status_id = DEFAULT_ORDERS_STATUS_ID;
@@ -395,12 +393,17 @@ class lC_Order {
       $Qtotals = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values (:orders_id, :title, :text, :value, :class, :sort_order)');
       $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
       $Qtotals->bindInt(':orders_id', $order_id);
-      $Qtotals->bindValue(':title', strip_tags($module['title']));
-      $Qtotals->bindValue(':text', strip_tags($module['text']));
+      $Qtotals->bindValue(':title', $module['title']);
+      $Qtotals->bindValue(':text', strip_tags(str_replace('&nbsp;', '', $module['text'])));
       $Qtotals->bindValue(':value', $module['value']);
       $Qtotals->bindValue(':class', $module['code']);
       $Qtotals->bindInt(':sort_order', $module['sort_order']);
       $Qtotals->execute();
+      
+      if ($lC_Coupons->is_enabled) {
+        preg_match('#\((.*?)\)#', $module['title'], $match);
+        $lC_Coupons->redeem($match[1], $order_id); 
+      }      
     }      
 
     $Qpd = $lC_Database->query('delete from :table_orders_products where orders_id = :orders_id');
