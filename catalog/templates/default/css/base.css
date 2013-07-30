@@ -624,10 +624,12 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 
 .accountHistory-odd {
   background-color: #EEEEF8;
+  cursor: pointer;
 }
 
 .accountHistory-even {
   background-color: #F8F8F9;
+  cursor: pointer;
 }
 
 .listingPageLinks {

@@ -74,7 +74,7 @@ $db_table_types = array(array('id' => 'mysqli', 'text' => 'MySQL - MyISAM (Defau
       rules: {
         DB_SERVER: { required: true },
         DB_SERVER_USERNAME: { required: true },
-        DB_SERVER_PASSWORD: { required: true },
+        DB_SERVER_PASSWORD: { required: false },
         DB_DATABASE: { required: true },
         DB_DATABASE_CLASS: { required: true },
         DB_TABLE_PREFIX: { required: false },
