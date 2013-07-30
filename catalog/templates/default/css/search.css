@@ -478,32 +478,43 @@ body.fd-drag-active
 {
   -webkit-user-select:none;
 }
+input, select, textarea {
+  font-size: 12px;
+  min-width: 155px;
+  padding: 5px;
+}
+input[type="checkbox"] {
+  margin-left: -70px;
+}
+@media only screen and (max-width: 479px) {
+  .action_buttonbar button { padding: 8px 14px; }
+}
 /* Chrome has problems with the -webkit-box-shadow and -webkit-border-radius styles together 
 Remove one or the other to get things looking less ugly */       
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   div.datePicker table
+    {
+    border-spacing:0.3em;
+    /* Naughty, naughty */
+    -webkit-box-shadow:0px 0px 5px #aaa;                 
+    -webkit-border-radius:0.8em;                
+  }          
+  div.static-datepicker table
   {
-  border-spacing:0.3em;
-  /* Naughty, naughty */
-  -webkit-box-shadow:0px 0px 5px #aaa;                 
-  -webkit-border-radius:0.8em;                
-}          
-div.static-datepicker table
-{
-  -webkit-box-shadow:0 0 0 transparent;
-} 
-div.datepicker-focus table
-{        
-  -webkit-box-shadow:0px 0px 5px #aaa;       
-}       
-div.datePicker table td,
-div.datePicker table tbody th
-{
-  padding:0.1em;
-  -webkit-border-radius:2px;
-}
-div.datePicker table tbody td.date-picker-hover
-{                
-  -webkit-box-shadow:0px 0px 1px rgb(100,130,170);
-}       
+    -webkit-box-shadow:0 0 0 transparent;
+  } 
+  div.datepicker-focus table
+  {        
+    -webkit-box-shadow:0px 0px 5px #aaa;       
+  }       
+  div.datePicker table td,
+  div.datePicker table tbody th
+  {
+    padding:0.1em;
+    -webkit-border-radius:2px;
+  }
+  div.datePicker table tbody td.date-picker-hover
+  {                
+    -webkit-box-shadow:0px 0px 1px rgb(100,130,170);
+  }       
 }
