@@ -47,7 +47,7 @@
               <tr>
                 <td style="height:5px;" class="<?php echo $class; ?>" colspan="9"></td>
               </tr>
-              <tr id="orderListingRow" class="<?php echo $class; ?>" href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'receipt=' . $Qhistory->valueInt('orders_id'), 'SSL'); ?>">
+              <tr id="orderListingRow_<?php echo $Qhistory->valueInt('orders_id'); ?>" class="<?php echo $class; ?>" href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'receipt=' . $Qhistory->valueInt('orders_id'), 'SSL'); ?>">
                 <td style="width:5px;"></td>
                 <td style="width:35px; padding-right:5px; vertical-align:bottom; text-align:center;">
 
@@ -71,7 +71,7 @@
         </table>
         <script>
           $(document).ready(function(){
-              $('table tr').click(function(){
+              $('table tr:not(:first)').click(function(){
                   window.location = $(this).attr('href');
                   return false;
               });
