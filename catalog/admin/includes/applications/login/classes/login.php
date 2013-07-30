@@ -45,23 +45,27 @@ class lC_Login_Admin {
   * @return array
   */
   public static function lostPasswordConfirmEmail($email) {
-    global $lC_Database;
+    global $lC_Database, $lC_Language;
+    
+    $lC_Language->loadIniFile('login.php');
     
     // check for email
     $Qadmin = $lC_Database->query('select * from :table_administrators where user_name = :user_name');
     $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
     $Qadmin->bindValue(':user_name', $email);
     $Qadmin->execute();
-    
+    $admin = $Qadmin->toArray();
     // if email exists we continue
     if ( $Qadmin->numberOfRows() > 0) {
       $lC_Database->startTransaction();
+      
+      $verify_key = Utility::generateUID();
     
       // set the key to be verified from the resulting email
       $Qsetkey = $lC_Database->query('update :table_administrators set verify_key = :verify_key where user_name = :user_name');
       $Qsetkey->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
       $Qsetkey->bindValue(':user_name', $email);
-      $Qsetkey->bindValue(':verify_key', Utility::generateUID());
+      $Qsetkey->bindValue(':verify_key', $verify_key);
       $Qsetkey->setLogging($_SESSION['module'], $email);
       $Qsetkey->execute();
       
@@ -71,10 +75,18 @@ class lC_Login_Admin {
         $_SESSION['user_not_exists'] = null;
         $_SESSION['user_confirmed_email'] = $email;
         
+        // set email contents
+        $email_text = '';
+        $email_text .= sprintf($lC_Language->get('text_lost_password_verification_body_line_1'), $admin['first_name']) . "\n\n";
+        $email_text .= sprintf($lC_Language->get('text_lost_password_verification_body_line_2'), $admin['user_name']) . "\n\n";
+        $email_text .= sprintf($lC_Language->get('text_lost_password_verification_body_line_3'), lc_href_link_admin(FILENAME_DEFAULT, 'login&action=lost_password&email=' . $admin['user_name'] . '&key=' . $verify_key)) . "\n\n";
+        $email_text .= sprintf($lC_Language->get('text_lost_password_verification_body_line_4'), $verify_key) . "\n\n";
+        $email_text .= $lC_Language->get('text_lost_password_verification_body_line_5') . "\n\n";
+        $email_text .= $lC_Language->get('text_lost_password_verification_body_line_6') . "\n\n";
+        $email_text .= sprintf($lC_Language->get('text_lost_password_verification_body_line_7'), STORE_NAME) . "\n\n";
+        
         // send verification email
-        //$email_text .= sprintf($lC_Language->get('email_password_reminder_body'), getenv('REMOTE_ADDR'), STORE_NAME, $password, STORE_OWNER_EMAIL_ADDRESS);
-
-        //lc_email($Qcheck->valueProtected('customers_firstname') . ' ' . $Qcheck->valueProtected('customers_lastname'), $Qcheck->valueProtected('customers_email_address'), sprintf($lC_Language->get('email_password_reminder_subject'), STORE_NAME), $email_text, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
+        lc_email($Qadmin->valueProtected('first_name') . ' ' . $Qadmin->valueProtected('last_name'), $Qadmin->valueProtected('user_name'), sprintf($lC_Language->get('text_lost_password_verification_subject'), STORE_NAME), $email_text, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
         
         return true;
       } else {

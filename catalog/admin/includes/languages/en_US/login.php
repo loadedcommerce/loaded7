@@ -75,5 +75,14 @@ text_lost_password_no_user = We could not find any admin user with that email. P
 text_password_no_match = Passwords do not match. Please try again.
 text_password_requirements = Your password does not meet the minimum requirements. Please try again.
 
+text_lost_password_verification_subject = Forgotten Password Request for %s.
+text_lost_password_verification_body_line_1 = Dear %s,
+text_lost_password_verification_body_line_2 = Someone has requested a password reset for your email address, %s. If you requested this, than follow the link below to complete the password reset action. 
+text_lost_password_verification_body_line_3 = %s 
+text_lost_password_verification_body_line_4 = If the link above does not work, you can enter the VERIFICATION KEY of %s manually on the "Lost Password Key" page. 
+text_lost_password_verification_body_line_5 = If you did not request this action, ingore it, no updates have been made and your existing password has not been changed. 
+text_lost_password_verification_body_line_6 = Sincerly, 
+text_lost_password_verification_body_line_7 = Your Loaded 7 System for %s. 
+
 title_register = Register
 title_lost_password = Lost Password

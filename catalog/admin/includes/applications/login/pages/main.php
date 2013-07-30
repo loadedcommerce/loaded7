@@ -33,7 +33,7 @@
             <span class="block-arrow"><span></span></span>
           </p>
           <ul class="inputs black-input large">
-            <li><span class="icon-mail mid-margin-right"></span><input type="email" name="password_email" id="password_email" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password_email'); ?>" autocomplete="off"></li>
+            <li><span class="icon-mail mid-margin-right"></span><input type="text" name="password_email" id="password_email" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password_email'); ?>" autocomplete="off"></li>
           </ul>
           <p class="full-width"><button type="submit" class="button glossy green-gradient full-width" id="lost-password"><?php echo $lC_Language->get('button_submit'); ?></button></p>
         </form>
@@ -163,13 +163,6 @@
       if (email.length === 0) {
         // Display message
         displayError('<?php echo $lC_Language->get('text_enter_email'); ?>');
-      } else if (!/^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(email)) {
-        // Remove empty email message if displayed
-        formWrapper.clearMessages('<?php echo $lC_Language->get('text_enter_email'); ?>');
-
-        // Display message
-        displayError('<?php echo $lC_Language->get('text_invalid_email'); ?>');
-        return false;
       } else {
         // Remove previous messages
         formWrapper.clearMessages();
