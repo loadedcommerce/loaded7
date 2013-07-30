@@ -26,7 +26,7 @@ $order = new lC_Order($_GET['receipt']);
       </div>
     </div>
     <div id="invoice-info">
-      <h2><?php echo $lC_Language->get('receipt_order_number_title'); ?> <?php echo $GET['receipt']; ?></h2>
+      <h2><?php echo $lC_Language->get('receipt_order_number_title'); ?> <?php echo $_GET['receipt']; ?></h2>
       <p id="payment-terms"><?php echo $lC_Language->get('receipt_order_date_title'); ?> <?php echo lC_DateTime::getShort($order->info['date_purchased']); ?></p>
       <p id="payment-terms"><?php echo $lC_Language->get('receipt_order_status_title'); ?> <?php echo  $order->info['orders_status']; ?></p>
       <p id="payment-terms"><?php echo $lC_Language->get('receipt_payment_method_title'); ?> <?php echo $order->info['payment_method']; ?></p>

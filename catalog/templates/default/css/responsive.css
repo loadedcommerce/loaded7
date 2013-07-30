@@ -123,6 +123,8 @@
   .checkout_tax .shipping_tax label { clear:left; margin-bottom:5px; }
   .checkout_tax .shipping_tax input[type="text"] { width:204px; }
   .checkout_tax .shipping_tax .brown_btn { margin-right:20px; }
+  .checkout_discount input[type="text"] { width:155px; }
+  .checkout_discount { margin-right: 0; }
 
   /*Checkout*/
   .checkout_steps { width:100%; }
@@ -269,7 +271,7 @@
   .single-bg { width:94% !important; }
 
   /* Cart */
-  .checkout_tax .shipping_tax, .checkout_tax .checkout_discount { width:310px; }
+  .checkout_tax .shipping_tax, .checkout_tax .checkout_discount { width:90%; }
   .message { padding:12px 12px 12px 75px; }
   .action_buttonbar { padding:5px; }
   #shopping-cart-table td:first-child { width:1%; }
@@ -282,7 +284,9 @@
   #shopping-cart-table tr td a.pr_name { font-size:12px; }
   .checkout_tax .shipping_tax label { float:left; width:24%; clear:left; }
   .checkout_tax .shipping_tax input[type="text"] { float:left; width:205px; }
-  .checkout_tax .checkout_discount { padding-left:0px; padding-right:0px; margin-top:10px; }
+  .checkout_tax .checkout_discount { padding-left:10px; padding-right:10px; }
+  .checkout_discount input[type="text"] { width:155px; }
+  .checkout_discount { margin-right: 0; }
 
   /*Checkout*/
   .checkout_steps { width:100%; }

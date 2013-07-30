@@ -14,7 +14,7 @@
 if ($lC_MessageStack->size('shopping_cart') > 0) {
   if (isset($_SESSION['messageToStack']) && $_SESSION['messageToStack'] != NULL) $lC_MessageStack = new lC_MessageStack();
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('shopping_cart', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
-}
+}  
 ?>
 <!--content/checkout/shopping_cart.php start-->
 <div id="shopping_cart_content" class="full_page">
@@ -50,7 +50,7 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
                   echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), strtolower($lC_Language->get('button_edit')), 'class="cart-edit hide-on-320"') . '</a>';
                   echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $products['name'], 'class="pr_name"') . '</a>';
                   if (!empty($products['model'])) {
-                    echo '<small>' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</small>';
+                    echo '<small class="purple">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</small>';
                   }
                   if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['item_id']) === false) ) {
                     echo '<span class="markProductOutOfStock">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>';
@@ -67,7 +67,7 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
                   }                             
                 ?>
               </td>
-              <td class="align_center vline hide-on-320"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td> 
+              <td class="align_center vline hide-on-320"><span><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td> 
               <td class="align_center vline"><?php echo lc_draw_input_field('products[' . $products['item_id'] . ']', $products['quantity'], 'class="qty_box"'); ?></td>
               <td class="align_center vline"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']); ?></span></td>
               <td class="align_center vline"><a href="javascript://" onclick="deleteItem('<?php echo $products['item_id']; ?>');"><?php echo lc_icon('cart_remove.png'); ?></a></td>
@@ -94,7 +94,7 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
               foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
               ?>
               <tr>
-                <td class="align_left<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>" style="padding-right:10px;"><?php echo $module['title']; ?></td>
+                <td class="align_right<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>" style="padding-right:10px;"><?php echo $module['title']; ?></td>
                 <td class="align_right<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>"><?php echo $module['text']; ?></td>
               </tr>
               <?php
@@ -111,8 +111,8 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
       <button type="button" onclick="location='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="checkout"><?php echo $lC_Language->get('button_checkout'); ?></button>
       <span class="buttonRight padding-right-15"><button type="button" class="continue" onclick="$('#shopping_cart').submit();"><?php echo $lC_Language->get('button_update'); ?></button></span>
     </div>
-    <!--
     <div class="checkout_tax">
+      <!--
       <div class="shipping_tax">
         <h4>Estimate Shipping and Tax</h4>
         <p>Enter your destination to get a shipping estimate.</p>
@@ -125,14 +125,16 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
         <select><option>Vancouver</option></select>
         <button type="button" title="" class="brown_btn">Get a Quote</button>
       </div>
+      -->
       <div class="checkout_discount">
-        <h4>Discount codes</h4>
-        <p>Enter your coupon code if you have one.</p>
-        <input type="text">
-        <button type="button" title="" class="brown_btn">Apply Coupon</button>
+        <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
+        <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
+        <form name="coupon" id="coupon" action="">
+          <input type="text" name="coupon_code" id="coupon_code">
+        </form>
+        <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
       </div>
     </div>
-     -->
     <?php
   } else {  
     ?>

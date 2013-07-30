@@ -2624,6 +2624,31 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>text_category_not_found</key>
       <value><![CDATA[We can not find the category you are looking for!]]></value>
       <group>index</group>
+    </definition>
+    <definition>
+      <key>text_coupon_code_heading</key>
+      <value><![CDATA[Coupon Code]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>text_coupon_code_instructions</key>
+      <value><![CDATA[Enter your coupon code if you have one.]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>text_apply_coupon</key>
+      <value><![CDATA[Apply Coupon]]></value>
+      <group>checkout</group>
     </definition>  
+    <definition>
+      <key>ms_error_coupon_not_found</key>
+      <value><![CDATA[Sorry we did not find the coupon code you entered.  Please check the code and try again.]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>ms_error_coupon_not_valid</key>
+      <value><![CDATA[Invalid coupon code.  Please check the code and try again.]]></value>
+      <group>checkout</group>
+    </definition>
   </definitions>
 </language>

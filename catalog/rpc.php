@@ -27,6 +27,7 @@ define('RPC_STATUS_NO_SESSION', -10);
 define('RPC_STATUS_CLASS_NONEXISTENT', -60);
 define('RPC_STATUS_METHOD_NONEXISTENT', -65);
 
+
 $module = $lC_Template->getCode();
 $class = 'rpc';
 $action = (isset($_GET['action']) && !empty($_GET['action'])) ? lc_sanitize_string(basename($_GET['action'])) : '';

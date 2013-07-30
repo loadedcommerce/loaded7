@@ -70,7 +70,7 @@ class lC_Checkout_Process extends lC_Template {
     include($lC_Vqmod->modCheck('includes/classes/order.php'));
 
     $lC_Payment->process();
-
+   
     $lC_ShoppingCart->reset(true);
 
     // unregister session variables used during checkout
