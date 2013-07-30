@@ -14,7 +14,7 @@
 ?>
 <script>
 function newClass() {
-  var accessLevel = '<?php echo $_SESSION['admin']['access']['definitions']; ?>';
+  var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 2) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
     return false;
