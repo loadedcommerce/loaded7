@@ -211,6 +211,17 @@ CREATE TABLE lc_coupons_description (
   PRIMARY KEY (coupons_id,language_id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_coupons_redeemed;
+CREATE TABLE lc_coupons_redeemed (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  coupons_id int(11) NOT NULL DEFAULT '0',
+  customers_id int(11) NOT NULL DEFAULT '0',
+  redeem_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  redeem_ip varchar(32) NOT NULL DEFAULT '',
+  order_id int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_credit_cards;
 CREATE TABLE lc_credit_cards (
   id int(11) NOT NULL AUTO_INCREMENT,
