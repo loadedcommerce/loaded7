@@ -89,7 +89,7 @@
                       }
                     }
                     echo '</td>' . "\n";
-                    echo '                <td style="float:right;"><b>' . $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']) . '</b></td>' . "\n" .
+                    echo '                <td style="float:right;">' . $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']) . '</td>' . "\n" .
                     '              </tr>' . "\n";
                   }
                 ?>
