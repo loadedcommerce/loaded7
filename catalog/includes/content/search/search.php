@@ -49,22 +49,24 @@ class lC_Search_Search extends lC_Template {
     global $lC_Language, $lC_MessageStack, $lC_Search, $Qlisting, $lC_Vqmod;
 
     require_once($lC_Vqmod->modCheck('includes/classes/search.php'));
-
-    if (isset($_GET['datefrom_days']) && is_numeric($_GET['datefrom_days']) && isset($_GET['datefrom_months']) && is_numeric($_GET['datefrom_months']) && isset($_GET['datefrom_years']) && is_numeric($_GET['datefrom_years'])) {
-      if (@checkdate($_GET['datefrom_months'], $_GET['datefrom_days'], $_GET['datefrom_years'])) {
-        $lC_Search->setDateFrom(mktime(0, 0, 0, $_GET['datefrom_months'], $_GET['datefrom_days'], $_GET['datefrom_years']));
+    if (isset($_GET['datefrom'])){
+      $dateParts = explode("/", $_GET['datefrom']);
+      if (isset($_GET['datefrom']) && checkdate($dateParts[0], $dateParts[1], $dateParts[2])) {
+        $data['datefrom'] = @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2]);
       } else {
         $lC_MessageStack->add('search', $lC_Language->get('error_search_invalid_from_date'));
       }
     }
 
-    if (isset($_GET['dateto_days']) && is_numeric($_GET['dateto_days']) && isset($_GET['dateto_months']) && is_numeric($_GET['dateto_months']) && isset($_GET['dateto_years']) && is_numeric($_GET['dateto_years'])) {
-      if (@checkdate($_GET['dateto_months'], $_GET['dateto_days'], $_GET['dateto_years'])) {
-        $lC_Search->setDateTo(mktime(23, 59, 59, $_GET['dateto_months'], $_GET['dateto_days'], $_GET['dateto_years']));
+    if (isset($_GET['dateto'])){
+      $dateParts = explode("/", $_GET['dateto']);
+      if (isset($_GET['dateto']) && checkdate($dateParts[0], $dateParts[1], $dateParts[2])) {
+        $data['dateto'] = @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2]);
       } else {
         $lC_MessageStack->add('search', $lC_Language->get('error_search_invalid_to_date'));
       }
     }
+
 
     if ($lC_Search->hasDateSet()) {
       if ($lC_Search->getDateFrom() > $lC_Search->getDateTo()) {

@@ -72,6 +72,23 @@ function check_form() {
   }
 }
 
+  // <![CDATA[       
+  var opts = {  
+    formElements:{"datefrom":"m-sl-d-sl-Y"},                  
+    cursorDate:"<?php echo date('YMM');?>"                  
+  };        
+  datePickerController.createDatePicker(opts);
+  // ]]>
+
+   // <![CDATA[       
+  var opts = {  
+    formElements:{"dateto":"m-sl-d-sl-Y"},                  
+    cursorDate:"<?php echo date('YMM');?>"                  
+  };        
+  datePickerController.createDatePicker(opts);
+  // ]]>
+
+
 function popupWindow(url) {
   window.open(url,'popupWindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no,width=450,height=280,screenX=150,screenY=150,top=150,left=150')
 }
