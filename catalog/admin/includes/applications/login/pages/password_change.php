@@ -23,21 +23,15 @@
           <h3 class="align-center"><?php echo $lC_Language->get('heading_change_password'); ?></h3>
           <p class="mid-margin-bottom small-margin-left"><?php echo $lC_Language->get('text_for_login'); ?>: <?php echo $_SESSION['user_confirmed_email']; ?></p>
           <ul class="inputs black-input medium">
-            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
-            <!-- code these to be hidden on load, and turn to green check when password meets validation parameters -->
-            <i class="icon-tick icon-green align-right" style="position:absolute; top:85px; right:25px;"></i>
-            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <i id="cpInput1" class="icon-cross icon-red align-right" style="position:absolute; top:85px; right:25px;"></i>
             <li class="with-small-padding small-margin-left small-margin-right">
               <span class="icon-lock small-margin-right"></span>
-              <input type="password" name="password" id="password" value="" class="input-unstyled with-small-padding" placeholder="<?php echo $lC_Language->get('placeholder_enter_password'); ?>" autocomplete="off">
+              <input type="password" name="password" id="password" value="" class="input-unstyled with-small-padding" placeholder="<?php echo $lC_Language->get('placeholder_enter_password'); ?>" autocomplete="off" onkeyup="validateRequirements1(this.value);">
             </li>
-            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
-            <!-- code these to be hidden on load, and turn to green check when password meets validation parameters -->
-            <i class="icon-cross icon-red align-right" style="position:absolute; top:125px; right:25px;"></i>
-            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            <i id="cpInput2" class="icon-cross icon-red align-right" style="position:absolute; top:125px; right:25px;"></i>
             <li class="with-small-padding small-margin-left small-margin-right">
               <span class="icon-lock small-margin-right"></span>
-              <input type="password" name="passwordconfirm" id="passwordconfirm" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_confirm_password'); ?>" autocomplete="off" onkeyup="comparePass(this.value);">
+              <input type="password" name="passwordconfirm" id="passwordconfirm" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_confirm_password'); ?>" autocomplete="off" onkeyup="comparePass(this.value);validateRequirements2(this.value);">
             </li>
           </ul>
           <input type="hidden" name="email" id="email" value="<?php echo $_SESSION['user_confirmed_email']; ?>">
@@ -285,6 +279,24 @@
       $("#submit-password").removeAttr("disabled");
     } else {
       $("#submit-password").attr("disabled", "disabled");
+    }
+  }
+  
+  function validateRequirements1(val) {
+    var containsDigits = /[0-9]/.test(val);
+    var containsUpper = /[A-Z]/.test(val);
+    var containsLower = /[a-z]/.test(val);
+    if (val.length >= '<?php echo ACCOUNT_PASSWORD; ?>' && containsDigits && containsUpper && containsLower) {
+      $("#cpInput1").removeClass("icon-cross icon-red").addClass("icon-tick icon-green");
+    }
+  }
+  
+  function validateRequirements2(val) {
+    var containsDigits = /[0-9]/.test(val);
+    var containsUpper = /[A-Z]/.test(val);
+    var containsLower = /[a-z]/.test(val);
+    if (val.length >= '<?php echo ACCOUNT_PASSWORD; ?>' && containsDigits && containsUpper && containsLower) {
+      $("#cpInput2").removeClass("icon-cross icon-red").addClass("icon-tick icon-green");
     }
   }
 </script>

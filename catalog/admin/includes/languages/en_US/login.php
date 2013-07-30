@@ -24,6 +24,7 @@ button_submit = Submit
 button_submit_activate = Submit and Activate
 button_back_to_login = Back to Login
 button_enter_admin = Enter Admin
+button_manual_verify = Verify Manually
 
 placeholder_activation_email = Email:
 placeholder_username = Email:
@@ -42,7 +43,7 @@ ms_updating_password = Updating password...
 ms_success_logged_out = Success: You have been successfully logged out of this system.
 ms_error_login_invalid = <strong>Authentication failed! Please try again.</strong>
 ms_error_user_invalid = No such user exists. Please try again.
-ms_error_key_invalid = The verification key you entered is invalid. Please try again.
+ms_error_key_invalid = Your verification is invalid. Please try again.
 ms_error_password_change = There was an error. Please try again.
 
 text_send_new_password_instructions = If you have lost your password, enter your e-mail below and you will receive reset instructions shortly:
@@ -74,6 +75,7 @@ text_email_missing = There has been an error. Please try again.
 text_lost_password_no_user = We could not find any admin user with that email. Please re-enter your admin email and try again.
 text_password_no_match = Passwords do not match. Please try again.
 text_password_requirements = Your password does not meet the minimum requirements. Please try again.
+text_manual_password_instructions = If you have a verification key already and wish to proceed manually with the verification process to change your password click the button below.
 
 text_lost_password_verification_subject = Forgotten Password Request for %s.
 text_lost_password_verification_body_line_1 = Dear %s,

@@ -38,7 +38,7 @@
             <li>
               <span class="icon-key mid-margin-right"></span>
               <input type="text" name="key" id="key" value="<?php echo (isset($_GET['key']) && $_GET['key'] != '') ? $_GET['key'] : ''; ?>" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_manual_key_entry'); ?>" autocomplete="off">
-              <input type="hidden" name="email" id="email" value="<?php echo (isset($_SESSION['user_confirmed_email']) ? $_SESSION['user_confirmed_email'] : $_GET['email']); ?>">
+              <input type="hidden" name="email" id="email" value="<?php echo (isset($_SESSION['user_confirmed_email'])) ? $_SESSION['user_confirmed_email'] : $_GET['email']; ?>">
             </li>
           </ul>
           <p class="small-margin-left no-margin-top">
@@ -109,11 +109,11 @@
         // Display message
         displayError('<?php echo $lC_Language->get('text_enter_key'); ?>');
         return false;
-      } else if (email.length === 0) {
+      } /*else if (email.length === 0) {
         // Display message
         displayError('<?php echo $lC_Language->get('text_email_missing'); ?>');
         return false;
-      } else {
+      } */else {
         // Remove previous messages
         formWrapper.clearMessages();
 
