@@ -25,7 +25,7 @@
             <li><span class="icon-user mid-margin-right"></span><input type="text" onfocus="$('#form-wrapper').clearMessages();" name="user_name" id="user_name" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_username'); ?>" autocomplete="on"></li>
             <li><span class="icon-lock mid-margin-right"></span><input type="password" onfocus="$('#form-wrapper').clearMessages();" name="user_password" id="user_password" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password'); ?>" autocomplete="on"></li>
           </ul>
-          <button type="submit" class="button glossy green-gradient full-width" id="login"><?php echo $lC_Language->get('button_login'); ?></button>
+          <p class="full-width"><button type="submit" class="button glossy green-gradient full-width" id="login"><?php echo $lC_Language->get('button_login'); ?></button></p>
         </form>
         <form id="form-lost-password" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=lost_password'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_lost_password'); ?>?">
           <p class="small-margin-left small-margin-right">
@@ -35,7 +35,7 @@
           <ul class="inputs black-input large">
             <li><span class="icon-mail mid-margin-right"></span><input type="email" name="password_email" id="password_email" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password_email'); ?>" autocomplete="off"></li>
           </ul>
-          <button type="submit" class="button glossy green-gradient full-width" id="lost-password"><?php echo $lC_Language->get('button_submit'); ?></button>
+          <p class="full-width"><button type="submit" class="button glossy green-gradient full-width" id="lost-password"><?php echo $lC_Language->get('button_submit'); ?></button></p>
         </form>
         <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
           <h3 class="align-center"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
@@ -44,7 +44,7 @@
           <ul class="inputs black-input large">
             <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="serial" id="serial" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
           </ul>
-          <button type="submit" class="button glossy red-gradient full-width" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button>
+          <p class="full-width"><button type="submit" class="button glossy red-gradient full-width" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
         </form>
       </div>
     </div>
@@ -181,23 +181,20 @@
         $("#form-lost-password").bind("submit", preventDefault(event));
 
         var nvp = $("#form-lost-password").serialize();
-        alert('send lost password email');
+        
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /*var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=lostPassword&NVP'); ?>'; 
+        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=lostPasswordConfirmEmail&NVP'); ?>'; 
         $.getJSON(jsonLink.replace('NVP', nvp),        
           function (data) {  
-            if (data.rpcStatus == 1) { 
+            if (data.rpcStatus == 1) {
               $("#form-lost-password").unbind("submit", preventDefault(event)).submit();
               return true;                  
             } 
-            //displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
-            //return false;
+            displayError('<?php echo $lC_Language->get('ms_error_user_invalid'); ?>');   
+            return false;
           }              
-        );*/
+        );
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        // temporary testing - go to lost password notification/instruction page
-        $("#form-lost-password").unbind("submit", preventDefault(event)).submit();
       }
     });
 

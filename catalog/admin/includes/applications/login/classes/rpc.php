@@ -73,6 +73,42 @@ class lC_Login_Admin_rpc {
   }
   
  /*
+  * Check the admin email to send lost password email to
+  *
+  * @access public
+  * @return json
+  */
+  public static function lostPasswordConfirmEmail() {
+    $result = array();
+    $result['rpcStatus'] = 0;
+    $validated = lC_Login_Admin::lostPasswordConfirmEmail($_GET['password_email']);
+    if ($validated) {
+      $result['rpcStatus'] = 1;
+    }
+
+    echo json_encode($result);
+    exit();
+  }
+  
+ /*
+  * Check to verify the lost password key before sending to change password screen 
+  *
+  * @access public
+  * @return json
+  */
+  public static function lostPasswordConfirmKey() {
+    $result = array();
+    $result['rpcStatus'] = 0;
+    $validated = lC_Login_Admin::lostPasswordConfirmKey($_GET['key'], $_GET['email']);
+    if ($validated) {
+      $result['rpcStatus'] = 1;
+    }
+
+    echo json_encode($result);
+    exit();
+  }
+  
+ /*
   * Activate Pro Serial
   *
   * @access public

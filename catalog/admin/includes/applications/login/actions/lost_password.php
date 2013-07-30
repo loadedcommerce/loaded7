@@ -24,7 +24,6 @@ class lC_Application_Login_Actions_lost_password extends lC_Application_Login {
     global $lC_Database, $lC_Language, $lC_MessageStack;
     
     parent::__construct();
-  }
-  
+  } 
 }
 ?>

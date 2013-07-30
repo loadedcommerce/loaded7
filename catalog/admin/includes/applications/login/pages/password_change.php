@@ -37,11 +37,11 @@
             <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
             <li class="with-small-padding small-margin-left small-margin-right">
               <span class="icon-lock small-margin-right"></span>
-              <input type="password" name="passwordconfirm" id="passwordconfirm" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_confirm_password'); ?>" autocomplete="off">
+              <input type="password" name="passwordconfirm" id="passwordconfirm" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_confirm_password'); ?>" autocomplete="off" onkeyup="comparePass(this.value);">
             </li>
           </ul>
-          <p class="margin-bottom small-margin-left align-center"><?php echo $lC_Language->get('text_password_instructions'); ?></p>
-          <p class=" align-center mid-margin-bottom"><button type="submit" class="button glossy green-gradient full-width" id="submit-password"><?php echo $lC_Language->get('button_submit'); ?></button></p>
+          <p class="margin-bottom small-margin-left align-center"><?php echo $lC_Language->get('text_password_instructions_1') . ' ' . ACCOUNT_PASSWORD . ' ' . $lC_Language->get('text_password_instructions_2'); ?></p>
+          <p class=" align-center mid-margin-bottom"><button type="submit" class="button glossy green-gradient full-width" id="submit-password" disabled><?php echo $lC_Language->get('button_submit'); ?></button></p>
         </form>
       </div>
     </div>
@@ -86,7 +86,7 @@
     $('#form-password-change').submit(function(event) {
       // Values
       var pass = $.trim($('#password').val()),
-      passconfirm = $.trim($('#passwordconfirm').val());
+          passconfirm = $.trim($('#passwordconfirm').val());
 
       // Stop normal behavior
       event.preventDefault();
@@ -96,17 +96,15 @@
       // ie, minimum length, uppercase, sybols, numbers etc etc, none exist to my knowledge currently??? //
       /////////////////////////////////////////////////////////////////////////////////////////////////////
       
+      var containsDigits = /[0-9]/.test(pass);
+      var containsUpper = /[A-Z]/.test(pass);
+      var containsLower = /[a-z]/.test(pass);
+      
       // Check inputs
-      if (pass.length === 0) {
-        // Display message
-        displayError('<?php echo $lC_Language->get('text_enter_password'); ?>');
-        return false;
-      } else if (passconfirm.length === 0) {
+      if (pass.length < '<?php echo ACCOUNT_PASSWORD; ?>' || !containsDigits || !containsUpper || !containsLower) {
         // Remove empty login message if displayed
-        formWrapper.clearMessages('<?php echo $lC_Language->get('text_enter_password'); ?>');
-
-        // Display message
-        displayError('<?php echo $lC_Language->get('text_confirm_password'); ?>');
+        formWrapper.clearMessages();
+        displayError('<?php echo $lC_Language->get('text_password_requirements'); ?>');
         return false;
       } else {
         // Remove previous messages
@@ -137,7 +135,7 @@
         $("#form-password-change").unbind("submit", preventDefault(event)).submit();
       }
     });
-    /******* END OF EDIT SECTION *******/
+    /******* END OF EDIT SECTION *******/ 
     
     // Prepare forms
     forms.each(function(i) {
@@ -284,4 +282,13 @@
       e.preventDefault();
     }
   });
+    
+  function comparePass(val) {
+    var pass = $("#password").val();
+    if (val == pass) {
+      $("#submit-password").removeAttr("disabled");
+    } else {
+      $("#submit-password").attr("disabled", "disabled");
+    }
+  }
 </script>
