@@ -84,8 +84,6 @@
       $Qcustomer->bindRaw(':date_account_created', 'now()');
       $Qcustomer->execute();
 
-if ($lC_DatabaseisError()) die($lC_Database->getError());      
-      
       if ( $Qcustomer->affectedRows() === 1 ) {
         $customer_id = $lC_Database->nextID();
 
