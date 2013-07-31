@@ -219,9 +219,9 @@ function addCoupon() {
         } else if (data.rpcStatus == -6) {
           alert('<?php echo $lC_Language->get('ms_error_coupon_expires_date'); ?> ' + data.msg + '. <?php echo $lC_Language->get('ms_error_coupon_check_coupon'); ?>');
         } else if (data.rpcStatus == -7) {
-          alert('<?php echo $lC_Language->get('ms_error_coupon_expires_date') . $lC_Language->get('ms_error_coupon_max_uses'); ?>');
+          alert('<?php echo $lC_Language->get('ms_error_coupon_max_uses'); ?>');
         } else if (data.rpcStatus == -8) {
-          alert('<?php echo $lC_Language->get('ms_error_coupon_expires_date') . $lC_Language->get('ms_error_coupon_max_uses'); ?>');                    
+          alert('<?php echo $lC_Language->get('ms_error_coupon_max_uses'); ?>');                    
         } else {
           alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         }       
