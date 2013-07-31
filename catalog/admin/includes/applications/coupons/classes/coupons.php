@@ -1,5 +1,5 @@
 <?php
-/*
+/**
   $Id: coupons.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -10,11 +10,9 @@
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
-
-  @function The lC_Coupons_Admin class manages coupons
 */
 class lC_Coupons_Admin {
- /*
+ /**
   * Returns the coupons datatable data for listings
   *
   * @access public
@@ -110,7 +108,7 @@ class lC_Coupons_Admin {
 
     return $result;
   }
- /*
+ /**
   * Get the coupons information
   *
   * @param integer $id The coupons id
@@ -138,7 +136,7 @@ class lC_Coupons_Admin {
 
     return $data;
   }
- /*
+ /**
   * Save the coupons information
   *
   * @param integer $id The coupons id used on update, null on insert
@@ -220,7 +218,7 @@ class lC_Coupons_Admin {
 
     return false;
   }
- /*
+ /**
   * Copy the coupon
   *
   * @param integer $id The coupons id used on copy
@@ -313,7 +311,7 @@ class lC_Coupons_Admin {
 
     return false;
   }
- /*
+ /**
   * Delete the coupons record
   *
   * @param integer $id The coupons id to delete
@@ -359,7 +357,7 @@ class lC_Coupons_Admin {
 
     return false;
   }
- /*
+ /**
   * Batch delete coupons records
   *
   * @param array $batch The coupons id's to delete
@@ -372,8 +370,8 @@ class lC_Coupons_Admin {
     }
     return true;
   }
- /*
-  * update coupon status db entry
+ /**
+  * Update coupon status db entry
   * 
   * @access public
   * @return true or false
