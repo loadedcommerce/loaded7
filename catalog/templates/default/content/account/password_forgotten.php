@@ -23,9 +23,9 @@ if ($lC_MessageStack->size('password_forgotten') > 0) {
       <div class="borderPadMe">
         <div id="passwordForgottenForm">
           <p><?php echo $lC_Language->get('password_forgotten'); ?></p><br />
-          <ol>
-            <li><?php echo lc_draw_label($lC_Language->get('field_customer_email_address'), 'email_address') . ' ' . lc_draw_input_field('email_address', null, 'style="width:50%"'); ?></li>
-          </ol>
+          <ul>
+            <li><?php echo lc_draw_label($lC_Language->get('field_customer_email_address'), 'email_address') . ' ' . lc_draw_input_field('email_address', null, 'class="txt" style="width:50%"'); ?></li>
+          </ul>
         </div>
       </div> 
       <div style="clear:both;">&nbsp;</div>
