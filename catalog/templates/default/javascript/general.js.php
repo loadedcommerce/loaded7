@@ -13,7 +13,7 @@
  
   @function The lC_Default class manages default template functions
 */
-global $lC_Template, $lC_Language, $lC_ShoppingCart; 
+global $lC_Template, $lC_Language, $lC_ShoppingCart, $lC_Coupons; 
 ?>
 <script>
 $(document).ready(function() {
@@ -206,19 +206,25 @@ function addCoupon() {
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=addCoupon&code=CODE', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('CODE', code).replace('&amp;', '&'),
     function (data) {
-      if (data.rpcStatus == -2) {
-        alert('<?php echo $lC_Language->get('ms_error_coupon_not_found'); ?>');
-        $('#coupon_code').val('');
-        return false;
-      }
-      if (data.rpcStatus == -3) {
-        alert('<?php echo $lC_Language->get('ms_error_coupon_not_valid'); ?>');
-        $('#coupon_code').val('');        
-        return false;
-      }
       if (data.rpcStatus != 1) {
-        alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-        $('#coupon_code').val('');        
+        $('#coupon_code').val('');
+        if (data.rpcStatus == -2) {
+          alert('<?php echo $lC_Language->get('ms_error_coupon_not_found'); ?>');
+        } else if (data.rpcStatus == -3) {
+          alert('<?php echo $lC_Language->get('ms_error_coupon_not_valid'); ?>');
+        } else if (data.rpcStatus == -4) {
+          alert('<?php echo $lC_Language->get('ms_error_coupon_purchase_not_over_1'); ?> ' + data.msg + ' <?php echo $lC_Language->get('ms_error_coupon_purchase_not_over_2'); ?>');
+        } else if (data.rpcStatus == -5) {
+          alert('<?php echo $lC_Language->get('ms_error_coupon_start_date'); ?> ' + data.msg + '. <?php echo $lC_Language->get('ms_error_coupon_check_coupon'); ?>');                    
+        } else if (data.rpcStatus == -6) {
+          alert('<?php echo $lC_Language->get('ms_error_coupon_expires_date'); ?> ' + data.msg + '. <?php echo $lC_Language->get('ms_error_coupon_check_coupon'); ?>');
+        } else if (data.rpcStatus == -7) {
+          alert('<?php echo $lC_Language->get('ms_error_coupon_expires_date') . $lC_Language->get('ms_error_coupon_max_uses'); ?>');
+        } else if (data.rpcStatus == -8) {
+          alert('<?php echo $lC_Language->get('ms_error_coupon_expires_date') . $lC_Language->get('ms_error_coupon_max_uses'); ?>');                    
+        } else {
+          alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        }       
         return false;
       }
       window.location.href = window.location.href;

@@ -59,7 +59,7 @@ class lC_Application_Coupons_Actions_save extends lC_Application_Coupons {
                     'type' => $type,
                     'mode' => $mode,
                     'code' => $code,
-                    'reward' => str_replace("%", "", str_replace("$", "", $reward)),
+                    'reward' => str_replace("%", "", $reward),
                     'purchase_over' => $purchase_over,                      
                     'start_date' => $start_date,                      
                     'expires_date' => $expires_date,

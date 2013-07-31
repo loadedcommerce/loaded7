@@ -79,7 +79,7 @@ class lC_Default_rpc {
   public static function addCoupon() {
     global $lC_Coupons;
     
-    $result['rpcStatus'] = $lC_Coupons->addEntry($_GET['code']);
+    $result = $lC_Coupons->addEntry($_GET['code']);
     
     echo json_encode($result);
   } 

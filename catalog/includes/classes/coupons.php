@@ -35,11 +35,14 @@ class lC_Coupons {
     
     $cInfo = $lC_Coupons->_getData($code);
          
-    if (is_array($cInfo) && empty($cInfo) === false) {    
-      if ($lC_Coupons->_isValid($cInfo)) {
+    if (is_array($cInfo) && empty($cInfo) === false) {
+      
+      $valid = $lC_Coupons->_isValid($cInfo);    
+      
+      if ($valid['status'] === true) {
 
         $name = $cInfo['name'];
-        $discount = 10.00;
+        $discount = $this->_calculate($cInfo);
 
         $this->_contents[$code] = array('title' => $name . ' (' . $code . ')',
                                         'total' => $discount); 
@@ -50,7 +53,7 @@ class lC_Coupons {
         return 1;                                              
       } else {
         // coupon not valid
-        return -3;
+        return $valid;
       }
     
     } else {
@@ -132,6 +135,7 @@ class lC_Coupons {
     return !empty($this->_contents);
   }  
   
+  // private methods  
   private function _getData($code, $status = 1) {
     global $lC_Database, $lC_Language;
 
@@ -147,13 +151,93 @@ class lC_Coupons {
   } 
   
   private function _isValid($cInfo) {
-    return true;
-  }   
-  
-  private function _calculate() {
-    $ret = 10.00;
+    global $lC_ShoppingCart, $lC_Customer, $lC_Currencies;
     
-    return $ret;
+    $valid = array('status' => true, 'rpcStatus' => 1, 'msg' => '');
+    
+    // check status
+    if (isset($cInfo['status']) && $cInfo['status'] != '1') $valid = array('status' => false, 'rpcStatus' => -3);
+    
+    // check purchase over
+    $total = (float)$lC_ShoppingCart->getTotal();
+    if (isset($cInfo['purchase_over']) && (float)$cInfo['purchase_over'] > $total) $valid = array('status' => false, 'rpcStatus' => -4, 'msg' => $lC_Currencies->format(number_format($cInfo['purchase_over'], DECIMAL_PLACES)));
+    
+    // check start/end dates
+    $today = lC_DateTime::getShort(lC_DateTime::getNow());
+    $start = (isset($cInfo['start_date']) && $cInfo['start_date'] != NULL) ? lC_DateTime::getShort($cInfo['start_date']) : NULL;
+    $expires = (isset($cInfo['expires_date']) && $cInfo['expires_date'] != NULL) ? lC_DateTime::getShort($cInfo['expires_date']) : NULL;
+
+    if ($start != NULL) {
+      if($start <= $today) {
+      } else {
+        $valid = array('status' => false, 'rpcStatus' => -5, 'msg' => $start);
+      }
+    }
+    
+    if ($expires != NULL) {
+      if($today <= $expires) {
+      } else {
+        $valid = array('status' => false, 'rpcStatus' => -6);
+      }   
+    }
+    
+    // check uses per coupon and uses per customer
+    $uses = $this->_getUses($cInfo['coupons_id']);
+    if ((int)$cInfo['uses_per_coupon'] <= (int)$uses['per_coupon']) $valid = array('status' => false, 'rpcStatus' => -7, 'msg' => $cInfo['uses_per_coupon']); 
+    if ((int)$cInfo['uses_per_customer'] <= (int)$uses['per_customer']) $valid = array('status' => false, 'rpcStatus' => -8, 'msg' => $cInfo['uses_per_customer']); 
+    
+    return $valid;
+  } 
+  
+  private function _getUses($id) {
+    global $lC_Database, $lC_Customer;
+    
+    $uses = array();
+    
+    $Qcust = $lC_Database->query('select count(*) as total from :table_coupons_redeemed where coupons_id = :coupons_id and customers_id = :customers_id');
+    $Qcust->bindTable(':table_coupons_redeemed', TABLE_COUPONS_REDEEMED);
+    $Qcust->bindInt(':coupons_id', $id);
+    $Qcust->bindInt(':customers_id', $lC_Customer->getID());
+    $Qcust->execute();
+    
+    $uses['per_customer'] = $Qcust->valueInt('total'); 
+    
+    $Qcust->freeResult();   
+    
+    $Qcoupon = $lC_Database->query('select count(*) as total from :table_coupons_redeemed where coupons_id = :coupons_id');
+    $Qcoupon->bindTable(':table_coupons_redeemed', 'lc_coupons_redeemed');
+    $Qcoupon->bindInt(':coupons_id', $id);
+    $Qcoupon->execute();
+    
+    $uses['per_coupon'] = $Qcoupon->valueInt('total'); 
+    
+    $Qcoupon->freeResult();  
+    
+    return $uses;  
+  }  
+  
+  private function _calculate($cInfo) {
+    global $lC_ShoppingCart;
+    
+    switch ($cInfo['type']) {
+      case 'T' : // percen(T) discount
+        $total = (isset($lC_ShoppingCart)) ? (float)$lC_ShoppingCart->getTotal() : 0.00;
+        $discount = ( ((float)$cInfo['reward'] * .01) * $total ); 
+        break;
+        
+      case 'S' : // free shipping
+        $discount = 0;
+        break;
+        
+      case 'P' : // free product
+        $discount = 0;
+        break;
+        
+      default : // (R)egular numeric discount 
+        $discount = (float)$cInfo['reward'];
+    }
+    
+    return ($discount > 0) ? number_format(round($discount, DECIMAL_PLACES), DECIMAL_PLACES) : 0.00;
   }  
    
   private function _refreshCouponOrderTotals() {

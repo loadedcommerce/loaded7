@@ -2650,5 +2650,35 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Invalid coupon code.  Please check the code and try again.]]></value>
       <group>checkout</group>
     </definition>
+    <definition>
+      <key>ms_error_coupon_purchase_not_over_1</key>
+      <value><![CDATA[Your order amount must be over]]></value>
+      <group>checkout</group>
+    </definition>  
+    <definition>
+      <key>ms_error_coupon_purchase_not_over_2</key>
+      <value><![CDATA[to use this coupon.  Please check your order and try again.]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>ms_error_coupon_start_date</key>
+      <value><![CDATA[Coupon not valid until]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>ms_error_coupon_expires_date</key>
+      <value><![CDATA[Coupon only valid until]]></value>
+      <group>checkout</group>
+    </definition>    
+    <definition>
+      <key>ms_error_coupon_check_coupon</key>
+      <value><![CDATA[Please check the coupon and try again.]]></value>
+      <group>checkout</group>
+    </definition>   
+    <definition>
+      <key>ms_error_coupon_max_uses</key>
+      <value><![CDATA[Coupon has reached maximum uses.]]></value>
+      <group>checkout</group>
+    </definition>  
   </definitions>
 </language>

@@ -88,7 +88,7 @@
  * @access protected
  */
 
-    protected $_page_tags = array('generator' => array('LoadedCommerce, Innovative eCommerce Solutions'));
+    protected $_page_tags = array('generator' => array('Loaded Commerce, Innovative eCommerce Solutions'));
 
 /**
  * Holds javascript filenames to be included in the page
@@ -525,6 +525,7 @@
 
     function set($code = null) {
       if ( (isset($_SESSION['template']) === false) || !empty($code) || (isset($_GET['template']) && !empty($_GET['template'])) ) {
+        
         if ( !empty( $code ) ) {
           $set_template = $code;
         } else {
@@ -546,7 +547,7 @@
           $data =& $data_default;
         }
 
-        $_SESSION['template'] =& $data;
+        $_SESSION['template'] = $data;
       }
 
       $this->_template_id =& $_SESSION['template']['id'];
