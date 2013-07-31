@@ -165,14 +165,21 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
                   <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, '', 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
                   <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
                 </div>
-                <div class="checkout_discount checkout_discount_stream">
-                  <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
-                  <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
-                  <form name="coupon" id="coupon" action="">
-                    <input type="text" name="coupon_code" id="coupon_code">
-                  </form><br />
-                  <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
-                </div>
+                <?php
+                if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && 
+                    defined('SERVICE_COUPONS_DISPLAY_ON_SHIPPING_PAGE') && SERVICE_COUPONS_DISPLAY_ON_SHIPPING_PAGE == '1') {
+                  ?>                 
+                  <div class="checkout_discount checkout_discount_stream">
+                    <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
+                    <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
+                    <form name="coupon" id="coupon" action="">
+                      <input type="text" name="coupon_code" id="coupon_code">
+                    </form><br />
+                    <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
+                  </div>
+                  <?php 
+                }
+                ?>
                 <div style="clear:both;"></div> 
               </div>
             </div>

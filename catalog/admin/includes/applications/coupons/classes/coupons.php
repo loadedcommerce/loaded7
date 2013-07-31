@@ -128,7 +128,7 @@ class lC_Coupons_Admin {
     if ($Qcoupon->value('type') == 'T' || $Qcoupon->value('type') == 'R') {
       $data['reward'] = ($Qcoupon->value('type') == 'T') ? number_format($Qcoupon->value('reward'), DECIMAL_PLACES) . '%' : $lC_Currencies->format($Qcoupon->value('reward'));
     }
-    $data['purchase_over'] = ($Qcoupon->value('purchase_over') > 0) ? $lC_Currencies->format($Qcoupon->value('purchase_over')) : null;
+    $data['purchase_over'] = ($Qcoupon->value('purchase_over') > 0) ? number_format($Qcoupon->value('purchase_over'), DECIMAL_PLACES) : null;
     $data['start_date'] = ($Qcoupon->value('start_date') != null) ? lC_DateTime::getShort($Qcoupon->value('start_date')) : null;
     $data['expires_date'] = ($Qcoupon->value('expires_date') != null) ? lC_DateTime::getShort($Qcoupon->value('expires_date')) : null;
     
@@ -165,7 +165,7 @@ class lC_Coupons_Admin {
     $Qcoupon->bindValue(':mode', $data['mode']);
     $Qcoupon->bindValue(':code', $data['code']);
     $Qcoupon->bindValue(':reward', $data['reward']);
-    $Qcoupon->bindInt(':purchase_over', (($data['purchase_over'] > 0) ? $data['purchase_over'] : null));
+    $Qcoupon->bindInt(':purchase_over', (($data['purchase_over'] > 0) ? str_replace('$', '', $data['purchase_over']) : 0.00));
     $Qcoupon->bindDate(':start_date', (($data['start_date'] != '') ? ((strstr($data['start_date'], '/')) ? lC_DateTime::toDateTime($data['start_date']) : $data['start_date']) : null));
     $Qcoupon->bindDate(':expires_date', (($data['expires_date'] != '') ? ((strstr($data['expires_date'], '/')) ? lC_DateTime::toDateTime($data['expires_date']) : $data['expires_date']) : null));
     $Qcoupon->bindInt(':uses_per_coupon', $data['uses_per_coupon']);

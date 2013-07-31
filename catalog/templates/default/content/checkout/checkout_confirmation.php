@@ -230,14 +230,21 @@ echo "</pre>";
                   <span class="buttonRight"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_confirm_order'); ?></button></span>
                 </div>
                 </form>
-                <div class="checkout_discount checkout_discount_stream">
-                  <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
-                  <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
-                  <form name="coupon" id="coupon" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                    <input type="text" name="coupon_code" id="coupon_code">
-                  </form><br />
-                  <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
-                </div>
+                <?php
+                if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && 
+                    defined('SERVICE_COUPONS_DISPLAY_ON_CONFIRMATION_PAGE') && SERVICE_COUPONS_DISPLAY_ON_CONFIRMATION_PAGE == '1') {
+                  ?>                 
+                  <div class="checkout_discount checkout_discount_stream">
+                    <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
+                    <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
+                    <form name="coupon" id="coupon" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                      <input type="text" name="coupon_code" id="coupon_code">
+                    </form><br />
+                    <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
+                  </div>
+                  <?php 
+                } 
+                ?>
                 <div style="clear:both;"></div>
             </div>
           </div>

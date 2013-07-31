@@ -50,7 +50,7 @@ class lC_Coupons {
         $lC_ShoppingCart->refresh(true);
         $this->_refreshCouponOrderTotals();
 
-        return 1;                                              
+        return array('rpcStatus' => 1);                                              
       } else {
         // coupon not valid
         return $valid;
@@ -183,8 +183,8 @@ class lC_Coupons {
     
     // check uses per coupon and uses per customer
     $uses = $this->_getUses($cInfo['coupons_id']);
-    if ((int)$cInfo['uses_per_coupon'] <= (int)$uses['per_coupon']) $valid = array('status' => false, 'rpcStatus' => -7, 'msg' => $cInfo['uses_per_coupon']); 
-    if ((int)$cInfo['uses_per_customer'] <= (int)$uses['per_customer']) $valid = array('status' => false, 'rpcStatus' => -8, 'msg' => $cInfo['uses_per_customer']); 
+    if ((int)$cInfo['uses_per_coupon'] > 0 && (int)$cInfo['uses_per_coupon'] <= (int)$uses['per_coupon']) $valid = array('status' => false, 'rpcStatus' => -7, 'msg' => $cInfo['uses_per_coupon']); 
+    if ((int)$cInfo['uses_per_customer'] > 0 && (int)$cInfo['uses_per_customer'] <= (int)$uses['per_customer']) $valid = array('status' => false, 'rpcStatus' => -8, 'msg' => $cInfo['uses_per_customer']); 
     
     return $valid;
   } 

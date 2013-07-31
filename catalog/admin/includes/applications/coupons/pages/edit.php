@@ -127,12 +127,12 @@
             </div>
             <div class="field-block button-height margin-bottom">
               <label for="uses_per_coupon" class="label"><b><?php echo $lC_Language->get('label_uses_per_coupon'); ?></b></label>
-              <input type="text"onfocus="this.select();" name="uses_per_coupon" id="uses_per_coupon" value="<?php echo (isset($cInfo) ? $cInfo->get('uses_per_coupon') : '1'); ?>" class="input">
+              <input type="text"onfocus="this.select();" name="uses_per_coupon" id="uses_per_coupon" value="<?php echo (isset($cInfo) ? $cInfo->get('uses_per_coupon') : 0); ?>" class="input">
               <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_uses_per_coupon'), null, 'info-spot on-left grey margin-left'); ?>
             </div>
             <div class="field-block button-height">
               <label for="uses_per_customer" class="label"><b><?php echo $lC_Language->get('label_uses_per_customer'); ?></b></label>
-              <input type="text" onfocus="this.select();" name="uses_per_customer" id="uses_per_customer" value="<?php echo (isset($cInfo) ? $cInfo->get('uses_per_customer') : '1'); ?>" class="input">
+              <input type="text" onfocus="this.select();" name="uses_per_customer" id="uses_per_customer" value="<?php echo (isset($cInfo) ? $cInfo->get('uses_per_customer') : 0); ?>" class="input">
               <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_uses_per_customer'), null, 'info-spot on-left grey margin-left'); ?>
             </div>
             <div class="field-block button-height">
