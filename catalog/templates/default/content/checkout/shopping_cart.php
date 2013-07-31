@@ -127,19 +127,21 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
       </div>
       -->
       <?php
-      if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && 
-          defined('SERVICE_COUPONS_DISPLAY_ON_CART_PAGE') && SERVICE_COUPONS_DISPLAY_ON_CART_PAGE == '1') {
-        ?>
-        <div class="checkout_discount">
-          <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
-          <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
-          <form name="coupon" id="coupon" action="">
-            <input type="text" name="coupon_code" id="coupon_code">
-          </form>
-          <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
-        </div>
-        <?php 
-      } 
+      if ($lC_Customer->isLoggedOn() !== false) {
+        if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && 
+            defined('SERVICE_COUPONS_DISPLAY_ON_CART_PAGE') && SERVICE_COUPONS_DISPLAY_ON_CART_PAGE == '1') {
+          ?>
+          <div class="checkout_discount">
+            <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
+            <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
+            <form name="coupon" id="coupon" action="">
+              <input type="text" name="coupon_code" id="coupon_code">
+            </form>
+            <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
+          </div>
+          <?php 
+        } 
+      }
       ?>
     </div>
     <?php
