@@ -400,10 +400,12 @@ class lC_Order {
       $Qtotals->bindInt(':sort_order', $module['sort_order']);
       $Qtotals->execute();
       
-      if ($lC_Coupons->is_enabled) {
-        preg_match('#\((.*?)\)#', $module['title'], $match);
-        $lC_Coupons->redeem($match[1], $order_id); 
-      }      
+      if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && isset($lC_Coupons)) {
+        if ($lC_Coupons->is_enabled) {
+          preg_match('#\((.*?)\)#', $module['title'], $match);
+          $lC_Coupons->redeem($match[1], $order_id); 
+        }      
+      }
     }      
 
     $Qpd = $lC_Database->query('delete from :table_orders_products where orders_id = :orders_id');

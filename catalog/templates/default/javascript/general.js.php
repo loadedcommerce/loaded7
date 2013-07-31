@@ -13,7 +13,7 @@
  
   @function The lC_Default class manages default template functions
 */
-global $lC_Template, $lC_Language, $lC_ShoppingCart, $lC_Coupons; 
+global $lC_Template, $lC_Language, $lC_ShoppingCart; 
 ?>
 <script>
 $(document).ready(function() {

@@ -79,7 +79,10 @@ class lC_Default_rpc {
   public static function addCoupon() {
     global $lC_Coupons;
     
-    $result = $lC_Coupons->addEntry($_GET['code']);
+    $result = array();
+    if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && isset($lC_Coupons)) {
+      $result = $lC_Coupons->addEntry($_GET['code']);
+    }
     
     echo json_encode($result);
   } 
@@ -93,8 +96,10 @@ class lC_Default_rpc {
     global $lC_Coupons;
     
     $result = array();
-    if ($lC_Coupons->removeEntry($_GET['code'])) {
-      $result['rpcStatus'] = '1';
+    if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && isset($lC_Coupons)) {
+      if ($lC_Coupons->removeEntry($_GET['code'])) {
+        $result['rpcStatus'] = '1';
+      }
     }
     
     echo json_encode($result);

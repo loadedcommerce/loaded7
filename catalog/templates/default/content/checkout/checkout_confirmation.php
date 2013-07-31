@@ -14,14 +14,6 @@
 if ($lC_MessageStack->size('checkout_payment') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('checkout_payment', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
 }
- /*
-echo "<pre>coupon ";
-print_r($lC_Coupons->getAll());
-echo "</pre>";
-echo "<pre>sc-ot ";
-print_r($lC_ShoppingCart);
-echo "</pre>";
- */
 ?>
 <!--content/checkout/checkout_confirmation.php start-->
 <div id="checkout_confirmation_details" class="full_page">

@@ -33,11 +33,13 @@ class lC_OrderTotal_coupon extends lC_OrderTotal {
   function process() {  
     global $lC_Coupons, $lC_Currencies;
            
-    foreach ($lC_Coupons->getAll() as $code => $val) {
-      if ($val['total'] > 0) {               
-        $this->output[] = array('title' => $val['title'],
-                                'text' => '<span onclick="removeCoupon(\'' . $code . '\');" style="padding:0; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/default/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '&nbsp;' . $lC_Currencies->format($val['total']) . '</span>',
-                                'value' => $val['total']);
+    if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && isset($lC_Coupons)) {
+      foreach ($lC_Coupons->getAll() as $code => $val) {
+        if ($val['total'] > 0) {               
+          $this->output[] = array('title' => $val['title'],
+                                  'text' => '<span onclick="removeCoupon(\'' . $code . '\');" style="padding:0; cursor:pointer;">' . lc_image(DIR_WS_CATALOG . 'templates/default/images/icons/16/cross_round.png', null, null, null, 'style="vertical-align:middle;"') . '&nbsp;' . $lC_Currencies->format($val['total']) . '</span>',
+                                  'value' => $val['total']);
+        }
       }
     }
   }

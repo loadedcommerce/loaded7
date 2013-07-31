@@ -86,20 +86,20 @@
             <div class="field-drop button-height black-inputs">
               <div>
                 <label for="type_reward" class="label"><b><?php echo $lC_Language->get('label_reward'); ?></b></label>
-                <input type="radio" name="type" value="T" id="type_1" class="switch tiny mid-margin-right small-margin-left<?php echo ($cInfo->get('type') == 'T' || $cInfo->get('type') == 'R') ? ' checked' : null; ?>" onchange="updateRewardField($(this).val());">
+                <input type="radio" name="type" value="T" id="type_1" class="switch tiny mid-margin-right small-margin-left<?php if (isset($cInfo)) { echo ($cInfo->get('type') == 'T' || $cInfo->get('type') == 'R') ? ' checked' : null; } else { echo ' checked'; } ?>" onchange="updateRewardField($(this).val());">
                 <input type="text" onfocus="this.select();" name="reward" id="reward" value="<?php echo (isset($cInfo) ? $cInfo->get('reward') : null); ?>" class="input">
                 <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_price_or_percent'); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_price_or_percent'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
               <div class="mid-margin-top">
                 <label for="type_free_shipping" class="label"></label>
-                <input type="radio" name="type" value="S" id="type_2" class="switch tiny mid-margin-right small-margin-left<?php echo ($cInfo->get('type') == 'S') ? ' checked' : null; ?>" onchange="updateRewardField($(this).val());">
+                <input type="radio" name="type" value="S" id="type_2" class="switch tiny mid-margin-right small-margin-left<?php if (isset($cInfo)) { echo ($cInfo->get('type') == 'S') ? ' checked' : null; } ?>" onchange="updateRewardField($(this).val());">
                 <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_shipping'); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_shipping'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
               <div class="mid-margin-top">
                 <label for="type_free_product" class="label"></label>
-                <input type="radio" name="type" value="P" id="type_3" class="switch tiny mid-margin-right small-margin-left disabled<?php echo ($cInfo->get('type') == 'P') ? ' checked' : null; ?>" onchange="updateRewardField($(this).val());">
+                <input type="radio" name="type" value="P" id="type_3" class="switch tiny mid-margin-right small-margin-left disabled<?php if (isset($cInfo)) { echo ($cInfo->get('type') == 'P') ? ' checked' : null; } ?>" onchange="updateRewardField($(this).val());">
                 <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_product'); ?></span>
                 <span class="small-margin-left"><?php echo lc_go_pro(); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_product'), null, 'info-spot on-left grey margin-left'); ?>
@@ -121,7 +121,7 @@
               <label for="purchase_over" class="label"><b><?php echo $lC_Language->get('label_purchase_over'); ?></b></label>
               <div class="inputs" style="display:inline; padding:8px 0;">
                 <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
-                <input type="text" style="width:152px;" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" class="input-unstyled" name="purchase_over" id="purchase_over" value="<?php echo (isset($cInfo) ? number_format(lc_round($cInfo->get('purchase_over'), DECIMAL_PLACES), DECIMAL_PLACES) : 0.00); ?>" class="input strong" />
+                <input type="text" style="width:152px;" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" class="input-unstyled" name="purchase_over" id="purchase_over" value="<?php echo (isset($cInfo) ? number_format(lc_round($cInfo->get('purchase_over'), DECIMAL_PLACES), DECIMAL_PLACES) : number_format(0.00, DECIMAL_PLACES)); ?>" class="input strong" />
               </div>              
               <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_purchase_over'), null, 'info-spot on-left grey margin-left'); ?>
             </div>

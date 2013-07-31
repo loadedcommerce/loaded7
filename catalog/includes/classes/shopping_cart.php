@@ -1086,7 +1086,7 @@ class lC_ShoppingCart {
       }
            
       // coupons
-      if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED))) {
+      if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && isset($lC_Coupons)) {
         if ($lC_Coupons->hasContents()) {
           $discount = $lC_Coupons->getTotalDiscount();
           $this->_total -= $discount;
