@@ -186,7 +186,7 @@ CREATE TABLE IF NOT EXISTS lc_coupons (
   coupons_id int(11) NOT NULL AUTO_INCREMENT,
   `type` enum('R','T','S','P') NOT NULL DEFAULT 'R',
   mode varchar(32) NOT NULL DEFAULT 'coupon',
-  code varchar(32) DEFAULT NULL,
+  code varchar(32) NOT NULL,
   reward decimal(8,4) NOT NULL DEFAULT '0.0000',
   purchase_over decimal(8,4) NOT NULL DEFAULT '0.0000',
   start_date datetime DEFAULT NULL,
@@ -200,6 +200,7 @@ CREATE TABLE IF NOT EXISTS lc_coupons (
   date_created datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   date_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   sale_exclude tinyint(1) NOT NULL DEFAULT '0',
+  notes varchar(255) NOT NULL,
   PRIMARY KEY (coupons_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 

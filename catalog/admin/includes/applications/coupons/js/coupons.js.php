@@ -57,6 +57,11 @@ $(document).ready(function() {
   
 });
 
+function updateRewardField(val) {
+  $('#reward').val("");
+  $('#type').val(val);
+}
+
 function updateStatus(id, val) {
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateStatus&cid=CID&val=VAL'); ?>';
   $.getJSON(jsonLink.replace('CID', id).replace('VAL', val));

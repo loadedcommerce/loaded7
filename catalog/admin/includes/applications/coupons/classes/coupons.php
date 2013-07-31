@@ -35,7 +35,7 @@ class lC_Coupons_Admin {
     while ( $Qcoupons->next() ) {
       
       if ($Qcoupons->value('type') == 'T') { // percen(T)
-        $rewardStr = round($Qcoupons->value('reward')) . '%';         
+        $rewardStr = number_format($Qcoupons->value('reward'), DECIMAL_PLACES) . '%';         
       } else if ($Qcoupons->value('type') == 'R') { // cash (R)eward
         $rewardStr = $lC_Currencies->format($Qcoupons->value('reward'));
       } else if ($Qcoupons->value('type') == 'S') { // free (S)hipping
@@ -128,7 +128,7 @@ class lC_Coupons_Admin {
     $data = $Qcoupon->toArray();
 
     if ($Qcoupon->value('type') == 'T' || $Qcoupon->value('type') == 'R') {
-      $data['reward'] = ($Qcoupon->value('type') == 'T') ? round($Qcoupon->value('reward')) . '%' : $lC_Currencies->format($Qcoupon->value('reward'));
+      $data['reward'] = ($Qcoupon->value('type') == 'T') ? number_format($Qcoupon->value('reward'), DECIMAL_PLACES) . '%' : $lC_Currencies->format($Qcoupon->value('reward'));
     }
     $data['purchase_over'] = ($Qcoupon->value('purchase_over') > 0) ? $lC_Currencies->format($Qcoupon->value('purchase_over')) : null;
     $data['start_date'] = ($Qcoupon->value('start_date') != null) ? lC_DateTime::getShort($Qcoupon->value('start_date')) : null;
@@ -155,10 +155,10 @@ class lC_Coupons_Admin {
     $lC_Database->startTransaction();
 
     if ( is_numeric($id) ) {
-      $Qcoupon = $lC_Database->query('update :table_coupons set type = :type, mode = :mode, code = :code, reward = :reward, purchase_over = :purchase_over, start_date = :start_date, expires_date = :expires_date, uses_per_coupon = :uses_per_coupon, uses_per_customer = :uses_per_customer, restrict_to_products = :restrict_to_products, restrict_to_categories = :restrict_to_categories, restrict_to_customers = :restrict_to_customers, status = :status, date_modified = now(), sale_exclude = :sale_exclude where coupons_id = :coupons_id');
+      $Qcoupon = $lC_Database->query('update :table_coupons set type = :type, mode = :mode, code = :code, reward = :reward, purchase_over = :purchase_over, start_date = :start_date, expires_date = :expires_date, uses_per_coupon = :uses_per_coupon, uses_per_customer = :uses_per_customer, restrict_to_products = :restrict_to_products, restrict_to_categories = :restrict_to_categories, restrict_to_customers = :restrict_to_customers, status = :status, date_modified = now(), sale_exclude = :sale_exclude, notes = :notes where coupons_id = :coupons_id');
       $Qcoupon->bindInt(':coupons_id', $id);
     } else {
-      $Qcoupon = $lC_Database->query('insert into :table_coupons (type, mode, code, reward, purchase_over, start_date, expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, status, date_created, date_modified, sale_exclude) values (:type, :mode, :code, :reward, :purchase_over, :start_date, :expires_date, :uses_per_coupon, :uses_per_customer, :restrict_to_products, :restrict_to_categories, :restrict_to_customers, :status, now(), now(), :sale_exclude)');
+      $Qcoupon = $lC_Database->query('insert into :table_coupons (type, mode, code, reward, purchase_over, start_date, expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, status, date_created, date_modified, sale_exclude, notes) values (:type, :mode, :code, :reward, :purchase_over, :start_date, :expires_date, :uses_per_coupon, :uses_per_customer, :restrict_to_products, :restrict_to_categories, :restrict_to_customers, :status, now(), now(), :sale_exclude, :notes)');
     }
      
     // insert/update the coupons table
@@ -168,8 +168,8 @@ class lC_Coupons_Admin {
     $Qcoupon->bindValue(':code', $data['code']);
     $Qcoupon->bindValue(':reward', $data['reward']);
     $Qcoupon->bindInt(':purchase_over', (($data['purchase_over'] > 0) ? $data['purchase_over'] : null));
-    $Qcoupon->bindDate(':start_date', (($data['start_date'] != '') ? $data['start_date'] : null));
-    $Qcoupon->bindDate(':expires_date', (($data['expires_date'] != '') ? $data['expires_date'] : null));
+    $Qcoupon->bindDate(':start_date', (($data['start_date'] != '') ? ((strstr($data['start_date'], '/')) ? lC_DateTime::toDateTime($data['start_date']) : $data['start_date']) : null));
+    $Qcoupon->bindDate(':expires_date', (($data['expires_date'] != '') ? ((strstr($data['expires_date'], '/')) ? lC_DateTime::toDateTime($data['expires_date']) : $data['expires_date']) : null));
     $Qcoupon->bindInt(':uses_per_coupon', $data['uses_per_coupon']);
     $Qcoupon->bindInt(':uses_per_customer', $data['uses_per_customer']);
     $Qcoupon->bindValue(':restrict_to_products', $data['restrict_to_products']);
@@ -177,12 +177,12 @@ class lC_Coupons_Admin {
     $Qcoupon->bindValue(':restrict_to_customers', $data['restrict_to_customers']);
     $Qcoupon->bindInt(':status', $data['status']);
     $Qcoupon->bindInt(':sale_exclude', $data['sale_exclude']);
+    $Qcoupon->bindValue(':notes', $data['notes']);
     $Qcoupon->setLogging($_SESSION['module'], $id);
     $Qcoupon->execute();
     
     if ( $lC_Database->isError() ) {
       $error = true;
-      break;
     }
     
     // insert/update the coupons description table
@@ -236,7 +236,7 @@ class lC_Coupons_Admin {
     $lC_Database->startTransaction();
 
     // copy the data from the desired coupon into a new row
-    $Qcoupon = $lC_Database->query('insert into :table_coupons (type, mode, code, reward, purchase_over, start_date, expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, status, date_created, date_modified, sale_exclude) select type, mode, code, reward, purchase_over, start_date, expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, status, date_created, date_modified, sale_exclude from :table_coupons_from where coupons_id = :coupons_id');
+    $Qcoupon = $lC_Database->query('insert into :table_coupons (type, mode, code, reward, purchase_over, start_date, expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, status, date_created, date_modified, sale_exclude, notes) select type, mode, code, reward, purchase_over, start_date, expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, status, date_created, date_modified, sale_exclude, notes from :table_coupons_from where coupons_id = :coupons_id');
     $Qcoupon->bindTable(':table_coupons', TABLE_COUPONS);
     $Qcoupon->bindTable(':table_coupons_from', TABLE_COUPONS);
     $Qcoupon->bindInt(':coupons_id', $id);
