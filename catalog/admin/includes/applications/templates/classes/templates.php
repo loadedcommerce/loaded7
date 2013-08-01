@@ -153,9 +153,9 @@ class lC_Templates_Admin {
 
     if ( $error === false ) {
       $lC_Database->commitTransaction();
-
-      lC_Cache::clear('configuration');
-
+      
+      lC_Cache::clear('configuration'); 
+      
       return true;
     }
 

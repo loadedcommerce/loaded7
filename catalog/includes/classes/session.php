@@ -134,7 +134,7 @@
       } elseif ( isset($_COOKIE[$this->_name]) && (empty($_COOKIE[$this->_name]) || (ctype_alnum($_COOKIE[$this->_name]) === false)) ) {
         $sane_session_id = false;
       }
-
+      
       if ( $sane_session_id === false ) {
         if ( isset($_COOKIE[$this->_name]) ) {
           setcookie($this->_name, '', time()-42000, $this->getCookieParameters('path'), $this->getCookieParameters('domain'));
