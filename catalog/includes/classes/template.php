@@ -28,6 +28,15 @@
     protected $_template;
 
 /**
+ * Holds the template selected name value
+ *
+ * @var string
+ * @access protected
+ */
+
+    protected $_template_selected;
+
+/**
  * Holds the template ID value
  *
  * @var int
@@ -524,34 +533,52 @@
  */
 
     function set($code = null) {
-      // added last check against DB for DEFAULT_TEMPLATE changes by admin
-      if ( (isset($_SESSION['template']) === false) || !empty($code) || (isset($_GET['template']) && !empty($_GET['template'])) || isset($_SESSION['template']) && $_SESSION['template']['code'] != DEFAULT_TEMPLATE ) {
-        if ( !empty( $code ) ) {
-          $set_template = $code;
-        } else {
-          $set_template = (isset($_GET['template']) && !empty($_GET['template'])) ? $_GET['template'] : DEFAULT_TEMPLATE;
-        }        
+      // much explanation is needed to follow the following rules/switches for template setting on page loads
+      if ( (isset($_SESSION['template']) === false) || // template session is not set
+            !empty($code) || // no template code has been sent to this function
+            (isset($_GET['template']) && !empty($_GET['template'])) || // no template selection in the url
+            isset($_SESSION['template']) && $_SESSION['template']['code'] != DEFAULT_TEMPLATE ) // the session template is not the same as the default one 
+      {
+        // one of the above triggered the function into action, continue
+        if (isset($_SESSION['template']['selected']) && $_SESSION['template']['selected'] != '') { // the session for selected template is set and overrides the rest
+          if (isset($_GET['template']) && !empty($_GET['template'])) { // but if the customer decided to change the template again we react 
+            $set_template = $_GET['template'];
+            $set_template_selected = $_GET['template'];
+          } else { // if they didn't we stay the same as the session
+            $set_template = $_SESSION['template']['selected'];
+            $set_template_selected = $_SESSION['template']['selected'];
+          }
+        } else { // the selected template session value is empty we continue as normal
+          if ( !empty( $code ) ) { // someone sent a template code to this function
+            $set_template = $code;
+            $set_template_selected = $code;
+          } else { // no code sent to function
+            $set_template = (isset($_GET['template']) && !empty($_GET['template'])) ? $_GET['template'] : DEFAULT_TEMPLATE;
+            $set_template_selected = (isset($_GET['template']) && !empty($_GET['template'])) ? $_GET['template'] : DEFAULT_TEMPLATE;
+          }
+        }       
         
         $data = array();
         $data_default = array();
 
-        foreach ($this->getTemplates() as $template) {
-          if ($template['code'] == DEFAULT_TEMPLATE) {
-            $data_default = array('id' => $template['id'], 'code' => $template['code']);
-          } elseif ($template['code'] == $set_template) {
-            $data = array('id' => $template['id'], 'code' => $set_template);
+        foreach ($this->getTemplates() as $template) { // for each template we check some tings
+          if ($template['code'] == DEFAULT_TEMPLATE) { // if the code of the template matched DEFAULT we do this
+            $data_default = array('id' => $template['id'], 'code' => $template['code'], 'selected' => $set_template_selected);
+          } elseif ($template['code'] == $set_template) { // if the code of the template does not match DEFAULT we do this
+            $data = array('id' => $template['id'], 'code' => $set_template, 'selected' => $set_template_selected);
           }
         }
 
-        if (empty($data)) {
+        if (empty($data)) { // if the template code did not match DEFAULT we should have "$data"
           $data = $data_default;
         }
 
-        $_SESSION['template'] = $data;
+        $_SESSION['template'] = $data; // set the session with the data set above
       }
 
       $this->_template_id = $_SESSION['template']['id'];
       $this->_template = $_SESSION['template']['code'];
+      $this->_template_selected = $_SESSION['template']['selected'];
     }
 
 /**
