@@ -257,15 +257,9 @@ class lC_Payment_globaliris extends lC_Payment {
       $action = 'error';
     }
 
-echo "<pre>";
-print_r($_POST);    
-echo "</pre>";
-echo '[' . $action . ']<br>';
-die('00');    
-
     switch($action){
       case 'error' :
-        $lC_MessageStack->add('checkout_payment', $result . ' - ' . $message);
+        $_SESSION['messageToStack'] = array('checkout_payment', $result . ' - ' . $message);
         lC_Order::remove($orderid);
         $error = true;
         break;
