@@ -54,16 +54,9 @@
         // Display message
         displayError('Please fill in your email');
         return false;
-      } else if (!/^[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(login)) {
-        // Remove empty email message if displayed
-        formWrapper.clearMessages('Please fill in your email');
-
-        // Display message
-        displayError('Email is not valid');
-        return false;
       } else if (pass.length === 0) {
         // Remove empty login message if displayed
-        formWrapper.clearMessages('Please fill in your login');
+        formWrapper.clearMessages('Please fill in your email');
 
         // Display message
         displayError('Please fill in your password');
