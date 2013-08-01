@@ -61,7 +61,7 @@ class Global_Iris_Payments extends lC_Addon {
    /**
     * The mobile capability of the addon
     */ 
-    $this->_mobile_enabled = true;    
+    $this->_mobile_enabled = false;    
    /**
     * The addon enable/disable switch
     */    
