@@ -20,14 +20,13 @@ if ($lC_MessageStack->size('password_forgotten') > 0) {
   <div class="short-code-column">
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
     <form name="password_forgotten" id="password_forgotten" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password_forgotten=process', 'SSL'); ?>" method="post" onsubmit="return check_form(password_forgotten);">
-      <div class="borderPadMe">
-        <div id="passwordForgottenForm">
-          <p><?php echo $lC_Language->get('password_forgotten'); ?></p><br />
-          <ul>
-            <li><?php echo lc_draw_label($lC_Language->get('field_customer_email_address'), 'email_address') . ' ' . lc_draw_input_field('email_address', null, 'class="txt" style="width:50%"'); ?></li>
-          </ul>
-        </div>
-      </div> 
+      <div id="passwordForgottenForm" class="single-bg" >
+        <p><?php echo $lC_Language->get('password_forgotten'); ?></p><br />
+        <ul>
+          <li><?php echo lc_draw_label($lC_Language->get('field_customer_email_address'), 'email_address') . ' ' . lc_draw_input_field('email_address', null, 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" class="txt" style="height:26px; padding-left:4px; width:79%;"'); ?></li>
+        </ul>
+        <div style="clear:both;">&nbsp;</div>
+      </div>
       <div style="clear:both;">&nbsp;</div>
       <div id="accountPasswordForgottentActions" class="action_buttonbar">
         <span class="buttonLeft"><a href="javascript: history.go(-1)" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span> 
