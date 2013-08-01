@@ -2684,7 +2684,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     <definition>
       <key>ms_error_action_not_performed</key>
       <value><![CDATA[Error: There was a problem performing the action.]]></value>
-      <group>general</group>
+      <group>checkout</group>
     </definition>  
   </definitions>  
 </language>
