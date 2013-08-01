@@ -524,13 +524,14 @@
  */
 
     function set($code = null) {
-      if ( (isset($_SESSION['template']) === false) || !empty($code) || (isset($_GET['template']) && !empty($_GET['template'])) ) {
+      // added last check against DB for DEFAULT_TEMPLATE changes by admin
+      if ( (isset($_SESSION['template']) === false) || !empty($code) || (isset($_GET['template']) && !empty($_GET['template'])) || isset($_SESSION['template']) && $_SESSION['template']['code'] != DEFAULT_TEMPLATE ) {
         if ( !empty( $code ) ) {
           $set_template = $code;
         } else {
           $set_template = (isset($_GET['template']) && !empty($_GET['template'])) ? $_GET['template'] : DEFAULT_TEMPLATE;
-        }
-
+        }        
+        
         $data = array();
         $data_default = array();
 
@@ -538,19 +539,19 @@
           if ($template['code'] == DEFAULT_TEMPLATE) {
             $data_default = array('id' => $template['id'], 'code' => $template['code']);
           } elseif ($template['code'] == $set_template) {
-            $data = array('id' => $template['id'], 'code' => $template['code']);
+            $data = array('id' => $template['id'], 'code' => $set_template);
           }
         }
 
         if (empty($data)) {
-          $data =& $data_default;
+          $data = $data_default;
         }
 
-        $_SESSION['template'] =& $data;
+        $_SESSION['template'] = $data;
       }
 
-      $this->_template_id =& $_SESSION['template']['id'];
-      $this->_template =& $_SESSION['template']['code'];
+      $this->_template_id = $_SESSION['template']['id'];
+      $this->_template = $_SESSION['template']['code'];
     }
 
 /**
