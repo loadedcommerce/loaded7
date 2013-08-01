@@ -89,7 +89,7 @@ class lC_Checkout_Payment extends lC_Template {
     }
 
     if (isset($_GET['payment_error'])) {
-      $lC_MessageStack->add('checkout_payment', $_GET['payment_error'], 'error'); 
+      $lC_MessageStack->add('checkout_payment', urldecode($_GET['payment_error']), 'error'); 
     }
     
     if (isset($_SESSION['messageToStack']) && !empty($_SESSION['messageToStack'])) $lC_MessageStack->__construct();

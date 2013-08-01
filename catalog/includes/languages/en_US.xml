@@ -2640,6 +2640,12 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Apply Coupon]]></value>
       <group>checkout</group>
     </definition>  
+    </definition> 
+    <definition>
+      <key>text_label_error</key>
+      <value><![CDATA[Error:]]></value>
+      <group>checkout</group>
+    </definition>      
     <definition>
       <key>ms_error_coupon_not_found</key>
       <value><![CDATA[Sorry we did not find the coupon code you entered.  Please check the code and try again.]]></value>

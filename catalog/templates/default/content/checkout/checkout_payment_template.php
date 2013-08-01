@@ -36,7 +36,9 @@ if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
   echo "#payformIframe { min-width:500px; margin-left:14px; min-height:580px; }";
 } else if ($lC_ShoppingCart->getBillingMethod('id') == 'cresecure') {
   echo "#payformIframe { min-width:480px; min-height:300px; }";
-} else if ($lC_ShoppingCart->getBillingMethod('id') == 'authorizenet_cc' || $lC_ShoppingCart->getBillingMethod('id') == 'usaepay_cc' ) {
+} else if ($lC_ShoppingCart->getBillingMethod('id') == 'authorizenet_cc' || 
+           $lC_ShoppingCart->getBillingMethod('id') == 'globaliris' ||
+           $lC_ShoppingCart->getBillingMethod('id') == 'usaepay_cc' ) {
   $fHeight = '400px';
   $fScroll = 'auto';
   echo "#checkout_shipping_col1 { width:28% !important; }";
