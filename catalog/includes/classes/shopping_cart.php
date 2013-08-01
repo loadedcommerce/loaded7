@@ -674,6 +674,10 @@ class lC_ShoppingCart {
     return $this->_weight;
   }    
 
+  public function getShippingCost() {
+    return $this->_shipping_method['cost'];
+  }
+    
   public function generateCartID($length = 5) {
     return lc_create_random_string($length, 'digits');
   }
@@ -976,10 +980,6 @@ class lC_ShoppingCart {
     $this->_tax += $amount;
   }
   
-  public function addDiscountAmount($amount) {
-    $this->_discount += $amount;
-  }  
-
   public function numberOfTaxGroups() {
     return sizeof($this->_tax_groups);
   }

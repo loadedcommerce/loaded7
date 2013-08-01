@@ -14,6 +14,10 @@
 if ($lC_MessageStack->size('checkout_shipping') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('checkout_shipping', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
 } 
+
+echo "<pre>";
+print_r($lC_ShoppingCart);
+echo "</pre>";
 ?>
 <!--content/checkout/checkout_shipping.php start-->
 <div id="checkout_shipping_details" class="full_page">
