@@ -43,7 +43,7 @@ class lC_Checkout_Success extends lC_Template {
       $this->_process();
     }
     
-    // unset cart sync
+    if (isset($_SESSION['lC_Coupons_data'] )) unset($_SESSION['lC_Coupons_data']);
     if (isset($_SESSION['cartSync'] )) unset($_SESSION['cartSync']);
   }
 

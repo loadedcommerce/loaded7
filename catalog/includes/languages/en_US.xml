@@ -2624,6 +2624,67 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>text_category_not_found</key>
       <value><![CDATA[We can not find the category you are looking for!]]></value>
       <group>index</group>
+    </definition>
+    <definition>
+      <key>text_coupon_code_heading</key>
+      <value><![CDATA[Coupon Code]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>text_coupon_code_instructions</key>
+      <value><![CDATA[Enter your coupon code if you have one.]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>text_apply_coupon</key>
+      <value><![CDATA[Apply Coupon]]></value>
+      <group>checkout</group>
+    </definition>  
+    <definition>
+      <key>ms_error_coupon_not_found</key>
+      <value><![CDATA[Sorry we did not find the coupon code you entered.  Please check the code and try again.]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>ms_error_coupon_not_valid</key>
+      <value><![CDATA[Invalid coupon code.  Please check the code and try again.]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>ms_error_coupon_purchase_not_over_1</key>
+      <value><![CDATA[Your order amount must be over]]></value>
+      <group>checkout</group>
+    </definition>  
+    <definition>
+      <key>ms_error_coupon_purchase_not_over_2</key>
+      <value><![CDATA[to use this coupon.  Please check your order and try again.]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>ms_error_coupon_start_date</key>
+      <value><![CDATA[Coupon not valid until]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>ms_error_coupon_expires_date</key>
+      <value><![CDATA[Coupon only valid until]]></value>
+      <group>checkout</group>
+    </definition>    
+    <definition>
+      <key>ms_error_coupon_check_coupon</key>
+      <value><![CDATA[Please check the coupon and try again.]]></value>
+      <group>checkout</group>
+    </definition>   
+    <definition>
+      <key>ms_error_coupon_max_uses</key>
+      <value><![CDATA[Coupon has reached maximum uses.]]></value>
+      <group>checkout</group>
     </definition>  
   </definitions>
+    <definition>
+      <key>ms_error_action_not_performed</key>
+      <value><![CDATA[Error: There was a problem performing the action.]]></value>
+      <group>checkout</group>
+    </definition>  
+  </definitions>  
 </language>

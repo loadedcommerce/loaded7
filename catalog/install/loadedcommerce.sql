@@ -184,32 +184,43 @@ CREATE TABLE lc_countries (
 DROP TABLE IF EXISTS lc_coupons;
 CREATE TABLE IF NOT EXISTS lc_coupons (
   coupons_id int(11) NOT NULL AUTO_INCREMENT,
-  coupons_type char(1) NOT NULL DEFAULT 'R',
-  coupons_mode varchar(32) NOT NULL DEFAULT 'coupon',
-  coupons_code varchar(32) DEFAULT NULL,
-  coupons_reward decimal(8,4) NOT NULL DEFAULT '0.0000',
-  coupons_purchase_over decimal(8,4) NOT NULL DEFAULT '0.0000',
-  coupons_start_date datetime DEFAULT NULL,
-  coupons_expires_date datetime DEFAULT NULL,
+  `type` enum('R','T','S','P') NOT NULL DEFAULT 'R',
+  mode varchar(32) NOT NULL DEFAULT 'coupon',
+  code varchar(32) NOT NULL,
+  reward decimal(8,4) NOT NULL DEFAULT '0.0000',
+  purchase_over decimal(8,4) NOT NULL DEFAULT '0.0000',
+  start_date datetime DEFAULT NULL,
+  expires_date datetime DEFAULT NULL,
   uses_per_coupon int(11) NOT NULL DEFAULT '0',
   uses_per_customer int(11) NOT NULL DEFAULT '0',
-  restrict_to_products text,
-  restrict_to_categories text,
-  restrict_to_customers text,
-  coupons_status tinyint(1) NOT NULL DEFAULT '1',
+  restrict_to_products varchar(1024) DEFAULT NULL,
+  restrict_to_categories varchar(1024) DEFAULT NULL,
+  restrict_to_customers varchar(1024) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   date_created datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   date_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  coupons_sale_exclude tinyint(1) NOT NULL DEFAULT '0',
+  sale_exclude tinyint(1) NOT NULL DEFAULT '0',
+  notes varchar(255) NOT NULL,
   PRIMARY KEY (coupons_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_coupons_description;
 CREATE TABLE lc_coupons_description (
   coupons_id int(11) NOT NULL DEFAULT '0',
-  language_id int(11) NOT NULL DEFAULT '0',
-  coupons_name varchar(255) NOT NULL DEFAULT '',
-  coupons_description text,
+  language_id int(11) NOT NULL DEFAULT '1',
+  name varchar(1024) NOT NULL DEFAULT '',
   PRIMARY KEY (coupons_id,language_id)
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+DROP TABLE IF EXISTS lc_coupons_redeemed;
+CREATE TABLE lc_coupons_redeemed (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  coupons_id int(11) NOT NULL DEFAULT '0',
+  customers_id int(11) NOT NULL DEFAULT '0',
+  redeem_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  redeem_ip varchar(32) NOT NULL DEFAULT '',
+  order_id int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_credit_cards;
@@ -247,7 +258,7 @@ CREATE TABLE lc_customers (
   customers_default_address_id int(11) DEFAULT NULL,
   customers_telephone varchar(255) DEFAULT NULL,
   customers_fax varchar(255) DEFAULT NULL,
-  customers_password varchar(40) DEFAULT NULL,
+  customers_password varchar(128) DEFAULT NULL,
   customers_newsletter char(1) DEFAULT NULL,
   customers_status int(11) DEFAULT NULL,
   customers_ip_address varchar(15) DEFAULT NULL,
@@ -952,6 +963,7 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(97, 'Check IP Address', 'SERVICE_SESSION_CHECK_IP_ADDRESS', '-1', 'Check the IP address on every page request.', 6, 0, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(98, 'Regenerate Session ID', 'SERVICE_SESSION_REGENERATE_ID', '-1', 'Regenerate the session ID when a customer logs on or creates an account.', 6, 0, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(99, 'Use Default Language Currency', 'USE_DEFAULT_LANGUAGE_CURRENCY', '-1', 'Automatically use the currency set with the language (eg, German->Euro).', 6, 0, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(100, 'Calculate Number Of Products In Each Category', 'SERVICES_CATEGORY_PATH_CALCULATE_PRODUCT_COUNT', '1', 'Recursively calculate how many products are in each category.', 6, 0, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(101, 'Detect Search Engine Spider Robots', 'SERVICE_WHOS_ONLINE_SPIDER_DETECTION', '1', 'Detect search engine spider robots (GoogleBot, Yahoo, etc).', 6, 0, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(102, 'Special Products', 'MAX_DISPLAY_SPECIAL_PRODUCTS', '9', 'Maximum number of products on special to display', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
@@ -966,17 +978,17 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(111, 'Maximum categories to show', 'SERVICE_RECENTLY_VISITED_MAX_CATEGORIES', '3', 'Mazimum number of recently visited categories to show', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(112, 'Display latest searches', 'SERVICE_RECENTLY_VISITED_SHOW_SEARCHES', '1', 'Show recent searches.', 6, 0, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(113, 'Maximum searches to show', 'SERVICE_RECENTLY_VISITED_MAX_SEARCHES', '3', 'Maximum number of recent searches to display', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(114, 'Service Modules', 'MODULE_SERVICES_INSTALLED', 'output_compression;session;language;breadcrumb;currencies;core;whos_online;simple_counter;category_path;recently_visited;specials;reviews;banner', 'Installed services modules', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(114, 'Service Modules', 'MODULE_SERVICES_INSTALLED', 'output_compression;session;language;breadcrumb;currencies;core;whos_online;simple_counter;category_path;recently_visited;specials;reviews;banner;coupons', 'Installed services modules', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(115, 'Display Sub-Total', 'MODULE_ORDER_TOTAL_SUBTOTAL_STATUS', 'true', 'Do you want to display the order sub-total cost?', 6, 1, NULL, '2009-11-26 15:58:32', NULL, 'lc_cfg_set_boolean_value(array(''true'', ''false''))');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(116, 'Sort Order', 'MODULE_ORDER_TOTAL_SUBTOTAL_SORT_ORDER', '1', 'Sort order of display.', 6, 2, NULL, '2009-11-26 15:58:32', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(116, 'Sort Order', 'MODULE_ORDER_TOTAL_SUBTOTAL_SORT_ORDER', '100', 'Sort order of display.', 6, 2, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(117, 'Display Shipping', 'MODULE_ORDER_TOTAL_SHIPPING_STATUS', 'true', 'Do you want to display the order shipping cost?', 6, 1, NULL, '2009-11-26 15:58:32', NULL, 'lc_cfg_set_boolean_value(array(''true'', ''false''))');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(118, 'Sort Order', 'MODULE_ORDER_TOTAL_SHIPPING_SORT_ORDER', '2', 'Sort order of display.', 6, 2, NULL, '2009-11-26 15:58:32', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(118, 'Sort Order', 'MODULE_ORDER_TOTAL_SHIPPING_SORT_ORDER', '200', 'Sort order of display.', 6, 2, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(119, 'Max Pages Display on mainpage', 'MAX_DISPLAY_CMS_ARTICLES', '5', 'Maximum number of Pages listings to display on mainpage', 3, 10, '2009-12-20 15:15:34', '2009-12-17 03:06:52', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(120, 'Max Page Links to Display', 'BOX_CMS_LIST_SIZE', '10', 'Maximum number of Page Links to display in the infobox', 3, 11, '2009-12-17 03:16:14', '2009-12-17 03:16:14', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(121, 'Display Total', 'MODULE_ORDER_TOTAL_TOTAL_STATUS', 'true', 'Do you want to display the total order value?', 6, 1, NULL, '2009-12-17 19:00:33', NULL, 'lc_cfg_set_boolean_value(array(''true'', ''false''))');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(122, 'Sort Order', 'MODULE_ORDER_TOTAL_TOTAL_SORT_ORDER', '4', 'Sort order of display.', 6, 2, NULL, '2009-12-17 19:00:33', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(122, 'Sort Order', 'MODULE_ORDER_TOTAL_TOTAL_SORT_ORDER', '600', 'Sort order of display.', 6, 2, NULL, '2009-12-17 19:00:33', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(123, 'Display Tax', 'MODULE_ORDER_TOTAL_TAX_STATUS', 'true', 'Do you want to display the order tax value?', 6, 1, NULL, '2009-12-17 19:01:01', NULL, 'lc_cfg_set_boolean_value(array(''true'', ''false''))');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(124, 'Sort Order', 'MODULE_ORDER_TOTAL_TAX_SORT_ORDER', '3', 'Sort order of display.', 6, 2, NULL, '2009-12-17 19:01:01', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(124, 'Sort Order', 'MODULE_ORDER_TOTAL_TAX_SORT_ORDER', '500', 'Sort order of display.', 6, 2, NULL, '2009-12-17 19:01:01', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(125, 'Tag Cloud Maiximum Listings', 'TAG_CLOUD_MAX_LIST', '6', 'The number of links to display in the tag cloud box.', 3, 99, '2012-09-21 18:33:12', '2009-12-20 03:41:27', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(126, 'Tag Cloud Font Size Setting', 'TAG_CLOUD_FONT_SIZE', '10,24', 'The low and high number of the font size to use for the link display in the tag cloud box, sperated by a comma.', 3, 98, NULL, '2009-12-20 03:41:27', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(127, 'Pricing Decimal Places', 'DECIMAL_PLACES', '2', 'Pad the pricing values this amount of decimal places', 1, 20, '2009-12-09 18:31:29', '2009-11-26 15:58:32', NULL, NULL);
@@ -1012,6 +1024,12 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(157, 'Suppress Non-Mobile Payment Modules', 'CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES', '-1', 'Suppress non-mobile payment modules in catalog when being viewed in mobile format.', 19, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(158, 'Enable/Disable Editor(Global)', 'ENABLE_EDITOR', '-1', 'Enable or Disable Editor Globally', 20, 1, NULL, '2013-07-03 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(159, 'Use Default Template Stylesheet', 'USE_DEFAULT_TEMPLATE_STYLESHEET', '-1', 'Use Default Template Stylesheet', 20, 2, NULL, '2013-07-03 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(160, 'Display Coupon', 'MODULE_ORDER_TOTAL_COUPON_STATUS', 'true', 'Do you want to dusplay the coupon discount total on the checkout pages?', 6, 0, NULL, '2013-07-30 14:10:55', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(''true'', ''false''))');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(161, 'Sort Order', 'MODULE_ORDER_TOTAL_COUPON_SORT_ORDER', '300', 'Sort order of the display.', 6, 0, NULL, '2013-07-30 14:10:55', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(162, 'Redeem On Cart Page?', 'SERVICE_COUPONS_DISPLAY_ON_CART_PAGE', '1', 'Display the coupons redemption form on the shopping cart page?', 6, 0, NULL, '2013-07-31 19:05:14', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(163, 'Redeem On Shipping Page?', 'SERVICE_COUPONS_DISPLAY_ON_SHIPPING_PAGE', '1', 'Display the coupons redemption form on the checkout shipping page?', 6, 0, NULL, '2013-07-31 19:05:14', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(164, 'Redeem On Payment Page?', 'SERVICE_COUPONS_DISPLAY_ON_PAYMENT_PAGE', '1', 'Display the coupons redemption form on the checkout payment page?', 6, 0, NULL, '2013-07-31 19:05:14', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(165, 'Redeem On Confirmation Page?', 'SERVICE_COUPONS_DISPLAY_ON_CONFIRMATION_PAGE', '1', 'Display the coupons redemption form on the checkout confirmation page?', 6, 0, NULL, '2013-07-31 19:05:14', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(1, 'My Store', 'General information about my store', 1, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(2, 'Minimum Values', 'The minimum values for functions / data', 2, 1);

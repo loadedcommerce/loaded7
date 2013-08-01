@@ -14,14 +14,6 @@
 if ($lC_MessageStack->size('checkout_payment') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('checkout_payment', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
 }
-
-//unset($_SESSION['PPEC_PROCESS']);
-//unset($_SESSION['PPEC_PAYDATA']);
-//unset($_SESSION['cartSync']);
-//echo "<pre>";
-//print_r($lC_Payment);
-//echo "</pre>";
-
 ?>
 <!--content/checkout/checkout_payment.php start-->
 <div id="checkout_payment_details" class="full_page">
@@ -97,7 +89,6 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                     <div style="clear:both;"></div>
                     <?php } ?>
                 </div>
-                <div id="checkout_coupon_tip"><?php echo $lC_Language->get('checkout_coupon_tip'); ?></div>
               </div>
               <div id="checkout_shipping_col2" style="width:65%; float:right;">
                 <div id="checkoutPaymentAddress">
@@ -211,6 +202,21 @@ if ($lC_MessageStack->size('checkout_payment') > 0) {
                   <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
                   <span class="buttonRight"><a onclick="$('#checkout_payment').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
                 </div>
+                <?php
+                if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && 
+                    defined('SERVICE_COUPONS_DISPLAY_ON_PAYMENT_PAGE') && SERVICE_COUPONS_DISPLAY_ON_PAYMENT_PAGE == '1') {
+                  ?>                
+                  <div class="checkout_discount checkout_discount_stream">
+                    <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
+                    <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
+                    <form name="coupon" id="coupon" action="">
+                      <input type="text" name="coupon_code" id="coupon_code">
+                    </form><br />
+                    <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
+                  </div>
+                  <?php
+                } 
+                ?>
                 <div style="clear:both;"></div>
               </div>
             </div>

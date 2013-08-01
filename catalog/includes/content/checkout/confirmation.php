@@ -33,7 +33,7 @@
         lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
       }
 
-      if ($lC_ShoppingCart->hasContents() === false) {
+      if ($lC_ShoppingCart->hasContents() === false) {     
         lc_redirect(lc_href_link(FILENAME_CHECKOUT, null, 'SSL'));
       }
 

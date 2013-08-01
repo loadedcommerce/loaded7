@@ -29,10 +29,41 @@ class lC_Application_Coupons extends lC_Template_Admin {
  /*
   * Class constructor
   */
-  function __construct() {
-    global $lC_Language;
+  public function __construct() {
+    global $lC_Database, $lC_Language, $cInfo;
 
     $this->_page_title = $lC_Language->get('heading_title');
+    
+    $action = (isset($_GET['action']) && empty($_GET['action']) === false) ? preg_replace('/[^a-z\s]/', '', $_GET['action']) : NULL;
+    
+    switch ($action) {
+      case 'save' :
+        if ( is_numeric($_GET[$this->_module]) ) {
+          
+          $cInfo = new lC_ObjectInfo(lC_Coupons_Admin::get($_GET[$this->_module]));
+          
+          $Qcd = $lC_Database->query('select * from :table_coupons_description where coupons_id = :coupons_id');
+          $Qcd->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
+          $Qcd->bindInt(':coupons_id', $cInfo->get('coupons_id'));
+          $Qcd->execute();
+          
+          $name = array();
+          while ($Qcd->next()) {
+            $name[$Qcd->valueInt('language_id')] = $Qcd->value('name');
+          }
+          $cInfo->set('name', $name);
+        }      
+        break;
+    }
+  }
+  
+  public function getName($cInfo, $language_id = '1') {
+    global $lC_Language;
+    
+    if (!is_object($cInfo)) return false;
+    $nameArr = $cInfo->get('name');
+
+    return $nameArr[$language_id];
   }
 }
 ?>
