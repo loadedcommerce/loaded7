@@ -231,6 +231,10 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
         include('../admin/includes/modules/order_total/shipping.php');
         $module = new lC_OrderTotal_shipping();
         $module->install();
+        
+        include('../admin/includes/modules/order_total/coupon.php');
+        $module = new lC_OrderTotal_coupon();
+        $module->install();        
 
         include('../admin/includes/modules/order_total/tax.php');
         $module = new lC_OrderTotal_tax();
