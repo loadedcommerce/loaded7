@@ -37,7 +37,7 @@
           </ul>
           <p class="full-width"><button type="submit" class="button glossy green-gradient full-width" id="lost-password"><?php echo $lC_Language->get('button_submit'); ?></button></p>
         </form>
-        <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
+        <!-- form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
           <h3 class="align-center"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
           <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>"><button type="button" class="button glossy green-gradient full-width" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button></a>
           <p class="align-center mid-margin-top"><?php echo $lC_Language->get('text_or'); ?></p>
@@ -45,7 +45,7 @@
             <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="serial" id="serial" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
           </ul>
           <p class="full-width"><button type="submit" class="button glossy red-gradient full-width" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
-        </form>
+        </form -->
       </div>
     </div>
   </div>
