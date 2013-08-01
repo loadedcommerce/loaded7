@@ -2624,6 +2624,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>text_category_not_found</key>
       <value><![CDATA[We can not find the category you are looking for!]]></value>
       <group>index</group>
-    </definition>  
+    </definition> 
+    <definition>
+      <key>text_label_error</key>
+      <value><![CDATA[Error:]]></value>
+      <group>checkout</group>
+    </definition>      
   </definitions>
 </language>

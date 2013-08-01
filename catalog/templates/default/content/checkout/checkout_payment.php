@@ -14,14 +14,6 @@
 if ($lC_MessageStack->size('checkout_payment') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('checkout_payment', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
 }
-
-//unset($_SESSION['PPEC_PROCESS']);
-//unset($_SESSION['PPEC_PAYDATA']);
-//unset($_SESSION['cartSync']);
-//echo "<pre>";
-//print_r($lC_Payment);
-//echo "</pre>";
-
 ?>
 <!--content/checkout/checkout_payment.php start-->
 <div id="checkout_payment_details" class="full_page">

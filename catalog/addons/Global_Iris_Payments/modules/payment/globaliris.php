@@ -257,9 +257,10 @@ class lC_Payment_globaliris extends lC_Payment {
       $action = 'error';
     }
 
+    $error_message = '';
     switch($action){
       case 'error' :
-        $_SESSION['messageToStack'] = array('checkout_payment', $result . ' - ' . $message);
+        $error_message = '&payment_error=' . $lC_Language->get('text_label_error') . ' ' . urlencode($result . ' - ' . $message);
         lC_Order::remove($orderid);
         $error = true;
         break;
@@ -285,7 +286,7 @@ class lC_Payment_globaliris extends lC_Payment {
     $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '00') ? 1 : 0);
     $Qtransaction->execute();   
     
-    if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));    
+    if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment' . $error_message, 'SSL'));    
   } 
  /**
   * Check the status of the payment module
