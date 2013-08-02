@@ -126,7 +126,7 @@ require($lC_Vqmod->modCheck('includes/classes/language.php'));
 $lC_Language = new lC_Language_Admin();
 
 // admin specific language
-if ($lC_Language->getAdminLanguage($_SESSION['admin']['id']) != 'en_US') {
+if ( ($lC_Language->getAdminLanguage($_SESSION['admin']['id']) != 'en_US') || ($lC_Language->getAdminLanguage($_SESSION['admin']['id']) != $_SESSION['admin']['language_id']) ) {
   $lC_Language->set($lC_Language->getAdminLanguage($_SESSION['admin']['id']));
 }
 

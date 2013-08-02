@@ -65,8 +65,8 @@ function profileEdit(id) {
                    '        <?php echo lc_draw_input_field('user_name', null, 'id="edit-user_name" class="input" style="width:86%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
-                   '        <label for="admin_language_id" class="label"><?php echo $lC_Language->get('field_admin_language'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('admin_language_id', $languagesSelectArr, null, 'class="select" style="min-width:200px;"'); ?>'+
+                   '        <label for="language_id" class="label"><?php echo $lC_Language->get('field_admin_language'); ?></label>'+
+                   '        <?php echo lc_draw_pull_down_menu('language_id', $languagesSelectArr, null, 'id="edit-language_id" class="select" style="min-width:200px;"'); ?>'+
                    '      </p>'+ 
                    '      <p class="button-height inline-label" id="pImage">'+
                    '        <label for="profile_image" class="label"><?php echo $lC_Language->get('profile_image'); ?></label>'+
@@ -126,17 +126,25 @@ function profileEdit(id) {
                         }
                         return false;
                       }
+                      window.location.href = window.location.href;
                     }
-                  );
-                  win.closeModal();
+                  ); 
                 }
               }
             }
           },
           buttonsLowPadding: true
-      });
+      });      
       
-      // add selected attribute js here
+      // Gulmohar here is the work /////////////////////////////////////////////////////////
+      //$("#edit-language_id").empty(); // clear the old values
+      //$.each(data.languagesSelectArr, function(id, text) {
+      //  var selected = (data.id == id) ? 'selected="selected"' : '';
+      //  $("#edit-language_id").append(
+      //    $("<option " + selected + "></option>").val(id).html(text)
+      //  );
+      //});
+      //////////////////////////////////////////////////////////////////////////////////////
 
       $('#edit-first_name').val(data.first_name);
       $('#edit-last_name').val(data.last_name);
