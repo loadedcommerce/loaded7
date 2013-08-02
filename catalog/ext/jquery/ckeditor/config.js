@@ -25,15 +25,15 @@ CKEDITOR.editorConfig = function( config ) {
     { name: 'clipboard', groups: [ 'clipboard' ] },
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
     { name: 'tools' },
-    { name: 'others' },
-    { name: 'about' }
+    { name: 'others' }/*,
+    { name: 'about' }*/
   ];
 
 
 
   // Remove some buttons, provided by the standard plugins, which we don't
   // need to have in the Standard(s) toolbar.
-  config.removeButtons = 'Subscript,Superscript,Strike,Table,Styles,Format,Font,BGColor,Cut,Copy,Anchor,HorizontalRule';
+  config.removeButtons = 'Subscript,Superscript,Strike,Table,Styles,Format,Font,BGColor,Cut,Copy,Anchor,HorizontalRule,SpecialChar';
 
   // Se the most common block elements.
   config.format_tags = 'p;h1;h2;h3;pre';
