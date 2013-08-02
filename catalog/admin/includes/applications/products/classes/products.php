@@ -604,9 +604,6 @@ class lC_Products_Admin {
               $Qattribute->bindInt(':languages_id', 0);
             }
             
-            // if the value is date from datepicker, reformat it
-            $value = (strstr($value, '/')) ? lC_DateTime::toDateTime($value) : $value;
-                   
             $Qattribute->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
             $Qattribute->bindValue(':value', $value);
             $Qattribute->bindInt(':products_id', $products_id);
@@ -1412,8 +1409,11 @@ class lC_Products_Admin {
   * @return string
   */  
   public static function getProductAttributeModules($section = '') {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language, $_module;
 
+    $aInfo = new lC_ObjectInfo(lC_Products_Admin::get($_GET[$_module]));
+    $attributes = $aInfo->get('attributes');  
+    
     $output = '';
     
     $Qattributes = $lC_Database->query('select id, code from :table_templates_boxes where modules_group = :modules_group order by code desc');
@@ -1435,7 +1435,7 @@ class lC_Products_Admin {
           $output .= '<div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
                       <div class="twelve-columns strong small-margin-bottom">
                         <span>' . $lC_Language->get('product_attributes_' . $module->getCode() . '_title') . '</span>' . lc_show_info_bubble($lC_Language->get('info_bubble_attributes_' . $module->getCode() . '_text')) . '</div>
-                      <div class="twelve-columns product-module-content margin-bottom">' . $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)) . '</div>
+                        <div class="twelve-columns product-module-content margin-bottom">' . $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)) . '</div>
                       </div>';
         }
       }

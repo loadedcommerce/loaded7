@@ -193,13 +193,18 @@ class lC_Search extends lC_Products {
     }
 
     if ($this->hasDateSet('from')) {
+      echo 'from';
+      die();
       $Qlisting->appendQuery('and p.products_date_added >= :products_date_added');
-      $Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', $this->_date_from));
+      //$Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', $this->_date_from));
+      $Qlisting->bindValue(':products_date_added', $this->_date_from);
     }
 
     if ($this->hasDateSet('to')) {
+      echo 'to';
       $Qlisting->appendQuery('and p.products_date_added <= :products_date_added');
-      $Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', $this->_date_to));
+      //$Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', $this->_date_to));
+      $Qlisting->bindValue(':products_date_added', $this->_date_to);
     }
 
     if ($this->hasPriceSet('from')) {
@@ -251,6 +256,12 @@ class lC_Search extends lC_Products {
       $Qlisting->bindRaw(':order_by_direction', (($this->_sort_by_direction == '-') ? 'desc' : ''));
     }
 
+    echo '<pre>';
+    print_r($Qlisting);
+    echo '</pre>';
+    die();
+
+      
     $Qlisting->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), MAX_DISPLAY_SEARCH_RESULTS);
     $Qlisting->execute();
 

@@ -47,26 +47,28 @@ class lC_Search_Search extends lC_Template {
   /* Private methods */
   function _process() {
     global $lC_Language, $lC_MessageStack, $lC_Search, $Qlisting, $lC_Vqmod;
-
+    
     require_once($lC_Vqmod->modCheck('includes/classes/search.php'));
+    
     if (isset($_GET['datefrom']) && $_GET['datefrom'] != ''){
-      $dateParts = explode("/", $_GET['datefrom']);
-      if (isset($_GET['datefrom']) && checkdate($dateParts[0], $dateParts[1], $dateParts[2])) {
-        $data['datefrom'] = @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2]);
-      } else {
-        $lC_MessageStack->add('search', $lC_Language->get('error_search_invalid_from_date'));
-      }
+      //$dateParts = explode("/", $_GET['datefrom']);
+      //if (isset($_GET['datefrom']) && checkdate($dateParts[0], $dateParts[1], $dateParts[2])) {
+        //$data['datefrom'] = @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2]);
+        $data['datefrom'] = $_GET['datefrom'];
+      //} else {
+      //  $lC_MessageStack->add('search', $lC_Language->get('error_search_invalid_from_date'));
+      //}
     }
 
     if (isset($_GET['dateto']) && $_GET['dateto'] != ''){
-      $dateParts = explode("/", $_GET['dateto']);
-      if (isset($_GET['dateto']) && checkdate($dateParts[0], $dateParts[1], $dateParts[2])) {
-        $data['dateto'] = @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2]);
-      } else {
-        $lC_MessageStack->add('search', $lC_Language->get('error_search_invalid_to_date'));
-      }
+      //$dateParts = explode("/", $_GET['dateto']);
+      //if (isset($_GET['dateto']) && checkdate($dateParts[0], $dateParts[1], $dateParts[2])) {
+        //$data['dateto'] = @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2]);
+        $data['dateto'] = $_GET['dateto'];
+      //} else {
+      //  $lC_MessageStack->add('search', $lC_Language->get('error_search_invalid_to_date'));
+      //}
     }
-
 
     if ($lC_Search->hasDateSet()) {
       if ($lC_Search->getDateFrom() > $lC_Search->getDateTo()) {
@@ -124,7 +126,7 @@ class lC_Search_Search extends lC_Template {
 
     if ($lC_MessageStack->size('search') > 0) {
       $this->_page_contents = 'search.php';
-    } else {
+    } else { 
       $Qlisting = $lC_Search->execute();
     }
   }
