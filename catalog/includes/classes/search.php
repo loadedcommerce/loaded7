@@ -67,11 +67,11 @@ class lC_Search extends lC_Products {
   function getNumberOfResults() {
     return $this->_number_of_results;
   }
-
+  
   function hasDateSet($flag = null) {
     if ($flag == 'from') {
       return isset($this->_date_from);
-    } elseif ($flag == 'to') {
+    } else if ($flag == 'to') {
       return isset($this->_date_to);
     }
 
@@ -193,15 +193,12 @@ class lC_Search extends lC_Products {
     }
 
     if ($this->hasDateSet('from')) {
-      echo 'from';
-      die();
       $Qlisting->appendQuery('and p.products_date_added >= :products_date_added');
       //$Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', $this->_date_from));
       $Qlisting->bindValue(':products_date_added', $this->_date_from);
     }
 
     if ($this->hasDateSet('to')) {
-      echo 'to';
       $Qlisting->appendQuery('and p.products_date_added <= :products_date_added');
       //$Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', $this->_date_to));
       $Qlisting->bindValue(':products_date_added', $this->_date_to);
