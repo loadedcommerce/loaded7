@@ -191,8 +191,9 @@
           <div id="profileInner" style="display:none;">                
             <div class="profile50">
               <div id="profileLeft">
-                <img src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="64" height="64" alt="User name" class="user-icon">
-                <?php echo $lC_Language->get('text_hello'); ?>
+                <?php echo $lC_Language->showImage($value['code'], '18', '12', 'class="lang-icon"'); ?>
+                <img id="profileLeftImage" src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="64" height="64" alt="User name" class="user-profile-left-image">
+                 <?php echo $lC_Language->get('text_hello'); ?>
                 <span class="name"><?php echo $_SESSION['admin']['firstname']; ?><br />
                 <?php echo $_SESSION['admin']['lastname']; ?></span>
                 <small class="profile-edit-logout"><?php echo $lC_Language->get('profile_slate_edit_logout'); ?></small>
@@ -202,7 +203,8 @@
               <div id="profileRight">
                 <a href="javascript://" onclick="profileEdit('<?php echo $_SESSION['admin']['id']; ?>')">
                   <div class="profile-right-fourth">
-                    <img src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="32" height="32"><br />
+                    <?php echo $lC_Language->showImage($value['code'], '9', '6', 'class="lang-icon"'); ?>
+                    <img id="profileRightImage" src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="32" height="32"><br />
                     <small><?php echo $lC_Language->get('profile_slate_edit_profile'); ?></small>
                   </div>
                 </a>

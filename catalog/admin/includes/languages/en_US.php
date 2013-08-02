@@ -85,6 +85,8 @@ button_yes = Yes
 button_no = No
 button_info = Info
 
+field_admin_language = Admin Language
+
 icon_all = All
 icon_app_store = Add Ons
 icon_preview = Preview
