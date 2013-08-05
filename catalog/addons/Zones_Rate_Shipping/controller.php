@@ -99,7 +99,7 @@ class Zones_Rate_Shipping extends lC_Addon { // your addon must extend lC_Addon
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Module weight Unit', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_WEIGHT_UNIT', '2', 'What unit of weight does this shipping module use?.', '6', '0', 'lC_Weight::getTitle', 'lc_cfg_set_weight_classes_pulldown_menu', now())");
     
     if (!defined("ADDONS_SHIPPING_" . strtoupper($this->_code) . "_NUMBER_OF_ZONES")) {
-      $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Number of World Zones', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_NUMBER_OF_ZONES', '1', 'Number of World Zones to use.', '7', '0', now())");
+      $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Zones Rate Shipping: Number of Zones', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_NUMBER_OF_ZONES', '1', 'Set the number number of zones to use in the Zones Rate Shipping add-on.', '7', '0', now())");
     } 
 
     for ($i = 1; $i <= $this->num_zones; $i++) {
