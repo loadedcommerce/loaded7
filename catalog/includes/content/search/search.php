@@ -51,23 +51,11 @@ class lC_Search_Search extends lC_Template {
     require_once($lC_Vqmod->modCheck('includes/classes/search.php'));
     
     if (isset($_GET['datefrom']) && $_GET['datefrom'] != ''){
-      //$dateParts = explode("/", $_GET['datefrom']);
-      //if (isset($_GET['datefrom']) && checkdate($dateParts[0], $dateParts[1], $dateParts[2])) {
-        //$data['datefrom'] = @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2]);
-        $data['datefrom'] = $_GET['datefrom'];
-      //} else {
-      //  $lC_MessageStack->add('search', $lC_Language->get('error_search_invalid_from_date'));
-      //}
+      $lC_Search->setDateFrom($_GET['datefrom']);
     }
 
     if (isset($_GET['dateto']) && $_GET['dateto'] != ''){
-      //$dateParts = explode("/", $_GET['dateto']);
-      //if (isset($_GET['dateto']) && checkdate($dateParts[0], $dateParts[1], $dateParts[2])) {
-        //$data['dateto'] = @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2]);
-        $data['dateto'] = $_GET['dateto'];
-      //} else {
-      //  $lC_MessageStack->add('search', $lC_Language->get('error_search_invalid_to_date'));
-      //}
+      $lC_Search->setDateTo($_GET['dateto']);
     }
 
     if ($lC_Search->hasDateSet()) {

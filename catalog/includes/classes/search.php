@@ -167,7 +167,7 @@ class lC_Search extends lC_Products {
     $Qlisting->bindTable(':table_categories', TABLE_CATEGORIES);
     $Qlisting->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
 
-    $Qlisting->appendQuery('where p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id and p.products_id = p2c.products_id and p2c.categories_id = c.categories_id');
+    $Qlisting->appendQuery('where p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id');
     $Qlisting->bindInt(':language_id', $lC_Language->getID());
 
     if ($this->hasCategory()) {
@@ -193,15 +193,15 @@ class lC_Search extends lC_Products {
     }
 
     if ($this->hasDateSet('from')) {
+      $dateParts = explode("/", $this->_date_from);
       $Qlisting->appendQuery('and p.products_date_added >= :products_date_added');
-      //$Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', $this->_date_from));
-      $Qlisting->bindValue(':products_date_added', $this->_date_from);
+      $Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2])));
     }
 
     if ($this->hasDateSet('to')) {
+      $dateParts = explode("/", $this->_date_to);
       $Qlisting->appendQuery('and p.products_date_added <= :products_date_added');
-      //$Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', $this->_date_to));
-      $Qlisting->bindValue(':products_date_added', $this->_date_to);
+      $Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2])));
     }
 
     if ($this->hasPriceSet('from')) {
@@ -252,12 +252,6 @@ class lC_Search extends lC_Products {
       $Qlisting->appendQuery('pd.products_name :order_by_direction');
       $Qlisting->bindRaw(':order_by_direction', (($this->_sort_by_direction == '-') ? 'desc' : ''));
     }
-
-    echo '<pre>';
-    print_r($Qlisting);
-    echo '</pre>';
-    die();
-
       
     $Qlisting->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), MAX_DISPLAY_SEARCH_RESULTS);
     $Qlisting->execute();
