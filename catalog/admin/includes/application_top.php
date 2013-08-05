@@ -20,7 +20,7 @@ require('../includes/config.php');
 
 // set the level of error reporting to E_ALL
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
-//ini_set("display_errors", 1);
+ini_set("display_errors", 1);
 ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
 
@@ -35,6 +35,9 @@ if ($request_type == 'NONSSL') {
 } else {
   define('DIR_WS_CATALOG', DIR_WS_HTTPS_CATALOG);
 }
+
+if (!defined('DIR_WS_ADMIN')) define('DIR_WS_ADMIN', 'admin/');
+if (!defined('DIR_FS_ADMIN')) define('DIR_FS_ADMIN', DIR_FS_CATALOG . 'admin/');
 
 // compatibility work-around logic for PHP4 
 require($lC_Vqmod->modCheck('../includes/functions/compatibility.php'));

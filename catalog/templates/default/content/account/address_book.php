@@ -70,7 +70,7 @@ if ($lC_MessageStack->size('address_book') > 0) {
           if ($Qaddresses->numberOfRows() < MAX_ADDRESS_BOOK_ENTRIES) {
           ?>
           <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book&new', 'SSL'); ?>" class="noDecoration">
-              <button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_add_address'); ?></button>
+              <button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_add_address'); ?></button>
             </a></span>
           <?php
           } else {

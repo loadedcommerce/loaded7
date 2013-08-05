@@ -18,7 +18,7 @@ if ($lC_MessageStack->size('account_edit') > 0) {
 ?>
 <!--content/account/account_edit.php start-->
 <div class="full_page">
-  <form name="account_edit" id="account_edit" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'edit=save', 'SSL'); ?>" method="post" onsubmit="return check_form(account_edit);">
+  <form name="account_edit" id="account_edit" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'edit=save', 'SSL'); ?>" method="post">
     <div class="short-code-column">
       <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
       <div id="errDiv" class="short-code msg error" style="margin-bottom:10px; display:none;"> <span><?php echo $lC_Language->get('form_validation_error'); ?></span> </div>
@@ -52,7 +52,7 @@ if ($lC_MessageStack->size('account_edit') > 0) {
       <div style="clear:both;"></div>
       <div id="accountEditActions" class="action_buttonbar"  style="margin-top:10px;"> 
         <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span> 
-        <span class="buttonRight"><a onclick="$('#account_edit').submit();" class="noDecoration"><button class="button brown_btn" type="submit"><?php echo $lC_Language->get('button_update'); ?></button></a></span> 
+        <span class="buttonRight"><button class="button purple_btn" type="submit" onclick="validateForm();"><?php echo $lC_Language->get('button_update'); ?></button></span> 
       </div>
       <div style="clear:both;"></div>
     </div>

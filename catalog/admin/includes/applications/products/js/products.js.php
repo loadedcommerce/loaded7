@@ -28,11 +28,23 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       <?php } ?>
       //$('#fileUploaderImageContainer .qq-upload-button').hide();
       //$('#fileUploaderImageContainer .qq-upload-list').hide();
-      <?php               
-      foreach ( $lC_Language->getAll() as $l ) {  
-        echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
-      }
-      ?>  
+      <?php
+        if (ENABLE_EDITOR == '1') { 
+          if (USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
+            foreach ( $lC_Language->getAll() as $l ) {  
+              echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser',contentsCss: '../templates/default/css/base.css',stylesSet: [] });";
+            }
+          } else {
+            foreach ( $lC_Language->getAll() as $l ) {  
+              echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+            }
+          }
+        } else {
+          foreach ( $lC_Language->getAll() as $l ) {  
+            echo '$("#ckEditorProductDescription_' . $l['id'] . '").css("height", "200px").css("width", "99.8%");';
+          }
+        }
+      ?>
       //$('#products_name_1').focus();
       $(this).scrollTop(0); 
            
@@ -71,20 +83,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
              
       // PRICING TAB
       _refreshSimpleOptionsPricingSymbols();
-      _updatePricingDivChevrons();
-      
-      <?php
-        if (!$pInfo) {
-          foreach ( $lC_Language->getAll() as $l ) {
-      ?>
-      // create the category slug as the title is being entered
-      $("#products_name_<?php echo $l['id']; ?>").blur(function(){
-        $("#products_keyword_<?php echo $l['id']; ?>").val($("#products_name_<?php echo $l['id']; ?>").val().toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, ''));
-      });
-      <?php
-          }
-        }
-      ?> 
+      _updatePricingDivChevrons(); 
       
                 
     });
@@ -565,6 +564,12 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           <?php
           foreach ( $lC_Language->getAll() as $l ) {
             ?>
+            'products_name_<?php echo $l['id']; ?>': {
+              required: true,
+            },
+            'ckEditorProductDescription_<?php echo $l['id']; ?>': {
+              required: true,
+            },
             'products_keyword[<?php echo $l['id']; ?>]': {
               required: true,
               remote: jsonVKUrl.replace('PID', pid),
@@ -590,7 +595,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       } 
 
       return false;
-    }         
+    }        
     
   </script>
   <?php

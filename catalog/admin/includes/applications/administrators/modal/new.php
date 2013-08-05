@@ -82,12 +82,11 @@ function newAdmin() {
         '<?php echo $lC_Language->get('button_save'); ?>': {
           classes:  'blue-gradient glossy',
           click:    function(win) {
-
           var bValid = $("#aNew").validate({
             rules: {
               first_name: { required: true },
               last_name: { required: true },
-              user_name: { required: true },
+              user_name: { required: true, email: true },
               user_password: { required: true }
             },
             invalidHandler: function() {

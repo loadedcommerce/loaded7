@@ -130,6 +130,7 @@ class lC_Template_Admin extends lC_Template {
   public function isAuthorized($_module) {
     $ok = FALSE;
 
+    
     if ((int)$_SESSION['admin']['access'][strtolower($_module)] > 0) {
       $ok = TRUE;
     } else if ($_module == 'login') {
@@ -138,13 +139,9 @@ class lC_Template_Admin extends lC_Template {
       $ok = TRUE;
     } else if ($_module == 'index' && $this->getPageContentsFilename() == 'main.php') {
       $ok = TRUE;
-    } else if ($_module == 'customer_groups' && $_SESSION['admin']['access']['definitions'] > 0) {
+    } else if ($_module == 'image_groups' && $_SESSION['admin']['access']['product_settings'] > 0) {
       $ok = TRUE;
-    } else if ($_module == 'orders_status' && $_SESSION['admin']['access']['definitions'] > 0) {
-      $ok = TRUE;
-    } else if ($_module == 'image_groups' && $_SESSION['admin']['access']['definitions'] > 0) {
-      $ok = TRUE;
-    } else if ($_module == 'weight_classes' && $_SESSION['admin']['access']['definitions'] > 0) {
+    } else if ($_module == 'weight_classes' && $_SESSION['admin']['access']['product_settings'] > 0) {
       $ok = TRUE;
     } else if (stristr($_module, 'modules_') && $_SESSION['admin']['access']['modules'] > 0) {
       $ok = TRUE;
@@ -152,6 +149,12 @@ class lC_Template_Admin extends lC_Template {
       $ok = TRUE;
     } else if ($_module == 'product_attributes' && $_SESSION['admin']['access']['modules'] > 0) {
       $ok = TRUE;
+    } else if ($_module == 'product_variants' && $_SESSION['admin']['access']['option_manager'] > 0) {
+      $ok = TRUE;    
+    } else if ($_module == 'countries' && $_SESSION['admin']['access']['locale'] > 0) {    
+      $ok = TRUE;    
+    } else if ($_module == 'zone_groups' && $_SESSION['admin']['access']['locale'] > 0) {
+      $ok = TRUE;              
     }
 
     return $ok;

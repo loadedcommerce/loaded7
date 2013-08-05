@@ -36,7 +36,7 @@ DROP TABLE IF EXISTS lc_administrators;
 CREATE TABLE lc_administrators (
   id int(11) NOT NULL AUTO_INCREMENT,
   user_name varchar(255) NOT NULL,
-  user_password varchar(40) NOT NULL,
+  user_password varchar(128) NOT NULL,
   first_name varchar(64) NOT NULL DEFAULT '',
   last_name varchar(64) NOT NULL DEFAULT '',
   image varchar(255) NOT NULL DEFAULT '',
@@ -179,6 +179,37 @@ CREATE TABLE lc_countries (
   address_format varchar(255) DEFAULT NULL,
   PRIMARY KEY (countries_id),
   KEY IDX_COUNTRIES_NAME (countries_name)
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+DROP TABLE IF EXISTS lc_coupons;
+CREATE TABLE IF NOT EXISTS lc_coupons (
+  coupons_id int(11) NOT NULL AUTO_INCREMENT,
+  coupons_type char(1) NOT NULL DEFAULT 'R',
+  coupons_mode varchar(32) NOT NULL DEFAULT 'coupon',
+  coupons_code varchar(32) DEFAULT NULL,
+  coupons_reward decimal(8,4) NOT NULL DEFAULT '0.0000',
+  coupons_purchase_over decimal(8,4) NOT NULL DEFAULT '0.0000',
+  coupons_start_date datetime DEFAULT NULL,
+  coupons_expires_date datetime DEFAULT NULL,
+  uses_per_coupon int(11) NOT NULL DEFAULT '0',
+  uses_per_customer int(11) NOT NULL DEFAULT '0',
+  restrict_to_products text,
+  restrict_to_categories text,
+  restrict_to_customers text,
+  coupons_status tinyint(1) NOT NULL DEFAULT '1',
+  date_created datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  date_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  coupons_sale_exclude tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (coupons_id)
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+DROP TABLE IF EXISTS lc_coupons_description;
+CREATE TABLE lc_coupons_description (
+  coupons_id int(11) NOT NULL DEFAULT '0',
+  language_id int(11) NOT NULL DEFAULT '0',
+  coupons_name varchar(255) NOT NULL DEFAULT '',
+  coupons_description text,
+  PRIMARY KEY (coupons_id,language_id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_credit_cards;
@@ -979,6 +1010,8 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(155, 'Check Sessions Directory', 'SERVICE_DEBUG_CHECK_SESSION_DIRECTORY', '1', 'Show a warning if the file-based session directory does not exist.', 6, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(156, 'Maximum Entries To Display', 'MODULE_CONTENT_NEW_PRODUCTS_MAX_DISPLAY', '6', 'Maximum number of new products to display', 6, 0, NULL, '2012-10-25 18:08:07', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(157, 'Suppress Non-Mobile Payment Modules', 'CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES', '-1', 'Suppress non-mobile payment modules in catalog when being viewed in mobile format.', 19, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(158, 'Enable/Disable Editor(Global)', 'ENABLE_EDITOR', '-1', 'Enable or Disable Editor Globally', 20, 1, NULL, '2013-07-03 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(159, 'Use Default Template Stylesheet', 'USE_DEFAULT_TEMPLATE_STYLESHEET', '-1', 'Use Default Template Stylesheet', 20, 2, NULL, '2013-07-03 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(1, 'My Store', 'General information about my store', 1, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(2, 'Minimum Values', 'The minimum values for functions / data', 2, 1);
@@ -995,6 +1028,7 @@ INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(17, 'Credit Cards', 'Credit card options', 17, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(18, 'Program Locations', 'Locations to certain programs on the server.', 18, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(19, 'Checkout', 'Checkout settings', 19, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(20, 'Editor', 'Editor settings', 20, 1);
 
 INSERT INTO lc_countries VALUES (1,'Afghanistan','AF','AFG','');
 
@@ -5938,9 +5972,9 @@ INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, 
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(12, 'Maestro', '/^(50|56|57|58|6)/', '0', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(13, 'Smartpay', '/^4\\d{12}(\\d{3})?$/', '0', 0);
 
-INSERT INTO `lc_currencies` (`currencies_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_places`, `value`, `last_updated`) VALUES(1, 'US Dollar', 'USD', '$', '', '2', 1.00000000, '2012-12-07 09:25:45');
-INSERT INTO `lc_currencies` (`currencies_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_places`, `value`, `last_updated`) VALUES(2, 'Euro', 'EUR', '€', '', '2', 1.20760000, '2012-12-07 09:25:45');
-INSERT INTO `lc_currencies` (`currencies_id`, `title`, `code`, `symbol_left`, `symbol_right`, `decimal_places`, `value`, `last_updated`) VALUES(3, 'British Pounds', 'GBP', '£', '', '2', 1.75870001, '2012-12-07 09:25:45');
+INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(1, 'US Dollar', 'USD', '$', '', '2', 1.00000000, '2012-12-07 09:25:45');
+INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(2, 'Euro', 'EUR', '€', '', '2', 1.20760000, '2012-12-07 09:25:45');
+INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(3, 'British Pounds', 'GBP', '£', '', '2', 1.75870001, '2012-12-07 09:25:45');
 
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(1, 1, 'Retail');
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(2, 1, 'Wholesale');

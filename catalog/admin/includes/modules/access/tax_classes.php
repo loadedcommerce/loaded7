@@ -17,7 +17,7 @@
         $_group = 'configuration',
         $_icon = 'classes.png',
         $_title,
-        $_sort_order = 1000;
+        $_sort_order = 500;
 
     function lC_Access_Tax_classes() {
       global $lC_Language;

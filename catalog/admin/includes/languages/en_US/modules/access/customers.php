@@ -10,3 +10,5 @@
 #  @license    http://loadedcommerce.com/license.html
 
 access_customers_title = Customers
+access_customers_menu_title = Customer Listing
+access_customer_groups_title = Customer Groups

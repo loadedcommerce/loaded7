@@ -27,7 +27,7 @@ class lC_Shipping_usps extends lC_Shipping {
   public function lC_Shipping_usps() {
     global $lC_Language;
 
-    $this->icon = DIR_WS_IMAGES . 'icons/shipping_usps.gif';
+    $this->icon = DIR_WS_CATALOG . 'addons/USPS_Shipping/images/usps-small.png';
 
     $this->_title = $lC_Language->get('shipping_usps_title');
     $this->_description = $lC_Language->get('shipping_usps_description');
@@ -125,7 +125,7 @@ class lC_Shipping_usps extends lC_Shipping {
                             'error' => $lC_Language->get('shipping_usps_error'));
     }
 
-    if (!empty($this->icon)) $this->quotes['icon'] = lc_image($this->icon, $this->_title);
+    if (!empty($this->icon)) $this->quotes['icon'] = lc_image($this->icon, $this->_title, null, null, 'style="vertical-align:-35%;"');
 
     return $this->quotes;
   }

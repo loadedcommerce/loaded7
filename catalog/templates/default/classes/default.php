@@ -173,7 +173,7 @@ class lC_Default {
       $result['single'] = '0';
 
     } else {                      
-      $result['zonesHtml'] = lc_draw_label('', null, 'state') . ' ' . lc_draw_input_field('state', (($zone != 'undefined') ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') . '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_state') . '\'" class="required" style="width:103%;"');
+      $result['zonesHtml'] = lc_draw_label('', null, 'state') . ' ' . lc_draw_input_field('state', (($zone != 'undefined') ? $zone : null), 'placeholder="' . $lC_Language->get('field_customer_state') ./* '" onfocus="this.placeholder = \'\'" onblur="this.placeholder = \'' . $lC_Language->get('field_customer_state') . '\'" */'"class="required" style="width:99.7%;"');
       $result['single'] = '1';
     }
     
@@ -487,14 +487,14 @@ class lC_Default {
   public static function getTopCategories() {
     global $lC_Database, $lC_Language;
     
-    $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.categories_link_target, c.categories_custom_url, c.categories_mode from :table_categories c, :table_categories_description cd where c.parent_id = 0 and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 and c.categories_visibility_nav = 1 order by sort_order, cd.categories_name');
+    $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, cd.categories_menu_name, c.categories_link_target, c.categories_custom_url, c.categories_mode from :table_categories c, :table_categories_description cd where c.parent_id = 0 and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 and c.categories_visibility_nav = 1 order by sort_order, cd.categories_name');
     $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
     $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
     $Qcategories->bindInt(':language_id', $lC_Language->getID());
     $Qcategories->execute();
     while ( $Qcategories->next() ) {
       $topCategories[] = array('id' => $Qcategories->value('categories_id'),
-                               'name' => $Qcategories->value('categories_name'),
+                               'name' => ($Qcategories->value('categories_menu_name') != '') ? $Qcategories->value('categories_menu_name') : $Qcategories->value('categories_name'),
                                'link_target' => $Qcategories->value('categories_link_target'),
                                'custom_url' => $Qcategories->value('categories_custom_url'),
                                'mode' => $Qcategories->value('categories_mode'));

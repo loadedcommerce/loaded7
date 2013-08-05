@@ -17,7 +17,7 @@
         $_group = 'configuration',
         $_icon = 'people.png',
         $_title,
-        $_sort_order = 100;
+        $_sort_order = 200;
 
     function lC_Access_Administrators() {
       global $lC_Language;

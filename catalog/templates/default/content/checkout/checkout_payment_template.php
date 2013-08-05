@@ -12,7 +12,6 @@
 *  @license    http://loadedcommerce.com/license.html
 */
 $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
-echo '[' . $lC_ShoppingCart->getBillingMethod('id') . ']<br>';
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>
@@ -34,17 +33,15 @@ $fHeight = '550px';
 $fScroll = 'no';
 
 if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
-  echo "#payformIframe { min-width:468px; min-height:580px; }";
+  echo "#payformIframe { min-width:500px; margin-left:14px; min-height:580px; }";
 } else if ($lC_ShoppingCart->getBillingMethod('id') == 'cresecure') {
   echo "#payformIframe { min-width:480px; min-height:300px; }";
-} else if ($lC_ShoppingCart->getBillingMethod('id') == 'authorizenet_cc') {
+} else if ($lC_ShoppingCart->getBillingMethod('id') == 'authorizenet_cc' || $lC_ShoppingCart->getBillingMethod('id') == 'usaepay_cc' ) {
   $fHeight = '400px';
   $fScroll = 'auto';
-  echo "#payformIframe { min-width:468px; min-height:280px; }";
   echo "#checkout_shipping_col1 { width:28% !important; }";
   echo "#checkout_shipping_col2 { width:71% !important; }";  
 } else {
-  echo "#payformIframe { min-width:500px; min-height:300px; }";
   echo "#checkout_shipping_col1 { width:28% !important; }";
   echo "#checkout_shipping_col2 { width:71% !important; }";
 }
@@ -79,7 +76,7 @@ and (orientation : landscape) {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
-  #payformIframe { min-width:460px; min-height:300px; }
+  #payformIframe { min-width:420px; min-height:300px; }
   #checkoutConfirmationDetails {width: 96% !important; }
 }
 
@@ -137,7 +134,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
             document.write(output);            
           </script>                   
           <div class="col2-set">
-            <div id="checkout_shipping_col1" style="width:32%; float:left;">
+            <div id="checkout_shipping_col1" style="width:28%; float:left;">
               <div id="ot-container">
                 <div class="ot-block" id="order-number">
                   <label><?php echo $lC_Language->get('checkout_order_number'); ?></label>
@@ -158,7 +155,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
                 //echo '[' . $_SESSION['mediaType'] . '][' . $_SESSION['mediaSize'] . ']<br>';
               ?>
             </div>
-            <div id="checkout_shipping_col2" style="width:67%; float:right; margin-right:-4px">
+            <div id="checkout_shipping_col2" style="width:71%; float:right; margin-right:-4px;">
               <div id="checkoutConfirmationDetails"> 
                 <div id="loadingContainer"><p id="iloader"></p></div>
                 <?php  

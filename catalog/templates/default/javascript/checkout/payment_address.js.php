@@ -44,7 +44,7 @@ $(document).ready(function() {
  });
 });
 
-$('#checkout_address').submit(function() {
+function validateForm() {
  if ($("#checkoutPaymentAddressDetails").is(':visible')) {
    var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
    var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
@@ -72,5 +72,5 @@ $('#checkout_address').submit(function() {
    }
    return false;
  } 
-}); 
+} 
 </script>

@@ -11,11 +11,8 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-// include the addon class (this is NOT the addons class; notice there is no `s` in the class name)
-require_once(DIR_FS_CATALOG . 'includes/classes/addon.php');
-
 // your addon must extend lC_Addon
-class Authnet_SIM_Payments extends lC_Addon {
+class Authnet_SIM_Payments extends lC_Addon { // your addon must extend lC_Addon 
   /*
   * Class constructor
   */
