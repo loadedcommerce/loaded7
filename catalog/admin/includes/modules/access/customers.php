@@ -23,6 +23,7 @@
       global $lC_Language;
 
       $this->_title = $lC_Language->get('access_customers_title');
+           
     }
   }
 ?>

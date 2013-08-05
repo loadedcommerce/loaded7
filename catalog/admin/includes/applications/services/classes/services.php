@@ -82,13 +82,13 @@ class lC_Services_Admin {
       $Qkey->bindTable(':table_configuration', TABLE_CONFIGURATION);
       $Qkey->bindValue(':configuration_key', $key);
       $Qkey->execute();
-      $keys .= '<label for="' . $Qkey->value('configuration_title') . '" class="label"><strong>' . $Qkey->value('configuration_title') . '</strong>&nbsp;<span class="icon-info-round icon-blue with-tooltip with-small-padding" style="cursor:pointer;" title="' . $Qkey->value('configuration_description') . '" data-tooltip-options=\'{"classes":["anthracite-gradient"]}\'></span>';
+      $keys .= '<label for="' . $Qkey->value('configuration_title') . '" class="label"><strong>' . $Qkey->value('configuration_title') . '</strong></label>';
       if ( !lc_empty($Qkey->value('set_function')) ) {
         $keys .= lc_call_user_func($Qkey->value('set_function'), $Qkey->value('configuration_value'), $key);
       } else {
-        $keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input full-width"');
+        $keys .= lc_draw_input_field('configuration[' . $key . ']', $Qkey->value('configuration_value'), 'class="input" onfocus="this.select();" style="width:28%;"');
       }
-      $keys .= '</label><br /><br />';
+      $keys .= '<span class="margin-left">' . lc_show_info_bubble($Qkey->value('configuration_description') , null, 'on-left grey') . '</span><br /><br />';
       $cnt++;
     }
     $result['keys'] = substr($keys, 0, strrpos($keys, '<br /><br />'));

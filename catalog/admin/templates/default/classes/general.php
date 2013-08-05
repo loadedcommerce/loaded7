@@ -69,9 +69,7 @@ class lC_General_Admin {
                                     <li>Orders</li>
                                   </ul>' . "\n";
           $result['html'] .= '    <ul class="orders-menu">' . "\n";
-          function unique_id() {
-            return substr(md5(uniqid(mt_rand(), true)), 0, 4);
-          }        
+                  
           foreach ($QorderResults as $key => $value) {
             $result['html'] .= '      <li class="bevel" title="' . $lC_Language->get('order_view_details') . ' ' . $value['orders_id'] . '">' . "\n" . 
                                '        <a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'orders&oID=' . $value['orders_id']) . '">' . "\n" .
@@ -80,7 +78,7 @@ class lC_General_Admin {
                                '            ' . $value['text'] . "\n" . 
                                '          </span>' . "\n" . 
                                '          <time><i class="icon-price-tag icon-size2 icon-grey icon-pad-right"></i></time>' . "\n" . 
-                               '          <span><b class="green">' . strtoupper(unique_id()) . '-' . $value['orders_id'] . '</b></span><small>'  . $value['customers_name'] . '</small>' . "\n" . 
+                               '          <span><b class="green">' . strtoupper(uniqid()) . '-' . $value['orders_id'] . '</b></span><small>'  . $value['customers_name'] . '</small>' . "\n" . 
                                '        </a>' . "\n" .
                                '      </li>';
           }

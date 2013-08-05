@@ -295,14 +295,14 @@ ul.breadcrumb li img { }
 #shopping-cart-table tr td a.edit{color:#544F4B;}
 
 .totals{ float:right; display:inline-block; width:100%; padding:17px 0px; margin-right:20px;}
-#totals-table { width:4%; float:right; font-size:14px; color:#544f4b; white-space: nowrap;}
+#totals-table { float:right; color:#544f4b; white-space: nowrap;}
 #totals-table td { padding: 8px 0px; }
 #totals-table td strong { font-weight:bold; }
 #totals-table .total { font-size:16px; font-weight:bold; }
 
-.checkout_tax{ margin-top:25px; font-size:14px;}
-.checkout_tax .shipping_tax{ width:620px; border:solid 1px #e0e0e0; border-width:2px 0px; float:left; padding:12px 0px 10px;}
-.checkout_tax h4{ color:#544f4b; font-size:14px; font-weight:bold; padding-bottom:10px; font-family:Arial, Helvetica, sans-serif;}
+.checkout_tax{ margin-top:20px; font-size:14px;}
+.checkout_tax .shipping_tax{ width:45%; border:solid 1px #e0e0e0; border-width:2px 0px; float:left; padding:0 10px 10px; min-height:140px; }
+.checkout_tax h4{ color:#544f4b; font-size:14px; font-weight:bold; padding-top:10px; padding-bottom:10px; font-family:Arial, Helvetica, sans-serif; }
 .checkout_tax p{ font-size:14px; padding-bottom:15px;}
 .checkout_tax .shipping_tax label{ display:inline-block; width:100px; float:left; color:#544f4b; padding:5px 0px; margin-bottom:20px; clear:right;}
 .checkout_tax .shipping_tax input[type="text"]{ border:1px solid #D7D7D7; padding:4px; width:175px;}
@@ -311,7 +311,9 @@ ul.breadcrumb li img { }
 .checkout_tax .shipping_tax .selector select{ width:213px;}
 .checkout_tax .shipping_tax .brown_btn{ float:right; margin-top:5px;}
 
-.checkout_discount{ float:right; width:305px;border:solid 1px #e0e0e0; border-width:2px 0px; padding:14px 16px 16px; background:url(../images/cart_coupon.png) no-repeat right bottom #f9f8f6;}
+.checkout_discount{ float:right; width:45%; border:solid 1px #e0e0e0; border-width:2px 0px; padding:0 10px 10px; background:url(../images/cart_coupon.png) no-repeat right bottom #f9f8f6; min-height:140px; margin-right:-10px; }
+.checkout_discount_stream h4 { padding: 10px 0; }
+.checkout_discount_stream { margin: 15px 0 0; min-width: 95%; }
 .checkout_discount input[type="text"]{ border:1px solid #D7D7D7; padding:4px; width:205px;}
 .checkout_discount .brown_btn{ float:left; margin-top:22px;}
 
@@ -622,10 +624,12 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 
 .accountHistory-odd {
   background-color: #EEEEF8;
+  cursor: pointer;
 }
 
 .accountHistory-even {
   background-color: #F8F8F9;
+  cursor: pointer;
 }
 
 .listingPageLinks {
@@ -787,11 +791,11 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #address_details li { margin: 10px 0; }
 .embed-form input { height: 26px; padding-left:4px; }
 .embed-form h3 { font-family: sans-serif !important; font-size: 1.3em; margin-bottom: 15px; }
-#uniform-country.selector { height: 22px; padding: 0px 3px 3px 0px; width: 100%; margin: 0 0 10px 0; }
-#uniform-country select { color: #000; font-size: 12px; height: 29px; top: -1px; width: 100%; }
-#uniform-country span { color: #000; font-size: 12px; height: 22px; top: 4px; width: 99%; }
-#uniform-zones.selector { height: 22px; padding: 3px 3px 3px 10px; width: 96%; margin: 0 0 10px 0; }
-#uniform-zones select { color: #000; font-size: 12px; height: 29px; top: -1px; width: 100%; }
+#uniform-zones input{margin-left:-1px;margin-top:-1px;height:27px;}
+#uniform-zones.selector { height: 26px; padding: 0px 4px 3px 0px; width: 99.2% !important; margin: 0 0 10px 0; }
+#uniform-country.selector  { height: 26px; padding: 0px 4px 3px 0px; width: 99% !important; margin: 0 0 10px 0; }
+#uniform-country select, #uniform-zones select { color: #000; font-size: 12px; height: 29px; top: -1px; width: 100% !important; overflow:hidden }
+#uniform-country span, #uniform-zones span { color: #000; font-size: 12px; height: 22px; width: 98%!important; top: 3px; left:5px; overflow:hidden }
 .padding-right-15 { padding-right: 15px; }
 .cart-edit { float:right; padding-right:10px; }
 .colorWhite { color: #fff !important; }
@@ -814,7 +818,8 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #ship-to-address-block { padding: 10px; margin-top: -10px; }
 #ship-to-address-block h3 { margin-top: 15px; }
 #checkoutShippingAddressDetails h3 { margin: 15px 0 0 10px; }
-#bill-to-address-block { padding: 10px; margin-bottom: 10px; }
+#bill-to-address-block { padding: 0px 10px; margin-bottom: 10px; }
+#order-comments-block { padding: 0px 10px; margin-bottom: 10px; }
 #shipping-method-block { padding: 10px; margin-bottom: 20px; background-color: #F7F7F7; }
 #shipping-method-block p { padding-top: 10px; }
 #payment-method-block { padding: 10px; margin-bottom: 20px; background-color: #F7F7F7; }
@@ -823,7 +828,7 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #confirmation-discount-code { float: left; width: 49%; }
 #confirmation-discount-code-inner { float: left; width: 100%; /*border: 1px solid #E7DED5;*/ margin-bottom: 10px; }
 #confirmation-discount-code-button { float: right; }
-#confirmation-order-totals { float: right; width: 49%; margin-bottom: 10px; }
+#confirmation-order-totals { float: right; width: 49%; margin-bottom: 10px; padding-right:12px; }
 #confirmation-order-totals #ot-container {  }
 #confirmation-order-totals h3 {  }
 #confirmation-order-comment { float: left; width: 48%; margin-bottom: 5px; }
@@ -844,7 +849,7 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 #checkout_coupon_tip { padding: 10px; }
 #success-order-comment { float: left; width: 44%; }
 #success-order-comment-inner { float: left; width: 100%; border: 1px solid #E7DED5; padding: 10px; }
-#success-order-totals { float: right; width: 49%; }
+#success-order-totals { float: right; width: 100%; padding-right:11px; }
 #mobile-order-number-id { display: none; } 
 .mobile-order-number-id-span { float: right; border: 1px solid #ccc; padding: 7px; width: 120px; text-align: left; margin-top: -8px; }
 
@@ -927,3 +932,8 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 .variant_sel > label {
     width: 14%;
 }
+.no-wrap { white-space: nowrap; }
+
+.sc_sub_total { font-weight:bold; }
+.sc_total { font-weight:bold; font-size:1.3em; color: #873B7A; padding: 20px 0 10px 10px !important; }
+.purple { color: #873B7A; }

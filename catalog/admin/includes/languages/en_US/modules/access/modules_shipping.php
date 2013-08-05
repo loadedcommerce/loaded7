@@ -9,4 +9,4 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-access_modules_shipping_title = Shipping Modules
+access_modules_shipping_title = Shipping

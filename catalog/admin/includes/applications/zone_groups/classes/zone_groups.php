@@ -35,8 +35,8 @@ class lC_Zone_groups_Admin {
       $group = '<td><a href="' . lc_href_link_admin(FILENAME_DEFAULT, 'zone_groups=' . $Qgroups->valueInt('geo_zone_id')) . '"><span class="icon-folder icon-orange"></span>&nbsp;' . $Qgroups->valueProtected('geo_zone_name') . '</a></td>';
       $entries = '<td class="hide-on-tablet">' . self::numberOfEntries($Qgroups->valueInt('geo_zone_id')) . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access']['zone_groups'] < 3) ? '#' : 'javascript://" onclick="editGroup(\'' . $Qgroups->valueInt('geo_zone_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['zone_groups'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access']['zone_groups'] < 4) ? '#' : 'javascript://" onclick="deleteGroup(\'' . $Qgroups->valueInt('geo_zone_id') . '\', \'' . urlencode($Qgroups->valueProtected('geo_zone_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['zone_groups'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   <a href="' . ((int)($_SESSION['admin']['access']['locale'] < 3) ? '#' : 'javascript://" onclick="editGroup(\'' . $Qgroups->valueInt('geo_zone_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['locale'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   <a href="' . ((int)($_SESSION['admin']['access']['locale'] < 4) ? '#' : 'javascript://" onclick="deleteGroup(\'' . $Qgroups->valueInt('geo_zone_id') . '\', \'' . urlencode($Qgroups->valueProtected('geo_zone_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['locale'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
 
       $result['aaData'][] = array("$check", "$group", "$entries", "$action");
@@ -60,8 +60,10 @@ class lC_Zone_groups_Admin {
     $Qgroups->bindTable(':table_geo_zones', TABLE_GEO_ZONES);
     $Qgroups->execute();
 
-    $result['zonesArray'] = $Qgroups->toArray();
-
+    while ( $Qgroups->next() ) {
+      $result['zonesArray'][] = $Qgroups->toArray();
+    }
+    
     $Qgroups->freeResult();
 
     return $result;
@@ -308,8 +310,8 @@ class lC_Zone_groups_Admin {
       $country = '<td>' . ( ($Qentries->value('countries_name') != null) ? $Qentries->value('countries_name') : $lC_Language->get('all_countries') ) . '</td>';
       $zone = '<td class="hide-on-tablet">' . ( ($Qentries->value('zone_name') != null) ? $Qentries->value('zone_name') : $lC_Language->get('all_zones') ) . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">
-                   <a href="' . ((int)($_SESSION['admin']['access']['zone_groups'] < 3) ? '#' : 'javascript://" onclick="editEntry(\'' . $Qentries->valueInt('association_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['zone_groups'] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access']['zone_groups'] < 4) ? '#' : 'javascript://" onclick="deleteEntry(\'' . $Qentries->valueInt('association_id') . '\', \'' . urlencode($Qentries->valueProtected('zone_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['zone_groups'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   <a href="' . ((int)($_SESSION['admin']['access']['locale'] < 3) ? '#' : 'javascript://" onclick="editEntry(\'' . $Qentries->valueInt('association_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['locale'] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   <a href="' . ((int)($_SESSION['admin']['access']['locale'] < 4) ? '#' : 'javascript://" onclick="deleteEntry(\'' . $Qentries->valueInt('association_id') . '\', \'' . urlencode($Qentries->valueProtected('zone_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['locale'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
 
       $result['aaData'][] = array("$check", "$country", "$zone", "$action");

@@ -126,7 +126,7 @@
       $key_length = strlen($key);
       
       $d = dir(DIR_FS_WORK . 'cache/');
-
+      
       while ( ($entry = $d->read()) !== false ) {
         if ( (strlen($entry) >= $key_length) && (substr($entry, 0, $key_length) == $key) ) {
           @unlink(DIR_FS_WORK . 'cache/' . $entry);

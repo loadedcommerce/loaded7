@@ -39,7 +39,7 @@ $(document).ready(function() {
   } else if (module == 'specials' || module == 'manufacturers' || module == 'reviews' || (module.indexOf('product') != -1) ) {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-products").addClass('current');
-  } else if (module == 'banner_manager' || module == 'newsletters') {
+  } else if (module == 'banner_manager' || module == 'newsletters' || module == 'coupons') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-marketing").addClass('current');      
   } else if (module == 'statistics' || module == 'whos_online') {
@@ -79,10 +79,15 @@ $(document).ready(function() {
       cfg = true;
     } else if (module.indexOf("products") != -1 && document.location.href.indexOf("products") != -1) {
       $("#big-menu_product_catalog").addClass('current navigable-current').change();
+    } else if (module.indexOf("coupons") != -1 && document.location.href.indexOf("coupons") != -1) {
+      $("#big-menu_coupon_manager").addClass('current navigable-current').change();
     } else if (module.indexOf("product_variants") != -1 && document.location.href.indexOf("product_variants") != -1) {
       $("#big-menu_product_variants").addClass('current navigable-current').change();
     } else if (module.indexOf("statistics") != -1 && document.location.href.indexOf("statistics") != -1) {
-      $("#big-menu_statistics").addClass('current navigable-current').change();        
+      $("#big-menu_statistics").addClass('current navigable-current').change();
+    } else if (module.indexOf("tax_classes") != -1 && document.location.href.indexOf("tax_classes") != -1) {
+      $("#big-menu_tax_classes").addClass('current navigable-current').change();        
+      cfg = true;
     }
   });
   if (cfg) toggleChildMenu('settings'); 
@@ -151,6 +156,7 @@ $(document).ready(function() {
         // first check if the escape key has been presed
         $(document).keydown(function(e){
           var code = e.keyCode ? e.keyCode : e.which;
+          //alert(code);
           if (code == 27) {
             disableKeyCombo = false; 
             $('#li-search').removeClass("current");
@@ -171,6 +177,7 @@ $(document).ready(function() {
         // if the modal's class is not with-blocker we can continue
         if (modalClass != 'with-blocker') {
           var code = e.keyCode ? e.keyCode : e.which;
+          //alert(code);
           if (code == 32) { // space for mega search menu
             $('#li-add').removeClass("current");
             $('#li-messages').removeClass("current");
@@ -237,6 +244,9 @@ $(document).ready(function() {
             };
             if (code == 108) { // l for new specia(L)
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'specials&action=quick_add'); ?>';
+            };
+            if (code == 117) { // u for new Co(U)pon
+              window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'coupons&action=save'); ?>';
             };
             if (code == 116) { // t for new manufac(T)urer
               window.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'manufacturers&action=quick_add'); ?>';

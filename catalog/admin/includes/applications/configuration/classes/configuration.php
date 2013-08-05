@@ -33,12 +33,23 @@ class lC_Configuration_Admin {
     while ( $Qcfg->next() ) {
       $title = $Qcfg->valueProtected('configuration_title');
       $value = $Qcfg->valueProtected('configuration_value');
+      $configuration_group_id = $Qcfg->valueProtected('configuration_group_id');
+
       if ($value == '-1') {
         $value = $lC_Language->get('parameter_false');
       } elseif ($value == '0') {
         $value = $lC_Language->get('parameter_optional');
       } elseif ($value == '1') {
-        $value = $lC_Language->get('parameter_true');
+
+        // Value 1 or true/yes fix.
+        if($configuration_group_id == 7){
+          
+          $value = 1;
+        }else{
+          
+          $value = $lC_Language->get('parameter_true');
+        }
+
       } else if ($title == 'Country' || $title == 'Country of Origin') {
         $country = lc_get_country_data($value);
         $value = $country['countries_name'];

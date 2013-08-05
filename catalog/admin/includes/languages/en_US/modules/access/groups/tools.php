@@ -9,4 +9,4 @@
 #  @copyright  (c) 2011 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-access_group_tools_title = Tools
+access_group_tools_title = System Tools

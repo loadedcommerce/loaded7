@@ -17,7 +17,7 @@
         $_group = 'configuration',
         $_icon = 'locale.png',
         $_title,
-        $_sort_order = 700;
+        $_sort_order = 300;
 
     function lC_Access_Languages() {
       global $lC_Language;

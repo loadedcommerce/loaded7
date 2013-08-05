@@ -18,7 +18,7 @@ class lC_Application_Login_Actions_process extends lC_Application_Login {
     global $lC_Database, $lC_Language, $lC_MessageStack;
 
     parent::__construct();
-
+    
     if ( !empty($_POST['user_name']) && !empty($_POST['user_password']) ) {
       $Qadmin = $lC_Database->query('select * from :table_administrators where user_name = :user_name');
       $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);

@@ -22,7 +22,7 @@ class lC_Checkout_Cart extends lC_Template {
 
   /* Class constructor */
   function lC_Checkout_Cart() {
-    global $lC_Services, $lC_Language, $lC_Breadcrumb, $lC_MessageStack;
+    global $lC_Services, $lC_Language, $lC_Breadcrumb, $lC_MessageStack, $lC_Customer, $lC_NavigationHistory;
 
     $this->_page_title = $lC_Language->get('shopping_cart_heading');
 

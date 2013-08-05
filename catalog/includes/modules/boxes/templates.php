@@ -45,7 +45,7 @@
           }
         }
 
-        $this->_content = '<ul class="category" style="white-space:nowrap;><form name="templates" action="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), null, 'AUTO', false) . '" method="get">' .
+        $this->_content = '<ul class="category" style="white-space:nowrap;"><form name="templates" action="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), null, 'AUTO', false) . '" method="get">' .
                           $hidden_get_variables . lc_draw_pull_down_menu('template', $data, $_SESSION['template']['code'], 'onchange="this.form.submit();" style="width: 100%"') . lc_draw_hidden_session_id_field() .
                           '</form></ul>';
       }

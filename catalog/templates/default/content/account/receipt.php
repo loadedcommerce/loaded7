@@ -26,7 +26,7 @@ $order = new lC_Order($_GET['receipt']);
       </div>
     </div>
     <div id="invoice-info">
-      <h2><?php echo $lC_Language->get('receipt_order_number_title'); ?> <?php echo $order->_id; ?></h2>
+      <h2><?php echo $lC_Language->get('receipt_order_number_title'); ?> <?php echo $_GET['receipt']; ?></h2>
       <p id="payment-terms"><?php echo $lC_Language->get('receipt_order_date_title'); ?> <?php echo lC_DateTime::getShort($order->info['date_purchased']); ?></p>
       <p id="payment-terms"><?php echo $lC_Language->get('receipt_order_status_title'); ?> <?php echo  $order->info['orders_status']; ?></p>
       <p id="payment-terms"><?php echo $lC_Language->get('receipt_payment_method_title'); ?> <?php echo $order->info['payment_method']; ?></p>
@@ -112,7 +112,7 @@ $order = new lC_Order($_GET['receipt']);
     <div class="noPrint">
       <div id="accountHistoryActions" class="action_buttonbar">
         <span class="buttonLeft"><a href="javascript:history.go(-1);" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
-        <span class="buttonRight"><a href="javascript:window.print();" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('text_print'); ?></button></a></span>
+        <span class="buttonRight"><a href="javascript:window.print();" class="noDecoration"><button class="button purple_btn" type="button"><?php echo $lC_Language->get('text_print'); ?></button></a></span>
       </div>
     </div>
   </div>

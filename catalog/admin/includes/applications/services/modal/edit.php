@@ -14,6 +14,9 @@
 ?>
 <style>
 #editModule { padding-bottom:20px; }
+.fieldset.fields-list { background-size: 62%; }
+.field-block { padding: 0 30px 0 230px; }
+.field-block .label { margin: 6px 0 0 -180px; width: 230px; padding-right: 60px; }
 </style>
 <script>
 function editModule(id) {
@@ -34,14 +37,13 @@ function editModule(id) {
         return false;
       }
       $.modal({
-          content: '<div id="editModule">'+
-                   '  <div id="editModuleForm">'+
-                   '    <form name="mEdit" id="mEdit" autocomplete="off" action="" method="post">'+
-                   '      <p><?php echo $lC_Language->get('introduction_edit_service_module'); ?></p>'+
-                   '      <span id="editModuleFormKeys"></span>'+
-                   '    </form>'+
-                   '  </div>'+
-                   '</div>',
+          content: '<p><?php echo $lC_Language->get('introduction_edit_service_module'); ?></p>'+
+                   '<fieldset class="fieldset fields-list">'+
+                   '  <form name="mEdit" id="mEdit" autocomplete="off" action="" method="post">'+                  
+                   '    <div class="field-block relative" id="editModuleFormKeys">'+
+                   '    </div>'+
+                   '  </form>'+
+                   '</fieldset>',                   
           title: '<?php echo $lC_Language->get('modal_heading_edit_service_module'); ?>',
           width: 500,
           scrolling: false,
@@ -80,13 +82,8 @@ function editModule(id) {
           },
           buttonsLowPadding: true
       });
-      $("#editModuleFormKeys").html(data.keys);
-      if ($.template.mediaQuery.isSmallerThan('desktop')) {
-        $('.modal').attr('style', 'top:10px !important; left: 25%;  margin-left: -50px;');  
-      } 
-      if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
-        $('.modal').attr('style', 'top:10px !important; left: 19%;  margin-left: -50px;');  
-      }      
+      $("#editModuleFormKeys").html(data.keys);  
+      $.modal.all.centerModal();
     }
   );
 }

@@ -38,7 +38,7 @@
           <th scope="col" class="hide-on-mobile align-left"><?php echo $lC_Language->get('table_heading_total_zones'); ?></th>
           <th scope="col" class="align-right">
            <span class="button-group compact" style="white-space:nowrap;">
-             <a style="display:none;" href="javascript://" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="newCountry(); return false;'); ?>" title="<?php echo $lC_Language->get('button_new_country'); ?>"></a>
+             <a style="display:none;" href="javascript://" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access']['locale'] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access']['locale'] < 2) ? '#' : 'javascript://" onclick="newCountry(); return false;'); ?>" title="<?php echo $lC_Language->get('button_new_country'); ?>"></a>
              <a href="javascript://" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a></span>
              <span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span>
           </th>        
@@ -53,7 +53,7 @@
       </tfoot>
     </table>
     <div class="selectContainer">
-      <select <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onchange="batchDelete();"'); ?> name="selectAction" id="selectAction" class="select blue-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
+      <select <?php echo (((int)$_SESSION['admin']['access']['locale'] < 4) ? NULL : 'onchange="batchDelete();"'); ?> name="selectAction" id="selectAction" class="select blue-gradient glossy<?php echo (((int)$_SESSION['admin']['access']['locale'] < 4) ? ' disabled' : NULL); ?>">
         <option value="0" selected="selected">With Selected</option>
         <option value="delete">Delete</option>
       </select>
@@ -65,7 +65,7 @@
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
-              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="newCountry(); return false;'); ?>">
+              <a class="button<?php echo (((int)$_SESSION['admin']['access']['locale'] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access']['locale'] < 2) ? '#' : 'javascript://" onclick="newCountry(); return false;'); ?>">
                 <span class="button-icon green-gradient">
                   <span class="icon-plus"></span>
                 </span><span class="buttonText"><?php echo $lC_Language->get('button_new_country'); ?></span>

@@ -29,12 +29,12 @@ if ($lC_MessageStack->size('login') > 0) {
       <h3><?php echo $lC_Language->get('login_returning_customer_heading'); ?></h3>
       <form id="login" name="login" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'login=process', 'SSL'); ?>" method="post">
       <ul id="login_list">
-        <li><?php echo lc_draw_label('', 'email_address', '', false) . ' ' . lc_draw_input_field('email_address', ($_POST['email']) ? $_POST['email'] : '', 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" class="txt" style="height:26px; padding-left:4px; width:99%;"'); ?></li>
+        <li><?php echo lc_draw_label('', 'email_address', '', false) . ' ' . lc_draw_input_field('email_address', (($_POST['email']) ? $_POST['email'] : ($_SESSION['lC_Customer_data']['email_address']) ? $_SESSION['lC_Customer_data']['email_address'] : ''), 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" class="txt" style="height:26px; padding-left:4px; width:99%;"'); ?></li>
         <li><?php echo lc_draw_label('', 'password', null, false) . ' ' . lc_draw_password_field('password', 'class="txt" placeholder="' . $lC_Language->get('field_customer_password') . '" style="height:26px; padding-left:4px; width:99%;"'); ?></li>
         <li><?php echo sprintf($lC_Language->get('login_returning_customer_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, 'password_forgotten', 'SSL')); ?></li>
       </ul>
       <div>
-        <button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_sign_in'); ?></button>
+        <button class="button purple_btn" type="submit" onclick="validateForm();"><?php echo $lC_Language->get('button_sign_in'); ?></button>
       </div>
       </form>
     <!-- /div>
@@ -50,7 +50,7 @@ if ($lC_MessageStack->size('login') > 0) {
   </div>
 </div>
 <script>
-$('#login').submit(function() {
+function validateForm() {
   jQuery.validator.messages.required = "";
   var bValid = $("#login").validate({
     rules: {
@@ -71,6 +71,6 @@ $('#login').submit(function() {
     $('#login').submit();
   }
   return false;
-});
+}
 </script>
 <!--content/account/login.php end-->

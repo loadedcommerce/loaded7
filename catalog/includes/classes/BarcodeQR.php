@@ -148,7 +148,7 @@ final class BarcodeQR {
 	 * @param string $url
 	 */
 	public function url($url = null) {
-		$this->_data = preg_match("#^https?\:\/\/#", $url) ? $url : "http://{$url}";
+    $this->_data = preg_match("#^https?\:\/\/#", $url) ? $url : "http://{$url}";
 	}
 
 	/**

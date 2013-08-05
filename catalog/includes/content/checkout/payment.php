@@ -62,6 +62,7 @@ class lC_Checkout_Payment extends lC_Template {
       $this->_page_title = $lC_Language->get('payment_address_heading');
       $this->_page_contents = 'checkout_payment_address.php';
       $this->addJavascriptPhpFilename('includes/form_check.js.php');
+      $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
     } else {
       // if no billing destination address was selected, use the customers own address as default
       if ($lC_ShoppingCart->hasBillingAddress() == false) {
@@ -88,7 +89,7 @@ class lC_Checkout_Payment extends lC_Template {
     }
 
     if (isset($_GET['payment_error'])) {
-      $lC_MessageStack->add('checkout_payment', $_GET['payment_error'], 'error'); 
+      $lC_MessageStack->add('checkout_payment', urldecode($_GET['payment_error']), 'error'); 
     }
     
     if (isset($_SESSION['messageToStack']) && !empty($_SESSION['messageToStack'])) $lC_MessageStack->__construct();

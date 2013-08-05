@@ -241,10 +241,12 @@ class lC_Tax_classes_Admin {
     $result = array();
     $zones_array = array();
     foreach ( lC_Zone_groups_Admin::getAllZones() as $group ) {
-      $zones_array[$group['geo_zone_id']] = $group['geo_zone_name'];
+      for ($i = 0; $i < count($group); $i++) {
+        $zones_array[$group[$i]['geo_zone_id']] = $group[$i]['geo_zone_name'];
+      }
     }
     $result['zonesArray'] = $zones_array;
-
+    
     if ( isset($id) && $id != null ) {
       $result['editFormData'] = lC_Tax_classes_Admin::getEntry($id);
     }

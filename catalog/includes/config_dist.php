@@ -8,8 +8,7 @@
   define('HTTPS_COOKIE_PATH', '/catalog/');
   define('DIR_WS_HTTP_CATALOG', '/catalog/');
   define('DIR_WS_HTTPS_CATALOG', '/catalog/');
-  define('DIR_WS_HTTP_ADMIN', '/catalog/admin/');
-  define('DIR_WS_HTTPS_ADMIN', '/catalog/admin/');  
+  define('DIR_WS_ADMIN', 'admin/');  
   define('DIR_WS_IMAGES', 'images/');
 
   define('DIR_WS_DOWNLOAD_PUBLIC', 'pub/');

@@ -17,7 +17,7 @@
         $_group = 'products',
         $_icon = 'date.png',
         $_title,
-        $_sort_order = 300;
+        $_sort_order = 500;
 
     function lC_Access_Products_expected() {
       global $lC_Language;
