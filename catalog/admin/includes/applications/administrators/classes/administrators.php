@@ -139,7 +139,7 @@ class lC_Administrators_Admin {
         $Qadmin->appendQuery('where id = :id');
         $Qadmin->bindInt(':id', $id);
       } else {
-        $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, image, access_group_id, language_id) values (:user_name, :user_password, :first_name, :last_name, :image, :access_group_id, :)');
+        $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, image, access_group_id, language_id) values (:user_name, :user_password, :first_name, :last_name, :image, :access_group_id,:language_id)');
         $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($data['user_password'])));
       }
       
