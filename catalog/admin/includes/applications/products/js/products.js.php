@@ -84,8 +84,19 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       // PRICING TAB
       _refreshSimpleOptionsPricingSymbols();
       _updatePricingDivChevrons(); 
-      
-                
+     
+      <?php 
+      if (!$pInfo) { 
+        foreach ( $lC_Language->getAll() as $l ) { 
+      ?>
+      $("#products_name_<?php echo $l['id']; ?>").blur(function(){
+        $("#products_keyword_<?php echo $l['id']; ?>").val($("#products_name_<?php echo $l['id']; ?>").val().toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, ''));
+      });
+      <?php 
+        } 
+      }
+      ?> 
+         
     });
     <?php if ($pInfo) { ?>
     /**

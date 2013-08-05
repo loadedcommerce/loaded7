@@ -26,7 +26,7 @@ class lC_Payment {
 
     $Qmodules = $lC_Database->query("select code, modules_group from :table_templates_boxes where modules_group LIKE '%payment%'");
     $Qmodules->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
- //   $Qmodules->setCache('modules-payment');
+    $Qmodules->setCache('modules-payment');
     $Qmodules->execute();
 
     while ($Qmodules->next()) {
