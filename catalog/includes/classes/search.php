@@ -190,6 +190,11 @@ class lC_Search extends lC_Products {
     $Qlisting->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qlisting->bindTable(':table_categories', TABLE_CATEGORIES);
     $Qlisting->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+    
+    if ($this->hasManufacturer()) {
+      $Qlisting->appendQuery(', :table_product_attributes pa');
+      $Qlisting->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
+    }
 
     $Qlisting->appendQuery('where p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id');
     $Qlisting->bindInt(':language_id', $lC_Language->getID());
@@ -208,7 +213,7 @@ class lC_Search extends lC_Products {
     }
 
     if ($this->hasManufacturer()) {
-      $Qlisting->appendQuery('and m.manufacturers_id = :manufacturers_id');
+      $Qlisting->appendQuery('and p.products_id = pa.products_id and pa.value = :manufacturers_id');
       $Qlisting->bindInt(':manufacturers_id', $this->_manufacturer);
     }
 
@@ -265,7 +270,7 @@ class lC_Search extends lC_Products {
     if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1')) {
       $Qlisting->appendQuery('group by p.products_id, tr.tax_priority');
     }
-
+    
     $Qlisting->appendQuery('order by');
 
     if (isset($this->_sort_by)) {
@@ -276,11 +281,6 @@ class lC_Search extends lC_Products {
       $Qlisting->appendQuery('pd.products_name :order_by_direction');
       $Qlisting->bindRaw(':order_by_direction', (($this->_sort_by_direction == '-') ? 'desc' : ''));
     }
-    
-    /*echo '<pre>';
-    print_r($Qlisting);
-    echo '</pre>';
-    die();*/
       
     $Qlisting->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), MAX_DISPLAY_SEARCH_RESULTS);
     $Qlisting->execute();
