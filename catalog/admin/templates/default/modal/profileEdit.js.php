@@ -134,17 +134,19 @@ function profileEdit(id) {
             }
           },
           buttonsLowPadding: true
-      });      
+      });     
       
-      // Gulmohar here is the work /////////////////////////////////////////////////////////
+      
       $("#edit-language_id").empty(); // clear the old values
       $.each(data.languagesArray, function(id, text) {
-        var selected = (data.id == id) ? 'selected="selected"' : '';
+        var selected = (data.language_id == id) ? 'selected="selected"' : '';
+        if(data.language_id == id) {
+          $("#edit-language_id").closest("span + *").prevAll("span.select-value:first").text(text);
+        }
         $("#edit-language_id").append(
           $("<option " + selected + "></option>").val(id).html(text)
         );
       });
-      //////////////////////////////////////////////////////////////////////////////////////
 
       $('#edit-first_name').val(data.first_name);
       $('#edit-last_name').val(data.last_name);
