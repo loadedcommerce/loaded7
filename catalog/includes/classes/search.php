@@ -157,18 +157,17 @@ class lC_Search extends lC_Products {
   function &execute() {
     global $lC_Database, $lC_Customer, $lC_Currencies, $lC_Language, $lC_Image, $lC_CategoryTree;
 
-    $Qlisting = $lC_Database->query('select SQL_CALC_FOUND_ROWS distinct p.*, pd.*, pa.*, m.*, i.image, if(s.status, s.specials_new_products_price, null) as specials_new_products_price, if(s.status, s.specials_new_products_price, p.products_price) as final_price');
+    $Qlisting = $lC_Database->query('select SQL_CALC_FOUND_ROWS distinct p.*, pd.*, m.*, i.image, if(s.status, s.specials_new_products_price, null) as specials_new_products_price, if(s.status, s.specials_new_products_price, p.products_price) as final_price');
 
     if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1')) {
       $Qlisting->appendQuery(', sum(tr.tax_rate) as tax_rate');
     }
 
-    $Qlisting->appendQuery('from :table_products p left join :table_manufacturers m using(manufacturers_id) left join :table_specials s on (p.products_id = s.products_id) left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag) left join :table_product_attributes pa on (p.products_id = pa.products_id)');
+    $Qlisting->appendQuery('from :table_products p left join :table_manufacturers m using(manufacturers_id) left join :table_specials s on (p.products_id = s.products_id) left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag)');
     $Qlisting->bindTable(':table_products', TABLE_PRODUCTS);
     $Qlisting->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
     $Qlisting->bindTable(':table_specials', TABLE_SPECIALS);
     $Qlisting->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
-    $Qlisting->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
     $Qlisting->bindInt(':default_flag', 1);
 
     if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1')) {
@@ -209,7 +208,7 @@ class lC_Search extends lC_Products {
     }
 
     if ($this->hasManufacturer()) {
-      $Qlisting->appendQuery('and p.products_id = pa.products_id and pa.value = :manufacturers_id');
+      $Qlisting->appendQuery('and m.manufacturers_id = :manufacturers_id');
       $Qlisting->bindInt(':manufacturers_id', $this->_manufacturer);
     }
 
