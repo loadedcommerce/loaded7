@@ -92,12 +92,13 @@ class lC_Search_Search extends lC_Template {
       }
     }
 
+    /* not require fields for searching
     if (!$lC_Search->hasKeywords() && !$lC_Search->hasPriceSet('from') && !$lC_Search->hasPriceSet('to') && !$lC_Search->hasDateSet('from') && !$lC_Search->hasDateSet('to')) {
       $lC_MessageStack->add('search', $lC_Language->get('error_search_at_least_one_input'));
-    }
+    }*/
 
     if (isset($_GET['category']) && is_numeric($_GET['category']) && ($_GET['category'] > 0)) {
-      $lC_Search->setCategory($_GET['category'], (isset($_GET['recursive']) && ($_GET['recursive'] == '1') ? true : false));
+      $lC_Search->setCategory($_GET['category'], (isset($_GET['recursive']) && ($_GET['recursive'] == 'on') ? true : false));
     }
 
     if (isset($_GET['manufacturer']) && is_numeric($_GET['manufacturer']) && ($_GET['manufacturer'] > 0)) {

@@ -21,7 +21,9 @@ class lC_Search extends lC_Products {
       $_price_from,
       $_price_to,
       $_keywords,
-      $_number_of_results;
+      $_number_of_results,
+      $_category,
+      $_recursive;
 
   /* Class constructor */
   function lC_Search() {
@@ -92,6 +94,11 @@ class lC_Search extends lC_Products {
     return isset($this->_keywords) && !empty($this->_keywords);
   }
 
+  function setCategory($category, $recursive) {
+    $this->_category = $category;
+    $this->_recursive = $recursive;
+  }
+
   function setDateFrom($timestamp) {
     $this->_date_from = $timestamp;
   }
@@ -106,6 +113,10 @@ class lC_Search extends lC_Products {
 
   function setPriceTo($price) {
     $this->_price_to = $price;
+  }
+  
+  function setRecursive($recursive) {
+    $this->_recursive = $recursive;
   }
 
   function setKeywords($keywords) {
@@ -128,6 +139,10 @@ class lC_Search extends lC_Products {
     }
 
     $this->_keywords = implode(' ', $terms_array);
+  }
+
+  function isRecursive() {
+    return (isset($this->_recursive) && !empty($this->_recursive)) ? true : false;
   }
 
   function &execute() {

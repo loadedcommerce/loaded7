@@ -54,7 +54,7 @@ if ($lC_MessageStack->size('search') > 0) {
         <div class="short-code-column one-half column-last">
           <div class="advancedSearchFormRight">
             <ol>
-              <li><?php echo lc_draw_pull_down_menu('category', lC_Default::getCategoriesDropdownArray()); ?></li>
+              <li><?php echo lc_draw_pull_down_menu('category', lC_Default::getSearchCategoriesDropdownArray()); ?></li>
               <li><?php echo lc_draw_checkbox_field('recursive'); ?></li>
               <li><?php echo lc_draw_pull_down_menu('manufacturer', lC_Default::getManufacturerDropdownArray()); ?></li>
               <li><?php echo lc_draw_input_field('pfrom'); ?></li>
