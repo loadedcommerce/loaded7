@@ -19,9 +19,9 @@ class lC_Api {
   * @access private      
   * @return string
   */ 
-  public function healthCheck() {
-//    if ($this->__timeToCheck()) {
-      return $this->__doRegister();
+  public function healthCheck($data = array()) {
+//    if ($this->_timeToCheck()) {
+      return $this->_doRegister($data);
 //    }
   }
   /**
@@ -30,7 +30,7 @@ class lC_Api {
   * @access private      
   * @return string
   */   
-  private function __doRegister() {
+  private function _doRegister($data) {
     global $lC_Database, $lC_Cache;
     
     // register the install with LC API
@@ -45,7 +45,7 @@ class lC_Api {
     $checksum = hash('sha256', json_encode($registerArr));
     $registerArr['checksum'] = $checksum;
     
-    $resultXML = $this->__sendToHost($registerArr, 'https://api.loadedcommerce.com/1_0/register/install/');
+    $resultXML = $this->_sendToHost($registerArr, 'https://api.loadedcommerce.com/1_0/register/install/');
     $newInstallationID = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
     
     // remove any old value that might be in the database
@@ -78,7 +78,7 @@ class lC_Api {
   * @access private      
   * @return boolean
   */   
-  private function __timeToCheck() {
+  private function _timeToCheck() {
     global $lC_Database;
 
     $check = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
@@ -105,7 +105,7 @@ class lC_Api {
   * @access private      
   * @return mixed
   */  
-  protected function __sendToHost($_data = NULL, $_url, $_action = 'post') {
+  protected function _sendToHost($_data = NULL, $_url, $_action = 'post') {
     
     $agent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)";
     $ch = curl_init();
@@ -118,6 +118,7 @@ class lC_Api {
       $params = (is_array($_data) && !empty($_data)) ? utility::arr2nvp($_data) : $_data;
       if (!empty($params)) $_url .= '?' . $params;
     }
+
     curl_setopt($ch, CURLOPT_URL, $_url);
     curl_setopt($ch, CURLOPT_TIMEOUT, 30);
     curl_setopt($ch, CURLOPT_USERAGENT, $agent);
