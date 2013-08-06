@@ -152,6 +152,7 @@ function profileEdit(id) {
       $('#edit-last_name').val(data.last_name);
       $('#edit-user_name').val(data.user_name);
       $('#pImage').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + data.image).attr("width", 64).attr("height", 64).attr("name", "avatar").attr("id", "avatar");
+      $('#generalAvatar').val(data.image);
       $('#edit-access_group_id').val(data.access_group_id);
       function createProfileUploaderGeneral(){
         var uploader = new qq.FileUploader({
