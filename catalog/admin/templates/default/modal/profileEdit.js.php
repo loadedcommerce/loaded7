@@ -137,13 +137,13 @@ function profileEdit(id) {
       });      
       
       // Gulmohar here is the work /////////////////////////////////////////////////////////
-      //$("#edit-language_id").empty(); // clear the old values
-      //$.each(data.languagesSelectArr, function(id, text) {
-      //  var selected = (data.id == id) ? 'selected="selected"' : '';
-      //  $("#edit-language_id").append(
-      //    $("<option " + selected + "></option>").val(id).html(text)
-      //  );
-      //});
+      $("#edit-language_id").empty(); // clear the old values
+      $.each(data.languagesArray, function(id, text) {
+        var selected = (data.id == id) ? 'selected="selected"' : '';
+        $("#edit-language_id").append(
+          $("<option " + selected + "></option>").val(id).html(text)
+        );
+      });
       //////////////////////////////////////////////////////////////////////////////////////
 
       $('#edit-first_name').val(data.first_name);

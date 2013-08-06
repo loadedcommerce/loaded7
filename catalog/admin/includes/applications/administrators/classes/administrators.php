@@ -90,8 +90,15 @@ class lC_Administrators_Admin {
     while ( $Qaccess->next() ) {
       $modules['access_modules'][] = $Qaccess->value('module');
     }
+    
+    $languages_array = array(); 
+    $languageAarray = array(); 
+    foreach (lC_Languages_Admin::getIdNameArray() as $key => $value) {
+      $languages_array[$value['languages_id']] = $value['name'];
+    }
+    $languageAarray['languagesArray'] = $languages_array;
 
-    $data = array_merge($Qadmin->toArray(), $modules);
+    $data = array_merge($Qadmin->toArray(), $modules,$languageAarray);
 
     unset($modules);
     $Qaccess->freeResult();
