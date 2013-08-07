@@ -230,7 +230,7 @@ class lC_Search extends lC_Products {
     if ($this->hasDateSet('to')) {
       $dateParts = explode("/", $this->_date_to);
       $Qlisting->appendQuery('and p.products_date_added <= :products_date_added');
-      $Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2])));
+      $Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', @mktime(23, 59, 59, $dateParts[0], $dateParts[1], $dateParts[2])));
     }
 
     if ($this->hasPriceSet('from')) {
