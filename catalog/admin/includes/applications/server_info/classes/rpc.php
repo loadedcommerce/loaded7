@@ -13,7 +13,7 @@
 
   @function The lC_Server_info_Admin_rpc class is for AJAX remote program control
 */
-require('includes/applications/server_info/classes/server_info.php');
+require_once('includes/applications/server_info/classes/server_info.php');
 
 class lC_Server_info_Admin_rpc {
  /*

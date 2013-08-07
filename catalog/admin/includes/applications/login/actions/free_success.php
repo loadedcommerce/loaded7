@@ -26,7 +26,7 @@ class lC_Application_Login_Actions_free_success extends lC_Application_Login {
     parent::__construct();
     
     if (isset($_POST)) {
-      $_POST['installID'] = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $lC_Api->healthCheck($_POST), $regs) == 1) ? $regs[1] : NULL;      
+      $_POST['installID'] = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $lC_Api->register($_POST), $regs) == 1) ? $regs[1] : NULL;      
       $rInfo = new lC_ObjectInfo($_POST);
     }    
   }

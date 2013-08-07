@@ -14,7 +14,6 @@
   @function The lC_Login_Admin_rpc class is for AJAX remote program control
 */
 global $lC_Vqmod;
-
 require_once($lC_Vqmod->modCheck('includes/applications/login/classes/login.php')); 
 
 class lC_Login_Admin_rpc {
@@ -26,14 +25,11 @@ class lC_Login_Admin_rpc {
   */
   public static function validateLogin() {
     $result = array();
-    $result['rpcStatus'] = 0;
-    $validated = lC_Login_Admin::validate($_GET['user_name'], $_GET['user_password']);
-    if ($validated) {
-      $result['rpcStatus'] = 1;
+    if (lC_Login_Admin::validate($_GET['user_name'], $_GET['user_password'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
 
     echo json_encode($result);
-    exit();
   }
   
  /*
@@ -44,14 +40,11 @@ class lC_Login_Admin_rpc {
   */
   public static function lostPassword() {
     $result = array();
-    $result['rpcStatus'] = 0;
-    $validated = lC_Login_Admin::lostPassword($_GET['email']);
-    if ($validated) {
-      $result['rpcStatus'] = 1;
+    if (lC_Login_Admin::lostPassword($_GET['email'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
 
     echo json_encode($result);
-    exit();
   }
   
  /*
@@ -62,14 +55,11 @@ class lC_Login_Admin_rpc {
   */
   public static function lostPasswordConfirmEmail() {
     $result = array();
-    $result['rpcStatus'] = 0;
-    $validated = lC_Login_Admin::lostPasswordConfirmEmail($_GET['password_email']);
-    if ($validated) {
-      $result['rpcStatus'] = 1;
+    if (lC_Login_Admin::lostPasswordConfirmEmail($_GET['password_email'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
 
     echo json_encode($result);
-    exit();
   }
   
  /*
@@ -80,14 +70,11 @@ class lC_Login_Admin_rpc {
   */
   public static function lostPasswordConfirmKey() {
     $result = array();
-    $result['rpcStatus'] = 0;
-    $validated = lC_Login_Admin::lostPasswordConfirmKey($_GET['key'], $_GET['email']);
-    if ($validated) {
-      $result['rpcStatus'] = 1;
+    if (lC_Login_Admin::lostPasswordConfirmKey($_GET['key'], $_GET['email'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
 
     echo json_encode($result);
-    exit();
   }
   
  /*
@@ -98,16 +85,12 @@ class lC_Login_Admin_rpc {
   */
   public static function passwordChange() {
     $result = array();
-    $result['rpcStatus'] = 0;
-    $validated = lC_Login_Admin::passwordChange($_GET['password'], $_GET['email']);
-    if ($validated) {
-      $result['rpcStatus'] = 1;
+    if (lC_Login_Admin::passwordChange($_GET['password'], $_GET['email'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
 
     echo json_encode($result);
-    exit();
   }
-  
  /*
   * Activate Pro Serial
   *
@@ -116,32 +99,11 @@ class lC_Login_Admin_rpc {
   */
   public static function activatePro() {
     $result = array();
-    $result['rpcStatus'] = 0;
-    $validated = lC_Login_Admin::activatePro($_GET['serial']);
-    if ($validated) {
-      $result['rpcStatus'] = 1;
+    if (lC_Login_Admin::activatePro($_GET['serial'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
 
     echo json_encode($result);
-    exit();
-  }
-  
- /*
-  * Activate Free Features
-  *
-  * @access public
-  * @return json
-  */
-  public static function activateFree() {
-    $result = array();
-    $result['rpcStatus'] = 0;
-    $validated = lC_Login_Admin::activateFree();
-    if ($validated) {
-      $result['rpcStatus'] = 1;
-    }
-
-    echo json_encode($result);
-    exit();
   }
 }
 ?>

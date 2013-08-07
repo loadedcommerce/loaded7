@@ -188,9 +188,15 @@ class lC_Login_Admin {
       return false;
     }
   }
+ /*
+  * Activate Pro Serial
+  *
+  * @access public
+  * @return json
+  */
+  public static function activatePro($serial) {
+    return true;
+  }  
+  
 }
-
-
-
-
 ?>

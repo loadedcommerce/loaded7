@@ -236,24 +236,20 @@
         $("#form-activate-pro").bind("submit", preventDefault(event));
 
         var nvp = $("#form-activate-pro").serialize();
-        alert('activate pro serial');
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // here we call the API via rpc and validate the serial (I think?)
-        /*var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=activatePro&NVP'); ?>'; 
-        $.getJSON(jsonLink.replace('NVP', nvp),        
-          function (data) {  
-            if (data.rpcStatus == 1) { 
-              $("#form-activate-pro").unbind("submit", preventDefault(event)).submit();
-              return true;                  
-            } 
-            //displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
-            //return false;
-          }              
-        );*/
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        var domain = '<?php echo str_replace('http://', '', HTTP_SERVER); ?>';
         
-        // temporary testing - go to pro success page
-        $("#form-activate-pro").unbind("submit", preventDefault(event)).submit();
+        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=activatePro&domain=DOMAINNVP'); ?>'; 
+        $.getJSON(jsonLink.replace('DOMAIN', domain).replace('NVP', nvp),        
+          function (data) {  
+            if (data.rpcStatus != 1) { 
+              displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
+              return false;
+            }
+    alert(print_r(data, true));          
+            // temporary testing - go to pro success page
+            //$("#form-activate-pro").unbind("submit", preventDefault(event)).submit();            
+          }              
+        );
       }
     }); 
     /******* END OF EDIT SECTION *******//*
