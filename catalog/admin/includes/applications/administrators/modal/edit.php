@@ -166,6 +166,7 @@ function editAdmin(id) {
       $('#edit-user_name').val(data.user_name);
       $('#edit-access_group_id').val(data.access_group_id).change();
       $('#pImage').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + data.image).attr("width", 64).attr("height", 64).attr("name", "avatar").attr("id", "avatar");
+      $('#editAvatar').val(data.image);
       function createProfileUploaderEdit(){
         var uploader = new qq.FileUploader({
           element: document.getElementById('profileUploaderContainerEdit'),
