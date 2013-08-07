@@ -11,45 +11,61 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-?>
-<div id="container">
-  <hgroup id="login-title" class="margin-bottom">
-    <h1 class="login-title-image"><?php echo STORE_NAME; ?></h1>
-  </hgroup>
-  <div id="form-wrapper">
-    <div id="form-block" class="scratch-metal">
-      <div id="form-viewport">
-        <form id="form-login" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=process'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('heading_title'); ?>" accept-charset="utf-8">
-          <ul class="inputs black-input large">
-            <!-- The autocomplete="off" attributes is the only way to prevent webkit browsers from filling the inputs with yellow -->
-            <li><span class="icon-user mid-margin-right"></span><input type="text" onfocus="$('#form-wrapper').clearMessages();" name="user_name" id="user_name" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_username'); ?>" autocomplete="on"></li>
-            <li><span class="icon-lock mid-margin-right"></span><input type="password" onfocus="$('#form-wrapper').clearMessages();" name="user_password" id="user_password" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password'); ?>" autocomplete="on"></li>
-          </ul>
-          <p class="full-width"><button type="submit" class="button glossy green-gradient full-width" id="login"><?php echo $lC_Language->get('button_login'); ?></button></p>
-        </form>
-        <form id="form-lost-password" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=lost_password'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_lost_password'); ?>?">
-          <p class="small-margin-left small-margin-right">
-            <?php echo $lC_Language->get('text_send_new_password_instructions'); ?>
-            <span class="block-arrow"><span></span></span>
-          </p>
-          <ul class="inputs black-input large">
-            <li><span class="icon-mail mid-margin-right"></span><input type="text" name="password_email" id="password_email" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password_email'); ?>" autocomplete="off"></li>
-          </ul>
-          <p class="full-width"><button type="submit" class="button glossy green-gradient full-width" id="lost-password"><?php echo $lC_Language->get('button_submit'); ?></button></p>
-        </form>
-        <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
-          <h3 class="align-center"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
-          <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>"><button type="button" class="button glossy green-gradient full-width" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button></a>
-          <p class="align-center mid-margin-top"><?php echo $lC_Language->get('text_or'); ?></p>
-          <ul class="inputs black-input large">
-            <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="serial" id="serial" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
-          </ul>
-          <p class="full-width"><button type="submit" class="button glossy red-gradient full-width" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
-        </form>
+?> 
+<style>
+.message { margin:-10px 0 22px 0; }
+</style>
+<div id="container" style="position:absolute; top:35%;">
+  <div id="login-container" style="visibility:hidden;">
+    <hgroup id="login-title" class="margin-bottom">
+      <h1 class="login-title-image"><?php echo STORE_NAME; ?></h1>
+    </hgroup>
+    <div id="form-wrapper">
+      <div id="form-block" class="scratch-metal">
+        <div id="form-viewport">
+          <form id="form-login" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=process'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('heading_title'); ?>" accept-charset="utf-8">
+            <ul class="inputs black-input large">
+              <!-- The autocomplete="off" attributes is the only way to prevent webkit browsers from filling the inputs with yellow -->
+              <li><span class="icon-user mid-margin-right"></span><input type="text" onfocus="$('#form-wrapper').clearMessages();" name="user_name" id="user_name" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_username'); ?>" autocomplete="on"></li>
+              <li><span class="icon-lock mid-margin-right"></span><input type="password" onfocus="$('#form-wrapper').clearMessages();" name="user_password" id="user_password" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password'); ?>" autocomplete="on"></li>
+            </ul>
+            <p align="center" class="small-margin-bottom">
+              <button type="submit" class="button glossy silver-gradient" style="padding:0 20px;" id="login"><?php echo $lC_Language->get('button_login'); ?></button>
+            </p>
+          </form>
+          <form id="form-lost-password" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=lost_password'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_lost_password'); ?>?">
+            <p class="small-margin-left small-margin-right mid-margin-bottom">
+              <?php echo $lC_Language->get('text_send_new_password_instructions'); ?>
+              <span class="block-arrow"><span></span></span>
+            </p>
+            <ul class="inputs black-input large">
+              <li><span class="icon-mail mid-margin-right"></span><input type="text" name="password_email" id="password_email" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password_email'); ?>" autocomplete="off"></li>
+            </ul>
+            <p align="center" class="small-margin-bottom">
+              <button type="submit" class="button glossy silver-gradient" style="padding:0 20px;" id="lost-password"><?php echo $lC_Language->get('button_submit'); ?></button>
+            </p>            
+          </form>
+          <?php
+          if (defined('INSTALLATION_SERIAL') && INSTALLATION_SERIAL != NULL) {
+          } else {
+            ?>
+            <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
+              <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
+              <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>"><button type="button" class="button glossy silver-gradient full-width" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button></a>
+              <p class="align-center mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('text_or'); ?></p>
+              <ul class="inputs black-input large">
+                <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="serial" id="serial" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
+              </ul>
+              <p class="full-width"><button type="submit" class="button glossy red-gradient full-width" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
+            </form>
+            <?php
+          }
+          ?>
+        </div>
       </div>
     </div>
+    <p class="anthracite" align="center" style="line-height:1.5;">Copyright &copy; <?php echo @date("Y"); ?> <a class="anthracite" href="http://www.loaded7.com">Loaded Commerce</a><br /><?php echo $lC_Language->get('text_version') . ' ' . utility::getVersion(); ?></p>
   </div>
-  <p class="anthracite" align="center" style="line-height:1.5;">Copyright &copy; <?php echo @date("Y"); ?> <a class="anthracite" href="http://www.loaded7.com">Loaded Commerce</a><br /><?php echo $lC_Language->get('text_version') . ' ' . utility::getVersion(); ?></p>
 </div>
 <script>
   $(document).ready(function() {
@@ -61,6 +77,7 @@
     $('body').removeClass('clearfix with-menu with-shortcuts');
     $('html').addClass('linen');
 
+    
     var doc = $('html').addClass('js-login'),
     container = $('#container'),
     formWrapper = $('#form-wrapper'),
@@ -260,7 +277,7 @@
       }
 
       // Button in the switch
-      form.data('button', $('<a href="#'+this.id+'" class="button anthracite-gradient'+color+(active ? ' active' : '')+'">'+this.title+'</a>')
+      form.data('button', $('<a href="#'+this.id+'" id="'+this.id+'-button" class="button anthracite-gradient'+color+(active ? ' active' : '')+'">'+this.title+'</a>')
         .appendTo(formSwitch)
         .data('form', form));
       // If active
@@ -403,7 +420,7 @@
             }
           });
         });
-      }
+      } 
     });
     // Initial vertical adjust
     centerForm(currentForm, false);
@@ -432,7 +449,7 @@
         });
 
         // Setup
-        container[animate ? 'animate' : 'css']({ marginTop: -Math.round(finalSize/2)+'px' });
+        container[animate ? 'animate' : 'css']({ marginTop: -Math.round((finalSize/2))+'px' });
       }
     };
 
@@ -489,7 +506,19 @@
 
       }).hide().slideDown('fast');
     };
-
+    
+    $('#form-activate-pro-button').hide();
+    
+    // show the login page after it finishes loading
+    $('#login-container').attr('style', 'visibility:normal');
+    
+    // if action=register, show register form on load
+    var action = '<?php echo (isset($_GET['action']) && $_GET['action'] != NULL) ? $_GET['action'] : NULL; ?>';
+    if (action == 'register') { 
+      $('#form-activate-pro-button').click();
+      $('#form-switch').hide();
+    }
+    
     /**
     * Function to prevent default action
     * @param object the event 
@@ -497,5 +526,6 @@
     function preventDefault(e) {
       e.preventDefault();
     }
+        
   });
 </script>

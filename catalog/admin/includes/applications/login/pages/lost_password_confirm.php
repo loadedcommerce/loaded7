@@ -12,9 +12,9 @@
   @license    http://loadedcommerce.com/license.html
 */
 ?>
-<div id="container">
-  <hgroup id="login-title" class="margin-bottom">
-    <h1 class="login-title-image"><?php echo STORE_NAME; ?></h1>
+<div id="container" style="position:absolute; top:35%;">
+  <hgroup id="login-title" class="mid-margin-bottom">
+    <h1 class="login-title-image no-margin-bottom"><?php echo STORE_NAME; ?></h1>
   </hgroup>
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">

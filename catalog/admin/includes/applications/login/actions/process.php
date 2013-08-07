@@ -42,15 +42,13 @@ class lC_Application_Login_Actions_process extends lC_Application_Login {
             unset($_SESSION['redirect_origin']);
           }
           
-          if (isset($_POST)) {
-            echo "<pre>post ";
-            print_r($_POST);
-            echo "</pre>";
-            die('login-process');
+          if (defined('INSTALLATION_SERIAL') && INSTALLATION_SERIAL != NULL) {
+            lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $get_string));
+          } else {          
+            // redirect to login=register
+            $id = (defined('INSTALLATION_ID') && INSTALLATION_ID != NULL) ? '&id=1' : NULL;
+            lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, 'login&action=register' . $id));
           }
-          
-          
-          lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $get_string));
         }
       }
     }

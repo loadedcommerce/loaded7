@@ -586,9 +586,6 @@ li .message-menu {
   -moz-box-shadow: none;
   box-shadow: none;
 }
-#login-title h1.login-title-image {
-  height: 65px !important;
-} 
 
 #form-block {
   margin: -12px 0 0 -12px;
