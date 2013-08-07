@@ -139,6 +139,7 @@ function editAdmin(id) {
                         return false;
                       }
                       oTable.fnReloadAjax();
+                      window.location.href = window.location.href;
                     }
                   );
                   win.closeModal();
