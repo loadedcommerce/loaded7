@@ -46,8 +46,7 @@
             </p>            
           </form>
           <?php
-          if (defined('INSTALLATION_SERIAL') && INSTALLATION_SERIAL != NULL) {
-          } else {
+          if (isset($_GET['action']) && $_GET['action'] == 'register') {
             ?>
             <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
               <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
@@ -527,5 +526,5 @@
       e.preventDefault();
     }
         
-  });
+  });    
 </script>

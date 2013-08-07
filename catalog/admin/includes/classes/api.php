@@ -32,10 +32,16 @@ class lC_Api {
   */   
   private function _doRegister($data) {
     global $lC_Database, $lC_Cache;
+                  
+    if (isset($data['activation_email']) && $data['activation_email'] != NULL) {
+      $storeEmail = $data['activation_email'];
+    } else {
+      $storeEmail = STORE_OWNER_EMAIL_ADDRESS;
+    } 
     
     // register the install with LC API
     $registerArr = array('storeName' => STORE_NAME,
-                         'storeEmail' => STORE_OWNER_EMAIL_ADDRESS,
+                         'storeEmail' => $storeEmail,
                          'storeWWW' => HTTP_SERVER . DIR_WS_HTTP_CATALOG,
                          'storeSSL' => HTTPS_SERVER . DIR_WS_HTTPS_CATALOG,
                          'systemMetaData' => base64_encode(json_encode(lc_get_system_information())),
@@ -53,7 +59,8 @@ class lC_Api {
     $Qdel->bindTable(':table_configuration', TABLE_CONFIGURATION);
     $Qdel->bindValue(':configuration_key', 'INSTALLATION_ID');
     $Qdel->execute();      
-    // update configuration table and add the installation ID     
+
+    // update configuration table and add the installation ID   
     $Qupdate = $lC_Database->query('insert into :table_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, last_modified) values (:configuration_title, :configuration_key, :configuration_value, :configuration_description, :configuration_group_id, :last_modified)');
     $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
     $Qupdate->bindValue(':configuration_title', 'Installation ID');
@@ -64,10 +71,12 @@ class lC_Api {
     $Qupdate->bindValue(':last_modified', date("Y-m-d H:m:s"));   
     $Qupdate->execute();  
 
+    $Qupdate->execute();     
+
     lC_Cache::clear('configuration');
     
     if ( $lC_Database->isError() ) {
-      return utility::arr2xml(array('error' => TRUE, 'message' => 'There was an error processing the request.'));
+      return utility::arr2xml(array('error' => TRUE, 'message' => 'error processing the request'));
     } else {    
       return utility::arr2xml(array('error' => FALSE, 'installationID' => $newInstallationID));
     }  

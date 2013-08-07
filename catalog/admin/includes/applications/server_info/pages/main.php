@@ -70,10 +70,38 @@
     </div>
     <div class="new-row twelve-columns-tablet">
       <p class="align-center">
-        <span><a href="http://www.loaded7.com" target="_blank"><?php echo lc_image(lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=image'), 'Loaded Commerce'); ?><br /><b><?php echo $lC_Language->get('text_version') . ' ' . utility::getVersion(); ?></b></a><br />Installation ID: <?php echo (defined('INSTALLATION_ID') ? INSTALLATION_ID : $lC_Language->get('no_installation_id')); ?></span>
+        <span>
+          <a href="http://www.loaded7.com" target="_blank"><?php echo lc_image(lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=image'), 'Loaded Commerce'); ?><br /><b><?php echo $lC_Language->get('text_version') . ' ' . utility::getVersion(); ?></b></a>
+        </span>
       </p>
+      <form id="install_id" name="install_id" action="" method="post">  
+      <p class="align-center">
+        <label for="installationID" class="label"><?php echo $lC_Language->get('field_installation_id'); ?></label>
+        <span><input type="text" name="id" style="width:17%;" value="<?php echo (defined('INSTALLATION_ID') ? INSTALLATION_ID : $lC_Language->get('no_installation_id')); ?>"><span id="updateIcon" onclick="updateInstallID();" style="cursor:pointer;" class="mid-margin-left icon-cloud-upload icon-blue"></span></span>
+      </p> 
+      </form>  
     </div>
   </div>  
 </section>
+<script>
+function updateInstallID() {
+  $('#updateIcon').attr('class', 'loader mid-margin-left'); 
+  var nvp = $("#install_id").serialize();
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateInstallID&BATCH'); ?>'
+  $.getJSON(jsonLink.replace('BATCH', nvp),
+    function (rdata) {
+      if (rdata.rpcStatus == -10) { // no session
+        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+        $(location).attr('href',url);
+      }
+      if (rdata.rpcStatus != 1) {
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
+      window.location.href = window.location.href;
+    }
+  );  
+}
+</script>
 <?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <!-- End main content -->

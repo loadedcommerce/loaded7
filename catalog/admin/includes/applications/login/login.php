@@ -31,7 +31,7 @@ class lC_Application_Login extends lC_Template_Admin {
     $this->_has_header = false;
     $this->_has_footer = false;
     
-    $lC_Api->healthCheck();
+   // $lC_Api->healthCheck();
   }
 }
 ?>

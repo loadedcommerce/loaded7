@@ -21,10 +21,14 @@ class lC_Application_Login_Actions_free_success extends lC_Application_Login {
   protected $_page_contents = 'free_success.php'; 
   
   public function __construct() {
-    global $lC_Database, $lC_Language, $lC_MessageStack;
+    global $lC_Database, $lC_Language, $lC_MessageStack, $lC_Api, $rInfo;
 
     parent::__construct();
+    
+    if (isset($_POST)) {
+      $_POST['installID'] = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $lC_Api->healthCheck($_POST), $regs) == 1) ? $regs[1] : NULL;      
+      $rInfo = new lC_ObjectInfo($_POST);
+    }    
   }
-  
 }
 ?>

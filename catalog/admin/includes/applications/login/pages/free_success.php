@@ -24,7 +24,7 @@
           <p class="align-center small-margin-left small-margin-bottom"><b><?php echo $lC_Language->get('text_free_core_activation_success'); ?></b></p>
           <p class="align-center no-margin-top small-margin-bottom"><?php echo $lC_Language->get('text_for'); ?></p>
           <p class="align-center no-margin-top small-margin-bottom"><b><?php echo str_replace('http://', '', HTTP_SERVER); ?></b></p>
-          <p class="align-center margin-bottom"><?php echo $lC_Language->get('text_serial'); ?>: <span id="serial">core12345678</span></p>
+          <p class="align-center margin-bottom"><span id="serial"><?php echo (isset($rInfo)) ? $rInfo->get('installID') : NULL; ?></span></p>
           <p class="align-center" style="margin:22px 0 10px 0;"><button type="submit" class="button glossy silver-gradient"><?php echo $lC_Language->get('button_enter_admin'); ?></button></p>
         </form>
       </div>
