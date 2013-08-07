@@ -53,7 +53,7 @@
               <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>"><button type="button" class="button glossy silver-gradient full-width" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button></a>
               <p class="align-center mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('text_or'); ?></p>
               <ul class="inputs black-input large">
-                <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="serial" id="serial" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
+                <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
               </ul>
               <p class="full-width"><button type="submit" class="button glossy red-gradient full-width" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
             </form>
@@ -73,10 +73,6 @@
     * This script will enable effects for the login page
     */
     // Elements
-    $('body').removeClass('clearfix with-menu with-shortcuts');
-    $('html').addClass('linen');
-
-    
     var doc = $('html').addClass('js-login'),
     container = $('#container'),
     formWrapper = $('#form-wrapper'),
@@ -212,7 +208,7 @@
     */
     $('#form-activate-pro').submit(function(event) {
       // Values
-      var serial = $.trim($('#serial').val());
+      var serial = $.trim($('#activation_serial').val());
 
       // Remove previous messages
       formWrapper.clearMessages();
@@ -238,21 +234,26 @@
         var nvp = $("#form-activate-pro").serialize();
         var domain = '<?php echo str_replace('http://', '', HTTP_SERVER); ?>';
         
-        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=activatePro&domain=DOMAINNVP'); ?>'; 
+        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=activatePro&domain=DOMAIN&NVP'); ?>'; 
         $.getJSON(jsonLink.replace('DOMAIN', domain).replace('NVP', nvp),        
           function (data) {  
             if (data.rpcStatus != 1) { 
-              displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
+              if (data.rpcStatus == -2) { 
+                displayError('<?php echo $lC_Language->get('ms_error_serial_not_found'); ?>');   
+              } else if (data.rpcStatus == -3) {
+                displayError('<?php echo $lC_Language->get('ms_error_serial_expired'); ?>');   
+              } else {
+                displayError('<?php echo $lC_Language->get('ms_error_serial_invalid'); ?>');   
+              }
               return false;
             }
-    alert(print_r(data, true));          
-            // temporary testing - go to pro success page
-            //$("#form-activate-pro").unbind("submit", preventDefault(event)).submit();            
+            $("#form-activate-pro").unbind("submit", preventDefault(event)).submit();            
           }              
         );
       }
-    }); 
-    /******* END OF EDIT SECTION *******//*
+    });
+     
+    /**
     * Animated login
     */
 

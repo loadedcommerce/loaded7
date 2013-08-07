@@ -98,10 +98,8 @@ class lC_Login_Admin_rpc {
   * @return json
   */
   public static function activatePro() {
-    $result = array();
-    if (lC_Login_Admin::activatePro($_GET['serial'])) {
-      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
-    }
+
+    $result = lC_Login_Admin::activatePro($_GET['serial'], $_GET['domain']);
 
     echo json_encode($result);
   }

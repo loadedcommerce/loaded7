@@ -194,8 +194,20 @@ class lC_Login_Admin {
   * @access public
   * @return json
   */
-  public static function activatePro($serial) {
-    return true;
+  public static function activatePro($serial, $domain) {
+    
+    $error = false;
+    
+    $result = array();
+    if ($error) {
+//      $result['rpcStatus'] = -1;  // invalid serial
+ //     $result['rpcStatus'] = -2;  // serial not found
+      $result['rpcStatus'] = -3;  // expired serial
+    } else {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    
+    return $result;
   }  
   
 }

@@ -50,8 +50,15 @@ class lC_Api {
       $storeEmail = STORE_OWNER_EMAIL_ADDRESS;
     } 
     
+    if (isset($data['activation_serial']) && $data['activation_serial'] != NULL) {
+      $storeSerial = $data['activation_serial'];
+    } else {
+      $storeSerial = '';
+    }    
+    
     // register the install with LC API
-    $registerArr = array('storeName' => STORE_NAME,
+    $registerArr = array('serial' => $storeSerial,
+                         'storeName' => STORE_NAME,
                          'storeEmail' => $storeEmail,
                          'storeWWW' => HTTP_SERVER . DIR_WS_HTTP_CATALOG,
                          'storeSSL' => HTTPS_SERVER . DIR_WS_HTTPS_CATALOG,

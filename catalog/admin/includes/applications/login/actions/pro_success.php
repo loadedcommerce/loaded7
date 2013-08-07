@@ -21,9 +21,14 @@ class lC_Application_Login_Actions_pro_success extends lC_Application_Login {
   protected $_page_contents = 'pro_success.php'; 
   
   public function __construct() {
-    global $lC_Database, $lC_Language, $lC_MessageStack;
+    global $lC_Database, $lC_Language, $lC_MessageStack, $rInfo;
 
     parent::__construct();
+    
+    if (isset($_POST)) {
+      $_POST['installID'] = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $lC_Api->register($_POST), $regs) == 1) ? $regs[1] : NULL;      
+      $rInfo = new lC_ObjectInfo($_POST);
+    }    
   }
   
 }
