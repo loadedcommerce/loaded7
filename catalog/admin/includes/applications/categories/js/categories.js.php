@@ -128,6 +128,7 @@ function doSelectFunction(e) {
 function customCheck() {
   var cModeVal = $("#categories_mode").val();
   if (cModeVal == 'specials' /*|| cModeVal == 'featured' */|| cModeVal == 'new' || cModeVal == 'search' || cModeVal == 'cart' || cModeVal == 'account' || cModeVal == 'info' || cModeVal == 'override') {
+    $("#categories_custom").show();
     $("#categories_custom_url").show();
     $("#categories_link_target_info").hide();
     $("#categories_link_target_p").hide(); 
