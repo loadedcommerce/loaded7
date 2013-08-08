@@ -125,6 +125,12 @@ require($lC_Vqmod->modCheck('../includes/classes/datetime.php'));
 require($lC_Vqmod->modCheck('includes/classes/language.php'));
 $lC_Language = new lC_Language_Admin();
 
+// admin specific language
+if ( ($lC_Language->getAdminLanguage($_SESSION['admin']['id']) != 'en_US') || ($lC_Language->getAdminLanguage($_SESSION['admin']['id']) != $_SESSION['admin']['language_id']) ) {
+  $lC_Language->set($lC_Language->getAdminLanguage($_SESSION['admin']['id']));
+}
+
+// language change detected via url $_GET 
 if (isset($_GET['language']) && !empty($_GET['language'])) {
   $lC_Language->set($_GET['language']);
 }

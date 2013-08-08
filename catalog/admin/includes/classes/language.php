@@ -197,6 +197,30 @@ class lC_Language_Admin extends lC_Language {
 
   function isDefined($key) {
     return isset($this->_definitions[$key]);
+  }
+
+  function getAdminLanguage($id = null) {
+    global $lC_Database;
+
+    $QAdminLanguageId = $lC_Database->query('select language_id from :table_administrators where id = :id');
+    $QAdminLanguageId->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+    $QAdminLanguageId->bindValue(':id', $id);
+    $QAdminLanguageId->execute();
+
+    $result = $QAdminLanguageId->toArray();
+
+    $QAdminLanguageId->freeResult();
+
+    $QAdminLanguage = $lC_Database->query('select code from :table_languages where languages_id = :languages_id');
+    $QAdminLanguage->bindTable(':table_languages', TABLE_LANGUAGES);
+    $QAdminLanguage->bindValue(':languages_id', $result['language_id']);
+    $QAdminLanguage->execute();
+
+    $result = $QAdminLanguage->toArray();
+
+    $QAdminLanguage->freeResult();
+
+    return $result['code'];
   } 
 }
 ?>

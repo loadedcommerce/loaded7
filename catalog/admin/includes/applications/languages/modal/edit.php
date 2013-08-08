@@ -184,7 +184,7 @@ function editLanguage(id) {
       $("#sort_order").val(data.languageData.sort_order);
       var defaultLanguage = '<?php echo DEFAULT_LANGUAGE; ?>';
       if (data.languageData.code != defaultLanguage) {
-        $("#setDefault").html('<label for="default" class="label"><?php echo $lC_Language->get('field_set_as_default'); ?></label><?php echo '&nbsp;' . lc_draw_checkbox_field('default', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>');
+        $("#setDefault").html('<label for="default" class="label"><?php echo $lC_Language->get('field_set_default'); ?></label><?php echo '&nbsp;' . lc_draw_checkbox_field('default', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>');
       } else {
         $("#setDefault").empty();
       }

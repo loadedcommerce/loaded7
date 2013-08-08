@@ -31,7 +31,8 @@ class lC_Application_Login_Actions_process extends lC_Application_Login {
                                      'lastname' => $Qadmin->value('last_name'),
                                      'username' => $Qadmin->value('user_name'),
                                      'password' => $Qadmin->value('user_pasword'),
-                                     'access' => lC_Access::getUserLevels($Qadmin->valueInt('access_group_id')));
+                                     'access' => lC_Access::getUserLevels($Qadmin->valueInt('access_group_id')),
+                                     'language_id' => $Qadmin->value('language_id'));
           $get_string = null;
 
           if ( isset($_SESSION['redirect_origin']) ) {

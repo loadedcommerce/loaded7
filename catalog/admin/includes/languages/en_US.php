@@ -85,6 +85,8 @@ button_yes = Yes
 button_no = No
 button_info = Info
 
+field_admin_language = Admin Language:
+
 icon_all = All
 icon_app_store = Add Ons
 icon_preview = Preview
@@ -187,7 +189,7 @@ profile_password_confirm = Confirm Password
 invalid_current_password = The current password you entered is not correct. Please re-enter it and try again.
 invalid_new_password_match = The new password and confirmation does not match. Please try again.
 password_change_success = You have successfully updated your password.
-profile_image = Profile Image
+profile_image = Profile Image:
 profile_new_image = New Image
 
 quick_add_order = Order
