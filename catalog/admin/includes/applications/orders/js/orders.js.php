@@ -49,7 +49,19 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         $('.on-mobile').show();
         $('.selectContainer').hide();   
       }   
-    } 
+    }
+    
+    // on screen resize get the new menu width and apply it for click functions
+    $(window).resize(function() {
+      // if window width drops below 1280px change orders edit tabs from side to top
+      if ($(window).width() < 1380) {
+        $("#order_tabs").removeClass("side-tabs");
+        $("#order_tabs").addClass("standard-tabs");
+      } if ($(window).width() >= 1380) {
+        $("#order_tabs").removeClass("standard-tabs");
+        $("#order_tabs").addClass("side-tabs");
+      }
+    }); 
   });
   
   function hideElements() {  
