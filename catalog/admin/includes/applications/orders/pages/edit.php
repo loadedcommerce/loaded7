@@ -11,6 +11,9 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
+  $oInfo = new lC_ObjectInfo(lC_Orders_Admin::getInfo($_GET[$lC_Template->getModule()]));
+}
 ?>
 <!-- Main content -->
 <section role="main" id="main">
@@ -24,8 +27,7 @@
   </hgroup>
   <div class="with-padding-no-top">
     <form name="order" id="order" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('orders_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
-      <div class="align-center"><span id="ordersLoader" class="loader huge refreshing on-dark with-padding large-margin-top"></span></div>
-      <div id="order_tabs" class="side-tabs" style="display:none;">
+      <div id="order_tabs" class="side-tabs">
         <ul class="tabs">
           <li class="active"><?php echo lc_link_object('#section_orders_summary', $lC_Language->get('section_orders_summary')); ?></li>
           <li><?php echo lc_link_object('#section_orders_products', $lC_Language->get('section_orders_products')); ?></li>
@@ -38,8 +40,62 @@
         <div class="clearfix tabs-content" id="orders_sections">
           <div id="section_orders_summary">
             <div class="columns with-padding">
-              <div class="new-row-mobile six-columns twelve-columns-mobile">Tab Content Left</div>
-              <div class="new-row-mobile six-columns twelve-columns-mobile">Tab Content Right</div>
+              <div class="new-row-mobile six-columns twelve-columns-mobile">
+                <fieldset>
+                  <legend class="small-margin-bottom">
+                    <span class="icon-user icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_customer'); ?></strong></span>
+                  </legend>
+                </fieldset>
+              </div>
+              <div class="new-row-mobile six-columns twelve-columns-mobile">
+                <fieldset>
+                  <legend class="small-margin-bottom">
+                    <span class="icon-card icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_payment'); ?></strong></span>
+                  </legend>
+                </fieldset>
+              </div>
+              <div class="new-row-mobile six-columns twelve-columns-mobile">
+                <fieldset>
+                  <legend class="small-margin-bottom">
+                    <span class="icon-info-round icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_info'); ?></strong></span>
+                  </legend>
+                </fieldset>
+              </div>
+              <div class="new-row-mobile six-columns twelve-columns-mobile">
+                <fieldset>
+                  <legend class="small-margin-bottom">
+                    <span class="icon-dropbox icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_shipping'); ?></strong></span>
+                  </legend>
+                </fieldset>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="twelve-columns">
+                <div class="field-drop-tabs field-drop-tabs-no-left button-height black-inputs">
+                  <div class="columns">
+                    <div class="six-columns twelve-columns-mobile new-row-mobile">Left</div>
+                    <div class="six-columns twelve-columns-mobile new-row-mobile ">Right</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="columns with-padding">
+              <div class="twelve-columns no-margin-bottom large-pull-top">
+                <fieldset>
+                  <legend class="small-margin-bottom">
+                    <span class="icon-list icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_products_ordered'); ?></strong></span>
+                  </legend>
+                </fieldset>
+              </div>
+            </div>
+            <div class="columns with-padding">
+              <div class="twelve-columns large-pull-top">
+                <fieldset>
+                  <legend class="small-margin-bottom">
+                    <span class="icon-read icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_recent_messages'); ?></strong></span>
+                  </legend>
+                </fieldset>
+              </div>
             </div>
           </div>
           <div id="section_orders_products">

@@ -119,19 +119,19 @@ Custom Template CSS added by Loaded7 Dev Team
   cursor: pointer;
 }
 
-  .field-drop-tabs + .field-block {
-    padding-top: 20px;
-    }
-    .field-drop-tabs + .field-block.button-height {
-      padding-top: 18px;
-    }
-  .field-drop-tabs .label {
-    display: block;
-    padding: 0;
-    color: #999999;
-    font-weight: bold;
-    margin: 0;
-    }
+.field-drop-tabs + .field-block {
+  padding-top: 20px;
+}
+.field-drop-tabs + .field-block.button-height {
+  padding-top: 18px;
+}
+.field-drop-tabs .label {
+  display: block;
+  padding: 0;
+  color: #999999;
+  font-weight: bold;
+  margin: 0;
+}
 
 /* Field drop */
 .field-drop-tabs {
@@ -142,63 +142,66 @@ Custom Template CSS added by Loaded7 Dev Team
   -moz-box-shadow: inset 0 1px 10px black;
   box-shadow: inset 0 1px 10px black;
   position: relative;
-  }
-  .field-drop-tabs.button-height {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  .field-drop-tabs:first-child,
-  .fields-list legend:first-child + .field-drop-tabs {
-    margin-top: -22px;
-    -webkit-background-clip: padding-box;
-  }
-  .field-drop-tabs:last-child {
-    margin-bottom: -20px;
-    -webkit-background-clip: padding-box;
-    }
-    /* IE7 */
-    .field-drop-tabs.last-child {
-      margin-bottom: -20px;
-    }
-  .field-drop-tabs + .field-drop-tabs {
-    border-top: 1px solid #666666;
-  }
-  .field-block + .field-drop-tabs {
-    margin-top: 20px;
-  }
-  .field-drop-tabs .label b,
-  .field-drop-tabs .label strong {
-    color: white;
-  }
-  .field-drop-tabs:after {
-    display: block;
-    width: 0;
-    height: 0;
-    border: 6px solid transparent;
-    border-top-color: white;
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    left: 100px;
-  }
-    .field-drop-tabs .label {
-      float: left;
-      text-align: right;
-      margin: 0 0 0 -210px;
-      width: 150px;
-    }
+}
+.field-drop-tabs.button-height {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.field-drop-tabs:first-child,
+.fields-list legend:first-child + .field-drop-tabs {
+  margin-top: -22px;
+  -webkit-background-clip: padding-box;
+}
+.field-drop-tabs:last-child {
+  margin-bottom: -20px;
+  -webkit-background-clip: padding-box;
+}
+/* IE7 */
+.field-drop-tabs.last-child {
+  margin-bottom: -20px;
+}
+.field-drop-tabs + .field-drop-tabs {
+  border-top: 1px solid #666666;
+}
+.field-block + .field-drop-tabs {
+  margin-top: 20px;
+}
+.field-drop-tabs .label b,
+.field-drop-tabs .label strong {
+  color: white;
+}
+.field-drop-tabs:after {
+  display: block;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-top-color: white;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 100px;
+}
+.field-drop-tabs .label {
+  float: left;
+  text-align: right;
+  margin: 0 0 0 -210px;
+  width: 150px;
+}
 
-  /* Field drop */
-  .field-drop-tabs {
-    padding: 13px 30px 17px 230px;
-  }
-  .field-drop-tabs .label {
-    width: 190px;
-  }
-  .field-drop-tabs:after {
-    left: 236px;
-  }
-  
+/* Field drop */
+.field-drop-tabs {
+  padding: 13px 30px 17px 230px;
+}
+.field-drop-tabs .label {
+  width: 190px;
+}
+.field-drop-tabs:after {
+  left: 236px;
+}
+.field-drop-tabs-no-left {
+  padding: 13px 30px 17px 30px;
+}
+
 
 .field-drop-tabs {
   background: #3c4044 url(../img/textures/grid.png) !important;
@@ -209,10 +212,10 @@ Custom Template CSS added by Loaded7 Dev Team
   background: url(../img/textures/grid.png), -o-linear-gradient(top, #6d7073, #3c4044) !important;
   background: url(../img/textures/grid.png), linear-gradient(top, #6d7073, #3c4044) !important;
   color: #afafaf;
-  }
-  .field-drop-tabs b, .field-drop-tabs strong {
-    color: white;
-  }
+}
+.field-drop-tabs b, .field-drop-tabs strong {
+  color: white;
+}
 .with-menu #title-bar {
   padding-right: 10px;
 }
@@ -692,6 +695,12 @@ a.shortcut-reports:before { background-position: -70px -495px; }
 .cat_rel_td { line-height: 2.0em; }
 
 .no-wrap { white-space: nowrap; }
+.valign-top { vertical-align: top; }
+.valign-bottom { vertical-align: bottom; }
+.small-pull-top { margin-top: -4px !important; }
+.mid-pull-top { margin-top: -8px !important; }
+.pull-top { margin-top: -16px !important; }
+.large-pull-top { margin-top: -30px !important; }
 #title-bar { height: 40px !important; }
 
 .imagesBackNav { display: none; }
@@ -707,6 +716,9 @@ select.input {
 input.error { border: 2px solid red !important; }
 textarea.error { border: 2px solid red !important; }
 select.error { border: 2px solid red !important; }
+
+/* added for enhanced order admin page */
+.edit-order-address { position: relative; margin-left: 5px; display: inline-block; }
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
@@ -745,6 +757,9 @@ select.error { border: 2px solid red !important; }
   .field-drop-tabs {
     padding: 13px 20px 17px 85px !important;
   }
+  .field-drop-tabs-no-left {
+    padding: 13px 20px 17px 20px !important;
+  }
   #products_msrp { width: 90% !important; }
   .products-price-gross { width: 90% !important; }
   .hide-on-tablet { display:none; }
@@ -759,22 +774,25 @@ select.error { border: 2px solid red !important; }
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    }
-    .button-group > .button,
-    .select-arrow {
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      box-shadow: none;
-    }
-    .button,
-    .select-value,
-    .legend {
-      -webkit-text-shadow: none;
-      -moz-text-shadow: none;
-      text-shadow: none;
-    }
+  }
+  .button-group > .button,
+  .select-arrow {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+  .button,
+  .select-value,
+  .legend {
+    -webkit-text-shadow: none;
+    -moz-text-shadow: none;
+    text-shadow: none;
+  }
   .field-drop-tabs {
     padding: 13px 20px 17px 85px !important;
+  }
+  .field-drop-tabs-no-left {
+    padding: 13px 20px 17px 20px !important;
   }
   #product_tabs { margin: -15px; }
   #floating-menu-div-listing {
@@ -806,7 +824,7 @@ select.error { border: 2px solid red !important; }
   .icon-search { margin-left:4px !important; }  
   .hide-on-mobile { display:none; }
 }  
-  
+
 @media screen and (max-width: 479px) {
   .hide-below-480 { display: none; }
   /* Default shadows */
@@ -817,34 +835,33 @@ select.error { border: 2px solid red !important; }
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    }
-    .button-group > .button,
-    .select-arrow {
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      box-shadow: none;
-    }
-    .button,
-    .select-value,
-    .legend {
-      -webkit-text-shadow: none;
-      -moz-text-shadow: none;
-      text-shadow: none;
-    }
-
+  }
+  .button-group > .button,
+  .select-arrow {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+  .button,
+  .select-value,
+  .legend {
+    -webkit-text-shadow: none;
+    -moz-text-shadow: none;
+    text-shadow: none;
+  }   
   .field-drop-tabs {
     padding: 13px 20px 17px 85px !important;
   }
-      
+  .field-drop-tabs-no-left {
+    padding: 13px 20px 17px 20px !important;
+  }
   .button-text {
     display:none;
   }
-  
   .button > .button-icon { 
     margin: -1px -14px -1px -12px;
     border-radius: 4px 4px 4px 4px;
   }
-  
   #product_tabs { margin: -15px; }
   #floating-menu-div-listing {
     right: -10px;
@@ -871,7 +888,6 @@ select.error { border: 2px solid red !important; }
   #category_tabs { margin: 30px -15px -15px -15px; }
   #languageTabs { margin: 0 0 0 5px; }
   #breadCrumbContainer { top: 50px; left: 21px; }
-  
   #storeFilterContainer { margin-left: 14px !important; }
   #addonsPanelContainer { padding: 0 4px !important; }
   #uninstallButton { right:10px; top:65px;  }
@@ -884,7 +900,7 @@ select.error { border: 2px solid red !important; }
   #coupons_limits { margin: 0 -15px 15px !important; }
   #coupons_restrictions { margin: 0 -15px 0 !important; }
 }  
-  
+
 @media screen and (max-width: 319px) {
   #dataTable_wrapper { margin: 30px -15px -15px -15px; }
   #category_tabs { margin: 30px -15px -15px -15px; }

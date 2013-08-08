@@ -52,6 +52,14 @@ operation_heading_order_id = Order ID:
 operation_heading_customer_id = Customer ID:
 operation_heading_filter_status = Status:
 
+orders_summary_customer = Customer
+orders_summary_payment = Payments
+orders_summary_info = Information
+orders_summary_shipping = Shipping
+orders_summary_products_ordered = Products Ordered
+orders_summary_recent_messages = Recent messages for this order
+orders_summary_order_totals = Order Totals
+
 reset_filter = Reset Filter
 
 section_summary = Summary
