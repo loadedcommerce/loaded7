@@ -88,13 +88,35 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
                 </fieldset>
               </div>
             </div>
-            <div class="columns with-padding">
+            <div class="columns">
               <div class="twelve-columns large-pull-top">
-                <fieldset>
-                  <legend class="small-margin-bottom">
-                    <span class="icon-read icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_recent_messages'); ?></strong></span>
-                  </legend>
-                </fieldset>
+                <div class="columns with-padding">
+                  <div class="six-columns twelve-columns-mobile">
+                    <fieldset>
+                      <legend class="small-margin-bottom">
+                        <span class="icon-chat icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_recent_messages'); ?></strong></span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                  <div class="six-columns twelve-columns-mobile">
+                    <div class="columns">
+                      <div class="twelve-columns">
+                        <fieldset>
+                          <legend class="small-margin-bottom">
+                            <span class="icon-read icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_order_totals'); ?></strong></span>
+                          </legend>
+                        </fieldset>
+                      </div>
+                      <div class="twelve-columns">
+                        <fieldset>
+                          <legend class="small-margin-bottom">
+                            <span class="icon-read icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_last_payment'); ?></strong></span>
+                          </legend>
+                        </fieldset>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

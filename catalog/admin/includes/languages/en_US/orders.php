@@ -59,6 +59,7 @@ orders_summary_shipping = Shipping
 orders_summary_products_ordered = Products Ordered
 orders_summary_recent_messages = Recent messages for this order
 orders_summary_order_totals = Order Totals
+orders_summary_last_payment = Last Payment
 
 reset_filter = Reset Filter
 

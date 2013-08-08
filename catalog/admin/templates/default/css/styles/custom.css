@@ -818,6 +818,7 @@ select.error { border: 2px solid red !important; }
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 30px -15px -15px -15px; }
   #category_tabs { margin: 30px -15px -15px -15px; }
+  #order_tabs { margin: 30px -15px -15px -15px; }
   #languageTabs { margin: 0 0 0 9px; }
   #breadCrumbContainer { top: 50px; left: 21px; }
   .dataColThumb  > div { margin-left:15px !important; } 
@@ -886,6 +887,7 @@ select.error { border: 2px solid red !important; }
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 30px -15px -15px -15px; }
   #category_tabs { margin: 30px -15px -15px -15px; }
+  #order_tabs { margin: 30px -15px -15px -15px; }
   #languageTabs { margin: 0 0 0 5px; }
   #breadCrumbContainer { top: 50px; left: 21px; }
   #storeFilterContainer { margin-left: 14px !important; }
@@ -904,6 +906,7 @@ select.error { border: 2px solid red !important; }
 @media screen and (max-width: 319px) {
   #dataTable_wrapper { margin: 30px -15px -15px -15px; }
   #category_tabs { margin: 30px -15px -15px -15px; }
+  #order_tabs { margin: 30px -15px -15px -15px; }
   #languageTabs { margin: 0 0 0 5px; }
   #breadCrumbContainer { top: 50px; left: 21px; }
 }
