@@ -1,5 +1,5 @@
 <?php
-  /*
+/**
   $Id: password_success.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -13,7 +13,7 @@
 */
 ?>
 <div id="container" style="position:absolute; top:35%;">
-  <hgroup id="login-title" class="mid-margin-bottom">
+  <hgroup id="login-title" class="margin-bottom">
     <h1 class="login-title-image no-margin-bottom"><?php echo STORE_NAME; ?></h1>
   </hgroup>
   <div id="form-wrapper">

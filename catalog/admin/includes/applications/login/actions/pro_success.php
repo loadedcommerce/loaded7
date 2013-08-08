@@ -21,7 +21,7 @@ class lC_Application_Login_Actions_pro_success extends lC_Application_Login {
   protected $_page_contents = 'pro_success.php'; 
   
   public function __construct() {
-    global $lC_Database, $lC_Language, $lC_MessageStack, $rInfo;
+    global $lC_Database, $lC_Language, $lC_MessageStack, $lC_Api, $rInfo;
 
     parent::__construct();
     
@@ -30,6 +30,5 @@ class lC_Application_Login_Actions_pro_success extends lC_Application_Login {
       $rInfo = new lC_ObjectInfo($_POST);
     }    
   }
-  
 }
 ?>

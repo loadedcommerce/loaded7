@@ -40,7 +40,9 @@ CREATE TABLE lc_administrators (
   first_name varchar(64) NOT NULL DEFAULT '',
   last_name varchar(64) NOT NULL DEFAULT '',
   image varchar(255) NOT NULL DEFAULT '',
-  access_group_id int NOT NULL DEFAULT '0',
+  access_group_id int(11) NOT NULL DEFAULT '0',
+  verify_key varchar(64) NOT NULL DEFAULT '',
+  language_id int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 

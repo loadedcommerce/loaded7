@@ -50,16 +50,18 @@ class lC_Login_Admin {
     $lC_Language->loadIniFile('login.php');
     
     // check for email
-    $Qadmin = $lC_Database->query('select * from :table_administrators where user_name = :user_name');
+    $Qadmin = $lC_Database->query('select * from :table_administrators where user_name = :user_name limit 1');
     $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
     $Qadmin->bindValue(':user_name', $email);
     $Qadmin->execute();
+
     $admin = $Qadmin->toArray();
+
     // if email exists we continue
     if ( $Qadmin->numberOfRows() > 0) {
       $lC_Database->startTransaction();
       
-      $verify_key = Utility::generateUID();
+      $verify_key = utility::generateUID();
     
       // set the key to be verified from the resulting email
       $Qsetkey = $lC_Database->query('update :table_administrators set verify_key = :verify_key where user_name = :user_name');

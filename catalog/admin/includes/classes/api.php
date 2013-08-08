@@ -71,7 +71,7 @@ class lC_Api {
     
     $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/register/install/', 'method' => 'post', 'parameters' => $registerArr));
     $newInstallationID = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
-                          
+
     if ( lC_Server_info_Admin::updateInstallID($newInstallationID) ) {
       return utility::arr2xml(array('error' => FALSE, 'installationID' => $newInstallationID));
     } else {    

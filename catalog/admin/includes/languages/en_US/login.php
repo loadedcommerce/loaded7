@@ -11,7 +11,7 @@
 
 heading_title = Login
 heading_change_password = Change Password
-heading_lost_password = Lost Password Key
+heading_lost_password = Lost Password Reset
 heading_change_password = Change Password
 heading_product_registration = Product Registration
 
@@ -33,7 +33,7 @@ placeholder_password_email = Email:
 placeholder_pro_serial = Enter Pro Product Serial
 placeholder_enter_password = Enter Password
 placeholder_confirm_password = Confirm Password
-placeholder_manual_key_entry = Manual Key Entry
+placeholder_manual_key_entry = Lost Password Key
 
 introduction = Use a valid email and password to gain access to the administration console.
 
@@ -69,8 +69,8 @@ text_domain = Domain
 text_serial = Serial
 text_adult_content = Adult Content
 text_lost_password_instructions = We have sent an email with instructions on how to change your admin password. Please allow a few minutes for it to arrive. If you do not see it shortly please check your spam or junk folders.
-text_lost_password_key_instructions_1 = An Email has been sent to:<br />
-text_lost_password_key_instructions_2 = Click the link in the email or manually enter the code in the field above to change your password.
+text_lost_password_key_instructions_1 = An E-mail has been sent to:
+text_lost_password_key_instructions_2 = Click the link in the E-mail or manually copy/paste the code in the field above to reset your password.
 text_enter_key = Please enter your confirmation key
 text_email_missing = There has been an error. Please try again.
 text_lost_password_no_user = We could not find any admin user with that email. Please re-enter your admin email and try again.
