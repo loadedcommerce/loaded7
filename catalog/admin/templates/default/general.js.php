@@ -39,7 +39,7 @@ $(document).ready(function() {
   } else if (module == 'specials' || module == 'manufacturers' || module == 'reviews' || (module.indexOf('product') != -1) ) {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-products").addClass('current');
-  } else if (module == 'banner_manager' || module == 'newsletters' || module == 'coupons') {
+  } else if (module == 'banner_manager' || module == 'newsletters' || module == 'coupons' || module == 'branding_manager') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-marketing").addClass('current');      
   } else if (module == 'statistics' || module == 'whos_online') {

@@ -711,8 +711,8 @@ select.error { border: 2px solid red !important; }
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
   #menu header .headerInner {
-    padding: 13px 0 10px 0;
-    margin: -10px 0;
+    margin: -13px 0;
+    padding: 11px 0 13px;
     -webkit-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
     -moz-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
     box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
@@ -727,8 +727,8 @@ select.error { border: 2px solid red !important; }
 @media screen and (min-width: 992px) and (max-width: 1199px) {
   .hide-below-992 { display: none !important; }
   #menu header .headerInner {
-    padding: 13px 0 10px 0;
-    margin: -10px 0;
+    margin: -13px 0;
+    padding: 11px 0 13px;
     -webkit-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
     -moz-box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
     box-shadow: 0 0 0 0 #272a2c inset, 0 0 0 0 #272a2c inset, -2px 0 0 -1px #272a2c inset;
