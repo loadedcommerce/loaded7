@@ -12,3 +12,16 @@
   @license    http://loadedcommerce.com/license.html
 */
 ?>
+<script>
+$(document).ready(function() {
+  $(window).resize(function() {
+    if ($(window).width() < 1380) {
+      $("#branding_manager_tabs").removeClass("side-tabs");
+      $("#branding_manager_tabs").addClass("standard-tabs");
+    } if ($(window).width() >= 1380) {
+      $("#branding_manager_tabs").removeClass("standard-tabs");
+      $("#branding_manager_tabs").addClass("side-tabs");
+    }
+  });
+});
+</script>

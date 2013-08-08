@@ -708,6 +708,15 @@ input.error { border: 2px solid red !important; }
 textarea.error { border: 2px solid red !important; }
 select.error { border: 2px solid red !important; }
 
+.input.two-thirds-width {
+  -moz-box-sizing: border-box;
+  display: block;
+  margin: 0;
+  width: 66%;
+}
+
+.branding-extra-line { margin-left: 90px; }
+
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
   #menu header .headerInner {
@@ -788,6 +797,7 @@ select.error { border: 2px solid red !important; }
   #section_pricing_content { margin: -15px; }
   #section_shipping_content { margin: -15px; }
   #section_relationships_content { margin: -15px; }
+  #section_branding_content { margin: -15px; }
   .description-content { padding: 0; }
   .description-content fieldset { padding: 6px; }
   .description-content fieldset input { width: 93% !important; }
@@ -800,11 +810,19 @@ select.error { border: 2px solid red !important; }
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 30px -15px -15px -15px; }
   #category_tabs { margin: 30px -15px -15px -15px; }
+  #branding_manager_tabs { margin: 30px -15px -15px -15px; }
   #languageTabs { margin: 0 0 0 9px; }
   #breadCrumbContainer { top: 50px; left: 21px; }
   .dataColThumb  > div { margin-left:15px !important; } 
   .icon-search { margin-left:4px !important; }  
   .hide-on-mobile { display:none; }
+  .input.two-thirds-width {
+    -moz-box-sizing: border-box;
+    display: block;
+    margin: 0;
+    width: 100%;
+  }
+  .branding-extra-line { margin-left: 10px; }
 }  
   
 @media screen and (max-width: 479px) {
@@ -857,6 +875,7 @@ select.error { border: 2px solid red !important; }
   #section_pricing_content { margin: -15px; }
   #section_shipping_content { margin: -15px; }
   #section_relationships_content { margin: -15px; }
+  #section_branding_content { margin: -15px; }
   .description-content { padding: 0; }
   .description-content fieldset { padding: 6px; }
   .description-content fieldset input { width: 93% !important; }
@@ -869,6 +888,7 @@ select.error { border: 2px solid red !important; }
   .imagesBackNav { display: block; }
   #dataTable_wrapper { margin: 30px -15px -15px -15px; }
   #category_tabs { margin: 30px -15px -15px -15px; }
+  #branding_manager_tabs { margin: 30px -15px -15px -15px; }
   #languageTabs { margin: 0 0 0 5px; }
   #breadCrumbContainer { top: 50px; left: 21px; }
   
@@ -883,11 +903,26 @@ select.error { border: 2px solid red !important; }
   #coupons_content { margin: 0 -15px 15px !important; }
   #coupons_limits { margin: 0 -15px 15px !important; }
   #coupons_restrictions { margin: 0 -15px 0 !important; }
+  .input.two-thirds-width {
+    -moz-box-sizing: border-box;
+    display: block;
+    margin: 0;
+    width: 100%;
+  }
+  .branding-extra-line { margin-left: 0px; }
 }  
   
 @media screen and (max-width: 319px) {
   #dataTable_wrapper { margin: 30px -15px -15px -15px; }
   #category_tabs { margin: 30px -15px -15px -15px; }
+  #branding_manager_tabs { margin: 30px -15px -15px -15px; }
   #languageTabs { margin: 0 0 0 5px; }
   #breadCrumbContainer { top: 50px; left: 21px; }
+  .input.two-thirds-width {
+    -moz-box-sizing: border-box;
+    display: block;
+    margin: 0;
+    width: 100%;
+  }
+  .branding-extra-line { margin-left: 0px; }
 }
