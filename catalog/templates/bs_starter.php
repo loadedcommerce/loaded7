@@ -33,10 +33,10 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700italic,700,500&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     
     <!-- Template CSS -->
-    <link rel="stylesheet" href="templates/bs_default/css/font-awesome.min.css">
-    <link rel="stylesheet" href="templates/bs_default/css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="templates/bs_starter/css/font-awesome.min.css">
+    <link rel="stylesheet" href="templates/bs_starter/css/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" type="text/css" href="ext/jquery/thickbox/thickbox.css" />
-    <link rel="stylesheet" href="templates/bs_default/css/loadmask.css?v=1">     
+    <link rel="stylesheet" href="templates/bs_starter/css/loadmask.css?v=1">     
 
     <!--[if lt IE 7]><link href="assets/css/font-awesome-ie7.min.css" rel="stylesheet"><![endif]-->
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -271,7 +271,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="ext/jquery/jquery.loadmask.js"></script>
     <script src="ext/jquery/jquery.activity-indicator-1.0.0.min.js"></script>
     <!-- Template JS -->
-    <script src="templates/bs_default/javascript/placeholder.js" ></script>
+    <script src="templates/bs_starter/javascript/placeholder.js" ></script>
     
     <!-- main js.php for all site pages -->
     <?php $lC_Template->addJavascriptPhpFilename('templates/' . $lC_Template->getCode() . '/javascript/general.js.php'); ?>
