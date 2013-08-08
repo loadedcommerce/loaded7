@@ -16,6 +16,16 @@ $groupsSelectArr = array();
 foreach ($groupsArr as $jey => $value) {
   $groupsSelectArr[] = array('id' => $value['id'], 'text' => $value['name']);
 }
+
+include_once($lC_Vqmod->modCheck('includes/applications/languages/classes/languages.php'));
+
+$languagesArr = lC_Languages_Admin::getIdNameArray();
+$languagesSelectArr = array();
+foreach ($languagesArr as $key => $value) {
+  $languagesSelectArr[] = array('id' => $value['languages_id'], 'text' => $value['name']);
+}
+$data = lC_Administrators_Admin::getData($_SESSION['admin']['id']);
+$admin_language_default = $data['language_id'];
 ?>
 <style>
 #newAdmin { padding-bottom:20px; }
@@ -48,6 +58,12 @@ function newAdmin() {
                '        <label for="user_password" class="label"><?php echo $lC_Language->get('field_password'); ?></label>'+
                '        <?php echo lc_draw_password_field('user_password', 'class="input full-width"'); ?>'+
                '      </p>'+
+
+               '      <p class="button-height inline-label">'+
+               '        <label for="language_id" class="label"><?php echo $lC_Language->get('field_admin_language'); ?></label>'+
+               '        <?php  echo lc_draw_pull_down_menu('language_id', $languagesSelectArr, $admin_language_default, 'id="edit-language_id" class="select" style="min-width:200px;"'); ?>'+
+               '      </p>'+
+
                '      <p class="button-height inline-label" id="pImage">'+
                '        <label for="profile_image" class="label"><?php echo $lC_Language->get('profile_image'); ?></label>'+
                '        <img alt="<?php echo $lC_Language->get('profile_image'); ?>" />'+

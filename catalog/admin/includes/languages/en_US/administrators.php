@@ -35,6 +35,7 @@ field_quick_set = Quick Set:
 field_first_name = First Name:
 field_last_name = Last Name:
 field_access_group = Access Group:
+field_admin_language = Admin Language:
 
 button_add_group = Add Group
 button_add_member = Add Member

@@ -407,7 +407,7 @@ class lC_Languages_Admin {
     $Qdefs->freeResult();
 
     return $result;
-  }
+  } 
  /*
   * Insert a language definition
   *
@@ -452,7 +452,7 @@ class lC_Languages_Admin {
     $lC_Database->rollbackTransaction();
 
     return false;
-  }
+  } 
  /*
   * Update a language definition
   *
@@ -580,6 +580,7 @@ class lC_Languages_Admin {
     }
 
     if ( $error === false ) {
+      if (isset($data['default']) && $data['default'] == 'on') $default = true;
       if ( $default === true ) {
         $Qupdate = $lC_Database->query('update :table_configuration set configuration_value = :configuration_value where configuration_key = :configuration_key');
         $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
@@ -1298,6 +1299,50 @@ class lC_Languages_Admin {
     }
 
     return false;
+  }  
+ /*
+  * Returns the languages id/name array
+  *
+  * @access public
+  * @return array
+  */
+  public static function getIdNameArray() { 
+    global $lC_Database;
+    
+    $Qlanguages = $lC_Database->query('select languages_id, name from :table_languages order by sort_order, name');
+    $Qlanguages->bindTable(':table_languages', TABLE_LANGUAGES);
+    $Qlanguages->execute();
+
+    while ( $Qlanguages->next() ) {
+      $result[] = $Qlanguages->toArray();
+    }
+    
+    $Qlanguages->freeResult();
+    
+    return $result;
+  }
+ /*
+  * Returns the languages id from code given
+  *
+  * @access public
+  * @return array
+  */
+  public static function getIdByCode($code = null) {
+    global $lC_Database;
+    
+    $QlanguageId = $lC_Database->query('select languages_id from :table_languages where code = :code');
+    $QlanguageId->bindTable(':table_languages', TABLE_LANGUAGES);
+    $QlanguageId->bindValue(':code', $code);
+    $QlanguageId->execute();
+
+    
+    while ( $QlanguageId->next() ) {
+      $result = $QlanguageId->toArray();
+    }
+    
+    $QlanguageId->freeResult();
+  
+    return $result['languages_id'];
   }
 }
 ?>
