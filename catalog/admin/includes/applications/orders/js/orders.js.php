@@ -51,6 +51,9 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       }   
     }
     
+    $("#ordersLoader").hide();
+    $("#order_tabs").fadeIn("slow");
+    
     // on screen resize get the new menu width and apply it for click functions
     $(window).resize(function() {
       // if window width drops below 1280px change orders edit tabs from side to top

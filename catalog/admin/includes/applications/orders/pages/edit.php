@@ -24,7 +24,8 @@
   </hgroup>
   <div class="with-padding-no-top">
     <form name="order" id="order" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('orders_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
-      <div id="order_tabs" class="side-tabs">
+      <div class="align-center"><span id="ordersLoader" class="loader huge refreshing on-dark with-padding large-margin-top"></span></div>
+      <div id="order_tabs" class="side-tabs" style="display:none;">
         <ul class="tabs">
           <li class="active"><?php echo lc_link_object('#section_orders_summary', $lC_Language->get('section_orders_summary')); ?></li>
           <li><?php echo lc_link_object('#section_orders_products', $lC_Language->get('section_orders_products')); ?></li>
@@ -34,7 +35,7 @@
           <li><?php echo lc_link_object('#section_orders_fraud', $lC_Language->get('section_orders_fraud')); ?></li>
           <li><?php echo lc_link_object('#section_orders_payments', $lC_Language->get('section_orders_payments')); ?></li>
         </ul>
-        <div class="clearfix tabs-content">
+        <div class="clearfix tabs-content" id="orders_sections">
           <div id="section_orders_summary">
             <div class="columns with-padding">
               <div class="new-row-mobile six-columns twelve-columns-mobile">Tab Content Left</div>
