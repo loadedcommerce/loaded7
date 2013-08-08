@@ -277,7 +277,7 @@ ul.breadcrumb li img { }
 .full_page h1{ font-size:24px; color:#312e2b; text-transform:uppercase; padding:22px 0px;}
 .full_page h5{ font-size:20px; color:#312e2b; padding:10px; }
 .full_page h4{ font-size:17px; color:#312e2b; padding:20px 0px; font-weight:bold;}
-.action_buttonbar{ background: none repeat scroll 0 0 #F9F8F6; border: 1px solid #EBE2D9; clear: both; padding: 10px; height:32px; margin-bottom:20px; width: 98.5%;}
+.action_buttonbar{ border: 1px solid #EBE2D9; clear: both; padding: 10px; height:32px; margin-bottom:20px; width: 98.5%;}
 .action_buttonbar button{ color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#544F4B; border:0px; line-height:100%; cursor:pointer;}
 .action_buttonbar button.checkout{ float:right; padding-right:28px; background:url(../images/arrow.png) right -20px no-repeat;}
 
