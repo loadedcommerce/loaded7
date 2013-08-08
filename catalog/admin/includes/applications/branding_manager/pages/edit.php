@@ -22,7 +22,7 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
 </style>
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
-  <hgroup id="main-title" class="thin large-margin-bottom">
+  <hgroup id="main-title" class="thin">
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   </hgroup>
   <div class="with-padding">
