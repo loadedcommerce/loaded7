@@ -1,15 +1,12 @@
 <?php
-/**  
-*  $Id: product_listing.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: product_listing.php v1.0 2013-08-08 datazen $
 */                          
 ?>
 <!--content/index/product_listing.php start-->
@@ -23,15 +20,15 @@ button.price_add {
     <h1 class="categories_h1"><?php echo $lC_Template->getPageTitle(); ?></h1> 
       <div id="categories_description">
       <?php 
-        if (lC_Default::getCategoryDescription() != '') {
-          echo '<div id="categories_description_inner">' . lC_Default::getCategoryDescription() . '</div>'; 
+        if (lC_Bs_starter::getCategoryDescription() != '') {
+          echo '<div id="categories_description_inner">' . lC_Bs_starter::getCategoryDescription() . '</div>'; 
         }
       ?>
       </div>
       <div class="products_list products_slider">
       <?php 
-      if (PRODUCT_LIST_FILTER == '1') echo lC_Default::getManufacturerFilter();
-      $Qlisting = lC_Default::getProductsListingSql();
+      if (PRODUCT_LIST_FILTER == '1') echo lC_Bs_starter::getManufacturerFilter();
+      $Qlisting = lC_Bs_starter::getProductsListingSql();
       if (file_exists(DIR_FS_TEMPLATE . 'modules/product_listing.php')) {
         require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/product_listing.php'));
       } else {

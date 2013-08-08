@@ -1,15 +1,12 @@
 <?php
-/**  
-*  $Id: footer.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: footer.php v1.0 2013-08-08 datazen $
 */
 ?>
 <!--footer.php start-->
@@ -32,7 +29,7 @@
     <ul class="footer_links">
       <li><span>New Arrivals</span>
         <ul>
-          <?php echo lC_Default::newArrivalsListing(); ?>
+          <?php echo lC_Bs_starter::newArrivalsListing(); ?>
         </ul>
       </li>
       <li class="seperator"><span>Brands we sell</span>

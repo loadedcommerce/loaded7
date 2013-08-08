@@ -1,16 +1,13 @@
 <?php
-/**  
-  $Id: header.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     Loaded Commerce Team
-  @copyright  (c) 2013 Loaded Commerce Team
-  @license    http://loadedcommerce.com/license.html
-*/
+/**
+  @package    catalog::templates
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: header.php v1.0 2013-08-08 datazen $
+*/ 
 ?>
 <!--header.php start-->
 <div class="header-container">
@@ -39,7 +36,7 @@
       <ul class="table_view cells">
         <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL'); ?>">Home</a></li>
         <?php
-        $topNav = lC_Default::getTopCategories();
+        $topNav = lC_Bs_starter::getTopCategories();
         foreach ($topNav as $menuItem) {
           if ($menuItem['custom_url'] != '') {
             echo '<li><a href="' . lc_href_link($menuItem['custom_url'], '', 'NONSSL') . '">' . $menuItem['name'] . '</a></li>';
@@ -126,7 +123,7 @@
     <ul id="primaryNav" class="primary_nav">
       <li><a id="navHome" href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_home'); ?></a></li>
       <?php
-        $topNav = lC_Default::getTopCategories();
+        $topNav = lC_Bs_starter::getTopCategories();
         foreach ($topNav as $menuItem) {
           if ($menuItem['custom_url'] != '') {
             if ($menuItem['mode'] == 'override') {

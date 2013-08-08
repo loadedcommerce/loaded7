@@ -1,22 +1,17 @@
 <?php
-/*
-  $Id: rpc.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
- 
-  @method The lC_Default_rpc class is for AJAX remote program control
+/**
+  @package    catalog::templates::classes
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: rpc.php v1.0 2013-08-08 datazen $
 */
 require_once($lC_Vqmod->modCheck('templates/default/classes/default.php'));
 require_once($lC_Vqmod->modCheck('includes/classes/coupons.php'));
 
-class lC_Default_rpc {
+class lC_Bs_starter_rpc {
  /*
   * Returns the live search results
   *
@@ -25,7 +20,7 @@ class lC_Default_rpc {
   * @return json
   */
   public static function search() {
-    $result = lC_Default::find($_GET['q']);
+    $result = lC_Bs_starter::find($_GET['q']);
 
     echo $result;
   }
@@ -38,7 +33,7 @@ class lC_Default_rpc {
   */
   public static function deleteItem() {
     $result = array();
-    $result = lC_Default::removeItem($_GET['item']);
+    $result = lC_Bs_starter::removeItem($_GET['item']);
     if (is_array($result)) $result['rpcStatus'] = '1';
     
     echo json_encode($result);
@@ -51,7 +46,7 @@ class lC_Default_rpc {
   */
   public static function getZonesDropdown() {
     $result = array();
-    $result = lC_Default::getZonesDropdownHtml($_GET['country'], $_GET['zone']);
+    $result = lC_Bs_starter::getZonesDropdownHtml($_GET['country'], $_GET['zone']);
     if (is_array($result)) $result['rpcStatus'] = '1';
     
     echo json_encode($result);
@@ -64,7 +59,7 @@ class lC_Default_rpc {
   */
   public static function setMediaType() {
     $result = array();
-    if (lC_Default::setMediaType($_GET['type'], $_GET['size'])) {
+    if (lC_Bs_starter::setMediaType($_GET['type'], $_GET['size'])) {
       $result['rpcStatus'] = '1';
     }
     

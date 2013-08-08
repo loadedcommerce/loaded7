@@ -1,15 +1,12 @@
 <?php
-/**  
-*  $Id: search.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: search.php v1.0 2013-08-08 datazen $
 */
 if ($lC_MessageStack->size('search') > 0) {
   echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('search', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
@@ -54,9 +51,9 @@ if ($lC_MessageStack->size('search') > 0) {
         <div class="short-code-column one-half column-last">
           <div class="advancedSearchFormRight">
             <ol>
-              <li><?php echo lc_draw_pull_down_menu('category', lC_Default::getCategoriesDropdownArray()); ?></li>
+              <li><?php echo lc_draw_pull_down_menu('category', lC_Bs_starter::getCategoriesDropdownArray()); ?></li>
               <li><?php echo lc_draw_checkbox_field('recursive'); ?></li>
-              <li><?php echo lc_draw_pull_down_menu('manufacturer', lC_Default::getManufacturerDropdownArray()); ?></li>
+              <li><?php echo lc_draw_pull_down_menu('manufacturer', lC_Bs_starter::getManufacturerDropdownArray()); ?></li>
               <li><?php echo lc_draw_input_field('pfrom'); ?></li>
               <li><?php echo lc_draw_input_field('pto'); ?></li>
               <li><?php echo lc_draw_date_pull_down_menu('datefrom', null, false, null, null, @date('Y') - $lC_Search->getMinYear(), 0); ?></li>

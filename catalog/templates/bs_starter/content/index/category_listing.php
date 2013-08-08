@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: category_listing.php v1.0 2013-01-01 datazen $ 
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: category_listing.php v1.0 2013-08-08 datazen $
 */
 ?>
 <!--content/index/category_listing.php start-->
@@ -18,12 +15,12 @@
     <div class="short-code-column">
       <h1 class="categories_h1"><?php echo $lC_Template->getPageTitle(); ?></h1>
       <?php 
-        if (lC_Default::getCategoryDescription() != '') {
-          echo lC_Default::getCategoryDescription(); 
+        if (lC_Bs_starter::getCategoryDescription() != '') {
+          echo lC_Bs_starter::getCategoryDescription(); 
         }
       ?>
       <table border="0" width="100%" cellspacing="0" cellpadding="2" class="categories_listing">
-        <tr><?php echo lC_Default::getCategoryListing(); ?></tr>
+        <tr><?php echo lC_Bs_starter::getCategoryListing(); ?></tr>
       </table>
     </div>
     <div style="clear:both;">&nbsp;</div>
