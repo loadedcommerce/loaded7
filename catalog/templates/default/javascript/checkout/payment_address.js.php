@@ -39,8 +39,14 @@ function selectRowEffect(object, buttonSelect) {
 }
 
 $(document).ready(function() {    
- $('#payment_address_form').click(function(){
-   $('#checkoutPaymentAddressDetails').show('drop');
+ $("#payment_address_form").click(function(){
+   var newAddOpen = $("#checkoutPaymentAddressDetails").is(":visible");
+   if (!newAddOpen) {
+     $('#payment_address_form').html('<?php echo $lC_Language->get('hide_address_form'); ?>');
+   } else {
+     $('#payment_address_form').html('<?php echo $lC_Language->get('show_address_form'); ?>');
+   }
+   $('#checkoutPaymentAddressDetails').toggle('slideUp');
  });
 });
 
