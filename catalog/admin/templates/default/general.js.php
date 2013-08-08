@@ -22,7 +22,7 @@ $(document).ready(function() {
   var module = '<?php echo $lC_Template->getModule(); ?>';
   var countryID = '<?php echo $_GET['countries']; ?>'         
   if (loc == 'index.php' && noParams) {
-    // do nothing
+    $("#sc-dashboard").addClass('current');
   } else if (module == 'store') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $('#sc-' + module).addClass("current");
