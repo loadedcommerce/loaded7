@@ -21,10 +21,6 @@
       $this->_page_contents = 'edit.php'; 
 
       if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
-        echo '<pre>';
-        print_r($_POST);
-        echo '</pre>';
-        die();
         switch ( $_GET['action'] ) {
           case 'save':  
             $data = array(/*'image' => (isset($_POST['categories_image']) ? $_POST['categories_image'] : null),
@@ -43,6 +39,10 @@
                           'keyword' =>  $_POST['categories_keyword'],
                           'tags' =>  $_POST['categories_tags'] */);
                           
+           echo '<pre>';
+           print_r($_POST);
+           echo '</pre>';
+           die();
            /*
             * Save the order information
             *
