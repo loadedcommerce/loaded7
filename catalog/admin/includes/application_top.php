@@ -77,7 +77,9 @@ $Qcfg->setCache('configuration');
 $Qcfg->execute();
 
 while ($Qcfg->next()) {
-  define($Qcfg->value('cfgKey'), $Qcfg->value('cfgValue'));
+  if(!defined($Qcfg->value('cfgKey'))){    
+    define($Qcfg->value('cfgKey'), $Qcfg->value('cfgValue'));
+  }
 }
 
 $Qcfg->freeResult();
