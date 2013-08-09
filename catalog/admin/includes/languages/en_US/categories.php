@@ -49,11 +49,14 @@ info_bubble_categories_keyword = Category Permalink
 info_bubble_categories_tags = Category Meta Keywords
 info_bubble_categories_custom_url = Category Custom URL
 info_bubble_categories_parent = Category Parent
+info_bubble_categories_mode = Category Mode
 info_bubble_categories_visibility = Category Visibility
 info_bubble_categories_status = Category Status
 info_bubble_categories_page_type = Category Page Type 
 info_bubble_categories_content_file = Category Content File
 info_bubble_categories_product_class = Category Product Class
+info_bubble_categories_permalink = Category Permalink
+info_bubble_categories_access_levels = Category Access Levels
  
 introduction_new_category = Please fill in the following information for the new category.
 introduction_edit_category = Please make the necessary changes for this category.
