@@ -34,7 +34,7 @@ $(document).ready(function() {
   $("#breadCrumbContainer").jBreadCrumb();     
    
   //jCarousel
-  $('.first-and-second-carousel').jcarousel();
+//  $('.first-and-second-carousel').jcarousel();
   
   //mini cart slide toggle
   $(".minicart_link").toggle(
