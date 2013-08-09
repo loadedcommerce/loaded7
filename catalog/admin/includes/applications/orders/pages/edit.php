@@ -26,7 +26,7 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
     ?>
   </hgroup>
   <div class="with-padding-no-top">
-    <form name="order" id="order" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('orders_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
+    <form name="order" id="order" class="dataForm" action="<?php //echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('orders_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="order_quick_info">
         <div class="columns with-small-padding">
           <div class="four-columns twelve-columns-mobile"><h4>Order Number 6574389</h4></div>
@@ -57,7 +57,7 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
               <div class="new-row-mobile six-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
-                    <span class="icon-card icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_payment'); ?></strong></span>
+                    <span class="icon-credit-card icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_payment'); ?></strong></span>
                   </legend>
                 </fieldset>
               </div>
@@ -87,22 +87,122 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
               </div>
             </div>
             <div class="columns with-padding">
-              <div class="twelve-columns no-margin-bottom large-pull-top">
+              <div class="twelve-columns mid-margin-bottom large-pull-top">
                 <fieldset>
-                  <legend class="small-margin-bottom">
+                  <legend class="mid-margin-bottom">
                     <span class="icon-list icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_products_ordered'); ?></strong></span>
                   </legend>
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <thead class="bbottom-anthracite">
+                      <tr>
+                        <th align="left" class="orders-products-listing-th hide-below-480">SKU/Model</th>
+                        <th align="left" class="orders-products-listing-th">Product Name</th>
+                        <th align="center" class="orders-products-listing-th hide-below-480">Fullfillment</th>
+                        <th align="right" class="orders-products-listing-th hide-below-480 pad-right-10">Qty</th>
+                        <th align="right" class="orders-products-listing-th hide-below-480">Total</th>
+                        <th align="right" class="orders-products-listing-th show-below-480">Details</th>
+                      </tr>
+                    </thead>
+                    <tbody class="mid-margin-bottom">
+                    <?php
+                      $Qordersproducts = array(array('id' => '24',
+                                                     'model' => 'Floral001RL', 
+                                                     'name' => 'Floral Dress - Red - Large', 
+                                                     'stock' => 'In Stock', 
+                                                     'qty' => '2', 
+                                                     'total' => '250.00'),
+                                               array('id' => '25',
+                                                     'model' => 'Watch001', 
+                                                     'name' => 'Mens Watch', 
+                                                     'stock' => 'Shipped', 
+                                                     'qty' => '1', 
+                                                     'total' => '100.00'),
+                                               array('id' => '26',
+                                                     'model' => 'GC124GIFT', 
+                                                     'name' => 'Gift Certificate $125', 
+                                                     'stock' => '-', 
+                                                     'qty' => '1', 
+                                                     'total' => '125.00'),
+                                               array('id' => '27',
+                                                     'model' => 'Floral001GXL', 
+                                                     'name' => 'Floral Dress - Green - Large', 
+                                                     'stock' => 'Out of Stock', 
+                                                     'qty' => '1', 
+                                                     'total' => '125.00')); 
+                      foreach ($Qordersproducts as $products) {
+                      ?>
+                      <tr id="orderProductsRow_<?php echo $products['id']; ?>" class="bbottom-grey">
+                        <td align="left" class="orders-products-listing-td hide-below-480"><?php echo $products['model']; ?></td>
+                        <td align="left" class="orders-products-listing-td"><?php echo $products['name']; ?></td>
+                        <td align="center" class="orders-products-listing-td hide-below-480"><small class="tag red-bg"><?php echo $products['stock']; ?></small></td>
+                        <td align="right" class="orders-products-listing-td hide-below-480 pad-right-10"><?php echo $products['qty']; ?></td>
+                        <td align="right" class="orders-products-listing-td hide-below-480">$<?php echo $products['total']; ?></td>
+                        <td align="right" class="orders-products-listing-td show-below-480"><i title="Product Details" class="icon-info-round icon-blue mid-margin-right cursor-pointer" onclick="orderProductDetails(<?php echo $products['id']; ?>);"></li></td>
+                      </tr>
+                      <?php
+                        }
+                      ?>
+                      <tr>
+                        <td class="hide-below-480"></td>
+                        <td class="hide-below-480"></td>
+                        <td class="hide-below-480"></td>
+                        <td class="no-wrap pad-right-10 pad-top-10 bold" align="right">Product Sub Total</td>
+                        <td class="pad-top-10 bold" align="right">$600.00</td>
+                        <td class="show-below-480"></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </fieldset>
               </div>
             </div>
             <div class="columns">
               <div class="twelve-columns large-pull-top">
-                <div class="columns with-padding">
+                <div class="columns with-padding mid-margin-top">
                   <div class="six-columns twelve-columns-mobile">
                     <fieldset>
-                      <legend class="small-margin-bottom">
-                        <span class="icon-chat icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_recent_messages'); ?></strong></span>
+                      <legend class="margin-bottom">
+                        <span class="icon-chat icon-size2 icon-anthracite mid-margin-left"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_recent_messages'); ?></strong></span>
                       </legend>
+                      <div class="with-small-padding silver-bg">
+                        <div class="small-margin-top">
+                          <span class="float-right green-bg with-min-padding">Comment</span>
+                          <span class="icon-user icon-size2 icon-anthracite small-margin-left">
+                            <span>
+                              Sal Iozzia <small class="anthracite small-margin-left">2013/08/07</small>
+                            </span>
+                          </span>
+                        </div>
+                        <p class="edit-order-summary-block with-small-padding">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula est ut interdum fringilla. Curabitur lobortis libero ut sagittis fermentum. Donec eu tortor ut elit condimentum iaculis. Nulla semper diam ut mi volutpat pharetra.</p>
+                      </div>
+                      <div class="with-small-padding">
+                        <div class="small-margin-top">
+                          <span class="float-right orange-bg with-min-padding">Message</span>
+                          <span>
+                            <img src="images/prod-mini.png" alt="Comment Image" />
+                            <span class="small-margin-left">
+                              John Nickelback <small class="anthracite small-margin-left">2013/08/05</small>
+                            </span>
+                          </span>
+                        </div>
+                        <p class="edit-order-summary-block with-small-padding">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula est ut interdum fringilla. Curabitur lobortis libero ut sagittis fermentum. Donec eu tortor ut elit condimentum iaculis. Nulla semper diam ut mi volutpat pharetra.</p>
+                      </div>
+                      <div class="with-small-padding grey-bg">
+                        <div class="small-margin-top">
+                          <span class="float-right anthracite-bg with-min-padding">Note</span>
+                          <span>
+                            <img src="images/prod-mini.png" alt="Comment Image" />
+                            <span class="small-margin-left">
+                              Jane Quarterback <small class="anthracite small-margin-left">sent 2013/08/02</small>
+                            </span>
+                          </span>
+                        </div>
+                        <p class="edit-order-summary-block with-small-padding">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula est ut interdum fringilla. Curabitur lobortis libero ut sagittis fermentum. Donec eu tortor ut elit condimentum iaculis. Nulla semper diam ut mi volutpat pharetra.</p>
+                      </div>
+                      <div class="with-small-padding">
+                        <div class="small-margin-top">
+                          <i class="icon-mail"></i> <span class="small-margin-left">2 Additional Messages</span>
+                        </div>
+                      </div>
                     </fieldset>
                   </div>
                   <div class="six-columns twelve-columns-mobile">
@@ -110,14 +210,14 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
                       <div class="twelve-columns">
                         <fieldset>
                           <legend class="small-margin-bottom">
-                            <span class="icon-read icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_order_totals'); ?></strong></span>
+                            <span class="icon-credit-card icon-size2 icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_order_totals'); ?></strong></span>
                           </legend>
                         </fieldset>
                       </div>
                       <div class="twelve-columns">
                         <fieldset>
                           <legend class="small-margin-bottom">
-                            <span class="icon-read icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_last_payment'); ?></strong></span>
+                            <span class="icon-credit-card icon-size2 icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_last_payment'); ?></strong></span>
                           </legend>
                         </fieldset>
                       </div>

@@ -122,5 +122,21 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       }
     );
     return false;
+  }
+  
+  function orderProductDetails(id) {
+    $.modal({
+      title: 'Product Details',
+      content: '<p>This is the orders products detail modal window for ' + id + '.</p>'+
+               '<p>More</p>'+
+               '<p>More</p>'+
+               '<p>More</p>'+
+               '<p>More</p>'+
+               '<p>More</p>'+
+               '<p>More</p>'+
+               '<p>More</p>'+
+               '<p>More</p>'+
+               '<p>More</p>'
+    });
   }  
 </script>
