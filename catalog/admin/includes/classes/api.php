@@ -35,6 +35,16 @@ class lC_Api {
   public function register($data) {
     return $this->_doRegister($data);
   }  
+  
+  /**
+  * Validate the serial
+  *  
+  * @access private      
+  * @return string
+  */  
+  public function validateSerial($data) {
+    return $this->_validateSerial($data);
+  }  
   /**
   * Register the new install with the LC API
   *  

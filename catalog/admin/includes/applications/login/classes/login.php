@@ -196,19 +196,22 @@ class lC_Login_Admin {
   * @access public
   * @return json
   */
-  public static function activatePro($serial, $domain) {
-    
-    $error = false;
+  public static function validateSerial($serial) {
     
     $result = array();
-    if ($error) {
-//      $result['rpcStatus'] = -1;  // invalid serial
- //     $result['rpcStatus'] = -2;  // serial not found
-      $result['rpcStatus'] = -3;  // expired serial
-    } else {
-      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
-    }
     
+    $validateArr = array('serial' => $serial,
+                         'storeName' => STORE_NAME,
+                         'storeEmail' => STORE_OWNER_EMAIL_ADDRESS,
+                         'storeWWW' => HTTP_SERVER . DIR_WS_HTTP_CATALOG);
+                         
+    $checksum = hash('sha256', json_encode($validateArr));
+    $validateArr['checksum'] = $checksum;
+    
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/check/serial/', 'method' => 'post', 'parameters' => $validateArr));  
+    
+    $result['rpcStatus'] = (preg_match("'<rpcStatus[^>]*?>(.*?)</rpcStatus>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;    
+
     return $result;
   }  
   

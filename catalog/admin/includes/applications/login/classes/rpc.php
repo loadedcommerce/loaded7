@@ -98,9 +98,9 @@ class lC_Login_Admin_rpc {
   * @access public
   * @return json
   */
-  public static function activatePro() {
+  public static function validateSerial() {
 
-    $result = lC_Login_Admin::activatePro($_GET['serial'], $_GET['domain']);
+    $result = lC_Login_Admin::validateSerial($_GET['activation_serial']);
 
     echo json_encode($result);
   }

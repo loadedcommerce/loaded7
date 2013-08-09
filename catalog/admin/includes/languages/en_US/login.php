@@ -47,8 +47,9 @@ ms_success_logged_out = Success: You have been successfully logged out of this s
 ms_error_login_invalid = Authentication failed! Please try again.
 ms_error_user_invalid = E-mail not found. Please try again.
 ms_error_key_invalid = Invalid Key. Please try again.
-ms_error_serial_invalid = Invalid Product Serial. Please try again.
-ms_error_password_change = There was an error. Please try again.
+
+ms_error_serial_invalid = Invalid Serial. Please try again.
+ms_error_password_change = An error occurred. Please try again.
 ms_error_blank_key = Key cannot be blank. Please try again.
 
 text_send_new_password_instructions = If you have lost your password, enter your e-mail below and you will receive reset instructions shortly:

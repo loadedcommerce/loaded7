@@ -216,6 +216,7 @@ $(document).ready(function() {
     }
   });  
   
+  
   /*
   * Register
   */
@@ -233,8 +234,6 @@ $(document).ready(function() {
       setTimeout(function(){ formWrapper.clearMessages() },3000);
       return false;
     } else {
-      // Remove previous messages
-      formWrapper.clearMessages();
       
       // Show progress
       displayLoading('<?php echo $lC_Language->get('ms_authenticating'); ?>');
@@ -245,16 +244,18 @@ $(document).ready(function() {
       var nvp = $("#form-activate-pro").serialize();
       var domain = '<?php echo str_replace('http://', '', HTTP_SERVER); ?>';
       
-      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=activatePro&domain=DOMAIN&NVP'); ?>'; 
-      $.getJSON(jsonLink.replace('DOMAIN', domain).replace('NVP', nvp),        
+      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateSerial&NVP'); ?>'; 
+      $.getJSON(jsonLink.replace('NVP', nvp),        
         function (data) {  
           if (data.rpcStatus != 1) { 
             if (data.rpcStatus == -2) { 
-              displayError('<?php echo $lC_Language->get('ms_error_serial_not_found'); ?>');   
+              displayError('<?php echo $lC_Language->get('text_error') . '(1) ' . $lC_Language->get('ms_error_serial_invalid'); ?>');   
             } else if (data.rpcStatus == -3) {
-              displayError('<?php echo $lC_Language->get('ms_error_serial_expired'); ?>');   
-            } else {
-              displayError('<?php echo $lC_Language->get('ms_error_serial_invalid'); ?>');   
+              displayError('<?php echo $lC_Language->get('text_error') . '(2) ' . $lC_Language->get('ms_error_serial_invalid'); ?>');   
+            } else if (data.rpcStatus == -4) {            
+              displayError('<?php echo $lC_Language->get('text_error') . '(3) ' . $lC_Language->get('ms_error_serial_invalid');?>');
+            } else {                                      
+              displayError('<?php echo $lC_Language->get('text_error') . '(4) ' . $lC_Language->get('ms_error_serial_invalid'); ?>');   
             }
             setTimeout(function(){ formWrapper.clearMessages() },3000);
             return false;
