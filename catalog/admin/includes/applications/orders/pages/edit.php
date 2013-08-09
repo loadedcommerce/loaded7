@@ -151,8 +151,8 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
               <div class="twelve-columns">
                 <div class="field-drop-tabs field-drop-tabs-no-left button-height black-inputs">
                   <div class="columns">
-                    <div class="six-columns twelve-columns-mobile new-row-mobile">Left</div>
-                    <div class="six-columns twelve-columns-mobile new-row-mobile ">Right</div>
+                    <div class="six-columns twelve-columns-mobile new-row-mobile">Left Side</div>
+                    <div class="six-columns twelve-columns-mobile new-row-mobile ">Right Side</div>
                   </div>
                 </div>
               </div>
