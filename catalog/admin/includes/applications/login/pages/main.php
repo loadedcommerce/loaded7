@@ -201,9 +201,9 @@ $(document).ready(function() {
   */
   $('#activation_serial').change(function(event) {
     var serial = $('#activation_serial').val();
-    var format = /[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/;
+    var format = /[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/;
     var found = serial.match(format);
-    if (!found || serial.length != 19) {
+    if (!found || serial.length != 24) {
       $('#activate-pro').addClass('disabled');
       $('#buy-pro').removeClass('disabled');
       displayError('<?php echo $lC_Language->get('ms_error_serial_invalid'); ?>');
