@@ -69,7 +69,8 @@ class lC_Login_Admin_rpc {
   * @return json
   */
   public static function lostPasswordConfirmKey() {
-    $result = array();
+    
+    $result = array('rpcStatus'=> 0);
     if (lC_Login_Admin::lostPasswordConfirmKey($_GET['key'], $_GET['email'])) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }

@@ -114,7 +114,7 @@ class lC_Login_Admin {
   */
   public static function lostPasswordConfirmKey($key, $email) {
     global $lC_Database;
-    
+       
     // check for key
     $Qkey = $lC_Database->query('select verify_key from :table_administrators where user_name = :user_name');
     $Qkey->bindTable(':table_administrators', TABLE_ADMINISTRATORS);

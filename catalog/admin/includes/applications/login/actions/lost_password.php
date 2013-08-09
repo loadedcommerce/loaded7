@@ -21,9 +21,14 @@ class lC_Application_Login_Actions_lost_password extends lC_Application_Login {
   protected $_page_contents = 'lost_password.php'; 
   
   public function __construct() {
-    global $lC_Database, $lC_Language, $lC_MessageStack;
+    global $lC_Database, $lC_Language, $lC_MessageStack, $rInfo;
     
     parent::__construct();
+     
+    if (isset($_POST['key']) && $_POST['key'] != NULL && isset($_POST['email']) && $_POST['email'] != NULL) {
+      $valid = lC_Login_Admin::lostPasswordConfirmKey($_POST['key'], $_POST['email']);
+      $rInfo = new lC_ObjectInfo($_POST);  
+    }    
   } 
 }
 ?>

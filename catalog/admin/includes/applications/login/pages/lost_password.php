@@ -11,12 +11,12 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-//$_SESSION['user_not_exists'] = null;
 ?>
 <div id="container" style="position:absolute; top:35%;">
   <hgroup id="login-title" class="mid-margin-bottom">
     <h1 class="login-title-image margin-bottom"><?php echo STORE_NAME; ?></h1>
   </hgroup>
+  <p id="error_message" class="message red-gradient align-center mid-margin-bottom" style="display: none;"><span id="error_text"></span><span class="block-arrow bottom"><span></span></span></p>                                                                                                                                                                                         
   <div id="form-wrapper">
     <div id="form-block" class="scratch-metal">
       <div id="form-viewport">
@@ -36,13 +36,13 @@
           <?php 
         } else { 
           ?>
-          <form id="form-lost-password" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=password_change'); ?>" class="input-wrapper blue-gradient glossy" method="post">
+          <form id="form-lost-password-key" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=password_change'); ?>" class="input-wrapper blue-gradient glossy" method="post">
             <h3 class="align-center mid-margin-bottom"><?php echo $lC_Language->get('heading_lost_password'); ?></h3>
             <ul class="inputs black-input large">
               <li>
                 <span class="icon-key mid-margin-right"></span>
                 <input type="text" name="key" id="key" value="<?php echo (isset($_GET['key']) && $_GET['key'] != '') ? $_GET['key'] : ''; ?>" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_manual_key_entry'); ?>" autocomplete="off">
-                <input type="hidden" name="email" id="email" value="<?php echo (isset($_SESSION['user_confirmed_email'])) ? $_SESSION['user_confirmed_email'] : $_GET['email']; ?>">
+                <input type="hidden" name="email" id="email" value="<?php echo (isset($_SESSION['user_confirmed_email'])) ? $_SESSION['user_confirmed_email'] : ((isset($rInfo)) ? $rInfo->get('password_email') : NULL); ?>">
               </li>
             </ul>
             <p class="small-margin-left no-margin-top mid-margin-bottom"><?php echo $lC_Language->get('text_lost_password_key_instructions_1'); ?></p>
@@ -62,3 +62,36 @@
   </div>
   <p class="anthracite mid-margin-top" align="center" style="line-height:1.5;">Copyright &copy; <?php echo @date("Y"); ?> <a class="anthracite" href="http://www.loaded7.com">Loaded Commerce</a><br /><?php echo $lC_Language->get('text_version') . ' ' . utility::getVersion(); ?></p>
 </div>
+<script>
+$('#form-lost-password-key').submit(function(event) {  
+  $("#form-lost-password-key").bind("submit", preventDefault(event));
+  var email = '<?php echo (isset($_SESSION['user_confirmed_email'])) ? urlencode($_SESSION['user_confirmed_email']) : ((isset($rInfo)) ? urlencode($rInfo->get('password_email')) : NULL); ?>';
+  var key = $('#key').val();
+  if (key == '') {
+    $('#error_message').slideDown('fast').delay(3000).slideUp('fast');
+    $('#error_text').html('<?php echo $lC_Language->get('ms_error_blank_key'); ?>');   
+    return false;
+  }
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=lostPasswordConfirmKey&key=KEY&email=EMAIL'); ?>'; 
+  $.getJSON(jsonLink.replace('KEY', key).replace('EMAIL', email),        
+    function (data) { 
+      if (data.rpcStatus != 1) {
+        $('#error_message').slideDown('fast').delay(3000).slideUp('fast');
+        $('#error_text').html('<?php echo $lC_Language->get('ms_error_key_invalid'); ?>');   
+        return false;
+      }
+    }              
+  );
+  $("#form-lost-password").unbind("submit", preventDefault(event)).submit();
+  return true;
+});
+
+/**
+* Function to prevent default action
+* @param object the event 
+*/      
+function preventDefault(e) {
+  e.preventDefault();
+}
+
+</script>

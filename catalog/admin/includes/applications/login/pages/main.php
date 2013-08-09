@@ -17,8 +17,8 @@
 </style>
 <div id="container" style="position:absolute; top:35%;">
   <div id="login-container" style="visibility:hidden;">
-    <hgroup id="login-title" class="margin-bottom">
-      <h1 class="login-title-image no-margin-bottom"><?php echo STORE_NAME; ?></h1>
+    <hgroup id="login-title">
+      <h1 class="login-title-image large-margin-bottom"><?php echo STORE_NAME; ?></h1>
     </hgroup>
     <div id="form-wrapper">
       <div id="form-block" class="scratch-metal">
@@ -115,9 +115,6 @@ $(document).ready(function() {
     var login = $.trim($('#user_name').val()),
     pass = $.trim($('#user_password').val());
 
-    // Remove previous messages
-    formWrapper.clearMessages();
-
     // Stop normal behavior
     event.preventDefault();
 
@@ -125,17 +122,14 @@ $(document).ready(function() {
     if (login.length === 0) {
       // Display message
       displayError('<?php echo $lC_Language->get('text_enter_email'); ?>');
+      setTimeout(function(){ formWrapper.clearMessages() },3000);
       return false;
     } else if (pass.length === 0) {
-      // Remove empty login message if displayed
-      formWrapper.clearMessages('<?php echo $lC_Language->get('text_enter_email'); ?>');
-
       // Display message
       displayError('<?php echo $lC_Language->get('text_enter_password'); ?>');
+      setTimeout(function(){ formWrapper.clearMessages() },3000);
       return false;
     } else {
-      // Remove previous messages
-      formWrapper.clearMessages();
 
       // Show progress 
       displayLoading('<?php echo $lC_Language->get('ms_authenticating'); ?>');    
@@ -152,6 +146,7 @@ $(document).ready(function() {
             return true;                  
           } 
           displayError('<?php echo $lC_Language->get('ms_error_login_invalid'); ?>');   
+          setTimeout(function(){ formWrapper.clearMessages() },3000);
           return false;
         }              
       );
@@ -165,9 +160,6 @@ $(document).ready(function() {
     // Values
     var email = $.trim($('#password_email').val());
     
-    // Remove previous messages
-    formWrapper.clearMessages();
-
     // Stop normal behavior
     event.preventDefault();
 
@@ -175,6 +167,7 @@ $(document).ready(function() {
     if (email.length === 0) {
       // Display message
       displayError('<?php echo $lC_Language->get('text_enter_email'); ?>');
+      setTimeout(function(){ formWrapper.clearMessages() },3000);
     } else {
       // Remove previous messages
       formWrapper.clearMessages();
@@ -186,8 +179,6 @@ $(document).ready(function() {
       $("#form-lost-password").bind("submit", preventDefault(event));
 
       var nvp = $("#form-lost-password").serialize();
-      
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=lostPasswordConfirmEmail&NVP'); ?>'; 
       $.getJSON(jsonLink.replace('NVP', nvp),        
         function (data) {  
@@ -196,10 +187,10 @@ $(document).ready(function() {
             return true;                  
           } 
           displayError('<?php echo $lC_Language->get('ms_error_user_invalid'); ?>');   
+          setTimeout(function(){ formWrapper.clearMessages() },3000);
           return false;
         }              
       );
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
   });
 
@@ -210,9 +201,6 @@ $(document).ready(function() {
     // Values
     var serial = $.trim($('#activation_serial').val());
 
-    // Remove previous messages
-    formWrapper.clearMessages();
-
     // Stop normal behavior
     event.preventDefault();
 
@@ -220,6 +208,7 @@ $(document).ready(function() {
     if (serial.length === 0) {
       // Display message
       displayError('<?php echo $lC_Language->get('text_enter_pro_serial'); ?>');
+      setTimeout(function(){ formWrapper.clearMessages() },3000);
       return false;
     } else {
       // Remove previous messages
@@ -245,6 +234,7 @@ $(document).ready(function() {
             } else {
               displayError('<?php echo $lC_Language->get('ms_error_serial_invalid'); ?>');   
             }
+            setTimeout(function(){ formWrapper.clearMessages() },3000);
             return false;
           }
           $("#form-activate-pro").unbind("submit", preventDefault(event)).submit();            

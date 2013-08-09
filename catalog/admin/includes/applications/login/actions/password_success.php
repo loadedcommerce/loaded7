@@ -24,7 +24,10 @@ class lC_Application_Login_Actions_password_success extends lC_Application_Login
     global $lC_Database, $lC_Language, $lC_MessageStack;
 
     parent::__construct();
+    
+//    if (isset($_POST['password']) && $_POST['password'] != NULL && isset($_POST['email']) && $_POST['email'] != NULL) {
+//      $updated = lC_Login_Admin::lostPasswordConfirmKey($_POST['password'], $_POST['email']);
+//    }    
   }
-  
 }
 ?>
