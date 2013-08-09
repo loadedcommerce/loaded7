@@ -50,12 +50,13 @@
             ?>
             <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
               <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
-              <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>"><button type="button" class="button glossy silver-gradient full-width" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button></a>
+              <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>"><button type="button" class="button glossy white-gradient full-width blue" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button></a>
               <p class="align-center mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('text_or'); ?></p>
               <ul class="inputs black-input large">
                 <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
               </ul>
-              <p class="full-width"><button type="submit" class="button glossy red-gradient full-width" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
+              <p class="full-width"><button type="submit" class="button glossy red-gradient full-width disabled" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
+              <a href="http://www.loadedcommerce.com/loaded-pre-order-p-395.html" target="_blank"><button type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button></a>
             </form>
             <?php
           }
@@ -67,6 +68,7 @@
   </div>
 </div>
 <script>
+
 $(document).ready(function() {
   /*
   * JS login effect
@@ -193,7 +195,27 @@ $(document).ready(function() {
       );
     }
   });
-
+  
+  /*
+  * Get Pro
+  */
+  $('#activation_serial').change(function(event) {
+    var serial = $('#activation_serial').val();
+    var format = /[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/;
+    var found = serial.match(format);
+    if (!found || serial.length != 19) {
+      $('#activate-pro').addClass('disabled');
+      $('#buy-pro').removeClass('disabled');
+      displayError('<?php echo $lC_Language->get('ms_error_serial_invalid'); ?>');
+      setTimeout(function(){ formWrapper.clearMessages() },3000);  
+      return false;
+    } else {
+      $('#buy-pro').addClass('disabled');
+      $('#activate-pro').removeClass('disabled');
+      return true;
+    }
+  });  
+  
   /*
   * Register
   */

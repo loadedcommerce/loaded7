@@ -157,7 +157,6 @@ class lC_Login_Admin {
     
     // successful password update, move on
     if ( !$lC_Database->isError() ) {
-      
       // get user info
       $Qadmin = $lC_Database->query('select * from :table_administrators where user_name = :user_name');
       $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
@@ -173,9 +172,10 @@ class lC_Login_Admin {
                                  'access' => lC_Access::getUserLevels($Qadmin->valueInt('access_group_id')));
                                  
       // remove key to stop further changes with this key
-      $Qkeyremove = $lC_Database->query('update :table_administrators set verify_key = null where user_name = :user_name');
+      $Qkeyremove = $lC_Database->query('update :table_administrators set verify_key = :verify_key where user_name = :user_name');
       $Qkeyremove->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
       $Qkeyremove->bindValue(':user_name', $email);
+      $Qkeyremove->bindValue(':verify_key', null);
       $Qkeyremove->execute();
       
       $lC_Database->commitTransaction();

@@ -17,6 +17,7 @@ heading_product_registration = Product Registration
 
 button_activate_free = Activate Free Features
 button_activate_pro = Activate Pro Features
+button_buy_pro = Get the Pro Version
 button_login = Login
 button_lost_password = Lost password
 button_register = Register
@@ -45,7 +46,8 @@ ms_updating_password = Updating password...
 ms_success_logged_out = Success: You have been successfully logged out of this system.
 ms_error_login_invalid = Authentication failed! Please try again.
 ms_error_user_invalid = E-mail not found. Please try again.
-ms_error_key_invalid = Key is invalid. Please try again.
+ms_error_key_invalid = Invalid Key. Please try again.
+ms_error_serial_invalid = Invalid Product Serial. Please try again.
 ms_error_password_change = There was an error. Please try again.
 ms_error_blank_key = Key cannot be blank. Please try again.
 

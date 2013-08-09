@@ -80,10 +80,10 @@ $('#form-lost-password-key').submit(function(event) {
         $('#error_text').html('<?php echo $lC_Language->get('ms_error_key_invalid'); ?>');   
         return false;
       }
+      $("#form-lost-password-key").unbind("submit", preventDefault(event)).submit();
+      return true;      
     }              
   );
-  $("#form-lost-password").unbind("submit", preventDefault(event)).submit();
-  return true;
 });
 
 /**
