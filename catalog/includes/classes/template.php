@@ -266,7 +266,7 @@ class lC_Template {
     if (isset($this->lC_Modules_Boxes) === false) {
       $this->lC_Modules_Boxes = new lC_Modules('boxes');
     }
-
+    
     return $this->lC_Modules_Boxes->getGroup($group);
   }
   /**
@@ -279,7 +279,7 @@ class lC_Template {
     if (isset($this->lC_Modules_Content) === false) {
       $this->lC_Modules_Content = new lC_Modules('content');
     }
-
+    
     return $this->lC_Modules_Content->getGroup($group);
   }
   /**

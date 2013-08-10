@@ -71,6 +71,24 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <div class="wrapper">
     
       <?php
+      // set the format; 1, 2, or 3 columns
+      $left = $lC_Template->getBoxModules('left');
+      $right = $lC_Template->getBoxModules('right');
+      
+      if (!empty($left) && !empty($right)) {
+        // 3 cols
+        $box_class = 'span3';
+        $content_class = 'span6';        
+      } else if (!empty($left) && empty($right)) {
+        // 2cols left
+        $box_class = 'span3';
+        $content_class = 'span9';        
+      } else if (empty($left) && !empty($right)) {
+        $box_class = 'span3';
+        $content_class = 'span9';
+      }
+      
+      
       
       //moved here to support mobile browse catalog button
       $content_left = '';
@@ -102,137 +120,113 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         }
       }                
       ?>
-      <div class="section_container">
-        <section>
-          <div class="main_content"> 
-            <!--Left Side Nav Starts-->
+      <div class="container">
+        <div class="row-fluid"> 
+
+          <!--Left Side Nav Starts-->
+          <?php
+          if (!empty($content_left)) {
+            echo '<div id="left-column" class="' . $box_class . '">' . $content_left . '</div>'; 
+          }             
+          ?>
+          <!--Left Side Nav Ends--> 
+            
+             
+          <!--Main Content Starts-->  
+          <div class="<?php echo $content_class; ?>">
             <?php
-            if (!empty($content_left)) {
-              echo '<div id="left_side_nav" class="sideNavBox colLeft">';
-              echo $content_left;     
-              echo '</div>'; 
-            }             
-            ?>
-            <!--Left Side Nav Ends-->  
-            <!--Main Content Starts-->  
-            <div class="colMid">
-              <?php
-                if ($lC_MessageStack->size('header') > 0) {
-                  echo '<!--Message Stack Header Starts-->';
-                  echo $lC_MessageStack->get('header');
-                  echo '<!--Message Stack Header Ends-->';
+              if ($lC_MessageStack->size('header') > 0) {
+                echo '<!--Message Stack Header Starts-->';
+                echo $lC_MessageStack->get('header');
+                echo '<!--Message Stack Header Ends-->';
+              }
+              if ($lC_Template->hasPageContentModules()) {
+                foreach ($lC_Services->getCallBeforePageContent() as $service) {
+                  $$service[0]->$service[1]();
                 }
-                if ($lC_Template->hasPageContentModules()) {
-                  foreach ($lC_Services->getCallBeforePageContent() as $service) {
-                    $$service[0]->$service[1]();
-                  }
-                  foreach ($lC_Template->getContentModules('before') as $box) {
-                    $lC_Box = new $box();
-                    $lC_Box->initialize();
-                    if ($lC_Box->hasContent()) {
-                      if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+                foreach ($lC_Template->getContentModules('before') as $box) {
+                  $lC_Box = new $box();
+                  $lC_Box->initialize();
+                  if ($lC_Box->hasContent()) {
+                    if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+                      include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                    } else {
+                      if (file_exists('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php')) {
                         include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
                       } else {
-                        if (file_exists('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php')) {
-                          include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
-                        } else {
-                          include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php'));
-                        }
+                        include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php'));
                       }
                     }
-                    unset($lC_Box);
                   }
+                  unset($lC_Box);
                 }
-                if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+              }
+              if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+                include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename()));
+              } else {
+                if (file_exists('templates/' . $lC_Template->getCode() . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename())) {
                   include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename()));
                 } else {
-                  if (file_exists('templates/' . $lC_Template->getCode() . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename())) {
-                    include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename()));
-                  } else {
-                    include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename()));
-                  }
+                  include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/content/' . $lC_Template->getGroup() . '/' . $lC_Template->getPageContentsFilename()));
                 }
-                if ($lC_Template->hasPageContentModules()) {
-                  foreach ($lC_Services->getCallAfterPageContent() as $service) {
-                    $$service[0]->$service[1]();
-                  }
-                  foreach ($lC_Template->getContentModules('after') as $box) {
-                    $lC_Box = new $box();
-                    $lC_Box->initialize();
-                    if ($lC_Box->hasContent()) {
-                      if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+              }
+              if ($lC_Template->hasPageContentModules()) {
+                foreach ($lC_Services->getCallAfterPageContent() as $service) {
+                  $$service[0]->$service[1]();
+                }
+                foreach ($lC_Template->getContentModules('after') as $box) {
+                  $lC_Box = new $box();
+                  $lC_Box->initialize();
+                  if ($lC_Box->hasContent()) {
+                    if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+                      include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                    } else {
+                      if (file_exists('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php')) {
                         include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
                       } else {
-                        if (file_exists('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php')) {
-                          include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
-                        } else {
-                          include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php'));
-                        }
+                        include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php'));
                       }
                     }
-                    unset($lC_Box);
                   }
-                } 
-                ?>
-            </div>
-            <!--Main Content Ends-->  
-            <!--Right Side Nav Starts-->
-            <?php
-            $content_right = '';
-            if ($lC_Template->hasPageBoxModules()) {
-              ob_start();
-              foreach ($lC_Template->getBoxModules('right') as $box) {
-                $lC_Box = new $box();
-                $lC_Box->initialize();
-                if ($lC_Box->hasContent()) {
-                  if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+                  unset($lC_Box);
+                }
+              } 
+            ?>
+          </div>
+          <!--Main Content Ends-->  
+            
+          <!--Right Side Nav Starts-->
+          <?php
+          $content_right = '';
+          if ($lC_Template->hasPageBoxModules()) {
+            ob_start();
+            foreach ($lC_Template->getBoxModules('right') as $box) {
+              $lC_Box = new $box();
+              $lC_Box->initialize();
+              if ($lC_Box->hasContent()) {
+                if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+                  include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
+                } else {
+                  if (file_exists('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php')) {
                     include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
                   } else {
-                    if (file_exists('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php')) {
-                      include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
-                    } else {
-                      include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
-                    }
+                    include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
                   }
                 }
-                unset($lC_Box);
               }
-              $content_right = ob_get_contents();
-              ob_end_clean();
+              unset($lC_Box);
             }
-            if (!empty($content_right)) {
-              echo '<div id="right_side_nav" class="sideNavBox colRight">';
-              echo $content_right;
-              echo '</div>';
-            }             
-            ?>
-            <!--Right Side Nav Ends-->
-            <div style="clear: both;"></div>
-          </div>
-          <?php
-            // the default css is set for both columns visible until now
-            // if only one of the two columns is visible...
-            if ( (!empty($content_left) && empty($content_right)) || (empty($content_left) && !empty($content_right)) ) {
+            $content_right = ob_get_contents();
+            ob_end_clean();
+          }
+          if (!empty($content_right)) {
+            echo '<div id="right-column" class="' . $box_class . '">' . $content_right . '</div>';
+          }             
           ?>
-          <!-- added to assist in the control of the three column width dynamically based on left and right column content :: maestro -->
-          <script>
-            $(document).ready(function() {
-              $(".main_content").find(".colMid").addClass("mid75");
-            });
-          </script>
-          <?php
-            // if both columns are empty...
-            } else if (empty($content_left) && empty($content_right)) {
-          ?>
-          <script>
-            $(document).ready(function() {
-              $(".main_content").find(".colMid").addClass("mid100");
-            });
-          </script>
-          <?php } ?> 
-          <div style="clear: both;"></div>          
-        </section>
-      </div>
+          <!--Right Side Nav Ends-->
+          
+        </div> <!-- end row-fluid --> 
+      </div> <!-- end container -->
       
       <?php
       // page footer
