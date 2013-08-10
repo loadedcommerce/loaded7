@@ -18,23 +18,6 @@ global $lC_Language;
 <script>
 $(document).ready(function() {
 
-  function setMaintenanceMode(s) {
-    if (s == 'on') {
-      $("body").mask('<span style="font-size:2em !important;"><?php echo $lC_Language->get('update_message_text1'); ?></span>');
-      $('.loadmask-msg').css({'top':'200px'});
-    } else {
-      $("body").unmask();
-    }
-  }
-
-  var maintMode = '<?php echo STORE_DOWN_FOR_MAINTENANCE; ?>';
-  
-  if (maintMode == 1) {
-    setMaintenanceMode('on');
-  } else {
-    setMaintenanceMode('off');
-  }
-  
   // jBreadcrumb
   $("#breadCrumbContainer").jBreadCrumb();     
    
@@ -100,9 +83,6 @@ $(document).ready(function() {
     $('#viewList').hide();
   });
   
-  // run this last - determine media type
-  setTimeout('_setMediaType()', 1000);
-  
   var loc = '<?php echo end(explode("/", $_SERVER['REQUEST_URI'])); ?>';
   if (loc == '' || loc == 'index.php') {
     $('#navHome').addClass('current');  
@@ -132,66 +112,5 @@ $(document).ready(function() {
     });
   }  
 
-});
-
-$(window).resize(function() {
-  
-  var type = _setMediaType();
-  var width = '';
-  
-  // reset the payment iframe width
-  if (type == 'mobile-portrait') {
-    width = '254px';
-  } else if (type == 'mobile-landscape') {
-    width = '414px';
-  } else if (type == 'small-tablet-portrait') {
-    width = '490px';
-  } else if (type == 'small-tablet-landscape') {
-    width = '410px';
-  } else if (type == 'tablet-portrait') {
-    width = '390px';
-  } else if (type == 'tablet-landscape') {
-    width = '450px';
-  } else {
-    width = '478px';
-  }
-  
-  $('#pmtFrame').css('width', width);
-});
-
-function _setMediaType() {
-  var winW = $(window).width();
-  
-  if (winW <= 320) {
-    mtype = 'mobile-portrait'; //320
-  } else if (winW > 320 && winW <= 480) {
-    mtype = 'mobile-landscape'; //480
-  } else if (winW > 480 && winW <= 600) {
-    mtype = 'small-tablet-portrait'; //600
-  } else if (winW > 600 && winW <= 768) {  
-    mtype = 'tablet-portrait'; //768   
-  } else if (winW > 768 && winW <= 800) {
-    mtype = 'small-tablet-landscape'; //800
-  } else if (winW > 800 && winW <= 1024) {
-    mtype = 'tablet-landscape'; //1024    
-  } else if (winW > 1024) {
-    mtype = 'desktop';    
-  }
-  
-  var sizeStored = '<?php echo $_SESSION['mediaSize']; ?>';
-  if (sizeStored != winW) {
-    var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=setMediaType&type=TYPE&size=SIZE', 'AUTO'); ?>'
-    $.getJSON(jsonLink.replace('TYPE', mtype).replace('&amp;', '&').replace('SIZE', winW).replace('&amp;', '&'),
-      function (data) {
-        return true;
-      }
-    );  
-  }
-
-  return mtype;
-}
-
-$(window).resize(function() {
-  _setMediaType();
 });
 </script>
