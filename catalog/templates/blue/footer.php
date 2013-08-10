@@ -78,7 +78,7 @@
       </div>
     </div>
     <address>
-      Copyright &copy; <?php echo @date("Y"); ?> Loaded Commerce <img src="templates/default/images/payment_info.jpg"/>
+      &copy; <?php echo @date("Y") . ' ' . STORE_NAME; ?> <img src="templates/default/images/payment_info.jpg"/>
     </address>
   </footer>
 </div>           
