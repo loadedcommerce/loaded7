@@ -31,20 +31,8 @@ $(document).ready(function() {
   }
   
   // jBreadcrumb
-  $("#breadCrumbContainer").jBreadCrumb();     
-   
-  //jCarousel
-//  $('.first-and-second-carousel').jcarousel();
+  $("#breadCrumbContainer").jBreadCrumb();    
   
-  //mini cart slide toggle
-  $(".minicart_link").toggle(
-    function() {
-      $('.cart_drop').slideDown(300);  
-    }, function(){
-      $('.cart_drop').slideUp(300);     
-    }
-  );  
-
   //sub menu
   $("ul.departments > li.menu_cont > a").toggle(
     function(){
@@ -58,7 +46,7 @@ $(document).ready(function() {
   );
   
   //style form select elements
-  $("select").uniform();  
+  //$("select").uniform();  
   
   //toggle box
   $(".toggle_box > li:first-child .toggle_title, .toggle_box > li:first-child .toggle_content").addClass('active');
@@ -70,11 +58,6 @@ $(document).ready(function() {
     $(this).siblings('.toggle_content').slideUp(300);  
   });  
   
-  //twitter feed
-  $('.twitter_feed').jTweetsAnywhere({
-    username: 'loadedcommerce',
-    count: 1
-  });
   
   $("#mobile-menu-button").click(function () {
     $("#mobile-menu").slideToggle("slow");

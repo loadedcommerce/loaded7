@@ -20,44 +20,28 @@
         <img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>mobile-menu.png" id="mobile-menu-button" />
       </div>
       <div class="language_switch"> 
-        <?php 
-          foreach ($lC_Language->getAll() as $value) {
-            echo ' ' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('language', 'currency')) . '&language=' . $value['code'], 'AUTO'), $lC_Language->showImage($value['code'])) . ' ';
-          }                                                                          
-        ?>
+        <?php echo $lC_Template->getLanguageSelection(); ?>
       </div>
       <ul id="topLinks" class="top_links">
         <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><?php echo $lC_Language->get('text_sign_in'); ?></a></li>
-        <?php if ($lC_Customer->isLoggedOn()) { ?>
-          <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'logoff', 'SSL'); ?>"><?php echo $lC_Language->get('text_sign_out'); ?></a></li>
-          <?php } ?>
+        <?php 
+        if ($lC_Customer->isLoggedOn()) { 
+          echo '<li><a href="' . lc_href_link(FILENAME_ACCOUNT, 'logoff', 'SSL') , '">' . $lC_Language->get('text_sign_out') . '</a></li>';
+        } 
+        ?>
         <li class="top_links hide-on-mobile"><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'SSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
         <li class="highlight"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>"><?php echo $lC_Language->get('text_checkout'); ?></a></li>
       </ul>
     </div>
     <div id="mobile-menu" style="display:none;">
       <ul class="table_view cells">
-        <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL'); ?>">Home</a></li>
-        <?php
-        $topNav = lC_Default::getTopCategories();
-        foreach ($topNav as $menuItem) {
-          if ($menuItem['custom_url'] != '') {
-            echo '<li><a href="' . lc_href_link($menuItem['custom_url'], '', 'NONSSL') . '">' . $menuItem['name'] . '</a></li>';
-          } else {
-            echo '<li><a href="' . lc_href_link(FILENAME_DEFAULT, 'cPath=' . $menuItem['id'], 'NONSSL') . '">' . $menuItem['name'] . '</a></li>';
-          }
-        }
-      ?>
+        <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL'); ?>"><?php echo $lC_Language->get('text_home'); ?></a></li>
+        <?php echo $lC_Template->getTopCategoriesSelection(); ?> 
       </ul>
     </div>
     <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>logo.png" /></a></h1>
     <?php
-    
-//foreach ($_SESSION['lC_Addons_data'] as $addon => $data) {
-//  echo $addon . ' [' . $data['enabled'] . ']<br>';
-//}    
-    
-      if (!empty($content_left)) {
+    if (!empty($content_left)) {
       ?>
       <button class="button brown_btn browse-catalog" style="display:none;" type="button" id="browse-catalog">Browse Catalog</button>
       <div id="browse-catalog-div" style="display:none;">
@@ -66,24 +50,12 @@
         </div>
       </div>
       <?php
-      }
+    }
     ?>
     <div id="currencySelect">      
-      <form id="currencies" name="currencies" action="<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), null, 'AUTO', false); ?>" method="get">
-        <select name="currency" id="currency" onchange="this.form.submit();">
-          <?php 
-            $currency_data = array();
-            foreach ($lC_Currencies->currencies as $key => $value) {
-              $currency_data[] = array('id' => $key, 'text' => $value['title']);
-            }
-            foreach ($currency_data as $currencies) {
-              echo '<option value="' . $currencies['id'] . '"' . ($_SESSION['currency'] == $currencies['id'] ? 'selected="selected"' : null) . '>' . $currencies['text'] . '</option>';
-            }
-          ?>
-        </select>
-        <?php echo lc_draw_hidden_session_id_field(); ?>
-      </form>
-    </div>    
+      <?php echo $lC_Template->getCurrencySelectionForm(); ?>
+    </div> 
+       
     <div id="mini-cart-container" class="minicart">
     <?php
       //print_r($lC_ShoppingCart->getProducts());
@@ -125,20 +97,7 @@
   <nav>
     <ul id="primaryNav" class="primary_nav">
       <li><a id="navHome" href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_home'); ?></a></li>
-      <?php
-        $topNav = lC_Default::getTopCategories();
-        foreach ($topNav as $menuItem) {
-          if ($menuItem['custom_url'] != '') {
-            if ($menuItem['mode'] == 'override') {
-              echo '<li><a href="' . $menuItem['custom_url'] . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
-            } else {
-              echo '<li><a href="' . lc_href_link($menuItem['custom_url'], '', 'NONSSL') . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
-            }
-          } else {
-            echo '<li><a href="' . lc_href_link(FILENAME_DEFAULT, 'cPath=' . $menuItem['id'], 'NONSSL') . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
-          }
-        }
-      ?>
+      <?php echo $lC_Language->get('text_home'); ?>
     </ul>
   </nav>
 </div>

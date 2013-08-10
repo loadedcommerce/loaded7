@@ -11,7 +11,7 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-require($lC_Vqmod->modCheck('templates/blue/classes/default.php'));
+require($lC_Vqmod->modCheck('templates/blue/classes/blue.php'));
 if (!defined('DIR_WS_TEMPLATE')) define('DIR_WS_TEMPLATE', DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/');
 if (!defined('DIR_FS_TEMPLATE')) define('DIR_FS_TEMPLATE', DIR_FS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/');
 if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_CATALOG . 'templates/' . $_SESSION['template']['code'] . '/images/');  

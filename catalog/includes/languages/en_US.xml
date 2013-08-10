@@ -14,7 +14,7 @@
     <numerical_thousands_separator><![CDATA[,]]></numerical_thousands_separator>
     <parent_language_code><![CDATA[]]></parent_language_code>
   </data>
-  <definitions>
+  <definitions> 
     <definition>
       <key>my_account</key>
       <value><![CDATA[My Account]]></value>
@@ -2686,7 +2686,6 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Coupon has reached maximum uses.]]></value>
       <group>checkout</group>
     </definition>  
-  </definitions>
     <definition>
       <key>ms_error_action_not_performed</key>
       <value><![CDATA[Error: There was a problem performing the action.]]></value>

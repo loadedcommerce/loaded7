@@ -484,6 +484,9 @@ class lC_Default {
   * @access public
   * @return array
   */
+  
+  /*  MOVED TO TEMPLATE CLASS
+  
   public static function getTopCategories() {
     global $lC_Database, $lC_Language;
     
@@ -502,6 +505,7 @@ class lC_Default {
     
     return $topCategories;   
   }
+  */
  /*
   * return the top cats for nav
   *

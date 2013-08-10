@@ -245,7 +245,7 @@ class lC_Bs_starter {
   * @return resource
   */  
   public static function getProductsListingSql() {
-    $pArr = self::__getProductsListingData();
+    $pArr = self::_getProductsListingData();
     
     return $pArr['Qlisting'];    
   }
@@ -256,7 +256,7 @@ class lC_Bs_starter {
   * @return array
   */  
   public static function getManufacturerFilter() {
-    $pArr = self::__getProductsListingData();
+    $pArr = self::_getProductsListingData();
     
     return $pArr['mfgFilter'];
   } 
@@ -429,7 +429,7 @@ class lC_Bs_starter {
   * @access private
   * @return array
   */  
-  private static function __getProductsListingData() {
+  private static function _getProductsListingData() {
     global $lC_Database, $lC_Language, $lC_Products, $lC_Vqmod;
     
     include_once($lC_Vqmod->modCheck('includes/classes/products.php'));
@@ -480,6 +480,7 @@ class lC_Bs_starter {
   * @access public
   * @return array
   */
+  /*
   public static function getTopCategories() {
     global $lC_Database, $lC_Language;
     
@@ -498,6 +499,7 @@ class lC_Bs_starter {
     
     return $topCategories;   
   }
+  */
  /*
   * return the top cats for nav
   *
