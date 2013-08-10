@@ -254,6 +254,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
     <script src="ext/jquery/respond.js"></script>    
     <!-- Core JS -->
+    <script src="ext/jquery/general.js.php"></script>
     <script src="ext/jquery/jquery.jBreadCrumb.1.1.js"></script>
     
     
@@ -268,8 +269,11 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="ext/jquery/jquery.activity-indicator-1.0.0.min.js"></script>
     <!-- Template JS -->
     <script src="templates/bs_starter/javascript/placeholder.js" ></script>
-    
-    <!-- main js.php for all site pages -->
+
+    <!-- js for core logic -->
+    <?php $lC_Template->addJavascriptPhpFilename('includes/javascript/general.js.php'); ?>
+        
+    <!-- js for template spcific logic -->
     <?php $lC_Template->addJavascriptPhpFilename('templates/' . $lC_Template->getCode() . '/javascript/general.js.php'); ?>
     
     <!-- js loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js'; ?> -->

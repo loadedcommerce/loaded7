@@ -266,7 +266,10 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="templates/blue/javascript/form_elements.js" ></script>
     <script src="templates/blue/javascript/placeholder.js" ></script>
     
-    <!-- main js.php for all site pages -->
+    <!-- js for core logic -->
+    <?php $lC_Template->addJavascriptPhpFilename('includes/javascript/general.js.php'); ?>
+        
+    <!-- js for template spcific logic -->
     <?php $lC_Template->addJavascriptPhpFilename('templates/' . $lC_Template->getCode() . '/javascript/general.js.php'); ?>
     
     <!-- js loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js'; ?> -->
