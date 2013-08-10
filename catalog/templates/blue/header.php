@@ -55,35 +55,8 @@
     <div id="currencySelect">      
       <?php echo $lC_Template->getCurrencySelectionForm(); ?>
     </div> 
-       
     <div id="mini-cart-container" class="minicart">
-    <?php
-      //print_r($lC_ShoppingCart->getProducts());
-      if ($lC_ShoppingCart->hasContents()) {
-        echo '<a href="' . lc_href_link(FILENAME_CHECKOUT, 'cart') . '" class="minicart_link">
-        <span class="item"><b>' . $lC_ShoppingCart->numberOfItems() . '</b> ' . ($lC_ShoppingCart->numberOfItems() > 1 ? strtoupper($lC_Language->get('text_cart_items')) : strtoupper($lC_Language->get('text_cart_item'))) . ' /</span> <span class="price"><b>' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</b></span>
-        </a>
-        <div class="cart_drop">
-        <span class="darw"></span>
-        <ul>';
-
-        foreach ($lC_ShoppingCart->getProducts() as $products) {
-          echo '<li>' . $lC_Image->show($products['image'], $products['name'], null, 'mini') . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), '(' . $products['quantity'] . ') x ' . $products['name']) . ' <span class="price">' . $lC_Currencies->format($products['price']) . '</span></li>';
-        }           
-
-        echo '</ul>
-        <div class="cart_bottom">
-        <div class="subtotal_menu">
-        <small>' . $lC_Language->get('box_shopping_cart_subtotal') . '</small>
-        <big>' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</big>
-        </div>
-        <a href="' . lc_href_link(FILENAME_CHECKOUT, 'shopping_cart', 'SSL') . '">' . $lC_Language->get('button_view_cart') . '</a>
-        </div>
-        </div>';
-      } else {
-        echo $lC_Language->get('box_shopping_cart_empty');
-      }
-    ?>
+      <?php echo $lC_Template->getMiniCartSelection(); ?>
     </div>
     <form id="liveSearchForm" class="header_search clear-both" method="post" action="search">
       <div id="liveSearchContainer" class="form-search">
@@ -97,7 +70,7 @@
   <nav>
     <ul id="primaryNav" class="primary_nav">
       <li><a id="navHome" href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_home'); ?></a></li>
-      <?php echo $lC_Language->get('text_home'); ?>
+      <?php echo $lC_Template->getTopCategoriesSelection(); ?>
     </ul>
   </nav>
 </div>

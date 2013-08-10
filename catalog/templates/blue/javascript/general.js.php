@@ -41,15 +41,6 @@ $(document).ready(function() {
   //jCarousel
   $('.first-and-second-carousel').jcarousel();
   
-  //mini cart slide toggle
-  $(".minicart_link").toggle(
-    function() {
-      $('.cart_drop').slideDown(300);  
-    }, function(){
-      $('.cart_drop').slideUp(300);     
-    }
-  );  
-
   //sub menu
   $("ul.departments > li.menu_cont > a").toggle(
     function(){
