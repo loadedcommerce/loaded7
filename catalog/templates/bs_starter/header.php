@@ -30,7 +30,7 @@
           <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
           <li><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>"><?php echo $lC_Language->get('text_checkout'); ?></a></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $lC_Language->get('text_dropdown'); ?> <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <?php echo $lC_Template->getTopCategoriesSelection(); ?>
             </ul>
@@ -77,7 +77,7 @@
     <?php
     if ($lC_Services->isStarted('breadcrumb')) {
       ?>
-      <div id="bread-crumb-container"> 
+      <div id="breadcrumb-container"> 
         <ul class="breadcrumb"><?php echo $lC_Breadcrumb->getPathList(); ?></ul>
       </div>
       <?php

@@ -638,7 +638,7 @@ class lC_Template {
     
     $output = '<a id="qrcode-tooltip">' .
               '  <span style="cursor:pointer;">' .
-              '    <img src="images/icons/qr-icon.png" border="0" style="vertical-align:middle; padding-right:6px;" /><span class="margin-left">Scan for URL</span>' .
+              '    <img src="images/icons/qr-icon.png" border="0" style="vertical-align:middle; padding-right:6px;" /><span class="margin-left">' . $lC_Language->get('text_click_and_scan') . '</span>' .
               '  </span>' .
               '</a>' . 
               '<div id="qr-message">' . 

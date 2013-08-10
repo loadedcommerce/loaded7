@@ -31,6 +31,16 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>text_click_and_scan</key>
+      <value><![CDATA[Click and Scan]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
+      <key>text_dropdown</key>
+      <value><![CDATA[Dropdown]]></value>
+      <group>general</group>
+    </definition>      
+    <definition>
       <key>text_shipping_returns</key>
       <value><![CDATA[Shipping & Returns]]></value>
       <group>general</group>
