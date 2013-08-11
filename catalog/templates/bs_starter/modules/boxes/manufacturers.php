@@ -1,18 +1,30 @@
 <?php
-/**  
-*  $Id: manufacturers.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::manufacturers::boxes
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: manufacturers.php v1.0 2013-08-08 datazen $
 */
 ?>
 <!--modules/boxes/manufacturers.php start-->
-<h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<div class="well" >
+  <ul id="box-manufacturers" class="nav nav-list">
+    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
+      <form id="box-manufacturer-form" name="manufacturers" class="no-margin-bottom" action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false); ?>" method="get">
+        <?php echo $lC_Box->getContent(); ?>
+      </form>
+  </ul>
+</div>
+<script>
+$(document).ready(function() {
+  $("#box-manufacturers li").each(function(){
+    if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
+  });  
+  $('#box-manufacturers-select').attr('onchange', 'this.form.submit();');
+});
+</script>
 <!--modules/boxes/manufacturers.php end-->
+

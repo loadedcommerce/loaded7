@@ -11,32 +11,32 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
-$_SESSION['setCategoriesMaximumLevel'] = 2; // set max levels = 2
-$cPathArr = explode('_', $_GET['cPath']);
-$cPathTop = $cPathArr[0];
-$cLoc = end(explode("/", $_SERVER['REQUEST_URI']));
 ?>
 <!--modules/boxes/categories.php start-->
-<h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<div class="well" >
+  <div class="nav-header"><?php echo $lC_Box->getTitle(); ?></div>
+  <?php echo $lC_Box->getContent(); ?>
+</div>
 <script>
 $(document).ready(function() {
-  var cPathTop = 'cPath=<?php echo $cPathTop; ?>';
-  var cPath = 'cPath=<?php echo $_GET['cPath']; ?>';
-  $('#ul-top-categories li a').each(function() {
-    // expand the top level
-    if (cPathTop == this.href.substr(this.href.indexOf('cPath='))) {
-      $(this).addClass('active current');
-      $(this).next('ul').attr('style', 'display:block');
+  $('#ul-top-categories').attr('class', 'nav nav-list');
+  // loop thru and set the active marker
+  $('#ul-top-categories li').each(function() {
+    
+    var loc = document.location.href;
+    cmp1 = loc.substring(loc.indexOf("?") + 1);
+    cmp1 = cmp1.substring(cmp1.indexOf("&") + 1);
+    
+    var href = $(this).find('a').attr('href');
+    cmp2 = href.substring(href.indexOf("?") + 1);
+    cmp2 = cmp2.substring(cmp2.indexOf("&") + 1);
+
+    if (cmp1 == cmp2) { 
+      $(this).addClass('active');
+    } else {
+      $(this).removeClass('active');
     }
-    if (cPath == this.href.substr(this.href.indexOf('cPath='))) {
-      $(this).addClass('current');    
-    }
-    var cLoc = this.href.split('/').pop();
-    if (cLoc == '<?php echo end(explode("/", $_SERVER['REQUEST_URI'])); ?>') {
-      $(this).addClass('active current');
-    }
-  });
-});      
-</script>  
+  });  
+});
+</script>
 <!--modules/boxes/categories.php end-->

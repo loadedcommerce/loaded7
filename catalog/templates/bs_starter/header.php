@@ -76,13 +76,20 @@
   <div class="container">
     <?php
     if ($lC_Services->isStarted('breadcrumb')) {
-      ?>
-      <div id="breadcrumb-container"> 
-        <ul class="breadcrumb"><?php echo $lC_Breadcrumb->getPathList(); ?></ul>
-      </div>
-      <?php
+      echo '<ul class="breadcrumb">' . $lC_Breadcrumb->getPathList() . '</ul>' . "\n";
     }
     ?>  
   </div>
+  <script>
+  $(document).ready(function() {
+    $(".breadcrumb li").each(function(){
+      if ($(this).is(':last-child')) {
+        $(this).addClass('active');
+      } else {
+        $(this).append('<span class="divider">&rarr;</span>');  
+      }
+    });    
+  });
+  </script>
 </div>
 <!--header.php end-->

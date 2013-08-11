@@ -19,9 +19,8 @@ class lC_Services_breadcrumb {
     include($lC_Vqmod->modCheck('includes/classes/breadcrumb.php'));
     $lC_Breadcrumb = new lC_Breadcrumb();
 
-    //$lC_Breadcrumb->add($lC_Language->get('breadcrumb_top'), HTTP_SERVER);
     $template = (isset($_SESSION['template']['code'])) ? $_SESSION['template']['code'] : 'default';
-    $lC_Breadcrumb->add('<span id="breadcrumbImg">' . lc_image(DIR_WS_CATALOG . 'templates/' . $template . '/images/iconHome.png'), lc_href_link(FILENAME_DEFAULT)) . '</span>';
+    $lC_Breadcrumb->add('<span id="breadcrumb-top">' . $lC_Language->get('text_home') . '</span>', lc_href_link(FILENAME_DEFAULT));
 
     return true;
   }

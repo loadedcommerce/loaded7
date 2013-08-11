@@ -42,14 +42,18 @@ footer { padding-top:40px; margin-top:40px; border-top:1px solid #dedede; }
 .large-margin-bottom { margin-bottom:20px; }
 .no-margin-bottom { margin-bottom:0; }
 
-/* Breadcrumb */
-#breadcrumb-container { overflow:hidden; }
-ul.breadcrumb{ display:inline-block; width:100%; }
-ul.breadcrumb li{ padding:2px 14px; font-size:12px; text-transform:uppercase; display:inline-block; list-style:none; background:url(../images/arrow.png) no-repeat -10px 4px;}
-ul.breadcrumb li:first-child{ padding-left:0px; background:none;}
-ul.breadcrumb li.active{ background-position:-10px -53px;}
-ul.breadcrumb li a{ color:#999; text-decoration:none;}
-ul.breadcrumb li:last-child a { color:#0088cc; font-weight: bold; }
+.align-center { text-align:center; }
+.align-left { text-align:left; }
+.align-right { text-align:right; }
+.margin-left-li { margin-left:-10px; }
+.margin-top-li { margin-top:-10px; }
+
+.float-right { float:right; }
+.float-left { float:left; }
+
+/* colors */
+.red { color:#ff0000; }
+
 
 /* QR Code */
 #qr-message {  -ms-word-break: break-all;  word-break: break-all; word-break: break-word;  -webkit-hyphens: auto;  -moz-hyphens: auto;  hyphens: auto;  display:none;  position:fixed;  bottom:25px;  right:25px;  width: 250px;  text-align:center;  background:#f5f5f5; padding:10px 0; }

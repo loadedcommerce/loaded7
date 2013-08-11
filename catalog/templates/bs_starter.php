@@ -26,15 +26,15 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <meta name="viewport" content="content="width=device-width, initial-scale=1.0">
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="ext/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="ext/bootstrap/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="templates/bs_starter/css/bootstrap.css">
+    <link rel="stylesheet" href="templates/bs_starter/css/bootstrap-responsive.css">
     
     <!-- Google Font -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700italic,700,500&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     
     <!-- Template CSS -->
     <link rel="stylesheet" href="templates/bs_starter/css/template.css?v=1">
-    <link rel="stylesheet" href="templates/bs_starter/css/font-awesome.min.css?v=1">
+    <link rel="stylesheet" href="templates/bs_starter/css/font-awesome.css?v=1">
     <link rel="stylesheet" href="templates/bs_starter/css/jquery.mCustomScrollbar.css?v=1">
     <link rel="stylesheet" type="text/css" href="ext/jquery/thickbox/thickbox.css?v=1" />
     <link rel="stylesheet" href="templates/bs_starter/css/loadmask.css?v=1">     
@@ -67,28 +67,22 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!--[if lt IE 7]>
         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->  
-  
     <div class="wrapper">
-    
       <?php
       // set the format; 1, 2, or 3 columns
       $left = $lC_Template->getBoxModules('left');
       $right = $lC_Template->getBoxModules('right');
       
-      if (!empty($left) && !empty($right)) {
-        // 3 cols
+      if (!empty($left) && !empty($right)) { // 3 cols
         $box_class = 'span3';
         $content_class = 'span6';        
-      } else if (!empty($left) && empty($right)) {
-        // 2cols left
+      } else if (!empty($left) && empty($right)) { // 2 cols left
         $box_class = 'span3';
         $content_class = 'span9';        
-      } else if (empty($left) && !empty($right)) {
+      } else if (empty($left) && !empty($right)) { // 2 cols right
         $box_class = 'span3';
         $content_class = 'span9';
       }
-      
-      
       
       //moved here to support mobile browse catalog button
       $content_left = '';
@@ -123,16 +117,15 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       <div class="container">
         <div class="row-fluid"> 
 
-          <!--Left Side Nav Starts-->
+          <!--left column start-->
           <?php
           if (!empty($content_left)) {
             echo '<div id="left-column" class="' . $box_class . '">' . $content_left . '</div>'; 
           }             
           ?>
-          <!--Left Side Nav Ends--> 
-            
+          <!--left column end--> 
              
-          <!--Main Content Starts-->  
+          <!--content start-->  
           <div class="<?php echo $content_class; ?>">
             <?php
               if ($lC_MessageStack->size('header') > 0) {
@@ -193,9 +186,9 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
               } 
             ?>
           </div>
-          <!--Main Content Ends-->  
+          <!--content end-->  
             
-          <!--Right Side Nav Starts-->
+          <!--right column start-->
           <?php
           $content_right = '';
           if ($lC_Template->hasPageBoxModules()) {
@@ -223,7 +216,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
             echo '<div id="right-column" class="' . $box_class . '">' . $content_right . '</div>';
           }             
           ?>
-          <!--Right Side Nav Ends-->
+          <!--right column end-->
           
         </div> <!-- end row-fluid --> 
       </div> <!-- end container -->
@@ -249,7 +242,6 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <script src="ext/jquery/respond.js"></script>    
     <!-- Core JS -->
     <script src="ext/jquery/general.js.php"></script>
-    <script src="ext/jquery/jquery.jBreadCrumb.1.1.js"></script>
     
     
     
@@ -273,24 +265,17 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!-- js loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js'; ?> -->
     <!-- js.php loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '/' . $lC_Template->getModule() . '.js.php'; ?> -->
     <?php
-      // add group specific (.js) filenames to the array for hasJavascript function (acount, products, info, search, index etc)
-      if (file_exists('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js')) {
-        $lC_Template->addJavascriptFilename('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js');
-      }
-      // add module specific (.js.php) filenames to the array for hasJavascript function
-      if (file_exists('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '/' . $lC_Template->getModule() . '.js.php')) {
-        $lC_Template->addJavascriptPhpFilename('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '/' . $lC_Template->getModule() . '.js.php');
-      }
-      if ($lC_Template->hasJavascript()) {
-        $lC_Template->getJavascript();
-      }
+    // add group specific (.js) filenames to the array for hasJavascript function (acount, products, info, search, index etc)
+    if (file_exists('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js')) {
+      $lC_Template->addJavascriptFilename('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js');
+    }
+    // add module specific (.js.php) filenames to the array for hasJavascript function
+    if (file_exists('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '/' . $lC_Template->getModule() . '.js.php')) {
+      $lC_Template->addJavascriptPhpFilename('templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '/' . $lC_Template->getModule() . '.js.php');
+    }
+    if ($lC_Template->hasJavascript()) {
+      $lC_Template->getJavascript();
+    }
     ?>
-    <script>
-      $(document).ready(function(e) {
-        var searchUrl = '<?php echo lc_href_link('rpc.php', 'action=search', 'AUTO'); ?>'  
-        $('#liveSearchContainer input[name="q"]').liveSearch({url: searchUrl + '&q='});
-      }); 
-    </script>   
-    
   </body>
 </html>

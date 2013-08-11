@@ -1,18 +1,27 @@
 <?php
-/**  
-*  $Id: checkout_trail.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::boxes
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: checkout_trail.php v1.0 2013-08-08 datazen $
 */
 ?>
 <!--modules/boxes/checkout_trail.php start-->
-<h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<div class="well" >
+  <ul id="box-checkout-trail" class="nav nav-list">
+    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
+    <?php echo $lC_Box->getContent(); ?>
+  </ul>
+</div>
+<script>
+$(document).ready(function() {
+  $("#box-checkout-trail li").each(function(){
+    if ($(this).attr('class') != 'nav-header') $(this).attr('style', 'margin-left:10px;');
+  });
+  $('#box-checkout-trail').attr('style', 'list-style:decimal !important;');
+});
+</script>
 <!--modules/boxes/checkout_trail.php end-->

@@ -167,7 +167,7 @@ $BarcodeQR = new BarcodeQR();
 require($lC_Vqmod->modCheck('templates/default/classes/general.php'));
 
 // instantiate the addons class
-require('includes/classes/addons.php');
+require_once('includes/classes/addons.php');
 $lC_Addons = new lC_Addons_Admin();
 
 // check if a default currency is set
