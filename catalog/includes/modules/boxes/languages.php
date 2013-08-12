@@ -28,7 +28,7 @@ class lC_Boxes_languages extends lC_Modules {
 
     $this->_content = '';
     foreach ($lC_Language->getAll() as $value) {  
-      $this->_content .= '<li>' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('language', 'currency')) . '&language=' . $value['code'], 'AUTO'), $lC_Language->showImage($value['code'])) . '</li>';
+      $this->_content .= '<li class="box-languages-selection">' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('language', 'currency')) . '&language=' . $value['code'], 'AUTO'), $lC_Language->showImage($value['code'])) . '</li>';
     }
   }
 }

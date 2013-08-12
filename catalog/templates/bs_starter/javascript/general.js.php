@@ -13,9 +13,6 @@ global $lC_Language;
 <script>
 $(document).ready(function() {
 
-  // jBreadcrumb
-  $("#breadCrumbContainer").jBreadCrumb();    
-  
   //sub menu
   $("ul.departments > li.menu_cont > a").toggle(
     function(){

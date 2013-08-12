@@ -82,9 +82,11 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       } else if (empty($left) && !empty($right)) { // 2 cols right
         $box_class = 'span3';
         $content_class = 'span9';
+      } else {
+        $box_class = '';
+        $content_class = 'span12';
       }
       
-      //moved here to support mobile browse catalog button
       $content_left = '';
       if ($lC_Template->hasPageBoxModules()) {
         ob_start();
@@ -126,7 +128,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
           <!--left column end--> 
              
           <!--content start-->  
-          <div class="<?php echo $content_class; ?>">
+          <div id="main-content-container" class="<?php echo $content_class; ?>">
             <?php
               if ($lC_MessageStack->size('header') > 0) {
                 echo '<!--Message Stack Header Starts-->';

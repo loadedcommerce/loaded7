@@ -21,6 +21,8 @@ $(document).ready(function() {
   $("#box-whats-new li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
   });  
+  var imageContent = $('.box-whats-new-image').html();
+  $('.box-whats-new-image').html('<div class="thumbnail">' + imageContent + '</div>');
   $('.box-whats-new-buy-now button').addClass('btn btn-warning margin-top');
 });
 </script>

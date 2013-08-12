@@ -124,15 +124,15 @@ class lC_Images_Admin {
     $Qoriginals->execute();
 
     $counter = array();
-    while ($Qoriginals->next()) {
-      foreach ($_GET['groups'] as $group) {
-        if ( ($group['id'] != '1') && in_array($group['id'], $_GET['groups'])) {
-          if (!isset($counter[$group['id']])) {
-            $counter[$group['id']] = 0;
+    while ($Qoriginals->next()) {  
+      foreach ($_GET['groups'] as $groupID) {
+        if ( ($groupID != '1') && in_array($groupID, $_GET['groups'])) {
+          if (!isset($counter[$groupID])) {
+            $counter[$groupID] = 0;
           }
           if ( ($overwrite === true) || !file_exists(DIR_FS_CATALOG . DIR_WS_IMAGES . 'products/' . $group['code'] . '/' . $Qoriginals->value('image')) ) {
-            $lC_Image_Admin->resize($Qoriginals->value('image'), $group['id']);
-            $counter[$group['id']]++;
+            $lC_Image_Admin->resize($Qoriginals->value('image'), $groupID);
+            $counter[$groupID]++;
           }
         }
       }

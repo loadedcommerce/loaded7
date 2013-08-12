@@ -59,7 +59,7 @@ class lC_Boxes_best_sellers extends lC_Modules {
 
       $this->_content = '';
       while ($Qbestsellers->next()) {
-        $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qbestsellers->value('products_keyword')), $Qbestsellers->value('products_name')) . '</li>';
+        $this->_content .= '<li class="box-best-sellers-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qbestsellers->value('products_keyword')), $Qbestsellers->value('products_name')) . '</li>';
       }
     }
 

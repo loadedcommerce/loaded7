@@ -43,9 +43,9 @@ class lC_Boxes_product_notifications extends lC_Modules {
           $Qcheck->execute();
 
           if ($Qcheck->numberOfRows() > 0) {
-            $this->_content = '<li><span id="box-product_notifications-image"></span>' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('action')) . '&action=notify_remove', 'AUTO'), sprintf($lC_Language->get('box_product_notifications_remove'), $lC_Product->getTitle())) . '</li>';
+            $this->_content = '<li class="box-product-notifications-remove-image"><span id="box-product_notifications-image-container"></span>' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('action')) . '&action=notify_remove', 'AUTO'), sprintf($lC_Language->get('box_product_notifications_remove'), $lC_Product->getTitle())) . '</li>';
           } else {
-            $this->_content = '<li><span id="box-product_notifications-image"></span>' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('action')) . '&action=notify_add', 'AUTO'), sprintf($lC_Language->get('box_product_notifications_add'), $lC_Product->getTitle())) . '</li>';
+            $this->_content = '<li class="box-product-notifications-add-image"><span id="box-product_notifications-image-container"></span>' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('action')) . '&action=notify_add', 'AUTO'), sprintf($lC_Language->get('box_product_notifications_add'), $lC_Product->getTitle())) . '</li>';
           }
         }
       }

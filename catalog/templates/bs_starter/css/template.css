@@ -4,12 +4,25 @@ h1,h2,h3,h4,h5,h6 { font-weight:200; }
 .navbar .container  { max-width: 1170px; }
 .navbar-inverse .navbar-inner{ -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; background:#282828; border:none; }
 .nav-tabs > li > a { -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; }    
+#cat-navi select{ display:none; }
 
 .page-header { border:none; padding: 10px 0px 0px; margin: 0px 0 0px; }
 .brand { margin-left:10px; margin-top:-15px; }
 .thumbnail { margin-bottom:20px; padding:0px; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; }
 .well { min-height: 20px; padding: 19px; margin-bottom: 20px; background-color: #f5f5f5; border: 1px solid #e3e3e3; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
 .carousel-inner > .item > img, .carousel-inner > .item > a > img { min-width:100%; }
+
+/* product listings */
+.product-special-price { color:#FF0000; }
+
+/* box modules */
+.product_notifications-image { float:left; margin-top:8px; }
+
+/* content modules */
+.content-upcoming-products-image-tag { padding-top:20px; }
+.content-upcoming-products-text-expected { font-weight:200; font-size:.9em; }
+.content-upcoming-products-text-price { font-size:1.3em; font-weight:400; }
+.content-upcoming-products-text-name { line-height:1.1; font-size:1.3em; }
 
 /*************** Bootstrap fixes **************/ 
 .container-folio.row-fluid .span6:nth-child(2n+1), #container-folio.row-fluid .span6:nth-child(2n+1){ margin-left:0px; } /* row-fluid scafolding */
@@ -45,11 +58,13 @@ footer { padding-top:40px; margin-top:40px; border-top:1px solid #dedede; }
 .align-center { text-align:center; }
 .align-left { text-align:left; }
 .align-right { text-align:right; }
-.margin-left-li { margin-left:-10px; }
+.margin-left-li { margin-left:0; }
 .margin-top-li { margin-top:-10px; }
-
+                                   
 .float-right { float:right; }
 .float-left { float:left; }
+
+.with-padding { padding:0 10px; }
 
 /* colors */
 .red { color:#ff0000; }
@@ -78,6 +93,12 @@ footer { padding-top:40px; margin-top:40px; border-top:1px solid #dedede; }
 
 @media (max-width: 1200px) and (min-width: 940px){
   
+}
+
+/* Desktops and laptops ----------- */
+@media (min-width : 1224px) {
+  .content-new-products-container { margin-right:-50px; }
+  .content-upcoming-products-container { margin-right:-75px; }
 }
 
 @media (max-width: 940px) and (min-width: 768px){

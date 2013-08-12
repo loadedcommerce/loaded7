@@ -39,13 +39,13 @@ class lC_Boxes_manufacturer_info extends lC_Modules {
         $this->_content = '';
 
         if (!lc_empty($Qmanufacturer->value('manufacturers_image'))) {
-          $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'manufacturers=' . $Qmanufacturer->valueInt('manufacturers_id')), lc_image(DIR_WS_IMAGES . 'manufacturers/' . $Qmanufacturer->value('manufacturers_image'), $Qmanufacturer->value('manufacturers_name'))) . '</li>' . "\n";
+          $this->_content .= '<li class="box-manufacturers-info-image">' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'manufacturers=' . $Qmanufacturer->valueInt('manufacturers_id')), lc_image(DIR_WS_IMAGES . 'manufacturers/' . $Qmanufacturer->value('manufacturers_image'), $Qmanufacturer->value('manufacturers_name'))) . '</li>' . "\n";
         }
 
         if (!lc_empty($Qmanufacturer->value('manufacturers_url'))) {
-          $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_REDIRECT, 'action=manufacturer&manufacturers_id=' . $Qmanufacturer->valueInt('manufacturers_id')), sprintf($lC_Language->get('box_manufacturer_info_website'), $Qmanufacturer->value('manufacturers_name')), 'target="_blank"') . '</li>' . "\n";
+          $this->_content .= '<li class="box-manufacturers-info-url">' . lc_link_object(lc_href_link(FILENAME_REDIRECT, 'action=manufacturer&manufacturers_id=' . $Qmanufacturer->valueInt('manufacturers_id')), sprintf($lC_Language->get('box_manufacturer_info_website'), $Qmanufacturer->value('manufacturers_name')), 'target="_blank"') . '</li>' . "\n";
         }
-        $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'manufacturers=' . $Qmanufacturer->valueInt('manufacturers_id')), $lC_Language->get('box_manufacturer_info_products')) . '</li>' . "\n";
+        $this->_content .= '<li class="box-manufacturers-info-link">' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'manufacturers=' . $Qmanufacturer->valueInt('manufacturers_id')), $lC_Language->get('box_manufacturer_info_products')) . '</li>' . "\n";
       }
     }
   }

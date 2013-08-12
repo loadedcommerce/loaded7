@@ -41,7 +41,7 @@ class lC_Boxes_templates extends lC_Modules {
         }
       }
 
-      $this->_content = '<li>' . $hidden_get_variables . lc_draw_pull_down_menu('template', $data, $_SESSION['template']['code']) . lc_draw_hidden_session_id_field() . '</li>';
+      $this->_content = '<li class="box-templates-selection">' . $hidden_get_variables . lc_draw_pull_down_menu('template', $data, $_SESSION['template']['code']) . lc_draw_hidden_session_id_field() . '</li>';
     }
   }
 }

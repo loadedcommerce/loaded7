@@ -28,8 +28,8 @@ class lC_Boxes_search extends lC_Modules {
 
     $this->_title_link = lc_href_link(FILENAME_SEARCH);
 
-    $this->_content = '<li>' . lc_draw_input_field('keywords', null, 'id="box-keywords"') . '&nbsp;<a id="box-search-submit" onclick="$(\'#box-search-form\').submit();"></a></li>' . "\n" .
-                      '<li>' . sprintf($lC_Language->get('box_search_text'), lc_href_link(FILENAME_SEARCH)) . '</li>' . "\n";
+    $this->_content = '<li class="box-search-input">' . lc_draw_input_field('keywords', null, 'id="box-keywords"') . '&nbsp;<a id="box-search-submit" onclick="$(\'#box-search-form\').submit();"></a></li>' . "\n" .
+                      '<li class="box-search-text">' . sprintf($lC_Language->get('box_search_text'), lc_href_link(FILENAME_SEARCH)) . '</li>' . "\n";
   }
 }
 ?>

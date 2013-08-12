@@ -21,6 +21,8 @@ $(document).ready(function() {
   $("#box-reviews li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('margin-left-li');
   });
+  var imageContent = $('.box-reviews-image').html();
+  $('.box-reviews-image').html('<div class="thumbnail">' + imageContent + '</div>');  
   $("#box-reviews li:last-child").addClass('small-margin-top align-center');
 });
 </script>

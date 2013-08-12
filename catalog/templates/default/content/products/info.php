@@ -130,7 +130,7 @@ function refreshVariants() {
         foreach ( $lC_Product->getImages() as $key => $value ) {
           if ($value['default_flag'] == true) continue;
           ?>
-          <li><a href="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'popup')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" class="thickbox"><img src="<?php echo $lC_Image->getAddress($value['image'], 'extra'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="" id="image" style="margin-bottom: 3px;" /></a></li>
+          <li><a href="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'popup')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" class="thickbox"><img src="<?php echo $lC_Image->getAddress($value['image'], 'mini'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="" id="image" style="margin-bottom: 3px;" /></a></li>
           <?php  
         }
       }

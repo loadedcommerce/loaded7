@@ -51,7 +51,7 @@ class lC_Boxes_order_history extends lC_Modules {
 
         $this->_content = '';
         while ($Qproducts->next()) {
-          $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qproducts->value('products_keyword')), $Qproducts->value('products_name')) . '</li>';
+          $this->_content .= '<li class="box-order-history-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qproducts->value('products_keyword')), $Qproducts->value('products_name')) . '</li>';
         }
       }
     }

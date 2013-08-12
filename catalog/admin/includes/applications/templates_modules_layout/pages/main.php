@@ -35,7 +35,7 @@ foreach($modulesArr['template_array'] as $module => $text) {
   .selectContainer { position:absolute; bottom:29px; left:30px }
   </style>
   <div class="with-padding-no-top">
-    <div id="templateSelectorContainer" style="position:absolute; top:98px; left:190px; z-index:2;"><div id="templateSelector"><form name="template" id="template" action="" onchange="updateTemplateSelector();"><?php echo lc_draw_pull_down_menu('filter', $templatesModulesArr, null, 'class="select"');?></form></div></div>
+    <div id="templateSelectorContainer" style="position:absolute; top:98px; left:190px; z-index:2;"><div id="templateSelector"><form name="template" id="template" action="" onchange="updateTemplateSelector();"><?php echo lc_draw_pull_down_menu('filter', $templatesModulesArr, null, 'class="input with-small-padding"');?></form></div></div>
     <form name="batch" id="batch" action="#" method="post">
     <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
       <thead>

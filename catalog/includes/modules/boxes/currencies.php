@@ -41,7 +41,7 @@ class lC_Boxes_currencies extends lC_Modules {
         }
       }
 
-      $this->_content = '<li>' . lc_draw_pull_down_menu('currency', $data, $_SESSION['currency'], 'id="box-currencies-select"') . $hidden_get_variables . lc_draw_hidden_session_id_field() . '</li>' . "\n";
+      $this->_content = '<li class="box-currencies-selection">' . lc_draw_pull_down_menu('currency', $data, $_SESSION['currency'], 'id="box-currencies-select"') . $hidden_get_variables . lc_draw_hidden_session_id_field() . '</li>' . "\n";
     }
   }
 }

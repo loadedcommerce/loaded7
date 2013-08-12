@@ -38,7 +38,7 @@ class lC_Boxes_manufacturers extends lC_Modules {
     }
     $Qmanufacturers->freeResult();
 
-    $this->_content = '<li>' . lc_draw_pull_down_menu('manufacturers', $manufacturers_array, null, 'id="box-manufacturers-select" size="' . BOX_MANUFACTURERS_LIST_SIZE . '"') . lc_draw_hidden_session_id_field() . '</li>' . "\n";
+    $this->_content = '<li class="box-manufacturers-selection">' . lc_draw_pull_down_menu('manufacturers', $manufacturers_array, null, 'id="box-manufacturers-select" size="' . BOX_MANUFACTURERS_LIST_SIZE . '"') . lc_draw_hidden_session_id_field() . '</li>' . "\n";
   }
 
   public function install() {

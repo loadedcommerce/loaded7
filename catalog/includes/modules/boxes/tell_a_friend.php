@@ -29,8 +29,8 @@ class lC_Boxes_tell_a_friend extends lC_Modules {
     if (isset($lC_Product) && is_a($lC_Product, 'lC_Product') && ($lC_Template->getModule() != 'tell_a_friend')) {
       
       $this->_content = '<form name="tell_a_friend" id="box-tell-a-friend-form" action="' . lc_href_link(FILENAME_PRODUCTS, 'tell_a_friend&' . $lC_Product->getKeyword()) . '" method="post">' . "\n" .
-                        '<li>' . lc_draw_input_field('to_email_address', null) . '&nbsp;<a id="tell-a-friend-submit" onclick="$(\'#tell_a_friend\').submit();"></a></li>' . "\n" .
-                        '<li>' . $lC_Language->get('box_tell_a_friend_text') . '</li>' . "\n" . 
+                        '<li class="box-tell-a-friend-input">' . lc_draw_input_field('to_email_address', null) . '&nbsp;<a id="tell-a-friend-submit" onclick="$(\'#tell_a_friend\').submit();"></a></li>' . "\n" .
+                        '<li class="box-tell-a-friend-text">' . $lC_Language->get('box_tell_a_friend_text') . '</li>' . "\n" . 
                         '</form>' . "\n";      
     }
   }

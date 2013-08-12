@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: upcoming_products.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: upcoming.php v1.0 2013-08-08 datazen $
 */
 class lC_Content_upcoming_products extends lC_Modules {
  /* 
@@ -54,21 +51,21 @@ class lC_Content_upcoming_products extends lC_Modules {
     $Qupcoming->execute();
 
     if ($Qupcoming->numberOfRows() > 0) {
-      $this->_content = '<ul id="upcomingList">';
-
+      
+      $this->_content = '';
       while ($Qupcoming->next()) {
         $lC_Product = new lC_Product($Qupcoming->valueInt('products_id'));
 
-        $this->_content .= '<li>' . 
-                              lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), substr($lC_Product->getTitle(), 0, 30)) . '...<br style="margin-bottom:5px;" />
-                              <span id="upcomingListImg">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), '', 'mini'), 'class="product_image"') . '</span>
-                              <span>' . 
-                                $lC_Product->getPriceFormated(true) . '<br />Expected: ' . lC_DateTime::getShort($Qupcoming->value('date_expected')) . '
-                              </span>
-                            </li>';
+        $this->_content .= '<div class="content-upcoming-products-container">' . "\n" . 
+                           '<div class="content-upcoming-products-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Product->getTitle()) . '</div>' . "\n";
+        
+        if ($lC_Product->hasImage()) {
+          $this->_content .= '<div class="content-upcoming-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-upcoming-products-image-tag"', 'small')) . '</div>' . "\n";
+        }
+        $this->_content .= '<div class="content-upcoming-products-price">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n" . 
+                           '<div class="content-upcoming-products-date">' . lC_DateTime::getShort($Qupcoming->value('date_expected')) . '</div>' . "\n" .
+                           '</div>' . "\n";
       }
-
-      $this->_content .= '</ul>';
     }
 
     $Qupcoming->freeResult();

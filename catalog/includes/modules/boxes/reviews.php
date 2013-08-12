@@ -72,15 +72,15 @@ class lC_Boxes_reviews extends lC_Modules {
 
       if (empty($data)) {
         if (isset($lC_Product) && is_a($lC_Product, 'lC_Product') && $lC_Product->isValid()) {
-           $this->_content = '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()), $lC_Language->get('box_reviews_write')) . '</li>' . "\n";
+           $this->_content = '<li class="box-reviews-write">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()), $lC_Language->get('box_reviews_write')) . '</li>' . "\n";
         }
       } else {
         if (!empty($data['image'])) {
-          $this->_content = '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $data['reviews_id'] . '&' . $data['products_keyword']), $lC_Image->show($data['image'], $data['products_name'])) . '</li>';
+          $this->_content = '<li class="box-reviews-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $data['reviews_id'] . '&' . $data['products_keyword']), $lC_Image->show($data['image'], $data['products_name'])) . '</li>';
         }
 
-        $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $data['reviews_id'] . '&' . $data['products_keyword']), wordwrap(lc_output_string_protected($data['reviews_text']), 15, "\n") . '...') . "\n" .
-                           '<li>' . $lC_Language->get('box_reviews_average_rating') . ' ' . lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $data['reviews_rating'] . '.png' , sprintf($lC_Language->get('box_reviews_stars_rating'), $data['reviews_rating'])) . '</li>';
+        $this->_content .= '<li class="box-reviews-text">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $data['reviews_id'] . '&' . $data['products_keyword']), wordwrap(lc_output_string_protected($data['reviews_text']), 15, "\n") . '...') . "\n" .
+                           '<li class="box-reviews-rating">' . $lC_Language->get('box_reviews_average_rating') . ' ' . lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $data['reviews_rating'] . '.png' , sprintf($lC_Language->get('box_reviews_stars_rating'), $data['reviews_rating'])) . '</li>';
       }
     }
   }

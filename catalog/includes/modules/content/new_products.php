@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: new_products.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: new_products.php v1.0 2013-08-08 datazen $
 */
 class lC_Content_new_products extends lC_Modules {
  /* 
@@ -71,20 +68,17 @@ class lC_Content_new_products extends lC_Modules {
     }
 
     if ( !empty($data) ) {
-      $this->_content = '<ul id="first-carousel" class="first-and-second-carousel jcarousel-skin-tango">';
 
+      $this->_content = '';
       foreach ( $data as $product ) {
-        $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $lC_Image->show($product['display_image'], $product['name']), 'class="product_image"')  . '
-                              <div class="product_info">
-                                <h3>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $product['name'])  . '</h3>
-                              <small>' . substr($product['description'], 0, 60) . '...</small></div>
-                              <div class="price_info" style="margin-top:10px;"> <a href="javascript://" onclick="alert(\'' . $lC_Language->get('feature_not_available') . '\'); return false;">+ ' . $lC_Language->get('add_to_wishlist') . '</a>
-                                <button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $product['keyword'] . '&action=cart_add') . '\'" class="price_add" title="" type="button"><span class="pr_price">' . $product['display_price']. '</span><span class="pr_add">' . $lC_Language->get('button_add_to_cart') . '</span></button>
-                              </div>
-                            </li>';
+        $this->_content .= '<div class="content-new-products-container">' . "\n";
+        $this->_content .= '  <div class="content-new-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $lC_Image->show($product['display_image'], $product['name']))  . '</div>' . "\n" . 
+                           '  <div class="content-new-products-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $product['name'])  . '</div>' . "\n" . 
+                           '  <div class="content-new-products-desc">' . substr($product['description'], 0, 60) . '...</div>' . "\n" . 
+                           '  <div class="content-new-products-price">' . $product['display_price']. '</div>' . "\n" .
+                           '  <div class="content-new-products-button"><button class="content-new-products-add-button" onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $product['keyword'] . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('button_add_to_cart') . '</button></div>' . "\n";
+        $this->_content .= '</div>' . "\n";
       }
-                    
-      $this->_content .= '</ul>';
     }
   }
  /*

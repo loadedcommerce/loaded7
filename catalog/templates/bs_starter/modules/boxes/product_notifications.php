@@ -21,7 +21,7 @@ $(document).ready(function() {
   $("#box-product-notifications li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('margin-left-li');
   });
-  $('#box-product_notifications-image').html('<img src="templates/bs_starter/images/icons/32/info.png" border="0" style="float:left; margin-top:8px">');
+  $('#box-product_notifications-image-container').html('<img class="product_notifications-image" src="templates/bs_starter/images/icons/32/info.png" border="0">');
   $("#box-product-notifications li:last-child").addClass('small-margin-top align-center');
 });
 </script>

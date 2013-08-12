@@ -21,6 +21,8 @@ $(document).ready(function() {
   $("#box-specials li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
   });  
+  var imageContent = $('.box-specials-image').html();
+  $('.box-specials-image').html('<div class="thumbnail">' + imageContent + '</div>');  
   $('.box-specials-price').addClass('red');
   $('.box-specials-buy-now button').addClass('btn btn-warning margin-top');
 });

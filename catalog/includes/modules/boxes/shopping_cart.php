@@ -32,12 +32,12 @@ class lC_Boxes_shopping_cart extends lC_Modules {
       
       $this->_content = '';
       foreach ($lC_ShoppingCart->getProducts() as $products) {
-        $this->_content .= '<li>' . $products['quantity'] . '&nbsp;x&nbsp;' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $products['name']) . '</li>';
+        $this->_content .= '<li class="box-shopping-cart-product">' . $products['quantity'] . '&nbsp;x&nbsp;' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $products['name']) . '</li>';
       }
-      $this->_content .= '<li>' . $lC_Language->get('box_shopping_cart_subtotal') . ' ' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</li>';
+      $this->_content .= '<li class="box-shopping-cart-subtotal">' . $lC_Language->get('box_shopping_cart_subtotal') . ' ' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</li>';
       
     } else {
-      $this->_content = '<li>' . $lC_Language->get('box_shopping_cart_empty') . '</li>';
+      $this->_content = '<li class="box-shopping-cart-empty">' . $lC_Language->get('box_shopping_cart_empty') . '</li>';
     }
   }
 }
