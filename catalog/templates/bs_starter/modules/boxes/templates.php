@@ -23,7 +23,7 @@ $(document).ready(function() {
   $("#box-templates li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
   });  
-  $('#template').attr('onchange', 'this,form.submit();');
+  $('#template').attr('onchange', 'this,form.submit();').attr('style', 'width:100%');
 });
 </script>
 <!--modules/boxes/templates.php end-->

@@ -23,7 +23,7 @@ $(document).ready(function() {
   $("#box-manufacturers li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
   });  
-  $('#box-manufacturers-select').attr('onchange', 'this.form.submit();');
+  $('#box-manufacturers-select').attr('onchange', 'this.form.submit();').attr('style', 'width:100%');
 });
 </script>
 <!--modules/boxes/manufacturers.php end-->

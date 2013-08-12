@@ -55,6 +55,9 @@ footer { padding-top:40px; margin-top:40px; border-top:1px solid #dedede; }
 .large-margin-bottom { margin-bottom:20px; }
 .no-margin-bottom { margin-bottom:0; }
 
+.no-margin-left { margin-left:0 !important; }
+
+
 .align-center { text-align:center; }
 .align-left { text-align:left; }
 .align-right { text-align:right; }
@@ -65,6 +68,7 @@ footer { padding-top:40px; margin-top:40px; border-top:1px solid #dedede; }
 .float-left { float:left; }
 
 .with-padding { padding:0 10px; }
+.large-padding-top { padding-top:20px; }
 
 /* colors */
 .red { color:#ff0000; }

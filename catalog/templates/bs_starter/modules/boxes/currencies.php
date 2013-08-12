@@ -23,7 +23,7 @@ $(document).ready(function() {
   $("#box-currencies li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
   });  
-  $('#box-currencies-select').attr('onchange', 'this.form.submit();');
+  $('#box-currencies-select').attr('onchange', 'this.form.submit();').attr('style', 'width:100%');
 });
 </script>
 <!--modules/boxes/currencies.php end-->

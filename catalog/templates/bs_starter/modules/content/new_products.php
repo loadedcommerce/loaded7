@@ -36,7 +36,7 @@ $(document).ready(function() {
     nameContent = nameContent.replace(nameContentText, newNameContentText);    
     
     output = '<div class="' + thisContentClass+ ' with-padding">'+
-             '  <div class="thumbnail align-center">'+ imageContent +
+             '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 style="line-height:1.1;">' + nameContent + '</h3>' +
              '      <p class="">' + descContent + '</p>' +
@@ -44,7 +44,7 @@ $(document).ready(function() {
              '        <div class="span6">' +
              '          <p class="lead">' + priceContent + '</p>' +
              '        </div>' +
-             '        <div class="span6">' + buttonContent +
+             '        <div class="span6 with-padding no-margin-left">' + buttonContent +
              '        </div>' +
              '      </div>' +
              '    </div>' +
