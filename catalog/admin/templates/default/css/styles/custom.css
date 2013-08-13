@@ -716,6 +716,8 @@ select.error { border: 2px solid red !important; }
 }
 
 .branding-extra-line { margin-left: 90px; }
+.small-margin-bottom, .branding-extra-line	{ border:0px solid red;margin-left: 100px; margin-bottom: 4px !important; }
+.padding_image{ border:1px solid red;margin-top: 0px;margin-left: 200px; margin-bottom: 4px !important; }
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
