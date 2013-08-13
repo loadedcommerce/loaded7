@@ -11,14 +11,14 @@
 ?>
 <!--modules/boxes/whats_new.php start-->
 <div class="well" >
-  <ul id="box-whats-new" class="nav nav-list">
+  <ul class="box-whats-new nav nav-list">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-whats-new li").each(function(){
+  $(".box-whats-new li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
   });  
   var imageContent = $('.box-whats-new-image').html();

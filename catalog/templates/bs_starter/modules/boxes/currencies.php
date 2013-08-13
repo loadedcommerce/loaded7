@@ -11,19 +11,19 @@
 ?>
 <!--modules/boxes/currencies.php start-->
 <div class="well" >
-  <ul id="box-currencies" class="nav nav-list">
+  <ul class="box-currencies nav nav-list">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
-      <form id="box-manufacturer-form" name="currencies" class="no-margin-bottom" action="<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), null, 'AUTO', false); ?>" method="get">
+      <form name="currencies" class="no-margin-bottom" action="<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), null, 'AUTO', false); ?>" method="get">
         <?php echo $lC_Box->getContent(); ?>
       </form>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-currencies li").each(function(){
+  $(".box-currencies li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
   });  
-  $('#box-currencies-select').attr('onchange', 'this.form.submit();').attr('style', 'width:100%');
+  $('.box-currencies-select').attr('onchange', '$(this).closest("form").submit();').attr('style', 'width:100%');
 });
 </script>
 <!--modules/boxes/currencies.php end-->

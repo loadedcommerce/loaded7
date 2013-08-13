@@ -11,34 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-?>
-<!--Listing Toolbar Starts-->
-<div id="toolbarContainer">
-<div class="toolbar">
-  <!-- will add back later :: maestro
-  <div class="sortby">
-    <label>Sort by:</label>
-    <select>
-      <option>PRICE</option>
-      <option>NAME</option>
-    </select>
-  </div>-->
-  <div class="viewby">
-    <label>View as:</label>
-    <a class="list" id="listView" href="javascript:void(0);"></a><a class="grid" id="gridView" href="javascript:void(0);"></a>
-  </div>
-  <!-- will add back later :: maestro
-  <div class="show_no">
-    <label>Show:</label>
-    <select>
-      <option>12 ITEMS</option>
-      <option>24 ITEMS</option>
-    </select>
-  </div>-->
-</div>
-</div>
-<!--Listing Toolbar Ends-->
-<?php
+
 // create column list
 $define_list = array('PRODUCT_LIST_MODEL' => PRODUCT_LIST_MODEL,
                      'PRODUCT_LIST_NAME' => PRODUCT_LIST_NAME,
@@ -54,18 +27,29 @@ reset($define_list);
 while (list($key, $value) = each($define_list)) {
   if ($value > 0) $column_list[] = $key;
 }
+
 if ( ($Qlisting->numberOfRows() > 0) && ( (PREV_NEXT_BAR_LOCATION == '1') || (PREV_NEXT_BAR_LOCATION == '3') ) ) {
   ?>
-  <div>
+  <!-- PAGINATION-->
+  <div class="pagination pull-right">
+    <div class="float-left" style="float: left"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></span>
+    <div class="float-right" style="float: right">
+      <ul>
+        <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y'))); ?>
+      </ul>
+    </div>
+  </div>
+  <!-- /PAGINATION-->  
+  
     <div class="listingPageLinks">
       <span style="float: left"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></span>
       <span style="float: right"><?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y'))); ?></span>
     </div>
     <div style="clear:both; height:10px;"></div>
-  </div>
   <?php
 }
 ?>
+
 <div style="clear:both;"></div>
 <div>
   <?php

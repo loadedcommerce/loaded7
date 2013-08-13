@@ -11,17 +11,16 @@
 ?>
 <!--modules/boxes/order_history.php start-->
 <div class="well" >
-  <ul id="box-order-history" class="nav nav-list">
+  <ul class="box-order-history nav nav-list list-style-circle">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-order-history li").each(function(){
+  $(".box-order-history li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).attr('style', 'margin-left:8px;');
   });
-  $('#box-order-history').attr('style', 'list-style:circle !important;');
 });
 </script>
 <!--modules/boxes/order_history.php end-->

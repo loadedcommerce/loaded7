@@ -11,19 +11,21 @@
 ?>
 <!--modules/boxes/tell_a_friend.php start-->
 <div class="well" >
-  <ul id="box-tell-a-friend" class="nav nav-list">
+  <ul class="box-tell-a-friend nav nav-list">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
-    <?php echo $lC_Box->getContent(); ?>
+    <form class="box-tell-a-friend-form" name="tell_a_friend" action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'tell_a_friend&' . $lC_Product->getKeyword()); ?>" method="post">   
+      <?php echo $lC_Box->getContent(); ?>
+    </form>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-tell-a-friend li").each(function(){
+  $(".box-tell-a-friend li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('margin-left-li');
   });  
-  $('#box-tell-a-friend-form').addClass('no-margin-bottom');
-  $('#tell-a-friend-submit').html('<i class="btn btn-small btn-info cusrsor:pointer margin-bottom">Go</i>');
-  $('#to_email_address').attr('style', 'width:73%;');
+  $('.box-tell-a-friend-form').addClass('no-margin-bottom');
+  $('.box-tell-a-friend-submit').html('<i class="btn btn-small btn-info cusrsor:pointer margin-bottom">Go</i>');
+  $('.box-tell-a-friend-select').attr('style', 'width:73%;');
 });
 </script>
 <!--modules/boxes/tell_a_friend.php end-->

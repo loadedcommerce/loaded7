@@ -11,18 +11,18 @@
 ?>
 <!--modules/boxes/shopping_cart.php start-->
 <div class="well" >
-  <ul id="box-shopping-cart" class="nav nav-list">
+  <ul class="box-shopping-cart nav nav-list">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-shopping-cart li").each(function(){
+  $(".box-shopping-cart li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('margin-left-li');
     $(this).find('a').attr('style', 'display:inline;');
   });  
-   $("#box-shopping-cart li:last-child").addClass('margin-top align-right');
+   $(".box-shopping-cart li:last-child").addClass('margin-top align-right');
 });
 </script>
 <!--modules/boxes/shopping_cart.php end-->

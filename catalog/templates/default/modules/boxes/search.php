@@ -14,5 +14,17 @@
 ?> 
 <!--modules/boxes/search.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<ul class="category">
+  <form name="search" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" method="get">
+    <?php echo $lC_Box->getContent(); ?>
+  </form>
+</ul>
+<script>
+$(document).ready(function() {
+  var icon = '<?php echo lc_icon('send.png', null, null, 'style="vertical-align:middle; margin-left:5px;"'); ?>';
+  $('.box-search-submit').html(icon);
+  $('.box-keywords').attr('style', 'width:73%;');
+  $(".box-search-input").find('a').attr('style', 'display:inline; cursor:pointer;');
+});
+</script>
 <!--modules/boxes/search.php end-->

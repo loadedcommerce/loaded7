@@ -11,7 +11,7 @@
 ?>
 <!--modules/boxes/manufacturers.php start-->
 <div class="well" >
-  <ul id="box-manufacturers" class="nav nav-list">
+  <ul class="box-manufacturers nav nav-list">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
       <form id="box-manufacturer-form" name="manufacturers" class="no-margin-bottom" action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false); ?>" method="get">
         <?php echo $lC_Box->getContent(); ?>
@@ -20,10 +20,9 @@
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-manufacturers li").each(function(){
+  $(".box-manufacturers li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
   });  
-  $('#box-manufacturers-select').attr('onchange', 'this.form.submit();').attr('style', 'width:100%');
 });
 </script>
 <!--modules/boxes/manufacturers.php end-->

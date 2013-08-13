@@ -11,17 +11,16 @@
 ?>
 <!--modules/boxes/checkout_trail.php start-->
 <div class="well" >
-  <ul id="box-checkout-trail" class="nav nav-list">
+  <ul class="box-checkout-trail nav nav-list list-style-decimal">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-checkout-trail li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).attr('style', 'margin-left:10px;');
+  $(".box-checkout-trail li").each(function(){
+    if ($(this).attr('class') != 'nav-header') $(this).attr('style', 'margin-left:15px;');
   });
-  $('#box-checkout-trail').attr('style', 'list-style:decimal !important;');
 });
 </script>
 <!--modules/boxes/checkout_trail.php end-->

@@ -14,5 +14,10 @@
 ?>
 <!--modules/boxes/product_notifications.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<ul class="category">
+  <?php echo $lC_Box->getContent(); ?>
+</ul>
+<script>
+$('.box-product_notifications-image-container').html('<img class="product_notifications-image" src="templates/default/images/subscribe_btn.png" border="0" style="float:left; margin-right:10px;">');
+</script>
 <!--modules/boxes/product_notifications.php end-->

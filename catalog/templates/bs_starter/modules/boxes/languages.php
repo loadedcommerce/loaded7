@@ -11,14 +11,14 @@
 ?>
 <!--modules/boxes/languages.php start-->
 <div class="well" >
-  <ul id="box-languages" class="nav nav-list">
+  <ul class="box-languages nav nav-list">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-languages li").each(function(){
+  $(".box-languages li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center left-margin-li');
   });  
 });

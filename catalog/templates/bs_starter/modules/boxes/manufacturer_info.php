@@ -11,14 +11,14 @@
 ?>
 <!--modules/boxes/manufacturers_info.php start-->
 <div class="well" >
-  <ul id="box-manufacturers-info" class="nav nav-list">
+  <ul class="box-manufacturers-info nav nav-list">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-manufacturers-info li").each(function(){
+  $(".box-manufacturers-info li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
   });  
 });

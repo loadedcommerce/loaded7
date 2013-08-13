@@ -703,13 +703,13 @@
     }
 
     function getBatchPageLinks($batch_keyword = 'page', $parameters = '', $with_pull_down_menu = true) {
-      $string = '<table border="0"><tr><td>' . $this->getBatchPreviousPageLink($batch_keyword, $parameters) . '</td>';
+      $string = '<li>' . $this->getBatchPreviousPageLink($batch_keyword, $parameters) . '</li>';
 
       if ( $with_pull_down_menu === true ) {
-        $string .= '<td>' . $this->getBatchPagesPullDownMenu($batch_keyword, $parameters) . '</td>';
+        $string .= '<li>' . $this->getBatchPagesPullDownMenu($batch_keyword, $parameters) . '</li>';
       }
 
-      $string .= '<td>' . $this->getBatchNextPageLink($batch_keyword, $parameters) . '</td></tr></table>';
+      $string .= '<li>' . $this->getBatchNextPageLink($batch_keyword, $parameters) . '</li>';
 
       return $string;
     }

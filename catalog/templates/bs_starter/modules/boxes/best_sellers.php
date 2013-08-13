@@ -11,17 +11,16 @@
 ?>
 <!--modules/boxes/best_sellers.php start-->
 <div class="well" >
-  <ul id="box-best-sellers" class="nav nav-list">
+  <ul class="box-best-sellers nav nav-list list-style-square">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-best-sellers li").each(function(){
+  $(".box-best-sellers li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).attr('style', 'margin-left:10px;');
   });
-  $('#box-best-sellers').attr('style', 'list-style:square !important;');
 });
 </script>
 <!--modules/boxes/best_sellers.php end-->

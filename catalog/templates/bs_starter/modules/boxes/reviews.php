@@ -11,19 +11,19 @@
 ?>
 <!--modules/boxes/reviews.php start-->
 <div class="well" >
-  <ul id="box-reviews" class="nav nav-list">
+  <ul class="box-reviews nav nav-list">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-reviews li").each(function(){
+  $(".box-reviews li").each(function(){
     if ($(this).attr('class') != 'nav-header') $(this).addClass('margin-left-li');
   });
   var imageContent = $('.box-reviews-image').html();
   $('.box-reviews-image').html('<div class="thumbnail">' + imageContent + '</div>');  
-  $("#box-reviews li:last-child").addClass('small-margin-top align-center');
+  $(".box-reviews li:last-child").addClass('small-margin-top align-center');
 });
 </script>
 <!--modules/boxes/reviews.php end-->

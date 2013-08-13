@@ -11,17 +11,16 @@
 ?>
 <!--modules/boxes/information.php start-->
 <div class="well" >
-  <ul id="box-information" class="nav nav-list">
+  <ul class="box-information nav nav-list list-style-disc">
     <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $("#box-information li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).attr('style', 'margin-left:8px;');
+  $(".box-information li").each(function(){
+    if ($(this).attr('class') != 'nav-header') $(this).attr('style', 'margin-left:10px;');
   });
-  $('#box-information').attr('style', 'list-style:disc !important;');
 });
 </script>
 <!--modules/boxes/information.php end-->
