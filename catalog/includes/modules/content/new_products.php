@@ -76,7 +76,7 @@ class lC_Content_new_products extends lC_Modules {
                            '  <div class="content-new-products-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $product['name'])  . '</div>' . "\n" . 
                            '  <div class="content-new-products-desc">' . substr($product['description'], 0, 60) . '...</div>' . "\n" . 
                            '  <div class="content-new-products-price">' . $product['display_price']. '</div>' . "\n" .
-                           '  <div class="content-new-products-button"><button class="content-new-products-add-button" onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $product['keyword'] . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('button_add_to_cart') . '</button></div>' . "\n";
+                           '  <div class="content-new-products-button"><button class="content-new-products-add-button" onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $product['keyword'] . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('new_products_button_buy_now') . '</button></div>' . "\n";
         $this->_content .= '</div>' . "\n";
       }
     }

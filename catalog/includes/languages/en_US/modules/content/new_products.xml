@@ -6,5 +6,10 @@
       <value><![CDATA[New Products]]></value>
       <group>modules-content</group>
     </definition>
+    <definition>
+      <key>new_products_button_buy_now</key>
+      <value><![CDATA[Buy Now]]></value>
+      <group>modules-content</group>
+    </definition>    
   </definitions>
 </language>

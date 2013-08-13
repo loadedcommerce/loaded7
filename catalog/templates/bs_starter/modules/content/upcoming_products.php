@@ -6,7 +6,7 @@
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: upcoming.php v1.0 2013-08-08 datazen $
+  @version    $Id: upcoming_prodicts.php v1.0 2013-08-08 datazen $
 */
 ?>
 <!--modules/content/upcoming_products.php start-->
@@ -16,7 +16,7 @@
 </div>
 <script>
 $(document).ready(function() {
-  
+  var mediaType = _setMediaType();
   var mainContentClass = $('#main-content-container').attr('class');
   if(mainContentClass == 'span6') {
     thisContentClass = 'span4';
@@ -39,16 +39,18 @@ $(document).ready(function() {
              '  <div class="thumbnail align-center">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 class="content-upcoming-products-text-name">' + nameContent + '</h3>' +
-             '      <div class="row-fluid">' +
-             '        <div class="span6">' +
-             '          <p class="lead content-upcoming-products-text-price">' + priceContent + '</p>' +
-             '        </div>' +
-             '        <div class="span6 content-upcoming-products-text-expected">' + textExpected + '<br />' + dateContent +
-             '        </div>' +
-             '      </div>' +
-             '    </div>' +
-             '  </div>' +
-             '</div>';
+             '      <div class="row-fluid">';
+    if (mediaType == 'desktop') {
+      output += '        <div class="span6">' +
+                '          <p class="lead content-upcoming-products-text-price">' + priceContent + '</p>' +
+                '        </div>';
+    }
+    output += '        <div class="' + ((mediaType != 'desktop') ? 'span12' : 'span6') + ' content-upcoming-products-text-expected">' + textExpected + '<br />' + dateContent +
+              '        </div>' +
+              '      </div>' +
+              '    </div>' +
+              '  </div>' +
+              '</div>';
               
     $(this).html(output);  
   });

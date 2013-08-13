@@ -16,7 +16,8 @@
 </div>
 <script>
 $(document).ready(function() {
-  
+  var buttonContentText;
+  var mediaType = _setMediaType();
   var mainContentClass = $('#main-content-container').attr('class');
   if(mainContentClass == 'span6') {
     thisContentClass = 'span6';
@@ -27,10 +28,11 @@ $(document).ready(function() {
   $(".content-new-products-container").each(function(){
     var imageContent = $(this).find('div.content-new-products-image').html();
     var nameContent = $(this).find('div.content-new-products-name').html();
-    var nameContentText = $(this).find('div.content-new-products-name').text();;
+    var nameContentText = $(this).find('div.content-new-products-name').text();
     var descContent = $(this).find('div.content-new-products-desc').html();
     var priceContent = $(this).find('div.content-new-products-price').html();
     var buttonContent = $(this).find('div.content-new-products-button').html();
+    buttonContentText = $(this).find('div.content-new-products-button').text();
 
     var newNameContentText = (nameContentText.length > 18) ? nameContentText.substr(0, 15) + '...' : nameContentText;
     nameContent = nameContent.replace(nameContentText, newNameContentText);    
@@ -44,8 +46,7 @@ $(document).ready(function() {
              '        <div class="span6">' +
              '          <p class="lead">' + priceContent + '</p>' +
              '        </div>' +
-             '        <div class="span6 with-padding no-margin-left">' + buttonContent +
-             '        </div>' +
+             '        <div class="span6 no-margin-left">' + buttonContent + '</div>' +
              '      </div>' +
              '    </div>' +
              '  </div>' +
@@ -54,6 +55,11 @@ $(document).ready(function() {
     $(this).html(output);  
   });
   $('.content-new-products-add-button').addClass('btn btn-success btn-block');
+  if (mediaType == 'small-tablet-landscape' || mediaType == 'tablet-portrait') {
+     var textArr = buttonContentText.split(' ');
+    $('.content-new-products-add-button').text(textArr[0]);  
+    $('.content-new-products-container p.lead').attr('style', 'font-size:1.1em;');  
+  }
 });
 </script>
 <!--modules/content/new_products.php end-->
