@@ -138,5 +138,17 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
                '<p>More</p>'+
                '<p>More</p>'
     });
+  }
+  
+  function editOrderProduct(val) {
+    $("#buttons_" + val).html('<p><a class="button compact small-margin-top op-action" href="javascript:void(0);" onclick="saveOrderProduct(' + val + ');">Save</a></p>'+
+                              '<p><a class="button compact small-margin-bottom op-action" href="javascript:void(0)" onclick="cancelOrderProductEdit(' + val + ');">Cancel</a></p>');
+  }
+  
+  function cancelOrderProductEdit(val) {
+    $("#buttons_" + val).html('<span class="button-group">'+
+                              '  <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct(' + val + ');">Edit</a>'+
+                              '  <a class="button compact icon-trash with-tooltip" title="Delete" href="javascript:void(0)" onclick="deleteOrderProduct(' + val + ');"></a>'+
+                              '</span>');
   }  
 </script>
