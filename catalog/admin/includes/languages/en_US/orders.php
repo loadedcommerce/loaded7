@@ -152,3 +152,4 @@ text_order_status = Order Status
 text_shipping_status = Shipping Status
 text_payment_status = Payment Status
 text_product_details = Product Details
+text_products = Products

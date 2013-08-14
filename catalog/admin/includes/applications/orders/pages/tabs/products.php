@@ -70,7 +70,7 @@
                       <span id="buttons_<?php echo $products['id']; ?>">
                         <span class="button-group">
                           <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct('<?php echo $products['id']; ?>');"><?php echo $lC_Language->get('text_edit'); ?></a>
-                          <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)"></a>
+                          <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['id']; ?>');"></a>
                         </span>
                       </span>
                     </div>

@@ -129,6 +129,18 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     return false;
   }
   
+  function saveOrderProduct(val) {
+    alert('save product: ' + val + ' changes');
+    $("#buttons_" + val).html('<span class="button-group">'+
+                              '  <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct(' + val + ');"><?php echo $lC_Language->get('text_edit'); ?></a>'+
+                              '  <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct(' + val + ');"></a>'+
+                              '</span>');
+  }
+  
+  function deleteOrderProduct(val) {
+    alert('delete product: ' + val + ' from the order');
+  }
+  
   function orderProductDetails(id) {
     $.modal({
       title: '<?php echo $lC_Language->get('text_product_details'); ?>',
