@@ -34,12 +34,11 @@ $(document).ready(function() {
     var imageContent = $(this).find('div.content-also-purchased-products-image').html();
     var nameContent = $(this).find('div.content-also-purchased-products-name').html();
     var nameContentText = $(this).find('div.content-also-purchased-products-name').text();
-    var descContent = $(this).find('div.content-also-purchased-products-desc').html();
-    var descContentText = $(this).find('div.content-also-purchased-products-desc').text();    
     var priceContent = $(this).find('div.content-also-purchased-products-price').html();
     var dateContent = $(this).find('div.content-also-purchased-products-date').html();
     var buttonContent = $(this).find('div.content-also-purchased-products-button').html();
     var buttonContentText = $(this).find('div.content-also-purchased-products-button').text();
+    
     var newNameContentText = (nameContentText.length > 16) ? nameContentText.substr(0, 13) + '...' : nameContentText;
     nameContent = nameContent.replace(nameContentText, newNameContentText);
     

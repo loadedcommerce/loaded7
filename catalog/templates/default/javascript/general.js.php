@@ -21,9 +21,6 @@ $(document).ready(function() {
   // jBreadcrumb
   $("#breadCrumbContainer").jBreadCrumb();     
    
-  //jCarousel
-  $('.first-and-second-carousel').jcarousel();
-  
   //sub menu
   $("ul.departments > li.menu_cont > a").toggle(
     function(){

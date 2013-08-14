@@ -30,12 +30,16 @@ $(document).ready(function() {
     var nameContent = $(this).find('div.content-new-products-name').html();
     var nameContentText = $(this).find('div.content-new-products-name').text();
     var descContent = $(this).find('div.content-new-products-desc').html();
+    var descContent = $(this).find('div.content-new-products-desc').html();
     var priceContent = $(this).find('div.content-new-products-price').html();
     var buttonContent = $(this).find('div.content-new-products-button').html();
     buttonContentText = $(this).find('div.content-new-products-button').text();
 
     var newNameContentText = (nameContentText.length > 18) ? nameContentText.substr(0, 15) + '...' : nameContentText;
-    nameContent = nameContent.replace(nameContentText, newNameContentText);    
+    nameContent = nameContent.replace(nameContentText, newNameContentText);  
+    
+    var newDescContentText = (descContentText.length > 65) ? descContentText.substr(0, 62) + '...' : descContentText;
+    descContent = descContent.replace(descContentText, newDescContentText);      
     
     output = '<div class="' + thisContentClass+ ' with-padding">'+
              '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
