@@ -405,6 +405,11 @@ input.holder { color: #818181; }
 
 img{ max-width:100%;}
 
+
+.pagination li { width: auto; margin: 0 4px; }
+.pagination li a { text-decoration:none;; }
+.pagination { float: right; }
+
 /*Forms*/
 div.selector {
   border:solid 1px #d7d7d7; 
