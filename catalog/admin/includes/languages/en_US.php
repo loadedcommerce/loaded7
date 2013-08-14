@@ -35,6 +35,7 @@ text_with_selected = With Selected
 text_delete = Delete
 text_move = Move
 text_version_info = Version Info
+text_error = Error
 
 menu_title_addons = Add Ons
 menu_title_app_store = Add Ons

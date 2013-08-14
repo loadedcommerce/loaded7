@@ -11,6 +11,8 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+require_once(DIR_FS_ADMIN . 'includes/applications/server_info/classes/server_info.php');
+require_once(DIR_FS_CATALOG . 'includes/classes/transport.php'); 
 
 class lC_Api {
   /**
@@ -19,23 +21,55 @@ class lC_Api {
   * @access private      
   * @return string
   */ 
-  public function healthCheck() {
-//    if ($this->__timeToCheck()) {
-      return $this->__doRegister();
+  public function healthCheck($data = array()) {
+//    if ($this->_timeToCheck()) {
+//      return $this->_doHealthCheck($data);
 //    }
   }
+  /**
+  * Register the installation
+  *  
+  * @access private      
+  * @return string
+  */  
+  public function register($data) {
+    return $this->_doRegister($data);
+  }  
+  
+  /**
+  * Validate the serial
+  *  
+  * @access private      
+  * @return string
+  */  
+  public function validateSerial($data) {
+    return $this->_validateSerial($data);
+  }  
   /**
   * Register the new install with the LC API
   *  
   * @access private      
   * @return string
   */   
-  private function __doRegister() {
+  private function _doRegister($data) {
     global $lC_Database, $lC_Cache;
+                  
+    if (isset($data['activation_email']) && $data['activation_email'] != NULL) {
+      $storeEmail = $data['activation_email'];
+    } else {
+      $storeEmail = STORE_OWNER_EMAIL_ADDRESS;
+    } 
+    
+    if (isset($data['activation_serial']) && $data['activation_serial'] != NULL) {
+      $storeSerial = $data['activation_serial'];
+    } else {
+      $storeSerial = '';
+    }    
     
     // register the install with LC API
-    $registerArr = array('storeName' => STORE_NAME,
-                         'storeEmail' => STORE_OWNER_EMAIL_ADDRESS,
+    $registerArr = array('serial' => $storeSerial,
+                         'storeName' => STORE_NAME,
+                         'storeEmail' => $storeEmail,
                          'storeWWW' => HTTP_SERVER . DIR_WS_HTTP_CATALOG,
                          'storeSSL' => HTTPS_SERVER . DIR_WS_HTTPS_CATALOG,
                          'systemMetaData' => base64_encode(json_encode(lc_get_system_information())),
@@ -45,31 +79,13 @@ class lC_Api {
     $checksum = hash('sha256', json_encode($registerArr));
     $registerArr['checksum'] = $checksum;
     
-    $resultXML = $this->__sendToHost($registerArr, 'https://api.loadedcommerce.com/1_0/register/install/');
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/register/install/', 'method' => 'post', 'parameters' => $registerArr));
     $newInstallationID = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
-    
-    // remove any old value that might be in the database
-    $Qdel = $lC_Database->query('delete from :table_configuration where configuration_key = :configuration_key');
-    $Qdel->bindTable(':table_configuration', TABLE_CONFIGURATION);
-    $Qdel->bindValue(':configuration_key', 'INSTALLATION_ID');
-    $Qdel->execute();      
-    // update configuration table and add the installation ID     
-    $Qupdate = $lC_Database->query('insert into :table_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, last_modified) values (:configuration_title, :configuration_key, :configuration_value, :configuration_description, :configuration_group_id, :last_modified)');
-    $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
-    $Qupdate->bindValue(':configuration_title', 'Installation ID');
-    $Qupdate->bindValue(':configuration_key', 'INSTALLATION_ID');
-    $Qupdate->bindValue(':configuration_value', $newInstallationID);
-    $Qupdate->bindValue(':configuration_description', 'Installation ID');      
-    $Qupdate->bindValue(':configuration_group_id', '6');      
-    $Qupdate->bindValue(':last_modified', date("Y-m-d H:m:s"));   
-    $Qupdate->execute();  
 
-    lC_Cache::clear('configuration');
-    
-    if ( $lC_Database->isError() ) {
-      return utility::arr2xml(array('error' => TRUE, 'message' => 'There was an error processing the request.'));
-    } else {    
+    if ( lC_Server_info_Admin::updateInstallID($newInstallationID) ) {
       return utility::arr2xml(array('error' => FALSE, 'installationID' => $newInstallationID));
+    } else {    
+      return utility::arr2xml(array('error' => TRUE, 'message' => 'error processing the request'));
     }  
   }
   /**
@@ -78,7 +94,7 @@ class lC_Api {
   * @access private      
   * @return boolean
   */   
-  private function __timeToCheck() {
+  private function _timeToCheck() {
     global $lC_Database;
 
     $check = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
@@ -96,50 +112,5 @@ class lC_Api {
 
     return (((int)$today != (int)$check) ? TRUE : FALSE);   
   }    
-  /**
-  * Send the data to the host 
-  *  
-  * @param array  $_data    The data array to process
-  * @param string $_url     The endpoint URL
-  * @param string $_action  Switch for POST or GET
-  * @access private      
-  * @return mixed
-  */  
-  protected function __sendToHost($_data = NULL, $_url, $_action = 'post') {
-    
-    $agent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)";
-    $ch = curl_init();
-    
-    curl_setopt($ch, CURLOPT_VERBOSE, 0);
-    if (strtolower($_action) == 'post') {
-      curl_setopt($ch, CURLOPT_POST, 1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, $_data);
-    } else {
-      $params = (is_array($_data) && !empty($_data)) ? utility::arr2nvp($_data) : $_data;
-      if (!empty($params)) $_url .= '?' . $params;
-    }
-    curl_setopt($ch, CURLOPT_URL, $_url);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-    curl_setopt($ch, CURLOPT_USERAGENT, $agent);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE); 
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, TRUE);
-    if (!is_array($_data) && substr($_data, 0, 5) == '<?xml') { 
-      curl_setopt($ch, CURLOPT_HEADER, 1);
-      curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
-    }
-
-    $response = curl_exec($ch);
-    
-    if(!curl_errno($ch)) {
-      $result = $response;
-    } else { 
-      $result = utility::arr2xml(array('error' => TRUE, 'message' => curl_errno($ch))); 
-    }
-    
-    curl_close($ch);
-    
-    return $result;
-  }  
 }
 ?>
