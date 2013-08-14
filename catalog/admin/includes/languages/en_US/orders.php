@@ -153,3 +153,6 @@ text_shipping_status = Shipping Status
 text_payment_status = Payment Status
 text_product_details = Product Details
 text_products = Products
+text_create_shipment = Create Shipment
+text_print_packing_slip = Print Packing Slip
+text_go_pro_and_enjoy = Go Pro and enjoy this feature!
