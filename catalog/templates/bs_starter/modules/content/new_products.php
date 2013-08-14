@@ -30,7 +30,7 @@ $(document).ready(function() {
     var nameContent = $(this).find('div.content-new-products-name').html();
     var nameContentText = $(this).find('div.content-new-products-name').text();
     var descContent = $(this).find('div.content-new-products-desc').html();
-    var descContent = $(this).find('div.content-new-products-desc').html();
+    var descContentText = $(this).find('div.content-new-products-desc').text();
     var priceContent = $(this).find('div.content-new-products-price').html();
     var buttonContent = $(this).find('div.content-new-products-button').html();
     buttonContentText = $(this).find('div.content-new-products-button').text();
