@@ -47,6 +47,9 @@ if ($request_type == 'NONSSL') {
   define('DIR_WS_CATALOG', DIR_WS_HTTPS_CATALOG);
 }
 
+// compatibility work-around logic for PHP4
+require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/functions/compatibility.php'));
+
 // include the list of project filenames
 require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/filenames.php'));
 
