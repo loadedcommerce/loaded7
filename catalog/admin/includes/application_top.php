@@ -39,10 +39,6 @@ if ($request_type == 'NONSSL') {
 if (!defined('DIR_WS_ADMIN')) define('DIR_WS_ADMIN', 'admin/');
 if (!defined('DIR_FS_ADMIN')) define('DIR_FS_ADMIN', DIR_FS_CATALOG . 'admin/');
 
-// compatibility work-around logic for PHP4 
-require($lC_Vqmod->modCheck('../includes/functions/compatibility.php'));
-require($lC_Vqmod->modCheck('includes/functions/compatibility.php'));
-
 // include the list of project filenames
 require($lC_Vqmod->modCheck('includes/filenames.php'));
 
