@@ -13,61 +13,61 @@
 */
 ?>
           <div id="section_orders_customer">
-            <h3 class="show-below-768 margin-left margin-top no-margin-bottom">Customer</h3>
+            <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('text_customer'); ?></h3>
             <div id="section_orders_customer_content" class="columns with-padding">
               <div class="new-row-mobile twelve-columns twelve-columns-mobile">
                 <fieldset class="fieldset">
-                  <legend class="legend">Customer Info</legend>
+                  <legend class="legend"><?php echo $lC_Language->get('text_customer_info'); ?></legend>
                   <div class="columns">
                     <div class="new-row-mobile nine-columns twelve-columns-mobile">
                       <div class="field-block button-height">
                         <p class="button-height field-line-height">
-                          <label for="cust_name" class="label">Name</label>
+                          <label for="cust_name" class="label"><?php echo $lC_Language->get('text_name'); ?></label>
                           <span id="cust_name" class="bold">Sal Iozzia</span>
                         </p>
                         <p class="button-height field-line-height">
-                          <label for="cust_name2" class="label">Company Name</label>
+                          <label for="cust_name2" class="label"><?php echo $lC_Language->get('text_company_name'); ?></label>
                           <span id="cust_name2" class="bold"><small class="tag orange-bg">B2B</small></span>
                         </p>
                         <p class="button-height field-line-height">
-                          <label for="cust_name" class="label">Email</label>
+                          <label for="cust_name" class="label"><?php echo $lC_Language->get('text_email'); ?></label>
                           <span id="cust_name" class="bold">sal@loadedcommerce.com</span>
                         </p>
                         <p class="button-height field-line-height">
-                          <label for="cust_name" class="label">Address</label>
+                          <label for="cust_name" class="label"><?php echo $lC_Language->get('text_address'); ?></label>
                           <span id="cust_name" class="field-block-address-offset">
                             <span class="bold field-block-address">1234 Main St.<br />Atlanta, GA 35282<br />United States</span>
                           </span>
                         </p>
                         <p class="button-height field-line-height">
-                          <label for="cust_name" class="label">Phone Number</label>
+                          <label for="cust_name" class="label"><?php echo $lC_Language->get('text_phone_number'); ?></label>
                           <span id="cust_name" class="bold">852-820-7896</span>
                         </p>
                         <p class="button-height field-line-height">
-                          <label for="cust_name" class="label">Customer Group</label>
+                          <label for="cust_name" class="label"><?php echo $lC_Language->get('text_customer_group'); ?></label>
                           <span id="cust_name" class="bold">Retail</span>
                         </p>
                       </div>
                     </div>
                     <div class="new-row-mobile three-columns twelve-columns-mobile">
                       <span class="button-group">
-                        <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&cID=1'); ?>" class="button compact">View</a>
-                        <a href="#" class="button compact">Edit</a>
+                        <a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&cID=1'); ?>" class="button compact"><?php echo $lC_Language->get('text_view'); ?></a>
+                        <a href="#" class="button compact"><?php echo $lC_Language->get('text_edit'); ?></a>
                       </span>
                     </div>
                   </div> 
                 </fieldset>
                 <fieldset class="fieldset">
-                  <legend class="legend">Alternate Customer Info <?php echo lc_go_pro(); ?></legend>
+                  <legend class="legend"><?php echo $lC_Language->get('text_alternate') . ' ' . $lC_Language->get('text_customer_info'); ?> <?php echo lc_go_pro(); ?></legend>
                   <div class="columns">
                     <div class="new-row-mobile nine-columns twelve-columns-mobile">
                       <div class="field-block button-height">
                         <p class="button-height field-line-height">
-                          <label for="cust_name" class="label">Email</label>
+                          <label for="cust_name" class="label"><?php echo $lC_Language->get('text_email'); ?></label>
                           <span id="cust_name" class="bold">&nbsp;</span>
                         </p>
                         <p class="button-height field-line-height">
-                          <label for="cust_name2" class="label">Phone Number</label>
+                          <label for="cust_name2" class="label"><?php echo $lC_Language->get('text_phone_number'); ?></label>
                           <span id="cust_name2" class="bold">&nbsp;</span>
                         </p>
                       </div>
@@ -75,14 +75,14 @@
                   </div>
                 </fieldset>
                 <fieldset class="fieldset">
-                  <legend class="legend">Order History</legend>
+                  <legend class="legend"><?php echo $lC_Language->get('text_order_history'); ?></legend>
                   <div class="columns with-small-padding small-margin-left hide-below-768 bbottom-grey">
-                    <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom">Number</div>
-                    <div class="new-row-mobile two-columns twelve-columns-mobil no-margin-bottom">Amount</div>
-                    <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom">Order Status</div>
-                    <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom">Shipping Status</div>
-                    <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom">Payment Status</div>
-                    <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom align-right">Action</div>
+                    <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom"><?php echo $lC_Language->get('text_number'); ?></div>
+                    <div class="new-row-mobile two-columns twelve-columns-mobil no-margin-bottom"><?php echo $lC_Language->get('text_amount'); ?></div>
+                    <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom"><?php echo $lC_Language->get('text_order_status'); ?></div>
+                    <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom"><?php echo $lC_Language->get('text_shipping_status'); ?></div>
+                    <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom"><?php echo $lC_Language->get('text_payment_status'); ?></div>
+                    <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom align-right"><?php echo $lC_Language->get('text_action'); ?></div>
                   </div>
                   <?php
                     $Qordershistory = array(array('id' => '3', 'number' => '52001', 'amount' => '89.66', 'status' => 'Complete', 'shipping' => 'Shipped', 'payment' => 'Paid'),
@@ -93,27 +93,27 @@
                   ?>
                   <div class="columns with-small-padding small-margin-left bbottom-grey">
                     <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom">
-                      <span class="show-below-768 bold">Number: </span>
+                      <span class="show-below-768 bold"><?php echo $lC_Language->get('text_number'); ?> </span>
                       <span><?php echo $history['number']; ?></span>
                     </div>
                     <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom">
-                      <span class="show-below-768 bold">Amount: </span>
+                      <span class="show-below-768 bold"><?php echo $lC_Language->get('text_amount'); ?> </span>
                       <span>$<?php echo $history['amount']; ?></span>
                     </div>
                     <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom">
-                      <span class="show-below-768 bold">Order Status: </span>
+                      <span class="show-below-768 bold"><?php echo $lC_Language->get('text_order_status'); ?> </span>
                       <span><?php echo $history['status']; ?></span>
                     </div>
                     <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom">
-                      <span class="show-below-768 bold">Shipping Status: </span>
+                      <span class="show-below-768 bold"><?php echo $lC_Language->get('text_shipping_status'); ?> </span>
                       <span><?php echo $history['shipping']; ?></span>
                     </div>
                     <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom">
-                      <span class="show-below-768 bold">Payment Status: </span>
+                      <span class="show-below-768 bold"><?php echo $lC_Language->get('text_payment_sttus'); ?> </span>
                       <span><?php echo $history['payment']; ?></span>
                     </div>
                     <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom align-right">
-                      <a class="button compact icon-pencil" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders=' . $history['id'] . '&action=save'); ?>">View</a>
+                      <a class="button compact icon-pencil" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders=' . $history['id'] . '&action=save'); ?>"><?php echo $lC_Language->get('text_view'); ?></a>
                     </div>
                   </div>
                   <?php

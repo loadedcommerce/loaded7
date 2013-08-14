@@ -29,9 +29,9 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
     <form name="order" id="order" class="dataForm" action="<?php //echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('orders_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="order_quick_info">
         <div class="columns with-small-padding">
-          <div class="four-columns twelve-columns-mobile"><h4>Order Number 6574389</h4></div>
-          <div class="four-columns twelve-columns-mobile"><h4>Amount $507.50</h4></div>
-          <div class="four-columns twelve-columns-mobile"><h4>Due $0.00</h4></div>
+          <div class="four-columns twelve-columns-mobile"><h4><?php echo $lC_Language->get('text_order_number'); ?> 6574389</h4></div>
+          <div class="four-columns twelve-columns-mobile"><h4><?php echo $lC_Language->get('text_amount'); ?> $507.50</h4></div>
+          <div class="four-columns twelve-columns-mobile"><h4><?php echo $lC_Language->get('text_due'); ?> $0.00</h4></div>
         </div>
       </div>
       <div id="order_tabs" class="side-tabs">
@@ -40,8 +40,8 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
           <li><?php echo lc_link_object('#section_orders_products', $lC_Language->get('section_orders_products')); ?></li>
           <li><?php echo lc_link_object('#section_orders_customer', $lC_Language->get('section_orders_customer')); ?></li>
           <li><?php echo lc_link_object('#section_orders_shipping', $lC_Language->get('section_orders_shipping')); ?></li>
-          <li><?php echo lc_link_object('#section_orders_messages', $lC_Language->get('section_orders_messages')); ?></li>
-          <li><?php echo lc_link_object('#section_orders_fraud', $lC_Language->get('section_orders_fraud')); ?></li>
+          <!--<li><?php echo lc_link_object('#section_orders_messages', $lC_Language->get('section_orders_messages')); ?></li>
+          <li><?php echo lc_link_object('#section_orders_fraud', $lC_Language->get('section_orders_fraud')); ?></li>-->
           <li><?php echo lc_link_object('#section_orders_payments', $lC_Language->get('section_orders_payments')); ?></li>
         </ul>
         <div class="tabs-content" id="orders_sections">
@@ -50,8 +50,8 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
             include('includes/applications/orders/pages/tabs/products.php');  
             include('includes/applications/orders/pages/tabs/customer.php'); 
             include('includes/applications/orders/pages/tabs/shipping.php'); 
-            include('includes/applications/orders/pages/tabs/messages.php');
-            include('includes/applications/orders/pages/tabs/fraud.php'); 
+            //include('includes/applications/orders/pages/tabs/messages.php');
+            //include('includes/applications/orders/pages/tabs/fraud.php'); 
             include('includes/applications/orders/pages/tabs/payments.php'); 
           ?> 
         </div>

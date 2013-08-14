@@ -131,7 +131,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
   
   function orderProductDetails(id) {
     $.modal({
-      title: 'Product Details',
+      title: '<?php echo $lC_Language->get('text_product_details'); ?>',
       content: '<p>This is the orders products detail modal window for ' + id + '.</p>'+
                '<p>More</p>'+
                '<p>More</p>'+
@@ -146,14 +146,14 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
   }
   
   function editOrderProduct(val) {
-    $("#buttons_" + val).html('<p><a class="button compact small-margin-top op-action" href="javascript:void(0);" onclick="saveOrderProduct(' + val + ');">Save</a></p>'+
-                              '<p><a class="button compact small-margin-bottom op-action" href="javascript:void(0)" onclick="cancelOrderProductEdit(' + val + ');">Cancel</a></p>');
+    $("#buttons_" + val).html('<p><a class="button compact small-margin-top op-action" href="javascript:void(0);" onclick="saveOrderProduct(' + val + ');"><?php echo $lC_Language->get('text_save'); ?></a></p>'+
+                              '<p><a class="button compact small-margin-bottom op-action" href="javascript:void(0)" onclick="cancelOrderProductEdit(' + val + ');"><?php echo $lC_Language->get('text_cancel'); ?></a></p>');
   }
   
   function cancelOrderProductEdit(val) {
     $("#buttons_" + val).html('<span class="button-group">'+
-                              '  <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct(' + val + ');">Edit</a>'+
-                              '  <a class="button compact icon-trash with-tooltip" title="Delete" href="javascript:void(0)" onclick="deleteOrderProduct(' + val + ');"></a>'+
+                              '  <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct(' + val + ');"><?php echo $lC_Language->get('text_edit'); ?></a>'+
+                              '  <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct(' + val + ');"></a>'+
                               '</span>');
   }  
 </script>

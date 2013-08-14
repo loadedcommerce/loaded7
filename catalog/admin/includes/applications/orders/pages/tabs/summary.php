@@ -13,29 +13,29 @@
 */
 ?>
           <div id="section_orders_summary">
-            <h3 class="show-below-768 margin-left margin-top no-margin-bottom">Summary</h3>
+            <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('text_summary'); ?></h3>
             <div class="columns with-padding">
               <div class="new-row-mobile six-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
-                    <span class="icon-user icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_customer'); ?></strong></span>
+                    <span class="icon-user icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_customer'); ?></strong></span>
                   </legend>
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Name</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_name'); ?></td>
                         <td class="align-left pad-5 width-66 bold">Sal Iozzia</td>
                       </tr>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Company Name</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_company_name'); ?></td>
                         <td class="align-left pad-5 width-66 bold"><small class="tag orange-bg">B2B</small></td>
                       </tr>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">City, State</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_city_state'); ?></td>
                         <td class="align-left pad-5 width-66 bold">Atlanta, GA USA</td>
                       </tr>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Customer Group</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_customer_group'); ?></td>
                         <td class="align-left pad-5 width-66 bold">Retail</td>
                       </tr>
                     </tbody>
@@ -45,20 +45,20 @@
               <div class="new-row-mobile six-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
-                    <span class="icon-credit-card icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_payment'); ?></strong></span>
+                    <span class="icon-credit-card icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_payment'); ?></strong></span>
                   </legend>
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Method</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>
                         <td class="align-left pad-5 width-66 bold">Credit Card via Loaded Payments</td>
                       </tr>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Details</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_details'); ?></td>
                         <td class="align-left pad-5 width-66 bold">Sal Iozzia - Visa - 4111</td>
                       </tr>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Payment State</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_payment_state'); ?></td>
                         <td class="align-left pad-5 width-66 bold">PAID</td>
                       </tr>
                     </tbody>
@@ -70,20 +70,20 @@
               <div class="new-row-mobile six-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
-                    <span class="icon-info-round icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_info'); ?></strong></span>
+                    <span class="icon-info-round icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_information'); ?></strong></span>
                   </legend>
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Addresses</td>
-                        <td class="align-left pad-5 width-66 bold">Mixed</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_addresses'); ?></td>
+                        <td class="align-left pad-5 width-66 bold"><?php echo $lC_Language->get('text_mixed'); ?></td>
                       </tr>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Date Ordered</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_date_ordered'); ?></td>
                         <td class="align-left pad-5 width-66 bold">2013/08/04</td>
                       </tr>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Purchase Order</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_purchase_order'); ?></td>
                         <td class="align-left pad-5 width-66 bold"><small class="tag orange-bg">B2B</small></td>
                       </tr>
                     </tbody>
@@ -93,20 +93,20 @@
               <div class="new-row-mobile six-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
-                    <span class="icon-dropbox icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_shipping'); ?></strong></span>
+                    <span class="icon-dropbox icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_shipping'); ?></strong></span>
                   </legend>
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Method</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>
                         <td class="align-left pad-5 width-66 bold">FedEx</td>
                       </tr>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Type</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_type'); ?></td>
                         <td class="align-left pad-5 width-66 bold">Next Day Air</td>
                       </tr>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey">Shipping State</td>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_shipping_state'); ?></td>
                         <td class="align-left pad-5 width-66 bold">Backordered</td>
                       </tr>
                     </tbody>
@@ -128,17 +128,17 @@
               <div class="twelve-columns mid-margin-bottom large-pull-top">
                 <fieldset>
                   <legend class="mid-margin-bottom">
-                    <span class="icon-list icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_products_ordered'); ?></strong></span>
+                    <span class="icon-list icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_products_ordered'); ?></strong></span>
                   </legend>
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <thead class="bbottom-anthracite">
                       <tr>
-                        <th align="left" class="orders-products-listing-th hide-below-480">SKU/Model</th>
-                        <th align="left" class="orders-products-listing-th">Product Name</th>
-                        <th align="center" class="orders-products-listing-th hide-below-480">Fullfillment</th>
-                        <th align="right" class="orders-products-listing-th hide-below-480 pad-right-10">Qty</th>
-                        <th align="right" class="orders-products-listing-th hide-below-480">Total</th>
-                        <th align="right" class="orders-products-listing-th show-below-480">Details</th>
+                        <th align="left" class="orders-products-listing-th hide-below-480"><?php echo $lC_Language->get('text_sku_model'); ?></th>
+                        <th align="left" class="orders-products-listing-th"><?php echo $lC_Language->get('text_product_name'); ?></th>
+                        <th align="center" class="orders-products-listing-th hide-below-480"><?php echo $lC_Language->get('text_fulfillment'); ?></th>
+                        <th align="right" class="orders-products-listing-th hide-below-480 pad-right-10"><?php echo $lC_Language->get('text_qty'); ?></th>
+                        <th align="right" class="orders-products-listing-th hide-below-480"><?php echo $lC_Language->get('text_total'); ?></th>
+                        <th align="right" class="orders-products-listing-th show-below-480"><?php echo $lC_Language->get('text_details'); ?></th>
                       </tr>
                     </thead>
                     <tbody class="mid-margin-bottom">
@@ -164,7 +164,7 @@
                         <td class="hide-below-480"></td>
                         <td class="hide-below-480"></td>
                         <td class="hide-below-480"></td>
-                        <td class="no-wrap pad-right-10 pad-top-10 bolder" align="right">Product Sub Total</td>
+                        <td class="no-wrap pad-right-10 pad-top-10 bolder" align="right"><?php echo $lC_Language->get('text_product_sub_total'); ?></td>
                         <td class="pad-top-10 bolder" align="right">$600.00</td>
                         <td class="show-below-480"></td>
                       </tr>
@@ -179,11 +179,11 @@
                   <div class="six-columns twelve-columns-mobile hide-below-768">
                     <fieldset>
                       <legend class="margin-bottom">
-                        <span class="icon-chat icon-size2 icon-anthracite mid-margin-left"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_recent_messages'); ?></strong></span>
+                        <span class="icon-chat icon-size2 icon-anthracite mid-margin-left"><strong class="small-margin-left"><?php echo $lC_Language->get('text_recent_messages'); ?></strong></span>
                       </legend>
                       <div class="with-small-padding silver-bg">
                         <div class="small-margin-top">
-                          <span class="float-right green-bg with-min-padding">Comment</span>
+                          <span class="float-right green-bg with-min-padding"><?php echo $lC_Language->get('text_comment'); ?></span>
                           <span class="icon-user icon-size2 icon-anthracite small-margin-left">
                             <span>
                               Sal Iozzia <small class="anthracite small-margin-left">2013/08/07</small>
@@ -194,7 +194,7 @@
                       </div>
                       <div class="with-small-padding">
                         <div class="small-margin-top">
-                          <span class="float-right orange-bg with-min-padding">Message</span>
+                          <span class="float-right orange-bg with-min-padding"><?php echo $lC_Language->get('text_message'); ?></span>
                           <span>
                             <img src="images/prod-mini.png" alt="Comment Image" />
                             <span class="small-margin-left">
@@ -206,11 +206,11 @@
                       </div>
                       <div class="with-small-padding grey-bg">
                         <div class="small-margin-top">
-                          <span class="float-right anthracite-bg with-min-padding">Note</span>
+                          <span class="float-right anthracite-bg with-min-padding"><?php echo $lC_Language->get('text_note'); ?></span>
                           <span>
                             <img src="images/prod-mini.png" alt="Comment Image" />
                             <span class="small-margin-left">
-                              Jane Quarterback <small class="anthracite small-margin-left">sent 2013/08/02</small>
+                              Jane Quarterback <small class="anthracite small-margin-left"><?php echo $lC_Language->get('text_sent'); ?> 2013/08/02</small>
                             </span>
                           </span>
                         </div>
@@ -218,7 +218,7 @@
                       </div>
                       <div class="with-small-padding">
                         <div class="small-margin-top">
-                          <i class="icon-mail"></i> <span class="small-margin-left">2 Additional Messages</span>
+                          <i class="icon-mail"></i> <span class="small-margin-left">2 <?php echo $lC_Language->get('text_additional_messages'); ?></span>
                         </div>
                       </div>
                     </fieldset>
@@ -228,7 +228,7 @@
                       <div class="twelve-columns">
                         <fieldset>
                           <legend class="small-margin-bottom">
-                            <span class="icon-credit-card icon-size2 icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_order_totals'); ?></strong></span>
+                            <span class="icon-credit-card icon-size2 icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_order_totals'); ?></strong></span>
                           </legend>
                           <div class="large-margin-left">
                             <table width="100%" cellpadding="0" cellspacing="0">
@@ -257,7 +257,7 @@
                       <div class="twelve-columns">
                         <fieldset>
                           <legend class="small-margin-bottom">
-                            <span class="icon-credit-card icon-size2 icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_last_payment'); ?></strong></span>
+                            <span class="icon-credit-card icon-size2 icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_last_payment'); ?></strong></span>
                           </legend>
                           <div class="large-margin-left">
                             <table width="100%" cellpadding="0" cellspacing="0">
@@ -267,7 +267,7 @@
                                   <td class="align-right pad-5 width-25">$572.50</td>
                                 </tr>
                                 <tr>
-                                  <td class="align-right pad-5 width-75 bold btop-grey">Balance</td>
+                                  <td class="align-right pad-5 width-75 bold btop-grey"><?php echo $lC_Language->get('text_balance'); ?></td>
                                   <td class="align-right pad-5 width-25 bold btop-grey">$0.00</td>
                                 </tr>
                               </tbody>
@@ -281,11 +281,11 @@
                   <div class="six-columns twelve-columns-mobile show-below-768">
                     <fieldset>
                       <legend class="margin-bottom">
-                        <span class="icon-chat icon-size2 icon-anthracite mid-margin-left"><strong class="small-margin-left"><?php echo $lC_Language->get('orders_summary_recent_messages'); ?></strong></span>
+                        <span class="icon-chat icon-size2 icon-anthracite mid-margin-left"><strong class="small-margin-left"><?php echo $lC_Language->get('text_recent_messages'); ?></strong></span>
                       </legend>
                       <div class="with-small-padding silver-bg">
                         <div class="small-margin-top">
-                          <span class="float-right green-bg with-min-padding">Comment</span>
+                          <span class="float-right green-bg with-min-padding"><?php echo $lC_Language->get('text_comment'); ?></span>
                           <span class="icon-user icon-size2 icon-anthracite small-margin-left">
                             <span>
                               Sal Iozzia <small class="anthracite small-margin-left">2013/08/07</small>
@@ -296,7 +296,7 @@
                       </div>
                       <div class="with-small-padding">
                         <div class="small-margin-top">
-                          <span class="float-right orange-bg with-min-padding">Message</span>
+                          <span class="float-right orange-bg with-min-padding"><?php echo $lC_Language->get('text_message'); ?></span>
                           <span>
                             <img src="images/prod-mini.png" alt="Comment Image" />
                             <span class="small-margin-left">
@@ -308,11 +308,11 @@
                       </div>
                       <div class="with-small-padding grey-bg">
                         <div class="small-margin-top">
-                          <span class="float-right anthracite-bg with-min-padding">Note</span>
+                          <span class="float-right anthracite-bg with-min-padding"><?php echo $lC_Language->get('text_note'); ?></span>
                           <span>
                             <img src="images/prod-mini.png" alt="Comment Image" />
                             <span class="small-margin-left">
-                              Jane Quarterback <small class="anthracite small-margin-left">sent 2013/08/02</small>
+                              Jane Quarterback <small class="anthracite small-margin-left"><?php echo $lC_Language->get('text_sent'); ?> 2013/08/02</small>
                             </span>
                           </span>
                         </div>
@@ -320,7 +320,7 @@
                       </div>
                       <div class="with-small-padding">
                         <div class="small-margin-top">
-                          <i class="icon-mail"></i> <span class="small-margin-left">2 Additional Messages</span>
+                          <i class="icon-mail"></i> <span class="small-margin-left">2 <?php echo $lC_Language->get('text_additional_messages'); ?></span>
                         </div>
                       </div>
                     </fieldset>
