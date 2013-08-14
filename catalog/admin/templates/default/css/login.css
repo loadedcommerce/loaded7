@@ -93,9 +93,10 @@ form {
 		#login-title h1.login-title-image {
 			background: url(../img/login-title.png) no-repeat center center;
 			overflow: hidden;
-			height: 55px;
+			height: 65px;
 			text-align: left;
 			text-indent: -3000px;
+      margin-bottom:20px;
 		}
 	#login-title h5 {
 		color: #c8cfd5;

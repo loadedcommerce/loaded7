@@ -21,6 +21,7 @@ field_database_host = Database Host:
 field_database_version = Database:
 field_database_date = Database Date:
 field_database_up_time = Database Up Time:
+field_installation_id = Installation ID:
 
 more_information = more info
 no_installation_id = UNREGISTERED COPY
