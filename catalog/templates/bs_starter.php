@@ -245,8 +245,10 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!-- Core JS -->
     <script src="ext/jquery/general.js.php"></script>
     
-    
-    
+    <!-- gMap PLUGIN -->
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="ext/jquery/jquery.gmap.js"></script>
+
     <script src="ext/jquery/jquery.validate.min.js"></script>
     <script src="ext/jquery/jquery.easing.1.3.js"></script>
     <script src="ext/jquery/jquery.hoverIntent.min.js"></script>

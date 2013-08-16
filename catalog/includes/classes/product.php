@@ -583,6 +583,18 @@ class lC_Product {
   public function numberOfImages() {
     return sizeof($this->_data['images']);
   }
+  
+  public function getAdditionalImagesHtml($size = 'mini') {
+    global $lC_Image;
+    
+    $output = '';
+    foreach ( $this->getImages() as $key => $value ) {
+      if ($value['default_flag'] == true) continue;
+      $output .= '<li><a href="' . (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'popup')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png') . '" title="<?php echo $lC_Product->getTitle(); ?>" class="thickbox"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $lC_Product->getTitle() . '" /></a></li>';
+    }
+    
+    return $output;    
+  }
 
   protected static function _usortVariantValues($a, $b) {
     if ( $a['sort_order'] == $b['sort_order'] ) {

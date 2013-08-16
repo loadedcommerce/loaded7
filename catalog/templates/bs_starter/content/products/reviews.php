@@ -1,48 +1,22 @@
 <?php
-/**  
-*  $Id: reviews.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: reviews.php v1.0 2013-08-08 datazen $
 */
-$Qreviews = lC_Reviews::getListing();
 ?>
-<!--content/products/reviews.php start-->
-<div class="full_page">
-  <div class="content">
-    <div class="short-code-column">
-      <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-      <?php
-        while ($Qreviews->next()) {
-        ?>
-        <div class="review-box clear">
-          <?php
-            if (!lc_empty($Qreviews->value('image'))) {
-              echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $Qreviews->valueInt('reviews_id') . '&' . $Qreviews->value('products_keyword')), $lC_Image->show($Qreviews->value('image'), $Qreviews->value('products_name'), 'class="review-img" align="left"'));
-            }
-          ?>
-          <h6><?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $Qreviews->valueInt('reviews_id') . '&' . $Qreviews->value('products_keyword')), $Qreviews->value('products_name')); ?> (<?php echo sprintf($lC_Language->get('reviewed_by'), $Qreviews->valueProtected('customers_name')); ?>)</h6>
-          <div><?php echo '<i>' . sprintf($lC_Language->get('review_rating'), lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $Qreviews->valueInt('reviews_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $Qreviews->valueInt('reviews_rating'))), sprintf($lC_Language->get('rating_of_5_stars'), $Qreviews->valueInt('reviews_rating'))) . '</i>';?> 
-          <br/><?php echo sprintf($lC_Language->get('review_date_added'), lC_DateTime::getLong($Qreviews->value('date_added'))); ?></div>
-          <div><?php echo wordwrap($Qreviews->valueProtected('reviews_text'), 60, '&shy;') . ((strlen($Qreviews->valueProtected('reviews_text')) >= 100) ? '..' : '') . '<br /><br />'; ?></div>
-          <div style="clear:both;"></div>
-        </div>
-        <div style="clear:both;"></div>
-        <?php
-        }
-      ?>
-    </div>
-    <div class="listingPageLinks" style="border-top: 1px solid #eee; padding-top:10px;">
-      <span style="float: right;"><?php echo $Qreviews->getBatchPageLinks('page', 'reviews'); ?></span>
-      <?php echo $Qreviews->getBatchTotalPages($lC_Language->get('result_set_number_of_reviews')); ?>
-    </div>
-  </div>
+<!--content/products/reviews.php start--> 
+<div class="row-fluid">
+  <div class="span12">
+    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <?php echo lC_Reviews::getListingOutput(); ?>
+  </div>                                                                                                                                                
+  <div class="button-set">
+    <a href="<?php echo  lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-large btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+  </div>    
 </div>
-<div style="clear:both;"></div>
 <!--content/products/reviews.php end-->

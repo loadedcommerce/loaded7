@@ -410,19 +410,7 @@ class lC_Bs_starter {
     
     return $countries_array;   
   }
- /*
-  * Sets the media type to session
-  *
-  * @access public
-  * @return boolean
-  */
-  public static function setMediaType($type, $size) {
-    
-    $_SESSION['mediaType'] = $type;
-    $_SESSION['mediaSize'] = $size;
-    
-    return true;   
-  }  
+ 
  /*
   * Returns the product listing data
   *

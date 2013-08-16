@@ -11,7 +11,7 @@
 ?>
 <!--content/index/product_listing.php start-->
 <div class="row-fluid articles-grid">
-  <h2 class="sub_title"><?php echo $lC_Template->getPageTitle(); ?></h2>
+  <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   
   <div id="content-product-listing-category-description-container">
     <?php 
@@ -33,7 +33,7 @@
         <div class="pull-left large-margin-bottom"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
         <div class="pull-right pagination large-margin-bottom no-margin-top">
           <ul>
-            <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y'))); ?>
+            <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y')), false); ?>
           </ul>
         </div>
       </div><div class="clear-both"></div>
@@ -44,11 +44,15 @@
 
     <div class="product-listing-module-container">
       <?php 
-      if (file_exists(DIR_FS_TEMPLATE . 'modules/product_listing.php')) {
-        require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/product_listing.php'));
+      if ($Qlisting->numberOfRows() > 0) {
+        if (file_exists(DIR_FS_TEMPLATE . 'modules/product_listing.php')) {
+          require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/product_listing.php'));
+        } else {
+          require($lC_Vqmod->modCheck('includes/modules/product_listing.php'));
+        }      
       } else {
-        require($lC_Vqmod->modCheck('includes/modules/product_listing.php'));
-      }
+        echo '<div class="margin-bottom margin-top">' . $lC_Language->get('no_products_found') . '</div>' . "\n";
+      } 
       ?>
     </div><div class="clear-both"></div>
 
@@ -60,12 +64,12 @@
         <div class="pull-left"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
         <div class="pull-right pagination no-margin-bottom no-margin-top">
           <ul>
-            <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y'))); ?>
+            <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y')), false); ?>
           </ul>
         </div>
       </div><div class="clear-both"></div>
       <!-- /PAGINATION--> 
-      <?php
+      <?php 
     }
     ?>
   </div>

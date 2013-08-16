@@ -86,7 +86,7 @@ function _setMediaType() {
   
   var sizeStored = '<?php echo $_SESSION['mediaSize']; ?>';
   if (sizeStored != winW) {
-    var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=setMediaType&type=TYPE&size=SIZE', 'AUTO'); ?>'
+    var jsonLink = '<?php echo lc_href_link('rpc.php', 'index&action=setMediaType&type=TYPE&size=SIZE', 'AUTO'); ?>'
     $.getJSON(jsonLink.replace('TYPE', mtype).replace('&amp;', '&').replace('SIZE', winW).replace('&amp;', '&'),
       function (data) {
         return true;
@@ -100,7 +100,7 @@ function _setMediaType() {
 function addCoupon() {
   var code = $('#coupon_code').val();
   var module = '<?php echo $lC_Template->getModule(); ?>';
-  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=addCoupon&code=CODE', 'AUTO'); ?>';   
+  var jsonLink = '<?php echo lc_href_link('rpc.php', $lC_Template->getModule() . '&action=addCoupon&code=CODE', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('CODE', code).replace('&amp;', '&'),
     function (data) {
       if (data.rpcStatus != 1) {
@@ -131,7 +131,7 @@ function addCoupon() {
 
 function removeCoupon(code) {
   var module = '<?php echo $lC_Template->getModule(); ?>';
-  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=removeCoupon&code=CODE', 'AUTO'); ?>';   
+  var jsonLink = '<?php echo lc_href_link('rpc.php', $lC_Template->getModule() . '&action=removeCoupon&code=CODE', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('CODE', code).replace('&amp;', '&'),
     function (data) {
       if (data.rpcStatus != 1) {

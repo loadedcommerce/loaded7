@@ -51,53 +51,6 @@ class lC_Bs_starter_rpc {
     
     echo json_encode($result);
   }
- /*
-  * Set the media type to session
-  *
-  * @access public
-  * @return json
-  */
-  public static function setMediaType() {
-    $result = array();
-    if (lC_Bs_starter::setMediaType($_GET['type'], $_GET['size'])) {
-      $result['rpcStatus'] = '1';
-    }
-    
-    echo json_encode($result);
-  }   
- /*
-  * Add a coupon to the stack
-  *
-  * @access public
-  * @return json
-  */
-  public static function addCoupon() {
-    global $lC_Coupons;
-    
-    $result = array();
-    if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && isset($lC_Coupons)) {
-      $result = $lC_Coupons->addEntry($_GET['code']);
-    }
-    
-    echo json_encode($result);
-  } 
- /*
-  * Remove a coupon to the stack
-  *
-  * @access public
-  * @return json
-  */
-  public static function removeCoupon() {
-    global $lC_Coupons;
-    
-    $result = array();
-    if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && isset($lC_Coupons)) {
-      if ($lC_Coupons->removeEntry($_GET['code'])) {
-        $result['rpcStatus'] = '1';
-      }
-    }
-    
-    echo json_encode($result);
-  }    
+      
 }
 ?>

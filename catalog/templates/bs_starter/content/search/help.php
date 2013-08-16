@@ -1,27 +1,21 @@
 <?php
-/**  
-*  $Id: help.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: help.php v1.0 2013-08-08 datazen $
 */
 ?>
 <!--content/search/help.php start-->
-<div class="full_page">
-  <div class="content">
-    <div class="short-code-column">
-      <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-      <p><?php echo $lC_Language->get('search_help'); ?></p>
-      <p>&nbsp;</p>
-      <div class="action_buttonbar">
-        <span class="buttonRight"><a href="javascript:window.close();" class="noDecoration"><button class="button brown_btn" type="submit"><?php echo $lC_Language->get('close_window'); ?></button></a></span>
-      </div>
+<div class="row-fluid">
+  <div class="span12">
+    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <div class="info-shipping-text large-margin-top large-margin-bottom"><?php echo $lC_Language->get('search_help'); ?></div>
+    <div class="button-set">
+      <a href="javascript:window.close();"><button class="pull-right btn btn-small btn-info" type="button"><?php echo $lC_Language->get('close_window'); ?></button></a>
     </div>
   </div>
 </div>

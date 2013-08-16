@@ -99,7 +99,7 @@
       <key>text_new_products</key>
       <value><![CDATA[New Products]]></value>
       <group>general</group>
-    </definition>
+    </definition>   
     <definition>
       <key>text_sign_out</key>
       <value><![CDATA[Sign Out]]></value>
@@ -1636,27 +1636,37 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>contact_name_title</key>
-      <value><![CDATA[Full Name:]]></value>
+      <value><![CDATA[Name]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>contact_email_address_title</key>
-      <value><![CDATA[Email Address:]]></value>
+      <value><![CDATA[E-mail]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>contact_enquiry_title</key>
-      <value><![CDATA[Enquiry:]]></value>
+      <value><![CDATA[Comments]]></value>
       <group>info</group>
     </definition>
     <definition>
+      <key>contact_email_form_title</key>
+      <value><![CDATA[Contact Us]]></value>
+      <group>info</group>
+    </definition>  
+    <definition>
+      <key>button_send_message</key>
+      <value><![CDATA[Send Message]]></value>
+      <group>info</group>
+    </definition>       
+    <definition>
       <key>contact_email_sent_successfully</key>
-      <value><![CDATA[Your enquiry has been successfully sent to the store owner.]]></value>
+      <value><![CDATA[Your comments have been successfully sent to the store owner.]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>contact_email_subject</key>
-      <value><![CDATA[Contact Enquiry]]></value>
+      <value><![CDATA[Contact Inquiry]]></value>
       <group>info</group>
     </definition>
     <definition>
@@ -1770,6 +1780,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>products</group>
     </definition>
     <definition>
+      <key>products_tell_a_friend_title</key>
+      <value><![CDATA[Tell A Friend]]></value>
+      <group>products</group>
+    </definition>    
+    <definition>
       <key>breadcrumb_tell_a_friend</key>
       <value><![CDATA[Tell A Friend]]></value>
       <group>products</group>
@@ -1780,7 +1795,7 @@ Note: If you did not request this action via our password forgotten page, please
       <group>products</group>
     </definition>
     <definition>
-      <key>no_new_products</key>
+      <key>no_products</key>
       <value><![CDATA[There are currently no products available.]]></value>
       <group>products</group>
     </definition>
@@ -1901,27 +1916,27 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>tell_a_friend_message</key>
-      <value><![CDATA[Your Message]]></value>
+      <value><![CDATA[Message]]></value>
       <group>products</group>
     </definition>
     <definition>
       <key>field_tell_a_friend_customer_name</key>
-      <value><![CDATA[Your Name:]]></value>
+      <value><![CDATA[Name]]></value>
       <group>products</group>
     </definition>
     <definition>
       <key>field_tell_a_friend_customer_email_address</key>
-      <value><![CDATA[Your E-Mail Address:]]></value>
+      <value><![CDATA[E-Mail Address]]></value>
       <group>products</group>
     </definition>
     <definition>
       <key>field_tell_a_friend_friends_name</key>
-      <value><![CDATA[Your Friends Name:]]></value>
+      <value><![CDATA[Friends Name]]></value>
       <group>products</group>
     </definition>
     <definition>
       <key>field_tell_a_friend_friends_email_address</key>
-      <value><![CDATA[Your Friends E-Mail Address:]]></value>
+      <value><![CDATA[Friends E-Mail Address]]></value>
       <group>products</group>
     </definition>
     <definition>

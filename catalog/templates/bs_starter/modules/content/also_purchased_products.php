@@ -42,7 +42,7 @@ $(document).ready(function() {
     var newNameContentText = (nameContentText.length > 16) ? nameContentText.substr(0, 13) + '...' : nameContentText;
     nameContent = nameContent.replace(nameContentText, newNameContentText);
     
-    output = '<div class="' + thisContentClass + ' ">'+
+    output = '<div class="' + thisContentClass + ' with-padding">'+
              '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 class="content-also-purchased-products-text-name">' + nameContent + '</h3>' +
@@ -50,7 +50,7 @@ $(document).ready(function() {
              '        <div class="span6">' +
              '          <p class="lead">' + priceContent + '</p>' +
              '        </div>' +
-             '        <div class="span6 no-margin-left">' + buttonContent + '</div>' +
+             '        <div class="span6 margin-left">' + buttonContent + '</div>' +
              '      </div>' +
              '    </div>' +
              '  </div>' +

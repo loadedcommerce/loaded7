@@ -707,6 +707,8 @@
 
       if ( $with_pull_down_menu === true ) {
         $string .= '<li>' . $this->getBatchPagesPullDownMenu($batch_keyword, $parameters) . '</li>';
+      } else {
+        $string .= '<li>' . $this->getPageLink($batch_keyword, $parameters) . '</li>';  
       }
 
       $string .= '<li>' . $this->getBatchNextPageLink($batch_keyword, $parameters) . '</li>';

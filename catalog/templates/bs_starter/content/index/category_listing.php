@@ -10,20 +10,17 @@
 */
 ?>
 <!--content/index/category_listing.php start-->
-<div class="full_page">
-  <div class="content">
-    <div class="short-code-column">
-      <h1 class="categories_h1"><?php echo $lC_Template->getPageTitle(); ?></h1>
-      <?php 
-        if (lC_Bs_starter::getCategoryDescription() != '') {
-          echo lC_Bs_starter::getCategoryDescription(); 
-        }
-      ?>
-      <table border="0" width="100%" cellspacing="0" cellpadding="2" class="categories_listing">
-        <tr><?php echo lC_Bs_starter::getCategoryListing(); ?></tr>
-      </table>
-    </div>
-    <div style="clear:both;">&nbsp;</div>
+<div class="row-fluid">
+  <div class="span12">
+    <h1 class="categories_h1"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <?php 
+    if (lC_Bs_starter::getCategoryDescription() != '') {
+      echo lC_Bs_starter::getCategoryDescription(); 
+    }
+    ?>
+    <table border="0" width="100%" cellspacing="0" cellpadding="2" class="categories_listing">
+      <tr><?php echo lC_Bs_starter::getCategoryListing(); ?></tr>
+    </table>
   </div>
 </div>
 <!--content/index/category_listing.php end-->

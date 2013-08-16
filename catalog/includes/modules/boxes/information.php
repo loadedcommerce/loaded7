@@ -29,11 +29,11 @@ class lC_Boxes_information extends lC_Modules {
     $this->_title_link = lc_href_link(FILENAME_INFO);
    
     $this->_content = (($lC_Customer->isLoggedOn()) ? '  <li>' . lc_link_object(lc_href_link(FILENAME_ACCOUNT), $lC_Language->get('my_account')) . '</li>' : '') . "\n" .
-                      '  <li class="box-informaiton-shipping">' . lc_link_object(lc_href_link(FILENAME_INFO, 'shipping'), $lC_Language->get('box_information_shipping')) . '</li>' . "\n" .
-                      '  <li class="box-informaiton-privacy">' . lc_link_object(lc_href_link(FILENAME_INFO, 'privacy'), $lC_Language->get('box_information_privacy')) . '</li>' . "\n" .
-                      '  <li class="box-informaiton-conditions">' . lc_link_object(lc_href_link(FILENAME_INFO, 'conditions'), $lC_Language->get('box_information_conditions')) . '</li>' . "\n" .
-                      '  <li class="box-informaiton-contact">' . lc_link_object(lc_href_link(FILENAME_INFO, 'contact'), $lC_Language->get('box_information_contact')) . '</li>' . "\n" .
-                      '  <li class="box-informaiton-sitemap">' . lc_link_object(lc_href_link(FILENAME_INFO, 'sitemap'), $lC_Language->get('box_information_sitemap')) . '</li>' . "\n";
+                      '  <li class="box-information-shipping">' . lc_link_object(lc_href_link(FILENAME_INFO, 'shipping'), $lC_Language->get('box_information_shipping')) . '</li>' . "\n" .
+                      '  <li class="box-information-privacy">' . lc_link_object(lc_href_link(FILENAME_INFO, 'privacy'), $lC_Language->get('box_information_privacy')) . '</li>' . "\n" .
+                      '  <li class="box-information-conditions">' . lc_link_object(lc_href_link(FILENAME_INFO, 'conditions'), $lC_Language->get('box_information_conditions')) . '</li>' . "\n" .
+                      '  <li class="box-information-contact">' . lc_link_object(lc_href_link(FILENAME_INFO, 'contact'), $lC_Language->get('box_information_contact')) . '</li>' . "\n" .
+                      '  <li class="box-information-sitemap">' . lc_link_object(lc_href_link(FILENAME_INFO, 'sitemap'), $lC_Language->get('box_information_sitemap')) . '</li>' . "\n";
   }
 }
 ?>

@@ -1,30 +1,22 @@
 <?php
-/**  
-*  $Id: reviews_not_found.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: reviews_not_found.php v1.0 2013-08-08 datazen $
 */
 ?>
 <!--content/products/reviews_not_found.php start-->
-<div class="full_page">
-  <div class="content">
-    <div class="short-code-column">
-      <h1><?php echo $lC_Template->getPageTitle(); ?></h1> 
-      <div>  
-        <p><?php echo $lC_Language->get('no_reviews_available'); ?></p>
-      </div>
-      <div id="reviewsNotFoundActions">
-        <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
-      </div>
-      <div style="clear:both;"></div>
-    </div>
-  </div>
+<div class="row-fluid">
+  <div class="span12">
+    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <div class="strong"><?php echo $lC_Language->get('no_reviews_available'); ?></div>
+    <div class="button-set">
+      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-large btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
+    </div>  
+  </div>  
 </div>
 <!--content/products/reviews_not_found.php end-->

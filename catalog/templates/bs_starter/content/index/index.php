@@ -1,17 +1,18 @@
 <?php
-/**  
-*  $Id: index.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: index.php v1.0 2013-08-08 datazen $
 */
 ?>
 <!--content/index/index.php start-->
-  <!--mainpage content goes here-->
+<div class="row-fluid">
+  <div class="span12">
+    <!--mainpage content goes here-->
+  </div>
+</div>
 <!--content/index/index.php end-->

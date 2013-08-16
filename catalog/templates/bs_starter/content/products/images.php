@@ -1,22 +1,18 @@
 <?php
-/**  
-*  $Id: images.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: images.php v1.0 2013-08-08 datazen $
 */
 $large_image = $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'id="productImageLarge"', 'large');
 ?>
 <!--content/products/images.php start-->
-<div class="full_page">
-  <div class="short-code-column">
-    <!-- h1><?php echo $lC_Template->getPageTitle(); ?></h1 --> 
+<div class="row-fluid">
+  <div class="span12">
     <?php
     if ($lC_Product->numberOfImages() > 1) {
       ?>

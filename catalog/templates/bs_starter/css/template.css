@@ -26,6 +26,19 @@ h1,h2,h3,h4,h5,h6 { font-weight:200; }
 .content-upcoming-products-text-price { font-size:1.3em; }
 .content-upcoming-products-text-name { line-height:1.1; font-size:1.3em; }
 
+.content-reviews-text { padding-top:4px; }
+
+.content-products-info-price { font-size:2.4em; font-weight:200; margin-bottom:20px; }
+.content-products-info-reviews-rating-label { text-transform:uppercase; display:inline; }
+.content-products-info-qty-input { width:30%; text-align:center; font-weight: bold; }
+.content-products-info-qty-label { display:inline; vertical-align:20% }
+
+
+.message-stack-container { padding:5px 5px 1px 5px; }
+.message-success-container { padding:10px; }
+
+#page { width: 60px; }
+
 /*************** Bootstrap fixes **************/ 
 .container-folio.row-fluid .span6:nth-child(2n+1), #container-folio.row-fluid .span6:nth-child(2n+1){ margin-left:0px; } /* row-fluid scafolding */
 .container-folio.row-fluid .span4:nth-child(3n+1), #container-folio.row-fluid .span4:nth-child(3n+1){ margin-left:0px; } /* row-fluid scafolding */ 
@@ -64,8 +77,8 @@ footer { padding-top:40px; margin-top:40px; border-top:1px solid #dedede; }
 .no-margin-left { margin-left:0 !important; }
 .no-margin-right { margin-right:0 !important; }
 
-.float-left { float:left; }
-.float-right { float:right; }
+.float-left { float:left; }  /* use bootstrap pull-left instead */
+.float-right { float:right; } /* use bootstrap pull-right instead */
 
 .align-center { text-align:center; }
 .align-left { text-align:left; }
@@ -76,6 +89,8 @@ footer { padding-top:40px; margin-top:40px; border-top:1px solid #dedede; }
                                    
 .with-padding { padding:0 10px; }
 .large-padding-top { padding-top:20px; }
+.large-padding-left { padding-left:20px; }
+.xlarge-padding-left { padding-left:40px; }
 
 .strong { font-weight:bold; }
 
@@ -85,12 +100,15 @@ footer { padding-top:40px; margin-top:40px; border-top:1px solid #dedede; }
 .list-style-decimal { list-style:decimal; }
 .list-style-none { list-style:none; }
 
+.no-decoration { text-decoration:none !important; }
+
 .no-wrap { white-space: nowrap; }
 
 /* utility end*/
 
 /* colors */
 .red { color:#ff0000; }
+.lt-blue { color:#0088cd; }
 
 /* QR Code */
 #qr-message {  -ms-word-break: break-all;  word-break: break-all; word-break: break-word;  -webkit-hyphens: auto;  -moz-hyphens: auto;  hyphens: auto;  display:none;  position:fixed;  bottom:25px;  right:25px;  width: 250px;  text-align:center;  background:#f5f5f5; padding:10px 0; }

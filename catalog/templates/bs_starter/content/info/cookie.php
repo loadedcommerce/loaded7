@@ -1,38 +1,33 @@
 <?php
-/**  
-*  $Id: cookie.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: cookie.php v1.0 2013-08-08 datazen $
 */
 ?>
 <!--content/info/cookie.php start-->
-<div class="full_page">
-  <div class="content">
-    <div class="short-code-column">
-      <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-      <div class="contentBorder">
-        <div class="single-bg" style="width:40%; margin-right:15px; padding:15px;">
-          <b><?php echo $lC_Language->get('cookie_usage_box_heading'); ?></b><br />
-          <?php echo $lC_Language->get('cookie_usage_box_contents'); ?>
-        </div>
-        <div>
-          <?php echo $lC_Language->get('text_information_cookie_usage'); ?>
+<div class="row-fluid">
+  <div class="span12">
+    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <div class="row xlarge-padding-left">
+      <div class="span4">
+        <div class="well">
+          <div class="strong"><?php echo $lC_Language->get('cookie_usage_box_heading'); ?></div>
+          <div><?php echo $lC_Language->get('cookie_usage_box_contents'); ?></div>      
         </div>
       </div>
-      <div style="clear:both;">&nbsp;</div>
-      <div id="infoConditionsActions" class="action_buttonbar">
-        <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
-        <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
-      </div>
-      <div style="clear:both;"></div>
+      <div class="span8">
+        <div><?php echo $lC_Language->get('text_information_cookie_usage'); ?></div>
+      </div>    
     </div>
+    <div class="button-set">
+      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-large btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
+      <a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="pull-left btn btn-large btn-info" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    </div>    
   </div>
 </div>
 <!--content/info/cookie.php end-->
