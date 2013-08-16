@@ -25,7 +25,7 @@
 */
 if (!function_exists('lc_href_link')) {
   function lc_href_link($page = null, $parameters = null, $connection = 'NONSSL', $add_session_id = true, $search_engine_safe = true, $use_full_address = false) {
-    global $request_type, $lC_Session, $lC_Services;
+    global $request_type, $lC_Session, $lC_Services, $lC_CategoryTree;
 
     if (!in_array($connection, array('NONSSL', 'SSL', 'AUTO'))) {
       $connection = 'NONSSL';
@@ -100,7 +100,19 @@ if (!function_exists('lc_href_link')) {
     }
 
     if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('sefu')) {
+      // get all category path names to add to the url structure BEFORE the cPath
+      if (!strpos($link, 'product')) {
+        if ($cPathPos = strpos($link, 'cPath=')) {
+          $cat_id = explode("_", $cPath = substr($link, $cPathPos+6));
+          foreach ($cat_id as $id) {
+            $cat_data = $lC_CategoryTree->getdata($id);
+            $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+          }       
+        }
+      }
       $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
+      // now inject the category path names into the url, if they are null, no change 
+      $link = str_replace('.php/', '.php/' . $cat_path, $link);
     } else {
       if (strpos($link, '&') !== false) {
         $link = str_replace('&', '&amp;', $link);
