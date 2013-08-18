@@ -57,7 +57,7 @@ class lC_Boxes_specials extends lC_Modules {
         
         $this->_content = '';
         if (empty($data['image']) === false) {
-          $this->_content = '<li class="box-specials-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['products_keyword']), $lC_Image->show($data['image'], $data['products_name'])) . '</li>';
+          $this->_content = '<li class="box-specials-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['products_keyword']), $lC_Image->show($data['image'], $data['products_name'], 'class="box-specials-image-src"')) . '</li>';
         }
         $this->_content .= '<li class="box-specials-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $data['products_keyword']), $data['products_name']) . '</li>';
         $this->_content .= '<li class="box-products-price">' . $data['products_price'] . '</li>';

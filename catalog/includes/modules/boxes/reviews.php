@@ -76,7 +76,7 @@ class lC_Boxes_reviews extends lC_Modules {
         }
       } else {
         if (!empty($data['image'])) {
-          $this->_content = '<li class="box-reviews-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $data['reviews_id'] . '&' . $data['products_keyword']), $lC_Image->show($data['image'], $data['products_name'])) . '</li>';
+          $this->_content = '<li class="box-reviews-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $data['reviews_id'] . '&' . $data['products_keyword']), $lC_Image->show($data['image'], $data['products_name'], 'class="box-reviews-image-src"')) . '</li>';
         }
 
         $this->_content .= '<li class="box-reviews-text">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews=' . $data['reviews_id'] . '&' . $data['products_keyword']), wordwrap(lc_output_string_protected($data['reviews_text']), 15, "\n") . '...') . "\n" .
