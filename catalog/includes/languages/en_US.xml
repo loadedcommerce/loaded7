@@ -342,7 +342,7 @@
     </definition>
     <definition>
       <key>footer</key>
-      <value><![CDATA[Copyright &copy; %s <a href="%s">%s</a><br />Powered by <a href="http://www.zenmerchant.com" target="_blank">LoadedCommerce</a>]]></value>
+      <value><![CDATA[<a href="www.loadedcommerce.com">Shopping Cart Software</a> by Loaded Commerce]]></value>
       <group>general</group>
     </definition>
     <definition>
@@ -542,9 +542,19 @@
     </definition>
     <definition>
       <key>account_edit_heading</key>
-      <value><![CDATA[My Account Information]]></value>
+      <value><![CDATA[My Account]]></value>
       <group>account</group>
     </definition>
+    <definition>
+      <key>personal_details_title</key>
+      <value><![CDATA[Personal Details]]></value>
+      <group>account</group>
+    </definition>    
+    <definition>
+      <key>login_details_title</key>
+      <value><![CDATA[Login Details]]></value>
+      <group>account</group>
+    </definition>    
     <definition>
       <key>account_password_heading</key>
       <value><![CDATA[My Account Password]]></value>
@@ -1566,7 +1576,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>info_contact_heading</key>
-      <value><![CDATA[Contact]]></value>
+      <value><![CDATA[Contact Us]]></value>
       <group>info</group>
     </definition>
     <definition>
@@ -1596,22 +1606,22 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>conditions</key>
-      <value><![CDATA[Put here the required information.]]></value>
+      <value><![CDATA[Edit this page content by going to Admin > Setup > Languages and clicking on the language name.]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>contact</key>
-      <value><![CDATA[Put here the required information.]]></value>
+      <value><![CDATA[Edit this page content by going to Admin > Setup > Languages and clicking on the language name.]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>privacy</key>
-      <value><![CDATA[Put here the required information.]]></value>
+      <value><![CDATA[Edit this page content by going to Admin > Setup > Languages and clicking on the language name.]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>shipping</key>
-      <value><![CDATA[Put here the required information.]]></value>
+      <value><![CDATA[Edit this page content by going to Admin > Setup > Languages and clicking on the language name.]]></value>
       <group>info</group>
     </definition>
     <definition>
@@ -2407,7 +2417,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>
     <definition>
       <key>contact_inquiry_title</key>
-      <value><![CDATA[Inquiry:]]></value>
+      <value><![CDATA[Comments:]]></value>
       <group>general</group>
     </definition>
     <definition>
