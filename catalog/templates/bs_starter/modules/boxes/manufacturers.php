@@ -11,19 +11,19 @@
 ?>
 <!--modules/boxes/manufacturers.php start-->
 <div class="well" >
-  <ul class="box-manufacturers nav nav-list">
-    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
-      <form id="box-manufacturer-form" name="manufacturers" class="no-margin-bottom" action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false); ?>" method="get">
-        <?php echo $lC_Box->getContent(); ?>
-      </form>
+  <ul class="box-templates list-unstyled">
+    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
+    <form role="form" class="form-inline no-margin-bottom" id="manufacturers" name="manufacturers" action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false); ?>" method="get">
+      <?php echo $lC_Box->getContent(); ?>
+    </form>
   </ul>
 </div>
 <script>
-$(document).ready(function() {
-  $(".box-manufacturers li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
-  });  
+$(document).ready(function() { 
+  $('.box-manufacturers-select').addClass('form-input-width');
 });
+$('.box-manufacturers-selection').addClass('form-group full-width');
+$('.box-manufacturers-select').addClass('form-control');
 </script>
 <!--modules/boxes/manufacturers.php end-->
 

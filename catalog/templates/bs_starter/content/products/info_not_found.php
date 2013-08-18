@@ -15,7 +15,7 @@
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
     <div class="strong"><?php echo $lC_Language->get('product_not_found'); ?></div>
     <div class="button-set">
-      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-large btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
+      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
     </div>  
   </div>  
 </div>

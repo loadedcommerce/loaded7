@@ -10,8 +10,8 @@
 */
 ?>
 <!--content/index/index.php start-->
-<div class="row-fluid">
-  <div class="span12">
+<div class="row">
+  <div class="col-sm-12 col-lg-12">
     <!--mainpage content goes here-->
   </div>
 </div>

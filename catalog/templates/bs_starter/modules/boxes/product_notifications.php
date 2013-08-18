@@ -11,16 +11,13 @@
 ?>
 <!--modules/boxes/product_notifications.php start-->
 <div class="well" >
-  <ul class="box-product-notifications nav nav-list">
-    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
+  <ul class="box-product-notifications list-unstyled list-indent-large">
+    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $(".box-product-notifications li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).addClass('margin-left-li');
-  });
   $('.box-product_notifications-image-container').html('<img class="product_notifications-image" src="templates/bs_starter/images/icons/32/info.png" border="0">');
   $(".box-product-notifications li:last-child").addClass('small-margin-top align-center');
 });

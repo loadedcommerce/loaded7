@@ -11,20 +11,19 @@
 ?>
 <!--modules/boxes/templates.php start-->
 <div class="well" >
-  <form name="templates" action="<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), null, 'AUTO', false); ?>" class="no-margin-bottom" method="get">
-    <ul class="box-templates nav nav-list">
-      <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
+  <ul class="box-templates list-unstyled">
+    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
+    <form role="form" name="templates" action="<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), null, 'AUTO', false); ?>" class="box-templates-form no-margin-bottom form-inline" method="get">
       <?php echo $lC_Box->getContent(); ?>
-    </ul>
-  </form>
+    </form>
+  </ul>
 </div>
 <script>
-$(document).ready(function() {
-  $(".box-templates li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
-  });  
-  $('.box-templates-select').attr('style', 'width:100%');
+$(document).ready(function() { 
+  $('.box-templates-select').addClass('form-input-width');
 });
+$('.box-templates-selection').addClass('form-group full-width');
+$('.box-templates-select').addClass('form-control');
 </script>
 <!--modules/boxes/templates.php end-->
 

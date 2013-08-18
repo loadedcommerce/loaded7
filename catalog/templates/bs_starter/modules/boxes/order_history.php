@@ -11,16 +11,9 @@
 ?>
 <!--modules/boxes/order_history.php start-->
 <div class="well" >
-  <ul class="box-order-history nav nav-list list-style-circle">
-    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
+  <ul class="box-order-history list-unstyled list-indent-large">
+    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
-<script>
-$(document).ready(function() {
-  $(".box-order-history li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).attr('style', 'margin-left:8px;');
-  });
-});
-</script>
 <!--modules/boxes/order_history.php end-->

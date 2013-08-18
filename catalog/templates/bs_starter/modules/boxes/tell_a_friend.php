@@ -10,22 +10,24 @@
 */
 ?>
 <!--modules/boxes/tell_a_friend.php start-->
-<div class="well" >
-  <ul class="box-tell-a-friend nav nav-list">
-    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
-    <form class="box-tell-a-friend-form" name="tell_a_friend" action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'tell_a_friend&' . $lC_Product->getKeyword()); ?>" method="post">   
+<div class="well">
+  <ul class="box-tell-a-friend list-unstyled">
+    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
+    <form role="form" class="box-tell-a-friend-form no-margin-bottom form-inline" name="tell_a_friend" action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'tell_a_friend&' . $lC_Product->getKeyword()); ?>" method="post">   
       <?php echo $lC_Box->getContent(); ?>
     </form>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $(".box-tell-a-friend li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).addClass('margin-left-li');
-  });  
-  $('.box-tell-a-friend-form').addClass('no-margin-bottom');
-  $('.box-tell-a-friend-submit').html('<i class="btn btn-small btn-info cusrsor:pointer margin-bottom">Go</i>');
-  $('.box-tell-a-friend-select').attr('style', 'width:73%;');
-});
+  var mediaType = _setMediaType();
+  $('.box-tell-a-friend-submit').html('<i class="btn btn-sm btn-info cusrsor:pointer">Go</i>');
+  $('.box-tell-a-friend-input').addClass('form-group');
+  if (mediaType == 'tablet-portrait' || mediaType == 'small-tablet-landscape') {
+  $('.box-tell-a-friend-select').attr('style', 'width:60%; display:inline;').addClass('form-control');
+  } else {
+  $('.box-tell-a-friend-select').attr('style', 'width:73%; display:inline;').addClass('form-control');
+  }  
+});                               
 </script>
 <!--modules/boxes/tell_a_friend.php end-->

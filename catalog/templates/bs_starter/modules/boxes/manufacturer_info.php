@@ -11,16 +11,9 @@
 ?>
 <!--modules/boxes/manufacturers_info.php start-->
 <div class="well" >
-  <ul class="box-manufacturers-info nav nav-list">
-    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
+  <ul class="box-manufacturers-info list-unstyled list-indent-large">
+    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
-<script>
-$(document).ready(function() {
-  $(".box-manufacturers-info li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
-  });  
-});
-</script>
 <!--modules/boxes/manufacturers_info.php end-->

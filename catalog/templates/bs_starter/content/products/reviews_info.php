@@ -17,7 +17,7 @@ $Qreviews = lC_Reviews::getEntry($_GET[$lC_Template->getModule()]);
     <div class="row">
       <div class="span4 large-padding-left">
         <div class="thumbnail align-center large-padding-top">
-          <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-upcoming-products-image-tag"', 'small')); ?>
+          <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-reviews-info-image-src"', 'small')); ?>
           <div class="caption">
             <h3 style="line-height:1.1;">
               <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Product->getTitle()); ?>
@@ -49,11 +49,11 @@ $Qreviews = lC_Reviews::getEntry($_GET[$lC_Template->getModule()]);
     <?php
     if ($lC_Reviews->is_enabled === true) {
       ?>  
-      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-right btn btn-large btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
+      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-right btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
       <?php 
     } 
     ?>
-    <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-left btn btn-large btn-info" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-left btn btn-lg btn-info" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
   </div>    
 </div>
 <!--content/products/reviews_info.php end-->

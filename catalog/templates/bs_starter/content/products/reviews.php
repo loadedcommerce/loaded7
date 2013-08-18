@@ -16,7 +16,7 @@
     <?php echo lC_Reviews::getListingOutput(); ?>
   </div>                                                                                                                                                
   <div class="button-set">
-    <a href="<?php echo  lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-large btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+    <a href="<?php echo  lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
   </div>    
 </div>
 <!--content/products/reviews.php end-->

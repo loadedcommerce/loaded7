@@ -10,18 +10,20 @@
 */
 ?>
 <!--footer.php start-->
+
 <div class="container">
-  <footer class="row-fluid"> 
-    <div class="span3">
+  <hr>
+  <div class="row">
+    <div class="col-sm-3 col-lg-3">
       <h4 class="line3 center standart-h4title"><span>New Arrivals</span></h4>
-      <ul class="footer-links">
+      <ul class="footer-links list-indent list-unstyled">
         <?php echo lC_Bs_starter::newArrivalsListing(); ?>
       </ul>
     </div>
 
-    <div class="span3">
-      <h4 class="line3 center standart-h4title"><span>Customer Service</span></h4>
-      <ul class="footer-links">
+    <div class="col-sm-3 col-lg-3">
+      <h4 class="line3 center standard-h4title"><span>Customer Service</span></h4>
+      <ul class="footer-links list-indent list-unstyled">
         <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'SSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
         <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'shipping', 'AUTO'); ?>"><?php echo $lC_Language->get('text_shipping_returns'); ?></a></li>
         <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'privacy', 'AUTO'); ?>"><?php echo $lC_Language->get('text_privacy'); ?></a></li>                                              
@@ -30,9 +32,9 @@
       </ul>
     </div> 
 
-    <div class="span3">
-      <h4 class="line3 center standart-h4title"><span>My Account</span></h4>
-      <ul class="footer-links">
+    <div class="col-sm-3 col-lg-3">
+      <h4 class="line3 center standard-h4title"><span>My Account</span></h4>
+      <ul class="footer-links list-indent list-unstyled">
         <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><?php echo $lC_Language->get('text_sign_in'); ?></a></li>
         <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password', 'SSL'); ?>"><?php echo $lC_Language->get('text_my_password'); ?></a></li>
         <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'); ?>"><?php echo $lC_Language->get('text_my_order_history'); ?></a></li>
@@ -41,22 +43,21 @@
       </ul>
     </div>
 
-    <div class="span3">
-      <h4 class="line3 center standart-h4title"><span>Our Office</span></h4>
-      <address>
+    <div class="col-sm-3 col-lg-3 large-margin-bottom">
+      <h4 class="line3 center standard-h4title"><span>Our Office</span></h4>
+      <address class="margin-left">
         <strong><?php echo STORE_NAME; ?></strong><br>
         <?php echo nl2br(STORE_NAME_ADDRESS); ?><br>
       </address>
-      
+
       <!-- QR Code -->
       <?php echo $lC_Template->getQRCode(); ?>
-      
-    </div>   
-  </footer>
-</div>
-
-<div class="container">
-  <hr>
-  <p>&copy; <?php echo date("Y") . ' ' . STORE_NAME; ?></p>
+    </div>               
+    <div class="col-sm-12 col-lg-12">
+      <div class="pull-left">&copy; <?php echo date("Y") . ' ' . STORE_NAME; ?></div>
+      <div class="pull-right"><?php echo $lC_Language->get('footer'); ?></div>
+    </div>    
+  </div>
+  <p>&nbsp;</p>
 </div>
 <!--footer.php end-->

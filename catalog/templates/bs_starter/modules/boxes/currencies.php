@@ -11,20 +11,19 @@
 ?>
 <!--modules/boxes/currencies.php start-->
 <div class="well" >
-  <ul class="box-currencies nav nav-list">
-    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
-      <form name="currencies" class="no-margin-bottom" action="<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), null, 'AUTO', false); ?>" method="get">
-        <?php echo $lC_Box->getContent(); ?>
-      </form>
+  <ul class="box-currencies list-unstyled">
+    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
+    <form role="form" class="form-inline no-margin-bottom" id="currencies" name="currencies" action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false); ?>" method="get">
+      <?php echo $lC_Box->getContent(); ?>
+    </form>
   </ul>
 </div>
 <script>
-$(document).ready(function() {
-  $(".box-currencies li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
-  });  
-  $('.box-currencies-select').attr('onchange', '$(this).closest("form").submit();').attr('style', 'width:100%');
+$(document).ready(function() { 
+  $('.box-currencies-select').addClass('form-input-width');
 });
+$('.box-currencies-selection').addClass('form-group full-width');
+$('.box-currencies-select').addClass('form-control');
 </script>
 <!--modules/boxes/currencies.php end-->
 

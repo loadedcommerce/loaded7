@@ -11,16 +11,9 @@
 ?>
 <!--modules/boxes/information.php start-->
 <div class="well" >
-  <ul class="box-information nav nav-list list-style-disc">
-    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
+  <ul class="box-information list-unstyled list-indent-large">
+    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
-<script>
-$(document).ready(function() {
-  $(".box-information li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).attr('style', 'margin-left:10px;');
-  });
-});
-</script>
 <!--modules/boxes/information.php end-->

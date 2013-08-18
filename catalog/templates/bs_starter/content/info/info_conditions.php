@@ -10,13 +10,13 @@
 */
 ?>
 <!--content/info/info_conditions.php start-->
-<div class="row-fluid">
-  <div class="span12">
-    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-    <div class="info-shipping-text large-margin-top large-margin-bottom"><?php echo $lC_Language->get('text_information_conditions'); ?></div>
-    <div class="button-set">
-      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-large btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
-      <a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="pull-left btn btn-large btn-info" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+<div class="row">
+  <div class="col-sm-12 col-lg-12">
+    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <div class="info-shipping-text large-margin-top large-margin-bottom margin-left"><?php echo $lC_Language->get('text_information_conditions'); ?></div>
+    <div class="btn-set">
+      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
+      <a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="pull-left btn btn-lg btn-info" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
     </div>
   </div>
 </div>

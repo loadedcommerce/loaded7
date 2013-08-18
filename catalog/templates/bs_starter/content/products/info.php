@@ -12,8 +12,8 @@
 <!--content/products/info.php start-->
 <div class="span4">
   <div class="row-fluid">
-    <div class="thumbnail large-margin-top">
-      <a href="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" class="thickbox"><img src="<?php echo $lC_Image->getAddress($lC_Product->getImage(), 'large'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="<?php echo $lC_Product->getTitle(); ?>" /></a><br />
+    <div class="thumbnail large-margin-top text-center">
+      <a href="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" class="thickbox"><img class="img-responsive" src="<?php echo $lC_Image->getAddress($lC_Product->getImage(), 'large'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="<?php echo $lC_Product->getTitle(); ?>" /></a><br />
     </div>
     <p class="align-center"><a href="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>" class="thickbox"><?php echo $lC_Language->get('enlarge_image'); ?></a></p>
     <hr>
@@ -26,7 +26,7 @@
 </div>
 <div class="span8">
   <?php
-  $availability = ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) ) ? '<span class="product-out-of-stock margin-right">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' : $lC_Product->getAttribute('shipping_availability');
+  $availability = ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) ) ? '<span class="product-out-of-stock red">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' : $lC_Product->getAttribute('shipping_availability');
   if ($lC_Product->getAttribute('manufacturers') != null || $lC_Product->hasModel()) {
     echo '<div class="pull-right large-margin-top">' . "\n" . 
          '  <span>' . $lC_Product->getAttribute('manufacturers') . '</span>' . "\n" .
@@ -40,10 +40,10 @@
   <div class="well large-margin-top margin-bottom">
     <div class="content-products-info-price-container clearfix">
       <span class="content-products-info-price pull-left lt-blue"><?php echo $lC_Product->getPriceFormated(true); ?></span>
-      <span class="content-products-info-avail with-padding"><?php echo $availability ?></span> (<?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'shipping'), $lC_Language->get('more_information'), 'target="_blank"'); ?>)
+      <span class="content-products-info-avail with-padding-no-top-bottom"><?php echo $availability ?></span> (<?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'shipping'), $lC_Language->get('more_information'), 'target="_blank"'); ?>)
     </div>
     <div class="content-products-info-reviews-container">
-      <label class="content-products-info-reviews-rating-label with-padding"><?php echo $lC_Language->get('average_rating'); ?></label>
+      <label class="content-products-info-reviews-rating-label with-padding-no-top-bottom"><?php echo $lC_Language->get('average_rating'); ?></label>
       <span class="content-products-info-reviews-rating"><?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $lC_Product->getData('reviews_average_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $lC_Product->getData('reviews_average_rating'))); ?></span>
       <?php       
       $Qreviews = lC_Reviews::getListing($lC_Product->getID());
@@ -91,13 +91,15 @@
   <div class="span12">
     <div class="row">
       <div class="span6 align-right mid-margin-top">
-        <form name="cart_quantity" id="cart_quantity" action="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add'); ?>" method="post">
-          <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
-          <input type="text" name="content-products-info-qty-input" onfocus="this.select();" class="content-products-info-qty-input" value="1">
+        <form role="form" class="form-inline" name="cart_quantity" id="cart_quantity" action="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add'); ?>" method="post">
+          <div class="form-group">
+            <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
+            <input type="text" name="content-products-info-qty-input" onfocus="this.select();" class="form-control content-products-info-qty-input" value="1">
+          </div>
         </form>
       </div>
       <div class="span6">
-        <p class="margin-top"><a class="no-decoration" onclick="$('#cart_quantity').submit();"><button class="btn btn-block btn-large btn-warning"><?php echo $lC_Language->get('button_buy_now'); ?></button></a></p>
+        <p class="mid-margin-top"><a class="no-decoration" onclick="$('#cart_quantity').submit();"><button class="btn btn-block btn-lg btn-warning"><?php echo $lC_Language->get('button_buy_now'); ?></button></a></p>
       </div>
     </div>
   </div>

@@ -11,21 +11,24 @@
 ?>
 <!--modules/boxes/search.php start-->
 <div class="well" >
-  <ul class="box-search nav nav-list">
-    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
-    <form name="box-search-form" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" class="no-margin-bottom" method="get">
+  <ul class="box-search list-unstyled list-indent-large">
+    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
+    <form role="form" name="box-search-form" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" class="form-inline no-margin-bottom" method="get">
       <?php echo $lC_Box->getContent(); ?>
     </form>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $(".box-search li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).addClass('margin-left-li');
-  });  
-  $('.box-search-submit').html('<i class="btn btn-small btn-info cusrsor:pointer margin-bottom">Go</i>');
-  $('.box-keywords').attr('style', 'width:73%;');
-  $(".box-search li:last-child").addClass('margin-top-li').attr('style', 'padding-left:4px;');
+  var mediaType = _setMediaType();
+  $('.box-search-submit').html('<i class="btn btn-sm btn-info cusrsor:pointer">Go</i>');
+  $(".box-search li:last-child").addClass('help-block small-padding-left');
+  $('.box-search-input').addClass('form-group');
+  if (mediaType == 'tablet-portrait' || mediaType == 'small-tablet-landscape') {
+    $('.box-keywords').attr('style', 'width:60%; display:inline;').addClass('form-control');
+  } else {
+    $('.box-keywords').attr('style', 'width:73%; display:inline;').addClass('form-control');
+  }
 });
 </script>
 <!--modules/boxes/search.php end-->

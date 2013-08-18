@@ -1,24 +1,218 @@
-body { padding-top: 0px; padding-bottom: 40px; padding-top: 0px; padding-bottom: 0px; font-family: 'Roboto', sans-serif; }
-h1,h2,h3,h4,h5,h6 { font-weight:200; }
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: also_purchased_products.php v1.0 2013-08-08 datazen $
+ *
+ * Base stylesheet
+ *
+ * Content:
+ * 1. Global
+ * 2. Basic elements/styles
+ * 3. Typography
+ * 4. Utility classes
+ * 5. Lists & tags
+ * 6. Main layout elements
+ * 7. Main layout styles
+ * 8. Media query styles
+ */
 
+/********************************************************/
+/*                       1. Global                      */
+/********************************************************/
+
+body { 
+  font-family: 'Roboto', sans-serif; 
+}
+
+/********************************************************/
+/*               2. Basic elements/styles               */
+/********************************************************/
+
+body { 
+  padding-top: 0px; 
+  padding-bottom: 40px; 
+  padding-top: 0px; 
+  padding-bottom: 0px; 
+}
+
+.box-header { 
+  margin-left:-5px; 
+  text-transform:uppercase; 
+  font-size:.9em; 
+}
+
+.btn-set { 
+  clear:both; 
+  margin:20px; 
+}
+
+.well { 
+  min-height: 20px; 
+  padding: 19px; 
+  margin-bottom: 20px; 
+  background-color: #f5f5f5; 
+  border: 1px solid #e3e3e3; 
+  -webkit-border-radius: 0px; 
+  -moz-border-radius: 0px; 
+  border-radius: 0px; 
+  -webkit-box-shadow: none; 
+  -moz-box-shadow: none; 
+  box-shadow: none; 
+}
+
+.thumbnail { 
+  margin-bottom:20px; 
+  padding:0px; 
+  -webkit-border-radius: 0px; 
+  -moz-border-radius: 0px; 
+  border-radius: 0px; 
+}
+
+.carousel-inner > .item > img, .carousel-inner > .item > a > img { 
+  min-width:100%; 
+}
+
+.strong { 
+  font-weight:bold; 
+}
+
+.no-decoration { 
+  text-decoration:none !important; 
+}
+
+.no-wrap { 
+  white-space: nowrap !important; 
+}
+
+.form-input-width { 
+  width:96% !important; 
+}
+
+.img-responsive { margin:auto !important; }
+
+/********************************************************/
+/*                    3. Typography                     */
+/********************************************************/
+
+h1, h2, h3, h4, h5, h6 { 
+  font-weight:200; 
+}
+
+.red { 
+  color:#ff0000; 
+}
+
+.lt-blue { 
+  color:#0088cd; 
+}
+          
+/********************************************************/
+/*                  4. Utility classes                  */
+/********************************************************/  
+
+.clear-left { clear: left !important; } /* use bootstrap clearfix instead */
+.clear-right { clear: right !important; } /* use bootstrap clearfix instead */
+.clear-both { clear: both !important; } /* use bootstrap clearfix instead */
+
+.margin-top { margin-top:10px !important; }
+.small-margin-top { margin-top:4px !important; }
+.mid-margin-top { margin-top:15px !important; }
+.large-margin-top { margin-top:20px !important; }
+.no-margin-top { margin-top:0 !important; }
+
+.margin-bottom { margin-bottom:10px !important; }
+.small-margin-bottom { margin-bottom:4px !important; }
+.mid-margin-bottom { margin-bottom:15px !important; }
+.large-margin-bottom { margin-bottom:20px !important; }
+.no-margin-bottom { margin-bottom:0 !important; }
+
+.margin-left { margin-left:10px !important; }
+.small-margin-left { margin-left:4px !important; }
+.mid-margin-left { margin-left:15px !important; }
+.large-margin-left { margin-left:20px !important; }
+.no-margin-left { margin-left:0 !important; }
+
+.margin-right { margin-right:10px !important; }
+.small-margin-right { margin-right:4px !important; }
+.mid-margin-right { margin-right:15px !important; }
+.large-margin-right { margin-right:20px !important; }
+.no-margin-right { margin-right:0 !important; }
+
+.float-left { float:left !important; }  /* use bootstrap pull-left instead */
+.float-right { float:right !important; } /* use bootstrap pull-right instead */
+
+.align-center { text-align:center !important; } /* use bootstrap text-center instead */
+.align-left { text-align:left !important; } /* use bootstrap text-left instead */
+.align-right { text-align:right !important; } /* use bootstrap text-right instead */
+
+.margin-top-neg { margin-top:-10px !important; }
+.margin-bottom-neg { margin-bottom:-10px !important; }
+.margin-left-neg { margin-left:-10px !important; }
+.margin-right-neg { margin-right:-10px !important; }
+                                   
+.with-padding { padding:10px !important; }
+.with-small-padding { padding:4px !important; }
+.with-large-padding { padding:20px !important; }
+.padding-top { padding-top:10px !important; }
+.large-padding-top { padding-top:20px !important; }
+.small-padding-left { padding-left:4px !important; }
+.small-padding-right { padding-right:4px !important; }
+.large-padding-left { padding-left:20px !important; }
+.large-padding-right { padding-right:20px !important; }
+
+.with-padding-no-top { padding:0 10px 10px 10px !important; }
+.with-padding-no-bottom { padding:10px 10px 0 10px !important; }
+.with-padding-no-top-bottom { padding:0 10px !important; }
+
+.no-padding { padding:0 !important; }
+.no-padding-top { padding-top:0 !important; }
+.no-padding-bottom { padding-bottom:0 !important; }
+.no-padding-left { padding-left:0 !important; }
+.no-padding-right { padding-right:0 !important; }
+
+.full-width { width:100% !important; }
+
+/********************************************************/
+/*                  5. Lists & tags                     */
+/********************************************************/
+
+.list-indent { padding-left:8px; }
+.list-indent-large { padding-left:10px; }
+
+/********************************************************/
+/*             6. Main layout elements                  */
+/********************************************************/
+
+#login input { 
+  width:97%; 
+}
+
+#page { 
+  width: 60px; 
+}
+
+/********************************************************/
+/*             7. Main layout styles                    */
+/********************************************************/
+
+/* header/nav */
 .navbar .container  { max-width: 1170px; }
-.navbar-inverse .navbar-inner{ -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; background:#282828; border:none; }
+.navbar-inverse .container{ -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; background:#282828; border:none; }
 .nav-tabs > li > a { -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; }    
-#cat-navi select{ display:none; }
-
 .page-header { border:none; padding: 10px 0px 0px; margin: 0px 0 0px; }
-.brand { margin-left:10px; margin-top:-15px; }
-.thumbnail { margin-bottom:20px; padding:0px; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; }
-.well { min-height: 20px; padding: 19px; margin-bottom: 20px; background-color: #f5f5f5; border: 1px solid #e3e3e3; -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
-.carousel-inner > .item > img, .carousel-inner > .item > a > img { min-width:100%; }
-
-/* product listings */
-.product-special-price { color:#FF0000; }
-
-.product-listing-module-buy-now a { text-decoration:none; }
+.logo { margin-left:10px; margin-top:-15px; }
 
 /* box modules */
 .product_notifications-image { float:left; margin-top:8px; }
+.box-products-price { font-size:1.4em; font-weight:200; }
+
+/* product listings */
+.product-special-price { color:#FF0000; }
+.product-listing-module-buy-now a { text-decoration:none; }
 
 /* content modules */
 .content-upcoming-products-image-tag { padding-top:20px; }
@@ -28,126 +222,55 @@ h1,h2,h3,h4,h5,h6 { font-weight:200; }
 
 .content-reviews-text { padding-top:4px; }
 
-.content-products-info-price { font-size:2.4em; font-weight:200; margin-bottom:20px; }
+.content-products-info-price { font-size:2.4em; font-weight:200; margin-bottom:4px; }
 .content-products-info-reviews-rating-label { text-transform:uppercase; display:inline; }
-.content-products-info-qty-input { width:30%; text-align:center; font-weight: bold; }
-.content-products-info-qty-label { display:inline; vertical-align:20% }
+.content-products-info-qty-input { width:30%; float:right; font-weight: bold; text-align: center; }
+.content-products-info-qty-label { display:inline; vertical-align:-30%; margin-right:10px;  } 
 
+.content-recently-visited-text-name { font-size:1.2em; } 
+.content-recently-visited-image-tag { width:100px; height:120px; } 
 
-.message-stack-container { padding:5px 5px 1px 5px; }
-.message-success-container { padding:10px; }
-
-#page { width: 60px; }
-
-/*************** Bootstrap fixes **************/ 
-.container-folio.row-fluid .span6:nth-child(2n+1), #container-folio.row-fluid .span6:nth-child(2n+1){ margin-left:0px; } /* row-fluid scafolding */
-.container-folio.row-fluid .span4:nth-child(3n+1), #container-folio.row-fluid .span4:nth-child(3n+1){ margin-left:0px; } /* row-fluid scafolding */ 
-.container-folio.row-fluid .span3:nth-child(4n+1), #container-folio.row-fluid .span3:nth-child(4n+1){ margin-left:0px; } /* row-fluid scafolding */
-.row-fluid.articles-grid .span6:nth-child(2n+1){ margin-left:0px; } /* fixed bs margin when row-fluid grid*/
-.row-fluid [class*="span"].pull-right:first-child { margin-left: 30px; } /* fixed pull-right margin */
-.row-fluid [class*="span"].left-side:last-child { margin-left: 0px; } /* fixed pull-right margin */
-
-.fixed-top{ position:fixed; top:0px; bottom:0px; display:inline-block; max-width:370px; background:e0e0e0; barder:1px solid #dfdfdf; z-index:1030; }
-  
-.tab-content .tab-pane{ max-height:600px; position:relative; overflow:auto; }
-
-footer { padding-top:40px; margin-top:40px; border-top:1px solid #dedede; }
-
-.related-projects { padding-top:40px; margin-top:40px; }
-  
-#cat-navi select{ display:none; }
-
-/* utility */
-.clear-left { clear: left; }
-.clear-right { clear: right; }
-.clear-both { clear: both; }
-
-.margin-top { margin-top:10px; }
-.small-margin-top { margin-top:4px; }
-.mid-margin-top { margin-top:15px; }
-.large-margin-top { margin-top:20px; }
-.no-margin-top { margin-top:0; }
-
-.margin-bottom { margin-bottom:10px; }
-.small-margin-bottom { margin-bottom:4px; }
-.mid-margin-bottom { margin-bottom:15px; }
-.large-margin-bottom { margin-bottom:20px; }
-.no-margin-bottom { margin-bottom:0; }
-
-.no-margin-left { margin-left:0 !important; }
-.no-margin-right { margin-right:0 !important; }
-
-.float-left { float:left; }  /* use bootstrap pull-left instead */
-.float-right { float:right; } /* use bootstrap pull-right instead */
-
-.align-center { text-align:center; }
-.align-left { text-align:left; }
-.align-right { text-align:right; }
-
-.margin-left-li { margin-left:0; }
-.margin-top-li { margin-top:-10px; }
-                                   
-.with-padding { padding:0 10px; }
-.large-padding-top { padding-top:20px; }
-.large-padding-left { padding-left:20px; }
-.xlarge-padding-left { padding-left:40px; }
-
-.strong { font-weight:bold; }
-
-.list-style-square { list-style:square; }
-.list-style-disc { list-style:disc; }
-.list-style-circle { list-style:circle; }
-.list-style-decimal { list-style:decimal; }
-.list-style-none { list-style:none; }
-
-.no-decoration { text-decoration:none !important; }
-
-.no-wrap { white-space: nowrap; }
-
-/* utility end*/
-
-/* colors */
-.red { color:#ff0000; }
-.lt-blue { color:#0088cd; }
+.content-also-purchased-products-text-name a { font-size:.8em; }
 
 /* QR Code */
 #qr-message {  -ms-word-break: break-all;  word-break: break-all; word-break: break-word;  -webkit-hyphens: auto;  -moz-hyphens: auto;  hyphens: auto;  display:none;  position:fixed;  bottom:25px;  right:25px;  width: 250px;  text-align:center;  background:#f5f5f5; padding:10px 0; }
 #qr-message strong {font-weight:bold;}
 .close-qr { background-color: #D52607;  border-radius: 9px 9px 9px 9px;  border-style: solid;  border-width: 1px;  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 1px 3px rgba(0, 0, 0, 0.75);  color: #FFFFFF;  font-family: verdana,Arial,Helvetica,sans-serif;  font-size: 11px;  font-weight: bold;  height: 16px;  right: -6px;  line-height: 16px;  min-width: 12px;  padding: 0 2px;  position: absolute;  text-align: center;  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);  top: -6px;  z-index: 1;  cursor: pointer;} 
   
-/*************** @media ******************/
+  /********************************************************/
+/*                8. Error classes                      */
+/********************************************************/
+
+.messageStack { 
+  margin-top:4px 
+}
+
+.message-stack-container { 
+  padding:5px 5px 1px 5px; 
+}
+
+.message-success-container { 
+  padding:10px; 
+}
+
+/********************************************************/
+/*              5. Media query styles                   */
+/********************************************************/  
+  
 @media (max-width: 940px){
-  .brand {
-    display:block;
-    text-align:center;
-    font-size:26px;
-  }
-  #cat-navi select{
-    display:block;
-    width:100%;
-  }
-  #cat-navi li{
-    display:none;
-  } 
+ 
 }
 
 @media (max-width: 1200px) and (min-width: 940px){
   
 }
 
-/* Desktops and laptops ----------- */
+/* Desktops and laptops */
 @media (min-width : 1224px) {
-  .content-new-products-container { margin-right:-50px; }
-  .content-upcoming-products-container { margin-right:-75px; }
-  .product-listing-module-container { margin-right:-50px; }
+
 }
 
 
 @media (max-width: 940px) and (min-width: 768px){
-  .fixed-top{
-    max-width:225px;
-  }
-  .row-fluid [class*="span"].left-side:last-child {
-    clear:both;
-  }
+
 }

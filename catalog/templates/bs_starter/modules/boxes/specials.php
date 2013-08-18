@@ -11,20 +11,26 @@
 ?>
 <!--modules/boxes/specials.php start-->
 <div class="well" >
-  <ul class="box-specials nav nav-list">
-    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
+  <ul class="box-specials list-unstyled">
+    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <script>
 $(document).ready(function() {
-  $(".box-specials li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).addClass('align-center margin-left-li');
-  });  
+  $('.box-specials li').each(function () {
+    if ($(this).is(':first-child')) {
+    } else {
+      $(this).addClass('text-center');
+    }
+  });
+  
   var imageContent = $('.box-specials-image').html();
   $('.box-specials-image').html('<div class="thumbnail">' + imageContent + '</div>');  
   $('.box-specials-price').addClass('red');
   $('.box-specials-buy-now button').addClass('btn btn-warning margin-top');
+  $('.box-specials-image-src').addClass('img-responsive');
+  
 });
 </script>
 <!--modules/boxes/specials.php end-->

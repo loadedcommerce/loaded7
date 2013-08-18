@@ -11,16 +11,9 @@
 ?>
 <!--modules/boxes/checkout_trail.php start-->
 <div class="well" >
-  <ul class="box-checkout-trail nav nav-list list-style-decimal">
-    <li class="nav-header"><?php echo $lC_Box->getTitle(); ?></li>
+  <ul class="box-checkout-trail list-unstyled list-indent-large">
+    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
 </div>
-<script>
-$(document).ready(function() {
-  $(".box-checkout-trail li").each(function(){
-    if ($(this).attr('class') != 'nav-header') $(this).attr('style', 'margin-left:15px;');
-  });
-});
-</script>
 <!--modules/boxes/checkout_trail.php end-->

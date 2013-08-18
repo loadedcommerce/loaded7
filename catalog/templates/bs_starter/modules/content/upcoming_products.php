@@ -10,18 +10,18 @@
 */
 ?>
 <!--modules/content/upcoming_products.php start-->
-<div class="row-fluid articles-grid">
-  <h2 class="sub_title"><?php echo $lC_Box->getTitle(); ?></h2>
+<div class="row">
+  <h2 class="no-margin-top"><?php echo $lC_Box->getTitle(); ?></h2>
   <?php echo $lC_Box->getContent(); ?>
 </div>
 <script>
 $(document).ready(function() {
   var mediaType = _setMediaType();
   var mainContentClass = $('#main-content-container').attr('class');
-  if(mainContentClass == 'span6') {
-    thisContentClass = 'span4';
+  if(mainContentClass == 'col-sm-6 col-lg-6') {
+    thisContentClass = 'col-sm-4 col-lg-4';
   } else {
-    thisContentClass = 'span3';
+    thisContentClass = 'col-sm-3 col-lg-3';
   }
   
   $(".content-upcoming-products-container").each(function(){
@@ -35,17 +35,17 @@ $(document).ready(function() {
     var newNameContentText = (nameContentText.length > 16) ? nameContentText.substr(0, 13) + '...' : nameContentText;
     nameContent = nameContent.replace(nameContentText, newNameContentText);
     
-    output = '<div class="' + thisContentClass + ' with-padding">'+
-             '  <div class="thumbnail align-center">'+ imageContent +
+    output = '<div class="' + thisContentClass + ' with-padding-no-top-bottom">'+
+             '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
-             '      <h3 class="content-upcoming-products-text-name">' + nameContent + '</h3>' +
-             '      <div class="row-fluid">';
+             '      <h3 class="content-upcoming-products-text-name small-margin-top">' + nameContent + '</h3>' +
+             '      <div class="row">';
     if (mediaType == 'desktop') {
-      output += '        <div class="span6">' +
+      output += '        <div class="col-sm-6 col-lg-6">' +
                 '          <p class="lead content-upcoming-products-text-price">' + priceContent + '</p>' +
                 '        </div>';
     }
-    output += '        <div class="' + ((mediaType != 'desktop') ? 'span12' : 'span6') + ' content-upcoming-products-text-expected">' + textExpected + '<br />' + dateContent +
+    output += '        <div class="' + ((mediaType != 'desktop') ? 'col-sm-12 col-lg-12' : 'col-sm-6 col-lg-6') + ' content-upcoming-products-text-expected">' + textExpected + '<br />' + dateContent +
               '        </div>' +
               '      </div>' +
               '    </div>' +
@@ -54,6 +54,7 @@ $(document).ready(function() {
               
     $(this).html(output);  
   });
+  $('.content-upcoming-products-image-src').addClass('img-responsive');
 });
 </script>
 <!--modules/content/upcoming_products.php end-->

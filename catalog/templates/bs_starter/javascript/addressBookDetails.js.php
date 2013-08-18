@@ -22,32 +22,14 @@ $(document).ready(function() {
 
 function getZonesDropdown(country, zone) {
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=getZonesDropdown&country=COUNTRY&zone=ZONE', 'AUTO'); ?>';   
-  $.getJSON(jsonLink.replace('COUNTRY', country).replace('&amp;', '&').replace('ZONE', zone).replace('&amp;', '&'),
+  $.getJSON(jsonLink.replace('COUNTRY', country).replace('&amp;', '&').replace('ZONE', zone).split('amp;').join(''),
     function (data) {
       if (data.rpcStatus != 1) {
         alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
-      $('#uniform-zones').html(data.zonesHtml).change();
-      if ($.browser.mozilla) $('#uniform-zones select').attr( "style", "padding-top:6px" );
-      if (data.single == '1') $('#uniform-zones').attr('style', 'padding:0px 3px 3px 0px;');
-      if ($.browser.mozilla) $('#uniform-zones select').each(function(){
-         var valu = $(this).attr('value');
-          if( $('option:selected', this).val() != ''  ) valu = $('option:selected',this).text();
-         $(this)
-         .css({'opacity':'0','-khtml-appearance':'none'})
-         .before('<span style="-moz-user-select: none;">'+valu+'</span>' )
-          .change(function(){
-                    val = $('option:selected',this).text();
-                    $(this).next().text(val);
-                    })
-     });
+
     }
   );
 }
-$("#uniform-zones").change(function(){
-var selectedValue = $(this).find(":selected").val();
-$("#uniform-zones").find("span:first").text(selectedValue);
-});
-
 </script>

@@ -10,5 +10,7 @@
 */
 ?>
 <!--modules/content/mainpage_content.php start-->
-<?php echo $lC_Box->getContent(); ?>
+<div class="row content-mainpage-content-container margin-bottom">
+  <?php echo $lC_Box->getContent(); ?>
+</div>
 <!--modules/content/mainpage_content.php end-->

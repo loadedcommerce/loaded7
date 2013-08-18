@@ -11,7 +11,11 @@
 ?>
 <!--modules/boxes/categories.php start-->
 <div class="well" >
-  <div class="nav-header"><?php echo $lC_Box->getTitle(); ?></div>
+  <div class="box-header small-margin-bottom small-margin-left"><?php echo $lC_Box->getTitle(); ?></div>
   <?php echo $lC_Box->getContent(); ?>
 </div>
+<script>
+$('.box-categories-ul-top').addClass('list-unstyled list-indent-large');
+$('.box-categories-ul').addClass('list-unstyled list-indent-large');
+</script>
 <!--modules/boxes/categories.php end-->

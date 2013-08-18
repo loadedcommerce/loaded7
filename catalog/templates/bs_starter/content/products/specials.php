@@ -44,7 +44,7 @@ $(document).ready(function() {
     var newDescContentText = (descContentText.length > 65) ? descContentText.substr(0, 62) + '...' : descContentText;
     descContent = descContent.replace(descContentText, newDescContentText);      
     
-    output = '<div class="' + thisContentClass+ ' with-padding">'+
+    output = '<div class="' + thisContentClass+ ' with-padding-no-top-bottom">'+
              '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 style="line-height:1.1;">' + nameContent + '</h3>' +

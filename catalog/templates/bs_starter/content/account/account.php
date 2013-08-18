@@ -1,59 +1,45 @@
 <?php
-/**  
-*  $Id: account.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: account.php v1.0 2013-08-08 datazen $
 */
-if ($lC_MessageStack->size('account') > 0) {
-  echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('account', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
-}
 ?>
-<!--content/account/account.php start-->
-<div class="full_page">
-  <div class="content">
-    <form name="account_password" id="account_password" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password=save', 'SSL'); ?>" method="post" onsubmit="return check_form(account_password);">
-      <div class="short-code-column">
-        <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-        <p><b><?php echo $lC_Language->get('my_account_title'); ?></b></p>
-        <div class="borderPadMe">
-          <?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'my_account.png', $lC_Language->get('my_account_title'), null, null, 'style="float:left;"'); ?>
-          <ul class="accountList">
-            <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'edit', 'SSL'), $lC_Language->get('my_account_information')); ?></li>
-            <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'), $lC_Language->get('my_account_address_book')); ?></li>
-            <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'password', 'SSL'), $lC_Language->get('my_account_password')); ?></li>
-          </ul>
-        </div>
-        <div style="clear: both;">&nbsp;</div>
-        <p><b><?php echo $lC_Language->get('my_orders_title'); ?></b></p>
-        <div class="borderPadMe">
-          <?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'my_orders.png', $lC_Language->get('my_orders_title'), null, null, 'style="float:left;"'); ?>
-          <ul class="accountList">
-            <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'), $lC_Language->get('my_orders_view')); ?></li>
-          </ul>
-        </div>
-        <div style="clear: both;">&nbsp;</div>
-        <p><b><?php echo $lC_Language->get('my_notifications_title'); ?></b></p> 
-        <div class="borderPadMe">
-          <?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'my_notifications.png', $lC_Language->get('my_notifications_title'), null, null, 'style="float:left;"'); ?>
-          <ul class="accountList">
-            <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'newsletters', 'SSL'), $lC_Language->get('my_notifications_newsletters')); ?></li>
-            <li><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'notifications', 'SSL'), $lC_Language->get('my_notifications_products')); ?></li>
-          </ul>
-        </div>
-        <div style="clear:both;">&nbsp;</div>     
-        <div id="accountPasswordActions" class="action_buttonbar">
-          <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_go_shopping'); ?></button></a></span> 
-        </div> 
-        <div style="clear:both;"></div>
+<!--content/info/account.php start-->
+<div class="row-fluid">
+  <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+  <?php 
+    if ( $lC_MessageStack->size('account') > 0 ) echo '<div class="message-stack-container alert alert-error small-margin-bottom margin-left-neg">' . $lC_MessageStack->get('account') . '</div>' . "\n"; 
+  ?>
+  <div class="span12">
+    <h3><?php echo $lC_Language->get('my_account_title'); ?></h3>
+    <div class="well clearfix large-margin-right">
+      <?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'my_account.png', $lC_Language->get('my_account_title'), null, null, 'class="pull-left large-margin-right img-responsive"'); ?>
+      <div class="">
+        <div><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'edit', 'SSL'), $lC_Language->get('my_account_information')); ?></div>
+        <div><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'), $lC_Language->get('my_account_address_book')); ?></div>
+        <div><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'password', 'SSL'), $lC_Language->get('my_account_password')); ?></div>
       </div>
-    </form>
+    </div>
+    <h3><?php echo $lC_Language->get('my_orders_title'); ?></h3>
+    <div class="well clearfix large-margin-right">
+      <?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'my_orders.png', $lC_Language->get('my_orders_title'), null, null, 'class="pull-left large-margin-right img-responsive"'); ?>
+      <div class="">
+        <div><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'), $lC_Language->get('my_orders_view')); ?></div>
+      </div>
+    </div>
+    <h3><?php echo $lC_Language->get('my_notifications_title'); ?></h3> 
+    <div class="well clearfix large-margin-right">
+      <?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'my_notifications.png', $lC_Language->get('my_notifications_title'), null, null, 'class="pull-left large-margin-right img-responsive"'); ?>
+      <div class="">
+        <div><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'newsletters', 'SSL'), $lC_Language->get('my_notifications_newsletters')); ?></div>
+        <div><?php echo lc_link_object(lc_href_link(FILENAME_ACCOUNT, 'notifications', 'SSL'), $lC_Language->get('my_notifications_products')); ?></div>
+      </div>
+    </div>  
   </div>
 </div>
 <!--content/account/account.php end-->

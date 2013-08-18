@@ -8,36 +8,10 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: rpc.php v1.0 2013-08-08 datazen $
 */
-require_once($lC_Vqmod->modCheck('templates/default/classes/default.php'));
-require_once($lC_Vqmod->modCheck('includes/classes/coupons.php'));
+global $lC_Vqmod;
+require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));
 
 class lC_Bs_starter_rpc {
- /*
-  * Returns the live search results
-  *
-  * @param string $_GET['q'] The search string
-  * @access public
-  * @return json
-  */
-  public static function search() {
-    $result = lC_Bs_starter::find($_GET['q']);
-
-    echo $result;
-  }
- /*
-  * Delete item from shopping cart page
-  *
-  * @param string $_GET['q'] The search string
-  * @access public
-  * @return json
-  */
-  public static function deleteItem() {
-    $result = array();
-    $result = lC_Bs_starter::removeItem($_GET['item']);
-    if (is_array($result)) $result['rpcStatus'] = '1';
-    
-    echo json_encode($result);
-  }  
  /*
   * Return the zones dropdown array
   *
@@ -46,11 +20,10 @@ class lC_Bs_starter_rpc {
   */
   public static function getZonesDropdown() {
     $result = array();
-    $result = lC_Bs_starter::getZonesDropdownHtml($_GET['country'], $_GET['zone']);
+    $result = lC_AddressBook::getZonesDropdownHtml($_GET['country'], $_GET['zone']);
     if (is_array($result)) $result['rpcStatus'] = '1';
     
     echo json_encode($result);
   }
-      
 }
 ?>

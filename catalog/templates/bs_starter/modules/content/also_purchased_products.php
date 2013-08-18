@@ -11,23 +11,19 @@
 global $lC_Language;
 ?>
 <!--modules/content/also_purchased_products.php start-->
-<style>
-.content-also-purchased-products-image-tag { padding-top:20px; }
-.content-also-purchased-products-text-expected { font-weight:200; font-size:.9em; }
-.content-also-purchased-products-text-price { font-size:1.3em; font-weight:400; }
-.content-also-purchased-products-text-name { line-height:1.1; font-size:1.3em; }
-</style>
-<div class="row-fluid articles-grid">
-  <h2 class="sub_title"><?php echo $lC_Box->getTitle(); ?></h2>
+<div class="row">
+  <h2 class="no-margin-top"><?php echo $lC_Box->getTitle(); ?></h2>
   <?php echo $lC_Box->getContent(); ?>
 </div>
 <script>
-$(document).ready(function() {     
+$(document).ready(function() {  
+  var buttonContentText;
+  var mediaType = _setMediaType();   
   var mainContentClass = $('#main-content-container').attr('class');
-  if(mainContentClass == 'span6') {
-    thisContentClass = 'span4';
+  if(mainContentClass == 'col-sm-6 col-lg-6') {
+    thisContentClass = 'col-sm-4 col-lg-4';
   } else {
-    thisContentClass = 'span3';
+    thisContentClass = 'col-sm-3 col-lg-3';
   }
   
   $(".content-also-purchased-products-container").each(function(){
@@ -37,28 +33,34 @@ $(document).ready(function() {
     var priceContent = $(this).find('div.content-also-purchased-products-price').html();
     var dateContent = $(this).find('div.content-also-purchased-products-date').html();
     var buttonContent = $(this).find('div.content-also-purchased-products-button').html();
-    var buttonContentText = $(this).find('div.content-also-purchased-products-button').text();
+    buttonContentText = $(this).find('div.content-also-purchased-products-button').text();
     
     var newNameContentText = (nameContentText.length > 16) ? nameContentText.substr(0, 13) + '...' : nameContentText;
     nameContent = nameContent.replace(nameContentText, newNameContentText);
     
-    output = '<div class="' + thisContentClass + ' with-padding">'+
+    output = '<div class="' + thisContentClass + ' with-padding-no-top-bottom">'+
              '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
-             '      <h3 class="content-also-purchased-products-text-name">' + nameContent + '</h3>' +
-             '      <div class="row-fluid">' +
-             '        <div class="span6">' +
-             '          <p class="lead">' + priceContent + '</p>' +
+             '      <h3 class="content-also-purchased-products-text-name small-margin-top no-margin-bottom">' + nameContent + '</h3>' +
+             '      <div class="row">' +
+             '        <div class="col-sm-6 col-lg-6 no-padding-right">' +
+             '          <p class="lead no-margin-bottom">' + priceContent + '</p>' +
              '        </div>' +
-             '        <div class="span6 margin-left">' + buttonContent + '</div>' +
+             '        <div class="col-sm-6 col-lg-6 margin-top">' + buttonContent + '</div>' +
              '      </div>' +
              '    </div>' +
              '  </div>' +
-             '</div>';
+             '</div>';            
               
     $(this).html(output);  
   });
+  if (mediaType == 'small-tablet-landscape' || mediaType == 'tablet-portrait' || mediaType == 'tablet-landscape') {
+    var textArr = buttonContentText.split(' ');
+    $('.content-also-purchased-products-add-button').text(textArr[0]);  
+    $('.content-also-purchased-products-container p.lead').attr('style', 'font-size:1.1em;');  
+  }  
   $('.content-also-purchased-products-add-button').addClass('btn btn-success btn-block');
+  $('.content-also-purchased-products-image-src').addClass('img-responsive');
 });
 </script>
 <!--modules/content/also_purchased_products.php end-->

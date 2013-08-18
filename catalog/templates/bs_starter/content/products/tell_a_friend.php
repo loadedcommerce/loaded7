@@ -16,7 +16,7 @@
     <div class="row">
       <div class="span4 large-padding-left">
         <div class="thumbnail align-center large-padding-top">
-          <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-upcoming-products-image-tag"', 'small')); ?>
+          <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-tell-a-friend-image-src"', 'small')); ?>
           <div class="caption">
             <h3 style="line-height:1.1;">
               <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Product->getTitle()); ?>
@@ -54,8 +54,8 @@
     </div>
   </div>                                                                                                                                                
   <div class="button-set">
-    <button class="pull-right btn btn-large btn-success" onclick="$('#tell_a_friend').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
-    <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-left btn btn-large btn-info" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    <button class="pull-right btn btn-lg btn-success" onclick="$('#tell_a_friend').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+    <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-left btn btn-lg btn-info" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
   </div>    
 </div>
 <!--content/products/tell_a_friend.php end-->
