@@ -114,9 +114,9 @@ h1, h2, h3, h4, h5, h6 {
 /*                  4. Utility classes                  */
 /********************************************************/  
 
-.clear-left { clear: left !important; } /* use bootstrap clearfix instead */
-.clear-right { clear: right !important; } /* use bootstrap clearfix instead */
-.clear-both { clear: both !important; } /* use bootstrap clearfix instead */
+.clear-left { clear: left !important; } 
+.clear-right { clear: right !important; } 
+.clear-both { clear: both !important; } 
 
 .margin-top { margin-top:10px !important; }
 .small-margin-top { margin-top:4px !important; }
@@ -153,6 +153,11 @@ h1, h2, h3, h4, h5, h6 {
 .margin-bottom-neg { margin-bottom:-10px !important; }
 .margin-left-neg { margin-left:-10px !important; }
 .margin-right-neg { margin-right:-10px !important; }
+
+.large-margin-top-neg { margin-top:-20px !important; }
+.large-margin-bottom-neg { margin-bottom:-20px !important; }
+.large-margin-left-neg { margin-left:-20px !important; }
+.large-margin-right-neg { margin-right:-20px !important; }
                                    
 .with-padding { padding:10px !important; }
 .with-small-padding { padding:4px !important; }
@@ -214,6 +219,13 @@ h1, h2, h3, h4, h5, h6 {
 .product-special-price { color:#FF0000; }
 .product-listing-module-buy-now a { text-decoration:none; }
 
+/* product info page */     
+.content-products-info-price { font-size:2.4em; font-weight:200; margin-bottom:4px; }
+.content-products-info-reviews-rating-label { text-transform:uppercase; display:inline; }
+.content-products-info-qty-input { width:30%; float:right; font-weight: bold; text-align: center; }
+.content-products-info-qty-label { display:inline; vertical-align:-30%; margin-right:10px;  } 
+.content-products-info-manuf-model { position:absolute; right:0; top:30px; right:20px;  } 
+
 /* content modules */
 .content-upcoming-products-image-tag { padding-top:20px; }
 .content-upcoming-products-text-expected { font-size:.9em; }
@@ -221,11 +233,6 @@ h1, h2, h3, h4, h5, h6 {
 .content-upcoming-products-text-name { line-height:1.1; font-size:1.3em; }
 
 .content-reviews-text { padding-top:4px; }
-
-.content-products-info-price { font-size:2.4em; font-weight:200; margin-bottom:4px; }
-.content-products-info-reviews-rating-label { text-transform:uppercase; display:inline; }
-.content-products-info-qty-input { width:30%; float:right; font-weight: bold; text-align: center; }
-.content-products-info-qty-label { display:inline; vertical-align:-30%; margin-right:10px;  } 
 
 .content-recently-visited-text-name { font-size:1.2em; } 
 .content-recently-visited-image-src { width:100px; height:120px; } 

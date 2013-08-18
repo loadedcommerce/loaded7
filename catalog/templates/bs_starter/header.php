@@ -15,7 +15,7 @@
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-        <span class="sr-only">Toggle navigation</span>
+        <span class="sr-only"><?php echo $lC_Language->get('text_toggle_navigation'); ?></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -42,9 +42,9 @@
         </li>
       </ul>
       <div class="pull-right mid-margin-top large-margin-right">
-        <span class="language-menu">
-          <?php echo $lC_Template->getLanguageSelection(); ?>
-        </span>
+        <ul class="language-menu">
+          <?php echo $lC_Template->getLanguageSelection(true, false, ''); ?>
+        </ul>
       </div>       
     </div>
   </div>
@@ -54,7 +54,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-3 col-lg-3">
-        <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>logo.png" /></a></h1>
+        <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img alt="<?php echo STORE_NAME; ?>" src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>logo.png" /></a></h1>
       </div>
       <div class="col-sm-9 col-lg-9">
         <div class="row">

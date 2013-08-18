@@ -11,17 +11,17 @@
 ?>
 <!--modules/boxes/search.php start-->
 <div class="well" >
-  <ul class="box-search list-unstyled list-indent-large">
-    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
-    <form role="form" name="box-search-form" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" class="form-inline no-margin-bottom" method="get">
-      <?php echo $lC_Box->getContent(); ?>
-    </form>
-  </ul>
+  <form role="form" name="box-search-form" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" class="form-inline no-margin-bottom" method="get">
+    <ul class="box-search list-unstyled list-indent-large">
+      <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
+        <?php echo $lC_Box->getContent(); ?>
+    </ul>
+  </form>
 </div>
 <script>
 $(document).ready(function() {
   var mediaType = _setMediaType();
-  $('.box-search-submit').html('<i class="btn btn-sm btn-info cusrsor:pointer">Go</i>');
+  $('.box-search-submit').html('<i class="btn btn-sm btn-primary cusrsor:pointer">Go</i>');
   $(".box-search li:last-child").addClass('help-block small-padding-left');
   $('.box-search-input').addClass('form-group');
   if (mediaType == 'tablet-portrait' || mediaType == 'small-tablet-landscape') {

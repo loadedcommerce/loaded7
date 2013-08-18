@@ -11,12 +11,12 @@
 ?>
 <!--modules/boxes/currencies.php start-->
 <div class="well" >
-  <ul class="box-currencies list-unstyled">
-    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
-    <form role="form" class="form-inline no-margin-bottom" id="currencies" name="currencies" action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false); ?>" method="get">
-      <?php echo $lC_Box->getContent(); ?>
-    </form>
-  </ul>
+  <form role="form" class="form-inline no-margin-bottom" id="currencies" name="currencies" action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false); ?>" method="get">
+    <ul class="box-currencies list-unstyled">
+      <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
+        <?php echo $lC_Box->getContent(); ?>
+    </ul>
+  </form>
 </div>
 <script>
 $(document).ready(function() { 

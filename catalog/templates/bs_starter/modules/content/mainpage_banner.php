@@ -9,9 +9,9 @@
   @version    $Id: mainpage_banner.php v1.0 2013-08-08 datazen $
 */
 ?>
-<!--modules/content/mainpage_banner.php start-->
+<!--modules/content/mainpage_banner.php start-->     
 <div class="col-sm-12 col-lg-12">
-  <div class="row content-mainpage-banner-container margin-bottom">
+  <div class="row content-mainpage-banner-container margin-bottom clear-both">
     <?php echo $lC_Box->getContent(); ?>
   </div>
 </div>

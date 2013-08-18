@@ -18,7 +18,7 @@
 </div>
 <script>
 $(document).ready(function() {
-  $('.box-product_notifications-image-container').html('<img class="product_notifications-image" src="templates/bs_starter/images/icons/32/info.png" border="0">');
+  $('.box-product_notifications-image-container').html('<img class="product_notifications-image" src="templates/bs_starter/images/icons/32/info.png">');
   $(".box-product-notifications li:last-child").addClass('small-margin-top align-center');
 });
 </script>
