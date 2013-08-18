@@ -616,7 +616,7 @@ if (!function_exists('lc_draw_label')) {
 * @access public
 */
 if (!function_exists('lc_draw_date_pull_down_menu')) {
-  function lc_draw_date_pull_down_menu($name, $value = null, $default_today = true, $show_days = true, $use_month_names = true, $year_range_start = 0, $year_range_end = 1) {
+  function lc_draw_date_pull_down_menu($name, $value = null, $default_today = true, $show_days = true, $use_month_names = true, $year_range_start = 0, $year_range_end = 1, $params = '') {
     $year = @date('Y');
 
     if (!is_bool($default_today)) {
@@ -682,7 +682,7 @@ if (!function_exists('lc_draw_date_pull_down_menu')) {
           'text' => $i);
       }
 
-      $days_select_string = lc_draw_pull_down_menu($name . '_days', $days_array, $value['date']);
+      $days_select_string = lc_draw_pull_down_menu($name . '_days', $days_array, $value['date'], null, $params);
     }
 
     $months_array = array();
