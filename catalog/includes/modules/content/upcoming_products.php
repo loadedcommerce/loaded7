@@ -60,7 +60,7 @@ class lC_Content_upcoming_products extends lC_Modules {
                            '<div class="content-upcoming-products-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Product->getTitle()) . '</div>' . "\n";
         
         if ($lC_Product->hasImage()) {
-          $this->_content .= '<div class="content-upcoming-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-upcoming-products-image-tag"', 'small')) . '</div>' . "\n";
+          $this->_content .= '<div class="content-upcoming-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-upcoming-products-image-src"', 'small')) . '</div>' . "\n";
         }
         $this->_content .= '<div class="content-upcoming-products-price">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n" . 
                            '<div class="content-upcoming-products-date">' . lC_DateTime::getShort($Qupcoming->value('date_expected')) . '</div>' . "\n" .

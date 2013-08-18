@@ -62,7 +62,7 @@ class lC_Content_also_purchased_products extends lC_Modules {
         while ($Qorders->next()) {
           $this->_content .= '<div class="content-also-purchased-products-container">' . "\n";
           if ($lC_Product->hasImage()) {
-            $this->_content .= '<div class="content-also-purchased-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword')), $lC_Image->show($Qorders->value('image'), $Qorders->value('products_name'), 'class="content-also-purchased-products-products-image-tag"', 'small')) . '</div>' . "\n"; 
+            $this->_content .= '<div class="content-also-purchased-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword')), $lC_Image->show($Qorders->value('image'), $Qorders->value('products_name'), 'class="content-also-purchased-products-image-src"', 'small')) . '</div>' . "\n"; 
           }
           $this->_content .= '<div class="content-also-purchased-products-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword')), $Qorders->value('products_name'))  . '</div>' . "\n" . 
                              '<div class="content-also-purchased-products-desc">' . $Qorders->value('products_description') . '</div>' . "\n" . 

@@ -72,7 +72,7 @@ class lC_Content_new_products extends lC_Modules {
       $this->_content = '';
       foreach ( $data as $product ) {
         $this->_content .= '<div class="content-new-products-container">' . "\n";
-        $this->_content .= '  <div class="content-new-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $lC_Image->show($product['display_image'], $product['name']))  . '</div>' . "\n" . 
+        $this->_content .= '  <div class="content-new-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $lC_Image->show($product['display_image'], $product['name'], 'class="content-new-products-image-src"'))  . '</div>' . "\n" . 
                            '  <div class="content-new-products-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $product['name'])  . '</div>' . "\n" . 
                            '  <div class="content-new-products-desc">' . $product['description'] . '</div>' . "\n" . 
                            '  <div class="content-new-products-price">' . $product['display_price']. '</div>' . "\n" .

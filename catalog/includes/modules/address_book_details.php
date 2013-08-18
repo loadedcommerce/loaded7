@@ -12,7 +12,7 @@
 <ol>
   <?php
   if (ACCOUNT_GENDER > -1) {
-    echo '<li>' . lc_draw_label($lC_Language->get('field_customer_gender'), null, 'fake', (ACCOUNT_GENDER > 0)) . lc_draw_radio_field('gender', lC_Default::getGenderArray(), (isset($Qentry) ? $Qentry->value('entry_gender') : (!$lC_Customer->hasDefaultAddress() ? $lC_Customer->getGender() : null))) . '</li>';
+    echo '<li>' . lc_draw_label($lC_Language->get('field_customer_gender'), null, 'fake', (ACCOUNT_GENDER > 0)) . lc_draw_radio_field('gender', array(array('id' => 'm', 'text' => $lC_Language->get('gender_male')), array('id' => 'f', 'text' => $lC_Language->get('gender_female'))), (isset($Qentry) ? $Qentry->value('entry_gender') : (!$lC_Customer->hasDefaultAddress() ? $lC_Customer->getGender() : null))) . '</li>';
   }
   echo '<li>' . lc_draw_label($lC_Language->get('field_customer_first_name'), null, 'firstname', true) . lc_draw_input_field('firstname', (isset($Qentry) ? $Qentry->value('entry_firstname') : (!$lC_Customer->hasDefaultAddress() ? $lC_Customer->getFirstName() : null))) . '</li>';
   echo '<li>' . lc_draw_label($lC_Language->get('field_customer_last_name'), null, 'lastname', true) . lc_draw_input_field('lastname', (isset($Qentry) ? $Qentry->value('entry_lastname') : (!$lC_Customer->hasDefaultAddress() ? $lC_Customer->getLastName() : null))) . '</li>';
@@ -28,9 +28,9 @@
   }
   echo '<li>' . lc_draw_label($lC_Language->get('field_customer_city'), null, 'city', true) . lc_draw_input_field('city', (isset($Qentry) ? $Qentry->value('entry_city') : null)) . '</li>';
   if (ACCOUNT_STATE > -1) {
-    echo '<li>' . lc_draw_label($lC_Language->get('field_customer_state'), null, 'state', (ACCOUNT_STATE > 0)) . lC_Default::getZonesField() . '</li>';
+    echo '<li>' . lc_draw_label($lC_Language->get('field_customer_state'), null, 'state', (ACCOUNT_STATE > 0)) . (isset($Qentry) ? lC_AddressBook::getZonesField($Qentry->valueInt('entry_country_id')) : lC_AddressBook::getZonesField(STORE_COUNTRY)) . '</li>';
   }
-  echo '<li>' . lc_draw_label($lC_Language->get('field_customer_country'), null, 'country', true) . lc_draw_pull_down_menu('country', lC_Default::getCountriesDropdownArray(), (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY)) . '</li>';
+  echo '<li>' . lc_draw_label($lC_Language->get('field_customer_country'), null, 'country', true) . lc_draw_pull_down_menu('country', lC_AddressBook::getCountriesDropdownArray(), (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY)) . '</li>';
   if (ACCOUNT_TELEPHONE > -1) {
     echo '<li>' . lc_draw_label($lC_Language->get('field_customer_telephone_number'), null, 'telephone', (ACCOUNT_TELEPHONE > 0)) . lc_draw_input_field('telephone', (isset($Qentry) ? $Qentry->value('entry_telephone') : null)) . '</li>';
   }
