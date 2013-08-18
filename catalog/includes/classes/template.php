@@ -567,7 +567,7 @@ class lC_Template {
     $js_files = '';
 
     foreach ($this->_javascript_filenames as $filenames) {
-      $js_files .= '<script language="javascript" type="text/javascript" src="' . $filenames . '"></script>' . "\n";
+      $js_files .= '<script src="' . $filenames . '"></script>' . "\n";
     }
 
     return $js_files;
@@ -638,7 +638,7 @@ class lC_Template {
     
     $output = '<a id="qrcode-tooltip">' .
               '  <span style="cursor:pointer;">' .
-              '    <img src="images/icons/qr-icon.png" border="0" style="vertical-align:middle; padding-right:6px;" /><span class="small-margin-left">' . $lC_Language->get('text_click_and_scan') . '</span>' .
+              '    <img src="images/icons/qr-icon.png" alt="' . $lC_Language->get('text_click_and_scan')  . '" style="vertical-align:middle; padding-right:6px;" /><span class="small-margin-left">' . $lC_Language->get('text_click_and_scan') . '</span>' .
               '  </span>' .
               '</a>' . 
               '<div id="qr-message">' . 
@@ -647,10 +647,10 @@ class lC_Template {
     $BarcodeQR->url($qrcode_url . $qrcode_url_add);
     if ($lC_Customer->isLoggedOn() === true) {
       $BarcodeQR->draw(230, DIR_FS_WORK . 'qrcode/c' .  $lC_Customer->id . '.png');
-      $output .= '<img src="includes/work/qrcode/c' . $lC_Customer->id . '.png" />';      
+      $output .= '<img alt="' . $lC_Language->get('text_click_and_scan') . '" src="includes/work/qrcode/c' . $lC_Customer->id . '.png" />';      
     } else {
       $BarcodeQR->draw(230, DIR_FS_WORK . 'qrcode/g' .  $lC_Session->getID() . '.png');
-      $output .= '<img src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" />';
+      $output .= '<img alt="' . $lC_Language->get('text_click_and_scan') . '" src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" />';
     }   
     $output .= '</div><script>$("#qrcode-tooltip").click(function() { $("#qr-message").show("500"); });</script>';
     
@@ -662,7 +662,7 @@ class lC_Template {
   * @access public
   * @return array
   */  
-  public function getLanguageSelection($include_image = true, $include_name = false) {
+  public function getLanguageSelection($include_image = true, $include_name = false, $params = '') {
     global $lC_Language;
     
     $text = '';
@@ -673,7 +673,7 @@ class lC_Template {
       } else if ($include_name === true && $include_image === false) {
         $text = $value['name'];
       } else {
-        $text = $lC_Language->showImage($value['code']);
+        $text = $lC_Language->showImage($value['code'], null, null, $params);
       }
       $output .= '<li>' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('language', 'currency')) . '&language=' . $value['code'], 'AUTO'), $text) . '</li>';
     }

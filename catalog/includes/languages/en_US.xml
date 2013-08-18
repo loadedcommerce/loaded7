@@ -61,6 +61,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>text_toggle_navigation</key>
+      <value><![CDATA[Toggle navigation]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>text_sign_in</key>
       <value><![CDATA[My Account]]></value>
       <group>general</group>
@@ -1801,7 +1806,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>product_not_found_heading</key>
-      <value><![CDATA[Product Not Found]]></value>
+      <value><![CDATA[Products]]></value>
       <group>products</group>
     </definition>
     <definition>
@@ -1826,7 +1831,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>product_not_found</key>
-      <value><![CDATA[Product not found!]]></value>
+      <value><![CDATA[There are currently no products available.]]></value>
       <group>products</group>
     </definition>
     <definition>
@@ -1886,7 +1891,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>no_reviews_available</key>
-      <value><![CDATA[No reviews found.]]></value>
+      <value><![CDATA[There are currently no reviews available.]]></value>
       <group>products</group>
     </definition>
     <definition>

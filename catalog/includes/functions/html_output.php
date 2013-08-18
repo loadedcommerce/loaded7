@@ -147,7 +147,7 @@ if (!function_exists('lc_image')) {
       $height = 0;
     }
 
-    $image = '<img src="' . lc_output_string($image) . '" border="0" alt="' . lc_output_string($title) . '"';
+    $image = '<img src="' . lc_output_string($image) . '" alt="' . lc_output_string($title) . '"';
 
     if (!empty($title)) {
       $image .= ' title="' . lc_output_string($title) . '"';

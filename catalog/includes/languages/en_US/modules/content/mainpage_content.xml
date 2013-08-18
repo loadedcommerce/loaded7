@@ -37,8 +37,8 @@
                             </div>
                           </div>
                         </div>
-                        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span style="font-size:.7em; vertical-align:23%"><</span></a>
-                        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span style="font-size:.7em; vertical-align:23%">></span></a>
+                        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
                       </div>]]>
       </value>
       <group>modules-content</group>
