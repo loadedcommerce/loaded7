@@ -11,9 +11,11 @@
 global $lC_Language;
 ?>
 <!--modules/content/also_purchased_products.php start-->
-<div class="row">
-  <h2 class="no-margin-top"><?php echo $lC_Box->getTitle(); ?></h2>
-  <?php echo $lC_Box->getContent(); ?>
+<div class="col-sm-12 col-lg-12">
+  <div class="row">
+    <h2 class="no-margin-top"><?php echo $lC_Box->getTitle(); ?></h2>
+    <?php echo $lC_Box->getContent(); ?>
+  </div>
 </div>
 <script>
 $(document).ready(function() {  

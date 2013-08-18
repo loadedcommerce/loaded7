@@ -10,7 +10,9 @@
 */
 ?>
 <!--modules/content/mainpage_content.php start-->
-<div class="row content-mainpage-content-container margin-bottom">
-  <?php echo $lC_Box->getContent(); ?>
+<div class="col-sm-12 col-lg-12">
+  <div class="row content-mainpage-content-container margin-bottom">
+    <?php echo $lC_Box->getContent(); ?>
+  </div>
 </div>
 <!--modules/content/mainpage_content.php end-->

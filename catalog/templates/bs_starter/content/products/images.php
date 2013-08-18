@@ -11,8 +11,8 @@
 $large_image = $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'id="productImageLarge"', 'large');
 ?>
 <!--content/products/images.php start-->
-<div class="row-fluid">
-  <div class="span12">
+<div class="row">
+  <div class="col-sm-12 col-lg-12">
     <?php
     if ($lC_Product->numberOfImages() > 1) {
       ?>
@@ -23,7 +23,7 @@ $large_image = $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(),
             $large_image = $lC_Image->show($images['image'], $lC_Product->getTitle(), 'id="productImageLarge"', 'large');
           }
           echo '<span style="width: ' . $lC_Image->getWidth($lC_Image->getCode(DEFAULT_IMAGE_GROUP_ID)) . 'px; padding: 2px; float: left; text-align: center;">
-               ' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'images&' . $lC_Product->getKeyword() . '&image=' . $images['id']), $lC_Image->show($images['image'], $lC_Product->getTitle(), 'height="' . $lC_Image->getHeight($lC_Image->getCode(DEFAULT_IMAGE_GROUP_ID)) . '" style="max-width: ' . $lC_Image->getWidth($lC_Image->getCode(DEFAULT_IMAGE_GROUP_ID)) . 'px;"'), 'onclick="loadImage(\'' . $lC_Image->getAddress($images['image'], 'large') . '\'); return false;"') . 
+               ' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'images&' . $lC_Product->getKeyword() . '&image=' . $images['id']), $lC_Image->show($images['image'], $lC_Product->getTitle(), 'height="' . $lC_Image->getHeight($lC_Image->getCode(DEFAULT_IMAGE_GROUP_ID)) . '" class="content-products-images-src img-responsive" style="max-width: ' . $lC_Image->getWidth($lC_Image->getCode(DEFAULT_IMAGE_GROUP_ID)) . 'px;"'), 'onclick="loadImage(\'' . $lC_Image->getAddress($images['image'], 'large') . '\'); return false;"') . 
                '</span>';
         }
         ?>

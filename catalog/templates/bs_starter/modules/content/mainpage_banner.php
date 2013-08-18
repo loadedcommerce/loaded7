@@ -10,8 +10,10 @@
 */
 ?>
 <!--modules/content/mainpage_banner.php start-->
-<div class="row content-mainpage-banner-container margin-bottom">
-  <?php echo $lC_Box->getContent(); ?>
+<div class="col-sm-12 col-lg-12">
+  <div class="row content-mainpage-banner-container margin-bottom">
+    <?php echo $lC_Box->getContent(); ?>
+  </div>
 </div>
 <!--modules/content/mainpage_banner.php end-->
 <script>

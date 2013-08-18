@@ -228,7 +228,7 @@ h1, h2, h3, h4, h5, h6 {
 .content-products-info-qty-label { display:inline; vertical-align:-30%; margin-right:10px;  } 
 
 .content-recently-visited-text-name { font-size:1.2em; } 
-.content-recently-visited-image-tag { width:100px; height:120px; } 
+.content-recently-visited-image-src { width:100px; height:120px; } 
 
 .content-also-purchased-products-text-name a { font-size:.8em; }
 
