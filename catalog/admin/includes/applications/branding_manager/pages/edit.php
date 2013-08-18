@@ -12,10 +12,8 @@
   @license    http://loadedcommerce.com/license.html
 */
 
-$bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($_GET[$lC_Template->getModule()]));
-
+$bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModule()));
 ?>
-<?php //echo (isset($lC_ObjectInfo)) ? $lC_ObjectInfo->get('products_price') : 0; ?>
 <style>
 .inline-label > .label {
   width: 200px;
