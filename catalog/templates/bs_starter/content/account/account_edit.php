@@ -50,7 +50,7 @@ $Qaccount = lC_Account::getEntry();
     </form>
     <div class="button-set clearfix">
       <button class="pull-right btn btn-lg btn-success" onclick="$('#account_edit').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
-      <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>"><button class="pull-left btn btn-lg btn-info" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+      <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
     </div>     
   </div>
 </div>

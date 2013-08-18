@@ -32,7 +32,7 @@ $class = 'rpc';
 $first_array = array_slice($_GET, 0, 1);
 $module = lc_sanitize_string(basename(key($first_array)));
 
-if (empty($module)) $module = $lC_Template->getCode();
+if ($module == 'action') $module = strtolower($lC_Template->getCode());
 
 $action = (isset($_GET['action']) && !empty($_GET['action'])) ? lc_sanitize_string(basename($_GET['action'])) : '';
 

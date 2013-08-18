@@ -48,7 +48,7 @@ class lC_Info_Contact extends lC_Template {
 
     if (lc_validate_email_address($email_address)) {
       lc_email(STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS, $lC_Language->get('contact_email_subject'), $inquiry, $name, $email_address);
-      lc_redirect(lc_href_link(FILENAME_INFO, 'contact=success', 'AUTO'));
+      lc_redirect(lc_href_link(FILENAME_INFO, 'contact&success=' . urlencode($lC_Language->get('contact_email_sent_successfully')), 'AUTO'));
     } else {
       $lC_MessageStack->add('contact', $lC_Language->get('field_customer_email_address_check_error'));
     }

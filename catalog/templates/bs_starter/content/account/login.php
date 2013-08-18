@@ -29,7 +29,7 @@
           </div>
         </form>   
         <div class="button-set clearfix">
-          <button class="pull-right btn btn-lg btn-success" onclick="$('#login').submit();" type="button"><?php echo $lC_Language->get('button_sign_in'); ?></button>
+          <button class="pull-right btn btn-lg btn-primary" onclick="$('#login').submit();" type="button"><?php echo $lC_Language->get('button_sign_in'); ?></button>
         </div>             
       </div>
     </div>
@@ -38,7 +38,7 @@
         <h3><?php echo $lC_Language->get('login_new_customer_heading'); ?></h3>
         <p><?php echo $lC_Language->get('login_new_customer_text'); ?></p>    
         <div class="buttons-set clearfix large-margin-top">
-          <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create', 'SSL'); ?>"><button class="pull-right btn btn-lg btn-info" type="button"><?php echo $lC_Language->get('button_create_account'); ?></button></a>
+          <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create', 'SSL'); ?>"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_create_account'); ?></button></a>
         </div>        
       </div>
     </div>

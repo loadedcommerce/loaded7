@@ -15,7 +15,7 @@
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
     <p><?php echo $lC_Language->get('sign_out_text'); ?></p>
     <div class="button-set">
-      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
+      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
     </div>           
   </div>
 </div>
