@@ -16,14 +16,14 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
 ?>
 <!DOCTYPE html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><!-- disable yellow input field highlight in Chrome -->
     <title><?php echo STORE_NAME . ($lC_Template->hasPageTitle() ? ': ' . $lC_Template->getPageTitle() : ''); ?></title>
     <base href="<?php echo lc_href_link(null, null, 'AUTO', false); ?>" />
     <meta name="description" content="Loaded Commerce Shopping Cart">
     <meta name="author" content="Loaded Commerce">
     <!-- include open graph rags -->
     <?php echo $lC_Template->getPageOGPTags(); ?>
-    <meta name="viewport" content="content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="templates/bs_starter/css/bootstrap.css">
@@ -35,8 +35,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!-- Template CSS -->
     <link rel="stylesheet" href="templates/bs_starter/css/template.css?v=1">
     <!--link rel="stylesheet" href="templates/bs_starter/css/font-awesome.css?v=1">
-    <link rel="stylesheet" href="templates/bs_starter/css/jquery.mCustomScrollbar.css?v=1">
-    <link rel="stylesheet" type="text/css" href="ext/jquery/thickbox/thickbox.css?v=1" / -->
+    <link rel="stylesheet" href="templates/bs_starter/css/jquery.mCustomScrollbar.css?v=1" -->
+    <link rel="stylesheet" type="text/css" href="ext/jquery/thickbox/thickbox.css?v=1" />
     <link rel="stylesheet" href="templates/bs_starter/css/loadmask.css?v=1">     
 
     <!--[if lt IE 7]><link href="assets/css/font-awesome-ie7.min.css" rel="stylesheet"><![endif]-->
@@ -123,7 +123,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         <!--left column start-->
         <?php
         if (!empty($content_left)) {
-          echo '<div id="left-column" class="' . $box_class . '">' . $content_left . '</div>'; 
+          echo '<div id="left-column-container" class="' . $box_class . '">' . $content_left . '</div>'; 
         }             
         ?>
         <!--left column end--> 
@@ -132,9 +132,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         <div id="main-content-container" class="<?php echo $content_class; ?>">
           <?php
             if ($lC_MessageStack->size('header') > 0) {
-              echo '<!--Message Stack Header Starts-->';
               echo $lC_MessageStack->get('header');
-              echo '<!--Message Stack Header Ends-->';
             }
             if ($lC_Template->hasPageContentModules()) {
               foreach ($lC_Services->getCallBeforePageContent() as $service) {
@@ -187,8 +185,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
                 unset($lC_Box);
               }
             } 
-          ?>
-        </div>
+            ?>
+          </div>
         <!--content end-->  
           
         <!--right column start-->
@@ -216,7 +214,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
           ob_end_clean();
         }
         if (!empty($content_right)) {
-          echo '<div id="right-column" class="' . $box_class . '">' . $content_right . '</div>';
+          echo '<div id="right-column-container" class="' . $box_class . '">' . $content_right . '</div>';
         }             
         ?>
         <!--right column end-->         
@@ -244,15 +242,14 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!-- Core Minumum JS -->
     <script src="ext/bootstrap/bootstrap-datepicker.js"></script>
     <script src="ext/jquery/jquery.loadmask.js"></script>
+    <script src="ext/jquery/thickbox/thickbox-compressed.js"></script>
 
-    <!-- Core Extra --    
-    
-    <!-- Core Extra --
-    <script src="ext/jquery/jquery.validate.min.js"></script>
+
+    <!-- Core Extra -->    
+    <!-- script src="ext/jquery/jquery.validate.min.js"></script>
     <script src="ext/jquery/jquery.easing.1.3.js"></script>
     <script src="ext/jquery/jquery.hoverIntent.min.js"></script>
     <script src="ext/jquery/jquery.liveSearch.js"></script>
-    <script src="ext/jquery/thickbox/thickbox-compressed.js"></script>
     <script src="ext/datepicker/datepicker.js"></script>
     <script src="ext/jquery/jquery.activity-indicator-1.0.0.min.js"></script -->
     
