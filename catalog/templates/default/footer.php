@@ -78,7 +78,8 @@
       </div>
     </div>
     <address>
-      &copy; <?php echo @date("Y") . ' ' . STORE_NAME; ?> <img src="templates/default/images/payment_info.jpg"/>
+      <div class="float-left">&copy; <?php echo @date("Y") . ' ' . STORE_NAME; ?> <img src="templates/default/images/payment_info.jpg"/></div>
+      <div class="powered-by float-right"><?php echo $lC_Language->get('footer'); ?></div>
     </address>
   </footer>
 </div>           
