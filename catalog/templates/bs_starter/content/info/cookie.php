@@ -11,19 +11,21 @@
 ?>
 <!--content/info/cookie.php start-->
 <div class="row">
-  <h1 class="no-margin-top margin-bottom"><?php echo $lC_Template->getPageTitle(); ?></h1>
-  <div class="col-sm-4 col-lg-4">
-    <div class="well">
-      <div class="strong"><?php echo $lC_Language->get('cookie_usage_box_heading'); ?></div>
-      <div><?php echo $lC_Language->get('cookie_usage_box_contents'); ?></div>      
+  <div class="col-sm-12 col-lg-12">
+    <h1 class="no-margin-top margin-bottom"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <div class="col-sm-4 col-lg-4">
+      <div class="well">
+        <div class="strong"><?php echo $lC_Language->get('cookie_usage_box_heading'); ?></div>
+        <div><?php echo $lC_Language->get('cookie_usage_box_contents'); ?></div>      
+      </div>
     </div>
-  </div>
-  <div class="col-sm-8 col-lg-8">
-    <div class="large-margin-right"><?php echo $lC_Language->get('text_information_cookie_usage'); ?></div>
-  </div>    
-  <div class="btn-set">
-    <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
-    <a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="pull-left btn btn-lg btn-info" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    <div class="col-sm-8 col-lg-8">
+      <div class="large-margin-right"><?php echo $lC_Language->get('text_information_cookie_usage'); ?></div>
+    </div>    
+    <div class="btn-set clearfix">
+      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
+      <a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    </div>    
   </div>    
 </div>
 <!--content/info/cookie.php end-->   

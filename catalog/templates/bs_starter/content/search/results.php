@@ -20,10 +20,10 @@
       require($lC_Vqmod->modCheck('includes/modules/product_listing.php')); 
     }
     ?>     
+    <div class="button-set clearfix large-margin-bottom">
+      <a href="javascript: history.go(-1);"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    </div>   
   </div>
-  <div class="button-set">
-    <a href="javascript: history.go(-1);"><button class="pull-left btn btn-lg btn-info" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
-  </div>   
 </div>
 <script>
 $(document).ready(function() {

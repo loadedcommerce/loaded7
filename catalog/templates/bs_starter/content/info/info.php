@@ -22,8 +22,8 @@
       <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'contact'), $lC_Language->get('box_information_contact')); ?></li>
       <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'sitemap'), $lC_Language->get('box_information_sitemap')); ?></li>
     </ul>
-    <div class="button-set">
-      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new'); ?>" class="noDecoration"><button class="pull-right btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_go_shopping'); ?></button></a>
+    <div class="button-set clearfix">
+      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new'); ?>" class="noDecoration"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_go_shopping'); ?></button></a>
     </div>
   </div>
 </div>

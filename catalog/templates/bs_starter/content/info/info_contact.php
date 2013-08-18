@@ -24,8 +24,8 @@
       </div>
       <div class="col-sm-8 col-lg-8">
         <?php 
-        if ( $lC_MessageStack->size('contact') > 0 ) echo '<div class="message-stack-container alert alert-danger large-margin-right">' . $lC_MessageStack->get('contact') . '</div>' . "\n"; 
-        if (isset($_GET['contact']) && $_GET['contact'] == 'success') echo '<div class="message-success-container alert alert-success large-margin-right"><img class="margin-right" src="images/icons/success.gif" border="0">' . $lC_Language->get('contact_email_sent_successfully') . '</div>' . "\n"; 
+        if ( $lC_MessageStack->size('contact') > 0 ) echo '<div class="message-stack-container alert alert-danger large-margin-right">' . $lC_MessageStack->get('contact') . '</div>' . "\n";  
+        if (isset($_GET['success']) && $_GET['success'] != NULL) echo '<div class="message-success-container alert alert-success"><img class="margin-right" src="images/icons/success.gif">' . preg_replace('/[^a-zA-Z0-9]\'\.\,/', '', $_GET['success']) . '</div>' . "\n"; 
         ?>
         <form role="form" id="contact" name="contact" class="row-fluid" action="<?php echo lc_href_link(FILENAME_INFO, 'contact=process', 'SSL'); ?>" method="post" enctype="multipart/form-data">
           <div class="form-group"><label class="sr-only"></label><input class="form-control" type="text" name="name" value="" placeholder="<?php echo $lC_Language->get('contact_name_title'); ?>"></div>
@@ -35,9 +35,9 @@
       </div>
     </div>
   </div>                                                                                                                                                
-  <div class="btn-set small-margin-top">
-    <button class="pull-right btn btn-lg btn-success" onclick="$('#contact').submit();" type="button"><?php echo $lC_Language->get('button_send_message'); ?></button>
-    <a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="pull-left btn btn-lg btn-info" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+  <div class="btn-set small-margin-top clearfix">
+    <button class="pull-right btn btn-lg btn-primary" onclick="$('#contact').submit();" type="button"><?php echo $lC_Language->get('button_send_message'); ?></button>
+    <a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
   </div>    
 </div>
 <!--content/info/info_contact.php end-->

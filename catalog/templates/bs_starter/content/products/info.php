@@ -11,7 +11,8 @@
 ?>
 <!--content/products/info.php start-->
 <div class="row">
-  <div class="col-sm-4 col-lg-4">
+
+  <div class="col-sm-4 col-lg-4 clearfix">
     <div class="thumbnail large-margin-top text-center">
       <a href="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" class="thickbox"><img class="img-responsive" src="<?php echo $lC_Image->getAddress($lC_Product->getImage(), 'large'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="<?php echo $lC_Product->getTitle(); ?>" /></a><br />
     </div>
@@ -19,18 +20,17 @@
     <hr>
     <?php
     if (sizeof($lC_Product->getImages()) > 1) {
-      echo '<div class="thumbnail"><ul>' . $lC_Product->getAdditionalImagesHtml() . '</ul></div><hr>' . "\n";
+      echo '<div class="thumbnail img-responsive"><ul>' . $lC_Product->getAdditionalImagesHtml() . '</ul></div><hr>' . "\n";
     }
     ?>
   </div>
-
-  <div class="col-sm-8 col-lg-8">
+  <div class="col-sm-8 col-lg-8 clearfix">
     <?php
     $availability = ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) ) ? '<span class="product-out-of-stock red">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' : $lC_Product->getAttribute('shipping_availability');
     if ($lC_Product->getAttribute('manufacturers') != null || $lC_Product->hasModel()) {
-      echo '<div class="pull-right large-margin-top">' . "\n" . 
-           '  <span>' . $lC_Product->getAttribute('manufacturers') . '</span>' . "\n" .
-           '  <span>' . $lC_Product->getModel() . '</span>' . "\n" . 
+      echo '<div class="content-products-info-manuf-model">' . "\n" . 
+           '  <span class="content-products-info-manuf small-margin-right">' . $lC_Product->getAttribute('manufacturers') . ':</span>' . "\n" .
+           '  <span class="content-products-info-model">' . $lC_Product->getModel() . '</span>' . "\n" . 
            '</div>' . "\n";
     }
     ?>
@@ -44,7 +44,7 @@
       </div>
       <div class="content-products-info-reviews-container">
         <label class="content-products-info-reviews-rating-label with-padding-no-top-bottom"><?php echo $lC_Language->get('average_rating'); ?></label>
-        <span class="content-products-info-reviews-rating"><?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $lC_Product->getData('reviews_average_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $lC_Product->getData('reviews_average_rating'))); ?></span>
+        <span class="content-products-info-reviews-rating margin-right"><?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $lC_Product->getData('reviews_average_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $lC_Product->getData('reviews_average_rating'))); ?></span>
         <?php       
         $Qreviews = lC_Reviews::getListing($lC_Product->getID());
         if ($lC_Reviews->getTotal($lC_Product->getID()) > 0) {
@@ -87,9 +87,8 @@
         <?php
       }
       ?>  
+    </div>
   </div>
-</div>
-<div class="col-sm-12 col-lg-12">
   <div class="row">
     <div class="col-sm-6 col-lg-6 align-right mid-margin-top">
       <form role="form" class="form-inline" name="cart_quantity" id="cart_quantity" action="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add'); ?>" method="post">
@@ -100,15 +99,13 @@
       </form>
     </div>
     <div class="col-sm-6 col-lg-6">
-      <p class="mid-margin-top"><a class="no-decoration" onclick="$('#cart_quantity').submit();"><button class="btn btn-block btn-lg btn-warning"><?php echo $lC_Language->get('button_buy_now'); ?></button></a></p>
+      <p class="margin-top"><button onclick="$('#cart_quantity').submit();" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
     </div>
   </div>
 </div>
-<hr>
-  
-  
 <script>
 $(document).ready(function() {
+  $('#main-content-container').addClass('large-margin-top-neg');
   refreshPrice();
 });
 
