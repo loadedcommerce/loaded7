@@ -521,7 +521,7 @@
         <div style="margin:-15px; padding:10px 20px 14px 10px; width:100%; height:32px; margin-bottom:0px;">
           <a id="qrcode-tooltip">
             <p style="width:32px;float:left;cursor:pointer;">
-              <img src="../images/icons/qr-icon.png" border="0" class="Click to Generate QR Code" /> 
+              <img src="../images/icons/qr-icon.png" border="0" alt="Click to Generate QR Code" /> 
             </p>
           </a>
           <p style="float:left; padding:10px 0 0px 10px; font-weight:bold;">QR Code for Current URL</p> 
