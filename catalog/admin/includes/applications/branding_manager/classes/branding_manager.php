@@ -23,7 +23,9 @@ class lC_Branding_manager_Admin {
   public static function get() {
     global $lC_Database, $lC_Language;
 
-    $language_id = '1';
+    if ( empty($language_id) ) {
+      $language_id = $lC_Language->getID();
+    }
     
     $Qbranding = $lC_Database->query('select * from :table_branding where language_id = :language_id');
     $Qbranding->bindTable(':table_branding', TABLE_BRANDING);
@@ -49,7 +51,9 @@ class lC_Branding_manager_Admin {
     global $lC_Database, $lC_Language;
 
     $error = false;   
-    $language_id = '1';
+    if ( empty($language_id) ) {
+      $language_id = $lC_Language->getID();
+    }
 
     $Qdelete = $lC_Database->query('delete from :table_branding where language_id = :language_id');
     $Qdelete->bindTable(':table_branding', TABLE_BRANDING);
