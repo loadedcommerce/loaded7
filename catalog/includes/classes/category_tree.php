@@ -77,7 +77,7 @@
       if ( $lC_Cache->read('category_tree-' . $lC_Language->getCode(), 720) ) {
         $this->_data = $lC_Cache->getCache();
       } else {
-        $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, cd.categories_name, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_id = cd.categories_id and cd.language_id = :language_id order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
+        $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, cd.categories_name, cd.categories_menu_name, cd.categories_keyword from :table_categories c, :table_categories_description cd where c.categories_id = cd.categories_id and cd.language_id = :language_id order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
         $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
         $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
         $Qcategories->bindInt(':language_id', $lC_Language->getID());
@@ -86,6 +86,7 @@
         while ( $Qcategories->next() ) {
           $this->_data[$Qcategories->valueInt('parent_id')][$Qcategories->valueInt('categories_id')] = array('name' => $Qcategories->value('categories_name'),
                                                                                                              'menu_name' => $Qcategories->value('categories_menu_name'),
+                                                                                                             'keyword' => $Qcategories->value('categories_keyword'),
                                                                                                              'image' => $Qcategories->value('categories_image'),
                                                                                                              'count' => 0,
                                                                                                              'mode' => $Qcategories->value('categories_mode'),
@@ -354,6 +355,7 @@
           if ($id == $category_id) {
             return array('id' => $id,
                          'name' => $info['name'],
+                         'keyword' => $info['keyword'],
                          'parent_id' => $parent,
                          'image' => $info['image'],
                          'status' => $info['status'],

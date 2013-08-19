@@ -101,13 +101,20 @@ if (!function_exists('lc_href_link')) {
 
     if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('sefu')) {
       // get all category path names to add to the url structure BEFORE the cPath
-      if (!strpos($link, 'product')) {
-        if ($cPathPos = strpos($link, 'cPath=')) {
-          $cat_id = explode("_", $cPath = substr($link, $cPathPos+6));
-          foreach ($cat_id as $id) {
-            $cat_data = $lC_CategoryTree->getdata($id);
-            $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
-          }       
+      $cat_path = '';
+      if (ADD_CATEGORY_NAMES_TO_SEF_URLS == 'true') {
+        if (!strpos($link, 'product')) {
+          if ($cPathPos = strpos($link, 'cPath=')) {
+            $cat_id = explode("_", $cPath = substr($link, $cPathPos+6));
+            foreach ($cat_id as $id) {
+              $cat_data = $lC_CategoryTree->getdata($id);
+              if ($cat_data['keyword'] != '') {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['keyword'])) . '/'; 
+              } else {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+              }
+            }       
+          }
         }
       }
       $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
