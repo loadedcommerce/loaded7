@@ -18,6 +18,7 @@ global $lC_Template, $lC_Language, $lC_ObjectInfo;
 $(document).ready(function() {
 
   createUploader();
+  createOGUploader();
 
   $(window).resize(function() {
     if ($(window).width() < 1380) {
@@ -31,20 +32,33 @@ $(document).ready(function() {
 });
 
 function validateForm() {
-   
-var url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=save'); ?>'; 
- $("#branding_manager").attr("action", url);
- $("#branding_manager").submit();
+   var url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=save'); ?>'; 
+   $("#branding_manager").attr("action", url);
+   $("#branding_manager").submit();
 } 
+
 
 function createUploader() {
   var uploader = new qq.FileUploader({
     element: document.getElementById('fileUploaderImageContainer'),
-    action: '',
+    action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
+    allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+    multiple: false,
     onComplete: function(id, fileName, responseJSON) {
-      $('#imagePreviewContainer').html('<img src="../images/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="' + fileName + '">');
+      $('#imagePreviewContainer').html('<img src="../images/branding/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="' + fileName + '">');
     },
   });
-}
+} 
 
+function createOGUploader() {
+  var uploader = new qq.FileUploader({
+    element: document.getElementById('ogfileUploaderImageContainer'),
+    action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
+    allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+    multiple: false,
+    onComplete: function(id, fileName, responseJSON) {
+      $('#ogimagePreviewContainer').html('<img src="../images/branding/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="' + fileName + '">');
+    },
+  });
+}      
 </script>
