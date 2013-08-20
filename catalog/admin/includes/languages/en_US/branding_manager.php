@@ -37,4 +37,10 @@ field_site_meta_title_delimeter = Site Meta Title Delimeter :
 field_footer_text = Footer Text
 field_site_footer_text = Site Footer Text :
 text_drag_drop_to_replace = Drag & Drop or&nbsp;
-
+field_social_links = Social Links
+field_facebook_page = facebook Page :
+field_twitter = Twitter :
+field_pinterest = Pinterest :
+field_google_plus = Google + :
+field_youtube = Youtube :
+field_linkedin = Linked In :
