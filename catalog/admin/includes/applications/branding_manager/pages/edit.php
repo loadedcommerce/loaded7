@@ -170,27 +170,27 @@ $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModul
                 <legend class="legend"><?php echo $lC_Language->get('field_social_links'); ?></legend>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_social_fb_page"><?php echo $lC_Language->get('field_facebook_page'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('facebook_page')) ? $bInfo->getProtected('facebook_page') : null);?>" class="input two-thirds-width" id="branding_social_fb_page" name="branding_social_fb_page">
+                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_facebook_page')) ? $bInfo->getProtected('social_facebook_page') : null);?>" class="input two-thirds-width" id="branding_social_fb_page" name="branding_social_fb_page">
                 </p>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_social_twitter"><?php echo $lC_Language->get('field_twitter'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('twitter')) ? $bInfo->getProtected('twitter') : null);?>" class="input two-thirds-width" id="branding_social_twitter" name="branding_social_twitter">
+                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_twitter')) ? $bInfo->getProtected('social_twitter') : null);?>" class="input two-thirds-width" id="branding_social_twitter" name="branding_social_twitter">
                 </p>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_social_pinterest"><?php echo $lC_Language->get('field_pinterest'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('pinterest')) ? $bInfo->getProtected('pinterest') : null);?>" class="input two-thirds-width" id="branding_social_pinterest" name="branding_social_pinterest">
+                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_pinterest')) ? $bInfo->getProtected('social_pinterest') : null);?>" class="input two-thirds-width" id="branding_social_pinterest" name="branding_social_pinterest">
                 </p>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_social_google_plus"><?php echo $lC_Language->get('field_google_plus'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('google_plus')) ? $bInfo->getProtected('google_plus') : null);?>" class="input two-thirds-width" id="branding_social_google_plus" name="branding_social_google_plus">
+                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_google_plus')) ? $bInfo->getProtected('social_google_plus') : null);?>" class="input two-thirds-width" id="branding_social_google_plus" name="branding_social_google_plus">
                 </p>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_social_youtube"><?php echo $lC_Language->get('field_youtube'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('youtube')) ? $bInfo->getProtected('youtube') : null);?>" class="input two-thirds-width" id="branding_social_youtube" name="branding_social_youtube">
+                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_youtube')) ? $bInfo->getProtected('social_youtube') : null);?>" class="input two-thirds-width" id="branding_social_youtube" name="branding_social_youtube">
                 </p>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_social_linkedin"><?php echo $lC_Language->get('field_linkedin'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('linkedin')) ? $bInfo->getProtected('linkedin') : null);?>" class="input two-thirds-width" id="branding_social_linkedin" name="branding_social_linkedin">
+                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_linkedin')) ? $bInfo->getProtected('social_linkedin') : null);?>" class="input two-thirds-width" id="branding_social_linkedin" name="branding_social_linkedin">
                 </p>
               </fieldset>
 
