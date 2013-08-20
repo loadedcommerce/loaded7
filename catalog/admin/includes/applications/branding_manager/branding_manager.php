@@ -52,6 +52,7 @@ class lC_Application_Branding_manager extends lC_Template_Admin {
            $branding_graph_site_thumbnail = $_POST['branding_graph_site_thumbnail'];
            $branding_meta_title           = $_POST['branding_meta_title'];
            $branding_meta_title_slug      = $_POST['branding_meta_title_slug'];
+           $branding_meta_slug_placement  = $_POST['branding_meta_slug_placement'];
            $branding_meta_title_delimeter = $_POST['branding_meta_title_delimeter'];
            $branding_footer_text          = $_POST['branding_footer_text'];
 
@@ -69,7 +70,7 @@ class lC_Application_Branding_manager extends lC_Template_Admin {
                          'og_image'             => $branding_graph_site_thumbnail,
                          'meta_title'           => $branding_meta_title,
                          'meta_slug'            => $branding_meta_title_slug,
-                         'meta_slug_placement'  => $branding_meta_title_slug,
+                         'meta_slug_placement'  => $branding_meta_slug_placement,
                          'meta_delimeter'       => $branding_meta_title_delimeter,
                          'footer_text'          => $branding_footer_text
                          
