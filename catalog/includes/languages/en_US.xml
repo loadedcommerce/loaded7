@@ -537,7 +537,7 @@
     </definition>
     <definition>
       <key>sign_out_heading</key>
-      <value><![CDATA[Sign Out From Your Account]]></value>
+      <value><![CDATA[Signed Out]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -556,13 +556,18 @@
       <group>account</group>
     </definition>    
     <definition>
+      <key>address_title</key>
+      <value><![CDATA[Address]]></value>
+      <group>account</group>
+    </definition>     
+    <definition>
       <key>login_details_title</key>
       <value><![CDATA[Login Details]]></value>
       <group>account</group>
     </definition>    
     <definition>
       <key>account_password_heading</key>
-      <value><![CDATA[My Account Password]]></value>
+      <value><![CDATA[Update Password]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -582,7 +587,7 @@
     </definition>
     <definition>
       <key>notifications_heading</key>
-      <value><![CDATA[My Product Notifications]]></value>
+      <value><![CDATA[My Notifications]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -602,7 +607,7 @@
     </definition>
     <definition>
       <key>address_book_delete_entry_heading</key>
-      <value><![CDATA[Remove Address Book Entry]]></value>
+      <value><![CDATA[Remove Address]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -652,7 +657,7 @@
     </definition>
     <definition>
       <key>sign_out_text</key>
-      <value><![CDATA[You have sign out successfully from your account. Your shopping cart has been saved and will be restored the next time you sign on again.<br /><br />It is now safe to leave this site.]]></value>
+      <value><![CDATA[You have successfully signed out from your account. Your shopping cart has been saved and will be restored the next time you sign on again. It is now safe to leave this site.]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -660,6 +665,11 @@
       <value><![CDATA[My Account]]></value>
       <group>account</group>
     </definition>
+    <definition>
+      <key>my_details_title</key>
+      <value><![CDATA[My Details]]></value>
+      <group>account</group>
+    </definition>    
     <definition>
       <key>information_title</key>
       <value><![CDATA[Information]]></value>
@@ -807,12 +817,12 @@
     </definition>
     <definition>
       <key>newsletter_general_description</key>
-      <value><![CDATA[Including store news, new products, special offers, and other promotional announcements.]]></value>
+      <value><![CDATA[Yes I would like to be notified about store news, new products, special offers, and other promotional announcements.]]></value>
       <group>account</group>
     </definition>
     <definition>
       <key>product_notifications</key>
-      <value><![CDATA[My Product Notifications]]></value>
+      <value><![CDATA[My Notifications]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -832,7 +842,7 @@
     </definition>
     <definition>
       <key>product_notifications_products</key>
-      <value><![CDATA[Product Notifications]]></value>
+      <value><![CDATA[Specific Product Notifications]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -842,7 +852,7 @@
     </definition>
     <definition>
       <key>product_notifications_products_none</key>
-      <value><![CDATA[There are currently no products marked to be notified on.<br /><br />To add products to your product notification list, click on the notification link available on the detailed product information page.]]></value>
+      <value><![CDATA[You currently have no products marked for notification.<br /><br />To add products to your notification list, go to any product information page and click on the notification link.]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -872,12 +882,12 @@
     </definition>
     <definition>
       <key>address_book_delete_address_title</key>
-      <value><![CDATA[Delete Address]]></value>
+      <value><![CDATA[Are You Sure?]]></value>
       <group>account</group>
     </definition>
     <definition>
       <key>address_book_delete_address_description</key>
-      <value><![CDATA[Are you sure you would like to delete the selected address from your address book?]]></value>
+      <value><![CDATA[Please confirm you would like to delete the selected address from your address book by clicking the Delete button below.]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -892,7 +902,7 @@
     </definition>
     <definition>
       <key>set_as_primary</key>
-      <value><![CDATA[Set as primary address.]]></value>
+      <value><![CDATA[Set as primary address]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -907,17 +917,17 @@
     </definition>
     <definition>
       <key>create_account_terms_confirm</key>
-      <value><![CDATA[I have read and agreed to your privacy statement <a href="%s">(here)</a>.]]></value>
+      <value><![CDATA[I agree with the privacy statement <a href="%s">(here)</a>.]]></value>
       <group>account</group>
     </definition>
     <definition>
       <key>password_forgotten_heading</key>
-      <value><![CDATA[Password Forgotten]]></value>
+      <value><![CDATA[Password Recovery]]></value>
       <group>account</group>
     </definition>
     <definition>
       <key>password_forgotten</key>
-      <value><![CDATA[If you've forgotten your password, enter your e-mail address below and we'll send you an e-mail message containing your new password.]]></value>
+      <value><![CDATA[If you can't remember your password, enter your E-mail address below and we'll send you a message containing password reset instructions.]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -1036,7 +1046,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>error_password_forgotten_no_email_address_found</key>
-      <value><![CDATA[Error: The E-Mail Address was not found in our records, please try again.]]></value>
+      <value><![CDATA[The E-Mail address entered was not found in our records. Please check the E-mail address and try again.]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -2206,6 +2216,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <group>general</group>
     </definition>
     <definition>
+      <key>field_customer_date_of_birth_abbr</key>
+      <value><![CDATA[DOB:]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>field_customer_date_of_birth_error</key>
       <value><![CDATA[Your Date of Birth must be set correctly.]]></value>
       <group>general</group>
@@ -2572,7 +2587,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>
     <definition>
       <key>receipt_payment_method_title</key>
-      <value><![CDATA[Payment Method]]></value>
+      <value><![CDATA[Payment Method:]]></value>
       <group>general</group>
     </definition>
     <definition>
