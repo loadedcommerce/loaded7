@@ -9,8 +9,7 @@
   @version    $Id: address_book_details.php v1.0 2013-08-08 datazen $
 */
 ?>
-<ol>
-  <?php
+<?php
   if (ACCOUNT_GENDER > -1) {
     echo '<li>' . lc_draw_label($lC_Language->get('field_customer_gender'), null, 'fake', (ACCOUNT_GENDER > 0)) . lc_draw_radio_field('gender', array(array('id' => 'm', 'text' => $lC_Language->get('gender_male')), array('id' => 'f', 'text' => $lC_Language->get('gender_female'))), (isset($Qentry) ? $Qentry->value('entry_gender') : (!$lC_Customer->hasDefaultAddress() ? $lC_Customer->getGender() : null))) . '</li>';
   }
@@ -40,5 +39,4 @@
   if ($lC_Customer->hasDefaultAddress() && ((isset($_GET['edit']) && ($lC_Customer->getDefaultAddressID() != $_GET['address_book'])) || isset($_GET['new'])) ) {
     echo '<li>' . lc_draw_label($lC_Language->get('set_as_primary'), null)  . lc_draw_checkbox_field('primary') . '</li>';
   }
-  ?>
-</ol>
+?>
