@@ -10,11 +10,13 @@
 */
 ?>
 <!--content/account/logoff.php start-->
-<div class="row-fluid">
-  <div class="span12">
-    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-    <p><?php echo $lC_Language->get('sign_out_text'); ?></p>
-    <div class="button-set">
+<div class="row">
+  <div class="col-sm-12 col-lg-12">
+    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <div class="well">
+      <p><?php echo $lC_Language->get('sign_out_text'); ?></p>
+    </div>
+    <div class="button-set clearfix">
       <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
     </div>           
   </div>

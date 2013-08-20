@@ -1,45 +1,34 @@
 <?php
-/**  
-*  $Id: account_password.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: account_password.php v1.0 2013-08-08 datazen $
 */
-if ($lC_MessageStack->size('account_password') > 0) {
-  echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('account_password', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
-}
 ?>
 <!--content/account/account_password.php start-->
-<div class="full_page">
-  <div class="content">
-    <form name="account_password" id="account_password" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password=save', 'SSL'); ?>" method="post">
-        <div class="short-code-column">
-          <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-          <div id="errDiv" class="short-code msg error" style="margin-bottom:10px; display:none;"> <span><?php echo $lC_Language->get('form_validation_error'); ?></span> </div>
-          <div class="single-bg">
-            <div class="embed-form short-code-column one-half no-margin-bottom">
-              <ul id="personal_details">
-                <li><?php echo lc_draw_label('', 'password_current', null, false) . ' ' . lc_draw_password_field('password_current', 'placeholder="' . $lC_Language->get('field_customer_password_current') . '" class="txt" style="width:99%;"'); ?></li>
-                <li><?php echo lc_draw_label('', 'password_new', null, false) . ' ' . lc_draw_password_field('password_new', 'placeholder="' . $lC_Language->get('field_customer_password_new') . '" class="txt" style="width:99%;"'); ?></li>
-                <li><?php echo lc_draw_label('', 'password_confirmation', null, false) . ' ' . lc_draw_password_field('password_confirmation', 'placeholder="' . $lC_Language->get('field_customer_password_confirmation') . '" class="txt" style="width:99%;"'); ?></li>
-              </ul>
-            </div>
-          </div>
-        </div>               
-        <div style="clear:both;">&nbsp;</div> 
-        <div id="accountPasswordActions" class="action_buttonbar">
-          <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span> 
-          <span class="buttonRight"><button class="button purple_btn" type="submit" onclick="validateForm();"><?php echo $lC_Language->get('button_update'); ?></button></span>
-        </div> 
-        <div style="clear:both;"></div>
-      </div>
-    </form>
+<div class="row">
+  <div class="col-sm-12 col-lg-12">
+    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <?php 
+      if ( $lC_MessageStack->size('login') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('login') . '</div>' . "\n"; 
+    ?>
+    <div class="well">
+      <form role="form" name="account_password" id="account_password" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password=save', 'SSL'); ?>" method="post" onsubmit="return check_form(account_password);">
+        <div class=""><label class="sr-only"></label><?php echo lc_draw_password_field('password_current', 'placeholder="' . $lC_Language->get('field_customer_password_current') . '" class="form-control"'); ?></div>
+        <div class="margin-top"><label class="sr-only"></label><?php echo lc_draw_password_field('password_new', 'placeholder="' . $lC_Language->get('field_customer_password_new') . '" class="form-control"'); ?></div>
+        <div class="margin-top"><label class="sr-only"></label><?php echo lc_draw_password_field('password_confirmation', 'placeholder="' . $lC_Language->get('field_customer_password_confirmation') . '" class="form-control"'); ?></div>
+      </form>
+    </div>
+    
+    <div class="btn-set small-margin-top clearfix">
+      <button class="pull-right btn btn-lg btn-primary" onclick="$('#account_password').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
+      <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    </div>     
+    
   </div>
-</div>
+</div> 
 <!--content/account/account_password.php end-->

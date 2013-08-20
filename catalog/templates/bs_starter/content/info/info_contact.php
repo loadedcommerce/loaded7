@@ -24,7 +24,7 @@
       </div>
       <div class="col-sm-8 col-lg-8">
         <?php 
-        if ( $lC_MessageStack->size('contact') > 0 ) echo '<div class="message-stack-container alert alert-danger large-margin-right">' . $lC_MessageStack->get('contact') . '</div>' . "\n";  
+        if ( $lC_MessageStack->size('contact') > 0 ) echo '<div class="message-stack-container alert alert-danger">' . $lC_MessageStack->get('contact') . '</div>' . "\n";  
         if (isset($_GET['success']) && $_GET['success'] != NULL) echo '<div class="message-success-container alert alert-success"><img class="margin-right" src="images/icons/success.gif">' . preg_replace('/[^a-zA-Z0-9]\'\.\,/', '', $_GET['success']) . '</div>' . "\n"; 
         ?>
         <form role="form" id="contact" name="contact" class="row-fluid" action="<?php echo lc_href_link(FILENAME_INFO, 'contact=process', 'SSL'); ?>" method="post" enctype="multipart/form-data">

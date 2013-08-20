@@ -11,16 +11,18 @@
 $Qaccount = lC_Account::getEntry();
 ?>
 <!--content/info/account_edit.php start-->
-<div class="row-fluid">
-  <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
-  <?php 
-    if ( $lC_MessageStack->size('account_edit') > 0 ) echo '<div class="message-stack-container alert alert-error small-margin-bottom margin-left-neg">' . $lC_MessageStack->get('account_edit') . '</div>' . "\n"; 
-  ?>
-  <div class="span12">
+<div class="row">
+  <div class="col-sm-12 col-lg-12">
+    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <?php 
+      if ( $lC_MessageStack->size('account_edit') > 0 ) echo '<div class="message-stack-container alert alert-error small-margin-bottom margin-left-neg">' . $lC_MessageStack->get('account_edit') . '</div>' . "\n"; 
+    ?>
+  </div>
+  <div class="col-sm-12 col-lg-12">
     <form role="form" name="account_edit" id="account_edit" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'edit=save', 'SSL'); ?>" method="post" onsubmit="return check_form(account_edit);">
       <div class="row">
-        <div class="span6">
-          <h3><?php echo $lC_Language->get('personal_details_title'); ?></h3>
+        <div class="col-sm-6 col-lg-6">
+          <h3 class="small-margin-top"><?php echo $lC_Language->get('personal_details_title'); ?></h3>
           <div class="well clearfix">
             <div class="form-group">
               <label class="sr-only"></label><?php echo lc_draw_input_field('firstname', $Qaccount->value('customers_firstname') , 'class="form-control" placeholder="' . $lC_Language->get('field_customer_first_name') . '"'); ?>
@@ -38,8 +40,8 @@ $Qaccount = lC_Account::getEntry();
             ?>
           </div>
         </div>
-        <div class="span6">
-          <h3><?php echo $lC_Language->get('login_details_title'); ?></h3>
+        <div class="col-sm-6 col-lg-6">
+          <h3 class="small-margin-top"><?php echo $lC_Language->get('login_details_title'); ?></h3>
           <div class="well clearfix">
             <div class="form-group no-margin-bottom">
               <label class="sr-only"></label><?php echo lc_draw_input_field('email_address', $Qaccount->value('customers_email_address'), 'class="form-control" placeholder="' . $lC_Language->get('field_customer_email_address') . '"'); ?>
@@ -47,8 +49,8 @@ $Qaccount = lC_Account::getEntry();
           </div>
         </div>
       </div>
-    </form>
-    <div class="button-set clearfix">
+    </form>         
+    <div class="button-set clearfix large-margin-bottom">
       <button class="pull-right btn btn-lg btn-success" onclick="$('#account_edit').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
       <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
     </div>     

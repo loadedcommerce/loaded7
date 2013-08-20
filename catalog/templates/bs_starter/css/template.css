@@ -80,6 +80,10 @@ body {
   font-weight:bold; 
 }
 
+.normal { 
+  font-weight:200; 
+}
+
 .no-decoration { 
   text-decoration:none !important; 
 }
@@ -149,6 +153,11 @@ h1, h2, h3, h4, h5, h6 {
 .align-left { text-align:left !important; } /* use bootstrap text-left instead */
 .align-right { text-align:right !important; } /* use bootstrap text-right instead */
 
+.small-margin-top-neg { margin-top:-4px !important; }
+.small-margin-bottom-neg { margin-bottom:-4px !important; }
+.small-margin-left-neg { margin-left:-4px !important; }
+.small-margin-right-neg { margin-right:-4px !important; }
+
 .margin-top-neg { margin-top:-10px !important; }
 .margin-bottom-neg { margin-bottom:-10px !important; }
 .margin-left-neg { margin-left:-10px !important; }
@@ -180,6 +189,10 @@ h1, h2, h3, h4, h5, h6 {
 .no-padding-right { padding-right:0 !important; }
 
 .full-width { width:100% !important; }
+
+.relative { position:relative !important; }
+.absolute { position:absolute !important; }
+.absolute-top-right-large-padding { position:absolute !important; top:20px !important; right:20px !important }
 
 /********************************************************/
 /*                  5. Lists & tags                     */

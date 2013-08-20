@@ -16,7 +16,7 @@
     if ( $lC_MessageStack->size('account') > 0 ) echo '<div class="message-stack-container alert alert-error small-margin-bottom margin-left-neg">' . $lC_MessageStack->get('account') . '</div>' . "\n"; 
   ?>
   <div class="col-sm-12 col-lg-12">
-    <h3><?php echo $lC_Language->get('my_account_title'); ?></h3>
+    <h3><?php echo $lC_Language->get('my_details_title'); ?></h3>
     <div class="well clearfix large-margin-right">
       <?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'icons/64/account.png', $lC_Language->get('my_account_title'), null, null, 'class="img-responsive pull-left large-margin-right img-responsive"'); ?>
       <div class="">

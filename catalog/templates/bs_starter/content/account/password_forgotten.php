@@ -1,39 +1,33 @@
 <?php
-/**  
-*  $Id: password_forgotten.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: password_forgotten.php v1.0 2013-08-08 datazen $
 */
-if ($lC_MessageStack->size('password_forgotten') > 0) {
-  echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('password_forgotten', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
-}
 ?>
 <!--content/account/password_forgotten.php start-->
-<div class="full_page">
-  <div class="short-code-column">
-    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-    <form name="password_forgotten" id="password_forgotten" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password_forgotten=process', 'SSL'); ?>" method="post" onsubmit="return check_form(password_forgotten);">
-      <div id="passwordForgottenForm" class="single-bg" >
-        <p><?php echo $lC_Language->get('password_forgotten'); ?></p><br />
-        <ul>
-          <li><?php echo lc_draw_input_field('email_address', null, 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" class="txt" style="height:26px; padding-left:4px; width:99%;"'); ?></li>
-        </ul>
-        <div style="clear:both;">&nbsp;</div>
-      </div>
-      <div style="clear:both;">&nbsp;</div>
-      <div id="accountPasswordForgottentActions" class="action_buttonbar">
-        <span class="buttonLeft"><a href="javascript: history.go(-1)" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span> 
-        <span class="buttonRight"><a onclick="$('#password_forgotten').submit();" class="noDecoration"><button class="button brown_btn" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></a></span>
-      </div> 
-      <div style="clear:both;"></div>
-    </form>
+<div class="row">
+  <div class="col-sm-12 col-lg-12">
+    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <?php    
+    if ( $lC_MessageStack->size('password_forgotten') > 0 ) echo '<div class="message-stack-container alert alert-danger">' . $lC_MessageStack->get('password_forgotten') . '</div>' . "\n";  
+    ?>
+    <div class="well">
+      <p class="no-margin-bottom"><?php echo $lC_Language->get('password_forgotten'); ?></p>
+      <form role="form" name="password_forgotten" id="password_forgotten" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password_forgotten=process', 'SSL'); ?>" method="post" onsubmit="return check_form(password_forgotten);">
+        <div class="form-group">
+          <label></label><?php echo lc_draw_input_field('email_address', null, 'placeholder="' . $lC_Language->get('field_customer_email_address') . '" class="form-control"'); ?>
+        </div>
+      </form>
+    </div>
+    <div class="btn-set small-margin-top clearfix">
+      <button class="pull-right btn btn-lg btn-primary" onclick="$('#password_forgotten').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+      <a href="<?php echo lc_href_link(FILENAME_ACCOUNT); ?>"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    </div> 
   </div>
 </div>
 <!--content/account/password_forgotten.php end-->

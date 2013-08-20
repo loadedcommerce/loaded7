@@ -30,7 +30,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <link rel="stylesheet" href="templates/bs_starter/css/bootstrap-datepicker.css">
     
     <!-- Google Font -->
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700italic,700,500&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700italic,700,500&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     
     <!-- Template CSS -->
     <link rel="stylesheet" href="templates/bs_starter/css/template.css?v=1">
@@ -241,6 +241,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     
     <!-- Core Minumum JS -->
     <script src="ext/bootstrap/bootstrap-datepicker.js"></script>
+    
+    
     <script src="ext/jquery/jquery.loadmask.js"></script>
     <script src="ext/jquery/thickbox/thickbox-compressed.js"></script>
 
