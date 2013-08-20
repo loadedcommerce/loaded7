@@ -48,7 +48,7 @@ $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModul
                   <div style="padding-left:6px;" class="small-margin-top">
                   <div id="imagePreviewContainer" class="cat-image align-center">
                     <img src="<?php echo '../' . DIR_WS_IMAGES . (!lc_empty($bInfo->get('site_image')) ? 'branding/' . $bInfo->getProtected('site_image') : 'no-image.png');?>" style="max-width: 100%; height: auto;" align="center" />
-                    <input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="<?php echo (!lc_empty($bInfo->get('name')) ? $bInfo->getProtected('site_image') : 'no-image.png');?>">
+                    <input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="<?php echo (!lc_empty($bInfo->get('site_image')) ? $bInfo->getProtected('site_image') : 'no-image.png');?>">
                   </div>
                 </div>  
                   <p class="thin mid-margin-top" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
