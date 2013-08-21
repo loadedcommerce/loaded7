@@ -42,3 +42,9 @@
 #  php_value session.use_trans_sid 0
 #  php_value magic_quotes_gpc 0
 #</IfModule>
+
+#Options +FollowSymLinks
+#RewriteEngine on
+#RewriteBase /sandbox/maestro/www/loaded7/catalog/
+#RewriteRule category/(.*)$ index.php?$1
+#RewriteRule product/(.*)$ products.php?$1
