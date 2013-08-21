@@ -1,38 +1,32 @@
 <?php
 /**  
-*  $Id: shopping_cart.php v1.0 2013-01-01 datazen $
-*
-*  LoadedCommerce, Innovative eCommerce Solutions
-*  http://www.loadedcommerce.com
-*
-*  Copyright (c) 2013 Loaded Commerce, LLC
-*
-*  @author     Loaded Commerce Team
-*  @copyright  (c) 2013 Loaded Commerce Team
-*  @license    http://loadedcommerce.com/license.html
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: shopping_cart.php v1.0 2013-08-08 datazen $
 */  
-if ($lC_MessageStack->size('shopping_cart') > 0) {
-  if (isset($_SESSION['messageToStack']) && $_SESSION['messageToStack'] != NULL) $lC_MessageStack = new lC_MessageStack();
-  echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('shopping_cart', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
-}  
 ?>
 <!--content/checkout/shopping_cart.php start-->
-<div id="shopping_cart_content" class="full_page">
-  <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-  <?php 
-  if ($lC_ShoppingCart->hasContents()) { 
-    ?>
-    <!-- <div class="message success">The Product was added to your shopping cart.</div> -->
-    <div class="cart_table">
-      <form name="shopping_cart" id="shopping_cart" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'action=cart_update', 'SSL'); ?>" method="post">
-        <table class="data-table cart-table" id="shopping-cart-table" cellpadding="0" cellspacing="0">
+<div class="row">
+  <div class="col-sm-12 col-lg-12">
+    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <?php 
+    if ( $lC_MessageStack->size('shopping_cart') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('shopping_cart') . '</div>' . "\n"; 
+    if ($lC_ShoppingCart->hasContents()) { 
+      ?>
+      <form role="form" class="no-margin-bottom" name="shopping_cart" id="shopping_cart" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'action=cart_update', 'SSL'); ?>" method="post">
+        <table class="table tabled-striped table-responsive no-margin-bottom" id="shopping-cart-table">
           <thead>
             <tr>
-              <th colspan="2"><?php echo $lC_Language->get('listing_products_heading'); ?></th>
-              <th class="align_center hide-on-320" width="12%"><?php echo $lC_Language->get('text_unit_price'); ?></th>
-              <th class="align_center" width="10%"><?php echo $lC_Language->get('text_quantity_abbr'); ?></th>
-              <th class="align_center" width="12%"><?php echo $lC_Language->get('text_sub_total'); ?></th>
-              <th class="align_center" width="6%"></th>
+              <th><?php echo $lC_Language->get('listing_products_heading'); ?></th>
+              <th class="text-left hide-on-mobile-portrait"></th>
+              <th class="text-center hide-on-mobile-portrait" width="12%"><?php echo $lC_Language->get('text_unit_price'); ?></th>
+              <th class="text-center" width="80px"><?php echo $lC_Language->get('text_quantity_abbr'); ?></th>
+              <th class="text-center" width="12%"><?php echo $lC_Language->get('text_sub_total'); ?></th>
+              <th class="text-center" width="6%"></th>
             </tr>
           </thead>
           <tbody>
@@ -40,126 +34,115 @@ if ($lC_MessageStack->size('shopping_cart') > 0) {
             foreach ($lC_ShoppingCart->getProducts() as $products) {
             ?>
             <tr id="tr-<?php echo $products['item_id'];?>">
-              <td>
+              <td class="text-left" width="<?php echo $lC_Image->getWidth('mini'); ?>px">
                 <?php 
                   echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $lC_Image->show($products['image'], $products['name'], null, 'mini')); 
                 ?>
               </td>
-              <td class="align_left">
+              <td class="text-left hide-on-mobile-portrait">
                 <?php 
-                  echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), strtolower($lC_Language->get('button_edit')), 'class="cart-edit hide-on-320"') . '</a>';
-                  echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $products['name'], 'class="pr_name"') . '</a>';
+                  echo '<div class="pull-right">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), strtolower($lC_Language->get('button_edit'))) . '</div>' . "\n";
+                  echo '<h4 class="no-margin-top no-margin-bottom">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $products['name']) . '</h4>' . "\n";
+                  echo '<div class="clearfix primary">' . "\n";
                   if (!empty($products['model'])) {
-                    echo '<small class="purple">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</small>';
+                    echo '<small>' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</small>' . "\n";
                   }
                   if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['item_id']) === false) ) {
-                    echo '<span class="markProductOutOfStock">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>';
+                    echo '<span class="warning">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' . "\n";
                   }
                   if ( $lC_ShoppingCart->isVariant($products['item_id']) ) {
                     foreach ( $lC_ShoppingCart->getVariant($products['item_id']) as $variant) {
-                      echo '<br />- ' . $variant['group_title'] . ': ' . $variant['value_title'];
+                      echo '<br />- ' . $variant['group_title'] . ': ' . $variant['value_title'] . "\n";
                     }
                   }   
                   if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
                     foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
-                      echo '<br /><span style="font-size:.9em;">- ' . $option['group_title'] . ': ' . $option['value_title'] . '</span>';
+                      echo '<br /><small>- ' . $option['group_title'] . ': ' . $option['value_title'] . '</span>' . "\n";
                     }
                   }                             
+                  echo '</div>' . "\n";
                 ?>
               </td>
-              <td class="align_center vline hide-on-320"><span><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td> 
-              <td class="align_center vline"><?php echo lc_draw_input_field('products[' . $products['item_id'] . ']', $products['quantity'], 'class="qty_box"'); ?></td>
-              <td class="align_center vline"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']); ?></span></td>
-              <td class="align_center vline"><a href="javascript://" onclick="deleteItem('<?php echo $products['item_id']; ?>');"><?php echo lc_icon('cart_remove.png'); ?></a></td>
+              <td class="text-center hide-on-mobile-portrait"><span><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td> 
+              <td class="text-center"><div class="form-group"><label class="sr-only"></label><input type="number" size="4" name="products[<?php echo $products['item_id']; ?>]" value="<?php echo $products['quantity']; ?>" onfocus="$(this).select();" class="form-control text-center"></div></td>
+              <td class="text-center"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']); ?></span></td>
+              <td class="text-center"><a href="javascript://" onclick="deleteItem('<?php echo $products['item_id']; ?>');"><?php echo lc_icon('cart_remove.png'); ?></a></td>
             </tr>
             <?php 
             } 
           ?>
           </tbody>
-        </table>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td class="hide-on-mobile-portrait"></td>
+              <td class="hide-on-mobile-portrait"></td>
+              <td colspan="3"></td>
+            </tr>
+          </tfoot>
+        </table>   
         <?php
-          if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->hasStock() === false) ) {
-            if (STOCK_ALLOW_CHECKOUT == '1') {
-              echo '<br /><p class="stockWarning" align="center">' . sprintf($lC_Language->get('products_out_of_stock_checkout_possible'), STOCK_MARK_PRODUCT_OUT_OF_STOCK) . '</p>';
-            } else {
-              echo '<br /><p class="stockWarning" align="center">' . sprintf($lC_Language->get('products_out_of_stock_checkout_not_possible'), STOCK_MARK_PRODUCT_OUT_OF_STOCK) . '</p>';
-            }
+        if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->hasStock() === false) ) {
+          if (STOCK_ALLOW_CHECKOUT == '1') {
+            echo '<p class="alert alert-danger text-center">' . sprintf($lC_Language->get('products_out_of_stock_checkout_possible'), STOCK_MARK_PRODUCT_OUT_OF_STOCK) . '</p>';
+          } else {
+            echo '<p class="alert alert-danger text-center">' . sprintf($lC_Language->get('products_out_of_stock_checkout_not_possible'), STOCK_MARK_PRODUCT_OUT_OF_STOCK) . '</p>';
           }
-        ?>
+        }
+        ?>         
       </form>
-      <div class="totals">
-        <table id="totals-table">
-          <tbody>
-            <?php 
-              foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
-              ?>
-              <tr>
-                <td class="align_right<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>" style="padding-right:10px;"><?php echo $module['title']; ?></td>
-                <td class="align_right<?php if ($module['code'] == 'sub_total') echo ' sc_sub_total'; if ($module['code'] == 'total') echo ' sc_total'; ?>"><?php echo $module['text']; ?></td>
-              </tr>
-              <?php
-              }
-            ?>     
-          </tbody>       
-        </table>
+      <div class="col-sm-offset-8 margin-right" id="content-shopping-cart-order-totals">
+        <?php
+        foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
+          ?>
+          <div class="clearfix">
+            <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['title']); ?></span>
+            <span class="pull-right ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['text']); ?></span>                
+          </div>                    
+          <?php
+        }
+        ?>     
       </div>
-    </div>
-    
-    <!--VQMOD-001-->
-    
-    <div class="action_buttonbar margin-top">
-      <button type="button" onclick="location='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="checkout"><?php echo $lC_Language->get('button_checkout'); ?></button>
-      <span class="buttonRight padding-right-15"><button type="button" class="continue" onclick="$('#shopping_cart').submit();"><?php echo $lC_Language->get('button_update'); ?></button></span>
-    </div>
-    <div class="checkout_tax">
-      <!--
-      <div class="shipping_tax">
-        <h4>Estimate Shipping and Tax</h4>
-        <p>Enter your destination to get a shipping estimate.</p>
-        <label>Country</label>
-        <select><option>Canada</option></select>
-        <label>Postal Code</label>
-        <input type="text">
-        <br class="clear"/>
-        <label>State</label>
-        <select><option>Vancouver</option></select>
-        <button type="button" title="" class="brown_btn">Get a Quote</button>
-      </div>
-      -->
+      <div class="clear-both large-margin-top large-margin-bottom pull-right clearfix">
+        <button class="btn btn-lg btn-primary" onclick="$('#shopping_cart').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
+        <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>"><button class="btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_checkout'); ?></button></a>
+      </div>   
       <?php
       if ($lC_Customer->isLoggedOn() !== false) {
         if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && 
             defined('SERVICE_COUPONS_DISPLAY_ON_CART_PAGE') && SERVICE_COUPONS_DISPLAY_ON_CART_PAGE == '1') {
           ?>
-          <div class="checkout_discount">
-            <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
-            <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
-            <form name="coupon" id="coupon" action="">
-              <input type="text" name="coupon_code" id="coupon_code">
-            </form>
-            <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
+          <div class="row clear-both clearfix">
+            <div class="col-sm-6 col-lg-6"></div>
+            <div class="col-sm-6 col-lg-6">
+              <div class="well">
+                <h3 class="no-margin-top"><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h3>
+                <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
+                <form role="form" name="coupon" id="coupon" action="">
+                  <div class="form-group">
+                    <label class="sr-only"></label><input type="text" name="coupon_code" id="coupon_code" class="form-control">
+                  </div>
+                </form>
+                <div class="btn-set clearfix no-margin-top no-margin-bottom">
+                  <button type="button" class="btn btn-primary pull-right" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
+                </div>
+              </div>
+            </div>
           </div>
           <?php 
         } 
       }
+    } else {  
       ?>
-    </div>
-    <?php
-  } else {  
-    ?>
-    <div class="cart_table">
-      <p align="center">
-        <?php echo $lC_Language->get('shopping_cart_empty'); ?>
-        <br />&nbsp;<br />&nbsp;<br />&nbsp;<br />
-      </p>
-    </div>
-    <div class="action_buttonbar" align="right">
-      <form name="shopping_cart" id="shopping_cart" action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>" method="post">
-        <button type="submit" class="continue"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button>
-      </form>
-    </div>
-    <?php 
-  } 
-  ?>
-</div>
+      <div class="well large-margin-top">
+        <p class="no-margin-bottom"><?php echo $lC_Language->get('shopping_cart_empty'); ?></p>
+      </div>
+      <div class="btn-set clearfix">
+        <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>"><button class="btn btn-lg btn-primary pull-right" type="button"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button></a>
+      </div>        
+      <?php 
+    } 
+    ?>      
+  </div> <!-- /col -->
+</div>  
 <!--content/checkout/shopping_cart.php end-->

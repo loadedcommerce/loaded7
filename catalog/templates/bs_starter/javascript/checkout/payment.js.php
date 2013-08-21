@@ -2,6 +2,9 @@
 var selected;
 
 function selectRowEffect(object, buttonSelect) {
+  
+  $('.content-checkout-payment-methods-table tr').removeClass('module-row-selected');
+  
   if (!selected) {
     if (document.getElementById) {
       selected = document.getElementById('defaultSelected');
@@ -10,11 +13,11 @@ function selectRowEffect(object, buttonSelect) {
     }
   }
 
-  if (selected) selected.className = 'moduleRow';
-  object.className = 'moduleRowSelected';
+  if (selected) selected.className = 'module-row';
+  object.className = 'module-row-selected';
   selected = object;
 
-// one button is not an array
+  // one button is not an array
   if (document.checkout_payment.payment_method[0]) {
     document.checkout_payment.payment_method[buttonSelect].checked=true;
   } else {

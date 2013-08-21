@@ -39,7 +39,6 @@
 <div class="col-sm-6 col-lg-6 margin-top clearfix">
   <div class="well no-padding-top">
     <h3><?php echo $lC_Language->get('address_title'); ?></h3>
-    <div class="form-group"><label class="sr-only"></label>
     <?php
     if (ACCOUNT_COMPANY > -1) {
       echo '<div class="form-group full-width margin-bottom"><label class="sr-only"></label>' . lc_draw_input_field('company', (isset($Qentry) ? $Qentry->value('entry_company') : null), 'placeholder="' . $lC_Language->get('field_customer_company') . '" class="form-control"') . '</div>';
@@ -101,7 +100,7 @@
     ?>
   </div>
 </div>
-<?php $lC_Template->addJavascriptPhpFilename('includes/form_check.js.php'); ?>
+<?php $lC_Template->addJavascriptPhpFilename('templates/includes/bs_starter/javascript/form_check.js.php'); ?>
 <script>
 $(document).ready(function() {
   $('#country').change(function() {

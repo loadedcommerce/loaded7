@@ -15,55 +15,37 @@
 */
 ?>
 <script>
- $(document).ready(function() {
-   $('#shipping_address_form').show();
-   $('#shipping_address_form').click(function(){
-     var newAddOpen = $('#checkoutShippingAddressDetails').is(':visible');
-     if (!newAddOpen) {
-       $('#shipping_address_form').html('<?php echo $lC_Language->get('hide_address_form'); ?>');
-     } else {
-       $('#shipping_address_form').html('<?php echo $lC_Language->get('show_address_form'); ?>');
-     }
-     $('#checkoutShippingAddressEntries').toggle('slideUp');
-     $('#checkoutShippingAddressDetails').toggle('slideUp');
-   });
- });
- 
-function validateForm() {
-  // validate if form is visible
-  if($("#checkoutShippingAddressDetails").is(':visible')) { 
-  var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
-  var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
-  jQuery.validator.messages.required = "";
-  var bValid = $("#checkout_address").validate({
-    rules: {
-      firstname: { minlength: fnameMin, required: true },
-      lastname: { minlength: lnameMin, required: true },
-      street_address: { required: true },
-      city: { required: true },
-    },
-    invalidHandler: function(e, validator) {
-      var errors = validator.numberOfInvalids();
-      if (errors) {
-        $("#errDiv").show().delay(5000).fadeOut('slow');
-      } else {
-        $("#errDiv").hide();
-      }
-      return false;
-    }
-  }).form();
-
-  if (bValid) {      
-    $('#checkout_address').submit();
-  }
-  return false;
-  }
-} 
-
-// Address selection 
 var selected;
 
+$(document).ready(function() {  
+  $('#shipping-address-form').show();
+  if (_setMediaType() == 'mobile-portrait') {
+    $('#shipping-address-form').text('<?php echo $lC_Language->get('text_add'); ?>'); 
+  }
+  $('#addressBookDetails > div').removeClass('large-padding-left').addClass('padding-left');;
+  $('.small-margin-left-neg').removeClass('small-margin-left-neg').removeClass('no-margin-top').addClass('large-margin-top-neg');;
+});        
+
+$('#shipping-address-form').click(function(){
+ var isVisible = $('#checkoutShippingAddressDetails').is(':visible');
+ var mediaType = _setMediaType();
+ if (!isVisible) {
+   var text = (mediaType == 'mobile-portrait') ? '<?php echo $lC_Language->get('text_hide'); ?>' : '<?php echo $lC_Language->get('hide_address_form'); ?>';
+   $('#shipping-address-form').html(text);
+   $('#checkout_address').attr('onsubmit', 'return check_form(checkout_address);');
+ } else {
+   var text = (mediaType == 'mobile-portrait') ? '<?php echo $lC_Language->get('text_add'); ?>' : '<?php echo $lC_Language->get('show_address_form'); ?>';
+   $('#shipping-address-form').html(text);
+   $('#checkout_address').removeAttr('onsubmit');
+ }
+ $('#checkoutShippingAddressEntries').toggle('slideUp');
+ $('#checkoutShippingAddressDetails').toggle('slideUp');
+}); 
+
 function selectRowEffect(object, buttonSelect) {
+
+  $('#content-checkout-address-selection-table tr').removeClass('module-row-selected');
+  
   if (!selected) {
     if (document.getElementById) {
       selected = document.getElementById('defaultSelected');
@@ -72,8 +54,8 @@ function selectRowEffect(object, buttonSelect) {
     }
   }
 
-  if (selected) selected.className = 'moduleRow';
-  object.className = 'moduleRowSelected';
+  if (selected) selected.className = 'module-row';
+  object.className = 'module-row-selected';
   selected = object;
 
 // one button is not an array

@@ -37,7 +37,7 @@
   </div>                                                                                                                                                
   <div class="btn-set small-margin-top clearfix">
     <button class="pull-right btn btn-lg btn-primary" onclick="$('#contact').submit();" type="button"><?php echo $lC_Language->get('button_send_message'); ?></button>
-    <a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    <a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
   </div>    
 </div>
 <!--content/info/info_contact.php end-->

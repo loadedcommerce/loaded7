@@ -1,168 +1,161 @@
 <?php
-  /**  
-  *  $Id: checkout_success.php v1.0 2013-01-01 datazen $
-  *
-  *  LoadedCommerce, Innovative eCommerce Solutions
-  *  http://www.loadedcommerce.com
-  *
-  *  Copyright (c) 2013 Loaded Commerce, LLC
-  *
-  *  @author     Loaded Commerce Team
-  *  @copyright  (c) 2013 Loaded Commerce Team
-  *  @license    http://loadedcommerce.com/license.html
-  */
-  $oID = lC_Success::getOrderID($lC_Customer->getID());
+/**  
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: checkout_success.php v1.0 2013-08-08 datazen $
+*/ 
+$oID = lC_Success::getOrderID($lC_Customer->getID());
 ?>
 <!--content/checkout/checkout_success.php start-->
-<div id="checkout_success_details" class="full_page">
-  <h5><?php echo $lC_Language->get('text_checkout'); ?></h5>
-  <div class="checkout_steps">
-    <ol id="checkoutSteps">
-    <li class="section allow active first-checkout-li">
-    <div class="step-title">
-      <h2><?php echo $lC_Language->get('box_ordering_steps_complete'); ?></h2>
-    </div> 
-    <div id="checkout-step-login">
-      <div class="col2-set">
-        <div class="short-code msg success"><span><h5><?php echo $lC_Language->get('success_heading'); ?></h5></span></div>
-        <div style="clear:both;">&nbsp;</div>
-        <div id="mobile-order-number-id"> 
-          <h3><?php echo $lC_Language->get('checkout_order_number') . '<span class="mobile-order-number-id-span">' . $_SESSION['cartID']; ?></span></h3>
-          <h3><?php echo $lC_Language->get('checkout_order_id') . '<span class="mobile-order-number-id-span">' . $oID; ?></span></h3>
+<div class="row">
+  <div class="col-sm-12 col-lg-12 large-margin-bottom">  
+    <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
+    <?php 
+    if ( $lC_MessageStack->size('checkout_success') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_success') . '</div>' . "\n"; 
+    ?>
+    <div id="content-checkout-shipping-container">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_complete'); ?></h3>
         </div>
-        <div id="checkout_shipping_col1" style="width:35%; float:left;">
-          <div id="ship-to-address-block">
-            <h3><?php echo $lC_Language->get('ship_to_address'); ?></h3>
-            <span id="ship-to-span"><?php echo lC_Address::format(lC_Success::getShippingAddress($oID, $lC_Customer->getID()), '<br />'); ?></span>
-          </div>
-          <div id="shipping-method-block">  
-            <h3><?php echo $lC_Language->get('shipping_method_heading'); ?></h3>
-            <p>
-              <?php 
-                foreach (lC_Success::getOrderTotals($oID) as $module) {
-                  if ($module['class'] == 'shipping') {
-                    echo $module['title']; 
-                  }                    
-                } 
-              ?>
-            </p>
-          </div>
-          <div id="bill-to-address-block">
-            <h3><?php echo $lC_Language->get('bill_to_address'); ?></h3>
-            <span id="bill-to-span"><?php echo lC_Address::format(lC_Success::getBillingAddress($oID, $lC_Customer->getID()), '<br />'); ?></span>
-          </div>
-          <div id="payment-method-block">  
-            <h3><?php echo $lC_Language->get('payment_method_heading'); ?></h3>
-            <p><?php echo lC_Success::getPaymentMethod($oID); ?></p>
-          </div>
-          <div id="order-comment-block" style="width:91%;">
-            <h3><?php echo $lC_Language->get('order_comment_title'); ?></h3>
-            <div id="success-order-comment-inner">
-              <?php echo (lC_Success::getOrderComments($oID) != null) ? lC_Success::getOrderComments($oID) : $lC_Language->get('order_comment_none'); ?>
+        <div class="panel-body no-padding-bottom">
+          <div class="alert alert-success"><h3 class="no-margin-top no-margin-bottom"><img class="margin-right" alt="<?php echo $lC_Language->get('success_heading'); ?>" src="templates/bs_starter/images/icons/32/success.png"><?php echo $lC_Language->get('success_heading'); ?></h3></div>
+          <div class="row">
+            <div class="col-sm-4 col-lg-4">
+              <div class="well relative no-padding-bottom">
+                <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
+                <address>
+                  <?php echo lC_Address::format(lC_Success::getShippingAddress($oID, $lC_Customer->getID()), '<br />'); ?>                
+                </address>
+              </div>
+              <div class="well relative clearfix small-padding-top small-padding-bottom"> 
+                <h4><?php echo $lC_Language->get('shipping_method_heading'); ?></h4>
+                <p>              
+                <?php 
+                  foreach (lC_Success::getOrderTotals($oID) as $module) {
+                    if ($module['class'] == 'shipping') {
+                      echo $module['title']; 
+                    }                    
+                  } 
+                  ?>
+                </p>
+              </div>   
+              <div class="well relative no-padding-bottom">
+                <h4 class="no-margin-top"><?php echo $lC_Language->get('bill_to_address'); ?></h4>
+                <address>
+                  <?php echo lC_Address::format(lC_Success::getBillingAddress($oID, $lC_Customer->getID()), '<br />'); ?>                
+                </address>
+              </div>
+              <div class="well relative clearfix small-padding-top small-padding-bottom"> 
+                <h4><?php echo $lC_Language->get('payment_method_heading'); ?></h4>
+                <p><?php echo lC_Success::getPaymentMethod($oID); ?></p>                  
+              </div>       
+              <div class="well relative clearfix small-padding-top small-padding-bottom"> 
+                <h4><?php echo $lC_Language->get('order_comment_title'); ?></h4>
+                <div class="form-group">
+                  <?php echo (lC_Success::getOrderComments($oID) != null) ? lC_Success::getOrderComments($oID) : $lC_Language->get('order_comment_none'); ?>
+                </div>                  
+              </div>                                        
             </div>
-          </div> 
-        </div>
-        <div id="checkout_shipping_col2" style="width:60%; float:right;">
-          <form name="order" id="order" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'success=update', 'SSL'); ?>" method="post">
-            <div id="success-products-listing-heading">
-              <h3 id="success-order-number"><?php echo $lC_Language->get('checkout_order_number') . '&nbsp;' . $_SESSION['cartID']; ?></h3>
-              <h3 id="success-order-id"><?php echo $lC_Language->get('checkout_order_id') . '&nbsp;' . $oID; ?></h3>
-            </div>
-            <div style="clear:both;"></div>
-            <div id="success-products-listing">
-              <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                <?php
+            <div class="col-sm-8 col-lg-8">
+              <h3 class="no-margin-top">
+                <span class="pull-right"><?php echo $lC_Language->get('checkout_order_number') . '&nbsp;' . $_SESSION['cartID']; ?></span>
+                <span class="pull-left"><?php echo $lC_Language->get('checkout_order_id') . '&nbsp;' . $oID; ?></span>
+              </h3>
+              <div class="clearfix" id="content-checkout-confirmation-products-table">
+                <table class="table responsive-table no-margin-bottom">
+                  <thead>
+                    <tr><th colspan="3"><?php echo $lC_Language->get('order_products_title'); ?></th></tr>
+                  </thead>
+                  <?php
                   foreach (lC_Success::getOrderProducts($oID) as $products) {
-                    echo '<tr class="success-products-listing-row">' . "\n" .
-                         '<td width="30"><b>' . $products['quantity'] . '&nbsp;x&nbsp;</b></td>' . "\n" .
-                         '<td><b>' . $products['name'] . '</b><br /><span class="confirmation-products-listing-model purple">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
+                    echo '<tr class="confirmation-products-listing-row">' . "\n" .
+                         '  <td width="30">' . $products['quantity'] . '&nbsp;x&nbsp;</td>' . "\n" .
+                         '  <td><span class="text-info strong">' . $products['name'] . '</span>' . "\n";
+                    echo '<br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
 
                     if ( is_array($products['options']) && empty($products['options']) === false ) {
                       foreach ( $products['options'] as $key => $val) {
-                        echo '<br /><span class="confirmation-products-listing-model">- ' . $val['group_title'] . ': ' . $val['value_title'] . '</span>';
+                        echo '<br /><small>- ' . $val['group_title'] . ': ' . $val['value_title'] . '</small>';
                       }
-                    }                           
-
+                    }                     
                     if ( lC_Success::isVariant($products['id']) === true ) {
                       foreach ( lC_Success::getVariants($products['id']) as $variant) {
-                        echo '<br /><span class="confirmation-products-listing-model">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</span>';
+                        echo '<br /><small>- ' . $val['group_title'] . ': ' . $val['value_title'] . '</small>';
                       }
-                    }
+                    }                    
                     echo '</td>' . "\n";
-                    echo '                <td style="float:right;">' . $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']) . '</td>' . "\n" .
-                    '              </tr>' . "\n";
+                    echo '<td class="text-right">' . $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']) . '</td>' . "\n" .
+                    '</tr>' . "\n";
                   }
-                ?>
-              </table>
-            </div>
-            <div style="clear:both;"></div>
-            <div class="col2-set" id="success-comment-order-total">
-              <div id="success-order-totals">
-                <table id="totals-table">
-                  <tbody>                  
-                  <?php 
-                    foreach (lC_Success::getOrderTotals($oID) as $module) { 
-                      ?>
-                      <tr>
-                        <td class="align_right<?php if ($module['class'] == 'sub_total') echo ' sc_sub_total'; if ($module['class'] == 'total') echo ' sc_total'; ?>" style="padding-right:10px;"><?php echo $module['title']; ?></td>
-                        <td class="align_right<?php if ($module['class'] == 'sub_total') echo ' sc_sub_total'; if ($module['class'] == 'total') echo ' sc_total'; ?>"><?php echo $module['text']; ?></td>
-                      </tr>                        
-                      <?php 
-                    } 
                   ?>
-                  </tbody>
-                </table>               
+                </table> 
+                <table class="table margin-bottom-neg"><tr><td>&nbsp;</td></tr></table>
               </div>
-            </div>
-            <div style="clear:both;">&nbsp;</div>
-            <div id="success-additional-info">
-            <div id="checkoutSuccessNotification" class="borderPadMe">
-              <?php
-                $products_array = lC_Success::globalNotifications($lC_Customer->getID());
-                if (isset($products_array) && !empty($products_array)) {
-                  echo $lC_Language->get('add_selection_to_product_notifications') . '<br />';
-                  $products_displayed = array();
-                  for ($i=0, $n=sizeof($products_array); $i<$n; $i++) {
-                    if (!in_array($products_array[$i]['id'], $products_displayed)) {
-                      echo '<div class="productsNotifications">' . lc_draw_checkbox_field('notify[]', $products_array[$i]['id']) . ' <b>' . $products_array[$i]['text'] . '</b></div>';
-                      $products_displayed[] = $products_array[$i]['id'];
-                    }
-                  }
-                } else {
-                  echo sprintf($lC_Language->get('view_order_history'), lc_href_link(FILENAME_ACCOUNT, null, 'SSL'), lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL')) . '<br /><br />' . sprintf($lC_Language->get('contact_store_owner'), lc_href_link(FILENAME_INFO, 'contact'));
-                }
-              ?>
-            </div> 
-          </form>
-          <div id="checkoutSuccessActions" style="margin-top:20px;">
-            <span class="buttonRight"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></span>
-          </div>
-          <div style="clear:both;">&nbsp;</div>
-          <?php
-            if (DOWNLOAD_ENABLED == '1') {
-            ?>
-            <div id="checkoutSuccessDownloads">
-              <table border="0" width="100%" cellspacing="0" cellpadding="0">
+              <div class="col-sm-offset-6 margin-right" id="content-shopping-cart-order-totals">
                 <?php
-                  if (file_exists(DIR_FS_TEMPLATE . 'modules/downloads.php')) {
-                    require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/downloads.php'));
-                  } else {
-                    require($lC_Vqmod->modCheck('includes/modules/downloads.php')); 
-                  }    
+                foreach (lC_Success::getOrderTotals($oID) as $module) { 
+                  ?>
+                  <div class="clearfix">
+                    <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['class'])); ?>"><?php echo strip_tags($module['title']); ?></span>
+                    <span class="pull-right ot-<?php echo strtolower(str_replace('_', '-', $module['class'])); ?>"><?php echo strip_tags($module['text']); ?></span>                
+                  </div>                    
+                  <?php
+                }
+                ?>     
+              </div>
+              <div class="well large-margin-top padding-bottom">
+                <form name="checkout_success" id="checkout_success" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'success=update', 'SSL'); ?>" method="post">
+                  <?php
+                    $products_array = lC_Success::globalNotifications($lC_Customer->getID());
+                    if (isset($products_array) && !empty($products_array)) {
+                      echo $lC_Language->get('add_selection_to_product_notifications') . '<br />';
+                      $products_displayed = array();
+                      for ($i=0, $n=sizeof($products_array); $i<$n; $i++) {
+                        if (!in_array($products_array[$i]['id'], $products_displayed)) {
+                          echo '<div class="checkbox">' . lc_draw_checkbox_field('notify[]', $products_array[$i]['id']) . '<label class="margin-left">' . $products_array[$i]['text'] . '</label></div>' . "\n";
+                          $products_displayed[] = $products_array[$i]['id'];
+                        }
+                      }
+                    } else {
+                      echo sprintf($lC_Language->get('view_order_history'), lc_href_link(FILENAME_ACCOUNT, null, 'SSL'), lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL')) . '<br /><br />' . sprintf($lC_Language->get('contact_store_owner'), lc_href_link(FILENAME_INFO, 'contact'));
+                    }
+                  ?>
+                </form>
+              </div>               
+              <div class="btn-set clearfix">
+                <button id="content-checkout-confirmation-confirm-button" class="btn btn-lg btn-success pull-right" onclick="$('#checkout_success').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+              </div> 
+              <?php
+                if (DOWNLOAD_ENABLED == '1') {
                 ?>
-              </table>
+                <div class="well">
+                  <table class="table">
+                    <?php
+                    if (file_exists(DIR_FS_TEMPLATE . 'modules/downloads.php')) {
+                      require($lC_Vqmod->modCheck(DIR_FS_TEMPLATE . 'modules/downloads.php'));
+                    } else {
+                      require($lC_Vqmod->modCheck('includes/modules/downloads.php')); 
+                    }    
+                    ?>
+                  </table>
+                </div>
+                <?php
+                }
+              ?>              
             </div>
-            <?php
-            }
-          ?>
-          <div style="clear:both;">&nbsp;</div>
+          </div>        
         </div>
-      </div>
-    </div>
+      </div>     
+    </div> 
   </div>
-  </li>
-  </ol>
-  </div>
-</div>
-<div style="clear:both;"></div>
-<!--content/checkout/checkout_success.php end-->
+</div> 
+<script>
+$(document).ready(function() {
+});
+</script>
+<!--content//checkout_success.php end-->

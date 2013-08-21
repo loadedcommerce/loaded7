@@ -55,7 +55,7 @@
   </div>                                                                                                                                                
   <div class="button-set clearfix large-margin-bottom large-margin-left large-margin-right">
     <button class="pull-right btn btn-lg btn-primary" onclick="$('#tell_a_friend').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
-    <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
   </div>    
 </div>
 <!--content/products/tell_a_friend.php end-->

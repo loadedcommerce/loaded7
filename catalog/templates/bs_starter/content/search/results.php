@@ -21,7 +21,7 @@
     }
     ?>     
     <div class="button-set clearfix large-margin-bottom">
-      <a href="javascript: history.go(-1);"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+      <a href="javascript: history.go(-1);"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
     </div>   
   </div>
 </div>

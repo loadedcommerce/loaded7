@@ -37,13 +37,13 @@ if (isset($_GET['edit'])) {
         </div>
         <div class="btn-set small-margin-top clearfix">
           <button class="pull-right btn btn-lg btn-primary" onclick="$('#address_book').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
-          <a href="<?php echo ($lC_NavigationHistory->hasSnapshot()) ? $lC_NavigationHistory->getSnapshotURL() : ($lC_Customer->hasDefaultAddress() === false) ? lc_href_link(FILENAME_ACCOUNT, null, 'SSL') : lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+          <a href="<?php echo ($lC_NavigationHistory->hasSnapshot()) ? $lC_NavigationHistory->getSnapshotURL() : ($lC_Customer->hasDefaultAddress() === false) ? lc_href_link(FILENAME_ACCOUNT, null, 'SSL') : lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
         </div> 
         <?php
       } else {
         ?>
         <div class="btn-set small-margin-top clearfix">
-          <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+          <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
         </div> 
         <?php
       }

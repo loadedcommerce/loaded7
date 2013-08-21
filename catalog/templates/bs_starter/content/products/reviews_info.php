@@ -64,7 +64,7 @@ $Qreviews = lC_Reviews::getEntry($_GET[$lC_Template->getModule()]);
         <?php 
       } 
       ?>
-      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-left btn btn-lg btn-primary large-margin-bottom" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-left btn btn-lg btn-default large-margin-bottom" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
     </div>    
   </div>    
 </div>

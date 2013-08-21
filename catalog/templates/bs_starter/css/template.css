@@ -170,17 +170,32 @@ h1, h2, h3, h4, h5, h6 {
                                    
 .with-padding { padding:10px !important; }
 .with-small-padding { padding:4px !important; }
+.with-mid-padding { padding:15px !important; }
 .with-large-padding { padding:20px !important; }
-.padding-top { padding-top:10px !important; }
-.large-padding-top { padding-top:20px !important; }
-.small-padding-left { padding-left:4px !important; }
-.small-padding-right { padding-right:4px !important; }
-.large-padding-left { padding-left:20px !important; }
-.large-padding-right { padding-right:20px !important; }
 
 .with-padding-no-top { padding:0 10px 10px 10px !important; }
 .with-padding-no-bottom { padding:10px 10px 0 10px !important; }
 .with-padding-no-top-bottom { padding:0 10px !important; }
+
+.small-padding-top { padding-top:4px !important; }
+.padding-top { padding-top:10px !important; }
+.mid-padding-top { padding-top:15px !important; }
+.large-padding-top { padding-top:20px !important; }
+
+.small-padding-bottom { padding-bottom:4px !important; }
+.padding-bottom { padding-bottom:10px !important; }
+.mid-padding-bottom { padding-bottom:15px !important; }
+.large-padding-bottom { padding-bottom:20px !important; }
+
+.small-padding-left { padding-left:4px !important; }
+.padding-left { padding-left:10px !important; }
+.mid-padding-bottom { padding-top:15px !important; }
+.large-padding-left { padding-left:20px !important; }
+
+.small-padding-right { padding-right:4px !important; }
+.padding-right { padding-right:10px !important; }
+.mid-padding-bottom { padding-bottom:15px !important; }
+.large-padding-right { padding-right:20px !important; }
 
 .no-padding { padding:0 !important; }
 .no-padding-top { padding-top:0 !important; }
@@ -189,10 +204,14 @@ h1, h2, h3, h4, h5, h6 {
 .no-padding-right { padding-right:0 !important; }
 
 .full-width { width:100% !important; }
+.half-width { width:49% !important; }
 
 .relative { position:relative !important; }
 .absolute { position:absolute !important; }
+.absolute-top-right { position:absolute !important; top:0 !important; right:0 !important }
 .absolute-top-right-large-padding { position:absolute !important; top:20px !important; right:20px !important }
+
+.cursor-pointer { cursor:pointer !important; }
 
 /********************************************************/
 /*                  5. Lists & tags                     */
@@ -244,13 +263,17 @@ h1, h2, h3, h4, h5, h6 {
 .content-upcoming-products-text-expected { font-size:.9em; }
 .content-upcoming-products-text-price { font-size:1.3em; }
 .content-upcoming-products-text-name { line-height:1.1; font-size:1.3em; }
-
 .content-reviews-text { padding-top:4px; }
-
 .content-recently-visited-text-name { font-size:1.2em; } 
 .content-recently-visited-image-src { width:100px; height:120px; } 
-
 .content-also-purchased-products-text-name a { font-size:.8em; }
+
+/* checkout pages */
+.ot-total { font-weight:bold; font-size: 1.3em; color:#428BCA; }
+.module-row-selected { background-color:#e6e6e6; }    
+.payment-selection span { margin-left: 4px; }
+.payment-selection-title { font-weight:200; }
+.content-checkout-payment-methods-table td { height: 60px; }
 
 /* QR Code */
 #qr-message {  -ms-word-break: break-all;  word-break: break-all; word-break: break-word;  -webkit-hyphens: auto;  -moz-hyphens: auto;  hyphens: auto;  display:none;  position:fixed;  bottom:25px;  right:25px;  width: 250px;  text-align:center;  background:#f5f5f5; padding:10px 0; }

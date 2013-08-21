@@ -17,7 +17,33 @@
 <script>
 var selected;
 
+$(document).ready(function() {  
+  $('#payment-address-form').show();
+  if (_setMediaType() == 'mobile-portrait') {
+    $('#payment-address-form').text('<?php echo $lC_Language->get('text_add'); ?>'); 
+  }
+  $('#addressBookDetails > div').removeClass('large-padding-left').addClass('padding-left');;
+  $('.small-margin-left-neg').removeClass('small-margin-left-neg').removeClass('no-margin-top').addClass('large-margin-top-neg');;
+});        
+
+$('#payment-address-form').click(function(){
+ var isVisible = $('#checkoutShippingAddressDetails').is(':visible');
+ var mediaType = _setMediaType();
+ if (!isVisible) {
+   var text = (mediaType == 'mobile-portrait') ? '<?php echo $lC_Language->get('text_hide'); ?>' : '<?php echo $lC_Language->get('hide_address_form'); ?>';
+   $('#payment-address-form').html(text);
+   $('#checkout_address').attr('onsubmit', 'return check_form(checkout_address);');
+ } else {
+   var text = (mediaType == 'mobile-portrait') ? '<?php echo $lC_Language->get('text_add'); ?>' : '<?php echo $lC_Language->get('show_address_form'); ?>';
+   $('#payment-address-form').html(text);
+   $('#checkout_address').removeAttr('onsubmit');
+ }
+ $('#checkoutShippingAddressEntries').toggle('slideUp');
+ $('#checkoutShippingAddressDetails').toggle('slideUp');
+});
+
 function selectRowEffect(object, buttonSelect) {
+  $('#content-checkout-address-selection-table tr').removeClass('module-row-selected');
   if (!selected) {
     if (document.getElementById) {
       selected = document.getElementById('defaultSelected');
@@ -26,8 +52,8 @@ function selectRowEffect(object, buttonSelect) {
     }
   }
 
-  if (selected) selected.className = 'moduleRow';
-  object.className = 'moduleRowSelected';
+  if (selected) selected.className = 'module-row';
+  object.className = 'module-row-selected';
   selected = object;
 
   // one button is not an array
@@ -37,46 +63,4 @@ function selectRowEffect(object, buttonSelect) {
     document.checkout_address.address.checked=true;
   }
 }
-
-$(document).ready(function() {    
- $("#payment_address_form").click(function(){
-   var newAddOpen = $("#checkoutPaymentAddressDetails").is(":visible");
-   if (!newAddOpen) {
-     $('#payment_address_form').html('<?php echo $lC_Language->get('hide_address_form'); ?>');
-   } else {
-     $('#payment_address_form').html('<?php echo $lC_Language->get('show_address_form'); ?>');
-   }
-   $('#checkoutPaymentAddressDetails').toggle('slideUp');
- });
-});
-
-function validateForm() {
- if ($("#checkoutPaymentAddressDetails").is(':visible')) {
-   var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
-   var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
-   jQuery.validator.messages.required = "";
-   var bValid = $("#checkout_address").validate({
-       rules: {
-         firstname: { minlength: fnameMin, required: true },
-         lastname: { minlength: lnameMin, required: true },
-         street_address: { required: true },
-         city: { required: true },
-       },
-       invalidHandler: function(e, validator) {
-         var errors = validator.numberOfInvalids();
-         if (errors) {
-           $("#errDiv").show().delay(5000).fadeOut('slow');
-         } else {
-           $("#errDiv").hide();
-         }
-         return false;
-       }
-   }).form();
-
-   if (bValid) {      
-     $('#checkout_address').submit();
-   }
-   return false;
- } 
-} 
 </script>

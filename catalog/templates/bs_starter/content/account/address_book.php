@@ -66,7 +66,7 @@
             echo '<div class="text-right">' . sprintf($lC_Language->get('address_book_maximum_entries'), MAX_ADDRESS_BOOK_ENTRIES) . '</div>' . "\n";
           }        
           ?>
-          <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><button class="pull-left btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+          <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
         </div>
       </div>
     </div>
