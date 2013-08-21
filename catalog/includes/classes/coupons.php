@@ -58,7 +58,7 @@ class lC_Coupons {
     
     } else {
       // coupon not found
-      return -2;
+      return array('rpcStatus' => -2);
     }   
           
   }
