@@ -246,6 +246,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>button_confirm</key>
+      <value><![CDATA[Confirm]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>button_continue</key>
       <value><![CDATA[Continue]]></value>
       <group>general</group>
@@ -553,12 +558,12 @@
     <definition>
       <key>personal_details_title</key>
       <value><![CDATA[Personal Details]]></value>
-      <group>account</group>
+      <group>general</group>
     </definition>    
     <definition>
       <key>address_title</key>
       <value><![CDATA[Address]]></value>
-      <group>account</group>
+      <group>general</group>
     </definition>     
     <definition>
       <key>login_details_title</key>
@@ -1231,7 +1236,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>order_comment_title</key>
-      <value><![CDATA[Order Comment]]></value>
+      <value><![CDATA[Order Comments]]></value>
       <group>general</group>
     </definition>
     <definition>
@@ -1397,7 +1402,7 @@ Note: If you did not request this action via our password forgotten page, please
     <definition>
       <key>order_products_title</key>
       <value><![CDATA[Products]]></value>
-      <group>order</group>
+      <group>general</group>
     </definition>
     <definition>
       <key>order_tax_title</key>
@@ -1416,7 +1421,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>billable_address_checkbox</key>
-      <value><![CDATA[This is also my billable address]]></value>
+      <value><![CDATA[Use as billing address]]></value>
       <group>general</group>
     </definition>
     <definition>
@@ -2675,6 +2680,16 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Add Address]]></value>
       <group>general</group>
     </definition>
+    <definition>    
+      <key>text_add</key>
+      <value><![CDATA[Add]]></value>
+      <group>general</group>
+    </definition>  
+    <definition>    
+      <key>text_hide</key>
+      <value><![CDATA[Hide]]></value>
+      <group>general</group>
+    </definition>       
     <definition>
       <key>text_not_found</key>
       <value><![CDATA[Not Found!]]></value>
@@ -2692,7 +2707,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>
     <definition>
       <key>text_coupon_code_instructions</key>
-      <value><![CDATA[Enter your coupon code if you have one.]]></value>
+      <value><![CDATA[If you have a coupon, redeem it by entering the code below.]]></value>
       <group>checkout</group>
     </definition>
     <definition>
@@ -2700,7 +2715,6 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Apply Coupon]]></value>
       <group>checkout</group>
     </definition>  
-    </definition> 
     <definition>
       <key>text_label_error</key>
       <value><![CDATA[Error:]]></value>
@@ -2749,7 +2763,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     <definition>
       <key>ms_error_action_not_performed</key>
       <value><![CDATA[Error: There was a problem performing the action.]]></value>
-      <group>checkout</group>
+      <group>general</group>
     </definition>  
   </definitions>  
 </language>

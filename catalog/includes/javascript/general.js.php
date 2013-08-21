@@ -77,18 +77,30 @@ $(window).resize(function() {
 function _setMediaType() {
   var winW = $(window).width();
   
+  // reset responsive helper classes
+  $('.hide-on-mobile-portrait').show();
+  $('.hide-on-mobile-landscape').show();
+  $('.hide-on-tablet-portrait').show();
+  $('.hide-on-tablet-landscape').show();  
+  
   if (winW <= 320) {
     mtype = 'mobile-portrait'; //320
+    $('.hide-on-mobile-portrait').hide();
   } else if (winW > 320 && winW <= 480) {
     mtype = 'mobile-landscape'; //480
+    $('.hide-on-mobile-landscape').hide();
   } else if (winW > 480 && winW <= 600) {
     mtype = 'small-tablet-portrait'; //600
+    $('.hide-on-mobile-landscape').hide();
   } else if (winW > 600 && winW <= 768) {  
     mtype = 'tablet-portrait'; //768   
+    $('.hide-on-tablet-portrait').hide();
   } else if (winW > 768 && winW <= 800) {
     mtype = 'small-tablet-landscape'; //800
+    $('.hide-on-tablet-landscape').hide();
   } else if (winW > 800 && winW <= 1024) {
     mtype = 'tablet-landscape'; //1024    
+    $('.hide-on-tablet-landscape').hide();
   } else if (winW > 1024) {
     mtype = 'desktop';    
   }
