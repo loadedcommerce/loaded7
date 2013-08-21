@@ -100,26 +100,34 @@ if (!function_exists('lc_href_link')) {
     }
 
     if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('sefu')) {
-      // get all category path names to add to the url structure BEFORE the cPath
       $cat_path = '';
-      if (ADD_CATEGORY_NAMES_TO_SEF_URLS == 'true') {
-        if (!strpos($link, 'product')) {
-          if ($cPathPos = strpos($link, 'cPath=')) {
-            $cat_id = explode("_", $cPath = substr($link, $cPathPos+6));
-            foreach ($cat_id as $id) {
-              $cat_data = $lC_CategoryTree->getdata($id);
-              if ($cat_data['keyword'] != '') {
-                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['keyword'])) . '/'; 
-              } else {
-                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
-              }
-            }       
+      if ($cPathPos = strpos($link, 'cPath=')) {
+        //if (!strpos($link, 'product')) {
+          $cat_id = explode("_", $cPath = substr($link, $cPathPos+6));
+          foreach ($cat_id as $id) {
+            $cat_data = $lC_CategoryTree->getdata($id);
+            if ($cat_data['permalink'] != '') {
+              $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
+            } else {
+              $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+            }
           }
-        }
+          /*$cat_data = $lC_CategoryTree->getdata($cat_id);
+          if ($cat_data['permalink'] != '') {
+            $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
+          } else {
+            $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+          }*/
+          $link = str_replace(array('?', '&', '=', 'index.php', 'products.php'), array('/', '/', ',', 'category', 'product'), $link);
+          //if ($cat_path != '') {
+            $link = str_replace(array('category/'), array('category/' . $cat_path), $link);
+            $link = preg_replace('/cPath,.*/', '', $link);
+            $link = preg_replace('{/$}', '', $link);
+          //}   
+        //}
+      } else {
+        $link = str_replace(array('?', '&', '=', 'products.php'), array('/', '/', ',', 'product'), $link);
       }
-      $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
-      // now inject the category path names into the url, if they are null, no change 
-      $link = str_replace('.php/', '.php/' . $cat_path, $link);
     } else {
       if (strpos($link, '&') !== false) {
         $link = str_replace('&', '&amp;', $link);

@@ -77,16 +77,25 @@
       if ( $lC_Cache->read('category_tree-' . $lC_Language->getCode(), 720) ) {
         $this->_data = $lC_Cache->getCache();
       } else {
-        $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, cd.categories_name, cd.categories_menu_name, cd.categories_keyword from :table_categories c, :table_categories_description cd where c.categories_id = cd.categories_id and cd.language_id = :language_id order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
+        $Qcategories = $lC_Database->query('select c.categories_id, c.categories_image, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url, c.categories_status, c.categories_visibility_nav, c.categories_visibility_box, cd.categories_name, cd.categories_menu_name from :table_categories c, :table_categories_description cd where c.categories_id = cd.categories_id and cd.language_id = :language_id order by c.parent_id, c.sort_order, cd.categories_name, cd.categories_menu_name');
         $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
         $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
         $Qcategories->bindInt(':language_id', $lC_Language->getID());
         $Qcategories->execute();
 
         while ( $Qcategories->next() ) {
-          $this->_data[$Qcategories->valueInt('parent_id')][$Qcategories->valueInt('categories_id')] = array('name' => $Qcategories->value('categories_name'),
+          // added to grab permalink if exists
+          $Qpermalink = $lC_Database->query('select item_id, query, keyword from :table_permalink where item_id = :item_id and type = 1 limit 1');
+          $Qpermalink->bindTable(':table_permalink', 'lc_permalink');
+          $Qpermalink->bindInt(':item_id', $Qcategories->valueInt('categories_id'));
+          $Qpermalink->bindInt(':language_id', $lC_Language->getID());
+          $Qpermalink->execute();
+          
+          $this->_data[$Qcategories->valueInt('parent_id')][$Qcategories->valueInt('categories_id')] = array('item_id' => $Qpermalink->valueInt('item_id'), 
+                                                                                                             'name' => $Qcategories->value('categories_name'),
                                                                                                              'menu_name' => $Qcategories->value('categories_menu_name'),
-                                                                                                             'keyword' => $Qcategories->value('categories_keyword'),
+                                                                                                             'query' => $Qpermalink->value('query'),
+                                                                                                             'permalink' => $Qpermalink->value('keyword'),
                                                                                                              'image' => $Qcategories->value('categories_image'),
                                                                                                              'count' => 0,
                                                                                                              'mode' => $Qcategories->value('categories_mode'),
@@ -355,7 +364,9 @@
           if ($id == $category_id) {
             return array('id' => $id,
                          'name' => $info['name'],
-                         'keyword' => $info['keyword'],
+                         'item_id' => $info['item_id'],
+                         'query' => $info['query'],
+                         'permalink' => $info['permalink'],
                          'parent_id' => $parent,
                          'image' => $info['image'],
                          'status' => $info['status'],
@@ -365,6 +376,17 @@
         }
       }
 
+      return false;
+    }
+        
+    function getID($permalink) {
+      foreach ($this->_data as $parent => $categories) {
+        foreach ($categories as $category_id => $info) {
+          if ($permalink == $info['permalink']) {
+            return $info['item_id'];
+          } 
+        }
+      }
       return false;
     }
 

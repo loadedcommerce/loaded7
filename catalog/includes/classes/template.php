@@ -198,7 +198,7 @@
       if (($pos = strrpos($group, '.')) !== false) {
         $group = substr($group, 0, $pos);
       }
-
+      
       if (empty($_GET) === false) {
         $first_array = array_slice($_GET, 0, 1);
         
