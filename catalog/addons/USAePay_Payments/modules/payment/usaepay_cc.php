@@ -210,16 +210,16 @@ class lC_Payment_usaepay_cc extends lC_Payment {
   public function process() {
     global $lC_Database, $lC_MessageStack;
     $error = false;
-    $status = (isset($_POST['UMstatus']) && $_POST['UMstatus'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_POST['UMstatus']) : NULL;
-    $code = (isset($_POST['UMauthCode']) && $_POST['UMauthCode'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_POST['UMauthCode']) : NULL;
-    $msg = (isset($_POST['UMerror']) && $_POST['UMerror'] != NULL) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_POST['UMerror']) : NULL;
-    $order_id = (isset($_POST['UMinvoice']) && $_POST['UMinvoice'] != NULL) ? preg_replace('/[^0-9]\:\|\[\]/', '', $_POST['UMinvoice']) : 0;
+    $status = (isset($_GET['UMstatus']) && $_GET['UMstatus'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_GET['UMstatus']) : NULL;
+    $code = (isset($_GET['UMauthCode']) && $_POST['UMauthCode'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_GET['UMauthCode']) : NULL;
+    $msg = (isset($_GET['UMerror']) && $_GET['UMerror'] != NULL) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_GET['UMerror']) : NULL;
+    $order_id = (isset($_GET['UMinvoice']) && $_GET['UMinvoice'] != NULL) ? preg_replace('/[^0-9]\:\|\[\]/', '', $_GET['UMinvoice']) : 0;
 
     if ($status == 'Approved') { // success    
       lC_Order::process($order_id, $this->order_status);
     } else {
       $error = true;
-      $error_code = (isset($_POST['UMerrorcode']) && $_POST['UMerrorcode'] != '') ? preg_replace('/[^0-9]/', '', $_POST['UMauthCode']) : NULL;      
+      $error_code = (isset($_GET['UMerrorcode']) && $_GET['UMerrorcode'] != '') ? preg_replace('/[^0-9]/', '', $_GET['UMauthCode']) : NULL;      
       $lC_MessageStack->add('checkout_payment', $error_code . ' - ' . $msg);
       lC_Order::remove($order_id);
     } 
@@ -238,8 +238,7 @@ class lC_Payment_usaepay_cc extends lC_Payment {
     $Qtransaction->bindValue(':transaction_return_value', $lC_XML->toXML());
     $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '1') ? 1 : 0);
     $Qtransaction->execute();   
-    echo '<pre>'; print_r($_POST); echo '</pre>';
-    exit();
+    
     if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
   }
 
