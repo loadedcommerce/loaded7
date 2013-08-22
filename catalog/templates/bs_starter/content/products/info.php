@@ -11,12 +11,29 @@
 ?>
 <!--content/products/info.php start-->
 <div class="row">
-
   <div class="col-sm-4 col-lg-4 clearfix">
-    <div class="thumbnail large-margin-top text-center">
-      <a href="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" class="thickbox"><img class="img-responsive" src="<?php echo $lC_Image->getAddress($lC_Product->getImage(), 'large'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="<?php echo $lC_Product->getTitle(); ?>" /></a><br />
-    </div>
-    <p class="align-center"><a href="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>" class="thickbox"><?php echo $lC_Language->get('enlarge_image'); ?></a></p>
+    <div class="thumbnail large-margin-top no-margin-bottom text-center">
+      <a data-toggle="modal" href="#myModal" title="<?php echo $lC_Product->getTitle(); ?>"><img class="img-responsive" src="<?php echo $lC_Image->getAddress($lC_Product->getImage(), 'large'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="<?php echo $lC_Product->getTitle(); ?>" /></a>
+    </div>  
+    <!-- Button trigger modal -->
+    <p class="text-center no-margin-top no-margin-bottom"><a data-toggle="modal" href="#myModal" class="btn normal"><?php echo $lC_Language->get('enlarge_image'); ?></a></p>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title"><?php echo $lC_Product->getTitle(); ?></h4>
+          </div>
+          <div class="modal-body">
+            <img class="img-responsive" src="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lC_Language->get('button_close'); ?></button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->   
     <hr>
     <?php
     if (sizeof($lC_Product->getImages()) > 1) {
@@ -101,7 +118,7 @@
     <div class="col-sm-6 col-lg-6">
       <p class="margin-top"><button onclick="$('#cart_quantity').submit();" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
     </div>
-  </div>
+  </div> 
 </div>
 <script>
 $(document).ready(function() {

@@ -789,5 +789,34 @@ class lC_Template {
     
     return $output;   
   }
+  
+  public function getInfoBoxHtml($group) {
+    global $lC_Vqmod;
+    
+    $content = '';
+    if ($this->hasPageBoxModules()) {
+      ob_start();
+      foreach ($this->getBoxModules($group) as $box) {
+        $lC_Box = new $box();
+        $lC_Box->initialize();
+        if ($lC_Box->hasContent()) {
+          if ($this->getCode() == DEFAULT_TEMPLATE) {
+            include($lC_Vqmod->modCheck('templates/' . $this->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
+          } else {
+            if (file_exists('templates/' . $this->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php')) {
+              include($lC_Vqmod->modCheck('templates/' . $this->getCode() . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
+            } else {
+              include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/boxes/' . $lC_Box->getCode() . '.php'));
+            }
+          }
+        }
+        unset($lC_Box);
+      }
+      $content = ob_get_contents();
+      ob_end_clean();  
+    }  
+    
+    return $content;
+  } 
 }
 ?>

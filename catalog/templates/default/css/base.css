@@ -783,9 +783,9 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 .payment-selection-title { font-weight:normal; font-style:italic; margin:5px 0; }
 
 /* debug display */
-#debugInfoContainer { margin-top:10px; }
-#debugInfoContainer .messageStack { margin-left:15px } 
-#debugInfoContainer .messageStack > ul > li { font-size:.9em; } 
+#debug-info-container { margin-top:10px; }
+#debug-info-container .messageStack { margin-left:15px } 
+#debug-info-container .messageStack > ul > li { font-size:.9em; } 
 
 /* create account */
 #accountCreate h3 { font-size: 1.3em; font-family: sans-serif !important; }

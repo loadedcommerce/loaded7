@@ -7,8 +7,8 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: bs_starter.php v1.0 2013-08-08 datazen $
 */
-//error_reporting(0);
-class lC_Bs_starter {
+//error_reporting(0);        
+class lC_Bs_starter { 
 
  /**
   * Return the countries dropdown array
@@ -336,6 +336,6 @@ class lC_Bs_starter {
     $Qcategories->execute();
     
     return $result;   
-  }
+  }   
 }
 ?>

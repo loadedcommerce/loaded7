@@ -38,10 +38,10 @@ $(document).ready(function() {
   var showDebug = '<?php echo $lC_Template->showDebugMessages(); ?>';
   if (showDebug) {
     var debugOutput = <?php echo (isset($_SESSION['debugStack']) && !empty($_SESSION['debugStack'])) ? $_SESSION['debugStack'] : "''" ?>;
-    $('#debugInfoContainer > span').html(debugOutput);
-    $('#debugInfoContainer').show();
+    $('#debug-info-container > span').html(debugOutput);
+    $('#debug-info-container').show();
   } else {
-    $('#debugInfoContainer').hide();
+    $('#debug-info-container').hide();
   }  
   
   // run this last - determine media type
