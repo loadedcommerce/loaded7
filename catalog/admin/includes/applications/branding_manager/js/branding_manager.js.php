@@ -16,7 +16,8 @@ global $lC_Template, $lC_Language, $lC_ObjectInfo;
 ?>
 <script>
 $(document).ready(function() {
-
+  
+  $('#floating-menu-div-listing').fixFloat();
   createUploader();
   ogUploader();
 
