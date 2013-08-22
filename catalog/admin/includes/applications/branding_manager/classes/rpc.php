@@ -14,6 +14,7 @@
   @function The lC_Branding_manager_Admin_rpc class is for AJAX remote program control
 */
 require('includes/applications/branding_manager/classes/branding_manager.php');
+require_once($lC_Vqmod->modCheck('includes/classes/image.php'));
 
 class lC_Branding_manager_Admin_rpc {
 
@@ -31,7 +32,7 @@ class lC_Branding_manager_Admin_rpc {
     echo json_encode($result);
   }
 
-   /*
+ /*
   * Returns the store branding data
   *
   * @access public
@@ -44,7 +45,7 @@ class lC_Branding_manager_Admin_rpc {
     echo json_encode($result);
   }
 
-   /*
+ /*
   * Return the data used on the dialog forms
   *
   * @param integer $_GET['cid'] The categories id
@@ -60,23 +61,35 @@ class lC_Branding_manager_Admin_rpc {
 
     echo json_encode($result);
   }
-
-   /**
-  * upload the profile image
-  *
+ 
+ /*
+  * Upload Category Image
+  * 
   * @access public
   * @return json
   */
   public static function fileUpload() {
-    $result = array();
+    global $lC_Database, $lC_Vqmod, $_module;
 
-    $result = lC_Branding_manager_Admin::brandingImageUpload($_GET['branding_manager_logo']);
+    $lC_Image = new lC_Image_Admin();
+    
+    require_once($lC_Vqmod->modCheck('includes/classes/ajax_upload.php'));
+
+    // list of valid extensions, ex. array("jpeg", "xml", "bmp")
+    $allowedExtensions = array('gif', 'jpg', 'jpeg', 'png');
+    // max file size in bytes
+    $sizeLimit = 10 * 1024 * 1024;
+
+    $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+    
+    $branding_logo = $uploader->handleUpload('../images/branding/');
+    
+    $result = array('result' => 1,
+                    'fileName' => $branding_logo['filename'],
+                    'success' => true,
+                    'rpcStatus' => RPC_STATUS_SUCCESS);
 
     echo json_encode($result);
   }
-
-
-   
-
 }
 ?>

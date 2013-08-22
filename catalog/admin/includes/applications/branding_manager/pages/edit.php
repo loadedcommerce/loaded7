@@ -60,10 +60,6 @@ $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModul
                     </div>
                   </center>
                 </p>
-
-                
-
-
                 <p class="button-height inline-label">
                   <label class="label" for="branding_name"><?php echo $lC_Language->get('field_site_name'); ?></label>
                   <input type="text" value="<?php echo (!lc_empty($bInfo->get('name')) ? $bInfo->getProtected('name') : null);?>" class="input two-thirds-width" id="branding_name" name="branding_name">
@@ -74,14 +70,14 @@ $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModul
                 </p>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_chat_code"><?php echo $lC_Language->get('field_live_chat_code'); ?></label>
-                  <?php echo lc_draw_textarea_field('branding_chat_code', (!lc_empty($bInfo->get('chat_code')) ? $bInfo->getProtected('chat_code') : null), 48, 2, 'id="editHtmlText" class="input" ');?>
+                  <?php echo lc_draw_textarea_field('branding_chat_code', (!lc_empty($bInfo->get('chat_code')) ? $bInfo->getProtected('chat_code') : null), 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding"');?>
                 </p>
               </fieldset>
               <fieldset class="fieldset">
                 <legend class="legend"><?php echo $lC_Language->get('field_company_info'); ?></legend>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_address"><?php echo $lC_Language->get('field_address'); ?></label>
-                  <?php echo lc_draw_textarea_field('branding_address', (!lc_empty($bInfo->get('address')) ? $bInfo->getProtected('address') : null), 48, 2, 'id="editHtmlText" class="input" ');?>
+                  <?php echo lc_draw_textarea_field('branding_address', (!lc_empty($bInfo->get('address')) ? $bInfo->getProtected('address') : null), 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding"');?>
                 </p>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_support_phone"><?php echo $lC_Language->get('field_support_phone'); ?></label>
@@ -104,17 +100,12 @@ $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModul
                 <legend class="legend"><?php echo $lC_Language->get('field_seo'); ?></legend>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_meta_description"><?php echo $lC_Language->get('field_site_meta_description'); ?></label>
-                  <?php echo lc_draw_textarea_field('branding_meta_description', (!lc_empty($bInfo->get('meta_description')) ? $bInfo->getProtected('meta_description') : null), 48, 2, 'id="editHtmlText" class="input" ');?>
+                  <?php echo lc_draw_textarea_field('branding_meta_description', (!lc_empty($bInfo->get('meta_description')) ? $bInfo->getProtected('meta_description') : null), 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding" ');?>
                 </p>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_meta_keywords"><?php echo $lC_Language->get('field_site_meta_keywords'); ?></label>
                   <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_keywords')) ? $bInfo->getProtected('meta_keywords') : null);?>" class="input two-thirds-width" id="branding_meta_keywords" name="branding_meta_keywords">
                 </p>
-
-
-
-
-
                 <p class="button-height inline-label">
                   <label class="label" for="branding_image"><?php echo $lC_Language->get('field_open_graph_site_thumbnail'); ?></label>
                   <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_open_graph_site_thumbnail'), null); ?> 
@@ -133,39 +124,23 @@ $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModul
                     </div>
                   </center>
                 </p>
-
-
-
                 <p class="button-height inline-label">
                   <label class="label" for="branding_meta_title"><?php echo $lC_Language->get('field_home_page_meta_title'); ?></label>
                   <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_title')) ? $bInfo->getProtected('meta_title') : null);?>" class="input two-thirds-width" id="branding_meta_title" name="branding_meta_title">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_meta_title_slug"><?php echo $lC_Language->get('field_site_meta_title_slug'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_slug')) ? $bInfo->getProtected('meta_slug') : null);?>" class="input two-thirds-width" id="branding_meta_title_slug" name="branding_meta_title_slug">
-                  <p class="margin-bottom branding-extra-line">
-      <span class="branding-extra-line"> 
-        <span class="button-group">
-            <label for="meta_slug_placement_prefix" class="button green-active">
-              <input name="branding_meta_slug_placement" id="meta_slug_placement_prefix" value="0" type="radio" <?php echo ($bInfo->get('meta_slug_placement') == 0 ? 'checked' : '');?>>
-              <?php echo $lC_Language->get('field_prefix'); ?>
-            </label>
-            <label for="meta_slug_placement_suffix" class="button green-active">
-              <input name="branding_meta_slug_placement" id="meta_slug_placement_suffix" value="1" type="radio" <?php echo ($bInfo->get('meta_slug_placement') == 1 ? 'checked' : '');?>>
-              <?php echo $lC_Language->get('field_suffix'); ?>
-            </label>
-          </span>
-      </span>
-                    </p>
-
+                  <label class="label" for="branding_meta_title_prefix"><?php echo $lC_Language->get('field_site_meta_title_prefix'); ?></label>
+                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_title_prefix')) ? $bInfo->getProtected('meta_title_prefix') : null);?>" class="input two-thirds-width" id="branding_meta_title_prefix" name="branding_meta_title_prefix">
+                </p>
+                <p class="button-height inline-label">
+                  <label class="label" for="branding_meta_title_suffix"><?php echo $lC_Language->get('field_site_meta_title_suffix'); ?></label>
+                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_title_suffix')) ? $bInfo->getProtected('meta_title_suffix') : null);?>" class="input two-thirds-width" id="branding_meta_title_suffix" name="branding_meta_title_suffix">
                 </p>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_meta_title_delimeter"><?php echo $lC_Language->get('field_site_meta_title_delimeter'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_delimeter')) ? $bInfo->getProtected('meta_delimeter') : null);?>" class="input two-thirds-width" id="branding_meta_title_delimeter" name="branding_meta_title_delimeter">
+                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_delimeter')) ? $bInfo->getProtected('meta_delimeter') : null);?>" class="input" id="branding_meta_title_delimeter" name="branding_meta_title_delimeter">
                 </p>
               </fieldset>
-
-
               <fieldset class="fieldset">
                 <legend class="legend"><?php echo $lC_Language->get('field_social_links'); ?></legend>
                 <p class="button-height inline-label">
@@ -193,13 +168,11 @@ $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModul
                   <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_linkedin')) ? $bInfo->getProtected('social_linkedin') : null);?>" class="input two-thirds-width" id="branding_social_linkedin" name="branding_social_linkedin">
                 </p>
               </fieldset>
-
-
               <fieldset class="fieldset">
                 <legend class="legend"><?php echo $lC_Language->get('field_footer_text'); ?></legend>
                 <p class="button-height inline-label">
                   <label class="label" for="branding_footer_text"><?php echo $lC_Language->get('field_site_footer_text'); ?></label>
-                  <?php echo lc_draw_textarea_field('branding_footer_text', (!lc_empty($bInfo->get('footer_text')) ? $bInfo->getProtected('footer_text') : null), 48, 2, 'id="editHtmlText" class="input" ');?>                 
+                  <?php echo lc_draw_textarea_field('branding_footer_text', (!lc_empty($bInfo->get('footer_text')) ? $bInfo->getProtected('footer_text') : null), 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding" ');?>                 
                 </p>
               </fieldset>
             </div>
@@ -211,7 +184,6 @@ $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModul
       </div>    
     </form>
     <div class="clear-both"></div>
-    
     <div id="floating-button-container" class="six-columns twelve-columns-tablet margin-bottom">
       <div id="floating-menu-div-listing">
         <div id="buttons-container" style="position: relative;" class="clear-both">

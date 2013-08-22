@@ -13,6 +13,7 @@
  
   @function The lC_Application_Branding_manager class manages the store branding data
 */
+
 require('includes/applications/branding_manager/classes/branding_manager.php');
 
 class lC_Application_Branding_manager extends lC_Template_Admin {
@@ -51,8 +52,8 @@ class lC_Application_Branding_manager extends lC_Template_Admin {
            $branding_meta_keywords        = $_POST['branding_meta_keywords'];
            $branding_graph_site_thumbnail = $_POST['branding_graph_site_thumbnail'];
            $branding_meta_title           = $_POST['branding_meta_title'];
-           $branding_meta_title_slug      = $_POST['branding_meta_title_slug'];
-           $branding_meta_slug_placement  = $_POST['branding_meta_slug_placement'];
+           $branding_meta_title_prefix    = $_POST['branding_meta_title_prefix'];
+           $branding_meta_title_suffix    = $_POST['branding_meta_title_suffix'];
            $branding_meta_title_delimeter = $_POST['branding_meta_title_delimeter'];
            $branding_social_fb_page       = $_POST['branding_social_fb_page'];
            $branding_social_twitter       = $_POST['branding_social_twitter'];
@@ -75,8 +76,8 @@ class lC_Application_Branding_manager extends lC_Template_Admin {
                          'meta_keywords'        => $branding_meta_keywords,
                          'og_image'             => $branding_graph_site_thumbnail,
                          'meta_title'           => $branding_meta_title,
-                         'meta_slug'            => $branding_meta_title_slug,
-                         'meta_slug_placement'  => $branding_meta_slug_placement,
+                         'meta_title_prefix'    => $branding_meta_title_prefix,
+                         'meta_title_suffix'    => $branding_meta_title_suffix,
                          'meta_delimeter'       => $branding_meta_title_delimeter,
                          'social_facebook_page' => $branding_social_fb_page,
                          'social_twitter'       => $branding_social_twitter,
@@ -95,7 +96,7 @@ class lC_Application_Branding_manager extends lC_Template_Admin {
           * @access public
           * @return boolean
           */           
-          if ( lC_Branding_manager_Admin::save((isset($_GET['bid']) && is_numeric($_GET['bid']) ? $_GET['bid'] : null), $data) ) {
+          if ( lC_Branding_manager_Admin::save($data) ) {
             lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module));
           } else {
             $_SESSION['error'] = true;
@@ -104,9 +105,6 @@ class lC_Application_Branding_manager extends lC_Template_Admin {
           break;
       }
     }
-
-
-
   }
 }
 ?>

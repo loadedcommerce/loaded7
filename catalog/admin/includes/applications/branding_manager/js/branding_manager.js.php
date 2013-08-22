@@ -18,7 +18,7 @@ global $lC_Template, $lC_Language, $lC_ObjectInfo;
 $(document).ready(function() {
 
   createUploader();
-  createOGUploader();
+  ogUploader();
 
   $(window).resize(function() {
     if ($(window).width() < 1380) {
@@ -42,23 +42,24 @@ function createUploader() {
   var uploader = new qq.FileUploader({
     element: document.getElementById('fileUploaderImageContainer'),
     action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
-    allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
-    multiple: false,
+	  allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+	  multiple: false,
     onComplete: function(id, fileName, responseJSON) {
       $('#imagePreviewContainer').html('<img src="../images/branding/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="' + fileName + '">');
     },
   });
 } 
 
-function createOGUploader() {
+function ogUploader() {
   var uploader = new qq.FileUploader({
     element: document.getElementById('ogfileUploaderImageContainer'),
     action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
-    allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
-    multiple: false,
+	  allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+	  multiple: false,
     onComplete: function(id, fileName, responseJSON) {
       $('#ogimagePreviewContainer').html('<img src="../images/branding/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="' + fileName + '">');
     },
   });
-}      
+} 
+
 </script>
