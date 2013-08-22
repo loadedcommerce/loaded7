@@ -100,7 +100,7 @@
     ?>
   </div>
 </div>
-<?php $lC_Template->addJavascriptPhpFilename('templates/includes/bs_starter/javascript/form_check.js.php'); ?>
+<?php $lC_Template->addJavascriptPhpFilename('templates/bs_starter/javascript/form_check.js.php'); ?>
 <script>
 $(document).ready(function() {
   $('#country').change(function() {

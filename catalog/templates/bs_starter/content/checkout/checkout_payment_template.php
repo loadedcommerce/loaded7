@@ -8,7 +8,6 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: checkout_payment_template.php v1.0 2013-08-08 datazen $
 */ 
-$lC_Template->addJavascriptFilename('ext/jquery/jquery.activity-indicator-1.0.0.min.js');
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <style>

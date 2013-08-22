@@ -131,6 +131,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>text_amount_due</key>
+      <value><![CDATA[Amount Due]]></value>
+      <group>checkout</group>
+    </definition>    
+    <definition>
       <key>breadcrumb_top</key>
       <value><![CDATA[Top]]></value>
       <group>general</group>
