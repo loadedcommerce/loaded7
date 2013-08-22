@@ -155,7 +155,7 @@
         }
 
         lC_Reviews::saveEntry($data);
-
+        
         lc_redirect(lc_href_link(FILENAME_PRODUCTS, 'reviews&' . $id));
       }
     }
