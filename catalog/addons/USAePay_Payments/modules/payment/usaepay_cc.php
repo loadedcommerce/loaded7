@@ -239,6 +239,7 @@ class lC_Payment_usaepay_cc extends lC_Payment {
     $Qtransaction->bindInt(':transaction_return_status', (strtoupper(trim($this->_transaction_response)) == '1') ? 1 : 0);
     $Qtransaction->execute();   
     echo '<pre>'; print_r($_POST); echo '</pre>';
+    exit();
     if ($error) lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
   }
 
