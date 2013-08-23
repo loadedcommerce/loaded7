@@ -61,7 +61,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
   </head>
 
   <body>
-    <div id="loadedcommerce-main-wrapper">
+    <div id="loaded7" class="loadedcommerce-main-wrapper">
       <!--[if lt IE 7]>
           <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
       <![endif]-->  
