@@ -11,7 +11,7 @@
 ?>
 <!--footer.php start-->
 
-<div class="container">
+<div id="footer" class="container">
   <hr>
   <div class="row">
     <div class="col-sm-3 col-lg-3">

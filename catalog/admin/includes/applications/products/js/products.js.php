@@ -224,7 +224,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       checkImageExists('../images/products/large/' + defaultImage).done(function() {
         $('#imagePreviewContainer').html('<img src="<?php echo '../images/products/large/'; ?>' + defaultImage + '" style="max-width:100%;" />');
       }).fail(function() {
-        $('#imagePreviewContainer').html('<img src="<?php echo '../images/no-image.png'; ?>" style="max-width:100%;" />');
+        $('#imagePreviewContainer').html('<img src="<?php echo '../images/no_image'; ?>" style="max-width:100%;" />');
       });       
       
       $('#additionalOriginal').sortable({

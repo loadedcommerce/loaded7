@@ -93,7 +93,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       }
       ?>
       <div id="content-container" class="container">
-        <div id="" class="row"> 
+        <div class="row"> 
           <!--left column -->
           <?php if (!empty($left)) echo '<div id="content-left-container" class="' . $box_class . '">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
              
@@ -193,9 +193,6 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       <script src="ext/bootstrap/bootstrap-datepicker.js"></script>
       <script src="ext/jquery/jquery.loadmask.js"></script>
       
-      <!-- Template JS -->
-      <!-- script src="templates/bs_starter/javascript/placeholder.js" ></script -->
-
       <!-- js for core logic -->
       <?php $lC_Template->addJavascriptPhpFilename('includes/javascript/general.js.php'); ?>
           

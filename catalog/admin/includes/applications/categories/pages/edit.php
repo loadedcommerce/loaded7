@@ -71,7 +71,7 @@
                     <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
                     <img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . ((is_file('../images/categories/' . $lC_ObjectInfo->get('categories_image')) == true) ? $lC_ObjectInfo->get('categories_image') : 'missing-image.png'); ?>" style="max-width:100%;" />
                     <?php } else { ?>
-                    <img src="../images/categories/no-image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?>
+                    <img src="../images/categories/no_image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?>
                     <?php } ?>
                     <input type="hidden" id="categories_image" name="categories_image" value="<?php echo $lC_ObjectInfo->get('categories_image'); ?>">
                   </div>

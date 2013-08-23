@@ -257,7 +257,7 @@ class lC_Default {
       $exists = ($Qcategories->value('categories_image') != null) ? true : false;
       $output .= '    <td style="text-align:center;" class="categoryListing" width="' . $width . '" valign="top">';
       if ($Qcategories->value('categories_custom_url') != '') {
-        $output .= lc_link_object(lc_href_link($Qcategories->value('categories_custom_url'), ''), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no-image.png', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name'), (($Qcategories->value('categories_link_target') == 1) ? 'target="_blank"' : null));
+        $output .= lc_link_object(lc_href_link($Qcategories->value('categories_custom_url'), ''), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no_image', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name'), (($Qcategories->value('categories_link_target') == 1) ? 'target="_blank"' : null));
       } else {
         $output .= lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id'))), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no_image.png', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name'), (($Qcategories->value('categories_link_target') == 1) ? 'target="_blank"' : null));
       }
