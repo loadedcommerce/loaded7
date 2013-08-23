@@ -38,7 +38,7 @@
     
     foreach (lC_Address::getZones($Qcountry->value('configuration_value')) as $zone) {
       $zones_array[] = array('id' => $zone['id'],
-                             'text' => utf8_decode($zone['name']),
+                             'text' => $zone['name'],
                              'group' => $zone['country_name']);
     }
 
