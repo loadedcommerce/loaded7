@@ -14,12 +14,12 @@
   <div class="col-sm-12 col-lg-12">
     <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <?php 
-    if (lC_Bs_starter::getCategoryDescription() != '') {
-      echo lC_Bs_starter::getCategoryDescription(); 
+    if (lC_Template_output::getCategoryDescription() != '') {
+      echo lC_Template_output::getCategoryDescription(); 
     }
     ?>
     <div class="col-sm-12 col-lg-12 container text-center">
-      <tr><?php echo lC_Bs_starter::getCategoryListing(); ?></tr>
+      <tr><?php echo lC_Template_output::getCategoryListing(); ?></tr>
     </div>
   </div>
 </div>

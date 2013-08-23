@@ -11,7 +11,7 @@
 global $lC_Vqmod;
 require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));
 
-class lC_Bs_starter_rpc {
+class lC_Template_output_rpc {
  /*
   * Return the zones dropdown array
   *

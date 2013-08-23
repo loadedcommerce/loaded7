@@ -35,7 +35,7 @@
         <h3 class="large-margin-bottom margin-top"><?php echo $lC_Language->get('advanced_search_heading'); ?></h3>
         <div class="form-group">
           <label for="category" class="control-label col-sm-3 col-lg-3 text-right"><?php echo $lC_Language->get('field_search_categories'); ?></label>
-          <div class="col-sm-9 col-lg-9"><?php echo lc_draw_pull_down_menu('category', lC_Bs_starter::getCategoriesDropdownArray(), null, 'class="form-control"'); ?></div>
+          <div class="col-sm-9 col-lg-9"><?php echo lc_draw_pull_down_menu('category', lC_Template_output::getCategoriesDropdownArray(), null, 'class="form-control"'); ?></div>
         </div>
         <div class="form-group">
           <label for="category" class="control-label col-sm-3 col-lg-3 text-right margin-top"><?php echo $lC_Language->get('field_search_recursive'); ?></label>
@@ -43,7 +43,7 @@
         </div>
         <div class="form-group">
           <label for="category" class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_manufacturers'); ?></label>
-          <div class="col-sm-9 col-lg-9"><?php echo lc_draw_pull_down_menu('manufacturer', lC_Bs_starter::getManufacturerDropdownArray(), null, 'class="form-control"'); ?></div>
+          <div class="col-sm-9 col-lg-9"><?php echo lc_draw_pull_down_menu('manufacturer', lC_Template_output::getManufacturerDropdownArray(), null, 'class="form-control"'); ?></div>
         </div>
         <div class="form-group">
           <label for="category" class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_price_from'); ?></label>

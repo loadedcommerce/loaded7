@@ -17,7 +17,7 @@
     <div class="col-sm-3 col-lg-3">
       <h4 class="line3 center standart-h4title"><span>New Arrivals</span></h4>
       <ul class="footer-links list-indent list-unstyled">
-        <?php echo lC_Bs_starter::newArrivalsListing(); ?>
+        <?php echo lC_Template_output::newArrivalsListing(); ?>
       </ul>
     </div>
 

@@ -15,16 +15,16 @@
   
   <div id="content-product-listing-category-description-container">
     <?php 
-      if (lC_Bs_starter::getCategoryDescription() != '') {
-        echo '<div id="content-product-listing-category-description">' . lC_Bs_starter::getCategoryDescription() . '</div>'; 
+      if (lC_Template_output::getCategoryDescription() != '') {
+        echo '<div id="content-product-listing-category-description">' . lC_Template_output::getCategoryDescription() . '</div>'; 
       }
     ?>
   </div>
   
   <div class="content-product-listing-container">
     <?php 
-    if (PRODUCT_LIST_FILTER == '1') echo lC_Bs_starter::getManufacturerFilter();
-    $Qlisting = lC_Bs_starter::getProductsListingSql();
+    if (PRODUCT_LIST_FILTER == '1') echo lC_Template_output::getManufacturerFilter();
+    $Qlisting = lC_Template_output::getProductsListingSql();
   
     if ( ($Qlisting->numberOfRows() > 0) && ( (PREV_NEXT_BAR_LOCATION == '1') || (PREV_NEXT_BAR_LOCATION == '3') ) ) {
       ?>

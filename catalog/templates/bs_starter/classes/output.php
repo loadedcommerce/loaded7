@@ -8,7 +8,7 @@
   @version    $Id: bs_starter.php v1.0 2013-08-08 datazen $
 */
 //error_reporting(0);        
-class lC_Bs_starter { 
+class lC_Template_output { 
 
  /**
   * Return the countries dropdown array

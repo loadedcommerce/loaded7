@@ -15,8 +15,8 @@
   
   <div id="content-product-listing-category-description-container">
     <?php 
-      if (lC_Bs_starter::getCategoryDescription() != '') {
-        echo '<div id="content-product-listing-category-description">' . lC_Bs_starter::getCategoryDescription() . '</div>'; 
+      if (lC_Template_output::getCategoryDescription() != '') {
+        echo '<div id="content-product-listing-category-description">' . lC_Template_output::getCategoryDescription() . '</div>'; 
       }
     ?>
   </div>
@@ -27,7 +27,7 @@
     $lC_Products->setSortBy('date_added', '-');
     $Qlisting = $lC_Products->execute(MODULE_CONTENT_NEW_PRODUCTS_MAX_DISPLAY);    
     
-    if (PRODUCT_LIST_FILTER == '1') echo lC_Bs_starter::getManufacturerFilter();
+    if (PRODUCT_LIST_FILTER == '1') echo lC_Template_output::getManufacturerFilter();
   
     if ( ($Qlisting->numberOfRows() > 0) && ( (PREV_NEXT_BAR_LOCATION == '1') || (PREV_NEXT_BAR_LOCATION == '3') ) ) {
       ?>
