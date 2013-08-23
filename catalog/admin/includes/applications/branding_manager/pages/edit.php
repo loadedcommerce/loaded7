@@ -11,8 +11,63 @@
   @copyright  (c) 2011 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
+  $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModule()));
 
-$bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModule()));
+      $site_image = array();
+      $name = array();
+      $slogan = array();
+      $chat_code = array();
+      $address = array();
+      $support_phone = array();
+      $support_email = array();
+      $sales_phone = array();
+      $sales_email = array();
+      $meta_description = array();
+      $meta_keywords = array();
+      $og_image = array();
+      $meta_title = array();
+      $meta_title_prefix = array();
+      $meta_title_suffix = array();
+      $meta_delimeter = array();
+      $social_facebook_page = array();
+      $social_twitter = array();
+      $social_pinterest = array();
+      $social_google_plus = array();
+      $social_youtube = array();
+      $social_linkedin = array();
+      $footer_text = array();
+
+      $Qbranding = $lC_Database->query('select * from :table_branding');
+      $Qbranding->bindTable(':table_branding', TABLE_BRANDING);
+      $Qbranding->execute();      
+
+    while ($Qbranding->next()) {
+      $site_image[$Qbranding->valueInt('language_id')] = $Qbranding->value('site_image');
+      $name[$Qbranding->valueInt('language_id')] = $Qbranding->value('name');
+      $slogan[$Qbranding->valueInt('language_id')] = $Qbranding->value('slogan');
+      $chat_code[$Qbranding->valueInt('language_id')] = $Qbranding->value('chat_code');
+      $address[$Qbranding->valueInt('language_id')] = $Qbranding->value('address');
+      $support_phone[$Qbranding->valueInt('language_id')] = $Qbranding->value('support_phone');
+      $support_email[$Qbranding->valueInt('language_id')] = $Qbranding->value('support_email');
+      $sales_phone[$Qbranding->valueInt('language_id')] = $Qbranding->value('sales_phone');
+      $sales_email[$Qbranding->valueInt('language_id')] = $Qbranding->value('sales_email');
+      $meta_description[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_description');
+      $meta_keywords[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_keywords');
+      $og_image[$Qbranding->valueInt('language_id')] = $Qbranding->value('og_image');
+      $meta_title[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_title');
+      $meta_title_prefix[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_title_prefix');
+      $meta_title_suffix[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_title_suffix');
+      $meta_delimeter[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_delimeter');
+      $social_facebook_page[$Qbranding->valueInt('language_id')] = $Qbranding->value('social_facebook_page');
+      $social_twitter[$Qbranding->valueInt('language_id')] = $Qbranding->value('social_twitter');
+      $social_pinterest[$Qbranding->valueInt('language_id')] = $Qbranding->value('social_pinerest');
+      $social_google_plus[$Qbranding->valueInt('language_id')] = $Qbranding->value('social_google_plus');
+      $social_youtube[$Qbranding->valueInt('language_id')] = $Qbranding->value('social_youtube');
+      $social_linkedin[$Qbranding->valueInt('language_id')] = $Qbranding->value('social_linkedin');
+      $footer_text[$Qbranding->valueInt('language_id')] = $Qbranding->value('footer_text');
+    }     
+}
 ?>
 <style>
 .inline-label > .label {
@@ -43,12 +98,12 @@ $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModul
               <fieldset class="fieldset">
                 <legend class="legend"><?php echo $lC_Language->get('field_header'); ?></legend>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_image"><?php echo $lC_Language->get('field_branding_manager_logo'); ?></label>
+                  <label class="label" for="branding_image[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_branding_manager_logo'); ?></label>
                   <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_branding_manager_logo'), null); ?> 
                   <div style="padding-left:6px;" class="small-margin-top">
                   <div id="imagePreviewContainer" class="cat-image align-center">
-                    <img src="<?php echo '../' . DIR_WS_IMAGES . (!lc_empty($bInfo->get('site_image')) ? 'branding/' . $bInfo->getProtected('site_image') : 'no-image.png');?>" style="max-width: 100%; height: auto;" align="center" />
-                    <input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="<?php echo (!lc_empty($bInfo->get('name')) ? $bInfo->getProtected('site_image') : 'no-image.png');?>">
+                    <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && isset($site_image[$l['id']]) ? 'branding/' . $site_image[$l['id']] : 'no-image.png');?>" style="max-width: 100%; height: auto;" align="center" />
+                    <input type="hidden" id="branding_manager_logo[<?php echo $l['id'];?>]" name="branding_manager_logo[<?php echo $l['id'];?>]" value="<?php echo (isset($bInfo) && isset($site_image[$l['id']]) ? $site_image[$l['id']] : 'no-image.png');?>">
                   </div>
                 </div>  
                   <p class="thin mid-margin-top" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
@@ -61,58 +116,58 @@ $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModul
                   </center>
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_name"><?php echo $lC_Language->get('field_site_name'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('name')) ? $bInfo->getProtected('name') : null);?>" class="input two-thirds-width" id="branding_name" name="branding_name">
+                  <label class="label" for="branding_name[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_site_name') ; ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($name[$l['id']]) ? $name[$l['id']] : null);?>" class="input two-thirds-width" id="branding_name[<?php echo $l['id'];?>]" name="branding_name[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_slogan"><?php echo $lC_Language->get('field_site_slogan'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('slogan')) ? $bInfo->getProtected('slogan') : null);?>" class="input two-thirds-width" id="branding_slogan" name="branding_slogan">
+                  <label class="label" for="branding_slogan[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_site_slogan'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($slogan[$l['id']]) ? $slogan[$l['id']] : null);?>" class="input two-thirds-width" id="branding_slogan[<?php echo $l['id'];?>]" name="branding_slogan[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_chat_code"><?php echo $lC_Language->get('field_live_chat_code'); ?></label>
-                  <?php echo lc_draw_textarea_field('branding_chat_code', (!lc_empty($bInfo->get('chat_code')) ? $bInfo->getProtected('chat_code') : null), 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding"');?>
+                  <label class="label" for="branding_chat_code[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_live_chat_code'); ?></label>
+                  <?php echo lc_draw_textarea_field('branding_chat_code[' . $l['id'] . ']', (isset($bInfo) && isset($chat_code[$l['id']]) ? $chat_code[$l['id']] : null) , 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding"');?>
                 </p>
               </fieldset>
               <fieldset class="fieldset">
                 <legend class="legend"><?php echo $lC_Language->get('field_company_info'); ?></legend>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_address"><?php echo $lC_Language->get('field_address'); ?></label>
-                  <?php echo lc_draw_textarea_field('branding_address', (!lc_empty($bInfo->get('address')) ? $bInfo->getProtected('address') : null), 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding"');?>
+                  <label class="label" for="branding_address[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_address'); ?></label>
+                  <?php echo lc_draw_textarea_field('branding_address[' . $l['id'] . ']', (isset($bInfo) && isset($address[$l['id']]) ? $address[$l['id']] : null), 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding"');?>
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_support_phone"><?php echo $lC_Language->get('field_support_phone'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('support_phone')) ? $bInfo->getProtected('support_phone') : null);?>" class="input two-thirds-width" id="branding_support_phone" name="branding_support_phone">
+                  <label class="label" for="branding_support_phone[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_support_phone'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($support_phone[$l['id']]) ? $support_phone[$l['id']] : null);?>" class="input two-thirds-width" id="branding_support_phone[<?php echo $l['id'];?>]" name="branding_support_phone[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_support_email"><?php echo $lC_Language->get('field_support_email'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('support_email')) ? $bInfo->getProtected('support_email') : null);?>" class="input two-thirds-width" id="branding_support_email" name="branding_support_email">
+                  <label class="label" for="branding_support_email[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_support_email'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($support_email[$l['id']]) ? $support_email[$l['id']] : null);?>" class="input two-thirds-width" id="branding_support_email[<?php echo $l['id'];?>]" name="branding_support_email[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_sales_phone"><?php echo $lC_Language->get('field_sales_phone'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('sales_phone')) ? $bInfo->getProtected('sales_phone') : null);?>" class="input two-thirds-width" id="branding_sales_phone" name="branding_sales_phone">
+                  <label class="label" for="branding_sales_phone[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_sales_phone'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($sales_phone[$l['id']]) ? $sales_phone[$l['id']] : null);?>" class="input two-thirds-width" id="branding_sales_phone[<?php echo $l['id'];?>]" name="branding_sales_phone[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_sales_email"><?php echo $lC_Language->get('field_sales_email'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('sales_email')) ? $bInfo->getProtected('sales_email') : null);?>" class="input two-thirds-width" id="branding_sales_email" name="branding_sales_email">
+                  <label class="label" for="branding_sales_email[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_sales_email'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($sales_email[$l['id']]) ? $sales_email[$l['id']] : null);?>" class="input two-thirds-width" id="branding_sales_email[<?php echo $l['id'];?>]" name="branding_sales_email[<?php echo $l['id'];?>]">
                 </p>
               </fieldset>
               <fieldset class="fieldset">
                 <legend class="legend"><?php echo $lC_Language->get('field_seo'); ?></legend>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_meta_description"><?php echo $lC_Language->get('field_site_meta_description'); ?></label>
-                  <?php echo lc_draw_textarea_field('branding_meta_description', (!lc_empty($bInfo->get('meta_description')) ? $bInfo->getProtected('meta_description') : null), 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding" ');?>
+                  <label class="label" for="branding_meta_description[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_site_meta_description'); ?></label>
+                  <?php echo lc_draw_textarea_field('branding_meta_description[' . $l['id'] . ']', (isset($bInfo) && isset($meta_description[$l['id']]) ? $meta_description[$l['id']] : null), 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding" ');?>
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_meta_keywords"><?php echo $lC_Language->get('field_site_meta_keywords'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_keywords')) ? $bInfo->getProtected('meta_keywords') : null);?>" class="input two-thirds-width" id="branding_meta_keywords" name="branding_meta_keywords">
+                  <label class="label" for="branding_meta_keywords[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_site_meta_keywords'); ?></label>
+                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_keywords')) ? $bInfo->getProtected('meta_keywords') : null);?>" class="input two-thirds-width" id="branding_meta_keywords[<?php echo $l['id'];?>]" name="branding_meta_keywords[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_image"><?php echo $lC_Language->get('field_open_graph_site_thumbnail'); ?></label>
+                  <label class="label" for="branding_image[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_open_graph_site_thumbnail'); ?></label>
                   <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_open_graph_site_thumbnail'), null); ?> 
                   <div style="padding-left:6px;" class="small-margin-top">
                   <div id="ogimagePreviewContainer" class="cat-image align-center">
-                    <img src="<?php echo '../' . DIR_WS_IMAGES . (!lc_empty($bInfo->get('og_image')) ? 'branding/' . $bInfo->getProtected('og_image') : 'no-image.png');?>" style="max-width: 100%; height: auto;" align="center" />
-                    <input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="<?php echo (!lc_empty($bInfo->get('og_image')) ? $bInfo->getProtected('og_image') : 'no-image.png');?>">
+                    <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && isset($og_image[$l['id']]) ? 'branding/' . $og_image[$l['id']] : 'no-image.png');?>" style="max-width: 100%; height: auto;" align="center" />
+                    <input type="hidden" id="branding_graph_site_thumbnail[<?php echo $l['id'];?>]" name="branding_graph_site_thumbnail[<?php echo $l['id'];?>]" value="<?php echo (isset($bInfo) && isset($og_image[$l['id']]) ? $og_image[$l['id']] : 'no-image.png');?>">
                   </div>
                 </div>  
                   <p class="thin mid-margin-top" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
@@ -125,54 +180,54 @@ $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModul
                   </center>
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_meta_title"><?php echo $lC_Language->get('field_home_page_meta_title'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_title')) ? $bInfo->getProtected('meta_title') : null);?>" class="input two-thirds-width" id="branding_meta_title" name="branding_meta_title">
+                  <label class="label" for="branding_meta_title[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_home_page_meta_title'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_title[$l['id']]) ? $meta_title[$l['id']] : null);?>" class="input two-thirds-width" id="branding_meta_title[<?php echo $l['id'];?>]" name="branding_meta_title[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_meta_title_prefix"><?php echo $lC_Language->get('field_site_meta_title_prefix'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_title_prefix')) ? $bInfo->getProtected('meta_title_prefix') : null);?>" class="input two-thirds-width" id="branding_meta_title_prefix" name="branding_meta_title_prefix">
+                  <label class="label" for="branding_meta_title_prefix[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_site_meta_title_prefix'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_title_prefix[$l['id']]) ? $meta_title_prefix[$l['id']] : null);?>" class="input two-thirds-width" id="branding_meta_title_prefix[<?php echo $l['id'];?>]" name="branding_meta_title_prefix[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_meta_title_suffix"><?php echo $lC_Language->get('field_site_meta_title_suffix'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_title_suffix')) ? $bInfo->getProtected('meta_title_suffix') : null);?>" class="input two-thirds-width" id="branding_meta_title_suffix" name="branding_meta_title_suffix">
+                  <label class="label" for="branding_meta_title_suffix[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_site_meta_title_suffix'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_title_suffix[$l['id']]) ? $meta_title_suffix[$l['id']] : null);?>" class="input two-thirds-width" id="branding_meta_title_suffix[<?php echo $l['id'];?>]" name="branding_meta_title_suffix[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_meta_title_delimeter"><?php echo $lC_Language->get('field_site_meta_title_delimeter'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('meta_delimeter')) ? $bInfo->getProtected('meta_delimeter') : null);?>" class="input" id="branding_meta_title_delimeter" name="branding_meta_title_delimeter">
+                  <label class="label" for="branding_meta_title_delimeter[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_site_meta_title_delimeter'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_delimeter[$l['id']]) ? $meta_delimeter[$l['id']] : null);?>" class="input" id="branding_meta_title_delimeter[<?php echo $l['id'];?>]" name="branding_meta_title_delimeter[<?php echo $l['id'];?>]">
                 </p>
               </fieldset>
               <fieldset class="fieldset">
                 <legend class="legend"><?php echo $lC_Language->get('field_social_links'); ?></legend>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_social_fb_page"><?php echo $lC_Language->get('field_facebook_page'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_facebook_page')) ? $bInfo->getProtected('social_facebook_page') : null);?>" class="input two-thirds-width" id="branding_social_fb_page" name="branding_social_fb_page">
+                  <label class="label" for="branding_social_fb_page[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_facebook_page'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($social_facebook_page[$l['id']]) ? $social_facebook_page[$l['id']] : null);?>" class="input two-thirds-width" id="branding_social_fb_page[<?php echo $l['id'];?>]" name="branding_social_fb_page[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_social_twitter"><?php echo $lC_Language->get('field_twitter'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_twitter')) ? $bInfo->getProtected('social_twitter') : null);?>" class="input two-thirds-width" id="branding_social_twitter" name="branding_social_twitter">
+                  <label class="label" for="branding_social_twitter[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_twitter'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($social_twitter[$l['id']]) ? $social_twitter[$l['id']] : null);?>" class="input two-thirds-width" id="branding_social_twitter[<?php echo $l['id'];?>]" name="branding_social_twitter[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_social_pinterest"><?php echo $lC_Language->get('field_pinterest'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_pinterest')) ? $bInfo->getProtected('social_pinterest') : null);?>" class="input two-thirds-width" id="branding_social_pinterest" name="branding_social_pinterest">
+                  <label class="label" for="branding_social_pinterest[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_pinterest'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($social_pinterest[$l['id']]) ? $social_pinterest[$l['id']] : null);?>" class="input two-thirds-width" id="branding_social_pinterest[<?php echo $l['id'];?>]" name="branding_social_pinterest[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_social_google_plus"><?php echo $lC_Language->get('field_google_plus'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_google_plus')) ? $bInfo->getProtected('social_google_plus') : null);?>" class="input two-thirds-width" id="branding_social_google_plus" name="branding_social_google_plus">
+                  <label class="label" for="branding_social_google_plus[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_google_plus'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($social_google_plus[$l['id']]) ? $social_google_plus[$l['id']] : null);?>" class="input two-thirds-width" id="branding_social_google_plus[<?php echo $l['id'];?>]" name="branding_social_google_plus[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_social_youtube"><?php echo $lC_Language->get('field_youtube'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_youtube')) ? $bInfo->getProtected('social_youtube') : null);?>" class="input two-thirds-width" id="branding_social_youtube" name="branding_social_youtube">
+                  <label class="label" for="branding_social_youtube[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_youtube'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($social_youtube[$l['id']]) ? $social_youtube[$l['id']] : null);?>" class="input two-thirds-width" id="branding_social_youtube[<?php echo $l['id'];?>]" name="branding_social_youtube[<?php echo $l['id'];?>]">
                 </p>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_social_linkedin"><?php echo $lC_Language->get('field_linkedin'); ?></label>
-                  <input type="text" value="<?php echo (!lc_empty($bInfo->get('social_linkedin')) ? $bInfo->getProtected('social_linkedin') : null);?>" class="input two-thirds-width" id="branding_social_linkedin" name="branding_social_linkedin">
+                  <label class="label" for="branding_social_linkedin[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_linkedin'); ?></label>
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($social_linkedin[$l['id']]) ? $social_linkedin[$l['id']] : null);?>" class="input two-thirds-width" id="branding_social_linkedin[<?php echo $l['id'];?>]" name="branding_social_linkedin[<?php echo $l['id'];?>]">
                 </p>
               </fieldset>
               <fieldset class="fieldset">
                 <legend class="legend"><?php echo $lC_Language->get('field_footer_text'); ?></legend>
                 <p class="button-height inline-label">
-                  <label class="label" for="branding_footer_text"><?php echo $lC_Language->get('field_site_footer_text'); ?></label>
-                  <?php echo lc_draw_textarea_field('branding_footer_text', (!lc_empty($bInfo->get('footer_text')) ? $bInfo->getProtected('footer_text') : null), 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding" ');?>                 
+                  <label class="label" for="branding_footer_text[<?php echo $l['id'];?>]"><?php echo $lC_Language->get('field_site_footer_text'); ?></label>
+                  <?php echo lc_draw_textarea_field('branding_footer_text[' . $l['id'] . ']', (isset($bInfo) && isset($footer_text[$l['id']]) ? $footer_text[$l['id']] : null), 48, 2, 'id="editHtmlText" class="input two-thirds-width autoexpanding" ');?>                 
                 </p>
               </fieldset>
             </div>
