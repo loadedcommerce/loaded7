@@ -192,12 +192,16 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       <script src="ext/bootstrap/bootstrap-datepicker.js"></script>
       <script src="ext/jquery/jquery.loadmask.js"></script>
       
-      <!-- js for core logic -->
-      <?php $lC_Template->addJavascriptPhpFilename('includes/javascript/general.js.php'); ?>
-          
-      <!-- js for template specific logic -->
-      <?php $lC_Template->addJavascriptPhpFilename('templates/' . $lC_Template->getCode() . '/javascript/general.js.php'); ?>
-      
+      <?php 
+      // core js
+      if (file_exists('includes/javascript/general.js.php')) {
+        $lC_Template->addJavascriptPhpFilename('includes/javascript/general.js.php'); 
+      }
+      // template specific js
+      if (file_exists('templates/' . $lC_Template->getCode() . '/javascript/general.js.php')) {
+        $lC_Template->addJavascriptPhpFilename('includes/javascript/general.js.php'); 
+      }
+      ?>      
       <!-- js loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js'; ?> -->
       <!-- js.php loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '/' . $lC_Template->getModule() . '.js.php'; ?> -->
       <?php
