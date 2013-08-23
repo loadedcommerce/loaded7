@@ -540,7 +540,7 @@ class lC_Orders_Admin {
       if ( $data['notify_customer'] === true ) {
         $email_body = sprintf($lC_Language->get('email_body'), STORE_NAME) . "\n" . $lC_Language->get('email_underline') . "\n";
         $email_body .= sprintf($lC_Language->get('email_order_number'), $id) . "\n";
-        $email_body .= sprintf($lC_Language->get('email_detailed_invoice'), lc_href_link(FILENAME_CATALOG_ACCOUNT_HISTORY_INFO, 'order_id=' . $id, 'SSL', false, false, true)) . "\n";
+        $email_body .= sprintf($lC_Language->get('email_detailed_invoice'), lc_href_link(FILENAME_CATALOG_ACCOUNT, 'receipt=' . $id, 'SSL', false, false, true)) . "\n";
         $email_body .= sprintf($lC_Language->get('email_date_ordered'), lC_DateTime::getLong($Qorder->value('date_purchased'))) . "\n\n";
         $email_body .= sprintf($lC_Language->get('email_order_status'), $orders_status_array[$data['status_id']]) . "\n\n";
 

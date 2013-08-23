@@ -13,8 +13,8 @@
 */
 
 // define the filenames used in the project
-  define('FILENAME_CATALOG_ACCOUNT_HISTORY_INFO', 'account_history_info.php');
   define('FILENAME_DEFAULT', 'index.php');
   define('FILENAME_RPC', 'rpc.php');
   define('FILENAME_PRODUCTS', 'products.php');
+  define('FILENAME_CATALOG_ACCOUNT', 'account.php');
 ?>

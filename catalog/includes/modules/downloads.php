@@ -11,7 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-if (!strstr($_SERVER['SCRIPT_FILENAME'], FILENAME_ACCOUNT_HISTORY_INFO)) {
+if (!strstr($_SERVER['SCRIPT_FILENAME'], 'receipt')) {
   // Get last order id for checkout_success
   $Qorder = $lC_Database->query('select orders_id from :table_orders where customers_id = :customers_id order by orders_id desc limit 1');
   $Qorder->bindTable(':table_orders', TABLE_ORDERS);
@@ -19,7 +19,7 @@ if (!strstr($_SERVER['SCRIPT_FILENAME'], FILENAME_ACCOUNT_HISTORY_INFO)) {
   $Qorder->execute();
   $last_order = $Qorders->valueInt('orders_id');
 } else {
-  $last_order = (int)$_GET['order_id'];
+  $last_order = (int)$_GET['receipt'];
 }
 // Now get all downloadable products in that order
 $Qdownloads = $lC_Database->query('select date_format(o.date_purchased, "%Y-%m-%d") as date_purchased_day, opd.download_maxdays, op.products_name, opd.orders_products_download_id, opd.orders_products_filename, opd.download_count, opd.download_maxdays from :table_orders o, :table_orders_products op, :table_orders_products_downloads opd where o.customers_id = :customers_id and o.orders_id = :orders_id and o.orders_id = op.orders_id and op.orders_products_id = opd.orders_products_id and opd.orders_products_filename != ""');
@@ -76,7 +76,7 @@ if ($Qdownloads->numberOfRows() > 0) {
     </table></td>
   </tr>
   <?php
-  if (!strstr($_SERVER['SCRIPT_FILENAME'], FILENAME_ACCOUNT_HISTORY_INFO)) {
+  if (!strstr($_SERVER['SCRIPT_FILENAME'], 'receipt')) {
     ?>
     <tr>
       <td width="10">&nbsp;</td>
