@@ -25,7 +25,6 @@ class lC_Branding_manager_Admin_rpc {
   * @return json
   */
   public static function get() {
-    die("lineeeeee 26 <br>");
     $result = lC_Branding_manager_Admin::get();
     $result['rpcStatus'] = RPC_STATUS_SUCCESS;
 
@@ -53,7 +52,6 @@ class lC_Branding_manager_Admin_rpc {
   * @return json
   */
   public static function getFormData() {  
-     die("lineeeeee 55 <br>");
     global $_module;
 
     $result = lC_Categories_Admin::formData($_GET['cid'], $_GET[$_module]); 
