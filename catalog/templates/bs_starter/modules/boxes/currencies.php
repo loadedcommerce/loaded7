@@ -26,4 +26,3 @@ $('.box-currencies-selection').addClass('form-group full-width');
 $('.box-currencies-select').addClass('form-control');
 </script>
 <!--modules/boxes/currencies.php end-->
-

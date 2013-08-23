@@ -1,11 +1,11 @@
 /**
-  @package    catalog::templates::content
+  @package    catalog::templates::css
   @author     Loaded Commerce, LLC
   @copyright  Copyright 2003-2013 Loaded Commerce Development Team
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: also_purchased_products.php v1.0 2013-08-08 datazen $
+  @version    $Id: template.css v1.0 2013-08-08 datazen $
  *
  * Base stylesheet
  *
@@ -13,11 +13,12 @@
  * 1. Global
  * 2. Basic elements/styles
  * 3. Typography
- * 4. Utility classes
- * 5. Lists & tags
- * 6. Main layout elements
- * 7. Main layout styles
+ * 4. Lists & tags
+ * 5. Main layout elements
+ * 6. Main layout styles
+ * 7. Error styles
  * 8. Media query styles
+ * 9. Utility classes
  */
 
 /********************************************************/
@@ -113,11 +114,294 @@ h1, h2, h3, h4, h5, h6 {
 .lt-blue { 
   color:#0088cd; 
 }
-          
-/********************************************************/
-/*                  4. Utility classes                  */
-/********************************************************/  
 
+/********************************************************/
+/*                  4. Lists & tags                     */
+/********************************************************/
+
+.list-indent { 
+  padding-left:8px; 
+}
+
+.list-indent-large { 
+  padding-left:10px; 
+}
+
+/********************************************************/
+/*             5. Main layout elements                  */
+/********************************************************/
+
+#login input { 
+  width:97%; 
+}
+
+#page { 
+  width: 60px; 
+}
+
+/********************************************************/
+/*             6. Main layout styles                    */
+/********************************************************/
+
+/* header/nav */
+.navbar .container  { 
+  max-width: 1170px; 
+}
+
+.navbar-inverse .container{ 
+  -webkit-border-radius: 0px; 
+  -moz-border-radius: 0px; 
+  border-radius: 0px; 
+  background:#282828; border:none; 
+}
+
+.nav-tabs > li > a { 
+  -webkit-border-radius: 0px; 
+  -moz-border-radius: 0px; 
+  border-radius: 0px; 
+}    
+
+.page-header { 
+  border:none; 
+  padding: 10px 0px 0px; 
+  margin: 0px 0 0px; 
+}
+
+.logo { 
+  margin-left:10px; 
+  margin-top:-15px; 
+}
+
+/* box modules */
+.product_notifications-image { 
+  float:left; 
+  margin-top:8px; 
+}
+
+.box-products-price { 
+  font-size:1.4em; 
+  font-weight:200; 
+}
+
+/* product listings */
+.product-special-price { 
+  color:#FF0000; 
+}
+
+.product-listing-module-buy-now a { 
+  text-decoration:none; 
+}
+
+/* product info page */     
+.content-products-info-price { 
+  font-size:2.4em; 
+  font-weight:200; 
+  margin-bottom:4px; 
+}
+
+.content-products-info-reviews-rating-label { 
+  text-transform:uppercase; 
+  display:inline; 
+}
+
+.content-products-info-qty-input { 
+  width:30%; 
+  float:right; 
+  font-weight: bold; 
+  text-align: center; 
+}
+
+.content-products-info-qty-label { 
+  display:inline; 
+  vertical-align:-30%; 
+  margin-right:10px;  
+} 
+
+.content-products-info-manuf-model { 
+  position:absolute; 
+  right:0; top:30px; 
+  right:20px;  
+} 
+
+/* content modules */
+.content-upcoming-products-image-tag { 
+  padding-top:20px; 
+}
+
+.content-upcoming-products-text-expected { 
+  font-size:.9em; 
+}
+
+.content-upcoming-products-text-price { 
+  font-size:1.3em; 
+}
+
+.content-upcoming-products-text-name { 
+  line-height:1.1; 
+  font-size:1.3em; 
+}
+
+.content-reviews-text { 
+  padding-top:4px; 
+}
+
+.content-recently-visited-text-name { 
+  font-size:1.2em; 
+} 
+
+.content-recently-visited-image-src { 
+  width:100px; height:120px; 
+} 
+
+.content-also-purchased-products-text-name a { 
+  font-size:.8em; 
+}
+
+/* checkout pages */
+.ot-total { 
+  font-weight:bold; 
+  font-size: 1.3em; 
+  color:#428BCA; 
+}
+
+.module-row-selected { 
+  background-color:#e6e6e6; 
+}    
+
+.payment-selection span { 
+  margin-left: 4px; 
+}
+
+.payment-selection-title { 
+  font-weight:200; 
+}
+
+.content-checkout-payment-methods-table td { 
+  height: 60px; 
+}
+
+/* QR Code */
+#qr-message {   
+  display:none;  
+  position:fixed;  
+  bottom:25px;  
+  right:25px;  
+  width: 250px;  
+  text-align:center;  
+  background:#f5f5f5; 
+  padding:10px 0; 
+  z-index: 1;
+}
+
+.close-qr { 
+  background-color: #D52607;  
+  border-radius: 9px 9px 9px 9px;  
+  border-style: solid;  
+  border-width: 1px;  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 1px 3px rgba(0, 0, 0, 0.75);  
+  color: #FFFFFF;  
+  font-family: verdana,Arial,Helvetica,sans-serif;  
+  font-size: 11px;  
+  font-weight: bold;  
+  height: 16px;  
+  right: -6px;  
+  line-height: 16px;  
+  min-width: 12px;  
+  padding: 0 2px;  
+  position: absolute;  
+  text-align: center;  
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);  
+  top: -6px;  
+  z-index: 1;  
+  cursor: pointer;
+} 
+  
+.loadmask {
+    z-index: 100;
+    position: absolute;
+    top:0;
+    left:0;
+    -moz-opacity: 0.5;
+    opacity: .50;
+    filter: alpha(opacity=50);
+    background-color: #333;
+    width: 100%;
+    height: 250%;
+    zoom: 1;
+}
+.loadmask-msg {
+    z-index: 20001;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border:1px solid #6593cf;
+    background: #c3daf9;
+    padding:2px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+.loadmask-msg div {
+    padding:6px 8px 5px 8px;
+    /* background: #fbfbfb url('../../img/loading.gif') no-repeat 5px 5px; */
+    background: #fbfbfb;
+    line-height: 16px;
+    border:1px solid #a3bad9;
+    color:#222;
+    font:normal 11px tahoma, arial, helvetica, sans-serif;
+    cursor:wait;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+.masked {
+   /* overflow: hidden !important; */
+}
+.masked-relative {
+    position: relative !important;
+}
+.masked-hidden {
+    visibility: hidden !important;
+}  
+  
+/********************************************************/
+/*                7. Error classes                      */
+/********************************************************/
+
+.messageStack { 
+  margin-top:4px 
+}
+
+.message-stack-container { 
+  padding:5px 5px 1px 5px; 
+}
+
+.message-success-container { 
+  padding:10px; 
+}
+
+/********************************************************/
+/*              8. Media query styles                   */
+/********************************************************/  
+  
+@media (max-width: 940px){
+ 
+}
+
+@media (max-width: 1200px) and (min-width: 940px){
+  
+}
+
+/* Desktops and laptops */
+@media (min-width : 1224px) {
+
+}
+
+
+@media (max-width: 940px) and (min-width: 768px){
+
+}
+
+/********************************************************/
+/*                  9. Utility classes                  */
+/********************************************************/  
 .clear-left { clear: left !important; } 
 .clear-right { clear: right !important; } 
 .clear-both { clear: both !important; } 
@@ -212,108 +496,3 @@ h1, h2, h3, h4, h5, h6 {
 .absolute-top-right-large-padding { position:absolute !important; top:20px !important; right:20px !important }
 
 .cursor-pointer { cursor:pointer !important; }
-
-/********************************************************/
-/*                  5. Lists & tags                     */
-/********************************************************/
-
-.list-indent { padding-left:8px; }
-.list-indent-large { padding-left:10px; }
-
-/********************************************************/
-/*             6. Main layout elements                  */
-/********************************************************/
-
-#login input { 
-  width:97%; 
-}
-
-#page { 
-  width: 60px; 
-}
-
-/********************************************************/
-/*             7. Main layout styles                    */
-/********************************************************/
-
-/* header/nav */
-.navbar .container  { max-width: 1170px; }
-.navbar-inverse .container{ -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; background:#282828; border:none; }
-.nav-tabs > li > a { -webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px; }    
-.page-header { border:none; padding: 10px 0px 0px; margin: 0px 0 0px; }
-.logo { margin-left:10px; margin-top:-15px; }
-
-/* box modules */
-.product_notifications-image { float:left; margin-top:8px; }
-.box-products-price { font-size:1.4em; font-weight:200; }
-
-/* product listings */
-.product-special-price { color:#FF0000; }
-.product-listing-module-buy-now a { text-decoration:none; }
-
-/* product info page */     
-.content-products-info-price { font-size:2.4em; font-weight:200; margin-bottom:4px; }
-.content-products-info-reviews-rating-label { text-transform:uppercase; display:inline; }
-.content-products-info-qty-input { width:30%; float:right; font-weight: bold; text-align: center; }
-.content-products-info-qty-label { display:inline; vertical-align:-30%; margin-right:10px;  } 
-.content-products-info-manuf-model { position:absolute; right:0; top:30px; right:20px;  } 
-
-/* content modules */
-.content-upcoming-products-image-tag { padding-top:20px; }
-.content-upcoming-products-text-expected { font-size:.9em; }
-.content-upcoming-products-text-price { font-size:1.3em; }
-.content-upcoming-products-text-name { line-height:1.1; font-size:1.3em; }
-.content-reviews-text { padding-top:4px; }
-.content-recently-visited-text-name { font-size:1.2em; } 
-.content-recently-visited-image-src { width:100px; height:120px; } 
-.content-also-purchased-products-text-name a { font-size:.8em; }
-
-/* checkout pages */
-.ot-total { font-weight:bold; font-size: 1.3em; color:#428BCA; }
-.module-row-selected { background-color:#e6e6e6; }    
-.payment-selection span { margin-left: 4px; }
-.payment-selection-title { font-weight:200; }
-.content-checkout-payment-methods-table td { height: 60px; }
-
-/* QR Code */
-#qr-message {  -ms-word-break: break-all;  word-break: break-all; word-break: break-word;  -webkit-hyphens: auto;  -moz-hyphens: auto;  hyphens: auto;  display:none;  position:fixed;  bottom:25px;  right:25px;  width: 250px;  text-align:center;  background:#f5f5f5; padding:10px 0; }
-#qr-message strong {font-weight:bold;}
-.close-qr { background-color: #D52607;  border-radius: 9px 9px 9px 9px;  border-style: solid;  border-width: 1px;  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 1px 3px rgba(0, 0, 0, 0.75);  color: #FFFFFF;  font-family: verdana,Arial,Helvetica,sans-serif;  font-size: 11px;  font-weight: bold;  height: 16px;  right: -6px;  line-height: 16px;  min-width: 12px;  padding: 0 2px;  position: absolute;  text-align: center;  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);  top: -6px;  z-index: 1;  cursor: pointer;} 
-  
-  /********************************************************/
-/*                8. Error classes                      */
-/********************************************************/
-
-.messageStack { 
-  margin-top:4px 
-}
-
-.message-stack-container { 
-  padding:5px 5px 1px 5px; 
-}
-
-.message-success-container { 
-  padding:10px; 
-}
-
-/********************************************************/
-/*              5. Media query styles                   */
-/********************************************************/  
-  
-@media (max-width: 940px){
- 
-}
-
-@media (max-width: 1200px) and (min-width: 940px){
-  
-}
-
-/* Desktops and laptops */
-@media (min-width : 1224px) {
-
-}
-
-
-@media (max-width: 940px) and (min-width: 768px){
-
-}

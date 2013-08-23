@@ -32,4 +32,3 @@ $(document).ready(function() {
 });
 </script>
 <!--modules/boxes/search.php end-->
-

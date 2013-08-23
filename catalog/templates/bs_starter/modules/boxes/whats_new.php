@@ -30,7 +30,6 @@ $(document).ready(function() {
   $('.box-whats-new-price').addClass('red');
   $('.box-whats-new-buy-now button').addClass('btn btn-warning margin-top');
   $('.box-whats-new-image-src').addClass('img-responsive');
-  
 });
 </script>
 <!--modules/boxes/whats_new.php end-->

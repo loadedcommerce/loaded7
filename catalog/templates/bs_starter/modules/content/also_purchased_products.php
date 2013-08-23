@@ -8,7 +8,6 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: also_purchased_products.php v1.0 2013-08-08 datazen $
 */
-global $lC_Language;
 ?>
 <!--modules/content/also_purchased_products.php start-->
 <div class="col-sm-12 col-lg-12">

@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: form_check.js.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::boxes
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: form_check.js.php v1.0 2013-08-08 datazen $
 */
 ?>
 <script><!--
@@ -120,15 +117,15 @@ function check_form(form_name) {
   check_input("lastname", <?php echo ACCOUNT_LAST_NAME; ?>, "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_last_name_error'), ACCOUNT_LAST_NAME); ?>");
   check_input("email_address", <?php echo ACCOUNT_EMAIL_ADDRESS; ?>, "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_email_address_error'), ACCOUNT_EMAIL_ADDRESS); ?>");
 
-<?php
+  <?php
   if (ACCOUNT_COMPANY > 0) {
     echo '  check_input("company", ' . ACCOUNT_COMPANY . ', "' . sprintf($GLOBALS['lC_Language']->get('field_customer_company_error'), ACCOUNT_COMPANY) . '");' . "\n";
   }
-?>
+  ?>
 
   check_input("street_address", <?php echo ACCOUNT_STREET_ADDRESS; ?>, "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_street_address_error'), ACCOUNT_STREET_ADDRESS); ?>");
 
-<?php
+  <?php
   if (ACCOUNT_SUBURB > 0) {
     echo '  check_input("suburb", ' . ACCOUNT_SUBURB . ', "' . sprintf($GLOBALS['lC_Language']->get('field_customer_suburb_error'), ACCOUNT_SUBURB) . '");' . "\n";
   }
@@ -136,19 +133,19 @@ function check_form(form_name) {
   if (ACCOUNT_POST_CODE > 0) {
     echo '  check_input("postcode", ' . ACCOUNT_POST_CODE . ', "' . sprintf($GLOBALS['lC_Language']->get('field_customer_post_code_error'), ACCOUNT_POST_CODE) . '");' . "\n";
   }
-?>
+  ?>
 
   check_input("city", <?php echo ACCOUNT_CITY; ?>, "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_city_error'), ACCOUNT_CITY); ?>");
 
-<?php
+  <?php
   if (ACCOUNT_STATE > 0) {
     echo '  check_input("state", ' . ACCOUNT_STATE . ', "' . sprintf($GLOBALS['lC_Language']->get('field_customer_state_error'), ACCOUNT_STATE) . '");' . "\n";
   }
-?>
+  ?>
 
   check_select("country", "", "<?php echo $GLOBALS['lC_Language']->get('field_customer_country_error'); ?>");
 
-<?php
+  <?php
   if (ACCOUNT_TELEPHONE > 0) {
     echo '  check_input("telephone", ' . ACCOUNT_TELEPHONE . ', "' . sprintf($GLOBALS['lC_Language']->get('field_customer_telephone_number_error'), ACCOUNT_TELEPHONE) . '");' . "\n";
   }
@@ -156,7 +153,7 @@ function check_form(form_name) {
   if (ACCOUNT_FAX > 0) {
     echo '  check_input("fax", ' . ACCOUNT_FAX . ', "' . sprintf($GLOBALS['lC_Language']->get('field_customer_fax_number_error'), ACCOUNT_FAX) . '");' . "\n";
   }
-?>
+  ?>
 
   check_password("password", "confirmation", <?php echo ACCOUNT_PASSWORD; ?>, "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_password_error'), ACCOUNT_PASSWORD); ?>", "<?php echo $GLOBALS['lC_Language']->get('field_customer_password_mismatch_with_confirmation'); ?>");
   check_password_new("password_current", "password_new", "password_confirmation", <?php echo ACCOUNT_PASSWORD; ?>, "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_password_error'), ACCOUNT_PASSWORD); ?>", "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_password_new_error'), ACCOUNT_PASSWORD); ?>", "<?php echo $GLOBALS['lC_Language']->get('field_customer_password_new_mismatch_with_confirmation_error'); ?>");

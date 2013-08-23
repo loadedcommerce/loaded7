@@ -26,4 +26,3 @@ $('.box-manufacturers-selection').addClass('form-group full-width');
 $('.box-manufacturers-select').addClass('form-control');
 </script>
 <!--modules/boxes/manufacturers.php end-->
-

@@ -26,4 +26,3 @@ $('.box-templates-selection').addClass('form-group full-width');
 $('.box-templates-select').addClass('form-control');
 </script>
 <!--modules/boxes/templates.php end-->
-

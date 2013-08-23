@@ -36,7 +36,6 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     
     <!-- Template CSS -->
     <link rel="stylesheet" href="templates/bs_starter/css/template.css?v=1">
-    <link rel="stylesheet" href="templates/bs_starter/css/loadmask.css?v=1">     
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -48,7 +47,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         echo $lC_Template->getPageTags();
       }
     ?>
-    
+
     <!-- fav and touch icons -->
     <link rel="shortcut icon" href="templates/bs_starter/icons/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="templates/bs_starter/icons/apple-touch-icon-144-precomposed.png">
