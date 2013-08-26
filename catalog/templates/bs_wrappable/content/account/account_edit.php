@@ -35,7 +35,15 @@ $Qaccount = lC_Account::getEntry();
               echo '<div class="form-group"><label class="sr-only"></label>' . lc_draw_input_field('dob', $Qaccount->value('customers_dob_month') . '/' . $Qaccount->value('customers_dob_date') . '/' . $Qaccount->value('customers_dob_year'),'class="datepicker form-control" data-date-format="mm/dd/yyyy" placeholder="' . $lC_Language->get('field_customer_date_of_birth') . '"') . '</div>' . "\n"; 
             } 
             if (ACCOUNT_GENDER > -1) {
-              echo '<div class="form-group no-margin-bottom"><label class="sr-only"></label>' . lc_draw_radio_field('gender', array(array('id' => 'm', 'text' => $lC_Language->get('gender_male')), array('id' => 'f', 'text' => $lC_Language->get('gender_female'))), $Qaccount->value('customers_gender'), 'form-control style="height:12px;"') . '</div>' . "\n"; 
+              ?>
+              <div class="form-group no-wrap margin-top">
+                <label class="sr-only"></label>
+                <select class="form-control" name="gender" id="gender">
+                  <option value="m" checked="checked"><?php echo $lC_Language->get('gender_male'); ?></option>
+                  <option value="f"><?php echo $lC_Language->get('gender_female'); ?></option>
+                </select>
+              </div>
+              <?php              
             }
             ?>
           </div>

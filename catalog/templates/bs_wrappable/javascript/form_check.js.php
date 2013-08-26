@@ -104,7 +104,7 @@ function check_form(form_name) {
   <?php
   if (ACCOUNT_GENDER > 0) {
     ?>
-    if (form.getAttribute('name') == 'create' || form.getAttribute('name') == 'address_book' || form.getAttribute('name') == 'checkout_address') {
+    if (form.getAttribute('name') == 'create' || form.getAttribute('name') == 'address_book' || form.getAttribute('name') == 'checkout_address' || form.getAttribute('name') == 'account_edit') {
       check_select("gender", "", "<?php echo $GLOBALS['lC_Language']->get('field_customer_gender_error'); ?>");
     } else {
       check_radio("gender", "<?php echo $GLOBALS['lC_Language']->get('field_customer_gender_error'); ?>");

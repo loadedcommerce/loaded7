@@ -25,13 +25,12 @@
               <div class="form-group full-width margin-bottom"><label class="sr-only"></label><?php echo lc_draw_input_field('lastname', null, 'placeholder="' . $lC_Language->get('field_customer_last_name') . '" class="form-control"'); ?></div>
               <?php
               if (ACCOUNT_DATE_OF_BIRTH == '1') {
-                echo '<div class="form-group full-width no-wrap"><label class="small-margin-right normal"><abbr title="' . $lC_Language->get('field_customer_date_of_birth') . '">' . $lC_Language->get('field_customer_date_of_birth_abbr') . '</abbr></label>' . lc_draw_date_pull_down_menu('dob', null, false, null, null, @date('Y')-1901, -5, 'class="form-control" style="width:27%;"') . '</div>';
-                //echo '<div class="form-group"><label></label>' . lc_draw_input_field('dob', null, 'placeholder="' . $lC_Language->get('field_customer_date_of_birth') . '" class="form-control"') . '</div>'; 
+                echo '<div class="form-group full-width"><label class="sr-only"></label>' . lc_draw_input_field('dob', null,'class="datepicker form-control full-width" data-date-format="mm/dd/yyyy" placeholder="' . $lC_Language->get('field_customer_date_of_birth') . '"') . '</div>' . "\n"; 
               }
               if (ACCOUNT_GENDER > -1) {
                 ?>
-                <div class="form-group no-wrap margin-top">
-                  <label class="normal"><?php echo $lC_Language->get('field_customer_gender'); ?></label>
+                <div class="form-group full-width margin-top">
+                  <label class="sr-only"></label>
                   <select class="form-control" name="gender" id="gender">
                     <option value="m" checked="checked"><?php echo $lC_Language->get('gender_male'); ?></option>
                     <option value="f"><?php echo $lC_Language->get('gender_female'); ?></option>
@@ -71,5 +70,10 @@
     </div> 
     <hr>
   </div>
-</div>                           
+</div>    
+<script>
+$(document).ready(function() {
+  $('.datepicker').datepicker();
+});
+</script>                       
 <!--content/info/create.php end-->
