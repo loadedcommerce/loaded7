@@ -32,7 +32,7 @@ $Qaccount = lC_Account::getEntry();
             </div>
             <?php
             if (ACCOUNT_DATE_OF_BIRTH == '1') {
-              echo '<div class="form-group"><label class="sr-only"></label>' . lc_draw_input_field('dob', $Qaccount->value('customers_dob_month') . '/' . $Qaccount->value('customers_dob_date') . '/' . $Qaccount->value('customers_dob_year'),'class="datepicker form-control" data-date-format="mm/dd/yyyy" placeholder="' . $lC_Language->get('field_customer_date_of_birth') . '"') . '</div>' . "\n"; 
+              echo '<div class="form-group"><label class="sr-only"></label>' . lc_draw_input_field('dob', $Qaccount->value('customers_dob_month') . '/' . $Qaccount->value('customers_dob_date') . '/' . $Qaccount->value('customers_dob_year'),'class="datepicker form-control padding-left" data-date-format="mm/dd/yyyy" placeholder="' . $lC_Language->get('field_customer_date_of_birth') . '"') . '</div>' . "\n"; 
             } 
             if (ACCOUNT_GENDER > -1) {
               ?>

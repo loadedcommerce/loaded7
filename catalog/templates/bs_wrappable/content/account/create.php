@@ -25,7 +25,7 @@
               <div class="form-group full-width margin-bottom"><label class="sr-only"></label><?php echo lc_draw_input_field('lastname', null, 'placeholder="' . $lC_Language->get('field_customer_last_name') . '" class="form-control"'); ?></div>
               <?php
               if (ACCOUNT_DATE_OF_BIRTH == '1') {
-                echo '<div class="form-group full-width"><label class="sr-only"></label>' . lc_draw_input_field('dob', null,'class="datepicker form-control full-width" data-date-format="mm/dd/yyyy" placeholder="' . $lC_Language->get('field_customer_date_of_birth') . '"') . '</div>' . "\n"; 
+                echo '<div class="form-group full-width"><label class="sr-only"></label>' . lc_draw_input_field('dob', null,'class="datepicker form-control full-width padding-left" data-date-format="mm/dd/yyyy" placeholder="' . $lC_Language->get('field_customer_date_of_birth') . '"') . '</div>' . "\n"; 
               }
               if (ACCOUNT_GENDER > -1) {
                 ?>
