@@ -8,14 +8,9 @@
     </definition>
     <definition>
       <key>addon_shipping_usps_blurb</key>
-      <value><![CDATA[<p class="big-message margin-bottom orange-gradient anthracite"><span class="big-message-icon icon-speech icon-red"></span><strong class="red">IMPORTANT:</strong>&nbsp;&nbsp;Please enable the Secure Token option at<br><a class="blue" target="_blank" href="https://manager.paypal.com"><u>manager.paypal.com</u></a> under Hosted Pages > Setup > Security Options.</p>]]></value>
+      <value><![CDATA[<p class="big-message margin-bottom orange-gradient anthracite"><span class="big-message-icon icon-speech icon-red"></span><strong class="red">IMPORTANT:</strong>&nbsp;&nbsp;Because of issues with the USPS test server it is recommended that you test this add-on with a production account.  First <a href="https://secure.shippingapis.com/registration/" target="_blank"><u>register an account</u></a>. Then call 800-344-7779, let them know you are running Loaded Commerce (osCommerce) and ask that your account be upgraded to production status.</p>]]></value>
       <group>checkout</group>
     </definition>     
-    <definition>
-      <key>addon_shipping_usps_description</key>
-      <value><![CDATA[Rate quotes retrieved automatically via the United Postal Service API.  You will need to have <a href="http://www.uspsprioritymail.com/et_regcert.html" target="_blank"><u>registered an account</u></a> with USPS to use this module. USPS expects you to use pounds as weight measure for your products.]]></value>
-      <group>checkout</group>
-    </definition>  
     <definition>
       <key>shipping_usps_title</key>
       <value><![CDATA[U.S. Postal Service]]></value>
