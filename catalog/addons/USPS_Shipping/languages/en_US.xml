@@ -7,6 +7,11 @@
       <group>checkout</group>
     </definition>
     <definition>
+      <key>addon_shipping_usps_blurb</key>
+      <value><![CDATA[Rate quotes retrieved automatically via the United Postal Service API.  You will need to have <a href="http://www.uspsprioritymail.com/et_regcert.html" target="_blank"><u>registered an account</u></a> with USPS to use this module. USPS expects you to use pounds as weight measure for your products.]]></value>
+      <group>checkout</group>
+    </definition>     
+    <definition>
       <key>addon_shipping_usps_description</key>
       <value><![CDATA[Rate quotes retrieved automatically via the United Postal Service API.  You will need to have <a href="http://www.uspsprioritymail.com/et_regcert.html" target="_blank"><u>registered an account</u></a> with USPS to use this module. USPS expects you to use pounds as weight measure for your products.]]></value>
       <group>checkout</group>
