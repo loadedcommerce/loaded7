@@ -2639,7 +2639,6 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>text_apply_coupon</key>
       <value><![CDATA[Apply Coupon]]></value>
       <group>checkout</group>
-    </definition>  
     </definition> 
     <definition>
       <key>text_label_error</key>
@@ -2685,8 +2684,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>ms_error_coupon_max_uses</key>
       <value><![CDATA[Coupon has reached maximum uses.]]></value>
       <group>checkout</group>
-    </definition>  
-  </definitions>
+    </definition>
     <definition>
       <key>ms_error_action_not_performed</key>
       <value><![CDATA[Error: There was a problem performing the action.]]></value>
