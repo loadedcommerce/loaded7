@@ -36,7 +36,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <link rel="stylesheet" href="templates/default/css/normalize.min.css">
     <!-- Template CSS -->
     <link rel="stylesheet" href="templates/default/css/styles.css">
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Istok+Web' type='text/css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Istok+Web' type='text/css'>
     <link rel="stylesheet" type="text/css" href="ext/jquery/thickbox/thickbox.css" />
     <link rel="stylesheet" href="templates/default/css/loadmask.css?v=1">     
     <!-- Load Page/Group Specific Tags -->
