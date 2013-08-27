@@ -228,7 +228,8 @@
         }
         // process the selected shipping destination
       } elseif (isset($_POST['address'])) {
-        $lC_ShoppingCart->setShippingAddress($_POST['address']);
+               
+        $lC_ShoppingCart->setShippingAddress($_POST['address']);        
 
         $Qcheck = $lC_Database->query('select address_book_id from :table_address_book where address_book_id = :address_book_id and customers_id = :customers_id limit 1');
         $Qcheck->bindTable(':table_address_book', TABLE_ADDRESS_BOOK);
@@ -236,7 +237,7 @@
         $Qcheck->bindInt(':customers_id', $lC_Customer->getID());
         $Qcheck->execute();
 
-        if ($Qcheck->numberOfRows() === 1) {
+        if ($Qcheck->numberOfRows() === 1) {          
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
         } else {
           $lC_ShoppingCart->resetShippingAddress();

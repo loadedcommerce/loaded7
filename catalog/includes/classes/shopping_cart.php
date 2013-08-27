@@ -878,7 +878,7 @@ class lC_ShoppingCart {
   public function hasShippingMethod() {
     return !empty($this->_shipping_method);
   }
-
+    
   public function hasBillingAddress() {
     return isset($this->_billing_address['id']);
   }
