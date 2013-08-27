@@ -182,6 +182,28 @@ class lC_Default {
     }
     
     return $categories_array;    
+  }
+ /*
+  * Returns the search page dropdown array
+  *
+  * @access public
+  * @return array
+  */  
+  public static function getSearchCategoriesDropdownArray() {
+    global $lC_Database, $lC_Language;
+    
+    $search_categories_array = array(array('id' => '', 'text' => $lC_Language->get('filter_all_categories')));
+    $Qsearchcategories = $lC_Database->query("select c.categories_id, cd.categories_name from :table_categories c, :table_categories_description cd where c.categories_id = cd.categories_id and language_id = :language_id and c.categories_mode = 'category' and parent_id = 0 order by c.sort_order");
+    $Qsearchcategories->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qsearchcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qsearchcategories->bindInt(':language_id', $lC_Language->getID());
+    $Qsearchcategories->execute();
+    while ($Qsearchcategories->next()) {
+      $search_categories_array[] = array('id' => $Qsearchcategories->valueInt('categories_id'),
+                                         'text' => $Qsearchcategories->value('categories_name'));
+    }
+    
+    return $search_categories_array;    
   }  
  /*
   * Returns the product listing SQL
