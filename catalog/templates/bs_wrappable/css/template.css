@@ -205,7 +205,7 @@
 }
 
 #loaded7 .content-products-info-qty-input { 
-  width:30%; 
+  width:20%; 
   float:right; 
   font-weight: bold; 
   text-align: center; 
@@ -494,6 +494,8 @@
 
 #loaded7 .full-width { width:100% !important; }
 #loaded7 .half-width { width:49% !important; }
+
+#loaded7 .display-inline { display:inline !important; }
 
 #loaded7 .relative { position:relative !important; }
 #loaded7 .absolute { position:absolute !important; }

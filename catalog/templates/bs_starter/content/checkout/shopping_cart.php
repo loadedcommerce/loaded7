@@ -91,7 +91,7 @@
         }
         ?>         
       </form>
-      <div class="col-sm-offset-8 margin-right" id="content-shopping-cart-order-totals">
+      <div class="col-sm-offset-7 margin-right" id="content-shopping-cart-order-totals">
         <?php
         foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
           ?>
