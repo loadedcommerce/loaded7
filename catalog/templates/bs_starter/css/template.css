@@ -40,11 +40,6 @@
   padding-bottom: 0px; 
 }
 
-#loaded7 *:focus {
-  /* turn off yellow input highlight in Chrome */
-  outline: none;
-}
-
 #loaded7 .box-header { 
   margin-left:-5px; 
   text-transform:uppercase; 
