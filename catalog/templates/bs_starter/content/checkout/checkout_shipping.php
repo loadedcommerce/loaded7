@@ -84,19 +84,12 @@
                             ?>
                             <td width="75%"><?php echo $methods['title']; ?></td>
                             <?php
-                              if ( ($lC_Shipping->numberOfQuotes() > 1) || (sizeof($quotes['methods']) > 1) ) {
+                            if ( ($lC_Shipping->numberOfQuotes() > 1) || (sizeof($quotes['methods']) > 1) ) {
                               ?>
                               <td><?php echo $lC_Currencies->displayPrice($methods['cost'], $quotes['tax_class_id']); ?></td>
-                              <td class="text-right"><?php echo lc_draw_radio_field('shipping_mod_sel', $quotes['id'] . '_' . $methods['id'], $lC_ShoppingCart->getShippingMethod('id'), 'id="' . $quotes['id'] . '_' . $counter . '"',''); ?></span></td>
+                              <td class="text-right"><?php echo lc_draw_radio_field('shipping_mod_sel', $quotes['id'] . '_' . $methods['id'], $lC_ShoppingCart->getShippingMethod('id'), 'id="' . $quotes['id'] . '_' . $counter . '"',''); ?></td>
                               <?php
                             } else {
-                              $counter = 0;
-                              foreach ($quotes['methods'] as $methods) {
-                                if (($quotes['id'] . '_' . $methods['id'] == $lC_ShoppingCart->getShippingMethod('id')) || sizeof($quotes['methods']) == 1) {
-                                  echo '<tr id="defaultSelected" class="moduleRowSelected" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
-                                } else {
-                                  echo '<tr class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
-                                }
                               ?>
                               <td colspan="2" class="text-right"><?php echo $lC_Currencies->displayPrice($methods['cost'], $quotes['tax_class_id']) . lc_draw_hidden_field('shipping_mod_sel', $quotes['id'] . '_' . $methods['id']); ?></td>
                               <?php

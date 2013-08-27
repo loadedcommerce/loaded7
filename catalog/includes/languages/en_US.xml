@@ -2724,6 +2724,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>text_apply_coupon</key>
       <value><![CDATA[Apply Coupon]]></value>
       <group>checkout</group>
+    </definition>
     <definition>
       <key>text_label_error</key>
       <value><![CDATA[Error:]]></value>
