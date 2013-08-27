@@ -231,6 +231,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>button_close</key>
+      <value><![CDATA[Close]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>button_buy_now</key>
       <value><![CDATA[Buy Now]]></value>
       <group>general</group>

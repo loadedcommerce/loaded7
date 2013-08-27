@@ -853,7 +853,7 @@ class lC_ShoppingCart {
     }
   }
 
-  public function setShippingMethod($shipping_array, $calculate_total = true) {
+  public function setShippingMethod($shipping_array, $calculate_total = true) {  
     $this->_shipping_method = $shipping_array;
 
     if ( $calculate_total === true ) {

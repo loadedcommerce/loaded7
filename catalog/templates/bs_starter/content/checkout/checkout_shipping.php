@@ -76,7 +76,7 @@
                         } else {
                           $counter = 0;   
                           foreach ($quotes['methods'] as $methods) {
-                            if ($quotes['id'] . '_' . $methods['id'] == $lC_ShoppingCart->getShippingMethod('id')) {
+                            if (($quotes['id'] . '_' . $methods['id'] == $lC_ShoppingCart->getShippingMethod('id')) || sizeof($quotes['methods']) == 1) {
                               echo '<tr class="module-row-selected cursor-pointer" id="default-selected" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
                             } else {
                               echo '<tr class="module-row cursor-pointer" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
