@@ -37,32 +37,38 @@ class lC_Content_recently_visited extends lC_Modules {
   * @return string
   */
   public function initialize() {
-    global $lC_Services, $lC_RecentlyVisited, $lC_Language, $lC_Image;
+    global $lC_Services, $lC_RecentlyVisited, $lC_Language, $lC_Image, $lC_Product;
+    
     if ($lC_Services->isStarted('recently_visited') && $lC_RecentlyVisited->hasHistory()) {
-      $this->_content = '<ul id="first-carousel" class="first-and-second-carousel jcarousel-skin-tango">';
-                        
+    
+      $this->_content = '';
       if ($lC_RecentlyVisited->hasProducts()) {
         foreach ($lC_RecentlyVisited->getProducts() as $product) {
-          $this->_content .= '<li>' . ((SERVICE_RECENTLY_VISITED_SHOW_PRODUCT_IMAGES == '1') ? lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $lC_Image->show($product['image'], $product['name']), 'class="product_image"') : MULL)  .
-                               '<div class="product_info">' . 
-                                 '<h3>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $product['name'])  . '</h3>' . 
-                               '<small><i>(' . sprintf($lC_Language->get('recently_visited_item_in_category'), lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $product['category_path']), $product['category_name'])) . ')</i></small></div>' .
-                               ((SERVICE_RECENTLY_VISITED_SHOW_PRODUCT_PRICES == '1') ? 
-                               '<div class="price_info"> <!-- a href="#">+ Add to wishlist</a -->' . 
-                                 '<button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $product['keyword']) . '\'" class="price_add" title="" type="button"><span class="pr_price">' . $product['price']. '</span><span class="pr_add">' . $lC_Language->get('button_add_to_cart') . '</span></button>' . 
-                               '</div>' : NULL) . 
-                             '</li>';
+
+          $lC_Product = new lC_Product($product['id']);
+         
+          $this->_content .= '<div class="content-recently-visited-container">' . "\n" . 
+                             '  <div class="content-recently-visited-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Product->getTitle()) . '</div>' . "\n";
+          if ($lC_Product->hasImage()) {
+            $this->_content .= '<div class="content-recently-visited-image">' . ((SERVICE_RECENTLY_VISITED_SHOW_PRODUCT_IMAGES == '1') ? lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-recently-visited-image-src"', 'small')) : NULL) . '</div>' . "\n";
+          }
+          $this->_content .= '  <div class="content-recently-visited-price">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n" . 
+                             '  <div class="content-recently-visited-from">' . sprintf($lC_Language->get('recently_visited_item_in_category'), lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $product['category_path']), $product['category_name'])) . '</div>' . "\n" .
+                             '</div>' . "\n";
         }                                
       }
       
       if ($lC_RecentlyVisited->hasCategories()) {
         foreach ($lC_RecentlyVisited->getCategories() as $category) {
-          if (!empty($category['parent_id'])) {  
-            $this->_content .= '<li>' . ((SERVICE_RECENTLY_VISITED_SHOW_CATEGORY_IMAGES == '1') ? lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $category['id']), lc_image('images/categories/' . $category['image'], $category['name']), 'class="product_image"') : NULL)  .
-                                 '<div class="product_info">' . 
-                                   '<h3>' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $category['path']), $category['name'])  . '</h3>';
-            $this->_content .=     '<small><i>(' . sprintf($lC_Language->get('recently_visited_item_in_category'), lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $category['parent_id']), $category['parent_name'])) . ')</i></small></div>';
-            $this->_content .= '</li>';          
+          if (!empty($category['parent_id'])) { 
+            $this->_content .= '<div class="content-recently-visited-container">' . "\n" . 
+                               '  <div class="content-recently-visited-name">' . sprintf($lC_Language->get('recently_visited_item_in_category'), lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $product['category_path']), $product['category_name'])). '</div>' . "\n";
+            if (isset($category['image']) && empty($category['image']) === false) {
+              $this->_content .= '<div class="content-recently-visited-image">' . ((SERVICE_RECENTLY_VISITED_SHOW_CATEGORY_IMAGES == '1') ? lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $category['id']), lc_image('images/categories/' . $category['image'], $category['name'], null, null, 'class="content-recently-visited-image-src"')) : NULL) . '</div>' . "\n";
+            }
+            $this->_content .= '  <div class="content-recently-visited-price"></div>' . "\n" . 
+                               '  <div class="content-recently-visited-from">' . sprintf($lC_Language->get('recently_visited_item_in_category'), lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $category['parent_id']), $category['parent_name'])) . '</div>' . "\n" . 
+                               '</div>' . "\n";          
           }
         }
       }
@@ -73,8 +79,6 @@ class lC_Content_recently_visited extends lC_Modules {
           $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_SEARCH, 'keywords=' . $searchphrase['keywords']), lc_output_string_protected($searchphrase['keywords'])) . ' <i>(' . number_format($searchphrase['results']) . ' results)</i></li>';
         }
       }
-
-      $this->_content .= '  </ul>';
     }
   }
 }

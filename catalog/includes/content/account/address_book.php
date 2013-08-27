@@ -36,8 +36,8 @@ class lC_Account_Address_book extends lC_Template {
       $this->_page_title = $lC_Language->get('address_book_add_entry_heading');
       $this->_page_contents = 'address_book_process.php';
 
-      $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
-      //$this->addJavascriptPhpFilename('includes/form_check.js.php');
+     // $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
+      $this->addJavascriptPhpFilename('includes/form_check.js.php');
     } elseif (isset($_GET['new'])) {
       if ($lC_Services->isStarted('breadcrumb')) {
         $lC_Breadcrumb->add($lC_Language->get('breadcrumb_address_book_add_entry'), lc_href_link(FILENAME_ACCOUNT, $this->_module . '&new', 'SSL'));
@@ -60,6 +60,7 @@ class lC_Account_Address_book extends lC_Template {
         $this->_page_title = $lC_Language->get('address_book_edit_entry_heading');
         $this->_page_contents = 'address_book_process.php';
 
+        $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/form_check.js.php');
         $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
       }
     } elseif (isset($_GET['delete']) && is_numeric($_GET[$this->_module])) {

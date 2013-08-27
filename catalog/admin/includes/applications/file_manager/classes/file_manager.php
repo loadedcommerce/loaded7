@@ -76,7 +76,6 @@ class lC_File_manager_Admin {
                         '<a href="' . ((int)($_SESSION['admin']['access']['file_manager'] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'file_manager&entry=' . $file['name'] . '&action=download')) . '" class="button icon-download with-tooltip' . ((int)($_SESSION['admin']['access']['file_manager'] < 2) ? ' disabled' : NULL) . '" title="' .  $lC_Language->get('icon_download') . '"></a>' . 
                         '<a href="' . ((int)($_SESSION['admin']['access']['file_manager'] < 4) ? '#' : 'javascript://" onclick="deleteEntry(\'' . $file['name'] . '\', \'' . urlencode($file['name']) . '\')"') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['file_manager'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>';
       } else {
-        //$action_links = lc_image('images/pixel_trans.gif') . '&nbsp;' .  lc_image('images/pixel_trans.gif') . '&nbsp;';
         $action_links = '<a href="' . ((int)($_SESSION['admin']['access']['file_manager'] < 4) ? '#' : 'javascript://" onclick="deleteEntry(\'' . $file['name'] . '\', \'' . urlencode($file['name']) . '\')"') . '" class="button icon-trash' . ((int)($_SESSION['admin']['access']['file_manager'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>';
       }
 

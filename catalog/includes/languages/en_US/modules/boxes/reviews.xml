@@ -16,5 +16,10 @@
       <value><![CDATA[%s of 5 Stars!]]></value>
       <group>modules-boxes</group>
     </definition>
+    <definition>
+      <key>box_reviews_average_rating</key>
+      <value><![CDATA[Average Rating:]]></value>
+      <group>modules-boxes</group>
+    </definition>    
   </definitions>
 </language>

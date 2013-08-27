@@ -1,123 +1,94 @@
 <?php
 /**  
-  $Id: checkout_shipping.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     Loaded Commerce Team
-  @copyright  (c) 2013 Loaded Commerce Team
-  @license    http://loadedcommerce.com/license.html
-*/
-if ($lC_MessageStack->size('checkout_shipping') > 0) {
-  echo '<br /><div class="short-code msg error"><span>' . $lC_MessageStack->get('checkout_shipping', DIR_WS_TEMAPLTE_IMAGES . 'shortcodes/', '.png') . '</span></div>';
-} 
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: checkout_shipping.php v1.0 2013-08-08 datazen $
+*/ 
 ?>
 <!--content/checkout/checkout_shipping.php start-->
-<div id="checkout_shipping_details" class="full_page">
-  <h5><?php echo $lC_Language->get('text_checkout'); ?></h5>
-  <form name="checkout_shipping" id="checkout_shipping" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping=process', 'SSL'); ?>" method="post">
-    <div class="checkout_steps">
-      <ol id="checkoutSteps">
-        <li class="section allow active">
-          <div class="step-title">
-            <h2><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h2>
+<div class="row">
+  <div class="col-sm-12 col-lg-12 large-margin-bottom">  
+    <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
+    <?php 
+    if ( $lC_MessageStack->size('checkout_shipping') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_shipping') . '</div>' . "\n"; 
+    ?>
+    <form name="checkout_shipping" id="checkout_shipping" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping=process', 'SSL'); ?>" method="post">
+      <div id="content-checkout-shipping-container">
+        <div class="panel panel-default no-margin-bottom">
+          <div class="panel-heading">
+            <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_delivery'); ?></h3>
           </div>
-          <div id="checkout-step-login">
-            <div class="col2-set">
-              <div id="mobile-grand-total">
-                <?php 
-                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
-                    if ($module['code'] == 'total') {
-                    ?>
-                    <div id="mobile-arrow-down"><span class="arrow-down"></span></div>
-                    <div class="ot-mobile-block" id="mobile_<?php echo $module['code']; ?>">
-                      <label><?php echo $module['title']; ?></label>
-                      <span><?php echo $module['text']; ?></span>
-                    </div>
-                    <div style="clear:both;"></div>
-                    <?php
-                    }
-                  }
-                ?>
-              </div>
-              <div id="mobile-order-totals">
-                <div id="mobile-arrow-up"><span class="arrow-up"></span></div>
-                <?php 
-                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
-                  ?>
-                  <div class="ot-mobile-block" id="mobile_<?php echo $module['code']; ?>">
-                    <label><?php echo $module['title']; ?></label>
-                    <span><?php echo $module['text']; ?></span>
+          <div class="panel-body no-padding-bottom">
+            <div class="row">
+              <div class="col-sm-4 col-lg-4">
+                <div class="well relative no-padding-bottom">
+                  <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
+                  <address>
+                    <?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?>                
+                  </address>
+                  <div class="checkbox">
+                    <input type="checkbox" name="shipto_as_billable" id="shipto_as_billable"><label class="small-margin-left"><?php echo $lC_Language->get('billable_address_checkbox'); ?></label>
                   </div>
-                  <div style="clear:both;"></div>
+                  <div class="btn-group clearfix absolute-top-right">
+                    <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>"><button type="button" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></a>
+                  </div>
+                </div>
+                <div class="well">
+                  <div class="clearfix">
+                    <span class="strong pull-left"><?php echo $lC_Language->get('checkout_order_number'); ?></span>
+                    <span class="strong pull-right"><?php echo $_SESSION['cartID']; ?></span>                
+                  </div>
+                  <?php 
+                  foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
+                    ?>
+                    <div class="clearfix">
+                      <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['title']); ?></span>
+                      <span class="pull-right ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['text']); ?></span>                
+                    </div>                    
+                    <?php
+                  }
+                  ?>                
+                </div>        
+              </div>
+              <div class="col-sm-8 col-lg-8">
+                <div class="">
                   <?php
-                  }
-                ?>            
-              </div>
-              <div id="checkout_shipping_col1" style="width:35%; float:left;">
-                <div id="ship-to-address-block">
-                  <h3><?php echo $lC_Language->get('ship_to_address'); ?></h3>
-                  <span style="float:right;"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>" class="sc-button small grey colorWhite noDecoration"><?php echo $lC_Language->get('button_edit'); ?></a></span>
-                  <span id="ship-to-span"><?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?></span>
-                  <br /><br />
-                  <input type="checkbox" name="shipto_as_billable" id="shipto_as_billable" class="checkbox">
-                  <label for="shipto_as_billable">&nbsp;<?php echo $lC_Language->get('billable_address_checkbox'); ?></label>
-                </div>
-                <div id="ot-container">
-                  <div class="ot-block" id="order-number">
-                    <label><?php echo $lC_Language->get('checkout_order_number'); ?></label>
-                    <span><?php echo $_SESSION['cartID']; ?></span>
-                  </div>
-                  <?php foreach ($lC_ShoppingCart->getOrderTotals() as $module) { ?>
-                    <div class="ot-block" id="<?php echo $module['code']; ?>">
-                      <label><?php echo $module['title']; ?></label>
-                      <span><?php echo $module['text']; ?></span>
-                    </div>
-                    <div style="clear:both;"></div>
-                    <?php } ?>
-                </div>
-              </div>
-              <div id="checkout_shipping_col2" style="width:60%; float:right;">
-                <?php
                   if ($lC_Shipping->hasQuotes()) {
-                  ?>
-                  <div id="shippingQuotes">
-                    <h3><?php echo $lC_Language->get('shipping_method_title'); ?></h3>
-                    <?php
-                      if ($lC_Shipping->numberOfQuotes() > 1) {
-                      ?>
-                      <p style="margin-top: 0px;"><?php echo $lC_Language->get('choose_shipping_method'); ?></p>
-                      <?php
-                      } else {
-                      ?>
-                      <p style="margin-top: 0px;"><?php echo $lC_Language->get('only_one_shipping_method_available'); ?></p>
-                      <?php
-                      }
                     ?>
-                    <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                      <?php
-                        $radio_buttons = 0;
-                        foreach ($lC_Shipping->getQuotes() as $quotes) {
-                        ?>
-                        <tr>
-                          <td><table border="0" width="100%" cellspacing="0" cellpadding="2" id="shippingSelect">
-                          <tr>
-                            <td width="10">&nbsp;</td>
-                            <td colspan="3" class="shippingQuotesTitle"><b><?php echo $quotes['module']; ?></b>&nbsp;<?php if (isset($quotes['icon']) && !empty($quotes['icon'])) { echo $quotes['icon']; } ?></td>
-                            <td width="10">&nbsp;</td>
-                          </tr>
+                    <h3><?php echo $lC_Language->get('shipping_method_title'); ?></h3>
+                    <?php 
+                    echo ($lC_Shipping->numberOfQuotes() > 1) ? '<div class="alert alert-warning">' . $lC_Language->get('choose_shipping_method') . '</div>' : '<div class="alert alert-warning">' . $lC_Language->get('only_one_shipping_method_available') . '</div>' . "\n"; 
+
+                    $radio_buttons = 0;
+                    foreach ($lC_Shipping->getQuotes() as $quotes) {
+                      ?>
+                      <h4><?php echo $quotes['module']; ?></h4>
+                      <table class="content-shipping-methods-table table table-hover table-responsive">
+                        <?php
+                        if (isset($quotes['error'])) {
+                          ?>
+                          <tr><td colspan="3" class=""><?php echo $quotes['error']; ?></td></tr>
                           <?php
-                            if (isset($quotes['error'])) {
+                        } else {
+                          $counter = 0;   
+                          foreach ($quotes['methods'] as $methods) {
+                            if (($quotes['id'] . '_' . $methods['id'] == $lC_ShoppingCart->getShippingMethod('id')) || sizeof($quotes['methods']) == 1) {
+                              echo '<tr class="module-row-selected cursor-pointer" id="default-selected" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
+                            } else {
+                              echo '<tr class="module-row cursor-pointer" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
+                            }
                             ?>
-                            <tr>
-                              <td width="10">&nbsp;</td>
-                              <td colspan="3"><?php echo $quotes['error']; ?></td>
-                              <td width="10">&nbsp;</td>
-                            </tr>
+                            <td width="75%"><?php echo $methods['title']; ?></td>
                             <?php
+                              if ( ($lC_Shipping->numberOfQuotes() > 1) || (sizeof($quotes['methods']) > 1) ) {
+                              ?>
+                              <td><?php echo $lC_Currencies->displayPrice($methods['cost'], $quotes['tax_class_id']); ?></td>
+                              <td class="text-right"><?php echo lc_draw_radio_field('shipping_mod_sel', $quotes['id'] . '_' . $methods['id'], $lC_ShoppingCart->getShippingMethod('id'), 'id="' . $quotes['id'] . '_' . $counter . '"',''); ?></span></td>
+                              <?php
                             } else {
                               $counter = 0;
                               foreach ($quotes['methods'] as $methods) {
@@ -127,77 +98,64 @@ if ($lC_MessageStack->size('checkout_shipping') > 0) {
                                   echo '<tr class="moduleRow" onmouseover="rowOverEffect(this)" onmouseout="rowOutEffect(this)" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
                                 }
                               ?>
-                              <td width="10">&nbsp;</td>
-                              <td width="75%"><div class="moduleSubRow" style="margin-left:10px;"><?php echo $methods['title']; ?></div></td>
+                              <td colspan="2" class="text-right"><?php echo $lC_Currencies->displayPrice($methods['cost'], $quotes['tax_class_id']) . lc_draw_hidden_field('shipping_mod_sel', $quotes['id'] . '_' . $methods['id']); ?></td>
                               <?php
-                                if ( ($lC_Shipping->numberOfQuotes() > 1) || (sizeof($quotes['methods']) > 1) ) {
-                                ?>
-                                <td><?php echo $lC_Currencies->displayPrice($methods['cost'], $quotes['tax_class_id']); ?></td>
-                                <td style="text-align:right;"><?php echo lc_draw_radio_field('shipping_mod_sel', $quotes['id'] . '_' . $methods['id'], $lC_ShoppingCart->getShippingMethod('id'), 'id="' . $quotes['id'] . '_' . $counter . '"',''); ?></span></td>
-                                <?php
-                                } else {
-                                ?>
-                                <td align="right" colspan="2"><?php echo $lC_Currencies->displayPrice($methods['cost'], $quotes['tax_class_id']) . lc_draw_hidden_field('shipping_mod_sel', $quotes['id'] . '_' . $methods['id']); ?></td>
-                                <?php
-                                }
-                              ?>
-                              <td width="10">&nbsp;</td>
+                            }
+                            ?>
                             </tr>
                             <?php
-                              $counter++;
-                              $radio_buttons++;
-                            }
+                            $counter++;
+                            $radio_buttons++;
                           }
+                        }
                         ?>
                       </table>
-                      </td>
-                      </tr>
-                      <?php
-                      }
-                    ?>
-                    </table>
-                  </div>
-                  <div style="clear:both;">&nbsp;</div>
-                  <?php
+                      <?php                          
+                    }
                   }
-                ?>
-                <div id="shippingActions">
-                  <span class="buttonLeft"><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, '', 'SSL'); ?>" class="noDecoration"><div class="button brown_btn" type="button"><?php echo $lC_Language->get('button_back'); ?></div></a></span>
-                  <span class="buttonRight"><a onclick="$('#checkout_shipping').submit();" class="noDecoration"><button class="button purple_btn" type="submit"><?php echo $lC_Language->get('continue_checkout'); ?></button></a></span>
+                  ?>                
                 </div>
+                <div class="btn-set clearfix">
+                  <button class="btn btn-lg btn-success pull-right" onclick="$('#checkout_shipping').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+                  <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, '', 'SSL'); ?>"><button class="btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+                </div> 
                 <?php
-                if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && 
-                    defined('SERVICE_COUPONS_DISPLAY_ON_SHIPPING_PAGE') && SERVICE_COUPONS_DISPLAY_ON_SHIPPING_PAGE == '1') {
-                  ?>                 
-                  <div class="checkout_discount checkout_discount_stream">
-                    <h4><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h4>
-                    <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
-                    <form name="coupon" id="coupon" action="">
-                      <input type="text" name="coupon_code" id="coupon_code">
-                    </form><br />
-                    <button type="button" class="brown_btn" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
-                  </div>
-                  <?php 
+                if ($lC_Customer->isLoggedOn() !== false) {
+                  if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && 
+                      defined('SERVICE_COUPONS_DISPLAY_ON_CART_PAGE') && SERVICE_COUPONS_DISPLAY_ON_CART_PAGE == '1') {
+                    ?>
+                    <div class="well">
+                      <h3 class="no-margin-top"><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h3>
+                      <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
+                      <form role="form" name="coupon" id="coupon" action="">
+                        <div class="form-group">
+                          <label class="sr-only"></label><input type="text" name="coupon_code" id="coupon_code" class="form-control">
+                        </div>
+                      </form>
+                      <div class="btn-set clearfix no-margin-top no-margin-bottom">
+                        <button type="button" class="btn btn-primary pull-right" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
+                      </div>
+                    </div>
+                    <?php 
+                  } 
                 }
                 ?>
-                <div style="clear:both;"></div> 
               </div>
-            </div>
+            </div>        
           </div>
-        </li>
-        <li>
-          <div class="step-title">
-            <h2><?php echo $lC_Language->get('box_ordering_steps_payment'); ?></h2>
+        </div>
+        <div class="clearfix panel panel-default no-margin-bottom">
+          <div class="panel-heading">
+            <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_payment'); ?></h3>
           </div>
-        </li>
-        <li>
-          <div class="step-title">
-            <h2><?php echo $lC_Language->get('box_ordering_steps_confirmation'); ?></h2>
+        </div>     
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_confirmation'); ?></h3>
           </div>
-        </li>
-      </ol>
-    </div>
-  </form>
-  <div style="clear:both;"></div>
-</div>
+        </div> 
+      </div> 
+    </form> 
+  </div>
+</div> 
 <!--content/checkout/checkout_shipping.php end-->

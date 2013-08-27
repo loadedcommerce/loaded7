@@ -14,5 +14,14 @@
 ?>
 <!--modules/boxes/manufacturers.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<ul class="category large-margin-bottom">
+  <form name="manufacturers" class="margin-bottom" action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'NONSSL', false); ?>" method="get">
+    <?php echo $lC_Box->getContent(); ?>
+  </form>
+</ul>
+<script>
+$(document).ready(function() {
+  $('.box-manufacturers-select').attr('style', 'width:100%');
+});
+</script>
 <!--modules/boxes/manufacturers.php end-->

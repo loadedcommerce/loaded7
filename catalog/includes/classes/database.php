@@ -703,13 +703,13 @@
     }
 
     function getBatchPageLinks($batch_keyword = 'page', $parameters = '', $with_pull_down_menu = true) {
-      $string = '<table border="0"><tr><td>' . $this->getBatchPreviousPageLink($batch_keyword, $parameters) . '</td>';
+      $string = '<li>' . $this->getBatchPreviousPageLink($batch_keyword, $parameters) . '</li>';
 
       if ( $with_pull_down_menu === true ) {
-        $string .= '<td>' . $this->getBatchPagesPullDownMenu($batch_keyword, $parameters) . '</td>';
+        $string .= '<li>' . $this->getBatchPagesPullDownMenu($batch_keyword, $parameters) . '</li>';
       }
 
-      $string .= '<td>' . $this->getBatchNextPageLink($batch_keyword, $parameters) . '</td></tr></table>';
+      $string .= '<li>' . $this->getBatchNextPageLink($batch_keyword, $parameters) . '</li>';
 
       return $string;
     }
@@ -742,10 +742,10 @@
         }
                  
         $string = '<form action="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME'])) . '" action="get">' . $hidden_parameter .
-                  sprintf($lC_Language->get('result_set_current_page'), lc_draw_pull_down_menu($batch_keyword, $pages_array, $this->batch_number, 'onchange="this.form.submit();"'), $number_of_pages) .
+                  '<a href="javascript://">' . sprintf($lC_Language->get('result_set_current_page'), lc_draw_pull_down_menu($batch_keyword, $pages_array, $this->batch_number, 'onchange="this.form.submit();"'), $number_of_pages) . '</a>' .
                   lc_draw_hidden_session_id_field() . '</form>';
       } else {
-        $string = sprintf($lC_Language->get('result_set_current_page'), 1, 1);
+        $string = '<a href="javascript://">' . sprintf($lC_Language->get('result_set_current_page'), 1, 1) . '</a>';
       }
 
       return $string;
@@ -772,14 +772,14 @@
         $back_string = lc_icon('nav_back.png');
         $back_grey_string = lc_icon('nav_back_grey.png');
       } else {
-        $back_string = (file_exists(DIR_FS_TEMPLATE . 'images/icons/16/nav_back.png')) ? lc_icon('nav_back.png') : $lC_Language->get('result_set_previous_page');
-        $back_grey_string = (file_exists(DIR_FS_TEMPLATE . 'images/icons/16/nav_back_grey.png')) ? lc_icon('nav_back_grey.png') : $lC_Language->get('result_set_previous_page');
+        $back_string = (file_exists(DIR_FS_TEMPLATE . 'images/icons/16/nav_back.png')) ? lc_icon('nav_back.png', null, null, 'style="vertical-align:-10%;"') : $lC_Language->get('result_set_previous_page');
+        $back_grey_string = (file_exists(DIR_FS_TEMPLATE . 'images/icons/16/nav_back_grey.png')) ? lc_icon('nav_back_grey.png', null, null, 'style="vertical-align:-10%;"') : $lC_Language->get('result_set_previous_page');
       }
 
       if ( $this->batch_number > 1 ) {
         $string = lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $get_parameter . $batch_keyword . '=' . ($this->batch_number - 1)), $back_string);
       } else {
-        $string = $back_grey_string;
+        $string = '<a href="javascript://">' . $back_grey_string . '</a>';
       }
 
       $string .= '&nbsp;';
@@ -810,8 +810,8 @@
         $forward_string = lc_icon('nav_forward.png');
         $forward_grey_string = lc_icon('nav_forward_grey.png');
       } else {  
-        $forward_string =  (file_exists(DIR_FS_TEMPLATE . 'images/icons/16/nav_forward.png')) ? lc_icon('nav_forward.png') : $lC_Language->get('result_set_next_page');
-        $forward_grey_string =  (file_exists(DIR_FS_TEMPLATE . 'images/icons/16/nav_forward_grey.png')) ? lc_icon('nav_forward_grey.png') : $lC_Language->get('result_set_next_page');          
+        $forward_string =  (file_exists(DIR_FS_TEMPLATE . 'images/icons/16/nav_forward.png')) ? lc_icon('nav_forward.png', null, null, 'style="vertical-align:-10%;"') : $lC_Language->get('result_set_next_page');
+        $forward_grey_string =  (file_exists(DIR_FS_TEMPLATE . 'images/icons/16/nav_forward_grey.png')) ? lc_icon('nav_forward_grey.png', null, null, 'style="vertical-align:-10%;"') : $lC_Language->get('result_set_next_page');          
       }
 
       $string = '&nbsp;';
@@ -819,7 +819,7 @@
       if ( ( $this->batch_number < $number_of_pages ) && ( $number_of_pages != 1 ) ) {
         $string .= lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $get_parameter . $batch_keyword . '=' . ($this->batch_number + 1)), $forward_string);
       } else {
-        $string .= $forward_grey_string;
+        $string .= '<a href="javascript://">' . $forward_grey_string . '</a>';
       }
 
       return $string;

@@ -28,7 +28,7 @@ class lC_Account_Password_forgotten extends lC_Template {
 
     $this->_page_title = $lC_Language->get('password_forgotten_heading');
 
-    $this->addJavascriptPhpFilename('includes/form_check.js.php');
+    $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/form_check.js.php');
 
     if ($lC_Services->isStarted('breadcrumb')) {
       $lC_Breadcrumb->add($lC_Language->get('breadcrumb_password_forgotten'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
