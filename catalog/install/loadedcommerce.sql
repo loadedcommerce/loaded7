@@ -6012,12 +6012,12 @@ INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(4, 1, 'Inquiry');
 
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(1, 1, 'Originals', 'originals', 0, 0, 0);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(2, 1, 'Thumbnails', 'thumbnails', 220, 242, 1);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(3, 1, 'Product Information Page', 'product_info', 360, 414, 1);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(4, 1, 'Large', 'large', 375, 300, 0);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(5, 1, 'Mini', 'mini', 50, 40, 0);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 600, 450, 0);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(7, 1, 'Extra', 'extra', 50, 50, 0); 
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(2, 1, 'Thumbnails', 'thumbnails', 200, 240, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(3, 1, 'Product Info', 'product_info', 360, 414, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(4, 1, 'Large', 'large', 250, 300, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(5, 1, 'Mini', 'mini', 50, 60, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 550, 650, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(7, 1, 'Small', 'small', 100, 120, 0);
 
 INSERT INTO lc_tax_class VALUES (1, 'Taxable Goods', 'The following types of products are included non-food, services, etc', now(), now());
 

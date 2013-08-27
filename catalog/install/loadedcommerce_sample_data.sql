@@ -162,10 +162,12 @@ INSERT INTO lc_reviews (reviews_id, products_id, customers_id, customers_name, r
 
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(6, 'Banner on Mainpage', 'mainpage_banner', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(7, 'Categories', 'categories', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
-INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(8, 'Manufacturers', 'manufacturers', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(8, 'Manufacturers', 'manufacturers', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(9, 'New Products', 'new_products', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
-INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(10, 'Your Recent History', 'recently_visited', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'content');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(10, 'Your Recent History', 'recently_visited', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(11, 'Customers Who Purchased This Product Also Purchased', 'also_purchased_products', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(12, 'Free Shipping', 'free', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'shipping|Free_Shipping');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(13, 'Check or Money Order', 'moneyorder', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'payment|Money_Order');
 
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(6, 1, 'index/index', 'after', 10, 1);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(7, 1, '*', 'left', 10, 0);
@@ -173,3 +175,4 @@ INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, conte
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(9, 1, 'index/index', 'after', 20, 1);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(10, 1, 'products/info', 'after', 20, 1);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(11, 1, 'products/info', 'after', 10, 1);
+
