@@ -146,6 +146,10 @@ class lC_Shipping {
   public function getQuotes() {
     return $this->_quotes;
   }
+  
+  public function getFirstQuote($key = 'id') {
+    return $this->_quotes[0][$key];
+  }   
 
   public function getQuote($module = '') {
     if (empty($module)) {
