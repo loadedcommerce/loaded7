@@ -49,7 +49,7 @@ $(document).ready(function() {
              '    <h3>' + nameContent + '</h3>' +
              '    <small>' + descContent + '</small>' +
              '  </div>' +
-             '  <div class="price_info" style="margin-top:10px;"> <a href="javascript://" onclick="alert(\'' + textFeatureNotAvailable + '\'); return false;">' + textAddToWishlist + '</a>' + buttonContent +
+             '  <div class="price_info" style="margin-top:10px;"> <a href="javsscript(void);" onclick="alert(\'' + textFeatureNotAvailable + '\'); return false;">' + textAddToWishlist + '</a>' + buttonContent +
              '  </div>' +
              '</li>';
              

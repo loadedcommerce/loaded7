@@ -58,6 +58,5 @@
       <div class="pull-right"><?php echo $lC_Language->get('footer'); ?></div>
     </div>    
   </div>
-  <p>&nbsp;</p>
 </div>
 <!--footer.php end-->

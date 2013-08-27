@@ -108,9 +108,9 @@ $gID = (isset($_GET['gid']) && !empty($_GET['gid'])) ? preg_replace('/[^0-9\s]/'
                     </a>&nbsp;
                     <?php
                       if ($gID != 0) {
-                        echo '<a class="button" href="javascript://" onclick="$(\'#aEdit\').submit();">';
+                        echo '<a class="button" href="javsscript(void);" onclick="$(\'#aEdit\').submit();">';
                       } else {
-                        echo '<a class="button" href="javascript://" onclick="$(\'#aNew\').submit();">';
+                        echo '<a class="button" href="javsscript(void);" onclick="$(\'#aNew\').submit();">';
                       }
                       ?>
                       <span class="button-icon green-gradient">

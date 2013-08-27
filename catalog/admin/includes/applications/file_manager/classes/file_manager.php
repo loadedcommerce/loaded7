@@ -62,7 +62,7 @@ class lC_File_manager_Admin {
         $files = '<td>' . lc_link_object($entry_url, '<span class="icon-folder icon-orange">&nbsp;' . $file['name']) . '</td>';
       } else {
         $entry_url = lc_href_link_admin(FILENAME_DEFAULT, 'file_manager&entry=' . $file['name'] . '&action=save');
-        $files = '<td><a href="javascript://" onclick="editEntry(\'' . $file['name'] . '\')">' . '<span class="icon-page-list icon-blue">&nbsp;' . $file['name'] . '</a></td>';
+        $files = '<td><a href="javsscript(void);" onclick="editEntry(\'' . $file['name'] . '\')">' . '<span class="icon-page-list icon-blue">&nbsp;' . $file['name'] . '</a></td>';
       }
       $size = '<td>' . number_format($file['size']) . '</td>';
       $perms = '<td>' . lc_get_file_permissions($file['permissions']) . '</td>';

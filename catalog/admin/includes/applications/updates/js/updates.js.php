@@ -82,13 +82,13 @@ function checkForUpdates() {
         $('#version-table thead').removeClass('green').addClass('red');
         $('#version-table tbody').removeClass('green').addClass('red');
         $('#updateText').html('<?php echo $lC_Language->get('text_update_avail'); ?>');
-        $('#updateButtonset').html('<a id="install-update" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installUpdate();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>"><span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span><?php echo $lC_Language->get('button_install_update'); ?></a>');
+        $('#updateButtonset').html('<a id="install-update" href="javsscript(void);" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installUpdate();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>"><span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span><?php echo $lC_Language->get('button_install_update'); ?></a>');
       } else {
         $('#versionContainer .fieldset').removeClass('orange-gradient');
         $('#version-table thead').removeClass('red').addClass('green');
         $('#version-table tbody').removeClass('red').addClass('green');
         $('#updateText').html('<?php echo $lC_Language->get('text_up_to_date'); ?>');
-        $('#updateButtonset').html('<a id="check-again" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? NULL : 'onclick="checkForUpdates();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? ' disabled' : NULL); ?>"><span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span><?php echo $lC_Language->get('button_check_again'); ?></a>');
+        $('#updateButtonset').html('<a id="check-again" href="javsscript(void);" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? NULL : 'onclick="checkForUpdates();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? ' disabled' : NULL); ?>"><span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span><?php echo $lC_Language->get('button_check_again'); ?></a>');
       }
     }
   );  
@@ -508,7 +508,7 @@ function __cancelBlock() {
 }
 
 function __okBlock() {
-  return '<span class="buttonset large-margin-top"><a id="ok" href="javascript://" onclick="location.reload(true); mask();" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span><?php echo $lC_Language->get('button_ok'); ?></a></span>';
+  return '<span class="buttonset large-margin-top"><a id="ok" href="javsscript(void);" onclick="location.reload(true); mask();" class="button ok"><span class="button-icon green-gradient glossy"><span class="icon-tick"></span></span><?php echo $lC_Language->get('button_ok'); ?></a></span>';
 }
 
 function __setMaintenanceMode(s) {

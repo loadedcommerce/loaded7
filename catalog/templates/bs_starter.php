@@ -174,8 +174,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
             include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/footer.php'));
           }            
 
-          if ($lC_Services->isStarted('banner') && $lC_Banner->exists('468x60')) {
-            echo '<p align="center">' . $lC_Banner->display() . '</p>';
+          if ($lC_Services->isStarted('banner') && $lC_Banner->exists('footer')) {
+            echo $lC_Banner->display();
           }     
         }
 

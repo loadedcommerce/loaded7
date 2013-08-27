@@ -760,7 +760,7 @@ class lC_Template {
       
     $output = '';
     if ($lC_ShoppingCart->hasContents()) {
-      $output .= '<a href="javascript://" class="minicart_link" onclick="toggleMiniCart();">' .
+      $output .= '<a href="javsscript(void);" class="minicart_link" onclick="toggleMiniCart();">' .
                  '  <span class="item"><b>' . $lC_ShoppingCart->numberOfItems() . '</b> ' . ($lC_ShoppingCart->numberOfItems() > 1 ? strtoupper($lC_Language->get('text_cart_items')) : strtoupper($lC_Language->get('text_cart_item'))) . ' /</span> <span class="price"><b>' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</b></span>' .
                  '</a>' .
                  '<div class="cart_drop">' .

@@ -19,7 +19,7 @@
     }
     ?>
     <div class="col-sm-12 col-lg-12 container text-center">
-      <tr><?php echo lC_Template_output::getCategoryListing(); ?></tr>
+      <?php echo lC_Template_output::getCategoryListing(); ?>
     </div>
   </div>
 </div>
