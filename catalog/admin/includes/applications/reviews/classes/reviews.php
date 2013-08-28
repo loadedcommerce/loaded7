@@ -47,7 +47,7 @@ class lC_Reviews_Admin {
           break;
       }
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qreviews->valueInt('reviews_id') . '" id="' . $Qreviews->valueInt('reviews_id') . '"></td>';
-      $product = '<td><a onclick="showPreview(\'' . $Qreviews->valueInt('reviews_id') . '\')" href="javascript(void);"><span class="icon-search icon-blue"></span>&nbsp;' . $Qreviews->value('products_name') . '</a></td>';
+      $product = '<td><a onclick="showPreview(\'' . $Qreviews->valueInt('reviews_id') . '\')" href="javascript:void(0);"><span class="icon-search icon-blue"></span>&nbsp;' . $Qreviews->value('products_name') . '</a></td>';
       $lang = '<td>' . $lC_Language->showImage($Qreviews->value('languages_code')) . '</td>';
       $rating = '<td>' . lc_image('../images/stars_' . $Qreviews->valueInt('reviews_rating') . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $Qreviews->valueInt('reviews_rating'))) . '</td>';
       $status = '<td>' . $status_image . '</td>';

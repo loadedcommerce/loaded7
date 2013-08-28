@@ -26,7 +26,7 @@
         </div>    
         <div class="button-set">
           <button class="pull-right btn btn-lg btn-primary" onclick="$('#advanced_search').submit();" type="button"><?php echo $lC_Language->get('button_search'); ?></button>
-          <p class="help-block margin-left"><a href="javascript(void);" onclick="javascript:window.open('<?php echo lc_href_link(FILENAME_SEARCH, 'help', 'AUTO'); ?>', 'searchHelp', 'location=0, status=0, toolbar=0, menubar=0, scrollbars=1, width=600, height=445'); return false"><?php echo $lC_Language->get('search_help_tips'); ?></a></p>
+          <p class="help-block margin-left"><a href="javascript:void(0);" onclick="javascript:window.open('<?php echo lc_href_link(FILENAME_SEARCH, 'help', 'AUTO'); ?>', 'searchHelp', 'location=0, status=0, toolbar=0, menubar=0, scrollbars=1, width=600, height=445'); return false"><?php echo $lC_Language->get('search_help_tips'); ?></a></p>
         </div>      
       </div>
     </div>

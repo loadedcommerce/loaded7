@@ -93,7 +93,7 @@ class lC_Products_Admin {
                           'products_keyword' => $products_keyword);
 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qproducts->valueInt('products_id') . '" id="' . $Qproducts->valueInt('products_id') . '"></td>';
-      $products = '<td><a href="javascript(void);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')"><span class="' . $product_icon . ' with-tooltip small-margin-right" title="' . $lC_Language->get('icon_preview') . '"></span>' . $Qproducts->value('products_name') . '</td>';
+      $products = '<td><a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')"><span class="' . $product_icon . ' with-tooltip small-margin-right" title="' . $lC_Language->get('icon_preview') . '"></span>' . $Qproducts->value('products_name') . '</td>';
       $price = '<td>' . $price . '</td>';
       $qty = '<td>' . $products_quantity . '</td>';
 

@@ -227,7 +227,7 @@ function refreshVariants() {
       <a onclick="$('#cart_quantity').submit();" id="add_to_cart" class="button"><button class="add_cart"><?php echo $lC_Language->get('button_add_to_cart'); ?></button></a>
       <span>or</span>
         <ul>
-          <li><a href="javascript(void);" onclick="alert('<?php echo $lC_Language->get('feature_not_available'); ?>'); return false;"><?php echo $lC_Language->get('add_to_wishlist'); ?></a></li>
+          <li><a href="javascript:void(0);" onclick="alert('<?php echo $lC_Language->get('feature_not_available'); ?>'); return false;"><?php echo $lC_Language->get('add_to_wishlist'); ?></a></li>
         </ul> 
     </div>
   </div>

@@ -201,14 +201,14 @@
             </div>
             <div class="profile50">
               <div id="profileRight">
-                <a href="javascript(void);" onclick="profileEdit('<?php echo $_SESSION['admin']['id']; ?>')">
+                <a href="javascript:void(0);" onclick="profileEdit('<?php echo $_SESSION['admin']['id']; ?>')">
                   <div class="profile-right-fourth">
                     <?php echo $lC_Language->showImage($value['code'], '9', '6', 'class="lang-icon"'); ?>
                     <img id="profileRightImage" src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="32" height="32"><br />
                     <small><?php echo $lC_Language->get('profile_slate_edit_profile'); ?></small>
                   </div>
                 </a>
-                <a href="javascript(void);" onclick="profilePassChange('<?php echo $_SESSION['admin']['id']; ?>')">
+                <a href="javascript:void(0);" onclick="profilePassChange('<?php echo $_SESSION['admin']['id']; ?>')">
                   <div class="profile-right-fourth">
                     <div style="height:8px;"></div>
                     <span class="icon icon-lock icon-size3"></span>

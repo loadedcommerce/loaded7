@@ -42,7 +42,7 @@
       <div class="panel-content">
         <div class="panel-control">
           <span id="cfgTitle" class="big-text small-margin-left"></span>
-          <a href="javascript(void);" onclick="oTable.fnReloadAjax();" class="button icon-undo float-right"><?php echo $lC_Language->get('button_refresh'); ?></a>
+          <a href="javascript:void(0);" onclick="oTable.fnReloadAjax();" class="button icon-undo float-right"><?php echo $lC_Language->get('button_refresh'); ?></a>
         </div>
         <div class="panel-load-target scrollable" style="min-height:460px">
           <div class="large-box-shadow white-gradient with-border" style="padding:3px;">
