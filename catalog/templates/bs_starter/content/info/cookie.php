@@ -23,8 +23,8 @@
       <div class="large-margin-right"><?php echo $lC_Language->get('text_information_cookie_usage'); ?></div>
     </div>    
     <div class="btn-set clearfix">
-      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
-      <a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+      <form action="<?php echo lc_href_link(FILENAME_DEFAULT); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></form>
+      <form action="<?php echo lc_href_link(FILENAME_INFO); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div>    
   </div>    
 </div>
