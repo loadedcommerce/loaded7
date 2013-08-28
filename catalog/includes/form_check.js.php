@@ -104,11 +104,17 @@ function check_form(form_name) {
   form = form_name;
   error_message = "<?php echo $GLOBALS['lC_Language']->get('js_error'); ?>";
 
-<?php
+  <?php
   if (ACCOUNT_GENDER > 0) {
-    echo '  check_radio("gender", "' . $GLOBALS['lC_Language']->get('field_customer_gender_error') . '");' . "\n";
+    ?>
+    if (form.getAttribute('name') == 'create' || form.getAttribute('name') == 'address_book' || form.getAttribute('name') == 'checkout_address') {
+      check_select("gender", "", "<?php echo $GLOBALS['lC_Language']->get('field_customer_gender_error'); ?>");
+    } else {
+      check_radio("gender", "<?php echo $GLOBALS['lC_Language']->get('field_customer_gender_error'); ?>");
+    }
+    <?php
   }
-?>
+  ?>
 
   check_input("firstname", <?php echo ACCOUNT_FIRST_NAME; ?>, "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_first_name_error'), ACCOUNT_FIRST_NAME); ?>");
   check_input("lastname", <?php echo ACCOUNT_LAST_NAME; ?>, "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_last_name_error'), ACCOUNT_LAST_NAME); ?>");

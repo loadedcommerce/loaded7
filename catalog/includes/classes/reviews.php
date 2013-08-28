@@ -175,6 +175,45 @@
 
       return $Qreviews;
     }
+    
+    function getListingOutput($id = null) {
+      global $lC_Database, $lC_Language, $lC_Image;
+
+      if (is_numeric($id)) {
+        $Qreviews = $lC_Database->query('select reviews_id, reviews_text, reviews_rating, date_added, customers_name from :table_reviews where products_id = :products_id and languages_id = :languages_id and reviews_status = 1 order by reviews_id desc');
+        $Qreviews->bindInt(':products_id', $id);
+        $Qreviews->bindInt(':languages_id', $lC_Language->getID());
+      } else {
+        $Qreviews = $lC_Database->query('select r.reviews_id, left(r.reviews_text, 100) as reviews_text, r.reviews_rating, r.date_added, r.customers_name, p.products_id, p.products_price, p.products_tax_class_id, pd.products_name, pd.products_keyword, i.image from :table_reviews r, :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd where r.reviews_status = 1 and r.languages_id = :languages_id and r.products_id = p.products_id and p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id order by r.reviews_id desc');
+        $Qreviews->bindTable(':table_products', TABLE_PRODUCTS);
+        $Qreviews->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+        $Qreviews->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $Qreviews->bindInt(':default_flag', 1);
+        $Qreviews->bindInt(':languages_id', $lC_Language->getID());
+        $Qreviews->bindInt(':language_id', $lC_Language->getID());
+      }
+      $Qreviews->bindTable(':table_reviews', TABLE_REVIEWS);
+      $Qreviews->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), MAX_DISPLAY_NEW_REVIEWS);
+      $Qreviews->execute();      
+      
+      
+      $counter = 0;
+      $output = '';
+      if ($Qreviews->numberOfRows() > 0) {
+        while ($Qreviews->next()) {
+          $counter++;
+          if ($counter > 1) {
+            $output .= '<div></div>' . "\n";                                                                                     
+          }
+          $output .= '<div class="content-reviews-stars">' . lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $Qreviews->valueInt('reviews_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $Qreviews->valueInt('reviews_rating'))) . '&nbsp;' . sprintf($lC_Language->get('reviewed_by'), $Qreviews->valueProtected('customers_name')) . '; ' . lC_DateTime::getLong($Qreviews->value('date_added')) . '</div>' . "\n";
+          $output .= '<div class="content-reviews-text"><em>' . nl2br(wordwrap($Qreviews->valueProtected('reviews_text'), 60, '&shy;')) . '</em></div>' . "\n";
+        }
+      } else {
+        $output ='<div>' . $lC_Language->get('no_reviews_available') . '</div>' . "\n"; 
+      }
+      
+      return $output;
+    }
 
     function saveEntry($data) {
       global $lC_Database, $lC_Language;

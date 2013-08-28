@@ -36,9 +36,9 @@
         $lC_CategoryTree->setMaximumLevel($_SESSION['setCategoriesMaximumLevel']);
       }
       $lC_CategoryTree->setCategoryPath($cPath, '', '');
-      $lC_CategoryTree->setParentGroupStringTop('<ul id="ul-top-categories" class="category departments">', '</ul>');
-      $lC_CategoryTree->setParentGroupString('<ul class="side_sub_menu">', '</ul>');
-      $lC_CategoryTree->setChildStringWithChildren('<li class="menu_cont">', '</li>');
+      $lC_CategoryTree->setParentGroupStringTop('<ul class="box-categories-ul-top">', '</ul>');
+      $lC_CategoryTree->setParentGroupString('<ul class="box-categories-ul">', '</ul>');
+      $lC_CategoryTree->setChildStringWithChildren('<li>', '</li>');
       $lC_CategoryTree->setUseAria(true);
       
       // $lC_CategoryTree->setParentString('<ul class="side_sub_menu">', '</ul>');

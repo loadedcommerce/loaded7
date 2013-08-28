@@ -81,7 +81,7 @@
       $this->_sort_by_direction = ($direction == '-') ? '-' : '+';
     }
 
-    function &execute() {
+    function &execute($max_entries = MAX_DISPLAY_SEARCH_RESULTS) {
       global $lC_Database, $lC_Language, $lC_CategoryTree, $lC_Image;
 
       $Qlisting = $lC_Database->query('select SQL_CALC_FOUND_ROWS distinct p.products_id 
@@ -137,7 +137,7 @@
         $Qlisting->bindRaw(':order_by_direction', (($this->_sort_by_direction == '-') ? 'desc' : ''));
       }
 
-      $Qlisting->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), MAX_DISPLAY_SEARCH_RESULTS);
+      $Qlisting->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), $max_entries);     
       $Qlisting->execute();
 
       return $Qlisting;

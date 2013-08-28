@@ -62,7 +62,7 @@ class lC_File_manager_Admin {
         $files = '<td>' . lc_link_object($entry_url, '<span class="icon-folder icon-orange">&nbsp;' . $file['name']) . '</td>';
       } else {
         $entry_url = lc_href_link_admin(FILENAME_DEFAULT, 'file_manager&entry=' . $file['name'] . '&action=save');
-        $files = '<td><a href="javascript://" onclick="editEntry(\'' . $file['name'] . '\')">' . '<span class="icon-page-list icon-blue">&nbsp;' . $file['name'] . '</a></td>';
+        $files = '<td><a href="javascript:void(0);" onclick="editEntry(\'' . $file['name'] . '\')">' . '<span class="icon-page-list icon-blue">&nbsp;' . $file['name'] . '</a></td>';
       }
       $size = '<td>' . number_format($file['size']) . '</td>';
       $perms = '<td>' . lc_get_file_permissions($file['permissions']) . '</td>';
@@ -76,7 +76,6 @@ class lC_File_manager_Admin {
                         '<a href="' . ((int)($_SESSION['admin']['access']['file_manager'] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'file_manager&entry=' . $file['name'] . '&action=download')) . '" class="button icon-download with-tooltip' . ((int)($_SESSION['admin']['access']['file_manager'] < 2) ? ' disabled' : NULL) . '" title="' .  $lC_Language->get('icon_download') . '"></a>' . 
                         '<a href="' . ((int)($_SESSION['admin']['access']['file_manager'] < 4) ? '#' : 'javascript://" onclick="deleteEntry(\'' . $file['name'] . '\', \'' . urlencode($file['name']) . '\')"') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['file_manager'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>';
       } else {
-        //$action_links = lc_image('images/pixel_trans.gif') . '&nbsp;' .  lc_image('images/pixel_trans.gif') . '&nbsp;';
         $action_links = '<a href="' . ((int)($_SESSION['admin']['access']['file_manager'] < 4) ? '#' : 'javascript://" onclick="deleteEntry(\'' . $file['name'] . '\', \'' . urlencode($file['name']) . '\')"') . '" class="button icon-trash' . ((int)($_SESSION['admin']['access']['file_manager'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>';
       }
 

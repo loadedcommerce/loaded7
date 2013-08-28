@@ -32,11 +32,7 @@ class lC_Variants_text_field extends lC_Variants_Abstract {
         }
       }      
       
-      $string = '<table border="0" cellspacing="0" cellpadding="2" style="padding-bottom:10px;">' .
-                '  <tr>' .
-                '    <td valign="top"><label>' . $group_title . '</label></td>' .
-                '    <td valign="top" style="vertical-align:middle; padding-left:26px;">';
-
+      $string = '';
       reset($data);
       $cnt = 0;
       foreach($data as $key => $val) {
@@ -46,31 +42,18 @@ class lC_Variants_text_field extends lC_Variants_Abstract {
         $group_id = $val['group_id'];
         $group_title = $val['group_title'];
                           
-        $string .= '<div><input style="margin:4px 0;" type="text" name="simple_options[' . $group_id . ']" value="" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '"><span style="font-size:.9em;">' . ' ' . $val['value_title'] . ' ' . $price_formatted . '</span></div>';
+        $string .= '<div class="form-group small-margin-left"><label class="label-control">' . $val['value_title'] . '</label><input class="form-control half-width display-inline small-margin-left" type="text" name="variants[' . $data['group_id'] . '][' . $field['id'] . ']" value="" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '"><span class="small-margin-left">' . $price_formatted . '</span></div>';
         $cnt++;
       }                 
-       
-      $string .= '    </td>' .
-                 '  </tr>' .
-                 '</table>';                     
-      
     } else {      
       
       
-      $string = '<table border="0" cellspacing="0" cellpadding="2">';
-
+      $string = '';
       $i = 0;
-
       foreach ( $data['data'] as $field ) {
         $i++;
-
-        $string .= '  <tr>' .
-                   '    <td width="100">' . $field['text'] . ':</td>' .
-                   '    <td>' . lc_draw_input_field('variants[' . $data['group_id'] . '][' . $field['id'] . ']', null, 'id="variants_' . $data['group_id'] . '_' . $i . '"') . '</td>' .
-                   '  </tr>';
+        $string .= '<div class="form-group"><label class="label-control">' . $field['text'] . '</label><input type="text" class="form-control" name="variants[' . $data['group_id'] . '][' . $field['id'] . ']" id="variants_' . $data['group_id'] . '_' . $i . '"></div>';
       }
-
-      $string .= '</table>';
     }
 
     return $string;

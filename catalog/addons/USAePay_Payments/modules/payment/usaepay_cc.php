@@ -30,11 +30,11 @@ class lC_Payment_usaepay_cc extends lC_Payment {
 
     switch (ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SERVER) {
       case 'Production':
-        $this->iframe_relay_url = 'https://www.usaepay.com/interface/epayform/';
+        $this->form_action_url = 'https://www.usaepay.com/interface/epayform/';
         break;
 
       default:
-        $this->iframe_relay_url = 'https://sandbox.usaepay.com/interface/epayform/';
+        $this->form_action_url = 'https://sandbox.usaepay.com/interface/epayform/';
         break;
     }
 
@@ -49,8 +49,6 @@ class lC_Payment_usaepay_cc extends lC_Payment {
     }
 
     $Qcredit_cards->freeResult();
-
-    $this->form_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) ;  
 
     if ($this->_status === true) {
       if ((int)ADDONS_PAYMENT_USAEPAY_PAYMENTS_ORDER_STATUS_ID > 0) {
@@ -81,39 +79,6 @@ class lC_Payment_usaepay_cc extends lC_Payment {
         }
       }
     }
-  }
-
-  public function customCss(){
-    $cssString = '<style type=\'text/css\' media=\'all\'>
-                    BODY {color: #544F4B;}
-                    .Page {border: #828282 0px solid; padding: 5px; width:465px; text-align:left; margin-left:auto; margin-right:auto;}
-                    #divTestMode, #tableOrderInformation, #divOrderDetailsTop, #divOrderDescr, #tableLineItems, .HrLineItem, #divOrderDetailsBottom { display: none; }
-                    #btnSubmit{ color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#873b7a !important; border:0px; line-height:100%; cursor:pointer; vertical-align:middle;}
-                    #btnSubmit:hover { background-color: #bf58ad !important; box-shadow: 0 0 0 #FFFFFF inset, 0 2px 1px rgba(204, 204, 204, 0.9); }
-                    .HorizontalLine {  background-color: #E7DED5;  height: 1px;}
-                    HR { border: 0px; border-top: 1px solid #E7DED5; height: 1px;}
-                    HR.HrTop {border-top-color: #E7DED5;}
-                    HR.HrLineItem {border-top-color: #E7DED5;}
-                    .SectionHeadingBorder { margin-top: 15px; margin-bottom: 5px; border-bottom: #E7DED5 1px solid; width: 100%; }
-                    .GrayBoxOuter { background-color: #FFFFFF; color: #544F4B;} 
-                    .GrayBox { border: none; padding: 10px; } 
-                    .LabelColCC { width: 20%; }
-                    .DataColCC { width: 74%; }
-                    #checkoutConfirmationDetails { width:99%; }
-                    #tableCreditCardInformation TD { padding-left:10px; }
-                    #tablePaymentMethodHeading TD { padding-bottom:10px; }
-                    #divMerchantHeader { display:none; } 
-                    #divBillingInformation { display:none; } 
-                    #divShippingInformation { display:none; }
-                    #hrDescriptionAfter { display:none; }
-                    #hrButtonsBefore { display:none; }
-                    @media only screen and (max-width: 479px) {
-                      .LabelColCC { display:none; }
-                      #tdSubmit { width:100%; text-align:left }
-                    }
-                  </style>';
-
-    return $cssString;
   }
 
   public function getJavascriptBlock() {
@@ -181,7 +146,7 @@ class lC_Payment_usaepay_cc extends lC_Payment {
             'UMshipcountry' => $lC_ShoppingCart->getShippingAddress('country_iso_code_2'),
             'UMshipphone' => $lC_ShoppingCart->getShippingAddress('telephone_number') ,
             'UMsoftware' => 'Loaded Commerce v' . utility::getVersion(),
-            'UMredirApproved' => lc_href_link(FILENAME_IREDIRECT, '', 'NONSSL', true, true, true)
+            'UMredirApproved' => lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true)
           );  
 
     if (defined('ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SERVER') && ADDONS_PAYMENT_USAEPAY_PAYMENTS_TRANSACTION_SERVER == 'Test') {
@@ -210,16 +175,16 @@ class lC_Payment_usaepay_cc extends lC_Payment {
   public function process() {
     global $lC_Database, $lC_MessageStack;
     $error = false;
-    $status = (isset($_POST['UMstatus']) && $_POST['UMstatus'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_POST['UMstatus']) : NULL;
-    $code = (isset($_POST['UMauthCode']) && $_POST['UMauthCode'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_POST['UMauthCode']) : NULL;
-    $msg = (isset($_POST['UMerror']) && $_POST['UMerror'] != NULL) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_POST['UMerror']) : NULL;
-    $order_id = (isset($_POST['UMinvoice']) && $_POST['UMinvoice'] != NULL) ? preg_replace('/[^0-9]\:\|\[\]/', '', $_POST['UMinvoice']) : 0;
+    $status = (isset($_GET['UMstatus']) && $_GET['UMstatus'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_GET['UMstatus']) : NULL;
+    $code = (isset($_GET['UMauthCode']) && $_GET['UMauthCode'] != '') ? preg_replace('/[^a-zA-Z]/', '', $_GET['UMauthCode']) : NULL;
+    $msg = (isset($_GET['UMerror']) && $_GET['UMerror'] != NULL) ? preg_replace('/[^a-zA-Z0-9]\:\|\[\]/', '', $_GET['UMerror']) : NULL;
+    $order_id = (isset($_GET['UMinvoice']) && $_GET['UMinvoice'] != NULL) ? preg_replace('/[^0-9]\:\|\[\]/', '', $_GET['UMinvoice']) : 0;
 
     if ($status == 'Approved') { // success    
       lC_Order::process($order_id, $this->order_status);
     } else {
       $error = true;
-      $error_code = (isset($_POST['UMerrorcode']) && $_POST['UMerrorcode'] != '') ? preg_replace('/[^0-9]/', '', $_POST['UMauthCode']) : NULL;      
+      $error_code = (isset($_GET['UMerrorcode']) && $_GET['UMerrorcode'] != '') ? preg_replace('/[^0-9]/', '', $_GET['UMauthCode']) : NULL;      
       $lC_MessageStack->add('checkout_payment', $error_code . ' - ' . $msg);
       lC_Order::remove($order_id);
     } 
@@ -344,12 +309,12 @@ class lC_Payment_usaepay_cc extends lC_Payment {
       'VND' => '704',
       'AMK' => '894',
       'ZWD' => '716',
-    );	
+    );  
 
     if(array_key_exists($countries_iso_code_3,$currency_numeric_code)) {
       return $currency_numeric_code[$countries_iso_code_3];
     } 
-    return $currency_numeric_code['USD'];	 	
+    return $currency_numeric_code['USD'];   
   }
 
 }

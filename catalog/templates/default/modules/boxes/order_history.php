@@ -14,5 +14,7 @@
 ?>
 <!--modules/boxes/order_history.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<ul class="category">
+  <?php echo $lC_Box->getContent(); ?>
+</ul>
 <!--modules/boxes/order_history.php end-->

@@ -37,6 +37,8 @@ class lC_Account_Create extends lC_Template {
       if ($lC_Services->isStarted('breadcrumb')) {
         $lC_Breadcrumb->add($lC_Language->get('breadcrumb_create_account'), lc_href_link(FILENAME_ACCOUNT, $this->_module, 'SSL'));
       }
+      
+      $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/form_check.js.php');
     }
 
     if ($_GET[$this->_module] == 'save') {
@@ -51,9 +53,10 @@ class lC_Account_Create extends lC_Template {
     require($lC_Vqmod->modCheck('includes/classes/account.php'));
     
     $data = array();
-
+    
     if (DISPLAY_PRIVACY_CONDITIONS == '1') {
-      if ( (isset($_POST['privacy_conditions']) === false) || (isset($_POST['privacy_conditions']) && ($_POST['privacy_conditions'] != '1')) ) {
+      if (isset($_POST['privacy_conditions']) && ($_POST['privacy_conditions'] == '1' || $_POST['privacy_conditions'] == 'on'))  {
+      } else {
         $lC_MessageStack->add($this->_module, $lC_Language->get('error_privacy_statement_not_accepted'));
       }
     }
@@ -78,14 +81,18 @@ class lC_Account_Create extends lC_Template {
       $lC_MessageStack->add($this->_module, sprintf($lC_Language->get('field_customer_last_name_error'), ACCOUNT_LAST_NAME));
     }
 
-    if (ACCOUNT_DATE_OF_BIRTH == '1') {
-      $dateParts = explode("/", $_POST['dob']);
+    if (ACCOUNT_DATE_OF_BIRTH == '1') {     
+      if (isset($_POST['dob']) && $_POST['dob'] != NULL) {
+        $dateParts = explode("/", $_POST['dob']);
+      } else {
+        $dateParts = array($_POST['dob_days'], $_POST['dob_months'], $_POST['dob_years']);
+      }
       if (isset($dateParts[1]) && isset($dateParts[0]) && isset($dateParts[2]) && checkdate($dateParts[0], $dateParts[1], $dateParts[2])) {
         $data['dob'] = @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2]);
       } else {
         $lC_MessageStack->add($this->_module, $lC_Language->get('field_customer_date_of_birth_error'));
       }
-    }
+    } 
 
     if (isset($_POST['email_address']) && (strlen(trim($_POST['email_address'])) >= ACCOUNT_EMAIL_ADDRESS)) {
       if (lc_validate_email_address($_POST['email_address'])) {

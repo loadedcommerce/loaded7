@@ -17,8 +17,8 @@ global $lC_Language;
 ?>
 <script>
 function deleteItem(id) {
-  var jsonLink = '<?php echo lc_href_link('rpc.php', 'action=deleteItem&item=ITEM', 'AUTO'); ?>';   
-  $.getJSON(jsonLink.replace('ITEM', id).replace('&amp;', '&'),
+  var jsonLink = '<?php echo lc_href_link('rpc.php', 'checkout&action=deleteItem&item=ITEM', 'AUTO'); ?>';   
+  $.getJSON(jsonLink.replace('ITEM', id).split('amp;').join(''),
     function (data) {
       if (data.rpcStatus != 1) {
         alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');

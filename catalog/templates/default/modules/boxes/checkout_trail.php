@@ -14,5 +14,7 @@
 ?>
 <!--modules/boxes/checkout_trail.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<ul class="category">
+  <?php echo $lC_Box->getContent(); ?>
+</ul>
 <!--modules/boxes/checkout_trail.php end-->

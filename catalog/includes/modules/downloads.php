@@ -17,7 +17,7 @@ if (!strstr($_SERVER['SCRIPT_FILENAME'], 'receipt')) {
   $Qorder->bindTable(':table_orders', TABLE_ORDERS);
   $Qorder->bindInt(':customers_id', $lC_Customer->getID());
   $Qorder->execute();
-  $last_order = $Qorders->valueInt('orders_id');
+  $last_order = $Qorder->valueInt('orders_id');
 } else {
   $last_order = (int)$_GET['receipt'];
 }

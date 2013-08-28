@@ -13,6 +13,15 @@
 */
 ?>
 <!--modules/boxes/tell_a_friend.php start-->
-<h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<h1 class="clear-both large-margin-top"><?php echo $lC_Box->getTitle(); ?></h1>
+<ul class="category">
+  <?php echo $lC_Box->getContent(); ?>
+</ul>
+<script>
+$(document).ready(function() {
+  var icon = '<?php echo lc_icon('send.png', null, null, 'style="vertical-align:middle; margin-left:5px;"'); ?>';
+  $('.box-tell-a-friend-submit').html(icon).attr('style', 'cursor:pointer;');
+  $('.box-tell-a-friend-text').addClass('margin-top');
+});
+</script>
 <!--modules/boxes/tell_a_friend.php end-->

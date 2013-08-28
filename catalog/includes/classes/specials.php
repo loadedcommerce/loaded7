@@ -81,7 +81,7 @@
       return $this->_specials[$id];
     }
 
-    function &getListing() {
+    function getListing() {
       global $lC_Database, $lC_Language, $lC_Image;
 
       $Qspecials = $lC_Database->query('select p.products_id, p.products_price, p.products_tax_class_id, pd.products_name, pd.products_keyword, pd.products_description, s.specials_new_products_price, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd, :table_specials s where p.products_status = 1 and s.products_id = p.products_id and p.products_id = pd.products_id and pd.language_id = :language_id and s.status = 1 order by s.specials_date_added desc');
@@ -96,6 +96,33 @@
 
       return $Qspecials;
     }
+    
+    function getListingOutput() {
+      global $lC_Database, $lC_Language, $lC_Currencies, $lC_Image;
+      
+      $Qspecials = $lC_Database->query('select p.products_id, p.products_price, p.products_tax_class_id, pd.products_name, pd.products_keyword, pd.products_description, s.specials_new_products_price, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag), :table_products_description pd, :table_specials s where p.products_status = 1 and s.products_id = p.products_id and p.products_id = pd.products_id and pd.language_id = :language_id and s.status = 1 order by s.specials_date_added desc');
+      $Qspecials->bindTable(':table_products', TABLE_PRODUCTS);
+      $Qspecials->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+      $Qspecials->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+      $Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
+      $Qspecials->bindInt(':default_flag', 1);
+      $Qspecials->bindInt(':language_id', $lC_Language->getID());
+      $Qspecials->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), MAX_DISPLAY_SPECIAL_PRODUCTS);
+      $Qspecials->execute();      
+      
+      $output = '';
+      while ( $Qspecials->next() ) {
+        $output .= '<div class="content-specials-listing-container">';
+        $output .= '  <div class="content-specials-listing-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qspecials->value('products_keyword')), $Qspecials->value('products_name')) . '</div>' . "\n";
+        $output .= '  <div class="content-specials-listing-description">' . lc_clean_html($Qspecials->value('products_description')) . '</div>' . "\n";
+        $output .= '  <div class="content-specials-listing-price"><s>' . $lC_Currencies->displayPrice($Qspecials->value('products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</s> <span class="product-special-price">' . $lC_Currencies->displayPrice($Qspecials->value('specials_new_products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</span></div>' . "\n";
+        $output .= '  <div class="content-specials-listing-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qspecials->value('products_keyword')), $lC_Image->show($Qspecials->value('image'), $Qspecials->value('products_name'))) . '</div>' . "\n";
+        $output .= '  <div class="content-specials-listing-buy-now"><a href="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qspecials->value('products_keyword') . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '"><button type="button" class="content-specials-listing-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></a></div>' . "\n"; 
+        $output .= '</div>' . "\n";
+      }
+
+      return $output;
+    }    
 
     /* Private methods */
     function _setStatus($id, $status) {
