@@ -940,6 +940,8 @@ ul.primary_nav > li > a, .minicart span, h1, h2, h3, h4, h5, .product_info, .pri
 .sc_total { font-weight:bold; font-size:1.3em; color: #873B7A; padding: 20px 0 10px 10px !important; }
 .purple { color: #873B7A; }
 
+.minicart_link { cursor: pointer; } 
+
 /* utility */
 .clear-left { clear: left; }
 .clear-right { clear: right; }
