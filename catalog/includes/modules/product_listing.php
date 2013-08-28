@@ -76,9 +76,9 @@ if ($Qlisting->numberOfRows() > 0) {
 
         case 'PRODUCT_LIST_IMAGE':
           if (isset($_GET['manufacturers'])) {
-            $output .= '<div class="product-listing-module-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&manufacturers=' . $_GET['manufacturers']), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle())) . '</div>' . "\n";
+            $output .= '<div class="product-listing-module-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&manufacturers=' . $_GET['manufacturers']), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="product-listing-module-image-src"')) . '</div>' . "\n";
           } else {
-            $output .= '<div class="product-listing-module-image">' .lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . ($cPath ? '&cPath=' . $cPath : '')), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle())) . '</div>' . "\n";
+            $output .= '<div class="product-listing-module-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . ($cPath ? '&cPath=' . $cPath : '')), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="product-listing-module-image-src"')) . '</div>' . "\n";
           }
           break;
           

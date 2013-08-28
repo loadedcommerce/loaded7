@@ -120,6 +120,7 @@ $(document).ready(function() {
     $(this).html(output);  
   });
   $('.product-listing-module-buy-now-button').addClass('btn btn-success btn-block');
+  $('.product-listing-module-image-src').addClass('img-responsive');
   if (mediaType == 'small-tablet-landscape' || mediaType == 'tablet-portrait') {
      var textArr = buttonContentText.split(' ');
     $('.product-listing-module-buy-now-button').text(textArr[0]);  
