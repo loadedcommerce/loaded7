@@ -76,7 +76,7 @@ class lC_Content_recently_visited extends lC_Modules {
       if ($lC_RecentlyVisited->hasSearches()) {
 
         foreach ($lC_RecentlyVisited->getSearches() as $searchphrase) {
-          $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_SEARCH, 'keywords=' . $searchphrase['keywords']), lc_output_string_protected($searchphrase['keywords'])) . ' <i>(' . number_format($searchphrase['results']) . ' results)</i></li>';
+//          $this->_content .= '<div class="content-recently-visited-searches">' . lc_link_object(lc_href_link(FILENAME_SEARCH, 'keywords=' . $searchphrase['keywords']), lc_output_string_protected($searchphrase['keywords'])) . ' <i>(' . number_format($searchphrase['results']) . ' results)</i></div>';
         }
       }
     }
