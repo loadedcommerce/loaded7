@@ -23,7 +23,7 @@
       <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'sitemap'), $lC_Language->get('box_information_sitemap')); ?></li>
     </ul>
     <div class="button-set clearfix">
-      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new'); ?>" class="noDecoration"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_go_shopping'); ?></button></a>
+      <form action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('button_go_shopping'); ?></button></form>
     </div>
   </div>
 </div>
