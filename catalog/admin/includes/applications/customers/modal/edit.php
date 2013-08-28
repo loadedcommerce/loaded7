@@ -68,7 +68,7 @@ $pContent .= '<p class="button-height inline-label">' .
                   lc_draw_checkbox_field('status', '1', true, 'id="editStatus" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
              '</p>' .
              '<p class="button-height float-right">' .
-             '  <a class="button margin-bottom" href="javsscript(void);" onclick="saveCustomer(); return false;">' .
+             '  <a class="button margin-bottom" href="javascript(void);" onclick="saveCustomer(); return false;">' .
              '    <span class="button-icon green-gradient">' .
              '      <span class="icon-download"></span>' .
              '    </span>' . $lC_Language->get('button_save') .
@@ -143,12 +143,12 @@ if ( ACCOUNT_FAX > -1 ) {
 }              
 $aContent .= '<p class="button-height inline-label" id="setPrimary"></p>';
 $aContent .= '  <p class="button-height float-right">' .
-             '    <a class="button margin-bottom" href="javsscript(void);" onclick="toggleAddressForm(true); return false;">' .
+             '    <a class="button margin-bottom" href="javascript(void);" onclick="toggleAddressForm(true); return false;">' .
              '      <span class="button-icon red-gradient glossy">' .
              '        <span class="icon-cross"></span>' .
              '      </span>' . $lC_Language->get('button_cancel') .
              '    </a>' .
-             '    <a class="button margin-bottom" href="javsscript(void);" onclick="saveAddress(); return false;">' .
+             '    <a class="button margin-bottom" href="javascript(void);" onclick="saveAddress(); return false;">' .
              '      <span class="button-icon green-gradient glossy">' .
              '        <span class="icon-download"></span>' .
              '      </span>' . $lC_Language->get('button_save') .
@@ -174,7 +174,7 @@ function editCustomer(id) {
                '  <ul class="tabs">'+
                '    <li class="active"><?php echo lc_link_object('#section_personal', $lC_Language->get('section_personal'), 'onclick="toggleAddAddressButton(false); return false;"'); ?></li>'+
                '    <li><?php echo lc_link_object('#section_address_book', $lC_Language->get('section_address_book'), 'onclick="toggleAddAddressButton(true); return false;"'); ?></li>'+
-               '    <li id="li-toggle" style="display:none;"><a href="javsscript(void);" onclick="toggleAddressForm(); return false;"><span class="icon-plus-round icon-green"><?php echo $lC_Language->get('operation_new_address_book_entry'); ?></span></a></li>'+
+               '    <li id="li-toggle" style="display:none;"><a href="javascript(void);" onclick="toggleAddressForm(); return false;"><span class="icon-plus-round icon-green"><?php echo $lC_Language->get('operation_new_address_book_entry'); ?></span></a></li>'+
                '  </ul>'+
                '  <div class="clearfix tabs-content">'+
                '    <div id="section_personal" class="with-padding">'+

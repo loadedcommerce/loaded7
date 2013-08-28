@@ -66,7 +66,7 @@
               <td class="text-center hide-on-mobile-portrait"><span><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td> 
               <td class="text-center"><div class="form-group"><label class="sr-only"></label><input type="number" size="4" name="products[<?php echo $products['item_id']; ?>]" value="<?php echo $products['quantity']; ?>" onfocus="$(this).select();" class="form-control text-center"></div></td>
               <td class="text-center"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']); ?></span></td>
-              <td class="text-center"><a href="javsscript(void);" onclick="deleteItem('<?php echo $products['item_id']; ?>');"><?php echo lc_icon('cart_remove.png'); ?></a></td>
+              <td class="text-center"><a href="javascript(void);" onclick="deleteItem('<?php echo $products['item_id']; ?>');"><?php echo lc_icon('cart_remove.png'); ?></a></td>
             </tr>
             <?php 
             } 

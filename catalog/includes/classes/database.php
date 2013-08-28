@@ -742,10 +742,10 @@
         }
                  
         $string = '<form action="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME'])) . '" action="get">' . $hidden_parameter .
-                  '<a href="javsscript(void);">' . sprintf($lC_Language->get('result_set_current_page'), lc_draw_pull_down_menu($batch_keyword, $pages_array, $this->batch_number, 'onchange="this.form.submit();"'), $number_of_pages) . '</a>' .
+                  '<a href="javascript(void);">' . sprintf($lC_Language->get('result_set_current_page'), lc_draw_pull_down_menu($batch_keyword, $pages_array, $this->batch_number, 'onchange="this.form.submit();"'), $number_of_pages) . '</a>' .
                   lc_draw_hidden_session_id_field() . '</form>';
       } else {
-        $string = '<a href="javsscript(void);">' . sprintf($lC_Language->get('result_set_current_page'), 1, 1) . '</a>';
+        $string = '<a href="javascript(void);">' . sprintf($lC_Language->get('result_set_current_page'), 1, 1) . '</a>';
       }
 
       return $string;
@@ -779,7 +779,7 @@
       if ( $this->batch_number > 1 ) {
         $string = lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $get_parameter . $batch_keyword . '=' . ($this->batch_number - 1)), $back_string);
       } else {
-        $string = '<a href="javsscript(void);">' . $back_grey_string . '</a>';
+        $string = '<a href="javascript(void);">' . $back_grey_string . '</a>';
       }
 
       $string .= '&nbsp;';
@@ -819,7 +819,7 @@
       if ( ( $this->batch_number < $number_of_pages ) && ( $number_of_pages != 1 ) ) {
         $string .= lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $get_parameter . $batch_keyword . '=' . ($this->batch_number + 1)), $forward_string);
       } else {
-        $string .= '<a href="javsscript(void);">' . $forward_grey_string . '</a>';
+        $string .= '<a href="javascript(void);">' . $forward_grey_string . '</a>';
       }
 
       return $string;

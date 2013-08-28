@@ -40,7 +40,7 @@
           <th scope="col" class="align-center hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_rating'); ?></th>
           <th scope="col" class="align-center hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_status'); ?></th>
           <th scope="col" class="align-center hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_date_added'); ?></th>
-          <th scope="col" class="align-right"><span class="button-group compact"><a href="javsscript(void);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a></span><span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span></th>
+          <th scope="col" class="align-right"><span class="button-group compact"><a href="javascript(void);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a></span><span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span></th>
         </tr>
       </thead>
       <tbody>

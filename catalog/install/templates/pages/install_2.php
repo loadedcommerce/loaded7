@@ -162,7 +162,7 @@ function prepareWork() {
         <span class="button-icon red-gradient glossy"><span class="icon-cross"></span></span>
         <?php echo addslashes($lC_Language->get('image_button_cancel')); ?>
       </a>&nbsp;&nbsp;  
-      <a href="javsscript(void);" onclick="$('#mBox').hide(); $('#pBox').hide(); $('#installForm2').submit();" class="button">
+      <a href="javascript(void);" onclick="$('#mBox').hide(); $('#pBox').hide(); $('#installForm2').submit();" class="button">
         <span class="button-icon blue-gradient glossy"><span class="icon-right-round"></span></span>
         <?php echo addslashes($lC_Language->get('image_button_continue')); ?>
       </a>

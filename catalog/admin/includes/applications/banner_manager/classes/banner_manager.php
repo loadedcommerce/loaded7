@@ -39,7 +39,7 @@ class lC_Banner_manager_Admin {
       $Qstats->execute();
 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qbanners->valueInt('banners_id') . '" id="' . $Qbanners->valueInt('banners_id') . '"></td>';
-      $banners = '<td><a href="javsscript(void);" onclick="showPreview(\'' . $Qbanners->valueInt('banners_id') . '\')"><span class="icon-eye with-tooltip" title="' . $lC_Language->get('icon_preview') . '"></span>&nbsp;' . $Qbanners->value('banners_title') . '</a></span>';  
+      $banners = '<td><a href="javascript(void);" onclick="showPreview(\'' . $Qbanners->valueInt('banners_id') . '\')"><span class="icon-eye with-tooltip" title="' . $lC_Language->get('icon_preview') . '"></span>&nbsp;' . $Qbanners->value('banners_title') . '</a></span>';  
       $group = '<td>' . $Qbanners->valueProtected('banners_group') . '</td>';
       $stats = '<td>' . $Qstats->valueInt('banners_shown') . ' / ' . $Qstats->valueInt('banners_clicked') . '</td>';
      

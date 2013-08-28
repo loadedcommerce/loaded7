@@ -35,7 +35,7 @@ class lC_Credit_cards_Admin {
     $result = array('aaData' => array());
     while ( $Qcc->next() ) {
       $card = '<td>' . $Qcc->value('credit_card_name') . '</td>';
-      $status = '<td><a href="javsscript(void);" onclick="updateStatus(\'' . $Qcc->valueInt('id') . '\', \'' . $Qcc->value('credit_card_status') . '\')">' . (($Qcc->value('credit_card_status') == '1') ? '<span class="icon-tick icon-green icon-size2 with-tooltip" title="' . $lC_Language->get('deactivate') . '"></span>' : '<span class="icon-cross icon-red icon-size2 with-tooltip" title="' . $lC_Language->get('activate') . '"></span>') . '</a></td>';
+      $status = '<td><a href="javascript(void);" onclick="updateStatus(\'' . $Qcc->valueInt('id') . '\', \'' . $Qcc->value('credit_card_status') . '\')">' . (($Qcc->value('credit_card_status') == '1') ? '<span class="icon-tick icon-green icon-size2 with-tooltip" title="' . $lC_Language->get('deactivate') . '"></span>' : '<span class="icon-cross icon-red icon-size2 with-tooltip" title="' . $lC_Language->get('activate') . '"></span>') . '</a></td>';
       $sort = '<td>' . $Qcc->valueInt('sort_order') . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editCard(\'' . $Qcc->valueInt('id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>

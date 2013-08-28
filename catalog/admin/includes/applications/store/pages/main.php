@@ -100,7 +100,7 @@ foreach ($typesArr as $key => $value) {
       <div class="panel-content">
         <div class="panel-control">
           <p id="cfgTitle" align="center" class="big-text"><span id="cfgTitleText"></span>
-          <a href="javsscript(void);" onclick="_updateTitles();" class="button icon-undo float-right" style="margin-top:1px;"><?php echo $lC_Language->get('button_refresh'); ?></a></p>
+          <a href="javascript(void);" onclick="_updateTitles();" class="button icon-undo float-right" style="margin-top:1px;"><?php echo $lC_Language->get('button_refresh'); ?></a></p>
         </div>
         <div class="panel-load-target scrollable" style="min-height:460px">
           <div class="large-box-shadow white-gradient">

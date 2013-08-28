@@ -130,7 +130,7 @@ function addSimpleOption(editRow) {
                    '        <span id="groupSelectContainer"></span>'+
                    '      </p>'+
                    '      <p class="button-height block-label no-margin-bottom strong">OR'+
-                   '        <div><a href="javsscript(void);" onclick="alert(\'Feature Not Present\');" class="button icon-plus-round green-gradient glossy"><?php echo $lC_Language->get('button_add_new_group'); ?></a><?php echo lc_go_pro(true); ?></div>'+
+                   '        <div><a href="javascript(void);" onclick="alert(\'Feature Not Present\');" class="button icon-plus-round green-gradient glossy"><?php echo $lC_Language->get('button_add_new_group'); ?></a><?php echo lc_go_pro(true); ?></div>'+
                    '      </p>'+                   
                    '    </form>'+
                    '  </div>'+
@@ -183,7 +183,7 @@ function addSimpleOption(editRow) {
                                  '        <span id="entrySelectContainer"></span>'+
                                  '      </p>'+
                                  '      <p class="button-height block-label no-margin-bottom strong">OR'+
-                                 '        <div><a href="javsscript(void);" onclick="alert(\'Feature Not Present\');" class="button icon-plus-round green-gradient glossy"><?php echo $lC_Language->get('button_add_new_item'); ?></a><?php echo lc_go_pro(true); ?></div>'+
+                                 '        <div><a href="javascript(void);" onclick="alert(\'Feature Not Present\');" class="button icon-plus-round green-gradient glossy"><?php echo $lC_Language->get('button_add_new_item'); ?></a><?php echo lc_go_pro(true); ?></div>'+
                                  '      </p>'+                   
                                  '    </form>'+
                                  '  </div>'+

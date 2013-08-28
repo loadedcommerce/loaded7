@@ -88,7 +88,7 @@ class lC_Administrators_log_Admin {
     $Qresult->execute();         
 
     while ( $Qresult->next() ) {
-      $module = '<td><a href="javsscript(void);" onClick="showInfo(\'' . $Qresult->valueInt('id') . '\')"><span class="icon-folder icon-orange"></span>&nbsp;' . $Qresult->value('module') . '</a></td>'; 
+      $module = '<td><a href="javascript(void);" onClick="showInfo(\'' . $Qresult->valueInt('id') . '\')"><span class="icon-folder icon-orange"></span>&nbsp;' . $Qresult->value('module') . '</a></td>'; 
       $id = '<td>' . $Qresult->valueInt('module_id') . '</td>';
       $type = '<td>' . $Qresult->value('module_action') . '</td>';
       $user = '<td>' . $Qresult->value('user_name') . '</td>';

@@ -99,7 +99,7 @@ class lC_Orders_Admin {
       
     while ($Qresult->next()) { 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qresult->valueInt('orders_id') . '" id="' . $Qresult->valueInt('orders_id') . '"></td>';
-      $oid = '<td><a href="javsscript(void);" onclick="editOrder(\'' . $Qresult->valueInt('orders_id') . '\')"><span class="icon-price-tag icon-red"></span>&nbsp;' . $Qresult->valueInt('orders_id') . '</a></td>';
+      $oid = '<td><a href="javascript(void);" onclick="editOrder(\'' . $Qresult->valueInt('orders_id') . '\')"><span class="icon-price-tag icon-red"></span>&nbsp;' . $Qresult->valueInt('orders_id') . '</a></td>';
       $name = '<td>' . $Qresult->valueProtected('customers_name') . '</td>';
       $cid = '<td>' . $Qresult->valueInt('customers_id') . '</td>';        
       $total = '<td>' . $lC_Currencies->format($Qresult->value('order_total')) . '</td>';

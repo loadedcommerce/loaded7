@@ -61,7 +61,7 @@ class lC_Configuration_Admin {
 
       $action = '<td class="align-right vertical-center">' .
                 '  <span class="button-group compact" title="' . $_SESSION['admin']['access']['configuration']. '">' .
-                '    <a href="javsscript(void);" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? " disabled" : NULL) . '"' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? NULL : ' onclick="editEntry(\'' . $Qcfg->valueInt('configuration_id') . '\')"') . '><span>' .  ((stristr($view, 'mobile-')) ? NULL : $lC_Language->get('icon_edit')) . '</span></a>' .
+                '    <a href="javascript(void);" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? " disabled" : NULL) . '"' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? NULL : ' onclick="editEntry(\'' . $Qcfg->valueInt('configuration_id') . '\')"') . '><span>' .  ((stristr($view, 'mobile-')) ? NULL : $lC_Language->get('icon_edit')) . '</span></a>' .
                 '  </span>' .
                 '</td>';
 
@@ -235,9 +235,9 @@ class lC_Configuration_Admin {
     foreach ( lc_toObjectInfo(lC_Configuration_Admin::getAllGroups())->get('entries') as $group ) {
       $menu .= '<li class="message-menu" id="cfgGroup' . (int)$group['configuration_group_id'] . '">' .
                '  <span class="message-status" style="padding-top:14px;">' .
-               '     <a href="javsscript(void);" onclick="showGroup(\'' . (int)$group['configuration_group_id'] . '\', \'' . lc_output_string_protected($group['configuration_group_title']) . '\');" class="new-message" title=""></a>' .
+               '     <a href="javascript(void);" onclick="showGroup(\'' . (int)$group['configuration_group_id'] . '\', \'' . lc_output_string_protected($group['configuration_group_title']) . '\');" class="new-message" title=""></a>' .
                '   </span>' .
-               '   <a id="cfgLink' . (int)$group['configuration_group_id'] . '" href="javsscript(void);" onclick="showGroup(\'' . (int)$group['configuration_group_id'] . '\', \'' . str_replace("/", "-", lc_output_string_protected($group['configuration_group_title'])) . '\');">' .
+               '   <a id="cfgLink' . (int)$group['configuration_group_id'] . '" href="javascript(void);" onclick="showGroup(\'' . (int)$group['configuration_group_id'] . '\', \'' . str_replace("/", "-", lc_output_string_protected($group['configuration_group_title'])) . '\');">' .
                '     <br><strong>' . lc_output_string_protected($group['configuration_group_title']) . '</strong>' .
                '   </a>' .
                ' </li>';

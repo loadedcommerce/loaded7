@@ -21,14 +21,14 @@ global $lC_Language, $pInfo;
         <div class="navigable">
           <ul class="files-list mini open-on-panel-content">
             <li id="images-gallery-trigger" class="with-right-arrow grey-arrow">     
-              <a class="file-link selected-menu" href="javsscript(void);" onclick="showContent('default');">
+              <a class="file-link selected-menu" href="javascript(void);" onclick="showContent('default');">
                 <span class="icon file-jpg"></span>
                 <b><?php echo $lC_Language->get('text_product_images'); ?></b>
               </a>            
             </li>
             <?php if ($pInfo) { ?>
             <li id="additional-gallery-trigger">     
-              <a class="file-link" href="javsscript(void);" onclick="showContent('additional');">
+              <a class="file-link" href="javascript(void);" onclick="showContent('additional');">
                 <span class="icon file-jpg"></span>
                 <b><?php echo $lC_Language->get('text_additional_images'); ?></b>
               </a>            
@@ -40,7 +40,7 @@ global $lC_Language, $pInfo;
     </div>
     <div class="panel-content linen scrollable" style="height:auto">
       <div class="panel-control align-right"></div>
-      <a href="javsscript(void);" onclick="backToNav();" class="imagesBackNav"><div class="back"><span class="back-arrow"></span>Back</div></a>
+      <a href="javascript(void);" onclick="backToNav();" class="imagesBackNav"><div class="back"><span class="back-arrow"></span>Back</div></a>
       <div style="height: auto; position: relative;" class="scrollable with-padding custom-scroll">
         <div class="gallery" id="images-gallery">
           <table border="0" width="100%" cellspacing="0" cellpadding="2">
