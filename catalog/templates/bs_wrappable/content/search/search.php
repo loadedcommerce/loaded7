@@ -34,31 +34,31 @@
       <div class="col-sm-12 col-lg-12">
         <h3 class="large-margin-bottom margin-top"><?php echo $lC_Language->get('advanced_search_heading'); ?></h3>
         <div class="form-group">
-          <label for="category" class="control-label col-sm-3 col-lg-3 text-right"><?php echo $lC_Language->get('field_search_categories'); ?></label>
+          <label class="control-label col-sm-3 col-lg-3 text-right"><?php echo $lC_Language->get('field_search_categories'); ?></label>
           <div class="col-sm-9 col-lg-9"><?php echo lc_draw_pull_down_menu('category', lC_Template_output::getCategoriesDropdownArray(), null, 'class="form-control"'); ?></div>
         </div>
         <div class="form-group">
-          <label for="category" class="control-label col-sm-3 col-lg-3 text-right margin-top"><?php echo $lC_Language->get('field_search_recursive'); ?></label>
-          <div class="col-sm-9 col-lg-9"><?php echo lc_draw_checkbox_field('recursive', null, null, 'class="form-control"'); ?></div>
+          <label class="control-label col-sm-3 col-lg-3 text-right margin-top"><?php echo $lC_Language->get('field_search_recursive'); ?></label>
+          <div class="col-sm-9 col-lg-9"><?php echo lc_draw_checkbox_field('recursive', null, null, 'class="form-control"', null); ?></div>
         </div>
         <div class="form-group">
-          <label for="category" class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_manufacturers'); ?></label>
+          <label class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_manufacturers'); ?></label>
           <div class="col-sm-9 col-lg-9"><?php echo lc_draw_pull_down_menu('manufacturer', lC_Template_output::getManufacturerDropdownArray(), null, 'class="form-control"'); ?></div>
         </div>
         <div class="form-group">
-          <label for="category" class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_price_from'); ?></label>
+          <label class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_price_from'); ?></label>
           <div class="col-sm-9 col-lg-9"><?php echo lc_draw_input_field('pfrom', null, 'class="form-control"'); ?></div>
         </div>
         <div class="form-group">
-          <label for="category" class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_price_to'); ?></label>
+          <label class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_price_to'); ?></label>
           <div class="col-sm-9 col-lg-9"><?php echo  lc_draw_input_field('pto', null, 'class="form-control"'); ?></div>
         </div>
         <div class="form-group">
-          <label for="category" class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_date_from'); ?></label>
+          <label class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_date_from'); ?></label>
           <div class="col-sm-9 col-lg-9"><?php echo lc_draw_date_pull_down_menu('datefrom', null, false, null, null, @date('Y') - $lC_Search->getMinYear(), 0, 'class="form-control"'); ?></div>
         </div>
         <div class="form-group no-margin-bottom">
-          <label for="category" class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_date_to'); ?></label>
+          <label class="control-label col-sm-3 col-lg-3 text-right small-margin-top"><?php echo $lC_Language->get('field_search_date_to'); ?></label>
           <div class="col-sm-9 col-lg-9"><?php echo lc_draw_date_pull_down_menu('dateto', null, null, null, null, @date('Y') - $lC_Search->getMaxYear(), 0, 'class="form-control"'); ?></div>
         </div>                                                
       </div>                                                                                                                                                

@@ -15,7 +15,7 @@
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
     <div class="info-shipping-text"><?php echo $lC_Language->get('search_help'); ?></div>
     <div class="button-set">
-      <a href="javascript:window.close();"><button class="pull-right btn btn-sm btn-primary" type="button"><?php echo $lC_Language->get('close_window'); ?></button></a>
+      <button class="pull-right btn btn-sm btn-primary" onclick="javascript:window.close();" type="button"><?php echo $lC_Language->get('close_window'); ?></button>
     </div>
   </div>
 </div>

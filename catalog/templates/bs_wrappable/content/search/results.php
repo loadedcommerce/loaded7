@@ -21,7 +21,7 @@
     }
     ?>     
     <div class="button-set clearfix large-margin-bottom">
-      <a href="javascript: history.go(-1);"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+      <button class="pull-left btn btn-lg btn-default" onclick="javascript: history.go(-1);" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
     </div>   
   </div>
 </div>
@@ -71,6 +71,7 @@ $(document).ready(function() {
     $(this).html(output);  
   });
   $('.product-listing-module-buy-now-button').addClass('btn btn-success btn-block');
+  $('.product-listing-module-image-src').addClass('img-responsive');
   if (mediaType == 'small-tablet-landscape' || mediaType == 'tablet-portrait') {
      var textArr = buttonContentText.split(' ');
     $('.product-listing-module-buy-now-button').text(textArr[0]);  

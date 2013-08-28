@@ -91,7 +91,7 @@ if ($Qlisting->numberOfRows() > 0) {
     
   }     
 } else {
-  $output .= '<div class="product-listing-module-ul"><div class="product-listing-module-no-products">' . $lC_Language->get('no_products_in_category') . '</div></ul>';
+  $output .= '<div class="product-listing-module-no-products"><p>' . $lC_Language->get('no_products_in_category') . '</p></div>';
 }
 
 echo $output;
