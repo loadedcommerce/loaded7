@@ -101,10 +101,28 @@ if (!function_exists('lc_href_link')) {
 
     if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('seo')) {
       $cat_path = '';
-      if ( ($cPathPos = strpos($link, 'cPath=')) ) {
-        $cat_id = explode("_", $cPath = substr($link, $cPathPos+6));
-        foreach ($cat_id as $id) {
-          $cat_data = $lC_CategoryTree->getdata($id);
+      if ( ($cPathPos = strpos($link, 'cPath=')) || (strpos($link, 'products.php')) ) {
+        if (defined('SERVICE_SEO_URL_ADD_CATEGORY_PARENT') && SERVICE_SEO_URL_ADD_CATEGORY_PARENT == 1) {
+          if ( (strpos($link, 'products.php') && !strpos($link, 'cart')) || (strpos($link, 'products.php') && !strpos($link, 'reviews')) ) {
+            $cat_id = explode("_", substr($link, $cPathPos+6));
+            if (count($cat_id) < 2) {
+              $cat_data = $lC_CategoryTree->getData($cat_id[0]);
+              $cat_ids = explode("_", substr($cat_data['query'], 6));
+            }
+          } else {
+            $cat_ids = explode("_", substr($link, $cPathPos+6));
+          }
+          foreach ($cat_ids as $id) {
+            $cat_data = $lC_CategoryTree->getData($id);
+            if ($cat_data['permalink'] != '') {
+              $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
+            } else {
+              $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+            }
+          }
+        } else {
+          $cat_id = end(explode("_", substr($link, $cPathPos+6)));
+          $cat_data = $lC_CategoryTree->getData($cat_id);
           if ($cat_data['permalink'] != '') {
             $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
           } else {
@@ -112,7 +130,8 @@ if (!function_exists('lc_href_link')) {
           }
         }
         $link = str_replace(array('?', '&', '=', 'index.php', 'products.php'), array('/', '/', ',', 'category', 'product'), $link);
-        $link = str_replace(array('category/'), array('category/' . $cat_path), $link);
+        $link = str_replace(array('category/', 'product/'), array('category/' . $cat_path, 'product/' . $cat_path), $link);
+        $link = str_replace(array('product//'), array('product/'), $link);
         $link = preg_replace('/cPath,.*/', '', $link);
         $link = preg_replace('{/$}', '', $link);
       } else {
