@@ -16,14 +16,14 @@
     <form role="form" class="form-inline" name="account_newsletter" id="account_newsletter" action="#" method="post">
       <div class="well">
         <div class="checkbox">
-          <?php echo lc_draw_checkbox_field('newsletter_general', '1', $Qnewsletter->value('customers_newsletter'), 'class=""'); ?><label class="margin-left"><?php echo $lC_Language->get('newsletter_general'); ?></label>
+          <label class=""><?php echo lc_draw_checkbox_field('newsletter_general', '1', $Qnewsletter->value('customers_newsletter'), null, null, null); ?>&nbsp;<?php echo $lC_Language->get('newsletter_general'); ?></label>
         </div>
-        <p class="large-margin-left normal">&nbsp;<?php echo $lC_Language->get('newsletter_general_description'); ?></p>
+        <p class="margin-top normal"><?php echo $lC_Language->get('newsletter_general_description'); ?></p>
       </div>
     </form>
     <div class="btn-set small-margin-top clearfix">
       <button class="pull-right btn btn-lg btn-primary" onclick="$('#account_newsletter').submit();" type="button"><?php echo $lC_Language->get('button_delete'); ?></button>
-      <a href="<?php echo lc_href_link(FILENAME_ACCOUNT); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+      <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div>     
   </div>
 </div>  

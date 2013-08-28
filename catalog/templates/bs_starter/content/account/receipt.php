@@ -12,7 +12,8 @@ require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
 $order = new lC_Order($_GET['receipt']); 
 ?>
 <!--content/info/receipt.php start-->
-<div class="col-sm-12 col-lg-12 large-margin-top col-lg-offset-2">
+<div class="large-margin-top">
+
   <div class="row">
     <div class="col-sm-3 col-lg-3">
       <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img alt="<?php echo STORE_NAME; ?>" src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>logo.png" /></a></h1>
@@ -22,7 +23,9 @@ $order = new lC_Order($_GET['receipt']);
         <strong><?php echo STORE_NAME; ?></strong><br>
         <?php echo nl2br(STORE_NAME_ADDRESS); ?>
       </address> 
+    </div>
   </div>
+  
   <div class="row clearfix">
     <div class="col-sm-3 col-lg-3">
       <address>
@@ -45,9 +48,10 @@ $order = new lC_Order($_GET['receipt']);
       </div>
     </div>
   </div>   
+  
   <div class="row">
     <div class="col-sm-12 col-lg-12">
-      <table id="content-receipt-products-table" border="0" cellspacing="0" cellpadding="0" width="100%" class="table table-striped table-hover no-margin-bottom">
+      <table id="content-receipt-products-table" class="table table-striped table-hover no-margin-bottom">
         <?php
           if (sizeof($order->info['tax_groups']) > 1) {
             ?>
@@ -68,7 +72,7 @@ $order = new lC_Order($_GET['receipt']);
           foreach ($order->products as $product) {
             ?>
             <tr>
-              <td width="50px"><?php echo $product['qty']; ?>&nbsp;x</td>
+              <td class="products-listing-separator"><?php echo $product['qty']; ?>&nbsp;x</td>
               <td><?php echo $product['name']; 
                 if (isset($product['attributes']) && (sizeof($product['attributes']) > 0)) {
                   foreach ($product['attributes'] as $attribute) {
@@ -88,10 +92,10 @@ $order = new lC_Order($_GET['receipt']);
           }
         ?>
       </table>
-      <div id="content-receipt-totals-container">
+      <div id="content-receipt-totals-container" class="small-margin-right small-padding-right">
         <?php
           foreach ($order->totals as $total) {              
-            echo '<div class="text-right margin-bottom"><span class="">' . $total['title'] . '</span><span class="text-right">' . $total['text'] . '</span></div>' . "\n";
+            echo '<div class="text-right margin-bottom"><span class="margin-right">' . $total['title'] . '</span><span class="">' . $total['text'] . '</span></div>' . "\n";
           }
         ?>
       </div>      
@@ -99,8 +103,8 @@ $order = new lC_Order($_GET['receipt']);
     </div>
   </div>       
   <div class="button-set clearfix large-margin-top">
-    <a href="javascript:window.print();"><button class="pull-right btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('text_print'); ?></button></a>
-    <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    <button onclick="javascript:window.print();" class="pull-right btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('text_print'); ?></button>
+    <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
   </div>   
 </div>    
 <!--content/account/receipt.php end-->

@@ -39,7 +39,7 @@
           <h3><?php echo $lC_Language->get('login_new_customer_heading'); ?></h3>
           <p><?php echo $lC_Language->get('login_new_customer_text'); ?></p>    
           <div class="buttons-set clearfix large-margin-top">
-            <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create', 'SSL'); ?>"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_create_account'); ?></button></a>
+            <form class="form-inline" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'create', 'SSL'); ?>" method="post"><button class="pull-right btn btn-lg btn-primary" type="button" onclick="$(this).closest('form').submit();"><?php echo $lC_Language->get('button_create_account'); ?></button></form>
           </div>        
         </div>
       </div>

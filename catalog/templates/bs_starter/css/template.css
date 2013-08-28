@@ -192,6 +192,10 @@
   text-decoration:none; 
 }
 
+#loaded7 .products-listing-separator {
+  width: 50px;
+}
+
 /* product info page */     
 #loaded7 .content-products-info-price { 
   font-size:2.4em; 

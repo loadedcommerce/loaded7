@@ -17,7 +17,7 @@
       <h3 class="large-margin-top"><?php echo $lC_Language->get('product_notifications_global'); ?></h3>
       <div class="well">
         <div class="checkbox">
-          <?php echo lc_draw_checkbox_field('product_global', '1', $Qglobal->value('global_product_notifications')); ?><label class="margin-left"><?php echo $lC_Language->get('product_notifications_global'); ?></label>
+          <label class="margin-left"><?php echo lc_draw_checkbox_field('product_global', '1', $Qglobal->value('global_product_notifications'), null, null); ?>&nbsp;<?php echo $lC_Language->get('product_notifications_global'); ?></label>
         </div>
         <p class="large-margin-left no-margin-bottom normal">&nbsp;<?php echo $lC_Language->get('product_notifications_global_description'); ?></p>
       </div>
@@ -33,13 +33,13 @@
             $counter++;
             echo '<div class="well">' . "\n";
             echo '  <div class="checkbox">' . "\n";
-            echo lc_draw_checkbox_field('products[' . $counter . ']', $Qproducts->valueInt('products_id'), true) . '<label class="margin-left">' . $Qproducts->value('products_name') . '</label>' . "\n";
+            echo '    <label class="margin-left">' . lc_draw_checkbox_field('products[' . $counter . ']', $Qproducts->valueInt('products_id'), true, null, null) . '&nbsp;' . $Qproducts->value('products_name') . '</label>' . "\n";
             echo '  </div>' . "\n";
             echo '</div>' . "\n";
           }
         } else {
           echo '<div class="well">' . "\n";
-          echo '  <p class="large-margin-left no-margin-bottom normal">&nbsp;' . $lC_Language->get('product_notifications_products_none') . '</p>' . "\n";
+          echo '  <p class="no-margin-bottom normal">&nbsp;' . $lC_Language->get('product_notifications_products_none') . '</p>' . "\n";
           echo '</div>' . "\n";        
         }
       }
@@ -47,7 +47,7 @@
     </form>
     <div class="btn-set small-margin-top clearfix">
       <button class="pull-right btn btn-lg btn-primary" onclick="$('#account_notifications').submit();" type="button"><?php echo $lC_Language->get('button_delete'); ?></button>
-      <a href="<?php echo lc_href_link(FILENAME_ACCOUNT); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+      <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div>     
   </div>
 </div> 

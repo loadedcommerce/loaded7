@@ -26,7 +26,7 @@
       <div class="col-sm-6 col-lg-6">
         <h3 class="small-margin-top">&nbsp;</h3>
         <div class="well">
-          <p> <?php echo $lC_Language->get('primary_address_description'); ?> </p>
+          <p><?php echo $lC_Language->get('primary_address_description'); ?></p>
         </div>
       </div>
     </div>
@@ -47,8 +47,8 @@
           echo '  </address>' . "\n";
           ?>
           <div class="btn-group clearfix absolute-top-right-large-padding">
-            <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&edit', 'SSL'); ?>"><button type="button" class="btn btn-primary"><?php echo $lC_Language->get('button_edit'); ?></button></a>
-            <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&delete', 'SSL'); ?>"><button type="button" class="btn btn-primary"><?php echo $lC_Language->get('button_delete'); ?></button></a>
+            <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&edit', 'SSL'); ?>" class="display-inline" method="post"><button onclick="$(this).closest('form').submit();" type="button" class="btn-small btn-default"><?php echo $lC_Language->get('button_edit'); ?></button></form>
+            <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&delete', 'SSL'); ?>" class="display-inline" method="post"><button onclick="$(this).closest('form').submit();" type="button" class="btn-small btn-default"><?php echo $lC_Language->get('button_delete'); ?></button></form>
           </div>
           <?php
           echo '</div>' . "\n";
@@ -61,12 +61,12 @@
         <div class="btn-set small-margin-top clearfix">
           <?php
           if ($Qaddresses->numberOfRows() < MAX_ADDRESS_BOOK_ENTRIES) {
-            echo '<a href="' . lc_href_link(FILENAME_ACCOUNT, 'address_book&new', 'SSL') . '"><button class="pull-right btn btn-lg btn-primary" type="button">' . $lC_Language->get('button_add_address') . '</button>' . "\n";
+            echo '<form action="' . lc_href_link(FILENAME_ACCOUNT, 'address_book&new', 'SSL') . '" method="post"><button onclick="$(this).closest(\'form\').submit();" class="pull-right btn btn-lg btn-primary" type="submit">' . $lC_Language->get('button_add_address') . '</button></form>' . "\n";
           } else {
             echo '<div class="text-right">' . sprintf($lC_Language->get('address_book_maximum_entries'), MAX_ADDRESS_BOOK_ENTRIES) . '</div>' . "\n";
           }        
           ?>
-          <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+          <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>" method="post"><button class="pull-left btn btn-lg btn-default" onclick="$(this).closest('form').submit();" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
         </div>
       </div>
     </div>

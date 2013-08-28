@@ -24,7 +24,7 @@ if ($lC_NavigationHistory->hasSnapshot()) {
       <p><?php echo sprintf($lC_Language->get('success_account_created'), lc_href_link(FILENAME_INFO, 'contact')); ?></p>
     </div>
     <div class="btn-set small-margin-top clearfix">
-      <a href="<?php echo lc_href_link((($href_parts[1] == 'shipping=') ? FILENAME_CHECKOUT : FILENAME_DEFAULT), (($href_parts[1] == 'shipping=') ? $href_parts[1] : '')); ?>"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
+      <form action="<?php echo lc_href_link((($href_parts[1] == 'shipping=') ? FILENAME_CHECKOUT : FILENAME_DEFAULT), (($href_parts[1] == 'shipping=') ? $href_parts[1] : ''), 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit()" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></form>
     </div>     
   </div>
 </div>

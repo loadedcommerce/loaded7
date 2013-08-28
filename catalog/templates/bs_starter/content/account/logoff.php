@@ -17,7 +17,7 @@
       <p><?php echo $lC_Language->get('sign_out_text'); ?></p>
     </div>
     <div class="button-set clearfix">
-      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
+      <form action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'AUTO'); ?>" method="post"><button class="pull-right btn btn-lg btn-primary" onclick="$(this).closest('form').submit();" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></form>
     </div>           
   </div>
 </div>

@@ -15,8 +15,8 @@
     <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <div class="info-shipping-text large-margin-top large-margin-bottom margin-left"><?php echo $lC_Language->get('text_information_conditions'); ?></div>
     <div class="btn-set clearfix">
-      <form action="<?php echo lc_href_link(FILENAME_DEFAULT); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></form>
-      <form action="<?php echo lc_href_link(FILENAME_INFO); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
+      <form action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></form>
+      <form action="<?php echo lc_href_link(FILENAME_INFO, null, 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div>
   </div>
 </div>

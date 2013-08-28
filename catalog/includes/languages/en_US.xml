@@ -877,7 +877,7 @@
     </definition>
     <definition>
       <key>primary_address_description</key>
-      <value><![CDATA[<p>This address is used as the pre-selected shipping and billing address for orders placed on this store.</p><p>This address is also used as the base for product and service tax calculations.</p>]]></value>
+      <value><![CDATA[This address is used as the pre-selected shipping and billing address for orders placed on this store. This address is also used as the base for product and service tax calculations.]]></value>
       <group>account</group>
     </definition>
     <definition>

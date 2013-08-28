@@ -39,7 +39,7 @@ $Qaccount = lC_Account::getEntry();
               <div class="form-group no-wrap margin-top">
                 <label class="sr-only"></label>
                 <select class="form-control" name="gender" id="gender">
-                  <option value="m" checked="checked"><?php echo $lC_Language->get('gender_male'); ?></option>
+                  <option value="m"><?php echo $lC_Language->get('gender_male'); ?></option>
                   <option value="f"><?php echo $lC_Language->get('gender_female'); ?></option>
                 </select>
               </div>
@@ -60,7 +60,7 @@ $Qaccount = lC_Account::getEntry();
     </form>         
     <div class="button-set clearfix large-margin-bottom">
       <button class="pull-right btn btn-lg btn-success" onclick="$('#account_edit').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
-      <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+      <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div>     
   </div>
 </div>

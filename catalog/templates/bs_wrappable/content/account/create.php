@@ -32,7 +32,7 @@
                 <div class="form-group full-width margin-top">
                   <label class="sr-only"></label>
                   <select class="form-control" name="gender" id="gender">
-                    <option value="m" checked="checked"><?php echo $lC_Language->get('gender_male'); ?></option>
+                    <option value="m"><?php echo $lC_Language->get('gender_male'); ?></option>
                     <option value="f"><?php echo $lC_Language->get('gender_female'); ?></option>
                   </select>
                 </div>
@@ -66,7 +66,7 @@
     </div>
     <div class="btn-set small-margin-top clearfix">
       <button class="pull-right btn btn-lg btn-primary" onclick="$('#create').submit();" type="button"><?php echo $lC_Language->get('button_signup'); ?></button>
-      <a href="<?php echo lc_href_link(FILENAME_INFO); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+      <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, null, 'AUTO'); ?>" method="post"><button class="pull-left btn btn-lg btn-default" onclick="$(this).closest('form').submit();" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div> 
     <hr>
   </div>

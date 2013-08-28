@@ -21,8 +21,8 @@
         <div class="form-group no-wrap no-margin-top margin-bottom full-width small-margin-left-neg">
           <label class="normal"></label>
           <select class="form-control" name="gender" id="gender">
-            <option value="m" <?php echo (isset($Qentry) && $Qentry->value('entry_gender') == 'm') ? 'checked="checked"' : (isset($_GET['new'])) ? 'checked="checked"' : null; ?>><?php echo $lC_Language->get('gender_male'); ?></option>
-            <option value="f" <?php echo (isset($Qentry) && $Qentry->value('entry_gender') == 'f') ? 'checked="checked"' : null; ?>><?php echo $lC_Language->get('gender_female'); ?></option>
+            <option value="m" <?php echo (isset($Qentry) && $Qentry->value('entry_gender') == 'm') ? 'selected="selected"' : (isset($_GET['new'])) ? 'selected="selected"' : null; ?>><?php echo $lC_Language->get('gender_male'); ?></option>
+            <option value="f" <?php echo (isset($Qentry) && $Qentry->value('entry_gender') == 'f') ? 'selected="selected"' : null; ?>><?php echo $lC_Language->get('gender_female'); ?></option>
           </select>
         </div>
         <?php

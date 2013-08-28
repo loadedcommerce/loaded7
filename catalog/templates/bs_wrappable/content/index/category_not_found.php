@@ -15,7 +15,7 @@
     <h1 class="no-margin-top"><?php echo $lC_Language->get('text_not_found'); ?></h1>
     <div class="strong"><?php echo $lC_Language->get('text_category_not_found'); ?></div>
     <div class="button-set">
-      <form action="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-primary" onclick="$(this).closest('form').submit();" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></form>
+      <form action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'AUTO'); ?>"><button class="pull-right btn btn-lg btn-primary" onclick="$(this).closest('form').submit();" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></form>
     </div>  
   </div>  
 </div>

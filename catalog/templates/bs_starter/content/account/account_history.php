@@ -14,7 +14,7 @@
   <div class="col-sm-12 col-lg-12">
     <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1> 
     <div class="">
-      <table border="0" id="content-account-history-table" class="table table-striped table-hover" width="100%" cellpadding="0" cellspacing="0">
+      <table id="content-account-history-table" class="table table-striped table-hover">
         <thead>
           <tr>
             <th><?php echo $lC_Language->get('text_view'); ?></th>
@@ -60,8 +60,8 @@
       </table>
     </div>
     <div class="btn-set small-margin-top clearfix">
-      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new'); ?>"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_go_shopping'); ?></button></a>
-      <a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+      <form action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('button_go_shopping'); ?></button></form>
+      <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div>  
   </div>
 </div>
