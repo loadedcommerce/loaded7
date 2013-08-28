@@ -10,9 +10,9 @@
 */
 ?>
 <!--modules/boxes/tell_a_friend.php start-->
-<div class="well">
-  <form role="form" class="box-tell-a-friend-form no-margin-bottom form-inline" name="tell_a_friend" action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'tell_a_friend&' . $lC_Product->getKeyword()); ?>" method="post">   
-    <ul class="box-tell-a-friend list-unstyled">
+<div class="well" >
+  <form role="form" class="box-tell-a-friend-form no-margin-bottom form-inline" name="tell_a_friend" action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'tell_a_friend&' . lc_sanitize_string(basename(key(array_slice($_GET, 0, 1) )))); ?>" method="post">   
+    <ul class="box-search list-unstyled list-indent-large">
       <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
         <?php echo $lC_Box->getContent(); ?>
     </ul>
@@ -22,12 +22,13 @@
 $(document).ready(function() {
   var mediaType = _setMediaType();
   $('.box-tell-a-friend-submit').html('<i class="btn btn-sm btn-primary cusrsor:pointer">Go</i>');
+  $(".box-search li:last-child").addClass('help-block small-padding-left');
   $('.box-tell-a-friend-input').addClass('form-group');
   if (mediaType == 'tablet-portrait' || mediaType == 'small-tablet-landscape') {
-  $('.box-tell-a-friend-select').attr('style', 'width:60%; display:inline;').addClass('form-control');
+    $('.box-to-email-address').attr('style', 'width:60%; display:inline;').addClass('form-control');
   } else {
-  $('.box-tell-a-friend-select').attr('style', 'width:73%; display:inline;').addClass('form-control');
-  }  
-});                               
+    $('.box-to-email-address').attr('style', 'width:73%; display:inline;').addClass('form-control');
+  }
+});
 </script>
 <!--modules/boxes/tell_a_friend.php end-->

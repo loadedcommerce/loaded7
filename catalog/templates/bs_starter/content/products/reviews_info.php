@@ -17,7 +17,7 @@ $Qreviews = lC_Reviews::getEntry($_GET[$lC_Template->getModule()]);
     <div class="row">
       <div class="col-sm-4 col-lg-4 large-padding-left">
         <div class="thumbnail align-center large-padding-top">
-          <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-product-reviews-image-src"', 'small')); ?>
+          <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="img-responsive content-product-reviews-image-src"', 'small')); ?>
           <div class="caption">
             <h3 style="line-height:1.1;">
               <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Product->getTitle()); ?>
