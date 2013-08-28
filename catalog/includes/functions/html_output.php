@@ -43,7 +43,7 @@ if (!function_exists('lc_href_link')) {
       $use_full_address = false;
     }
 
-    if (($search_engine_safe === true) && ($use_full_address === false) && isset($lC_Services) && $lC_Services->isStarted('sefu')) {
+    if (($search_engine_safe === true) && ($use_full_address === false) && isset($lC_Services) && $lC_Services->isStarted('seo')) {
       $use_full_address = true;
     }
 
@@ -99,7 +99,7 @@ if (!function_exists('lc_href_link')) {
       $link = str_replace('&&', '&', $link);
     }
 
-    if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('sefu')) {
+    if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('seo')) {
       $cat_path = '';
       if ( ($cPathPos = strpos($link, 'cPath=')) ) {
         $cat_id = explode("_", $cPath = substr($link, $cPathPos+6));

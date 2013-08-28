@@ -42,7 +42,7 @@
         }
       }
       
-      if ( isset($lC_Services) && $lC_Services->isStarted('sefu') && $_GET['cpath'] == '' ) {
+      if ( isset($lC_Services) && $lC_Services->isStarted('seo') && $_GET['cpath'] == '' ) {
         $id = $lC_CategoryTree->getID($id);
         $cData = $lC_CategoryTree->getData($id);         
         $cPath = end(explode("_", $cData['query']));
