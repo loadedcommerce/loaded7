@@ -121,12 +121,14 @@ if (!function_exists('lc_href_link')) {
             }
           }
         } else {
-          $cat_id = end(explode("_", substr($link, $cPathPos+6)));
-          $cat_data = $lC_CategoryTree->getData($cat_id);
-          if ($cat_data['permalink'] != '') {
-            $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
-          } else {
-            $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+          if (!strpos($link, 'products.php')) {
+            $cat_id = end(explode("_", substr($link, $cPathPos+6)));
+            $cat_data = $lC_CategoryTree->getData($cat_id);
+            if ($cat_data['permalink'] != '') {
+              $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
+            } else {
+              $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+            }
           }
         }
         $link = str_replace(array('?', '&', '=', 'index.php', 'products.php'), array('/', '/', ',', 'category', 'product'), $link);
