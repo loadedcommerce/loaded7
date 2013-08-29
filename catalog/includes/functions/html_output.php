@@ -103,7 +103,7 @@ if (!function_exists('lc_href_link')) {
       $cat_path = '';
       if ( ($cPathPos = strpos($link, 'cPath=')) || (strpos($link, 'products.php')) ) {
         if (defined('SERVICE_SEO_URL_ADD_CATEGORY_PARENT') && SERVICE_SEO_URL_ADD_CATEGORY_PARENT == 1) {
-          if ( (strpos($link, 'products.php') && !strpos($link, 'cart')) || (strpos($link, 'products.php') && !strpos($link, 'reviews')) ) {
+          if ( (stristr($link, 'products.php') && !stristr($link, 'cart')) && (stristr($link, 'products.php') && !stristr($link, 'reviews')) ) {
             $data = $lC_Product->getData(substr($link, strpos($link, 'products.php?')+13));
             $cData = $lC_CategoryTree->getData($data['category_id']);         
             $cat_ids = explode("_", str_replace('cPath=', '', $cData['query']));
