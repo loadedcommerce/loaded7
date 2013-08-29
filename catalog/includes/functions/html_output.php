@@ -103,19 +103,27 @@ if (!function_exists('lc_href_link')) {
       $cat_path = '';
       if ( ($cPathPos = strpos($link, 'cPath=')) || (strpos($link, 'products.php')) ) {
         if (defined('SERVICE_SEO_URL_ADD_CATEGORY_PARENT') && SERVICE_SEO_URL_ADD_CATEGORY_PARENT == 1) {
-          if ( (stristr($link, 'products.php') && !stristr($link, 'cart')) && (stristr($link, 'products.php') && !stristr($link, 'reviews')) ) {
+          if ( (strpos($link, 'products.php') && !strpos($link, 'cart')) && (strpos($link, 'products.php') && !strpos($link, 'reviews')) ) {
             $data = $lC_Product->getData(substr($link, strpos($link, 'products.php?')+13));
             $cData = $lC_CategoryTree->getData($data['category_id']);         
             $cat_ids = explode("_", str_replace('cPath=', '', $cData['query']));
           } else {
-            $cat_ids = explode("_", substr($link, $cPathPos+6));
-          }
-          foreach ($cat_ids as $id) {
-            $cat_data = $lC_CategoryTree->getData($id);
-            if ($cat_data['permalink'] != '') {
-              $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
+            $cPathArr = explode("_", str_replace('cPath=', '', substr($link, strpos($link, 'cPath='))));
+            if (count($cPathArr) < 2) {
+              $cat_data = $lC_CategoryTree->getData($cPathArr[0]);
+              $cat_ids = explode("_", substr($cat_data['query'], 6));
             } else {
-              $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+              $cat_ids = explode("_", substr($link, $cPathPos+6));
+            }
+          }
+          if ($cat_ids != '') {
+            foreach ($cat_ids as $id) {
+              $cat_data = $lC_CategoryTree->getData($id);
+              if ($cat_data['permalink'] != '') {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
+              } else {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+              }
             }
           }
         } else {
