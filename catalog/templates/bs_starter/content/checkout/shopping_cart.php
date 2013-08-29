@@ -23,10 +23,10 @@
             <tr>
               <th><?php echo $lC_Language->get('listing_products_heading'); ?></th>
               <th class="text-left hide-on-mobile-portrait"></th>
-              <th class="text-center hide-on-mobile-portrait" width="12%"><?php echo $lC_Language->get('text_unit_price'); ?></th>
-              <th class="text-center" width="80px"><?php echo $lC_Language->get('text_quantity_abbr'); ?></th>
-              <th class="text-center" width="12%"><?php echo $lC_Language->get('text_sub_total'); ?></th>
-              <th class="text-center" width="6%"></th>
+              <th class="text-right hide-on-mobile-portrait"><?php echo $lC_Language->get('text_unit_price'); ?></th>
+              <th class="text-center large-padding-left"><?php echo $lC_Language->get('text_quantity_abbr'); ?></th>
+              <th class="text-right"><?php echo $lC_Language->get('text_sub_total'); ?></th>
+              <th class="text-center"></th>
             </tr>
           </thead>
           <tbody>
@@ -34,7 +34,7 @@
             foreach ($lC_ShoppingCart->getProducts() as $products) {
             ?>
             <tr id="tr-<?php echo $products['item_id'];?>">
-              <td class="text-left" width="<?php echo $lC_Image->getWidth('mini'); ?>px">
+              <td class="text-left content-shopping-cart-image-td">
                 <?php 
                   echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $lC_Image->show($products['image'], $products['name'], null, 'mini')); 
                 ?>
@@ -63,10 +63,10 @@
                   echo '</div>' . "\n";
                 ?>
               </td>
-              <td class="text-center hide-on-mobile-portrait"><span><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td> 
-              <td class="text-center"><div class="form-group"><label class="sr-only"></label><input type="number" size="4" name="products[<?php echo $products['item_id']; ?>]" value="<?php echo $products['quantity']; ?>" onfocus="$(this).select();" class="form-control text-center"></div></td>
-              <td class="text-center"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']); ?></span></td>
-              <td class="text-center"><a href="javascript:void(0);" onclick="deleteItem('<?php echo $products['item_id']; ?>');"><?php echo lc_icon('cart_remove.png'); ?></a></td>
+              <td class="text-right hide-on-mobile-portrait"><span><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td> 
+              <td class="text-right content-shopping-cart-qty-input-td"><div class="form-group pull-right"><label class="sr-only"></label><input class="form-control content-shopping-cart-qty-input text-center" type="number" name="products[<?php echo $products['item_id']; ?>]" value="<?php echo $products['quantity']; ?>" onfocus="$(this).select();"></div></td>
+              <td class="text-right"><span class="price"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']); ?></span></td>
+              <td class="text-center content-shopping-cart-remove-td"><a href="javascript:void(0);" onclick="deleteItem('<?php echo $products['item_id']; ?>');"><?php echo lc_icon('cart_remove.png'); ?></a></td>
             </tr>
             <?php 
             } 
@@ -91,7 +91,9 @@
         }
         ?>         
       </form>
-      <div class="col-sm-offset-7 margin-right" id="content-shopping-cart-order-totals">
+      <div class="row" id="content-shopping-cart-order-totals">
+        <div id="content-shopping-cart-order-totals-left" class="col-sm-6 col-lg-6"></div>
+        <div id="content-shopping-cart-order-totals-right" class="col-sm-6 col-lg-6">
         <?php
         foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
           ?>
@@ -103,9 +105,10 @@
         }
         ?>     
       </div>
-      <div class="clear-both large-margin-top large-margin-bottom pull-right clearfix">
-        <button class="btn btn-lg btn-primary" onclick="$('#shopping_cart').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
-        <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>"><button class="btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_checkout'); ?></button></a>
+      </div>
+      <div class="large-margin-top large-margin-bottom pull-right">
+        <button class="btn btn-lg btn-default" onclick="$('#shopping_cart').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
+        <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_checkout'); ?></button>
       </div>   
       <?php
       if ($lC_Customer->isLoggedOn() !== false) {
@@ -137,12 +140,27 @@
       <div class="well large-margin-top">
         <p class="no-margin-bottom"><?php echo $lC_Language->get('shopping_cart_empty'); ?></p>
       </div>
-      <div class="btn-set clearfix">
-        <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>"><button class="btn btn-lg btn-primary pull-right" type="button"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button></a>
+      <div class="btn-set clearfix">  
+        <form action="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button></form>
       </div>        
       <?php 
     } 
     ?>      
   </div> <!-- /col -->
 </div>  
+<script>
+var rows = $('#content-center-container').attr('class');
+
+if (rows == 'col-sm-6 col-lg-6') {
+  $('#content-shopping-cart-order-totals-left').attr('class', 'col-sm-5 col-lg-5');  
+  $('#content-shopping-cart-order-totals-right').attr('class', 'col-sm-7 col-lg-7');  
+} else if (rows == 'col-sm-9 col-lg-9') {
+  $('#content-shopping-cart-order-totals-left').attr('class', 'col-sm-6 col-lg-6');  
+  $('#content-shopping-cart-order-totals-right').attr('class', 'col-sm-6 col-lg-6');   
+} else {
+  $('#content-shopping-cart-order-totals-left').attr('class', 'col-sm-8 col-lg-8');  
+  $('#content-shopping-cart-order-totals-right').attr('class', 'col-sm-4 col-lg-4');  
+}
+
+</script>
 <!--content/checkout/shopping_cart.php end-->

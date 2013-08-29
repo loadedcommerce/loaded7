@@ -2566,6 +2566,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <group>general</group>
     </definition>
     <definition>
+      <key>icon_cart_remove</key>
+      <value><![CDATA[Remove Item]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>receipt_billing_address_title</key>
       <value><![CDATA[Billing Address]]></value>
       <group>general</group>

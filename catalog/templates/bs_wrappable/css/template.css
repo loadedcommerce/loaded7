@@ -284,6 +284,22 @@
   height: 60px; 
 }
 
+#loaded7 .content-shopping-cart-image-td {
+  width:50px;
+}
+
+#loaded7 .content-shopping-cart-qty-input-td {
+  width:12%;
+}
+
+#loaded7 .content-shopping-cart-qty-input { 
+  width:60px;
+}
+
+#loaded7 .content-shopping-cart-remove-td {
+  width:16px;
+}
+
 /* QR Code */
 #loaded7 #qr-message {   
   display:none;  

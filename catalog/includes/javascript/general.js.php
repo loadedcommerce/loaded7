@@ -123,7 +123,7 @@ function addCoupon() {
   var code = $('#coupon_code').val();
   var module = '<?php echo $lC_Template->getModule(); ?>';
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'checkout&action=addCoupon&code=CODE', 'AUTO'); ?>';   
-  $.getJSON(jsonLink.replace('CODE', code).replace('&amp;', '&'),
+  $.getJSON(jsonLink.replace('CODE', code).split('amp;').join(''),
     function (data) {
       if (data.rpcStatus != 1) {
         $('#coupon_code').val('');
@@ -154,7 +154,7 @@ function addCoupon() {
 function removeCoupon(code) {
   var module = '<?php echo $lC_Template->getModule(); ?>';
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'checkout&action=removeCoupon&code=CODE', 'AUTO'); ?>';   
-  $.getJSON(jsonLink.replace('CODE', code).replace('&amp;', '&'),
+  $.getJSON(jsonLink.replace('CODE', code).split('amp;').join(''),
     function (data) {
       if (data.rpcStatus != 1) {
         alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
