@@ -25,7 +25,7 @@
 */
 if (!function_exists('lc_href_link')) {
   function lc_href_link($page = null, $parameters = null, $connection = 'NONSSL', $add_session_id = true, $search_engine_safe = true, $use_full_address = false) {
-    global $request_type, $lC_Session, $lC_Services, $lC_CategoryTree;
+    global $request_type, $lC_Session, $lC_Services, $lC_CategoryTree, $lC_Product;
 
     if (!in_array($connection, array('NONSSL', 'SSL', 'AUTO'))) {
       $connection = 'NONSSL';
@@ -104,11 +104,9 @@ if (!function_exists('lc_href_link')) {
       if ( ($cPathPos = strpos($link, 'cPath=')) || (strpos($link, 'products.php')) ) {
         if (defined('SERVICE_SEO_URL_ADD_CATEGORY_PARENT') && SERVICE_SEO_URL_ADD_CATEGORY_PARENT == 1) {
           if ( (strpos($link, 'products.php') && !strpos($link, 'cart')) || (strpos($link, 'products.php') && !strpos($link, 'reviews')) ) {
-            $cat_id = explode("_", substr($link, $cPathPos+6));
-            if (count($cat_id) < 2) {
-              $cat_data = $lC_CategoryTree->getData($cat_id[0]);
-              $cat_ids = explode("_", substr($cat_data['query'], 6));
-            }
+            $data = $lC_Product->getData(substr($link, strpos($link, 'products.php?')+13));
+            $cData = $lC_CategoryTree->getData($data['category_id']);         
+            $cat_ids = explode("_", str_replace('cPath=', '', $cData['query']));
           } else {
             $cat_ids = explode("_", substr($link, $cPathPos+6));
           }

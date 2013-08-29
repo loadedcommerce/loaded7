@@ -43,7 +43,7 @@ class lC_Content_recently_visited extends lC_Modules {
                         
       if ($lC_RecentlyVisited->hasProducts()) {
         foreach ($lC_RecentlyVisited->getProducts() as $product) {
-          $this->_content .= '<li>' . ((SERVICE_RECENTLY_VISITED_SHOW_PRODUCT_IMAGES == '1') ? lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $lC_Image->show($product['image'], $product['name']), 'class="product_image"') : MULL)  .
+          $this->_content .= '<li>' . ((SERVICE_RECENTLY_VISITED_SHOW_PRODUCT_IMAGES == '1') ? lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $lC_Image->show($product['image'], $product['name']), 'class="product_image"') : NULL)  .
                                '<div class="product_info">' . 
                                  '<h3>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $product['keyword']), $product['name'])  . '</h3>' . 
                                '<small><i>(' . sprintf($lC_Language->get('recently_visited_item_in_category'), lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $product['category_path']), $product['category_name'])) . ')</i></small></div>' .
