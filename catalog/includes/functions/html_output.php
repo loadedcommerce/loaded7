@@ -132,8 +132,7 @@ if (!function_exists('lc_href_link')) {
                     $cat_ids = explode("_", substr($pQuery, 6));
                 }
               }
-            }
-            
+            }            
             foreach ($cat_ids as $id => $value) {
               $cat_data = $lC_CategoryTree->getData($value);
               if ($cat_data['permalink'] != '') {
