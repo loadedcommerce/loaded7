@@ -10,7 +10,7 @@
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
-*/
+*/ 
 
 /**
 * Generate an internal URL address for the catalog side
@@ -25,7 +25,7 @@
 */
 if (!function_exists('lc_href_link')) {
   function lc_href_link($page = null, $parameters = null, $connection = 'NONSSL', $add_session_id = true, $search_engine_safe = true, $use_full_address = false) {
-    global $request_type, $lC_Session, $lC_Services, $lC_CategoryTree, $lC_Product;
+    global $request_type, $lC_Session, $lC_Services, $lC_CategoryTree, $lC_Products;
 
     if (!in_array($connection, array('NONSSL', 'SSL', 'AUTO'))) {
       $connection = 'NONSSL';
@@ -99,26 +99,53 @@ if (!function_exists('lc_href_link')) {
       $link = str_replace('&&', '&', $link);
     }
 
-    if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('seo')) {
-      $cat_path = '';
-      if ( ($cPathPos = strpos($link, 'cPath=')) || (strpos($link, 'products.php')) ) {
-        if (defined('SERVICE_SEO_URL_ADD_CATEGORY_PARENT') && SERVICE_SEO_URL_ADD_CATEGORY_PARENT == 1) {
-          if ( (strpos($link, 'products.php') && !strpos($link, 'cart')) && (strpos($link, 'products.php') && !strpos($link, 'reviews')) ) {
-            $data = $lC_Product->getData(substr($link, strpos($link, 'products.php?')+13));
-            $cData = $lC_CategoryTree->getData($data['category_id']);         
-            $cat_ids = explode("_", str_replace('cPath=', '', $cData['query']));
-          } else {
-            $cPathArr = explode("_", str_replace('cPath=', '', substr($link, strpos($link, 'cPath='))));
-            if (count($cPathArr) < 2) {
-              $cat_data = $lC_CategoryTree->getData($cPathArr[0]);
-              $cat_ids = explode("_", substr($cat_data['query'], 6));
-            } else {
-              $cat_ids = explode("_", substr($link, $cPathPos+6));
+    if (!stristr($link, 'rpc.php')) {
+      if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('seo')) {
+        $cat_path = '';
+        if ( ($cPathPos = strpos($link, 'cPath')) || (strpos($link, 'products.php')) ) {
+          if (defined('SERVICE_SEO_URL_ADD_CATEGORY_PARENT') && SERVICE_SEO_URL_ADD_CATEGORY_PARENT == 1) {
+            // categories
+            if ( (strpos($link, 'index.php') && strpos($link, 'cPath')) ) {
+              $cat_id = explode("_", substr($link, $cPathPos+6));
+              if (count($cat_id) < 2) {
+                $cat_data = $lC_CategoryTree->getData($cat_id[0]);
+                $cat_ids = explode("_", substr($cat_data['query'], 6));
+              } else {
+                $cat_ids = explode("_", substr($link, $cPathPos+6));
+              }
+            } 
+            // products
+            if ( (strpos($link, 'products.php') && !strpos($link, 'cart_add') && !strpos($link, 'reviews') && !strpos($link, '?specials') && !strpos($link, '?new')) ) {
+              if (strpos($link, 'cPath')) {
+                $cat_id = explode("_", substr($link, $cPathPos+6));
+                if (count($cat_id) < 2) {
+                  echo 'one cat deep -> ' . $link . ' | ';
+                  $cat_data = $lC_CategoryTree->getData($cat_id[0]);
+                  $cat_ids = explode("_", substr($cat_data['query'], 6));
+                }
+              } else {
+                $permalink = substr($link, strpos($link, 'products.php?')+13);
+                if (!strpos($permalink, '/') && 
+                    !strpos($permalink, '?') && 
+                    !strpos($permalink, ',')) {
+                    $pQuery = get_permalink_query($permalink);
+                    $cat_ids = explode("_", substr($pQuery, 6));
+                }
+              }
             }
-          }
-          if ($cat_ids != '') {
-            foreach ($cat_ids as $id) {
-              $cat_data = $lC_CategoryTree->getData($id);
+            
+            foreach ($cat_ids as $id => $value) {
+              $cat_data = $lC_CategoryTree->getData($value);
+              if ($cat_data['permalink'] != '') {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
+              } else {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+              }
+            }
+          } else {
+            if (!strpos($link, 'products.php')) {
+              $cat_id = end(explode("_", substr($link, $cPathPos+6)));
+              $cat_data = $lC_CategoryTree->getData($cat_id);
               if ($cat_data['permalink'] != '') {
                 $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
               } else {
@@ -126,35 +153,24 @@ if (!function_exists('lc_href_link')) {
               }
             }
           }
+          $link = str_replace(array('?', '&', '=', 'index.php', 'products.php'), array('/', '/', ',', 'category', 'product'), $link);
+          $link = str_replace(array('category/', 'product/'), array('category/' . $cat_path, 'product/' . $cat_path), $link);
+          $link = str_replace(array('product//'), array('product/'), $link);
+          $link = preg_replace('/cPath,.*/', '', $link);
+          $link = preg_replace('{/$}', '', $link);
         } else {
-          if (!strpos($link, 'products.php')) {
-            $cat_id = end(explode("_", substr($link, $cPathPos+6)));
-            $cat_data = $lC_CategoryTree->getData($cat_id);
-            if ($cat_data['permalink'] != '') {
-              $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
-            } else {
-              $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
-            }
+          if ( (strpos($link, 'products.php') && !strpos($link, '&')) || (strpos($link, 'cPath=') && !strpos($link, '&')) ) {
+            $link = str_replace(array('?', '&', '=', 'products.php'), array('/', '/', ',', 'product'), $link);
+          } else {
+            $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
           }
         }
-        $link = str_replace(array('?', '&', '=', 'index.php', 'products.php'), array('/', '/', ',', 'category', 'product'), $link);
-        $link = str_replace(array('category/', 'product/'), array('category/' . $cat_path, 'product/' . $cat_path), $link);
-        $link = str_replace(array('product//'), array('product/'), $link);
-        $link = preg_replace('/cPath,.*/', '', $link);
-        $link = preg_replace('{/$}', '', $link);
       } else {
-        if ( (strpos($link, 'products.php') && !strpos($link, '&')) || (strpos($link, 'cPath=') && !strpos($link, '&')) ) {
-          $link = str_replace(array('?', '&', '=', 'products.php'), array('/', '/', ',', 'product'), $link);
-        } else {
-          $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
+        if (strpos($link, '&') !== false) {
+          $link = str_replace('&', '&amp;', $link);
         }
       }
-    } else {
-      if (strpos($link, '&') !== false) {
-        $link = str_replace('&', '&amp;', $link);
-      }
     }
-
     return $link;
   }
 }
@@ -814,6 +830,19 @@ if (!function_exists('lc_output_utf8_encoded')) {
 if (!function_exists('lc_output_utf8_decoded')) {
   function lc_output_utf8_decoded($text) {
     return utf8_decode($text);
+  }
+}
+
+if (!function_exists('get_permalink_query')) {
+  function get_permalink_query($key) {
+    global $lC_Database;
+    
+    $Qpermalink = $lC_Database->query('select query from :table_permalink where keyword = :keyword and type = 2');
+    $Qpermalink->bindTable(':table_permalink', 'lc_permalink');
+    $Qpermalink->bindValue(':keyword', $key);
+    $Qpermalink->execute();          
+    
+    return $Qpermalink->value('query');
   }
 }
 ?>
