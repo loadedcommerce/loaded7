@@ -38,7 +38,6 @@
 
       $this->_page_title = $lC_Language->get('shipping_address_heading');
 
-      //$this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_shipping_address.js');
       $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
 
       // if the order contains only virtual products, forward the customer to the billing page as

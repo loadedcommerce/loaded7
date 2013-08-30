@@ -91,7 +91,7 @@
                               <?php
                             } else {
                               ?>
-                              <td>&nbsp;</td>
+                              <td class="content-checkout-listing-blank"></td>
                               <td class="text-right"><?php echo $lC_Currencies->displayPrice($methods['cost'], $quotes['tax_class_id']) . lc_draw_hidden_field('shipping_mod_sel', $quotes['id'] . '_' . $methods['id']); ?></td>
                               <?php
                             }

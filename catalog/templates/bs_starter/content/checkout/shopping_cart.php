@@ -94,17 +94,17 @@
       <div class="row" id="content-shopping-cart-order-totals">
         <div id="content-shopping-cart-order-totals-left" class="col-sm-6 col-lg-6"></div>
         <div id="content-shopping-cart-order-totals-right" class="col-sm-6 col-lg-6">
-        <?php
-        foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
-          ?>
-          <div class="clearfix">
-            <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['title']); ?></span>
-            <span class="pull-right ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['text']); ?></span>                
-          </div>                    
           <?php
-        }
-        ?>     
-      </div>
+          foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
+            ?>
+            <div class="clearfix">
+              <span class="pull-left ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['title']); ?></span>
+              <span class="pull-right ot-<?php echo strtolower(str_replace('_', '-', $module['code'])); ?>"><?php echo strip_tags($module['text']); ?></span>                
+            </div>                    
+            <?php
+          }
+          ?>     
+        </div>
       </div>
       <div class="large-margin-top large-margin-bottom pull-right">
         <button class="btn btn-lg btn-default" onclick="$('#shopping_cart').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
@@ -149,18 +149,18 @@
   </div> <!-- /col -->
 </div>  
 <script>
-var rows = $('#content-center-container').attr('class');
-
-if (rows == 'col-sm-6 col-lg-6') {
-  $('#content-shopping-cart-order-totals-left').attr('class', 'col-sm-5 col-lg-5');  
-  $('#content-shopping-cart-order-totals-right').attr('class', 'col-sm-7 col-lg-7');  
-} else if (rows == 'col-sm-9 col-lg-9') {
-  $('#content-shopping-cart-order-totals-left').attr('class', 'col-sm-6 col-lg-6');  
-  $('#content-shopping-cart-order-totals-right').attr('class', 'col-sm-6 col-lg-6');   
-} else {
-  $('#content-shopping-cart-order-totals-left').attr('class', 'col-sm-8 col-lg-8');  
-  $('#content-shopping-cart-order-totals-right').attr('class', 'col-sm-4 col-lg-4');  
-}
-
+$(document).ready(function() {
+  var rows = $('#content-center-container').attr('class');
+  if (rows == 'col-sm-6 col-lg-6') {
+    $('#content-shopping-cart-order-totals-left').attr('class', 'col-sm-5 col-lg-5');  
+    $('#content-shopping-cart-order-totals-right').attr('class', 'col-sm-7 col-lg-7');  
+  } else if (rows == 'col-sm-9 col-lg-9') {
+    $('#content-shopping-cart-order-totals-left').attr('class', 'col-sm-6 col-lg-6');  
+    $('#content-shopping-cart-order-totals-right').attr('class', 'col-sm-6 col-lg-6');   
+  } else {
+    $('#content-shopping-cart-order-totals-left').attr('class', 'col-sm-8 col-lg-8');  
+    $('#content-shopping-cart-order-totals-right').attr('class', 'col-sm-4 col-lg-4');  
+  }
+});
 </script>
 <!--content/checkout/shopping_cart.php end-->

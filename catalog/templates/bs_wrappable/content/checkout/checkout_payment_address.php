@@ -101,7 +101,7 @@
                 <?php
                 if (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES) {
                   ?>
-                  <div class="" id="checkoutShippingAddressDetails" style="display:none;">
+                  <div class="" id="checkoutBillingAddressDetails" style="display:none;">
                     <h3 class="no-margin-top"><?php echo $lC_Language->get('new_billing_address_title'); ?></h3>
                     <p><?php echo $lC_Language->get('new_billing_address'); ?></p>
                     <div id="addressBookDetails">

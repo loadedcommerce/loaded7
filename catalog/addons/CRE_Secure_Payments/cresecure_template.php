@@ -33,7 +33,7 @@ require('../../includes/application_top.php');
 #PAN { margin-bottom: 10px; }  
 #payment-buttons-container .required { display: none; }
 #payment-buttons-container { width: 40%; float:right; margin-top:10px; }
-#payment-button { color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#873b7a !important; border:0px; line-height:100%; cursor:pointer; vertical-align:middle; }
+#payment-button { color:#fff; font-size:14px; font-weight:bold; padding:8px 14px; background:#5cb85c !important; border:0px; line-height:100%; cursor:pointer; vertical-align:middle; }
 #cancel { font-size:.8em; font-family:Arial,Helvetica,sans-serif; }
 .error_message { font-family: Arial,Helvetica,sans-serif !important; font-size: 0.75em !important; font-weight: bold !important; background-color:transparent !important; color:red !important; }
 #error_message { margin-bottom:14px; }
@@ -62,6 +62,8 @@ and (max-device-width : 480px) {
 and (max-width : 320px) {
   #payformContainer { margin-left:-30px !important; }
   #payformContainer label { width:70% !important; }
+  #payformContainer .form-list { margin-left: 40px !important; margin-top: -35px !important; }
+
   #payformContainer input { width:92% !important; }
   #card_type { width:92% !important; }
   #cv_data { width:92% !important; }

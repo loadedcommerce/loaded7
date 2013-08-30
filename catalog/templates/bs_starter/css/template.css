@@ -300,6 +300,29 @@
   width:16px;
 }
 
+#loaded7 .content-checkout-confirmation-qty-td {
+  width:30px;
+}
+
+#loaded7 .content-checkout-success-qty-td {
+  width:30px;
+}
+
+#loaded7 .content-checkout-listing-blank {
+  width:1px;
+  background-image: url('images/pixel_trans.gif');
+}
+
+#loaded7 #loading-container { 
+  position:absolute; 
+  left:50%; 
+  top:10%; 
+}
+
+#loaded7 #iloader { 
+  margin:100px 0 0 0px; 
+}
+
 /* QR Code */
 #loaded7 #qr-message {   
   display:none;  

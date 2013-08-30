@@ -78,16 +78,20 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       
       if (!empty($left) && !empty($right)) { // 3 cols
         $box_class = 'col-sm-3 col-lg-3';
-        $content_class = 'col-sm-6 col-lg-6';        
+        $content_class = 'col-sm-6 col-lg-6';
+        $_SESSION['content_span'] = '6';        
       } else if (!empty($left) && empty($right)) { // 2 cols left
         $box_class = 'col-sm-3 col-lg-3';
-        $content_class = 'col-sm-9 col-lg-9';        
+        $content_class = 'col-sm-9 col-lg-9'; 
+        $_SESSION['content_span'] = '9';       
       } else if (empty($left) && !empty($right)) { // 2 cols right
         $box_class = 'col-sm-3 col-lg-3';
         $content_class = 'col-sm-9 col-lg-9';
+        $_SESSION['content_span'] = '9';
       } else {
         $box_class = '';
         $content_class = 'col-sm-12 col-lg-12'; // 1 col
+        $_SESSION['content_span'] = '12';
       }
       ?>
       <div id="content-container" class="container">

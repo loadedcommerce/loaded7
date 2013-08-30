@@ -109,7 +109,8 @@ class lC_Payment_cresecure extends lC_Payment {
       $this->iframe_action_url = 'https://sandbox-cresecure.net/securepayments/a1/cc_collection.php?' . $this->_iframe_params();  // sandbox url
     } else {
       $this->iframe_action_url = 'https://cresecure.net/securepayments/a1/cc_collection.php?' . $this->_iframe_params();  // production url
-    }  
+    } 
+    $this->iframe_params = $this->_getIframeParams(); 
     $this->form_action_url = (getenv('HTTPS') == 'on') ? lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) : null;
     
     $Qcredit_cards = $lC_Database->query('select credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
@@ -363,6 +364,69 @@ class lC_Payment_cresecure extends lC_Payment {
     $params = substr($response, strpos($response, 'uID='));         
              
     return $params;
+  }  
+ /**
+  * Determine the iFrame paramters depending on device params
+  *
+  * @access private
+  * @return string
+  */
+  private function _getIframeParams() {
+    
+    // how many content columns
+    $content_span = (isset($_SESSION['content_span']) && $_SESSION['content_span'] != NULL) ? $_SESSION['content_span'] : '6';
+    
+    switch($content_span) {
+      case '9':
+        $fHeight = '300px';
+        $fScroll = 'no';
+        $fStyle = 'margin-left=20px';
+        $fWidth = '500px';       
+        break;
+        
+      case '12':
+        $fHeight = '300px';
+        $fScroll = 'no';
+        $fStyle = 'margin-left=120px';
+        $fWidth = '500px';       
+        break;
+        
+      default :
+        $fHeight = '300px';
+        $fScroll = 'no';
+        $fStyle = 'margin-left=-20px';
+        $fWidth = '380px';      
+      
+    }
+    
+    $mediaType = (isset($_SESSION['mediaType']) && $_SESSION['mediaType'] != NULL) ? strtolower($_SESSION['mediaType']) : 'desktop';
+    switch($mediaType) {
+      case 'mobile-portrait' :
+        $fWidth = '310px';
+        $fHeight = '360px';
+        $fStyle = '';
+        break;
+      case 'mobile-landscape' :
+        $fWidth = '440px';
+        $fStyle = '';        
+        break;
+      case 'small-tablet-portrait' :
+        $fWidth = '470px';
+        break;   
+      case 'small-tablet-landscape' :
+        $fWidth = '320px';
+        break;                                         
+      case 'tablet-portrait' :
+        $fWidth = '320px';
+        break;  
+      case 'tablet-landscape' :
+        $fWidth = '470px';
+        $fStyle = '';                
+        break;                                                                 
+      default : // desktop
+    }    
+    
+    return 'width=' . $fWidth . '&height=' . $fHeight . '&scroll=' . $fScroll . '&' . $fStyle;
   }  
 }
 ?>

@@ -66,7 +66,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                 <span class="pull-right"><?php echo $lC_Language->get('checkout_order_number') . '&nbsp;' . $_SESSION['cartID']; ?></span>
                 <span class="pull-left"><?php echo $lC_Language->get('checkout_order_id') . '&nbsp;' . $oID; ?></span>
               </h3>
-              <div class="clearfix" id="content-checkout-confirmation-products-table">
+              <div class="clearfix" id="content-checkout-success-products-table">
                 <table class="table responsive-table no-margin-bottom">
                   <thead>
                     <tr><th colspan="3"><?php echo $lC_Language->get('order_products_title'); ?></th></tr>
@@ -74,7 +74,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                   <?php
                   foreach (lC_Success::getOrderProducts($oID) as $products) {
                     echo '<tr class="confirmation-products-listing-row">' . "\n" .
-                         '  <td width="30">' . $products['quantity'] . '&nbsp;x&nbsp;</td>' . "\n" .
+                         '  <td class="content-checkout-success-qty-td">' . $products['quantity'] . '&nbsp;x&nbsp;</td>' . "\n" .
                          '  <td><span class="text-info strong">' . $products['name'] . '</span>' . "\n";
                     echo '<br /><span class="confirmation-products-listing-model">' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</span>';
 
@@ -117,7 +117,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                       $products_displayed = array();
                       for ($i=0, $n=sizeof($products_array); $i<$n; $i++) {
                         if (!in_array($products_array[$i]['id'], $products_displayed)) {
-                          echo '<div class="checkbox">' . lc_draw_checkbox_field('notify[]', $products_array[$i]['id']) . '<label class="margin-left">' . $products_array[$i]['text'] . '</label></div>' . "\n";
+                          echo '<div class="checkbox"><label class="">' . lc_draw_checkbox_field('notify[]', $products_array[$i]['id'], null, null, null) . $products_array[$i]['text'] . '</label></div>' . "\n";
                           $products_displayed[] = $products_array[$i]['id'];
                         }
                       }
@@ -128,7 +128,7 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
                 </form>
               </div>               
               <div class="btn-set clearfix">
-                <button id="content-checkout-confirmation-confirm-button" class="btn btn-lg btn-success pull-right" onclick="$('#checkout_success').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+                <button id="content-checkout-success-confirm-button" class="btn btn-lg btn-success pull-right" onclick="$('#checkout_success').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
               </div> 
               <?php
                 if (DOWNLOAD_ENABLED == '1') {
