@@ -15,6 +15,7 @@
 */
 include_once('includes/applications/customer_groups/classes/customer_groups.php');
 include_once('includes/applications/product_variants/classes/product_variants.php');
+include_once('includes/applications/specials/classes/specials.php');
 
 class lC_Products_Admin {
  /*
@@ -869,7 +870,23 @@ class lC_Products_Admin {
           }
         }
       }      
-    }    
+    }
+    
+    // specials pricing
+    if ( $error === false ) {
+      if ($data['specials_pricing_switch'] = 1) {
+        if ($data['products_special_pricing_enable1'] === 1) {
+          $specials_id = self::hasSpecial($products_id);          
+          $specials_data = array('specials_id' => (int)$specials_id,
+                                 'products_id' => (int)$products_id,
+                                 'specials_price' => $data['products_special_price1'],
+                                 'start_date' => $data['products_special_start_date1'],
+                                 'expires_date' => $data['products_special_expires_date1'],
+                                 'status' => $data['products_special_pricing_enable1']);
+          lC_Specials_Admin::save((int)$specials_id, $specials_data);
+        }
+      }
+    }   
 
     if ( $error === false ) {
       $lC_Database->commitTransaction();
@@ -1666,10 +1683,10 @@ class lC_Products_Admin {
       $special = (isset($pInfo)) ? (float)$pInfo->get('products_special_price') : 0.00;
       $discount = (isset($base) && $base > 0.00) ? round( ((($base - $special) / $base) * 100), DECIMAL_PLACES) : 0.00; 
      
-      $content .= '<label for="" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
+      $content .= '<label for="products_special_pricing_enable' . $value['customers_group_id'] . '" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
                   '<div class="columns">' .
                   '  <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom">' .
-                  '    <input type="checkbox" name="enable_group_pricing[' . $value['customers_group_id'] . ']" class="margin-right medium switch' . (($pInfo->get('status') != -1 && $value['customers_group_id'] == '1') ? ' checked' : ' disabled') . '" />' .
+                  '    <input id="products_special_pricing_enable' . $value['customers_group_id'] . '" name="products_special_pricing_enable' . $value['customers_group_id'] . '" type="checkbox" class="margin-right medium switch"' . (($pInfo->get('status') != -1 && $value['customers_group_id'] == '1') ? ' checked' : ' disabled') . ' />' .
                   '    <div class="inputs' . (($value['customers_group_id'] == '1') ? '' : ' disabled grey') . '" style="display:inline; padding:8px 0;">' .
                   '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
                   '      <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" name="products_special_price[' . $value['customers_group_id'] . ']" id="products_special_price' . $value['customers_group_id'] . '" value="' . (($value['customers_group_id'] == '1') ? number_format($pInfo->get('products_special_price'), DECIMAL_PLACES) : '0.00') . '" class="sprice input-unstyled small-margin-right' . (($value['customers_group_id'] == '1') ? '' : ' grey disabled') . '" style="width:60px;"' . (($value['customers_group_id'] == '1') ? '' : ' READONLY') . '/>' .
@@ -1679,13 +1696,13 @@ class lC_Products_Admin {
                   '  <div class="new-row-mobile twelve-columns twelve-columns-mobile">' .
                   '    <span class="nowrap margin-right">' .
                   '      <span class="input small-margin-top">' .
-                  '        <input name="products_special_start_date" id="products_special_start_date" type="text" placeholder="Start" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($value['customers_group_id'] == '1') ? $pInfo->get('products_special_start_date') : '') . '" style="width:97px;" />' .
+                  '        <input name="products_special_start_date[' . $value['customers_group_id'] . ']" id="products_special_start_date' . $value['customers_group_id'] . '" type="text" placeholder="Start" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($value['customers_group_id'] == '1') ? $pInfo->get('products_special_start_date') : '') . '" style="width:97px;" />' .
                   '      </span>' .
                   '      <span class="icon-calendar icon-size2 small-margin-left"></span>' .
                   '    </span>' .
                   '    <span class="nowrap">' .
                   '      <span class="input small-margin-top">' .
-                  '        <input name="products_special_expires_date" id="products_special_expires_date" type="text" placeholder="End" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($value['customers_group_id'] == '1') ? $pInfo->get('products_special_expires_date') : '') . '" style="width:97px;" />' .
+                  '        <input name="products_special_expires_date[' . $value['customers_group_id'] . ']" id="products_special_expires_date' . $value['customers_group_id'] . '" type="text" placeholder="End" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($value['customers_group_id'] == '1') ? $pInfo->get('products_special_expires_date') : '') . '" style="width:97px;" />' .
                   '      </span>' .
                   '      <span class="icon-calendar icon-size2 small-margin-left"></span>' .
                   '    </span>' .
@@ -1694,6 +1711,27 @@ class lC_Products_Admin {
     }
     
     return $content;
+  }  
+ /*
+  *  Return true if product has special in db, false if none
+  *
+  * @access public
+  * @return boolean true or false
+  */
+  
+  public static function hasSpecial($id) {
+    global $lC_Database;
+
+    $Qspecial = $lC_Database->query('select specials_id from :table_specials where products_id = :products_id limit 1');
+    $Qspecial->bindTable(':table_specials', TABLE_SPECIALS);
+    $Qspecial->bindInt(':products_id', $id);
+    $Qspecial->execute();
+
+    if ( $Qspecial->numberOfRows() === 1 ) {
+      return true;
+    }
+
+    return false;
   }    
 }
 ?>
