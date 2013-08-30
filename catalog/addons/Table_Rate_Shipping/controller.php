@@ -84,7 +84,7 @@ class Table_Rate_Shipping extends lC_Addon { // your addon must extend lC_Addon
     global $lC_Database;
 
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable AddOn', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_STATUS', '-1', 'Do you want to enable this addon?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Shipping Table', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_COST', '25:8.50,50:5.50,10000:0.00', 'The shipping cost is based on the total cost or weight of items. Example: 25:8.50,50:5.50,etc.. Up to 25 charge 8.50, from there to 50 charge 5.50, etc', '6', '0', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Shipping Table', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_TABLE', '25:8.50,50:5.50,10000:0.00', 'The shipping cost is based on the total cost or weight of items. Example: 25:8.50,50:5.50,etc.. Up to 25 charge 8.50, from there to 50 charge 5.50, etc', '6', '0', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('Table Method', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_MODE', 'weight', 'The shipping cost is based on the order total or the total weight of the items ordered.', '6', '0', 'lc_cfg_set_boolean_value(array(\'weight\', \'price\'))', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Handling Fee', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_HANDLING', '0', 'Handling fee for this shipping method.', '6', '0', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Tax Class', 'ADDONS_SHIPPING_" . strtoupper($this->_code) . "_TAX_CLASS', '0', 'Use the following tax class on the shipping fee.', '6', '0', 'lc_cfg_use_get_tax_class_title', 'lc_cfg_set_tax_classes_pull_down_menu', now())");
@@ -101,7 +101,7 @@ class Table_Rate_Shipping extends lC_Addon { // your addon must extend lC_Addon
   public function getKeys() {
     if (!isset($this->_keys)) {
       $this->_keys = array('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS',
-                           'ADDONS_SHIPPING_' . strtoupper($this->_code) . '_COST',
+                           'ADDONS_SHIPPING_' . strtoupper($this->_code) . '_TABLE',
                            'ADDONS_SHIPPING_' . strtoupper($this->_code) . '_MODE',
                            'ADDONS_SHIPPING_' . strtoupper($this->_code) . '_HANDLING',
                            'ADDONS_SHIPPING_' . strtoupper($this->_code) . '_TAX_CLASS',

@@ -26,7 +26,7 @@ Custom Template CSS added by Loaded7 Dev Team
 .profile50 { 
   float: left; 
   width: 50%;
-  margin-bottom: -25px; 
+  margin: 12px -9px -20px 9px; 
 }
 #profileLeft {
   padding: 14px 0 0 2px;
@@ -34,8 +34,13 @@ Custom Template CSS added by Loaded7 Dev Team
 }
 #profileRight {
   margin-bottom: 104px;
-  padding: 20px 0 0 0;
+  padding: 14px 0 3px;
 }
+#profileRight .lang-icon {
+  position: relative;
+  top: 32px;
+  left: 19px;
+} 
 .profileRightBr {
   margin-bottom: 6px;
 }
@@ -43,9 +48,13 @@ Custom Template CSS added by Loaded7 Dev Team
   margin-top: 10px !important;
   margin-bottom: 10px !important;
 }
-#profile .user-icon {
+#profile .user-profile-left-image { 
   float: left;
   margin: 0 10px 0 14px !important;
+}
+#profile .lang-icon {
+  float: right;
+  margin: 0 35px 0 0;
 }
 #profile .name {
   display: block;
@@ -586,9 +595,6 @@ li .message-menu {
   -moz-box-shadow: none;
   box-shadow: none;
 }
-#login-title h1.login-title-image {
-  height: 65px !important;
-} 
 
 #form-block {
   margin: -12px 0 0 -12px;

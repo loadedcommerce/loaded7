@@ -8,7 +8,7 @@
     </definition>
     <definition>
       <key>box_search_text</key>
-      <value><![CDATA[(try our <a href="%s">advanced search</a>)]]></value>
+      <value><![CDATA[<a href="%s">advanced search</a>]]></value>
       <group>modules-boxes</group>
     </definition>
   </definitions>

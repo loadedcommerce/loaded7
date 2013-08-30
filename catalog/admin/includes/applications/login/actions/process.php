@@ -31,7 +31,8 @@ class lC_Application_Login_Actions_process extends lC_Application_Login {
                                      'lastname' => $Qadmin->value('last_name'),
                                      'username' => $Qadmin->value('user_name'),
                                      'password' => $Qadmin->value('user_pasword'),
-                                     'access' => lC_Access::getUserLevels($Qadmin->valueInt('access_group_id')));
+                                     'access' => lC_Access::getUserLevels($Qadmin->valueInt('access_group_id')),
+                                     'language_id' => $Qadmin->value('language_id'));
           $get_string = null;
 
           if ( isset($_SESSION['redirect_origin']) ) {
@@ -41,7 +42,13 @@ class lC_Application_Login_Actions_process extends lC_Application_Login {
 
             unset($_SESSION['redirect_origin']);
           }
-          lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $get_string));
+          
+          if (defined('INSTALLATION_ID') && INSTALLATION_ID != NULL) {
+            lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $get_string));
+          } else {          
+            // redirect to login=register
+            lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, 'login&action=register'));
+          }
         }
       }
     }

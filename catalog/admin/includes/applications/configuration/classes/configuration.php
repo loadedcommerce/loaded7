@@ -39,17 +39,13 @@ class lC_Configuration_Admin {
         $value = $lC_Language->get('parameter_false');
       } elseif ($value == '0') {
         $value = $lC_Language->get('parameter_optional');
-      } elseif ($value == '1') {
-
+      /*} elseif ($value == '1') {
         // Value 1 or true/yes fix.
-        if($configuration_group_id == 7){
-          
+        if ($configuration_group_id == 7) {
           $value = 1;
-        }else{
-          
+        } else {
           $value = $lC_Language->get('parameter_true');
-        }
-
+        }*/
       } else if ($title == 'Country' || $title == 'Country of Origin') {
         $country = lc_get_country_data($value);
         $value = $country['countries_name'];
@@ -65,7 +61,7 @@ class lC_Configuration_Admin {
 
       $action = '<td class="align-right vertical-center">' .
                 '  <span class="button-group compact" title="' . $_SESSION['admin']['access']['configuration']. '">' .
-                '    <a href="javascript://" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? " disabled" : NULL) . '"' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? NULL : ' onclick="editEntry(\'' . $Qcfg->valueInt('configuration_id') . '\')"') . '><span>' .  ((stristr($view, 'mobile-')) ? NULL : $lC_Language->get('icon_edit')) . '</span></a>' .
+                '    <a href="javascript:void(0);" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? " disabled" : NULL) . '"' . ((int)($_SESSION['admin']['access']['configuration'] < 4) ? NULL : ' onclick="editEntry(\'' . $Qcfg->valueInt('configuration_id') . '\')"') . '><span>' .  ((stristr($view, 'mobile-')) ? NULL : $lC_Language->get('icon_edit')) . '</span></a>' .
                 '  </span>' .
                 '</td>';
 
@@ -94,7 +90,7 @@ class lC_Configuration_Admin {
       
       if ( !lc_empty($result['cData']['set_function']) ) {
         if ($result['cData']['configuration_key'] == 'STORE_ZONE') {
-          if (lc_store_country_has_zones() == 1) { 
+          if (lc_store_country_has_zones() == 1) {
             $result['valueField'] = lc_call_user_func($result['cData']['set_function'], $result['cData']['configuration_value'], $result['cData']['configuration_key']);
           } else {
             $result['valueField'] = lc_draw_input_field('configuration[' . $result['cData']['configuration_key'] . ']', $result['cData']['configuration_value'], 'style="width:96%"');
@@ -239,9 +235,9 @@ class lC_Configuration_Admin {
     foreach ( lc_toObjectInfo(lC_Configuration_Admin::getAllGroups())->get('entries') as $group ) {
       $menu .= '<li class="message-menu" id="cfgGroup' . (int)$group['configuration_group_id'] . '">' .
                '  <span class="message-status" style="padding-top:14px;">' .
-               '     <a href="javascript://" onclick="showGroup(\'' . (int)$group['configuration_group_id'] . '\', \'' . lc_output_string_protected($group['configuration_group_title']) . '\');" class="new-message" title=""></a>' .
+               '     <a href="javascript:void(0);" onclick="showGroup(\'' . (int)$group['configuration_group_id'] . '\', \'' . lc_output_string_protected($group['configuration_group_title']) . '\');" class="new-message" title=""></a>' .
                '   </span>' .
-               '   <a id="cfgLink' . (int)$group['configuration_group_id'] . '" href="javascript://" onclick="showGroup(\'' . (int)$group['configuration_group_id'] . '\', \'' . str_replace("/", "-", lc_output_string_protected($group['configuration_group_title'])) . '\');">' .
+               '   <a id="cfgLink' . (int)$group['configuration_group_id'] . '" href="javascript:void(0);" onclick="showGroup(\'' . (int)$group['configuration_group_id'] . '\', \'' . str_replace("/", "-", lc_output_string_protected($group['configuration_group_title'])) . '\');">' .
                '     <br><strong>' . lc_output_string_protected($group['configuration_group_title']) . '</strong>' .
                '   </a>' .
                ' </li>';

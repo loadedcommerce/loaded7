@@ -29,7 +29,7 @@ if ($lC_MessageStack->size('address') > 0) {
       <?php
       if (ACCOUNT_GENDER > -1) {
         $gender_array = array(array('id' => 'm', 'text' => $lC_Language->get('gender_male')), array('id' => 'f', 'text' => $lC_Language->get('gender_female')));   
-        echo '<li style="font-size:.9em; margin:14px 0 15px 3px;">' . lc_draw_label('', 'gender', (isset($Qentry) ? $Qentry->value('entry_gender') : null), false) . ' ' . lc_draw_radio_field('gender', $gender_array, 'm', 'style="height:12px;"') . '</li>'; 
+        echo '<li style="font-size:.9em; margin:14px 0 15px 3px;">' . lc_draw_label('', 'gender') . ' ' . lc_draw_radio_field('gender', $gender_array, (isset($Qentry) ? $Qentry->value('entry_gender') : 'm'), 'style="height:12px;"') . '</li>'; 
       }
       if (ACCOUNT_TELEPHONE > -1) {
         echo '<li>' . lc_draw_label('', 'telephone', null, '', (ACCOUNT_TELEPHONE > 0)) . ' ' . lc_draw_input_field('telephone', (isset($Qentry) ? $Qentry->value('entry_telephone') : null), 'placeholder="' . $lC_Language->get('field_customer_telephone_number') . '" class="txt ' . ((ACCOUNT_TELEPHONE > 0) ? 'required' : null) . '" style="width:99%;"') . '</li>';

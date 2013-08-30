@@ -14,5 +14,14 @@
 ?>
 <!--modules/boxes/currencies.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<ul class="category large-margin-bottom">
+  <form name="currencies" class="margin-bottom" action="<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), null, 'AUTO', false); ?>" method="get">
+    <?php echo $lC_Box->getContent(); ?>
+  </form>
+</ul>
+<script>
+$(document).ready(function() {
+  $('.box-currencies-select').attr('onchange', '$(this).closest("form").submit();').attr('style', 'width:100%');
+});
+</script>
 <!--modules/boxes/currencies.php end-->

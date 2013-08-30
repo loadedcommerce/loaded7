@@ -100,9 +100,7 @@ class lC_Products_Tell_a_friend extends lC_Template {
 
       lc_email(lc_sanitize_string($_POST['to_name']), lc_sanitize_string($_POST['to_email_address']), $email_subject, $email_body, lc_sanitize_string($_POST['from_name']), lc_sanitize_string($_POST['from_email_address']));
 
-      $lC_MessageStack->add('header', sprintf($lC_Language->get('success_tell_a_friend_email_sent'), $lC_Product->getTitle(), lc_output_string_protected($_POST['to_name'])), 'success');
-
-      lc_redirect(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getID()));
+      lc_redirect(lc_href_link(FILENAME_PRODUCTS, 'tell_a_friend&' . $lC_Product->getID() . '&success=' . urlencode(sprintf($lC_Language->get('success_tell_a_friend_email_sent'), $lC_Product->getTitle(), lc_output_string_protected($_POST['to_name'])))));
     }
   }
 }

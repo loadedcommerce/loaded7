@@ -11,7 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-$lastRestoreDate = ( defined('DB_LAST_RESTORE') ) ? '<table><tr><td>' . $lC_Language->get('last_restoration_date') . ' ' . DB_LAST_RESTORE . '</td><td><a href="javascript://" onclick="doForget();"><img border="0" src="' .  lc_icon_admin_raw('delete.png') . '" title="' . $lC_Language->get('forget_restoration_date') . '"></a></td></tr></table>' : '';
+$lastRestoreDate = ( defined('DB_LAST_RESTORE') ) ? '<table><tr><td>' . $lC_Language->get('last_restoration_date') . ' ' . DB_LAST_RESTORE . '</td><td><a href="javascript:void(0);" onclick="doForget();"><img border="0" src="' .  lc_icon_admin_raw('delete.png') . '" title="' . $lC_Language->get('forget_restoration_date') . '"></a></td></tr></table>' : '';
 ?>
 <!-- Main content -->
 <section role="main" id="main">
@@ -39,9 +39,9 @@ $lastRestoreDate = ( defined('DB_LAST_RESTORE') ) ? '<table><tr><td>' . $lC_Lang
           <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_file_size'); ?></th>
           <th scope="col" class="align-right">
             <span class="button-group compact" style="white-space:nowrap;">
-              <a style="display:none;" href="javascript://" style="cursor:pointer" class="on-mobile button with-tooltip icon-outbox green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="doBackup(); return false;'); ?>" title="<?php echo $lC_Language->get('button_backup'); ?>"></a>
-              <a style="display:none;" href="javascript://" style="cursor:pointer" class="on-mobile button with-tooltip icon-inbox blue<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? '#' : 'javascript://" onclick="restoreLocal(); return false;'); ?>" title="<?php echo $lC_Language->get('button_restore'); ?>"></a>
-              <a href="javascript://" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a>
+              <a style="display:none;" href="javascript:void(0);" style="cursor:pointer" class="on-mobile button with-tooltip icon-outbox green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="doBackup(); return false;'); ?>" title="<?php echo $lC_Language->get('button_backup'); ?>"></a>
+              <a style="display:none;" href="javascript:void(0);" style="cursor:pointer" class="on-mobile button with-tooltip icon-inbox blue<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? '#' : 'javascript://" onclick="restoreLocal(); return false;'); ?>" title="<?php echo $lC_Language->get('button_restore'); ?>"></a>
+              <a href="javascript:void(0);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a>
             </span>
             <span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span>
           </th>  

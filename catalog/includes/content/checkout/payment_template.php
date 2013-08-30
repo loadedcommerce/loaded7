@@ -33,6 +33,8 @@ class lC_Checkout_Payment_template extends lC_Template {
       }               
 
       $this->_page_title = $lC_Language->get('secure_payment_heading_title');
+      
+      $this->addJavascriptFilename('ext/jquery/jquery.activity-indicator-1.0.0.min.js');
   }
 
   function getIframeWidth() {

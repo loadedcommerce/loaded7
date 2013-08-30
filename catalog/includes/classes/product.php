@@ -296,13 +296,13 @@ class lC_Product {
     global $lC_Services, $lC_Specials, $lC_Currencies;
 
     if (($with_special === true) && $lC_Services->isStarted('specials') && ($new_price = $lC_Specials->getPrice($this->_data['id'])) && ($lC_Specials->getPrice($this->_data['id']) < $this->getPriceBreak())  ) {
-      $price = '<big>' . $lC_Currencies->displayPrice($new_price, $this->_data['tax_class_id']) . '</big><small>' . $lC_Currencies->displayPrice($this->_data['price'], $this->_data['tax_class_id']) . '</small>'; 
-//        $price = '<s>' . $lC_Currencies->displayPrice($this->_data['price'], $this->_data['tax_class_id']) . '</s> <span class="productSpecialPrice">' . $lC_Currencies->displayPrice($new_price, $this->_data['tax_class_id']) . '</span>';
+     // $price = '<big>' . $lC_Currencies->displayPrice($new_price, $this->_data['tax_class_id']) . '</big><small>' . $lC_Currencies->displayPrice($this->_data['price'], $this->_data['tax_class_id']) . '</small>'; 
+        $price = '<s>' . $lC_Currencies->displayPrice($this->_data['price'], $this->_data['tax_class_id']) . '</s> <span class="product-special-price">' . $lC_Currencies->displayPrice($new_price, $this->_data['tax_class_id']) . '</span>';
     } else {
       if ( $this->hasVariants() ) {
-        $price = 'from&nbsp;<big>' . $lC_Currencies->displayPrice($this->getVariantMinPrice(), $this->_data['tax_class_id']) . '</big><small></small>';
+        $price = 'from&nbsp;' . $lC_Currencies->displayPrice($this->getVariantMinPrice(), $this->_data['tax_class_id']);
       } else {
-        $price = '<big>' . $lC_Currencies->displayPrice($this->getPriceBreak(), $this->getTaxClassID()) . '</big><small></small>';
+        $price = $lC_Currencies->displayPrice($this->getPriceBreak(), $this->getTaxClassID());
       }
     }
 
@@ -582,6 +582,18 @@ class lC_Product {
 
   public function numberOfImages() {
     return sizeof($this->_data['images']);
+  }
+  
+  public function getAdditionalImagesHtml($size = 'mini') {
+    global $lC_Image;
+    
+    $output = '';
+    foreach ( $this->getImages() as $key => $value ) {
+      if ($value['default_flag'] == true) continue;
+      $output .= '<li><a href="' . (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'popup')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png') . '" title="<?php echo $lC_Product->getTitle(); ?>" class="thickbox"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $lC_Product->getTitle() . '" /></a></li>';
+    }
+    
+    return $output;    
   }
 
   protected static function _usortVariantValues($a, $b) {

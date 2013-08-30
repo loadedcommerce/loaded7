@@ -3,8 +3,13 @@
   <definitions>
     <definition>
       <key>customers_also_purchased_title</key>
-      <value><![CDATA[Customers Who Purchased This Product Also Purchased]]></value>
+      <value><![CDATA[Customers Also Purchased]]></value>
       <group>modules-content</group>
-    </definition>
+    </definition>  
+    <definition>
+      <key>customers_also_purchased_button_buy_now</key>
+      <value><![CDATA[Buy Now]]></value>
+      <group>modules-content</group>
+    </definition>        
   </definitions>
 </language>

@@ -167,8 +167,8 @@ if ($lC_MessageStack->size('checkout_address') > 0) {
       ?>
         <div id="checkoutPaymentAddressActions" class="action_buttonbar"> 
           <!-- <span class="buttonLeft"><?php echo '<b>' . $lC_Language->get('continue_checkout_procedure_title') . '</b> ' . $lC_Language->get('continue_checkout_procedure_to_shipping'); ?></span> -->
-          <span class="buttonRight"><button class="button purple_btn" type="submit" onclick="validateForm();"><?php echo $lC_Language->get('button_continue'); ?></button></span> </div>
-          <span style="float: left"><button class="button purple_btn" name="payment_address_form" type="button" id="payment_address_form"><?php echo $lC_Language->get('show_address_form'); ?></button></span>
+          <span class="buttonRight"><button class="button purple_btn" type="submit" onclick="validateForm();"><?php echo $lC_Language->get('button_continue'); ?></button></span>
+          <span class="ButtonLeft"><button class="button purple_btn" name="payment_address_form" type="button" id="payment_address_form"><?php echo $lC_Language->get('show_address_form'); ?></button></span>
         <div style="clear:both;"></div>
       </form>
     </div>

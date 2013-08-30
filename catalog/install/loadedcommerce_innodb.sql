@@ -40,7 +40,9 @@ CREATE TABLE lc_administrators (
   first_name varchar(64) NOT NULL DEFAULT '',
   last_name varchar(64) NOT NULL DEFAULT '',
   image varchar(255) NOT NULL DEFAULT '',
-  access_group_id int NOT NULL DEFAULT '0',
+  access_group_id int(11) NOT NULL DEFAULT '0',
+  verify_key varchar(64) NOT NULL DEFAULT '',
+  language_id int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -868,8 +870,8 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(2, 'Store Owner', 'STORE_OWNER', 'Store Owner', 'The name of my store owner', 1, 2, '2011-03-04 11:41:43', '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(3, 'E-Mail Address', 'STORE_OWNER_EMAIL_ADDRESS', 'noreply@mystore.com', 'The e-mail address of my store owner', 1, 3, '2010-12-02 19:14:31', '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(4, 'E-Mail From', 'EMAIL_FROM', '"Store Owner" <noreply@mystore.com>', 'The e-mail address used in (sent) e-mails', 1, 4, '2012-03-30 19:26:23', '2009-11-26 15:58:32', NULL, NULL);
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(5, 'Country', 'STORE_COUNTRY', '223', 'The country my store is located in <br><br><b>Note: Please remember to update the store zone.</b>', 1, 6, NULL, '2009-11-26 15:58:32', 'lC_Address::getCountryName', 'lc_cfg_set_countries_pulldown_menu(class=\"select\",');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(6, 'Zone', 'STORE_ZONE', '4032', 'The zone my store is located in', 1, 7, '2012-03-31 15:47:38', '2009-11-26 15:58:32', 'lC_Address::getZoneName', 'lc_cfg_set_zones_pulldown_menu(class=\"select\",');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(5, 'Country', 'STORE_COUNTRY', '223', 'The country my store is located in <br><br><b>Note: Please remember to update the store zone.</b>', 1, 6, NULL, '2009-11-26 15:58:32', 'lC_Address::getCountryName', 'lc_cfg_set_countries_pulldown_menu');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(6, 'Zone', 'STORE_ZONE', '4032', 'The zone my store is located in', 1, 7, '2012-03-31 15:47:38', '2009-11-26 15:58:32', 'lC_Address::getZoneName', 'lc_cfg_set_zones_pulldown_menu');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(7, 'Send Extra Order Emails To', 'SEND_EXTRA_ORDER_EMAILS_TO', '', 'Send extra order emails to the following email addresses, in this format: Name 1 &lt;email@address1&gt;, Name 2 &lt;email@address2&gt;', 1, 11, '2012-09-19 14:19:17', '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(8, 'Allow Guest To Tell A Friend', 'ALLOW_GUEST_TO_TELL_A_FRIEND', '1', 'Allow guests to tell a friend about a product', 1, 15, '2012-09-16 00:37:33', '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(9, 'Store Address and Phone', 'STORE_NAME_ADDRESS', '123 Main St.\r\nAtlanta, GA 30324\r\n(404) 123-4567', 'This is the Store Name, Address and Phone used on printable documents and displayed online', 1, 18, '2012-03-30 19:26:04', '2009-11-26 15:58:32', NULL, 'lc_cfg_set_textarea_field');
@@ -1029,6 +1031,10 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(163, 'Redeem On Shipping Page?', 'SERVICE_COUPONS_DISPLAY_ON_SHIPPING_PAGE', '1', 'Display the coupons redemption form on the checkout shipping page?', 6, 0, NULL, '2013-07-31 19:05:14', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(164, 'Redeem On Payment Page?', 'SERVICE_COUPONS_DISPLAY_ON_PAYMENT_PAGE', '1', 'Display the coupons redemption form on the checkout payment page?', 6, 0, NULL, '2013-07-31 19:05:14', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(165, 'Redeem On Confirmation Page?', 'SERVICE_COUPONS_DISPLAY_ON_CONFIRMATION_PAGE', '1', 'Display the coupons redemption form on the checkout confirmation page?', 6, 0, NULL, '2013-07-31 19:05:14', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(166, 'cURL Proxy Host Name', 'CURL_PROXY_HOST', '', 'If you are required to use a cURL proxy, enter the host name here.', 21, 0, NULL, '0000-00-00 00:00:00', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(167, 'cURL Proxy Username', 'CURL_PROXY_USER', '', 'If your proxy requires a username, enter it here.', 21, 0, NULL, '0000-00-00 00:00:00', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(168, 'cURL Proxy Password', 'CURL_PROXY_PASSWORD', '', 'If your proxy requires a password, enter it here.', 21, 0, NULL, '0000-00-00 00:00:00', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(169, 'cURL Proxy Port', 'CURL_PROXY_PORT', '', 'If your proxy requires a specific port, enter it here.', 21, 0, NULL, '0000-00-00 00:00:00', NULL, NULL);
 
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(1, 'My Store', 'General information about my store', 1, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(2, 'Minimum Values', 'The minimum values for functions / data', 2, 1);
@@ -1046,6 +1052,7 @@ INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(18, 'Program Locations', 'Locations to certain programs on the server.', 18, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(19, 'Checkout', 'Checkout settings', 19, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(20, 'Editor', 'Editor settings', 20, 1);
+INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(21, 'cURL Proxy', 'cURL proxy configuration setttings.', 21, 1);
 
 INSERT INTO lc_countries VALUES (1,'Afghanistan','AF','AFG','');
 
@@ -6009,12 +6016,13 @@ INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(4, 1, 'Inquiry');
 
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(1, 1, 'Originals', 'originals', 0, 0, 0);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(2, 1, 'Thumbnails', 'thumbnails', 220, 242, 1);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(3, 1, 'Product Information Page', 'product_info', 360, 414, 1);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(4, 1, 'Large', 'large', 375, 300, 0);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(5, 1, 'Mini', 'mini', 50, 40, 0);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 600, 450, 0);
-INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(7, 1, 'Extra', 'extra', 50, 50, 0); 
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(2, 1, 'Thumbnails', 'thumbnails', 200, 240, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(3, 1, 'Product Info', 'product_info', 360, 414, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(4, 1, 'Large', 'large', 250, 300, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(5, 1, 'Mini', 'mini', 50, 60, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 550, 650, 0);
+INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(7, 1, 'Small', 'small', 100, 120, 0);
+
 
 INSERT INTO lc_tax_class VALUES (1, 'Taxable Goods', 'The following types of products are included non-food, services, etc', now(), now());
 

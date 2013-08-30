@@ -39,7 +39,7 @@ class lC_Newsletters_Admin {
         $$newsletter_module_class = new $newsletter_module_class();
       }
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qnewsletters->valueInt('newsletters_id') . '" id="' . $Qnewsletters->valueInt('newsletters_id') . '"></td>';
-      $newsletter = '<td><a class="with-tooltip" href="javascript://" onclick="showPreview(\'' . $Qnewsletters->valueInt('newsletters_id') . '\')" title="' .  $lC_Language->get('icon_preview') . '"><span class="icon-search"></span>&nbsp;' . $Qnewsletters->value('title') . '</a></td>';  
+      $newsletter = '<td><a class="with-tooltip" href="javascript:void(0);" onclick="showPreview(\'' . $Qnewsletters->valueInt('newsletters_id') . '\')" title="' .  $lC_Language->get('icon_preview') . '"><span class="icon-search"></span>&nbsp;' . $Qnewsletters->value('title') . '</a></td>';  
       $size = '<td>' . number_format($Qnewsletters->valueInt('content_length')) . '</td>';  
       $module = '<td>' . $$newsletter_module_class->getTitle() . '</td>';  
       $sent = '<td>' . (($Qnewsletters->valueInt('status') === 1) ? '<span class="icon-tick icon-green icon-size2"></span>' : '<span class="icon-cross icon-red icon-size2"></span>') . '</td>';  

@@ -33,9 +33,9 @@ class lC_Variants_pull_down_menu extends lC_Variants_Abstract {
         $group_title = $val['group_title'];
       }
       
-      $string = '<div class="variant_sel">' . 
-                '  <label>' . $group_title . '</label>' . 
-                '  <select style="width:165px !important;" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '" name="simple_options[' . $group_id . ']">' . $options . '</select>' . 
+      $string = '<div class="variant_sel form-group  margin-top margin-left">' . 
+                '  <label class="control-label">' . $group_title . '</label>' . 
+                '  <select class="form-control display-inline half-width small-margin-left" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '" name="simple_options[' . $group_id . ']">' . $options . '</select>' . 
                 '</div>';      
       
     } else {
@@ -47,12 +47,11 @@ class lC_Variants_pull_down_menu extends lC_Variants_Abstract {
           break;
         }
       }
-
-      $string = '<div class="variant_sel" id="variantsBlockData">' . 
-                '  <label>' . $data['title'] . '</label>' . 
-                lc_draw_pull_down_menu('variants[' . $data['group_id'] . ']', $data['data'], $default_value, 'onchange="refreshVariants();" id="variants_' . $data['group_id'] . '"') .
-                '</div>';  
-
+      
+      $string = '<div class="variant_sel form-group margin-top margin-left">' . 
+                '  <label class="control-label">' . $group_title . '</label>' . 
+                '  <select class="form-control display-inline half-width small-margin-left" onchange="refreshPrice();" value="' . $data['data'] . '" id="variants_' . $data['group_id'] . '" name="variants[' . $data['group_id'] . ']">' . $options . '</select>' . 
+                '</div>';       
     }              
 
     return $string;

@@ -58,13 +58,16 @@ while (list($key, $value) = each($define_list)) {
 }
 if ( ($Qlisting->numberOfRows() > 0) && ( (PREV_NEXT_BAR_LOCATION == '1') || (PREV_NEXT_BAR_LOCATION == '3') ) ) {
   ?>
-  <div>
-    <div class="listingPageLinks">
-      <span style="float: left"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></span>
-      <span style="float: right"><?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y'))); ?></span>
+  <!-- PAGINATION-->
+  <div class="product-listing-module-pagination margin-bottom">
+    <div class="float-left" style="width:40%;"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
+    <div class="float-right" style="width:40%;">
+      <ul class="pagination">
+        <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y'))); ?>
+      </ul>
     </div>
-    <div style="clear:both; height:10px;"></div>
-  </div>
+  </div><div class="clear-both"></div>
+  <!-- /PAGINATION--> 
   <?php
 }
 ?>
@@ -175,13 +178,16 @@ if ( ($Qlisting->numberOfRows() > 0) && ( (PREV_NEXT_BAR_LOCATION == '1') || (PR
 <?php
 if ( ($Qlisting->numberOfRows() > 0) && ((PREV_NEXT_BAR_LOCATION == '2') || (PREV_NEXT_BAR_LOCATION == '3')) ) {
   ?>
-<div>
-  <div class="listingPageLinks">
-    <span style="float: right;"><?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y'))); ?></span>
-    <span style="float: left; margin-top:6px;"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></span>
-  </div>
-  <div style="clear:both;">&nbsp;</div>
-</div> 
+  <!-- PAGINATION-->
+  <div class="product-listing-module-pagination margin-bottom">
+    <div class="float-left" style="width:40%;"><?php echo $Qlisting->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
+    <div class="float-right" style="width:40%;">
+      <ul class="pagination">
+        <?php echo $Qlisting->getBatchPageLinks('page', lc_get_all_get_params(array('page', 'info', 'x', 'y'))); ?>
+      </ul>
+    </div>
+  </div><div class="clear-both"></div>
+  <!-- /PAGINATION--> 
   <?php
 }
 ?>
