@@ -380,7 +380,7 @@ class lC_Payment_cresecure extends lC_Payment {
       case '9':
         $fHeight = '300px';
         $fScroll = 'no';
-        $fStyle = 'margin-left=20px';
+        $fStyle = 'margin-left=10px';
         $fWidth = '500px';       
         break;
         
