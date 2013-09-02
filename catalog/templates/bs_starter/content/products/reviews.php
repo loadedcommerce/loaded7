@@ -15,7 +15,7 @@
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
     <?php echo lC_Reviews::getListingOutput(); ?>
     <div class="button-set">
-      <a href="<?php echo lc_href_link(FILENAME_DEFAULT); ?>"><button class="pull-right btn btn-lg btn-primary" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
+      <form action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></form>
     </div>  
   </div>  
 </div>
