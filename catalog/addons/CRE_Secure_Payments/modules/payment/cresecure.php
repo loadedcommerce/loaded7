@@ -78,8 +78,7 @@ class lC_Payment_cresecure extends lC_Payment {
 
     $this->_title = $lC_Language->get('payment_cresecure_title');
     $this->_method_title = $lC_Language->get('payment_cresecure_method_title');
-    //$this->_status = (defined('ADDONS_PAYMENT_CRE_SECURE_PAYMENTS_STATUS') && (ADDONS_PAYMENT_CRE_SECURE_PAYMENTS_STATUS == '1') ? true : false);
-    $this->_status = true;
+    $this->_status = (defined('ADDONS_PAYMENT_CRE_SECURE_PAYMENTS_STATUS') && (ADDONS_PAYMENT_CRE_SECURE_PAYMENTS_STATUS == '1') ? true : false);
     $this->_sort_order = (defined('ADDONS_PAYMENT_CRE_SECURE_PAYMENTS_SORT_ORDER') ? ADDONS_PAYMENT_CRE_SECURE_PAYMENTS_SORT_ORDER : null);
 
     if (defined('ADDONS_PAYMENT_CRE_SECURE_PAYMENTS_STATUS')) {

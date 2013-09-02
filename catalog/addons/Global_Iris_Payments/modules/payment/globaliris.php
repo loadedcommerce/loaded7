@@ -313,7 +313,7 @@ class lC_Payment_globaliris extends lC_Payment {
     // how many content columns
     $content_span = (isset($_SESSION['content_span']) && $_SESSION['content_span'] != NULL) ? $_SESSION['content_span'] : '6';
     
-    $fHeight = '500px';
+    $fHeight = '300px';
     $fScroll = 'no';    
     
     switch($content_span) {
@@ -337,8 +337,9 @@ class lC_Payment_globaliris extends lC_Payment {
     switch($mediaType) {
       case 'mobile-portrait' :
         $fWidth = '280px';
-        $fHeight = '510px';
+        $fHeight = '300px';
         $fStyle = '';
+        $fScroll = 'auto';
         break;
       case 'mobile-landscape' :
         $fWidth = '440px';
@@ -348,7 +349,7 @@ class lC_Payment_globaliris extends lC_Payment {
         $fWidth = '540px';
         break;   
       case 'small-tablet-landscape' :
-        $fWidth = '320px';
+        $fWidth = '320px'; 
         break;                                         
       case 'tablet-portrait' :
         $fWidth = '320px';
