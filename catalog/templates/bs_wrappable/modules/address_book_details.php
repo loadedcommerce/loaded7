@@ -95,7 +95,7 @@
     echo '<div class="form-group full-width margin-bottom"><label class="sr-only"></label>' . lc_draw_pull_down_menu('country', $countries_array, (isset($Qentry) ? $Qentry->valueInt('entry_country_id') : STORE_COUNTRY), 'class="form-control"') . '</div>';
     
     if ($lC_Customer->hasDefaultAddress() && ((isset($_GET['edit']) && ($lC_Customer->getDefaultAddressID() != $_GET['address_book'])) || isset($_GET['new'])) ) {
-      echo '<div class="checkbox small-margin-left">' . lc_draw_checkbox_field('primary') . '<label class="small-margin-left">' . $lC_Language->get('set_as_primary') . '</label></div>';
+      echo '<div class="checkbox small-margin-left">' . lc_draw_checkbox_field('primary', null, null, null, null) . '<label class="small-margin-left">' . $lC_Language->get('set_as_primary') . '</label></div>';
     }
     ?>
   </div>
