@@ -346,7 +346,10 @@ class lC_Store_Admin {
         self::_resetAddons();
         lC_Cache::clear('modules-addons');
         lC_Cache::clear('configuration');
+        lC_Cache::clear('templates');
         lC_Cache::clear('addons');
+        lC_Cache::clear('vqmoda');
+        lC_Cache::clear('vqmods');
 
         return true;
       }
@@ -400,7 +403,10 @@ class lC_Store_Admin {
       self::_resetAddons();
       lC_Cache::clear('modules-addons');
       lC_Cache::clear('configuration');
+      lC_Cache::clear('templates');
       lC_Cache::clear('addons');
+      lC_Cache::clear('vqmoda');
+      lC_Cache::clear('vqmods');
       
       return true;
     }

@@ -20,6 +20,7 @@ if ($lC_Payment->hasIframeParams()) {
   $fScroll = 'no';
   $fStyle = null;
 }
+$secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <div class="row">
@@ -49,9 +50,9 @@ if ($lC_Payment->hasIframeParams()) {
               <script>
                 /* we use javascript here due to js scrubbing at payment endpoints - we don't want to show if javascript is disabled or scrubbed */
                 var output = '<div class="security-info-container">'+
-                             '  <div class="security-info-title text-right cursor-pointer" onclick="$(\'#security-info-alert\').toggle(\'slideDown\');"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin:10px 5px;"') . $lC_Language->get('secure_payment_security_info_title'); ?><span class="arrow-container"><span id="arrow" class="arrow-down"></span></span></div>'+
+                             '  <div class="security-info-title text-right cursor-pointer" onclick="$(\'#security-info-alert\').toggle(\'slideDown\');"><?php echo lc_image('images/greenlock.png', null, null, null, 'class="valign-middle margin-top margin-bottom small-margin-left small-margin-right"') . $lC_Language->get('secure_payment_security_info_title'); ?></div>'+
                              '  <div id="security-info-alert" class="alert alert-success" style="display:none;">'+
-                             '    <div class="security-info-url"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin-right:5px;"') . ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL); ?></div>'+
+                             '  <div class="security-info-url"><?php echo lc_image('images/greenlock.png', null, null, null, 'class="valign-middle small-margin-right"') . $secureUrl; ?></div>'+
                              '    <div class="security-info-text normal large-margin-left small-padding-left"><?php echo $lC_Language->get('secure_payment_security_info_text'); ?></div>'+
                              '  </div>' +
                              '</div>';

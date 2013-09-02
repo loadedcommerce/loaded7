@@ -107,6 +107,10 @@
   font-weight:200; 
 }
 
+#loaded7 .highlight-color {
+  color:#66afe9;
+}
+
 #loaded7 .red { 
   color:#ff0000; 
 }
@@ -482,6 +486,7 @@
 #loaded7 .align-center { text-align:center !important; } /* use bootstrap text-center instead */
 #loaded7 .align-left { text-align:left !important; } /* use bootstrap text-left instead */
 #loaded7 .align-right { text-align:right !important; } /* use bootstrap text-right instead */
+#loaded7 .valign-middle { vertical-align:middle !important; }
 
 #loaded7 .small-margin-top-neg { margin-top:-4px !important; }
 #loaded7 .small-margin-bottom-neg { margin-bottom:-4px !important; }

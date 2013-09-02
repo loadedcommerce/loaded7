@@ -107,6 +107,7 @@ class lC_Payment_payleappayments extends lC_Payment {
     } else {
       $this->iframe_relay_url = 'https://secure1.payleap.com/plcheckout.aspx';  // production url
     }
+    $this->iframe_params = $this->_getIframeParams();
     $this->form_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true) ;  
 
     $Qcredit_cards = $lC_Database->query('select credit_card_name from :table_credit_cards where credit_card_status = :credit_card_status');
@@ -298,5 +299,65 @@ class lC_Payment_payleappayments extends lC_Payment {
 
     return $this->_check;
   }
+ /**
+  * Determine the iFrame paramters depending on device params
+  *
+  * @access private
+  * @return string
+  */
+  private function _getIframeParams() {
+    
+    // how many content columns
+    $content_span = (isset($_SESSION['content_span']) && $_SESSION['content_span'] != NULL) ? $_SESSION['content_span'] : '6';
+    
+    $fHeight = '500px';
+    $fScroll = 'no';    
+    
+    switch($content_span) {
+      case '9':
+        $fStyle = 'margin-left=10px';
+        $fWidth = '500px';       
+        break;
+        
+      case '12':
+        $fStyle = 'margin-left=120px';
+        $fWidth = '500px';       
+        break;
+        
+      default :
+        $fStyle = 'margin-left=-20px';
+        $fWidth = '380px';      
+      
+    }
+    
+    $mediaType = (isset($_SESSION['mediaType']) && $_SESSION['mediaType'] != NULL) ? strtolower($_SESSION['mediaType']) : 'desktop';
+    switch($mediaType) {
+      case 'mobile-portrait' :
+        $fWidth = '280px';
+        $fHeight = '510px';
+        $fStyle = '';
+        break;
+      case 'mobile-landscape' :
+        $fWidth = '440px';
+        $fStyle = '';        
+        break;
+      case 'small-tablet-portrait' :
+        $fWidth = '540px';
+        break;   
+      case 'small-tablet-landscape' :
+        $fWidth = '320px';
+        break;                                         
+      case 'tablet-portrait' :
+        $fWidth = '320px';
+        break;  
+      case 'tablet-landscape' :
+        $fWidth = '445px';
+        $fStyle = '';                
+        break;                                                                 
+      default : // desktop
+    }    
+    
+    return 'width=' . $fWidth . '&height=' . $fHeight . '&scroll=' . $fScroll . '&' . $fStyle;
+  }  
 }
 ?>
