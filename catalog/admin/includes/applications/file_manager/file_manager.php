@@ -17,7 +17,7 @@ global $lC_Vqmod;
 
 require($lC_Vqmod->modCheck('includes/applications/file_manager/classes/file_manager.php'));
 
-define('ZM_ADMIN_FILE_MANAGER_ROOT_PATH', realpath('../'));
+define('LC_ADMIN_FILE_MANAGER_ROOT_PATH', realpath('../'));
 
 class lC_Application_File_manager extends lC_Template_Admin {
  /*
@@ -34,22 +34,22 @@ class lC_Application_File_manager extends lC_Template_Admin {
 
     $this->_page_title = $lC_Language->get('heading_title');
 
-    if (!defined('ZM_ADMIN_FILE_MANAGER_ROOT_PATH')) define('ZM_ADMIN_FILE_MANAGER_ROOT_PATH', substr(DIR_FS_CATALOG, 0, -1));
+    if (!defined('LC_ADMIN_FILE_MANAGER_ROOT_PATH')) define('LC_ADMIN_FILE_MANAGER_ROOT_PATH', substr(DIR_FS_CATALOG, 0, -1));
 
     if ( !isset($_SESSION['fm_directory']) ) {
-      $_SESSION['fm_directory'] = ZM_ADMIN_FILE_MANAGER_ROOT_PATH;
+      $_SESSION['fm_directory'] = LC_ADMIN_FILE_MANAGER_ROOT_PATH;
     }
 
     if ( isset($_GET['directory']) ) {
       $_SESSION['fm_directory'] .= '/' . $_GET['directory'];
     } elseif ( isset($_GET['goto']) ) {
-      $_SESSION['fm_directory'] = ZM_ADMIN_FILE_MANAGER_ROOT_PATH . '/' . urldecode($_GET['goto']);
+      $_SESSION['fm_directory'] = LC_ADMIN_FILE_MANAGER_ROOT_PATH . '/' . urldecode($_GET['goto']);
     }
 
     $_SESSION['fm_directory'] = realpath($_SESSION['fm_directory']);
 
-    if ( ( substr($_SESSION['fm_directory'], 0, strlen(ZM_ADMIN_FILE_MANAGER_ROOT_PATH)) != ZM_ADMIN_FILE_MANAGER_ROOT_PATH ) || !is_dir($_SESSION['fm_directory']) ) {
-      $_SESSION['fm_directory'] = ZM_ADMIN_FILE_MANAGER_ROOT_PATH;
+    if ( ( substr($_SESSION['fm_directory'], 0, strlen(LC_ADMIN_FILE_MANAGER_ROOT_PATH)) != LC_ADMIN_FILE_MANAGER_ROOT_PATH ) || !is_dir($_SESSION['fm_directory']) ) {
+      $_SESSION['fm_directory'] = LC_ADMIN_FILE_MANAGER_ROOT_PATH;
     }
 
     if ( !isset($_GET['action']) ) {
