@@ -880,8 +880,8 @@ class lC_Products_Admin {
           $specials_data = array('specials_id' => (int)$specials_id,
                                  'products_id' => (int)$products_id,
                                  'specials_price' => $data['products_special_price1'],
-                                 'start_date' => $data['products_special_start_date1'],
-                                 'expires_date' => $data['products_special_expires_date1'],
+                                 'specials_start_date' => $data['products_special_start_date1'],
+                                 'specials_expires_date' => $data['products_special_expires_date1'],
                                  'status' => $data['products_special_pricing_enable1']);
           lC_Specials_Admin::save((int)$specials_id, $specials_data);
         }
