@@ -119,7 +119,6 @@ if (!function_exists('lc_href_link')) {
               if (strpos($link, 'cPath')) {
                 $cat_id = explode("_", substr($link, $cPathPos+6));
                 if (count($cat_id) < 2) {
-                  echo 'one cat deep -> ' . $link . ' | ';
                   $cat_data = $lC_CategoryTree->getData($cat_id[0]);
                   $cat_ids = explode("_", substr($cat_data['query'], 6));
                 }

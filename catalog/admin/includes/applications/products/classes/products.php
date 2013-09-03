@@ -1357,48 +1357,47 @@ class lC_Products_Admin {
     return ( $Qupdate->affectedRows() > 0 );
   }
  /*
-  * Return the number of keywords for a product
+  * Return the number of permalinks for a product
   *
-  * @param string $keyword The keyword string to count
-  * @param integer $id The products id, null = count all products
+  * @param string $permalink The permalink string to count
   * @access public
   * @return integer
   */
-  public static function getKeywordCount($keyword, $id = null) {
+  public static function getPermalinkCount($permalink, $iid = null, $type = null) {
     global $lC_Database;
 
-    $Qkeywords = $lC_Database->query('select count(*) as total, products_keyword from :table_products_description where products_keyword = :products_keyword');
+    $Qpermalinks = $lC_Database->query('select count(*) as total, item_id, permalink from :table_permalinks where permalink = :permalink');
 
-    if ( is_numeric($id) ) {
-      $Qkeywords->appendQuery('and products_id != :products_id');
-      $Qkeywords->bindInt(':products_id', $id);
+    if (is_numeric($iid)) {
+      $Qpermalinks->appendQuery('and item_id != :item_id');
+      $Qpermalinks->bindInt(':item_id', $iid);
     }
 
-    $Qkeywords->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-    $Qkeywords->bindValue(':products_keyword', $keyword);
-    $Qkeywords->execute();
-
-    if ( is_numeric($id) && ($keyword == $Qkeywords->value('products_keyword'))) {
-      $keyword_count = 0;
-    } else {
-      $keyword_count = $Qkeywords->valueInt('total');
+    $Qpermalinks->bindTable(':table_permalinks', TABLE_PERMALINKS);
+    $Qpermalinks->bindValue(':permalink', $permalink);
+    $Qpermalinks->execute();
+    
+    if ($iid == $Qpermalinks->valueInt('item_id') && $permalink == $Qpermalinks->value('permalink')) {
+      $permalink_count = 0;
+    } else {  
+      $permalink_count = $Qpermalinks->valueInt('total');
     }
-
-    return $keyword_count;
+    
+    return $permalink_count;
   }
  /*
-  * Validate the product keyword
+  * Validate the product permalink
   *
-  * @param string $keyword The product keyword
+  * @param string $permalink The product permalink
   * @access public
   * @return array
   */
-  public static function validate($keyword_array, $pid = null) {
-
-    $validated = true;;
-    foreach($keyword_array as $keyword) {
-      if ( preg_match('/^[a-z0-9_-]+$/iD', $keyword) !== 1 ) $validated = false;
-      if ( lC_Products_Admin::getKeywordCount($keyword, $pid) > 0) $validated = false;
+  public static function validatePermalink($permalink_array, $iid = null, $type = null) {
+    
+    $validated = true;
+    foreach($permalink_array as $permalink) {
+      if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
+      if ( lC_Products_Admin::getPermalinkCount($permalink, $iid, $type) > 0) $validated = false;
     }
 
     return $validated;
