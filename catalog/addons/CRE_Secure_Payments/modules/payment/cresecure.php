@@ -375,42 +375,41 @@ class lC_Payment_cresecure extends lC_Payment {
     // how many content columns
     $content_span = (isset($_SESSION['content_span']) && $_SESSION['content_span'] != NULL) ? $_SESSION['content_span'] : '6';
     
+    $fHeight = '300px';
+    $fScroll = 'no';
+        
     switch($content_span) {
       case '9':
-        $fHeight = '300px';
-        $fScroll = 'no';
         $fStyle = 'margin-left=10px';
         $fWidth = '500px';       
         break;
         
       case '12':
-        $fHeight = '300px';
-        $fScroll = 'no';
         $fStyle = 'margin-left=120px';
         $fWidth = '500px';       
         break;
         
       default :
-        $fHeight = '300px';
-        $fScroll = 'no';
         $fStyle = 'margin-left=-20px';
         $fWidth = '380px';      
       
     }
     
-    $mediaType = (isset($_SESSION['mediaType']) && $_SESSION['mediaType'] != NULL) ? strtolower($_SESSION['mediaType']) : 'desktop';
+    $mediaType = (isset($_SESSION['mediaType']) && $_SESSION['mediaType'] != NULL) ? $_SESSION['mediaType'] : 'desktop';
+    $mediaSize = (isset($_SESSION['mediaSize']) && $_SESSION['mediaSize'] != NULL) ? (int)$_SESSION['mediaSize'] : '500';
+    
+    $cWidth = ($mediaSize > 500) ? 500 : ($mediaSize * .93);
+    $fWidth = (string)$cWidth . 'px';     
+    
     switch($mediaType) {
       case 'mobile-portrait' :
-        $fWidth = '310px';
-        $fHeight = '360px';
+        $fHeight = '510px';
         $fStyle = '';
         break;
       case 'mobile-landscape' :
-        $fWidth = '440px';
         $fStyle = '';        
         break;
       case 'small-tablet-portrait' :
-        $fWidth = '470px';
         break;   
       case 'small-tablet-landscape' :
         $fWidth = '320px';
@@ -423,7 +422,7 @@ class lC_Payment_cresecure extends lC_Payment {
         $fStyle = '';                
         break;                                                                 
       default : // desktop
-    }    
+    }     
     
     return 'width=' . $fWidth . '&height=' . $fHeight . '&scroll=' . $fScroll . '&' . $fStyle;
   }  
