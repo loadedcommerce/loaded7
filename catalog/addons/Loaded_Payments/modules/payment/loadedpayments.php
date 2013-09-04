@@ -330,19 +330,21 @@ class lC_Payment_loadedpayments extends lC_Payment {
       
     }
     
-    $mediaType = (isset($_SESSION['mediaType']) && $_SESSION['mediaType'] != NULL) ? strtolower($_SESSION['mediaType']) : 'desktop';
+    $mediaType = (isset($_SESSION['mediaType']) && $_SESSION['mediaType'] != NULL) ? $_SESSION['mediaType'] : 'desktop';
+    $mediaSize = (isset($_SESSION['mediaSize']) && $_SESSION['mediaSize'] != NULL) ? (int)$_SESSION['mediaSize'] : '500';
+    
+    $cWidth = ($mediaSize > 500) ? 500 : ($mediaSize * .90);
+    $fWidth = (string)$cWidth . 'px';     
+    
     switch($mediaType) {
       case 'mobile-portrait' :
-        $fWidth = '280px';
         $fHeight = '510px';
         $fStyle = '';
         break;
       case 'mobile-landscape' :
-        $fWidth = '440px';
         $fStyle = '';        
         break;
       case 'small-tablet-portrait' :
-        $fWidth = '540px';
         break;   
       case 'small-tablet-landscape' :
         $fWidth = '320px';
