@@ -80,5 +80,16 @@ class lC_CategoryTree_Admin extends lC_CategoryTree {
 
     return array_reverse($path);
   }
+
+  function getcPath($category_id) {
+    
+    $getCpathArray = $this->getPathArray($category_id);
+    $cPath = '';
+    foreach ($getCpathArray as $key => $value) {
+      $cPath .= $value['id'] . '_';
+    }
+
+    return substr($cPath, 0, -1);
+  }
 }
 ?>

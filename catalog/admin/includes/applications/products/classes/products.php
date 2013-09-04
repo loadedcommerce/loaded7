@@ -399,7 +399,7 @@ class lC_Products_Admin {
   * @return boolean
   */
   public static function save($id = null, $data) {
-    global $lC_Database, $lC_Language, $lC_Image;
+    global $lC_Database, $lC_Language, $lC_Image, $lC_CategoryTree;
 
     $error = false;
 
@@ -561,8 +561,9 @@ class lC_Products_Admin {
     }
     
     if ( $error === false ) {
+      $cPath = ($category_id != '') ? $lC_CategoryTree->getcPath($category_id) : 0;
       foreach ($lC_Language->getAll() as $l) {
-        if ( is_numeric($id) ) {
+        if (is_numeric($id)) {
           $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url where products_id = :products_id and language_id = :language_id');
         } else {
           $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_keyword, products_tags, products_url) values (:products_id, :language_id, :products_name, :products_description, :products_keyword, :products_tags, :products_url)');
@@ -577,6 +578,25 @@ class lC_Products_Admin {
         $Qpd->bindValue(':products_url', $data['products_url'][$l['id']]);
         $Qpd->setLogging($_SESSION['module'], $products_id);
         $Qpd->execute();
+
+        if ( $lC_Database->isError() ) {
+          $error = true;
+          break;
+        }
+        
+        // added for permalink
+        if (is_numeric($id)) {
+          $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink where item_id = :item_id and type = :type and language_id = :language_id');
+        } else {
+          $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
+        }
+        $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
+        $Qpl->bindInt(':item_id', $products_id);
+        $Qpl->bindInt(':language_id', $l['id']);
+        $Qpl->bindInt(':type', 2);
+        $Qpl->bindValue(':query', 'cPath=' . $cPath);
+        $Qpl->bindValue(':permalink', $data['products_keyword'][$l['id']]);
+        $Qpl->execute();
 
         if ( $lC_Database->isError() ) {
           $error = true;
@@ -1263,6 +1283,18 @@ class lC_Products_Admin {
         $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
         $Qpb->bindInt(':products_id', $id);
         $Qpb->setLogging($_SESSION['module'], $id);
+        $Qpb->execute();
+
+        if ( $lC_Database->isError() ) {
+          $error = true;
+        }
+      }
+      
+      // permalink
+      if ( $error === false ) {
+        $Qpb = $lC_Database->query('delete from :table_permalinks where item_id = :item_id');
+        $Qpb->bindTable(':table_permalinks', TABLE_PERMALINKS);
+        $Qpb->bindInt(':item_id', $id);
         $Qpb->execute();
 
         if ( $lC_Database->isError() ) {
