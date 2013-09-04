@@ -57,7 +57,7 @@ class Paypal_Payments_Advanced extends lC_Addon { // your addon must extend lC_A
    /**
     * The base64 encoded addon image used in the addons store listing
     */     
-    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/paypal_adv.png');
+    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/paypal_adv.png', $this->_title);
    /**
     * The mobile capability of the addon
     */ 

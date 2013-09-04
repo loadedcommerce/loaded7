@@ -59,7 +59,7 @@ class Zones_Rate_Shipping extends lC_Addon { // your addon must extend lC_Addon
    /**
     * The addon image used in the addons store listing
     */     
-    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/zones.png');
+    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/zones.png', $this->_title);
    /**
     * The addon enable/disable switch
     */    

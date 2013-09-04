@@ -23,7 +23,7 @@
     </definition>   
     <definition>
       <key>payment_cresecure_method_blurb</key>
-      <value><![CDATA[powered by <img src="addons/CRE_Secure_Payments/images/cresecure-small.png" style="vertical-align:middle">]]></value>
+      <value><![CDATA[powered by <img src="addons/CRE_Secure_Payments/images/cresecure-small.png" alt="CRE Secure Payments" style="vertical-align:middle">]]></value>
       <group>checkout</group>
     </definition>      
   </definitions>
