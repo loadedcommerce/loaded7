@@ -5596,6 +5596,7 @@ INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'LSB','
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'LUT','Luton');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MAN','Manchester');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MDB','Middlesbrough');
+INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MDX','Middlesex');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MDW','Medway');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MFT','Magherafelt');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MIK','Milton Keynes');
