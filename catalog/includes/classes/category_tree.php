@@ -85,8 +85,8 @@
 
         while ( $Qcategories->next() ) {
           // added to grab permalink if exists
-          $Qpermalink = $lC_Database->query('select item_id, query, keyword from :table_permalink where item_id = :item_id and type = 1 limit 1');
-          $Qpermalink->bindTable(':table_permalink', 'lc_permalink');
+          $Qpermalink = $lC_Database->query('select item_id, query, permalink from :table_permalinks where item_id = :item_id and type = 1 limit 1');
+          $Qpermalink->bindTable(':table_permalinks', 'lc_permalinks');
           $Qpermalink->bindInt(':item_id', $Qcategories->valueInt('categories_id'));
           $Qpermalink->bindInt(':language_id', $lC_Language->getID());
           $Qpermalink->execute();
@@ -95,7 +95,7 @@
                                                                                                              'name' => $Qcategories->value('categories_name'),
                                                                                                              'menu_name' => $Qcategories->value('categories_menu_name'),
                                                                                                              'query' => $Qpermalink->value('query'),
-                                                                                                             'permalink' => $Qpermalink->value('keyword'),
+                                                                                                             'permalink' => $Qpermalink->value('permalink'),
                                                                                                              'image' => $Qcategories->value('categories_image'),
                                                                                                              'count' => 0,
                                                                                                              'mode' => $Qcategories->value('categories_mode'),
