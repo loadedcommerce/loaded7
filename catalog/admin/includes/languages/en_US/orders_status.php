@@ -22,6 +22,7 @@ modal_heading_delete_order_status = Delete Order Status
 modal_heading_batch_delete_order_status = Batch Delete Order Statuses
 
 field_name = Name:
+field_type = Type:
 field_set_as_default = Set as Default?
 
 orders = Orders

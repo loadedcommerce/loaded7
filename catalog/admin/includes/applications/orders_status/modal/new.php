@@ -11,6 +11,9 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+$typesSelectArr[] = array('id' => 'Pending', 'text' => "Pending");
+$typesSelectArr[] = array('id' => 'Approved', 'text' => "Approved");
+$typesSelectArr[] = array('id' => 'Rejected', 'text' => "Rejected");
 ?>
 <style>
 #newStatus { padding-bottom:20px; }
@@ -41,6 +44,10 @@ function newStatus() {
                    '      <p class="button-height inline-label">'+
                    '        <label for="name" class="label"><?php echo $lC_Language->get('field_name'); ?></label>'+
                    '        <span id="newStatusNamesContainer"></span>'+
+                   '      </p>'+
+                   '      <p class="button-height inline-label">'+
+                   '        <label for="type" class="label"><?php echo $lC_Language->get('field_type'); ?></label>'+
+                   '        <?php echo lc_draw_pull_down_menu('type', $typesSelectArr, null, 'id="status_type_id" class="select check-list replacement" style="min-width:200px;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="default" class="label"><?php echo $lC_Language->get('field_set_as_default'); ?></label>'+
