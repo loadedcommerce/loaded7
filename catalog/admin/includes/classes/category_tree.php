@@ -69,7 +69,7 @@ class lC_CategoryTree_Admin extends lC_CategoryTree {
       foreach ( $categories as $id => $info ) {
         if ( $id == $category_id ) {
           $path[] = array('id' => $id,
-            'name' => $info['name']);
+                          'name' => $info['name']);
 
           if ( $parent != $this->root_category_id ) {
             $this->getPathArray($parent);
@@ -88,7 +88,7 @@ class lC_CategoryTree_Admin extends lC_CategoryTree {
     foreach ($getCpathArray as $key => $value) {
       $cPath .= $value['id'] . '_';
     }
-
+    
     return substr($cPath, 0, -1);
   }
 }
