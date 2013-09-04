@@ -11,7 +11,8 @@
 
 heading_title = Order Statuses
 
-table_heading_order_statuses = Order Statuses
+table_heading_order_status = Order Status
+table_heading_status_type = Status Type
 table_heading_action = Action
 
 button_new_status = New Status

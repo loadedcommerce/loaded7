@@ -27,8 +27,8 @@
     <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
       <thead>
         <tr>
-          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_order_statuses'); ?></th>
-          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_order_statuses'); ?></th>
+          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_order_status'); ?></th>
+          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_status_type'); ?></th>
           <th scope="col" class="align-right">
            <span class="button-group compact" style="white-space:nowrap;">
              <a style="display:none;" href="javascript:void(0);" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access']['orders'] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access']['orders'] < 2) ? '#' : 'javascript://" onclick="newStatus(); return false;'); ?>" title="<?php echo $lC_Language->get('button_new_status'); ?>"></a>
