@@ -1434,7 +1434,7 @@ class lC_Products_Admin {
 
     return $validated;
   }
-    /*
+ /*
   * Get the product attribute modules HTML
   *
   * @param string $section The product page section to display in

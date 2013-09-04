@@ -611,6 +611,52 @@ class lC_Categories_Admin {
     }
 
     return $icon;
+  } 
+ /*
+  * Return the number of permalinks for a category
+  *
+  * @param string $permalink The permalink string to count
+  * @access public
+  * @return integer
+  */
+  public static function getPermalinkCount($permalink, $cid = null, $type = null) {
+    global $lC_Database;
+
+    $Qpermalinks = $lC_Database->query('select count(*) as total, item_id, permalink from :table_permalinks where permalink = :permalink');
+
+    if (is_numeric($cid)) {
+      $Qpermalinks->appendQuery('and item_id != :item_id');
+      $Qpermalinks->bindInt(':item_id', $cid);
+    }
+
+    $Qpermalinks->bindTable(':table_permalinks', TABLE_PERMALINKS);
+    $Qpermalinks->bindValue(':permalink', $permalink);
+    $Qpermalinks->execute();
+    
+    if ($cid == $Qpermalinks->valueInt('item_id') && $permalink == $Qpermalinks->value('permalink')) {
+      $permalink_count = 0;
+    } else {  
+      $permalink_count = $Qpermalinks->valueInt('total');
+    }
+    
+    return $permalink_count;
+  }
+ /*
+  * Validate the product permalink
+  *
+  * @param string $permalink The product permalink
+  * @access public
+  * @return array
+  */
+  public static function validatePermalink($permalink_array, $cid = null, $type = null) {
+    
+    $validated = true;
+    foreach($permalink_array as $permalink) {
+      if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
+      if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type) > 0) $validated = false;
+    }
+
+    return $validated;
   }
                           
 }
