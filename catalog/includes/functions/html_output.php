@@ -10,7 +10,7 @@
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
-*/
+*/ 
 
 /**
 * Generate an internal URL address for the catalog side
@@ -25,7 +25,7 @@
 */
 if (!function_exists('lc_href_link')) {
   function lc_href_link($page = null, $parameters = null, $connection = 'NONSSL', $add_session_id = true, $search_engine_safe = true, $use_full_address = false) {
-    global $request_type, $lC_Session, $lC_Services;
+    global $request_type, $lC_Session, $lC_Services, $lC_CategoryTree, $lC_Products;
 
     if (!in_array($connection, array('NONSSL', 'SSL', 'AUTO'))) {
       $connection = 'NONSSL';
@@ -43,7 +43,7 @@ if (!function_exists('lc_href_link')) {
       $use_full_address = false;
     }
 
-    if (($search_engine_safe === true) && ($use_full_address === false) && isset($lC_Services) && $lC_Services->isStarted('sefu')) {
+    if (($search_engine_safe === true) && ($use_full_address === false) && isset($lC_Services) && $lC_Services->isStarted('seo')) {
       $use_full_address = true;
     }
 
@@ -99,14 +99,76 @@ if (!function_exists('lc_href_link')) {
       $link = str_replace('&&', '&', $link);
     }
 
-    if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('sefu')) {
-      $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
-    } else {
-      if (strpos($link, '&') !== false) {
-        $link = str_replace('&', '&amp;', $link);
+    if (!stristr($link, 'rpc.php')) {
+      if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('seo')) {
+        $cat_path = '';
+        if ( ($cPathPos = strpos($link, 'cPath')) || (strpos($link, 'products.php')) ) {
+          if (defined('SERVICE_SEO_URL_ADD_CATEGORY_PARENT') && SERVICE_SEO_URL_ADD_CATEGORY_PARENT == 1) {
+            // categories
+            if ( (strpos($link, 'index.php') && strpos($link, 'cPath')) ) {
+              $cat_id = explode("_", substr($link, $cPathPos+6));
+              if (count($cat_id) < 2) {
+                $cat_data = $lC_CategoryTree->getData($cat_id[0]);
+                $cat_ids = explode("_", substr($cat_data['query'], 6));
+              } else {
+                $cat_ids = explode("_", substr($link, $cPathPos+6));
+              }
+            }
+            // products
+            if ( (strpos($link, 'products.php') && !strpos($link, 'cart_add') && !strpos($link, 'reviews') && !strpos($link, '?specials') && !strpos($link, '?new')) ) {
+              if (strpos($link, 'cPath')) {
+                $cat_id = explode("_", substr($link, $cPathPos+6));
+                if (count($cat_id) < 2) {
+                  $cat_data = $lC_CategoryTree->getData($cat_id[0]);
+                  $cat_ids = explode("_", substr($cat_data['query'], 6));
+                }
+              } else {
+                $permalink = substr($link, strpos($link, 'products.php?')+13);
+                if (!strpos($permalink, '/') &&
+                    !strpos($permalink, '?') &&
+                    !strpos($permalink, ',')) {
+                    $pQuery = get_permalink_query($permalink);
+                    $cat_ids = explode("_", substr($pQuery, 6));
+                }
+              }
+            }
+            foreach ($cat_ids as $id => $value) {
+              $cat_data = $lC_CategoryTree->getData($value);
+              if ($cat_data['permalink'] != '') {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/';
+              } else {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+              }
+            }
+          } else {
+            if (!strpos($link, 'products.php')) {
+              $cat_id = end(explode("_", substr($link, $cPathPos+6)));
+              $cat_data = $lC_CategoryTree->getData($cat_id);
+              if ($cat_data['permalink'] != '') {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/';
+              } else {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+              }
+            }
+          }
+          $link = str_replace(array('?', '&', '=', 'index.php', 'products.php'), array('/', '/', ',', 'category', 'product'), $link);
+          $link = str_replace(array('category/', 'product/'), array('category/' . $cat_path, 'product/' . $cat_path), $link);
+          $link = str_replace(array('product//'), array('product/'), $link);
+          $link = preg_replace('/cPath,.*/', '', $link);
+          $link = preg_replace('{/$}', '', $link);
+        } else {
+          if ( (strpos($link, 'products.php') && !strpos($link, '&')) || (strpos($link, 'cPath=') && !strpos($link, '&')) ) {
+            $link = str_replace(array('?', '&', '=', 'products.php'), array('/', '/', ',', 'product'), $link);
+          } else {
+            $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
+          }
+        }
+      } else {
+        if (strpos($link, '&') !== false) {
+          $link = str_replace('&', '&amp;', $link);
+        }
       }
     }
-
     return $link;
   }
 }
@@ -766,6 +828,19 @@ if (!function_exists('lc_output_utf8_encoded')) {
 if (!function_exists('lc_output_utf8_decoded')) {
   function lc_output_utf8_decoded($text) {
     return utf8_decode($text);
+  }
+}
+
+if (!function_exists('get_permalink_query')) {
+  function get_permalink_query($key) {
+    global $lC_Database;
+    
+    $Qpermalink = $lC_Database->query('select query from :table_permalinks where permalink = :permalink and type = 2');
+    $Qpermalink->bindTable(':table_permalinks', 'lc_permalinks');
+    $Qpermalink->bindValue(':permalink', $key);
+    $Qpermalink->execute();          
+    
+    return $Qpermalink->value('query');
   }
 }
 ?>

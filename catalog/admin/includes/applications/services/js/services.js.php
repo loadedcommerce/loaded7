@@ -20,7 +20,8 @@ $(document).ready(function() {
   oTable = $('#dataTable').dataTable({
     "bProcessing": true,
     "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
-    "sPaginationType": paginationType,    
+    "sPaginationType": paginationType,
+    "iDisplayLength": 20,    
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     "aoColumns": [{ "sWidth": "80%", "bSortable": true, "sClass": "dataColModule" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]

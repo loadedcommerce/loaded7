@@ -22,8 +22,6 @@
   define('TABLE_CATEGORIES_DESCRIPTION', DB_TABLE_PREFIX . 'categories_description');
   define('TABLE_COMPONENTS', DB_TABLE_PREFIX . 'components');
   define('TABLE_COMPONENTS_FILES', DB_TABLE_PREFIX . 'components_files');
-  define('TABLE_PLUGINS', DB_TABLE_PREFIX . 'plugins');
-  define('TABLE_PLUGINS_GROUP', DB_TABLE_PREFIX . 'plugins_group');
   define('TABLE_CONFIGURATION', DB_TABLE_PREFIX . 'configuration');
   define('TABLE_CONFIGURATION_GROUP', DB_TABLE_PREFIX . 'configuration_group');
   define('TABLE_COUNTER', DB_TABLE_PREFIX . 'counter');
@@ -53,6 +51,9 @@
   define('TABLE_ORDERS_TOTAL', DB_TABLE_PREFIX . 'orders_total');
   define('TABLE_ORDERS_TRANSACTIONS_HISTORY', DB_TABLE_PREFIX . 'orders_transactions_history');
   define('TABLE_ORDERS_TRANSACTIONS_STATUS', DB_TABLE_PREFIX . 'orders_transactions_status');
+  define('TABLE_PERMALINKS', DB_TABLE_PREFIX . 'permalinks');
+  define('TABLE_PLUGINS', DB_TABLE_PREFIX . 'plugins');
+  define('TABLE_PLUGINS_GROUP', DB_TABLE_PREFIX . 'plugins_group');
   define('TABLE_PRODUCT_ATTRIBUTES', DB_TABLE_PREFIX . 'product_attributes');
   define('TABLE_PRODUCTS', DB_TABLE_PREFIX . 'products');
   define('TABLE_PRODUCTS_DESCRIPTION', DB_TABLE_PREFIX . 'products_description');

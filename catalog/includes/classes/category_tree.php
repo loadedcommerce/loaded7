@@ -84,8 +84,18 @@
         $Qcategories->execute();
 
         while ( $Qcategories->next() ) {
-          $this->_data[$Qcategories->valueInt('parent_id')][$Qcategories->valueInt('categories_id')] = array('name' => $Qcategories->value('categories_name'),
+          // added to grab permalink if exists
+          $Qpermalink = $lC_Database->query('select item_id, query, permalink from :table_permalinks where item_id = :item_id and language_id = :language_id and type = 1 limit 1');
+          $Qpermalink->bindTable(':table_permalinks', 'lc_permalinks');
+          $Qpermalink->bindInt(':item_id', $Qcategories->valueInt('categories_id'));
+          $Qpermalink->bindInt(':language_id', $lC_Language->getID());
+          $Qpermalink->execute();
+          
+          $this->_data[$Qcategories->valueInt('parent_id')][$Qcategories->valueInt('categories_id')] = array('item_id' => $Qpermalink->valueInt('item_id'), 
+                                                                                                             'name' => $Qcategories->value('categories_name'),
                                                                                                              'menu_name' => $Qcategories->value('categories_menu_name'),
+                                                                                                             'query' => $Qpermalink->value('query'),
+                                                                                                             'permalink' => $Qpermalink->value('permalink'),
                                                                                                              'image' => $Qcategories->value('categories_image'),
                                                                                                              'count' => 0,
                                                                                                              'mode' => $Qcategories->value('categories_mode'),
@@ -354,6 +364,9 @@
           if ($id == $category_id) {
             return array('id' => $id,
                          'name' => $info['name'],
+                         'item_id' => $info['item_id'],
+                         'query' => $info['query'],
+                         'permalink' => $info['permalink'],
                          'parent_id' => $parent,
                          'image' => $info['image'],
                          'status' => $info['status'],
@@ -363,6 +376,18 @@
         }
       }
 
+      return false;
+    }
+        
+    function getID($permalink) {
+      foreach ($this->_data as $parent => $categories) {
+        foreach ($categories as $category_id => $info) {
+          if ($permalink == $info['permalink']) {
+            return $info['item_id'];
+          } 
+        }
+      }
+      
       return false;
     }
 

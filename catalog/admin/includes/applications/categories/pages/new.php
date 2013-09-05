@@ -81,21 +81,21 @@
                           <?php echo $lC_Language->get('field_name'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_name'), null); ?>
                         </label>
-                        <?php echo lc_draw_input_field('categories_name[' . $l['id'] . ']', null, 'class="required input full-width mid-margin-top"'); ?>
+                        <?php echo lc_draw_input_field('categories_name[' . $l['id'] . ']', null, 'class="required input full-width mid-margin-top" id="categories_name_' . $l['id'] . '"'); ?>
                       </p>
                       <p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_menu_name[' . $l['id'] . ']'; ?>">
                           <?php echo $lC_Language->get('field_menu_name'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_menu_name'), null); ?>
                         </label>
-                        <?php echo lc_draw_input_field('categories_menu_name[' . $l['id'] . ']', null, 'class="required input full-width mid-margin-top"'); ?>
+                        <?php echo lc_draw_input_field('categories_menu_name[' . $l['id'] . ']', null, 'class="input full-width mid-margin-top"'); ?>
                       </p>
                       <p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_blurb[' . $l['id'] . ']'; ?>">
                           <?php echo $lC_Language->get('field_blurb'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_blurb'), null); ?>
                         </label>
-                        <?php echo lc_draw_textarea_field('categories_blurb[' . $l['id'] . ']', null, null, 1, 'class="required input full-width mid-margin-top"'); ?>
+                        <?php echo lc_draw_textarea_field('categories_blurb[' . $l['id'] . ']', null, null, 1, 'class="input full-width mid-margin-top"'); ?>
                       </p>
                       <p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_description[' . $l['id'] . ']'; ?>">
@@ -103,18 +103,25 @@
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_description'), null); ?>
                         </label>
                         <div style="margin-bottom:-6px;"></div>
-                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', null, null, 10, 'id="ckEditorCategoriesDescription_' . $l['id'] . '" style="width:97%;" class="required input full-width autoexpanding"'); ?>
+                        <?php echo lc_draw_textarea_field('categories_description[' . $l['id'] . ']', null, null, 10, 'id="ckEditorCategoriesDescription_' . $l['id'] . '" style="width:97%;" class="input full-width autoexpanding"'); ?>
                         <?php if(ENABLE_EDITOR == '1') { ?>
                         <span class="float-right small-margin-top small-margin-right"><?php echo '<a href="javascript:toggleEditor();">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></span>
                         <?php } ?>
                       </p>
                       <br />
                       <p class="button-height block-label">
+                        <label class="label" for="<?php echo 'categories_permalink[' . $l['id'] . ']'; ?>">
+                          <?php echo $lC_Language->get('field_permalink'); ?>
+                          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_permalink'), null); ?>
+                        </label>
+                        <?php echo lc_draw_input_field('categories_permalink[' . $l['id'] . ']', null, 'class="required input full-width mid-margin-top" onblur="validatePermalink(this.value);" id="categories_permalink_' . $l['id'] . '"'); ?>
+                      </p>
+                      <p class="button-height block-label">
                         <label class="label" for="<?php echo 'categories_tags[' . $l['id'] . ']'; ?>">
                           <?php echo $lC_Language->get('field_tags'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_tags'), null); ?>
                         </label>
-                        <?php echo lc_draw_input_field('categories_tags[' . $l['id'] . ']', null, 'class="required input full-width mid-margin-top"'); ?>
+                        <?php echo lc_draw_input_field('categories_tags[' . $l['id'] . ']', null, 'class="input full-width mid-margin-top"'); ?>
                       </p>
                     </div>
                     <div class="clear-both"></div>
@@ -261,13 +268,6 @@
               <legend class="legend"><?php echo $lC_Language->get('field_management_settings'); ?></legend>
               <div class="columns no-margin-bottom">
                 <div class="six-columns twelve-columns-mobile">
-                  <label class="label" for="<?php echo 'categories_keyword'; ?>">
-                    <?php echo $lC_Language->get('field_keyword'); ?>
-                    <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_keyword'), null); ?>
-                  </label>
-                  <?php echo lc_draw_input_field('categories_slug', null, 'class="required input full-width mid-margin-top" placeholder="category-permalink" disabled'); ?>
-                </div>
-                <div class="six-columns twelve-columns-mobile">
                   <label class="label" for="<?php echo 'categories_product_class'; ?>">
                     <?php echo $lC_Language->get('field_product_class'); ?>
                     <span class="info-spot on-left grey">
@@ -335,7 +335,7 @@
                 </span>
                 <span class="button-text"><?php echo $lC_Language->get('button_cancel'); ?></span>
               </a>&nbsp;
-              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#category\').submit();'); ?>">
+              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" onclick="validateForm('#category');" href="javascript:void(0);">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
                 </span>

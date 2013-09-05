@@ -34,7 +34,7 @@ field_tags = Meta Keywords
 field_name = Title
 field_parent_category = Parent Category
 field_product_class = Product Class
-field_keyword = Permalink
+field_permalink = Permalink
 field_sort_order = Sort Order
 
 heading_title = Category Pages

@@ -42,3 +42,17 @@
 #  php_value session.use_trans_sid 0
 #  php_value magic_quotes_gpc 0
 #</IfModule>
+
+<IfModule mod_rewrite.c>
+  Options +FollowSymLinks
+  RewriteEngine on
+  RewriteBase /sandbox/maestro/www/loaded7/catalog/
+  RewriteRule category/(.*)$ index.php?$1
+  RewriteRule product/(.*)/specials/(.*),(.*)$ products.php?$1&$2=$3
+  RewriteRule product/reviews,new/(.*)/(.*),(.*)$ products.php?reviews=new&$1&$2=$3
+  RewriteRule product/(.*)/reviews/(.*)/(.*),(.*)$ products.php?$1&reviews&$2&$3=$4
+  RewriteRule product/reviews,new/(.*)$ products.php?reviews=new&$1
+  RewriteRule product/reviews/(.*)$ products.php?reviews&$1
+  RewriteRule product/(.*)/(.*),(.*)$ products.php?$1&$2=$3
+  RewriteRule product/(.*)$ products.php?$1
+</IfModule> 
