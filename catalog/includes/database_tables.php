@@ -84,4 +84,5 @@
   define('TABLE_ZONES', DB_TABLE_PREFIX . 'zones');
   define('TABLE_ZONES_TO_GEO_ZONES', DB_TABLE_PREFIX . 'zones_to_geo_zones');
   define('TABLE_BRANDING', DB_TABLE_PREFIX . 'branding');
+    define('TABLE_BRANDING_DATA', DB_TABLE_PREFIX . 'branding_data');
 ?>

@@ -61,40 +61,50 @@ class lC_Branding_manager_Admin {
     $Qdelete->bindInt(':language_id', $language_id);
     $Qdelete->execute();
 
+    $Qdelete = $lC_Database->query('delete from :table_branding_data where id = :language_id');
+    $Qdelete->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+    $Qdelete->bindInt(':language_id', $language_id);
+    $Qdelete->execute();
 
-   
-    $Qbranding = $lC_Database->query('insert into :table_branding (site_image, name, slogan, chat_code, address, support_phone, support_email, sales_phone, sales_email, meta_description, meta_keywords, og_image, meta_title, meta_title_prefix, meta_title_suffix, meta_delimeter, social_facebook_page, social_twitter, social_pinterest, social_google_plus, social_youtube, social_linkedin, footer_text,language_id) values (:site_image, :name, :slogan, :chat_code, :address, :support_phone, :support_email, :sales_phone, :sales_email, :meta_description, :meta_keywords, :og_image, :meta_title, :meta_title_prefix, :meta_title_suffix, :meta_delimeter, :social_facebook_page, :social_twitter, :social_pinterest, :social_google_plus, :social_youtube, :social_linkedin, :footer_text,:language_id )');
 
-    $Qbranding->bindTable(':table_branding', TABLE_BRANDING);
-    $Qbranding->bindValue(':site_image', $data['site_image']);
-    $Qbranding->bindValue(':name', $data['name']);
-    $Qbranding->bindValue(':slogan', $data['slogan']);
-    $Qbranding->bindValue(':chat_code', $data['chat_code']);
-    $Qbranding->bindValue(':address', $data['address']);
-    $Qbranding->bindInt(':support_phone', $data['support_phone']);
-    $Qbranding->bindValue(':support_email', $data['support_email']);
-    $Qbranding->bindInt(':sales_phone', $data['sales_phone']);
-    $Qbranding->bindValue(':sales_email', $data['sales_email']);
-    $Qbranding->bindValue(':meta_description', $data['meta_description']);
-    $Qbranding->bindValue(':meta_keywords', $data['meta_keywords']);
-    $Qbranding->bindValue(':og_image', $data['og_image']);
-    $Qbranding->bindValue(':meta_title', $data['meta_title']);
-    $Qbranding->bindValue(':meta_title_prefix', $data['meta_title_prefix']); 
-    $Qbranding->bindValue(':meta_title_suffix', $data['meta_title_suffix']);
-    $Qbranding->bindValue(':meta_delimeter', $data['meta_delimeter']);
+foreach ( $lC_Language->getAll() as $l ) {
+    $QBrand = $lC_Database->query('insert into :table_branding (language_id, slogan, meta_description, meta_keywords, meta_title, meta_title_prefix, meta_title_suffix, footer_text) values (:language_id, :slogan, :meta_description, :meta_keywords, :meta_title, :meta_title_prefix, :meta_title_suffix, :footer_text)');
+    $QBrand->bindTable(':table_branding', TABLE_BRANDING);
+    $QBrand->bindValue(':slogan', $data['slogan'][$l['id']]);
+    $QBrand->bindValue(':meta_description', $data['meta_description'][$l['id']]);
+    $QBrand->bindValue(':meta_keywords', $data['meta_keywords'][$l['id']]);
+    $QBrand->bindValue(':meta_title', $data['meta_title'][$l['id']]);
+    $QBrand->bindValue(':meta_title_prefix', $data['meta_title_prefix'][$l['id']]); 
+    $QBrand->bindValue(':meta_title_suffix', $data['meta_title_suffix'][$l['id']]);
+    $QBrand->bindValue(':footer_text', $data['footer_text'][$l['id']]);
+    $QBrand->bindValue(':language_id', $l['id']);
+    $QBrand->setLogging($_SESSION['module']);
+    $QBrand->execute();
+}
 
-    $Qbranding->bindValue(':social_facebook_page', $data['social_facebook_page']);
-    $Qbranding->bindValue(':social_twitter', $data['social_twitter']);
-    $Qbranding->bindValue(':social_pinterest', $data['social_pinterest']);
-    $Qbranding->bindValue(':social_google_plus', $data['social_google_plus']);
-    $Qbranding->bindValue(':social_youtube', $data['social_youtube']);
-    $Qbranding->bindValue(':social_linkedin', $data['social_linkedin']);
+    $QbrandingData = $lC_Database->query('insert into :table_branding_data (id, site_image, chat_code, support_phone, support_email, sales_phone, sales_email, og_image, meta_delimeter, social_facebook_page, social_twitter, social_pinterest, social_google_plus, social_youtube, social_linkedin) values (:language_id, :site_image, :chat_code, :support_phone, :support_email, :sales_phone, :sales_email, :og_image, :meta_delimeter, :social_facebook_page, :social_twitter, :social_pinterest, :social_google_plus, :social_youtube, :social_linkedin)');
+    $QbrandingData->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+    $QbrandingData->bindValue(':site_image', $data['site_image']);
+    $QbrandingData->bindValue(':chat_code', $data['chat_code']);
+    $QbrandingData->bindValue(':address', $data['address']);
+    $QbrandingData->bindInt(':support_phone', $data['support_phone']);
+    $QbrandingData->bindValue(':support_email', $data['support_email']);
+    $QbrandingData->bindInt(':sales_phone', $data['sales_phone']);
+    $QbrandingData->bindValue(':sales_email', $data['sales_email']);
+    $QbrandingData->bindValue(':og_image', $data['og_image']);
+    $QbrandingData->bindValue(':meta_delimeter', $data['meta_delimeter']);
+    $QbrandingData->bindValue(':social_facebook_page', $data['social_facebook_page']);
+    $QbrandingData->bindValue(':social_twitter', $data['social_twitter']);
+    $QbrandingData->bindValue(':social_pinterest', $data['social_pinterest']);
+    $QbrandingData->bindValue(':social_google_plus', $data['social_google_plus']);
+    $QbrandingData->bindValue(':social_youtube', $data['social_youtube']);
+    $QbrandingData->bindValue(':social_linkedin', $data['social_linkedin']);
+    $QbrandingData->bindValue(':language_id', $language_id);
+    $QbrandingData->execute();
 
-    $Qbranding->bindValue(':footer_text', $data['footer_text']);
-    $Qbranding->bindValue(':language_id', $language_id);
-    $Qbranding->setLogging($_SESSION['module']);
-    $Qbranding->execute();
-         
+//echo '<pre>';
+//print_r($data);
+//die;
     return true;
   }
 
