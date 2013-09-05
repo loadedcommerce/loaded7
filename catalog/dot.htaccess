@@ -55,4 +55,4 @@
   RewriteRule product/reviews/(.*)$ products.php?reviews&$1
   RewriteRule product/(.*)/(.*),(.*)$ products.php?$1&$2=$3
   RewriteRule product/(.*)$ products.php?$1
-</IfModule>
+</IfModule> 
