@@ -113,7 +113,7 @@ if (!function_exists('lc_href_link')) {
               } else {
                 $cat_ids = explode("_", substr($link, $cPathPos+6));
               }
-            } 
+            }
             // products
             if ( (strpos($link, 'products.php') && !strpos($link, 'cart_add') && !strpos($link, 'reviews') && !strpos($link, '?specials') && !strpos($link, '?new')) ) {
               if (strpos($link, 'cPath')) {
@@ -124,18 +124,18 @@ if (!function_exists('lc_href_link')) {
                 }
               } else {
                 $permalink = substr($link, strpos($link, 'products.php?')+13);
-                if (!strpos($permalink, '/') && 
-                    !strpos($permalink, '?') && 
+                if (!strpos($permalink, '/') &&
+                    !strpos($permalink, '?') &&
                     !strpos($permalink, ',')) {
                     $pQuery = get_permalink_query($permalink);
                     $cat_ids = explode("_", substr($pQuery, 6));
                 }
               }
-            }            
+            }
             foreach ($cat_ids as $id => $value) {
               $cat_data = $lC_CategoryTree->getData($value);
               if ($cat_data['permalink'] != '') {
-                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/';
               } else {
                 $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
               }
@@ -145,7 +145,7 @@ if (!function_exists('lc_href_link')) {
               $cat_id = end(explode("_", substr($link, $cPathPos+6)));
               $cat_data = $lC_CategoryTree->getData($cat_id);
               if ($cat_data['permalink'] != '') {
-                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/'; 
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/';
               } else {
                 $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
               }
@@ -835,9 +835,9 @@ if (!function_exists('get_permalink_query')) {
   function get_permalink_query($key) {
     global $lC_Database;
     
-    $Qpermalink = $lC_Database->query('select query from :table_permalink where keyword = :keyword and type = 2');
-    $Qpermalink->bindTable(':table_permalink', 'lc_permalink');
-    $Qpermalink->bindValue(':keyword', $key);
+    $Qpermalink = $lC_Database->query('select query from :table_permalinks where permalink = :permalink and type = 2');
+    $Qpermalink->bindTable(':table_permalinks', 'lc_permalinks');
+    $Qpermalink->bindValue(':permalink', $key);
     $Qpermalink->execute();          
     
     return $Qpermalink->value('query');
