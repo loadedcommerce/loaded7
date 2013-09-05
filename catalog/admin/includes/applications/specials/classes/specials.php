@@ -146,11 +146,9 @@ class lC_Specials_Admin {
       if ( is_numeric($id) ) {
         $Qspecial = $lC_Database->query('update :table_specials set specials_new_products_price = :specials_new_products_price, specials_last_modified = now(), expires_date = :expires_date, start_date = :start_date, status = :status where specials_id = :specials_id');
         $Qspecial->bindInt(':specials_id', $id);
-        $numeric = 'is num';
       } else {
         $Qspecial = $lC_Database->query('insert into :table_specials (products_id, specials_new_products_price, specials_date_added, expires_date, start_date, status) values (:products_id, :specials_new_products_price, now(), :expires_date, :start_date, :status)');
         $Qspecial->bindInt(':products_id', $data['products_id']);
-        $numeric = 'not num';
       }
 
       $Qspecial->bindTable(':table_specials', TABLE_SPECIALS);
