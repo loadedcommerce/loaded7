@@ -121,7 +121,7 @@
               <div class="well">
                 <h3 class="no-margin-top"><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h3>
                 <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
-                <form role="form" name="coupon" id="coupon" action="">
+                <form role="form" name="coupon" id="coupon">
                   <div class="form-group">
                     <label class="sr-only"></label><input type="text" name="coupon_code" id="coupon_code" class="form-control">
                   </div>
