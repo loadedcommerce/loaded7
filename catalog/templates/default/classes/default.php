@@ -89,65 +89,7 @@ class lC_Default {
 
     return $result;
   }
- /*
-  * Removes an item from the shopping cart
-  *
-  * @param string $search The search string 
-  * @access public
-  * @return array
-  */  
-  public static function removeItem($item_id) {
-    global $lC_Database, $lC_Language, $lC_Currencies, $lC_Customer, $lC_ShoppingCart, $lC_Image;
-
-    $result = array();
-    
-    $lC_ShoppingCart->remove($item_id);
    
-    // crete the new order total text
-    $otText = '';
-    foreach ($lC_ShoppingCart->getOrderTotals() as $module) {
-      $otText .= '<tr>' .
-                 ' <td class="align_left' . (($module['code'] == 'sub_total') ? ' sc_sub_total' : null) . (($module['code'] == 'total') ? ' sc_total' : null) . '" style="padding-right:10px;">' . $module['title'] . '</td>' .
-                 ' <td class="align_right' . (($module['code'] == 'sub_total') ? ' sc_sub_total' : null) . (($module['code'] == 'total') ? ' sc_total' : null) . '">' . $module['text'] . '</td>' .
-                 '</tr>';
-    }
-    
-    $result['otText'] = $otText;
-    
-    // create the new mini-cart text
-    $mcText = '';
-    if ($lC_ShoppingCart->hasContents()) {
-      $mcText .= '<a href="#" class="minicart_link">' . 
-                  '  <span class="item"><b>' . $lC_ShoppingCart->numberOfItems() . '</b> ' . ($lC_ShoppingCart->numberOfItems() > 1 ? strtoupper($lC_Language->get('text_cart_items')) : strtoupper($lC_Language->get('text_cart_item'))) . ' /</span> <span class="price"><b>' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</b></span>' . 
-                  '</a>' .
-                  '<div class="cart_drop">' .
-                  '  <span class="darw"></span>' .
-                  '  <ul>';
-
-      foreach ($lC_ShoppingCart->getProducts() as $products) {
-        $mcText .= '<li>' . $lC_Image->show($products['image'], $products['name'], null, 'mini') . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), '(' . $products['quantity'] . ') x ' . $products['name']) . ' <span class="price">' . $lC_Currencies->format($products['price']) . '</span></li>';
-      }           
-      
-      $mcText .= '</ul>' .
-            '<div class="cart_bottom">' .
-              '<div class="subtotal_menu">' .
-                '<small>' . $lC_Language->get('box_shopping_cart_subtotal') . '</small>' .
-                '<big>' . $lC_Currencies->format($lC_ShoppingCart->getSubTotal()) . '</big>' .
-              '</div>' .
-              '<a href="' . lc_href_link(FILENAME_CHECKOUT, null, 'SSL') . '">' . $lC_Language->get('text_checkout') . '</a>' .
-            '</div>' .
-          '</div>';
-      $result['redirect'] = '0';
-    } else {
-      $mcText .= $lC_Language->get('box_shopping_cart_empty');
-      $result['redirect'] = '1';
-    } 
-    
-    $result['mcText'] = $mcText;
-   
-    
-    return $result;
-  }   
  /**
   * Return the countries dropdown array
   *
@@ -240,6 +182,28 @@ class lC_Default {
     }
     
     return $categories_array;    
+  }
+ /*
+  * Returns the search page dropdown array
+  *
+  * @access public
+  * @return array
+  */  
+  public static function getSearchCategoriesDropdownArray() {
+    global $lC_Database, $lC_Language;
+    
+    $search_categories_array = array(array('id' => '', 'text' => $lC_Language->get('filter_all_categories')));
+    $Qsearchcategories = $lC_Database->query("select c.categories_id, cd.categories_name from :table_categories c, :table_categories_description cd where c.categories_id = cd.categories_id and language_id = :language_id and c.categories_mode = 'category' and parent_id = 0 order by c.sort_order");
+    $Qsearchcategories->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qsearchcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qsearchcategories->bindInt(':language_id', $lC_Language->getID());
+    $Qsearchcategories->execute();
+    while ($Qsearchcategories->next()) {
+      $search_categories_array[] = array('id' => $Qsearchcategories->valueInt('categories_id'),
+                                         'text' => $Qsearchcategories->value('categories_name'));
+    }
+    
+    return $search_categories_array;    
   }  
  /*
   * Returns the product listing SQL
@@ -315,7 +279,7 @@ class lC_Default {
       $exists = ($Qcategories->value('categories_image') != null) ? true : false;
       $output .= '    <td style="text-align:center;" class="categoryListing" width="' . $width . '" valign="top">';
       if ($Qcategories->value('categories_custom_url') != '') {
-        $output .= lc_link_object(lc_href_link($Qcategories->value('categories_custom_url'), ''), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no-image.png', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name'), (($Qcategories->value('categories_link_target') == 1) ? 'target="_blank"' : null));
+        $output .= lc_link_object(lc_href_link($Qcategories->value('categories_custom_url'), ''), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no_image', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name'), (($Qcategories->value('categories_link_target') == 1) ? 'target="_blank"' : null));
       } else {
         $output .= lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id'))), ( ($exists === true) ? lc_image(DIR_WS_IMAGES . 'categories/' . $Qcategories->value('categories_image'), $Qcategories->value('categories_name')) : lc_image(DIR_WS_TEMPLATE_IMAGES . 'no_image.png', $lC_Language->get('image_not_found')) ) . '<br />' . $Qcategories->value('categories_name'), (($Qcategories->value('categories_link_target') == 1) ? 'target="_blank"' : null));
       }
@@ -386,16 +350,7 @@ class lC_Default {
 
     return $output;    
   }  
- /*
-  * Returns the gender array
-  *
-  * @access public
-  * @return array
-  */
-  public static function getGenderArray() {
-      return array(array('id' => 'm', 'text' => $lC_Language->get('gender_male')),
-                   array('id' => 'f', 'text' => $lC_Language->get('gender_female')));
-  }
+
  /*
   * Returns the countries dropdown array
   *
@@ -484,6 +439,9 @@ class lC_Default {
   * @access public
   * @return array
   */
+  
+  // MOVED TO TEMPLATE CLASS
+  /*
   public static function getTopCategories() {
     global $lC_Database, $lC_Language;
     
@@ -502,6 +460,7 @@ class lC_Default {
     
     return $topCategories;   
   }
+  */
  /*
   * return the top cats for nav
   *

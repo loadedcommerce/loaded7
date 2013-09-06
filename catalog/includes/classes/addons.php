@@ -27,9 +27,9 @@ class lC_Addons {
       if (array_key_exists('login', $_GET)) return false;
     }
 
-  //  if ( !isset($_SESSION['lC_Addons_data']) ) {
+    if ( !isset($_SESSION['lC_Addons_data']) ) {
       $this->_initialize();
-  //  }
+    }
   } 
   
   public function getAddons($flag = '') {

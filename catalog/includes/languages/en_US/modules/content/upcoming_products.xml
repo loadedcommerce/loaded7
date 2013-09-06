@@ -6,5 +6,10 @@
       <value><![CDATA[Upcoming Products]]></value>
       <group>modules-content</group>
     </definition>
+    <definition>
+      <key>upcoming_products_text_expected</key>
+      <value><![CDATA[Expected:]]></value>
+      <group>modules-content</group>
+    </definition>    
   </definitions>
 </language>

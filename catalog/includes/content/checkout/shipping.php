@@ -24,7 +24,7 @@ class lC_Checkout_Shipping extends lC_Template {
   function lC_Checkout_Shipping() {  
     global $lC_Database, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Shipping, $lC_MessageStack, $lC_Vqmod;
        
-    require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));
+    require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));    
            
     /*VQMOD-002*/
     
@@ -101,11 +101,15 @@ class lC_Checkout_Shipping extends lC_Template {
       $lC_Shipping = new lC_Shipping();
 
       // if no shipping method has been selected, automatically select the cheapest method.
-      if ($lC_ShoppingCart->hasShippingMethod() === false) {
-        $lC_ShoppingCart->setShippingMethod($lC_Shipping->getCheapestQuote());
+      if ($lC_ShoppingCart->hasShippingMethod() === false) {          
+        if ($lC_Shipping->numberOfQuotes() === 1) {  
+          $lC_ShoppingCart->setShippingMethod($lC_Shipping->getFirstQuote(), false);
+        } else {  
+          $lC_ShoppingCart->setShippingMethod($lC_Shipping->getCheapestQuote());
+        }
       }
-    }
-
+    } 
+    
     if ($_GET[$this->_module] == 'process') {
       $this->_process();
     }
@@ -137,7 +141,6 @@ class lC_Checkout_Shipping extends lC_Template {
             $lC_ShoppingCart->resetShippingMethod();
           } else {
             $lC_ShoppingCart->setShippingMethod($quote);
-
             lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
           }
         } else {

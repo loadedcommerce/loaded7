@@ -87,6 +87,9 @@ button_no = No
 button_info = Info
 
 field_admin_language = Admin Language:
+field_username = Email:
+field_first_name = First Name:
+field_last_name = Last Name:
 
 icon_all = All
 icon_app_store = Add Ons
@@ -184,6 +187,7 @@ profile_password = Current Password
 profile_password_new = New Password
 profile_password_confirm = Confirm New Password
 introduction_profile_pass_change = Please make the necessary changes for this administrator.
+introduction_edit_administrator = Please make the necessary changes for this administrator.
 profile_password = Current Password
 profile_password_new = New Password
 profile_password_confirm = Confirm Password

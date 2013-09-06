@@ -66,14 +66,14 @@ $backupArr = lC_Updates_Admin::getBackups();
         <?php 
         if ((isset($checkArr['hasUpdates']) && (int)$checkArr['hasUpdates'] > 0)) {
           ?>
-          <a id="install-update" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installUpdate();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
+          <a id="install-update" href="javascript:void(0);" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installUpdate();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
             <span class="button-icon green-gradient glossy"><span class="icon-down-fat"></span></span>
             <?php echo $lC_Language->get('button_install_update'); ?>
           </a>
           <?php 
         } else {
           ?>
-          <a id="check-again" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? NULL : 'onclick="checkForUpdates();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? ' disabled' : NULL); ?>">
+          <a id="check-again" href="javascript:void(0);" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? NULL : 'onclick="checkForUpdates();"'); ?> class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 1) ? ' disabled' : NULL); ?>">
             <span class="button-icon green-gradient glossy"><span class="icon-cloud-upload"></span></span>
             <?php echo $lC_Language->get('button_check_again'); ?>
           </a>
@@ -95,7 +95,7 @@ $backupArr = lC_Updates_Admin::getBackups();
           <tr><td>&nbsp;</td></tr>
           <tr>
             <td align="left">
-              <a id="reinstall" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installUpdate(\'full\');"'); ?> class="button icon-redo orange-gradient glossy re-install<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
+              <a id="reinstall" href="javascript:void(0);" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="installUpdate(\'full\');"'); ?> class="button icon-redo orange-gradient glossy re-install<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
                 <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_reinstall_update'); ?></span>
               </a>               
             </td>
@@ -105,7 +105,7 @@ $backupArr = lC_Updates_Admin::getBackups();
               </a>
             </td>
             <td align="right">
-              <a id="undo" href="javascript://" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : (is_array($backupArr) && count($backupArr) == 0) ? NULL : 'onclick="undoUpdate();"'); ?> class="button icon-undo undo-last red-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : (is_array($backupArr) && count($backupArr) == 0) ? ' disabled' : NULL); ?>">
+              <a id="undo" href="javascript:void(0);" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : (is_array($backupArr) && count($backupArr) == 0) ? NULL : 'onclick="undoUpdate();"'); ?> class="button icon-undo undo-last red-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : (is_array($backupArr) && count($backupArr) == 0) ? ' disabled' : NULL); ?>">
                 <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_undo_last_update'); ?></span>
               </a>                                                                                                                                                
             </td>

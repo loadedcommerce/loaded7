@@ -27,7 +27,8 @@ class lC_Account_Password extends lC_Template {
     require_once($lC_Vqmod->modCheck('includes/classes/account.php'));
 
     $this->_page_title = $lC_Language->get('account_password_heading');
-
+    
+    $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/form_check.js.php');
     $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/account/account_password.js.php');
 
     if ($lC_Services->isStarted('breadcrumb')) {

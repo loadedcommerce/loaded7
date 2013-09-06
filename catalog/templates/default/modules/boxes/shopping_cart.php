@@ -14,5 +14,13 @@
 ?>
 <!--modules/boxes/shopping_cart.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<ul class="category">
+  <?php echo $lC_Box->getContent(); ?>
+</ul>
+<script>
+$(document).ready(function() {
+  $(".box-shopping-cart-product").find("a").attr("style", "display:inline;");
+  $(".box-shopping-cart-subtotal").addClass("align-right strong purple");
+});
+</script>
 <!--modules/boxes/shopping_cart.php end-->

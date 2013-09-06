@@ -201,14 +201,14 @@
             </div>
             <div class="profile50">
               <div id="profileRight">
-                <a href="javascript://" onclick="profileEdit('<?php echo $_SESSION['admin']['id']; ?>')">
+                <a href="javascript:void(0);" onclick="profileEdit('<?php echo $_SESSION['admin']['id']; ?>')">
                   <div class="profile-right-fourth">
                     <?php echo $lC_Language->showImage($value['code'], '9', '6', 'class="lang-icon"'); ?>
                     <img id="profileRightImage" src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="32" height="32"><br />
                     <small><?php echo $lC_Language->get('profile_slate_edit_profile'); ?></small>
                   </div>
                 </a>
-                <a href="javascript://" onclick="profilePassChange('<?php echo $_SESSION['admin']['id']; ?>')">
+                <a href="javascript:void(0);" onclick="profilePassChange('<?php echo $_SESSION['admin']['id']; ?>')">
                   <div class="profile-right-fourth">
                     <div style="height:8px;"></div>
                     <span class="icon icon-lock icon-size3"></span>
@@ -521,7 +521,7 @@
         <div style="margin:-15px; padding:10px 20px 14px 10px; width:100%; height:32px; margin-bottom:0px;">
           <a id="qrcode-tooltip">
             <p style="width:32px;float:left;cursor:pointer;">
-              <img src="../images/icons/qr-icon.png" border="0" class="Click to Generate QR Code" /> 
+              <img src="../images/icons/qr-icon.png" border="0" alt="Click to Generate QR Code" /> 
             </p>
           </a>
           <p style="float:left; padding:10px 0 0px 10px; font-weight:bold;">QR Code for Current URL</p> 

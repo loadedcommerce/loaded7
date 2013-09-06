@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: mainpage_content.php v1.0 2011-11-04 kiran $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: mainpage_content.php v1.0 2013-08-08 datazen $
 */
 class lC_Content_mainpage_content extends lC_Modules {
  /* 
@@ -37,36 +34,9 @@ class lC_Content_mainpage_content extends lC_Modules {
   * @return string
   */
   public function initialize() {
-    if (defined('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT')) {
-      $this->_content = MODULE_CONTENT_HOMEPAGE_HTML_CONTENT;
-    }
-  }
- /*
-  * Install the module
-  *
-  * @access public
-  * @return void
-  */
-  public function install() {
-    global $lC_Database;
-
-    parent::install();
-
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added, use_function, set_function) values ('Home Page Content', 'MODULE_CONTENT_HOMEPAGE_HTML_CONTENT', '<h2>Welcome to Loaded Commerce!</h2><br>The Most Complete Open Source Shopping Cart Software.', 'The text area allows you to add / edit home page HTML content block.', '6', '0', now(), 'lc_cfg_set_textarea_field', 'lc_cfg_set_textarea_field')");
-
-  }
- /*
-  * Return the module keys
-  *
-  * @access public
-  * @return array
-  */
-  public function getKeys() {
-    if (!isset($this->_keys)) {
-      $this->_keys = array('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT');
-    }
-
-    return $this->_keys;
+    global $lC_Language;               
+    
+    $this->_content = $lC_Language->get('mainpage_content_content');
   }
 }
 ?>

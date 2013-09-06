@@ -58,7 +58,7 @@ class lC_Coupons {
     
     } else {
       // coupon not found
-      return -2;
+      return array('rpcStatus' => -2);
     }   
           
   }
@@ -219,9 +219,11 @@ class lC_Coupons {
   private function _calculate($cInfo) {
     global $lC_ShoppingCart;
     
+    
+    
     switch ($cInfo['type']) {
       case 'T' : // percen(T) discount
-        $total = (isset($lC_ShoppingCart)) ? (float)$lC_ShoppingCart->getTotal() : 0.00;
+        $total = (isset($lC_ShoppingCart)) ? (float)$lC_ShoppingCart->getSubTotal() : 0.00;
         $discount = ( ((float)$cInfo['reward'] * .01) * $total ); 
         break;
         

@@ -14,5 +14,7 @@
 ?>
 <!--modules/boxes/reviews.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<ul class="category align-center">
+  <?php echo $lC_Box->getContent(); ?>
+</ul>
 <!--modules/boxes/reviews.php end-->

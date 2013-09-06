@@ -4,7 +4,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 { margin: 0; padding: 0; border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
 
 /* remember to define focus styles! */
-body.bodyStyle { margin: 5px; margin-top: 15px; font-family: Arial, Arial, Helvetica, sans-serif; background: transparent; }
+body.bodyStyle { margin: 5px; margin-top: 0px; font-family: Arial, Arial, Helvetica, sans-serif; background: transparent; }
 ol, ul { list-style: none; }
 
 /* Default style for controls input ,select */
@@ -12,9 +12,12 @@ input, select { padding: 3px; border-style: solid; border-width: 1px; border-col
 select { background-image: none; }
 #ccType { display: none; }
 #PaymentTypeCC { margin-bottom: 10px; }
-input:focus { border: 1px solid #C541FC; outline: medium none; }
+input:focus { border: 1px solid #66afe9; outline: medium none; }
 
-input.button { cursor: pointer; width: 90px !important; background-color: #873b7a !important; background-image: none !important; border-style: inset; border-width: 1px; color: #FFF; }
+input.button { cursor: pointer; width: 90px !important; background-image: none !important; }
+#btnPayment { background-color: #5cb85c !important; color: #FFF; }
+#btnCancel { }
+
 fieldset li, fieldset p { font-size: 14px; }
 .subsection-header { border-bottom: dotted 1px #ccc; font-size: 14px; font-weight: bold; margin-bottom: 15px; padding-bottom: 5px; margin-top: 15px; display: block; }
 

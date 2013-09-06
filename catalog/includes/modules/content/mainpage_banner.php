@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: mainpage_banner.php v1.0 2011-11-04 maestro $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: mainpage_banner.php v1.0 2013-08-08 datazen $
 */
 class lC_Content_mainpage_banner extends lC_Modules {
  /* 
@@ -40,7 +37,7 @@ class lC_Content_mainpage_banner extends lC_Modules {
     global $lC_Database, $lC_Language, $lC_Image, $lC_Banner, $lC_Services;
     
     if ($lC_Services->isStarted('banner') && $lC_Banner->exists('mainpage')) {
-      $this->_content = '<p align="center">' . $lC_Banner->display() . '</p>';
+      $this->_content = $lC_Banner->display();
     }
   }
 }

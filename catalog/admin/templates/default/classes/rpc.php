@@ -11,7 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
  
-  @method The lC_Default_rpc class is for AJAX remote program control
+  @method The lC_Bs_starter_rpc class is for AJAX remote program control
 */
 global $lC_Vqmod;
 

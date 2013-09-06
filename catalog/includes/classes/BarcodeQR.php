@@ -72,6 +72,17 @@ final class BarcodeQR {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HEADER, false);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    
+   // added support for curl proxy
+    if (defined('CURL_PROXY_HOST') && defined('CURL_PROXY_PORT') && CURL_PROXY_HOST != NULL && CURL_PROXY_PORT != NULL) {
+      curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, TRUE);
+      curl_setopt($ch, CURLOPT_PROXY, CURL_PROXY_HOST . ":" . CURL_PROXY_PORT);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    }
+    if (defined('CURL_PROXY_USER') && defined('CURL_PROXY_PASSWORD') && CURL_PROXY_USER != NULL && CURL_PROXY_PASSWORD != NULL) {
+      curl_setopt($ch, CURLOPT_PROXYUSERPWD, CURL_PROXY_USER . ':' . CURL_PROXY_PASSWORD);
+    }   
+      
 		$img = curl_exec($ch);
 		curl_close($ch);
 

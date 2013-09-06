@@ -18,7 +18,7 @@ class lC_Checkout_Cart extends lC_Template {
       $_group = 'checkout',
       $_page_title,
       $_page_contents = 'shopping_cart.php',
-      $_page_image = 'table_background_cart.gif';
+      $_page_image = '';
 
   /* Class constructor */
   function lC_Checkout_Cart() {

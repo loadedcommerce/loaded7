@@ -170,7 +170,7 @@ class lC_Store_Admin {
   public static function drawMenu() {
     foreach ( self::getAllTypes() as $key => $type ) {
       $menu .= '<li style="cursor:pointer;" class="message-menu store-menu-' . strtolower($type['text']) . '" id="menuType' . ucwords($type['text']) . '">' . 
-               '  <a href="javascript://" class="" id="menuLink' . (int)$type['id'] . '" onclick="showAddonType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');">' . 
+               '  <a href="javascript:void(0);" class="" id="menuLink' . (int)$type['id'] . '" onclick="showAddonType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');">' . 
                '    <span class="message-status" style="padding-top:14px;"></span>' .
                '     <br><strong>' . lc_output_string_protected($type['text']) . '</strong>' .
                '   </a>' .
@@ -346,7 +346,10 @@ class lC_Store_Admin {
         self::_resetAddons();
         lC_Cache::clear('modules-addons');
         lC_Cache::clear('configuration');
+        lC_Cache::clear('templates');
         lC_Cache::clear('addons');
+        lC_Cache::clear('vqmoda');
+        lC_Cache::clear('vqmods');
 
         return true;
       }
@@ -400,7 +403,10 @@ class lC_Store_Admin {
       self::_resetAddons();
       lC_Cache::clear('modules-addons');
       lC_Cache::clear('configuration');
+      lC_Cache::clear('templates');
       lC_Cache::clear('addons');
+      lC_Cache::clear('vqmoda');
+      lC_Cache::clear('vqmods');
       
       return true;
     }

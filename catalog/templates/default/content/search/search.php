@@ -54,13 +54,15 @@ if ($lC_MessageStack->size('search') > 0) {
         <div class="short-code-column one-half column-last">
           <div class="advancedSearchFormRight">
             <ol>
-              <li><?php echo lc_draw_pull_down_menu('category', lC_Default::getCategoriesDropdownArray()); ?></li>
+              <li><?php echo lc_draw_pull_down_menu('category', lC_Default::getSearchCategoriesDropdownArray()); ?></li>
               <li><?php echo lc_draw_checkbox_field('recursive'); ?></li>
               <li><?php echo lc_draw_pull_down_menu('manufacturer', lC_Default::getManufacturerDropdownArray()); ?></li>
               <li><?php echo lc_draw_input_field('pfrom'); ?></li>
               <li><?php echo lc_draw_input_field('pto'); ?></li>
-              <li><?php echo lc_draw_date_pull_down_menu('datefrom', null, false, null, null, @date('Y') - $lC_Search->getMinYear(), 0); ?></li>
-              <li><?php echo lc_draw_date_pull_down_menu('dateto', null, null, null, null, @date('Y') - $lC_Search->getMaxYear(), 0); ?></li>
+              <!-- <li><?php echo lc_draw_date_pull_down_menu('datefrom', null, false, null, null, @date('Y') - $lC_Search->getMinYear(), 0); ?></li>
+              <li><?php echo lc_draw_date_pull_down_menu('dateto', null, null, null, null, @date('Y') - $lC_Search->getMaxYear(), 0); ?></li> -->              
+              <li><?php echo lc_draw_input_field('datefrom', '','placeholder="' . $lC_Language->get('Date From') . '" class="txt required date"');  ?></li>
+              <li><?php echo lc_draw_input_field('dateto', '','placeholder="' . $lC_Language->get('Date To') . '" class="txt required date"');  ?></li>
             </ol>
           </div>
         </div>
@@ -71,4 +73,5 @@ if ($lC_MessageStack->size('search') > 0) {
     </form>
   </div>
 </div>
+
 <!--content/search/search.php end-->

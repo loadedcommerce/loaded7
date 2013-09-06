@@ -12,7 +12,7 @@
 *  @license    http://loadedcommerce.com/license.html
 */
 ?>
-<!--content/info/info.php start-->
+<!--content/info/info.php start-->  
 <div id="infoListing" class="full_page">
   <div class="content">
     <div class="short-code-column">
@@ -27,7 +27,7 @@
         <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'sitemap'), $lC_Language->get('box_information_sitemap')); ?></li>
       </ul>
     </div>
-    <div style="clear:both;">&nbsp;</div>
+    <div style="clear:both;">&nbsp;</div>   
     <div id="infoConditionsActions" class="action_buttonbar">
       <span class="buttonRight"><a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'new'); ?>" class="noDecoration"><button class="button brown_btn" type="button"><?php echo $lC_Language->get('button_go_shopping'); ?></button></a></span>
     </div>

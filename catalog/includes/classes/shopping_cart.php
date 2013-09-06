@@ -853,7 +853,7 @@ class lC_ShoppingCart {
     }
   }
 
-  public function setShippingMethod($shipping_array, $calculate_total = true) {
+  public function setShippingMethod($shipping_array, $calculate_total = true) {  
     $this->_shipping_method = $shipping_array;
 
     if ( $calculate_total === true ) {
@@ -878,7 +878,7 @@ class lC_ShoppingCart {
   public function hasShippingMethod() {
     return !empty($this->_shipping_method);
   }
-
+    
   public function hasBillingAddress() {
     return isset($this->_billing_address['id']);
   }
