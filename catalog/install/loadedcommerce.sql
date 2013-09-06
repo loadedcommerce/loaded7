@@ -134,7 +134,6 @@ CREATE TABLE IF NOT EXISTS lc_categories_description (
   categories_menu_name varchar(255) DEFAULT NULL,
   categories_blurb mediumtext,
   categories_description text,
-  categories_keyword text,
   categories_tags varchar(255) DEFAULT NULL,
   PRIMARY KEY (categories_id,language_id),
   KEY idx_categories_name (categories_name)
