@@ -83,6 +83,8 @@ modal_heading_batch_move_categories = Batch Move Categories
 ms_error_nothing_to_move = You have not selected anything to move!
 ms_error_image_directory_not_writable = Error: The directory containing the category images is not writable: %s
 ms_error_image_directory_non_existant = Error: The directory to store the category images does not exist: %s 
+ms_error_categories_permalink_exists = That Permalink already exists. Please try another.
+ms_error_categories_permalink_required = The Permalink is required.
 
 section_general = Content
 section_data = Data 

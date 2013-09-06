@@ -136,11 +136,9 @@ class lC_Categories_Admin {
 
     $lC_CategoryTree = new lC_CategoryTree_Admin();
 
-    $Qcategories = $lC_Database->query('select c.*, cd.* from :table_categories c, :table_categories_description cd where c.categories_id = :categories_id and c.categories_id = cd.categories_id and cd.language_id = :language_id');
+    $Qcategories = $lC_Database->query('select * from :table_categories where categories_id = :categories_id');
     $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
-    $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
     $Qcategories->bindInt(':categories_id', $id);
-    $Qcategories->bindInt(':language_id', $language_id);
     $Qcategories->execute();
 
     $data = $Qcategories->toArray();
@@ -148,8 +146,8 @@ class lC_Categories_Admin {
     $data['childs_count'] = sizeof($lC_CategoryTree->getChildren($Qcategories->valueInt('categories_id'), $dummy = array()));
     $data['products_count'] = $lC_CategoryTree->getNumberOfProducts($Qcategories->valueInt('categories_id'));
 
-    $Qcategories->freeResult();
-
+    $Qcategories->freeResult(); 
+    
     if ( !empty($key) && isset($data[$key]) ) {
       $data = $data[$key];
     }
@@ -222,22 +220,31 @@ class lC_Categories_Admin {
         }
         
         // added for permalink
-        if (is_numeric($id)) {
-          $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink where item_id = :item_id and type = :type and language_id = :language_id');
-        } else {
-          $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
-        }
-        $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
-        $Qpl->bindInt(':item_id', $category_id);
-        $Qpl->bindInt(':language_id', $l['id']);
-        $Qpl->bindInt(':type', 1);
-        $Qpl->bindValue(':query', 'cPath=' . $cPath);
-        $Qpl->bindValue(':permalink', $data['permalink'][$l['id']]);
-        $Qpl->execute();
+        if ($data['permalink'][$l['id']] != 'no-permalink') {
+          if (is_numeric($id) && lC_Categories_Admin::validatePermalink(array($data['permalink'][$l['id']]), $category_id, 1) != 1) {
+            $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink where item_id = :item_id and type = :type and language_id = :language_id');
+          } else {
+            $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
+          }
+          $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
+          $Qpl->bindInt(':item_id', $category_id);
+          $Qpl->bindInt(':language_id', $l['id']);
+          $Qpl->bindInt(':type', 1);
+          $Qpl->bindValue(':query', 'cPath=' . $cPath);
+          $Qpl->bindValue(':permalink', $data['permalink'][$l['id']]);
+          $Qpl->execute();
 
-        if ( $lC_Database->isError() ) {
-          $error = true;
-          break;
+          if ( $lC_Database->isError() ) {
+            $error = true;
+            break;
+          }
+        } else {
+          $Qpl = $lC_Database->query('delete from :table_permalinks where item_id = :item_id and type = :type and language_id = :language_id');
+          $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
+          $Qpl->bindInt(':item_id', $category_id);
+          $Qpl->bindInt(':language_id', $l['id']);
+          $Qpl->bindInt(':type', 1);
+          $Qpl->execute();
         }
       }
     }
@@ -673,9 +680,9 @@ class lC_Categories_Admin {
     return $permalink_count;
   }
  /*
-  * Validate the product permalink
+  * Validate the category permalink
   *
-  * @param string $permalink The product permalink
+  * @param string $permalink The category permalink
   * @access public
   * @return array
   */

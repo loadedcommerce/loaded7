@@ -85,8 +85,10 @@ $(document).ready(function() {
     // instantiate floating menu
     $('#floating-menu-div-listing').fixFloat();
   }
-  <?php if ($_GET['action'] != '') { ?>
-  createUploader();
+  <?php 
+  if ($_GET['action'] != '') { 
+  ?>
+    createUploader();
   <?php
     if (ENABLE_EDITOR == '1') { 
       if (USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
@@ -103,8 +105,7 @@ $(document).ready(function() {
         echo '$("#ckEditorCategoriesDescription_' . $l['id'] . '").css("height", "200px").css("width", "99.8%");';
       }
     }
-  ?>
-  <?php } ?>
+  } ?>
 });
                   
 function createUploader() {
@@ -156,6 +157,11 @@ function customCheck() {
       $("#categories_custom_url").val('');
       $("#custom_url_text").show();
     }
+    <?php
+    foreach ( $lC_Language->getAll() as $l ) {
+      echo '$("#categories_permalink_' . $l['id'] . '").attr("value", "no-permalink").parent().hide();';
+    }
+    ?>
   } else {
     $("#categories_custom").hide();
     $("#categories_link_target_p").hide();
@@ -163,6 +169,11 @@ function customCheck() {
     $("#categories_custom_url").val("");
     $("#categories_link_target").removeAttr("checked");
     $("#categories_link_target").parent("span").removeClass("checked");
+    <?php
+    foreach ( $lC_Language->getAll() as $l ) {
+      echo '$("#categories_permalink_' . $l['id'] . '").attr("value", "").parent().show();';
+    }
+    ?>
   }
 }
 
