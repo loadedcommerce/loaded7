@@ -164,7 +164,7 @@
                 </fieldset>
               </div>
             </div>
-            <div class="columns">
+            <!--<div class="columns">
               <div class="twelve-columns">
                 <div class="field-drop-tabs field-drop-tabs-no-left button-height black-inputs">
                   <div class="columns">
@@ -173,7 +173,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div>-->
             <div class="columns with-padding">
               <div class="twelve-columns mid-margin-bottom large-pull-top">
                 <fieldset>
