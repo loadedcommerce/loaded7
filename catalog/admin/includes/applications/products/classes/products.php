@@ -561,7 +561,11 @@ class lC_Products_Admin {
     }
     
     if ( $error === false ) {
-      $cPath = ($category_id != '') ? $lC_CategoryTree->getcPath($category_id) : 0;
+      if ( isset($data['categories']) && !empty($data['categories']) ) {
+        $cPath = $lC_CategoryTree->getcPath($data['categories'][0]);
+      } else {
+        $cPath = ($category_id != '') ? $lC_CategoryTree->getcPath($category_id) : 0;
+      }
       foreach ($lC_Language->getAll() as $l) {
         if (is_numeric($id)) {
           $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url where products_id = :products_id and language_id = :language_id');
@@ -586,7 +590,7 @@ class lC_Products_Admin {
         
         // added for permalink
         if (is_numeric($id)) {
-          $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink where item_id = :item_id and type = :type and language_id = :language_id');
+          $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink, query = :query where item_id = :item_id and type = :type and language_id = :language_id');
         } else {
           $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
         }
