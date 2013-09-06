@@ -28,7 +28,7 @@
     </definition> 
     <definition>
       <key>payment_paypal_adv_method_blurb</key>
-      <value><![CDATA[powered by <img src="addons/Paypal_Payments_Advanced/images/paypal-small.png" style="vertical-align:middle">]]></value>
+      <value><![CDATA[powered by <img src="addons/Paypal_Payments_Advanced/images/paypal-small.png" alt="PayPal Advanced" style="vertical-align:middle;">]]></value>
       <group>checkout</group>
     </definition>     
     <definition>   

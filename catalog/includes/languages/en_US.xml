@@ -14,7 +14,7 @@
     <numerical_thousands_separator><![CDATA[,]]></numerical_thousands_separator>
     <parent_language_code><![CDATA[]]></parent_language_code>
   </data>
-  <definitions>
+  <definitions> 
     <definition>
       <key>my_account</key>
       <value><![CDATA[My Account]]></value>
@@ -30,6 +30,16 @@
       <value><![CDATA[Contact Us]]></value>
       <group>general</group>
     </definition>
+    <definition>
+      <key>text_click_and_scan</key>
+      <value><![CDATA[Click and Scan]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
+      <key>text_dropdown</key>
+      <value><![CDATA[Dropdown]]></value>
+      <group>general</group>
+    </definition>      
     <definition>
       <key>text_shipping_returns</key>
       <value><![CDATA[Shipping & Returns]]></value>
@@ -50,6 +60,11 @@
       <value><![CDATA[Sitemap]]></value>
       <group>general</group>
     </definition>
+    <definition>
+      <key>text_toggle_navigation</key>
+      <value><![CDATA[Toggle navigation]]></value>
+      <group>general</group>
+    </definition>    
     <definition>
       <key>text_sign_in</key>
       <value><![CDATA[My Account]]></value>
@@ -89,7 +104,7 @@
       <key>text_new_products</key>
       <value><![CDATA[New Products]]></value>
       <group>general</group>
-    </definition>
+    </definition>   
     <definition>
       <key>text_sign_out</key>
       <value><![CDATA[Sign Out]]></value>
@@ -106,10 +121,20 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>shopping_cart_empty</key>
+      <value><![CDATA[0 Items]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>checkout</key>
       <value><![CDATA[Checkout]]></value>
       <group>general</group>
     </definition>
+    <definition>
+      <key>text_amount_due</key>
+      <value><![CDATA[Amount Due]]></value>
+      <group>checkout</group>
+    </definition>    
     <definition>
       <key>breadcrumb_top</key>
       <value><![CDATA[Top]]></value>
@@ -206,6 +231,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>button_close</key>
+      <value><![CDATA[Close]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>button_buy_now</key>
       <value><![CDATA[Buy Now]]></value>
       <group>general</group>
@@ -225,6 +255,11 @@
       <value><![CDATA[Confirm Order]]></value>
       <group>general</group>
     </definition>
+    <definition>
+      <key>button_confirm</key>
+      <value><![CDATA[Confirm]]></value>
+      <group>general</group>
+    </definition>    
     <definition>
       <key>button_continue</key>
       <value><![CDATA[Continue]]></value>
@@ -327,7 +362,7 @@
     </definition>
     <definition>
       <key>footer</key>
-      <value><![CDATA[Copyright &copy; %s <a href="%s">%s</a><br />Powered by <a href="http://www.zenmerchant.com" target="_blank">LoadedCommerce</a>]]></value>
+      <value><![CDATA[<a href="www.loadedcommerce.com">Shopping Cart Software</a> by Loaded Commerce]]></value>
       <group>general</group>
     </definition>
     <definition>
@@ -517,7 +552,7 @@
     </definition>
     <definition>
       <key>sign_out_heading</key>
-      <value><![CDATA[Sign Out From Your Account]]></value>
+      <value><![CDATA[Signed Out]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -527,12 +562,27 @@
     </definition>
     <definition>
       <key>account_edit_heading</key>
-      <value><![CDATA[My Account Information]]></value>
+      <value><![CDATA[My Account]]></value>
       <group>account</group>
     </definition>
     <definition>
+      <key>personal_details_title</key>
+      <value><![CDATA[Personal Details]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
+      <key>address_title</key>
+      <value><![CDATA[Address]]></value>
+      <group>general</group>
+    </definition>     
+    <definition>
+      <key>login_details_title</key>
+      <value><![CDATA[Login Details]]></value>
+      <group>account</group>
+    </definition>    
+    <definition>
       <key>account_password_heading</key>
-      <value><![CDATA[My Account Password]]></value>
+      <value><![CDATA[Update Password]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -552,7 +602,7 @@
     </definition>
     <definition>
       <key>notifications_heading</key>
-      <value><![CDATA[My Product Notifications]]></value>
+      <value><![CDATA[My Notifications]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -572,7 +622,7 @@
     </definition>
     <definition>
       <key>address_book_delete_entry_heading</key>
-      <value><![CDATA[Remove Address Book Entry]]></value>
+      <value><![CDATA[Remove Address]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -622,7 +672,7 @@
     </definition>
     <definition>
       <key>sign_out_text</key>
-      <value><![CDATA[You have sign out successfully from your account. Your shopping cart has been saved and will be restored the next time you sign on again.<br /><br />It is now safe to leave this site.]]></value>
+      <value><![CDATA[You have successfully signed out from your account. Your shopping cart has been saved and will be restored the next time you sign on again. It is now safe to leave this site.]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -630,6 +680,11 @@
       <value><![CDATA[My Account]]></value>
       <group>account</group>
     </definition>
+    <definition>
+      <key>my_details_title</key>
+      <value><![CDATA[My Details]]></value>
+      <group>account</group>
+    </definition>    
     <definition>
       <key>information_title</key>
       <value><![CDATA[Information]]></value>
@@ -777,12 +832,12 @@
     </definition>
     <definition>
       <key>newsletter_general_description</key>
-      <value><![CDATA[Including store news, new products, special offers, and other promotional announcements.]]></value>
+      <value><![CDATA[Yes I would like to be notified about store news, new products, special offers, and other promotional announcements.]]></value>
       <group>account</group>
     </definition>
     <definition>
       <key>product_notifications</key>
-      <value><![CDATA[My Product Notifications]]></value>
+      <value><![CDATA[My Notifications]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -802,7 +857,7 @@
     </definition>
     <definition>
       <key>product_notifications_products</key>
-      <value><![CDATA[Product Notifications]]></value>
+      <value><![CDATA[Specific Product Notifications]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -812,7 +867,7 @@
     </definition>
     <definition>
       <key>product_notifications_products_none</key>
-      <value><![CDATA[There are currently no products marked to be notified on.<br /><br />To add products to your product notification list, click on the notification link available on the detailed product information page.]]></value>
+      <value><![CDATA[You currently have no products marked for notification.<br /><br />To add products to your notification list, go to any product information page and click on the notification link.]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -822,7 +877,7 @@
     </definition>
     <definition>
       <key>primary_address_description</key>
-      <value><![CDATA[<p>This address is used as the pre-selected shipping and billing address for orders placed on this store.</p><p>This address is also used as the base for product and service tax calculations.</p>]]></value>
+      <value><![CDATA[This address is used as the pre-selected shipping and billing address for orders placed on this store. This address is also used as the base for product and service tax calculations.]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -842,12 +897,12 @@
     </definition>
     <definition>
       <key>address_book_delete_address_title</key>
-      <value><![CDATA[Delete Address]]></value>
+      <value><![CDATA[Are You Sure?]]></value>
       <group>account</group>
     </definition>
     <definition>
       <key>address_book_delete_address_description</key>
-      <value><![CDATA[Are you sure you would like to delete the selected address from your address book?]]></value>
+      <value><![CDATA[Please confirm you would like to delete the selected address from your address book by clicking the Delete button below.]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -862,7 +917,7 @@
     </definition>
     <definition>
       <key>set_as_primary</key>
-      <value><![CDATA[Set as primary address.]]></value>
+      <value><![CDATA[Set as primary address]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -877,17 +932,17 @@
     </definition>
     <definition>
       <key>create_account_terms_confirm</key>
-      <value><![CDATA[I have read and agreed to your privacy statement <a href="%s">(here)</a>.]]></value>
+      <value><![CDATA[I agree with the privacy statement <a href="%s">(here)</a>.]]></value>
       <group>account</group>
     </definition>
     <definition>
       <key>password_forgotten_heading</key>
-      <value><![CDATA[Password Forgotten]]></value>
+      <value><![CDATA[Password Recovery]]></value>
       <group>account</group>
     </definition>
     <definition>
       <key>password_forgotten</key>
-      <value><![CDATA[If you've forgotten your password, enter your e-mail address below and we'll send you an e-mail message containing your new password.]]></value>
+      <value><![CDATA[If you can't remember your password, enter your E-mail address below and we'll send you a message containing password reset instructions.]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -1006,7 +1061,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>error_password_forgotten_no_email_address_found</key>
-      <value><![CDATA[Error: The E-Mail Address was not found in our records, please try again.]]></value>
+      <value><![CDATA[The E-Mail address entered was not found in our records. Please check the E-mail address and try again.]]></value>
       <group>account</group>
     </definition>
     <definition>
@@ -1191,7 +1246,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>order_comment_title</key>
-      <value><![CDATA[Order Comment]]></value>
+      <value><![CDATA[Order Comments]]></value>
       <group>general</group>
     </definition>
     <definition>
@@ -1357,7 +1412,7 @@ Note: If you did not request this action via our password forgotten page, please
     <definition>
       <key>order_products_title</key>
       <value><![CDATA[Products]]></value>
-      <group>order</group>
+      <group>general</group>
     </definition>
     <definition>
       <key>order_tax_title</key>
@@ -1376,7 +1431,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>billable_address_checkbox</key>
-      <value><![CDATA[This is also my billable address]]></value>
+      <value><![CDATA[Use as billing address]]></value>
       <group>general</group>
     </definition>
     <definition>
@@ -1551,7 +1606,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>info_contact_heading</key>
-      <value><![CDATA[Contact]]></value>
+      <value><![CDATA[Contact Us]]></value>
       <group>info</group>
     </definition>
     <definition>
@@ -1581,22 +1636,22 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>conditions</key>
-      <value><![CDATA[Put here the required information.]]></value>
+      <value><![CDATA[Edit this page content by going to Admin > Setup > Languages and clicking on the language name.]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>contact</key>
-      <value><![CDATA[Put here the required information.]]></value>
+      <value><![CDATA[Edit this page content by going to Admin > Setup > Languages and clicking on the language name.]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>privacy</key>
-      <value><![CDATA[Put here the required information.]]></value>
+      <value><![CDATA[Edit this page content by going to Admin > Setup > Languages and clicking on the language name.]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>shipping</key>
-      <value><![CDATA[Put here the required information.]]></value>
+      <value><![CDATA[Edit this page content by going to Admin > Setup > Languages and clicking on the language name.]]></value>
       <group>info</group>
     </definition>
     <definition>
@@ -1621,27 +1676,37 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>contact_name_title</key>
-      <value><![CDATA[Full Name:]]></value>
+      <value><![CDATA[Name]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>contact_email_address_title</key>
-      <value><![CDATA[Email Address:]]></value>
+      <value><![CDATA[E-mail]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>contact_enquiry_title</key>
-      <value><![CDATA[Enquiry:]]></value>
+      <value><![CDATA[Comments]]></value>
       <group>info</group>
     </definition>
     <definition>
+      <key>contact_email_form_title</key>
+      <value><![CDATA[Contact Us]]></value>
+      <group>info</group>
+    </definition>  
+    <definition>
+      <key>button_send_message</key>
+      <value><![CDATA[Send Message]]></value>
+      <group>info</group>
+    </definition>       
+    <definition>
       <key>contact_email_sent_successfully</key>
-      <value><![CDATA[Your enquiry has been successfully sent to the store owner.]]></value>
+      <value><![CDATA[Your comments have been successfully sent to the store owner.]]></value>
       <group>info</group>
     </definition>
     <definition>
       <key>contact_email_subject</key>
-      <value><![CDATA[Contact Enquiry]]></value>
+      <value><![CDATA[Contact Inquiry]]></value>
       <group>info</group>
     </definition>
     <definition>
@@ -1755,17 +1820,22 @@ Note: If you did not request this action via our password forgotten page, please
       <group>products</group>
     </definition>
     <definition>
+      <key>products_tell_a_friend_title</key>
+      <value><![CDATA[Tell A Friend]]></value>
+      <group>products</group>
+    </definition>    
+    <definition>
       <key>breadcrumb_tell_a_friend</key>
       <value><![CDATA[Tell A Friend]]></value>
       <group>products</group>
     </definition>
     <definition>
       <key>product_not_found_heading</key>
-      <value><![CDATA[Product Not Found]]></value>
+      <value><![CDATA[Products]]></value>
       <group>products</group>
     </definition>
     <definition>
-      <key>no_new_products</key>
+      <key>no_products</key>
       <value><![CDATA[There are currently no products available.]]></value>
       <group>products</group>
     </definition>
@@ -1786,7 +1856,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>product_not_found</key>
-      <value><![CDATA[Product not found!]]></value>
+      <value><![CDATA[There are currently no products available.]]></value>
       <group>products</group>
     </definition>
     <definition>
@@ -1846,7 +1916,7 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>no_reviews_available</key>
-      <value><![CDATA[No reviews found.]]></value>
+      <value><![CDATA[There are currently no reviews available.]]></value>
       <group>products</group>
     </definition>
     <definition>
@@ -1886,27 +1956,27 @@ Note: If you did not request this action via our password forgotten page, please
     </definition>
     <definition>
       <key>tell_a_friend_message</key>
-      <value><![CDATA[Your Message]]></value>
+      <value><![CDATA[Message]]></value>
       <group>products</group>
     </definition>
     <definition>
       <key>field_tell_a_friend_customer_name</key>
-      <value><![CDATA[Your Name:]]></value>
+      <value><![CDATA[Name]]></value>
       <group>products</group>
     </definition>
     <definition>
       <key>field_tell_a_friend_customer_email_address</key>
-      <value><![CDATA[Your E-Mail Address:]]></value>
+      <value><![CDATA[E-Mail Address]]></value>
       <group>products</group>
     </definition>
     <definition>
       <key>field_tell_a_friend_friends_name</key>
-      <value><![CDATA[Your Friends Name:]]></value>
+      <value><![CDATA[Friends Name]]></value>
       <group>products</group>
     </definition>
     <definition>
       <key>field_tell_a_friend_friends_email_address</key>
-      <value><![CDATA[Your Friends E-Mail Address:]]></value>
+      <value><![CDATA[Friends E-Mail Address]]></value>
       <group>products</group>
     </definition>
     <definition>
@@ -2161,6 +2231,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <group>general</group>
     </definition>
     <definition>
+      <key>field_customer_date_of_birth_abbr</key>
+      <value><![CDATA[DOB:]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>field_customer_date_of_birth_error</key>
       <value><![CDATA[Your Date of Birth must be set correctly.]]></value>
       <group>general</group>
@@ -2377,7 +2452,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>
     <definition>
       <key>contact_inquiry_title</key>
-      <value><![CDATA[Inquiry:]]></value>
+      <value><![CDATA[Comments:]]></value>
       <group>general</group>
     </definition>
     <definition>
@@ -2491,6 +2566,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <group>general</group>
     </definition>
     <definition>
+      <key>icon_cart_remove</key>
+      <value><![CDATA[Remove Item]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>receipt_billing_address_title</key>
       <value><![CDATA[Billing Address]]></value>
       <group>general</group>
@@ -2527,7 +2607,7 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>
     <definition>
       <key>receipt_payment_method_title</key>
-      <value><![CDATA[Payment Method]]></value>
+      <value><![CDATA[Payment Method:]]></value>
       <group>general</group>
     </definition>
     <definition>
@@ -2615,6 +2695,16 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Add Address]]></value>
       <group>general</group>
     </definition>
+    <definition>    
+      <key>text_add</key>
+      <value><![CDATA[Add]]></value>
+      <group>general</group>
+    </definition>  
+    <definition>    
+      <key>text_hide</key>
+      <value><![CDATA[Hide]]></value>
+      <group>general</group>
+    </definition>       
     <definition>
       <key>text_not_found</key>
       <value><![CDATA[Not Found!]]></value>
@@ -2632,15 +2722,14 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>
     <definition>
       <key>text_coupon_code_instructions</key>
-      <value><![CDATA[Enter your coupon code if you have one.]]></value>
+      <value><![CDATA[If you have a coupon, redeem it by entering the code below.]]></value>
       <group>checkout</group>
     </definition>
     <definition>
       <key>text_apply_coupon</key>
       <value><![CDATA[Apply Coupon]]></value>
       <group>checkout</group>
-    </definition>  
-    </definition> 
+    </definition>
     <definition>
       <key>text_label_error</key>
       <value><![CDATA[Error:]]></value>
@@ -2686,11 +2775,10 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Coupon has reached maximum uses.]]></value>
       <group>checkout</group>
     </definition>  
-  </definitions>
     <definition>
       <key>ms_error_action_not_performed</key>
       <value><![CDATA[Error: There was a problem performing the action.]]></value>
-      <group>checkout</group>
+      <group>general</group>
     </definition>  
   </definitions>  
 </language>

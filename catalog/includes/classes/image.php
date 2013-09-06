@@ -73,7 +73,7 @@ class lC_Image {
     }
 
     if (empty($image)) {
-      $image = 'pixel_trans.gif';
+      $image = 'no_image.png';
     } else {
       $image = 'products/' . $this->_groups[$group_id]['code'] . '/' . $image;
     }

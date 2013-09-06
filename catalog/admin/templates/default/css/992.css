@@ -39,7 +39,7 @@
 	}
 	#title-bar ~ #menu,
 	#title-bar ~ #shortcuts {
-		top: 35px;
+		top: 41px;
 	}
 body.with-menu #main {
 	margin-right: 260px;

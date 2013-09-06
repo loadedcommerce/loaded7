@@ -77,7 +77,9 @@ $Qcfg->setCache('configuration');
 $Qcfg->execute();
 
 while ($Qcfg->next()) {
-  define($Qcfg->value('cfgKey'), $Qcfg->value('cfgValue'));
+  if(!defined($Qcfg->value('cfgKey'))){    
+    define($Qcfg->value('cfgKey'), $Qcfg->value('cfgValue'));
+  }
 }
 
 $Qcfg->freeResult();
@@ -125,6 +127,12 @@ require($lC_Vqmod->modCheck('../includes/classes/datetime.php'));
 require($lC_Vqmod->modCheck('includes/classes/language.php'));
 $lC_Language = new lC_Language_Admin();
 
+// admin specific language
+if ( ($lC_Language->getAdminLanguage($_SESSION['admin']['id']) != 'en_US') || ($lC_Language->getAdminLanguage($_SESSION['admin']['id']) != $_SESSION['admin']['language_id']) ) {
+  $lC_Language->set($lC_Language->getAdminLanguage($_SESSION['admin']['id']));
+}
+
+// language change detected via url $_GET 
 if (isset($_GET['language']) && !empty($_GET['language'])) {
   $lC_Language->set($_GET['language']);
 }
@@ -161,7 +169,7 @@ $BarcodeQR = new BarcodeQR();
 require($lC_Vqmod->modCheck('templates/default/classes/general.php'));
 
 // instantiate the addons class
-require('includes/classes/addons.php');
+require_once('includes/classes/addons.php');
 $lC_Addons = new lC_Addons_Admin();
 
 // check if a default currency is set

@@ -99,7 +99,7 @@ class lC_Orders_Admin {
       
     while ($Qresult->next()) { 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qresult->valueInt('orders_id') . '" id="' . $Qresult->valueInt('orders_id') . '"></td>';
-      $oid = '<td><a href="javascript://" onclick="editOrder(\'' . $Qresult->valueInt('orders_id') . '\')"><span class="icon-price-tag icon-red"></span>&nbsp;' . $Qresult->valueInt('orders_id') . '</a></td>';
+      $oid = '<td><a href="javascript:void(0);" onclick="editOrder(\'' . $Qresult->valueInt('orders_id') . '\')"><span class="icon-price-tag icon-red"></span>&nbsp;' . $Qresult->valueInt('orders_id') . '</a></td>';
       $name = '<td>' . $Qresult->valueProtected('customers_name') . '</td>';
       $cid = '<td>' . $Qresult->valueInt('customers_id') . '</td>';        
       $total = '<td>' . $lC_Currencies->format($Qresult->value('order_total')) . '</td>';
@@ -541,7 +541,7 @@ class lC_Orders_Admin {
       if ( $data['notify_customer'] === true ) {
         $email_body = sprintf($lC_Language->get('email_body'), STORE_NAME) . "\n" . $lC_Language->get('email_underline') . "\n";
         $email_body .= sprintf($lC_Language->get('email_order_number'), $id) . "\n";
-        $email_body .= sprintf($lC_Language->get('email_detailed_invoice'), lc_href_link(FILENAME_CATALOG_ACCOUNT_HISTORY_INFO, 'order_id=' . $id, 'SSL', false, false, true)) . "\n";
+        $email_body .= sprintf($lC_Language->get('email_detailed_invoice'), lc_href_link(FILENAME_CATALOG_ACCOUNT, 'receipt=' . $id, 'SSL', false, false, true)) . "\n";
         $email_body .= sprintf($lC_Language->get('email_date_ordered'), lC_DateTime::getLong($Qorder->value('date_purchased'))) . "\n\n";
         $email_body .= sprintf($lC_Language->get('email_order_status'), $orders_status_array[$data['status_id']]) . "\n\n";
 

@@ -22,7 +22,7 @@ class lC_Products_Specials extends lC_Template {
 
   /* Class constructor */
   function lC_Products_Specials() {
-    global $lC_Services, $lC_Language, $lC_Breadcrumb;
+    global $lC_Services, $lC_Language, $lC_Breadcrumb, $lC_Specials;
 
     $this->_page_title = $lC_Language->get('specials_heading');
 

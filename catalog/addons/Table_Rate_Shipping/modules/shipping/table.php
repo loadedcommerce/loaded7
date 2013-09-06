@@ -69,8 +69,8 @@ class lC_Shipping_table extends lC_Shipping {
     } else {
       $order_total = $lC_Weight->convert($lC_ShoppingCart->getWeight(), SHIPPING_WEIGHT_UNIT, ADDONS_SHIPPING_TABLE_RATE_SHIPPING_WEIGHT_UNIT);
     }
-
-    $table_cost = preg_split("/[:,]/" , ADDONS_SHIPPING_TABLE_RATE_SHIPPING_COST);
+    
+    $table_cost = preg_split("/[:,]/" , ADDONS_SHIPPING_TABLE_RATE_SHIPPING_TABLE);
     $size = sizeof($table_cost);
     for ($i=0, $n=$size; $i<$n; $i+=2) {
       if ($order_total <= $table_cost[$i]) {

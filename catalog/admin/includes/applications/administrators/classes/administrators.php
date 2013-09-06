@@ -1,5 +1,5 @@
 <?php
-/**
+/*
   $Id: administrators.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
@@ -90,8 +90,15 @@ class lC_Administrators_Admin {
     while ( $Qaccess->next() ) {
       $modules['access_modules'][] = $Qaccess->value('module');
     }
+    
+    $languages_array = array(); 
+    $languageAarray = array(); 
+    foreach (lC_Languages_Admin::getIdNameArray() as $key => $value) {
+      $languages_array[$value['languages_id']] = $value['name'];
+    }
+    $languageAarray['languagesArray'] = $languages_array;
 
-    $data = array_merge($Qadmin->toArray(), $modules);
+    $data = array_merge($Qadmin->toArray(), $modules,$languageAarray);
 
     unset($modules);
     $Qaccess->freeResult();
@@ -113,7 +120,7 @@ class lC_Administrators_Admin {
     $error = false;
     $result = array();
 
-    $Qcheck = $lC_Database->query('select id from :table_administrators where user_name = :user_name');
+    $Qcheck = $lC_Database->query('select id, language_id from :table_administrators where user_name = :user_name');
 
     if ( isset($id) && $id != null ) {
       $Qcheck->appendQuery('and id != :id');
@@ -124,12 +131,12 @@ class lC_Administrators_Admin {
     $Qcheck->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
     $Qcheck->bindValue(':user_name', $data['user_name']);
     $Qcheck->execute();
-
+    
     if ($Qcheck->numberOfRows() < 1) {
       $lC_Database->startTransaction();
 
       if ( isset($id) && $id != null ) {
-        $Qadmin = $lC_Database->query('update :table_administrators set user_name = :user_name, first_name = :first_name, last_name = :last_name, image = :image, access_group_id = :access_group_id ');
+        $Qadmin = $lC_Database->query('update :table_administrators set user_name = :user_name, first_name = :first_name, last_name = :last_name, image = :image, access_group_id = :access_group_id, language_id = :language_id ');
 
         if ( isset($data['user_password']) && !empty($data['user_password']) ) {
           $Qadmin->appendQuery(', user_password = :user_password');
@@ -139,7 +146,7 @@ class lC_Administrators_Admin {
         $Qadmin->appendQuery('where id = :id');
         $Qadmin->bindInt(':id', $id);
       } else {
-        $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, image, access_group_id) values (:user_name, :user_password, :first_name, :last_name, :image, :access_group_id)');
+        $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, image, access_group_id, language_id) values (:user_name, :user_password, :first_name, :last_name, :image, :access_group_id,:language_id)');
         $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($data['user_password'])));
       }
       
@@ -149,6 +156,7 @@ class lC_Administrators_Admin {
       $Qadmin->bindValue(':last_name', $data['last_name']);
       $Qadmin->bindValue(':image', $data['avatar']);
       $Qadmin->bindInt(':access_group_id', $data['access_group_id']);
+      $Qadmin->bindInt(':language_id', $data['language_id']);
       $Qadmin->setLogging($_SESSION['module'], $id);
       $Qadmin->execute();
 
@@ -162,6 +170,10 @@ class lC_Administrators_Admin {
 
       if ( $error === false ) {
         $lC_Database->commitTransaction();
+        // check for language changes and set session accordingly
+        if ($data['language_id'] != $Qcheck->value('language_id')) {
+          $_SESSION['admin']['language_id'] = $data['language_id'];
+        }
       } else {
         $lC_Database->rollbackTransaction();
         $result['rpcStatus'] = -1;

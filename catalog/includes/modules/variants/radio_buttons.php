@@ -34,10 +34,11 @@ class lC_Variants_radio_buttons extends lC_Variants_Abstract {
         }
       }      
       
-      $string = '<table border="0" cellspacing="0" cellpadding="2" style="padding-bottom:10px;">' .
-                '  <tr>' .
-                '    <td valign="top"><label>' . $group_title . '</label></td>' .
-                '    <td valign="top" style="vertical-align:middle; padding-left:26px;">';
+      $string = '<div class="margin-left margin-bottom">' .
+                '  <table>' .
+                '    <tr>' .
+                '      <td valign="top"><label class="margin-right">' . $group_title . '</label></td>' .
+                '      <td valign="top">';
 
       reset($data);
       $cnt = 0;
@@ -46,15 +47,16 @@ class lC_Variants_radio_buttons extends lC_Variants_Abstract {
         $price_formatted = ((float)$val['price_modifier'] != 0.00) ? $price_ind . $lC_Currencies->format(number_format($val['price_modifier'], DECIMAL_PLACES), $lC_Currencies->getCode()) : null;
         $options[$val['value_id']] = $val['price_modifier']; 
         $group_id = $val['group_id'];
-        $group_title = $val['group_title'];
-                          
-        $string .= '<div><input ' . (($cnt == 0) ? 'checked="checked"' : '') . ' style="margin:4px 0;" type="radio" name="simple_options[' . $group_id . ']" value="' . $val['value_id'] . '" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '"><span style="font-size:.9em;">' . ' ' . $val['value_title'] . ' ' . $price_formatted . '</span></div>';
+        $group_title = $val['group_title'];    
+                    
+        $string .= '<div class="radio no-margin-top small-margin-bottom"><label><input type="radio" ' . (($cnt == 0) ? 'checked="checked"' : '') . ' name="simple_options[' . $group_id . ']" value="' . $val['value_id'] . '" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '"><span style="font-size:.9em;">' . ' ' . $val['value_title'] . ' ' . $price_formatted . '</span></label></div>';
         $cnt++;
       }                 
        
-      $string .= '    </td>' .
-                 '  </tr>' .
-                 '</table>';                     
+      $string .= '      </td>' .
+                 '    </tr>' .
+                 '  </table>' .
+                 '</div>';                     
       
     } else {      
 

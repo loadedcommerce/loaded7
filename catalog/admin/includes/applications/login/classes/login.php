@@ -50,16 +50,18 @@ class lC_Login_Admin {
     $lC_Language->loadIniFile('login.php');
     
     // check for email
-    $Qadmin = $lC_Database->query('select * from :table_administrators where user_name = :user_name');
+    $Qadmin = $lC_Database->query('select * from :table_administrators where user_name = :user_name limit 1');
     $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
     $Qadmin->bindValue(':user_name', $email);
     $Qadmin->execute();
+
     $admin = $Qadmin->toArray();
+
     // if email exists we continue
     if ( $Qadmin->numberOfRows() > 0) {
       $lC_Database->startTransaction();
       
-      $verify_key = Utility::generateUID();
+      $verify_key = utility::generateUID();
     
       // set the key to be verified from the resulting email
       $Qsetkey = $lC_Database->query('update :table_administrators set verify_key = :verify_key where user_name = :user_name');
@@ -112,7 +114,7 @@ class lC_Login_Admin {
   */
   public static function lostPasswordConfirmKey($key, $email) {
     global $lC_Database;
-    
+       
     // check for key
     $Qkey = $lC_Database->query('select verify_key from :table_administrators where user_name = :user_name');
     $Qkey->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
@@ -155,7 +157,6 @@ class lC_Login_Admin {
     
     // successful password update, move on
     if ( !$lC_Database->isError() ) {
-      
       // get user info
       $Qadmin = $lC_Database->query('select * from :table_administrators where user_name = :user_name');
       $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
@@ -171,9 +172,10 @@ class lC_Login_Admin {
                                  'access' => lC_Access::getUserLevels($Qadmin->valueInt('access_group_id')));
                                  
       // remove key to stop further changes with this key
-      $Qkeyremove = $lC_Database->query('update :table_administrators set verify_key = null where user_name = :user_name');
+      $Qkeyremove = $lC_Database->query('update :table_administrators set verify_key = :verify_key where user_name = :user_name');
       $Qkeyremove->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
       $Qkeyremove->bindValue(':user_name', $email);
+      $Qkeyremove->bindValue(':verify_key', null);
       $Qkeyremove->execute();
       
       $lC_Database->commitTransaction();
@@ -188,9 +190,30 @@ class lC_Login_Admin {
       return false;
     }
   }
+ /*
+  * Activate Pro Serial
+  *
+  * @access public
+  * @return json
+  */
+  public static function validateSerial($serial) {
+    
+    $result = array();
+    
+    $validateArr = array('serial' => $serial,
+                         'storeName' => STORE_NAME,
+                         'storeEmail' => STORE_OWNER_EMAIL_ADDRESS,
+                         'storeWWW' => HTTP_SERVER . DIR_WS_HTTP_CATALOG);
+                         
+    $checksum = hash('sha256', json_encode($validateArr));
+    $validateArr['checksum'] = $checksum;
+    
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/check/serial/', 'method' => 'post', 'parameters' => $validateArr));  
+    
+    $result['rpcStatus'] = (preg_match("'<rpcStatus[^>]*?>(.*?)</rpcStatus>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;    
+
+    return $result;
+  }  
+  
 }
-
-
-
-
 ?>

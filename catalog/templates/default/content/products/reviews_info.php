@@ -25,7 +25,7 @@ if ($lC_MessageStack->size('reviews') > 0) {
       $height = ($lC_Product->hasImage()) ? $lC_Image->getHeight('thumbnails')+30 : 110;
       if ($lC_Product->hasImage()) {
         $height = $lC_Image->getHeight('thumbnails')+20;
-      ?>
+      ?> 
       <div style="float:right; padding:10px; text-align:center; margin:0 0 10px 10px; background-color:#fff;">
         <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'images&' . $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="review-img"', 'thumbnail'), 'target="_blank" onclick="window.open(\'' . lc_href_link(FILENAME_PRODUCTS, 'images&' . $lC_Product->getKeyword()) . '\', \'popUp\', \'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width=' . (($lC_Product->numberOfImages() > 1) ? $lC_Image->getWidth('large') + ($lC_Image->getWidth('thumbnails') * 2) + 70 : $lC_Image->getWidth('large') + 20) . ',height=' . ($lC_Image->getHeight('large') + 20) . '\'); return false;"'); ?>
         <?php echo '<br /><a href="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action')) . '&action=cart_add') . '" class="buyNowButtonSmall"><button class="button brown_btn" type="button">' . $lC_Language->get('button_buy_now') . '</button></a>'; ?>

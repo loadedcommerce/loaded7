@@ -35,7 +35,7 @@ foreach($modulesArr['template_array'] as $module => $text) {
   .selectContainer { position:absolute; bottom:29px; left:30px }
   </style>
   <div class="with-padding-no-top">
-    <div id="templateSelectorContainer" style="position:absolute; top:98px; left:190px; z-index:2;"><div id="templateSelector"><form name="template" id="template" action="" onchange="updateTemplateSelector();"><?php echo lc_draw_pull_down_menu('filter', $templatesModulesArr, null, 'class="select"');?></form></div></div>
+    <div id="templateSelectorContainer" style="position:absolute; top:98px; left:190px; z-index:2;"><div id="templateSelector"><form name="template" id="template" action="" onchange="updateTemplateSelector();"><?php echo lc_draw_pull_down_menu('filter', $templatesModulesArr, null, 'class="input with-small-padding"');?></form></div></div>
     <form name="batch" id="batch" action="#" method="post">
     <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
       <thead>
@@ -48,8 +48,8 @@ foreach($modulesArr['template_array'] as $module => $text) {
           <th scope="col" class="align-right hide-on-tablet"><?php echo $lC_Language->get('table_heading_sort_order'); ?></th>
           <th scope="col" class="align-right">
            <span class="button-group compact" style="white-space:nowrap;">
-             <a style="display:none;" href="javascript://" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="newModule(); return false;'); ?>" title="<?php echo $lC_Language->get('button_add_template_module'); ?>"></a>
-             <a href="javascript://" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a>
+             <a style="display:none;" href="javascript:void(0);" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="newModule(); return false;'); ?>" title="<?php echo $lC_Language->get('button_add_template_module'); ?>"></a>
+             <a href="javascript:void(0);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a>
            </span>
            <span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span>
           </th>

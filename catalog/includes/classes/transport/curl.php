@@ -46,6 +46,15 @@ class curl {
       $curl_options[CURLOPT_POST] = true;
       $curl_options[CURLOPT_POSTFIELDS] = $parameters['parameters'];
     }
+    
+   // added support for curl proxy
+    if (defined('CURL_PROXY_HOST') && defined('CURL_PROXY_PORT') && CURL_PROXY_HOST != NULL && CURL_PROXY_PORT != NULL) {
+      $curl_options[CURLOPT_HTTPPROXYTUNNEL] = true;
+      $curl_options[CURLOPT_PROXY] = CURL_PROXY_HOST . ":" . CURL_PROXY_PORT;
+    }
+    if (defined('CURL_PROXY_USER') && defined('CURL_PROXY_PASSWORD') && CURL_PROXY_USER != NULL && CURL_PROXY_PASSWORD != NULL) {
+      $curl_options[CURLOPT_PROXYUSERPWD] = CURL_PROXY_USER . ':' . CURL_PROXY_PASSWORD;
+    }    
 
     curl_setopt_array($curl, $curl_options);
     $result = curl_exec($curl);

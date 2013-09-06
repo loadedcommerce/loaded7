@@ -47,23 +47,15 @@ class lC_Search_Search extends lC_Template {
   /* Private methods */
   function _process() {
     global $lC_Language, $lC_MessageStack, $lC_Search, $Qlisting, $lC_Vqmod;
-
+    
     require_once($lC_Vqmod->modCheck('includes/classes/search.php'));
-
-    if (isset($_GET['datefrom_days']) && is_numeric($_GET['datefrom_days']) && isset($_GET['datefrom_months']) && is_numeric($_GET['datefrom_months']) && isset($_GET['datefrom_years']) && is_numeric($_GET['datefrom_years'])) {
-      if (@checkdate($_GET['datefrom_months'], $_GET['datefrom_days'], $_GET['datefrom_years'])) {
-        $lC_Search->setDateFrom(mktime(0, 0, 0, $_GET['datefrom_months'], $_GET['datefrom_days'], $_GET['datefrom_years']));
-      } else {
-        $lC_MessageStack->add('search', $lC_Language->get('error_search_invalid_from_date'));
-      }
+    
+    if (isset($_GET['datefrom']) && $_GET['datefrom'] != ''){
+      $lC_Search->setDateFrom($_GET['datefrom']);
     }
 
-    if (isset($_GET['dateto_days']) && is_numeric($_GET['dateto_days']) && isset($_GET['dateto_months']) && is_numeric($_GET['dateto_months']) && isset($_GET['dateto_years']) && is_numeric($_GET['dateto_years'])) {
-      if (@checkdate($_GET['dateto_months'], $_GET['dateto_days'], $_GET['dateto_years'])) {
-        $lC_Search->setDateTo(mktime(23, 59, 59, $_GET['dateto_months'], $_GET['dateto_days'], $_GET['dateto_years']));
-      } else {
-        $lC_MessageStack->add('search', $lC_Language->get('error_search_invalid_to_date'));
-      }
+    if (isset($_GET['dateto']) && $_GET['dateto'] != ''){
+      $lC_Search->setDateTo($_GET['dateto']);
     }
 
     if ($lC_Search->hasDateSet()) {
@@ -100,12 +92,13 @@ class lC_Search_Search extends lC_Template {
       }
     }
 
+    /* not require fields for searching
     if (!$lC_Search->hasKeywords() && !$lC_Search->hasPriceSet('from') && !$lC_Search->hasPriceSet('to') && !$lC_Search->hasDateSet('from') && !$lC_Search->hasDateSet('to')) {
       $lC_MessageStack->add('search', $lC_Language->get('error_search_at_least_one_input'));
-    }
+    }*/
 
     if (isset($_GET['category']) && is_numeric($_GET['category']) && ($_GET['category'] > 0)) {
-      $lC_Search->setCategory($_GET['category'], (isset($_GET['recursive']) && ($_GET['recursive'] == '1') ? true : false));
+      $lC_Search->setCategory($_GET['category'], (isset($_GET['recursive']) && ($_GET['recursive'] == 'on') ? true : false));
     }
 
     if (isset($_GET['manufacturer']) && is_numeric($_GET['manufacturer']) && ($_GET['manufacturer'] > 0)) {
@@ -122,7 +115,7 @@ class lC_Search_Search extends lC_Template {
 
     if ($lC_MessageStack->size('search') > 0) {
       $this->_page_contents = 'search.php';
-    } else {
+    } else { 
       $Qlisting = $lC_Search->execute();
     }
   }

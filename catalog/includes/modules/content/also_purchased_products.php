@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: also_purchased_products.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::templates::content
+  @author     Loaded Commerce, LLC
+  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: also_purchased_products.php v1.0 2013-08-08 datazen $
 */
 class lC_Content_also_purchased_products extends lC_Modules {
  /* 
@@ -61,20 +58,18 @@ class lC_Content_also_purchased_products extends lC_Modules {
 
       if ($Qorders->numberOfRows() >= MODULE_CONTENT_ALSO_PURCHASED_MIN_DISPLAY) {
 
-        $this->_content = '<ul id="first-carousel" class="first-and-second-carousel jcarousel-skin-tango">';
-
+        $this->_content = '';
         while ($Qorders->next()) {
-          $this->_content .= '<li>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword')), $lC_Image->show($Qorders->value('image'), $Qorders->value('products_name')), 'class="product_image"')  . '
-                                <div class="product_info">
-                                  <h3>' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword')), $Qorders->value('products_name'))  . '</h3>
-                                <small>' . substr($Qorders->value('products_description'), 0, 60) . '...</small></div>
-                                <div class="price_info">
-                                  <button onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword') . '&action=cart_add') . '\'" class="price_add" title="" type="button"><span class="pr_price">' . $lC_Product->getPriceFormated(true) . '</span><span class="pr_add">' . $lC_Language->get('button_add_to_cart') . '</span></button>
-                                </div>
-                              </li>';
+          $this->_content .= '<div class="content-also-purchased-products-container">' . "\n";
+          if ($lC_Product->hasImage()) {
+            $this->_content .= '<div class="content-also-purchased-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword')), $lC_Image->show($Qorders->value('image'), $Qorders->value('products_name'), 'class="content-also-purchased-products-image-src"', 'small')) . '</div>' . "\n"; 
+          }
+          $this->_content .= '<div class="content-also-purchased-products-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword')), $Qorders->value('products_name'))  . '</div>' . "\n" . 
+                             '<div class="content-also-purchased-products-desc">' . $Qorders->value('products_description') . '</div>' . "\n" . 
+                             '<div class="content-also-purchased-products-price">' . $lC_Product->getPriceFormated(true). '</div>' . "\n" .
+                             '<div class="content-also-purchased-products-button"><button class="content-also-purchased-products-add-button" onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $Qorders->value('products_keyword') . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('customers_also_purchased_button_buy_now') . '</button></div>' . "\n";
+          $this->_content .= '</div>' . "\n";          
         }
-
-        $this->_content .= '</ul>';
       }
 
       $Qorders->freeResult();

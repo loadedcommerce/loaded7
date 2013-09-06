@@ -147,7 +147,7 @@ if (!function_exists('lc_image')) {
       $height = 0;
     }
 
-    $image = '<img src="' . lc_output_string($image) . '" border="0" alt="' . lc_output_string($title) . '"';
+    $image = '<img src="' . lc_output_string($image) . '" alt="' . lc_output_string($title) . '"';
 
     if (!empty($title)) {
       $image .= ' title="' . lc_output_string($title) . '"';
@@ -356,7 +356,7 @@ if (!function_exists('lc_draw_selection_field')) {
 
       if (is_array($value)) {
         $selection_value = $value['id'];
-        $selection_text = '&nbsp;' . $value['text'];
+        $selection_text = $value['text'];
       } else {
         $selection_value = $value;
         $selection_text = '';
@@ -365,7 +365,7 @@ if (!function_exists('lc_draw_selection_field')) {
       if (strstr($separator, '&nbsp;')) {
         $field .= '<span style="display:inline-block"><label for="' . lc_output_string($name) . (sizeof($values) > 1 ? $counter : '') . '" class="fieldLabel"><input type="' . lc_output_string($type) . '" name="' . lc_output_string($name) . '"';
       } else {
-        $field .= '<span><input type="' . lc_output_string($type) . '" name="' . lc_output_string($name) . '"';
+        $field .= '<input type="' . lc_output_string($type) . '" name="' . lc_output_string($name) . '"';
 
       }
 
@@ -616,7 +616,7 @@ if (!function_exists('lc_draw_label')) {
 * @access public
 */
 if (!function_exists('lc_draw_date_pull_down_menu')) {
-  function lc_draw_date_pull_down_menu($name, $value = null, $default_today = true, $show_days = true, $use_month_names = true, $year_range_start = 0, $year_range_end = 1) {
+  function lc_draw_date_pull_down_menu($name, $value = null, $default_today = true, $show_days = true, $use_month_names = true, $year_range_start = 0, $year_range_end = 1, $parameters = null) {
     $year = @date('Y');
 
     if (!is_bool($default_today)) {
@@ -682,7 +682,7 @@ if (!function_exists('lc_draw_date_pull_down_menu')) {
           'text' => $i);
       }
 
-      $days_select_string = lc_draw_pull_down_menu($name . '_days', $days_array, $value['date']);
+      $days_select_string = lc_draw_pull_down_menu($name . '_days', $days_array, $value['date'], $parameters);
     }
 
     $months_array = array();
@@ -691,7 +691,7 @@ if (!function_exists('lc_draw_date_pull_down_menu')) {
         'text' => (($use_month_names === true) ? @strftime('%B', @mktime(0, 0, 0, $i, 1)) : $i));
     }
 
-    $months_select_string = lc_draw_pull_down_menu($name . '_months', $months_array, $value['month'], $params);
+    $months_select_string = lc_draw_pull_down_menu($name . '_months', $months_array, $value['month'], $parameters);
 
     $years_array = array();
     for ($i = ($year - $year_range_start); $i <= ($year + $year_range_end); $i++) {
@@ -699,7 +699,7 @@ if (!function_exists('lc_draw_date_pull_down_menu')) {
         'text' => $i);
     }
 
-    $years_select_string = lc_draw_pull_down_menu($name . '_years', $years_array, $value['year'], $params);
+    $years_select_string = lc_draw_pull_down_menu($name . '_years', $years_array, $value['year'], $parameters);
 
     return $days_select_string . $months_select_string . $years_select_string;
   }

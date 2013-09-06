@@ -102,6 +102,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
       $this->_ec_redirect_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';  // sandbox url
       if (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE == 'C') {
         $this->form_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true);  // payment page
+        // set the width, height and scroll for the iframe
+        $this->iframe_params = $this->_getIframeParams();
         $this->iframe_action_url = 'https://pilot-payflowlink.paypal.com?SECURETOKEN=' . $_SESSION['cartSync']['SECURETOKEN'] . '&SECURETOKENID=' . $_SESSION['cartSync']['SECURETOKENID'] . '&MODE=TEST';  
       } else {
         $this->form_action_url = 'https://pilot-payflowlink.paypal.com';  // sandbox url
@@ -110,6 +112,8 @@ class lC_Payment_paypal_adv extends lC_Payment {
       $this->_ec_redirect_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=';  // production url
       if (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_TEMPLATE == 'C') {
         $this->form_action_url = lc_href_link(FILENAME_CHECKOUT, 'payment_template', 'SSL', true, true, true);  // payment page
+        // set the width, height and scroll for the iframe
+        $this->iframe_params = $this->_getIframeParams();
         $this->iframe_action_url = 'https://payflowlink.paypal.com?SECURETOKEN=' . $_SESSION['cartSync']['SECURETOKEN'] . '&SECURETOKENID=' . $_SESSION['cartSync']['SECURETOKENID'];  
       } else {
         $this->form_action_url = 'https://payflowlink.paypal.com';  // production url
@@ -734,6 +738,44 @@ class lC_Payment_paypal_adv extends lC_Payment {
     }    
     
     return $dataArr;
+  }
+ /**
+  * Determine the iFrame paramters depending on device params
+  *
+  * @access private
+  * @return string
+  */
+  private function _getIframeParams() {
+    // note PayPal has device sensing logic and will redirect to mobile form automatically
+    // Important:  check with actual device.  Emulators will not work when testing.
+    
+    // how many content columns
+    $content_span = (isset($_SESSION['content_span']) && $_SESSION['content_span'] != NULL) ? $_SESSION['content_span'] : '6';
+    
+    switch($content_span) {
+      case '9':
+        $fHeight = '600px';
+        $fScroll = 'no';
+        $fStyle = 'margin-left=36px';
+        $fWidth = '500px';       
+        break;
+        
+      case '12':
+        $fHeight = '600px';
+        $fScroll = 'no';
+        $fStyle = 'margin-left=130px';
+        $fWidth = '500px';       
+        break;
+        
+      default :
+        $fHeight = '600px';
+        $fScroll = 'yes';
+        $fStyle = 'margin-left=-20px';
+        $fWidth = '380px';      
+      
+    }
+    
+    return 'width=' . $fWidth . '&height=' . $fHeight . '&scroll=' . $fScroll . '&' . $fStyle;
   }
 }
 ?>

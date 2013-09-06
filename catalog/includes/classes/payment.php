@@ -17,7 +17,8 @@ class lC_Payment {
   var $selected_module;
 
   var $_modules = array(),
-      $_group = 'payment',                                                               
+      $_group = 'payment',     
+      $iframe_params,                                                          
       $order_status = DEFAULT_ORDERS_STATUS_ID;
 
   // class constructor
@@ -274,6 +275,22 @@ class lC_Payment {
   public function getIframeURL() {   
     return $GLOBALS[$this->selected_module]->iframe_action_url;
   }
+  
+  public function hasIframeParams() {
+    if (is_array($this->_modules)) {     
+      if (isset($GLOBALS[$this->selected_module]) && is_object($GLOBALS[$this->selected_module]) && $GLOBALS[$this->selected_module]->isEnabled()) {
+        if (isset($GLOBALS[$this->selected_module]->iframe_params) && (empty($GLOBALS[$this->selected_module]->iframe_params) === false)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }  
+  
+  public function getIframeParams() {
+    return $GLOBALS[$this->selected_module]->iframe_params;
+  }   
 
   public function hasRelayURL() {
     if (is_array($this->_modules)) {

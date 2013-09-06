@@ -209,13 +209,15 @@ class lC_Shipping_usps extends lC_Shipping {
       $request = 'API=IntlRateV2&XML=' . urlencode($request);
     }
 
-    switch (ADDONS_SHIPPING_USPS_SHIPPING_SERVER) {
+  /*  switch (ADDONS_SHIPPING_USPS_SHIPPING_SERVER) {
       case 'Production': $usps_server = 'http://production.shippingapis.com/ShippingAPI.dll';
                          break;
       case 'Test':
       default:           $usps_server = 'http://testing.shippingapis.com/ShippingAPITest.dll';
                          break;
-    }
+    } */
+    // hardcoded to production
+    $usps_server = 'http://production.shippingapis.com/ShippingAPI.dll';
 
     $xmlResponse = transport::getResponse(array('url' => $usps_server . '?' . $request, 'method' => 'get'));
     $response = utility::xml2arr($xmlResponse);
