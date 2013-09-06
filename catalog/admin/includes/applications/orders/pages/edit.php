@@ -37,22 +37,22 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
       <div id="order_tabs" class="side-tabs">
         <ul class="tabs">
           <li class="active"><?php echo lc_link_object('#section_orders_summary', $lC_Language->get('section_orders_summary')); ?></li>
-          <li><?php echo lc_link_object('#section_orders_products', $lC_Language->get('section_orders_products')); ?></li>
+          <!--<li><?php echo lc_link_object('#section_orders_products', $lC_Language->get('section_orders_products')); ?></li>
           <li><?php echo lc_link_object('#section_orders_customer', $lC_Language->get('section_orders_customer')); ?></li>
           <li><?php echo lc_link_object('#section_orders_shipping', $lC_Language->get('section_orders_shipping')); ?></li>
-          <!--<li><?php echo lc_link_object('#section_orders_messages', $lC_Language->get('section_orders_messages')); ?></li>
-          <li><?php echo lc_link_object('#section_orders_fraud', $lC_Language->get('section_orders_fraud')); ?></li>-->
-          <li><?php echo lc_link_object('#section_orders_payments', $lC_Language->get('section_orders_payments')); ?></li>
+          <li><?php echo lc_link_object('#section_orders_messages', $lC_Language->get('section_orders_messages')); ?></li>
+          <li><?php echo lc_link_object('#section_orders_fraud', $lC_Language->get('section_orders_fraud')); ?></li>
+          <li><?php echo lc_link_object('#section_orders_payments', $lC_Language->get('section_orders_payments')); ?></li>-->
         </ul>
         <div class="tabs-content" id="orders_sections">
           <?php 
             include('includes/applications/orders/pages/tabs/summary.php'); 
-            include('includes/applications/orders/pages/tabs/products.php');  
-            include('includes/applications/orders/pages/tabs/customer.php'); 
-            include('includes/applications/orders/pages/tabs/shipping.php'); 
+            //include('includes/applications/orders/pages/tabs/products.php');  
+            //include('includes/applications/orders/pages/tabs/customer.php'); 
+            //include('includes/applications/orders/pages/tabs/shipping.php'); 
             //include('includes/applications/orders/pages/tabs/messages.php');
             //include('includes/applications/orders/pages/tabs/fraud.php'); 
-            include('includes/applications/orders/pages/tabs/payments.php'); 
+            //include('includes/applications/orders/pages/tabs/payments.php'); 
           ?> 
         </div>
       </div>
@@ -65,10 +65,10 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
           <div style="float:right;">
             <p class="button-height" align="right">
               <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>">
-                <span class="button-icon red-gradient glossy">
-                  <span class="icon-cross"></span>
+                <span class="button-icon blue-gradient glossy">
+                  <span class="icon-list"></span>
                 </span>
-                <span class="button-text"><?php echo $lC_Language->get('button_cancel'); ?></span>
+                <span class="button-text"><?php echo $lC_Language->get('button_back_to_list'); ?></span>
               </a>&nbsp;
               <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#order\').submit();'); ?>">
                 <span class="button-icon green-gradient glossy">
@@ -76,6 +76,13 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
                 </span>
                 <span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span> 
               </a>&nbsp;
+              <!--<select class="green-gradient select expandable-list">
+                <option value=""><?php echo $lC_Language->get('text_actions'); ?></option>
+                <option value="invoice"><?php echo $lC_Language->get('text_print_invoice'); ?></option>
+                <option value="packing"><?php echo $lC_Language->get('text_print_packing_slip'); ?></option>
+                <option value="spin"><?php echo $lC_Language->get('text_spin_off_order'); ?></option>
+                <option value="customer"><?php echo $lC_Language->get('text_go_to_customer'); ?></option>
+              </select>&nbsp;-->
             </p>
           </div>
           <div id="floating-button-container-title" class="hidden">

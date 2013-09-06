@@ -15,7 +15,7 @@
           <div id="section_orders_summary">
             <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('text_summary'); ?></h3>
             <div class="columns with-padding">
-              <div class="new-row-mobile six-columns twelve-columns-mobile">
+              <div class="new-row-mobile four-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
                     <span class="icon-user icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_customer'); ?></strong></span>
@@ -23,10 +23,10 @@
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_name'); ?></td>
-                        <td class="align-left pad-5 width-66 bold">Sal Iozzia</td>
+                        <!--<td class="align-right pad-5 width-25 bold grey"><?php echo $lC_Language->get('text_name'); ?></td>-->
+                        <td class="align-left with-mid-padding bold"><?php echo $oInfo->get('customerAddress'); ?></td>
                       </tr>
-                      <tr>
+                      <!--<tr>
                         <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_company_name'); ?></td>
                         <td class="align-left pad-5 width-66 bold"><small class="tag orange-bg">B2B</small></td>
                       </tr>
@@ -37,78 +37,128 @@
                       <tr>
                         <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_customer_group'); ?></td>
                         <td class="align-left pad-5 width-66 bold">Retail</td>
-                      </tr>
+                      </tr>-->
                     </tbody>
                   </table>
                 </fieldset>
               </div>
-              <div class="new-row-mobile six-columns twelve-columns-mobile">
+              <div class="new-row-mobile four-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
-                    <span class="icon-credit-card icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_payment'); ?></strong></span>
+                    <span class="icon-dropbox icon-anthracite"><strong class="small-margin-left"><?php echo /*$lC_Language->get('text_shipping')*/$lC_Language->get('subsection_shipping_address'); ?></strong></span>
                   </legend>
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tbody>
                       <tr>
-                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>
-                        <td class="align-left pad-5 width-66 bold">Credit Card via Loaded Payments</td>
+                        <!--<td class="align-right pad-5 width-25 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>-->
+                        <td class="align-left with-mid-padding bold"><?php echo $oInfo->get('deliveryAddress'); ?></td>
                       </tr>
-                      <tr>
-                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_details'); ?></td>
-                        <td class="align-left pad-5 width-66 bold">Sal Iozzia - Visa - 4111</td>
-                      </tr>
-                      <tr>
-                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_payment_state'); ?></td>
-                        <td class="align-left pad-5 width-66 bold">PAID</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </fieldset>
-              </div>
-            </div>
-            <div class="columns with-padding large-pull-top">
-              <div class="new-row-mobile six-columns twelve-columns-mobile">
-                <fieldset>
-                  <legend class="small-margin-bottom">
-                    <span class="icon-info-round icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_information'); ?></strong></span>
-                  </legend>
-                  <table width="100%" cellpadding="0" cellspacing="0">
-                    <tbody>
-                      <tr>
-                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_addresses'); ?></td>
-                        <td class="align-left pad-5 width-66 bold"><?php echo $lC_Language->get('text_mixed'); ?></td>
-                      </tr>
-                      <tr>
-                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_date_ordered'); ?></td>
-                        <td class="align-left pad-5 width-66 bold">2013/08/04</td>
-                      </tr>
-                      <tr>
-                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_purchase_order'); ?></td>
-                        <td class="align-left pad-5 width-66 bold"><small class="tag orange-bg">B2B</small></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </fieldset>
-              </div>
-              <div class="new-row-mobile six-columns twelve-columns-mobile">
-                <fieldset>
-                  <legend class="small-margin-bottom">
-                    <span class="icon-dropbox icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_shipping'); ?></strong></span>
-                  </legend>
-                  <table width="100%" cellpadding="0" cellspacing="0">
-                    <tbody>
-                      <tr>
-                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>
-                        <td class="align-left pad-5 width-66 bold">FedEx</td>
-                      </tr>
-                      <tr>
+                      <!--<tr>
                         <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_type'); ?></td>
                         <td class="align-left pad-5 width-66 bold">Next Day Air</td>
                       </tr>
                       <tr>
                         <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_shipping_state'); ?></td>
                         <td class="align-left pad-5 width-66 bold">Backordered</td>
+                      </tr>-->
+                    </tbody>
+                  </table>
+                </fieldset>
+              </div>
+              <div class="new-row-mobile four-columns twelve-columns-mobile">
+                <fieldset>
+                  <legend class="small-margin-bottom">
+                    <span class="icon-card icon-anthracite"><strong class="small-margin-left"><?php echo /*$lC_Language->get('text_information')*/$lC_Language->get('subsection_billing_address'); ?></strong></span>
+                  </legend>
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <!--<td class="align-right pad-5 width-25 bold grey"><?php echo $lC_Language->get('text_addresses'); ?></td>-->
+                        <td class="align-left with-mid-padding bold"><?php echo $oInfo->get('billingAddress'); ?></td>
                       </tr>
+                      <!--<tr>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_date_ordered'); ?></td>
+                        <td class="align-left pad-5 width-66 bold">2013/08/04</td>
+                      </tr>
+                      <tr>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_purchase_order'); ?></td>
+                        <td class="align-left pad-5 width-66 bold"><small class="tag orange-bg">B2B</small></td>
+                      </tr>-->
+                    </tbody>
+                  </table>
+                </fieldset>
+              </div>
+            </div>
+            <div class="columns with-padding large-pull-top">
+              <div class="new-row-mobile four-columns twelve-columns-mobile">
+                <fieldset>
+                  <legend class="small-margin-bottom">
+                    <span class="icon-credit-card icon-anthracite"><strong class="small-margin-left"><?php echo /*$lC_Language->get('text_payment')*/$lC_Language->get('subsection_payment_method'); ?></strong></span>
+                  </legend>
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <!--<td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>-->
+                        <td class="align-left with-mid-padding bold"><?php echo $oInfo->get('paymentMethod'); ?></td>
+                      </tr>
+                      <!--<tr>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_details'); ?></td>
+                        <td class="align-left pad-5 width-66 bold">Sal Iozzia - Visa - 4111</td>
+                      </tr>
+                      <tr>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_payment_state'); ?></td>
+                        <td class="align-left pad-5 width-66 bold">PAID</td>
+                      </tr>-->
+                    </tbody>
+                  </table>
+                </fieldset>
+              </div>
+              <div class="new-row-mobile four-columns twelve-columns-mobile">
+                <fieldset>
+                  <legend class="small-margin-bottom">
+                    <span class="icon-clock icon-anthracite"><strong class="small-margin-left"><?php echo /*$lC_Language->get('text_shipping')*/$lC_Language->get('subsection_status'); ?></strong></span>
+                  </legend>
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <!--<td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>-->
+                        <td class="align-left with-mid-padding bold">
+                          <p class="no-padding"><?php echo $oInfo->get('orderStatus') . '</p><p class="no-padding">' . $oInfo->get('orderComments'); ?></p>
+                        </td>
+                      </tr>
+                      <!--<tr>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_type'); ?></td>
+                        <td class="align-left pad-5 width-66 bold">Next Day Air</td>
+                      </tr>
+                      <tr>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_shipping_state'); ?></td>
+                        <td class="align-left pad-5 width-66 bold">Backordered</td>
+                      </tr>-->
+                    </tbody>
+                  </table>
+                </fieldset>
+              </div>
+              <div class="new-row-mobile four-columns twelve-columns-mobile">
+                <fieldset>
+                  <legend class="small-margin-bottom">
+                    <span class="icon-bag icon-anthracite"><strong class="small-margin-left"><?php echo /*$lC_Language->get('text_shipping')*/$lC_Language->get('subsection_total'); ?></strong></span>
+                  </legend>
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <!--<td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>-->
+                        <td class="align-left with-mid-padding bold">
+                          <p class="no-padding"><?php echo $oInfo->get('orderTotal') . '</p><p class="no-padding">' . str_replace('Items:', '', $oInfo->get('numberProducts')); ?></p>
+                        </td>
+                      </tr>
+                      <!--<tr>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_type'); ?></td>
+                        <td class="align-left pad-5 width-66 bold">Next Day Air</td>
+                      </tr>
+                      <tr>
+                        <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_shipping_state'); ?></td>
+                        <td class="align-left pad-5 width-66 bold">Backordered</td>
+                      </tr>-->
                     </tbody>
                   </table>
                 </fieldset>
