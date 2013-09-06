@@ -162,7 +162,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       ?>       
         
       <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-      <script src="ext/jquery/respond.js"></script>    
+      <script src="ext/jquery/respond.min.js"></script>    
       
       <!-- Core JS -->
       <script src="ext/bootstrap/bootstrap-datepicker.js"></script>

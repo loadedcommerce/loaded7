@@ -578,6 +578,21 @@ class lC_Updates_Admin {
   * @access protected      
   * @return boolean
   */ 
+  protected static function rmdir_r($path) {
+    $i = new DirectoryIterator($path);
+    foreach($i as $f) {
+      if($f->isFile()) {
+        @unlink($f->getRealPath());
+      } else if(!$f->isDot() && $f->isDir()) {
+        self::_rrmdir($f->getRealPath());
+        @rmdir($f->getRealPath());
+      }
+    }
+    @rmdir($path);
+    
+    return true;
+  } 
+  /*  
   protected static function rmdir_r($dir) {
     foreach ( scandir($dir) as $file ) {
       if ( !in_array($file, array('.', '..')) ) {
@@ -590,7 +605,8 @@ class lC_Updates_Admin {
     }
 
     return rmdir($dir);
-  }  
+  } 
+  */ 
  /**
   * Check if a log exists
   *  
