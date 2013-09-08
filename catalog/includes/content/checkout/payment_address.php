@@ -241,7 +241,6 @@
           if ($reset_payment === true) {
             $lC_ShoppingCart->resetBillingMethod();
           }
-
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
         } else {
           $lC_ShoppingCart->resetBillingAddress();
@@ -249,7 +248,6 @@
         // no addresses to select from - customer decided to keep the current assigned address
       } else {
         $lC_ShoppingCart->setBillingAddress($lC_Customer->getDefaultAddressID());
-
         lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
       }
     }

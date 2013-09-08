@@ -920,7 +920,7 @@ class lC_ShoppingCart {
                                       'telephone_number' => $Qaddress->value('entry_telephone'));
 
       if ( is_array($previous_address) && ( ($previous_address['id'] != $this->_billing_address['id']) || ($previous_address['country_id'] != $this->_billing_address['country_id']) || ($previous_address['zone_id'] != $this->_billing_address['zone_id']) || ($previous_address['state'] != $this->_billing_address['state']) || ($previous_address['postcode'] != $this->_billing_address['postcode']) ) ) {
-        $this->_calculate();
+        $this->_calculate(false);
       }
     }
   }

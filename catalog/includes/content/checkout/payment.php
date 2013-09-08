@@ -61,7 +61,7 @@ class lC_Checkout_Payment extends lC_Template {
     if ($lC_Customer->hasDefaultAddress() === false) {
       $this->_page_title = $lC_Language->get('payment_address_heading');
       $this->_page_contents = 'checkout_payment_address.php';
-      $this->addJavascriptPhpFilename('includes/form_check.js.php');
+      $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/form_check.js.php');
       $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
     } else {
       // if no billing destination address was selected, use the customers own address as default
