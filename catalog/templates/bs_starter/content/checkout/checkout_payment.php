@@ -69,10 +69,8 @@
                   <address class="no-margin-bottom">
                     <?php  
                       if ($_SESSION['shipto_as_billable'] == 'on') {
-                        $lC_ShoppingCart->setBillingAddress($lC_ShoppingCart->getShippingAddress('id'));
                         echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); 
                       } else {
-                        $lC_ShoppingCart->resetBillingAddress();
                         echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); 
                       }                      
                     ?>
