@@ -119,9 +119,23 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       if ($(selection).is(":visible")) {
         $('#ckEditorProductDescription_' + id).hide();
         $('#cke_ckEditorProductDescription_' + id).show();
+        <?php
+          foreach ( $lC_Language->getAll() as $l ) {
+        ?>
+          $("#languageTabs_<?php echo $l['code']; ?>").css("min-height", "470px").css("height", "auto");
+        <?php
+          }
+        ?>
       } else {
         $('#ckEditorProductDescription_' + id).attr('style', 'width:99%');
         $('#cke_ckEditorProductDescription_' + id).hide();
+        <?php
+          foreach ( $lC_Language->getAll() as $l ) {
+        ?>
+          $("#languageTabs_<?php echo $l['code']; ?>").css("min-height", "270px").css("height", "auto");
+        <?php
+          }
+        ?>
       }
     }
     
