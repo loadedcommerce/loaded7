@@ -32,7 +32,7 @@
               <div class="well relative no-padding-bottom">
                 <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
                 <address>
-                  <?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?>
+                  <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>
                 </address>
               </div>
               <div class="well">

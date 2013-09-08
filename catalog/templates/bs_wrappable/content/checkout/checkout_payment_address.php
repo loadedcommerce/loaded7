@@ -32,7 +32,7 @@
               <div class="well relative no-padding-bottom">
                 <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
                 <address>
-                  <?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?>
+                  <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>
                 </address>
               </div>
               <div class="well">
@@ -85,7 +85,7 @@
                           }
                           ?>
                           <td class=""><span class="strong"><?php echo $Qaddresses->valueProtected('firstname') . ' ' . $Qaddresses->valueProtected('lastname'); ?></span><br /><small><?php echo str_replace($Qaddresses->valueProtected('firstname') . ' ' . $Qaddresses->valueProtected('lastname') . ', ', '', lC_Address::format($Qaddresses->toArray(), ', ')); ?></small></td>
-                          <td class="text-right"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getShippingAddress('id'),null,''); ?></td>
+                          <td class="text-right"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getBillingAddress('id'), 'id="address_' . $radio_buttons . '"', ''); ?></td>
                           </tr>
                           </table>
                           <?php
