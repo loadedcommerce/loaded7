@@ -80,7 +80,7 @@
                           }
                           ?>
                           <td class=""><span class="strong"><?php echo $Qaddresses->valueProtected('firstname') . ' ' . $Qaddresses->valueProtected('lastname'); ?></span><br /><small><?php echo str_replace($Qaddresses->valueProtected('firstname') . ' ' . $Qaddresses->valueProtected('lastname') . ', ', '', lC_Address::format($Qaddresses->toArray(), ', ')); ?></small></td>
-                          <td class="text-right"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getShippingAddress('id'), null, 'id="address_' . $lC_ShoppingCart->getShippingAddress('id') . '"'); ?></td>
+                          <td class="text-right"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getShippingAddress('id'), 'id="address_' . $lC_ShoppingCart->getShippingAddress('id') . '"', ''); ?></td>
                           </tr>
                           </table>
                           <?php
