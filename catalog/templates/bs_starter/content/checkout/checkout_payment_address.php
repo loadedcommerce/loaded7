@@ -77,7 +77,7 @@
                         $radio_buttons = 0;
                         $Qaddresses = $lC_Template->getListing();
                         while ($Qaddresses->next()) {
-                          echo '<table class="table no-margin-bottom" id="content-checkout-address-selection-table">';
+                          echo '<table class="table no-margin-bottom content-checkout-address-selection-table">';
                           if ($Qaddresses->valueInt('address_book_id') == $lC_ShoppingCart->getShippingAddress('id')) {
                             echo '<tr class="module-row-selected cursor-pointer" id="default-selected" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
                           } else {

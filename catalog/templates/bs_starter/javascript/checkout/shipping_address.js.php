@@ -37,7 +37,7 @@ $('#shipping-address-form').click(function(){
 }); 
 
 function selectRowEffect(object, buttonSelect) {
-  $('#content-checkout-address-selection-table tr').removeClass('module-row-selected');
+  $('.content-checkout-address-selection-table tr').removeClass('module-row-selected');
   if (!selected) {
     if (document.getElementById) {
       selected = document.getElementById('defaultSelected');
