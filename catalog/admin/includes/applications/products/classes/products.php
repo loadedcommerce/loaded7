@@ -953,14 +953,13 @@ class lC_Products_Admin {
           $Qdesc->execute();
 
           while ( $Qdesc->next() ) {
-            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_tags, products_url, products_viewed)
-                                             values (:products_id, :language_id, :products_name, :products_description, :products_tags, :products_url, 0)');
-            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_tags, products_url, products_viewed) values (:products_id, :language_id, :products_name, :products_description, :products_tags, :products_url, 0)');
+            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_keyword, products_tags, products_url, products_viewed) values (:products_id, :language_id, :products_name, :products_description, :products_keyword, :products_tags, :products_url, 0)');
             $Qnewdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
             $Qnewdesc->bindInt(':products_id', $new_product_id);
             $Qnewdesc->bindInt(':language_id', $Qdesc->valueInt('language_id'));
             $Qnewdesc->bindValue(':products_name', $Qdesc->value('products_name'));
             $Qnewdesc->bindValue(':products_description', $Qdesc->value('products_description'));
+            $Qnewdesc->bindValue(':products_keyword', $Qdesc->value('products_keyword'));
             $Qnewdesc->bindValue(':products_tags', $Qdesc->value('products_tags'));
             $Qnewdesc->bindValue(':products_url', $Qdesc->value('products_url'));
             $Qnewdesc->setLogging($_SESSION['module'], $new_product_id);
@@ -1006,6 +1005,30 @@ class lC_Products_Admin {
 
             if ( $lC_Database->isError() ) {
               $error = true;
+            }
+          }
+
+          if ( $error === false ) {
+            $Qproductimages = $lC_Database->query('select * from :table_products_images where products_id = :products_id');
+            $Qproductimages->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+            $Qproductimages->bindInt(':products_id', $id);
+            $Qproductimages->execute();
+
+            while ( $Qproductimages->next() ) {
+              $Qpi = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added)
+                                             values (:products_id, :image, :default_flag, :sort_order, :date_added)');
+              $Qpi->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+              $Qpi->bindInt(':products_id', $new_product_id);
+              $Qpi->bindValue(':image', $Qproductimages->value('image'));
+              $Qpi->bindInt(':default_flag', $Qproductimages->value('default_flag'));
+              $Qpi->bindInt(':sort_order', $Qproductimages->value('sort_order'));
+              $Qpi->bindRaw(':date_added', 'now()');
+              $Qpi->execute();
+
+              if ( $lC_Database->isError() ) {
+                $error = true;
+                break;
+              }
             }
           }
         } else {
