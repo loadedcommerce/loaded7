@@ -13,7 +13,7 @@
     </definition>     
     <definition>
       <key>addon_shipping_fedex_description</key>
-      <value><![CDATA[Get Rates and Transit Times for all available FedEx® services before you ship.]]></value>
+      <value><![CDATA[Get Rates and Transit Times for all available FedEx services before you ship.]]></value>
       <group>checkout</group>
     </definition>  
     <definition>
