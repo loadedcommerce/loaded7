@@ -714,6 +714,13 @@ input.error { border: 2px solid red !important; }
 textarea.error { border: 2px solid red !important; }
 select.error { border: 2px solid red !important; }
 
+/* added to start error notification on edit screens */
+  .count.tableft {
+    right: auto;
+    left: 0;
+    margin: -4px 0 0 -3px;
+  }
+
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
   #menu header .headerInner {

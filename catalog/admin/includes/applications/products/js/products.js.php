@@ -603,7 +603,9 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       $("#languageTabs").refreshTabs();
       if (bValid) {
         $(e).submit();
-      } 
+      } //else {
+        //$("#tabHeaderSectionContent a").css("background-color", "#FFE3E2").css("border-left", "1px solid #D84646").css("border-top", "1px solid #D84646").css("border-bottom", "1px solid #D84646");
+      //}
 
       return false;
     }        
