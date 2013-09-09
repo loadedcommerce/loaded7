@@ -412,26 +412,5 @@ class utility {
 
     return $vInfo[1];  
   } 
- /**
-  * Recursive remove files and directories
-  *  
-  * @param string $path  The path to delete
-  * @access public      
-  * @return boolean
-  */ 
-  public static function rmdir_r($path) {
-    $i = new DirectoryIterator($path);
-    foreach($i as $f) {
-      if($f->isFile()) {
-        @unlink($f->getRealPath());
-      } else if(!$f->isDot() && $f->isDir()) {
-        self::_rrmdir($f->getRealPath());
-        @rmdir($f->getRealPath());
-      }
-    }
-    @rmdir($path);
-    
-    return true;
-  }   
 } 
 ?>

@@ -429,8 +429,8 @@ class lC_Store_Admin {
         $Qdel->execute();
       }   
       
-      // phsically remove the add-on
-      if (isset($key) && empty($key) === false) utility::rmdir_r(DIR_FS_CATALOG . 'addons/' . $key);   
+            // phsically remove the add-on
+      if (isset($key) && empty($key) === false) $_SESSION['deleteAddon'] = $key;   
 
       self::_resetAddons();
 
@@ -476,6 +476,6 @@ class lC_Store_Admin {
   */  
   private static function _usortAddonsByRating($a, $b) {
     return $a['rating'] == $b['rating'] ? 0 : $a['rating'] > $b['rating'] ? -1 : 1;
-  }    
+  } 
 }
 ?>
