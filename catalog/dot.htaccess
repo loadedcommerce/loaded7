@@ -46,7 +46,7 @@
 <IfModule mod_rewrite.c>
   Options +FollowSymLinks
   RewriteEngine on
-  RewriteBase /sandbox/maestro/www/loaded7/catalog/
+  RewriteBase /
   RewriteRule category/(.*)$ index.php?$1
   RewriteRule product/(.*)/specials/(.*),(.*)$ products.php?$1&$2=$3
   RewriteRule product/reviews,new/(.*)/(.*),(.*)$ products.php?reviews=new&$1&$2=$3
