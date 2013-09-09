@@ -31,7 +31,7 @@ class lC_Application_Store extends lC_Template_Admin {
     $this->_page_title = $lC_Language->get('heading_title');
     
     if (isset($_SESSION['deleteAddon']) && empty($_SESSION['deleteAddon']) === false) {
-      $this->_rmdir_r(DIR_FS_CATALOG . 'addons/' . $_SESSION['deleteAddon']);
+      $this->_rmdir_r(DIR_FS_CATALOG . 'addons/' . $_SESSION['deleteAddon'] . '/');
       unset($_SESSION['deleteAddon']);
       lC_Cache::clear('modules-addons');
       lC_Cache::clear('configuration');
@@ -49,13 +49,13 @@ class lC_Application_Store extends lC_Template_Admin {
   * @access public      
   * @return boolean
   */ 
-  private function _rmdir_r($path) {
+  protected function _rmdir_r($path) {
     $i = new DirectoryIterator($path);
     foreach($i as $f) {
       if($f->isFile()) {
         @unlink($f->getRealPath());
       } else if(!$f->isDot() && $f->isDir()) {
-        $this->_rrmdir($f->getRealPath());
+        $this->_rmdir_r($f->getRealPath());
         @rmdir($f->getRealPath());
       }
     }
