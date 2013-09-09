@@ -14,6 +14,8 @@
   @function The lC_Updater_Admin class manages zM services
 */
 require_once(DIR_FS_CATALOG . 'includes/classes/addons.php');
+require_once(DIR_FS_CATALOG . 'includes/classes/transport.php');
+require_once(DIR_FS_ADMIN . 'includes/applications/updates/classes/updates.php');
 
 class lC_Store_Admin { 
  /*
@@ -31,16 +33,25 @@ class lC_Store_Admin {
     
     $type = (isset($_GET['type']) && $_GET['type'] != NULL) ? strtolower($_GET['type']) : NULL;
 
-    $Qaddons = self::getAvailbleAddons(); 
+    $Qaddons = self::getAvailbleAddons();    
     
     $result = array('aaData' => array());
     
     foreach ( $Qaddons as $key => $addon ) {
       
-      if ($type != NULL && $type == $addon['type']) {
+      $from_store = (isset($addon['from_store']) && $addon['from_store'] == '1') ? true : false;
+      $featured = ($from_store && isset($addon['featured']) && $addon['featured'] == '1') ? '<span class="icon-star mid-margin-left icon-orange with-tooltip" title="' . $lC_Language->get('text_featured') . '" style="cursor:pointer; vertical-align:-35%;"></span>' : NULL;
+      $inCloud = ($from_store) ? '<span class="mid-margin-left icon-cloud icon-green with-tooltip" title="' . $lC_Language->get('text_in_cloud') . '" style="vertical-align:-35%;"></span>' : NULL;
+      
+      if (  $type != NULL && ($type == $addon['type'] || ($type == 'featured' && $addon['featured'] == '1'))   ) {
         $mobileEnabled = (isset($addon['mobile']) && $addon['mobile'] == true) ? '<span class="mid-margin-left icon-mobile icon-blue with-tooltip" title="' . $lC_Language->get('text_mobile_enabled') . '" style="vertical-align:-40%;"></span>' : '';
-        $thumb = '<div style="position:relative;">' . $addon['thumbnail'] . '<div class="version-tag"><span class="tag black-gradient">' . $addon['version'] . '</span></div></div>';
-        $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom"') . $mobileEnabled . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . '</small>';
+        if ($from_store === false) {
+          $thumb = '<div style="position:relative;">' . $addon['thumbnail'] . '<div class="version-tag"><span class="tag black-gradient">' . $addon['version'] . '</span></div></div>';
+        } else {
+          $thumb = '<div style="position:relative;"><img src="' . $addon['thumbnail'] . '" alt="' . $addon['title'] . '"><div class="version-tag"><span class="tag black-gradient">' . $addon['version'] . '</span></div></div>';
+        }
+        
+        $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom"') . $mobileEnabled . $inCloud . $featured . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . '</small>';
         $desc = substr($addon['description'], 0, 300) . '...';     
        
         if ($addon['installed'] == '1') { 
@@ -147,11 +158,14 @@ class lC_Store_Admin {
     if ( $error === false ) {
       $lC_Database->commitTransaction();
 
-      self::_resetAddons();
-      lC_Cache::clear('vqmods');
-      lC_Cache::clear('vqmoda');
+      self::_resetAddons(); 
+
+      lC_Cache::clear('modules-addons');
       lC_Cache::clear('configuration');
+      lC_Cache::clear('templates');
       lC_Cache::clear('addons');
+      lC_Cache::clear('vqmoda');
+      lC_Cache::clear('vqmods');
 
       return true;
     }
@@ -171,7 +185,7 @@ class lC_Store_Admin {
     foreach ( self::getAllTypes() as $key => $type ) {
       $menu .= '<li style="cursor:pointer;" class="message-menu store-menu-' . strtolower($type['text']) . '" id="menuType' . ucwords($type['text']) . '">' . 
                '  <a href="javascript:void(0);" class="" id="menuLink' . (int)$type['id'] . '" onclick="showAddonType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');">' . 
-               '    <span class="message-status" style="padding-top:14px;"></span>' .
+               '    <span class="message-status" style="padding-top:8px;"><img src="' . $type['icon'] . '" alt="' . $type['text'] . '"></span>' .
                '     <br><strong>' . lc_output_string_protected($type['text']) . '</strong>' .
                '   </a>' .
                ' </li>';               
@@ -186,18 +200,19 @@ class lC_Store_Admin {
   * @return array
   */
   public static function getAllTypes() {
+    
+    $request = array('storeName' => STORE_NAME,
+                     'storeWWW' => HTTP_SERVER . DIR_WS_HTTP_CATALOG,
+                     'storeSSL' => HTTPS_SERVER . DIR_WS_HTTPS_CATALOG);
+                         
+    $checksum = hash('sha256', json_encode($request));
+    $request['checksum'] = $checksum;
+    
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/store/types/', 'method' => 'post', 'parameters' => $request));
 
-    $types = array(array('id' => '0', 'text' => 'Payment', 'icon' => 'payment.png'),
-                   array('id' => '1', 'text' => 'Shipping', 'icon' => 'shipping.png'),
-                   array('id' => '2', 'text' => 'Themes', 'icon' => 'themes.png'),
-                   array('id' => '3', 'text' => 'Checkout', 'icon' => 'checkout.png'),
-                   array('id' => '4', 'text' => 'Catalog', 'icon' => 'catalog.png'),
-                   array('id' => '5', 'text' => 'Admin', 'icon' => 'admin.png'),
-                   array('id' => '6', 'text' => 'Reports', 'icon' => 'reports.png'),
-                   array('id' => '7', 'text' => 'Connectors', 'icon' => 'connectors.png'),
-                   array('id' => '8', 'text' => 'Other', 'icon' => 'other.png'));
-
-    return $types;
+    $types = utility::xml2arr($resultXML);     
+       
+    return $types['data'];
   }  
  /*
   * Get all the app store available add ons
@@ -209,50 +224,69 @@ class lC_Store_Admin {
     
     $installed = self::getInstalledAddons();
     
-    $desc = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus.';
+    $request = array('storeName' => STORE_NAME,
+                     'storeWWW' => HTTP_SERVER . DIR_WS_HTTP_CATALOG,
+                     'storeSSL' => HTTPS_SERVER . DIR_WS_HTTPS_CATALOG);
+                         
+    $checksum = hash('sha256', json_encode($request));
+    $request['checksum'] = $checksum;
+    
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/store/addons/', 'method' => 'post', 'parameters' => $request));
 
-    $available = array(array('code' => 'Other_Payments',
-                             'type' => 'payment', 
-                             'title' => 'Other Payments', 
-                             'description' => $desc, 
-                             'rating' => '4', 
-                             'author' => 'Even More Corp.', 
-                             'thumbnail' => 'p3.png', 
-                             'version' => '5.0.3'),
-                             
-                       array('code' => 'More_Payments',
-                             'type' => 'payment', 
-                             'title' => 'More Payments', 
-                             'description' => $desc, 
-                             'rating' => '3', 
-                             'author' => 'Acme, Inc.', 
-                             'thumbnail' => 'p4.png', 
-                             'version' => '3.1.4'),
-                             
-                       array('code' => 'IOU_Payments', 
-                             'type' => 'payment', 
-                             'title' => 'I.O.U. Payments', 
-                             'description' => $desc, 
-                             'rating' => '3', 
-                             'author' => 'Wadayawant, Inc.', 
-                             'thumbnail' => 'p5.png', 
-                             'version' => '5.7.7'),
-                             
-                       array('code' => 'Please_Pay_Me', 
-                             'type' => 'payment', 
-                             'title' => 'Please Pay Me', 
-                             'description' => $desc, 
-                             'rating' => '2', 
-                             'author' => 'Morners, Inc.', 
-                             'thumbnail' => 'p6.png', 
-                             'version' => '1.0.1'),
-                       );
-
-   // $result = array_merge((array)$installed, (array)$available);
-        
-    return $installed;
+    $available = utility::xml2arr($resultXML);  
+    
+    $addons = array();
+    $codeArr = array();
+    foreach($installed as $key => $val) {
+      $codeArr[$val['code']] = true;  
+      $addons[] = array('name' => $val['name'],
+                        'code' => $val['code'],
+                        'type' => $val['type'],
+                        'title' => $val['title'],
+                        'description' => $val['description'],
+                        'rating' => $val['rating'],
+                        'author' => $val['author'],
+                        'authorWWW' => $val['authorWWW'],
+                        'thumbnail' => $val['thumbnail'],
+                        'version' => $val['version'],
+                        'compatibility' => $val['compatibility'],
+                        'installed' => $val['installed'],
+                        'mobile' => $val['mobile'],
+                        'enabled' => $val['enabled'],
+                        'from_store' => false,
+                        'featured' => false,
+                        'featured_in_group' => false);
+    }
+    
+    foreach($available['data'] as $key => $val) {
+      
+      if (array_key_exists($val['code'], $codeArr)) continue;
+      
+      $addons[] = array('name' => $val['code'] . '/controller.php',
+                        'code' => $val['code'],
+                        'type' => $val['type'],
+                        'title' => self::_decodeText($val['title']),
+                        'description' => self::_decodeText($val['description']),
+                        'rating' => $val['rating'],
+                        'author' => $val['author'],
+                        'authorWWW' => $val['authorWWW'],
+                        'thumbnail' => $val['thumbnail'],
+                        'version' => $val['version'],
+                        'compatibility' => $val['compatibility'],
+                        'installed' => $val['installed'],
+                        'mobile' => $val['mobile'],
+                        'enabled' => $val['enabled'],
+                        'from_store' => true,
+                        'featured' => $val['featured'],
+                        'featured_in_group' => $val['featured_in_group']);
+    }       
+    
+    return $addons;
   } 
   
+  private static function _decodeText($text) {
+    return str_replace('-AMP-', '&', urldecode($text));
+  }  
  /*
   * Get the locally installed addons
   *
@@ -308,6 +342,14 @@ class lC_Store_Admin {
   */
   public static function install($key) {
     global $lC_Database, $lC_Language, $lC_Vqmod;
+    
+    if ( !file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
+      // get the addon phar from the store
+      self::_getAddonPhar($key);
+      
+      // apply the addon phar 
+      lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
+    }
     
     if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
 
@@ -413,6 +455,18 @@ class lC_Store_Admin {
 
     return false;
   } 
+ /*
+  * Reset the addons data array
+  *
+  * @access public
+  * @return void
+  */  
+  private static function _getAddonPhar($key) {
+
+    $response = file_get_contents('https://api.loadedcommerce.com/1_0/get/' . $key . '?type=addon&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']));
+
+    return file_put_contents(DIR_FS_WORK . 'addons/update.phar', $response);    
+  }
  /*
   * Reset the addons data array
   *

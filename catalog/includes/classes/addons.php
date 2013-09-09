@@ -70,9 +70,9 @@ class lC_Addons {
       $class = $nameArr[count($nameArr)-2];
 
       if (file_exists($ao['path'])) {
-        include_once($lC_Vqmod->modCheck($ao['path']));
-        if ($GLOBALS[$class] instanceof $class) {
+        if (class_exists($class)) { 
         } else {
+          include_once($lC_Vqmod->modCheck($ao['path']));
           $GLOBALS[$class] = new $class();
         }        
         

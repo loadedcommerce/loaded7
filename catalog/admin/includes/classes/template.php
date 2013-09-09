@@ -101,7 +101,9 @@ class lC_Template_Admin extends lC_Template {
     global $lC_Vqmod;
     
     if ( file_exists('includes/applications/' . $_module . '/js/responsive.js.php') ) {
-      include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/js/jquery.dataTables.delay.min.js.php'));
+      if ( file_exists(DIR_FS_CATALOG . 'ext/jquery/DataTables/media/js/jquery.dataTables.delay.min.js') ) {
+        include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'ext/jquery/DataTables/media/js/jquery.dataTables.delay.min.js'));
+      }
     }
 
     return true;
