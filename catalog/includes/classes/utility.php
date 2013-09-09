@@ -411,6 +411,27 @@ class utility {
     $vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents(DIR_FS_CATALOG . 'includes/version.txt'), 2))));
 
     return $vInfo[1];  
-  }  
+  } 
+ /**
+  * Recursive remove files and directories
+  *  
+  * @param string $path  The path to delete
+  * @access public      
+  * @return boolean
+  */ 
+  public static function rmdir_r($path) {
+    $i = new DirectoryIterator($path);
+    foreach($i as $f) {
+      if($f->isFile()) {
+        @unlink($f->getRealPath());
+      } else if(!$f->isDot() && $f->isDir()) {
+        self::_rrmdir($f->getRealPath());
+        @rmdir($f->getRealPath());
+      }
+    }
+    @rmdir($path);
+    
+    return true;
+  }   
 } 
 ?>

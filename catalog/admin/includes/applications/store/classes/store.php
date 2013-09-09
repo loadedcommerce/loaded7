@@ -160,13 +160,6 @@ class lC_Store_Admin {
 
       self::_resetAddons(); 
 
-      lC_Cache::clear('modules-addons');
-      lC_Cache::clear('configuration');
-      lC_Cache::clear('templates');
-      lC_Cache::clear('addons');
-      lC_Cache::clear('vqmoda');
-      lC_Cache::clear('vqmods');
-
       return true;
     }
 
@@ -386,12 +379,6 @@ class lC_Store_Admin {
         $Qinstall->execute();
         
         self::_resetAddons();
-        lC_Cache::clear('modules-addons');
-        lC_Cache::clear('configuration');
-        lC_Cache::clear('templates');
-        lC_Cache::clear('addons');
-        lC_Cache::clear('vqmoda');
-        lC_Cache::clear('vqmods');
 
         return true;
       }
@@ -440,16 +427,13 @@ class lC_Store_Admin {
         $Qdel->bindTable(':table_configuration', TABLE_CONFIGURATION);
         $Qdel->bindRaw(':configuration_key', implode('", "', $addon->getKeys()));
         $Qdel->execute();
-      }      
+      }   
+      
+      // phsically remove the add-on
+      if (isset($key) && empty($key) === false) utility::rmdir_r(DIR_FS_CATALOG . 'addons/' . $key);   
 
       self::_resetAddons();
-      lC_Cache::clear('modules-addons');
-      lC_Cache::clear('configuration');
-      lC_Cache::clear('templates');
-      lC_Cache::clear('addons');
-      lC_Cache::clear('vqmoda');
-      lC_Cache::clear('vqmods');
-      
+
       return true;
     }
 
@@ -475,6 +459,12 @@ class lC_Store_Admin {
   */
   private static function _resetAddons() {
     if (isset($_SESSION['lC_Addons_data'])) unset($_SESSION['lC_Addons_data']);
+    lC_Cache::clear('modules-addons');
+    lC_Cache::clear('configuration');
+    lC_Cache::clear('templates');
+    lC_Cache::clear('addons');
+    lC_Cache::clear('vqmoda');
+    lC_Cache::clear('vqmods');    
   } 
  /*
   * Sort addons listing by rating
