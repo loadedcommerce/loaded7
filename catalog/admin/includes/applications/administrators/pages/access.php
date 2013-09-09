@@ -60,7 +60,8 @@ $gID = (isset($_GET['gid']) && !empty($_GET['gid'])) ? preg_replace('/[^0-9\s]/'
           </div>
           <div class="new-row twelve-columns small-margin-bottom"><p><hr></p></div>
           <?php
-          $cnt = 0;
+          $cnt = 0;          
+
           foreach(lC_Administrators_Admin::getAccessModules() as $key => $group) {
             $modulesArr[] = urlencode($key);
             if (strtolower($key) == 'access_group_hidden_title') continue;
@@ -77,9 +78,12 @@ $gID = (isset($_GET['gid']) && !empty($_GET['gid'])) ? preg_replace('/[^0-9\s]/'
                 <div class="with-padding div-details">
                   <div class="columns">
                     <?php
+
+
                     foreach ($group as $gkey => $value) {
                       $ref = strtolower($key) . '-' . $value['id'];
                       $ref = str_replace("'", "", $ref);
+                      $ref = str_replace(" ", "_", $ref);
                       $accessArr[] = urlencode($ref);
                       echo '<div class="twelve-columns"><label>
                           <span class="details-text"><small>' . $value['text'] . '</small></span>
