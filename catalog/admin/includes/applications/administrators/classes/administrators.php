@@ -538,10 +538,13 @@ class lC_Administrators_Admin {
         $tmp_module = $module;
       }
       $module = 'lC_Access_' . ucfirst($module);
-      $module = new $module();     
-      $modules[lC_Access::getGroupTitle( $module->getGroup() )][] = array('id' => (($tmp_module != '') ? $tmp_module : $module->getModule()),
+      $module = new $module(); 
+      $module_group = lC_Access::getGroupTitle( $module->getGroup() ); 
+      $module_group = str_replace(" ", "_", $module_group);
+      $modules[$module_group][] = array('id' => (($tmp_module != '') ? $tmp_module : $module->getModule()),
                                                                           'text' => $module->getTitle());
     }
+
     ksort($modules);
 
     return $modules;
