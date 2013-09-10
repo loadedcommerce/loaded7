@@ -607,7 +607,6 @@ li .message-menu {
 #main-title h1 {
   line-height: 48px;
 }
-
 #shortcuts > li > span {
   overflow: hidden;
 }
@@ -729,6 +728,9 @@ select.error { border: 2px solid red !important; }
   }
   #products_msrp { width: 92% !important; }
   .products-price-gross { width: 92% !important; }
+  #title-bar ~ #menu, #title-bar ~ #shortcuts {
+    top: 41px;
+  }
 }
 
 @media screen and (min-width: 992px) and (max-width: 1199px) {
@@ -746,6 +748,9 @@ select.error { border: 2px solid red !important; }
   #products_msrp { width: 90% !important; }
   .products-price-gross { width: 90% !important; } 
   .hide-on-tablet { display:none; }
+  #title-bar ~ #menu, #title-bar ~ #shortcuts {
+    top: 41px;
+  }
 } 
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
