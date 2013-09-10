@@ -593,15 +593,15 @@
 							}
 
 							// Bounds check - vertical
-							if (top < settings.screenPadding+doc.scrollLeft())
+							if (top < settings.screenPadding+doc.scrollTop())
 							{
-								offset = settings.screenPadding-top;
+								offset = settings.screenPadding+doc.scrollTop()-top;
 								arrowExtraOffset = -Math.min(offset, Math.round(tooltipHeight/2)-settings.arrowMargin);
 								top += offset;
 							}
-							else if (top+tooltipHeight > docHeight-settings.screenPadding)
+							else if (top+tooltipHeight > doc.scrollTop()+docHeight-settings.screenPadding)
 							{
-								offset = docHeight-settings.screenPadding-tooltipHeight-top;
+								offset = doc.scrollTop()+docHeight-settings.screenPadding-tooltipHeight-top;
 								arrowExtraOffset = Math.min(-offset, Math.round(tooltipHeight/2)-settings.arrowMargin);
 								left += offset;
 							}
@@ -665,15 +665,15 @@
 							}
 
 							// Bounds check - vertical
-							if (top < settings.screenPadding)
+							if (top < settings.screenPadding+doc.scrollTop())
 							{
-								offset = settings.screenPadding-top;
+								offset = settings.screenPadding+doc.scrollTop()-top;
 								arrowExtraOffset = -Math.min(offset, Math.round(tooltipHeight/2)-settings.arrowMargin);
 								top += offset;
 							}
-							else if (top+tooltipHeight > docHeight-settings.screenPadding)
+							else if (top+tooltipHeight > doc.scrollTop()+docHeight-settings.screenPadding)
 							{
-								offset = docHeight-settings.screenPadding-tooltipHeight-top;
+								offset = doc.scrollTop()+docHeight-settings.screenPadding-tooltipHeight-top;
 								arrowExtraOffset = Math.min(-offset, Math.round(tooltipHeight/2)-settings.arrowMargin);
 								left += offset;
 							}
@@ -910,16 +910,16 @@
 				// Close on click anywhere else
 				if (settings.removeOnBlur)
 				{
-					// Prevent inner click propagation
-					tooltip.on('click touchend', function(event)
-					{
-						event.stopPropagation();
-					});
-
 					// Callback function
 					onBlur = function(event)
 					{
-						// Do not process if default is prevented (most probably trigerred from inside the tooltip)
+						// Do not process if the event occurs inside the tooltip
+						if ($(event.target).closest(tooltip[0]).length)
+						{
+							return;
+						}
+
+						// Do not process if default is prevented
 						if (event.isDefaultPrevented())
 						{
 							return;

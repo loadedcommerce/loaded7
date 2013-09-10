@@ -1,4 +1,13 @@
 /**
+ *
+ * '||''|.                            '||
+ *  ||   ||    ....  .... ...   ....   ||    ...   ... ...  ... ..
+ *  ||    || .|...||  '|.  |  .|...||  ||  .|  '|.  ||'  ||  ||' ''
+ *  ||    || ||        '|.|   ||       ||  ||   ||  ||    |  ||
+ * .||...|'   '|...'    '|     '|...' .||.  '|..|'  ||...'  .||.
+ *                                                  ||
+ * --------------- By Display:inline ------------- '''' -----------
+ *
  * Styles override for 768+ pixels screens
  */
 
@@ -463,6 +472,23 @@ h2 {
 				left: 0;
 				bottom: 0;
 			}
+	#shortcuts .count {
+		text-indent: 0;
+		right: 74px;
+		}
+		#shortcuts .current .count {
+			right: 4px;
+		}
+		body.reversed #shortcuts .count {
+			right: auto;
+			left: 74px;
+			}
+			body.reversed #shortcuts .current .count {
+				left: 4px;
+				}
+				.no-generatedcontent body.reversed #shortcuts .current .count {
+					left: 142px;
+				}
 
 #menu {
 	position: fixed;

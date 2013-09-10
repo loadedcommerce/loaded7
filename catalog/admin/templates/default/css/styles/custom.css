@@ -713,6 +713,7 @@ select.input {
 input.error { border: 2px solid red !important; }
 textarea.error { border: 2px solid red !important; }
 select.error { border: 2px solid red !important; }
+.baseprice-status { width: 49%; }
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
