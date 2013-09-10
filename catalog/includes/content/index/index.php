@@ -44,9 +44,8 @@
       
       if ( isset($lC_Services) && $lC_Services->isStarted('seo') && $_GET['cpath'] == '' ) {
         $id = $lC_CategoryTree->getID($id);
-        $cData = $lC_CategoryTree->getData($id);         
+        $cData = $lC_CategoryTree->getData($id);
         $cPath = end(explode("_", $cData['query']));
-        $cPath_array = str_replace('_', ',', str_replace('cPath=', '', $cData['query']));
         $current_category_id = $cData['item_id'];
       }
       

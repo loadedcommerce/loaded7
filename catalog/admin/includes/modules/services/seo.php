@@ -43,6 +43,9 @@
       }
       
       if ($exists == false) {
+        $file = file_get_contents(DIR_FS_CATALOG . 'dot.htaccess');
+        $file = str_replace('RewriteBase /', 'RewriteBase ' . DIR_WS_HTTP_CATALOG, $file);
+        file_put_contents(DIR_FS_CATALOG . 'dot.htaccess', $file);
         if (rename(DIR_FS_CATALOG . 'dot.htaccess', DIR_FS_CATALOG . '.htaccess')) {
         } else {
           return false;

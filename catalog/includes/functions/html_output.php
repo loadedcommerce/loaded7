@@ -104,6 +104,7 @@ if (!function_exists('lc_href_link')) {
         $cat_path = '';
         if ( ($cPathPos = strpos($link, 'cPath')) || (strpos($link, 'products.php')) ) {
           if (defined('SERVICE_SEO_URL_ADD_CATEGORY_PARENT') && SERVICE_SEO_URL_ADD_CATEGORY_PARENT == 1) {
+            $cat_ids = array();
             // categories
             if ( (strpos($link, 'index.php') && strpos($link, 'cPath')) ) {
               $cat_id = explode("_", substr($link, $cPathPos+6));
