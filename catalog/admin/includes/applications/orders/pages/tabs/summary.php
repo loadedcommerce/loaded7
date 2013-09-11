@@ -192,9 +192,7 @@
                       </tr>
                     </thead>
                     <tbody class="mid-margin-bottom">
-                      <?php
-                        echo lC_Orders_Admin::getProductListingRows($_GET[$lC_Template->getModule()]);
-                      ?>
+                      <?php echo lC_Orders_Admin::getProductListingRows($_GET[$lC_Template->getModule()]); ?>
                       <tr class="mid-margin-bottom">
                         <td class="hide-below-480"></td>
                         <td class="hide-below-480"></td>
@@ -215,7 +213,11 @@
                       <legend class="margin-bottom">
                         <span class="icon-chat icon-size2 icon-anthracite mid-margin-left"><strong class="small-margin-left"><?php echo $lC_Language->get('text_recent_messages'); ?></strong></span>
                       </legend>
-                      <?php echo $oInfo->get('orderStatusHistory'); ?>
+                      <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
+                          <?php echo lC_Orders_Admin::getOrderComments($_GET[$lC_Template->getModule()]); ?>
+                        </tbody>
+                      </table>
                       <!--<div class="with-small-padding silver-bg">
                         <div class="small-margin-top">
                           <span class="float-right green-bg with-min-padding"><?php echo $lC_Language->get('text_comment'); ?></span>
@@ -298,6 +300,11 @@
                       <legend class="margin-bottom">
                         <span class="icon-chat icon-size2 icon-anthracite mid-margin-left"><strong class="small-margin-left"><?php echo $lC_Language->get('text_recent_messages'); ?></strong></span>
                       </legend>
+                      <table width="100%" cellpadding="0" cellspacing="0">
+                        <tbody>
+                          <?php //echo lC_Orders_Admin::getOrderComments($_GET[$lC_Template->getModule()]); ?>
+                        </tbody>
+                      </table>
                       <!--<div class="with-small-padding silver-bg">
                         <div class="small-margin-top">
                           <span class="float-right green-bg with-min-padding"><?php echo $lC_Language->get('text_comment'); ?></span>
