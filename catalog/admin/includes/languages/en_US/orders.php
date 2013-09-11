@@ -156,3 +156,4 @@ text_products = Products
 text_create_shipment = Create Shipment
 text_print_packing_slip = Print Packing Slip
 text_go_pro_and_enjoy = Go Pro and enjoy this feature!
+text_grand_total = Grand Total:

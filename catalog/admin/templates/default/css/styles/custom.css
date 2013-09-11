@@ -779,11 +779,22 @@ select.error { border: 2px solid red !important; }
 .show-below-768 { display: none; }
 .show-below-480 { display: none; }
 .with-min-padding { padding: 1px 4px !important; }
-.pad-5 { padding: 4px; }
-.pad-top-10 { padding-top: 10px; }
-.pad-right-10 { padding-right: 10px; }
-.pad-bottom-10 { padding-bottom: 10px; }
-.pad-left-10 { padding-left: 10px; }
+.small-padding-top { padding-top: 8px; }
+.small-padding-right { padding-right: 8px; }
+.small-padding-bottom { padding-bottom: 8px; }
+.small-padding-left { padding-left: 8px; }
+.mid-padding-top { padding-top: 18px; }
+.mid-padding-right { padding-right: 18px; }
+.mid-padding-bottom { padding-bottom: 18px; }
+.mid-padding-left { padding-left: 18px; }
+.padding-top { padding-top: 24px; }
+.padding-right { padding-right: 24px; }
+.padding-bottom { padding-bottom: 24px; }
+.padding-left { padding-left: 24px; }
+.large-padding-top { padding-top: 32px; }
+.large-padding-right { padding-right: 32px; }
+.large-padding-bottom { padding-bottom: 32px; }
+.large-padding-left { padding-left: 32px; }
 .bold { font-weight: bold; }
 .bolder { font-weight: 800; }
 .width-25 { width: 25%; }

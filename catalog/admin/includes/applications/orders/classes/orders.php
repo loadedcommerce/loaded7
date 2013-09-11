@@ -349,6 +349,9 @@ class lC_Orders_Admin {
     $result['numberProducts'] = '<span>' . $lC_Language->get('number_of_products') . ' ' . $lC_Order->getNumberOfProducts() . '<br />' . $lC_Language->get('number_of_items') . ' ' . $lC_Order->getNumberOfItems . '</span>';
     // build the product string  
     $result['orderProducts'] = ''; 
+    // enhanced order admin additions
+    $result['orderProductsData'] = ''; 
+    $cnt = 0;
     foreach ( $lC_Order->getProducts() as $products ) {
       $result['orderProducts'] .= '<tr>
                                     <td valign="top" align="left">' . $products['quantity'] . '&nbsp;x&nbsp;</td>
@@ -356,12 +359,16 @@ class lC_Orders_Admin {
       if ( isset($products['attributes']) && is_array($products['attributes']) && ( sizeof($products['attributes']) > 0 ) ) {
         foreach ( $products['attributes'] as $attributes ) {
           $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span style="font-size:.9em;"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
+          // enhanced order admin additions
+          $result['orderProductsData']['attributes'] = '<br /><nobr>&nbsp;&nbsp;- <span style="font-size:.9em;"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
         }
       }
       
       if ( isset($products['options']) && is_array($products['options']) && ( sizeof($products['options']) > 0 ) ) {
         foreach ( $products['options'] as $key => $val ) {
           $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
+          // enhanced order admin additions
+          $result['orderProductsData']['options'] = '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
         }
       }
             
@@ -372,21 +379,44 @@ class lC_Orders_Admin {
                                    <td valign="top" align="right">' . $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], 1, true, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
                                    <td valign="top" align="right">' . $lC_Currencies->format($products['price'] * $products['quantity'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
                                    <td valign="top" align="right">' . $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], $products['quantity'], true, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td></tr>';
+      // enhanced order admin additions
+      $result['orderProductsData'][$cnt]['id'] = $products['id'];
+      $result['orderProductsData'][$cnt]['model'] = $products['model'];
+      $result['orderProductsData'][$cnt]['name'] = $products['name'];
+      $result['orderProductsData'][$cnt]['quantity'] = $products['quantity'];
+      $result['orderProductsData'][$cnt]['tax'] = $lC_Tax->displayTaxRateValue($products['tax']);
+      $result['orderProductsData'][$cnt]['price_net'] = $lC_Currencies->format($products['price'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue());
+      $result['orderProductsData'][$cnt]['price_gross'] = $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], 1, true, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue());
+      $result['orderProductsData'][$cnt]['total_net'] = $lC_Currencies->format($products['price'] * $products['quantity'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue());
+      $result['orderProductsData'][$cnt]['total_gross'] = $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], $products['quantity'], true, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue());
+      $cnt++;
     }
     // build the order totals string
     $result['orderTotals'] = '';
+    // enhanced order admin additions
+    $result['orderTotalsData'] = ''; 
     foreach ( $lC_Order->getTotals() as $totals ) {
-      $result['orderTotals'] .= '<tr><td align="right">' . $totals['title'] . '</td><td align="right" width="100px">' . $totals['text'] . '</td></tr>';
+      $result['orderTotals'] .= '<tr><td align="right" class="small-padding-bottom' . (($totals['class'] == 'total') ? ' bolder btop-anthracite small-padding-top' : null) . '">' . (($totals['class'] == 'total') ? $totals['title'] = $lC_Language->get('text_grand_total') : $totals['title']) . '</td><td align="right" width="100px" class="small-padding-bottom' . (($totals['class'] == 'total') ? ' bolder btop-anthracite small-padding-top' : null) . '">' . $totals['text'] . '</td></tr>';
+      // enhanced order admin additions
+      $result['orderTotalsData']['title'] = $totals['title'];
+      $result['orderTotalsData']['text'] = $totals['text'];
     }
     // build the transaction history string
     $result['transactionHistory'] = ''; 
-     foreach ( $lC_Order->getTransactionHistory() as $history ) {
-       $result['transactionHistory'] .= '<tr>
+    // enhanced order admin additions
+    $result['transactionHistoryData'] = ''; 
+    foreach ( $lC_Order->getTransactionHistory() as $history ) {
+      $result['transactionHistory'] .= '<tr>
                                           <td valign="top">' . lC_DateTime::getShort($history['date_added'], true) . '</td>
                                           <td valign="top">' . ((!empty($history['status'])) ? $history['status'] : $history['status_id']) . '</td>
                                           <td align="center" valign="top"><span class="' . (($history['return_status'] === 1) ? 'icon-tick icon-green' : 'icon-cross icon-red') . '"><span></td>
                                           <td valign="top">' . nl2br($history['return_value']) . '</td>
                                         </tr>';
+      // enhanced order admin additions
+      $result['transactionHistoryData']['date_added'] = lC_DateTime::getShort($history['date_added'], true);
+      $result['transactionHistoryData']['status'] = ((!empty($history['status'])) ? $history['status'] : $history['status_id']);
+      $result['transactionHistoryData']['return_status'] = '<span class="' . (($history['return_status'] === 1) ? 'icon-tick icon-green' : 'icon-cross icon-red') . '"><span>';
+      $result['transactionHistoryData']['return_value'] = nl2br($history['return_value']);
     }
     $postTransactionActions = array(); 
     if ($lC_Order->hasPostTransactionActions()) {
@@ -400,6 +430,8 @@ class lC_Orders_Admin {
     }
     // build the order status history string
     $result['orderStatusHistory'] = '';
+    // enhanced order admin additions
+    $result['orderStatusHistoryData'] = ''; 
     foreach ( $lC_Order->getStatusHistory() as $status_history ) {
       $result['orderStatusHistory'] .= '<tr>
                                           <td align="left" valign="top">' . lC_DateTime::getShort($status_history['date_added'], true) . '</td>
@@ -407,6 +439,11 @@ class lC_Orders_Admin {
                                           <td align="left" valign="top">' . nl2br($status_history['comment']) . '</td>
                                           <td align="center" valign="top"><span class="' . (($status_history['customer_notified'] === 1) ? 'icon-tick icon-green' : 'icon-cross icon-red') . '"><span></td>
                                         </tr>';
+      // enhanced order admin additions
+      $result['orderStatusHistoryData']['date_added'] = lC_DateTime::getShort($status_history['date_added'], true);
+      $result['orderStatusHistoryData']['status'] = $status_history['status'];
+      $result['orderStatusHistoryData']['comment'] = nl2br($status_history['comment']);
+      $result['orderStatusHistoryData']['customer_notified'] = '<span class="' . (($status_history['customer_notified'] === 1) ? 'icon-tick icon-green' : 'icon-cross icon-red') . '"><span>';
     }
     // build the order status array
     $orders_status_array = array();
@@ -423,7 +460,7 @@ class lC_Orders_Admin {
     $result['ordersStatusArray'] = $orders_status_array; 
 
     $Qstatuses->freeResult;
-
+    
     return $result;
   }
  /*
@@ -611,6 +648,26 @@ class lC_Orders_Admin {
     return "o.date_purchased"; 
    else if ( $i == 6 )
     return "s.orders_status_name";      
+  }
+ /*
+  * Return the order information
+  *
+  * @param array $id The order id
+  * @access public
+  * @return array
+  */ 
+  public static function getProductListingRows($id) {
+    $data = lC_Orders_Admin::getInfo($id);
+    foreach ($data['orderProductsData'] as $opData) {
+      $newData .= '<tr class="bbottom-grey">' .
+                  '  <td align="left" class="orders-products-listing-td hide-below-480">' . $opData['model'] . '</td>' .
+                  '  <td align="left" class="orders-products-listing-td">' . $opData['name'] . '</td>' .
+                  '  <td align="right" class="orders-products-listing-td hide-below-480 pad-right-10">' . $opData['quantity'] . '</td>' .
+                  '  <td align="right" class="orders-products-listing-td hide-below-480">' . $opData['total_net'] . '</td>' .
+                  '  <td align="right" class="orders-products-listing-td show-below-480"><i title="Product Details" class="icon-info-round icon-blue mid-margin-right cursor-pointer" onclick="orderProductDetails(' . $opData['name'] . ');"></li></td>' .
+                  '</tr>';
+    }
+    return $newData;
   }      
 }
 ?>
