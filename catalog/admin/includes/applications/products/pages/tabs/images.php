@@ -23,7 +23,7 @@ global $lC_Language, $pInfo;
             <li id="images-gallery-trigger" class="with-right-arrow grey-arrow">     
               <a class="file-link selected-menu" href="javascript:void(0);" onclick="showContent('default');">
                 <span class="icon file-jpg"></span>
-                <b><?php echo $lC_Language->get('text_product_images'); ?></b>
+                <b><?php echo $lC_Language->get('text_product_default_image'); ?></b>
               </a>            
             </li>
             <?php if ($pInfo) { ?>
