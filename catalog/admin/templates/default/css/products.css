@@ -1,7 +1,7 @@
 /* admin product add/edit page specific css */
 
 /* content tab */
-#fileUploaderImageContainer .qq-upload-drop-area { left: 19%; min-height: 104px; position: absolute; width: 65%; top: -200px; }
+#fileUploaderImageContainer .qq-upload-drop-area { left: 19%; min-height: 104px; position: absolute; width: 65%; bottom: 55px; }
 #fileUploaderImageContainer .qq-upload-drop-area span { margin-top:-16px; }
 
 /* images tab */
