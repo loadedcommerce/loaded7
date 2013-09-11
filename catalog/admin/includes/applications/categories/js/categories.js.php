@@ -41,6 +41,7 @@ $(document).ready(function() {
   $('.sorted_table').sortable({  
     containerSelector: 'tbody',
     itemSelector: 'tr',
+    handle: '.dragsort',
     placeholder: '<tr class="placeholder" />',
     tolerance: '1',
     onDragStart: function (item, group, _super) {
