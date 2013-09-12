@@ -39,7 +39,8 @@
 
         $this->_order_id = $Qorder->valueInt('orders_id');
 
-        $this->_customer = array('name' => $Qorder->valueProtected('customers_name'),
+        $this->_customer = array('id' => $Qorder->value('customers_id'),
+                                 'name' => $Qorder->valueProtected('customers_name'),
                                  'company' => $Qorder->valueProtected('customers_company'),
                                  'street_address' => $Qorder->valueProtected('customers_street_address'),
                                  'suburb' => $Qorder->valueProtected('customers_suburb'),

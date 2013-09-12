@@ -70,19 +70,13 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
                 </span>
                 <span class="button-text"><?php echo $lC_Language->get('button_back_to_list'); ?></span>
               </a>&nbsp;
-              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#order\').submit();'); ?>">
-                <span class="button-icon green-gradient glossy">
-                  <span class="icon-download"></span>
-                </span>
-                <span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span> 
-              </a>&nbsp;
-              <!--<select class="green-gradient select expandable-list">
+              <select class="green-gradient select expandable-list" onchange="ordersEditSelect('<?php echo $oInfo->get('customerId'); ?>', '<?php echo $_GET[$lC_Template->getModule()]; ?>', this.value);">
                 <option value=""><?php echo $lC_Language->get('text_actions'); ?></option>
                 <option value="invoice"><?php echo $lC_Language->get('text_print_invoice'); ?></option>
                 <option value="packing"><?php echo $lC_Language->get('text_print_packing_slip'); ?></option>
-                <option value="spin"><?php echo $lC_Language->get('text_spin_off_order'); ?></option>
+                <!--<option value="spin"><?php echo $lC_Language->get('text_spin_off_order'); ?></option>-->
                 <option value="customer"><?php echo $lC_Language->get('text_go_to_customer'); ?></option>
-              </select>&nbsp;-->
+              </select>&nbsp;
             </p>
           </div>
           <div id="floating-button-container-title" class="hidden">

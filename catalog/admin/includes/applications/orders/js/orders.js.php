@@ -167,5 +167,19 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
                               '  <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct(' + val + ');"><?php echo $lC_Language->get('text_edit'); ?></a>'+
                               '  <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct(' + val + ');"></a>'+
                               '</span>');
+  }
+  
+  function ordersEditSelect(cid, oid, val) {
+    if (val == 'invoice') {
+      url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&oid=OID&action=invoice'); ?>';
+      window.open(url.replace('OID', oid));
+    } else if (val == 'packing') {
+      url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&oid=OID&action=packaging_slip'); ?>';
+      window.open(url.replace('OID', oid));
+    } else if (val == 'customer') {
+      url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&cID=CID'); ?>';
+      alert(url.replace('CID', cid));
+      //window.location(url.replace('CID', cid));
+    }
   }  
 </script>
