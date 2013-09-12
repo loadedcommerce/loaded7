@@ -141,20 +141,46 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     alert('delete product: ' + val + ' from the order');
   }
   
-  function orderProductDetails(id) {
-    $.modal({
-      title: '<?php echo $lC_Language->get('text_product_details'); ?>',
-      content: '<p>This is the orders products detail modal window for ' + id + '.</p>'+
-               '<p>More</p>'+
-               '<p>More</p>'+
-               '<p>More</p>'+
-               '<p>More</p>'+
-               '<p>More</p>'+
-               '<p>More</p>'+
-               '<p>More</p>'+
-               '<p>More</p>'+
-               '<p>More</p>'
-    });
+  function orderProductDetails(oid, pid) {
+    var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+    if (parseInt(accessLevel) < 2) {
+      $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+      return false;
+    }
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getProduct&oid=OID&pid=PID'); ?>'  
+    $.getJSON(jsonLink.replace('OID', parseInt(oid)).replace('PID', parseInt(pid)),
+      function (data) {
+        if (data.rpcStatus == -10) { // no session
+          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+          $(location).attr('href',url);
+        }
+        if (data.rpcStatus != 1) {
+          $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
+          return false;
+        }
+        $.modal({
+            content: '<div id="product_details"></div>',
+            title: '<?php echo $lC_Language->get('text_product_details'); ?>',
+            width: 600,
+            scrolling: true,
+            actions: {
+              'Close' : {
+                color: 'red',
+                click: function(win) { win.closeModal(); }
+              }
+            },
+            buttons: {
+              '<?php echo $lC_Language->get('button_close'); ?>': {
+                classes:  'glossy',
+                click:    function(win) { win.closeModal(); }
+              }
+            },
+            buttonsLowPadding: true
+        });
+        $("#product_details").html(data.orderProduct);
+        $.modal.all.centerModal();
+      }
+    );
   }
   
   function editOrderProduct(val) {
@@ -178,8 +204,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       window.open(url.replace('OID', oid));
     } else if (val == 'customer') {
       url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&cID=CID'); ?>';
-      alert(url.replace('CID', cid));
-      //window.location(url.replace('CID', cid));
+      window.location = url.replace('CID', cid);
     }
   }  
 </script>

@@ -350,47 +350,33 @@ class lC_Orders_Admin {
     $result['numberProducts'] = '<span>' . $lC_Language->get('number_of_products') . ' ' . $lC_Order->getNumberOfProducts() . '<br />' . $lC_Language->get('number_of_items') . ' ' . $lC_Order->getNumberOfItems . '</span>';
     // build the product string  
     $result['orderProducts'] = ''; 
-    // enhanced order admin additions
-    $result['orderProductsData'] = ''; 
-    $opcnt = 0;
     foreach ( $lC_Order->getProducts() as $products ) {
-      $result['orderProducts'] .= '<tr>
-                                    <td valign="top" align="left">' . $products['quantity'] . '&nbsp;x&nbsp;</td>
-                                    <td valign="top">' . $products['name'];
+      $result['orderProducts'] .= '<tr class="bbottom-grey">
+                                     <td valign="top" align="left" class="orders-products-listing-td hide-below-480">' . $products['model'] . '</td>
+                                     <td valign="top" align="left" class="orders-products-listing-td">' . $products['name'];
       if ( isset($products['attributes']) && is_array($products['attributes']) && ( sizeof($products['attributes']) > 0 ) ) {
         foreach ( $products['attributes'] as $attributes ) {
           $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span style="font-size:.9em;"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
-          // enhanced order admin additions
-          $result['orderProductsData']['attributes'] = '<br /><nobr>&nbsp;&nbsp;- <span style="font-size:.9em;"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
         }
       }
       
       if ( isset($products['options']) && is_array($products['options']) && ( sizeof($products['options']) > 0 ) ) {
         foreach ( $products['options'] as $key => $val ) {
           $result['orderProducts'] .= '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
-          // enhanced order admin additions
-          $result['orderProductsData']['options'] = '<br /><nobr>&nbsp;&nbsp;- <span class="small"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
         }
       }
             
-      $result['orderProducts'] .= '</td>
-                                   <td valign="top">' . $products['model'] . '</td>
-                                   <td valign="top" align="right" width="60px">' . $lC_Tax->displayTaxRateValue($products['tax']) . '</td>
-                                   <td valign="top" align="right">' . $lC_Currencies->format($products['price'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
-                                   <td valign="top" align="right">' . $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], 1, true, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
-                                   <td valign="top" align="right">' . $lC_Currencies->format($products['price'] * $products['quantity'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
-                                   <td valign="top" align="right">' . $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], $products['quantity'], true, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td></tr>';
-      // enhanced order admin additions
-      $result['orderProductsData'][$opcnt]['id'] = $products['id'];
-      $result['orderProductsData'][$opcnt]['model'] = $products['model'];
-      $result['orderProductsData'][$opcnt]['name'] = $products['name'];
-      $result['orderProductsData'][$opcnt]['quantity'] = $products['quantity'];
-      $result['orderProductsData'][$opcnt]['tax'] = $lC_Tax->displayTaxRateValue($products['tax']);
-      $result['orderProductsData'][$opcnt]['price_net'] = $lC_Currencies->format($products['price'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue());
-      $result['orderProductsData'][$opcnt]['price_gross'] = $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], 1, true, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue());
-      $result['orderProductsData'][$opcnt]['total_net'] = $lC_Currencies->format($products['price'] * $products['quantity'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue());
-      $result['orderProductsData'][$opcnt]['total_gross'] = $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], $products['quantity'], true, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue());
-      $opcnt++;
+      $result['orderProducts'] .= '  </td>
+                                     <td valign="top" align="right" class="orders-products-listing-td hide-below-480">' . $products['quantity'] . '</td>
+                                     <td valign="top" align="right" class="orders-products-listing-td hide-below-480">' . $lC_Currencies->format($products['price'] * $products['quantity'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
+                                     <td align="right" class="orders-products-listing-td show-below-480"><i title="Product Details" class="icon-info-round icon-blue mid-margin-right cursor-pointer" onclick="orderProductDetails(\'' . $id . '\', \'' . $products['products_id'] . '\');"></i></td>
+                                     <!-- hidden for now 
+                                     <td valign="top" align="right">' . $lC_Tax->displayTaxRateValue($products['tax']) . '</td>
+                                     <td valign="top" align="right">' . $lC_Currencies->format($products['price'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
+                                     <td valign="top" align="right">' . $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], 1, true, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
+                                     <td valign="top" align="right">' . $lC_Currencies->displayPriceWithTaxRate($products['price'], $products['tax'], $products['quantity'], true, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
+                                     -->
+                                   </tr>';
     }
     // build the order totals string
     $result['orderTotals'] = '';
@@ -657,25 +643,6 @@ class lC_Orders_Admin {
     return "s.orders_status_name";      
   }
  /*
-  * Return the orders products rows
-  *
-  * @access public
-  * @return array
-  */ 
-  public static function getProductListingRows($id) {
-    $data = lC_Orders_Admin::getInfo($id);
-    foreach ($data['orderProductsData'] as $opData) {
-      $plrData .= '<tr class="bbottom-grey">
-                     <td align="left" class="orders-products-listing-td hide-below-480">' . $opData['model'] . '</td>
-                     <td align="left" class="orders-products-listing-td">' . $opData['name'] . '</td>
-                     <td align="right" class="orders-products-listing-td hide-below-480 pad-right-10">' . $opData['quantity'] . '</td>
-                     <td align="right" class="orders-products-listing-td hide-below-480">' . $opData['total_net'] . '</td>
-                     <td align="right" class="orders-products-listing-td show-below-480"><i title="Product Details" class="icon-info-round icon-blue mid-margin-right cursor-pointer" onclick="orderProductDetails(' . $opData['name'] . ');"></li></td>
-                   </tr>';
-    }
-    return $plrData;
-  }
- /*
   * Return the orders comments
   *
   * @access public
@@ -701,6 +668,64 @@ class lC_Orders_Admin {
       }
     }
     return $ocData;
+  }
+ /*
+  * Return the order information
+  *
+  * @param array $id The order id
+  * @access public
+  * @return array
+  */ 
+  public static function getProduct($oid, $pid) {
+    global $lC_Language, $lC_Database, $lC_Vqmod;
+
+    $lC_Language->loadIniFile('orders.php');
+
+    require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
+    $lC_Currencies = new lC_Currencies();
+    require_once($lC_Vqmod->modCheck('includes/classes/tax.php'));
+    $lC_Tax = new lC_Tax_Admin();
+    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
+    $lC_Order = new lC_Order($oid);
+
+    if ( !$lC_Order->isValid() ) {
+      return array('error' => true, 'errmsg' => sprintf(ERROR_ORDER_DOES_NOT_EXIST, $id));
+    }
+    // build a single product string  
+    $result['orderProduct'] = ''; 
+    foreach ( $lC_Order->getProduct($oid, $pid) as $product ) {
+      $result['orderProduct'] .= '<div class="mid-padding-bottom">
+                                    <label class="label small-padding-bottom" for="products_model">Model: </label>
+                                    <span id="products_model" class="bolder">' . $product['model'] . '</span>
+                                  </div>
+                                  <div class="mid-padding-bottom">
+                                    <label class="label small-padding-bottom" for="products_name">Name: </label>
+                                    <span id="products_name"><span class="bolder">' . $product['name'] . '</span>';
+      if ( isset($product['attributes']) && is_array($product['attributes']) && ( sizeof($product['attributes']) > 0 ) ) {
+        foreach ( $product['attributes'] as $attributes ) {
+          $result['orderProduct'] .= '<br /><nobr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="large-margin-left"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
+        }
+      }
+      
+      if ( isset($product['options']) && is_array($product['options']) && ( sizeof($product['options']) > 0 ) ) {
+        foreach ( $product['options'] as $key => $val ) {
+          $result['orderProduct'] .= '<br /><nobr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="small" class="large-margin-left"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
+        }
+      }
+            
+      $result['orderProduct'] .= '  </span>
+                                  </div>
+                                  <div class="mid-padding-bottom">
+                                    <label class="label small-padding-bottom" for="products_quantity">Qty: </label>
+                                    <span id="products_quantity" class="bolder">' . $product['quantity'] . '</span>
+                                  </div>
+                                  <div class="mid-padding-bottom">
+                                    <label class="label small-padding-bottom" for="products_total">Total: </label>
+                                    <span id="products_total" class="bolder">' . $lC_Currencies->format($product['price'] * $product['quantity'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</span>
+                                  </div>';
+    }
+    
+    return $result;
   }      
 }
 ?>

@@ -192,7 +192,7 @@
                       </tr>
                     </thead>
                     <tbody class="mid-margin-bottom">
-                      <?php echo lC_Orders_Admin::getProductListingRows($_GET[$lC_Template->getModule()]); ?>
+                      <?php echo $oInfo->get('orderProducts'); ?>
                       <tr class="mid-margin-bottom">
                         <td class="hide-below-480"></td>
                         <td class="hide-below-480"></td>
@@ -218,46 +218,6 @@
                           <?php echo lC_Orders_Admin::getOrderComments($_GET[$lC_Template->getModule()]); ?>
                         </tbody>
                       </table>
-                      <!--<div class="with-small-padding silver-bg">
-                        <div class="small-margin-top">
-                          <span class="float-right green-bg with-min-padding"><?php echo $lC_Language->get('text_comment'); ?></span>
-                          <span class="icon-user icon-size2 icon-anthracite small-margin-left">
-                            <span>
-                              Sal Iozzia <small class="anthracite small-margin-left">2013/08/07</small>
-                            </span>
-                          </span>
-                        </div>
-                        <p class="edit-order-summary-block with-small-padding">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula est ut interdum fringilla. Curabitur lobortis libero ut sagittis fermentum. Donec eu tortor ut elit condimentum iaculis. Nulla semper diam ut mi volutpat pharetra.</p>
-                      </div>
-                      <div class="with-small-padding">
-                        <div class="small-margin-top">
-                          <span class="float-right orange-bg with-min-padding"><?php echo $lC_Language->get('text_message'); ?></span>
-                          <span>
-                            <img src="images/prod-mini.png" alt="Comment Image" />
-                            <span class="small-margin-left">
-                              John Nickelback <small class="anthracite small-margin-left">2013/08/05</small>
-                            </span>
-                          </span>
-                        </div>
-                        <p class="edit-order-summary-block with-small-padding">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula est ut interdum fringilla. Curabitur lobortis libero ut sagittis fermentum. Donec eu tortor ut elit condimentum iaculis. Nulla semper diam ut mi volutpat pharetra.</p>
-                      </div>
-                      <div class="with-small-padding grey-bg">
-                        <div class="small-margin-top">
-                          <span class="float-right anthracite-bg with-min-padding"><?php echo $lC_Language->get('text_note'); ?></span>
-                          <span>
-                            <img src="images/prod-mini.png" alt="Comment Image" />
-                            <span class="small-margin-left">
-                              Jane Quarterback <small class="anthracite small-margin-left"><?php echo $lC_Language->get('text_sent'); ?> 2013/08/02</small>
-                            </span>
-                          </span>
-                        </div>
-                        <p class="edit-order-summary-block with-small-padding">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula est ut interdum fringilla. Curabitur lobortis libero ut sagittis fermentum. Donec eu tortor ut elit condimentum iaculis. Nulla semper diam ut mi volutpat pharetra.</p>
-                      </div>
-                      <div class="with-small-padding">
-                        <div class="small-margin-top">
-                          <i class="icon-mail"></i> <span class="small-margin-left">2 <?php echo $lC_Language->get('text_additional_messages'); ?></span>
-                        </div>
-                      </div>-->
                     </fieldset>
                   </div>
                   <div class="six-columns twelve-columns-mobile">
@@ -302,49 +262,9 @@
                       </legend>
                       <table width="100%" cellpadding="0" cellspacing="0">
                         <tbody>
-                          <?php //echo lC_Orders_Admin::getOrderComments($_GET[$lC_Template->getModule()]); ?>
+                          <?php echo lC_Orders_Admin::getOrderComments($_GET[$lC_Template->getModule()]); ?>
                         </tbody>
                       </table>
-                      <!--<div class="with-small-padding silver-bg">
-                        <div class="small-margin-top">
-                          <span class="float-right green-bg with-min-padding"><?php echo $lC_Language->get('text_comment'); ?></span>
-                          <span class="icon-user icon-size2 icon-anthracite small-margin-left">
-                            <span>
-                              Sal Iozzia <small class="anthracite small-margin-left">2013/08/07</small>
-                            </span>
-                          </span>
-                        </div>
-                        <p class="edit-order-summary-block with-small-padding">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula est ut interdum fringilla. Curabitur lobortis libero ut sagittis fermentum. Donec eu tortor ut elit condimentum iaculis. Nulla semper diam ut mi volutpat pharetra.</p>
-                      </div>
-                      <div class="with-small-padding">
-                        <div class="small-margin-top">
-                          <span class="float-right orange-bg with-min-padding"><?php echo $lC_Language->get('text_message'); ?></span>
-                          <span>
-                            <img src="images/prod-mini.png" alt="Comment Image" />
-                            <span class="small-margin-left">
-                              John Nickelback <small class="anthracite small-margin-left">2013/08/05</small>
-                            </span>
-                          </span>
-                        </div>
-                        <p class="edit-order-summary-block with-small-padding">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula est ut interdum fringilla. Curabitur lobortis libero ut sagittis fermentum. Donec eu tortor ut elit condimentum iaculis. Nulla semper diam ut mi volutpat pharetra.</p>
-                      </div>
-                      <div class="with-small-padding grey-bg">
-                        <div class="small-margin-top">
-                          <span class="float-right anthracite-bg with-min-padding"><?php echo $lC_Language->get('text_note'); ?></span>
-                          <span>
-                            <img src="images/prod-mini.png" alt="Comment Image" />
-                            <span class="small-margin-left">
-                              Jane Quarterback <small class="anthracite small-margin-left"><?php echo $lC_Language->get('text_sent'); ?> 2013/08/02</small>
-                            </span>
-                          </span>
-                        </div>
-                        <p class="edit-order-summary-block with-small-padding">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vehicula est ut interdum fringilla. Curabitur lobortis libero ut sagittis fermentum. Donec eu tortor ut elit condimentum iaculis. Nulla semper diam ut mi volutpat pharetra.</p>
-                      </div>
-                      <div class="with-small-padding">
-                        <div class="small-margin-top">
-                          <i class="icon-mail"></i> <span class="small-margin-left">2 <?php echo $lC_Language->get('text_additional_messages'); ?></span>
-                        </div>
-                      </div>-->
                     </fieldset>
                   </div>
                 </div>
