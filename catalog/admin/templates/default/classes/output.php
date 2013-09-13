@@ -49,14 +49,19 @@ class output {
         
         // custom sort
         $access = array();
-        if (array_key_exists('hq', $newArr)) $access['hq'] = $newArr['hq'];
         if (array_key_exists('orders', $newArr)) $access['orders'] = $newArr['orders'];
         if (array_key_exists('customers', $newArr)) $access['customers'] = $newArr['customers'];
         if (array_key_exists('products', $newArr)) $access['products'] = $newArr['products'];
         if (array_key_exists('content', $newArr)) $access['content'] = $newArr['content'];
         if (array_key_exists('marketing', $newArr)) $access['marketing'] = $newArr['marketing'];
         if (array_key_exists('reports', $newArr)) $access['reports'] = $newArr['reports'];
-        if (array_key_exists('hidden', $newArr)) $access['hidden'] = $newArr['hidden'];
+
+        // include any other added sections
+        foreach($newArr as $key => $value) {
+          if (array_key_exists($key, $access)) continue;
+          $access[$key] = $value;  
+        }
+        
     }
 
     $output = '';

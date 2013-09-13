@@ -77,7 +77,24 @@ class lC_Addons_Admin extends lC_Addons {
     }
     
     return false;
-  } 
+  }
+ /*
+  * Determine if the module has actions
+  *
+  * @param string $module The addon module
+  * @param string $action The action to perform
+  * @access public
+  * @return boolean
+  */ 
+  public static function hasAdminModuleActions($module, $action) {
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/actions/' . $action . '.php') ) {
+        return true;
+      }
+    }
+    
+    return false;
+  }   
  /*
   * Retrieve addon module actions
   *
@@ -86,7 +103,7 @@ class lC_Addons_Admin extends lC_Addons {
   * @access public
   * @return array
   */
-  public static function getAdminModuleActions($module, $action) {
+  public static function getAdminModuleActionsPath($module, $action) {
     foreach (self::getAdminAddons('enabled') as $addon => $val) { 
       if (file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/actions/' . $action . '.php')) {
         return DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/actions/' . $action . '.php';
@@ -95,6 +112,55 @@ class lC_Addons_Admin extends lC_Addons {
     
     return false;
   }
+ /*
+  * Determine if the module has modals
+  *
+  * @param string $module The addon module
+  * @access public
+  * @return boolean
+  */ 
+  public static function hasAdminModuleModals($module) {
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if ( is_dir(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/modal') ) {
+        if ( ($files = @scandir(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/modal')) && (count($files) > 2) ) {
+          return true;
+        }
+      }
+    }
+    
+    return false;
+  }  
+ /*
+  * Retrieve addon module modals
+  *
+  * @param  string $modules The addon module
+  * @access public
+  * @return array
+  */
+  public static function loadAdminModuleModals($module) {
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if ( is_dir(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/modal') ) {
+        if ( ($files = @scandir(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/modal')) && (count($files) > 2) ) {
+          $modalPath = DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/modal';
+          $pattern = '/(\w*)\.php$/';
+          $dir = opendir($modalPath);
+          while( $file = readdir( $dir ) ) {
+            if ($file == '.'  || $file == '..') continue;
+            $match = array();
+            if ( preg_match($pattern, $file, $match) > 0 ) {
+              if (strstr($match[0], '_')) {
+                include($lC_Vqmod->modCheck($modalPath . '/' . $match[0]));
+              }
+            }
+          }          
+          return true;
+        }
+      }
+    }
+    
+    return false;
+  }  
+  
  /*
   * Set top admin access to the addon modules
   *

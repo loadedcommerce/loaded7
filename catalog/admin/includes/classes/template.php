@@ -26,8 +26,10 @@ class lC_Template_Admin extends lC_Template {
 
       if ( file_exists('includes/applications/' . $module . '/actions/' . $_action . '.php') ) {
         include($lC_Vqmod->modCheck('includes/applications/' . $module . '/actions/' . $_action . '.php'));
-
         $class = 'lC_Application_' . ucfirst($module) . '_Actions_' . $_action;
+      } else if (lC_Addons_Admin::hasAdminModuleActions($module, $_action)) {
+        include($lC_Vqmod->modCheck(lC_Addons_Admin::getAdminModuleActionsPath($module, $_action)));
+        $class = 'lC_Application_' . ucfirst($module) . '_Actions_' . $_action;        
       }
     }
 
@@ -58,7 +60,10 @@ class lC_Template_Admin extends lC_Template {
           }
         }
       }
+    } else if (lC_Addons_Admin::hasAdminModuleModals($_module)) {
+      lC_Addons_Admin::loadAdminModuleModals($_module);
     }
+    
     return true;
   }
   /*
