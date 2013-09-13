@@ -138,6 +138,8 @@ class lC_Addons_Admin extends lC_Addons {
   * @return array
   */
   public static function loadAdminModuleModals($module) {
+    global $lC_Vqmod;
+    
     foreach (self::getAdminAddons('enabled') as $addon => $val) {
       if ( is_dir(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/modal') ) {
         if ( ($files = @scandir(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/modal')) && (count($files) > 2) ) {
@@ -148,11 +150,11 @@ class lC_Addons_Admin extends lC_Addons {
             if ($file == '.'  || $file == '..') continue;
             $match = array();
             if ( preg_match($pattern, $file, $match) > 0 ) {
-              if (strstr($match[0], '_')) {
+              if (file_exists($modalPath . '/' . $match[0])) {
                 include($lC_Vqmod->modCheck($modalPath . '/' . $match[0]));
               }
             }
-          }          
+          }    
           return true;
         }
       }
@@ -160,7 +162,73 @@ class lC_Addons_Admin extends lC_Addons {
     
     return false;
   }  
+ /*
+  * Determine if the module has page script
+  *
+  * @param string $module The addon module
+  * @access public
+  * @return boolean
+  */ 
+  public static function hasAdminModulePageScript($module) {
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/js/' . $module . '.js.php') ) {
+        return true;
+      }
+    }
+    
+    return false;
+  }   
+ /*
+  * Retrieve module has page script path
+  *
+  * @param string $module The addon module
+  * @access public
+  * @return mixed
+  */ 
+  public static function getAdminModulePageScriptPath($module) {
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/js/' . $module . '.js.php') ) {
+        return DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/js/' . $module . '.js.php';
+      }
+    }
+    
+    return false;
+  }
   
+ /*
+  * Determine if the module has responsive page script
+  *
+  * @param string $module The addon module
+  * @access public
+  * @return boolean
+  */ 
+  public static function hasAdminModulePageResponsiveScript($module) {
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/js/' . $module . '.js.php') ) {
+        return true;
+      }
+    }
+    
+    return false;
+  }   
+ /*
+  * Retrieve module has page responsive script path
+  *
+  * @param string $module The addon module
+  * @access public
+  * @return mixed
+  */ 
+  public static function getAdminModulePageResponsiveScriptPath($module) {
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/js/responsive.js.php') ) {
+        return DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/js/responsive.js.php';
+      }
+    }
+    
+    return false;
+  }
+  
+    
  /*
   * Set top admin access to the addon modules
   *

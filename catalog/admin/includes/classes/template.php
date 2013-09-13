@@ -45,7 +45,7 @@ class lC_Template_Admin extends lC_Template {
   */
   public function loadModal($_module, $_sub = false) {
     global $lC_Language, $lC_Template, $lC_Vqmod;
-
+    
     if ( is_dir('includes/applications/' . $_module . '/modal') ) {
       $pattern = '/(\w*)\.php$/';
       $dir = opendir('includes/applications/' . $_module . '/modal');
@@ -77,6 +77,8 @@ class lC_Template_Admin extends lC_Template {
     
     if ( file_exists('includes/applications/' . $_module . '/js/' . $_module . '.js.php') ) {
       include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/js/' . $_module . '.js.php'));
+    } else if (lC_Addons_Admin::hasAdminModulePageScript($_module)) {
+      include($lC_Vqmod->modCheck(lC_Addons_Admin::getAdminModulePageScriptPath($_module)));
     }
 
     return true;
@@ -92,6 +94,8 @@ class lC_Template_Admin extends lC_Template {
     
     if ( file_exists('includes/applications/' . $_module . '/js/responsive.js.php') ) {
       include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/js/responsive.js.php'));
+    } else if (lC_Addons_Admin::hasAdminModulePageResponsiveScript($_module)) {
+      include($lC_Vqmod->modCheck(lC_Addons_Admin::getAdminModulePageResponsiveScriptPath($_module)));
     }
 
     return true;
