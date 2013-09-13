@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id: cache.php v1.0 2013-01-01 datazen $
+  $Id: addons.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -70,11 +70,11 @@ class lC_Addons {
       $class = $nameArr[count($nameArr)-2];
 
       if (file_exists($ao['path'])) {
-        include_once($lC_Vqmod->modCheck($ao['path']));
-        if ($GLOBALS[$class] instanceof $class) {
+        if (class_exists($class)) { 
         } else {
+          include_once($lC_Vqmod->modCheck($ao['path']));
           $GLOBALS[$class] = new $class();
-        }        
+        }         
         
         $_SESSION['lC_Addons_data'][$class] = array('type' => $GLOBALS[$class]->getAddonType(),
                                                     'title' => $GLOBALS[$class]->getAddonTitle(),
