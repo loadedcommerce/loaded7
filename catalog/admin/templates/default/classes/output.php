@@ -49,6 +49,7 @@ class output {
         
         // custom sort
         $access = array();
+        if (array_key_exists('hq', $newArr)) $access['hq'] = $newArr['hq'];
         if (array_key_exists('orders', $newArr)) $access['orders'] = $newArr['orders'];
         if (array_key_exists('customers', $newArr)) $access['customers'] = $newArr['customers'];
         if (array_key_exists('products', $newArr)) $access['products'] = $newArr['products'];
