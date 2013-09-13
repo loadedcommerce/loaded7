@@ -181,6 +181,7 @@ class lC_Addons_Admin extends lC_Addons {
     global $lC_Language;
     
     foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      
       if (file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/languages/' . $lC_Language->getCode() . '/modules/access/groups/' . $group . '.php')) {
         $lC_Language->loadIniFile(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/languages/' . $lC_Language->getCode() . '/modules/access/groups/' . $group . '.php', null, null, true);
       }
