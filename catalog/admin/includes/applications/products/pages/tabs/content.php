@@ -46,7 +46,7 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
             <?php
               foreach ( $lC_Language->getAll() as $l ) {
               ?>
-              <div style="min-height:<?php echo (ENABLE_EDITOR == '1') ? '465' : '365'; ?>px; height:auto;" id="languageTabs_<?php echo $l['code']; ?>">
+              <div id="languageTabs_<?php echo $l['code']; ?>">
                 <fieldset>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_name[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_name') . lc_show_info_bubble($lC_Language->get('info_bubble_content_name')); ?></label>
