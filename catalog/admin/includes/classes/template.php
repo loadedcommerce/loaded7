@@ -132,7 +132,7 @@ class lC_Template_Admin extends lC_Template {
     return $html;
   }
   
-  public function isAuthorized($_module, $_sub_of) {
+  public function isAuthorized($_module) {
     $ok = FALSE;
     
     if ((int)$_SESSION['admin']['access'][strtolower($_module)] > 0) {

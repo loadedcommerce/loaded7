@@ -153,7 +153,7 @@
   }
   
   // load the main content
-  if ($lC_Template->isAuthorized($lC_Template->getModule(), $lC_Template->getSubOf())) {
+  if ($lC_Template->isAuthorized($lC_Template->getModule())) {
     if ($_SESSION['moduleType'] == 'addon') {
       require($lC_Vqmod->modCheck(lC_Addons_Admin::getAdminPage($lC_Template->getModule(), $lC_Template->getPageContentsFilename())));
     } else {
