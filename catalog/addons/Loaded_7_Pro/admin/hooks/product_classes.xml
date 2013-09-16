@@ -7,7 +7,9 @@
   <file name="includes/modules/access/product_settings.php">
     <operation info="After Image Groups, add Product Classes">
       <search position="after"><![CDATA[global $lC_Language;]]></search>         
-      <add><![CDATA[$lC_Language->loadIniFile(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/languages/en_US/modules/access/product_classes.php', null, null, true);]]></add>
+      <add><![CDATA[global $lC_Template;
+                    $lC_Language->loadIniFile(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/languages/en_US/modules/access/product_classes.php', null, null, true);]]></add>
+                    $lC_Template->setSubOf('product_settings');
     </operation>
 
     <operation info="After Image Groups, add Product Classes">

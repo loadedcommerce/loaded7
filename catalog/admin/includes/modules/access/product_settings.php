@@ -20,9 +20,11 @@
         $_sort_order = 800;
 
     function lC_Access_Product_settings() {
-      global $lC_Language;
+      global $lC_Language, $lC_Template;
 
       $this->_title = $lC_Language->get('access_product_settings_title');
+      
+      $lC_Template->setSubOf('product_settings');
       
       $this->_subgroups = array(array('icon' => 'image_groups.png',
                                       'title' => $lC_Language->get('access_image_groups_title'),

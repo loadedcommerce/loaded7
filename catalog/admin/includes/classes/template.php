@@ -16,6 +16,7 @@ global $lC_Vqmod;
 require($lC_Vqmod->modCheck('../includes/classes/template.php'));
 
 class lC_Template_Admin extends lC_Template {
+
   function &setup($module) {
     global $lC_Vqmod;
     
@@ -130,15 +131,16 @@ class lC_Template_Admin extends lC_Template {
 
     return $html;
   }
-  /*
-  * Check to see if page view is authorized
-  *
-  * @access public
-  * @return boolean
-  */
-  public function isAuthorized($_module) {
+  
+  public function isAuthorized($_module, $_sub_of) {
     $ok = FALSE;
 
+//if (is_array($_sub_of) && count($_sub_of) > 0) {
+  
+//echo '[' . $_module . ']<br>';  
+//print_r($_sub_of);
+//die();    
+//}
     
     if ((int)$_SESSION['admin']['access'][strtolower($_module)] > 0) {
       $ok = TRUE;
