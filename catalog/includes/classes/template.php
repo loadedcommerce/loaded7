@@ -41,14 +41,7 @@ class lC_Template {
   * @var string
   * @access protected
   */
-  protected $_module;
-  /**
-  * Holds the children in the 3rd+ levels
-  *
-  * @var array
-  * @access protected
-  */
-  protected $_sub_of = array();  
+  protected $_module; 
   /**
   * Holds the group name of the page
   *
@@ -230,15 +223,6 @@ class lC_Template {
   public function getModule() {
     return $this->_module;
   }
-  /**
-  * Returns the page module name
-  *
-  * @access public
-  * @return string
-  */
-  public function getSubOf() {
-    return $this->_sub_of;
-  }  
   /**
   * Returns the page group name
   *
@@ -518,16 +502,6 @@ class lC_Template {
   public function setPageTitle($title) {
     $this->_page_title = $title;
   }
-  /**
-  * Sets the 3rd+ level children
-  * 
-  * @param string $title The title of the page to set to
-  * @access public
-  */
-  public function setSubOf($sub) {
-    $this->_sub_of[$sub] = true;
-  }  
-  
   /**
   * Sets the image of the page
   *

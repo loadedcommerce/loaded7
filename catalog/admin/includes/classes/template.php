@@ -134,13 +134,6 @@ class lC_Template_Admin extends lC_Template {
   
   public function isAuthorized($_module, $_sub_of) {
     $ok = FALSE;
-
-//if (is_array($_sub_of) && count($_sub_of) > 0) {
-  
-//echo '[' . $_module . ']<br>';  
-//print_r($_sub_of);
-//die();    
-//}
     
     if ((int)$_SESSION['admin']['access'][strtolower($_module)] > 0) {
       $ok = TRUE;
