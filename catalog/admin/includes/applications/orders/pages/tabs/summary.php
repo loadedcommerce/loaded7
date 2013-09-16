@@ -24,7 +24,7 @@
                     <tbody>
                       <tr>
                         <!--<td class="align-right pad-5 width-25 bold grey"><?php echo $lC_Language->get('text_name'); ?></td>-->
-                        <td class="align-left bold mid-padding-left small-padding-top"><?php echo $oInfo->get('customerAddress'); ?></td>
+                        <td class="align-left mid-padding-left small-padding-top"><?php echo $oInfo->get('customerAddress'); ?></td>
                       </tr>
                       <!--<tr>
                         <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_company_name'); ?></td>
@@ -51,7 +51,7 @@
                     <tbody>
                       <tr>
                         <!--<td class="align-right pad-5 width-25 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>-->
-                        <td class="align-left bold mid-padding-left small-padding-top"><?php echo $oInfo->get('deliveryAddress'); ?></td>
+                        <td class="align-left mid-padding-left small-padding-top"><?php echo $oInfo->get('deliveryAddress'); ?></td>
                       </tr>
                       <!--<tr>
                         <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_type'); ?></td>
@@ -74,7 +74,7 @@
                     <tbody>
                       <tr>
                         <!--<td class="align-right pad-5 width-25 bold grey"><?php echo $lC_Language->get('text_addresses'); ?></td>-->
-                        <td class="align-left bold mid-padding-left small-padding-top"><?php echo $oInfo->get('billingAddress'); ?></td>
+                        <td class="align-left mid-padding-left small-padding-top"><?php echo $oInfo->get('billingAddress'); ?></td>
                       </tr>
                       <!--<tr>
                         <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_date_ordered'); ?></td>
@@ -99,7 +99,7 @@
                     <tbody>
                       <tr>
                         <!--<td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>-->
-                        <td class="align-left bold mid-padding-left small-padding-top"><?php echo $oInfo->get('paymentMethod'); ?></td>
+                        <td class="align-left mid-padding-left small-padding-top"><?php echo $oInfo->get('paymentMethod'); ?></td>
                       </tr>
                       <!--<tr>
                         <td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_details'); ?></td>
@@ -122,7 +122,7 @@
                     <tbody>
                       <tr>
                         <!--<td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>-->
-                        <td class="align-left bold mid-padding-left small-padding-top">
+                        <td class="align-left mid-padding-left small-padding-top">
                           <p class="no-padding"><?php echo $oInfo->get('orderStatus'); ?></p>
                         </td>
                       </tr>
@@ -147,7 +147,7 @@
                     <tbody>
                       <tr>
                         <!--<td class="align-right pad-5 width-33 bold grey"><?php echo $lC_Language->get('text_method'); ?></td>-->
-                        <td class="align-left bold mid-padding-left small-padding-top">
+                        <td class="align-left mid-padding-left small-padding-top">
                           <p class="no-padding"><?php echo $oInfo->get('orderTotal'); ?></p>
                         </td>
                       </tr>
