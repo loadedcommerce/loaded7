@@ -163,7 +163,7 @@
             <input type="text" value="<?php echo (isset($bInfo) && isset($sales_phone) ? $sales_phone : null); ?>" class="input full-width required small-margin-top margin-bottom" id="branding_sales_phone" name="branding_sales_phone">
           </p>
           <p class="button-height block-label mid-margin-bottom">
-            <label class="label" for="branding_sales_email"><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_sales_email1')) . $lC_Language->get('field_sales_email'); ?></label>
+            <label class="label" for="branding_sales_email"><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_sales_email')) . $lC_Language->get('field_sales_email'); ?></label>
             <input type="text" value="<?php echo (isset($bInfo) && isset($sales_email) ? $sales_email : null); ?>" class="input full-width required small-margin-top margin-bottom" id="branding_sales_email" name="branding_sales_email">
           </p>
         </div>
