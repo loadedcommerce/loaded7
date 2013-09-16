@@ -122,7 +122,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         <?php
           foreach ( $lC_Language->getAll() as $l ) {
         ?>
-          $("#languageTabs_<?php echo $l['code']; ?>").css("min-height", "470px").css("height", "auto");
+          $("#languageTabs_<?php echo $l['code']; ?>").css("min-height", "465px").css("height", "auto");
         <?php
           }
         ?>
@@ -132,7 +132,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         <?php
           foreach ( $lC_Language->getAll() as $l ) {
         ?>
-          $("#languageTabs_<?php echo $l['code']; ?>").css("min-height", "270px").css("height", "auto");
+          $("#languageTabs_<?php echo $l['code']; ?>").css("min-height", "265px").css("height", "auto");
         <?php
           }
         ?>

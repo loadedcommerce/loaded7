@@ -34,7 +34,7 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
     <div class="new-row-mobile <?php echo (isset($pInfo) ? 'eight' : 'twelve'); ?>-columns twelve-columns-mobile">             
       <div class="columns">
       
-        <div id="languageTabs" class="standard-tabs same-height no-margin-bottom" style="width:99%;">
+        <div id="languageTabs" class="standard-tabs no-margin-bottom" style="width:99%;">
           <ul class="tabs">
             <?php               
               foreach ( $lC_Language->getAll() as $l ) {
@@ -46,7 +46,7 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
             <?php
               foreach ( $lC_Language->getAll() as $l ) {
               ?>
-              <div style="min-height:470px;" id="languageTabs_<?php echo $l['code']; ?>">
+              <div style="min-height:<?php echo (ENABLE_EDITOR == '1') ? '465' : '365'; ?>px; height:auto;" id="languageTabs_<?php echo $l['code']; ?>">
                 <fieldset>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_name[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_name') . lc_show_info_bubble($lC_Language->get('info_bubble_content_name')); ?></label>
@@ -55,11 +55,13 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
                   <p class="button-height block-label">
                   <label class="label" for="<?php echo 'products_description[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_description') . lc_show_info_bubble($lC_Language->get('info_bubble_content_description')); ?></label>
                   <?php echo lc_draw_textarea_field('products_description[' . $l['id'] . ']', (isset($pInfo) && isset($products_description[$l['id']]) ? $products_description[$l['id']] : null), null, 10, 'id="ckEditorProductDescription_' . $l['id'] . '" style="width:97%;" class="required input full-width autoexpanding"'); ?>
-                  <?php if(ENABLE_EDITOR == '1') { ?>
-                  <p align="right" style="padding:0; margin:-10px 10px -10px 0; font-size:.9em;"><?php echo '<a href="javascript:toggleEditor(\'' . $l['id'] . '\');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></p>
-                  <?php } ?>
                   </p>
+                  <?php if (ENABLE_EDITOR == '1') { ?>
+                  <p class="toggle-html-editor"><?php echo '<a href="javascript:toggleEditor(\'' . $l['id'] . '\');">' . $lC_Language->get('text_toggle_html_editor') . '</a>'; ?></p>
+                  <p class="button-height block-label large-margin-top">
+                  <?php } else { ?>
                   <p class="button-height block-label">
+                  <?php } ?>
                     <label class="label" for="<?php echo 'products_keyword[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_keyword') . lc_show_info_bubble($lC_Language->get('info_bubble_content_keyword')); ?></label>
                     <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($pInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="required input" style="width:97%" id="products_keyword_' . $l['id'] . '"'); ?>
                   </p>
