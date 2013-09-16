@@ -89,9 +89,9 @@
       $QbrandingData->bindValue(':site_image', $data['site_image']);
       $QbrandingData->bindValue(':chat_code', $data['chat_code']);
       $QbrandingData->bindValue(':address', $data['address']);
-      $QbrandingData->bindInt(':support_phone', $data['support_phone']);
+      $QbrandingData->bindValue(':support_phone', $data['support_phone']);
       $QbrandingData->bindValue(':support_email', $data['support_email']);
-      $QbrandingData->bindInt(':sales_phone', $data['sales_phone']);
+      $QbrandingData->bindValue(':sales_phone', $data['sales_phone']);
       $QbrandingData->bindValue(':sales_email', $data['sales_email']);
       $QbrandingData->bindValue(':og_image', $data['og_image']);
       $QbrandingData->bindValue(':meta_delimeter', $data['meta_delimeter']);
