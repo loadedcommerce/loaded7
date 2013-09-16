@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>After Image Groups, add Product Classes</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/modules/access/product_settings.php">
+    <operation info="After Image Groups, add Product Classes">
+      <search position="after"><![CDATA['identifier' => '?image_groups'),]]></search>         
+      <add><![CDATA[            array('icon' => 'classes.png',
+                                      'title' => $lC_Language->get('access_product_classes_title'),
+                                      'identifier' => '?product_classes')      ]]></add>
+    </operation>
+  </file> 
+</modification>
