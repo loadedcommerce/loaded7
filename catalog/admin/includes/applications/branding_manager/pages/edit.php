@@ -66,11 +66,6 @@
     }
   }
 ?>
-<style>
-  .inline-label > .label {
-    width: 200px;
-  }
-</style>
 <section role="main" id="main">
   <noscript class="message black-gradient simpler">
     <?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?>
@@ -82,7 +77,7 @@
     <form name="branding_manager" id="branding_manager" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . '&action=save'); ?>" method="post">
 
     <!-- Wrapper, set tabs style class here -->
-    <div class="side-tabs"> 
+    <div class="side-tabs tab-opened"> 
 
       <!-- Tabs -->
       <ul class="tabs">
@@ -97,8 +92,8 @@
       <div class="tabs-content">
         <div id="header" class="with-padding">
           <div class="columns">
-            <div class="four-columns">
-              <p class="button-height inline-label">
+            <div class="four-columns twelve-columns-mobile">
+              <p class="button-height">
                 <label class="label" for="branding_image"><?php echo $lC_Language->get('field_branding_manager_logo'); ?></label>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_branding_manager_logo'), 'margin-right:6px; margin-top:4px;'); ?> 
                 <div class="small-margin-top">
@@ -117,7 +112,7 @@
                 </center>
               </p>
             </div>
-            <div class="eight-columns">
+            <div class="eight-columns twelve-columns-mobile">
               <span class="button-height block-label">
                 <label for="branding_name" class="label"><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_site_name')) . $lC_Language->get('field_site_name'); ?></label>
                 <input type="text" name="branding_name" id="branding_name" class="input full-width required small-margin-top small-margin-bottom" value="<?php echo $QbrandingName->value('configuration_value'); ?>">
@@ -169,8 +164,8 @@
         </div>
         <div id="seo" class="with-padding">
           <div class="columns">
-            <div class="four-columns">
-              <p class="button-height inline-label">
+            <div class="four-columns twelve-columns-mobile">
+              <p class="button-height">
                 <label class="label" for="branding_image"><?php echo $lC_Language->get('field_open_graph_site_thumbnail'); ?></label>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_open_graph_site_thumbnail'), 'margin-right:6px; margin-top:4px;'); ?> 
                 <div class="small-margin-top">
@@ -189,7 +184,7 @@
                 </center>
               </p>
             </div>
-            <div class="eight-columns">
+            <div class="eight-columns twelve-columns-mobile">
               <span class="button-height block-label">
                 <span class="bold"><?php echo $lC_Language->get('field_site_meta_description'); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_site_meta_description'), 'margin-right:6px; margin-top:8px;'); ?>
