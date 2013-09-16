@@ -206,5 +206,6 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&cID=CID'); ?>';
       window.location = url.replace('CID', cid);
     }
+    $('#orders_edit_select').val('');
   }  
 </script>
