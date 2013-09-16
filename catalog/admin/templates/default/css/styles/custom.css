@@ -719,6 +719,10 @@ select.error { border: 2px solid red !important; }
 .small-margin-bottom, .branding-extra-line	{ border:0px solid red;margin-left: 100px; margin-bottom: 4px !important; }
 .padding_image{ border:1px solid red;margin-top: 0px;margin-left: 200px; margin-bottom: 4px !important; }
 
+
+.bold { font-weight: bold; }
+.bolder { font-weight: 800; }
+
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
   #menu header .headerInner {

@@ -49,7 +49,7 @@ field_site_meta_title_delimeter = Site Meta Title Delimeter:
 
 info_bubble_site_meta_description = This is your Site Meta Description. This is a multi-language setting.
 info_bubble_site_meta_keywords = These are your Site Meta Keywords. This is a multi-language setting. 
-infobubble_filed_open_graph_site_thumbnail = Open Graph image must be larger than 200 x 200<br>Allowed Extensions: jpg, jpeg, png, gif
+info_bubble_open_graph_site_thumbnail = This is your Open Graph Site Thumbnail, it will show in facebook postings, shares, and likes. Open Graph image must be larger than 200 x 200<br>Allowed Extensions: .jpg, .jpeg, .png, .gif. This is not a multi-language setting.
 info_bubble_home_page_meta_title = This is your Home Page Meta Title. This is a multi-language setting. 
 info_bubble_site_meta_title_prefix = This is your Site Meta Title Prefix. This is a multi-language setting.
 info_bubble_site_meta_title_suffix = This is your Site Meta Title Suffix. This is a multi-language setting.
