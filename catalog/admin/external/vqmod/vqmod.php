@@ -238,7 +238,7 @@ final class VQMod {
     $modArr = array();
     foreach ($modList as $key => $value) {
       $loc = str_replace('controller.php', '', $value);
-      $hooks = glob($loc . 'hooks/admin/*.xml');
+      $hooks = glob($loc . 'admin/hooks/*.xml');
       $modArr = array_merge((array)$modArr, (array)$hooks);
     }
     
