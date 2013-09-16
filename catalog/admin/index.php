@@ -20,7 +20,7 @@ $_SESSION['moduleType'] = 'core';
 if ( !empty($_GET) ) {
   $first_array = array_slice($_GET, 0, 1);
   $_module = lc_sanitize_string(basename(key($first_array)));
-
+  
   if ( file_exists('includes/applications/' . $_module . '/' . $_module . '.php') ) {
     $_SESSION['module'] = $_module;
     $_SESSION['moduleType'] = 'core';
@@ -28,12 +28,6 @@ if ( !empty($_GET) ) {
     $_SESSION['module'] = $_module;
     $_SESSION['moduleType'] = 'addon';
   }
-}
-
-if ( !lC_Access::hasAccess($_SESSION['module']) ) {
-  $lC_MessageStack->add('header', 'No access.', 'error');
-
-  lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT));
 }
 
 if ($_SESSION['moduleType'] == 'addon') {

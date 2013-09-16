@@ -154,7 +154,7 @@
   
   // load the main content
   if ($lC_Template->isAuthorized($lC_Template->getModule())) {
-    if ($_SESSION['moduleType'] == 'addon') {
+    if (lC_Addons_Admin::hasAdminPage($lC_Template->getModule(), $lC_Template->getPageContentsFilename())) {
       require($lC_Vqmod->modCheck(lC_Addons_Admin::getAdminPage($lC_Template->getModule(), $lC_Template->getPageContentsFilename())));
     } else {
       require($lC_Vqmod->modCheck('includes/applications/' . $lC_Template->getModule() . '/pages/' . $lC_Template->getPageContentsFilename()));

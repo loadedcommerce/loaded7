@@ -340,6 +340,24 @@ class lC_Addons_Admin extends lC_Addons {
     return false;
   }
  /*
+  * Determine if there are addon pages
+  *
+  * @param string $module   The addon module
+  * @param string $filename The page filename
+  * @access public
+  * @return mixed
+  */  
+  public static function hasAdminPage($module, $filename) {
+    
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if (file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/pages/' . $filename)) {
+        return true;
+      }
+    }
+    
+    return false;    
+  }  
+ /*
   * Retrieve the admin addon page
   *
   * @param string $module   The addon module

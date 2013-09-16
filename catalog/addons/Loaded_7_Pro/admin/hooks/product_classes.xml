@@ -20,13 +20,9 @@
     </operation>
   </file>
   <file name="includes/classes/template.php">
-  
     <operation info="After Image Groups, add Product Classes">
-      <search position="after"><![CDATA[    } else if ($_module == 'image_groups' && $_SESSION['admin']['access']['product_settings'] > 0) {
-                                                       $ok = TRUE;]]></search>         
-                                                       
-      <add><![CDATA[    } else if ($_module == 'product_classes' && $_SESSION['admin']['access']['product_settings'] > 0) {
-                                   $ok = TRUE;      ]]></add>
+      <search position="after"><![CDATA[} else if ($_module == 'image_groups' && $_SESSION['admin']['access']['product_settings'] > 0) { $ok = TRUE;]]></search>         
+      <add><![CDATA[} else if ($_module == 'product_classes' && $_SESSION['admin']['access']['product_settings'] > 0) { $ok = TRUE;]]></add>
     </operation>    
   </file> 
 </modification>
