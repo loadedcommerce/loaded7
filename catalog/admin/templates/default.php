@@ -577,7 +577,6 @@
   <?php } ?>
   <!-- Template functions -->
   <script src="templates/default/js/setup.js"></script>
-  <script src="templates/default/js/float.js"></script>
   <script src="templates/default/js/accordions.js"></script>
   <script src="templates/default/js/auto-resizing.js"></script>
   <script src="templates/default/js/input.js"></script>

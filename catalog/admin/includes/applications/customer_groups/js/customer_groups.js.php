@@ -33,12 +33,8 @@ $(document).ready(function() {
     $('#main-title').attr('style', 'padding: 0 0 0 20px;');
     $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
     $('#dataTable_length').hide();
-    $('#floating-button-container').hide();
     $('#actionText').hide();
     $('.on-mobile').show();
-  } else {
-    // instantiate floating menu
-    $('#floating-menu-div-listing').fixFloat();
-  }     
+  }    
 });
 </script>

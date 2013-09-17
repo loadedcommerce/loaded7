@@ -16,9 +16,6 @@ if (!empty($_GET['module'])) { // module listing
 ?>
 <script>
   $(document).ready(function() {
-    // instantiate floating menu     
-    $('#floating-menu-div-listing').fixFloat();
-
     var cols = '<?php echo $cols; ?>';
     if (cols == 2) {
       var aoCols = [{ "sWidth": "80%", "bSortable": true, "sClass": "dataCol1" },
@@ -55,7 +52,6 @@ if (!empty($_GET['module'])) { // module listing
       $('#main-title').attr('style', 'padding: 0 0 0 20px;');
       $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
       $('#dataTable_length').hide();
-      $('#floating-button-container').hide();
       $('#actionText').hide();
       $('.on-mobile').show();
       $('.selectContainer').hide();
@@ -89,7 +85,6 @@ if (!empty($_GET['module'])) { // module listing
       $('#main-title').attr('style', 'padding: 0 0 0 20px;');
       $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
       $('#dataTable_length').hide();
-      $('#floating-button-container').hide();
       $('#actionText').hide();
       $('.on-mobile').show();
       $('.selectContainer').hide();

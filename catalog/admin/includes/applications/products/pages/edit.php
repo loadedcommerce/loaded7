@@ -499,8 +499,8 @@ function getTaxClassOptionsString($id = null, $esc = false) {
     
     <div class="clear-both"></div>
     
-    <div id="floating-button-container" class="six-columns twelve-columns-tablet margin-bottom">
-      <div id="floating-menu-div-listing">
+    <div class="six-columns twelve-columns-tablet margin-bottom">
+      <div>
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
@@ -528,9 +528,6 @@ function getTaxClassOptionsString($id = null, $esc = false) {
                 </span><span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span>
               </a>&nbsp;
             </p>
-          </div>
-          <div id="floating-button-container-title" class="hidden">
-            <p class="white big-text small-margin-top"><?php echo $lC_Template->getPageTitle(); ?></p>
           </div>
         </div>
       </div>

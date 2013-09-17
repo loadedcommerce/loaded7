@@ -49,8 +49,8 @@
     </table>
     </form>
     <div class="clear-both"></div>
-    <div id="floating-button-container" class="six-columns twelve-columns-tablet">
-      <div id="floating-menu-div-listing">
+    <div class="six-columns twelve-columns-tablet">
+      <div>
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
@@ -60,9 +60,6 @@
                 </span><?php echo $lC_Language->get('button_new_class'); ?>
               </a>&nbsp;
             </p>
-          </div>
-          <div id="floating-button-container-title" class="hidden">
-            <p class="white big-text small-margin-top"><?php echo $lC_Template->getPageTitle(); ?></p>
           </div>
         </div>
       </div>
