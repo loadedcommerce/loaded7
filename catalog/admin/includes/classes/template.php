@@ -165,7 +165,7 @@ class lC_Template_Admin extends lC_Template {
   * @param string $code The code of the template to use
   * @access public
   */
-  function set($code = null) {
+  public function set($code = null) {
     if ( (isset($_SESSION['template']) === false) || !empty($code) || (isset($_GET['template']) && !empty($_GET['template'])) ) {
       if ( !empty( $code ) ) {
         $set_template = $code;
