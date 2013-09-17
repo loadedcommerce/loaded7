@@ -170,7 +170,7 @@ class lC_Template_Admin extends lC_Template {
       if ( !empty( $code ) ) {
         $set_template = $code;
       } else {
-        $set_template = (isset($_GET['template']) && !empty($_GET['template'])) ? $_GET['template'] : DEFAULT_TEMPLATE;
+        $set_template = (isset($_GET['template']) && !empty($_GET['template'])) ? $_GET['template'] : 'default';
       }
 
       /*$data = array();
