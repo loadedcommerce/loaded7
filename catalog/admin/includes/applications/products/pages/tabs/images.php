@@ -13,7 +13,7 @@
 */
 global $lC_Language, $pInfo; 
 ?>   
-<div id="section_images_content" class="with-padding">
+<div id="section_images_content" class="with-padding<?php echo (isset($pInfo) && !empty($pInfo)) ? null : ' hidden'; ?>">
   <div class="content-panel margin-bottom enabled-panels">
     <div class="panel-navigation silver-gradient scrollable">
       <div class="panel-control"></div>
