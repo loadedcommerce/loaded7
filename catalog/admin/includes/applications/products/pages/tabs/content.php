@@ -61,7 +61,7 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
                   </p>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_keyword[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_keyword') . lc_show_info_bubble($lC_Language->get('info_bubble_content_keyword')); ?></label>
-                    <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($pInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="required input" style="width:97%" id="products_keyword_' . $l['id'] . '"'); ?>
+                    <?php echo lc_draw_input_field('products_keyword[' . $l['id'] . ']', (isset($pInfo) && isset($products_keyword[$l['id']]) ? $products_keyword[$l['id']] : null), 'class="required input" style="width:97%" id="products_keyword_' . $l['id'] . '" onblur="validatePermalink(this.value);"'); ?>
                   </p>
                   <p class="button-height block-label">
                     <label class="label" for="<?php echo 'products_tags[' . $l['id'] . ']'; ?>"><?php echo $lC_Language->get('field_tags') . lc_show_info_bubble($lC_Language->get('info_bubble_content_tags')); ?></label>

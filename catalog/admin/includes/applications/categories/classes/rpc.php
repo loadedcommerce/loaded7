@@ -215,6 +215,21 @@ class lC_Categories_Admin_rpc {
     }  
 
     echo json_encode($result);
+  } 
+ /*
+  * Check category permalink
+  *
+  * @param array $_GET['categories_permalink'] The category permalink to validate 
+  * @access public
+  * @return json
+  */
+  public static function validatePermalink() {
+    $data = str_replace('%5B', '[', $_GET);
+    $data = str_replace('%5D', ']', $data);
+    
+    $validated = lC_Categories_Admin::validatePermalink($data['categories_permalink'], $data['cid'], $data['type']);
+
+    echo json_encode($validated);
   }
 }
 ?>

@@ -86,8 +86,10 @@ $(document).ready(function() {
     // instantiate floating menu
     $('#floating-menu-div-listing').fixFloat();
   }
-  <?php if ($_GET['action'] != '') { ?>
-  createUploader();
+  <?php 
+  if ($_GET['action'] != '') { 
+  ?>
+    createUploader();
   <?php
     if (ENABLE_EDITOR == '1') { 
       if (USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
@@ -104,8 +106,7 @@ $(document).ready(function() {
         echo '$("#ckEditorCategoriesDescription_' . $l['id'] . '").css("height", "200px").css("width", "99.8%");';
       }
     }
-  ?>
-  <?php } ?>
+  } ?>
 });
                   
 function createUploader() {
@@ -157,6 +158,11 @@ function customCheck() {
       $("#categories_custom_url").val('');
       $("#custom_url_text").show();
     }
+    <?php
+    foreach ( $lC_Language->getAll() as $l ) {
+      echo '$("#categories_permalink_' . $l['id'] . '").attr("value", "no-permalink").parent().hide();';
+    }
+    ?>
   } else {
     $("#categories_custom").hide();
     $("#categories_link_target_p").hide();
@@ -164,6 +170,11 @@ function customCheck() {
     $("#categories_custom_url").val("");
     $("#categories_link_target").removeAttr("checked");
     $("#categories_link_target").parent("span").removeClass("checked");
+    <?php
+    foreach ( $lC_Language->getAll() as $l ) {
+      echo '$("#categories_permalink_' . $l['id'] . '").attr("value", "").parent().show();';
+    }
+    ?>
   }
 }
 
@@ -202,6 +213,7 @@ function updateVisibilityBox(id, val) {
     $("#box_" + id).html('<span class="icon-browser icon-size2 icon-silver cursor-pointer with-tooltip"></span>');
   }
 }
+<?php if ($_GET['action'] != '') { ?>
 
 function toggleEditor(id) {
   var selection = $("#ckEditorCategoriesDescription_" + id);
@@ -218,8 +230,6 @@ function validateForm(e) {
   // turn off messages
   jQuery.validator.messages.required = "";
 
-  //var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
-  //var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateKeyword&pid=PID'); ?>';
   var bValid = $("#category").validate({
     invalidHandler: function() {
     },
@@ -229,18 +239,20 @@ function validateForm(e) {
         ?>
         'categories_name[<?php echo $l['id']; ?>]': {
           required: true,
-          //remote: jsonVKUrl.replace('PID', pid),
+        },
+        'categories_permalink[<?php echo $l['id']; ?>]': {
+          required: true,
         },
         <?php
       }
       ?>
-    },
-    
+    },    
     messages: {
       <?php
       foreach ( $lC_Language->getAll() as $l ) {
         ?>
-        //"products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
+        "categories_name[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_categories_name_required'); ?>",
+        "categories_permalink[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_categories_permalink_required'); ?>",
         <?php
       }
       ?>
@@ -252,5 +264,51 @@ function validateForm(e) {
   } 
 
   return false;
-}           
+}
+    
+function validatePermalink(pl) {
+  // turn off messages
+  jQuery.validator.messages.required = "";
+
+  var cid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
+  var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validatePermalink&cid=CID&type=1'); ?>';
+  var bValid = $("#category").validate({
+    invalidHandler: function() {
+    },
+    rules: {
+      <?php
+      foreach ( $lC_Language->getAll() as $l ) {
+        ?>
+        'categories_permalink[<?php echo $l['id']; ?>]': {
+          remote: jsonVKUrl.replace('CID', cid),
+        },
+        <?php
+      }
+      ?>
+    },    
+    messages: {
+      <?php
+      foreach ( $lC_Language->getAll() as $l ) {
+        ?>
+        "categories_permalink[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_categories_permalink_exists'); ?>",
+        <?php
+      }
+      ?>
+    } 
+  }).form();
+  $("#languageTabs").refreshTabs();
+
+  return false;
+}
+
+<?php 
+  foreach ( $lC_Language->getAll() as $l ) { 
+?>
+$("#categories_name_<?php echo $l['id']; ?>").blur(function(){
+  $("#categories_permalink_<?php echo $l['id']; ?>").val($("#categories_name_<?php echo $l['id']; ?>").val().toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, ''));
+});
+<?php 
+  }
+}
+?>           
 </script>

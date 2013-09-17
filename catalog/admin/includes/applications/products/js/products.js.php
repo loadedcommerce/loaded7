@@ -103,7 +103,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
      * CONTENT TAB
      * 
     /* create the uploader instance on content tab */
-    function createUploader2(){
+    function createUploader2() {
       var uploader = new qq.FileUploader({
         element: document.getElementById('fileUploaderImageContainer'),
         action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=fileUpload&default=1'); ?>',
@@ -129,7 +129,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     * IMAGES TAB
     *    
    /* create the uploader instance for images tab */
-    function createUploader(){
+    function createUploader() {
       var uploader = new qq.FileUploader({
         element: document.getElementById('fileUploaderContainer'),
         action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . (isset($pInfo) ? $pInfo->getInt('products_id') : null) . '&action=fileUpload&default=DEFAULT'); ?>',
@@ -567,7 +567,6 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       jQuery.validator.messages.required = "";
 
       var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
-      var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateKeyword&pid=PID'); ?>';
       var bValid = $("#product").validate({
         invalidHandler: function() {
         },
@@ -578,12 +577,49 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             'products_name_<?php echo $l['id']; ?>': {
               required: true,
             },
-            'ckEditorProductDescription_<?php echo $l['id']; ?>': {
-              required: true,
-            },
             'products_keyword[<?php echo $l['id']; ?>]': {
               required: true,
-              remote: jsonVKUrl.replace('PID', pid),
+            },
+            <?php
+          }
+          ?>
+        },
+        
+        messages: {
+          <?php
+          foreach ( $lC_Language->getAll() as $l ) {
+            ?>
+            "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_required'); ?>",
+            <?php
+          }
+          ?>
+        } 
+      }).form();
+      $("#languageTabs").refreshTabs();
+      if (bValid) {
+        $(e).submit();
+      } //else {
+        //$("#tabHeaderSectionContent a").css("background-color", "#FFE3E2").css("border-left", "1px solid #D84646").css("border-top", "1px solid #D84646").css("border-bottom", "1px solid #D84646");
+      //}
+
+      return false;
+    }    
+    
+    function validatePermalink(pl) {
+      // turn off messages
+      jQuery.validator.messages.required = "";
+
+      var iid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
+      var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validatePermalink&iid=IID&type=2'); ?>';
+      var bValid = $("#product").validate({
+        invalidHandler: function() {
+        },
+        rules: {
+          <?php
+          foreach ( $lC_Language->getAll() as $l ) {
+            ?>
+            'products_keyword[<?php echo $l['id']; ?>]': {
+              remote: jsonVKUrl.replace('IID', iid),
             },
             <?php
           }
@@ -601,14 +637,9 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         } 
       }).form();
       $("#languageTabs").refreshTabs();
-      if (bValid) {
-        $(e).submit();
-      } //else {
-        //$("#tabHeaderSectionContent a").css("background-color", "#FFE3E2").css("border-left", "1px solid #D84646").css("border-top", "1px solid #D84646").css("border-bottom", "1px solid #D84646");
-      //}
 
       return false;
-    }        
+    }       
     
   </script>
   <?php
