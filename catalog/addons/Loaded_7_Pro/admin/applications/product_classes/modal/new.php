@@ -86,7 +86,7 @@ function newClass() {
                 }).form();
                 if (bValid) {
                   var nvp = $("#pcNew").serialize();
-                  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveGroup&BATCH'); ?>'
+                  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveClass&addon=Loaded_7_Pro&BATCH'); ?>'
                   $.getJSON(jsonLink.replace('BATCH', nvp),
                     function (data) {
                       if (data.rpcStatus == -10) { // no session

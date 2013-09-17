@@ -87,10 +87,13 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable AddOn', 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS', '1', 'Do you want to enable this addon?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
     $lC_Database->simpleQuery("delete from " . TABLE_TEMPLATE_BOXES . " where modules_group = 'system|Loaded_7_Pro'");
     $lC_Database->simpleQuery("insert into " . TABLE_TEMPLATE_BOXES . " (title, code, author_name, author_www, modules_group) values ('" . $this->_title . "', '" . $this->_type . "', '" . $this->_author . "','" . $this->authorWWW . "', 'system:Loaded_7_Pro'");
-                              
+    // product classes
+    $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'DEFAULT_PRODUCT_CLASSES_ID'");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_key, configuration_value, configuration_group_id, date_added) values ('DEFAULT_PRODUCT_CLASSES_ID', '1', '6', now())");                             
     $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . DB_TABLE_PREFIX . "product_classes` (id int(11) NOT NULL AUTO_INCREMENT,`name` varchar(128) NOT NULL DEFAULT '', `comment` varchar(255) DEFAULT NULL, `status` tinyint(1) NOT NULL DEFAULT '0', language_id int(11) NOT NULL DEFAULT '1', PRIMARY KEY (id)) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=2;");
-    $lC_Database->simpleQuery("INSERT IGNORE INTO `" . DB_TABLE_PREFIX . "product_classes` (id, name, comment, status, language_id) VALUES('1', 'Common', 'Common Class', 1, 1);");
-    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . DB_TABLE_PREFIX . "product_classes` ADD `product_class_id` INT( 11 ) DEFAULT '1'");
+    $lC_Database->simpleQuery("delete from `" . DB_TABLE_PREFIX . "product_classes` where id = '1'");
+    $lC_Database->simpleQuery("insert into `" . DB_TABLE_PREFIX . "product_classes` (id, name, comment, status, language_id) VALUES('1', 'Common', 'Common Class', 1, 1);");
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . DB_TABLE_PREFIX . "products` ADD `product_class_id` INT( 11 ) DEFAULT '1'");
     
     lC_Cache::clear('configuration');
     lC_Cache::clear('addons');
@@ -108,6 +111,15 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     }
 
     return $this->_keys;
-  }    
+  } 
+  
+  public function remove() {
+    parent::remove();
+    
+    // product classes
+    $lC_Database->simpleQuery("DROP TABLE IF EXISTS `" . DB_TABLE_PREFIX . "product_classes`");
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . DB_TABLE_PREFIX . "products` DROP COLUMN `product_class_id`");
+    
+  }   
 }
 ?>

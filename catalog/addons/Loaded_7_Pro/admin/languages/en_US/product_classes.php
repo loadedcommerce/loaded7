@@ -26,9 +26,6 @@ field_comment = Comment:
 field_status = Status:
 field_set_as_default = Set as Default?
 
-text_enable = Click to Enable
-text_disable = Click to Disable
-
 button_new_class = New Class
 
 introduction_new_class = Please fill in the following information for the new class.

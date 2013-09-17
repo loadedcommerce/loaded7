@@ -48,9 +48,9 @@ class lC_Product_classes_Admin_rpc {
   * @access public
   * @return json
   */
-  public static function saveGroup() { 
+  public static function saveClass() { 
     $result = array();
-    $default = (isset($_GET['default']) && $_GET['default'] == 'on') ? true : false;
+    $default = (isset($_GET['default']) && ($_GET['default'] == 'on' || $_GET['default'] == '1')) ? true : false;   
     $saved = lC_Product_classes_Admin::save($_GET['pcid'], $_GET, $default);
     if ($saved) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;

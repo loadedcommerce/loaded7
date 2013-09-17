@@ -18,7 +18,7 @@ class lC_Product_classes_Admin {
     global $lC_Database, $lC_Language, $_module;
     
     $media = $_GET['media'];
-
+    
     $Qclasses = $lC_Database->query('select * from :table_product_classes where language_id = :language_id order by name');
     $Qclasses->bindTable(':table_product_classes', TABLE_PRODUCT_CLASSES);
     $Qclasses->bindInt(':language_id', $lC_Language->getID());
