@@ -786,10 +786,10 @@ $("#li-settings").click(function() {
 
 // added to pull in any added modals used across all admin pages
 <?php
-  $lC_DirectoryListing = new lC_DirectoryListing('templates/' . $lC_Template->getCode() . '/modal/');
+  $lC_DirectoryListing = new lC_DirectoryListing('templates/' . $_SESSION['template']['code'] . '/modal/');
   $lC_DirectoryListing->setCheckExtension('php');
   foreach ($lC_DirectoryListing->getFiles() as $file) {
-    include('templates/' . $lC_Template->getCode() . '/modal/' . $file['name']);
+    include('templates/' . $_SESSION['template']['code'] . '/modal/' . $file['name']);
   }
 ?>
 </script>
