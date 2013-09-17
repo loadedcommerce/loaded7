@@ -24,7 +24,7 @@ global $lC_Language, $pInfo, $weight_class_array;
               <span><?php echo $lC_Language->get('field_weight'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_shipping_weight')); ?>
             </div>
             <div class="twelve-columns no-margin-bottom small-margin-top">
-              <input type="text" class="required input full-width" value="<?php echo (isset($pInfo) ? $pInfo->get('products_weight') : null); ?>" id="products_weight" name="products_weight" />
+              <input type="text" class="input full-width" value="<?php echo (isset($pInfo) ? $pInfo->get('products_weight') : null); ?>" id="products_weight" name="products_weight" />
             </div>
           </div>
           <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -32,7 +32,7 @@ global $lC_Language, $pInfo, $weight_class_array;
               <span><?php echo $lC_Language->get('field_weight_class'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_shipping_weight_class')); ?>
             </div>
             <div class="twelve-columns no-margin-bottom small-margin-top">
-              <?php echo lc_draw_pull_down_menu('products_weight_class', $weight_class_array, (isset($pInfo) ? $pInfo->get('products_weight_class') : SHIPPING_WEIGHT_UNIT), 'class="select full-width small-margin-top required"'); ?>
+              <?php echo lc_draw_pull_down_menu('products_weight_class', $weight_class_array, (isset($pInfo) ? $pInfo->get('products_weight_class') : SHIPPING_WEIGHT_UNIT), 'class="select full-width small-margin-top"'); ?>
             </div>
           </div>
         </div>
