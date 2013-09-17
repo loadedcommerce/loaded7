@@ -84,7 +84,6 @@ function profileEdit(id) {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_profile_edit'); ?>',
           width: 500,
-          scrolling: false,
           actions: {
             'Close' : {
               color: 'red',
