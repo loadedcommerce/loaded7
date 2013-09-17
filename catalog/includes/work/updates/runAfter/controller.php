@@ -119,6 +119,9 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
       
     $lC_Database->simpleQuery("ALTER TABLE `lc_orders_status` ADD `orders_status_type` ENUM( 'Pending', 'Rejected', 'Approved' ) NOT NULL DEFAULT 'Pending' AFTER `orders_status_name`");
     parent::log("Database Update: ALTER TABLE `lc_orders_status` ADD `orders_status_type` ENUM( 'Pending', 'Rejected', 'Approved' ) NOT NULL DEFAULT 'Pending' AFTER `orders_status_name`");
+                        
+    $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS lc_permalinks (permalink_id int(11) NOT NULL AUTO_INCREMENT, item_id int(11) NOT NULL, language_id int(11) NOT NULL DEFAULT '1', `type` int(11) NOT NULL, query varchar(255) NOT NULL, permalink varchar(255) NOT NULL, PRIMARY KEY (permalink_id,permalink)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");
+    parent::log("Database Update: CREATE TABLE IF NOT EXISTS lc_permalinks (permalink_id int(11) NOT NULL AUTO_INCREMENT, item_id int(11) NOT NULL, language_id int(11) NOT NULL DEFAULT '1', `type` int(11) NOT NULL, query varchar(255) NOT NULL, permalink varchar(255) NOT NULL, PRIMARY KEY (permalink_id,permalink)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");
                          
   } 
 }  

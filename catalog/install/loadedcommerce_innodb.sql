@@ -527,7 +527,7 @@ CREATE TABLE IF NOT EXISTS lc_permalinks (
   query varchar(255) NOT NULL,
   permalink varchar(255) NOT NULL,
   PRIMARY KEY (permalink_id,permalink)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products;
 CREATE TABLE lc_products (
