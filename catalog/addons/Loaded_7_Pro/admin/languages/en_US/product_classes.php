@@ -13,13 +13,12 @@ heading_title = Product Classes
 
 table_heading_name = Name
 table_heading_comment = Comment
-table_heading_status = Status
+table_heading_usage = Usage
 table_heading_action = Action
 
 modal_heading_new_class = New Product Class
 modal_heading_edit_class = Edit Product Class
 modal_heading_delete_class = Delete Product Class
-modal_heading_batch_delete_classs = Batch Delete Product Classes
 
 field_name = Name:
 field_comment = Comment:
@@ -31,7 +30,7 @@ button_new_class = New Class
 introduction_new_class = Please fill in the following information for the new class.
 introduction_edit_class = Please make the necessary changes for this class.
 introduction_delete_class = Please verify the removal of this classe.
-introduction_batch_delete_class = Please verify the removal of the selected classes.
 
 delete_error_class_prohibited = Error: The default class cannot be removed.
-delete_error_class_in_use = Error: This class is currently assigned to %s products and cannot be removed.
+delete_error_class_in_use_1 = Error: This class is currently assigned to 
+delete_error_class_in_use_2 = product(s) and cannot be removed.

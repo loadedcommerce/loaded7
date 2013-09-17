@@ -65,7 +65,7 @@ class lC_Product_classes_Admin_rpc {
   * @access public
   * @return json
   */    
-  public static function deleteGroup() {
+  public static function deleteClass() {
     $result = array();
     $deleted = lC_Product_classes_Admin::delete($_GET['pcid']);
     if ($deleted) {
@@ -73,22 +73,6 @@ class lC_Product_classes_Admin_rpc {
     }
 
     echo json_encode($result);
-  }
- /*
-  * Batch delete customer group records
-  *
-  * @param array $_GET['batch'] An array of customer group id's
-  * @access public
-  * @return json
-  */ 
-  public static function batchDelete() {
-    $result = lC_Product_classes_Admin::batchDelete($_GET['batch']);
-    if (isset($result['namesString']) && $result['namesString'] != null) {
-    } else {
-      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
-    }
-
-    echo json_encode($result);
-  }    
+  }   
 }
 ?>

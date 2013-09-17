@@ -18,11 +18,10 @@ $(document).ready(function() {
     "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
     "sPaginationType": paginationType,    
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
-    "aaSorting": [[1,'desc']],
-    "aoColumns": [{ "sWidth": "16px", "bSortable": false, "sClass": "dataColCheck" },
-                  { "sWidth": "30%", "bSortable": true, "sClass": "dataColName" },
-                  { "sWidth": "45%", "bSortable": true, "sClass": "dataColComment" },
-                  { "sWidth": "10%", "bSortable": true, "sClass": "dataColStatus" },
+    "aaSorting": [[0,'asc']],
+    "aoColumns": [{ "sWidth": "25%", "bSortable": false, "sClass": "dataColName" },
+                  { "sWidth": "35%", "bSortable": true, "sClass": "dataColComment hide-on-mobile" },
+                  { "sWidth": "25%", "bSortable": true, "sClass": "dataColUsage hide-on-mobile" },
                   { "sWidth": "15%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();

@@ -47,10 +47,6 @@ function newClass() {
                    '      <p class="field-block button-height">'+
                    '        <label for="comment" class="label anthracite"><?php echo $lC_Language->get('field_comment'); ?></label>'+
                    '        <?php echo lc_draw_input_field('comment', null, 'class="input"'); ?>'+
-                   '      </p>'+ 
-                   '      <p class="field-block button-height">'+
-                   '        <label for="status" class="label anthracite"><?php echo $lC_Language->get('field_status'); ?></label>'+
-                   '         <?php echo '&nbsp;' . lc_draw_checkbox_field('status', null, null, 'class="switch medium checked" checked="checked" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>'+
                    '      </p>'+                                     
                    '      <p class="field-block button-height margin-bottom">'+
                    '        <label for="default" class="label anthracite"><?php echo $lC_Language->get('field_set_as_default'); ?></label>'+
