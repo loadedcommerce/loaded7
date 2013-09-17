@@ -174,6 +174,9 @@ class lC_Administrators_Admin {
         if ($data['language_id'] != $Qcheck->value('language_id')) {
           $_SESSION['admin']['language_id'] = $data['language_id'];
         }
+        $_SESSION['admin']['username'] = $data['user_name'];
+        $_SESSION['admin']['firstname'] = $data['first_name'];
+        $_SESSION['admin']['lastname'] = $data['last_name'];
       } else {
         $lC_Database->rollbackTransaction();
         $result['rpcStatus'] = -1;
