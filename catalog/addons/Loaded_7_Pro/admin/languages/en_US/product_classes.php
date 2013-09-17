@@ -11,24 +11,30 @@
 
 heading_title = Product Classes
 
-table_heading_items = Items
+table_heading_name = Name
+table_heading_comment = Comment
+table_heading_status = Status
 table_heading_action = Action
 
-dialog_heading_new_item = New Item
-dialog_heading_edit_item = Edit Item
-dialog_heading_delete_item = Delete Item
-dialog_heading_batch_delete_items = Batch Delete Items
+modal_heading_new_class = New Product Class
+modal_heading_edit_class = Edit Product Class
+modal_heading_delete_class = Delete Product Class
+modal_heading_batch_delete_classs = Batch Delete Product Classes
 
-field_name = Group Name:
+field_name = Name:
+field_comment = Comment:
+field_status = Status:
 field_set_as_default = Set as Default?
 
-introduction_new_item = Please fill in the following information for the new item.
-introduction_edit_item = Please make the necessary changes for this item.
+text_enable = Click to Enable
+text_disable = Click to Disable
 
-introduction_delete_item = Please verify the removal of this item.
+button_new_class = New Class
 
-delete_error_item_prohibited = Error: The default item cannot be removed.
-delete_error_item_in_use = Error: This item is currently assigned to
-delete_error_item_in_use_end = customers and cannot be removed.
+introduction_new_class = Please fill in the following information for the new class.
+introduction_edit_class = Please make the necessary changes for this class.
+introduction_delete_class = Please verify the removal of this classe.
+introduction_batch_delete_class = Please verify the removal of the selected classes.
 
-introduction_batch_delete_product_classes = Please verify the removal of the selected items.
+delete_error_class_prohibited = Error: The default class cannot be removed.
+delete_error_class_in_use = Error: This class is currently assigned to %s products and cannot be removed.

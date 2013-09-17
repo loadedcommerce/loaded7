@@ -64,7 +64,7 @@ if ( empty($_GET) && $_GET['action'] != 'validateLogin') {
   $_module = lc_sanitize_string(basename(key($first_array)));
 
   
-  if ( !lC_Access::hasAccess($_module) && $_GET['action'] != 'validateLogin' ) {
+  if ( !lC_Access::hasAccess($_module) && $_GET['action'] != 'validateLogin' && !isset($_GET['addon'])) {
     echo json_encode(array('rpcStatus' => RPC_STATUS_NO_ACCESS));
     exit;
   }
