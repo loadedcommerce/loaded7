@@ -134,7 +134,6 @@ CREATE TABLE IF NOT EXISTS lc_categories_description (
   categories_menu_name varchar(255) DEFAULT NULL,
   categories_blurb mediumtext,
   categories_description text,
-  categories_keyword text,
   categories_tags varchar(255) DEFAULT NULL,
   PRIMARY KEY (categories_id,language_id),
   KEY idx_categories_name (categories_name)
@@ -517,6 +516,17 @@ CREATE TABLE lc_orders_transactions_status (
   status_name varchar(255) NOT NULL,
   PRIMARY KEY (id,language_id),
   KEY idx_orders_transactions_status_name (status_name)
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+DROP TABLE IF EXISTS lc_permalinks;
+CREATE TABLE IF NOT EXISTS lc_permalinks (
+  permalink_id int(11) NOT NULL AUTO_INCREMENT,
+  item_id int(11) NOT NULL,
+  language_id int(11) NOT NULL DEFAULT '1',
+  `type` int(11) NOT NULL,
+  query varchar(255) NOT NULL,
+  permalink varchar(255) NOT NULL,
+  PRIMARY KEY (permalink_id,permalink)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products;
