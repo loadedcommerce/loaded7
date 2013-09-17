@@ -13,11 +13,17 @@
 */
 global $lC_Vqmod;
 
-include_once($lC_Vqmod->modCheck('includes/applications/administrators/classes/administrators.php'));
-$groupsArr = lC_Administrators_Admin::getAllGroups(true);
-$groupsSelectArr = array();
-foreach ($groupsArr as $key => $value) {
-  $groupsSelectArr[] = array('id' => $value['id'], 'text' => $value['name']);
+//include_once($lC_Vqmod->modCheck('includes/applications/administrators/classes/administrators.php'));
+include_once($lC_Vqmod->modCheck('includes/applications/languages/classes/languages.php'));
+//$groupsArr = lC_Administrators_Admin::getAllGroups(true);
+//$groupsSelectArr = array();
+//foreach ($groupsArr as $key => $value) {
+//   $groupsSelectArr[] = array('id' => $value['id'], 'text' => $value['name']);
+//}
+$languagesArr = lC_Languages_Admin::getIdNameArray();
+$languagesSelectArr = array();
+foreach ($languagesArr as $key => $value) {
+  $languagesSelectArr[] = array('id' => $value['languages_id'], 'text' => $value['name']);
 }
 ?>
 function profileEdit(id) {
@@ -48,16 +54,20 @@ function profileEdit(id) {
                    '      <p><?php echo $lC_Language->get('introduction_edit_administrator'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="first_name" class="label"><?php echo $lC_Language->get('field_first_name'); ?></label>'+
-                   '        <?php echo lc_draw_input_field('first_name', null, 'id="edit-first_name" class="input full-width"'); ?>'+
+                   '        <?php echo lc_draw_input_field('first_name', null, 'id="edit-first_name" class="input" style="width:86%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="last_name" class="label"><?php echo $lC_Language->get('field_last_name'); ?></label>'+
-                   '        <?php echo lc_draw_input_field('last_name', null, 'id="edit-last_name" class="input full-width"'); ?>'+
+                   '        <?php echo lc_draw_input_field('last_name', null, 'id="edit-last_name" class="input" style="width:86%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="user_name" class="label"><?php echo $lC_Language->get('field_username'); ?></label>'+
-                   '        <?php echo lc_draw_input_field('user_name', null, 'id="edit-user_name" class="input full-width"'); ?>'+
+                   '        <?php echo lc_draw_input_field('user_name', null, 'id="edit-user_name" class="input" style="width:86%;"'); ?>'+
                    '      </p>'+
+                   '      <p class="button-height inline-label">'+
+                   '        <label for="language_id" class="label"><?php echo $lC_Language->get('field_admin_language'); ?></label>'+
+                   '        <?php echo lc_draw_pull_down_menu('language_id', $languagesSelectArr, null, 'id="edit-language_id" class="select" style="min-width:200px;"'); ?>'+
+                   '      </p>'+ 
                    '      <p class="button-height inline-label" id="pImage">'+
                    '        <label for="profile_image" class="label"><?php echo $lC_Language->get('profile_image'); ?></label>'+
                    '        <img alt="<?php echo $lC_Language->get('profile_image'); ?>" />'+
@@ -116,19 +126,33 @@ function profileEdit(id) {
                         }
                         return false;
                       }
+                      window.location.href = window.location.href;
                     }
-                  );
-                  win.closeModal();
+                  ); 
                 }
               }
             }
           },
           buttonsLowPadding: true
+      });     
+      
+      
+      $("#edit-language_id").empty(); // clear the old values
+      $.each(data.languagesArray, function(id, text) {
+        var selected = (data.language_id == id) ? 'selected="selected"' : '';
+        if(data.language_id == id) {
+          $("#edit-language_id").closest("span + *").prevAll("span.select-value:first").text(text);
+        }
+        $("#edit-language_id").append(
+          $("<option " + selected + "></option>").val(id).html(text)
+        );
       });
+
       $('#edit-first_name').val(data.first_name);
       $('#edit-last_name').val(data.last_name);
       $('#edit-user_name').val(data.user_name);
       $('#pImage').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + data.image).attr("width", 64).attr("height", 64).attr("name", "avatar").attr("id", "avatar");
+      $('#generalAvatar').val(data.image);
       $('#edit-access_group_id').val(data.access_group_id);
       function createProfileUploaderGeneral(){
         var uploader = new qq.FileUploader({
@@ -137,8 +161,8 @@ function profileEdit(id) {
           onComplete: function(id, fileName, responseJSON){
             $('#generalAvatar').attr("value", fileName);
             $('#pImage').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName).attr("width", 64).attr("height", 64);
-            $('#profileLeft').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName);
-            $('.profile-right-fourth').children('img').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName);
+            $('#profileLeftImage').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName);
+            $('#profileRightImage').attr("src", "<?php echo DIR_WS_IMAGES; ?>avatar/" + fileName);
           },
         });
       }

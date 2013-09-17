@@ -69,6 +69,9 @@
 				return;
 			}
 
+			// Store complete settings
+			form.data('wizard-options', settings);
+
 			// Stop DOM watching
 			isWatching = $.template.disableDOMWatch();
 
@@ -108,7 +111,6 @@
 			fieldsets.each(function(i)
 			{
 				var fieldset = $(this),
-					isCurrent = (this === current[0]),
 					classes = [],
 					title = fieldset.find('legend').text(),
 					controlsWrapper = fieldset.find('.wizard-controls'),
@@ -221,6 +223,72 @@
 	};
 
 	/**
+	 * Lock the wizard, for instance during AJAX validation
+	 */
+	$.fn.lockWizard = function()
+	{
+		return this.each(function(i)
+		{
+			var form = $(this).closest('.wizard-enabled'),
+				inputs;
+
+			// If already locked, do not process
+			if (!form.length || form.data('wizard-locked'))
+			{
+				return;
+			}
+
+			// Store list of elements, after they are disabled
+			inputs = form.find('input, select, textarea').not(':disabled');
+			form.data('wizard-locked', {
+				inputs:		$.fn.disableInput ? inputs.disableInput() : inputs.prop('disabled', true).addClass('disabled'),
+				buttons:	form.find('.wizard-prev, .wizard-next').not('.disabled').addClass('disabled')
+			});
+		});
+	};
+
+	/**
+	 * Test if a wizard is locked
+	 * @return boolean true if locked, else false
+	 */
+	$.fn.isWizardLocked = function()
+	{
+		return !!this.eq(0).closest('.wizard-enabled').data('wizard-locked');
+	};
+
+	/**
+	 * Unlock a wizard
+	 */
+	$.fn.unlockWizard = function()
+	{
+		return this.each(function(i)
+		{
+			var form = $(this).closest('.wizard-enabled'),
+				data = form.data('wizard-locked');
+
+			// If not locked, do not process
+			if (!form.length || !data)
+			{
+				return;
+			}
+
+			// Restore disabled elements
+			if ($.fn.enableInput)
+			{
+				data.inputs.enableInput();
+			}
+			else
+			{
+				data.inputs.prop('disabled', false).removeClass('disabled');
+			}
+			data.buttons.removeClass('disabled');
+
+			// Clear data
+			form.removeData('wizard-locked');
+		});
+	};
+
+	/**
 	 * Show a specific step of a wizard (to be called on a fieldset or on any element inside it)
 	 * @param boolean force true to force display even if step is not unlocked yet (optional, default: false)
 	 */
@@ -231,7 +299,8 @@
 			var fieldset = $(this).closest('fieldset'),
 				step = fieldset.data('wizard-step'),
 				form = fieldset.closest('.wizard-enabled'),
-				previous;
+				settings = form.data('wizard-options'),
+				previous, previousIsCurrent, nextStep, newStep, validation, jqv, previousCallback;
 
 			// If not valid
 			if (fieldset.length === 0 || !step)
@@ -239,8 +308,8 @@
 				return;
 			}
 
-			// If not reachable
-			if (!fieldset.hasClass('completed') && !fieldset.hasClass('current') && !force)
+			// If locked
+			if (form.isWizardLocked())
 			{
 				return;
 			}
@@ -253,32 +322,116 @@
 
 			// Previously active section
 			previous = fieldset.siblings('.active');
+			previousIsCurrent = previous.hasClass('current');
+			nextStep = previous.nextAll('fieldset').filter(fieldset).length > 0;
+			newStep = (previousIsCurrent && nextStep);
 
-			// Validation
-			if (!previous.hasClass('current') && $.validationEngine && form.removeClass('validating').validationEngine('validate') === false)
+			// If not reachable
+			if (!previousIsCurrent && !fieldset.hasClass('completed') && !fieldset.hasClass('current') && !force)
 			{
 				return;
 			}
-			previous.trigger('wizardleave');
 
-			// Set as active
-			step.addClass('active');
-			fieldset.addClass('active').trigger('wizardenter');
-
-			// Hide validation messages
-			if ($.validationEngine)
+			// Validation
+			if (!force && settings.useValidation && $.validationEngine && (!previousIsCurrent || newStep))
 			{
-				form.validationEngine('hideAll');
+				// Run validation
+				validation = form.removeClass('validating').validationEngine('validate');
+
+				// Failed validation
+				if (validation === false)
+				{
+					return;
+				}
+				// AJAX validation (validation === null)
+				else if (!validation)
+				{
+					// Lock wizard
+					form.lockWizard();
+
+					/**
+					 * Note: there is no way to set an additional option on an already initialized form,
+					 * wo we access the options object directly using form.data('jqv').
+					 * Not a good habit, but hey, it's the only way...
+					 */
+					jqv = form.data('jqv');
+					previousCallback = jqv.onAjaxFormComplete;
+
+					// Set validation callback
+					jqv.onAjaxFormComplete = function(status, f, errors, options)
+					{
+						// Unlock wizard
+						form.unlockWizard();
+
+						// Finalize if valid
+						if (status)
+						{
+							_endStepChange(form, fieldset, step, previous, newStep);
+						}
+
+						// Original handler
+						if (previousCallback)
+						{
+							previousCallback.call(this, status, f, errors, options);
+						}
+
+						// Restore settings
+						jqv.onAjaxFormComplete = previousCallback;
+					};
+
+					return;
+				}
 			}
 
-			// Previously active section
-			step.siblings('.active').removeClass('active');
-			previous.removeClass('active');
-
-			// Form event
-			form.trigger('wizardchange');
+			// Finalize
+			_endStepChange(form, fieldset, step, previous, newStep);
 		});
 	};
+
+	/**
+	 * Internal function to handle the end of the step change process (mostly to enable AJAX validation)
+	 */
+	function _endStepChange(form, fieldset, step, previous, newStep)
+	{
+		var event;
+
+		// Check if we can leave the current step
+		event = $.Event('wizardleave');
+		event.wizard = {
+			current: previous[0],
+			target: step[0],
+			forward: (step.prevAll(previous).length > 0)
+		};
+		previous.trigger(event);
+		if (event.isDefaultPrevented())
+		{
+			return;
+		}
+
+		// Update status
+		if (newStep)
+		{
+			fieldset.prevAll('fieldset').not('.completed').markWizardStepAsComplete();
+			fieldset.markWizardStepAsCurrent();
+		}
+
+		// Set as active
+		step.addClass('active');
+		fieldset.addClass('active').trigger('wizardenter');
+
+		// Hide validation messages
+		if ($.validationEngine)
+		{
+			form.validationEngine('hideAll');
+		}
+
+		// Previously active section
+		step.siblings('.active').removeClass('active');
+		previous.removeClass('active');
+
+		// Form event
+		form.trigger('wizardchange');
+	}
 
 	/**
 	 * Show the previous step of a wizard (to be called on the form)
@@ -310,29 +463,12 @@
 		{
 			var form = $(this).closest('.wizard-enabled'),
 				active = form.find('fieldset.active'),
-				next = active.nextAll('fieldset').first(),
-				valid = true;
+				next = active.nextAll('fieldset').first();
 
 			// If valid
 			if (next.length > 0)
 			{
-				// Validation
-				if ($.validationEngine)
-				{
-					valid = form.validationEngine('validate');
-				}
-
-				// If valid
-				if (valid)
-				{
-					active.markWizardStepAsComplete();
-					if (active.hasClass('current'))
-					{
-						next.markWizardStepAsCurrent();
-					}
-
-					next.showWizardStep(force);
-				}
+				next.showWizardStep(force);
 			}
 		});
 	};
@@ -411,7 +547,13 @@
 		 * Next button markup - must use class 'wizard-next'
 		 * @var string
 		 */
-		controlNext: '<button type="button" class="button glossy mid-margin-right wizard-next float-right">Next<span class="button-icon right-side"><span class="icon-forward"></span></span></button>'
+		controlNext: '<button type="button" class="button glossy mid-margin-right wizard-next float-right">Next<span class="button-icon right-side"><span class="icon-forward"></span></span></button>',
+
+		/**
+		 * Enable validation if the plugin is loaded
+		 * @var boolean
+		 */
+		useValidation: true
 	};
 
 	// Add template setup function

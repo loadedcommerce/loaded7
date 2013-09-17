@@ -21,7 +21,10 @@ class lC_Search extends lC_Products {
       $_price_from,
       $_price_to,
       $_keywords,
-      $_number_of_results;
+      $_number_of_results,
+      $_category,
+      $_recursive,
+      $_manufacturer;
 
   /* Class constructor */
   function lC_Search() {
@@ -67,11 +70,11 @@ class lC_Search extends lC_Products {
   function getNumberOfResults() {
     return $this->_number_of_results;
   }
-
+  
   function hasDateSet($flag = null) {
     if ($flag == 'from') {
       return isset($this->_date_from);
-    } elseif ($flag == 'to') {
+    } else if ($flag == 'to') {
       return isset($this->_date_to);
     }
 
@@ -92,6 +95,15 @@ class lC_Search extends lC_Products {
     return isset($this->_keywords) && !empty($this->_keywords);
   }
 
+  function hasManufacturer() {
+    return isset($this->_manufacturer) && !empty($this->_manufacturer);
+  }
+
+  function setCategory($category, $recursive) {
+    $this->_category = $category;
+    $this->_recursive = $recursive;
+  }
+
   function setDateFrom($timestamp) {
     $this->_date_from = $timestamp;
   }
@@ -106,6 +118,14 @@ class lC_Search extends lC_Products {
 
   function setPriceTo($price) {
     $this->_price_to = $price;
+  }
+  
+  function setRecursive($recursive) {
+    $this->_recursive = $recursive;
+  }
+  
+  function setManufacturer($manufacturer) {
+    $this->_manufacturer = $manufacturer;
   }
 
   function setKeywords($keywords) {
@@ -128,6 +148,10 @@ class lC_Search extends lC_Products {
     }
 
     $this->_keywords = implode(' ', $terms_array);
+  }
+
+  function isRecursive() {
+    return (isset($this->_recursive) && !empty($this->_recursive)) ? true : false;
   }
 
   function &execute() {
@@ -166,8 +190,13 @@ class lC_Search extends lC_Products {
     $Qlisting->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qlisting->bindTable(':table_categories', TABLE_CATEGORIES);
     $Qlisting->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+    
+    if ($this->hasManufacturer()) {
+      $Qlisting->appendQuery(', :table_product_attributes pa');
+      $Qlisting->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
+    }
 
-    $Qlisting->appendQuery('where p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id and p.products_id = p2c.products_id and p2c.categories_id = c.categories_id');
+    $Qlisting->appendQuery('where p.products_status = 1 and p.products_id = pd.products_id and pd.language_id = :language_id');
     $Qlisting->bindInt(':language_id', $lC_Language->getID());
 
     if ($this->hasCategory()) {
@@ -184,7 +213,7 @@ class lC_Search extends lC_Products {
     }
 
     if ($this->hasManufacturer()) {
-      $Qlisting->appendQuery('and m.manufacturers_id = :manufacturers_id');
+      $Qlisting->appendQuery('and p.products_id = pa.products_id and pa.value = :manufacturers_id');
       $Qlisting->bindInt(':manufacturers_id', $this->_manufacturer);
     }
 
@@ -193,13 +222,15 @@ class lC_Search extends lC_Products {
     }
 
     if ($this->hasDateSet('from')) {
+      $dateParts = explode("/", $this->_date_from);
       $Qlisting->appendQuery('and p.products_date_added >= :products_date_added');
-      $Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', $this->_date_from));
+      $Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', @mktime(0, 0, 0, $dateParts[0], $dateParts[1], $dateParts[2])));
     }
 
     if ($this->hasDateSet('to')) {
+      $dateParts = explode("/", $this->_date_to);
       $Qlisting->appendQuery('and p.products_date_added <= :products_date_added');
-      $Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', $this->_date_to));
+      $Qlisting->bindValue(':products_date_added', @date('Y-m-d H:i:s', @mktime(23, 59, 59, $dateParts[0], $dateParts[1], $dateParts[2])));
     }
 
     if ($this->hasPriceSet('from')) {
@@ -239,7 +270,7 @@ class lC_Search extends lC_Products {
     if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1')) {
       $Qlisting->appendQuery('group by p.products_id, tr.tax_priority');
     }
-
+    
     $Qlisting->appendQuery('order by');
 
     if (isset($this->_sort_by)) {
@@ -250,7 +281,7 @@ class lC_Search extends lC_Products {
       $Qlisting->appendQuery('pd.products_name :order_by_direction');
       $Qlisting->bindRaw(':order_by_direction', (($this->_sort_by_direction == '-') ? 'desc' : ''));
     }
-
+      
     $Qlisting->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), MAX_DISPLAY_SEARCH_RESULTS);
     $Qlisting->execute();
 

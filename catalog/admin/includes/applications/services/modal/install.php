@@ -22,7 +22,11 @@ function installModule(id) {
         $(location).attr('href',url);
       }
       if (data.rpcStatus != 1) {
-        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        if (data.error) {
+          $.modal.alert(data.error);
+        } else {
+          $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        }
         return false;
       }
       oTable.fnReloadAjax();

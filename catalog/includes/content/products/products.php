@@ -32,6 +32,7 @@
 
         // PHP < 5.0.2; array_slice() does not preserve keys and will not work with numerical key values, so foreach() is used
         foreach ($_GET as $key => $value) {
+          $key = end(explode("/", $key));
           if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) ) {
             $id = $key;
           }

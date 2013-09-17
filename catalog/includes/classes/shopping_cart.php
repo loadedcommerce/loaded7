@@ -853,7 +853,7 @@ class lC_ShoppingCart {
     }
   }
 
-  public function setShippingMethod($shipping_array, $calculate_total = true) {
+  public function setShippingMethod($shipping_array, $calculate_total = true) {  
     $this->_shipping_method = $shipping_array;
 
     if ( $calculate_total === true ) {
@@ -878,7 +878,7 @@ class lC_ShoppingCart {
   public function hasShippingMethod() {
     return !empty($this->_shipping_method);
   }
-
+    
   public function hasBillingAddress() {
     return isset($this->_billing_address['id']);
   }
@@ -918,9 +918,9 @@ class lC_ShoppingCart {
                                       'country_iso_code_3' => $Qaddress->value('countries_iso_code_3'),
                                       'format' => $Qaddress->value('address_format'),
                                       'telephone_number' => $Qaddress->value('entry_telephone'));
-
+                                      
       if ( is_array($previous_address) && ( ($previous_address['id'] != $this->_billing_address['id']) || ($previous_address['country_id'] != $this->_billing_address['country_id']) || ($previous_address['zone_id'] != $this->_billing_address['zone_id']) || ($previous_address['state'] != $this->_billing_address['state']) || ($previous_address['postcode'] != $this->_billing_address['postcode']) ) ) {
-        $this->_calculate();
+        $this->_calculate(false);
       }
     }
   }

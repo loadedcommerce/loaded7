@@ -11,19 +11,26 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 
-  @function The lC_Application_Login_Actions_lost_password
 */
 class lC_Application_Login_Actions_lost_password extends lC_Application_Login {
-    
   /*
   * Protected variables
   */
   protected $_page_contents = 'lost_password.php'; 
   
   public function __construct() {
-    global $lC_Database, $lC_Language, $lC_MessageStack;
+    global $lC_Database, $lC_Language, $lC_MessageStack, $rInfo;
     
     parent::__construct();
+     
+    if (isset($_POST['key']) && $_POST['key'] != NULL && isset($_POST['email']) && $_POST['email'] != NULL) {
+      if (lC_Login_Admin::lostPasswordConfirmKey($_POST['key'], $_POST['email'])) {
+        $rInfo = new lC_ObjectInfo($_POST);  
+      } else {
+        // if key is invalid redirect back to login
+        lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module));
+      }
+    }    
   } 
 }
 ?>

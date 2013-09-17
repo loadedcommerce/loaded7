@@ -32,8 +32,8 @@
           <th scope="col" class="align-right"><?php echo $lC_Language->get('table_heading_baseline_discount'); ?></th>
           <th scope="col" class="align-right">
            <span class="button-group compact" style="white-space:nowrap;">
-             <a style="display:none;" href="javascript://" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access']['definitions'] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access']['definitions'] < 2) ? '#' : 'javascript://" onclick="newGroup(); return false;'); ?>" title="<?php echo $lC_Language->get('button_new_group'); ?>"></a>
-             <a href="javascript://" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a>
+             <a style="display:none;" href="javascript:void(0);" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access']['customer_groups'] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access']['customer_groups'] < 2) ? '#' : 'javascript://" onclick="newGroup(); return false;'); ?>" title="<?php echo $lC_Language->get('button_new_group'); ?>"></a>
+             <a href="javascript:void(0);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a>
            </span>
            <span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span>
           </th>       
@@ -54,7 +54,7 @@
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
-              <a class="button<?php echo (((int)$_SESSION['admin']['access']['definitions'] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access']['definitions'] < 2) ? '#' : 'javascript://" onclick="newGroup(); return false;'); ?>">
+              <a class="button<?php echo (((int)$_SESSION['admin']['access']['customer_groups'] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access']['customer_groups'] < 2) ? '#' : 'javascript://" onclick="newGroup(); return false;'); ?>">
                 <span class="button-icon green-gradient">
                   <span class="icon-plus"></span>
                 </span><?php echo $lC_Language->get('button_new_group'); ?>

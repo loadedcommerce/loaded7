@@ -57,7 +57,7 @@ class Fedex_Web_Services extends lC_Addon { // your addon must extend lC_Addon
    /**
     * The base64 encoded addon image used in the addons store listing
     */     
-    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/fedex.png');
+    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/fedex.png', $this->_title);
    /**
     * The addon enable/disable switch
     */    

@@ -27,9 +27,9 @@ class lC_Addons {
       if (array_key_exists('login', $_GET)) return false;
     }
 
-  //  if ( !isset($_SESSION['lC_Addons_data']) ) {
+    if ( !isset($_SESSION['lC_Addons_data']) ) {
       $this->_initialize();
-  //  }
+    }
   } 
   
   public function getAddons($flag = '') {
@@ -71,7 +71,10 @@ class lC_Addons {
 
       if (file_exists($ao['path'])) {
         include_once($lC_Vqmod->modCheck($ao['path']));
-        $GLOBALS[$class] = new $class();
+        if ($GLOBALS[$class] instanceof $class) {
+        } else {
+          $GLOBALS[$class] = new $class();
+        }        
         
         $_SESSION['lC_Addons_data'][$class] = array('type' => $GLOBALS[$class]->getAddonType(),
                                                     'title' => $GLOBALS[$class]->getAddonTitle(),

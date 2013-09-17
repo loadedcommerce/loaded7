@@ -22,7 +22,7 @@ global $lC_Language, $pInfo, $tax_class_array;
           <span><?php echo $lC_Language->get('field_model'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_model')); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
-          <input type="text" onfocus="this.select();" class="required input full-width" value="<?php echo (isset($pInfo) ? $pInfo->get('products_model') : null); ?>" id="products_model" name="products_model" />
+          <input type="text" onfocus="this.select();" class="input full-width" value="<?php echo (isset($pInfo) ? $pInfo->get('products_model') : null); ?>" id="products_model" name="products_model" />
         </div>
       </div>
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">
@@ -32,7 +32,7 @@ global $lC_Language, $pInfo, $tax_class_array;
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <div class="inputs" style="display:inline; padding:8px 0;">
             <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
-            <input type="text" onfocus="this.select();" style="width:94%;" class="required input-unstyled" value="<?php echo (isset($pInfo) ? number_format($pInfo->get('products_msrp'), DECIMAL_PLACES) : null); ?>" id="products_msrp" name="products_msrp" />
+            <input type="text" onfocus="this.select();" style="width:94%;" class="input-unstyled" value="<?php echo (isset($pInfo) ? number_format($pInfo->get('products_msrp'), DECIMAL_PLACES) : null); ?>" id="products_msrp" name="products_msrp" />
           </div>         
         </div>
       </div>      
@@ -43,7 +43,7 @@ global $lC_Language, $pInfo, $tax_class_array;
           <span><?php echo $lC_Language->get('text_inventory_control'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), 'margin-left:8px', 'info-spot info-spot on-right grey'); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
-          <span id=invControlButtons" class="button-group">
+          <span id="invControlButtons" class="button-group">
             <label for="ic_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_1" value="1" />
               <?php echo $lC_Language->get('text_simple'); ?>
@@ -61,7 +61,7 @@ global $lC_Language, $pInfo, $tax_class_array;
       <div id="inventory_control_simple"<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' style="display:none;"' : ''); ?>>
         <div>
           <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_on_hand'); ?></b></label>
-          <input type="text" name="products_quantity" id="products_quantity" value="<?php echo (isset($pInfo) ? $pInfo->get('products_quantity') : null); ?>" class="required input small-margin-right" style="width:60px;" />
+          <input type="text" name="products_quantity" id="products_quantity" value="<?php echo (isset($pInfo) ? $pInfo->get('products_quantity') : null); ?>" class="input small-margin-right" style="width:60px;" />
           <input type="text" name="products_sku" id="products_sku" placeholder="<?php echo $lC_Language->get('text_sku'); ?>" value="<?php echo (isset($pInfo) ? $pInfo->get('products_sku') : null); ?>" class="input" />
         </div>
       </div>
@@ -88,7 +88,7 @@ global $lC_Language, $pInfo, $tax_class_array;
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <div class="inputs blue-gradient" style="display:inline; padding:8px 0;">
             <span class="mid-margin-left no-margin-right strong"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
-            <?php echo lc_draw_input_field('products_price_gross', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="width:94%;" class="required input-unstyled strong products-price-gross" id="products_price0_gross" READONLY'); ?>
+            <?php echo lc_draw_input_field('products_price_gross', (isset($pInfo) ? lc_round($pInfo->get('products_price'), DECIMAL_PLACES) : null), 'style="width:94%;" class="input-unstyled strong products-price-gross" id="products_price0_gross" READONLY'); ?>
           </div>         
         </div>
       </div>

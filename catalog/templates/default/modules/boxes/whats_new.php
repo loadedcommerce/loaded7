@@ -14,5 +14,14 @@
 ?>
 <!--modules/boxes/whats_new.php start-->
 <h1><?php echo $lC_Box->getTitle(); ?></h1>
-<?php echo $lC_Box->getContent(); ?>
+<ul class="category align-center">
+  <?php echo $lC_Box->getContent(); ?>
+</ul>
+<script>
+$(document).ready(function() {
+  $(".box-whats-new-image").find("a").addClass("product_image");
+  $(".box-whats-new-price").attr("style", "font-size:1.4em;").addClass('purple strong');
+  $('.box-whats-new-buy-now').find('button').addClass('button brown_btn');
+});
+</script>
 <!--modules/boxes/whats_new.php end-->

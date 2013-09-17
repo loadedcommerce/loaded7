@@ -57,7 +57,7 @@ class United_Parcel_Service extends lC_Addon { // your addon must extend lC_Addo
    /**
     * The base64 encoded addon image used in the addons store listing
     */     
-    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/ups.png');
+    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/ups.png', $this->_title);
    /**
     * The addon enable/disable switch
     */    

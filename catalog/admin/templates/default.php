@@ -42,7 +42,6 @@
   <link rel="stylesheet" href="templates/default/css/colors.css?v=1">
   <link rel="stylesheet" media="print" href="templates/default/css/print.css?v=1">
   <!-- For progressively larger displays -->
-  <link rel="stylesheet" media="only all and (min-width: 320px)" href="templates/default/css/320.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 480px)" href="templates/default/css/480.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 768px)" href="templates/default/css/768.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 992px)" href="templates/default/css/992.css?v=1">
@@ -78,8 +77,7 @@
 
   <!-- Modernizr is always at top and first -->
   <script src="../ext/jquery/modernizr.custom.js"></script>
-  <script src="../ext/jquery/jquery-1.9.1.min.js"></script>
-  <script src="../ext/jquery/jquery.migrate-1.2.1.min.js"></script>
+  <script src="../ext/jquery/jquery-1.10.2.min.js"></script>
   
   <!-- For Modern Browsers -->
   <link rel="shortcut icon" href="templates/default/img/favicons/favicon.png?v=2">
@@ -191,8 +189,9 @@
           <div id="profileInner" style="display:none;">                
             <div class="profile50">
               <div id="profileLeft">
-                <img src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="64" height="64" alt="User name" class="user-icon">
-                <?php echo $lC_Language->get('text_hello'); ?>
+                <?php echo $lC_Language->showImage($value['code'], '18', '12', 'class="lang-icon"'); ?>
+                <img id="profileLeftImage" src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="64" height="64" alt="User name" class="user-profile-left-image">
+                 <?php echo $lC_Language->get('text_hello'); ?>
                 <span class="name"><?php echo $_SESSION['admin']['firstname']; ?><br />
                 <?php echo $_SESSION['admin']['lastname']; ?></span>
                 <small class="profile-edit-logout"><?php echo $lC_Language->get('profile_slate_edit_logout'); ?></small>
@@ -200,13 +199,14 @@
             </div>
             <div class="profile50">
               <div id="profileRight">
-                <a href="javascript://" onclick="profileEdit('<?php echo $_SESSION['admin']['id']; ?>')">
+                <a href="javascript:void(0);" onclick="profileEdit('<?php echo $_SESSION['admin']['id']; ?>')">
                   <div class="profile-right-fourth">
-                    <img src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="32" height="32"><br />
+                    <?php echo $lC_Language->showImage($value['code'], '9', '6', 'class="lang-icon"'); ?>
+                    <img id="profileRightImage" src="<?php echo lC_General_Admin::getProfileImage($_SESSION['admin']['id']); ?>" width="32" height="32"><br />
                     <small><?php echo $lC_Language->get('profile_slate_edit_profile'); ?></small>
                   </div>
                 </a>
-                <a href="javascript://" onclick="profilePassChange('<?php echo $_SESSION['admin']['id']; ?>')">
+                <a href="javascript:void(0);" onclick="profilePassChange('<?php echo $_SESSION['admin']['id']; ?>')">
                   <div class="profile-right-fourth">
                     <div style="height:8px;"></div>
                     <span class="icon icon-lock icon-size3"></span>
@@ -519,7 +519,7 @@
         <div style="margin:-15px; padding:10px 20px 14px 10px; width:100%; height:32px; margin-bottom:0px;">
           <a id="qrcode-tooltip">
             <p style="width:32px;float:left;cursor:pointer;">
-              <img src="../images/icons/qr-icon.png" border="0" class="Click to Generate QR Code" /> 
+              <img src="../images/icons/qr-icon.png" border="0" alt="Click to Generate QR Code" /> 
             </p>
           </a>
           <p style="float:left; padding:10px 0 0px 10px; font-weight:bold;">QR Code for Current URL</p> 

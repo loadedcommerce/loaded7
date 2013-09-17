@@ -10,7 +10,7 @@
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
-*/
+*/ 
 
 /**
 * Generate an internal URL address for the catalog side
@@ -25,7 +25,7 @@
 */
 if (!function_exists('lc_href_link')) {
   function lc_href_link($page = null, $parameters = null, $connection = 'NONSSL', $add_session_id = true, $search_engine_safe = true, $use_full_address = false) {
-    global $request_type, $lC_Session, $lC_Services;
+    global $request_type, $lC_Session, $lC_Services, $lC_CategoryTree, $lC_Products;
 
     if (!in_array($connection, array('NONSSL', 'SSL', 'AUTO'))) {
       $connection = 'NONSSL';
@@ -43,7 +43,7 @@ if (!function_exists('lc_href_link')) {
       $use_full_address = false;
     }
 
-    if (($search_engine_safe === true) && ($use_full_address === false) && isset($lC_Services) && $lC_Services->isStarted('sefu')) {
+    if (($search_engine_safe === true) && ($use_full_address === false) && isset($lC_Services) && $lC_Services->isStarted('seo')) {
       $use_full_address = true;
     }
 
@@ -99,14 +99,77 @@ if (!function_exists('lc_href_link')) {
       $link = str_replace('&&', '&', $link);
     }
 
-    if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('sefu')) {
-      $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
-    } else {
-      if (strpos($link, '&') !== false) {
-        $link = str_replace('&', '&amp;', $link);
+    if (!stristr($link, 'rpc.php')) {
+      if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('seo')) {
+        $cat_path = '';
+        if ( ($cPathPos = strpos($link, 'cPath')) || (strpos($link, 'products.php')) ) {
+          if (defined('SERVICE_SEO_URL_ADD_CATEGORY_PARENT') && SERVICE_SEO_URL_ADD_CATEGORY_PARENT == 1) {
+            $cat_ids = array();
+            // categories
+            if ( (strpos($link, 'index.php') && strpos($link, 'cPath')) ) {
+              $cat_id = explode("_", substr($link, $cPathPos+6));
+              if (count($cat_id) < 2) {
+                $cat_data = $lC_CategoryTree->getData($cat_id[0]);
+                $cat_ids = explode("_", substr($cat_data['query'], 6));
+              } else {
+                $cat_ids = explode("_", substr($link, $cPathPos+6));
+              }
+            }
+            // products
+            if ( (strpos($link, 'products.php') && !strpos($link, 'cart_add') && !strpos($link, 'reviews') && !strpos($link, '?specials') && !strpos($link, '?new')) ) {
+              if (strpos($link, 'cPath')) {
+                $cat_id = explode("_", substr($link, $cPathPos+6));
+                if (count($cat_id) < 2) {
+                  $cat_data = $lC_CategoryTree->getData($cat_id[0]);
+                  $cat_ids = explode("_", substr($cat_data['query'], 6));
+                }
+              } else {
+                $permalink = substr($link, strpos($link, 'products.php?')+13);
+                if (!strpos($permalink, '/') &&
+                    !strpos($permalink, '?') &&
+                    !strpos($permalink, ',')) {
+                    $pQuery = get_permalink_query($permalink);
+                    $cat_ids = explode("_", substr($pQuery, 6));
+                }
+              }
+            }
+            foreach ($cat_ids as $id => $value) {
+              $cat_data = $lC_CategoryTree->getData($value);
+              if ($cat_data['permalink'] != '') {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/';
+              } else {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+              }
+            }
+          } else {
+            if (!strpos($link, 'products.php')) {
+              $cat_id = end(explode("_", substr($link, $cPathPos+6)));
+              $cat_data = $lC_CategoryTree->getData($cat_id);
+              if ($cat_data['permalink'] != '') {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['permalink'])) . '/';
+              } else {
+                $cat_path .= strtolower(str_replace(' ', '-', $cat_data['name'])) . '/';
+              }
+            }
+          }
+          $link = str_replace(array('?', '&', '=', 'index.php', 'products.php'), array('/', '/', ',', 'category', 'product'), $link);
+          $link = str_replace(array('category/', 'product/'), array('category/' . $cat_path, 'product/' . $cat_path), $link);
+          $link = str_replace(array('product//'), array('product/'), $link);
+          $link = preg_replace('/cPath,.*/', '', $link);
+          $link = preg_replace('{/$}', '', $link);
+        } else {
+          if ( (strpos($link, 'products.php') && !strpos($link, '&')) || (strpos($link, 'cPath=') && !strpos($link, '&')) ) {
+            $link = str_replace(array('?', '&', '=', 'products.php'), array('/', '/', ',', 'product'), $link);
+          } else {
+            $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
+          }
+        }
+      } else {
+        if (strpos($link, '&') !== false) {
+          $link = str_replace('&', '&amp;', $link);
+        }
       }
     }
-
     return $link;
   }
 }
@@ -147,7 +210,7 @@ if (!function_exists('lc_image')) {
       $height = 0;
     }
 
-    $image = '<img src="' . lc_output_string($image) . '" border="0" alt="' . lc_output_string($title) . '"';
+    $image = '<img src="' . lc_output_string($image) . '" alt="' . lc_output_string($title) . '"';
 
     if (!empty($title)) {
       $image .= ' title="' . lc_output_string($title) . '"';
@@ -356,7 +419,7 @@ if (!function_exists('lc_draw_selection_field')) {
 
       if (is_array($value)) {
         $selection_value = $value['id'];
-        $selection_text = '&nbsp;' . $value['text'];
+        $selection_text = $value['text'];
       } else {
         $selection_value = $value;
         $selection_text = '';
@@ -365,7 +428,7 @@ if (!function_exists('lc_draw_selection_field')) {
       if (strstr($separator, '&nbsp;')) {
         $field .= '<span style="display:inline-block"><label for="' . lc_output_string($name) . (sizeof($values) > 1 ? $counter : '') . '" class="fieldLabel"><input type="' . lc_output_string($type) . '" name="' . lc_output_string($name) . '"';
       } else {
-        $field .= '<span><input type="' . lc_output_string($type) . '" name="' . lc_output_string($name) . '"';
+        $field .= '<input type="' . lc_output_string($type) . '" name="' . lc_output_string($name) . '"';
 
       }
 
@@ -616,7 +679,7 @@ if (!function_exists('lc_draw_label')) {
 * @access public
 */
 if (!function_exists('lc_draw_date_pull_down_menu')) {
-  function lc_draw_date_pull_down_menu($name, $value = null, $default_today = true, $show_days = true, $use_month_names = true, $year_range_start = 0, $year_range_end = 1) {
+  function lc_draw_date_pull_down_menu($name, $value = null, $default_today = true, $show_days = true, $use_month_names = true, $year_range_start = 0, $year_range_end = 1, $parameters = null) {
     $year = @date('Y');
 
     if (!is_bool($default_today)) {
@@ -682,7 +745,7 @@ if (!function_exists('lc_draw_date_pull_down_menu')) {
           'text' => $i);
       }
 
-      $days_select_string = lc_draw_pull_down_menu($name . '_days', $days_array, $value['date']);
+      $days_select_string = lc_draw_pull_down_menu($name . '_days', $days_array, $value['date'], $parameters);
     }
 
     $months_array = array();
@@ -691,7 +754,7 @@ if (!function_exists('lc_draw_date_pull_down_menu')) {
         'text' => (($use_month_names === true) ? @strftime('%B', @mktime(0, 0, 0, $i, 1)) : $i));
     }
 
-    $months_select_string = lc_draw_pull_down_menu($name . '_months', $months_array, $value['month'], $params);
+    $months_select_string = lc_draw_pull_down_menu($name . '_months', $months_array, $value['month'], $parameters);
 
     $years_array = array();
     for ($i = ($year - $year_range_start); $i <= ($year + $year_range_end); $i++) {
@@ -699,7 +762,7 @@ if (!function_exists('lc_draw_date_pull_down_menu')) {
         'text' => $i);
     }
 
-    $years_select_string = lc_draw_pull_down_menu($name . '_years', $years_array, $value['year'], $params);
+    $years_select_string = lc_draw_pull_down_menu($name . '_years', $years_array, $value['year'], $parameters);
 
     return $days_select_string . $months_select_string . $years_select_string;
   }
@@ -766,6 +829,19 @@ if (!function_exists('lc_output_utf8_encoded')) {
 if (!function_exists('lc_output_utf8_decoded')) {
   function lc_output_utf8_decoded($text) {
     return utf8_decode($text);
+  }
+}
+
+if (!function_exists('get_permalink_query')) {
+  function get_permalink_query($key) {
+    global $lC_Database;
+    
+    $Qpermalink = $lC_Database->query('select query from :table_permalinks where permalink = :permalink and type = 2');
+    $Qpermalink->bindTable(':table_permalinks', 'lc_permalinks');
+    $Qpermalink->bindValue(':permalink', $key);
+    $Qpermalink->execute();          
+    
+    return $Qpermalink->value('query');
   }
 }
 ?>

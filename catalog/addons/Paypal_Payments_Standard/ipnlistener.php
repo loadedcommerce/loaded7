@@ -89,6 +89,16 @@ class IpnListener {
     curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HEADER, true);        
+    
+   // added support for curl proxy
+    if (defined('CURL_PROXY_HOST') && defined('CURL_PROXY_PORT') && CURL_PROXY_HOST != '' && CURL_PROXY_PORT != '') {
+      curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, TRUE);
+      curl_setopt($ch, CURLOPT_PROXY, CURL_PROXY_HOST . ":" . CURL_PROXY_PORT);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    }
+    if (defined('CURL_PROXY_USER') && defined('CURL_PROXY_PASSWORD') && CURL_PROXY_USER != '' && CURL_PROXY_PASSWORD != '') {
+      curl_setopt($ch, CURLOPT_PROXYUSERPWD, CURL_PROXY_USER . ':' . CURL_PROXY_PASSWORD);
+    }    
            
     $this->response = curl_exec($ch);
     $this->response_status = strval(curl_getinfo($ch, CURLINFO_HTTP_CODE));        

@@ -21,9 +21,12 @@ $cLoc = end(explode("/", $_SERVER['REQUEST_URI']));
 <?php echo $lC_Box->getContent(); ?>
 <script>
 $(document).ready(function() {
+  $('.box-categories-ul-top').addClass('category departments');
+  $('.box-categories-ul').addClass('side_sub_menu');
+  $('.box-categories-ul li').addClass('menu_cont');
   var cPathTop = 'cPath=<?php echo $cPathTop; ?>';
   var cPath = 'cPath=<?php echo $_GET['cPath']; ?>';
-  $('#ul-top-categories li a').each(function() {
+  $('.box-categories-ul-top li a').each(function() {
     // expand the top level
     if (cPathTop == this.href.substr(this.href.indexOf('cPath='))) {
       $(this).addClass('active current');

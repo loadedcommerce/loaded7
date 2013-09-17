@@ -25,7 +25,7 @@ class lC_Orders_status_Admin {
 
     $media = $_GET['media'];
     
-    $Qstatuses = $lC_Database->query('select orders_status_id, orders_status_name from :table_orders_status where language_id = :language_id order by orders_status_name');
+    $Qstatuses = $lC_Database->query('select orders_status_id, orders_status_name, orders_status_type from :table_orders_status where language_id = :language_id order by orders_status_name');
     $Qstatuses->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
     $Qstatuses->bindInt(':language_id', $lC_Language->getID());
     $Qstatuses->setBatchLimit($_GET['page'], MAX_DISPLAY_SEARCH_RESULTS);
@@ -38,11 +38,12 @@ class lC_Orders_status_Admin {
         $status_name .= '<small class="tag purple-gradient glossy margin-left">' . $lC_Language->get('default_entry') . '</small>';
       }
       $name = '<td>' . $status_name . '</td>';
+      $type = '<td>' . $Qstatuses->value('orders_status_type') . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access']['definitions'] < 3) ? '#' : 'javascript://" onclick="editStatus(\'' . $Qstatuses->valueInt('orders_status_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['definitions'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access']['definitions'] < 4 || $Qstatuses->valueInt('orders_status_id') == DEFAULT_ORDERS_STATUS_ID) ? '#' : 'javascript://" onclick="deleteStatus(\'' . $Qstatuses->valueInt('orders_status_id') . '\', \'' . urlencode($Qstatuses->valueProtected('title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['definitions'] < 4 || $Qstatuses->valueInt('orders_status_id') == DEFAULT_ORDERS_STATUS_ID) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   <a href="' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? '#' : 'javascript://" onclick="editStatus(\'' . $Qstatuses->valueInt('orders_status_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   <a href="' . ((int)($_SESSION['admin']['access']['orders'] < 4 || $Qstatuses->valueInt('orders_status_id') == DEFAULT_ORDERS_STATUS_ID) ? '#' : 'javascript://" onclick="deleteStatus(\'' . $Qstatuses->valueInt('orders_status_id') . '\', \'' . urlencode($Qstatuses->valueProtected('title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['orders'] < 4 || $Qstatuses->valueInt('orders_status_id') == DEFAULT_ORDERS_STATUS_ID) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
-      $result['aaData'][] = array("$name", "$action");
+      $result['aaData'][] = array("$name", "$type", "$action");
     }
 
     $Qstatuses->freeResult();
@@ -69,15 +70,17 @@ class lC_Orders_status_Admin {
 
     if (isset($id) && $id != null) {
       if ($edit === true) {
-        $Qsd = $lC_Database->query('select language_id, orders_status_name from :table_orders_status where orders_status_id = :orders_status_id');
+        $Qsd = $lC_Database->query('select language_id, orders_status_name, orders_status_type from :table_orders_status where orders_status_id = :orders_status_id');
         $Qsd->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
         $Qsd->bindInt(':orders_status_id', $id);
         $Qsd->execute();
         $status_name = array();
         while ( $Qsd->next() ) {
           $status_name[$Qsd->valueInt('language_id')] = $Qsd->value('orders_status_name');
+          $status_type = $Qsd->value('orders_status_type');
         }
         $result['editNames'] = '';
+        $result['editType'] = $status_type;
         foreach ( $lC_Language->getAll() as $l ) {
           $result['editNames'] .= '<span class="input" style="width:88%"><label for="name[' . $l['id'] . ']" class="button silver-gradient glossy">' . $lC_Language->showImage($l['code']) . '</label>' . lc_draw_input_field('name[' . $l['id'] . ']', (isset($status_name[$l['id']]) ? $status_name[$l['id']] : null), 'class="input-unstyled"') . '</span><br />';
         }
@@ -158,10 +161,11 @@ class lC_Orders_status_Admin {
     }
 
     foreach ( $lC_Language->getAll() as $l ) {
-      $Qstatus = $lC_Database->query('insert into :table_orders_status (orders_status_id, language_id, orders_status_name) values (:orders_status_id, :language_id, :orders_status_name)');
+      $Qstatus = $lC_Database->query('insert into :table_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) values (:orders_status_id, :language_id, :orders_status_name, :orders_status_type)');
       $Qstatus->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
       $Qstatus->bindInt(':orders_status_id', $orders_status_id);
       $Qstatus->bindValue(':orders_status_name', $data['name'][$l['id']]);
+      $Qstatus->bindValue(':orders_status_type', $data['type']);
       $Qstatus->bindInt(':language_id', $l['id']);
       $Qstatus->setLogging($_SESSION['module'], $orders_status_id);
       $Qstatus->execute();
@@ -236,7 +240,7 @@ class lC_Orders_status_Admin {
     $lC_Language->loadIniFile('orders_status.php');
 
     $result = array();
-    $Qstatuses = $lC_Database->query('select orders_status_id, orders_status_name from :table_orders_status where orders_status_id in (":orders_status_id") and language_id = :language_id order by orders_status_name');
+    $Qstatuses = $lC_Database->query('select orders_status_id, orders_status_name, orders_status_type from :table_orders_status where orders_status_id in (":orders_status_id") and language_id = :language_id order by orders_status_name');
     $Qstatuses->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
     $Qstatuses->bindRaw(':orders_status_id', implode('", "', array_unique(array_filter(array_slice($batch, 0, MAX_DISPLAY_SEARCH_RESULTS), 'is_numeric'))));
     $Qstatuses->bindInt(':language_id', $lC_Language->getID());

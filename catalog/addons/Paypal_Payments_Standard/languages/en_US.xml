@@ -8,7 +8,7 @@
     </definition>
     <definition>
       <key>addon_payment_paypal_std_description</key>
-      <value><![CDATA[Get everything you need to accept credit cards from your customers. Online sales, invoicing, in-person payments … this solution securely handles them all.]]></value>
+      <value><![CDATA[Get everything you need to accept credit cards from your customers. Online sales, invoicing, in-person payments; this solution securely handles them all.]]></value>
       <group>checkout</group>
     </definition> 
     <definition>
@@ -23,7 +23,7 @@
     </definition> 
     <definition>
       <key>payment_paypal_std_method_blurb</key>
-      <value><![CDATA[powered by <img src="addons/Paypal_Payments_Standard/images/paypal-small.png" style="vertical-align:middle">]]></value>
+      <value><![CDATA[powered by <img src="addons/Paypal_Payments_Standard/images/paypal-small.png" alt="PayPal Standard" style="vertical-align:middle;">]]></value>
       <group>checkout</group>
     </definition>     
     <definition>   

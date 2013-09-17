@@ -43,7 +43,7 @@ class lC_Categories_Admin {
 
     while ( $Qcategories->next() ) {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcategories->value('categories_id') . '" id="' . $Qcategories->value('categories_id') . '"></td>';
-      $category = '<td><span class="icon-list icon-size2" title="' . $lC_Language->get('text_sort') . '" style="cursor:move;"></span><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-' . lC_Categories_Admin::getCategoryIcon($Qcategories->value('categories_mode')) . ' margin-left"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
+      $category = '<td><span class="icon-list icon-size2 dragsort" title="' . $lC_Language->get('text_sort') . '" style="cursor:move;"></span><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-' . lC_Categories_Admin::getCategoryIcon($Qcategories->value('categories_mode')) . ' margin-left"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
       $status = '<td><span class="align-center" id="status_' . $Qcategories->value('categories_id') . '" onclick="updateStatus(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_status') == 1) ? 0 : 1) . '\');">' . (($Qcategories->valueInt('categories_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_category') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_category') . '"></span>') . '</span></td>';
       $visibility = '<td>' .
                     (($Qcategories->valueInt('parent_id') == 0) ? 
@@ -136,11 +136,9 @@ class lC_Categories_Admin {
 
     $lC_CategoryTree = new lC_CategoryTree_Admin();
 
-    $Qcategories = $lC_Database->query('select c.*, cd.* from :table_categories c, :table_categories_description cd where c.categories_id = :categories_id and c.categories_id = cd.categories_id and cd.language_id = :language_id');
+    $Qcategories = $lC_Database->query('select * from :table_categories where categories_id = :categories_id');
     $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
-    $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
     $Qcategories->bindInt(':categories_id', $id);
-    $Qcategories->bindInt(':language_id', $language_id);
     $Qcategories->execute();
 
     $data = $Qcategories->toArray();
@@ -148,8 +146,8 @@ class lC_Categories_Admin {
     $data['childs_count'] = sizeof($lC_CategoryTree->getChildren($Qcategories->valueInt('categories_id'), $dummy = array()));
     $data['products_count'] = $lC_CategoryTree->getNumberOfProducts($Qcategories->valueInt('categories_id'));
 
-    $Qcategories->freeResult();
-
+    $Qcategories->freeResult(); 
+    
     if ( !empty($key) && isset($data[$key]) ) {
       $data = $data[$key];
     }
@@ -195,7 +193,9 @@ class lC_Categories_Admin {
     
     if ( !$lC_Database->isError() ) {
       $category_id = (is_numeric($id)) ? $id : $lC_Database->nextID();
-
+      $lC_CategoryTree = new lC_CategoryTree_Admin();
+      $cPath = ($data['parent_id'] != 0) ? $lC_CategoryTree->getcPath($data['parent_id']) . '_' . $category_id : $category_id;
+        
       foreach ( $lC_Language->getAll() as $l ) {
         if ( is_numeric($id) ) {
           $Qcd = $lC_Database->query('update :table_categories_description set categories_name = :categories_name, categories_menu_name = :categories_menu_name, categories_blurb = :categories_blurb, categories_description = :categories_description, categories_tags = :categories_tags where categories_id = :categories_id and language_id = :language_id');
@@ -217,6 +217,34 @@ class lC_Categories_Admin {
         if ( $lC_Database->isError() ) {
           $error = true;
           break;
+        }
+        
+        // added for permalink
+        if ($data['permalink'][$l['id']] != 'no-permalink') {
+          if (is_numeric($id) && lC_Categories_Admin::validatePermalink(array($data['permalink'][$l['id']]), $category_id, 1) != 1) {
+            $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink where item_id = :item_id and type = :type and language_id = :language_id');
+          } else {
+            $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
+          }
+          $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
+          $Qpl->bindInt(':item_id', $category_id);
+          $Qpl->bindInt(':language_id', $l['id']);
+          $Qpl->bindInt(':type', 1);
+          $Qpl->bindValue(':query', 'cPath=' . $cPath);
+          $Qpl->bindValue(':permalink', $data['permalink'][$l['id']]);
+          $Qpl->execute();
+
+          if ( $lC_Database->isError() ) {
+            $error = true;
+            break;
+          }
+        } else {
+          $Qpl = $lC_Database->query('delete from :table_permalinks where item_id = :item_id and type = :type and language_id = :language_id');
+          $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
+          $Qpl->bindInt(':item_id', $category_id);
+          $Qpl->bindInt(':language_id', $l['id']);
+          $Qpl->bindInt(':type', 1);
+          $Qpl->execute();
         }
       }
     }
@@ -308,23 +336,33 @@ class lC_Categories_Admin {
             $Qp2c->execute();
 
             if ( !$lC_Database->isError() ) {
-              $lC_Database->commitTransaction();
+              // permalink
+              $Qpb = $lC_Database->query('delete from :table_permalinks where item_id = :item_id');
+              $Qpb->bindTable(':table_permalinks', TABLE_PERMALINKS);
+              $Qpb->bindInt(':item_id', $category['id']);
+              $Qpb->execute();
 
-              lC_Cache::clear('categories');
-              lC_Cache::clear('category_tree');
-              lC_Cache::clear('also_purchased');
+              if ( !$lC_Database->isError() ) {
+                $lC_Database->commitTransaction();
 
-              if ( !lc_empty($Qimage->value('categories_image')) ) {
-                $Qcheck = $lC_Database->query('select count(*) as total from :table_categories where categories_image = :categories_image');
-                $Qcheck->bindTable(':table_categories', TABLE_CATEGORIES);
-                $Qcheck->bindValue(':categories_image', $Qimage->value('categories_image'));
-                $Qcheck->execute();
+                lC_Cache::clear('categories');
+                lC_Cache::clear('category_tree');
+                lC_Cache::clear('also_purchased');
 
-                if ( $Qcheck->numberOfRows() === 0 ) {
-                  if (file_exists(realpath('../' . DIR_WS_IMAGES . 'categories/' . $Qimage->value('categories_image')))) {
-                    @unlink(realpath('../' . DIR_WS_IMAGES . 'categories/' . $Qimage->value('categories_image')));
+                if ( !lc_empty($Qimage->value('categories_image')) ) {
+                  $Qcheck = $lC_Database->query('select count(*) as total from :table_categories where categories_image = :categories_image');
+                  $Qcheck->bindTable(':table_categories', TABLE_CATEGORIES);
+                  $Qcheck->bindValue(':categories_image', $Qimage->value('categories_image'));
+                  $Qcheck->execute();
+
+                  if ( $Qcheck->numberOfRows() === 0 ) {
+                    if (file_exists(realpath('../' . DIR_WS_IMAGES . 'categories/' . $Qimage->value('categories_image')))) {
+                      @unlink(realpath('../' . DIR_WS_IMAGES . 'categories/' . $Qimage->value('categories_image')));
+                    }
                   }
                 }
+              } else {
+                $lC_Database->rollbackTransaction();
               }
             } else {
               $lC_Database->rollbackTransaction();
@@ -611,6 +649,52 @@ class lC_Categories_Admin {
     }
 
     return $icon;
+  } 
+ /*
+  * Return the number of permalinks for a category
+  *
+  * @param string $permalink The permalink string to count
+  * @access public
+  * @return integer
+  */
+  public static function getPermalinkCount($permalink, $cid = null, $type = null) {
+    global $lC_Database;
+
+    $Qpermalinks = $lC_Database->query('select count(*) as total, item_id, permalink from :table_permalinks where permalink = :permalink');
+
+    if (is_numeric($cid)) {
+      $Qpermalinks->appendQuery('and item_id != :item_id');
+      $Qpermalinks->bindInt(':item_id', $cid);
+    }
+
+    $Qpermalinks->bindTable(':table_permalinks', TABLE_PERMALINKS);
+    $Qpermalinks->bindValue(':permalink', $permalink);
+    $Qpermalinks->execute();
+    
+    if ($cid == $Qpermalinks->valueInt('item_id') && $permalink == $Qpermalinks->value('permalink')) {
+      $permalink_count = 0;
+    } else {  
+      $permalink_count = $Qpermalinks->valueInt('total');
+    }
+    
+    return $permalink_count;
+  }
+ /*
+  * Validate the category permalink
+  *
+  * @param string $permalink The category permalink
+  * @access public
+  * @return array
+  */
+  public static function validatePermalink($permalink_array, $cid = null, $type = null) {
+    
+    $validated = true;
+    foreach($permalink_array as $permalink) {
+      if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
+      if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type) > 0) $validated = false;
+    }
+
+    return $validated;
   }
                           
 }

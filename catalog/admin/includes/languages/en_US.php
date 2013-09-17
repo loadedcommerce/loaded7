@@ -35,6 +35,7 @@ text_with_selected = With Selected
 text_delete = Delete
 text_move = Move
 text_version_info = Version Info
+text_error = Error
 
 menu_title_addons = Add Ons
 menu_title_app_store = Add Ons
@@ -84,6 +85,11 @@ button_upload = Upload
 button_yes = Yes
 button_no = No
 button_info = Info
+
+field_admin_language = Admin Language:
+field_username = Email:
+field_first_name = First Name:
+field_last_name = Last Name:
 
 icon_all = All
 icon_app_store = Add Ons
@@ -181,13 +187,14 @@ profile_password = Current Password
 profile_password_new = New Password
 profile_password_confirm = Confirm New Password
 introduction_profile_pass_change = Please make the necessary changes for this administrator.
+introduction_edit_administrator = Please make the necessary changes for this administrator.
 profile_password = Current Password
 profile_password_new = New Password
 profile_password_confirm = Confirm Password
 invalid_current_password = The current password you entered is not correct. Please re-enter it and try again.
 invalid_new_password_match = The new password and confirmation does not match. Please try again.
 password_change_success = You have successfully updated your password.
-profile_image = Profile Image
+profile_image = Profile Image:
 profile_new_image = New Image
 
 quick_add_order = Order

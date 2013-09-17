@@ -53,7 +53,7 @@ class USAePay_Payments extends lC_Addon { // your addon must extend lC_Addon
    /**
     * The addon image used in the addons store listing
     */     
-    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/USAePay.png');
+    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/USAePay.png', $this->_title);
    /**
     * The mobile capability of the addon
     */ 

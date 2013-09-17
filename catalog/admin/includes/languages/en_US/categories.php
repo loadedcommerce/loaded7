@@ -34,7 +34,7 @@ field_tags = Meta Keywords
 field_name = Title
 field_parent_category = Parent Category
 field_product_class = Product Class
-field_keyword = Permalink
+field_permalink = Permalink
 field_sort_order = Sort Order
 
 heading_title = Category Pages
@@ -49,11 +49,14 @@ info_bubble_categories_keyword = Category Permalink
 info_bubble_categories_tags = Category Meta Keywords
 info_bubble_categories_custom_url = Category Custom URL
 info_bubble_categories_parent = Category Parent
+info_bubble_categories_mode = Category Mode
 info_bubble_categories_visibility = Category Visibility
 info_bubble_categories_status = Category Status
 info_bubble_categories_page_type = Category Page Type 
 info_bubble_categories_content_file = Category Content File
 info_bubble_categories_product_class = Category Product Class
+info_bubble_categories_permalink = Category Permalink
+info_bubble_categories_access_levels = Category Access Levels
  
 introduction_new_category = Please fill in the following information for the new category.
 introduction_edit_category = Please make the necessary changes for this category.
@@ -80,6 +83,8 @@ modal_heading_batch_move_categories = Batch Move Categories
 ms_error_nothing_to_move = You have not selected anything to move!
 ms_error_image_directory_not_writable = Error: The directory containing the category images is not writable: %s
 ms_error_image_directory_non_existant = Error: The directory to store the category images does not exist: %s 
+ms_error_categories_permalink_exists = That Permalink already exists. Please try another.
+ms_error_categories_permalink_required = The Permalink is required.
 
 section_general = Content
 section_data = Data 

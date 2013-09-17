@@ -23,7 +23,7 @@
     </definition> 
     <definition>
       <key>payment_loadedpayments_method_blurb</key>
-      <value><![CDATA[powered by <img src="addons/Loaded_Payments/images/loadedpayments-small.png" style="vertical-align:middle">]]></value>
+      <value><![CDATA[powered by <img src="addons/Loaded_Payments/images/loadedpayments-small.png" alt="Loaded Payments" style="vertical-align:middle">]]></value>
       <group>checkout</group>
     </definition>       
   </definitions>
