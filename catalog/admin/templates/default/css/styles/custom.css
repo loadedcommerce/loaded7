@@ -721,6 +721,8 @@ select.error { border: 2px solid red !important; }
     margin: -4px 0 0 -3px;
   }
 
+.toggle-html-editor { padding:0; margin:-10px 10px -10px 0; font-size:.9em; float:right; }
+
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
   #menu header .headerInner {
