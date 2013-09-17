@@ -23,10 +23,31 @@
 
     /* Class constructor */
     function lC_Index_Index() {
-      global $lC_Database, $lC_Services, $lC_Language, $lC_Breadcrumb, $cPath, $cPath_array, $current_category_id, $lC_CategoryTree, $lC_Category;
+      global $lC_Database, $lC_Services, $lC_Language, $lC_Breadcrumb, $cPath, $cPath_array, $current_category_id, $lC_CategoryTree, $lC_Category, $lC_Session;
 
       $this->_page_title = sprintf($lC_Language->get('index_heading'), STORE_NAME);
       $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
+      
+      // attempting to match products url capability to get data from permalink
+      if (empty($_GET) === false) {
+        $id = false;
+       
+        // PHP < 5.0.2; array_slice() does not preserve keys and will not work with numerical key values, so foreach() is used
+        foreach ($_GET as $key => $value) {
+          $key = end(explode("/", $key));
+          if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) ) {
+            $id = $key;
+          }
+          break;
+        }
+      }
+      
+      if ( isset($lC_Services) && $lC_Services->isStarted('seo') && $_GET['cpath'] == '' ) {
+        $id = $lC_CategoryTree->getID($id);
+        $cData = $lC_CategoryTree->getData($id);
+        $cPath = end(explode("_", $cData['query']));
+        $current_category_id = $cData['item_id'];
+      }
       
       if (isset($cPath) && (empty($cPath) === false)) {
         if ($lC_Services->isStarted('breadcrumb')) {
@@ -35,7 +56,7 @@
           $Qcategories->bindTable(':categories_id', implode(',', $cPath_array));
           $Qcategories->bindInt(':language_id', $lC_Language->getID());
           $Qcategories->execute();
-
+          
           $categories = array();
           while ($Qcategories->next()) {
             $categories[$Qcategories->value('categories_id')] = $Qcategories->valueProtected('categories_name');

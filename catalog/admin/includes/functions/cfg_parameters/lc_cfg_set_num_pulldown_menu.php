@@ -23,7 +23,7 @@
     for ($i = 1; $i <= 20; $i++) {
 
       $array[] = array('id' => $i,
-                        'text' => $i);
+                       'text' => $i);
     }
 
     return lc_draw_pull_down_menu($name, $array, $default, $css_class);

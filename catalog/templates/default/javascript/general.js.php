@@ -97,8 +97,8 @@ $(document).ready(function() {
         if (urlStr == loc) {
           $(this).addClass('current');
         }
-      } else if (loc.indexOf("info.php") != -1) {
-        if (urlStr == loc || (loc.search(urlPath) != -1 && this.href.search('<?php echo HTTP_SERVER; ?>') != -1)) {
+      } else if (loc.indexOf("info.php") != -1 || loc.indexOf("shipping") != -1 || loc.indexOf("privacy") != -1 || loc.indexOf("conditions") != -1 || loc.indexOf("cookie") != -1 || loc.indexOf("ssl_check") != -1 || loc.indexOf("contact") != -1 || loc.indexOf("sitemap") != -1) {
+        if (urlStr == "info.php" || urlStr == loc || (loc.search(urlPath) != -1 && this.href.search('<?php echo HTTP_SERVER; ?>') != -1)) {
           $(this).addClass('current');
         }
       } else {

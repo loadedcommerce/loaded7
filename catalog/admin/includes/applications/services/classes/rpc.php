@@ -85,8 +85,11 @@ class lC_Services_Admin_rpc {
   public static function installModule() {
     $result = array();
     $installed = lC_Services_Admin::install($_GET['module']);
+    
     if ($installed) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    } else {
+      $result['error'] = $lC_Language->get('services_install_error');
     }
 
     echo json_encode($result);

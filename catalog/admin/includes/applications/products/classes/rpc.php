@@ -145,17 +145,17 @@ class lC_Products_Admin_rpc {
     echo json_encode($result);
   } 
  /*
-  * Check product keyword
+  * Check product permalink
   *
-  * @param array $_GET['products_keyword'] The product keywords to validate 
+  * @param array $_GET['products_keyword'] The product permalink to validate 
   * @access public
   * @return json
   */
-  public static function validateKeyword() {
+  public static function validatePermalink() {
     $data = str_replace('%5B', '[', $_GET);
     $data = str_replace('%5D', ']', $data);
     
-    $validated = lC_Products_Admin::validate($data['products_keyword'], $data['pid']);
+    $validated = lC_Products_Admin::validatePermalink($data['products_keyword'], $data['iid'], $data['type']);
 
     echo json_encode($validated);
   }
