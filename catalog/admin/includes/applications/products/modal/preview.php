@@ -54,6 +54,7 @@ function showPreview(id) {
           buttonsLowPadding: true
       });
       $("#previewContentMessage").html(data.previewHtml);
+      $.modal.all.centerModal();
     }
   );
 }
