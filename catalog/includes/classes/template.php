@@ -818,5 +818,114 @@ class lC_Template {
     
     return $content;
   } 
+  
+  
+ /*
+  * return the Branding Data
+  *
+  * @access public
+  * @return array
+  */
+  public function getBranding($data) {
+    global $lC_Database, $lC_Language;
+
+    $QbrandingLangData = $lC_Database->query('select * from :table_branding where language_id = :language_id');
+    $QbrandingLangData->bindTable(':table_branding', TABLE_BRANDING);
+    $QbrandingLangData->bindInt(':language_id', $lC_Language->getID());
+    $QbrandingLangData->execute();
+    
+    $QbrandingData = $lC_Database->query('select * from :table_branding_data');
+    $QbrandingData->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+    $QbrandingData->execute();
+
+    switch($data){
+      case 'site_image':
+      $data = $QbrandingData->value('site_image');
+      break;
+      
+      case 'og_image':
+      $data = $QbrandingData->value('og_image');
+      break;
+      
+      case 'chat_code':
+      $data = $QbrandingData->value('chat_code');
+      break;
+      
+      case 'support_phone':
+      $data = $QbrandingData->value('support_phone');
+      break;
+      
+      case 'support_email':
+      $data = $QbrandingData->value('support_email');
+      break;
+      
+      case 'sales_phone':
+      $data = $QbrandingData->value('sales_phone');
+      break;
+      
+      case 'sales_email':
+      $data = $QbrandingData->value('sales_email');
+      break;
+      
+      case 'meta_delimeter':
+      $data = $QbrandingData->value('meta_delimeter');
+      break;
+      
+      case 'social_facebook_page':
+      $data = $QbrandingData->value('social_facebook_page');
+      break;
+      
+      case 'social_tweeter':
+      $data = $QbrandingData->value('social_twitter');
+      break;
+      
+      case 'social_pinterest':
+      $data = $QbrandingData->value('social_pinterest');
+      break;
+      
+      case 'social_google_plus':
+      $data = $QbrandingData->value('social_google_plus');
+      break;
+      
+      case 'social_youtube':
+      $data = $QbrandingData->value('social_youtube');
+      break;
+      
+      case 'social_linkedin':
+      $data = $QbrandingData->value('social_linkedin');
+      break;
+      
+      case 'slogan':
+      $data = $QbrandingLangData->value('slogan');
+      break;
+      
+      case 'meta_description':
+      $data = $QbrandingLangData->value('meta_description');
+      break;
+      
+      case 'meta_keywords':
+      $data = $QbrandingLangData->value('meta_keywords');
+      break;
+      
+      case 'meta_title':
+      $data = $QbrandingLangData->value('meta_title');
+      break;
+      
+      case 'meta_title_prefix':
+      $data = $QbrandingLangData->value('meta_title_prefix');
+      break;
+      
+      case 'meta_title_suffix':
+      $data = $QbrandingLangData->value('meta_title_suffix');
+      break;
+      
+      case 'footer_text':
+      $data = $QbrandingLangData->value('footer_text');
+      break;
+    }
+    return $data;
+  }
+  
+  
 }
 ?>
