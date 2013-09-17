@@ -500,7 +500,7 @@ function getTaxClassOptionsString($id = null, $esc = false) {
     <div class="clear-both"></div>
     
     <div class="six-columns twelve-columns-tablet margin-bottom">
-      <div>
+      <div id="buttons-menu-div-listing">
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">

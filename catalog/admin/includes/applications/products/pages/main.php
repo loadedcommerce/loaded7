@@ -25,7 +25,7 @@
   .dataColQty { text-align: left; }
   .dataColAction { text-align: right; }
   .dataTables_info { position:absolute; bottom: 42px; color:#4c4c4c; }
-  .selectContainer { position:absolute; bottom:29px; left:30px }
+  .selectContainer { position:absolute; bottom:29px; left:30px }  
   </style>
   <div class="with-padding-no-top">
     <form name="batch" id="batch" action="#" method="post">
@@ -63,7 +63,7 @@
     </form>
     <div class="clear-both"></div>
     <div class="six-columns twelve-columns-tablet">
-      <div>
+      <div id="buttons-menu-div-listing">
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">

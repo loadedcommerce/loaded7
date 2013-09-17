@@ -753,6 +753,15 @@ select.error { border: 2px solid red !important; }
 
 .toggle-html-editor { padding:0; margin:-10px 10px -10px 0; font-size:.9em; float:right; }
 
+#buttons-menu-div-listing {
+  position:absolute;
+  width:50%;
+  background-color:transparent;
+  top:43px;
+  right:0px;
+  padding: 5px 20px;
+}
+
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
   #menu header .headerInner {
