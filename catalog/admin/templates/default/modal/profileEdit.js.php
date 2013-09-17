@@ -18,7 +18,7 @@ include_once($lC_Vqmod->modCheck('includes/applications/languages/classes/langua
 //$groupsArr = lC_Administrators_Admin::getAllGroups(true);
 //$groupsSelectArr = array();
 //foreach ($groupsArr as $key => $value) {
-//  $groupsSelectArr[] = array('id' => $value['id'], 'text' => $value['name']);
+//   $groupsSelectArr[] = array('id' => $value['id'], 'text' => $value['name']);
 //}
 $languagesArr = lC_Languages_Admin::getIdNameArray();
 $languagesSelectArr = array();
