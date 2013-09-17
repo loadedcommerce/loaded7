@@ -116,7 +116,10 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     parent::log("Database Update: INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(164, 'Redeem On Payment Page?', 'SERVICE_COUPONS_DISPLAY_ON_PAYMENT_PAGE', '1', 'Display the coupons redemption form on the checkout payment page?', 6, 0, NULL, '2013-07-31 19:05:14', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))')");
     $lC_Database->simpleQuery("INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(165, 'Redeem On Confirmation Page?', 'SERVICE_COUPONS_DISPLAY_ON_CONFIRMATION_PAGE', '1', 'Display the coupons redemption form on the checkout confirmation page?', 6, 0, NULL, '2013-07-31 19:05:14', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))')");
     parent::log("Database Update: INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(165, 'Redeem On Confirmation Page?', 'SERVICE_COUPONS_DISPLAY_ON_CONFIRMATION_PAGE', '1', 'Display the coupons redemption form on the checkout confirmation page?', 6, 0, NULL, '2013-07-31 19:05:14', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))')");
-                               
+      
+    $lC_Database->simpleQuery("ALTER TABLE `lc_orders_status` ADD `orders_status_type` ENUM( 'Pending', 'Rejected', 'Approved' ) NOT NULL DEFAULT 'Pending' AFTER `orders_status_name`");
+    parent::log("Database Update: ALTER TABLE `lc_orders_status` ADD `orders_status_type` ENUM( 'Pending', 'Rejected', 'Approved' ) NOT NULL DEFAULT 'Pending' AFTER `orders_status_name`");
+                         
   } 
 }  
 ?>
