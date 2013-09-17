@@ -144,22 +144,10 @@
 				url: url,
 				success: function(data, textStatus, jqXHR)
 				{
-					var back;
-
 					// Insert content if text/html
 					if ( typeof data === 'string' )
 					{
-						// Back button
-						back = target.closest('.panel-content').data('panel-back-button');
-						if (back)
-						{
-							target.children().not(back).remove();
-							target.append(data);
-						}
-						else
-						{
-							target.html(data);
-						}
+						setPanelContent(data, target);
 					}
 
 					// Callback in settings
@@ -182,9 +170,9 @@
 			target = loadTarget.length ? loadTarget : panel;
 
 		// Pre-callback
-		if (settings.onStartLoad)
+		if (options && options.onStartLoad)
 		{
-			if (settings.onStartLoad.call(target[0], settings, ajaxOptions) === false)
+			if (options.onStartLoad.call(target[0], settings, ajaxOptions) === false)
 			{
 				return;
 			}
@@ -193,12 +181,75 @@
 		// Display panel (for mobile devices)
 		wrapper[isNav ? 'removeClass' : 'addClass']('show-panel-content');
 
+		// Event
+		target.trigger('content-panel-load');
+
 		// Load content
 		$.ajax(ajaxOptions);
 
 		// Store url and options
 		panel.data('content-panel-url', url);
 		panel.data('content-panel-options', options);
+	}
+
+	/**
+	 * Set the content of the navigation panel
+	 * @param string|jQuery|DOM content the content to insert
+	 */
+	$.fn.setPanelNavigation = function(content)
+	{
+		return this.each(function(i)
+		{
+			var contentPanel = $(this).closest('.content-panel'),
+				panelNavigation = contentPanel.children('.panel-navigation');
+
+			// Load content
+			setPanelContent(content, panelNavigation);
+		});
+	};
+
+	/**
+	 * Set the content of the content panel
+	 * @param string|jQuery|DOM content the content to insert
+	 */
+	$.fn.setPanelContent = function(content)
+	{
+		return this.each(function(i)
+		{
+			var contentPanel = $(this).closest('.content-panel'),
+				panelContent = contentPanel.children('.panel-content');
+
+			// Load content
+			setPanelContent(content, panelContent);
+		});
+	};
+
+	/**
+	 * Load content into a panel
+	 * @param string|jQuery|DOM content the content to insert
+	 * @param jQuery panel the panel in which to load content
+	 */
+	function setPanelContent(content, panel)
+	{
+		var back;
+
+		// If not valid, exit
+		if (!panel.length)
+		{
+			return;
+		}
+
+		// Clear contents except back button
+		back = panel.closest('.panel-content').data('panel-back-button');
+		if (back)
+		{
+			panel.children().not(back).remove();
+		}
+		else
+		{
+			panel.empty();
+		}
+		panel.append(content);
 	}
 
 	/**

@@ -69,7 +69,7 @@
                 <div style="padding-left:6px;" class="small-margin-top">
                   <div id="imagePreviewContainer" class="cat-image align-center">
                     <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
-                    <img src="<?php echo DIR_WS_HTTP_CATALOG . 'images/categories/' . ((is_file('../images/categories/' . $lC_ObjectInfo->get('categories_image')) == true) ? $lC_ObjectInfo->get('categories_image') : 'missing-image.png'); ?>" style="max-width:100%;" />
+                    <img src="<?php echo DIR_WS_HTTP_CATALOG . ((is_file('../images/categories/' . $lC_ObjectInfo->get('categories_image')) == true) ? 'images/categories/' . $lC_ObjectInfo->get('categories_image') : 'images/no_image.png'); ?>" style="max-width:100%;" />
                     <?php } else { ?>
                     <img src="../images/categories/no_image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?>
                     <?php } ?>

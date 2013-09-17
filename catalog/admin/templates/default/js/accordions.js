@@ -34,6 +34,21 @@
 			dl.refreshAccordion();
 		}
 
+		// Toggle mode
+		if (dl.hasClass('toggle-mode'))
+		{
+			dt.toggleClass('closed');
+			if (dt.hasClass('closed'))
+			{
+				dt.next('dd').stop(true).slideUp();
+			}
+			else
+			{
+				dt.next('dd').stop(true).slideDown();
+			}
+			return;
+		}
+
 		// Check if closed
 		if (dt.hasClass('closed'))
 		{
