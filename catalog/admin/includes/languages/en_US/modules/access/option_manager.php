@@ -10,4 +10,5 @@
 #  @license    http://loadedcommerce.com/license.html
 
 access_option_manager_title = Option Manager
+access_option_groups_title = Option Groups
 access_product_variants_title = Option Variants
