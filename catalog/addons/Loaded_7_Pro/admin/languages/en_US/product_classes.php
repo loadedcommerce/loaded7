@@ -11,6 +11,8 @@
 
 heading_title = Product Classes
 
+access_product_classes_title = Product Classes
+
 table_heading_name = Name
 table_heading_comment = Comment
 table_heading_usage = Usage

@@ -439,6 +439,40 @@ class lC_Addons_Admin extends lC_Addons {
     }    
   }
  /*
+  * Determine if there are addon attribute module
+  *
+  * @param string $module   The addon module
+  * @param string $filename The page filename
+  * @access public
+  * @return mixed
+  */  
+  public static function hasAdminAddonsProductAttributesModule($module) {
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if (file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/modules/product_attributes/' . $module . '.php')) {
+        return true;
+      }
+    }
+    
+    return false;    
+  }  
+ /*
+  * Retrieve the admin addon attribute module
+  *
+  * @param string $module   The addon module
+  * @param string $filename The page filename
+  * @access public
+  * @return mixed
+  */  
+  public static function getAdminAddonsProductAttributesModulePath($module) {
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if (file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/modules/product_attributes/' . $module . '.php')) {
+        return DIR_FS_CATALOG . 'addons/' . $addon . '/admin/modules/product_attributes/' . $module . '.php';
+      }
+    }
+    
+    return false;    
+  }  
+ /*
   * Install the product attributes addon
   *
   * @param string $class The addon class name
