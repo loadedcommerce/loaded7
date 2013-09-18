@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+//error_reporting(0);    
 /**
  * VQMod
  * @description Main Object used
@@ -39,8 +39,8 @@ final class VQMod {
     $this->vqCachePath = 'includes/work/cache/vqmod/';
     $this->modCache = 'includes/work/cache/vqmoda.cache';    
     $this->directorySeparator = defined('DIRECTORY_SEPARATOR') ? DIRECTORY_SEPARATOR : '/';
-    $this->protectedFilelist = DIR_WS_HTTPS_CATALOG . 'external/vqmod/vqprotect.txt';
-    $this->pathReplaces = DIR_WS_HTTPS_CATALOG . 'external/vqmod/pathReplaces.php';
+    $this->protectedFilelist = DIR_FS_ADMIN . 'external/vqmod/vqprotect.txt';
+    $this->pathReplaces = DIR_FS_ADMIN . 'external/vqmod/pathReplaces.php';
 
     if(!$path){
       $path = dirname(dirname(__FILE__));
@@ -83,8 +83,9 @@ final class VQMod {
       $this->dirCheck($cache_folder);
 
       // Store cache folder path to save on repeat checks for path validity
-      $this->_cachePathFull = $this->path($this->vqCachePath);
-
+      $this->_cachePathFull = DIR_FS_CATALOG . $this->vqCachePath;
+      $this->dirCheck($this->_cachePathFull);
+                                   
       $this->_folderChecks = true;
     }
     
@@ -173,7 +174,7 @@ final class VQMod {
   public function dirCheck($path) {
     if(!is_dir($path)) {
       if(!mkdir($path)) {
-        //die('ERROR! FOLDER CANNOT BE CREATED: ' . $path);
+        die('ERROR! FOLDER CANNOT BE CREATED: ' . $path);
       }
     }
   }
@@ -338,7 +339,7 @@ final class VQMod {
     }
     
     if(!$result) {
-      //die('MODS CACHE PATH NOT WRITEABLE: ' . $modCache);
+      die('MODS CACHE PATH NOT WRITEABLE: ' . $modCache);
     }
   }
  /**
@@ -504,7 +505,7 @@ class VQModLog {
 
     $result = @file_put_contents($logPath, implode(PHP_EOL, $txt), ($append ? FILE_APPEND : 0));
     if(!$result) {
-      //die('LOG FILE COULD NOT BE WRITTEN: ' . $logPath);
+      die('LOG FILE COULD NOT BE WRITTEN: ' . $logPath);
     }
   }
 

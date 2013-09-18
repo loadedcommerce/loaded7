@@ -13,7 +13,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('../includes/classes/addons.php'));
+require_once($lC_Vqmod->modCheck('../includes/classes/addons.php'));
 
 class lC_Addons_Admin extends lC_Addons {
 
@@ -401,6 +401,100 @@ class lC_Addons_Admin extends lC_Addons {
     }
     
     return $data;
+  }  
+ /*
+  * Retrieve the admin addon product attribute files
+  *
+  * @access public
+  * @return array
+  */ 
+  public static function getAdminAddonsProductAttributesFiles() {
+    $files = array();
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/modules/product_attributes')) {
+        $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/modules/product_attributes');
+        $lC_DirectoryListing->setIncludeDirectories(false);
+        $lC_DirectoryListing->setStats(true);
+
+        $files = array_merge((array)$files, (array)$lC_DirectoryListing->getFiles());
+      }
+    }
+    
+    return $files;    
+  } 
+ /*
+  * Retrieve the product attributes definitions
+  *
+  * @param string $class The addon class name
+  * @access public
+  * @return void
+  */
+  public function loadAdminAddonsProductAttributesDefinitions($class) {
+    global $lC_Language;
+    
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if (file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/languages/' . $lC_Language->getCode() . '/modules/product_attributes/' . $class . '.php')) {
+        $lC_Language->loadIniFile(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/languages/' . $lC_Language->getCode() . '/modules/product_attributes/' . $class . '.php', null, null, true);
+      }
+    }    
+  }
+ /*
+  * Install the product attributes addon
+  *
+  * @param string $class The addon class name
+  * @access public
+  * @return boolean
+  */
+  public function installAdminAddonsProductAttributesModule($class) {
+    global $lC_Language, $lC_Vqmod;
+    
+    $result = array();
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/modules/product_attributes/' . $class . '.php') ) {
+        include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/modules/product_attributes/' . $class . '.php'));
+        if ( class_exists('lC_ProductAttributes_' . $class) ) {
+          $module = 'lC_ProductAttributes_' . $class;
+          $module = new $module();
+          
+          self::loadAdminAddonsProductAttributesDefinitions($class);
+          
+          if ( $module->installModule($lC_Language->get('product_attributes_' . $module->getCode() . '_title'), $module->getCode()) ) {
+          } else {
+            $result['rpcStatus'] = -1;
+          }
+        }
+      }      
+    }    
+    
+    return $result;
+  }  
+ /*
+  * Uninstall the product attributes addon
+  *
+  * @param string $class The addon class name
+  * @access public
+  * @return boolean
+  */
+  public function uninstallAdminAddonsProductAttributesModule($class) {
+    global $lC_Language, $lC_Vqmod;
+    
+    $result = array();
+    foreach (self::getAdminAddons('enabled') as $addon => $val) {
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/modules/product_attributes/' . $class . '.php') ) {
+        include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/modules/product_attributes/' . $class . '.php'));
+        if ( class_exists('lC_ProductAttributes_' . $class) ) {
+          $module = 'lC_ProductAttributes_' . $class;
+          $module = new $module();
+          
+          if ( $module->removeModule($module->getID(), $module->getCode()) ) {
+          } else {
+            $result['rpcStatus'] = -1;
+          }
+        }
+      }      
+    }    
+    
+    return $result;
   }  
  /*
   * Initialize the addons data array

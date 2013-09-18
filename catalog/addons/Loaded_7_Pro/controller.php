@@ -91,8 +91,9 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'DEFAULT_PRODUCT_CLASSES_ID', '1', '', '6', '0', '', '', now())");
     $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . DB_TABLE_PREFIX . "product_classes` (id int(11) NOT NULL AUTO_INCREMENT,`name` varchar(128) NOT NULL DEFAULT '', `comment` varchar(255) DEFAULT NULL, `status` tinyint(1) NOT NULL DEFAULT '0', language_id int(11) NOT NULL DEFAULT '1', PRIMARY KEY (id)) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=2;");
     $lC_Database->simpleQuery("delete from `" . DB_TABLE_PREFIX . "product_classes` where id = '1'");
-    $lC_Database->simpleQuery("insert into `" . DB_TABLE_PREFIX . "product_classes` (id, name, comment, status, language_id) VALUES('1', 'Common', 'Common Class', 1, 1);");
-    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . DB_TABLE_PREFIX . "products` ADD `product_class_id` INT( 11 ) DEFAULT '1'");
+    $lC_Database->simpleQuery("insert into `" . DB_TABLE_PREFIX . "product_classes` (id, name, comment, status, language_id) VALUES ('1', 'Common', 'Common Class', 1, 1);");
+    $lC_Database->simpleQuery("delete from " . TABLE_TEMPLATE_BOXES . " where code = 'product_classes'");
+    $lC_Database->simpleQuery("insert into " . TABLE_TEMPLATE_BOXES . " (title, code, author_name, author_www, modules_group) VALUES ('Product Classes', 'product_classes', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes')");
     
     lC_Cache::clear('configuration');
     lC_Cache::clear('addons');
@@ -119,8 +120,6 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     
     // product classes
     $lC_Database->simpleQuery("DROP TABLE IF EXISTS `" . DB_TABLE_PREFIX . "product_classes`");
-    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . DB_TABLE_PREFIX . "products` DROP COLUMN `product_class_id`");
-    
   }   
 }
 ?>
