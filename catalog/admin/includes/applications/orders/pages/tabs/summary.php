@@ -168,14 +168,38 @@
               <div class="twelve-columns">
                 <div class="field-drop-tabs field-drop-tabs-no-left button-height black-inputs">
                   <div class="columns">
-                    <div class="six-columns twelve-columns-mobile new-row-mobile">Left Side</div>
-                    <div class="six-columns twelve-columns-mobile new-row-mobile ">Right Side</div>
+                    <div class="three-columns twelve-columns-mobile new-row-mobile">
+                      <div class="large-margin-left">LEFT</div>
+                    </div>
+                    <div class="five-columns twelve-columns-mobile new-row-mobile">
+                      <div class="columns">
+                        <div class="twelve-columns">
+                          <label class="label white bold" for="validation-select">Current Status</label>
+                          <?php echo lc_draw_pull_down_menu('status', null, null, 'class="select" style="width:225px" id="orderStatus"'); ?>
+                        </div>
+                        <div class="twelve-columns">
+                          <div style="margin-left:-110px;">
+                            <?php echo lc_draw_textarea_field('comment', null, null, null, 'class="input autoexpanding full-width mid-pull-top" placeholder="Type here to send a message..."'); ?>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="four-columns twelve-columns-mobile new-row-mobile ">
+                      <div class="columns">
+                        <div class="seven-columns">
+                          left
+                        </div>
+                        <div class="five-columns">
+                          right
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="columns with-padding">
-              <div class="twelve-columns mid-margin-bottom large-pull-top">
+              <div class="twelve-columns mid-margin-bottom mid-pull-top">
                 <fieldset>
                   <legend class="mid-margin-bottom">
                     <span class="icon-list icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_products_ordered'); ?></strong></span>
