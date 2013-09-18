@@ -96,6 +96,7 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     $lC_Database->simpleQuery("insert into " . TABLE_TEMPLATES_BOXES . " (title, code, author_name, author_www, modules_group) VALUES ('Product Classes', 'product_classes', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes')");
     
     lC_Cache::clear('configuration');
+    lC_Cache::clear('languages');
     lC_Cache::clear('addons');
     lC_Cache::clear('vqmoda');
   }
