@@ -13,7 +13,7 @@
 */
 global $lC_Language, $pInfo; 
 ?>   
-<div id="section_images_content" class="with-padding<?php echo (isset($pInfo) && !empty($pInfo)) ? null : ' hidden'; ?>">
+<div id="section_images_content" class="with-padding"<?php echo (isset($pInfo) && !empty($pInfo)) ? null : ' style="display:none;"'; ?>>
   <div class="content-panel margin-bottom enabled-panels">
     <div class="panel-navigation silver-gradient scrollable">
       <div class="panel-control"></div>
@@ -65,7 +65,6 @@ global $lC_Language, $pInfo;
                       <?php
                     } else {
                       echo '<div id="fileUploaderContainer" style="display:none;"></div>';
-                      echo lc_draw_file_field('products_image', null, 'class="file"');
                     }
                     ?>                              
                   </div>
