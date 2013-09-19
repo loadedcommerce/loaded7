@@ -53,10 +53,28 @@
       <!-- QR Code -->
       <?php echo $lC_Template->getQRCode(); ?>
     </div>               
-    <div class="col-sm-12 col-lg-12">
-      <div class="pull-left">&copy; <?php echo date("Y") . ' ' . STORE_NAME; ?></div>
-      <div class="pull-right"><?php echo $lC_Language->get('footer'); ?></div>
-    </div>    
+    <?php echo $lC_Template->getBranding('footer_text');?>    
   </div>
+  <p class="text-right margin-top"><?php
+      if ($lC_Template->getBranding('social_facebook_page') != '') {
+        echo '<a href="' . $lC_Template->getBranding('social_facebook_page') . '" target="_blank"><img alt="Facebook" src="' . DIR_WS_IMAGES . 'icons/facebook.png" /></a>';
+      }
+      if ($lC_Template->getBranding('social_twitter') != '') {
+        echo '<a href="' . $lC_Template->getBranding('social_twitter') . '" target="_blank"><img alt="Twitter" src="' . DIR_WS_IMAGES . 'icons/twitter_bird.png" /></a>';
+      }
+      if ($lC_Template->getBranding('social_pinterest') != '') {
+        echo '<a href="' . $lC_Template->getBranding('social_pinterest') . '" target="_blank"><img alt="Pinterest" src="' . DIR_WS_IMAGES . 'icons/pinterest.png" /></a>';
+      }
+      if ($lC_Template->getBranding('social_google_plus') != '') {
+        echo '<a href="' . $lC_Template->getBranding('social_google_plus') . '" target="_blank"><img alt="Google+" src="' . DIR_WS_IMAGES . 'icons/google_plus.png" /></a>';
+      }
+      if ($lC_Template->getBranding('social_youtube') != '') {
+        echo '<a href="' . $lC_Template->getBranding('social_youtube') . '" target="_blank"><img alt="Youtube" src="' . DIR_WS_IMAGES . 'icons/youtube.png" /></a>';
+      }
+      if ($lC_Template->getBranding('social_linkedin') != '') {
+        echo '<a href="' . $lC_Template->getBranding('social_linkedin') . '" target="_blank"><img alt="LinkedIn" src="' . DIR_WS_IMAGES . 'icons/linkedin.png" /></a>';
+      }
+    ?><img style="border:0;width:88px;height:31px" alt="HTML5 Validator" src="http://upload.wikimedia.org/wikipedia/commons/b/bb/W3C_HTML5_certified.png"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!" />
+    </p>       
 </div>
 <!--footer.php end-->

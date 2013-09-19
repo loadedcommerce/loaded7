@@ -20,6 +20,14 @@
           <strong><?php echo STORE_NAME; ?></strong><br>
             <?php echo nl2br(STORE_NAME_ADDRESS); ?>
           </address>          
+          <?php
+            if ($lC_Template->getBranding('support_email') != '') {
+              echo '<br><strong>Support Email:</strong><br>' . $lC_Template->getBranding('support_email') . '';
+            }
+            if ($lC_Template->getBranding('support_email') != '') {
+              echo '<br><strong>Support Phone:</strong><br>' . $lC_Template->getBranding('support_phone') . '';
+            }
+          ?>
         </div>
       </div>
       <div class="col-sm-8 col-lg-8">

@@ -54,7 +54,10 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-3 col-lg-3">
-        <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img alt="<?php echo STORE_NAME; ?>" src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>logo.png" /></a></h1>
+        <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img alt="<?php echo STORE_NAME; ?>" src="<?php echo DIR_WS_IMAGES . 'branding/' . $lC_Template->getBranding('site_image'); ?>" /></a></h1>
+        <?php if ($lC_Template->getBranding('slogan') != '') { ?>
+          <p class="slogan clear-both"><?php echo $lC_Template->getBranding('slogan'); ?></p>
+        <?php } ?>
       </div>
       <div class="col-sm-9 col-lg-9">
         <div class="row">
@@ -68,6 +71,15 @@
           </div>  
           <div class="col-sm-4 col-lg-4">
             <p class="text-right margin-top">
+              <div>
+                <?php
+                  if ($lC_Template->getBranding('sales_email') != '') {
+                    echo $lC_Template->getBranding('sales_email');
+                  }
+                  if ($lC_Template->getBranding('sales_phone') != '') {
+                    echo ' | ' . $lC_Template->getBranding('sales_phone');
+                  }
+              ?></div>
               <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'cart', 'NONSSL'); ?>">View Cart</a> | Total: <?php echo $lC_Currencies->format($lC_ShoppingCart->getSubTotal()); ?> (<?php echo $lC_ShoppingCart->numberOfItems(); ?>)
             </p>
           </div>
