@@ -55,8 +55,8 @@ function uninstallAddon(id, name) {
                 $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                 return false;
               } 
-              oTable.fnReloadAjax();
               $($.modal.all).closeModal();
+              window.location.href = window.location.href;
             }
           );
           win.closeModal();
