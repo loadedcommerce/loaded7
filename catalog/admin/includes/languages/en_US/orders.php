@@ -92,7 +92,7 @@ table_heading_date_added = Date Added
 table_heading_comments = Comments
 table_heading_customer_notified = Customer Notified
 
-text_edit_order = Edit Order
+text_edit_order = Order
 text_order_number = Order Number
 text_amount = Amount
 text_due = Due

@@ -168,31 +168,50 @@
               <div class="twelve-columns">
                 <div class="field-drop-tabs field-drop-tabs-no-left button-height black-inputs">
                   <div class="columns">
-                    <div class="three-columns twelve-columns-mobile new-row-mobile">
-                      <p class="white">Balance <span class="tag with-small-padding small-margin-left green-bg">PAID</span></p>
-                      <p class="white">Address <span class="tag with-small-padding small-margin-left orange-bg">MIXED</span></p>
-                    </div>
-                    <div class="five-columns twelve-columns-mobile new-row-mobile">
-                      <div class="columns">
-                        <div class="twelve-columns">
-                          <font class="white bold mid-margin-right">Current Status</font>
-                          <?php echo lc_draw_pull_down_menu('status', null, null, 'class="select" style="width:225px" id="orderStatus"'); ?>
-                        </div>
-                        <div class="twelve-columns">
-                          <div>
-                            <?php echo lc_draw_textarea_field('comment', null, null, null, 'class="input autoexpanding full-width mid-pull-top" placeholder="Type here to send a message..."'); ?>
+                    <form id="updateOrder" method="post" action="#" name="updateOrder">
+                      <div class="two-columns twelve-columns-mobile new-row-mobile no-wrap no-margin-bottom">
+                        <p class="white">Balance <small class="tag small-margin-left green-bg">PAID</small></p>
+                        <p class="white">Address <small class="tag small-margin-left orange-bg">MIXED</small></p>
+                      </div>
+                      <div class="six-columns twelve-columns-mobile new-row-mobile">
+                        <div class="columns">
+                          <div class="twelve-columns">
+                            <font class="white font-eightteen mid-margin-right">Current Status</font>
+                            <?php echo lC_Orders_Admin::drawOrderStatusDropdown($_GET[$lC_Template->getModule()]); ?>
+                          </div>
+                          <div class="twelve-columns">
+                            <div>
+                              <?php echo lc_draw_textarea_field('comment', null, null, null, 'class="input autoexpanding full-width mid-pull-top" placeholder="Type here to send a message..."'); ?>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="four-columns twelve-columns-mobile new-row-mobile">
-                      <div class="columns">
-                        <div class="twelve-columns twelve-columns-mobile new-row-mobile hide-below-768"></div>
-                        <div class="twelve-columns twelve-columns-mobile new-row-mobile">
-                          bottom
+                      <div class="four-columns twelve-columns-mobile new-row-mobile">
+                        <div class="columns">
+                          <div class="twelve-columns twelve-columns-mobile new-row-mobile hide-below-768">&nbsp;</div>
+                          <div class="twelve-columns twelve-columns-mobile new-row-mobile">
+                            <div class="columns">
+                              <div class="six-columns twelve-columns-mobile new-row-mobile no-margin-bottom">
+                                <p class="small-margin-bottom no-wrap">
+                                  <input type="radio" class="radio small-margin-right checked" name="append_comment">Customer Message
+                                </p>
+                                <p class="small-margin-bottom">
+                                  <input type="radio" class="radio small-margin-right" name="append_comment">Admin Note
+                                </p>
+                              </div>
+                              <div class="six-columns twelve-columns-mobile new-row-mobile no-margin-bottom">
+                                <p class="no-margin-bottom">&nbsp;</p>
+                                <p class="no-margin-top">
+                                  <input class="button float-right margin-bottom" type="submit" value="Update" onclick="updateOrderStatus(); return false;">
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                      <input id="order_id" type="hidden" value="1" name="oid">
+                      <input id="notify_customer" type="hidden" value="1" name="notify_customer">
+                    </form>
                   </div>
                 </div>
               </div>

@@ -723,6 +723,12 @@ input.error { border: 2px solid red !important; }
 textarea.error { border: 2px solid red !important; }
 select.error { border: 2px solid red !important; }
 
+.radio > .check-knob {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
 /* Silver Borders */
 .bborder-silver { border: 1px solid #E3E5EA; }
 .btop-silver { border-top: 1px solid #E3E5EA; }
@@ -803,6 +809,21 @@ select.error { border: 2px solid red !important; }
 .width-66 { width: 66%; }
 .width-75 { width: 75%; }
 .dark-grey { color: #7a7a7a; }
+.font-ten { font-size: 10px; }
+.font-eleven { font-size: 11px; }
+.font-twelve { font-size: 12px; }
+.font-thirteen { font-size: 13px; }
+.font-fourteen { font-size: 14px; }
+.font-fifteen { font-size: 15px; }
+.font-sixteen { font-size: 16px; }
+.font-seventeen { font-size: 17px; }
+.font-eightteen { font-size: 18px; }
+.font-nineteen { font-size: 19px; }
+.font-twenty { font-size: 20px; }
+.font-twenty-one { font-size: 21px; }
+.font-twenty-two { font-size: 22px; }
+.font-twenty-three { font-size: 23px; }
+.font-twenty-four { font-size: 24px; }
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {

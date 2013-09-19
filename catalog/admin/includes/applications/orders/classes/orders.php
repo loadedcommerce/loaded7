@@ -726,6 +726,29 @@ class lC_Orders_Admin {
     }
     
     return $result;
+  }
+ /*
+  * Return the orders comments
+  *
+  * @access public
+  * @return array
+  */ 
+  public static function drawOrderStatusDropdown($oid) {
+    global $lC_Language;
+    
+    $data = lC_Orders_Admin::getInfo($oid);
+    
+    $osDropdown = '<select class="select withClearFunctions" style="min-width:150px" id="order_statuses" name="status">';
+    foreach ($data['ordersStatusArray'] as $id => $val) {
+      $osDropdown .= '<option value="' . $id . '"';
+      if ($data['orderStatusID'] == $id) {
+        $osDropdown .= ' selected="selected"';
+      }
+      $osDropdown .= '>' . $val . '</option>';
+    }
+    $osDropdown .= '</select>';
+    
+    return $osDropdown;
   }      
 }
 ?>

@@ -537,7 +537,7 @@ if (!function_exists('lc_draw_hidden_session_id_field')) {
 if (!function_exists('lc_draw_pull_down_menu')) {
   function lc_draw_pull_down_menu($name, $values, $default = null, $parameters = null) {
     $group = false;
-
+    
     if (isset($_GET[$name])) {
       $default = $_GET[$name];
     } elseif (isset($_POST[$name])) {
