@@ -169,28 +169,27 @@
                 <div class="field-drop-tabs field-drop-tabs-no-left button-height black-inputs">
                   <div class="columns">
                     <div class="three-columns twelve-columns-mobile new-row-mobile">
-                      <div class="large-margin-left">LEFT</div>
+                      <p class="white">Balance <span class="tag with-small-padding small-margin-left green-bg">PAID</span></p>
+                      <p class="white">Address <span class="tag with-small-padding small-margin-left orange-bg">MIXED</span></p>
                     </div>
                     <div class="five-columns twelve-columns-mobile new-row-mobile">
                       <div class="columns">
                         <div class="twelve-columns">
-                          <label class="label white bold" for="validation-select">Current Status</label>
+                          <font class="white bold mid-margin-right">Current Status</font>
                           <?php echo lc_draw_pull_down_menu('status', null, null, 'class="select" style="width:225px" id="orderStatus"'); ?>
                         </div>
                         <div class="twelve-columns">
-                          <div style="margin-left:-110px;">
+                          <div>
                             <?php echo lc_draw_textarea_field('comment', null, null, null, 'class="input autoexpanding full-width mid-pull-top" placeholder="Type here to send a message..."'); ?>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="four-columns twelve-columns-mobile new-row-mobile ">
+                    <div class="four-columns twelve-columns-mobile new-row-mobile">
                       <div class="columns">
-                        <div class="seven-columns">
-                          left
-                        </div>
-                        <div class="five-columns">
-                          right
+                        <div class="twelve-columns twelve-columns-mobile new-row-mobile hide-below-768"></div>
+                        <div class="twelve-columns twelve-columns-mobile new-row-mobile">
+                          bottom
                         </div>
                       </div>
                     </div>
