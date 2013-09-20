@@ -22,10 +22,10 @@
           </address>          
           <?php
             if ($lC_Template->getBranding('support_email') != '') {
-              echo '<br><strong>Support Email:</strong><br>' . $lC_Template->getBranding('support_email') . '';
+              echo '<br><strong>' . $lC_Language->get('contact_text_support_email') . '</strong><br>' . $lC_Template->getBranding('support_email') . '';
             }
             if ($lC_Template->getBranding('support_email') != '') {
-              echo '<br><strong>Support Phone:</strong><br>' . $lC_Template->getBranding('support_phone') . '';
+              echo '<br><strong>' . $lC_Language->get('contact_text_support_phone') . '</strong><br>' . $lC_Template->getBranding('support_phone') . '';
             }
           ?>
         </div>
