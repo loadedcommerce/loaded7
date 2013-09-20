@@ -436,6 +436,9 @@ class lC_Orders_Admin {
       $result['orderStatusHistoryData'][$oshcnt]['status'] = $status_history['status'];
       $result['orderStatusHistoryData'][$oshcnt]['comment'] = nl2br($status_history['comment']);
       $result['orderStatusHistoryData'][$oshcnt]['customer_notified'] = $status_history['customer_notified'];
+      $result['orderStatusHistoryData'][$oshcnt]['admin_name'] = $status_history['admin_name'];
+      $result['orderStatusHistoryData'][$oshcnt]['admin_image'] = $status_history['admin_image'];
+      $result['orderStatusHistoryData'][$oshcnt]['admin_id'] = $status_history['admin_id'];
       $oshcnt++;
     }
     // build the order status array
@@ -467,8 +470,8 @@ class lC_Orders_Admin {
   public static function updateStatus($oid, $data) {
     $data = array('status_id' => $data['status'],
                   'comment' => $data['comment'],
-                  'notify_customer' => ( isset($data['notify_customer']) && ( $data['notify_customer'] == 'on' ) ? true : false ),
-                  'append_comment' => ( isset($data['append_comment']) && ( $data['append_comment'] == 'on' ) ? true : false ));
+                  'notify_customer' => $data['notify_customer'],
+                  'append_comment' => $data['append_comment']);
 
     $result = lC_Orders_Admin::_updateStatus($oid, $data);
     if ($result === false) {
@@ -514,8 +517,8 @@ class lC_Orders_Admin {
           $payment_module = 'lC_Payment_' . $Qorder->value('payment_module');
           $payment_module = new $payment_module();
           $payment_module->$call_function($id);
-//            the following static call won't work due to using $this->_gateway_url in the class method
-//            call_user_func(array('lC_Payment_' . $Qorder->value('payment_module'), $call_function), $id);
+          // the following static call won't work due to using $this->_gateway_url in the class method
+          // call_user_func(array('lC_Payment_' . $Qorder->value('payment_module'), $call_function), $id);
           return true;
         }
       }
@@ -654,17 +657,15 @@ class lC_Orders_Admin {
     foreach ($data['orderStatusHistoryData'] as $oshData) {
       if ($oshData['comment'] != '') {
         $ocData .= '<div class="with-small-padding bbottom-grey' . (($oshData['customer_notified'] == 1) ? ' silver-bg' : ' grey-bg') . '">
-                       <div class="small-margin-top">
-                         <span class="float-right with-min-padding small-margin-right' . (($oshData['customer_notified'] == 1) ? ' green-bg' : ' anthracite-bg') . '">' . (($oshData['customer_notified'] == 1) ? $lC_Language->get('text_comment') : $lC_Language->get('text_note')) . '</span>
-                         <!--<span class="icon-user icon-size2 icon-anthracite small-margin-left">-->
-                           <span>
-                             <!--Sal Iozzia --><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small>
-                           </span>
-                         <!--</span>-->
-                       </div>
-                       <!-- edit-order-summary-block -->
-                       <p class="with-small-padding">' . $oshData['comment'] . '</p>
-                     </div>';
+                      <div class="small-margin-top">
+                        <span class="float-right with-min-padding small-margin-right' . (($oshData['customer_notified'] == 1) ? ' green-bg' : ' anthracite-bg') . '">' . (($oshData['customer_notified'] == 1) ? $lC_Language->get('text_comment') : $lC_Language->get('text_note')) . '</span>
+                        <span class="small-margin-left float-left">
+                          ' . (($oshData['admin_image'] != '') ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Comment by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right"></span>') . '
+                        </span>
+                        <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small>
+                      </div>
+                      <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
+                    </div>';
       }
     }
     return $ocData;

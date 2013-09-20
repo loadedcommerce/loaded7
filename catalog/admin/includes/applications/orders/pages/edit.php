@@ -26,7 +26,8 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
     ?>
   </hgroup>
   <div class="with-padding-no-top">
-    <form name="order" id="order" class="dataForm" action="<?php //echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('orders_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
+    <form name="order" id="order" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
+      <input id="order_id" type="hidden" value="<?php echo $_GET[$lC_Template->getModule()]; ?>" name="oid">
       <!--<div id="order_quick_info">
         <div class="columns with-small-padding">
           <div class="four-columns twelve-columns-mobile"><h4><?php echo $lC_Language->get('text_order_number'); ?> 6574389</h4></div>

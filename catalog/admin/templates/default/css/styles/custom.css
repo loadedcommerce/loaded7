@@ -824,6 +824,7 @@ select.error { border: 2px solid red !important; }
 .font-twenty-two { font-size: 22px; }
 .font-twenty-three { font-size: 23px; }
 .font-twenty-four { font-size: 24px; }
+.margin-left-order-comments { margin-left: 32px; }
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {

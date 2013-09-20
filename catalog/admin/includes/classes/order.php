@@ -118,7 +118,7 @@
 
       $history_array = array();
 
-      $Qhistory = $lC_Database->query('select osh.orders_status_id, osh.date_added, osh.customer_notified, osh.comments, os.orders_status_name from :table_orders_status_history osh left join :table_orders_status os on (osh.orders_status_id = os.orders_status_id and os.language_id = :language_id) where osh.orders_id = :orders_id order by osh.date_added');
+      $Qhistory = $lC_Database->query('select osh.orders_status_id, osh.date_added, osh.customer_notified, osh.comments, os.orders_status_name, osh.administrators_id from :table_orders_status_history osh left join :table_orders_status os on (osh.orders_status_id = os.orders_status_id and os.language_id = :language_id) where osh.orders_id = :orders_id order by osh.date_added');
       $Qhistory->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
       $Qhistory->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
 
@@ -130,11 +130,18 @@
       $Qhistory->execute();
 
       while ($Qhistory->next()) {
+        $QhAdmin = $lC_Database->query('select first_name, last_name, image from :table_administrators where id = :id limit 1');
+        $QhAdmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+        $QhAdmin->bindInt(':id', $Qhistory->valueInt('administrators_id'));
+
         $history_array[] = array('status_id' => $Qhistory->valueInt('orders_status_id'),
                                  'status' => $Qhistory->value('orders_status_name'),
                                  'date_added' => $Qhistory->value('date_added'),
                                  'customer_notified' => $Qhistory->valueInt('customer_notified'),
-                                 'comment' => $Qhistory->valueProtected('comments'));
+                                 'comment' => $Qhistory->valueProtected('comments'),
+                                 'admin_name' => $QhAdmin->value('first_name') . ' ' . $QhAdmin->value('last_name'),
+                                 'admin_image' => $QhAdmin->value('image'),
+                                 'admin_id' => $Qhistory->valueInt('administrators_id'));
       }
 
       $this->_status_history = $history_array;
