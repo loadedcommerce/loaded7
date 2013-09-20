@@ -248,13 +248,37 @@ class lC_Template {
   * @return string
   */
   public function getPageTags() {
-    $tag_string = '';
+    global $lC_Template, $_GET;
 
-    foreach ($this->_page_tags as $key => $values) {
-      $tag_string .= '<meta name="' . $key . '" content="' . implode(', ', $values) . '" />' . "\n";
+    $tag_string = '';
+    $meta_title = $lC_Template->getBranding('meta_title') != '' ? $lC_Template->getBranding('meta_title') : STORE_NAME;
+    $meta_title_prefix = $lC_Template->getBranding('meta_title_prefix') != '' ? $lC_Template->getBranding('meta_title_prefix') : '';
+    $meta_title_suffix = $lC_Template->getBranding('meta_title_suffix') != '' ? $lC_Template->getBranding('meta_title_suffix') : '';
+    $meta_delimeter = $lC_Template->getBranding('meta_delimeter') != '' ? $lC_Template->getBranding('meta_delimeter') : '';
+    $meta_description = $lC_Template->getBranding('meta_description') != '' ? $lC_Template->getBranding('meta_description') : '';
+    $meta_keywords = $lC_Template->getBranding('meta_keywords') != '' ? $lC_Template->getBranding('meta_keywords') : '';;
+
+
+    if($this->_module == 'index' && isset($_GET['cpath']) && (empty($_GET['cpath']) === false) ){
+      $tag_parts_title = $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix;
+      $tag_parts_description = $meta_description;
+      $tag_parts_keywords = ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords;
+    } else if($this->_group == 'products'){
+      $tag_parts_title =  $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix ;
+      $tag_parts_description .=  $meta_description ;
+      $tag_parts_keywords =  ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords ;
+    } else {
+      $tag_parts_title =  $meta_title_prefix . $meta_delimeter . $meta_title . $meta_delimeter . $meta_title_suffix;
+      $tag_parts_description =  $meta_description ;
+      $tag_parts_keywords =  $meta_keywords;
     }
 
-    return $tag_string . "\n";
+    $tag_string .= '<title>' . $tag_parts_title . '</title>' . "\n";
+    $tag_string .= '<meta name="description" content="' . $tag_parts_description . '">' . "\n";
+    $tag_string .= '<meta name="keywords" content="' . $tag_parts_keywords . '">' . "\n";
+    $tag_string .= '<meta name="generator" content="' . $this->_page_tags['generator'][0] . '">' . "\n";
+
+    return $tag_string;
   }
   /**
   * Return the box modules assigned to the page
@@ -894,6 +918,10 @@ class lC_Template {
       case 'social_linkedin':
       $data = $QbrandingData->value('social_linkedin');
       break;
+
+      case 'meta_delimeter':
+      $data = $QbrandingData->value('meta_delimeter');
+      break;
       
       case 'slogan':
       $data = $QbrandingLangData->value('slogan');
@@ -925,7 +953,6 @@ class lC_Template {
     }
     return $data;
   }
-  
   
 }
 ?>
