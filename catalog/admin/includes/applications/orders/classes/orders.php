@@ -586,12 +586,13 @@ class lC_Orders_Admin {
         lc_email($Qorder->value('customers_name'), $Qorder->value('customers_email_address'), sprintf($lC_Language->get('email_subject'), STORE_NAME), $email_body, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
       }
 
-      $Qupdate = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments)');
+      $Qupdate = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments, administrators_id) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments, :administrators_id)');
       $Qupdate->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
       $Qupdate->bindInt(':orders_id', $id);
       $Qupdate->bindInt(':orders_status_id', $data['status_id']);
       $Qupdate->bindInt(':customer_notified', ( $data['notify_customer'] === true ? '1' : '0'));
       $Qupdate->bindValue(':comments', $data['comment']);
+      $Qupdate->bindInt(':administrators_id', $_SESSION['admin']['id']);
       $Qupdate->setLogging($_SESSION['module'], $id);
       $Qupdate->execute();
 
