@@ -54,7 +54,12 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-3 col-lg-3">
-        <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><img alt="<?php echo STORE_NAME; ?>" src="<?php echo DIR_WS_IMAGES . 'branding/' . $lC_Template->getBranding('site_image'); ?>" /></a></h1>
+        <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>">
+          <?php if ($lC_Template->getBranding('site_image') != ''){
+              echo '<img alt="' . STORE_NAME . '" src="' . DIR_WS_IMAGES . 'branding/' . $lC_Template->getBranding('site_image') . '" /></a>';
+            } else { 
+              echo STORE_NAME; 
+        }?></h1>
         <?php if ($lC_Template->getBranding('slogan') != '') { ?>
           <p class="slogan clear-both"><?php echo $lC_Template->getBranding('slogan'); ?></p>
         <?php } ?>
