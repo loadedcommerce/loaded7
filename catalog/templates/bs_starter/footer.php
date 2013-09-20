@@ -55,7 +55,7 @@
     </div>               
     <?php echo $lC_Template->getBranding('footer_text');?>    
   </div>
-  <p class="text-right margin-top"><?php
+  <p class="margin-top"><?php
       if ($lC_Template->getBranding('social_facebook_page') != '') {
         echo '<a href="' . $lC_Template->getBranding('social_facebook_page') . '" target="_blank"><img alt="Facebook" src="' . DIR_WS_IMAGES . 'icons/facebook.png" /></a>';
       }
