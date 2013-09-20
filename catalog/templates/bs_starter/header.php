@@ -45,7 +45,12 @@
         <ul class="language-menu">
           <?php echo $lC_Template->getLanguageSelection(true, false, ''); ?>
         </ul>
-      </div>       
+      </div>   
+      <?php if ($lC_Template->getBranding('chat_code') != '') { ?>
+        <div class="pull-right mid-margin-top large-margin-right">
+          <?php echo $lC_Template->getBranding('chat_code'); ?>
+        </div>  
+      <?php } ?>    
     </div>
   </div>
 </div>

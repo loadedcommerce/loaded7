@@ -74,7 +74,7 @@
       if ($lC_Template->getBranding('social_linkedin') != '') {
         echo '<a href="' . $lC_Template->getBranding('social_linkedin') . '" target="_blank"><img alt="LinkedIn" src="' . DIR_WS_IMAGES . 'icons/linkedin.png" /></a>';
       }
-    ?><img style="border:0;width:88px;height:31px" alt="HTML5 Validator" src="http://upload.wikimedia.org/wikipedia/commons/b/bb/W3C_HTML5_certified.png"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!" />
+    ?><span class="float-right"><img style="border:0;width:88px;height:31px" alt="HTML5 Validator" src="http://upload.wikimedia.org/wikipedia/commons/b/bb/W3C_HTML5_certified.png"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!" /></span>
     </p>       
 </div>
 <!--footer.php end-->
