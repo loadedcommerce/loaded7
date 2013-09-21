@@ -511,6 +511,7 @@ class lC_Products_Admin {
       $images = array();
 
       $products_image = new upload('products_image');
+      
       $products_image->set_extensions(array('gif', 'jpg', 'jpeg', 'png'));
 
       if ( $products_image->exists() ) {
@@ -535,7 +536,7 @@ class lC_Products_Admin {
       }
 
       $default_flag = 1;
-
+      
       foreach ($images as $image) {
         $Qimage = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added) values (:products_id, :image, :default_flag, :sort_order, :date_added)');
         $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);

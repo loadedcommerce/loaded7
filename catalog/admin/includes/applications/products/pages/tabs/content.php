@@ -15,25 +15,31 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
 ?>
 <div id="section_general_content" class="with-padding">
   <div class="columns">
-    <?php if ($pInfo) { ?>
     <div class="new-row-mobile four-columns twelve-columns-mobile">
       <div class="twelve-columns">
         <span class="strong margin-right"><?php echo $lC_Language->get('text_product_image'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_image'), null); ?>   
         <div style="padding-left:6px;" class="small-margin-top">
-          <div id="imagePreviewContainer" class="prod-image align-center"></div>
-        </div>   
+          <div id="imagePreviewContainer" class="prod-image align-center">
+            <?php if (!$pInfo) { ?>
+            <div><img src="../images/no_image.png" style="max-width:100%;" /></div>
+            <div class="margin-top"><span class="input file"><span class="file-text"></span><span class="button compact">Select file</span><input type="file" class="file withClearFunctions" id="products_image" name="products_image"></span></div>
+            <?php } ?>
+          </div>
+        </div>
+        <?php if ($pInfo) { ?>   
         <p class="thin margin-top" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
-        <center style="margin-top:-12px;"><div id="fileUploaderImageContainer" class="small-margin-top">
-          <noscript>
-            <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
-          </noscript>
-        </div></center>        
+        <center style="margin-top:-12px;">
+          <div id="fileUploaderImageContainer" class="small-margin-top">
+            <noscript>
+              <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
+            </noscript>
+          </div>
+        </center>
+        <?php } ?>        
       </div>
     </div>
-    <?php } ?>
-    <div class="new-row-mobile <?php echo (isset($pInfo) ? 'eight' : 'twelve'); ?>-columns twelve-columns-mobile">             
+    <div class="new-row-mobile eight-columns twelve-columns-mobile">             
       <div class="columns">
-      
         <div id="languageTabs" class="standard-tabs no-margin-bottom" style="width:99%;">
           <ul class="tabs">
             <?php               
