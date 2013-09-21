@@ -1710,6 +1710,16 @@ Note: If you did not request this action via our password forgotten page, please
       <group>info</group>
     </definition>
     <definition>
+      <key>contact_text_support_email</key>
+      <value><![CDATA[Support Email:]]></value>
+      <group>info</group>
+    </definition>
+    <definition>
+      <key>contact_text_support_phone</key>
+      <value><![CDATA[Support Phone:]]></value>
+      <group>info</group>
+    </definition>
+    <definition>
       <key>sitemap_account</key>
       <value><![CDATA[My Account]]></value>
       <group>info</group>
