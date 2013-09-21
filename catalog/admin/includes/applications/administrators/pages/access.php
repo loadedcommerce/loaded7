@@ -28,9 +28,9 @@ $gID = (isset($_GET['gid']) && !empty($_GET['gid'])) ? preg_replace('/[^0-9\s]/'
     <?php
     $modulesArr = array();
     $accessArr = array();
-    $sliderOptions    = '{"size":false,"tooltip":false,"innerMarks":25,"step":25,"knob":true,"topMarks":[{"value":0,"label":"' . $lC_Language->get('text_none') . '"},{"value":25,"label":"' . $lC_Language->get('text_view') . '"},{"value":50,"label":"' . $lC_Language->get('text_insert') . '"},{"value":75,"label":"' . $lC_Language->get('text_update') . '"},{"value":100,"label":"' . $lC_Language->get('text_delete') . '"}],"insetExtremes":true,"barClasses":"blue-gradient black","classes":"float-right"}\'';
+    $sliderOptions    = '{"size":false,"tooltip":false,"innerMarks":25,"step":25,"knob":true,"topMarks":[{"value":0,"label":"' . $lC_Language->get('text_none') . '"},{"value":25,"label":"' . $lC_Language->get('text_view') . '"},{"value":50,"label":"' . $lC_Language->get('text_insert') . '"},{"value":75,"label":"' . $lC_Language->get('text_update') . '"},{"value":100,"label":"' . $lC_Language->get('text_delete') . '"}],"insetExtremes":true,"barClasses":"blue-gradient black","classes":"float-right"}';
  //   $genSliderOptions = '{"size":98,"tooltip":false,"innerMarks":25,"step":25,"knob":true,"topMarks":[{"value":0,"label":"' . $lC_Language->get('text_none') . '"},{"value":25,"label":"' . $lC_Language->get('text_view') . '"},{"value":50,"label":"' . $lC_Language->get('text_insert') . '"},{"value":75,"label":"' . $lC_Language->get('text_update') . '"},{"value":100,"label":"' . $lC_Language->get('text_delete') . '"}],"insetExtremes":true,"barClasses":"blue-gradient black"}\'';
-    $subSliderOptions = '{"size":false,"topLabel":false,"topMarks":false,"tooltip":false,"innerMarks":25,"step":25,"knob":true,"topMarks":[{"value":0,"label":"' . $lC_Language->get('text_none') . '"},{"value":25,"label":"' . $lC_Language->get('text_view') . '"},{"value":50,"label":"' . $lC_Language->get('text_insert') . '"},{"value":75,"label":"' . $lC_Language->get('text_update') . '"},{"value":100,"label":"' . $lC_Language->get('text_delete') . '"}],"insetExtremes":true,"barClasses":"orange-gradient","classes":"float-right"}\'';
+    $subSliderOptions = '{"size":false,"topLabel":false,"topMarks":false,"tooltip":false,"innerMarks":25,"step":25,"knob":true,"topMarks":[{"value":0,"label":"' . $lC_Language->get('text_none') . '"},{"value":25,"label":"' . $lC_Language->get('text_view') . '"},{"value":50,"label":"' . $lC_Language->get('text_insert') . '"},{"value":75,"label":"' . $lC_Language->get('text_update') . '"},{"value":100,"label":"' . $lC_Language->get('text_delete') . '"}],"insetExtremes":true,"barClasses":"orange-gradient","classes":"float-right"}';
     ?>
     <div id="newGroup">
       <div id="newGroupForm">
@@ -60,7 +60,8 @@ $gID = (isset($_GET['gid']) && !empty($_GET['gid'])) ? preg_replace('/[^0-9\s]/'
           </div>
           <div class="new-row twelve-columns small-margin-bottom"><p><hr></p></div>
           <?php
-          $cnt = 0;
+          $cnt = 0;          
+
           foreach(lC_Administrators_Admin::getAccessModules() as $key => $group) {
             $modulesArr[] = urlencode($key);
             if (strtolower($key) == 'access_group_hidden_title') continue;
@@ -77,9 +78,12 @@ $gID = (isset($_GET['gid']) && !empty($_GET['gid'])) ? preg_replace('/[^0-9\s]/'
                 <div class="with-padding div-details">
                   <div class="columns">
                     <?php
+
+
                     foreach ($group as $gkey => $value) {
                       $ref = strtolower($key) . '-' . $value['id'];
                       $ref = str_replace("'", "", $ref);
+                      $ref = str_replace(" ", "_", $ref);
                       $accessArr[] = urlencode($ref);
                       echo '<div class="twelve-columns"><label>
                           <span class="details-text"><small>' . $value['text'] . '</small></span>
