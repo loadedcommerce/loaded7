@@ -119,7 +119,9 @@
         $this->addOGPTags('title', $this->_page_title);
         $this->addOGPTags('description', $this->_page_title);
         $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, '', 'NONSSL',false,true,true));
-        $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . 'templates/' . $template_code . '/images/logo.png');
+        if($this->getBranding('og_image')){
+          $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . DIR_WS_IMAGES . '/branding/' . $this->getBranding('og_image'));
+        }
       }
     }
 
