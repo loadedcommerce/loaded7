@@ -423,19 +423,19 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       // remomve the active classes
       $('.oicb').removeClass('active');  
       if (type == '1') {
-      //  $('#inventory_control_simple').show('300');
-      //  $('#inventory_control_multi').hide('300');
+        $('#inventory_control_simple').show('300');
+        $('#inventory_control_multi').hide('300');
         $('label[for=\'ic_radio_1\']').addClass('active');
         $('label[for=\'ioc_radio_1\']').addClass('active'); 
-    //    $('#multiSkuContainer').hide();   
-     //   $('#simpleOptionsContainer').show();   
+        $('#multiSkuContainer').hide();   
+        $('#simpleOptionsContainer').show();   
       } else if (type == '2') {   
-      //  $('#inventory_control_simple').hide('300');
-      //  $('#inventory_control_multi').show('300');
+        $('#inventory_control_simple').hide('300');
+        $('#inventory_control_multi').show('300');
         $('label[for=\'ic_radio_1\']').addClass('active');
         $('label[for=\'ioc_radio_1\']').addClass('active'); 
-     //   $('#multiSkuContainer').show();   
-     //   $('#simpleOptionsContainer').hide();        
+        $('#multiSkuContainer').show();   
+        $('#simpleOptionsContainer').hide();        
       }
     }
 
