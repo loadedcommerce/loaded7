@@ -519,6 +519,17 @@ CREATE TABLE lc_orders_transactions_status (
   KEY idx_orders_transactions_status_name (status_name)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_permalinks;
+CREATE TABLE IF NOT EXISTS lc_permalinks (
+  permalink_id int(11) NOT NULL AUTO_INCREMENT,
+  item_id int(11) NOT NULL,
+  language_id int(11) NOT NULL DEFAULT '1',
+  `type` int(11) NOT NULL,
+  query varchar(255) NOT NULL,
+  permalink varchar(255) NOT NULL,
+  PRIMARY KEY (permalink_id,permalink)
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_products;
 CREATE TABLE lc_products (
   products_id int(11) NOT NULL AUTO_INCREMENT,
