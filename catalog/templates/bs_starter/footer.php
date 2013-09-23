@@ -60,7 +60,7 @@
       if ($lC_Template->getBranding('social_facebook_page') != '') {
         echo '<a href="' . $lC_Template->getBranding('social_facebook_page') . '" target="_blank"><img alt="Facebook" src="' . DIR_WS_IMAGES . 'icons/facebook.png" /></a>';
       }
-      if ($lC_Template->getBranding('social_twitter') != '') {
+      if ($lC_Template->getBranding('social_tweeter') != '') {
         echo '<a href="' . $lC_Template->getBranding('social_twitter') . '" target="_blank"><img alt="Twitter" src="' . DIR_WS_IMAGES . 'icons/twitter_bird.png" /></a>';
       }
       if ($lC_Template->getBranding('social_pinterest') != '') {
