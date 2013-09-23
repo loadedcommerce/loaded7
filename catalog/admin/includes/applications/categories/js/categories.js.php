@@ -66,25 +66,15 @@ $(document).ready(function() {
   }); 
   // instantiate breadcrumb
   $("#breadCrumb0").jBreadCrumb();
-
-  <?php if (!$_GET['action']) { ?>
-    if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {  
-      $('#floating-button-container').hide();
-    }
-  <?php } ?>
   
   if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
     $('#main-title > h1').attr('style', 'font-size:1.8em;');
     $('#main-title').attr('style', 'padding: 0 0 0 20px;');
     $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
     $('#dataTable_length').hide();
-    $('#floating-menu-div-listing').fixFloat();
     $('#actionText').hide();
     $('.on-mobile').show();
     $('.selectContainer').hide();
-  } else {
-    // instantiate floating menu
-    $('#floating-menu-div-listing').fixFloat();
   }
   <?php 
   if ($_GET['action'] != '') { 
