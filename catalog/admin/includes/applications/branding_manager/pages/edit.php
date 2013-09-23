@@ -98,7 +98,7 @@
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_branding_manager_logo'), 'margin-right:6px; margin-top:4px;'); ?> 
                 <div class="small-margin-top">
                   <div id="imagePreviewContainer" class="cat-image align-center">
-                    <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && isset($site_image) ? 'branding/' . $site_image : 'no-image.png');?>" style="max-width: 100%; height: auto;" align="center" />
+                    <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && !empty($site_image) ? 'branding/' . $site_image : 'no_image.png');?>" style="max-width: 100%; height: auto;" align="center" />
                     <input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="<?php echo (isset($bInfo) && isset($site_image) ? $site_image : '');?>">
                   </div>
                 </div>  
@@ -170,7 +170,7 @@
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_open_graph_site_thumbnail'), 'margin-right:6px; margin-top:4px;'); ?> 
                 <div class="small-margin-top">
                   <div id="ogimagePreviewContainer" class="cat-image align-center">
-                    <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && isset($og_image) ? 'branding/' . $og_image : 'no-image.png');?>" style="max-width: 100%; height: auto;" align="center" />
+                    <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && isset($og_image) ? 'branding/' . $og_image : 'no_image.png');?>" style="max-width: 100%; height: auto;" align="center" />
                     <input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="<?php echo (isset($bInfo) && isset($og_image) ? $og_image : 'no-image.png'); ?>">
                   </div>
                 </div>
