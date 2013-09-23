@@ -172,9 +172,13 @@
 }
 
 #loaded7 .logo { 
-  margin-left:10px; 
-  margin-top:-15px; 
+  /*margin-left:10px; */
+  margin-top:-5px; 
 }
+
+#loaded7 .logo a {
+  text-decoration: none;
+} 
 
 /* box modules */
 #loaded7 .product_notifications-image { 

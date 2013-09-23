@@ -59,12 +59,17 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-3 col-lg-3">
-        <h1 class="logo"><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>">
-          <?php if ($lC_Template->getBranding('site_image') != ''){
-              echo '<img alt="' . STORE_NAME . '" src="' . DIR_WS_IMAGES . 'branding/' . $lC_Template->getBranding('site_image') . '" /></a>';
+        <h1 class="logo">
+          <a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>">
+          <?php 
+            if ($lC_Template->getBranding('site_image') != '') {
+              echo '<img alt="' . STORE_NAME . '" src="' . DIR_WS_IMAGES . 'branding/' . $lC_Template->getBranding('site_image') . '" />';
             } else { 
               echo STORE_NAME; 
-        }?></h1>
+            }
+          ?>
+          </a>
+        </h1>
         <?php if ($lC_Template->getBranding('slogan') != '') { ?>
           <p class="slogan clear-both"><?php echo $lC_Template->getBranding('slogan'); ?></p>
         <?php } ?>
@@ -81,22 +86,25 @@
           </div>  
           <div class="col-sm-4 col-lg-4">
             <p class="text-right margin-top">
-              <div>
-                <?php
+              <?php
+                if ($lC_Template->getBranding('sales_email') != '' || $lC_Template->getBranding('sales_phone') != '') {
+                  echo '<div>';
                   if ($lC_Template->getBranding('sales_email') != '') {
                     echo $lC_Template->getBranding('sales_email');
                   }
                   if ($lC_Template->getBranding('sales_phone') != '') {
                     echo ' | ' . $lC_Template->getBranding('sales_phone');
                   }
-              ?></div>
+                  echo '</div>';
+                }
+              ?>
               <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'cart', 'NONSSL'); ?>">View Cart</a> | Total: <?php echo $lC_Currencies->format($lC_ShoppingCart->getSubTotal()); ?> (<?php echo $lC_ShoppingCart->numberOfItems(); ?>)
             </p>
           </div>
         </div>
       </div>       
     </div>
-    <div class="row">
+    <div class="row small-margin-top">
       <?php
       if ($lC_Services->isStarted('breadcrumb')) {
         echo '<ol class="breadcrumb">' . $lC_Breadcrumb->getPathList() . '</ol>' . "\n";
