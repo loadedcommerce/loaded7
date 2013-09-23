@@ -99,7 +99,7 @@
                 <div class="small-margin-top">
                   <div id="imagePreviewContainer" class="cat-image align-center">
                     <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && isset($site_image) ? 'branding/' . $site_image : 'no-image.png');?>" style="max-width: 100%; height: auto;" align="center" />
-                    <input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="<?php echo (isset($bInfo) && isset($site_image) ? $site_image : 'no-image.png');?>">
+                    <input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="">
                   </div>
                 </div>  
                 <p class="thin mid-margin-top" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
