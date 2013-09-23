@@ -39,14 +39,14 @@
                 <address>
                   <?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?>                
                 </address>
-                <div class="btn-group clearfix absolute-top-right">
+                <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
                   <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                 </div>
               </div>
               <div class="well relative clearfix small-padding-top small-padding-bottom"> 
                 <h4><?php echo $lC_Language->get('shipping_method_heading'); ?></h4>
                 <p><?php echo $lC_ShoppingCart->getShippingMethod('title'); ?></p>
-                <div class="btn-group clearfix absolute-top-right">
+                <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
                   <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                 </div>                  
               </div>   
@@ -55,17 +55,18 @@
                 <address>
                   <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>                
                 </address>
-                <div class="btn-group clearfix absolute-top-right">
+                <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
                   <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                 </div>
               </div>
               <div class="well relative clearfix small-padding-top small-padding-bottom"> 
                 <h4><?php echo $lC_Language->get('payment_method_heading'); ?></h4>
                 <p><?php echo $lC_ShoppingCart->getBillingMethod('title'); ?></p>
-                <div class="btn-group clearfix absolute-top-right">
+                <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
                   <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                 </div>                  
-              </div>       
+              </div>
+              <form name="checkout_confirmation" id="checkout_confirmation" action="<?php echo ($lC_Payment->hasActionURL()) ? $lC_Payment->getActionURL() : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL'); ?>" method="post">       
               <div class="well relative clearfix small-padding-top small-padding-bottom"> 
                 <h4><?php echo $lC_Language->get('order_comment_title'); ?></h4>
                 <div class="form-group">
@@ -144,21 +145,18 @@
               </div>              
               <?php 
               /* ppec inject: we will be moving this to the addon */ 
-              if (isset($_SESSION['PPEC_PROCESS']['LINK']) && $_SESSION['PPEC_PROCESS']['LINK'] != NULL) $form_action_url = $_SESSION['PPEC_PROCESS']['LINK']; ?>
-              
-              <form name="checkout_confirmation" id="checkout_confirmation" action="<?php echo ($lC_Payment->hasActionURL()) ? $lC_Payment->getActionURL() : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL'); ?>" method="post">
-                <?php 
-                if ($lC_Payment->hasActive()) echo $lC_Payment->process_button();                 
-                if (DISPLAY_CONDITIONS_ON_CHECKOUT == '1') {
-                  ?>     
-                  <div class="well padding-top padding-bottom large-margin-top">
-                    <div class="checkbox">
-                      <?php echo lc_draw_checkbox_field('conditions', array(array('id' => 1, 'text' => $lC_Language->get('order_conditions_acknowledge'))), false); ?>
-                    </div>
-                  </div>                    
-                  <?php
-                }
-                ?>
+              if (isset($_SESSION['PPEC_PROCESS']['LINK']) && $_SESSION['PPEC_PROCESS']['LINK'] != NULL) $form_action_url = $_SESSION['PPEC_PROCESS']['LINK'];
+              if ($lC_Payment->hasActive()) echo $lC_Payment->process_button();                 
+              if (DISPLAY_CONDITIONS_ON_CHECKOUT == '1') {
+                ?>     
+                <div class="well padding-top padding-bottom large-margin-top">
+                  <div class="checkbox">
+                    <?php echo lc_draw_checkbox_field('conditions', array(array('id' => 1, 'text' => $lC_Language->get('order_conditions_acknowledge'))), false); ?>
+                  </div>
+                </div>                    
+                <?php
+              }
+              ?>
               </form>
               <div class="btn-set clearfix">
                 <button id="content-checkout-confirmation-confirm-button" class="btn btn-lg btn-success pull-right" onclick="$('#checkout_confirmation').submit();" type="button"><?php echo $lC_Language->get('button_confirm_order'); ?></button>
