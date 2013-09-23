@@ -76,7 +76,7 @@
                     ?>
                   </address>    
                   <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
-                    <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>'" class="btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
+                    <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                   </div>                                       
                 </div>
                 <h3 class="no-margin-top"><?php echo $lC_Language->get('payment_method_title'); ?></h3>
