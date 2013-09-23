@@ -108,38 +108,6 @@ CREATE TABLE lc_banners_history (
   PRIMARY KEY (banners_history_id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-DROP TABLE IF EXISTS lc_branding;
-CREATE TABLE IF NOT EXISTS lc_branding (
-  language_id int(11) NOT NULL DEFAULT '1',
-  slogan varchar(256) NOT NULL DEFAULT '',
-  meta_description varchar(250) NOT NULL DEFAULT '',
-  meta_keywords varchar(128) NOT NULL DEFAULT '',
-  meta_title varchar(128) NOT NULL DEFAULT '',
-  meta_title_prefix varchar(128) NOT NULL,
-  meta_title_suffix varchar(128) NOT NULL,
-  footer_text varchar(256) NOT NULL DEFAULT '',
-  PRIMARY KEY (language_id)
-) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
- 
- 
-DROP TABLE IF EXISTS lc_branding_data;
-CREATE TABLE IF NOT EXISTS lc_branding_data (
-  site_image varchar(128) NOT NULL DEFAULT '',
-  chat_code varchar(8192) NOT NULL DEFAULT '',
-  support_phone varchar(16) NOT NULL DEFAULT '',
-  support_email varchar(128) NOT NULL DEFAULT '',
-  sales_phone varchar(16) NOT NULL DEFAULT '',
-  sales_email varchar(128) NOT NULL DEFAULT '',
-  og_image varchar(128) NOT NULL DEFAULT '',
-  meta_delimeter varchar(128) NOT NULL DEFAULT '',
-  social_facebook_page varchar(128) NOT NULL,
-  social_twitter varchar(128) NOT NULL,
-  social_pinterest varchar(128) NOT NULL,
-  social_google_plus varchar(128) NOT NULL,
-  social_youtube varchar(128) NOT NULL,
-  social_linkedin varchar(128) NOT NULL
-) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
-
 DROP TABLE IF EXISTS lc_categories;
 CREATE TABLE lc_categories (
   categories_id int(11) NOT NULL AUTO_INCREMENT,
@@ -166,6 +134,7 @@ CREATE TABLE IF NOT EXISTS lc_categories_description (
   categories_menu_name varchar(255) DEFAULT NULL,
   categories_blurb mediumtext,
   categories_description text,
+  categories_keyword text,
   categories_tags varchar(255) DEFAULT NULL,
   PRIMARY KEY (categories_id,language_id),
   KEY idx_categories_name (categories_name)
@@ -500,7 +469,6 @@ CREATE TABLE lc_orders_status (
   orders_status_id int(11) NOT NULL,
   language_id int(11) NOT NULL DEFAULT '1',
   orders_status_name varchar(255) NOT NULL,
-  orders_status_type enum('Pending', 'Approved', 'Rejected') NOT NULL,
   PRIMARY KEY (orders_status_id,language_id),
   KEY idx_orders_status_name (orders_status_name)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -548,17 +516,6 @@ CREATE TABLE lc_orders_transactions_status (
   status_name varchar(255) NOT NULL,
   PRIMARY KEY (id,language_id),
   KEY idx_orders_transactions_status_name (status_name)
-) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
-
-DROP TABLE IF EXISTS lc_permalinks;
-CREATE TABLE IF NOT EXISTS lc_permalinks (
-  permalink_id int(11) NOT NULL AUTO_INCREMENT,
-  item_id int(11) NOT NULL,
-  language_id int(11) NOT NULL DEFAULT '1',
-  `type` int(11) NOT NULL,
-  query varchar(255) NOT NULL,
-  permalink varchar(255) NOT NULL,
-  PRIMARY KEY (permalink_id,permalink)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products;
@@ -6025,6 +5982,7 @@ INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (239,'MS','M
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (239,'MV','Masvingo');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (239,'MW','Mashonaland West');
 
+
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(1, 'American Express', '/^(34|37)\\d{13}$/', '1', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(2, 'Diners Club', '/^(30|36|38)\\d{12}$/', '0', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(3, 'JCB', '/^((2131|1800)\\d{11}|3[0135]\\d{14})$/', '0', 0);
@@ -6048,10 +6006,10 @@ INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_grou
 
 INSERT INTO lc_languages (languages_id, `name`, code, locale, `charset`, date_format_short, date_format_long, time_format, text_direction, currencies_id, numeric_separator_decimal, numeric_separator_thousands, parent_id, sort_order) VALUES(1, 'English', 'en_US', 'en_US.UTF-8,en_US,english', 'utf-8', '%m/%d/%Y', '%A %B %d, %Y at %H:%M', '%H:%M:%S', 'ltr', 1, '.', ',', 0, 10);
 
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(1, 1, 'Pending', 'Pending');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(2, 1, 'Processing', 'Pending');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(3, 1, 'Preparing', 'Pending');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(4, 1, 'Delivered', 'Approved');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(1, 1, 'Pending');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(2, 1, 'Processing');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(3, 1, 'Preparing');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(4, 1, 'Delivered');
 
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(1, 1, 'Authorize');
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(2, 1, 'Cancel');
@@ -6066,9 +6024,6 @@ INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width,
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 550, 650, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(7, 1, 'Small', 'small', 100, 120, 0);
 
-INSERT INTO shipping_availability (id, languages_id, title, css_key) VALUES(1, 1, 'Ships within 24 hours.', 'ships24hours');
-INSERT INTO shipping_availability (id, languages_id, title, css_key) VALUES(2, 1, 'Ships within 48 hours.', '2days');
-INSERT INTO shipping_availability (id, languages_id, title, css_key) VALUES(3, 1, 'Ships within 72 hours.', '3days');
 
 INSERT INTO lc_tax_class VALUES (1, 'Taxable Goods', 'The following types of products are included non-food, services, etc', now(), now());
 
