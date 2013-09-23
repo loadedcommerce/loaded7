@@ -469,6 +469,7 @@ CREATE TABLE lc_orders_status (
   orders_status_id int(11) NOT NULL,
   language_id int(11) NOT NULL DEFAULT '1',
   orders_status_name varchar(255) NOT NULL,
+  orders_status_type enum('Pending','Approved','Rejected') NOT NULL,
   PRIMARY KEY (orders_status_id,language_id),
   KEY idx_orders_status_name (orders_status_name)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
