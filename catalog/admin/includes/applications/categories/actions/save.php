@@ -21,10 +21,6 @@
       $this->_page_contents = 'edit.php'; 
 
       if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
-        //echo '<pre>';
-        //print_r($_POST);
-        //echo '<pre>';
-        //die('before $data');
         switch ( $_GET['action'] ) {
           case 'save':  
             $data = array('image' => (isset($_POST['categories_image']) ? $_POST['categories_image'] : null),

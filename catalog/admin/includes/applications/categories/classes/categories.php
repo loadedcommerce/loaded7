@@ -170,6 +170,11 @@ class lC_Categories_Admin {
 
     $lC_Database->startTransaction();
 
+    //echo '<pre>';
+    //print_r($data);
+    //echo '<pre>';
+    //die('after $data');
+        
     if ( is_numeric($id) ) {
       $Qcat = $lC_Database->query('update :table_categories set categories_image = :categories_image, parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_status = :categories_status, categories_visibility_nav = :categories_visibility_nav, categories_visibility_box = :categories_visibility_box, last_modified = now() where categories_id = :categories_id');
       $Qcat->bindInt(':categories_id', $id);
@@ -221,7 +226,7 @@ class lC_Categories_Admin {
         
         // added for permalink
         if ($data['permalink'][$l['id']] != 'no-permalink') {
-          if (is_numeric($id) && lC_Categories_Admin::validatePermalink(array($data['permalink'][$l['id']]), $category_id, 1) != 1) {
+          if (is_numeric($id) && lC_Categories_Admin::validatePermalink(array($data['permalink'][$l['id']]), $category_id, 1) == 1) {
             $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink where item_id = :item_id and type = :type and language_id = :language_id');
           } else {
             $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
@@ -693,7 +698,7 @@ class lC_Categories_Admin {
       if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
       if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type) > 0) $validated = false;
     }
-
+    
     return $validated;
   }
                           

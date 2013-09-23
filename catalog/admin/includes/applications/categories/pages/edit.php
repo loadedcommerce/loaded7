@@ -143,19 +143,19 @@
                         <?php } ?>
                       </p>
                       <br />
-                      <p class="button-height block-label">
-                        <label class="label" for="<?php echo 'categories_tags[' . $l['id'] . ']'; ?>">
-                          <?php echo $lC_Language->get('field_tags'); ?>
-                          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_tags'), null); ?>
-                        </label>
-                        <?php echo lc_draw_input_field('categories_tags[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_tags[$l['id']]) ? $categories_tags[$l['id']] : null), 'class="input full-width mid-margin-top"'); ?>
-                      </p>
                       <p class="button-height block-label"<?php echo ($lC_ObjectInfo->get('categories_mode') != 'category' && $lC_ObjectInfo->get('categories_mode') != 'page') ? ' style="display:none;"' : ''; ?>>
                         <label class="label" for="<?php echo 'categories_permalink[' . $l['id'] . ']'; ?>">
                           <?php echo $lC_Language->get('field_permalink'); ?>
                           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_permalink'), null); ?>
                         </label>
                         <?php echo lc_draw_input_field('categories_permalink[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_permalink[$l['id']]) ? $categories_permalink[$l['id']] : null), 'class="required input full-width mid-margin-top" onblur="validatePermalink(this.value);" id="categories_permalink_' . $l['id'] . '"'); ?>
+                      </p>
+                      <p class="button-height block-label">
+                        <label class="label" for="<?php echo 'categories_tags[' . $l['id'] . ']'; ?>">
+                          <?php echo $lC_Language->get('field_tags'); ?>
+                          <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_tags'), null); ?>
+                        </label>
+                        <?php echo lc_draw_input_field('categories_tags[' . $l['id'] . ']', (isset($lC_ObjectInfo) && isset($categories_tags[$l['id']]) ? $categories_tags[$l['id']] : null), 'class="input full-width mid-margin-top"'); ?>
                       </p>
                     </div>
                     <div class="clear-both"></div>
