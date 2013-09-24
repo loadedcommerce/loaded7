@@ -108,38 +108,6 @@ CREATE TABLE lc_banners_history (
   PRIMARY KEY (banners_history_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-DROP TABLE IF EXISTS lc_branding;
-CREATE TABLE IF NOT EXISTS lc_branding (
-  language_id int(11) NOT NULL DEFAULT '1',
-  slogan varchar(256) NOT NULL DEFAULT '',
-  meta_description varchar(250) NOT NULL DEFAULT '',
-  meta_keywords varchar(128) NOT NULL DEFAULT '',
-  meta_title varchar(128) NOT NULL DEFAULT '',
-  meta_title_prefix varchar(128) NOT NULL,
-  meta_title_suffix varchar(128) NOT NULL,
-  footer_text varchar(256) NOT NULL DEFAULT '',
-  PRIMARY KEY (language_id)
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
- 
- 
-DROP TABLE IF EXISTS lc_branding_data;
-CREATE TABLE IF NOT EXISTS lc_branding_data (
-  site_image varchar(128) NOT NULL DEFAULT '',
-  chat_code varchar(8192) NOT NULL DEFAULT '',
-  support_phone varchar(16) NOT NULL DEFAULT '',
-  support_email varchar(128) NOT NULL DEFAULT '',
-  sales_phone varchar(16) NOT NULL DEFAULT '',
-  sales_email varchar(128) NOT NULL DEFAULT '',
-  og_image varchar(128) NOT NULL DEFAULT '',
-  meta_delimeter varchar(128) NOT NULL DEFAULT '',
-  social_facebook_page varchar(128) NOT NULL,
-  social_twitter varchar(128) NOT NULL,
-  social_pinterest varchar(128) NOT NULL,
-  social_google_plus varchar(128) NOT NULL,
-  social_youtube varchar(128) NOT NULL,
-  social_linkedin varchar(128) NOT NULL
-) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
-
 DROP TABLE IF EXISTS lc_categories;
 CREATE TABLE lc_categories (
   categories_id int(11) NOT NULL AUTO_INCREMENT,
@@ -501,6 +469,7 @@ CREATE TABLE lc_orders_status (
   orders_status_id int(11) NOT NULL,
   language_id int(11) NOT NULL DEFAULT '1',
   orders_status_name varchar(255) NOT NULL,
+  orders_status_type enum('Pending','Approved','Rejected') NOT NULL,
   PRIMARY KEY (orders_status_id,language_id),
   KEY idx_orders_status_name (orders_status_name)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -6049,10 +6018,10 @@ INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_grou
 
 INSERT INTO lc_languages (languages_id, `name`, code, locale, `charset`, date_format_short, date_format_long, time_format, text_direction, currencies_id, numeric_separator_decimal, numeric_separator_thousands, parent_id, sort_order) VALUES(1, 'English', 'en_US', 'en_US.UTF-8,en_US,english', 'utf-8', '%m/%d/%Y', '%A %B %d, %Y at %H:%M', '%H:%M:%S', 'ltr', 1, '.', ',', 0, 10);
 
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(1, 1, 'Pending');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(2, 1, 'Processing');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(3, 1, 'Preparing');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(4, 1, 'Delivered');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(1, 1, 'Pending', 'Pending');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(2, 1, 'Processing', 'Pending');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(3, 1, 'Preparing', 'Pending');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(4, 1, 'Delivered', 'Approved');
 
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(1, 1, 'Authorize');
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(2, 1, 'Cancel');
