@@ -23,16 +23,12 @@
       if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
         switch ( $_GET['action'] ) {
           case 'save':  
-            $data = array('oid' => $_POST['oid'],
-                          'status' => $_POST['status'],
-                          'comment' => $_POST['comment'],
-                          'notify_customer' => (isset($_POST['notify_customer']) && $_POST['notify_customer'] == 1 ? true : false),
-                          'append_comment' => (isset($_POST['append_comment']) && $_POST['append_comment'] == 1 ? true : false));
+           $data = array('oid' => $_POST['oid'],
+                         'status' => $_POST['status'],
+                         'comment' => $_POST['comment'],
+                         'notify_customer' => (isset($_POST['notify_customer']) && $_POST['notify_customer'] == 1 ? true : false),
+                         'append_comment' => (isset($_POST['append_comment']) && $_POST['append_comment'] == 1 ? true : false));
                           
-           //echo '<pre>';
-           //print_r($data);
-           //echo '</pre>';
-           //die();
            /*
             * Update the order status
             *

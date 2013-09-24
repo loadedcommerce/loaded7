@@ -1,5 +1,4 @@
 <?php
-<?php
 /**
   $Id: process.php v1.0 2013-01-01 datazen $
 

@@ -439,6 +439,7 @@ class lC_Orders_Admin {
       $result['orderStatusHistoryData'][$oshcnt]['admin_name'] = $status_history['admin_name'];
       $result['orderStatusHistoryData'][$oshcnt]['admin_image'] = $status_history['admin_image'];
       $result['orderStatusHistoryData'][$oshcnt]['admin_id'] = $status_history['admin_id'];
+      $result['orderStatusHistoryData'][$oshcnt]['append_comment'] = $status_history['append_comment'];
       $oshcnt++;
     }
     // build the order status array
@@ -586,13 +587,14 @@ class lC_Orders_Admin {
         lc_email($Qorder->value('customers_name'), $Qorder->value('customers_email_address'), sprintf($lC_Language->get('email_subject'), STORE_NAME), $email_body, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
       }
 
-      $Qupdate = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments, administrators_id) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments, :administrators_id)');
+      $Qupdate = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments, administrators_id, append_comment) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments, :administrators_id, :append_comment)');
       $Qupdate->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
       $Qupdate->bindInt(':orders_id', $id);
       $Qupdate->bindInt(':orders_status_id', $data['status_id']);
       $Qupdate->bindInt(':customer_notified', ( $data['notify_customer'] === true ? '1' : '0'));
       $Qupdate->bindValue(':comments', $data['comment']);
       $Qupdate->bindInt(':administrators_id', $_SESSION['admin']['id']);
+      $Qupdate->bindInt(':append_comment', $data['append_comment']);
       $Qupdate->setLogging($_SESSION['module'], $id);
       $Qupdate->execute();
 
@@ -602,7 +604,6 @@ class lC_Orders_Admin {
     } else {
       $error = true;
     }
-
     if ( $error === false ) {
       $lC_Database->commitTransaction();
       // build and return the udpated status history
@@ -617,7 +618,6 @@ class lC_Orders_Admin {
                      </tr>';
       }
       $result['orderStatusHistory'] = $history;
-
       return $result;
     }
 
@@ -657,11 +657,11 @@ class lC_Orders_Admin {
     $data = lC_Orders_Admin::getInfo($id);
     foreach ($data['orderStatusHistoryData'] as $oshData) {
       if ($oshData['comment'] != '') {
-        $ocData .= '<div class="with-small-padding bbottom-grey' . (($oshData['customer_notified'] == 1) ? ' silver-bg' : ' grey-bg') . '">
+        $ocData .= '<div class="with-small-padding bbottom-grey' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
                       <div class="small-margin-top">
-                        <span class="float-right with-min-padding small-margin-right' . (($oshData['customer_notified'] == 1) ? ' green-bg' : ' anthracite-bg') . '">' . (($oshData['customer_notified'] == 1) ? $lC_Language->get('text_comment') : $lC_Language->get('text_note')) . '</span>
+                        <span class="float-right with-min-padding small-margin-right' . (($oshData['admin_id'] == null) ? ' green-bg' : (($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg')) . '">' . (($oshData['admin_id'] == null) ? $lC_Language->get('text_order_comment') : (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'))) . '</span>
                         <span class="small-margin-left float-left">
-                          ' . (($oshData['admin_image'] != '') ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Comment by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right"></span>') . '
+                          ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
                         </span>
                         <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small>
                       </div>

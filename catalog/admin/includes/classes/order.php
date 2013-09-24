@@ -118,7 +118,7 @@
 
       $history_array = array();
 
-      $Qhistory = $lC_Database->query('select osh.orders_status_id, osh.date_added, osh.customer_notified, osh.comments, os.orders_status_name, osh.administrators_id from :table_orders_status_history osh left join :table_orders_status os on (osh.orders_status_id = os.orders_status_id and os.language_id = :language_id) where osh.orders_id = :orders_id order by osh.date_added');
+      $Qhistory = $lC_Database->query('select osh.orders_status_id, osh.date_added, osh.customer_notified, osh.comments, os.orders_status_name, osh.administrators_id, osh.append_comment from :table_orders_status_history osh left join :table_orders_status os on (osh.orders_status_id = os.orders_status_id and os.language_id = :language_id) where osh.orders_id = :orders_id order by osh.date_added');
       $Qhistory->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
       $Qhistory->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
 
@@ -141,7 +141,8 @@
                                  'comment' => $Qhistory->valueProtected('comments'),
                                  'admin_name' => $QhAdmin->value('first_name') . ' ' . $QhAdmin->value('last_name'),
                                  'admin_image' => $QhAdmin->value('image'),
-                                 'admin_id' => $Qhistory->valueInt('administrators_id'));
+                                 'admin_id' => $Qhistory->valueInt('administrators_id'),
+                                 'append_comment' => $Qhistory->valueInt('append_comment'));
       }
 
       $this->_status_history = $history_array;
