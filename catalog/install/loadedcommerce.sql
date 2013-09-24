@@ -6036,6 +6036,10 @@ INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width,
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 550, 650, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(7, 1, 'Small', 'small', 100, 120, 0);
 
+INSERT INTO lc_shipping_availability (id, languages_id, title, css_key) VALUES(1, 1, 'Ships within 24 hours.', 'ships24hours');
+INSERT INTO lc_shipping_availability (id, languages_id, title, css_key) VALUES(2, 1, 'Ships within 48 hours.', 'ships48hours');
+INSERT INTO lc_shipping_availability (id, languages_id, title, css_key) VALUES(3, 1, 'Ships within 72 hours.', 'ships72hours');
+
 INSERT INTO lc_tax_class VALUES (1, 'Taxable Goods', 'The following types of products are included non-food, services, etc', now(), now());
 
 # USA/Florida
