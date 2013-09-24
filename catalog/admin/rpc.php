@@ -14,6 +14,8 @@
 header('Cache-Control: no-cache, must-revalidate');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 
+ini_set('display_errors', 1);
+
 require('includes/application_top.php');
 require($lC_Vqmod->modCheck('includes/classes/template.php'));
 
@@ -62,7 +64,7 @@ if ( empty($_GET) && $_GET['action'] != 'validateLogin') {
   $_module = lc_sanitize_string(basename(key($first_array)));
 
   
-  if ( !lC_Access::hasAccess($_module) && $_GET['action'] != 'validateLogin' ) {
+  if ( !lC_Access::hasAccess($_module) && $_GET['action'] != 'validateLogin' && !isset($_GET['addon'])) {
     echo json_encode(array('rpcStatus' => RPC_STATUS_NO_ACCESS));
     exit;
   }
@@ -76,6 +78,7 @@ if ( empty($_GET) && $_GET['action'] != 'validateLogin') {
   }  
   
   if ($action != 'search') {
+    
     if ( file_exists('includes/applications/' . $_module . '/classes/' . $class . '.php')) {
       include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/classes/' . $class . '.php'));
       if ( method_exists('lC_' . ucfirst($_module) . '_Admin_' . $class, $action) ) {
@@ -85,10 +88,27 @@ if ( empty($_GET) && $_GET['action'] != 'validateLogin') {
         echo json_encode(array('rpcStatus' => RPC_STATUS_METHOD_NONEXISTENT . ': lC_' . ucfirst($_module) . '_Admin_' . $class . ' ' . $stat));
         exit;
       }
+    } else if (isset($_GET['addon']) && empty($_GET['addon']) === false) { //addons
+    
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $_GET['addon'] . '/admin/applications/' . $_module . '/classes/' . $class . '.php')) {
+        include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/' . $_GET['addon'] . '/admin/applications/' . $_module . '/classes/' . $class . '.php'));
+        if ( method_exists('lC_' . ucfirst($_module) . '_Admin_' . $class, $action) ) {
+          call_user_func(array('lC_' . ucfirst($_module) . '_Admin_' . $class, $action));
+          exit;
+        } else {
+          echo json_encode(array('rpcStatus' => RPC_STATUS_METHOD_NONEXISTENT . ': lC_' . ucfirst($_module) . '_Admin_' . $class . ' ' . $stat));
+          exit;
+        }
+      } else {
+        echo json_encode(array('rpcStatus' => RPC_STATUS_ACTION_NONEXISTENT . ': includes/applications/' . $_module . '/classes/' . $class . '.php'));
+        exit;
+      }    
+    
     } else {
       echo json_encode(array('rpcStatus' => RPC_STATUS_ACTION_NONEXISTENT . ': includes/applications/' . $_module . '/classes/' . $class . '.php'));
       exit;
     }  
+    
   } else {
     $_module = 'general';
     if ( file_exists('templates/default/classes/' . $class . '.php')) {

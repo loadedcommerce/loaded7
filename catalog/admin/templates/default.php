@@ -153,10 +153,14 @@
   
   // load the main content
   if ($lC_Template->isAuthorized($lC_Template->getModule())) {
-    require($lC_Vqmod->modCheck('includes/applications/' . $lC_Template->getModule() . '/pages/' . $lC_Template->getPageContentsFilename()));
+    if (lC_Addons_Admin::hasAdminPage($lC_Template->getModule(), $lC_Template->getPageContentsFilename())) {
+      require($lC_Vqmod->modCheck(lC_Addons_Admin::getAdminPage($lC_Template->getModule(), $lC_Template->getPageContentsFilename())));
+    } else {
+      require($lC_Vqmod->modCheck('includes/applications/' . $lC_Template->getModule() . '/pages/' . $lC_Template->getPageContentsFilename()));
+    }
   } else {
     // not authorized to view
-    require($lC_Vqmod->modCheck('includes/applications/error_pages/pages/main.php'));
+    require($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/error_pages/pages/main.php'));
   }
 
   if ($lC_Template->hasPageWrapper()) {

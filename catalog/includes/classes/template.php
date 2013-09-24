@@ -41,7 +41,7 @@ class lC_Template {
   * @var string
   * @access protected
   */
-  protected $_module;
+  protected $_module; 
   /**
   * Holds the group name of the page
   *

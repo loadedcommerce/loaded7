@@ -280,6 +280,9 @@ text_disable_category = Click to disable Category
 text_enable_coupon = Click to Enable Coupon
 text_disable_coupon = Click to Disable Coupon
 
+text_enable = Click to Enable
+text_disable = Click to Disable
+
 update_message_title = Updates are Available!
 update_message_text1 = New version
 update_message_text2 = released.
