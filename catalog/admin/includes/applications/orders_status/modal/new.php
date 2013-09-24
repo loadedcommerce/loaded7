@@ -11,7 +11,6 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-
 $typesSelectArr[] = array('id' => 'Pending', 'text' => "Pending");
 $typesSelectArr[] = array('id' => 'Approved', 'text' => "Approved");
 $typesSelectArr[] = array('id' => 'Rejected', 'text' => "Rejected");
