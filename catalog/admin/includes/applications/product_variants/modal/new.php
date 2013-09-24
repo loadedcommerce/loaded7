@@ -44,7 +44,7 @@ function newGroup() {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="module" class="label" style="width:30%;"><?php echo $lC_Language->get('field_display_module'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('module', null, null, 'class="select" style=width:73%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('module', null, null, 'class="input with-small-padding" style=width:73%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="sort_order" class="label" style="width:30%;"><?php echo $lC_Language->get('field_sort_order'); ?></label>'+
