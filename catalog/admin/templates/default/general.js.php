@@ -151,6 +151,11 @@ $(document).ready(function() {
     });
     // when a key is pressed 
     $("*").keypress(function(e){
+      // check to see if input is datatables search
+      var attr = $("#batch input").attr('aria-controls');
+      if (attr) {
+        disableKeyCombo = true;
+      }
       // if the disable var is false we continue
       if (!disableKeyCombo == true) {
         // first check if the escape key has been presed

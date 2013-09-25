@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>addon_payment_globaliris_title</key>
+      <value><![CDATA[Global Iris Payments]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>addon_payment_globaliris_description</key>
+      <value><![CDATA[Global Iris offers a simple, convenient and secure way to process online - Card Not Present (CNP) payments for Internet, telephone and mail order transactions, whilst containing the tools to help you manage and greatly reduce fraud.]]></value>
+      <group>checkout</group>
+    </definition>    
+    <definition>
+      <key>payment_globaliris_title</key>
+      <value><![CDATA[Global Iris Payments]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>payment_globaliris_method_title</key>
+      <value><![CDATA[Credit Card]]></value>
+      <group>checkout</group>
+    </definition>   
+    <definition>
+      <key>payment_globaliris_method_blurb</key>
+      <value><![CDATA[powered by <img src="addons/Global_Iris_Payments/images/iris-small.png" alt="Global Iris Payments" style="vertical-align:middle">]]></value>
+      <group>checkout</group>
+    </definition>      
+  </definitions>
+</language>

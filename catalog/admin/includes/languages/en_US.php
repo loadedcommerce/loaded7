@@ -48,6 +48,7 @@ button_add = Add
 button_add_new = Add New
 button_approve = Approve
 button_back = Back
+button_back_to_list = Back to List
 button_backup = Backup
 button_cancel = Cancel
 button_close = Close
@@ -304,3 +305,9 @@ text_expire_date = To
 text_purchase_over = Minimum Purchase
 text_free_shipping = Free Shipping
 text_free_product = Free Product
+
+text_actions = Actions
+text_print_invoice = Print Invoice
+text_print_packing_slip = Print Packing Slip
+text_spin_off_order = Spin Off Order
+text_go_to_customer = Go to Customer

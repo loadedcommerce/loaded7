@@ -121,5 +121,19 @@ class lC_Orders_Admin_rpc {
     }
     echo json_encode($result);
   }
+ /*
+  * Returns a single order product info
+  *
+  * @access public
+  * @return json
+  */
+  public static function getProduct() {
+    $result = lC_Orders_Admin::getProduct($_GET['oid'], $_GET['pid']);
+    if ($result !== false) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    
+    echo json_encode($result);
+  }
 }
 ?>

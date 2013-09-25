@@ -48,7 +48,36 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         $('.on-mobile').show();
         $('.selectContainer').hide();   
       }   
-    } 
+    }
+    
+    // on screen resize get the new menu width and apply it for click functions
+    $(window).resize(function() {
+      // if window width drops below 1280px change orders edit tabs from side to top
+      if ($(window).width() < 1380) {
+        $("#order_tabs").removeClass("side-tabs");
+        $("#order_tabs").addClass("standard-tabs");
+      } if ($(window).width() >= 1380) {
+        $("#order_tabs").removeClass("standard-tabs");
+        $("#order_tabs").addClass("side-tabs");
+      }
+    });
+    // if window width drops below 1280px change orders edit tabs from side to top
+    if ($(window).width() < 1380) {
+      $("#order_tabs").removeClass("side-tabs");
+      $("#order_tabs").addClass("standard-tabs");
+    }
+  
+    $("#order_statuses").change(function() {
+      if (this.value == 1) {
+        $('#comment').val('<?php echo $lC_Language->get('text_status_update_pending'); ?>');
+      } else if (this.value == 2) {
+        $('#comment').val('<?php echo $lC_Language->get('text_status_update_processing'); ?>');
+      } else if (this.value == 3) {
+        $('#comment').val('<?php echo $lC_Language->get('text_status_update_preparing'); ?>');
+      } else if (this.value == 4) {
+        $('#comment').val('<?php echo $lC_Language->get('text_status_update_delivered'); ?>');
+      }
+    }); 
   });
   
   function hideElements() {  
@@ -109,5 +138,85 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       }
     );
     return false;
-  }  
+  }
+  
+  function saveOrderProduct(val) {
+    alert('save product: ' + val + ' changes');
+    $("#buttons_" + val).html('<span class="button-group">'+
+                              '  <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct(' + val + ');"><?php echo $lC_Language->get('text_edit'); ?></a>'+
+                              '  <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct(' + val + ');"></a>'+
+                              '</span>');
+  }
+  
+  function deleteOrderProduct(val) {
+    alert('delete product: ' + val + ' from the order');
+  }
+  
+  function orderProductDetails(oid, pid) {
+    var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+    if (parseInt(accessLevel) < 2) {
+      $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+      return false;
+    }
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getProduct&oid=OID&pid=PID'); ?>'  
+    $.getJSON(jsonLink.replace('OID', parseInt(oid)).replace('PID', parseInt(pid)),
+      function (data) {
+        if (data.rpcStatus == -10) { // no session
+          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+          $(location).attr('href',url);
+        }
+        if (data.rpcStatus != 1) {
+          $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
+          return false;
+        }
+        $.modal({
+            content: '<div id="product_details"></div>',
+            title: '<?php echo $lC_Language->get('text_product_details'); ?>',
+            width: 600,
+            scrolling: true,
+            actions: {
+              'Close' : {
+                color: 'red',
+                click: function(win) { win.closeModal(); }
+              }
+            },
+            buttons: {
+              '<?php echo $lC_Language->get('button_close'); ?>': {
+                classes:  'glossy',
+                click:    function(win) { win.closeModal(); }
+              }
+            },
+            buttonsLowPadding: true
+        });
+        $("#product_details").html(data.orderProduct);
+        $.modal.all.centerModal();
+      }
+    );
+  }
+  
+  function editOrderProduct(val) {
+    $("#buttons_" + val).html('<p><a class="button compact small-margin-top op-action" href="javascript:void(0);" onclick="saveOrderProduct(' + val + ');"><?php echo $lC_Language->get('text_save'); ?></a></p>'+
+                              '<p><a class="button compact small-margin-bottom op-action" href="javascript:void(0)" onclick="cancelOrderProductEdit(' + val + ');"><?php echo $lC_Language->get('text_cancel'); ?></a></p>');
+  }
+  
+  function cancelOrderProductEdit(val) {
+    $("#buttons_" + val).html('<span class="button-group">'+
+                              '  <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct(' + val + ');"><?php echo $lC_Language->get('text_edit'); ?></a>'+
+                              '  <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct(' + val + ');"></a>'+
+                              '</span>');
+  }
+  
+  function ordersEditSelect(cid, oid, val) {
+    if (val == 'invoice') {
+      url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&oid=OID&action=invoice'); ?>';
+      window.open(url.replace('OID', oid));
+    } else if (val == 'packing') {
+      url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&oid=OID&action=packaging_slip'); ?>';
+      window.open(url.replace('OID', oid));
+    } else if (val == 'customer') {
+      url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&cID=CID'); ?>';
+      window.location = url.replace('CID', cid);
+    }
+    $('#orders_edit_select').val('');
+  }
 </script>
