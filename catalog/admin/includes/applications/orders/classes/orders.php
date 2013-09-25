@@ -652,18 +652,18 @@ class lC_Orders_Admin {
   * @access public
   * @return array
   */ 
-  public static function getOrderComments($id) {
+  public static function getOrderComments($id = null) {
     global $lC_Language;
     $data = lC_Orders_Admin::getInfo($id);
     foreach ($data['orderStatusHistoryData'] as $oshData) {
       if ($oshData['comment'] != '') {
-        $ocData .= '<div class="with-small-padding bbottom-grey' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
+        $ocData .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
                       <div class="small-margin-top">
                         <span class="float-right with-min-padding small-margin-right' . (($oshData['admin_id'] == null) ? ' green-bg' : (($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg')) . '">' . (($oshData['admin_id'] == null) ? $lC_Language->get('text_order_comment') : (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'))) . '</span>
                         <span class="small-margin-left float-left">
                           ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
                         </span>
-                        <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small>
+                        <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
                       </div>
                       <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
                     </div>';
@@ -672,13 +672,36 @@ class lC_Orders_Admin {
     return $ocData;
   }
  /*
+  * Return the orders status history
+  *
+  * @access public
+  * @return array
+  */ 
+  public static function getOrderStatusHistory($id = null) {
+    global $lC_Language;
+    $data = lC_Orders_Admin::getInfo($id);
+    foreach ($data['orderStatusHistoryData'] as $oshData) {
+      $osHistory .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
+                      <div class="small-margin-top">
+                        <span class="float-right with-min-padding small-margin-right' . (($oshData['admin_id'] == null) ? ' green-bg' : (($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg')) . '">' . (($oshData['admin_id'] == null) ? $lC_Language->get('text_order_comment') : (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'))) . '</span>
+                        <span class="small-margin-left float-left">
+                          ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
+                        </span>
+                        <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
+                      </div>
+                      <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
+                    </div>';
+    }
+    return $osHistory;
+  }
+ /*
   * Return the order information
   *
   * @param array $id The order id
   * @access public
   * @return array
   */ 
-  public static function getProduct($oid, $pid) {
+  public static function getProduct($oid = null, $pid = null) {
     global $lC_Language, $lC_Database, $lC_Vqmod;
 
     $lC_Language->loadIniFile('orders.php');
@@ -735,12 +758,12 @@ class lC_Orders_Admin {
   * @access public
   * @return array
   */ 
-  public static function drawOrderStatusDropdown($oid) {
+  public static function drawOrderStatusDropdown($oid, $classes = null) {
     global $lC_Language;
     
     $data = lC_Orders_Admin::getInfo($oid);
     
-    $osDropdown = '<select class="select withClearFunctions" style="min-width:150px" id="order_statuses" name="status">';
+    $osDropdown = '<select class="select withClearFunctions' . ((!empty($classes)) ? ' ' . $classes : null) . '" style="min-width:150px" id="order_statuses" name="status">';
     foreach ($data['ordersStatusArray'] as $id => $val) {
       $osDropdown .= '<option value="' . $id . '"';
       if ($data['orderStatusID'] == $id) {

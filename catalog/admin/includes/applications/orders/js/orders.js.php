@@ -66,7 +66,19 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     if ($(window).width() < 1380) {
       $("#order_tabs").removeClass("side-tabs");
       $("#order_tabs").addClass("standard-tabs");
-    } 
+    }
+  
+    $("#order_statuses").change(function() {
+      if (this.value == 1) {
+        $('#comment').val('<?php echo $lC_Language->get('text_status_update_pending'); ?>');
+      } else if (this.value == 2) {
+        $('#comment').val('<?php echo $lC_Language->get('text_status_update_processing'); ?>');
+      } else if (this.value == 3) {
+        $('#comment').val('<?php echo $lC_Language->get('text_status_update_preparing'); ?>');
+      } else if (this.value == 4) {
+        $('#comment').val('<?php echo $lC_Language->get('text_status_update_delivered'); ?>');
+      }
+    }); 
   });
   
   function hideElements() {  
@@ -207,5 +219,5 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       window.location = url.replace('CID', cid);
     }
     $('#orders_edit_select').val('');
-  }  
+  }
 </script>

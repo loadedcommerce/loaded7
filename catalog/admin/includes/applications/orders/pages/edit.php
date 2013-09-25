@@ -40,9 +40,9 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
           <li class="active"><?php echo lc_link_object('#section_orders_summary', $lC_Language->get('section_orders_summary')); ?></li>
           <!--<li><?php echo lc_link_object('#section_orders_products', $lC_Language->get('section_orders_products')); ?></li>
           <li><?php echo lc_link_object('#section_orders_customer', $lC_Language->get('section_orders_customer')); ?></li>
-          <li><?php echo lc_link_object('#section_orders_shipping', $lC_Language->get('section_orders_shipping')); ?></li>
-          <li><?php echo lc_link_object('#section_orders_messages', $lC_Language->get('section_orders_messages')); ?></li>
-          <li><?php echo lc_link_object('#section_orders_fraud', $lC_Language->get('section_orders_fraud')); ?></li>-->
+          <li><?php echo lc_link_object('#section_orders_shipping', $lC_Language->get('section_orders_shipping')); ?></li>-->
+          <li><?php echo lc_link_object('#section_orders_status', $lC_Language->get('section_orders_status')); ?></li>
+          <!--<li><?php echo lc_link_object('#section_orders_fraud', $lC_Language->get('section_orders_fraud')); ?></li>-->
           <li><?php echo lc_link_object('#section_orders_payments', $lC_Language->get('section_orders_payments')); ?></li>
         </ul>
         <div class="tabs-content" id="orders_sections">
@@ -51,7 +51,7 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
             //include('includes/applications/orders/pages/tabs/products.php');  
             //include('includes/applications/orders/pages/tabs/customer.php'); 
             //include('includes/applications/orders/pages/tabs/shipping.php'); 
-            //include('includes/applications/orders/pages/tabs/messages.php');
+            include('includes/applications/orders/pages/tabs/status.php');
             //include('includes/applications/orders/pages/tabs/fraud.php'); 
             include('includes/applications/orders/pages/tabs/payments.php'); 
           ?> 

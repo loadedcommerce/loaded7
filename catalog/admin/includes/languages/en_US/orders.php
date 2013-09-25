@@ -63,7 +63,7 @@ section_orders_summary = Summary
 section_orders_products = Products
 section_orders_customer = Customer
 section_orders_shipping = Shipping
-section_orders_messages = Message History
+section_orders_status = Status History
 section_orders_fraud = Fraud
 section_orders_payments = Payments
 
@@ -157,3 +157,7 @@ text_create_shipment = Create Shipment
 text_print_packing_slip = Print Packing Slip
 text_go_pro_and_enjoy = Go Pro and enjoy this feature!
 text_grand_total = Grand Total:
+text_status_update_pending = Your order status has been changed to Pending.
+text_status_update_processing = Your order status has been changed to Processing.
+text_status_update_preparing = Your order status has been changed to Preparing.
+text_status_update_delivered = Your order status has been changed to Delivered.

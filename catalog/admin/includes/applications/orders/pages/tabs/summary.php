@@ -176,7 +176,7 @@
                       <div class="columns">
                         <div class="twelve-columns">
                           <font class="white font-eightteen mid-margin-right">Current Status</font>
-                          <?php echo lC_Orders_Admin::drawOrderStatusDropdown($_GET[$lC_Template->getModule()]); ?>
+                          <?php echo lC_Orders_Admin::drawOrderStatusDropdown($_GET[$lC_Template->getModule()], 'anthracite-gradient'); ?>
                         </div>
                         <div class="twelve-columns">
                           <div>
@@ -192,16 +192,16 @@
                           <div class="columns">
                             <div class="six-columns twelve-columns-mobile new-row-mobile small-margin-top no-margin-bottom">
                               <p class="small-margin-bottom no-wrap">
-                                <input type="radio" class="radio small-margin-right" name="append_comment" value="1" checked="">Customer Message
+                                <input type="radio" class="radio small-margin-right" name="append_comment" value="1" checked="" onchange="$('#notify_customer').attr('value', '1');">Customer Message
                               </p>
                               <p class="small-margin-bottom">
-                                <input type="radio" class="radio small-margin-right" name="append_comment" value="0">Admin Note
+                                <input type="radio" class="radio small-margin-right" name="append_comment" value="0" onchange="$('#notify_customer').attr('value', '0');$('#comment').val('');">Admin Note
                               </p>
                             </div>
                             <div class="six-columns twelve-columns-mobile new-row-mobile no-margin-bottom">
                               <p class="no-margin-bottom">&nbsp;</p>
                               <p class="no-margin-top">
-                                <input class="button float-right margin-bottom" type="submit" value="Update">
+                                <input class="button float-right margin-bottom blue-gradient" type="submit" value="Update">
                               </p>
                             </div>
                           </div>
@@ -252,11 +252,9 @@
                       <legend class="margin-bottom">
                         <span class="icon-chat icon-size2 icon-anthracite mid-margin-left"><strong class="small-margin-left"><?php echo $lC_Language->get('text_recent_messages'); ?></strong></span>
                       </legend>
-                      <table width="100%" cellpadding="0" cellspacing="0">
-                        <tbody>
-                          <?php echo lC_Orders_Admin::getOrderComments($_GET[$lC_Template->getModule()]); ?>
-                        </tbody>
-                      </table>
+                      <div class="btop-anthracite">
+                        <?php echo lC_Orders_Admin::getOrderComments($_GET[$lC_Template->getModule()]); ?>
+                      </div>
                     </fieldset>
                   </div>
                   <div class="six-columns twelve-columns-mobile">
