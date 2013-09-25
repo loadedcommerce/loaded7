@@ -55,13 +55,15 @@ class lC_Summary_orders extends lC_Summary {
 
       while ( $Qorders->next() ) {
         $this->_data .= '    <li>' .
-                        '      <span class="list-link icon-price-tag icon-green" title="oID[' . $Qorders->value('orders_id') . ']">' .  
-                        '        <strong><span class="tag green-bg"><small class="white">' . strip_tags($Qorders->value('order_total'))  . '</small></span></strong> &nbsp; <span class="anthracite"><strong>' . $Qorders->value('customers_name') . '</strong> &nbsp; ' . lC_DateTime::getShort($Qorders->value('date_purchased')) . '</span>' . 
-                        '      </span>' .
-                        '      <div class="absolute-right compact show-on-parent-hover">' .
-                        '        <a href="' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? '#' : 'javascript://" onclick="editOrder(\'' . $Qorders->valueInt('orders_id') . '\')') . ';" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? ' disabled' : NULL) . '">' .  $lC_Language->get('icon_view') . '</a>' . 
-                        '        <!-- a href="' . ((int)($_SESSION['admin']['access']['orders'] < 4) ? '#' : 'javascript://" onclick="deleteOrder(\'' . $Qorders->valueInt('orders_id') . '\', \'' . urlencode($Qorders->value('customers_name')) . '\')') . ';" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['orders'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a -->' . 
-                        '      </div>' .
+                        '      <a href="' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'orders=' . $Qorders->valueInt('orders_id') . '&action=save')) . '"' . 
+                        '        <span class="list-link icon-price-tag icon-green" title="oID[' . $Qorders->value('orders_id') . ']">' .  
+                        '          <strong><span class="tag green-bg"><small class="white">' . strip_tags($Qorders->value('order_total'))  . '</small></span></strong> &nbsp; <span class="anthracite"><strong>' . $Qorders->value('customers_name') . '</strong> &nbsp; ' . lC_DateTime::getShort($Qorders->value('date_purchased')) . '</span>' . 
+                        '        </span>' .                                                                    
+                        '        <div class="absolute-right compact show-on-parent-hover">' .
+                        '          <span class="button icon-pencil' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? ' disabled' : NULL) . '">' .  $lC_Language->get('icon_view') . '</span>' . 
+                        '          <!-- a href="' . ((int)($_SESSION['admin']['access']['orders'] < 4) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'orders=' . $Qorders->valueInt('orders_id') . '&action=save')) . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['orders'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a -->' . 
+                        '        </div>' .
+                        '      </a>' .
                         '    </li>';        
       }
 
