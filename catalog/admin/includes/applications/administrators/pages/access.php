@@ -72,7 +72,7 @@ $gID = (isset($_GET['gid']) && !empty($_GET['gid'])) ? preg_replace('/[^0-9\s]/'
                 <summary class="details-summary">
                   <label id="lbl-<?php echo strtolower($key); ?>">
                     <span class="details-title-text"><?php echo $key; ?></span>
-                    <input onclick="updateSectionSliders('<?php echo strtolower($key); ?>');" type="text" name="<?php echo strtolower($key); ?>" id="<?php echo strtolower($key); ?>" class="access-levels-slider access-section" data-slider-options='<?php echo $sliderOptions; ?>'>
+                    <input onchange="updateSectionSliders('<?php echo strtolower($key); ?>');" type="text" name="<?php echo strtolower($key); ?>" id="<?php echo strtolower($key); ?>" class="access-levels-slider access-section" data-slider-options='<?php echo $sliderOptions; ?>'>
                   </label>
                 </summary>
                 <div class="with-padding div-details">
