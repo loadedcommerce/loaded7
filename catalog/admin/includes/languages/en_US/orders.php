@@ -163,3 +163,5 @@ text_status_update_preparing = Your order status has been changed to Preparing.
 text_status_update_delivered = Your order status has been changed to Delivered.
 text_address_same = Same
 text_address_mixed = Mixed
+text_balance_paid = Paid
+text_balance_due = Due

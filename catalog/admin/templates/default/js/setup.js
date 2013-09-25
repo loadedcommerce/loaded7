@@ -1,4 +1,13 @@
 /**
+ *
+ * '||''|.                            '||
+ *  ||   ||    ....  .... ...   ....   ||    ...   ... ...  ... ..
+ *  ||    || .|...||  '|.  |  .|...||  ||  .|  '|.  ||'  ||  ||' ''
+ *  ||    || ||        '|.|   ||       ||  ||   ||  ||    |  ||
+ * .||...|'   '|...'    '|     '|...' .||.  '|..|'  ||...'  .||.
+ *                                                  ||
+ * --------------- By Display:inline ------------- '''' -----------
+ *
  * Global template functions
  *
  * Content:
@@ -108,10 +117,12 @@
 		},
 
 		/**
-		 * Path to the respond.js folder
+		 * Path to the respond.js folder: use either a relative path, an absolute path, or dynamic path detection
 		 * @var string
 		 */
-    respondPath: 'js/',
+		//respondPath: 'js/libs/',														/* Relative path  */
+		//respondPath: '/myApp/js/libs/',												/* Absolute path  */
+		respondPath: $('script').last().attr('src').replace(/[^\/]+$/, '')+'libs/',		/* Path detection */
 
 		/*
 		 * Here are stored various informations about the current media queries according to screen size
@@ -311,7 +322,7 @@
 		}
 
 		// Test
-		if (top != scroll)
+		if (Math.round(top) != Math.round(scroll))
 		{
 			// Define
 			supportFixed = false;
@@ -867,6 +878,7 @@
 				sizeWatcher.heightElements.length === 0 && sizeWatcher.scrollElements.length === 0)
 			{
 				clearTimeout(sizeWatcher.timeout);
+				sizeWatcher.timeout = false;
 			}
 		}
 
@@ -1415,136 +1427,298 @@
 		{
 			// Icons replacement map
 			var iconMap = {
-					'phone':		'!',
-					'mobile':		'"',
-					'tag':			'#',
-					'directions':	'$',
-					'mail':			'%',
-					'pencil':		'&',
-					'paperclip':	'\'',
-					'reply':		'(',
-					'replay-all':	')',
-					'fwd':			'*',
-					'user':			'+',
-					'users':		',',
-					'add-user':		'-',
-					'card':			'.',
-					'extract':		'/',
-					'marker':		'0',
-					'map':			'1',
-					'compass':		'2',
-					'arrow':		'3',
-					'target':		'4',
-					'path':			'5',
-					'heart':		'6',
-					'star':			'7',
-					'like':			'8',
-					'chat':			'9',
-					'speech':		':',
-					'quote':		';',
-					'printer':		'<',
-					'bell':			'=',
-					'link':			'>',
-					'flag':			'?',
-					'gear':			'@',
-					'flashlight':	'A',
-					'cup':			'B',
-					'price-tag':	'C',
-					'camera':		'D',
-					'moon':			'E',
-					'palette':		'F',
-					'leaf':			'G',
-					'music-note':	'H',
-					'bag':			'I',
-					'plane':		'J',
-					'buoy':			'K',
-					'rain':			'L',
-					'eye':			'M',
-					'clock':		'N',
-					'mic':			'O',
-					'calendar':		'P',
-					'lightning':	'Q',
-					'hourglass':	'R',
-					'rss':			'S',
-					'wifi':			'T',
-					'lock':			'U',
-					'unlock':		'V',
-					'tick':			'W',
-					'cross':		'X',
-					'minus-round':	'Y',
-					'plus-round':	'Z',
-					'cross-round':	'[',
-					'minus':		'\\',
-					'plus':			']',
-					'forbidden':	'^',
-					'info':			'_',
-					'info-round':	'`',
-					'question':		'a',
-					'question-round':	'b',
-					'warning':		'c',
-					'redo':			'd',
-					'undo':			'e',
-					'swap':			'f',
-					'revert':		'g',
-					'refresh':		'h',
-					'list':			'i',
-					'list-add':		'j',
-					'thumbs':		'k',
-					'page-list':	'l',
-					'page':			'm',
-					'pages':		'n',
-					'frame':		'o',
-					'pictures':		'p',
-					'movie':		'q',
-					'music':		'r',
-					'folder':		's',
-					'drawer':		't',
-					'trash':		'u',
-					'outbox':		'v',
-					'inbox':		'w',
-					'download':		'x',
-					'cloud':		'y',
-					'cloud-upload':	'z',
-					'play':			'{',
-					'pause':		'|',
-					'record':		'~',
-					'forward':		'Ä',
-					'backward':		'Å',
-					'previous':		'Ç',
-					'next':			'É',
-					'expand':		'Ñ',
-					'reduce':		'Ö',
-					'volume':		'Ü',
-					'loud':			'á',
-					'mute':			'à',
-					'left-fat':		'â',
-					'down-fat':		'ä',
-					'up-fat':		'ã',
-					'right-fat':	'å',
-					'left':			'ç',
-					'down':			'é',
-					'up':			'è',
-					'right':		'ê',
-					'left-round':	'ë',
-					'down-round':	'í',
-					'up-round':		'ì',
-					'right-round':	'î',
-					'home':			'ï',
-					'ribbon':		'ñ',
-					'read':			'ó',
-					'new-tab':		'ò',
-					'search':		'ô',
-					'ellipsis':		'ö',
-					'bullet-list':	'®',
-					'creative-commons':	'©'
+					'plus': '&#61462;',
+					'minus': '&#61465;',
+					'info': '&#61470;',
+					'left-thin': '&#61581;',
+					'up-thin': '&#61583;',
+					'right-thin': '&#61582;',
+					'down-thin': '&#61580;',
+					'level-up': '&#61588;',
+					'level-down': '&#61587;',
+					'switch': '&#61591;',
+					'infinity': '&#61635;',
+					'squared-plus': '&#61464;',
+					'squared-minus': '&#61467;',
+					'home': '&#61474;',
+					'keyboard': '&#61499;',
+					'erase': '&#61636;',
+					'pause': '&#61594;',
+					'forward': '&#61598;',
+					'backward': '&#61599;',
+					'next': '&#61596;',
+					'previous': '&#61597;',
+					'hourglass': '&#61540;',
+					'stop': '&#61593;',
+					'triangle-up': '&#61575;',
+					'play': '&#61592;',
+					'triangle-right': '&#61574;',
+					'triangle-down': '&#61572;',
+					'triangle-left': '&#61573;',
+					'adjust': '&#61544;',
+					'cloud': '&#61619;',
+					'star': '&#61448;',
+					'star-empty': '&#61449;',
+					'cup': '&#61511;',
+					'list': '&#61457;',
+					'moon': '&#61622;',
+					'heart-empty': '&#61447;',
+					'heart': '&#61446;',
+					'music-note': '&#61440;',
+					'beamed-note': '&#61441;',
+					'thumbs': '&#61456;',
+					'flag': '&#61483;',
+					'tools': '&#61527;',
+					'gear': '&#61526;',
+					'warning': '&#61503;',
+					'lightning': '&#61621;',
+					'record': '&#61595;',
+					'thunder-cloud': '&#61620;',
+					'voicemail': '&#61641;',
+					'plane': '&#61623;',
+					'mail': '&#61445;',
+					'pencil': '&#61495;',
+					'feather': '&#61496;',
+					'tick': '&#61458;',
+					'cross': '&#61459;',
+					'cross-round': '&#61460;',
+					'squared-cross': '&#61461;',
+					'question': '&#61468;',
+					'quote': '&#61492;',
+					'plus-round': '&#61463;',
+					'minus-round': '&#61466;',
+					'right': '&#61570;',
+					'arrow': '&#61509;',
+					'fwd': '&#61491;',
+					'undo': '&#61584;',
+					'redo': '&#61585;',
+					'left': '&#61569;',
+					'up': '&#61571;',
+					'down': '&#61568;',
+					'list-add': '&#61607;',
+					'numbered-list': '&#61606;',
+					'left-fat': '&#61577;',
+					'right-fat': '&#61578;',
+					'up-fat': '&#61579;',
+					'down-fat': '&#61576;',
+					'add-user': '&#61452;',
+					'question-round': '&#61469;',
+					'info-round': '&#61471;',
+					'eye': '&#61479;',
+					'price-tag': '&#61480;',
+					'cloud-upload': '&#61488;',
+					'reply': '&#61489;',
+					'reply-all': '&#61490;',
+					'code': '&#61493;',
+					'extract': '&#61494;',
+					'printer': '&#61497;',
+					'refresh': '&#61498;',
+					'speech': '&#61500;',
+					'chat': '&#61501;',
+					'card': '&#61505;',
+					'directions': '&#61506;',
+					'marker': '&#61507;',
+					'map': '&#61508;',
+					'compass': '&#61510;',
+					'trash': '&#61512;',
+					'page': '&#61513;',
+					'page-list-inverted': '&#61517;',
+					'pages': '&#61514;',
+					'frame': '&#61515;',
+					'drawer': '&#61522;',
+					'rss': '&#61524;',
+					'path': '&#61528;',
+					'cart': '&#61530;',
+					'shareable': '&#61529;',
+					'login': '&#61533;',
+					'logout': '&#61534;',
+					'volume': '&#61538;',
+					'expand': '&#61546;',
+					'reduce': '&#61547;',
+					'new-tab': '&#61548;',
+					'publish': '&#61549;',
+					'browser': '&#61550;',
+					'arrow-combo': '&#61551;',
+					'pie-chart': '&#61637;',
+					'language': '&#61643;',
+					'air': '&#61647;',
+					'database': '&#61652;',
+					'drive': '&#61653;',
+					'bucket': '&#61654;',
+					'thermometer': '&#61655;',
+					'down-round': '&#61552;',
+					'left-round': '&#61553;',
+					'right-round': '&#61554;',
+					'up-round': '&#61555;',
+					'chevron-down': '&#61556;',
+					'chevron-left': '&#61557;',
+					'chevron-right': '&#61558;',
+					'chevron-up': '&#61559;',
+					'chevron-small-down': '&#61560;',
+					'chevron-small-left': '&#61561;',
+					'chevron-small-right': '&#61562;',
+					'chevron-small-up': '&#61563;',
+					'chevron-thin-down': '&#61564;',
+					'chevron-thin-left': '&#61565;',
+					'chevron-thin-right': '&#61566;',
+					'chevron-thin-up': '&#61567;',
+					'progress-0': '&#61600;',
+					'progress-1': '&#61601;',
+					'progress-2': '&#61602;',
+					'progress-3': '&#61603;',
+					'back-in-time': '&#61611;',
+					'network': '&#61614;',
+					'mailbox': '&#61616;',
+					'download': '&#61617;',
+					'buoy': '&#61626;',
+					'tag': '&#61627;',
+					'dot': '&#61630;',
+					'two-dots': '&#61631;',
+					'ellipsis': '&#61632;',
+					'suitcase': '&#61629;',
+					'flow-cascade': '&#61657;',
+					'flow-branch': '&#61658;',
+					'flow-tree': '&#61659;',
+					'flow-line': '&#61660;',
+					'flow-parallel': '&#61661;',
+					'brush': '&#61633;',
+					'paper-plane': '&#61624;',
+					'magnet': '&#61634;',
+					'gauge': '&#61663;',
+					'traffic-cone': '&#61664;',
+					'icon-creative-commons': '&#61665;',
+					'cc-by': '&#61666;',
+					'cc-nc': '&#61667;',
+					'cc-nc-eu': '&#61668;',
+					'cc-nc-jp': '&#61669;',
+					'cc-sa': '&#61670;',
+					'cc-nd': '&#61671;',
+					'cc-pd': '&#61672;',
+					'cc-zero': '&#61673;',
+					'cc-share': '&#61674;',
+					'cc-remix': '&#61675;',
+					'github': '&#61676;',
+					'github-circled': '&#61677;',
+					'flickr': '&#61678;',
+					'flickr-circled': '&#61679;',
+					'vimeo': '&#61680;',
+					'vimeo-circled': '&#61681;',
+					'twitter': '&#61682;',
+					'twitter-circled': '&#61683;',
+					'facebook': '&#61684;',
+					'facebook-circled': '&#61685;',
+					'facebook-squared': '&#61686;',
+					'gplus': '&#61687;',
+					'gplus-circled': '&#61688;',
+					'pinterest': '&#61689;',
+					'pinterest-circled': '&#61690;',
+					'tumblr': '&#61691;',
+					'tumblr-circled': '&#61692;',
+					'linkedin': '&#61693;',
+					'linkedin-circled': '&#61694;',
+					'dribbble': '&#61695;',
+					'dribbble-circled': '&#61696;',
+					'stumbleupon': '&#61697;',
+					'stumbleupon-circled': '&#61698;',
+					'lastfm': '&#61699;',
+					'lastfm-circled': '&#61700;',
+					'rdio': '&#61701;',
+					'rdio-circled': '&#61702;',
+					'spotify': '&#61703;',
+					'spotify-circled': '&#61704;',
+					'qq': '&#61705;',
+					'instagrem': '&#61706;',
+					'dropbox': '&#61707;',
+					'evernote': '&#61708;',
+					'flattr': '&#61709;',
+					'skype': '&#61710;',
+					'skype-circled': '&#61711;',
+					'renren': '&#61712;',
+					'sina-weibo': '&#61713;',
+					'paypal': '&#61714;',
+					'picasa': '&#61715;',
+					'soundcloud': '&#61716;',
+					'mixi': '&#61717;',
+					'behance': '&#61718;',
+					'google-circles': '&#61719;',
+					'vkontakte': '&#61720;',
+					'smashing': '&#61721;',
+					'db-shape': '&#61723;',
+					'bullet-list': '&#61722;',
+					'db-logo': '&#61724;',
+					'pictures': '&#61454;',
+					'globe': '&#61618;',
+					'leaf': '&#61625;',
+					'graduation-cap': '&#61642;',
+					'mic': '&#61535;',
+					'palette': '&#61605;',
+					'ticket': '&#61644;',
+					'movie': '&#61453;',
+					'target': '&#61604;',
+					'music': '&#61442;',
+					'trophy': '&#61609;',
+					'like': '&#61484;',
+					'unlike': '&#61485;',
+					'bag': '&#61531;',
+					'user': '&#61450;',
+					'users': '&#61451;',
+					'light-bulb': '&#61541;',
+					'new': '&#61504;',
+					'water': '&#61645;',
+					'droplet': '&#61646;',
+					'credit-card': '&#61648;',
+					'monitor': '&#61612;',
+					'briefcase': '&#61628;',
+					'save': '&#61649;',
+					'cd': '&#61615;',
+					'folder': '&#61521;',
+					'page-list': '&#61516;',
+					'calendar': '&#61532;',
+					'line-graph': '&#61638;',
+					'bar-graph': '&#61639;',
+					'clipboard': '&#61650;',
+					'paperclip': '&#61476;',
+					'ribbons': '&#61482;',
+					'book': '&#61520;',
+					'read': '&#61519;',
+					'phone': '&#61525;',
+					'megaphone': '&#61651;',
+					'outbox': '&#61487;',
+					'inbox': '&#61486;',
+					'box': '&#61523;',
+					'newspaper': '&#61518;',
+					'mobile': '&#61613;',
+					'wifi': '&#61608;',
+					'camera': '&#61455;',
+					'swap': '&#61589;',
+					'loop': '&#61590;',
+					'cycle': '&#61586;',
+					'light-down': '&#61542;',
+					'light-up': '&#61543;',
+					'mute': '&#61536;',
+					'loud': '&#61537;',
+					'battery': '&#61610;',
+					'search': '&#61443;',
+					'key': '&#61656;',
+					'lock': '&#61477;',
+					'unlock': '&#61478;',
+					'bell': '&#61502;',
+					'ribbon': '&#61481;',
+					'link': '&#61475;',
+					'revert': '&#61473;',
+					'flashlight': '&#61444;',
+					'area-graph': '&#61640;',
+					'clock': '&#61539;',
+					'rocket': '&#61662;',
+					'forbidden': '&#61545;'
 				};
 
 			// Font-icons
-			this.findIn(self, children, '[class^="icon-"],[class*=" icon-"]').each(function(i)
+			this.findIn(self, children, '[class^="icon-"],[class*=" icon-"]').not('.old-icon').each(function(i)
 			{
 				// Icon class
 				var name = /icon-([^ ]+)/.exec(this.className)[1],
-					element = $(this);
+					element = $(this).addClass('old-icon');
 
 				// If valid icon name
 				if (iconMap[name])
@@ -1563,7 +1737,7 @@
 		{
 			// Before/after pseudo-elements
 			var pseudo = {
-					'.bullet-list > li':		{ before: '<span class="bullet-list-before">k</span>' },
+					'.bullet-list > li':		{ before: '<span class="bullet-list-before">&#61456;</span>' },
 					'.info-bubble':				{ before: '<span class="info-bubble-before"></span>' },
 					'.select-arrow':			{ before: '<span class="select-arrow-before"></span>', after: '<span class="select-arrow-after"></span>' },
 					'.with-left-arrow, .with-right-arrow, .tabs > li > a':
@@ -2049,12 +2223,25 @@
 		// Support for webapp mode on iOS
 		if (('standalone' in window.navigator) && window.navigator.standalone)
 		{
-			$(document).on('click', 'a', function (event)
+			doc.on('click', 'body', function (event)
 			{
-				var link = $(this),
-					href = link.attr('href');
+				var link = $(event.target).closest('a'),
+					href;
 
-				// Do not process anchors
+				// Only handle links
+				if (!link.length)
+				{
+					return;
+				}
+
+				// If already processed
+				if (event.isDefaultPrevented())
+				{
+					return;
+				}
+
+				// Do not process local anchors
+				href = link.attr('href');
 				if (!href || href.indexOf('#') === 0)
 				{
 					return;
@@ -2360,7 +2547,10 @@
 			$.each(target.data('tracking-elements') || [], function(i)
 			{
 				$(this.element).stop(true, true);
-				this.func.call(this.element, target);
+				if (this.func)
+				{
+					this.func.call(this.element, target);
+				}
 			});
 		});
 
@@ -2384,7 +2574,10 @@
 			$.each(target.data('tracking-elements') || [], function(i)
 			{
 				$(this.element).stop(true, true);
-				this.func.call(this.element, target);
+				if (this.func)
+				{
+					this.func.call(this.element, target);
+				}
 			});
 		});
 
@@ -2672,7 +2865,7 @@
 		// Add event and delta to the front of the arguments
 		args.unshift(event, delta, deltaX, deltaY);
 
-		return $.event.handle.apply(this, args);
+		return ($.event.dispatch || $.event.handle).apply(this, args);
 	}
 
 	// Register event

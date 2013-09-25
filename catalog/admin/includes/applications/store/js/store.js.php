@@ -18,10 +18,11 @@ $(document).ready(function() {
   
   var sel = '<?php echo $_GET['type']; ?>';
   if (sel != '') {
-    if (sel == 'payment') showAddonType('0', 'Payment');   
-    if (sel == 'shipping') showAddonType('1', 'Shipping');   
+    if (sel == 'featured') showAddonType('1', 'Featured');   
+    if (sel == 'payment') showAddonType('2', 'Payment');   
+    if (sel == 'shipping') showAddonType('3', 'Shipping');   
   } else { 
-    showAddonType('0', 'Payment'); 
+    showAddonType('1', 'Featured'); 
   }
   $(this).scrollTop(0); 
 });

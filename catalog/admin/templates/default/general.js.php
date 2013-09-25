@@ -22,7 +22,7 @@ $(document).ready(function() {
   var module = '<?php echo $lC_Template->getModule(); ?>';
   var countryID = '<?php echo $_GET['countries']; ?>'         
   if (loc == 'index.php' && noParams) {
-    // do nothing
+    $("#sc-dashboard").addClass('current');
   } else if (module == 'store') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $('#sc-' + module).addClass("current");
@@ -39,7 +39,7 @@ $(document).ready(function() {
   } else if (module == 'specials' || module == 'manufacturers' || module == 'reviews' || (module.indexOf('product') != -1) ) {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-products").addClass('current');
-  } else if (module == 'banner_manager' || module == 'newsletters' || module == 'coupons') {
+  } else if (module == 'banner_manager' || module == 'newsletters' || module == 'coupons' || module == 'branding_manager') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-marketing").addClass('current');      
   } else if (module == 'statistics' || module == 'whos_online') {
@@ -791,10 +791,10 @@ $("#li-settings").click(function() {
 
 // added to pull in any added modals used across all admin pages
 <?php
-  $lC_DirectoryListing = new lC_DirectoryListing('templates/' . $lC_Template->getCode() . '/modal/');
+  $lC_DirectoryListing = new lC_DirectoryListing('templates/' . $_SESSION['template']['code'] . '/modal/');
   $lC_DirectoryListing->setCheckExtension('php');
   foreach ($lC_DirectoryListing->getFiles() as $file) {
-    include('templates/' . $lC_Template->getCode() . '/modal/' . $file['name']);
+    include('templates/' . $_SESSION['template']['code'] . '/modal/' . $file['name']);
   }
 ?>
 </script>

@@ -20,6 +20,7 @@ if ($lC_Payment->hasIframeParams()) {
   $fScroll = 'no';
   $fStyle = null;
 }
+$secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <div class="row">
@@ -49,9 +50,9 @@ if ($lC_Payment->hasIframeParams()) {
               <script>
                 /* we use javascript here due to js scrubbing at payment endpoints - we don't want to show if javascript is disabled or scrubbed */
                 var output = '<div class="security-info-container">'+
-                             '  <div class="security-info-title text-right cursor-pointer" onclick="$(\'#security-info-alert\').toggle(\'slideDown\');"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin:10px 5px;"') . $lC_Language->get('secure_payment_security_info_title'); ?><span class="arrow-container"><span id="arrow" class="arrow-down"></span></span></div>'+
+                             '  <div class="security-info-title text-right cursor-pointer" onclick="$(\'#security-info-alert\').toggle(\'slideDown\');"><?php echo lc_image('images/greenlock.png', null, null, null, 'class="valign-middle margin-top margin-bottom small-margin-left small-margin-right"') . $lC_Language->get('secure_payment_security_info_title'); ?></div>'+
                              '  <div id="security-info-alert" class="alert alert-success" style="display:none;">'+
-                             '    <div class="security-info-url"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin-right:5px;"') . ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL); ?></div>'+
+                             '  <div class="security-info-url"><?php echo lc_image('images/greenlock.png', null, null, null, 'class="valign-middle small-margin-right"') . $secureUrl; ?></div>'+
                              '    <div class="security-info-text normal large-margin-left small-padding-left"><?php echo $lC_Language->get('secure_payment_security_info_text'); ?></div>'+
                              '  </div>' +
                              '</div>';
@@ -82,10 +83,9 @@ if ($lC_Payment->hasIframeParams()) {
               <div id="checkoutConfirmationDetails"> 
                 <div id="loading-container"><p id="iloader"></p></div>
                 <?php  
-//echo '[' . $lC_Payment->getIframeParams() . ']<br>';
-                
                 if ($lC_Payment->hasIframeURL()) {
-                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->getIframeURL() . '" scrolling="' . $fScroll . '" height="' . $fHeight . '" width="' . $fWidth . '" ' . $fStyle . ' frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
+                  $params = (isset($_SESSION['cartSync']['iFrameParams']) && empty($_SESSION['cartSync']['iFrameParams'] ) === false) ? $_SESSION['cartSync']['iFrameParams']  : NULL;
+                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->getIframeURL() . $params . '" scrolling="' . $fScroll . '" height="' . $fHeight . '" width="' . $fWidth . '" ' . $fStyle . ' frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
                 } else if ($lC_Payment->hasRelayURL()) { 
                   echo '<form name="pmtForm" id="pmtForm" action="' . $lC_Payment->getRelayURL() . '" target="pmtFrame" method="post">' . lC_Checkout_Payment_template::rePost() . '</form>' . "\n";        
                   echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="' . $fWidth . '" height="' . $fHeight . '" scrolling="' . $fScroll . '" ' . $fStyle . ' frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 

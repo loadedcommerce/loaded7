@@ -33,7 +33,7 @@
                   <div class="checkbox">
                     <input type="checkbox" name="shipto_as_billable" id="shipto_as_billable"><label class="small-margin-left"><?php echo $lC_Language->get('billable_address_checkbox'); ?></label>
                   </div>
-                  <div class="btn-group clearfix absolute-top-right">
+                  <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
                     <button type="button" onclick="document.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                   </div>
                 </div>

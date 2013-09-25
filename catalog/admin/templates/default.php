@@ -42,7 +42,6 @@
   <link rel="stylesheet" href="templates/default/css/colors.css?v=1">
   <link rel="stylesheet" media="print" href="templates/default/css/print.css?v=1">
   <!-- For progressively larger displays -->
-  <link rel="stylesheet" media="only all and (min-width: 320px)" href="templates/default/css/320.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 480px)" href="templates/default/css/480.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 768px)" href="templates/default/css/768.css?v=1">
   <link rel="stylesheet" media="only all and (min-width: 992px)" href="templates/default/css/992.css?v=1">
@@ -78,7 +77,7 @@
 
   <!-- Modernizr is always at top and first -->
   <script src="../ext/jquery/modernizr.custom.js"></script>
-  <script src="../ext/jquery/jquery-1.9.1.min.js"></script>
+  <script src="../ext/jquery/jquery-1.10.2.min.js"></script>
   <script src="../ext/jquery/jquery.migrate-1.2.1.min.js"></script>
   
   <!-- For Modern Browsers -->
@@ -164,7 +163,7 @@
     ?>
     <!-- Side tabs shortcuts -->
     <ul id="shortcuts" role="complementary" class="children-tooltip tooltip-right" style="z-index:2;">
-      <li id="sc-dashboard" class="current"><a href="./" class="shortcut-dashboard" title="<?php echo $lC_Language->get('icon_dashboard'); ?>"><?php echo $lC_Language->get('icon_dashboard'); ?></a></li>
+      <li id="sc-dashboard" class="current"><a href="./index.php" class="shortcut-dashboard" title="<?php echo $lC_Language->get('icon_dashboard'); ?>"><?php echo $lC_Language->get('icon_dashboard'); ?></a></li>
       <li id="sc-orders"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders'); ?>" class="shortcut-orders" title="<?php echo $lC_Language->get('icon_orders'); ?>"><?php echo $lC_Language->get('icon_orders'); ?></a></li>
       <li id="sc-customers"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers'); ?>" class="shortcut-customers" title="<?php echo $lC_Language->get('icon_customers'); ?>"><?php echo $lC_Language->get('icon_customers'); ?></a></li>
       <li id="sc-products"><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products'); ?>" class="shortcut-products" title="<?php echo $lC_Language->get('icon_products'); ?>"><?php echo $lC_Language->get('icon_products'); ?></a></li>
@@ -579,7 +578,6 @@
   <?php } ?>
   <!-- Template functions -->
   <script src="templates/default/js/setup.js"></script>
-  <script src="templates/default/js/float.js"></script>
   <script src="templates/default/js/accordions.js"></script>
   <script src="templates/default/js/auto-resizing.js"></script>
   <script src="templates/default/js/input.js"></script>

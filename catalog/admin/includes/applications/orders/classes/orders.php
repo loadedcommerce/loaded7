@@ -458,6 +458,13 @@ class lC_Orders_Admin {
 
     $Qstatuses->freeResult;
     
+    $Qstatustype = $lC_Database->query('select orders_status_type from :table_orders_status where orders_status_id = :orders_status_id');
+    $Qstatustype->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
+    $Qstatustype->bindInt(':orders_status_id', $lC_Order->getStatusID());
+    $Qstatustype->execute();     
+    $result['ordersStatusType'] = $Qstatustype->value('orders_status_type');    
+    $Qstatuses->freeResult;
+    
     return $result;
   }
  /*
@@ -802,12 +809,11 @@ class lC_Orders_Admin {
     global $lC_Language;
     
     $data = lC_Orders_Admin::getInfo($oid);
-    $oBalState = 'State';
-    /*if ($data['customerAddress'] == $data['billingAddress'] && $data['customerAddress'] == $data['deliveryAddress'] && $data['billingAddress'] == $data['deliveryAddress']) {
+    if ($data['ordersStatusType'] == 'Approved') {
       $oBalState = $lC_Language->get('text_balance_paid');
     } else {
       $oBalState = $lC_Language->get('text_balance_due');
-    }*/
+    }
     
     return $oBalState;
   }      

@@ -61,8 +61,8 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
     </form>
     <div class="clear-both"></div>
     <div id="floating-button-container" class="six-columns twelve-columns-tablet">
-      <div id="floating-menu-div-listing">
-        <div id="buttons-container" style="position: relative;" class="clear-both">
+      <div id="buttons-menu-div-listing">
+        <div id="buttons-container" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
               <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>">

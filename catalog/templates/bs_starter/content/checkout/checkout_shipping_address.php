@@ -29,6 +29,9 @@
                 <address>
                   <?php echo $lC_Language->get('add_first_address'); ?>
                 </address>
+                <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
+                  <button type="button" onclick="document.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_add_address'); ?></button>
+                </div>
               </div>
               <div class="well">
                 <div class="clearfix">
@@ -72,15 +75,15 @@
                         $radio_buttons = 0;
                         $Qaddresses = $lC_Template->getListing();
                         while ($Qaddresses->next()) {
-                          echo '<table class="table no-margin-bottom" id="content-checkout-address-selection-table">';
-                          if ($Qaddresses->valueInt('address_book_id') == $lC_ShoppingCart->getShippingAddress('id')) {
+                          echo '<table class="table no-margin-bottom content-checkout-address-selection-table">';
+                          if ($Qaddresses->valueInt('address_book_id') == $lC_ShoppingCart->getShippingAddress('id') || lC_AddressBook::numberOfEntries() == 1) {
                             echo '<tr class="module-row-selected cursor-pointer" id="default-selected" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
                           } else {
                             echo '<tr class="module-row cursor-pointer" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
                           }
                           ?>
                           <td class=""><span class="strong"><?php echo $Qaddresses->valueProtected('firstname') . ' ' . $Qaddresses->valueProtected('lastname'); ?></span><br /><small><?php echo str_replace($Qaddresses->valueProtected('firstname') . ' ' . $Qaddresses->valueProtected('lastname') . ', ', '', lC_Address::format($Qaddresses->toArray(), ', ')); ?></small></td>
-                          <td class="text-right"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getShippingAddress('id'),null,''); ?></td>
+                          <td class="text-right"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getShippingAddress('id'), 'id="address_' . $radio_buttons . '"', ''); ?></td>
                           </tr>
                           </table>
                           <?php

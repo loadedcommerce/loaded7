@@ -173,6 +173,7 @@ text_product_date_available = This product will be available for order on %s.
 text_product_details = Product Details
 text_product_image = Image
 text_product_images = Product Images
+text_product_default_image = Default Image
 text_product_image_preview = Preview
 text_product_image_drag_n_drop = You can also Drag & Drop here for file upload
 text_pro = Pro

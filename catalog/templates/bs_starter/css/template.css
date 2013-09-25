@@ -172,9 +172,13 @@
 }
 
 #loaded7 .logo { 
-  margin-left:10px; 
-  margin-top:-15px; 
+  /*margin-left:10px; */
+  margin-top:-5px; 
 }
+
+#loaded7 .logo a {
+  text-decoration: none;
+} 
 
 /* box modules */
 #loaded7 .product_notifications-image { 
@@ -342,7 +346,7 @@
 
 #loaded7 .close-qr { 
   background-color: #D52607;  
-  border-radius: 9px 9px 9px 9px;  
+  border-radius: 15px 15px 15px 15px;  
   border-style: solid;  
   border-width: 1px;  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 1px 3px rgba(0, 0, 0, 0.75);  
   color: #FFFFFF;  
@@ -351,15 +355,16 @@
   font-weight: bold;  
   height: 16px;  
   right: -6px;  
-  line-height: 16px;  
+  line-height: 13px;  
   min-width: 12px;  
-  padding: 0 2px;  
+  padding: 0 3px;  
   position: absolute;  
   text-align: center;  
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);  
   top: -6px;  
   z-index: 1;  
   cursor: pointer;
+  text-decoration: none;
 } 
   
 #loaded7 .loadmask {

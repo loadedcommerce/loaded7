@@ -97,7 +97,7 @@
     function _getStatus() {
       global $lC_Database, $lC_Language;
 
-      $Qstatus = $lC_Database->query('select orders_status_name from :table_orders_status where orders_status_id = :orders_status_id and language_id = :language_id');
+      $Qstatus = $lC_Database->query('select orders_status_name, orders_status_type from :table_orders_status where orders_status_id = :orders_status_id and language_id = :language_id');
       $Qstatus->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
       $Qstatus->bindInt(':orders_status_id', $this->_status_id);
 
@@ -108,6 +108,7 @@
 
       if ($Qstatus->numberOfRows() === 1) {
         $this->_status = $Qstatus->value('orders_status_name');
+        $this->_status_type = $Qstatus->value('orders_status_type');
       } else {
         $this->_status = $this->_status_id;
       }

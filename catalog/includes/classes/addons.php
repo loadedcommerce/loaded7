@@ -70,8 +70,11 @@ class lC_Addons {
       $class = $nameArr[count($nameArr)-2];
 
       if (file_exists($ao['path'])) {
-        include_once($lC_Vqmod->modCheck($ao['path']));
-        $GLOBALS[$class] = new $class();
+        if (class_exists($class)) { 
+        } else {
+          include_once($lC_Vqmod->modCheck($ao['path']));
+          $GLOBALS[$class] = new $class();
+        }        
         
         $_SESSION['lC_Addons_data'][$class] = array('type' => $GLOBALS[$class]->getAddonType(),
                                                     'title' => $GLOBALS[$class]->getAddonTitle(),

@@ -32,13 +32,9 @@ $(document).ready(function() {
     $('#main-title').attr('style', 'padding: 0 0 0 20px;');
     $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
     $('#dataTable_length').hide();
-    $('#floating-button-container').hide();
     $('#actionText').hide();
     $('.on-mobile').show();
     $('.selectContainer').hide();
-  } else {
-    // instantiate floating menu
-    $('#floating-menu-div-listing').fixFloat();
   } 
   var error = '<?php echo $_SESSION['error']; ?>';
   if (error) {

@@ -248,13 +248,37 @@ class lC_Template {
   * @return string
   */
   public function getPageTags() {
-    $tag_string = '';
+    global $lC_Template, $_GET;
 
-    foreach ($this->_page_tags as $key => $values) {
-      $tag_string .= '<meta name="' . $key . '" content="' . implode(', ', $values) . '" />' . "\n";
+    $tag_string = '';
+    $meta_title = $lC_Template->getBranding('meta_title') != '' ? $lC_Template->getBranding('meta_title') : STORE_NAME;
+    $meta_title_prefix = $lC_Template->getBranding('meta_title_prefix') != '' ? $lC_Template->getBranding('meta_title_prefix') : '';
+    $meta_title_suffix = $lC_Template->getBranding('meta_title_suffix') != '' ? $lC_Template->getBranding('meta_title_suffix') : '';
+    $meta_delimeter = $lC_Template->getBranding('meta_delimeter') != '' ? $lC_Template->getBranding('meta_delimeter') : '';
+    $meta_description = $lC_Template->getBranding('meta_description') != '' ? $lC_Template->getBranding('meta_description') : '';
+    $meta_keywords = $lC_Template->getBranding('meta_keywords') != '' ? $lC_Template->getBranding('meta_keywords') : '';;
+
+
+    if($this->_module == 'index' && isset($_GET['cpath']) && (empty($_GET['cpath']) === false) ){
+      $tag_parts_title = $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix;
+      $tag_parts_description = $meta_description;
+      $tag_parts_keywords = ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords;
+    } else if($this->_group == 'products'){
+      $tag_parts_title =  $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix ;
+      $tag_parts_description .=  $meta_description ;
+      $tag_parts_keywords =  ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords ;
+    } else {
+      $tag_parts_title =  $meta_title_prefix . $meta_delimeter . $meta_title . $meta_delimeter . $meta_title_suffix;
+      $tag_parts_description =  $meta_description ;
+      $tag_parts_keywords =  $meta_keywords;
     }
 
-    return $tag_string . "\n";
+    $tag_string .= '<title>' . $tag_parts_title . '</title>' . "\n";
+    $tag_string .= '<meta name="description" content="' . $tag_parts_description . '">' . "\n";
+    $tag_string .= '<meta name="keywords" content="' . $tag_parts_keywords . '">' . "\n";
+    $tag_string .= '<meta name="generator" content="' . $this->_page_tags['generator'][0] . '">' . "\n";
+
+    return $tag_string;
   }
   /**
   * Return the box modules assigned to the page
@@ -818,5 +842,117 @@ class lC_Template {
     
     return $content;
   } 
+  
+  
+ /*
+  * return the Branding Data
+  *
+  * @access public
+  * @return array
+  */
+  public function getBranding($data) {
+    global $lC_Database, $lC_Language;
+
+    $QbrandingLangData = $lC_Database->query('select * from :table_branding where language_id = :language_id');
+    $QbrandingLangData->bindTable(':table_branding', TABLE_BRANDING);
+    $QbrandingLangData->bindInt(':language_id', $lC_Language->getID());
+    $QbrandingLangData->execute();
+    
+    $QbrandingData = $lC_Database->query('select * from :table_branding_data');
+    $QbrandingData->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+    $QbrandingData->execute();
+
+    switch($data){
+      case 'site_image':
+      $data = $QbrandingData->value('site_image');
+      break;
+      
+      case 'og_image':
+      $data = $QbrandingData->value('og_image');
+      break;
+      
+      case 'chat_code':
+      $data = $QbrandingData->value('chat_code');
+      break;
+      
+      case 'support_phone':
+      $data = $QbrandingData->value('support_phone');
+      break;
+      
+      case 'support_email':
+      $data = $QbrandingData->value('support_email');
+      break;
+      
+      case 'sales_phone':
+      $data = $QbrandingData->value('sales_phone');
+      break;
+      
+      case 'sales_email':
+      $data = $QbrandingData->value('sales_email');
+      break;
+      
+      case 'meta_delimeter':
+      $data = $QbrandingData->value('meta_delimeter');
+      break;
+      
+      case 'social_facebook_page':
+      $data = $QbrandingData->value('social_facebook_page');
+      break;
+      
+      case 'social_tweeter':
+      $data = $QbrandingData->value('social_twitter');
+      break;
+      
+      case 'social_pinterest':
+      $data = $QbrandingData->value('social_pinterest');
+      break;
+      
+      case 'social_google_plus':
+      $data = $QbrandingData->value('social_google_plus');
+      break;
+      
+      case 'social_youtube':
+      $data = $QbrandingData->value('social_youtube');
+      break;
+      
+      case 'social_linkedin':
+      $data = $QbrandingData->value('social_linkedin');
+      break;
+
+      case 'meta_delimeter':
+      $data = $QbrandingData->value('meta_delimeter');
+      break;
+      
+      case 'slogan':
+      $data = $QbrandingLangData->value('slogan');
+      break;
+      
+      case 'meta_description':
+      $data = $QbrandingLangData->value('meta_description');
+      break;
+      
+      case 'meta_keywords':
+      $data = $QbrandingLangData->value('meta_keywords');
+      break;
+      
+      case 'meta_title':
+      $data = $QbrandingLangData->value('meta_title');
+      break;
+      
+      case 'meta_title_prefix':
+      $data = $QbrandingLangData->value('meta_title_prefix');
+      break;
+      
+      case 'meta_title_suffix':
+      $data = $QbrandingLangData->value('meta_title_suffix');
+      break;
+      
+      case 'footer_text':
+      $data = $QbrandingLangData->value('footer_text');
+      break;
+    }
+    return $data;
+  }
+  
 }
 ?>

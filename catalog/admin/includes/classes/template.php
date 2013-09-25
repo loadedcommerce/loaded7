@@ -101,7 +101,9 @@ class lC_Template_Admin extends lC_Template {
     global $lC_Vqmod;
     
     if ( file_exists('includes/applications/' . $_module . '/js/responsive.js.php') ) {
-      include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/js/jquery.dataTables.delay.min.js.php'));
+      if ( file_exists(DIR_FS_CATALOG . 'ext/jquery/DataTables/media/js/jquery.dataTables.delay.min.js') ) {
+        include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'ext/jquery/DataTables/media/js/jquery.dataTables.delay.min.js'));
+      }
     }
 
     return true;
@@ -158,6 +160,41 @@ class lC_Template_Admin extends lC_Template {
     }
 
     return $ok;
+  }  
+  /**
+  * Sets the template to use
+  *
+  * @param string $code The code of the template to use
+  * @access public
+  */
+  public function set($code = null) {
+    if ( (isset($_SESSION['template']) === false) || !empty($code) || (isset($_GET['template']) && !empty($_GET['template'])) ) {
+      if ( !empty( $code ) ) {
+        $set_template = $code;
+      } else {
+        $set_template = (isset($_GET['template']) && !empty($_GET['template'])) ? $_GET['template'] : 'default';
+      }
+
+      /*$data = array();
+      $data_default = array();
+
+      foreach ($this->getTemplates() as $template) {
+        if ($template['code'] == DEFAULT_TEMPLATE) {
+          $data_default = array('id' => $template['id'], 'code' => $template['code']);
+        } elseif ($template['code'] == $set_template) {
+          $data = array('id' => $template['id'], 'code' => $template['code']);
+        }
+      }
+
+      if (empty($data)) {
+        $data = $data_default;
+      }*/
+
+      $_SESSION['template']['code'] = $set_template;
+    }
+
+    //$this->_template_id = $_SESSION['template']['id'];
+    //$this->_template = $_SESSION['template']['code'];
   }
 }
 ?>

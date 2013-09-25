@@ -22,7 +22,8 @@ global $lC_Template;
     "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
     "sPaginationType": paginationType, 
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
-    "aoColumns": [{ "sWidth": "80%", "bSortable": true, "sClass": "dataColStatus" },
+    "aoColumns": [{ "sWidth": "60%", "bSortable": true, "sClass": "dataColStatus" },
+                  { "sWidth": "20%", "bSortable": true, "sClass": "dataColStatus" },
                   { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();
@@ -32,12 +33,8 @@ global $lC_Template;
     $('#main-title').attr('style', 'padding: 0 0 0 20px;');
     $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
     $('#dataTable_length').hide();
-    $('#floating-button-container').hide();
     $('#actionText').hide();
     $('.on-mobile').show();
-  } else {
-    // instantiate floating menu
-    $('#floating-menu-div-listing').fixFloat();
   }  
 });
 </script>

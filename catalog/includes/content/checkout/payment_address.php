@@ -230,7 +230,7 @@
         }
 
         $lC_ShoppingCart->setBillingAddress($_POST['address']);
-
+       
         $Qcheck = $lC_Database->query('select address_book_id from :table_address_book where address_book_id = :address_book_id and customers_id = :customers_id limit 1');
         $Qcheck->bindTable(':table_address_book', TABLE_ADDRESS_BOOK);
         $Qcheck->bindInt(':address_book_id', $lC_ShoppingCart->getBillingAddress('id'));
@@ -241,7 +241,6 @@
           if ($reset_payment === true) {
             $lC_ShoppingCart->resetBillingMethod();
           }
-
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
         } else {
           $lC_ShoppingCart->resetBillingAddress();
@@ -249,7 +248,6 @@
         // no addresses to select from - customer decided to keep the current assigned address
       } else {
         $lC_ShoppingCart->setBillingAddress($lC_Customer->getDefaultAddressID());
-
         lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'));
       }
     }
