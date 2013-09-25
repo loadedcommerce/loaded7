@@ -759,8 +759,6 @@ class lC_Orders_Admin {
   * @return array
   */ 
   public static function drawOrderStatusDropdown($oid, $classes = null) {
-    global $lC_Language;
-    
     $data = lC_Orders_Admin::getInfo($oid);
     
     $osDropdown = '<select class="select withClearFunctions' . ((!empty($classes)) ? ' ' . $classes : null) . '" style="min-width:150px" id="order_statuses" name="status">';
@@ -774,6 +772,44 @@ class lC_Orders_Admin {
     $osDropdown .= '</select>';
     
     return $osDropdown;
+  }
+ /*
+  * Return the orders address matching results
+  *
+  * @access public
+  * @return var (text define for same or mixed)
+  */ 
+  public static function getAddressMatching($oid) {
+    global $lC_Language;
+    
+    $data = lC_Orders_Admin::getInfo($oid);
+    
+    if ($data['customerAddress'] == $data['billingAddress'] && $data['customerAddress'] == $data['deliveryAddress'] && $data['billingAddress'] == $data['deliveryAddress']) {
+      $oAddMatch = $lC_Language->get('text_address_same');
+    } else {
+      $oAddMatch = $lC_Language->get('text_address_mixed');
+    }
+    
+    return $oAddMatch;
+  }
+ /*
+  * Return the orders balance state
+  *
+  * @access public
+  * @return var (text define for paid or due)
+  */ 
+  public static function getBalanceState($oid) {
+    global $lC_Language;
+    
+    $data = lC_Orders_Admin::getInfo($oid);
+    $oBalState = 'State';
+    /*if ($data['customerAddress'] == $data['billingAddress'] && $data['customerAddress'] == $data['deliveryAddress'] && $data['billingAddress'] == $data['deliveryAddress']) {
+      $oBalState = $lC_Language->get('text_balance_paid');
+    } else {
+      $oBalState = $lC_Language->get('text_balance_due');
+    }*/
+    
+    return $oBalState;
   }      
 }
 ?>

@@ -161,3 +161,5 @@ text_status_update_pending = Your order status has been changed to Pending.
 text_status_update_processing = Your order status has been changed to Processing.
 text_status_update_preparing = Your order status has been changed to Preparing.
 text_status_update_delivered = Your order status has been changed to Delivered.
+text_address_same = Same
+text_address_mixed = Mixed

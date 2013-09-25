@@ -169,8 +169,8 @@
                 <div class="field-drop-tabs field-drop-tabs-no-left button-height black-inputs">
                   <div class="columns">
                     <div class="two-columns twelve-columns-mobile new-row-mobile no-wrap no-margin-bottom">
-                      <p class="white">Balance <small class="tag small-margin-left green-bg">PAID</small></p>
-                      <p class="white">Address <small class="tag small-margin-left orange-bg">MIXED</small></p>
+                      <p class="white">Balance <small class="tag small-margin-left green-bg"><?php echo lC_Orders_Admin::getBalanceState($_GET[$lC_Template->getModule()]); ?></small></p>
+                      <p class="white">Address <small class="tag small-margin-left orange-bg"><?php echo lC_Orders_Admin::getAddressMatching($_GET[$lC_Template->getModule()]); ?></small></p>
                     </div>
                     <div class="six-columns twelve-columns-mobile new-row-mobile">
                       <div class="columns">
