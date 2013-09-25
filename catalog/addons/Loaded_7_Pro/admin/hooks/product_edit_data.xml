@@ -13,5 +13,5 @@
       <search position="replace"><![CDATA[<?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left float-right">' . lc_go_pro() . '</span>'; ?>]]></search>         
       <add><![CDATA[<?php echo $lC_Language->get('text_multi_sku'); ?>]]></add>
     </operation>      
-  </file> 
+  </file>   
 </modification>

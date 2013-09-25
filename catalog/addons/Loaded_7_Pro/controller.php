@@ -61,7 +61,7 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     
     // auto install the module
     if (!$this->isInstalled()) {
-      $this->install();
+//      $this->install();
     }
   }
  /**
@@ -81,7 +81,7 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   */
   public function install() {
     global $lC_Database;
-    
+
     $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS'");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable AddOn', 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS', '1', 'Do you want to enable this addon?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
     $lC_Database->simpleQuery("delete from " . TABLE_TEMPLATES_BOXES . " where modules_group like '%Loaded_7_Pro%'");
@@ -94,11 +94,9 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     $lC_Database->simpleQuery("insert into `" . DB_TABLE_PREFIX . "product_classes` (id, name, comment, status, language_id) VALUES ('1', 'Common', 'Common Class', 1, 1);");
     $lC_Database->simpleQuery("delete from " . TABLE_TEMPLATES_BOXES . " where code = 'product_classes'");
     $lC_Database->simpleQuery("insert into " . TABLE_TEMPLATES_BOXES . " (title, code, author_name, author_www, modules_group) VALUES ('Product Classes', 'product_classes', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes')");
+    $lC_Database->simpleQuery("alter table " . TABLE_PRODUCTS . " ADD `is_subproduct` TINYINT( 1 ) NOT NULL DEFAULT '0'");
     
-    lC_Cache::clear('configuration');
-    lC_Cache::clear('languages');
-    lC_Cache::clear('addons');
-    lC_Cache::clear('vqmoda');
+    $this->_clearCache();
   }
  /**
   * Return the configuration parameter keys an an array
@@ -113,14 +111,49 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
 
     return $this->_keys;
   } 
-  
+ /**
+  * Remove the addon
+  *
+  * @access public
+  * @return void
+  */
   public function remove() {
-    global $lC_Database;
+    global $lC_Database, $lC_Language;
     
-    parent::remove();
-    
+    if ($this->hasKeys()) {
+      $Qdel = $lC_Database->query('delete from :table_configuration where configuration_key in (":configuration_key")');
+      $Qdel->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $Qdel->bindRaw(':configuration_key', implode('", "', $this->getKeys()));
+      $Qdel->execute();
+    }
+
+    if (file_exists(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml')) {
+      foreach ($lC_Language->extractAddonDefinitions(DIR_FS_CATALOG . 'addons/' . $this->_code . '/languages/' . $lC_Language->getCode() . '.xml') as $def) {
+        $Qdel = $lC_Database->query('delete from :table_languages_definitions where definition_key = :definition_key and content_group = :content_group');
+        $Qdel->bindTable(':table_languages_definitions', TABLE_LANGUAGES_DEFINITIONS);
+        $Qdel->bindValue(':definition_key', $def['key']);
+        $Qdel->bindValue(':content_group', $def['group']);
+        $Qdel->execute();
+      }
+    }    
     // product classes
     $lC_Database->simpleQuery("DROP TABLE IF EXISTS `" . DB_TABLE_PREFIX . "product_classes`");
-  }   
+    $lC_Database->simpleQuery("alter table " . TABLE_PRODUCTS . " DROP COLUMN `is_subproduct`");
+    
+    $this->_clearCache();
+  }
+ /**
+  * Clear the cache
+  *
+  * @access public
+  * @return void
+  */
+  private function _clearCache() {
+    lC_Cache::clear('configuration');
+    lC_Cache::clear('languages');
+    lC_Cache::clear('addons');
+    lC_Cache::clear('vqmoda');
+  }
+     
 }
 ?>

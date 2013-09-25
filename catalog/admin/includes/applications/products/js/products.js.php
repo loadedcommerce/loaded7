@@ -411,10 +411,12 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     }
 
     $('input[name=inventory_control_radio_group]').click(function() {
-      _updateInvControlType($(this).val());
+      var pro = '<?php echo (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? '1' : '0'; ?>';
+      if (pro == '1') _updateInvControlType($(this).val());
     });
     $('input[name=inventory_option_control_radio_group]').click(function() {
-      _updateInvControlType($(this).val());
+      var pro = '<?php echo (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? '1' : '0'; ?>';
+      if (pro == '1') _updateInvControlType($(this).val());
     });
 
     function _updateInvControlType(type) {
@@ -430,8 +432,8 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       } else if (type == '2') {   
         $('#inventory_control_simple').hide('300');
         $('#inventory_control_multi').show('300');
-        $('label[for=\'ic_radio_1\']').addClass('active');
-        $('label[for=\'ioc_radio_1\']').addClass('active'); 
+        $('label[for=\'ic_radio_2\']').addClass('active');
+        $('label[for=\'ioc_radio_2\']').addClass('active'); 
         $('#multiSkuContainer').show();   
         $('#simpleOptionsContainer').hide();        
       }
