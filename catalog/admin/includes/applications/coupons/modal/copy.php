@@ -28,7 +28,6 @@ function copyCoupon(id, name, code) {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_copy_coupon'); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

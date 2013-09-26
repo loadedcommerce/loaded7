@@ -45,8 +45,7 @@ function deleteLanguage(id, name) {
                  '</div>',
         title: '<?php echo $lC_Language->get('modal_heading_delete_language'); ?>',
         width: 300,
-        scrolling: false,
-        actions: {
+            actions: {
           'Close' : {
             color: 'red',
             click: function(win) { win.closeModal(); }

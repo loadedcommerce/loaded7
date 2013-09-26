@@ -29,7 +29,6 @@ function deleteSpecial(id, name) {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_delete_specials'); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

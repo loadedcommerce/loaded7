@@ -73,8 +73,7 @@ function newSpecial() {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_new_special'); ?>',
           width: 600,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

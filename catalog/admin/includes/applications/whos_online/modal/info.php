@@ -69,8 +69,7 @@ function showInfo(id) {
                    '</div>',
           title: '<?php echo str_replace("'", "", $lC_Language->get('heading_title')); ?>',
           width: 500,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

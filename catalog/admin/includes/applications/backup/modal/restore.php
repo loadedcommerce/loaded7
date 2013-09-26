@@ -30,7 +30,6 @@ function restoreEntry(id) {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_restore_file'); ?>',
     width: 400,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

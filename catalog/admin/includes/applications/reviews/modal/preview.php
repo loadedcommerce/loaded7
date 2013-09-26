@@ -63,8 +63,7 @@ function showPreview(id) {
             content: modalContent,
             title: '<?php echo $lC_Language->get('modal_heading_preview_review'); ?>',
             width: 500,
-            scrolling: false,
-            actions: {
+                    actions: {
               'Close' : {
                 color: 'red',
                 click: function(win) { win.closeModal(); }
@@ -103,8 +102,7 @@ function showPreview(id) {
             content: modalContent,
             title: '<?php echo $lC_Language->get('modal_heading_preview_review'); ?>',
             width: 500,
-            scrolling: false,
-            actions: {
+                    actions: {
               'Close' : {
                 color: 'red',
                 click: function(win) { win.closeModal(); }
@@ -143,8 +141,7 @@ function showPreview(id) {
             content: modalContent,
             title: '<?php echo $lC_Language->get('modal_heading_preview_review'); ?>',
             width: 500,
-            scrolling: false,
-            actions: {
+                    actions: {
               'Close' : {
                 color: 'red',
                 click: function(win) { win.closeModal(); }

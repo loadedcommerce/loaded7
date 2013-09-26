@@ -96,8 +96,7 @@ function newCustomer() {
           content: '<?php echo $content; ?>',
           title: '<?php echo $lC_Language->get('modal_heading_new_customer'); ?>',
           width: 600,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

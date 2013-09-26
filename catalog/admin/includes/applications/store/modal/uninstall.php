@@ -29,7 +29,6 @@ function uninstallAddon(id, name) {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_uninstall_addon'); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

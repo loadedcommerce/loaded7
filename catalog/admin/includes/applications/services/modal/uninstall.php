@@ -29,7 +29,6 @@ function uninstallModule(id, name) {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_uninstall_service_module'); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',
