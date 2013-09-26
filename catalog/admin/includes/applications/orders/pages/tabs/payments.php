@@ -13,5 +13,6 @@
 */
 ?>
           <div id="section_orders_payments">
-            <h3 class="show-below-768 margin-left margin-top no-margin-bottom">Payments</h3>
+            <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('text_payments'); ?></h3>
+            </div>
           </div>

@@ -22,9 +22,11 @@
   .dataColCheck { text-align: center; }  
   .dataColOID { text-align: left; } 
   .dataColName { text-align: left; } 
-  .dataColCID { text-align: left; } 
+  .dataColCountry { text-align: left; } 
+  .dataColItems { text-align: left; } 
   .dataColOTotal { text-align: left; } 
   .dataColDate { text-align: center; } 
+  .dataColTime { text-align: center; } 
   .dataColStatus { text-align: left; } 
   .dataColAction { text-align: right; } 
   .dataTables_info { position:absolute; bottom: 42px; color:#4c4c4c; }
@@ -38,9 +40,11 @@
           <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
           <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_oid'); ?></th>
           <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_customers'); ?></th>
-          <th scope="col" class="align-left hide-on-tablet"><?php echo $lC_Language->get('table_heading_cid'); ?></th>
+          <!--<th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_country'); ?></th>
+          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_items'); ?></th>-->
           <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_order_total'); ?></th>
-          <th scope="col" class="align-center hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_date_purchased'); ?></th>
+          <th scope="col" class="align-center hide-on-tablet no-wrap"><?php echo $lC_Language->get('table_heading_date_purchased'); ?></th>
+          <th scope="col" class="align-center hide-on-tablet"><?php echo $lC_Language->get('table_heading_time'); ?></th>
           <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_status'); ?></th>
           <th scope="col" class="align-right"><span class="button-group compact"><a href="javascript:void(0);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a></span><span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span></th>
         </tr>
@@ -49,7 +53,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="8">&nbsp;</th>
+          <th colspan="10">&nbsp;</th>
         </tr>
       </tfoot>
     </table>

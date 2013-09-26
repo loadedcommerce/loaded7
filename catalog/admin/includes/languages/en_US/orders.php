@@ -74,7 +74,7 @@ subsection_payment_method = Payment Method
 subsection_status = Status
 subsection_total = Total 
 
-table_heading_cid = cID
+table_heading_time = Time
 table_heading_customers = Customer Name
 table_heading_oid = oID
 table_heading_order_total = Order&nbsp;Total
@@ -91,6 +91,8 @@ table_heading_total_gross = Total (Gross)
 table_heading_date_added = Date Added
 table_heading_comments = Comments
 table_heading_customer_notified = Customer Notified
+table_heading_country = Country
+table_heading_items = Items
 
 text_edit_order = Order
 text_order_number = Order Number
@@ -165,3 +167,5 @@ text_address_same = Same
 text_address_mixed = Mixed
 text_balance_paid = Paid
 text_balance_due = Due
+text_customer_comment = Customer Comment
+text_payments = Payments

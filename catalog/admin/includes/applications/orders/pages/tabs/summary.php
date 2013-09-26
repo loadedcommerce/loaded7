@@ -45,7 +45,7 @@
               <div class="new-row-mobile four-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
-                    <span class="icon-dropbox icon-anthracite"><strong class="small-margin-left"><?php echo /*$lC_Language->get('text_shipping')*/$lC_Language->get('subsection_shipping_address'); ?></strong></span>
+                    <span class="icon-dropbox icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('subsection_shipping_address'); ?></strong></span>
                   </legend>
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tbody>
@@ -68,7 +68,7 @@
               <div class="new-row-mobile four-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
-                    <span class="icon-card icon-anthracite"><strong class="small-margin-left"><?php echo /*$lC_Language->get('text_information')*/$lC_Language->get('subsection_billing_address'); ?></strong></span>
+                    <span class="icon-card icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('subsection_billing_address'); ?></strong></span>
                   </legend>
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tbody>
@@ -93,7 +93,7 @@
               <div class="new-row-mobile four-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
-                    <span class="icon-credit-card icon-anthracite"><strong class="small-margin-left"><?php echo /*$lC_Language->get('text_payment')*/$lC_Language->get('subsection_payment_method'); ?></strong></span>
+                    <span class="icon-credit-card icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('subsection_payment_method'); ?></strong></span>
                   </legend>
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tbody>
@@ -116,7 +116,7 @@
               <div class="new-row-mobile four-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
-                    <span class="icon-clock icon-anthracite"><strong class="small-margin-left"><?php echo /*$lC_Language->get('text_shipping')*/$lC_Language->get('subsection_status'); ?></strong></span>
+                    <span class="icon-clock icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('subsection_status'); ?></strong></span>
                   </legend>
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tbody>
@@ -141,7 +141,7 @@
               <div class="new-row-mobile four-columns twelve-columns-mobile">
                 <fieldset>
                   <legend class="small-margin-bottom">
-                    <span class="icon-bag icon-anthracite"><strong class="small-margin-left"><?php echo /*$lC_Language->get('text_shipping')*/$lC_Language->get('subsection_total'); ?></strong></span>
+                    <span class="icon-bag icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('subsection_total'); ?></strong></span>
                   </legend>
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tbody>
@@ -169,8 +169,18 @@
                 <div class="field-drop-tabs field-drop-tabs-no-left button-height black-inputs">
                   <div class="columns">
                     <div class="two-columns twelve-columns-mobile new-row-mobile no-wrap no-margin-bottom">
-                      <p class="white">Balance <small class="tag small-margin-left green-bg"><?php echo lC_Orders_Admin::getBalanceState($_GET[$lC_Template->getModule()]); ?></small></p>
-                      <p class="white">Address <small class="tag small-margin-left orange-bg"><?php echo lC_Orders_Admin::getAddressMatching($_GET[$lC_Template->getModule()]); ?></small></p>
+                      <p class="white">
+                        <?php echo $lC_Language->get('text_balance'); ?> 
+                        <small class="tag small-margin-left with-min-padding<?php echo ((lC_Orders_Admin::getBalanceState($_GET[$lC_Template->getModule()]) == 'Paid') ? ' green-bg' : ' red-bg'); ?>">
+                          <?php echo lC_Orders_Admin::getBalanceState($_GET[$lC_Template->getModule()]); ?>
+                        </small>
+                      </p>
+                      <p class="white">
+                        <?php echo $lC_Language->get('text_address'); ?> 
+                        <small class="tag small-margin-left with-min-padding<?php echo ((lC_Orders_Admin::getAddressMatching($_GET[$lC_Template->getModule()]) == 'Same') ? ' green-bg' : ' orange-bg'); ?>">
+                          <?php echo lC_Orders_Admin::getAddressMatching($_GET[$lC_Template->getModule()]); ?>
+                        </small>
+                      </p>
                     </div>
                     <div class="six-columns twelve-columns-mobile new-row-mobile">
                       <div class="columns">

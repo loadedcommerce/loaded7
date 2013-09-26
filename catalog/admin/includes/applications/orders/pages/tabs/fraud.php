@@ -13,5 +13,5 @@
 */
 ?>
           <div id="section_orders_fraud">
-            <h3 class="show-below-768 margin-left margin-top no-margin-bottom">Fraud</h3>
+            <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('section_orders_fraud'); ?></h3>
           </div>

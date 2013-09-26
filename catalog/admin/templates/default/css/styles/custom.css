@@ -831,7 +831,7 @@ select.error { border: 2px solid red !important; }
 .orders-products-listing-td { padding: 10px 0 15px; }
 .show-below-768 { display: none; }
 .show-below-480 { display: none; }
-.with-min-padding { padding: 1px 4px !important; }
+.with-min-padding { padding: 2px 4px !important; }
 .small-padding-top { padding-top: 8px; }
 .small-padding-right { padding-right: 8px; }
 .small-padding-bottom { padding-bottom: 8px; }
@@ -882,6 +882,17 @@ select.error { border: 2px solid red !important; }
 .font-twenty-three { font-size: 23px; }
 .font-twenty-four { font-size: 24px; }
 .margin-left-order-comments { margin-left: 32px; }
+
+.force-text-break {
+  white-space: -moz-pre-wrap; /* Mozilla */
+  white-space: -hp-pre-wrap; /* HP printers */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: pre-wrap; /* CSS 2.1 */
+  white-space: pre-line; /* CSS 2.1 and 3) */
+  word-wrap: break-word; /* IE */
+  word-break: break-all;
+}
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {

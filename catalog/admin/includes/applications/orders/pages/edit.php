@@ -42,8 +42,9 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
           <li><?php echo lc_link_object('#section_orders_customer', $lC_Language->get('section_orders_customer')); ?></li>
           <li><?php echo lc_link_object('#section_orders_shipping', $lC_Language->get('section_orders_shipping')); ?></li>-->
           <li><?php echo lc_link_object('#section_orders_status', $lC_Language->get('section_orders_status')); ?></li>
-          <!--<li><?php echo lc_link_object('#section_orders_fraud', $lC_Language->get('section_orders_fraud')); ?></li>-->
-          <li><?php echo lc_link_object('#section_orders_payments', $lC_Language->get('section_orders_payments')); ?></li>
+          <!--<li><?php echo lc_link_object('#section_orders_fraud', $lC_Language->get('section_orders_fraud')); ?></li>
+          <li><?php echo lc_link_object('#section_orders_payments', $lC_Language->get('section_orders_payments')); ?></li>-->
+          <li><?php echo lc_link_object('#section_orders_transactions', $lC_Language->get('section_transaction_history')); ?></li>
         </ul>
         <div class="tabs-content" id="orders_sections">
           <?php 
@@ -53,7 +54,8 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
             //include('includes/applications/orders/pages/tabs/shipping.php'); 
             include('includes/applications/orders/pages/tabs/status.php');
             //include('includes/applications/orders/pages/tabs/fraud.php'); 
-            include('includes/applications/orders/pages/tabs/payments.php'); 
+            //include('includes/applications/orders/pages/tabs/payments.php'); 
+            include('includes/applications/orders/pages/tabs/transactions.php'); 
           ?> 
         </div>
       </div>
@@ -79,9 +81,6 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
                 <option value="customer"><?php echo $lC_Language->get('text_go_to_customer'); ?></option>
               </select>&nbsp;
             </p>
-          </div>
-          <div id="floating-button-container-title" class="hidden">
-            <p class="white big-text small-margin-top"><?php echo $lC_Language->get('text_edit_order') . ': '/* . $lC_ObjectInfo->get('orders_id')*/; ?></p>
           </div>
         </div>
       </div>

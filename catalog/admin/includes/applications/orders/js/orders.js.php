@@ -27,11 +27,13 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
         "aaSorting": [[1,'desc']],
         "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
-                      { "sWidth": "10%", "bSortable": true, "sClass": "dataColOID" },
+                      { "sWidth": "5%", "bSortable": true, "sClass": "dataColOID" },
                       { "sWidth": "25%", "bSortable": true, "sClass": "dataColName hide-on-mobile-portrait" },
-                      { "sWidth": "10%", "bSortable": true, "sClass": "dataColCID hide-on-tablet hide-on-mobile" },
-                      { "sWidth": "10%", "bSortable": true, "sClass": "dataColOTotal" },
-                      { "sWidth": "15%", "bSortable": true,"sClass": "dataColDate hide-on-mobile-portrait" },
+                      //{ "sWidth": "5%", "bSortable": true,"sClass": "dataColCountry hide-on-tablet" },
+                      //{ "sWidth": "5%", "bSortable": true,"sClass": "dataColItems hide-on-tablet" },
+                      { "sWidth": "15%", "bSortable": true, "sClass": "dataColOTotal" },
+                      { "sWidth": "15%", "bSortable": true,"sClass": "dataColDate hide-on-tablet" },
+                      { "sWidth": "10%", "bSortable": true,"sClass": "dataColTime hide-on-tablet" },
                       { "sWidth": "10%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile" },
                       { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
       });
@@ -219,4 +221,11 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     }
     $('#orders_edit_select').val('');
   }
+  
+  $(function(){
+    $('.transCommentsTrigger').click(function() {
+      $(this).parents("tr").next().toggle(300);
+      return false;
+    });
+  });
 </script>

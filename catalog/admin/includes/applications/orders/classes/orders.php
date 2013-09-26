@@ -83,36 +83,39 @@ class lC_Orders_Admin {
     $QresultFilterTotal->freeResult();      
     
     /* Main Listing Query */
-    $Qresult = $lC_Database->query("SELECT o.orders_id, o.customers_id, o.customers_ip_address, o.customers_name, o.payment_method, o.date_purchased, o.last_modified, greatest(date_purchased, coalesce(last_modified, date_purchased)) as date_sort, o.currency, o.currency_value, ot.value as order_total, s.orders_status_name     
-                                    from :table_orders o 
-                                               LEFT JOIN :table_orders_total ot 
-                                                 on (o.orders_id = ot.orders_id and ot.class = 'total')
-                                               LEFT JOIN :table_orders_status s 
-                                                 on (s.orders_status_id = o.orders_status and s.language_id = :language_id) " . 
+    $Qresult = $lC_Database->query("SELECT o.orders_id, o.customers_id, o.customers_ip_address, o.customers_name, o.payment_method, o.date_purchased, o.last_modified, greatest(date_purchased, coalesce(last_modified, date_purchased)) as date_sort, o.currency, o.currency_value, ot.value as order_total, s.orders_status_name, s.orders_status_type     
+                                      from :table_orders o 
+                                 LEFT JOIN :table_orders_total ot 
+                                        on (o.orders_id = ot.orders_id and ot.class = 'total')
+                                 LEFT JOIN :table_orders_status s 
+                                        on (s.orders_status_id = o.orders_status and s.language_id = :language_id) " . 
                                     $sWhere . $sOrder  . $sLimit); 
                                   
     $Qresult->bindTable(':table_orders', TABLE_ORDERS);
     $Qresult->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+    $Qresult->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
     $Qresult->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
     $Qresult->bindInt(':language_id', $lC_Language->getID());
     $Qresult->execute();   
       
     while ($Qresult->next()) { 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qresult->valueInt('orders_id') . '" id="' . $Qresult->valueInt('orders_id') . '"></td>';
-      $oid = '<td><a href="javascript:void(0);" onclick="editOrder(\'' . $Qresult->valueInt('orders_id') . '\')"><span class="icon-price-tag icon-red"></span>&nbsp;' . $Qresult->valueInt('orders_id') . '</a></td>';
+      $oid = '<td><a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qresult->valueInt('orders_id') . '&action=save')) . '"><span class="icon-price-tag icon-red"></span>&nbsp;' . $Qresult->valueInt('orders_id') . '</a></td>';
       $name = '<td>' . $Qresult->valueProtected('customers_name') . '</td>';
-      $cid = '<td>' . $Qresult->valueInt('customers_id') . '</td>';        
+      //$country = '<td>USA</td>';
+      //$items = '<td>' . count($Qresult->valueInt('products_id')) . '</td>';
       $total = '<td>' . $lC_Currencies->format($Qresult->value('order_total')) . '</td>';
       number_format($Qresult->value('order_total'), DECIMAL_PLACES) . '</td>';
-      $date = '<td>' . lC_DateTime::getShort($Qresult->value('date_purchased'), true) . '</td>';
-      $status = '<td>' . $Qresult->valueProtected('orders_status_name') . '</td>'; 
+      $date = '<td>' . self::getTextDate($Qresult->value('date_purchased')) . '</td>';
+      $time = '<td>' . self::get12HourTime($Qresult->value('date_purchased')) . '</td>';
+      $status = '<td><span class="tag with-min-padding ' . (($Qresult->valueProtected('orders_status_type') == 'Approved') ? 'green-bg' : (($Qresult->valueProtected('orders_status_type') == 'Pending') ? 'orange-bg' : 'red-bg')) . '">' . $Qresult->valueProtected('orders_status_name') . '</span></td>'; 
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qresult->valueInt('orders_id') . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="editOrder(\'' . $Qresult->valueInt('orders_id') . '\')') . '" class="button icon-pencil with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_edit') . '"></a>
+                   <!--<a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="editOrder(\'' . $Qresult->valueInt('orders_id') . '\')') . '" class="button icon-pencil with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_edit') . '"></a>-->
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteOrder(\'' . $Qresult->valueInt('orders_id') . '\', \'' . urlencode($Qresult->value('customers_name')) . '\')"') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';         
 
-      $result['aaData'][] = array("$check", "$oid", "$name", "$cid", "$total", "$date", "$status", "$action");      
+      $result['aaData'][] = array("$check", "$oid", "$name"/*, "$country", "$items"*/, "$total", "$date", "$time", "$status", "$action");      
     }
     $result['sEcho'] = intval($_GET['sEcho']);
 
@@ -670,7 +673,7 @@ class lC_Orders_Admin {
                         <span class="small-margin-left float-left">
                           ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
                         </span>
-                        <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
+                        <span class="anthracite mid-margin-left">' . (($oshData['admin_id'] != null) ? $oshData['admin_name'] : $lC_Language->get('text_customer_comment')) . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
                       </div>
                       <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
                     </div>';
@@ -784,7 +787,7 @@ class lC_Orders_Admin {
   * Return the orders address matching results
   *
   * @access public
-  * @return var (text define for same or mixed)
+  * @return string (text define for same or mixed)
   */ 
   public static function getAddressMatching($oid) {
     global $lC_Language;
@@ -800,10 +803,10 @@ class lC_Orders_Admin {
     return $oAddMatch;
   }
  /*
-  * Return the orders balance state
+  * Return the orders balance state (paid or due)
   *
   * @access public
-  * @return var (text define for paid or due)
+  * @return string (text define for paid or due)
   */ 
   public static function getBalanceState($oid) {
     global $lC_Language;
@@ -816,6 +819,57 @@ class lC_Orders_Admin {
     }
     
     return $oBalState;
+  }
+ /*
+  * Return the 12 hour formatted time for the orders listing
+  *
+  * @access public
+  * @return string
+  */
+  public static function get12HourTime($datetime) {
+    $time = substr(lC_DateTime::getShort($datetime, true), -8);
+    $parts = explode(":", $time);
+    if ($parts[0] > 12) {
+      $h = ($parts[0] - 12);
+      $ampm = 'pm';
+    } else {
+      $h = $parts[0];
+      $ampm = 'am';
+    }
+    return $h . ':' . $parts[1] . '<small>&nbsp;</small>' . $ampm;
+  }
+ /*
+  * Return the text/word formatted time for the orders listing
+  *
+  * @access public
+  * @return string
+  */
+  public static function getTextDate($datetime) {
+    $date = substr(lC_DateTime::getShort($datetime, true), 0, -8);
+    return date("M jS Y", strtotime($date));
+  }
+ /*
+  * Return the orders transaction history
+  *
+  * @access public
+  * @return array
+  */ 
+  public static function getOrderTransactions($id = null) {
+    global $lC_Language;
+    $data = lC_Orders_Admin::getInfo($id);
+    $cnt = 1;
+    foreach ($data['transactionHistoryData'] as $thData) {
+      $tData .= '<tr>' .
+                '  <td>' . lC_DateTime::getShort($thData['date_added'], false) . '</td>' .
+                '  <td>' . $thData['status'] . '&nbsp;&nbsp;' . $thData['return_status'] . '</td>' .
+                '  <td class="cursor-pointer transCommentsTrigger">More <span class="icon-triangle-down"></span></td>' .
+                '</tr>' . 
+                '<tr style="display:none;">' . 
+                '  <td colspan="3" class="force-text-break">' . $thData['return_value'] . '</td>' . 
+                '</tr>';
+      $cnt++;
+    }      
+    return $tData;
   }      
 }
 ?>
