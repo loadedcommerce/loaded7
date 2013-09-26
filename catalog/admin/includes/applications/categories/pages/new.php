@@ -333,13 +333,13 @@
                 <span class="button-icon red-gradient glossy">
                   <span class="icon-cross"></span>
                 </span>
-                <span class="button-text"><?php echo $lC_Language->get('button_cancel'); ?></span>
+                <span><?php echo $lC_Language->get('button_cancel'); ?></span>
               </a>&nbsp;
               <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" onclick="validateForm('#category');" href="javascript:void(0);">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
                 </span>
-                <span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span>
+                <span><?php echo $lC_Language->get('button_save'); ?></span>
               </a>&nbsp;
             </p>
           </div>

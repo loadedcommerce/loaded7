@@ -90,7 +90,7 @@ class lC_Store_Admin {
                              <div class="strong">' . $addon->getAddonTitle() . '</div>
                              <div>' . lc_image('../images/stars_' . $addon->getAddonRating() . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon->getAddonRating()), null, null, 'class="mid-margin-top small-margin-bottom"') . '</div>
                              <div><small>' . $addon->getAddonAuthor() . '</small></div>
-                             <div style="position:absolute; right:0; top:0;"><button id="uninstallButton" onclick="uninstallAddon(\'' . $addon->getAddonCode() . '\',\'' . urlencode($addon->getAddonTitle()) . '\');" class="button icon-undo red-gradient glossy"><span class="button-text">Uninstall</span></button></div>
+                             <div style="position:absolute; right:0; top:0;"><button id="uninstallButton" onclick="uninstallAddon(\'' . $addon->getAddonCode() . '\',\'' . urlencode($addon->getAddonTitle()) . '\');" class="button icon-undo red-gradient glossy"><span>Uninstall</span></button></div>
                            </div>
                          </div>' . $blurb . '
                        </div>';

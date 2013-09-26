@@ -190,13 +190,13 @@
                 <span class="button-icon red-gradient glossy">
                   <span class="icon-cross"></span>
                 </span>
-                <span class="button-text"><?php echo $lC_Language->get('button_cancel'); ?></span>
+                <span><?php echo $lC_Language->get('button_cancel'); ?></span>
               </a>&nbsp;
               <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="validateForm(\'#coupon\');'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
                 </span>
-                <span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span> 
+                <span><?php echo $lC_Language->get('button_save'); ?></span> 
               </a>&nbsp;
             </p>
           </div>

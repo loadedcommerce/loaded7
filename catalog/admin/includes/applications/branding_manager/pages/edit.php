@@ -309,7 +309,7 @@
   </div>
   </form>
   <div class="clear-both"></div>
-  <div id="floating-button-container" class="six-columns twelve-columns-tablet margin-bottom">
+  <div class="six-columns twelve-columns-tablet margin-bottom">
     <div id="floating-menu-div-listing">
       <div id="buttons-container" style="position: relative;" class="clear-both">
         <div style="float:right;">
@@ -318,13 +318,13 @@
               <span class="button-icon blue-gradient">
                 <span class="icon-undo"></span>
               </span>
-              <span class="button-text"><?php echo $lC_Language->get('button_reset'); ?></span>
+              <span><?php echo $lC_Language->get('button_reset'); ?></span>
             </a>&nbsp; 
             <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="validateForm(\'#branding_manager\');'); ?>">
               <span class="button-icon green-gradient glossy">
                 <span class="icon-download"></span>
               </span>
-              <span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span>
+              <span><?php echo $lC_Language->get('button_save'); ?></span>
             </a>&nbsp;
           </p>
         </div>

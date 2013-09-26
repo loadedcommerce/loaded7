@@ -62,7 +62,7 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
       <?php echo lc_draw_hidden_field('subaction', 'confirm'); ?>
     </form>
     <div class="clear-both"></div>
-    <div id="floating-button-container" class="six-columns twelve-columns-tablet">
+    <div class="six-columns twelve-columns-tablet">
       <div id="buttons-menu-div-listing">
         <div id="buttons-container" class="clear-both">
           <div style="float:right;">
@@ -71,7 +71,7 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
                 <span class="button-icon blue-gradient glossy">
                   <span class="icon-list"></span>
                 </span>
-                <span class="button-text"><?php echo $lC_Language->get('button_back_to_list'); ?></span>
+                <span><?php echo $lC_Language->get('button_back_to_list'); ?></span>
               </a>&nbsp;
               <select id="orders_edit_select" class="green-gradient select expandable-list" onchange="ordersEditSelect('<?php echo $oInfo->get('customerId'); ?>', '<?php echo $_GET[$lC_Template->getModule()]; ?>', this.value);">
                 <option value=""><?php echo $lC_Language->get('text_actions'); ?></option>
