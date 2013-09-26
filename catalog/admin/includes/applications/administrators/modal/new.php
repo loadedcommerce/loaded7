@@ -61,7 +61,7 @@ function newAdmin() {
 
                '      <p class="button-height inline-label">'+
                '        <label for="language_id" class="label"><?php echo $lC_Language->get('field_admin_language'); ?></label>'+
-               '        <?php  echo lc_draw_pull_down_menu('language_id', $languagesSelectArr, $admin_language_default, 'id="edit-language_id" class="select" style="min-width:200px;"'); ?>'+
+               '        <?php  echo lc_draw_pull_down_menu('language_id', $languagesSelectArr, $admin_language_default, 'id="edit-language_id" class="input with-small-padding" style="min-width:200px;"'); ?>'+
                '      </p>'+
 
                '      <p class="button-height inline-label" id="pImage">'+

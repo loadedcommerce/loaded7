@@ -155,7 +155,7 @@ function editOrder(id) {
                    '          <table border="0" width="100%" cellspacing="0" cellpadding="2" id="statusHistoryTable">'+
                    '            <tr>'+
                    '              <td><?php echo $lC_Language->get('field_status'); ?></td>'+
-                   '              <td><?php echo lc_draw_pull_down_menu('status', null, null, 'class="select" style="width: 73%" id="orderStatus"'); ?></td>'+
+                   '              <td><?php echo lc_draw_pull_down_menu('status', null, null, 'class="input with-small-padding" style="width: 73%" id="orderStatus"'); ?></td>'+
                    '            </tr>'+
                    '            <tr>'+
                    '              <td valign="top" width="30%"><?php echo $lC_Language->get('field_add_comment'); ?></td>'+

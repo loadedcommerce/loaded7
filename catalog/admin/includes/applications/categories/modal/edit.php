@@ -40,7 +40,7 @@ function editCategory(id) {
                    '      <p><?php echo $lC_Language->get('introduction_edit_category'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="parent_id" class="label" style="width:33%;"><?php echo $lC_Language->get('field_parent_category'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('parent_id', null, null, 'class="select" style="width:73%;" id="editParentId"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('parent_id', null, null, 'class="input with-small-padding" style="width:73%;" id="editParentId"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="categories_name" class="label" style="width:33%;"><?php echo $lC_Language->get('field_name'); ?></label>'+
