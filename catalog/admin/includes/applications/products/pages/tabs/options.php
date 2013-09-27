@@ -12,7 +12,11 @@
   @license    http://loadedcommerce.com/license.html
 */
 global $lC_Language, $pInfo; 
-?>
+?>  
+<style>
+.half-width { width:90%; }
+.align-middle { vertical-align:middle; }
+</style>
 <div id="section_options_content" class="with-padding">
   <div class="columns">
     <div class="twelve-columns">
@@ -39,9 +43,130 @@ global $lC_Language, $pInfo;
     <div id="multiSkuContainer" class="twelve-columns" style="position:relative; display:none;">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_multi_sku_options'); ?></legend>
-        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewMultiSkuOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
-        <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
-          <span class="thin"><?php echo $lC_Language->get('text_coming_soon'); ?>...</span>
+        <div class="twelve-columns"> 
+          <!--VQMOD1-->          
+          
+          <div id="multiTypeControlButtons" class="button-group small-margin-top">
+            <label for="type_radio_1" class="button green-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 && $pInfo->getInt('is_subproduct') != 1) ? '' : ' active'); ?>">
+              <input type="radio" onclick="toggleMultiSkuTypeRadioGroup(this.value);" name="multi_sku_type_radio_group" id="type_radio_1" value="1" />
+              <?php echo $lC_Language->get('text_combo_options'); ?>
+            </label>
+            <label for="type_radio_2" class="button green-active<?php echo (isset($pInfo) && ($pInfo->getInt('is_subproduct') == 1) ? ' active' : ''); ?>">
+              <input type="radio" onclick="toggleMultiSkuTypeRadioGroup(this.value);" name="multi_sku_type_radio_group" id="type_radio_2" value="2" />
+              <?php echo $lC_Language->get('text_sub_products'); ?>
+            </label>
+          </div>  
+                   
+          <div id="comboOptionsContainer" class="">
+          
+          </div>       
+          
+          <div id="subProductsContainer" class="margin-top">    
+            <table width="100%" style="" id="subProductsTable" class="simple-table">
+              <thead>
+                <tr>
+                  <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_sub_products_name'); ?></th>
+                  <th scope="col" class="align-center hide-below-480"><?php echo $lC_Language->get('table_heading_sub_products_status'); ?></th>
+                  <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_sub_products_weight'); ?></th>
+                  <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_sub_products_sku'); ?></th>
+                  <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_sub_products_qoh'); ?></th>
+                  <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_sub_products_cost'); ?></th>
+                  <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_sub_products_img'); ?></th>
+                  <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
+                </tr>
+              </thead>      
+              <tbody class="">
+              </tbody>
+            </table>          
+          </div>       
+          <script>
+          $(document).ready(function() {
+            var optionsDiv = $("input:radio[name=multi_sku_type_radio_group]").val();
+            toggleMultiSkuTypeRadioGroup(optionsDiv);
+            addSubProductsRow();  
+            $("#subProductsTable tr:last-child td:first-child").find('input').focus();  
+
+          }); 
+          
+          function addSubProductsRow() {
+            if($("#subProductsTable tbody").children().length > 0) {
+              var id = $('#subProductsTable tr:last').attr('id').replace('tr-', '');
+              if($('#sub_products_name_' + id).val() == '') return false;
+            } else {
+              var id = 0;
+            }
+            var nextId = parseInt(id) + 1;
+            var row = '<tr id="tr-' + nextId + '">'+
+                      '  <td><input type="text" class="input" onblur="addSubProductsRow();" tabindex="' + nextId + '1" id="sub_products_name_' + nextId + '" name="sub_products_name[' + nextId + ']" value=""></td>'+
+                      '  <td class="align-center align-middle">'+
+                      '    <a onclick="setSubProductDefault(\'' + nextId + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_set_as_default'); ?>" href="javascript:void(0);"><span id="sub_products_default_span_' + nextId + '" class="icon-star icon-size2 margin-right ' + ((nextId == 1) ? "icon-orange" : "icon-grey") + '"></span></a>'+
+                      '    <a onclick="setSubProductStatus(\'' + nextId + '\');" class="with-tooltip" id="sub_products_status_link[' + nextId + ']" title="<?php echo $lC_Language->get('text_sub_products_enable_disable'); ?>" href="javascript:void(0);"><span id="sub_products_status_span_' + nextId + '" class="icon-tick icon-size2 icon-green"></span></a>'+
+                      '    <input type="hidden" id="sub_products_default_' + nextId + '" name="sub_products_default[' + nextId + ']" class="sub_products_default" value="' + ((nextId == 1) ? "1" : "0") + '">'+
+                      '    <input type="hidden" id="sub_products_status_' + nextId + '" name="sub_products_status[' + nextId + ']" value="1">'+
+                      '  </td>'+
+                      '  <td><input type="text" class="input half-width" tabindex="' + nextId + '2" name="sub_products_weight[' + nextId + ']" value=""></td>'+
+                      '  <td><input type="text" class="input half-width" tabindex="' + nextId + '3" name="sub_products_sku[' + nextId + ']" value=""></td>'+
+                      '  <td><input type="text" class="input half-width" tabindex="' + nextId + '4" name="sub_products_qoh[' + nextId + ']" value=""></td>'+
+                      '  <td><input type="text" class="input half-width" tabindex="' + nextId + '5" name="sub_products_price[' + nextId + ']" value=""></td>'+
+                      '<td class="align-center align-middle">'+
+                      '  <input style="display:none;" type="file" id="sub_products_image_' + nextId + '" name="sub_products_image[' + nextId + ']" onchange="setSubProductImage(\'' + nextId + '\');" multiple />'+
+                      '  <span class="icon-camera icon-size2 icon-grey cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_select_image'); ?>" id="fileSelectButton-' + nextId + '" onclick="document.getElementById(\'sub_products_image_' + nextId + '\').click();"></span>'+
+                      '</td>'+
+                      '<td class="align-right align-middle">'+
+                      '  <a onclick="removeSubProductRow(\'' + nextId + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_remove'); ?>" href="javascript:void(0)"><span class="icon-cross icon-size2 icon-red"></span></a>'+
+                      '</td>'+
+                    '</tr>';
+                    
+            $('#subProductsTable > tbody').append(row);                    
+          }   
+          
+          function removeSubProductRow(id) {
+            $('#tr-' + id).remove();
+             if($("#subProductsTable tbody").children().length == 0) addSubProductsRow();
+          }
+          
+          function setSubProductDefault(id) {
+            $('.icon-star').removeClass('icon-orange').addClass('icon-grey');
+            $('#sub_products_default_span_' + id).removeClass('icon-grey').addClass('icon-orange');
+            $('.sub_products_default').val('0');
+            $('#sub_products_default_' + id).val('1');
+          } 
+          
+          function setSubProductStatus(id) {
+            var v = $('#sub_products_status_' + id).val();
+            if (v == '1') {
+              $('#sub_products_status_' + id).val('0');
+              $('#sub_products_status_span_' + id).removeClass('icon-green icon-tick').addClass('icon-red icon-cross');
+            } else {
+              $('#sub_products_status_' + id).val('1');
+              $('#sub_products_status_span_' + id).removeClass('icon-red icon-cross').addClass('icon-green icon-tick');
+            } 
+          }  
+          
+          function setSubProductImage(id) {
+            setTimeout(function(){
+              var v = ($('#sub_products_image_' + id).val());
+              if (v != '') {
+                $('#fileSelectButton-' + id).removeClass('icon-grey').addClass('icon-green').prop('title', v);
+              } else {                                                              
+                var title = '<?php echo $lC_Language->get('text_sub_products_select_image'); ?>';
+                $('#fileSelectButton-' + id).removeClass('icon-green').addClass('icon-grey').prop('title', title);
+              }
+            }, 500);
+          } 
+          
+          function toggleMultiSkuTypeRadioGroup(val) {
+            if (val == '1') {
+              $('#comboOptionsContainer').slideDown();  
+              $('#subProductsContainer').slideUp();  
+            } else {
+              $('#comboOptionsContainer').slideUp();  
+              $('#subProductsContainer').slideDown();            
+            }
+          }  
+          </script>   
+                  
+                         
         </div>
       </fieldset>
     </div>
@@ -77,114 +202,3 @@ global $lC_Language, $pInfo;
     */ ?>
   </div>
 </div>
-<script>
-$(document).ready(function() {
-  _setSimpleOptionsSortOrder();
-  
-  $('.sorted_table').sortable({  
-    containerSelector: 'tbody',
-    itemSelector: 'tr',
-    placeholder: '<tr class="placeholder"/>',
-    tolerance: '1',
-    onDragStart: function (item, group, _super) {      
-      item.css({
-        height: item.height(),
-        width: item.width()
-      });
-      item.addClass("dragged");
-      $('body').addClass('dragging');
-    },
-    onDrop: function  (item, container, _super) { 
-      item.removeClass("dragged");
-      item.attr("style", "");
-      $("body").removeClass("dragging");
-
-      _setSimpleOptionsSortOrder();
-    }    
-  });
-});   
-
-function _setSimpleOptionsSortOrder() {
-  var order = 0;
-  $('#simpleOptionsTable tr').each(function () {
-    var sort = $(this).find('input[class=sort]');
-    var td = $(this).find('td[class=sort]');
-    if ($(sort.val()) != undefined) {
-      $(sort).val(order.toString());
-      $(td).text(order.toString());
-      order = parseInt(order) + 10;
-    }
-  });
-}
-
-$('input[name=inventory_control_radio_group]').click(function() {
-  _updateInvControlType($(this).val());
-});
-$('input[name=inventory_option_control_radio_group]').click(function() {
-  _updateInvControlType($(this).val());
-});
-
-function _updateInvControlType(type) {
-  // remomve the active classes
-  $('.oicb').removeClass('active');  
-  if (type == '1') {
-  //  $('#inventory_control_simple').show('300');
-  //  $('#inventory_control_multi').hide('300');
-    $('label[for=\'ic_radio_1\']').addClass('active');
-    $('label[for=\'ioc_radio_1\']').addClass('active'); 
-//    $('#multiSkuContainer').hide();   
- //   $('#simpleOptionsContainer').show();   
-  } else if (type == '2') {   
-  //  $('#inventory_control_simple').hide('300');
-  //  $('#inventory_control_multi').show('300');
-    $('label[for=\'ic_radio_1\']').addClass('active');
-    $('label[for=\'ioc_radio_1\']').addClass('active'); 
- //   $('#multiSkuContainer').show();   
- //   $('#simpleOptionsContainer').hide();        
-  }
-}
-
-function toggleSimpleOpitonsStatus(e, id) {
-  var status = $('#simple_options_group_status_' + id).val();
-  if (status == '1') {
-    $('#simple_options_group_status_' + id).val('-1');
-    $(e).html('<span class="icon-cross icon-size2 icon-red"></span>');
-  } else {
-    $('#simple_options_group_status_' + id).val('1');
-    $(e).html('<span class="icon-tick icon-size2 icon-green"></span>');    
-  }
-}
-
-function removeSimpleOptionsRow(id) {
-  $.modal.confirm('<?php echo $lC_Language->get('text_remove_row'); ?>', function() {
-      $('#tre-' + id).remove();
-      $('.trp-' + id).remove();
-    }, function() {
-      return false;
-  });  
-}
-
-function toggleSimpleOptionsRow(item) {
-  var expand = $(item + '_span').hasClass('icon-squared-plus');
-  if (expand) {
-    $(item).slideDown();
-    $(item + '_span').removeClass('icon-squared-plus').addClass('icon-squared-minus');
-  } else {
-    $(item).slideUp();
-    $(item + '_span').removeClass('icon-squared-minus').addClass('icon-squared-plus');
-  }
-}
-
-function toggleAllSimpleOptionsRows() {
-  var expand = $('#toggle-all').hasClass('icon-squared-plus');
-  if (expand) {
-    $('.dropall').slideDown();
-    $('#toggle-all').removeClass('icon-squared-plus').addClass('icon-squared-minus');
-    $('.toggle-icon').removeClass('icon-squared-plus').addClass('icon-squared-minus');
-  } else {
-    $('.dropall').slideUp();
-    $('#toggle-all').removeClass('icon-squared-minus').addClass('icon-squared-plus');
-    $('.toggle-icon').removeClass('icon-squared-minus').addClass('icon-squared-plus');
-  }
-}
-</script>

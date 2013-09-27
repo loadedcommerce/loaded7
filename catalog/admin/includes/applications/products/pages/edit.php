@@ -11,6 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+global $lC_Vqmod;
 
 if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
   $pInfo = new lC_ObjectInfo(lC_Products_Admin::get($_GET[$lC_Template->getModule()]));
@@ -486,13 +487,13 @@ function getTaxClassOptionsString($id = null, $esc = false) {
         </ul>
         <div class="tabs-content">
           <?php 
-          include('includes/applications/products/pages/tabs/content.php');
-          include('includes/applications/products/pages/tabs/images.php');
-          include('includes/applications/products/pages/tabs/data.php'); 
-          include('includes/applications/products/pages/tabs/options.php'); 
-          include('includes/applications/products/pages/tabs/pricing.php');
-          include('includes/applications/products/pages/tabs/shipping.php'); 
-          include('includes/applications/products/pages/tabs/relationships.php'); 
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/content.php')); 
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/images.php'));  
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/data.php')); 
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/options.php')); 
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/pricing.php'));
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/shipping.php')); 
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/relationships.php')); 
           ?> 
         </div>
       </div>

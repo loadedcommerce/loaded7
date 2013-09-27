@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>addon_system_pro_title</key>
+      <value><![CDATA[Loaded 7 Pro]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>addon_system_pro_description</key>
+      <value><![CDATA[Loaded 7 Pro is a complete ecommerce application and shopping cart with content management functionality for the serious ecommerce web site.]]></value>
+      <group>checkout</group>
+    </definition>    
+  </definitions>
+</language>

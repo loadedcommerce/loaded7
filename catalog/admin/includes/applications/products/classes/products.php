@@ -16,6 +16,7 @@
 include_once('includes/applications/customer_groups/classes/customer_groups.php');
 include_once('includes/applications/product_variants/classes/product_variants.php');
 include_once('includes/applications/specials/classes/specials.php');
+include_once('includes/classes/addons.php');
 
 class lC_Products_Admin {
  /*
@@ -827,6 +828,16 @@ class lC_Products_Admin {
       }
     }
     
+    // multi SKU sub products
+    if ( $error === false ) {
+echo "<pre>";
+print_r($_FILES);
+print_r($data);
+echo "<pre>";
+die('00');      
+      
+    }    
+    
     // simple options
     if ( $error === false ) {
       
@@ -1477,13 +1488,20 @@ class lC_Products_Admin {
       if ( !class_exists('lC_ProductAttributes_' . $module) ) {
         if ( file_exists(DIR_FS_ADMIN . 'includes/modules/product_attributes/' . $module . '.php') ) {
           include(DIR_FS_ADMIN . 'includes/modules/product_attributes/' . $module . '.php');
+        } else if (lC_Addons_Admin::hasAdminAddonsProductAttributesModule($module)) {
+          include(lC_Addons_Admin::getAdminAddonsProductAttributesModulePath($module));
         }
       }
       if ( class_exists('lC_ProductAttributes_' . $module) ) {
         $module = 'lC_ProductAttributes_' . $module;
         $module = new $module();
         if ($module->getSection() == $section) {
-          $lC_Language->loadIniFile('modules/product_attributes/' . $module->getCode() . '.php');
+          if (file_exists(DIR_FS_ADMIN . 'includes/languages/' . $lC_Language->getCode() . '/modules/product_attributes/' . $module->getCode() . '.php')) {
+            $lC_Language->loadIniFile('/modules/product_attributes/' . $module->getCode() . '.php');
+          } else {
+            lC_Addons_Admin::loadAdminAddonsProductAttributesDefinitions($module->getCode());
+          }
+          
           $output .= '<div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
                       <div class="twelve-columns strong small-margin-bottom">
                         <span>' . $lC_Language->get('product_attributes_' . $module->getCode() . '_title') . '</span>' . lc_show_info_bubble($lC_Language->get('info_bubble_attributes_' . $module->getCode() . '_text')) . '</div>
