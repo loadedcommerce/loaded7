@@ -54,7 +54,8 @@ function deleteNewsletter(id, name) {
                 $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                 return false;
               }
-              oTable.fnReloadAjax();
+              //oTable.fnReloadAjax();
+              window.location.href = window.location.href;
             }
           );
           win.closeModal();
