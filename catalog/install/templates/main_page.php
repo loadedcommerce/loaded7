@@ -53,8 +53,19 @@ $template = 'main_page';
 
   <!-- Modernizr is always at top and first -->
   <script src="templates/js/modernizr.custom.js"></script>
-  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-  <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <?php
+  if(isset($_SERVER['SSL_TLS_SNI'])) {
+  ?>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <?php
+  } else {
+  ?>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <?php
+    }
+  ?>
 
   <!-- For Modern Browsers -->
   <link rel="shortcut icon" href="img/favicons/favicon.png">
