@@ -204,7 +204,7 @@ class lC_Addons_Admin extends lC_Addons {
   */ 
   public static function hasAdminModulePageResponsiveScript($module) {
     foreach (self::getAdminAddons('enabled') as $addon => $val) {
-      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/js/' . $module . '.js.php') ) {
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/applications/' . $module . '/js/responsive.js.php') ) {
         return true;
       }
     }
