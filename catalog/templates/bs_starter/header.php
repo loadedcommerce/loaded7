@@ -85,7 +85,7 @@
             </form>
           </div>  
           <div class="col-sm-4 col-lg-4">
-            <p class="text-right margin-top">
+            <div class="text-right">
               <?php
                 if ($lC_Template->getBranding('sales_email') != '' || $lC_Template->getBranding('sales_phone') != '') {
                   echo '<div>';
@@ -99,7 +99,7 @@
                 }
               ?>
               <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'cart', 'NONSSL'); ?>">View Cart</a> | Total: <?php echo $lC_Currencies->format($lC_ShoppingCart->getSubTotal()); ?> (<?php echo $lC_ShoppingCart->numberOfItems(); ?>)
-            </p>
+            </div>
           </div>
         </div>
       </div>       

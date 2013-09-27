@@ -38,7 +38,6 @@ function batchDeleteEntries() {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_batch_delete_tax_rates'); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

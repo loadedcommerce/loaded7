@@ -27,11 +27,18 @@ class lC_Boxes_templates extends lC_Modules {
     global $lC_Session;
 
     $data = array();
-
+    
+    // added to allow a reset to the DEFAULT_TEMPLATE database setting
+    $reset = array();
+    $reset[] = array('id' => 'reset', 'text' => 'Clear Template Selection');
+    
     foreach (lC_Template::getTemplates() as $template) {
       $data[] = array('id' => $template['code'], 'text' => $template['title']);
     }
-
+    
+    // merge the reset option into the templates dropdown selection array
+    $data = array_merge($reset, $data);
+    
     if (sizeof($data) > 1) {
       $hidden_get_variables = '';
 

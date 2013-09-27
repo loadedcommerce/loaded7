@@ -472,50 +472,59 @@ class lC_Template {
   public function set($code = null) {
     // much explanation is needed to follow the following rules/switches for template setting on page loads
     if ( (isset($_SESSION['template']) === false) || // template session is not set
-          !empty($code) || // no template code has been sent to this function
-          (isset($_GET['template']) && !empty($_GET['template'])) || // no template selection in the url
-          isset($_SESSION['template']) && $_SESSION['template']['code'] != DEFAULT_TEMPLATE ) // the session template is not the same as the default one 
+          !empty($code) || // a template code has been sent to this function
+          (isset($_GET['template']) && !empty($_GET['template'])) || // a template selection came from the url $_GET
+          isset($_SESSION['template']) && $_SESSION['template']['code'] != DEFAULT_TEMPLATE ) // the session template is not the same as in the database
     {
       // one of the above triggered the function into action, continue
-      if (isset($_SESSION['template']['selected']) && $_SESSION['template']['selected'] != '') { // the session for selected template is set and overrides the rest
-        if (isset($_GET['template']) && !empty($_GET['template'])) { // but if the customer decided to change the template again we react 
-          $set_template = $_GET['template'];
-          $set_template_selected = $_GET['template'];
-        } else { // if they didn't we stay the same as the session
-          $set_template = $_SESSION['template']['selected'];
-          $set_template_selected = $_SESSION['template']['selected'];
-        }
-      } else { // the selected template session value is empty we continue as normal
-        if ( !empty( $code ) ) { // someone sent a template code to this function
-          $set_template = $code;
-          $set_template_selected = $code;
-        } else { // no code sent to function
-          $set_template = (isset($_GET['template']) && !empty($_GET['template'])) ? $_GET['template'] : DEFAULT_TEMPLATE;
-          $set_template_selected = (isset($_GET['template']) && !empty($_GET['template'])) ? $_GET['template'] : DEFAULT_TEMPLATE;
-        }
-      }       
+      if ( !empty( $code ) ) { 
+        // someone sent a template code to this function
+        $set_template = $code;
+      } else if (isset($_GET['template']) && !empty($_GET['template'])) { 
+        // no code sent and a template code was in the url $_GET
+        $set_template = $_GET['template'];
+        $set_template_selected = $_GET['template'];
+        $_SESSION['template']['selected'] = $set_template_selected;
+        $this->_template_selected = $set_template_selected;
+      } else if (isset($_SESSION['template']['selected']) && $_SESSION['template']['selected'] != '') { 
+        // no code sent, no $_GET and the session for selected template is set
+        $set_template = $_SESSION['template']['selected'];
+        $set_template_selected = $_SESSION['template']['selected'];
+      } else {
+        // set the template from the database default template setting
+        $set_template = DEFAULT_TEMPLATE;
+      }
+      
+      // if someone clears the template selection we reset from the database default template setting
+      if (isset($_SESSION['template']['selected']) && $_SESSION['template']['selected'] == 'reset') {
+        $_SESSION['template']['selected'] = null;
+      }
       
       $data = array();
       $data_default = array();
 
-      foreach ($this->getTemplates() as $template) { // for each template we check some tings
-        if ($template['code'] == DEFAULT_TEMPLATE) { // if the code of the template matched DEFAULT we do this
+      foreach ($this->getTemplates() as $template) { 
+        // for each template we check some tings
+        if ($template['code'] == DEFAULT_TEMPLATE) { 
+          // if the code of the template matches DEFAULT_TEMPLATE we set the $default_data array in case it's needed
           $data_default = array('id' => $template['id'], 'code' => $template['code'], 'selected' => $set_template_selected);
-        } elseif ($template['code'] == $set_template) { // if the code of the template does not match DEFAULT we do this
+        } elseif ($template['code'] == $set_template) { 
+          // if the code of the template does not match DEFAULT_TEMPLATE we set the $data array for use
           $data = array('id' => $template['id'], 'code' => $set_template, 'selected' => $set_template_selected);
         }
       }
 
-      if (empty($data)) { // if the template code did not match DEFAULT we should have "$data"
+      // if the template to set is not found in the database we fallback to default
+      if (empty($data)) { 
         $data = $data_default;
       }
 
-      $_SESSION['template'] = $data; // set the session with the data set above
+      // set the session with the template data result
+      $_SESSION['template'] = $data;
     }
 
     $this->_template_id = $_SESSION['template']['id'];
     $this->_template = $_SESSION['template']['code'];
-    $this->_template_selected = $_SESSION['template']['selected'];
   }
   /**
   * Sets the title of the page

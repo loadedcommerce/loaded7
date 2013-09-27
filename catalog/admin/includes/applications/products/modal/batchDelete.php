@@ -38,7 +38,6 @@ function batchDelete() {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_batch_delete_products'); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',
