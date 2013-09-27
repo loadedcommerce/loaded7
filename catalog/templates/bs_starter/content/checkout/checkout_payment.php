@@ -35,15 +35,15 @@
                   <address>
                     <?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?>                
                   </address>
-                  <div class="btn-group clearfix absolute-top-right">
-                    <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>"><button type="button" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></a>
+                  <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
+                    <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                   </div>
                 </div>
                 <div class="well relative clearfix padding-bottom"> 
                   <h4 class="no-margin-top"><?php echo $lC_Language->get('shipping_method_heading'); ?></h4>
                   <p><?php echo $lC_ShoppingCart->getShippingMethod('title'); ?></p>
-                  <div class="btn-group clearfix absolute-top-right">
-                    <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>"><button type="button" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></a>
+                  <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
+                    <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                   </div>                  
                 </div>                
                 <div class="well">
@@ -69,16 +69,14 @@
                   <address class="no-margin-bottom">
                     <?php  
                       if ($_SESSION['shipto_as_billable'] == 'on') {
-                        $lC_ShoppingCart->setBillingAddress($lC_ShoppingCart->getShippingAddress('id'));
                         echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); 
                       } else {
-                        $lC_ShoppingCart->resetBillingAddress();
                         echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); 
                       }                      
                     ?>
                   </address>    
-                  <div class="btn-group clearfix absolute-top-right">
-                    <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>"><button type="button" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></a>
+                  <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
+                    <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                   </div>                                       
                 </div>
                 <h3 class="no-margin-top"><?php echo $lC_Language->get('payment_method_title'); ?></h3>
@@ -99,11 +97,12 @@
                     if ($n > 1) {
                       ?>
                       <td><?php echo $selection[$i]['module']; ?></td>
-                      <td class="text-right" width="20"><?php echo lc_draw_radio_field('payment_method', $selection[$i]['id'], ($lC_ShoppingCart->hasBillingMethod() ? $lC_ShoppingCart->getBillingMethod('id') : null), 'id="pm_' . $counter . '"',''); ?></td>
+                      <td class="text-right"><?php echo lc_draw_radio_field('payment_method', $selection[$i]['id'], ($lC_ShoppingCart->hasBillingMethod() ? $lC_ShoppingCart->getBillingMethod('id') : null), 'id="pm_' . $counter . '"',''); ?></td>
                       <?php
                     } else {
                       ?>
-                      <td colspan="2"><?php echo $selection[$i]['module'] . lc_draw_hidden_field('payment_method', $selection[$i]['id']); ?></td>
+                      <td class="content-checkout-listing-blank no-padding-left"></td>
+                      <td><?php echo $selection[$i]['module'] . lc_draw_hidden_field('payment_method', $selection[$i]['id']); ?></td>
                       <?php
                     }                          
                     ?>
@@ -134,7 +133,7 @@
                 <table class="table margin-bottom-neg"><tr><td>&nbsp;</td></tr></table>
                 <div class="btn-set clearfix no-margin-top">
                   <button class="btn btn-lg btn-success pull-right" onclick="$('#checkout_payment').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
-                  <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>"><button class="btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+                  <button class="btn btn-lg btn-default" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
                 </div> 
                 <?php
                 if ($lC_Customer->isLoggedOn() !== false) {
@@ -144,11 +143,9 @@
                     <div class="well">
                       <h3 class="no-margin-top"><?php echo $lC_Language->get('text_coupon_code_heading'); ?></h3>
                       <p><?php echo $lC_Language->get('text_coupon_code_instructions'); ?></p>
-                      <form role="form" name="coupon" id="coupon" action="">
-                        <div class="form-group">
-                          <label class="sr-only"></label><input type="text" name="coupon_code" id="coupon_code" class="form-control">
-                        </div>
-                      </form>
+                      <div class="form-group">
+                        <label class="sr-only"></label><input type="text" name="coupon_code" id="coupon_code" class="form-control">
+                      </div>
                       <div class="btn-set clearfix no-margin-top no-margin-bottom">
                         <button type="button" class="btn btn-primary pull-right" onclick="addCoupon();"><?php echo $lC_Language->get('text_apply_coupon'); ?></button>
                       </div>

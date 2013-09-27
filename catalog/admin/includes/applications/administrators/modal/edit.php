@@ -75,7 +75,7 @@ function editAdmin(id) {
 
                    '      <p class="button-height inline-label">'+
                    '        <label for="language_id" class="label"><?php echo $lC_Language->get('field_admin_language'); ?></label>'+
-                   '        <?php  echo lc_draw_pull_down_menu('language_id', $languagesSelectArr, null, 'id="edit-language_id" class="select" style="min-width:200px;"'); ?>'+
+                   '        <?php  echo lc_draw_pull_down_menu('language_id', $languagesSelectArr, null, 'id="edit-language_id" class="input with-small-padding" style="min-width:200px;"'); ?>'+
                    '      </p>'+
 
                    '      <p class="button-height inline-label" id="pImage">'+
@@ -97,8 +97,7 @@ function editAdmin(id) {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_edit_administrator'); ?>',
           width: 500,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

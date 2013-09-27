@@ -76,7 +76,7 @@ class output {
           $link['title'] .= ' ' . $lC_Language->get('text_list');
         }
         
-        if (count($link['subgroups']) > 1 && $link['module'] != 'configuration') {
+        if (count($link['subgroups']) > 0 && $link['module'] != 'configuration') {
           $output .= '<li class="with-right-arrow">';
           $output .= '<span><span class="list-count">' . count($link['subgroups']) . '</span>' . $link['title'] . '</span>';
         } else {

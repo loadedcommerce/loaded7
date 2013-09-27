@@ -29,7 +29,6 @@ function deleteBanner(id, name) {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_delete_banner'); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

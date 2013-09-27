@@ -27,9 +27,7 @@
                 <p class="lead"><?php echo $lC_Product->getPriceFormated(); ?></p>
               </div>
               <div class="col-sm-6 col-lg-6 no-margin-left">
-                <a href="<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add'); ?>">
-                  <button class="btn btn-success btn-block large" type="button"><?php echo $lC_Language->get('button_buy_now'); ?></button>
-                </a>
+                <button class="btn btn-success btn-block large" onclick="window.location.href='<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add'); ?>'" type="button"><?php echo $lC_Language->get('button_buy_now'); ?></button>
               </div>
             </div>
           </div>
@@ -45,7 +43,7 @@
           <?php
           if ($lC_Product->getData('reviews_average_rating') > 0) {
             ?>
-            <div class="content-product-reviews-rating"><?php echo $lC_Language->get('average_rating') . ' ' . lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $lC_Product->getData('reviews_average_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $lC_Product->getData('reviews_average_rating'))); ?><br /><br /></p>
+            <div class="content-product-reviews-rating margin-bottom"><?php echo $lC_Language->get('average_rating') . ' ' . lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $lC_Product->getData('reviews_average_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $lC_Product->getData('reviews_average_rating'))); ?></div>
             <?php echo lC_Reviews::getListingOutput($lC_Product->getID()); ?>
             <?php 
           }
@@ -59,11 +57,11 @@
       <?php
       if ($lC_Reviews->is_enabled === true) {
         ?>  
-        <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()); ?>"><button class="pull-right btn btn-lg btn-primary large-margin-bottom" type="button"><?php echo $lC_Language->get('button_continue'); ?></button></a>
+        <button class="pull-right btn btn-lg btn-primary large-margin-bottom" onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()); ?>'" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
         <?php 
       } 
       ?>
-      <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-left btn btn-lg btn-default large-margin-bottom" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+      <button class="pull-left btn btn-lg btn-default large-margin-bottom" onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>'" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
     </div>    
   </div>    
 </div>

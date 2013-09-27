@@ -118,29 +118,30 @@ class lC_Specials_Admin {
   */
   public static function save($id = null, $data) {
     global $lC_Database, $lC_DateTime;
-
+    
     $error = false;
-
+    
     $Qproduct = $lC_Database->query('select products_price from :table_products where products_id = :products_id limit 1');
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproduct->bindInt(':products_id', $data['products_id']);
     $Qproduct->execute();
 
     $specials_price = $data['specials_price'];
-
+    
     if ( substr($specials_price, -1) == '%' ) {
       $specials_price = $Qproduct->valueDecimal('products_price') - (((double)$specials_price / 100) * $Qproduct->valueDecimal('products_price'));
     }
+    
     if ( ( $specials_price < '0.00' ) || ( $specials_price >= $Qproduct->valueDecimal('products_price') ) ) {
       $result['rpcStatus'] = -1;
       $error = true;
     }
-
-    if ( $data['expires_date'] < $data['start_date'] ) {
+    
+    if ( $data['specials_expires_date'] < $data['specials_start_date'] ) {
       $result['rpcStatus'] = -2;
       $error = true;
     }
-
+    
     if ( $error === false ) {
       if ( is_numeric($id) ) {
         $Qspecial = $lC_Database->query('update :table_specials set specials_new_products_price = :specials_new_products_price, specials_last_modified = now(), expires_date = :expires_date, start_date = :start_date, status = :status where specials_id = :specials_id');
@@ -162,7 +163,6 @@ class lC_Specials_Admin {
         $result['rpcStatus'] = -3;
       }
     }
-
     return $result;
   }
  /*

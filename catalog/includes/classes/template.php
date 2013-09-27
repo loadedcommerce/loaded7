@@ -248,13 +248,37 @@ class lC_Template {
   * @return string
   */
   public function getPageTags() {
-    $tag_string = '';
+    global $lC_Template, $_GET;
 
-    foreach ($this->_page_tags as $key => $values) {
-      $tag_string .= '<meta name="' . $key . '" content="' . implode(', ', $values) . '" />' . "\n";
+    $tag_string = '';
+    $meta_title = $lC_Template->getBranding('meta_title') != '' ? $lC_Template->getBranding('meta_title') : STORE_NAME;
+    $meta_title_prefix = $lC_Template->getBranding('meta_title_prefix') != '' ? $lC_Template->getBranding('meta_title_prefix') : '';
+    $meta_title_suffix = $lC_Template->getBranding('meta_title_suffix') != '' ? $lC_Template->getBranding('meta_title_suffix') : '';
+    $meta_delimeter = $lC_Template->getBranding('meta_delimeter') != '' ? $lC_Template->getBranding('meta_delimeter') : '';
+    $meta_description = $lC_Template->getBranding('meta_description') != '' ? $lC_Template->getBranding('meta_description') : '';
+    $meta_keywords = $lC_Template->getBranding('meta_keywords') != '' ? $lC_Template->getBranding('meta_keywords') : '';;
+
+
+    if($this->_module == 'index' && isset($_GET['cpath']) && (empty($_GET['cpath']) === false) ){
+      $tag_parts_title = $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix;
+      $tag_parts_description = $meta_description;
+      $tag_parts_keywords = ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords;
+    } else if($this->_group == 'products'){
+      $tag_parts_title =  $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix ;
+      $tag_parts_description .=  $meta_description ;
+      $tag_parts_keywords =  ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords ;
+    } else {
+      $tag_parts_title =  $meta_title_prefix . $meta_delimeter . $meta_title . $meta_delimeter . $meta_title_suffix;
+      $tag_parts_description =  $meta_description ;
+      $tag_parts_keywords =  $meta_keywords;
     }
 
-    return $tag_string . "\n";
+    $tag_string .= '<title>' . $tag_parts_title . '</title>' . "\n";
+    $tag_string .= '<meta name="description" content="' . $tag_parts_description . '">' . "\n";
+    $tag_string .= '<meta name="keywords" content="' . $tag_parts_keywords . '">' . "\n";
+    $tag_string .= '<meta name="generator" content="' . $this->_page_tags['generator'][0] . '">' . "\n";
+
+    return $tag_string;
   }
   /**
   * Return the box modules assigned to the page
@@ -448,50 +472,59 @@ class lC_Template {
   public function set($code = null) {
     // much explanation is needed to follow the following rules/switches for template setting on page loads
     if ( (isset($_SESSION['template']) === false) || // template session is not set
-          !empty($code) || // no template code has been sent to this function
-          (isset($_GET['template']) && !empty($_GET['template'])) || // no template selection in the url
-          isset($_SESSION['template']) && $_SESSION['template']['code'] != DEFAULT_TEMPLATE ) // the session template is not the same as the default one 
+          !empty($code) || // a template code has been sent to this function
+          (isset($_GET['template']) && !empty($_GET['template'])) || // a template selection came from the url $_GET
+          isset($_SESSION['template']) && $_SESSION['template']['code'] != DEFAULT_TEMPLATE ) // the session template is not the same as in the database
     {
       // one of the above triggered the function into action, continue
-      if (isset($_SESSION['template']['selected']) && $_SESSION['template']['selected'] != '') { // the session for selected template is set and overrides the rest
-        if (isset($_GET['template']) && !empty($_GET['template'])) { // but if the customer decided to change the template again we react 
-          $set_template = $_GET['template'];
-          $set_template_selected = $_GET['template'];
-        } else { // if they didn't we stay the same as the session
-          $set_template = $_SESSION['template']['selected'];
-          $set_template_selected = $_SESSION['template']['selected'];
-        }
-      } else { // the selected template session value is empty we continue as normal
-        if ( !empty( $code ) ) { // someone sent a template code to this function
-          $set_template = $code;
-          $set_template_selected = $code;
-        } else { // no code sent to function
-          $set_template = (isset($_GET['template']) && !empty($_GET['template'])) ? $_GET['template'] : DEFAULT_TEMPLATE;
-          $set_template_selected = (isset($_GET['template']) && !empty($_GET['template'])) ? $_GET['template'] : DEFAULT_TEMPLATE;
-        }
-      }       
+      if ( !empty( $code ) ) { 
+        // someone sent a template code to this function
+        $set_template = $code;
+      } else if (isset($_GET['template']) && !empty($_GET['template'])) { 
+        // no code sent and a template code was in the url $_GET
+        $set_template = $_GET['template'];
+        $set_template_selected = $_GET['template'];
+        $_SESSION['template']['selected'] = $set_template_selected;
+        $this->_template_selected = $set_template_selected;
+      } else if (isset($_SESSION['template']['selected']) && $_SESSION['template']['selected'] != '') { 
+        // no code sent, no $_GET and the session for selected template is set
+        $set_template = $_SESSION['template']['selected'];
+        $set_template_selected = $_SESSION['template']['selected'];
+      } else {
+        // set the template from the database default template setting
+        $set_template = DEFAULT_TEMPLATE;
+      }
+      
+      // if someone clears the template selection we reset from the database default template setting
+      if (isset($_SESSION['template']['selected']) && $_SESSION['template']['selected'] == 'reset') {
+        $_SESSION['template']['selected'] = null;
+      }
       
       $data = array();
       $data_default = array();
 
-      foreach ($this->getTemplates() as $template) { // for each template we check some tings
-        if ($template['code'] == DEFAULT_TEMPLATE) { // if the code of the template matched DEFAULT we do this
+      foreach ($this->getTemplates() as $template) { 
+        // for each template we check some tings
+        if ($template['code'] == DEFAULT_TEMPLATE) { 
+          // if the code of the template matches DEFAULT_TEMPLATE we set the $default_data array in case it's needed
           $data_default = array('id' => $template['id'], 'code' => $template['code'], 'selected' => $set_template_selected);
-        } elseif ($template['code'] == $set_template) { // if the code of the template does not match DEFAULT we do this
+        } elseif ($template['code'] == $set_template) { 
+          // if the code of the template does not match DEFAULT_TEMPLATE we set the $data array for use
           $data = array('id' => $template['id'], 'code' => $set_template, 'selected' => $set_template_selected);
         }
       }
 
-      if (empty($data)) { // if the template code did not match DEFAULT we should have "$data"
+      // if the template to set is not found in the database we fallback to default
+      if (empty($data)) { 
         $data = $data_default;
       }
 
-      $_SESSION['template'] = $data; // set the session with the data set above
+      // set the session with the template data result
+      $_SESSION['template'] = $data;
     }
 
     $this->_template_id = $_SESSION['template']['id'];
     $this->_template = $_SESSION['template']['code'];
-    $this->_template_selected = $_SESSION['template']['selected'];
   }
   /**
   * Sets the title of the page
@@ -818,5 +851,117 @@ class lC_Template {
     
     return $content;
   } 
+  
+  
+ /*
+  * return the Branding Data
+  *
+  * @access public
+  * @return array
+  */
+  public function getBranding($data) {
+    global $lC_Database, $lC_Language;
+
+    $QbrandingLangData = $lC_Database->query('select * from :table_branding where language_id = :language_id');
+    $QbrandingLangData->bindTable(':table_branding', TABLE_BRANDING);
+    $QbrandingLangData->bindInt(':language_id', $lC_Language->getID());
+    $QbrandingLangData->execute();
+    
+    $QbrandingData = $lC_Database->query('select * from :table_branding_data');
+    $QbrandingData->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+    $QbrandingData->execute();
+
+    switch($data){
+      case 'site_image':
+      $data = $QbrandingData->value('site_image');
+      break;
+      
+      case 'og_image':
+      $data = $QbrandingData->value('og_image');
+      break;
+      
+      case 'chat_code':
+      $data = $QbrandingData->value('chat_code');
+      break;
+      
+      case 'support_phone':
+      $data = $QbrandingData->value('support_phone');
+      break;
+      
+      case 'support_email':
+      $data = $QbrandingData->value('support_email');
+      break;
+      
+      case 'sales_phone':
+      $data = $QbrandingData->value('sales_phone');
+      break;
+      
+      case 'sales_email':
+      $data = $QbrandingData->value('sales_email');
+      break;
+      
+      case 'meta_delimeter':
+      $data = $QbrandingData->value('meta_delimeter');
+      break;
+      
+      case 'social_facebook_page':
+      $data = $QbrandingData->value('social_facebook_page');
+      break;
+      
+      case 'social_tweeter':
+      $data = $QbrandingData->value('social_twitter');
+      break;
+      
+      case 'social_pinterest':
+      $data = $QbrandingData->value('social_pinterest');
+      break;
+      
+      case 'social_google_plus':
+      $data = $QbrandingData->value('social_google_plus');
+      break;
+      
+      case 'social_youtube':
+      $data = $QbrandingData->value('social_youtube');
+      break;
+      
+      case 'social_linkedin':
+      $data = $QbrandingData->value('social_linkedin');
+      break;
+
+      case 'meta_delimeter':
+      $data = $QbrandingData->value('meta_delimeter');
+      break;
+      
+      case 'slogan':
+      $data = $QbrandingLangData->value('slogan');
+      break;
+      
+      case 'meta_description':
+      $data = $QbrandingLangData->value('meta_description');
+      break;
+      
+      case 'meta_keywords':
+      $data = $QbrandingLangData->value('meta_keywords');
+      break;
+      
+      case 'meta_title':
+      $data = $QbrandingLangData->value('meta_title');
+      break;
+      
+      case 'meta_title_prefix':
+      $data = $QbrandingLangData->value('meta_title_prefix');
+      break;
+      
+      case 'meta_title_suffix':
+      $data = $QbrandingLangData->value('meta_title_suffix');
+      break;
+      
+      case 'footer_text':
+      $data = $QbrandingLangData->value('footer_text');
+      break;
+    }
+    return $data;
+  }
+  
 }
 ?>

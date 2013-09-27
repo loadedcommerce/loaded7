@@ -41,8 +41,9 @@ foreach ($typesArr as $key => $value) {
 </style>
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
-  <hgroup id="main-title" class="thin" style="padding-bottom:0;">
+  <hgroup id="main-title" class="thin">
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+    <?php /*
     <div class="columns margin-bottom" id="storeHeaderRightContainer">
       <!-- search -->
       <div class="six-columns twelve-columns-tablet no-margin-bottom" id="storeSearchContainer">
@@ -78,6 +79,7 @@ foreach ($typesArr as $key => $value) {
         </span>      
       </div>
     </div><div style="clear:both;"></div>
+    */ ?>
   </hgroup>
 
   <div id="addonsPanelContainer" class="with-padding">  

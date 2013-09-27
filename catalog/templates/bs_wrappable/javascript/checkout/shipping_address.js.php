@@ -33,14 +33,11 @@ $('#shipping-address-form').click(function(){
    $('#shipping-address-form').html(text);
    $('#checkout_address').removeAttr('onsubmit');
  }
- $('#checkoutShippingAddressEntries').toggle('slideUp');
  $('#checkoutShippingAddressDetails').toggle('slideUp');
 }); 
 
 function selectRowEffect(object, buttonSelect) {
-
-  $('#content-checkout-address-selection-table tr').removeClass('module-row-selected');
-  
+  $('.content-checkout-address-selection-table tr').removeClass('module-row-selected');
   if (!selected) {
     if (document.getElementById) {
       selected = document.getElementById('defaultSelected');

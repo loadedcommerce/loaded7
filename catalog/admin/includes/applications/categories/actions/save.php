@@ -36,8 +36,8 @@
                           'menu_name' =>  $_POST['categories_menu_name'],
                           'blurb' =>  $_POST['categories_blurb'],
                           'description' =>  $_POST['categories_description'],
-                          'keyword' =>  $_POST['categories_keyword'],
-                          'tags' =>  $_POST['categories_tags'] );
+                          'permalink' =>  $_POST['categories_permalink'],
+                          'tags' =>  $_POST['categories_tags']);
            /*
             * Save the category information
             *

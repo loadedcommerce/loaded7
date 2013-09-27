@@ -25,7 +25,7 @@
   .dataColQty { text-align: left; }
   .dataColAction { text-align: right; }
   .dataTables_info { position:absolute; bottom: 42px; color:#4c4c4c; }
-  .selectContainer { position:absolute; bottom:29px; left:30px }
+  .selectContainer { position:absolute; bottom:29px; left:30px }  
   </style>
   <div class="with-padding-no-top">
     <form name="batch" id="batch" action="#" method="post">
@@ -62,8 +62,8 @@
     </div>
     </form>
     <div class="clear-both"></div>
-    <div id="floating-button-container" class="six-columns twelve-columns-tablet">
-      <div id="floating-menu-div-listing">
+    <div class="six-columns twelve-columns-tablet">
+      <div id="buttons-menu-div-listing">
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
@@ -73,9 +73,6 @@
                 </span><?php echo $lC_Language->get('button_new_product'); ?>
               </a>&nbsp;
             </p>
-          </div>
-          <div id="floating-button-container-title" class="hidden">
-            <p class="white big-text small-margin-top"><?php echo $lC_Template->getPageTitle(); ?></p>
           </div>
         </div>
       </div>

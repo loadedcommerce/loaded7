@@ -63,7 +63,7 @@ $content .= '<p class="button-height inline-label">' .
             '</p>' .
             '<p class="button-height inline-label">' .
             '  <label for="group" class="label" style="width:30%;">' . $lC_Language->get('field_customer_group') . '</label>' .
-               lc_draw_pull_down_menu('group', null, null, 'class="select" style="width:73%;"') .
+               lc_draw_pull_down_menu('group', null, null, 'class="input with-small-padding" style="width:73%;"') .
             '</p>' .
             '<p class="button-height inline-label">' .
               '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
@@ -96,8 +96,7 @@ function newCustomer() {
           content: '<?php echo $content; ?>',
           title: '<?php echo $lC_Language->get('modal_heading_new_customer'); ?>',
           width: 600,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

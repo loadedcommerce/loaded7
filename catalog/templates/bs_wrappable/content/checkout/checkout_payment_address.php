@@ -32,7 +32,7 @@
               <div class="well relative no-padding-bottom">
                 <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
                 <address>
-                  <?php echo lC_Address::format($lC_ShoppingCart->getShippingAddress(), '<br />'); ?>
+                  <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>
                 </address>
               </div>
               <div class="well">
@@ -77,7 +77,7 @@
                         $radio_buttons = 0;
                         $Qaddresses = $lC_Template->getListing();
                         while ($Qaddresses->next()) {
-                          echo '<table class="table no-margin-bottom" id="content-checkout-address-selection-table">';
+                          echo '<table class="table no-margin-bottom content-checkout-address-selection-table">';
                           if ($Qaddresses->valueInt('address_book_id') == $lC_ShoppingCart->getShippingAddress('id')) {
                             echo '<tr class="module-row-selected cursor-pointer" id="default-selected" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
                           } else {
@@ -85,7 +85,7 @@
                           }
                           ?>
                           <td class=""><span class="strong"><?php echo $Qaddresses->valueProtected('firstname') . ' ' . $Qaddresses->valueProtected('lastname'); ?></span><br /><small><?php echo str_replace($Qaddresses->valueProtected('firstname') . ' ' . $Qaddresses->valueProtected('lastname') . ', ', '', lC_Address::format($Qaddresses->toArray(), ', ')); ?></small></td>
-                          <td class="text-right"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getShippingAddress('id'),null,''); ?></td>
+                          <td class="text-right"><?php echo lc_draw_radio_field('address', $Qaddresses->valueInt('address_book_id'), $lC_ShoppingCart->getBillingAddress('id'), 'id="address_' . $radio_buttons . '"', ''); ?></td>
                           </tr>
                           </table>
                           <?php
@@ -101,7 +101,7 @@
                 <?php
                 if (lC_AddressBook::numberOfEntries() < MAX_ADDRESS_BOOK_ENTRIES) {
                   ?>
-                  <div class="" id="checkoutShippingAddressDetails" style="display:none;">
+                  <div class="" id="checkoutBillingAddressDetails" style="display:none;">
                     <h3 class="no-margin-top"><?php echo $lC_Language->get('new_billing_address_title'); ?></h3>
                     <p><?php echo $lC_Language->get('new_billing_address'); ?></p>
                     <div id="addressBookDetails">

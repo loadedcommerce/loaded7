@@ -36,8 +36,7 @@ function showPreview(id) {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_preview_banner'); ?> <b>' + data.title + '</b>',
           width: 600,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

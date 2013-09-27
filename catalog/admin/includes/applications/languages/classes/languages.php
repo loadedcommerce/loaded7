@@ -331,7 +331,7 @@ class lC_Languages_Admin {
     }
     $result['groupsSelection'] = '';
     if ( !empty($groups_array) ) {
-      $result['groupsSelection'] = lc_draw_pull_down_menu('group', $groups_array, null, 'class="select"');
+      $result['groupsSelection'] = lc_draw_pull_down_menu('group', $groups_array, null, 'class="input with-small-padding"');
     }
 
     if (isset($id) && $id != null) {

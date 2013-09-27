@@ -475,7 +475,9 @@ function getTaxClassOptionsString($id = null, $esc = false) {
       <div id="product_tabs" class="side-tabs" style="position:relative;">  
         <ul class="tabs">
           <li id="tabHeaderSectionContent" class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
+          <?php if ($pInfo) { ?>
           <li id="tabHeaderSectionImages"><?php echo lc_link_object('#section_images_content', $lC_Language->get('section_images')); ?></li>
+          <?php } ?>
           <li id="tabHeaderSectionData"><?php echo lc_link_object('#section_data_content', $lC_Language->get('section_data')); ?></li>
           <li id="tabHeaderSectionOptions"><?php echo lc_link_object('#section_options_content', $lC_Language->get('section_options')); ?></li>
           <li id="tabHeaderSectionPricing"><?php echo lc_link_object('#section_pricing_content', $lC_Language->get('section_pricing')); ?></li>
@@ -484,8 +486,8 @@ function getTaxClassOptionsString($id = null, $esc = false) {
         </ul>
         <div class="tabs-content">
           <?php 
-          include('includes/applications/products/pages/tabs/content.php'); 
-          include('includes/applications/products/pages/tabs/images.php');  
+          include('includes/applications/products/pages/tabs/content.php');
+          include('includes/applications/products/pages/tabs/images.php');
           include('includes/applications/products/pages/tabs/data.php'); 
           include('includes/applications/products/pages/tabs/options.php'); 
           include('includes/applications/products/pages/tabs/pricing.php');
@@ -499,8 +501,8 @@ function getTaxClassOptionsString($id = null, $esc = false) {
     
     <div class="clear-both"></div>
     
-    <div id="floating-button-container" class="six-columns twelve-columns-tablet margin-bottom">
-      <div id="floating-menu-div-listing">
+    <div class="six-columns twelve-columns-tablet margin-bottom">
+      <div id="buttons-menu-div-listing">
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
@@ -528,9 +530,6 @@ function getTaxClassOptionsString($id = null, $esc = false) {
                 </span><span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span>
               </a>&nbsp;
             </p>
-          </div>
-          <div id="floating-button-container-title" class="hidden">
-            <p class="white big-text small-margin-top"><?php echo $lC_Template->getPageTitle(); ?></p>
           </div>
         </div>
       </div>

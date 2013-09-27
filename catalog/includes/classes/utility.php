@@ -411,6 +411,6 @@ class utility {
     $vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents(DIR_FS_CATALOG . 'includes/version.txt'), 2))));
 
     return $vInfo[1];  
-  }  
+  } 
 } 
 ?>

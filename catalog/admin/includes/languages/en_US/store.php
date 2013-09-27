@@ -15,6 +15,8 @@ modal_heading_setup_addon = Setup %s Add-On
 modal_heading_uninstall_addon = Uninstall Add-On
 
 text_mobile_enabled = Mobile Enabled
+text_featured = Featured
+text_in_cloud = In Cloud
 
 rating_from_5_stars = %s of 5 Stars!
 

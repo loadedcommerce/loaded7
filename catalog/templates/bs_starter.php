@@ -18,10 +18,11 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
 <html lang="<?php echo substr(strtolower($lC_Language->getCode()), 0, 2); ?>">
   <head>
     <meta charset="utf-8">
-    <title><?php echo STORE_NAME . ($lC_Template->hasPageTitle() ? ': ' . $lC_Template->getPageTitle() : ''); ?></title>
-    <base href="<?php echo lc_href_link(null, null, 'AUTO', false); ?>" />
-    <meta name="description" content="Loaded Commerce Shopping Cart">
+    <!-- meta tags -->
+    <?php echo $lC_Template->getPageTags();?>
+    <!-- meta tags -->
     <meta name="author" content="Loaded Commerce">
+    <base href="<?php echo lc_href_link(null, null, 'AUTO', false); ?>" />
     <!-- include open graph rags -->
     <?php echo $lC_Template->getPageOGPTags(); ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,16 +79,20 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       
       if (!empty($left) && !empty($right)) { // 3 cols
         $box_class = 'col-sm-3 col-lg-3';
-        $content_class = 'col-sm-6 col-lg-6';        
+        $content_class = 'col-sm-6 col-lg-6';
+        $_SESSION['content_span'] = '6';        
       } else if (!empty($left) && empty($right)) { // 2 cols left
         $box_class = 'col-sm-3 col-lg-3';
-        $content_class = 'col-sm-9 col-lg-9';        
+        $content_class = 'col-sm-9 col-lg-9'; 
+        $_SESSION['content_span'] = '9';       
       } else if (empty($left) && !empty($right)) { // 2 cols right
         $box_class = 'col-sm-3 col-lg-3';
         $content_class = 'col-sm-9 col-lg-9';
+        $_SESSION['content_span'] = '9';
       } else {
         $box_class = '';
         $content_class = 'col-sm-12 col-lg-12'; // 1 col
+        $_SESSION['content_span'] = '12';
       }
       ?>
       <div id="content-container" class="container">
@@ -185,7 +190,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         ?>       
       </div>  
       <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-      <script src="ext/jquery/respond.js"></script>    
+      <script src="ext/jquery/respond.min.js"></script>    
       
       <!-- Core JS -->
       <script src="ext/bootstrap/bootstrap-datepicker.js"></script>

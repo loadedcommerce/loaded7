@@ -13,7 +13,7 @@
 */
 global $lC_Language, $pInfo; 
 ?>   
-<div id="section_images_content" class="with-padding">
+<div id="section_images_content" class="with-padding"<?php echo (isset($pInfo) && !empty($pInfo)) ? null : ' style="display:none;"'; ?>>
   <div class="content-panel margin-bottom enabled-panels">
     <div class="panel-navigation silver-gradient scrollable">
       <div class="panel-control"></div>
@@ -23,7 +23,7 @@ global $lC_Language, $pInfo;
             <li id="images-gallery-trigger" class="with-right-arrow grey-arrow">     
               <a class="file-link selected-menu" href="javascript:void(0);" onclick="showContent('default');">
                 <span class="icon file-jpg"></span>
-                <b><?php echo $lC_Language->get('text_product_images'); ?></b>
+                <b><?php echo $lC_Language->get('text_product_default_image'); ?></b>
               </a>            
             </li>
             <?php if ($pInfo) { ?>
@@ -65,7 +65,6 @@ global $lC_Language, $pInfo;
                       <?php
                     } else {
                       echo '<div id="fileUploaderContainer" style="display:none;"></div>';
-                      echo lc_draw_file_field('products_image', null, 'class="file"');
                     }
                     ?>                              
                   </div>

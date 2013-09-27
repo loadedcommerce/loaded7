@@ -108,6 +108,38 @@ CREATE TABLE lc_banners_history (
   PRIMARY KEY (banners_history_id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_branding;
+CREATE TABLE IF NOT EXISTS lc_branding (
+  language_id int(11) NOT NULL DEFAULT '1',
+  slogan varchar(256) NOT NULL DEFAULT '',
+  meta_description varchar(250) NOT NULL DEFAULT '',
+  meta_keywords varchar(128) NOT NULL DEFAULT '',
+  meta_title varchar(128) NOT NULL DEFAULT '',
+  meta_title_prefix varchar(128) NOT NULL,
+  meta_title_suffix varchar(128) NOT NULL,
+  footer_text varchar(256) NOT NULL DEFAULT '',
+  PRIMARY KEY (language_id)
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+ 
+ 
+DROP TABLE IF EXISTS lc_branding_data;
+CREATE TABLE IF NOT EXISTS lc_branding_data (
+  site_image varchar(128) NOT NULL DEFAULT '',
+  chat_code varchar(8192) NOT NULL DEFAULT '',
+  support_phone varchar(16) NOT NULL DEFAULT '',
+  support_email varchar(128) NOT NULL DEFAULT '',
+  sales_phone varchar(16) NOT NULL DEFAULT '',
+  sales_email varchar(128) NOT NULL DEFAULT '',
+  og_image varchar(128) NOT NULL DEFAULT '',
+  meta_delimeter varchar(128) NOT NULL DEFAULT '',
+  social_facebook_page varchar(128) NOT NULL,
+  social_twitter varchar(128) NOT NULL,
+  social_pinterest varchar(128) NOT NULL,
+  social_google_plus varchar(128) NOT NULL,
+  social_youtube varchar(128) NOT NULL,
+  social_linkedin varchar(128) NOT NULL
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_categories;
 CREATE TABLE lc_categories (
   categories_id int(11) NOT NULL AUTO_INCREMENT,
@@ -469,6 +501,7 @@ CREATE TABLE lc_orders_status (
   orders_status_id int(11) NOT NULL,
   language_id int(11) NOT NULL DEFAULT '1',
   orders_status_name varchar(255) NOT NULL,
+  orders_status_type enum('Pending','Approved','Rejected') NOT NULL,
   PRIMARY KEY (orders_status_id,language_id),
   KEY idx_orders_status_name (orders_status_name)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -516,6 +549,17 @@ CREATE TABLE lc_orders_transactions_status (
   status_name varchar(255) NOT NULL,
   PRIMARY KEY (id,language_id),
   KEY idx_orders_transactions_status_name (status_name)
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+DROP TABLE IF EXISTS lc_permalinks;
+CREATE TABLE IF NOT EXISTS lc_permalinks (
+  permalink_id int(11) NOT NULL AUTO_INCREMENT,
+  item_id int(11) NOT NULL,
+  language_id int(11) NOT NULL DEFAULT '1',
+  `type` int(11) NOT NULL,
+  query varchar(255) NOT NULL,
+  permalink varchar(255) NOT NULL,
+  PRIMARY KEY (permalink_id,permalink)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 DROP TABLE IF EXISTS lc_products;
@@ -887,10 +931,10 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(19, 'Heading Image Width', 'HEADING_IMAGE_WIDTH', '50', 'The pixel width of heading images', 4, 3, '2009-12-20 01:24:07', '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(20, 'Heading Image Height', 'HEADING_IMAGE_HEIGHT', '', 'The pixel height of heading images', 4, 4, '2009-12-20 01:24:16', '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(21, 'Image Required', 'IMAGE_REQUIRED', '1', 'Enable to display broken images. Good for development.', 4, 8, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(22, 'Gender', 'ACCOUNT_GENDER', '1', 'Ask for or require the customers gender.', 5, 10, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, 0, -1))');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(22, 'Gender', 'ACCOUNT_GENDER', '-1', 'Ask for or require the customers gender.', 5, 10, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, 0, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(23, 'First Name', 'ACCOUNT_FIRST_NAME', '2', 'Minimum requirement for the customers first name.', 5, 11, '2012-09-27 10:02:02', '2009-11-26 15:58:32', NULL, 'lc_cfg_set_boolean_value(array(''1'', ''2'', ''3'', ''4'', ''5'', ''6'', ''7'', ''8'', ''9'', ''10''))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(24, 'Last Name', 'ACCOUNT_LAST_NAME', '2', 'Minimum requirement for the customers last name.', 5, 12, NULL, '2009-11-26 15:58:32', NULL, 'lc_cfg_set_boolean_value(array(''1'', ''2'', ''3'', ''4'', ''5'', ''6'', ''7'', ''8'', ''9'', ''10''))');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(25, 'Date Of Birth', 'ACCOUNT_DATE_OF_BIRTH', '1', 'Ask for the customers date of birth.', 5, 13, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(25, 'Date Of Birth', 'ACCOUNT_DATE_OF_BIRTH', '-1', 'Ask for the customers date of birth.', 5, 13, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(26, 'E-Mail Address', 'ACCOUNT_EMAIL_ADDRESS', '6', 'Minimum requirement for the customers e-mail address.', 5, 14, NULL, '2009-11-26 15:58:32', NULL, 'lc_cfg_set_boolean_value(array(''1'', ''2'', ''3'', ''4'', ''5'', ''6'', ''7'', ''8'', ''9'', ''10''))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(27, 'Password', 'ACCOUNT_PASSWORD', '5', 'Minimum requirement for the customers password.', 5, 15, NULL, '2009-11-26 15:58:32', NULL, 'lc_cfg_set_boolean_value(array(''1'', ''2'', ''3'', ''4'', ''5'', ''6'', ''7'', ''8'', ''9'', ''10''))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(28, 'Newsletter', 'ACCOUNT_NEWSLETTER', '1', 'Ask for a newsletter subscription.', 5, 16, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
@@ -1023,7 +1067,7 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(155, 'Check Sessions Directory', 'SERVICE_DEBUG_CHECK_SESSION_DIRECTORY', '1', 'Show a warning if the file-based session directory does not exist.', 6, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(156, 'Maximum Entries To Display', 'MODULE_CONTENT_NEW_PRODUCTS_MAX_DISPLAY', '6', 'Maximum number of new products to display', 6, 0, NULL, '2012-10-25 18:08:07', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(157, 'Suppress Non-Mobile Payment Modules', 'CHECKOUT_SUPRESS_NON_MOBILE_PAYMENT_MODULES', '-1', 'Suppress non-mobile payment modules in catalog when being viewed in mobile format.', 19, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(158, 'Enable/Disable Editor(Global)', 'ENABLE_EDITOR', '-1', 'Enable or Disable Editor Globally', 20, 1, NULL, '2013-07-03 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(158, 'Enable/Disable Editor(Global)', 'ENABLE_EDITOR', '1', 'Enable or Disable Editor Globally', 20, 1, NULL, '2013-07-03 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(159, 'Use Default Template Stylesheet', 'USE_DEFAULT_TEMPLATE_STYLESHEET', '-1', 'Use Default Template Stylesheet', 20, 2, NULL, '2013-07-03 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(160, 'Display Coupon', 'MODULE_ORDER_TOTAL_COUPON_STATUS', 'true', 'Do you want to dusplay the coupon discount total on the checkout pages?', 6, 0, NULL, '2013-07-30 14:10:55', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(''true'', ''false''))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(161, 'Sort Order', 'MODULE_ORDER_TOTAL_COUPON_SORT_ORDER', '300', 'Sort order of the display.', 6, 0, NULL, '2013-07-30 14:10:55', NULL, NULL);
@@ -5596,6 +5640,7 @@ INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'LSB','
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'LUT','Luton');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MAN','Manchester');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MDB','Middlesbrough');
+INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MDX','Middlesex');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MDW','Medway');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MFT','Magherafelt');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'MIK','Milton Keynes');
@@ -6005,10 +6050,10 @@ INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_grou
 
 INSERT INTO lc_languages (languages_id, `name`, code, locale, `charset`, date_format_short, date_format_long, time_format, text_direction, currencies_id, numeric_separator_decimal, numeric_separator_thousands, parent_id, sort_order) VALUES(1, 'English', 'en_US', 'en_US.UTF-8,en_US,english', 'utf-8', '%m/%d/%Y', '%A %B %d, %Y at %H:%M', '%H:%M:%S', 'ltr', 1, '.', ',', 0, 10);
 
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(1, 1, 'Pending');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(2, 1, 'Processing');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(3, 1, 'Preparing');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name) VALUES(4, 1, 'Delivered');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(1, 1, 'Pending', 'Pending');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(2, 1, 'Processing', 'Pending');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(3, 1, 'Preparing', 'Pending');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(4, 1, 'Delivered', 'Approved');
 
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(1, 1, 'Authorize');
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(2, 1, 'Cancel');
@@ -6023,6 +6068,9 @@ INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width,
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 550, 650, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(7, 1, 'Small', 'small', 100, 120, 0);
 
+INSERT INTO lc_shipping_availability (id, languages_id, title, css_key) VALUES(1, 1, 'Ships within 24 hours.', 'ships24hours');
+INSERT INTO lc_shipping_availability (id, languages_id, title, css_key) VALUES(2, 1, 'Ships within 48 hours.', 'ships48hours');
+INSERT INTO lc_shipping_availability (id, languages_id, title, css_key) VALUES(3, 1, 'Ships within 72 hours.', 'ships72hours');
 
 INSERT INTO lc_tax_class VALUES (1, 'Taxable Goods', 'The following types of products are included non-food, services, etc', now(), now());
 

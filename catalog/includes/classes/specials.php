@@ -117,7 +117,7 @@
         $output .= '  <div class="content-specials-listing-description">' . lc_clean_html($Qspecials->value('products_description')) . '</div>' . "\n";
         $output .= '  <div class="content-specials-listing-price"><s>' . $lC_Currencies->displayPrice($Qspecials->value('products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</s> <span class="product-special-price">' . $lC_Currencies->displayPrice($Qspecials->value('specials_new_products_price'), $Qspecials->valueInt('products_tax_class_id')) . '</span></div>' . "\n";
         $output .= '  <div class="content-specials-listing-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qspecials->value('products_keyword')), $lC_Image->show($Qspecials->value('image'), $Qspecials->value('products_name'))) . '</div>' . "\n";
-        $output .= '  <div class="content-specials-listing-buy-now"><a href="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qspecials->value('products_keyword') . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '"><button type="button" class="content-specials-listing-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></a></div>' . "\n"; 
+        $output .= '  <div class="content-specials-listing-buy-now"><button type="button" onclick="document.location.href=\'' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qspecials->value('products_keyword') . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '\'" class="content-specials-listing-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></div>' . "\n"; 
         $output .= '</div>' . "\n";
       }
 

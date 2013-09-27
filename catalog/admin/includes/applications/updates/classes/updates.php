@@ -13,7 +13,7 @@
 
   @function The lC_Updater_Admin class manages zM services
 */
-ini_set('error_reporting', 0);
+//ini_set('error_reporting', 0);
 
 global $lC_Vqmod;
 
@@ -386,25 +386,34 @@ class lC_Updates_Admin {
   * @access public      
   * @return boolean
   */    
-  public static function applyPackage() {
+  public static function applyPackage($pharWithPath = null) {
     $phar_can_open = true;
 
     $meta = array();
     $pro_hart = array();
 
     try {
-      $phar = $phar = new Phar(DIR_FS_WORK . 'updates/update.phar', 0);
-
-      $meta = $phar->getMetadata();     
-
-      self::$_to_version = $meta['version_to'];
-
-      // reset the log
-      if ( file_exists(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') && is_writable(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') ) {
-        unlink(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
+      if ($pharWithPath == null) {
+        $pharFile = 'update.phar';
+        $phar = $phar = new Phar(DIR_FS_WORK . 'updates/' . $pharFile, 0);
+        $meta = $phar->getMetadata();     
+        self::$_to_version = $meta['version_to'];
+        // reset the log
+        if ( file_exists(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') && is_writable(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') ) {
+          unlink(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
+        }   
+        self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED');
+      } else {
+        $pharFile = end(explode('/', $pharWithPath));
+        $phar = $phar = new Phar(DIR_FS_WORK . 'addons/update.phar', 0);
+        $meta = $phar->getMetadata();     
+        // reset the log
+        $pharCode = str_replace('.phar', '', $pharFile);
+        if ( file_exists(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt') && is_writable(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt') ) {
+          unlink(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt');
+        }        
+        self::log('##### ADDON INSTALL ' . $pharCode . ' STARTED', $pharCode);
       }
-
-      self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED');
 
       // first delete files before extracting new files
       if (is_array($meta['delete']) && count($meta['delete']) > 0) {
@@ -435,7 +444,12 @@ class lC_Updates_Admin {
         if ( ($pos = strpos($iteration->getPathName(), 'update.phar')) !== false ) {
           
           $file = substr($iteration->getPathName(), $pos+12);
-          $directory = realpath(DIR_FS_CATALOG) . '/';
+          
+          if ($pharWithPath == null) {
+            $directory = realpath(DIR_FS_CATALOG) . '/';
+          } else {
+            $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
+          }
           
           if ( file_exists($directory . $file) ) {
             if ( rename($directory . $file, $directory . dirname($file) . '/.CU_' . basename($file)) ) {
@@ -510,22 +524,27 @@ class lC_Updates_Admin {
       trigger_error($e->getMessage());
       trigger_error('Please review the update log at: ' . DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
     }
-
-    // execute run after script if exists
-    if (file_exists(DIR_FS_WORK . 'updates/runAfter/controller.php')) {
-      include_once(DIR_FS_WORK . 'updates/runAfter/controller.php');
-      lC_Updates_Admin_run_after::process();      
+    
+    if ($pharWithPath == null) {
+      // execute run after script if exists
+      if (file_exists(DIR_FS_WORK . 'updates/runAfter/controller.php')) {
+        include_once(DIR_FS_WORK . 'updates/runAfter/controller.php');
+        lC_Updates_Admin_run_after::process();      
+      }
+      
+      // verify 644 permissions on PHP files
+      try {
+        exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
+        self::log('##### UPDATED Permissions on PHP files to 644');
+      } catch ( Exception $e ) {  
+        self::log('*** Could Not Set Permissions on PHP files to 644');
+      } 
+      self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
+    } else {
+      self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
     }
-    
-    // verify 644 permissions on PHP files
-    try {
-      exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
-      self::log('##### UPDATED Permissions on PHP files to 644');
-    } catch ( Exception $e ) {  
-      self::log('*** Could Not Set Permissions on PHP files to 644');
-    }       
-    
-    self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
+
+    self::log('##### ADDON INSTALL ' . $code . ' COMPLETE');
 
     return $phar_can_open;
   }
@@ -566,9 +585,13 @@ class lC_Updates_Admin {
   * @access protected      
   * @return void
   */ 
-  protected static function log($message) {
+  protected static function log($message, $code = null) {
     if ( is_writable(DIR_FS_WORK . 'logs') ) {
-      file_put_contents(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt', '[' . lC_DateTime::getNow('d-M-Y H:i:s') . '] ' . $message . "\n", FILE_APPEND);
+      if ($code == null) {
+        file_put_contents(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt', '[' . lC_DateTime::getNow('d-M-Y H:i:s') . '] ' . $message . "\n", FILE_APPEND);
+      } else {
+        file_put_contents(DIR_FS_WORK . 'logs/addon-' . $code . '.txt', '[' . lC_DateTime::getNow('d-M-Y H:i:s') . '] ' . $message . "\n", FILE_APPEND);
+      }
     }
   }
  /**
@@ -578,6 +601,21 @@ class lC_Updates_Admin {
   * @access protected      
   * @return boolean
   */ 
+  protected static function rmdir_r($path) {
+    $i = new DirectoryIterator($path);
+    foreach($i as $f) {
+      if($f->isFile()) {
+        @unlink($f->getRealPath());
+      } else if(!$f->isDot() && $f->isDir()) {
+        self::_rrmdir($f->getRealPath());
+        @rmdir($f->getRealPath());
+      }
+    }
+    @rmdir($path);
+    
+    return true;
+  } 
+  /*  
   protected static function rmdir_r($dir) {
     foreach ( scandir($dir) as $file ) {
       if ( !in_array($file, array('.', '..')) ) {
@@ -590,7 +628,8 @@ class lC_Updates_Admin {
     }
 
     return rmdir($dir);
-  }  
+  } 
+  */ 
  /**
   * Check if a log exists
   *  

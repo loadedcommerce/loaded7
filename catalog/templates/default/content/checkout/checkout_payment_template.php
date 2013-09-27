@@ -11,6 +11,18 @@
 *  @copyright  (c) 2013 Loaded Commerce Team
 *  @license    http://loadedcommerce.com/license.html
 */
+if ($lC_Payment->hasIframeParams()) {
+  $params = utility::nvp2arr($lC_Payment->getIframeParams());
+  $fWidth = (isset($params['width']) && empty($params['width']) === false) ? $params['width'] : '550px';
+  $fHeight = (isset($params['height']) && empty($params['height']) === false) ? $params['height'] : '550px';
+  $fScroll = (isset($params['scroll']) && empty($params['scroll']) === false) ? $params['scroll'] : 'no';
+  $fStyle = (isset($params['margin-left']) && empty($params['margin-left']) === false) ? 'style="margin-left:' . $params['margin-left'] . '"' : null;
+} else {
+  $fWidth = '550px';
+  $fHeight = '550px';
+  $fScroll = 'no';
+  $fStyle = null;
+}
 $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
@@ -27,27 +39,6 @@ $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(),
 #paymentTemplateContainer .arrow-up { border-bottom: 10px solid gray; border-left: 10px solid transparent; border-right: 10px solid transparent; float: right; height: 0; width: 0; margin:13px 0 0 6px; } 
 #loadingContainer { position:absolute; right:250px; }
 #iloader { margin:100px 0 0 0px; }
-<?php 
-// common
-$fHeight = '550px';
-$fScroll = 'no';
-
-if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
-  echo "#payformIframe { min-width:500px; margin-left:14px; min-height:580px; }";
-} else if ($lC_ShoppingCart->getBillingMethod('id') == 'cresecure') {
-  echo "#payformIframe { min-width:480px; min-height:300px; }";
-} else if ($lC_ShoppingCart->getBillingMethod('id') == 'authorizenet_cc' || 
-           $lC_ShoppingCart->getBillingMethod('id') == 'globaliris' ||
-           $lC_ShoppingCart->getBillingMethod('id') == 'usaepay_cc' ) {
-  $fHeight = '400px';
-  $fScroll = 'auto';
-  echo "#checkout_shipping_col1 { width:28% !important; }";
-  echo "#checkout_shipping_col2 { width:71% !important; }";  
-} else {
-  echo "#checkout_shipping_col1 { width:28% !important; }";
-  echo "#checkout_shipping_col2 { width:71% !important; }";
-}
-?>
 
 /* Mobile (landscape) ----------- */
 @media only screen 
@@ -162,10 +153,11 @@ only screen and (min-device-pixel-ratio : 1.5) {
                 <div id="loadingContainer"><p id="iloader"></p></div>
                 <?php  
                 if ($lC_Payment->hasIframeURL()) {
-                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->getIframeURL() . '" scrolling="' . $fScroll . '" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
+                  $params = (isset($_SESSION['cartSync']['iFrameParams']) && empty($_SESSION['cartSync']['iFrameParams'] ) === false) ? $_SESSION['cartSync']['iFrameParams']  : NULL;
+                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->getIframeURL() . $params . '" scrolling="' . $fScroll . '" height="' . $fHeight . '" width="' . $fWidth . '" ' . $fStyle . ' frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
                 } else if ($lC_Payment->hasRelayURL()) { 
                   echo '<form name="pmtForm" id="pmtForm" action="' . $lC_Payment->getRelayURL() . '" target="pmtFrame" method="post">' . lC_Checkout_Payment_template::rePost() . '</form>' . "\n";        
-                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="' . lC_Checkout_Payment_template::getIframeWidth() . '" height="' . $fHeight . '" scrolling="' . $fScroll . '" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 
+                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="' . $fWidth . '" height="' . $fHeight . '" scrolling="' . $fScroll . '" ' . $fStyle . ' frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 
                 } else {
                   echo '[[FORM INSERT]]'; 
                 }

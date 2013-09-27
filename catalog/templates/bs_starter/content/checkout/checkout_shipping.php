@@ -33,7 +33,7 @@
                   <div class="checkbox">
                     <input type="checkbox" name="shipto_as_billable" id="shipto_as_billable"><label class="small-margin-left"><?php echo $lC_Language->get('billable_address_checkbox'); ?></label>
                   </div>
-                  <div class="btn-group clearfix absolute-top-right">
+                  <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
                     <button type="button" onclick="document.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                   </div>
                 </div>
@@ -74,9 +74,9 @@
                           <tr><td colspan="3" class=""><?php echo $quotes['error']; ?></td></tr>
                           <?php
                         } else {
-                          $counter = 0;   
+                          $counter = 0;                   
                           foreach ($quotes['methods'] as $methods) {
-                            if (($quotes['id'] . '_' . $methods['id'] == $lC_ShoppingCart->getShippingMethod('id')) || sizeof($quotes['methods']) == 1) {
+                            if (($quotes['id'] . '_' . $methods['id'] == $lC_ShoppingCart->getShippingMethod('id')) || $lC_Shipping->numberOfQuotes() == 1) {
                               echo '<tr class="module-row-selected cursor-pointer" id="default-selected" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
                             } else {
                               echo '<tr class="module-row cursor-pointer" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
@@ -91,7 +91,7 @@
                               <?php
                             } else {
                               ?>
-                              <td>&nbsp;</td>
+                              <td class="content-checkout-listing-blank"></td>
                               <td class="text-right"><?php echo $lC_Currencies->displayPrice($methods['cost'], $quotes['tax_class_id']) . lc_draw_hidden_field('shipping_mod_sel', $quotes['id'] . '_' . $methods['id']); ?></td>
                               <?php
                             }

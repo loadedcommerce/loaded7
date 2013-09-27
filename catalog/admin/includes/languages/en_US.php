@@ -88,6 +88,8 @@ button_info = Info
 
 field_admin_language = Admin Language:
 field_username = Email:
+field_first_name = First Name:
+field_last_name = Last Name:
 
 icon_all = All
 icon_app_store = Add Ons

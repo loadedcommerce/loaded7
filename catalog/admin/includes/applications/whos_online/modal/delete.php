@@ -29,7 +29,6 @@ function deleteEntry(id, name) {
              '</div>',
     title: '<?php echo str_replace("'", "", $lC_Language->get('modal_heading_delete_customer_sessions')); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

@@ -16,9 +16,9 @@
       <a data-toggle="modal" href="#myModal" title="<?php echo $lC_Product->getTitle(); ?>"><img class="img-responsive" src="<?php echo $lC_Image->getAddress($lC_Product->getImage(), 'large'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="<?php echo $lC_Product->getTitle(); ?>" /></a>
     </div>  
     <!-- Button trigger modal -->
-    <p class="text-center no-margin-top no-margin-bottom"><a data-toggle="modal" href="#myModal" class="btn normal"><?php echo $lC_Language->get('enlarge_image'); ?></a></p>
+    <p class="text-center no-margin-top no-margin-bottom"><a data-toggle="modal" href="#popup-image-modal" class="btn normal"><?php echo $lC_Language->get('enlarge_image'); ?></a></p>
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="popup-image-modal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -26,14 +26,14 @@
             <h4 class="modal-title"><?php echo $lC_Product->getTitle(); ?></h4>
           </div>
           <div class="modal-body">
-            <img class="img-responsive" src="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>">
+            <img class="img-responsive" alt="<?php echo $lC_Product->getTitle(); ?>" src="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals'))) ? lc_href_link($lC_Image->getAddress($lC_Product->getImage(), 'originals')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lC_Language->get('button_close'); ?></button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->   
+    </div><!-- /.modal -->
     <hr>
     <?php
     if (sizeof($lC_Product->getImages()) > 1) {

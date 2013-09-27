@@ -174,6 +174,9 @@ class lC_Administrators_Admin {
         if ($data['language_id'] != $Qcheck->value('language_id')) {
           $_SESSION['admin']['language_id'] = $data['language_id'];
         }
+        $_SESSION['admin']['username'] = $data['user_name'];
+        $_SESSION['admin']['firstname'] = $data['first_name'];
+        $_SESSION['admin']['lastname'] = $data['last_name'];
       } else {
         $lC_Database->rollbackTransaction();
         $result['rpcStatus'] = -1;
@@ -527,17 +530,24 @@ class lC_Administrators_Admin {
 
     $modules = array();
 
-    foreach ( $lC_DirectoryListing->getFiles() as $file ) {
+    foreach ( $lC_DirectoryListing->getFiles() as $file ) {  
       $module = substr($file['name'], 0, strrpos($file['name'], '.'));
       if ( !class_exists('lC_Access_' . ucfirst($module)) ) {
         $lC_Language->loadIniFile('modules/access/' . $file['name']);
         include($lC_DirectoryListing->getDirectory() . '/' . $file['name']);
       }
+      $tmp_module = '';
+      if($module == 'option_manager' || $module == 'product_settings') {
+        $tmp_module = $module;
+      }
       $module = 'lC_Access_' . ucfirst($module);
-      $module = new $module();
-      $modules[lC_Access::getGroupTitle( $module->getGroup() )][] = array('id' => $module->getModule(),
+      $module = new $module(); 
+      $module_group = lC_Access::getGroupTitle( $module->getGroup() ); 
+      $module_group = str_replace(" ", "_", $module_group);
+      $modules[$module_group][] = array('id' => (($tmp_module != '') ? $tmp_module : $module->getModule()),
                                                                           'text' => $module->getTitle());
     }
+
     ksort($modules);
 
     return $modules;

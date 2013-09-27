@@ -102,6 +102,6 @@ $lC_Services = new lC_Services();
 $lC_Services->startServices();
 
 // instantiate the addons class
-require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
+require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
 $lC_Addons = new lC_Addons();
 ?>

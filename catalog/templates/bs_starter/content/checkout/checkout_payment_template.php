@@ -8,82 +8,20 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: checkout_payment_template.php v1.0 2013-08-08 datazen $
 */ 
+if ($lC_Payment->hasIframeParams()) {
+  $params = utility::nvp2arr($lC_Payment->getIframeParams());
+  $fWidth = (isset($params['width']) && empty($params['width']) === false) ? $params['width'] : '550px';
+  $fHeight = (isset($params['height']) && empty($params['height']) === false) ? $params['height'] : '550px';
+  $fScroll = (isset($params['scroll']) && empty($params['scroll']) === false) ? $params['scroll'] : 'no';
+  $fStyle = (isset($params['margin-left']) && empty($params['margin-left']) === false) ? 'style="margin-left:' . $params['margin-left'] . '"' : null;
+} else {
+  $fWidth = '550px';
+  $fHeight = '550px';
+  $fScroll = 'no';
+  $fStyle = null;
+}
+$secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
 ?>
-<!--content/checkout/checkout_payment_template.php start-->
-<style>
-/*content area width, it is needed*/
-#loadingContainer { position:absolute; left:50%; top:10%; }
-#iloader { margin:100px 0 0 0px; }
-<?php 
-// common
-$fHeight = '550px';
-$fScroll = 'no';
-
-if ($lC_ShoppingCart->getBillingMethod('id') == 'paypal_adv') {
-  echo "#payformIframe { min-width:500px; margin-left:14px; min-height:580px; }";
-} else if ($lC_ShoppingCart->getBillingMethod('id') == 'cresecure') {
-  echo "#payformIframe { min-width:480px; min-height:300px; }";
-} else if ($lC_ShoppingCart->getBillingMethod('id') == 'authorizenet_cc' || 
-           $lC_ShoppingCart->getBillingMethod('id') == 'globaliris' ||
-           $lC_ShoppingCart->getBillingMethod('id') == 'usaepay_cc' ) {
-  $fHeight = '400px';
-  $fScroll = 'auto';
-} 
-?>
-
-/* Mobile (landscape) ----------- */
-@media only screen 
-and (min-width : 321px) 
-and (max-device-width : 480px) {
-  #payformIframe { min-width:460px; min-height:300px; }
-  #checkoutConfirmationDetails {width: 98% !important; }
-}
-
-/* Mobile (portrait) ----------- */
-@media only screen 
-and (max-width : 320px) {
-  #payformIframe { min-width:320px; min-height:380px; }
-  #checkoutConfirmationDetails {width: 96% !important; }
-}
-
-/* Tablet (landscape) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : landscape) {
-  #payformIframe { min-width:520px; min-height:300px; }
-  #checkoutConfirmationDetails {width: 96% !important; }
-}
-
-/* Tablet (portrait) ----------- */
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : portrait) {
-  #payformIframe { min-width:420px; min-height:300px; }
-  #checkoutConfirmationDetails {width: 96% !important; }
-}
-
-/* Desktops and laptops ----------- */
-@media only screen 
-and (min-width : 1224px) {
-/* Styles */
-}
-
-/* Large screens ----------- */
-@media only screen 
-and (min-width : 1824px) {
-/* Styles */
-}
-
-/* iPhone 4 ----------- */
-@media
-only screen and (-webkit-min-device-pixel-ratio : 1.5),
-only screen and (min-device-pixel-ratio : 1.5) {
-/* Styles */
-}
-</style>
-
 <!--content/checkout/checkout_payment_template.php start-->
 <div class="row">
   <div class="col-sm-12 col-lg-12 large-margin-bottom">  
@@ -112,9 +50,9 @@ only screen and (min-device-pixel-ratio : 1.5) {
               <script>
                 /* we use javascript here due to js scrubbing at payment endpoints - we don't want to show if javascript is disabled or scrubbed */
                 var output = '<div class="security-info-container">'+
-                             '  <div class="security-info-title text-right cursor-pointer" onclick="$(\'#security-info-alert\').toggle(\'slideDown\');"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin:10px 5px;"') . $lC_Language->get('secure_payment_security_info_title'); ?><span class="arrow-container"><span id="arrow" class="arrow-down"></span></span></div>'+
+                             '  <div class="security-info-title text-right cursor-pointer" onclick="$(\'#security-info-alert\').toggle(\'slideDown\');"><?php echo lc_image('images/greenlock.png', null, null, null, 'class="valign-middle margin-top margin-bottom small-margin-left small-margin-right"') . $lC_Language->get('secure_payment_security_info_title'); ?></div>'+
                              '  <div id="security-info-alert" class="alert alert-success" style="display:none;">'+
-                             '    <div class="security-info-url"><?php echo lc_image('images/greenlock.png', null, null, null, 'style="vertical-align:middle; margin-right:5px;"') . ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL); ?></div>'+
+                             '  <div class="security-info-url"><?php echo lc_image('images/greenlock.png', null, null, null, 'class="valign-middle small-margin-right"') . $secureUrl; ?></div>'+
                              '    <div class="security-info-text normal large-margin-left small-padding-left"><?php echo $lC_Language->get('secure_payment_security_info_text'); ?></div>'+
                              '  </div>' +
                              '</div>';
@@ -137,19 +75,20 @@ only screen and (min-device-pixel-ratio : 1.5) {
                   <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>                
                 </address>
                 <div class="btn-group clearfix absolute-top-right">
-                  <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>"><button type="button" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></a>
+                  <form action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>" method="post"><button type="button" onclick="$(this).closest('form').submit();" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></form>
                 </div>                  
               </div>
             </div>
             <div class="col-sm-8 col-lg-8 no-padding-left large-margin-bottom">
               <div id="checkoutConfirmationDetails"> 
-                <div id="loadingContainer"><p id="iloader"></p></div>
+                <div id="loading-container"><p id="iloader"></p></div>
                 <?php  
                 if ($lC_Payment->hasIframeURL()) {
-                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->getIframeURL() . '" scrolling="' . $fScroll . '" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
+                  $params = (isset($_SESSION['cartSync']['iFrameParams']) && empty($_SESSION['cartSync']['iFrameParams'] ) === false) ? $_SESSION['cartSync']['iFrameParams']  : NULL;
+                  echo '<iframe onload="hideLoader();" id="payformIframe" src="' . $lC_Payment->getIframeURL() . $params . '" scrolling="' . $fScroll . '" height="' . $fHeight . '" width="' . $fWidth . '" ' . $fStyle . ' frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>';
                 } else if ($lC_Payment->hasRelayURL()) { 
                   echo '<form name="pmtForm" id="pmtForm" action="' . $lC_Payment->getRelayURL() . '" target="pmtFrame" method="post">' . lC_Checkout_Payment_template::rePost() . '</form>' . "\n";        
-                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="' . lC_Checkout_Payment_template::getIframeWidth() . '" height="' . $fHeight . '" scrolling="' . $fScroll . '" frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 
+                  echo '<iframe frameborder="0" onload="setTimeout(function() {hideLoader();},1250);" src="" id="pmtFrame" name="pmtFrame" width="' . $fWidth . '" height="' . $fHeight . '" scrolling="' . $fScroll . '" ' . $fStyle . ' frameborder="0" border="0" allowtransparency="true">Your browser does not support iframes.</iframe>'; 
                 } else {
                   echo '[[FORM INSERT]]'; 
                 }
@@ -164,7 +103,7 @@ only screen and (min-device-pixel-ratio : 1.5) {
 </div> 
 <script>
 function hideLoader() {
-  var loadDiv = document.getElementById("loadingContainer"); 
+  var loadDiv = document.getElementById("loading-container"); 
   loadDiv.style.display = "none"; 
 }
 

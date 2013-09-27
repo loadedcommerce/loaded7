@@ -27,9 +27,7 @@
                 <p class="lead"><?php echo $lC_Product->getPriceFormated(); ?></p>
               </div>
               <div class="col-sm-6 col-lg-6 no-margin-left">
-                <a href="<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add'); ?>">
-                  <button class="btn btn-success btn-block" type="button"><?php echo $lC_Language->get('button_buy_now'); ?></button>
-                </a>
+                <button class="btn btn-success btn-block" onclick="window.location.href='<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add'); ?>'" type="button"><?php echo $lC_Language->get('button_buy_now'); ?></button>
               </div>
             </div>
           </div>
@@ -55,7 +53,7 @@
   </div>                                                                                                                                                
   <div class="button-set clearfix large-margin-bottom large-margin-left large-margin-right">
     <button class="pull-right btn btn-lg btn-primary" onclick="$('#tell_a_friend').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
-    <a href="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>"><button class="pull-left btn btn-lg btn-default" type="button"><?php echo $lC_Language->get('button_back'); ?></button></a>
+    <button class="pull-left btn btn-lg btn-default" onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()); ?>'" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
   </div>    
 </div>
 <!--content/products/tell_a_friend.php end-->

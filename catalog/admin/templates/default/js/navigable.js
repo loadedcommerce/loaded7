@@ -24,7 +24,7 @@
 		animate = true;
 
 	// Navigable menus
-	doc.on('click', '.navigable li, .navigable li > span, .navigable li > a', function(event)
+	doc.on('click', '.navigable li, .navigable li > span, .navigable li > a, .navigable li > b', function(event)
 	{
 		// Only work if the element is the event's target
 		if (event.target !== this)
@@ -64,7 +64,7 @@
 			load = root.children('.load'),
 
 			// Other vars
-			current, url, delayedOpen, text;
+			current, url, delayedOpen, text, hidden, parentLi, parentLink;
 
 		// Prepare on first call
 		if (!mainUL.hasClass('fixed'))
@@ -105,10 +105,6 @@
 				}
 				else
 				{
-					left = -target.parentsUntil('.navigable', 'ul').length*100;
-					backHeight = back.outerHeight();
-					root.data('navigableCurrent', target);
-
 					// Text
 					if (settings.backText)
 					{
@@ -117,13 +113,17 @@
 					else
 					{
 						parentLi = target.closest('li');
-						parentLink = parentLi.children('a, span').first();
+						parentLink = parentLi.children('a, b, span').not('.icon').first();
 						if (!parentLink.length)
 						{
 							parentLink = parentLi;
 						}
 						backText.text(parentLink.contents().filter(function(){ return(this.nodeType == 3); }).text() );
 					}
+
+					left = -target.parentsUntil('.navigable', 'ul').length*100;
+					backHeight = back.outerHeight();
+					root.data('navigableCurrent', target);
 				}
 
 				// Set root element size according to target size
@@ -175,6 +175,9 @@
 		// If there is a submenu
 		if (submenu.length > 0)
 		{
+			// Reveal hidden parents if needed for correct height processing
+			hidden = root.tempShow();
+
 			// If not ready yet
 			if (parentUL.outerHeight(true) === 0 && allUL.length < 3)
 			{
@@ -224,6 +227,22 @@
 			 * Animation
 			 */
 
+			// Text
+			if (settings.backText)
+			{
+				backText.text(settings.backText);
+			}
+			else
+			{
+				parentLi = li;
+				parentLink = parentLi.children('a, b, span').not('.icon').first();
+				if (!parentLink.length)
+				{
+					parentLink = parentLi;
+				}
+				backText.text(parentLink.contents().filter(function(){ return(this.nodeType == 3); }).text() );
+			}
+
 			// Set root element size according to target size
 			root.stop(true).height(parentUL.outerHeight(true)+back.outerHeight(true))[animate ? 'animate' : 'css']({ height: (submenu.outerHeight(true)+back.outerHeight())+'px' });
 
@@ -232,10 +251,12 @@
 
 			// Show back button
 			back[animate ? 'animate' : 'css']({ marginTop: 0 });
-			backText.text(settings.backText || clicked.contents().filter(function(){ return(this.nodeType == 3); }).text() );
 
 			// Send open event
 			li.trigger('navigable-open');
+
+			// Hide previously hidden parents
+			hidden.tempShowRevert();
 
 			// Prevent default behavior
 			event.preventDefault();
@@ -317,6 +338,9 @@
 							// Finally open the clicked element
 							clicked.click();
 						}
+
+						// Trigger notification
+						clicked.trigger('navigable-ajax-loaded');
 					}
 				});
 
@@ -342,16 +366,26 @@
 			var root = $(this),
 
 				// Back button
-				back = root.children('.back');
+				back = root.children('.back'),
 
-				// If valid
-				if (back.length > 0)
+				// Hidden parents
+				hidden;
+
+			// If valid
+			if (back.length > 0)
+			{
+				// Reveal hidden parents if needed for correct height processing
+				hidden = root.tempShow();
+
+				// Walk back the arbo
+				while (root.data('navigableCurrent'))
 				{
-					while (root.data('navigableCurrent'))
-					{
-						back.click();
-					}
+					back.click();
 				}
+
+				// Hide previously hidden parents
+				hidden.tempShowRevert();
+			}
 		});
 
 		return this;
