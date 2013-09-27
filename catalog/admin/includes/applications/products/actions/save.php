@@ -73,7 +73,18 @@
           if ( isset($_POST['products_special_expires_date'][1]) ) $data['products_special_expires_date1'] = $_POST['products_special_expires_date'][1];
         }
 
-        // multi SKU
+        // multi SKU sub-products
+        if (isset($_POST['sub_products_name']) && $_POST['sub_products_name'] != NULL) {
+          $data['sub_products_name'] = $_POST['sub_products_name'];
+          if (isset($_POST['sub_products_default']) && $_POST['sub_products_default'] != NULL) $data['sub_products_default'] = $_POST['sub_products_default'];
+          if (isset($_POST['sub_products_status']) && $_POST['sub_products_status'] != NULL) $data['sub_products_status'] = $_POST['sub_products_status'];
+          if (isset($_POST['sub_products_weight']) && $_POST['sub_products_weight'] != NULL) $data['sub_products_weight'] = $_POST['sub_products_weight'];
+          if (isset($_POST['sub_products_sku']) && $_POST['sub_products_sku'] != NULL) $data['sub_products_sku'] = $_POST['sub_products_sku'];
+          if (isset($_POST['sub_products_qoh']) && $_POST['sub_products_qoh'] != NULL) $data['sub_products_qoh'] = $_POST['sub_products_qoh'];
+          if (isset($_POST['sub_products_price']) && $_POST['sub_products_price'] != NULL) $data['sub_products_price'] = $_POST['sub_products_price'];
+        }                                         
+        
+        // multi SKU combo
         if ($has_variants === true) {
           if ( isset($_POST['variants_status']) ) {
             $data['variants_status'] = $_POST['variants_status'];

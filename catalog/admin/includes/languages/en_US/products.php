@@ -204,10 +204,8 @@ text_sub_products = Sub Products
 text_sub_products_edit = Full Edit
 text_sub_products_remove = Remove Row
 text_sub_products_set_as_default = Set as Default
-text_sub_products_disable = Click to Disable
-text_sub_products_enable = Click to Enable
+text_sub_products_enable_disable = Enable / Disable
 text_sub_products_select_image = Select Image
-text_sub_products_image_selected = Image Selected
 
 text_supplier_characteristics = Supplier Characteristics
 text_tax_class = Tax Class

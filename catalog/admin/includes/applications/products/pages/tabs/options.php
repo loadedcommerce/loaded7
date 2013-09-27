@@ -84,6 +84,8 @@ global $lC_Language, $pInfo;
             var optionsDiv = $("input:radio[name=multi_sku_type_radio_group]").val();
             toggleMultiSkuTypeRadioGroup(optionsDiv);
             addSubProductsRow();  
+            $("#subProductsTable tr:last-child td:first-child").find('input').focus();  
+
           }); 
           
           function addSubProductsRow() {
@@ -98,7 +100,7 @@ global $lC_Language, $pInfo;
                       '  <td><input type="text" class="input" onblur="addSubProductsRow();" tabindex="' + nextId + '1" id="sub_products_name_' + nextId + '" name="sub_products_name[' + nextId + ']" value=""></td>'+
                       '  <td class="align-center align-middle">'+
                       '    <a onclick="setSubProductDefault(\'' + nextId + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_set_as_default'); ?>" href="javascript:void(0);"><span id="sub_products_default_span_' + nextId + '" class="icon-star icon-size2 margin-right ' + ((nextId == 1) ? "icon-orange" : "icon-grey") + '"></span></a>'+
-                      '    <a onclick="setSubProductStatus(\'' + nextId + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_disable'); ?>" href="javascript:void(0);"><span id="sub_products_status_span_' + nextId + '" class="icon-tick icon-size2 icon-green"></span></a>'+
+                      '    <a onclick="setSubProductStatus(\'' + nextId + '\');" class="with-tooltip" id="sub_products_status_link[' + nextId + ']" title="<?php echo $lC_Language->get('text_sub_products_enable_disable'); ?>" href="javascript:void(0);"><span id="sub_products_status_span_' + nextId + '" class="icon-tick icon-size2 icon-green"></span></a>'+
                       '    <input type="hidden" id="sub_products_default_' + nextId + '" name="sub_products_default[' + nextId + ']" class="sub_products_default" value="' + ((nextId == 1) ? "1" : "0") + '">'+
                       '    <input type="hidden" id="sub_products_status_' + nextId + '" name="sub_products_status[' + nextId + ']" value="1">'+
                       '  </td>'+
@@ -107,8 +109,8 @@ global $lC_Language, $pInfo;
                       '  <td><input type="text" class="input half-width" tabindex="' + nextId + '4" name="sub_products_qoh[' + nextId + ']" value=""></td>'+
                       '  <td><input type="text" class="input half-width" tabindex="' + nextId + '5" name="sub_products_price[' + nextId + ']" value=""></td>'+
                       '<td class="align-center align-middle">'+
-                      '  <input type="file" id="selectedFile-' + nextId + '" style="display: none;" onchange="setSubProductImage(\'' + nextId + '\');" />'+
-                      '  <span class="icon-camera icon-size2 icon-grey cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_select_image'); ?>" id="fileSelectButton-' + nextId + '" onclick="document.getElementById(\'selectedFile-' + nextId + '\').click();"></span>'+
+                      '  <input style="display:none;" type="file" id="sub_products_image_' + nextId + '" name="sub_products_image[' + nextId + ']" onchange="setSubProductImage(\'' + nextId + '\');" multiple />'+
+                      '  <span class="icon-camera icon-size2 icon-grey cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_select_image'); ?>" id="fileSelectButton-' + nextId + '" onclick="document.getElementById(\'sub_products_image_' + nextId + '\').click();"></span>'+
                       '</td>'+
                       '<td class="align-right align-middle">'+
                       '  <a onclick="removeSubProductRow(\'' + nextId + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_remove'); ?>" href="javascript:void(0)"><span class="icon-cross icon-size2 icon-red"></span></a>'+
@@ -139,16 +141,18 @@ global $lC_Language, $pInfo;
               $('#sub_products_status_' + id).val('1');
               $('#sub_products_status_span_' + id).removeClass('icon-red icon-cross').addClass('icon-green icon-tick');
             } 
-          }
+          }  
           
           function setSubProductImage(id) {
-            var val = ($('#selectedFile-' + id).val());
-            if (val != '') {
-              $('#fileSelectButton-' + id).removeClass('icon-grey').addClass('icon-green').prop('title', val);
-            } else {                                                              
-              var title = '<?php echo $lC_Language->get('text_sub_products_select_image'); ?>';
-              $('#fileSelectButton-' + id).removeClass('icon-green').addClass('icon-grey').prop('title', title);
-            }
+            setTimeout(function(){
+              var v = ($('#sub_products_image_' + id).val());
+              if (v != '') {
+                $('#fileSelectButton-' + id).removeClass('icon-grey').addClass('icon-green').prop('title', v);
+              } else {                                                              
+                var title = '<?php echo $lC_Language->get('text_sub_products_select_image'); ?>';
+                $('#fileSelectButton-' + id).removeClass('icon-green').addClass('icon-grey').prop('title', title);
+              }
+            }, 500);
           } 
           
           function toggleMultiSkuTypeRadioGroup(val) {
@@ -160,7 +164,8 @@ global $lC_Language, $pInfo;
               $('#subProductsContainer').slideDown();            
             }
           }  
-          </script>           
+          </script>   
+                  
                          
         </div>
       </fieldset>

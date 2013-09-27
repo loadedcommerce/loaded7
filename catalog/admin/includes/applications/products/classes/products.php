@@ -828,6 +828,16 @@ class lC_Products_Admin {
       }
     }
     
+    // multi SKU sub products
+    if ( $error === false ) {
+echo "<pre>";
+print_r($_FILES);
+print_r($data);
+echo "<pre>";
+die('00');      
+      
+    }    
+    
     // simple options
     if ( $error === false ) {
       
