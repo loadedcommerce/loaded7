@@ -29,7 +29,6 @@ function deleteGroup(id, name) {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_delete_administrator_group'); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       '<?php echo $lC_Language->get('button_close'); ?>' : {
         color: 'red',

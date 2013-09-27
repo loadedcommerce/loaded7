@@ -42,11 +42,11 @@ function newModule() {
                    '      <p><?php echo $lC_Language->get('introduction_new_template_layout_module'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="box" class="label"><?php echo $lC_Language->get('field_module'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('box', null, null, 'class="select" style="width:100%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('box', null, null, 'class="input with-small-padding" style="width:100%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="content_page" class="label"><?php echo $lC_Language->get('field_pages'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('content_page', $pages_array, null, 'class="select" style="width:100%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('content_page', $pages_array, null, 'class="input with-small-padding" style="width:100%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="page_specific" class="label"><?php echo $lC_Language->get('field_page_specific'); ?></label>'+
@@ -69,8 +69,7 @@ function newModule() {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_new_template_layout_module'); ?>',
           width: 500,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

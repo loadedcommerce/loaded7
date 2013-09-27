@@ -32,8 +32,7 @@ function showImage(src, wid, hgt) {
                '</div>',
       title: '<?php echo $lC_Language->get('modal_heading_preview_image'); ?> ' + size,
       width: w,
-      scrolling: false,
-      actions: {
+        actions: {
         'Close' : {
           color: 'red',
           click: function(win) { win.closeModal(); }

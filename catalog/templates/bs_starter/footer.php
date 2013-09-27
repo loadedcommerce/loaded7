@@ -53,7 +53,7 @@
       <!-- QR Code -->
       <?php echo $lC_Template->getQRCode(); ?>
     </div>               
-    <?php echo $lC_Template->getBranding('footer_text');?>    
+    <div class="margin-left small-padding-left margin-right small-padding-right"><?php echo $lC_Template->getBranding('footer_text');?></div>
   </div>
   <p class="margin-top">
     <?php

@@ -40,7 +40,7 @@ function newNewsletter() {
                    '      <p><?php echo $lC_Language->get('introduction_new_newsletter'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="module" class="label"><?php echo $lC_Language->get('field_module'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('module', null, null, 'class="select" style="width:46%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('module', null, null, 'class="input with-small-padding" style="width:46%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="title" class="label"><?php echo $lC_Language->get('field_title'); ?></label>'+
@@ -55,8 +55,7 @@ function newNewsletter() {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_new_newsletter'); ?>',
           width: 600,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

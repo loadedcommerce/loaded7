@@ -108,6 +108,38 @@ CREATE TABLE lc_banners_history (
   PRIMARY KEY (banners_history_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_branding;
+CREATE TABLE IF NOT EXISTS lc_branding (
+  language_id int(11) NOT NULL DEFAULT '1',
+  slogan varchar(256) NOT NULL DEFAULT '',
+  meta_description varchar(250) NOT NULL DEFAULT '',
+  meta_keywords varchar(128) NOT NULL DEFAULT '',
+  meta_title varchar(128) NOT NULL DEFAULT '',
+  meta_title_prefix varchar(128) NOT NULL,
+  meta_title_suffix varchar(128) NOT NULL,
+  footer_text varchar(256) NOT NULL DEFAULT '',
+  PRIMARY KEY (language_id)
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+ 
+ 
+DROP TABLE IF EXISTS lc_branding_data;
+CREATE TABLE IF NOT EXISTS lc_branding_data (
+  site_image varchar(128) NOT NULL DEFAULT '',
+  chat_code varchar(8192) NOT NULL DEFAULT '',
+  support_phone varchar(16) NOT NULL DEFAULT '',
+  support_email varchar(128) NOT NULL DEFAULT '',
+  sales_phone varchar(16) NOT NULL DEFAULT '',
+  sales_email varchar(128) NOT NULL DEFAULT '',
+  og_image varchar(128) NOT NULL DEFAULT '',
+  meta_delimeter varchar(128) NOT NULL DEFAULT '',
+  social_facebook_page varchar(128) NOT NULL,
+  social_twitter varchar(128) NOT NULL,
+  social_pinterest varchar(128) NOT NULL,
+  social_google_plus varchar(128) NOT NULL,
+  social_youtube varchar(128) NOT NULL,
+  social_linkedin varchar(128) NOT NULL
+) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_categories;
 CREATE TABLE lc_categories (
   categories_id int(11) NOT NULL AUTO_INCREMENT,
@@ -6035,6 +6067,10 @@ INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width,
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(5, 1, 'Mini', 'mini', 50, 60, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(6, 1, 'Popup', 'popup', 550, 650, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(7, 1, 'Small', 'small', 100, 120, 0);
+
+INSERT INTO lc_shipping_availability (id, languages_id, title, css_key) VALUES(1, 1, 'Ships within 24 hours.', 'ships24hours');
+INSERT INTO lc_shipping_availability (id, languages_id, title, css_key) VALUES(2, 1, 'Ships within 48 hours.', 'ships48hours');
+INSERT INTO lc_shipping_availability (id, languages_id, title, css_key) VALUES(3, 1, 'Ships within 72 hours.', 'ships72hours');
 
 INSERT INTO lc_tax_class VALUES (1, 'Taxable Goods', 'The following types of products are included non-food, services, etc', now(), now());
 

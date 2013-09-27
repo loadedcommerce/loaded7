@@ -49,7 +49,7 @@ function batchCopy(id) {
                  '      <p><?php echo $lC_Language->get('introduction_batch_copy_products'); ?></p>'+
                  '      <p class="button-height inline-label">'+
                  '        <label for="new_category_id" class="label"><?php echo $lC_Language->get('field_copy_to_category'); ?></label>'+
-                 '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="select" style="width:77%;" id="copyNewCategoryId"'); ?>'+
+                 '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="input with-small-padding" style="width:77%;" id="copyNewCategoryId"'); ?>'+
                  '      </p>'+
                  '      <p class="button-height inline-label">'+
                  '        <label for="copy_as" class="label"><?php echo $lC_Language->get('field_copy_method'); ?></label>'+
@@ -67,8 +67,7 @@ function batchCopy(id) {
                  '</div>',
         title: '<?php echo $lC_Language->get('modal_heading_batch_copy_products'); ?>',
         width: 500,
-        scrolling: false,
-        actions: {
+            actions: {
           'Close' : {
             color: 'red',
             click: function(win) { win.closeModal(); }

@@ -127,7 +127,7 @@ if ( ACCOUNT_STATE > -1 ) {
 }     
 $aContent .=  '<p class="button-height inline-label">' .
               '  <label for="ab_country_id" class="label" style="width:30%;">' . $lC_Language->get('field_country') . '</label>' .
-              lc_draw_pull_down_menu('ab_country_id', null, STORE_COUNTRY, 'class="select" style="width:73%;" onchange="updateZones();"') .
+              lc_draw_pull_down_menu('ab_country_id', null, STORE_COUNTRY, 'class="input with-small-padding" style="width:73%;" onchange="updateZones();"') .
               '</p>';         
 if ( ACCOUNT_TELEPHONE > -1 ) {
   $aContent .=  '<p class="button-height inline-label">' .
@@ -196,8 +196,7 @@ function editCustomer(id) {
                '</div>',
       title: '<?php echo $lC_Language->get('modal_heading_edit_customer'); ?>',
       width: 600,
-      scrolling: false,
-      actions: {
+        actions: {
         'Close' : {
           color: 'red',
           click: function(win) { win.closeModal(); }
