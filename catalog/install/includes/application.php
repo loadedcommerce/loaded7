@@ -11,7 +11,9 @@
   @copyright  (c) 2012 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-
+if(isset($_SERVER['HTTPS']) && $_SERVER["HTTPS"] == "on") {
+  header('Location: http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
+}
 // Set the level of error reporting
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 //ini_set("display_errors", 1);
