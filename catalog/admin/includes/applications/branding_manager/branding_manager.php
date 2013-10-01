@@ -63,6 +63,7 @@
             $branding_social_youtube       = $_POST['branding_social_youtube'];
             $branding_social_linkedin      = $_POST['branding_social_linkedin'];
             $branding_footer_text          = $_POST['branding_footer_text'];
+            $branding_home_page_text       = $_POST['branding_home_page_text'];
 
             $data = array('site_image' => $branding_image,
               'name'                 => $branding_name,
@@ -86,7 +87,8 @@
               'social_google_plus'   => $branding_social_google_plus,
               'social_youtube'       => $branding_social_youtube,
               'social_linkedin'      => $branding_social_linkedin,
-              'footer_text'          => $branding_footer_text
+              'footer_text'          => $branding_footer_text,
+              'home_page_text'       => $branding_home_page_text
 
             );
 

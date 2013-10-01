@@ -22,14 +22,6 @@
   $meta_title_suffix = array();
   $footer_text = array();
 
-  $QbrandingName = $lC_Database->query('select configuration_value from :table_configuration where configuration_key = "STORE_NAME"');
-  $QbrandingName->bindTable(':table_configuration', TABLE_CONFIGURATION);
-  $QbrandingName->execute();
-
-  $QbrandingAddress = $lC_Database->query('select configuration_value from :table_configuration where configuration_key = "STORE_NAME_ADDRESS"');
-  $QbrandingAddress->bindTable(':table_configuration', TABLE_CONFIGURATION);
-  $QbrandingAddress->execute();
-
   $QbrandingData = $lC_Database->query('select * from :table_branding_data');
   $QbrandingData->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
   $QbrandingData->execute();
@@ -76,13 +68,27 @@
     <form name="branding_manager" id="branding_manager" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . '&action=save'); ?>" method="post">
     <div class="side-tabs tab-opened"> 
       <ul class="tabs">
-        <li class="active"><a href="#header"><?php echo $lC_Language->get('tab_header'); ?></a></li>
+      <?php if (defined('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT')) { ?>
+        <li class="active"><a href="#home"><?php echo $lC_Language->get('tab_home_page'); ?></a></li>
+      <?php } ?>
+        <li><a href="#header"><?php echo $lC_Language->get('tab_header'); ?></a></li>
         <li><a href="#company"><?php echo $lC_Language->get('tab_company_info'); ?></a></li>
         <li><a href="#seo"><?php echo $lC_Language->get('tab_seo'); ?></a></li>
         <li><a href="#social"><?php echo $lC_Language->get('tab_social_links'); ?></a></li>
         <li><a href="#footer"><?php echo $lC_Language->get('tab_footer_text'); ?></a></li>
       </ul>
       <div class="tabs-content">
+      <?php if (defined('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT')) { ?>
+        <div id="home" class="with-padding">
+          <div class="bold mid-margin-bottom">
+            <?php echo $lC_Language->get('field_home_page_text'); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_home_page')); ?>
+          </div>
+            <span class="required full-width autoexpanding mid-margin-bottom">
+              <label for="ckEditor_branding_home_page_text"></label>
+              <?php echo lc_draw_textarea_field('branding_home_page_text', MODULE_CONTENT_HOMEPAGE_HTML_CONTENT, 48, 2, 'id="ckEditor_branding_home_page_text" style="width:97%;" class="required input-unstyled full-width autoexpanding"'); ?>
+            </span>
+        </div>
+      <?php } ?>
         <div id="header" class="with-padding">
           <div class="columns">
             <div class="four-columns twelve-columns-mobile">
@@ -108,7 +114,7 @@
             <div class="eight-columns twelve-columns-mobile">
               <span class="button-height block-label">
                 <label for="branding_name" class="label"><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_site_name')) . $lC_Language->get('field_site_name'); ?></label>
-                <input type="text" name="branding_name" id="branding_name" class="input full-width required small-margin-top small-margin-bottom" value="<?php echo $QbrandingName->value('configuration_value'); ?>">
+                <input type="text" name="branding_name" id="branding_name" class="input full-width required small-margin-top small-margin-bottom" value="<?php echo STORE_NAME; ?>">
               </span>
               <span class="button-height">
                 <span class="bold"><?php echo $lC_Language->get('field_site_slogan'); ?></span>
@@ -136,7 +142,7 @@
         <div id="company" class="with-padding"> 
           <p class="button-height block-label mid-margin-bottom">
             <label class="label" for="branding_address"><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_address')); ?><?php echo $lC_Language->get('field_address'); ?></label>
-            <?php echo lc_draw_textarea_field('branding_address',  $QbrandingAddress->value('configuration_value'), 48, 2, 'id="branding_address" class="input full-width required autoexpanding small-margin-top margin-bottom"');?>
+            <?php echo lc_draw_textarea_field('branding_address',  STORE_NAME_ADDRESS, 48, 2, 'id="branding_address" class="input full-width required autoexpanding small-margin-top margin-bottom"');?>
           </p>
           <p class="button-height block-label mid-margin-bottom mid-margin-top">
             <label class="label" for="branding_support_phone"><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_support_phone')) . $lC_Language->get('field_support_phone'); ?></label>
