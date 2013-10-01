@@ -40,4 +40,7 @@ CKEDITOR.editorConfig = function( config ) {
 
   // Make dialogs simpler.
   config.removeDialogTabs = 'image:advanced;link:advanced';
+  
+  // allow inline div and styles
+  config.extraAllowedContent = 'p(*)[*]{*};div(*){*}[*];span(*)[*]{*}';
 };
