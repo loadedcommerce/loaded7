@@ -18,10 +18,11 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
 <html lang="<?php echo substr(strtolower($lC_Language->getCode()), 0, 2); ?>">
   <head>
     <meta charset="utf-8">
-    <title><?php echo STORE_NAME . ($lC_Template->hasPageTitle() ? ': ' . $lC_Template->getPageTitle() : ''); ?></title>
-    <base href="<?php echo lc_href_link(null, null, 'AUTO', false); ?>" />
-    <meta name="description" content="Loaded Commerce Shopping Cart">
+    <!-- meta tags -->
+    <?php echo $lC_Template->getPageTags();?>
+    <!-- meta tags -->
     <meta name="author" content="Loaded Commerce">
+    <base href="<?php echo lc_href_link(null, null, 'AUTO', false); ?>" />
     <!-- include open graph rags -->
     <?php echo $lC_Template->getPageOGPTags(); ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

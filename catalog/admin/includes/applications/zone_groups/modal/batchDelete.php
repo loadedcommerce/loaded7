@@ -38,7 +38,6 @@ function batchDelete() {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_batch_delete_zone_entries'); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

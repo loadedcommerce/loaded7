@@ -29,6 +29,9 @@
                 <address>
                   <?php echo $lC_Language->get('add_first_address'); ?>
                 </address>
+                <div class="btn-group clearfix absolute-top-right small-padding-right small-padding-top">
+                  <button type="button" onclick="document.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'); ?>'" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_add_address'); ?></button>
+                </div>
               </div>
               <div class="well">
                 <div class="clearfix">

@@ -35,13 +35,9 @@ if ( !empty($_GET[$lC_Template->getModule()]) && is_numeric($_GET[$lC_Template->
         $('#main-title').attr('style', 'padding: 0 0 0 20px;');
         $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
         $('#dataTable_length').hide();
-        $('#floating-button-container').hide();
         $('#actionText').hide();
         $('.on-mobile').show();
         setTimeout('hideMobile()', 500); // because of server-side processing we need to delay for race condition
-      } else {
-        // instantiate floating menu
-        $('#floating-menu-div-listing').fixFloat();
       }      
     });
   </script>
@@ -74,14 +70,10 @@ if ( !empty($_GET[$lC_Template->getModule()]) && is_numeric($_GET[$lC_Template->
         $('#main-title').attr('style', 'padding: 0 0 0 20px;');
         $('#dataTable_info').attr('style', 'position: absolute; bottom: 42px; color:#4c4c4c;');
         $('#dataTable_length').hide();
-        $('#floating-button-container').hide();
         $('#actionText').hide();
         $('.on-mobile').show();
         $('.selectContainer').hide();   
-      } else {
-        // instantiate floating menu
-        $('#floating-menu-div-listing').fixFloat();
-      }       
+      }      
     });
     
     function hideElements() {  

@@ -68,7 +68,6 @@ function profilePassChange(id) {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_profile_pass_change'); ?>',
           width: 500,
-          scrolling: false,
           actions: {
             'Close' : {
               color: 'red',

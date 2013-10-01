@@ -249,7 +249,7 @@ class lC_Customers_Admin {
         $zones_array[] = array('id' => $Qzones->value('zone_name'),
                                'text' => $Qzones->value('zone_name'));
       }
-      $result['abState'] = lc_draw_pull_down_menu('ab_state', $zones_array, null, 'class="select" style="width:73%;"');
+      $result['abState'] = lc_draw_pull_down_menu('ab_state', $zones_array, null, 'class="input with-small-padding" style="width:73%;"');
     }
 
     $countries_array = array();
@@ -372,7 +372,7 @@ class lC_Customers_Admin {
         $zones_array[] = array('id' => $Qzones->value('zone_name'),
                                'text' => $Qzones->value('zone_name'));
       }
-      $result['abZonesDropdown'] = lc_draw_pull_down_menu('ab_state', $zones_array,  null, 'class="select" style="width:73%;"');
+      $result['abZonesDropdown'] = lc_draw_pull_down_menu('ab_state', $zones_array,  null, 'class="input with-small-padding" style="width:73%;"');
     } else {
       $result['abZonesDropdown'] = lc_draw_input_field('ab_state');
     }

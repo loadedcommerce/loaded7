@@ -32,7 +32,6 @@ function uploadFile() {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_upload_file'); ?>',
     width: 350,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id: definitions.php v1.0 2013-01-01 datazen $
+  $Id: option_manager.php v1.0 2013-01-01 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -24,10 +24,7 @@
 
       $this->_title = $lC_Language->get('access_option_manager_title');
       
-      $this->_subgroups = array(array('icon' => 'groups.png',
-                                      'title' => $lC_Language->get('access_option_groups_title'),
-                                      'identifier' => '?option_groups'),                                       
-                                array('icon' => 'variants.png',
+      $this->_subgroups = array(array('icon' => 'variants.png',
                                       'title' => $lC_Language->get('access_product_variants_title'),
                                       'identifier' => '?product_variants')
                                       );      

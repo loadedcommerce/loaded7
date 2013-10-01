@@ -26,7 +26,7 @@
             <h4 class="modal-title"><?php echo $lC_Product->getTitle(); ?></h4>
           </div>
           <div class="modal-body">
-            <img class="img-responsive" alt="<?php echo $lC_Product->getTitle(); ?>" src="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>">
+            <img class="img-responsive" alt="<?php echo $lC_Product->getTitle(); ?>" src="<?php echo (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($lC_Product->getImage(), 'originals'))) ? lc_href_link($lC_Image->getAddress($lC_Product->getImage(), 'originals')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png'); ?>">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $lC_Language->get('button_close'); ?></button>

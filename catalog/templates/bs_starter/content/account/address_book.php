@@ -47,8 +47,8 @@
           echo '  </address>' . "\n";
           ?>
           <div class="btn-group clearfix absolute-top-right-large-padding">
-            <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&edit', 'SSL'); ?>" class="display-inline" method="post"><button onclick="$(this).closest('form').submit();" type="button" class="btn-small btn-default"><?php echo $lC_Language->get('button_edit'); ?></button></form>
-            <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&delete', 'SSL'); ?>" class="display-inline" method="post"><button onclick="$(this).closest('form').submit();" type="button" class="btn-small btn-default"><?php echo $lC_Language->get('button_delete'); ?></button></form>
+            <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&edit', 'SSL'); ?>" class="display-inline" method="post"><button onclick="$(this).closest('form').submit();" type="button" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></form>
+            <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book=' . $Qaddresses->valueInt('address_book_id') . '&delete', 'SSL'); ?>" class="display-inline" method="post"><button onclick="$(this).closest('form').submit();" type="button" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_delete'); ?></button></form>
           </div>
           <?php
           echo '</div>' . "\n";

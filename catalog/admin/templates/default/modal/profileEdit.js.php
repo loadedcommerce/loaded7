@@ -18,7 +18,7 @@ include_once($lC_Vqmod->modCheck('includes/applications/languages/classes/langua
 //$groupsArr = lC_Administrators_Admin::getAllGroups(true);
 //$groupsSelectArr = array();
 //foreach ($groupsArr as $key => $value) {
-//  $groupsSelectArr[] = array('id' => $value['id'], 'text' => $value['name']);
+//   $groupsSelectArr[] = array('id' => $value['id'], 'text' => $value['name']);
 //}
 $languagesArr = lC_Languages_Admin::getIdNameArray();
 $languagesSelectArr = array();
@@ -66,7 +66,7 @@ function profileEdit(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="language_id" class="label"><?php echo $lC_Language->get('field_admin_language'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('language_id', $languagesSelectArr, null, 'id="edit-language_id" class="select" style="min-width:200px;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('language_id', $languagesSelectArr, null, 'id="edit-language_id" class="input with-small-padding" style="min-width:200px;"'); ?>'+
                    '      </p>'+ 
                    '      <p class="button-height inline-label" id="pImage">'+
                    '        <label for="profile_image" class="label"><?php echo $lC_Language->get('profile_image'); ?></label>'+
@@ -84,7 +84,6 @@ function profileEdit(id) {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_profile_edit'); ?>',
           width: 500,
-          scrolling: false,
           actions: {
             'Close' : {
               color: 'red',

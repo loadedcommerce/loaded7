@@ -30,11 +30,6 @@ abstract class lC_Product_attributes_Admin {
   * Class constructor
   */
   public function __construct() {
-    global $lC_Language;
-    
-    $lC_Language->loadIniFile('modules/product_attributes/' . $this->getCode() . '.php');
-
-    $this->_title = $lC_Language->get('product_attributes_' . $this->getCode() . '_title');
   }
  /*
   * Returns the addons modules datatable data for listings
@@ -45,7 +40,7 @@ abstract class lC_Product_attributes_Admin {
   public function getAll() {
     global $lC_Language, $lC_Vqmod;
 
-    $media = $_GET['media'];
+    $media = $_GET['media'];    
     
     $lC_DirectoryListing = new lC_DirectoryListing('includes/modules/product_attributes');
     $lC_DirectoryListing->setIncludeDirectories(false);
@@ -58,17 +53,20 @@ abstract class lC_Product_attributes_Admin {
       include($lC_Vqmod->modCheck('includes/modules/product_attributes/' . $file['name']));
       $class = substr($file['name'], 0, strrpos($file['name'], '.'));
       if ( class_exists('lC_ProductAttributes_' . $class) ) {
-        $module = 'lC_ProductAttributes_' . $class;
-        $module = new $module();
-        $name = '<td>' . $module->getTitle() . '</td>';
+        $moduleClass = 'lC_ProductAttributes_' . $class;
+        $mod = new $moduleClass();
+
+        $lC_Language->loadIniFile('modules/product_attributes/' . $class . '.php');
+
+        $title = '<td>' . $lC_Language->get('product_attributes_' . $mod->getCode() . '_title') . '</td>';
         $action = '<td class="align-right vertical-center"><span class="button-group compact">';
-        if ( $module->isInstalled() ) {
-          $action .= '<a href="' . ((int)($_SESSION['admin']['access']['modules'] < 4) ? '#' : 'javascript://" onclick="uninstallModule(\'' . $module->getCode() . '\', \'' . urlencode($module->getTitle()) . '\')') . '" class="button icon-minus-round icon-red' . ((int)($_SESSION['admin']['access']['modules'] < 4) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_uninstall')) . '</a>';
+        if ( $mod->isInstalled() ) {
+          $action .= '<a href="' . ((int)($_SESSION['admin']['access']['modules'] < 4) ? '#' : 'javascript://" onclick="uninstallModule(\'' . $mod->getCode() . '\', \'' . urlencode($mod->getTitle()) . '\')') . '" class="button icon-minus-round icon-red' . ((int)($_SESSION['admin']['access']['modules'] < 4) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_uninstall')) . '</a>';
         } else {
-          $action .= '<a href="' . ((int)($_SESSION['admin']['access']['modules'] < 3) ? '#' : 'javascript://" onclick="installModule(\'' . $module->getCode() . '\', \'' . urlencode($module->getTitle()) . '\')') . '" class="button icon-plus-round icon-green' . ((int)($_SESSION['admin']['access']['modules'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('button_install')) . '</a>';
+          $action .= '<a href="' . ((int)($_SESSION['admin']['access']['modules'] < 3) ? '#' : 'javascript://" onclick="installModule(\'' . $mod->getCode() . '\', \'' . urlencode($mod->getTitle()) . '\')') . '" class="button icon-plus-round icon-green' . ((int)($_SESSION['admin']['access']['modules'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('button_install')) . '</a>';
         }
         $action .= '</span></td>';
-        $result['aaData'][] = array("$name", "$action");
+        $result['aaData'][] = array("$title", "$action");
         $cnt++;
       }
     }

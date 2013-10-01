@@ -52,8 +52,7 @@ function showAdminLogInfo(id) {
                   '  <span style="background-color:#FFC881; color:#000;">&nbsp;<?php echo strtoupper($lC_Language->get('button_update')); ?>&nbsp;</span>'+
                   '</div>',
           width: 600,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

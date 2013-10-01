@@ -41,8 +41,7 @@ function sendNewsletter(id) {
                    ' </div>',
           title: '<?php echo $lC_Language->get('heading_title'); ?>',
           width: 600,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

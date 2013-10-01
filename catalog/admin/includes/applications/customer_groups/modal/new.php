@@ -59,8 +59,7 @@ function newGroup() {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_new_customer_group'); ?>',
           width: 500,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

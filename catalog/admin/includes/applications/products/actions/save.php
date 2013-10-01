@@ -18,12 +18,7 @@
 
       parent::__construct();
     
-      if (isset($_GET['old']) && $_GET['old'] == 'old') {
-        $this->_page_contents = 'edit.old.php';
-      } else {
-        $this->_page_contents = 'edit.php';
-      }
-          
+      $this->_page_contents = 'edit.php';
       
       if ( (lc_empty(CFG_APP_IMAGEMAGICK_CONVERT) || !@file_exists(CFG_APP_IMAGEMAGICK_CONVERT)) && !lC_Image_Admin::hasGDSupport() ) {
         $_SESSION['error'] = true;                                                                                            
@@ -32,10 +27,11 @@
 
       if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
         
-//echo "<pre>";
-//print_r($_POST);
-//echo "</pre>";
-//die('end run');          
+        //echo "<pre>";
+        //print_r($_POST);
+        //echo "</pre>";
+        //die('before data');
+                  
         $error = false;
 
         $has_variants = (isset($_POST['has_variants']) && $_POST['has_variants'] == 'on') ? true : false;   
@@ -67,6 +63,15 @@
         if ( isset($_POST['simple_options_group_status']) ) $data['simple_options_group_status'] = $_POST['simple_options_group_status'];
         if ( isset($_POST['simple_options_entry']) ) $data['simple_options_entry'] = $_POST['simple_options_entry'];
         if ( isset($_POST['simple_options_entry_price_modifier']) ) $data['simple_options_entry_price_modifier'] = $_POST['simple_options_entry_price_modifier'];
+        
+        // specials
+        if ( isset($_POST['specials_pricing_switch']) && $_POST['specials_pricing_switch'] == 'on' ) {
+          $data['specials_pricing_switch'] = 1;
+          if ( isset($_POST['products_special_pricing_enable1']) ) $data['products_special_pricing_enable1'] = ($_POST['products_special_pricing_enable1'] == 'on' ? 1 : 0);
+          if ( isset($_POST['products_special_price'][1]) ) $data['products_special_price1'] = $_POST['products_special_price'][1];
+          if ( isset($_POST['products_special_start_date'][1]) ) $data['products_special_start_date1'] = $_POST['products_special_start_date'][1];
+          if ( isset($_POST['products_special_expires_date'][1]) ) $data['products_special_expires_date1'] = $_POST['products_special_expires_date'][1];
+        }
 
         // multi SKU
         if ($has_variants === true) {
@@ -126,6 +131,11 @@
         if ( isset($_POST['price_breaks']) ) {
           $data['price_breaks'] = $_POST['price_breaks'];         
         }
+        
+//echo "<pre>";
+//print_r($data);
+//echo "</pre>";
+//die('end run');
 
         if ( $error === false ) {
           if ( lC_Products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data) ) {

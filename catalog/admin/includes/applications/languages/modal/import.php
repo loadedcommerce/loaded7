@@ -39,7 +39,7 @@ function importLanguage() {
                    '      <p><?php echo $lC_Language->get('introduction_import_language'); ?></p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="language_import" class="label" style="width:0px !important"><?php echo $lC_Language->get('field_language_selection'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('language_import', null, null, 'class="select" style = "width:30%"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('language_import', null, null, 'class="input with-small-padding" style = "width:30%"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="import_type" class="absolute-left"><strong><?php echo $lC_Language->get('field_import_type'); ?></strong></label>'+
@@ -50,8 +50,7 @@ function importLanguage() {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_import_language'); ?>',
           width: 500,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

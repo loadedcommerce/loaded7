@@ -44,7 +44,7 @@ function editGroup(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="module" class="label" style="width:30%;"><?php echo $lC_Language->get('field_display_module'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('module', null, null, 'class="select" style=width:73%;" id="editModule"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('module', null, null, 'class="input with-small-padding" style=width:73%;" id="editModule"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="sort_order" class="label" style="width:30%;"><?php echo $lC_Language->get('field_sort_order'); ?></label>'+
@@ -55,8 +55,7 @@ function editGroup(id) {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_edit_variant_group'); ?>',
           width: 500,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }
