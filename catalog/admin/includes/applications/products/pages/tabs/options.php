@@ -81,12 +81,44 @@ global $lC_Language, $pInfo;
           </div>       
           <script>
           $(document).ready(function() {
+            var edit = '<?php echo (isset($pInfo)) ? '1' : '0'; ?>';
             var optionsDiv = $("input:radio[name=multi_sku_type_radio_group]").val();
             toggleMultiSkuTypeRadioGroup(optionsDiv);
+            
+            if (edit == '1') getSubProductsRows(); 
             addSubProductsRow();  
             $("#subProductsTable tr:last-child td:first-child").find('input').focus();  
 
           }); 
+          
+          function getSubProductsRows() {
+            var subproducts = <?php echo json_encode($pInfo->get('subproducts')); ?>;
+            var output = '';
+            $.each(subproducts, function(key, val) {
+              output += '<tr id="tr-' + key + '">'+
+                        '  <td><input type="text" class="input" onblur="addSubProductsRow();" tabindex="' + key + '1" id="sub_products_name_' + key + '" name="sub_products_name[' + key + ']" value="' + val.products_name + '"></td>'+
+                        '  <td class="align-center align-middle">'+
+                        '    <a onclick="setSubProductDefault(\'' + key + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_set_as_default'); ?>" href="javascript:void(0);"><span id="sub_products_default_span_' + key + '" class="icon-star icon-size2 margin-right ' + ((val.is_subproduct == 2) ? "icon-orange" : "icon-grey") + '"></span></a>'+
+                        '    <a onclick="setSubProductStatus(\'' + key + '\');" class="with-tooltip" id="sub_products_status_link[' + key + ']" title="<?php echo $lC_Language->get('text_sub_products_enable_disable'); ?>" href="javascript:void(0);"><span id="sub_products_status_span_' + key + '" class="icon-tick icon-size2 icon-green"></span></a>'+
+                        '    <input type="hidden" id="sub_products_default_' + key + '" name="sub_products_default[' + key + ']" class="sub_products_default" value="' + ((key == 1) ? "1" : "0") + '">'+
+                        '    <input type="hidden" id="sub_products_status_' + key + '" name="sub_products_status[' + key + ']" value="1">'+
+                        '  </td>'+
+                        '  <td><input type="text" class="input half-width" tabindex="' + key + '2" name="sub_products_weight[' + key + ']" value="' + val.products_weight + '"></td>'+
+                        '  <td><input type="text" class="input half-width" tabindex="' + key + '3" name="sub_products_sku[' + key + ']" value="' + val.products_sku + '"></td>'+
+                        '  <td><input type="text" class="input half-width" tabindex="' + key + '4" name="sub_products_qoh[' + key + ']" value="' + val.products_quantity + '"></td>'+
+                        '  <td><input type="text" class="input half-width" tabindex="' + key + '5" name="sub_products_cost[' + key + ']" value="' + val.products_cost + '"></td>'+
+                        '  <td class="align-center align-middle">'+
+                        '    <input style="display:none;" type="file" id="sub_products_image_' + key + '" name="sub_products_image[' + key + ']" onchange="setSubProductImage(\'' + key + '\');" multiple />'+
+                        '    <span class="icon-camera icon-size2 icon-grey cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_select_image'); ?>" id="fileSelectButton-' + key + '" onclick="document.getElementById(\'sub_products_image_' + key + '\').click();"></span>'+
+                        '  </td>'+
+                        '  <td class="align-right align-middle">'+
+                        '    <a onclick="editSubProductRow(\'' + key + '\');" class="with-tooltip margin-right" title="<?php echo $lC_Language->get('text_sub_products_edit'); ?>" href="javascript:void(0)"><span class="icon-pencil icon-size2 icon-blue"></span></a>'+
+                        '    <a onclick="removeSubProductRow(\'' + key + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_remove'); ?>" href="javascript:void(0)"><span class="icon-cross icon-size2 icon-red"></span></a>'+
+                        '  </td>'+
+                        '</tr>';
+            });            
+            $('#subProductsTable> tbody').append(output);
+          }
           
           function addSubProductsRow() {
             if($("#subProductsTable tbody").children().length > 0) {
@@ -107,7 +139,7 @@ global $lC_Language, $pInfo;
                       '  <td><input type="text" class="input half-width" tabindex="' + nextId + '2" name="sub_products_weight[' + nextId + ']" value=""></td>'+
                       '  <td><input type="text" class="input half-width" tabindex="' + nextId + '3" name="sub_products_sku[' + nextId + ']" value=""></td>'+
                       '  <td><input type="text" class="input half-width" tabindex="' + nextId + '4" name="sub_products_qoh[' + nextId + ']" value=""></td>'+
-                      '  <td><input type="text" class="input half-width" tabindex="' + nextId + '5" name="sub_products_price[' + nextId + ']" value=""></td>'+
+                      '  <td><input type="text" class="input half-width" tabindex="' + nextId + '5" name="sub_products_cost[' + nextId + ']" value=""></td>'+
                       '<td class="align-center align-middle">'+
                       '  <input style="display:none;" type="file" id="sub_products_image_' + nextId + '" name="sub_products_image[' + nextId + ']" onchange="setSubProductImage(\'' + nextId + '\');" multiple />'+
                       '  <span class="icon-camera icon-size2 icon-grey cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_select_image'); ?>" id="fileSelectButton-' + nextId + '" onclick="document.getElementById(\'sub_products_image_' + nextId + '\').click();"></span>'+

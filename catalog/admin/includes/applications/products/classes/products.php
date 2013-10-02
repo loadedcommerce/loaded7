@@ -335,7 +335,7 @@ class lC_Products_Admin {
     $data['variants'] = $variants_array;
 
     $Qattributes = $lC_Database->query('select id, value from :table_product_attributes where products_id = :products_id and languages_id in (0, :languages_id)');
-    $Qattributes->bindTable(':table_product_attributes');
+    $Qattributes->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
     $Qattributes->bindInt(':products_id', $id);
     $Qattributes->bindInt(':languages_id', $lC_Language->getID());
     $Qattributes->execute();
@@ -364,6 +364,30 @@ class lC_Products_Admin {
     }
     
     $Qimages->freeResult();
+    
+    // load subproducts
+    $Qsubproducts = $lC_Database->query('select p.*, pd.* from :table_products p, :table_products_description pd where p.parent_id = :products_id and p.products_id = pd.products_id and pd.language_id = :language_id');
+    $Qsubproducts->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qsubproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+    $Qsubproducts->bindInt(':products_id', $id);
+    $Qsubproducts->bindInt(':language_id', $lC_Language->getID());    
+    $Qsubproducts->execute();
+    
+    $subproducts_array = array();
+    while ( $Qsubproducts->next() ) {
+      // subproduct images
+      $Qimages = $lC_Database->query('select id, image, default_flag from :table_products_images where products_id = :sub_products_id order by sort_order');
+      $Qimages->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+      $Qimages->bindInt(':sub_products_id', $Qsubproducts->valueInt('products_id'));
+      $Qimages->execute();
+
+      $subproducts_array[] = array_merge((array)$Qsubproducts->toArray(), array('image' => $Qimages->value('image')));
+      
+      $Qimages->freeResult();      
+    }    
+    $data['subproducts'] = $subproducts_array;
+    
+    $Qsubproducts->freeResult();      
     
     // load simple options
     $Qoptions = $lC_Database->query('select so.options_id, so.sort_order, so.status, vg.title, vg.module from :table_products_simple_options so left join :table_products_variants_groups vg on (so.options_id = vg.id) where so.products_id = :products_id and vg.languages_id = :languages_id order by so.sort_order');
@@ -830,12 +854,118 @@ class lC_Products_Admin {
     
     // multi SKU sub products
     if ( $error === false ) {
-echo "<pre>";
-print_r($_FILES);
-print_r($data);
-echo "<pre>";
-die('00');      
-      
+      if (isset($data['sub_products_name'])) {
+
+        for ($i=0; $i < sizeof($data['sub_products_name']); $i++) {
+          if ($data['sub_products_name'][$i] == '') continue;
+        
+        
+          if (is_numeric($id)) {
+          } else {
+            // delete any possible ghosts for sanity
+            $Qdel = $lC_Database->query('delete from :table_products where parent_id = :products_id and is_subproduct = :is_subproduct');
+            $Qdel->bindTable(':table_products', TABLE_PRODUCTS);
+            $Qdel->bindInt(':parent_id', $products_id);
+            $Qdel->bindInt(':is_subproduct', 1);
+            $Qdel->execute();    
+
+            // add the new subproduct   
+            $Qsubproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added, is_subproduct) values (:parent_id, :products_quantity, :products_cost, :products_price, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added, :is_subproduct)');
+            $Qsubproduct->bindTable(':table_products', TABLE_PRODUCTS);
+            $Qsubproduct->bindInt(':parent_id', $products_id);
+            $Qsubproduct->bindInt(':products_quantity', $data['sub_products_qoh'][$i]);
+            $Qsubproduct->bindFloat(':products_cost', $data['sub_products_cost'][$i]);
+            $Qsubproduct->bindFloat(':products_price', $data['sub_products_price'][$i]);
+            $Qsubproduct->bindValue(':products_sku', $data['sub_products_sku'][$i]);
+            $Qsubproduct->bindFloat(':products_weight', $data['sub_products_weight'][$i]);
+            $Qsubproduct->bindInt(':products_weight_class', $data['weight_class']);
+            $Qsubproduct->bindInt(':products_status', $data['sub_products_status'][$i]);
+            $Qsubproduct->bindInt(':products_tax_class_id', $data['tax_class_id']);
+            $Qsubproduct->bindRaw(':products_date_added', 'now()');            
+            $Qsubproduct->bindInt(':is_subproduct', ($data['sub_products_default'][$i] == '1') ? 2 : 1);            
+            $Qsubproduct->setLogging($_SESSION['module'], $id);
+            $Qsubproduct->execute();
+            
+            if ( $lC_Database->isError() ) {
+              $error = true;
+            } else {
+              if ( is_numeric($id) ) {
+                $sub_products_id = $id;
+              } else {
+                $sub_products_id = $lC_Database->nextID();
+              }            
+            
+              // subproduct description
+              foreach ($lC_Language->getAll() as $l) {
+                if (is_numeric($id)) {
+                  $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name where products_id = :products_id and language_id = :language_id');
+                } else {
+                  $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name) values (:products_id, :language_id, :products_name)');
+                }
+                $Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+                $Qpd->bindInt(':products_id', $sub_products_id);
+                $Qpd->bindInt(':language_id', $l['id']);
+                $Qpd->bindValue(':products_name', $data['sub_products_name'][$i]);
+                $Qpd->setLogging($_SESSION['module'], $sub_products_id);
+                $Qpd->execute();
+
+                if ( $lC_Database->isError() ) {
+                  $error = true;
+                  break;
+                }
+              }
+            }            
+            
+            //subproduct images 
+            if ( $error === false ) {
+              $images = array();
+              
+              $file = array('name' => $_FILES['sub_products_image']['name'][$i],
+                            'type' => $_FILES['sub_products_image']['type'][$i],
+                            'size' => $_FILES['sub_products_image']['size'][$i],
+                            'tmp_name' => $_FILES['sub_products_image']['tmp_name'][$i]);
+
+              $products_image = new upload($file);
+              
+              $products_image->set_extensions(array('gif', 'jpg', 'jpeg', 'png'));
+
+              if ( $products_image->exists() ) {
+                $products_image->set_destination(realpath('../images/products/originals'));
+
+                if ( $products_image->parse() && $products_image->save() ) {
+                  $images[] = $products_image->filename;
+                }
+              }
+
+              $default_flag = 1;
+              
+              foreach ($images as $image) {
+                $Qimage = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added) values (:products_id, :image, :default_flag, :sort_order, :date_added)');
+                $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+                $Qimage->bindInt(':products_id', $sub_products_id);
+                $Qimage->bindValue(':image', $image);
+                $Qimage->bindInt(':default_flag', $default_flag);
+                $Qimage->bindInt(':sort_order', 0);
+                $Qimage->bindRaw(':date_added', 'now()');
+                $Qimage->setLogging($_SESSION['module'], $products_id);
+                $Qimage->execute();
+
+                if ( $lC_Database->isError() ) {
+                  $error = true;
+                } else {
+                  foreach ($lC_Image->getGroups() as $group) {
+                    if ($group['id'] != '1') {
+                      $lC_Image->resize($image, $group['id']);
+                    }
+                  }
+                }
+
+                $default_flag = 0;
+              }
+            }            
+          }
+        }  
+      }
     }    
     
     // simple options
@@ -1331,6 +1461,40 @@ die('00');
           $error = true;
         }
       }
+    }
+    
+    // delete subproducts
+    if ( ($error === false) && ($delete_product === true) ) {
+      $Qcheck = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id');
+      $Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
+      $Qcheck->bindInt(':parent_id', $id);
+      $Qcheck->execute();  
+      
+      while ( $Qcheck->next() ) {
+        // delete the description data
+        $Qdel = $lC_Database->query('delete from :table_products_description where products_id = :products_id');
+        $Qdel->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
+        $Qdel->setLogging($_SESSION['module'], $id);
+        $Qdel->execute();
+        
+        // delete the image data
+        $Qdel = $lC_Database->query('delete from :table_products_images where products_id = :products_id');
+        $Qdel->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+        $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
+        $Qdel->setLogging($_SESSION['module'], $id);
+        $Qdel->execute();        
+      }     
+      // delete the subproduct
+      $Qdel = $lC_Database->query('delete from :table_products where products_id = :products_id');
+      $Qdel->bindTable(':table_products', TABLE_PRODUCTS);
+      $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
+      $Qdel->setLogging($_SESSION['module'], $id);
+      $Qdel->execute();                      
+      
+      if ( $lC_Database->isError() ) {
+        $error = true;
+      }         
     }
     
     // delete simple options
