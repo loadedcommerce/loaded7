@@ -6,8 +6,8 @@
   <author>loadedcommerce.com</author>
   <file name="includes/applications/products/pages/tabs/options.php">
     <operation info="Enable Multi SKU Inv Control-1">
-      <search position="replace"><![CDATA[<label upsell="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ioc_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">]]></search>         
-      <add><![CDATA[<label for="ioc_radio_2" class="oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">]]></add>
+      <search position="replace"><![CDATA[<label upsell="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ioc_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">]]></search>         
+      <add><![CDATA[<label for="ioc_radio_2" class="oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">]]></add>
     </operation>   
     <operation info="Enable Multi SKU Inv Control-2">
       <search position="replace"><![CDATA[<?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left">' . lc_go_pro() . '</span>'; ?>]]></search>         

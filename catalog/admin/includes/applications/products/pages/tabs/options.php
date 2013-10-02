@@ -26,11 +26,11 @@ global $lC_Language, $pInfo;
           
           <div id="optionsInvControlButtons" class="button-group small-margin-top">
             <!-- lc_options_inventory_control begin -->
-            <label for="ioc_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
+            <label for="ioc_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? '' : ' active'); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_1" value="1" />
               <?php echo $lC_Language->get('text_simple'); ?>
             </label>
-            <label upsell="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ioc_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
+            <label upsell="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ioc_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_2" value="2" />
               <?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left">' . lc_go_pro() . '</span>'; ?>
             </label>
@@ -47,11 +47,11 @@ global $lC_Language, $pInfo;
           <!--VQMOD1-->          
           
           <div id="multiTypeControlButtons" class="button-group small-margin-top">
-            <label for="type_radio_1" class="button green-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 && $pInfo->getInt('is_subproduct') != 1) ? '' : ' active'); ?>">
+            <label for="type_radio_1" class="button green-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 && $pInfo->getInt('is_subproduct') != 1) ? ' active' : ''); ?>">
               <input type="radio" onclick="toggleMultiSkuTypeRadioGroup(this.value);" name="multi_sku_type_radio_group" id="type_radio_1" value="1" />
               <?php echo $lC_Language->get('text_combo_options'); ?>
             </label>
-            <label for="type_radio_2" class="button green-active<?php echo (isset($pInfo) && ($pInfo->getInt('is_subproduct') == 1) ? ' active' : ''); ?>">
+            <label for="type_radio_2" class="button green-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">
               <input type="radio" onclick="toggleMultiSkuTypeRadioGroup(this.value);" name="multi_sku_type_radio_group" id="type_radio_2" value="2" />
               <?php echo $lC_Language->get('text_sub_products'); ?>
             </label>
@@ -82,10 +82,22 @@ global $lC_Language, $pInfo;
           <script>
           $(document).ready(function() {
             var edit = '<?php echo (isset($pInfo)) ? '1' : '0'; ?>';
+            var has_subproducts = '<?php echo (isset($pInfo) && $pInfo->get('has_subproducts') == '1') ? '1' : '0'; ?>';
+            var has_variants = '<?php echo (isset($pInfo) && $pInfo->get('has_children') == '1') ? '1' : '0'; ?>';
             var optionsDiv = $("input:radio[name=multi_sku_type_radio_group]").val();
             toggleMultiSkuTypeRadioGroup(optionsDiv);
             
-            if (edit == '1') getSubProductsRows(); 
+            if (edit == '1') {
+              if (has_subproducts == '1') {
+                getSubProductsRows();
+                _updateInvControlType('2');
+                $('#type_radio_2').click();
+                $('label[for=\'ic_radio_1\']').addClass('disabled');
+                $('label[for=\'ioc_radio_1\']').addClass('disabled');
+                $('label[for=\'type_radio_1\']').addClass('disabled');
+                $('#type_radio_1').removeAttr('onclick');
+              }
+            }
             addSubProductsRow();  
             $("#subProductsTable tr:last-child td:first-child").find('input').focus();  
 
@@ -93,26 +105,27 @@ global $lC_Language, $pInfo;
           
           function getSubProductsRows() {
             var subproducts = <?php echo json_encode($pInfo->get('subproducts')); ?>;
+            var editLink = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'products=PID&subproduct=1&cID=' . $_GET['cID'] . '&action=save'); ?>'; 
             var output = '';
             $.each(subproducts, function(key, val) {
               output += '<tr id="tr-' + key + '">'+
-                        '  <td><input type="text" class="input" onblur="addSubProductsRow();" tabindex="' + key + '1" id="sub_products_name_' + key + '" name="sub_products_name[' + key + ']" value="' + val.products_name + '"></td>'+
-                        '  <td class="align-center align-middle">'+
+                        '  <td><input type="text" class="input" onblur="addSubProductsRow();" onfocus="this.select();" tabindex="' + key + '1" id="sub_products_name_' + key + '" name="sub_products_name[' + key + ']" value="' + val.products_name + '"></td>'+
+                        '  <td class="align-center align-middle"><input type="hidden" name="sub_products_parent[' + key + ']"  value="' + val.products_id + '">'+
                         '    <a onclick="setSubProductDefault(\'' + key + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_set_as_default'); ?>" href="javascript:void(0);"><span id="sub_products_default_span_' + key + '" class="icon-star icon-size2 margin-right ' + ((val.is_subproduct == 2) ? "icon-orange" : "icon-grey") + '"></span></a>'+
                         '    <a onclick="setSubProductStatus(\'' + key + '\');" class="with-tooltip" id="sub_products_status_link[' + key + ']" title="<?php echo $lC_Language->get('text_sub_products_enable_disable'); ?>" href="javascript:void(0);"><span id="sub_products_status_span_' + key + '" class="icon-tick icon-size2 icon-green"></span></a>'+
                         '    <input type="hidden" id="sub_products_default_' + key + '" name="sub_products_default[' + key + ']" class="sub_products_default" value="' + ((key == 1) ? "1" : "0") + '">'+
                         '    <input type="hidden" id="sub_products_status_' + key + '" name="sub_products_status[' + key + ']" value="1">'+
                         '  </td>'+
-                        '  <td><input type="text" class="input half-width" tabindex="' + key + '2" name="sub_products_weight[' + key + ']" value="' + val.products_weight + '"></td>'+
-                        '  <td><input type="text" class="input half-width" tabindex="' + key + '3" name="sub_products_sku[' + key + ']" value="' + val.products_sku + '"></td>'+
-                        '  <td><input type="text" class="input half-width" tabindex="' + key + '4" name="sub_products_qoh[' + key + ']" value="' + val.products_quantity + '"></td>'+
-                        '  <td><input type="text" class="input half-width" tabindex="' + key + '5" name="sub_products_cost[' + key + ']" value="' + val.products_cost + '"></td>'+
+                        '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + key + '2" name="sub_products_weight[' + key + ']" value="' + val.products_weight + '"></td>'+
+                        '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + key + '3" name="sub_products_sku[' + key + ']" value="' + val.products_sku + '"></td>'+
+                        '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + key + '4" name="sub_products_qoh[' + key + ']" value="' + val.products_quantity + '"></td>'+
+                        '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + key + '5" name="sub_products_cost[' + key + ']" value="' + val.products_cost + '"></td>'+
                         '  <td class="align-center align-middle">'+
                         '    <input style="display:none;" type="file" id="sub_products_image_' + key + '" name="sub_products_image[' + key + ']" onchange="setSubProductImage(\'' + key + '\');" multiple />'+
-                        '    <span class="icon-camera icon-size2 icon-grey cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_select_image'); ?>" id="fileSelectButton-' + key + '" onclick="document.getElementById(\'sub_products_image_' + key + '\').click();"></span>'+
+                        '    <span class="icon-camera icon-size2 cursor-pointer with-tooltip ' + ((val.image != '') ? 'icon-green' : 'icon-grey') + '" title="' + ((val.image != '') ? val.image : null) + '" id="fileSelectButton-' + key + '" onclick="document.getElementById(\'sub_products_image_' + key + '\').click();"></span>'+
                         '  </td>'+
                         '  <td class="align-right align-middle">'+
-                        '    <a onclick="editSubProductRow(\'' + key + '\');" class="with-tooltip margin-right" title="<?php echo $lC_Language->get('text_sub_products_edit'); ?>" href="javascript:void(0)"><span class="icon-pencil icon-size2 icon-blue"></span></a>'+
+                        '    <a href="' + editLink.replace('PID', val.products_id) + '" class="with-tooltip margin-right" title="<?php echo $lC_Language->get('text_sub_products_edit'); ?>"><span class="icon-pencil icon-size2 icon-blue"></span></a>'+
                         '    <a onclick="removeSubProductRow(\'' + key + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_remove'); ?>" href="javascript:void(0)"><span class="icon-cross icon-size2 icon-red"></span></a>'+
                         '  </td>'+
                         '</tr>';
@@ -123,23 +136,29 @@ global $lC_Language, $pInfo;
           function addSubProductsRow() {
             if($("#subProductsTable tbody").children().length > 0) {
               var id = $('#subProductsTable tr:last').attr('id').replace('tr-', '');
+              $('label[for=\'ic_radio_1\']').addClass('disabled');
+              $('label[for=\'ioc_radio_1\']').addClass('disabled');
+              $('label[for=\'type_radio_1\']').addClass('disabled');
               if($('#sub_products_name_' + id).val() == '') return false;
             } else {
               var id = 0;
+              $('label[for=\'ic_radio_1\']').removeClass('disabled');
+              $('label[for=\'ioc_radio_1\']').removeClass('disabled');
+              $('label[for=\'type_radio_1\']').removeClass('disabled'); 
             }
             var nextId = parseInt(id) + 1;
             var row = '<tr id="tr-' + nextId + '">'+
-                      '  <td><input type="text" class="input" onblur="addSubProductsRow();" tabindex="' + nextId + '1" id="sub_products_name_' + nextId + '" name="sub_products_name[' + nextId + ']" value=""></td>'+
+                      '  <td><input type="text" class="input" onblur="addSubProductsRow();" onfocus="this.select();" tabindex="' + nextId + '1" id="sub_products_name_' + nextId + '" name="sub_products_name[' + nextId + ']" value=""></td>'+
                       '  <td class="align-center align-middle">'+
                       '    <a onclick="setSubProductDefault(\'' + nextId + '\');" class="with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_set_as_default'); ?>" href="javascript:void(0);"><span id="sub_products_default_span_' + nextId + '" class="icon-star icon-size2 margin-right ' + ((nextId == 1) ? "icon-orange" : "icon-grey") + '"></span></a>'+
                       '    <a onclick="setSubProductStatus(\'' + nextId + '\');" class="with-tooltip" id="sub_products_status_link[' + nextId + ']" title="<?php echo $lC_Language->get('text_sub_products_enable_disable'); ?>" href="javascript:void(0);"><span id="sub_products_status_span_' + nextId + '" class="icon-tick icon-size2 icon-green"></span></a>'+
                       '    <input type="hidden" id="sub_products_default_' + nextId + '" name="sub_products_default[' + nextId + ']" class="sub_products_default" value="' + ((nextId == 1) ? "1" : "0") + '">'+
                       '    <input type="hidden" id="sub_products_status_' + nextId + '" name="sub_products_status[' + nextId + ']" value="1">'+
                       '  </td>'+
-                      '  <td><input type="text" class="input half-width" tabindex="' + nextId + '2" name="sub_products_weight[' + nextId + ']" value=""></td>'+
-                      '  <td><input type="text" class="input half-width" tabindex="' + nextId + '3" name="sub_products_sku[' + nextId + ']" value=""></td>'+
-                      '  <td><input type="text" class="input half-width" tabindex="' + nextId + '4" name="sub_products_qoh[' + nextId + ']" value=""></td>'+
-                      '  <td><input type="text" class="input half-width" tabindex="' + nextId + '5" name="sub_products_cost[' + nextId + ']" value=""></td>'+
+                      '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + nextId + '2" name="sub_products_weight[' + nextId + ']" value=""></td>'+
+                      '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + nextId + '3" name="sub_products_sku[' + nextId + ']" value=""></td>'+
+                      '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + nextId + '4" name="sub_products_qoh[' + nextId + ']" value=""></td>'+
+                      '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' + nextId + '5" name="sub_products_cost[' + nextId + ']" value=""></td>'+
                       '<td class="align-center align-middle">'+
                       '  <input style="display:none;" type="file" id="sub_products_image_' + nextId + '" name="sub_products_image[' + nextId + ']" onchange="setSubProductImage(\'' + nextId + '\');" multiple />'+
                       '  <span class="icon-camera icon-size2 icon-grey cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_sub_products_select_image'); ?>" id="fileSelectButton-' + nextId + '" onclick="document.getElementById(\'sub_products_image_' + nextId + '\').click();"></span>'+
@@ -149,12 +168,12 @@ global $lC_Language, $pInfo;
                       '</td>'+
                     '</tr>';
                     
-            $('#subProductsTable > tbody').append(row);                    
+            $('#subProductsTable > tbody').append(row); 
           }   
           
           function removeSubProductRow(id) {
             $('#tr-' + id).remove();
-             if($("#subProductsTable tbody").children().length == 0) addSubProductsRow();
+            if($("#subProductsTable tbody").children().length == 0) addSubProductsRow();
           }
           
           function setSubProductDefault(id) {
@@ -190,11 +209,12 @@ global $lC_Language, $pInfo;
           function toggleMultiSkuTypeRadioGroup(val) {
             if (val == '1') {
               $('#comboOptionsContainer').slideDown();  
-              $('#subProductsContainer').slideUp();  
+              $('#subProductsContainer').slideUp();
             } else {
               $('#comboOptionsContainer').slideUp();  
               $('#subProductsContainer').slideDown();            
             }
+            
           }  
           </script>   
                   

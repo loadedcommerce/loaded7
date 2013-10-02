@@ -386,6 +386,7 @@ class lC_Products_Admin {
       $Qimages->freeResult();      
     }    
     $data['subproducts'] = $subproducts_array;
+    if (sizeof($data['subproducts']) > 0) $data['has_subproducts'] = 1;
     
     $Qsubproducts->freeResult();      
     
@@ -861,6 +862,11 @@ class lC_Products_Admin {
         
         
           if (is_numeric($id)) {
+echo "<pre>";
+print_r($data);
+echo "</pre>";
+die('00');            
+            
           } else {
             // delete any possible ghosts for sanity
             $Qdel = $lC_Database->query('delete from :table_products where parent_id = :products_id and is_subproduct = :is_subproduct');
@@ -1762,7 +1768,7 @@ class lC_Products_Admin {
                     '  <td width="40%">' . $so['title'] . '<div class="small-margin-top dropall" id="drope' . $so['options_id'] . '" style="display:none;"><span>' . $items . '</span></div></td>' .
                     '  <td width="30%" class="hide-below-480">' . $so['module'] . '</td>' .
                     '  <td width="10%" class="sort hide-below-480"></td>' .
-                    '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleSimpleOpitonsStatus(this, \'' . $so['options_id'] . '\');">' . $statusIcon . '</td>' .
+                    '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleSimpleOptionsStatus(this, \'' . $so['options_id'] . '\');">' . $statusIcon . '</td>' .
                     '  <td width="15%" align="right">
                          <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addSimpleOption(\'' . $so['options_id'] . '\')"></span>
                          <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeSimpleOptionsRow(\'' . $so['options_id'] . '\');"></span>

@@ -81,6 +81,8 @@
           if (isset($_POST['sub_products_weight']) && $_POST['sub_products_weight'] != NULL) $data['sub_products_weight'] = $_POST['sub_products_weight'];
           if (isset($_POST['sub_products_sku']) && $_POST['sub_products_sku'] != NULL) $data['sub_products_sku'] = $_POST['sub_products_sku'];
           if (isset($_POST['sub_products_qoh']) && $_POST['sub_products_qoh'] != NULL) $data['sub_products_qoh'] = $_POST['sub_products_qoh'];
+          if (isset($_POST['sub_products_parent']) && $_POST['sub_products_parent'] != NULL) $data['sub_products_parent'] = $_POST['sub_products_parent'];
+          if (isset($_POST['sub_products_cost']) && $_POST['sub_products_cost'] != NULL) $data['sub_products_cost'] = $_POST['sub_products_cost'];
           if (isset($_POST['sub_products_price']) && $_POST['sub_products_price'] != NULL) $data['sub_products_price'] = $_POST['sub_products_price'];
         }                                         
         

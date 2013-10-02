@@ -44,11 +44,11 @@ global $lC_Language, $pInfo, $tax_class_array;
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
           <span id="invControlButtons" class="button-group">
-            <label for="ic_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
+            <label for="ic_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? '' : ' active'); ?>">
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_1" value="1" />
               <?php echo $lC_Language->get('text_simple'); ?>
             </label>
-            <label upsell="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ic_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
+            <label upsell="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ic_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_2" value="2" />
               <?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left float-right">' . lc_go_pro() . '</span>'; ?>
             </label>
@@ -58,14 +58,14 @@ global $lC_Language, $pInfo, $tax_class_array;
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile">&nbsp;</div>
     </div>
     <div id="inventory_control_container" class="field-drop button-height black-inputs">
-      <div id="inventory_control_simple"<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' style="display:none;"' : ''); ?>>
+      <div id="inventory_control_simple"<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? ' style="display:none;"' : ''); ?>>
         <div>
           <label for="" class="label"><b><?php echo $lC_Language->get('text_qty_on_hand'); ?></b></label>
           <input type="text" name="products_quantity" id="products_quantity" value="<?php echo (isset($pInfo) ? $pInfo->get('products_quantity') : null); ?>" class="input small-margin-right" style="width:60px;" />
           <input type="text" name="products_sku" id="products_sku" placeholder="<?php echo $lC_Language->get('text_sku'); ?>" value="<?php echo (isset($pInfo) ? $pInfo->get('products_sku') : null); ?>" class="input" />
         </div>
       </div>
-      <div id="inventory_control_multi"<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? '' : ' style="display:none;"'); ?>>
+      <div id="inventory_control_multi"<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? '' : ' style="display:none;"'); ?>>
         <span class="icon-warning icon icon-size2 icon-orange small-margin-right"></span> <?php echo $lC_Language->get('text_edit_qoh_sku'); ?>
       </div>
     </div>
