@@ -23,7 +23,7 @@ $(document).ready(function() {
   <?php
   if (defined('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT')) {
     if (ENABLE_EDITOR == '1') { 
-      echo "CKEDITOR.replace('branding_home_page_text', { height: 200, width: '99%' });";
+      echo "CKEDITOR.replace('branding_home_page_text', { height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php' });";
     } else {
       echo '$("#branding_home_page_text").css("height", "200px").css("width", "99.8%");';
     }
