@@ -1036,8 +1036,7 @@ class lC_Products_Admin {
           $Qpb->execute();
 
           while ( $Qpb->next() ) {
-            $Qnewpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added)
-                                           values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
+            $Qnewpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
             $Qnewpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
             $Qnewpb->bindInt(':products_id', $new_product_id);
             $Qnewpb->bindInt(':group_id', $Qpb->valueInt('group_id'));
@@ -1074,8 +1073,7 @@ class lC_Products_Admin {
             $Qproductimages->execute();
 
             while ( $Qproductimages->next() ) {
-              $Qpi = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added)
-                                             values (:products_id, :image, :default_flag, :sort_order, :date_added)');
+              $Qpi = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added) values (:products_id, :image, :default_flag, :sort_order, :date_added)');
               $Qpi->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
               $Qpi->bindInt(':products_id', $new_product_id);
               $Qpi->bindValue(':image', $Qproductimages->value('image'));
