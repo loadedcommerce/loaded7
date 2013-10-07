@@ -899,7 +899,7 @@ class lC_Products_Admin {
     
     // specials pricing
     if ( $error === false ) {
-      if ($data['specials_pricing_switch'] = 1) {
+      if ($data['specials_pricing_switch'] == 1) {
         if ($data['products_special_pricing_enable1'] === 1) {
           $specials_id = self::hasSpecial($products_id);          
           $specials_data = array('specials_id' => (int)$specials_id,
@@ -1803,10 +1803,14 @@ class lC_Products_Admin {
     $Qspecial->execute();
 
     if ( $Qspecial->numberOfRows() === 1 ) {
-      return true;
+
+      $id = $Qspecial->valueInt('specials_id');
+      $Qspecials->freeResult();
+
+      return $id;
     }
 
     return false;
-  }    
+  }
 }
 ?>
