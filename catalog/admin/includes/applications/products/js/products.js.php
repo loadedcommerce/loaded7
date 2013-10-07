@@ -698,6 +698,8 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             "sPaginationType": paginationType,
             "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "bDestroy": true,
+            "aaSorting": [[1,'asc']],
+            "iDisplayLength": 25,
             "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
                           { "sWidth": "50%", "bSortable": true, "sClass": "dataColProducts" },
                           { "sWidth": "15%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },

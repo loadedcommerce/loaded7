@@ -12,6 +12,14 @@
     <operation info="Enable Multi SKU Inv Control-2">
       <search position="replace"><![CDATA[<?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left">' . lc_go_pro() . '</span>'; ?>]]></search>         
       <add><![CDATA[<?php echo $lC_Language->get('text_multi_sku'); ?>]]></add>
-    </operation>      
+    </operation>  
+    <operation info="Include Subproducts Logic">
+      <search position="after"><![CDATA[<!--VQMOD1-->]]></search>         
+      <add><![CDATA[<?php 
+                    if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/options_subproducts.inc.php')) {
+                      include_once(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/options_subproducts.inc.php');
+                    }                    
+                    ?>]]></add>
+    </operation>     
   </file>   
 </modification>

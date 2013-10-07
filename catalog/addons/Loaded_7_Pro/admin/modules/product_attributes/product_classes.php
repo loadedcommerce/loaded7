@@ -22,7 +22,7 @@ class lC_ProductAttributes_product_classes extends lC_Product_attributes_Admin {
 
     $string = '';
     
- //   if (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') {
+    if (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') {
       $Qclass = $lC_Database->query('select id, name from :table_product_classes where language_id = :language_id order by name');
       $Qclass->bindTable(':table_product_classes', TABLE_PRODUCT_CLASSES);
       $Qclass->bindInt(':language_id', $lC_Language->getID());
@@ -37,7 +37,7 @@ class lC_ProductAttributes_product_classes extends lC_Product_attributes_Admin {
       if ( !empty($classes) ) {
         $string = lc_draw_pull_down_menu('attributes[' . self::getID() . ']', $classes, $value, 'class="select full-width"');
       }
-   // }
+    }
     
     return $string;
   }
