@@ -16,7 +16,8 @@
     <operation info="Include Subproducts Logic">
       <search position="after"><![CDATA[<!--VQMOD1-->]]></search>         
       <add><![CDATA[<?php 
-                    if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/options_subproducts.inc.php')) {
+                    if ((defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') &&
+                      (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/options_subproducts.inc.php'))) {
                       include_once(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/options_subproducts.inc.php');
                     }                    
                     ?>]]></add>
