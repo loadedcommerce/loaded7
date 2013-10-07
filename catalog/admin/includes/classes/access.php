@@ -35,9 +35,7 @@
         } else {
           $modules[$Qaccess->value('module')] = $Qaccess->value('level');
         }
-        //$modules[] = $Qaccess->value('module');
       }
-
 
       if ( array_key_exists('*', $modules) ) {
         $modules = array();
@@ -47,11 +45,12 @@
 
         foreach ($lC_DirectoryListing->getFiles() as $file) {
           $modules[substr($file['name'], 0, strrpos($file['name'], '.'))] = '99';
-          //$modules[] = substr($file['name'], 0, strrpos($file['name'], '.'));
         }
+        
+        $modulesPlusAddons = lC_Addons_Admin::getModulesAccessTopAdmin($modules); 
       }
 
-      return $modules;
+      return $modulesPlusAddons;
     }
 
     function getLevels() {
@@ -81,10 +80,12 @@
             } else {
               $access[$module_class->getGroup()][] = $data;
             }
+          } else if (lC_Addons_Admin::hasModulesAccess($module)) {
+            $access = lC_Addons_Admin::getModulesAccess($module, $level, $access);
           }
         }
       }
-
+      
       return $access;
     }
 
@@ -100,7 +101,11 @@
       global $lC_Language;
 
       if ( !$lC_Language->isDefined('access_group_' . $group . '_title') ) {
-        $lC_Language->loadIniFile( 'modules/access/groups/' . $group . '.php' );
+        if (file_exists(DIR_FS_ADMIN . 'includes/languages/' . $lC_Language->getCode() . '/modules/access/groups/' . $group . '.php')) {
+          $lC_Language->loadIniFile('modules/access/groups/' . $group . '.php');
+        } else {     
+          lC_Addons_Admin::loadAccessGroupDefinitions($group);
+        }
       }
 
       return $lC_Language->get('access_group_' . $group . '_title');
@@ -127,12 +132,13 @@
         $module = $this->_module;
       }
 
-//return !@file_exists( 'includes/modules/access/' . $module . '.php' ) || @array_key_exists( $module, $_SESSION['admin']['access'] );
-
-
-      return !@file_exists( 'includes/modules/access/' . $module . '.php' ) ||
-              @array_key_exists( $module, $_SESSION['admin']['access'] ) ||
-              ( (int)$_SESSION['admin']['access'][$module] >= 1 );
+      if ($_SESSION['moduleType'] == 'addon') {
+        return lC_Addons_Admin::hasAccess($module);
+      } else {
+        return !@file_exists( 'includes/modules/access/' . $module . '.php' ) ||
+                @array_key_exists( $module, $_SESSION['admin']['access'] ) ||
+                ( (int)$_SESSION['admin']['access'][$module] >= 1 );
+      }
 
     }
   }

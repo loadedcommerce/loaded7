@@ -55,7 +55,13 @@ class output {
         if (array_key_exists('content', $newArr)) $access['content'] = $newArr['content'];
         if (array_key_exists('marketing', $newArr)) $access['marketing'] = $newArr['marketing'];
         if (array_key_exists('reports', $newArr)) $access['reports'] = $newArr['reports'];
-        if (array_key_exists('hidden', $newArr)) $access['hidden'] = $newArr['hidden'];
+
+        // include any other added sections
+        foreach($newArr as $key => $value) {
+          if (array_key_exists($key, $access)) continue;
+          $access[$key] = $value;  
+        }
+        
     }
 
     $output = '';

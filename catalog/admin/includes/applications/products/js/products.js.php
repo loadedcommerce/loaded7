@@ -411,33 +411,47 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
     }
 
     $('input[name=inventory_control_radio_group]').click(function() {
-      _updateInvControlType($(this).val());
+      var pro = '<?php echo (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? '1' : '0'; ?>';
+      if (pro == '1') _updateInvControlType($(this).val());
     });
     $('input[name=inventory_option_control_radio_group]').click(function() {
-      _updateInvControlType($(this).val());
+      var pro = '<?php echo (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? '1' : '0'; ?>';
+      if (pro == '1') _updateInvControlType($(this).val());
     });
 
     function _updateInvControlType(type) {
       // remomve the active classes
       $('.oicb').removeClass('active');  
       if (type == '1') {
-      //  $('#inventory_control_simple').show('300');
-      //  $('#inventory_control_multi').hide('300');
+        var disabled = $('label[for=\'ioc_radio_1\']').is('.disabled');
+        if (disabled) {
+          $('#ic_radio_2').click(); 
+          $('#ioc_radio_2').click(); 
+          return false;
+        }
+        $('#inventory_control_simple').show('300');
+        $('#inventory_control_multi').hide('300');
         $('label[for=\'ic_radio_1\']').addClass('active');
         $('label[for=\'ioc_radio_1\']').addClass('active'); 
-    //    $('#multiSkuContainer').hide();   
-     //   $('#simpleOptionsContainer').show();   
+        $('#multiSkuContainer').hide();   
+        $('#simpleOptionsContainer').show();   
       } else if (type == '2') {   
-      //  $('#inventory_control_simple').hide('300');
-      //  $('#inventory_control_multi').show('300');
-        $('label[for=\'ic_radio_1\']').addClass('active');
-        $('label[for=\'ioc_radio_1\']').addClass('active'); 
-     //   $('#multiSkuContainer').show();   
-     //   $('#simpleOptionsContainer').hide();        
+        var disabled = $('label[for=\'ioc_radio_2\']').is('.disabled');
+        if (disabled) { 
+          $('#ic_radio_1').click(); 
+          $('#ioc_radio_1').click(); 
+          return false; 
+        }
+        $('#inventory_control_simple').hide('300');
+        $('#inventory_control_multi').show('300');
+        $('label[for=\'ic_radio_2\']').addClass('active');
+        $('label[for=\'ioc_radio_2\']').addClass('active'); 
+        $('#multiSkuContainer').show();   
+        $('#simpleOptionsContainer').hide();        
       }
     }
 
-    function toggleSimpleOpitonsStatus(e, id) {
+    function toggleSimpleOptionsStatus(e, id) {
       var status = $('#simple_options_group_status_' + id).val();
       if (status == '1') {
         $('#simple_options_group_status_' + id).val('-1');
@@ -684,6 +698,8 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             "sPaginationType": paginationType,
             "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "bDestroy": true,
+            "aaSorting": [[1,'asc']],
+            "iDisplayLength": 25,
             "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
                           { "sWidth": "50%", "bSortable": true, "sClass": "dataColProducts" },
                           { "sWidth": "15%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },

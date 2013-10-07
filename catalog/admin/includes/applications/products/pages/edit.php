@@ -11,6 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+global $lC_Vqmod;
 
 if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
   $pInfo = new lC_ObjectInfo(lC_Products_Admin::get($_GET[$lC_Template->getModule()]));
@@ -472,6 +473,7 @@ function getTaxClassOptionsString($id = null, $esc = false) {
   </hgroup>
   <div class="with-padding-no-top small-margin-top">
     <form name="product" id="product" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="products_id" value="<?php echo (int)$_GET[$lC_Template->getModule()]; ?>">
       <div id="product_tabs" class="side-tabs" style="position:relative;">  
         <ul class="tabs">
           <li id="tabHeaderSectionContent" class="active"><?php echo lc_link_object('#section_general_content', $lC_Language->get('section_general')); ?></li>
@@ -486,13 +488,13 @@ function getTaxClassOptionsString($id = null, $esc = false) {
         </ul>
         <div class="tabs-content">
           <?php 
-          include('includes/applications/products/pages/tabs/content.php');
-          include('includes/applications/products/pages/tabs/images.php');
-          include('includes/applications/products/pages/tabs/data.php'); 
-          include('includes/applications/products/pages/tabs/options.php'); 
-          include('includes/applications/products/pages/tabs/pricing.php');
-          include('includes/applications/products/pages/tabs/shipping.php'); 
-          include('includes/applications/products/pages/tabs/relationships.php'); 
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/content.php')); 
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/images.php'));  
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/data.php')); 
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/options.php')); 
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/pricing.php'));
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/shipping.php')); 
+          include($lC_Vqmod->modCheck('includes/applications/products/pages/tabs/relationships.php')); 
           ?> 
         </div>
       </div>
