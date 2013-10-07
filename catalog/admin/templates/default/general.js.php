@@ -139,6 +139,8 @@ $(document).ready(function() {
   
   // begin shortcut key additions
   $(window).bind("load", function() {
+    // bypass certain pages
+    var bypass = '<?php echo (isset($_GET['action']) && $_GET['action'] == 'save') ? '1' : '0'; ?>';
     // set the disable var to false to begin
     var disableKeyCombo = false; 
     // if any inputs on the page are clicked into then set the disable var to true
@@ -147,7 +149,7 @@ $(document).ready(function() {
     }); 
     // when the input fields are blurred set the disable var back to false
     $(":input").blur(function(){
-      disableKeyCombo = false;
+      if (bypass != '1') disableKeyCombo = false;
     });
     // when a key is pressed 
     $("*").keypress(function(e){
