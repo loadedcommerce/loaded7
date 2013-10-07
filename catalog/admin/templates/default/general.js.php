@@ -143,7 +143,14 @@ $(document).ready(function() {
     var bypass = '<?php echo (isset($_GET['action']) && $_GET['action'] == 'save') ? '1' : '0'; ?>';
     // set the disable var to false to begin
     var disableKeyCombo = false; 
-    // if any inputs on the page are clicked into then set the disable var to true
+    // if any textareas on the page are clicked into then set the disable var to true
+    for (var i in CKEDITOR.instances) {
+      (function(i){
+        CKEDITOR.instances[i].on('focus', function() {
+          disableKeyCombo = true;
+        });
+      })(i);
+    }// if any inputs on the page are clicked into then set the disable var to true
     $(":input").focus(function(){
       disableKeyCombo = true;
     }); 

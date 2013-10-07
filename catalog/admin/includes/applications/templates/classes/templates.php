@@ -32,31 +32,33 @@ class lC_Templates_Admin {
     $cnt = 0;
     $result = array('aaData' => array());
     foreach ( $files as $file ) {
-      include($lC_Vqmod->modCheck('includes/templates/' . $file['name']));
-      $code = substr($file['name'], 0, strrpos($file['name'], '.'));
-      $class = 'lC_Template_' . $code;
-      if ( class_exists($class) ) {
-        $module = new $class();
-        $module_title = $module->getTitle();
-        if ( $module->getCode() == DEFAULT_TEMPLATE ) {
-          $module_title .= ' (' . $lC_Language->get('default_entry') . ')';
-        }
-        $name = '<td>' . $module_title . '</td>';
-        $action = '<td class="align-right vertical-center"><span class="button-group compact">';
-        if ( $module->isInstalled() && $module->isActive() ) {
-          if ( $module->hasKeys() || ( $module->getCode() != DEFAULT_TEMPLATE ) ) {
-            $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="editTemplate(\'' . str_ireplace('.php', '', $file['name']) . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>';
+      if (strpos($file['name'], '.') !== (int) 0) {
+        include($lC_Vqmod->modCheck('includes/templates/' . $file['name']));
+        $code = substr($file['name'], 0, strrpos($file['name'], '.'));
+        $class = 'lC_Template_' . $code;
+        if ( class_exists($class) ) {
+          $module = new $class();
+          $module_title = $module->getTitle();
+          if ( $module->getCode() == DEFAULT_TEMPLATE ) {
+            $module_title .= ' (' . $lC_Language->get('default_entry') . ')';
           }
-          if ($module->getCode() != DEFAULT_TEMPLATE) {
-            $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="uninstallTemplate(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-minus-round icon-red with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_uninstall') . '"></a>';
+          $name = '<td>' . $module_title . '</td>';
+          $action = '<td class="align-right vertical-center"><span class="button-group compact">';
+          if ( $module->isInstalled() && $module->isActive() ) {
+            if ( $module->hasKeys() || ( $module->getCode() != DEFAULT_TEMPLATE ) ) {
+              $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="editTemplate(\'' . str_ireplace('.php', '', $file['name']) . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>';
+            }
+            if ($module->getCode() != DEFAULT_TEMPLATE) {
+              $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="uninstallTemplate(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-minus-round icon-red with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_uninstall') . '"></a>';
+            }
+          } else {
+            $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="installTemplate(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-plus-round icon-green with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_install') . '"></a>';
           }
-        } else {
-          $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="installTemplate(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-plus-round icon-green with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_install') . '"></a>';
-        }
-        $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="showInfo(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-question-round icon-blue with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_info') . '"></a></td>';
+          $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="showInfo(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-question-round icon-blue with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_info') . '"></a></td>';
 
-        $result['aaData'][] = array("$name", "$action");
-        $cnt++;
+          $result['aaData'][] = array("$name", "$action");
+          $cnt++;
+        }
       }
     }
 

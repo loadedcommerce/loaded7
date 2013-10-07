@@ -113,6 +113,13 @@
       $QbrandingAddress->bindTable(':table_configuration', TABLE_CONFIGURATION);
       $QbrandingAddress->bindValue(':address', $data['address']);
       $QbrandingAddress->execute();
+      
+      $QbrandingHomeText = $lC_Database->query('update :table_configuration set configuration_value = :address where configuration_key = "MODULE_CONTENT_HOMEPAGE_HTML_CONTENT"');
+      $QbrandingHomeText->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $QbrandingHomeText->bindValue(':address', $data['home_page_text']);
+      $QbrandingHomeText->execute();
+      
+      lC_Cache::clear('configuration');
 
       return true;
     }
