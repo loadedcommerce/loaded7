@@ -8,10 +8,10 @@ CKEDITOR.editorConfig = function( config ) {
   // For the complete reference:
   // http://docs.ckeditor.com/#!/api/CKEDITOR.config
 
-  config.extraPlugins = 'font,colorbutton';
+  config.extraPlugins = 'font,colorbutton,autogrow';
   
   //below seeting is for removing editor footer
-  config.removePlugins = 'elementspath';
+  config.removePlugins = 'elementspath,resize';
   config.resize_enabled = false;
 
   // The toolbar groups arrangement, optimized for two toolbar rows.
