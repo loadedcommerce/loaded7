@@ -23,7 +23,8 @@ if (File_exists(__DIR__ . '/config.php')) {
 // redirect to the installation module if DB_SERVER is empty
 if (!defined('DB_SERVER') || (defined('DB_SERVER') && DB_SERVER == '')) {
   if (is_dir('install')) {
-    header('Location: install/index.php');
+    $tmp_path = substr($_SERVER['PHP_SELF'],0,strrpos($_SERVER['PHP_SELF'],"/")+1);
+    header('Location: http://'.$_SERVER['SERVER_NAME'].$tmp_path.'install/index.php');
   } else {
     die('Install directory does not exist!');
   }
