@@ -937,7 +937,7 @@ class lC_Products_Admin {
   * @return boolean
   */
   public static function copy($id, $category_id, $type) {
-    global $lC_Database;
+    global $lC_Database, $lC_CategoryTree;
 
     $category_array = explode('_', $category_id);
 
@@ -995,18 +995,34 @@ class lC_Products_Admin {
           $Qdesc->execute();
 
           while ( $Qdesc->next() ) {
-            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_tags, products_url, products_viewed)
-                                             values (:products_id, :language_id, :products_name, :products_description, :products_tags, :products_url, 0)');
-            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_tags, products_url, products_viewed) values (:products_id, :language_id, :products_name, :products_description, :products_tags, :products_url, 0)');
+            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_keyword, products_tags, products_url, products_viewed) values (:products_id, :language_id, :products_name, :products_description, :products_keyword, :products_tags, :products_url, 0)');
             $Qnewdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
             $Qnewdesc->bindInt(':products_id', $new_product_id);
             $Qnewdesc->bindInt(':language_id', $Qdesc->valueInt('language_id'));
-            $Qnewdesc->bindValue(':products_name', $Qdesc->value('products_name'));
+            $Qnewdesc->bindValue(':products_name', $Qdesc->value('products_name') . '_Copy');
             $Qnewdesc->bindValue(':products_description', $Qdesc->value('products_description'));
+            $Qnewdesc->bindValue(':products_keyword', $Qdesc->value('products_keyword') . '-copy');
             $Qnewdesc->bindValue(':products_tags', $Qdesc->value('products_tags'));
             $Qnewdesc->bindValue(':products_url', $Qdesc->value('products_url'));
             $Qnewdesc->setLogging($_SESSION['module'], $new_product_id);
             $Qnewdesc->execute();
+
+            if ( $lC_Database->isError() ) {
+              $error = true;
+              break;
+            }
+            
+            // permalink addition
+            $lC_CategoryTree = new lC_CategoryTree_Admin();
+            $cPath = (end($category_array) != 0) ? $lC_CategoryTree->getcPath(end($category_array)) : 0;
+            $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
+            $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qpl->bindInt(':item_id', $new_product_id);
+            $Qpl->bindInt(':language_id', $Qdesc->valueInt('language_id'));
+            $Qpl->bindInt(':type', 2);
+            $Qpl->bindValue(':query', 'cPath=' . $cPath);
+            $Qpl->bindValue(':permalink', $Qdesc->value('products_keyword') . '-copy');
+            $Qpl->execute();
 
             if ( $lC_Database->isError() ) {
               $error = true;
@@ -1020,8 +1036,7 @@ class lC_Products_Admin {
           $Qpb->execute();
 
           while ( $Qpb->next() ) {
-            $Qnewpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added)
-                                           values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
+            $Qnewpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
             $Qnewpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
             $Qnewpb->bindInt(':products_id', $new_product_id);
             $Qnewpb->bindInt(':group_id', $Qpb->valueInt('group_id'));
@@ -1048,6 +1063,29 @@ class lC_Products_Admin {
 
             if ( $lC_Database->isError() ) {
               $error = true;
+            }
+          }
+
+          if ( $error === false ) {
+            $Qproductimages = $lC_Database->query('select * from :table_products_images where products_id = :products_id');
+            $Qproductimages->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+            $Qproductimages->bindInt(':products_id', $id);
+            $Qproductimages->execute();
+
+            while ( $Qproductimages->next() ) {
+              $Qpi = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added) values (:products_id, :image, :default_flag, :sort_order, :date_added)');
+              $Qpi->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+              $Qpi->bindInt(':products_id', $new_product_id);
+              $Qpi->bindValue(':image', $Qproductimages->value('image'));
+              $Qpi->bindInt(':default_flag', $Qproductimages->value('default_flag'));
+              $Qpi->bindInt(':sort_order', $Qproductimages->value('sort_order'));
+              $Qpi->bindRaw(':date_added', 'now()');
+              $Qpi->execute();
+
+              if ( $lC_Database->isError() ) {
+                $error = true;
+                break;
+              }
             }
           }
         } else {
@@ -1416,7 +1454,7 @@ class lC_Products_Admin {
   */
   public static function getPermalinkCount($permalink, $iid = null, $type = null) {
     global $lC_Database;
-
+    
     $Qpermalinks = $lC_Database->query('select count(*) as total, item_id, permalink from :table_permalinks where permalink = :permalink');
 
     if (is_numeric($iid)) {
@@ -1447,10 +1485,11 @@ class lC_Products_Admin {
     
     $validated = true;
     foreach($permalink_array as $permalink) {
+      echo '[' . $permalink . ']';
       if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
       if ( lC_Products_Admin::getPermalinkCount($permalink, $iid, $type) > 0) $validated = false;
     }
-
+    
     return $validated;
   }
  /*
