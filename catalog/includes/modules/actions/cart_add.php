@@ -51,6 +51,9 @@
             return false;
           }
         } else {
+          if ($lC_Product->hasSubProducts($lC_Product->getID())) {
+            lc_redirect(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()));
+          }
           $lC_ShoppingCart->add($lC_Product->getID(), $quantity);
         }
       }
