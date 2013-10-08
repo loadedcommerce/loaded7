@@ -290,6 +290,8 @@ update_message_text2 = released.
 site_maintenance_message_title = Maintenance Mode
 site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
 
+product_attributes_product_classes_title = Product Classes
+
 text_coming_soon = Pro Feature Coming Soon
 text_cick_for_info = &nbsp;Click for Info&nbsp;
 text_pro = Pro
