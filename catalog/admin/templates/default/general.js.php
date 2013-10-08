@@ -386,15 +386,11 @@ if ($(window).width() < 1380) {
   $("#product_tabs").addClass("standard-tabs");
 }
   
-/* show the upsell spot modal */
+/* show the pro upsell spot modal */
 function showUpsellSpot(e) {  
   
-  var title = $(e).closest('.field-block').find('.label').text();
-  var desc = $(e).closest('.field-block').find('.label').attr('upsell');
-  if (title == '') { 
-    title = $(e).closest('.button').text().replace('Pro', '').replace('B2B', '');
-    desc = $(e).closest('.button').attr('upsell');
-  }
+  title = $(e).closest('.upsellwrapper').find('.upsellinfo').attr('upselltitle');
+  desc = $(e).closest('.upsellwrapper').find('.upsellinfo').attr('upselldesc');
   
   var text = '<style>.modal { padding:0; }</style>'+
              '<div id="spotMainContainer" class="with-mid-padding no-margin anthracite" style="width:280px; min-height:200px; background-color:#fff; border:3px solid white; border-radius:4px 4px 4px 4px;">'+
@@ -406,9 +402,9 @@ function showUpsellSpot(e) {
              '    </div>'+
              '    <div id="spotMainDesc" class="align-left">'+ desc +
              '    </div>'+
-             '    <div id="spotMainButton" class="with-padding"><a href="javascript:void(0);" class="button huge red-gradient glossy ">Upgrade Now</a>'+
+             '    <div id="spotMainButton" class="with-padding"><a href="http://www.loadedcommerce.com/loaded-pre-order-p-395.html" class="button huge red-gradient glossy "><?php echo $lC_Language->get('text_upgrade_now'); ?></a>'+
              '    </div>'+
-             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="#" style="text-decoration:underline;">See Full Pro & B2B Feature List</a>'+
+             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="http://www.loadedcommerce.com/loaded-pre-order-p-395.html" style="text-decoration:underline;"><?php echo $lC_Language->get('text_full_pro_b2b_features_list'); ?></a>'+
              '    </div>'+
              '    </div>';
              '</div>';

@@ -281,14 +281,9 @@
                       <label class="label" for="categories_content_file"><b><?php echo $lC_Language->get('field_categories_content_file'); ?></b></label>
                     </div>
                   </div>
-                  <div class="nine-columns twelve-columns-mobile">
+                  <div class="nine-columns twelve-columns-mobile upsellwrapper">
                     <?php echo lc_draw_input_field('categories_content_file', null, 'id="categories_content_file" name="categories_content_file" class="input" style="min-width:250px;"' . (($lC_ObjectInfo->get('categories_content_file') != '') ? ' value="' . $lC_ObjectInfo->get('categories_content_file') . '"' : ' placeholder="/customhtml.php"') . '" disabled'); ?>
-                    <span class="info-spot on-left grey">
-                      <small class="tag red-bg mid-margin-left margin-right">Pro</small>
-                      <span class="info-bubble">
-                        <b>Go Pro!</b> and enjoy this feature!
-                      </span>
-                    </span>  
+                    <span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('text_html_content_file_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_html_content_file_upsell_desc'); ?>"><?php echo lc_go_pro(); ?></span>  
                     <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_content_file'), null, 'on-left grey large-margin-left'); ?>
                     <p class="small-margin-top"><?php echo $lC_Language->get('text_path_to_file'); ?></p>
                   </div>
@@ -300,15 +295,10 @@
             <fieldset class="fieldset">
               <legend class="legend"><?php echo $lC_Language->get('field_management_settings'); ?></legend>
               <div class="columns no-margin-bottom">
-                <div class="six-columns twelve-columns-mobile">
+                <div class="six-columns twelve-columns-mobile upsellwrapper">
                   <label class="label" for="<?php echo 'categories_product_class'; ?>">
                     <?php echo $lC_Language->get('field_product_class'); ?>
-                    <span class="info-spot on-left grey">
-                      <small class="tag red-bg mid-margin-left margin-right">Pro</small>
-                      <span class="info-bubble">
-                        <b>Go Pro!</b> and enjoy this feature!
-                      </span>
-                    </span>  
+                    <span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('text_product_class_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_product_class_upsell_desc'); ?>"><?php echo lc_go_pro(); ?></span>  
                     <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_product_class'), null); ?>
                   </label>
                   <select class="select full-width mid-margin-top" id="categories_product_class" name="categories_product_class" disabled>

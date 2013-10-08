@@ -43,12 +43,12 @@ global $lC_Language, $pInfo, $tax_class_array;
           <span><?php echo $lC_Language->get('text_inventory_control'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), 'margin-left:8px', 'info-spot info-spot on-right grey'); ?>
         </div>
         <div class="twelve-columns no-margin-bottom small-margin-top">
-          <span id="invControlButtons" class="button-group">
+          <span id="invControlButtons" class="button-group upsellwrapper">
             <label for="ic_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_1" value="1" />
               <?php echo $lC_Language->get('text_simple'); ?>
             </label>
-            <label upsell="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ic_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
+            <label upselltitle="<?php echo $lC_Language->get('text_multi_sku'); ?>" upselldesc="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ic_radio_2" class="upsellinfo disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_control_radio_group" id="ic_radio_2" value="2" />
               <?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left float-right">' . lc_go_pro() . '</span>'; ?>
             </label>

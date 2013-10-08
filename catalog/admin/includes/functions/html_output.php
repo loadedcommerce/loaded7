@@ -174,13 +174,13 @@
     if ($no_tooltip) {
       $html = '<span class="upsell-spot">' . 
               '  <a href="javascript:void(0);" onclick="showUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
-              '    <small class="tag red-bg" title="' . $lC_Language->get('text_cick_for_info') . '">' . $lC_Language->get('text_pro') . '</small>' . 
+              '    <small class="tag red-bg" title="' . $lC_Language->get('text_click_for_info') . '">' . $lC_Language->get('text_pro') . '</small>' . 
               '  </a>' .
               '</span>';
     } else {
       $html = '<span class="upsell-spot">' . 
               '  <a href="javascript:void(0);" onclick="showUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
-              '    <small class="tag red-bg with-tooltip" title="' . $lC_Language->get('text_cick_for_info') . '" data-tooltip-options=\'{"classes":["anthracite-gradient glossy small no-padding"],"position":"right"}\'>' . $lC_Language->get('text_pro') . '</small>' . 
+              '    <small class="tag red-bg with-tooltip" title="' . $lC_Language->get('text_click_for_info') . '" data-tooltip-options=\'{"classes":["anthracite-gradient glossy small no-padding"],"position":"right"}\'>' . $lC_Language->get('text_pro') . '</small>' . 
               '  </a>' .
               '</span>';
     }

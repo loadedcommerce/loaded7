@@ -288,7 +288,7 @@ site_maintenance_message_title = Maintenance Mode
 site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
 
 text_coming_soon = Pro Feature Coming Soon
-text_cick_for_info = &nbsp;Click for Info&nbsp;
+text_click_for_info = &nbsp;Click for Info&nbsp;
 text_pro = Pro
 text_b2b = B2B
 text_list = List
@@ -304,3 +304,5 @@ text_expire_date = To
 text_purchase_over = Minimum Purchase
 text_free_shipping = Free Shipping
 text_free_product = Free Product
+text_upgrade_now = Upgrade Now
+text_full_pro_b2b_features_list = See Full Pro & B2B Feature List
