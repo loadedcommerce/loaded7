@@ -603,5 +603,22 @@ class lC_Product {
 
     return ( $a['sort_order'] < $b['sort_order'] ) ? -1 : 1;
   }
+
+  public function hasSpecial() {
+    global $lC_Database;
+
+
+    $Qspecial = $lC_Database->query('select specials_id from :table_specials where products_id = :products_id limit 1');
+    $Qspecial->bindTable(':table_specials', TABLE_SPECIALS);
+    $Qspecial->bindInt(':products_id', $this->getID());
+    $Qspecial->execute();
+
+    if ( $Qspecial->numberOfRows() === 1 ) {
+
+      return true;
+    }
+
+    return false;
+  }
 }
 ?>

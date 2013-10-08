@@ -20,7 +20,7 @@ $(document).ready(function() {
 
 function refreshPrice() {
   var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
-  var basePrice = '<?php echo $lC_Product->getBasePrice(); ?>';
+  var basePrice = '<?php echo $lC_Product->getPriceFormated(true); ?>';
 
   var priceModTotal = 0;
   // loop thru any options select fields
@@ -43,7 +43,11 @@ function refreshPrice() {
   var adjPrice = (parseFloat(basePrice) + parseFloat(priceModTotal));
   var adjPriceFormatted = currencySymbolLeft + adjPrice.toFixed(<?php echo DECIMAL_PLACES; ?>);
   
+  <?php if($lC_Product->hasSpecial()){ // Adjusted price for special price. ?>
+  $('#productInfoPrice').html('<big><?php echo $lC_Product->getPriceFormated(true); ?></big>');
+  <?php }else{ ?>
   $('#productInfoPrice').html('<big>' + adjPriceFormatted + '</big>');
+  <?php } ?>
 }
 
 function refreshVariants() {
@@ -100,16 +104,20 @@ function refreshVariants() {
   }
 
   if (id != null) {
-    price = combos[id]['price'];
+    //price = combos[id]['price'];
     availability = productInfoAvailability;
     model = combos[id]['model'];
   } else {
+    <?php if($lC_Product->hasSpecial()){ // Adjusted price for special price. ?>
+    price = '<?php echo $lC_Product->getPriceFormated(true); ?>';
+    <?php }else{ ?>
     price = originalPrice;
+    <?php } ?>
     availability = productInfoNotAvailable;
     model = '';
   }
 
-  document.getElementById('productInfoPrice').innerHTML = '<big>' + price + '</big>';
+  document.getElementById('productInfoPrice').innerHTML = '<bigd>' + price + '</big>';
   document.getElementById('productInfoAvailability').innerHTML = availability;
   if (document.getElementById('productInfoModel')) {
     document.getElementById('productInfoModel').innerHTML = model;
@@ -235,10 +243,12 @@ function refreshVariants() {
   if ( $lC_Product->hasVariants() ) {
     ?>
     <script>
+    
     var originalPrice = '<?php echo $lC_Product->getPriceFormated(true); ?>';
     var productInfoNotAvailable = '<span id="productVariantCombinationNotAvailable"><?php echo $lC_Language->get('variant_combo_not_available'); ?></span>';
     var productInfoAvailability = '<?php if ( $lC_Product->hasAttribute('shipping_availability') ) { echo addslashes($lC_Product->getAttribute('shipping_availability')); } else { echo $lC_Language->get('product_variant_in_stock'); } ?>';
     refreshVariants();
+    
     </script>
     <?php 
   } 
