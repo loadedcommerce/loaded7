@@ -19,7 +19,9 @@
 // Favicon count
 //Tinycon.setBubble(2);
 </script>
-
+<?php
+require_once($lC_Vqmod->modCheck('includes/applications/index/classes/index.php')); 
+?>
 <!-- Charts library -->
 <!-- Load the AJAX API -->
 <script src="https://www.google.com/jsapi"></script>
@@ -33,12 +35,12 @@ drawVisitorsChart = function()
 {
   // Create our data table.
   var data = new google.visualization.DataTable();
-  var raw_data = [['Sessions', 50, 73, 104, 129, 146, 176, 139, 149, 218, 194, 96, 53],
-    ['Customers', 82, 77, 98, 94, 105, 81, 104, 104, 92, 83, 107, 91],
-    ['Carts', 50, 39, 39, 41, 47, 49, 59, 59, 52, 64, 59, 51],
-    ['Orders', 45, 35, 35, 39, 53, 76, 56, 59, 48, 40, 48, 21]];
+  var raw_data = [['Sessions', <?php echo lC_Administrators_Index::get_live_data('Sessions'); ?>],
+    ['Customers', <?php echo lC_Administrators_Index::get_live_data('Customers'); ?>],
+    ['Carts', <?php echo lC_Administrators_Index::get_live_data('Carts'); ?>],
+    ['Orders', <?php echo lC_Administrators_Index::get_live_data('Orders'); ?>]];
 
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var column_data = [<?php echo lC_Administrators_Index::get_column_data('month'); ?>];
 
   data.addColumn('string', 'Month');
   for (var i = 0; i < raw_data.length; ++i)
@@ -46,11 +48,11 @@ drawVisitorsChart = function()
     data.addColumn('number', raw_data[i][0]);
   }
 
-  data.addRows(months.length);
+  data.addRows(column_data.length);
 
-  for (var j = 0; j < months.length; ++j)
+  for (var j = 0; j < column_data.length; ++j)
   {
-    data.setValue(j, 0, months[j]);
+    data.setValue(j, 0, column_data[j]);
   }
   for (var i = 0; i < raw_data.length; ++i)
   {
