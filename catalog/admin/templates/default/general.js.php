@@ -387,7 +387,7 @@ if ($(window).width() < 1380) {
 }
   
 /* show the pro upsell spot modal */
-function showUpsellSpot(e) {  
+function showProUpsellSpot(e) {  
   
   title = $(e).closest('.upsellwrapper').find('.upsellinfo').attr('upselltitle');
   desc = $(e).closest('.upsellwrapper').find('.upsellinfo').attr('upselldesc');
@@ -417,6 +417,39 @@ function showUpsellSpot(e) {
      buttons: {}
    });
 }
+  
+/* show the b2b upsell spot modal */
+function showB2BUpsellSpot(e) {  
+  
+  title = $(e).closest('.upsellwrapper').find('.upsellinfo').attr('upselltitle');
+  desc = $(e).closest('.upsellwrapper').find('.upsellinfo').attr('upselldesc');
+  
+  var text = '<style>.modal { padding:0; }</style>'+
+             '<div id="spotMainContainer" class="with-mid-padding no-margin anthracite" style="width:280px; min-height:200px; background-color:#fff; border:3px solid white; border-radius:4px 4px 4px 4px;">'+
+             '  <div id="spotMainOutline" class="relative with-mid-padding" min-height:180px; style="border:2px solid red; border-radius:4px 4px 4px 4px;">'+
+             '    <a onclick="closeUpsellSpot($(this).getModalWindow());" href="javascript:void(0);"><span onclick="closeUpsellSpot($(this).getModalWindow());" class="close">X</span></a>'+
+             '    <div id="spotMainHeader" class="align-left"><small class="tag red-bg"><?php echo $lC_Language->get('text_pro'); ?></small><span class="thin mid-margin-left">Feature Information</span>'+ 
+             '    </div>'+
+             '    <div id="spotMainTitle" class="align-left"><h3 class="align-left margin-top mid-margin-bottom">' + title + '</h3>'+
+             '    </div>'+
+             '    <div id="spotMainDesc" class="align-left">'+ desc +
+             '    </div>'+
+             '    <div id="spotMainButton" class="with-padding"><a href="http://www.loadedcommerce.com/loaded-pre-order-p-395.html" class="button huge red-gradient glossy "><?php echo $lC_Language->get('text_upgrade_now'); ?></a>'+
+             '    </div>'+
+             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="http://www.loadedcommerce.com/loaded-pre-order-p-395.html" style="text-decoration:underline;"><?php echo $lC_Language->get('text_full_pro_b2b_features_list'); ?></a>'+
+             '    </div>'+
+             '    </div>';
+             '</div>';
+  $.modal({
+     contentBg: false,
+     contentAlign: 'center',
+     content: text,
+     resizable: false,
+     actions: {},
+     buttons: {}
+   });
+}
+
 // added to prevent enter key on megasearch
 $('.noEnterSubmit').keypress(function(e){
   if (e.which == 13) return false;

@@ -302,7 +302,7 @@
                     <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_product_class'), null); ?>
                   </label>
                   <select class="select full-width mid-margin-top" id="categories_product_class" name="categories_product_class" disabled>
-                    <option>Common</option>
+                    <option><?php echo $lC_Language->get('text_common'); ?></option>
                   </select>
                 </div>
               </div>
@@ -310,15 +310,10 @@
             <fieldset class="fieldset">
               <legend class="legend"><?php echo $lC_Language->get('field_access_settings'); ?></legend>
               <div class="columns no-margin-bottom">
-                <div class="six-columns twelve-columns-mobile">
+                <div class="six-columns twelve-columns-mobile upsellwrapper">
                   <p class="margin-bottom">
                     <label class="label" for="categories_access_levels"><?php echo $lC_Language->get('field_access_levels'); ?></label>
-                    <span class="info-spot on-left grey">
-                      <small class="tag orange-bg mid-margin-left margin-right"><?php echo $lC_Language->get('text_b2b'); ?></small>
-                      <span class="info-bubble">
-                        <b>Get B2B!</b> and enjoy this feature!
-                      </span>
-                    </span>  
+                    <span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('text_access_levels_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_access_levels_upsell_desc'); ?>"><?php echo lc_go_b2b(); ?></span>  
                     <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_access_levels'), null, 'on-left grey large-margin-left'); ?>  
                   </p>
                   <p class="margin-left">

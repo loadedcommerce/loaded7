@@ -78,10 +78,11 @@
                   <span class="icon-plus"></span>
                 </span><?php echo $lC_Language->get('button_new_coupon'); ?>
               </a>&nbsp;
-              <a upselltitle="<?php echo $lC_Language->get('button_new_rule'); ?>" upselldesc="<?php echo $lC_Language->get('text_new_rule_upsell_desc'); ?>" class="upsellinfo button" href="javascript:void(0);" onclick="showUpsellSpot(this); return false;">
+              <a upselltitle="<?php echo $lC_Language->get('button_new_rule'); ?>" upselldesc="<?php echo $lC_Language->get('text_new_rule_upsell_desc'); ?>" class="upsellinfo button" href="javascript:void(0);" onclick="showProUpsellSpot(this); return false;">
                 <span class="button-icon green-gradient">
                   <span class="icon-plus"></span>
-                </span><?php echo $lC_Language->get('button_new_rule'); ?><small class="tag red-gradient small-margin-left">Pro</small>
+                </span><?php echo $lC_Language->get('button_new_rule'); ?>
+                <small data-tooltip-options="{&quot;classes&quot;:[&quot;anthracite-gradient glossy small no-padding&quot;],&quot;position&quot;:&quot;right&quot;}" title="&nbsp;<?php echo $lC_Language->get('text_click_for_info'); ?>&nbsp;" class="tag red-bg with-tooltip"><?php echo $lC_Language->get('text_pro'); ?></small>
               </a>&nbsp;
             </p>
           </div>
