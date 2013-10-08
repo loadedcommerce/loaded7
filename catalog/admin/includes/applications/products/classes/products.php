@@ -1805,7 +1805,7 @@ class lC_Products_Admin {
     if ( $Qspecial->numberOfRows() === 1 ) {
 
       $id = $Qspecial->valueInt('specials_id');
-      $Qspecials->freeResult();
+      $Qspecial->freeResult();
 
       return $id;
     }
