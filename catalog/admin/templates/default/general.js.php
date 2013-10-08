@@ -402,9 +402,9 @@ function showProUpsellSpot(e) {
              '    </div>'+
              '    <div id="spotMainDesc" class="align-left">'+ desc +
              '    </div>'+
-             '    <div id="spotMainButton" class="with-padding"><a href="http://www.loadedcommerce.com/loaded-pre-order-p-395.html" class="button huge red-gradient glossy "><?php echo $lC_Language->get('text_upgrade_now'); ?></a>'+
+             '    <div id="spotMainButton" class="with-padding"><a href="http://www.loadedcommerce.com/" class="button huge red-gradient glossy "><?php echo $lC_Language->get('text_upgrade_now'); ?></a>'+
              '    </div>'+
-             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="http://www.loadedcommerce.com/loaded-pre-order-p-395.html" style="text-decoration:underline;"><?php echo $lC_Language->get('text_full_pro_b2b_features_list'); ?></a>'+
+             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="http://www.loadedcommerce.com/" style="text-decoration:underline;"><?php echo $lC_Language->get('text_full_pro_b2b_features_list'); ?></a>'+
              '    </div>'+
              '    </div>';
              '</div>';
@@ -434,9 +434,9 @@ function showB2BUpsellSpot(e) {
              '    </div>'+
              '    <div id="spotMainDesc" class="align-left">'+ desc +
              '    </div>'+
-             '    <div id="spotMainButton" class="with-padding"><a href="http://www.loadedcommerce.com/loaded-pre-order-p-395.html" class="button huge orange-gradient glossy "><?php echo $lC_Language->get('text_upgrade_now'); ?></a>'+
+             '    <div id="spotMainButton" class="with-padding"><a href="http://www.loadedcommerce.com/" class="button huge orange-gradient glossy "><?php echo $lC_Language->get('text_upgrade_now'); ?></a>'+
              '    </div>'+
-             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="http://www.loadedcommerce.com/loaded-pre-order-p-395.html" style="text-decoration:underline;"><?php echo $lC_Language->get('text_full_pro_b2b_features_list'); ?></a>'+
+             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="http://www.loadedcommerce.com/" style="text-decoration:underline;"><?php echo $lC_Language->get('text_full_pro_b2b_features_list'); ?></a>'+
              '    </div>'+
              '    </div>';
              '</div>';
