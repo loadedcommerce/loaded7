@@ -64,7 +64,7 @@ drawVisitorsChart = function()
 
   // Create and draw the visualization.
   // Learn more on configuration for the LineChart: http://code.google.com/apis/chart/interactive/docs/gallery/linechart.html
-  var div = $('#demo-chart'),
+  var div = $('#dashboard-chart'),
   divWidth = div.width();
   new google.visualization.LineChart(div.get(0)).draw(data, {
       title: 'Store Performance :: Current Month',
@@ -103,7 +103,7 @@ google.load('visualization', '1', {
 google.setOnLoadCallback(drawVisitorsChart);
 
 // Watch for block resizing
-$('#demo-chart').widthchange(drawVisitorsChart);
+$('#dashboard-chart').widthchange(drawVisitorsChart);
 
 // Respond.js hook (media query polyfill)
 $(document).on('respond-ready', drawVisitorsChart);

@@ -27,7 +27,7 @@ require_once($lC_Vqmod->modCheck('includes/applications/index/classes/index.php'
   <div class="dashboard">
 
     <div class="columns">
-      <div class="nine-columns twelve-columns-mobile" id="demo-chart">
+      <div class="nine-columns twelve-columns-mobile" id="dashboard-chart">
         <!-- This div will hold the generated chart -->
       </div>
       <div class="three-columns twelve-columns-mobile new-row-mobile">
