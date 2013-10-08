@@ -316,7 +316,7 @@ class lC_ShoppingCart {
       return false;
     }
 
-    $Qproduct = $lC_Database->query('select p.parent_id, p.products_price, p.products_tax_class_id, p.products_model, p.products_weight, p.products_weight_class, p.products_status, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag) where p.products_id = :products_id');
+    $Qproduct = $lC_Database->query('select p.parent_id, p.products_price, p.products_tax_class_id, p.products_model, p.products_weight, p.products_weight_class, p.products_status, p.is_subproduct, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag) where p.products_id = :products_id');
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproduct->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
     $Qproduct->bindInt(':default_flag', 1);
@@ -360,7 +360,7 @@ class lC_ShoppingCart {
 
           $Qdescription = $lC_Database->query('select products_name, products_keyword, products_description from :table_products_description where products_id = :products_id and language_id = :language_id');
           $Qdescription->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-          $Qdescription->bindInt(':products_id', ($Qproduct->valueInt('parent_id') > 0) ? $Qproduct->valueInt('parent_id') : $product_id);
+          $Qdescription->bindInt(':products_id', ($Qproduct->valueInt('parent_id') > 0 && $Qproduct->valueInt('is_subproduct') != 1) ? $Qproduct->valueInt('parent_id') : $product_id);
           $Qdescription->bindInt(':language_id', $lC_Language->getID());
           $Qdescription->execute();
 
