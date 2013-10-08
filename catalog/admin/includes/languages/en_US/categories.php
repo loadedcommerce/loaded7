@@ -123,3 +123,10 @@ text_to_parent = to which parent category?
 text_toggle_html_editor = Toggle HTML Editor 
 text_top_category = -- Top --
 text_visibility = Visibility
+
+text_html_content_file_upsell_title = HTML Content File
+text_html_content_file_upsell_desc = HTML Content File Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+text_product_class_upsell_title = Product Classification
+text_product_class_upsell_desc = Product Classification Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+text_access_levels_upsell_title = Access Levels
+text_access_levels_upsell_desc = Access Levels Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.

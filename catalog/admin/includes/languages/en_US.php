@@ -292,6 +292,7 @@ text_click_for_info = &nbsp;Click for Info&nbsp;
 text_pro = Pro
 text_b2b = B2B
 text_common = Common
+text_feature_information = Feature Information
 text_list = List
 text_none = None
 text_no_restriction = No Restriction
