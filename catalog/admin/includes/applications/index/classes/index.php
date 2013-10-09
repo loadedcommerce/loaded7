@@ -26,9 +26,8 @@ class lC_Administrators_Index {
     global $lC_Database;
     switch ( $arg ) {
       case 'Sessions':
-        /*$QresultTotal = $lC_Database->query('SELECT DAY( date_account_created ) as day, COUNT( `customers_id` ) as total from :table_sessions where MONTH( date_account_created ) = MONTH( CURRENT_DATE ) AND YEAR( date_account_created ) = YEAR( CURRENT_DATE ) GROUP BY DAY( date_account_created )');
-        $QresultTotal->bindTable(':table_sessions', TABLE_SESSIONS);*/
-        $result= "150, 173, 104, 129, 146, 176, 139, 149, 218, 194, 196, 153, 173, 104, 129, 146, 176, 139, 149, 218, 194, 196, 153, 173, 104, 129, 146, 176, 139, 149";    
+        $QresultTotal = $lC_Database->query('SELECT DAY( FROM_UNIXTIME(time_entry) ) as day,  COUNT( session_id ) as total from :table_whos_online where MONTH( FROM_UNIXTIME(time_entry) ) = MONTH( CURRENT_DATE ) AND YEAR( FROM_UNIXTIME(time_entry) ) = YEAR( CURRENT_DATE ) GROUP BY DAY( FROM_UNIXTIME(time_entry) )');
+        $QresultTotal->bindTable(':table_whos_online', TABLE_WHOS_ONLINE);
         return $result;
         break;
       case 'Customers':
@@ -68,10 +67,8 @@ class lC_Administrators_Index {
     global $lC_Database;
     switch ( $arg ) {
       case 'Sessions':
-        /*$QresultTotal = $lC_Database->query('SELECT DAY( date_account_created ) as day, COUNT( `customers_id` ) as total from :table_sessions where MONTH( date_account_created ) = MONTH( CURRENT_DATE ) AND YEAR( date_account_created ) = YEAR( CURRENT_DATE ) GROUP BY MONTH( date_account_created )');
-        $QresultTotal->bindTable(':table_sessions', TABLE_SESSIONS);*/
-        $result= "15";    
-        return $result;
+        $QresultTotal = $lC_Database->query('SELECT DAY( FROM_UNIXTIME(time_entry) ) as day,  COUNT( session_id ) as total from :table_whos_online where MONTH( FROM_UNIXTIME(time_entry) ) = MONTH( CURRENT_DATE ) AND YEAR( FROM_UNIXTIME(time_entry) ) = YEAR( CURRENT_DATE ) GROUP BY MONTH( FROM_UNIXTIME(time_entry) )');
+        $QresultTotal->bindTable(':table_whos_online', TABLE_WHOS_ONLINE);        
         break;
       case 'Customers':
         $QresultTotal = $lC_Database->query('SELECT DAY( date_account_created ) as day, COUNT( `customers_id` ) as total from :table_customers where MONTH( date_account_created ) = MONTH( CURRENT_DATE ) AND YEAR( date_account_created ) = YEAR( CURRENT_DATE ) GROUP BY MONTH( date_account_created )');

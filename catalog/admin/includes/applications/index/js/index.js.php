@@ -66,8 +66,8 @@ drawVisitorsChart = function()
   // Learn more on configuration for the LineChart: http://code.google.com/apis/chart/interactive/docs/gallery/linechart.html
   var div = $('#dashboard-chart'),
   divWidth = div.width();
-  new google.visualization.LineChart(div.get(0)).draw(data, {
-      title: 'Store Performance :: Current Month',
+  new google.visualization.LineChart(div.get(0)).draw(data, {      
+      title: '<?php echo $lC_Language->get('text_chart_performance_current_month'); ?>',
       width: divWidth,
       height: $.template.mediaQuery.is('mobile') ? 180 : 265,
       legend: 'right',
