@@ -13,7 +13,7 @@
 <div class="row">
   <div class="col-sm-12 col-lg-12">
     <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
-    <form role="form" class="form-inline" name="account_newsletter" id="account_newsletter" action="#" method="post">
+    <form role="form" class="form-inline" name="account_newsletter" id="account_newsletter" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'newsletters=save', 'SSL'); ?>" method="post">
       <div class="well">
         <div class="checkbox">
           <label class=""><?php echo lc_draw_checkbox_field('newsletter_general', '1', $Qnewsletter->value('customers_newsletter'), null, null, null); ?>&nbsp;<?php echo $lC_Language->get('newsletter_general'); ?></label>

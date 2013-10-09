@@ -16,7 +16,7 @@
 <div class="full_page">
   <div class="content">
     <!-- Need to get with Scott on class code to support newsletter data for customer -->
-    <form name="account_newsletter" id="account_newsletter" action="#" method="post">
+    <form name="account_newsletter" id="account_newsletter" action="<?php echo lc_href_link(FILENAME_ACCOUNT, 'newsletters=save', 'SSL'); ?>" method="post">
       <div class="short-code-column">
         <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
         <div id="accoutnNewsletters" class="borderPadMe">
