@@ -20,6 +20,7 @@
 //Tinycon.setBubble(2);
 </script>
 <?php
+global $lC_Language;
 require_once($lC_Vqmod->modCheck('includes/applications/index/classes/index.php')); 
 ?>
 <!-- Charts library -->
