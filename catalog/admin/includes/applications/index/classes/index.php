@@ -28,7 +28,6 @@ class lC_Administrators_Index {
       case 'Sessions':
         $QresultTotal = $lC_Database->query('SELECT DAY( FROM_UNIXTIME(time_entry) ) as day,  COUNT( session_id ) as total from :table_whos_online where MONTH( FROM_UNIXTIME(time_entry) ) = MONTH( CURRENT_DATE ) AND YEAR( FROM_UNIXTIME(time_entry) ) = YEAR( CURRENT_DATE ) GROUP BY DAY( FROM_UNIXTIME(time_entry) )');
         $QresultTotal->bindTable(':table_whos_online', TABLE_WHOS_ONLINE);
-        return $result;
         break;
       case 'Customers':
         $QresultTotal = $lC_Database->query('SELECT DAY( date_account_created ) as day, COUNT( `customers_id` ) as total from :table_customers where MONTH( date_account_created ) = MONTH( CURRENT_DATE ) AND YEAR( date_account_created ) = YEAR( CURRENT_DATE ) GROUP BY DAY( date_account_created )');
