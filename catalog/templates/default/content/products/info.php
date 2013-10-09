@@ -43,11 +43,13 @@ function refreshPrice() {
   var adjPrice = (parseFloat(basePrice) + parseFloat(priceModTotal));
   var adjPriceFormatted = currencySymbolLeft + adjPrice.toFixed(<?php echo DECIMAL_PLACES; ?>);
   
-  <?php if($lC_Product->hasSpecial()){ // Adjusted price for special price. ?>
-  $('#productInfoPrice').html('<big><?php echo $lC_Product->getPriceFormated(true); ?></big>');
-  <?php }else{ ?>
-  $('#productInfoPrice').html('<big>' + adjPriceFormatted + '</big>');
-  <?php } ?>
+  if(isNaN(adjPriceFormatted)){
+    
+    $('#productInfoPrice').html('<big>' + basePrice + '</big>'); // Special price
+  }else{
+    
+    $('#productInfoPrice').html('<big>' + adjPriceFormatted + '</big>');
+  }
 }
 
 function refreshVariants() {
@@ -108,11 +110,7 @@ function refreshVariants() {
     availability = productInfoAvailability;
     model = combos[id]['model'];
   } else {
-    <?php if($lC_Product->hasSpecial()){ // Adjusted price for special price. ?>
-    price = '<?php echo $lC_Product->getPriceFormated(true); ?>';
-    <?php }else{ ?>
     price = originalPrice;
-    <?php } ?>
     availability = productInfoNotAvailable;
     model = '';
   }
