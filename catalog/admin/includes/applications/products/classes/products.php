@@ -879,7 +879,7 @@ class lC_Products_Admin {
           $Qchk->execute();
           
           while( $Qchk->next() ) {
-            if (!in_array($Qchk->valueInt('products_id'), $data['sub_products_id'])) {
+            if (! @in_array($Qchk->valueInt('products_id'), $data['sub_products_id'])) {
               self::delete($Qchk->valueInt('products_id'));              
             }
           }
@@ -895,7 +895,7 @@ class lC_Products_Admin {
         for ($i=0; $i < sizeof($data['sub_products_name']); $i++) {
           if ($data['sub_products_name'][$i] == '') continue;
 
-          if (is_numeric($id) && in_array($data['sub_products_id'][$i], $data['sub_products_id'])) {
+          if (is_numeric($id) && @in_array($data['sub_products_id'][$i], $data['sub_products_id'])) {
             // update the subproduct record
             $Qsubproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id, products_date_added = :products_date_added, is_subproduct = :is_subproduct where parent_id = :parent_id and products_id = :products_id');
             $Qsubproduct->bindInt(':products_id', $data['sub_products_id'][$i]);
@@ -907,8 +907,8 @@ class lC_Products_Admin {
           $Qsubproduct->bindTable(':table_products', TABLE_PRODUCTS);
           $Qsubproduct->bindInt(':parent_id', $products_id);
           $Qsubproduct->bindInt(':products_quantity', $data['sub_products_qoh'][$i]);
-          $Qsubproduct->bindFloat(':products_cost', $data['sub_products_cost'][$i]);
-          $Qsubproduct->bindFloat(':products_price', $data['sub_products_price'][1][$i]); // retail group - other prices go into pricing table
+          $Qsubproduct->bindFloat(':products_cost', preg_replace('/[^0-9]\./', '', $data['sub_products_cost'][$i]));
+          $Qsubproduct->bindFloat(':products_price',  preg_replace('/[^0-9]\./', '', $data['sub_products_price'][1][$i])); // retail group - other prices go into pricing table
           $Qsubproduct->bindValue(':products_sku', $data['sub_products_sku'][$i]);
           $Qsubproduct->bindFloat(':products_weight', $data['sub_products_weight'][$i]);
           $Qsubproduct->bindInt(':products_weight_class', $data['weight_class']);
@@ -922,14 +922,14 @@ class lC_Products_Admin {
           if ( $lC_Database->isError() ) {
             $error = true;
           } else {
-            if ( is_numeric($id) && in_array($data['sub_products_id'][$i], $data['sub_products_id']) ) {
+            if ( is_numeric($id) && @in_array($data['sub_products_id'][$i], $data['sub_products_id']) ) {
               $sub_products_id = $data['sub_products_id'][$i];
             } else {
               $sub_products_id = $lC_Database->nextID();
-            }            
+            }                  
             // subproduct description
             foreach ($lC_Language->getAll() as $l) {
-              if (is_numeric($id) && in_array($data['sub_products_id'][$i], $data['sub_products_id'])) {
+              if (is_numeric($id) && @in_array($data['sub_products_id'][$i], $data['sub_products_id'])) {
                 $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name where products_id = :products_id and language_id = :language_id');
               } else {
                 $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name) values (:products_id, :language_id, :products_name)');
@@ -1898,10 +1898,10 @@ class lC_Products_Admin {
   public static function hasSubProducts($id) {
     global $lC_Database;
 
-    $Qchk = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id and is_subproduct = :is_subproduct limit 1');
+    $Qchk = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id and is_subproduct > :is_subproduct limit 1');
     $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
     $Qchk->bindInt(':parent_id', $id);
-    $Qchk->bindInt(':is_subproduct', 1);
+    $Qchk->bindInt(':is_subproduct', 0);
     $Qchk->execute();
 
     if ( $Qchk->numberOfRows() === 1 ) {
@@ -1921,10 +1921,10 @@ class lC_Products_Admin {
   public static function getMinMax($id, $key = 'products_quantity') {
     global $lC_Database;
 
-    $Qproducts = $lC_Database->query('select MAX(' . $key . ') as high, MIN(' . $key . ') as low from :table_products where parent_id = :parent_id and is_subproduct = :is_subproduct');
+    $Qproducts = $lC_Database->query('select MAX(' . $key . ') as high, MIN(' . $key . ') as low from :table_products where parent_id = :parent_id and is_subproduct > :is_subproduct');
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindInt(':parent_id', $id);
-    $Qproducts->bindInt(':is_subproduct', 1);
+    $Qproducts->bindInt(':is_subproduct', 0);
     $Qproducts->execute();
    
     $result = $Qproducts->toArray();
