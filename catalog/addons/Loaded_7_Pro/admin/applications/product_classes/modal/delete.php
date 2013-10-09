@@ -78,6 +78,8 @@ function deleteClass(id, name) {
                     return false;
                   }
                   oTable.fnReloadAjax();
+                  // we must refresh after delete to pick up the changed default constant
+                  window.location.href = window.location.href;
                 }
               );
               win.closeModal();
