@@ -28,6 +28,7 @@ abstract class lC_Addon {
             $_compatibility,
             $_enabled,
             $_mobile_enabled,
+            $_auto_install = false,
             $_valid;
     
   public function isEnabled() {
@@ -80,6 +81,10 @@ abstract class lC_Addon {
   
   public function getCompatibility() {
     return $this->_compatibility;
+  }  
+  
+  public function isAutoInstall() {
+    return $this->_auto_install;
   }   
   
   public function hasKeys() {

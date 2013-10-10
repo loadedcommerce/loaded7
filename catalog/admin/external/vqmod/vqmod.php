@@ -235,7 +235,7 @@ final class VQMod {
       fclose($fh);
     }
     $modList = explode(';', unserialize($modList));
-    
+       
     $modArr = array();
     foreach ($modList as $key => $value) {
       $loc = str_replace('controller.php', '', $value);
