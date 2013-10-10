@@ -369,14 +369,6 @@ class lC_Order {
       $Qupdate->bindValue(':currency', $lC_Currencies->getCode());
       $Qupdate->bindValue(':currency_value', $lC_Currencies->value($lC_Currencies->getCode()));
     
-      $Qstatus = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments)');
-      $Qstatus->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
-      $Qstatus->bindInt(':orders_id', $order_id);
-      $Qstatus->bindInt(':orders_status_id', $status_id);
-      $Qstatus->bindInt(':customer_notified', (SEND_EMAILS == '1') ? '1' : '0');
-      $Qstatus->bindValue(':comments', '');
-      $Qstatus->execute();
-      
       $Qpt = $lC_Database->query('delete from :table_orders_total where orders_id = :orders_id');
       $Qpt->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
       $Qpt->bindInt(':orders_id', $order_id); 
@@ -441,7 +433,15 @@ class lC_Order {
     $Qupdate->bindTable(':table_orders', TABLE_ORDERS);
     $Qupdate->bindInt(':orders_status', $status_id);
     $Qupdate->bindInt(':orders_id', $order_id);
-    $Qupdate->execute();          
+    $Qupdate->execute();
+    
+    $Qstatus = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments)');
+    $Qstatus->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
+    $Qstatus->bindInt(':orders_id', $order_id);
+    $Qstatus->bindInt(':orders_status_id', $status_id);
+    $Qstatus->bindInt(':customer_notified', (SEND_EMAILS == '1') ? '1' : '0');
+    $Qstatus->bindValue(':comments', '');
+    $Qstatus->execute();
 
     $lC_ShoppingCart->synchronizeWithDatabase();
     
@@ -884,5 +884,5 @@ class lC_Order {
       $index++;
     }
   }
-  }
+}
 ?>
