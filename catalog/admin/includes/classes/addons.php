@@ -561,6 +561,25 @@ class lC_Addons_Admin extends lC_Addons {
           $GLOBALS[$class] = new $class();
         }         
         
+        if ($GLOBALS[$class]->isAutoInstall()) {
+          if (defined('ADDONS_' . strtoupper($GLOBALS[$class]->getAddonType()) . '_' . strtoupper($class) . '_STATUS')) {
+            $isInstalled = $GLOBALS[$class]->isInstalled();
+            $isEnabled = $GLOBALS[$class]->isEnabled();            
+          } else {
+            if (class_exists('lC_Store_Admin')) { 
+            } else {
+              include_once($lC_Vqmod->modCheck('includes/applications/store/classes/store.php'));
+            }            
+            
+            lC_Store_Admin::install($class);
+            $isInstalled = true;  
+            $isEnabled = true;
+          }
+        } else {
+          $isInstalled = $GLOBALS[$class]->isInstalled();
+          $isEnabled = $GLOBALS[$class]->isEnabled();
+        }
+        
         $_SESSION['lC_Addons_Admin_data'][$class] = array('type' => $GLOBALS[$class]->getAddonType(),
                                                           'title' => self::_getLanguageDefinition($GLOBALS[$class]->getAddonTitle(), $class),
                                                           'description' => self::_getLanguageDefinition($GLOBALS[$class]->getAddonDescription(), $class),
@@ -570,12 +589,12 @@ class lC_Addons_Admin extends lC_Addons {
                                                           'thumbnail' => $GLOBALS[$class]->getAddonThumbnail(),
                                                           'version' => $GLOBALS[$class]->getAddonVersion(),
                                                           'compatibility' => $GLOBALS[$class]->getCompatibility(),
-                                                          'installed' => $GLOBALS[$class]->isInstalled(),
+                                                          'installed' => $isInstalled,
                                                           'mobile' => $GLOBALS[$class]->isMobileEnabled(),
                                                           'auto_install' => $GLOBALS[$class]->isAutoInstall(),
-                                                          'enabled' => $GLOBALS[$class]->isEnabled());         
+                                                          'enabled' => $isEnabled);         
         
-        if ($GLOBALS[$class]->isEnabled()) $enabled .= $addon['path'] . ';';
+        if ($isEnabled) $enabled .= $addon['path'] . ';';
       }
     }   
        

@@ -58,11 +58,10 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     * The addon enable/disable switch
     */    
     $this->_enabled = (defined('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false; 
-    
-    // auto install the module
-    if (!$this->isInstalled()) {
-//      $this->install();
-    }
+   /**
+    * Automatically install the module
+    */ 
+    $this->_auto_install = true; 
   }
  /**
   * Checks to see if the addon has been installed
