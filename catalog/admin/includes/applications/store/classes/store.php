@@ -13,9 +13,11 @@
 
   @function The lC_Updater_Admin class manages zM services
 */
-require_once(DIR_FS_CATALOG . 'includes/classes/addons.php');
-require_once(DIR_FS_CATALOG . 'includes/classes/transport.php');
-require_once(DIR_FS_ADMIN . 'includes/applications/updates/classes/updates.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
+require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/transport.php'));
+require_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/updates/classes/updates.php'));
 
 class lC_Store_Admin { 
  /*
@@ -38,6 +40,8 @@ class lC_Store_Admin {
     $result = array('aaData' => array());
     
     foreach ( $Qaddons as $key => $addon ) {
+      
+      if ($type == 'payment' && $addon['code'] != 'Vantiv_Payments') continue;
       
       $from_store = (isset($addon['from_store']) && $addon['from_store'] == '1') ? true : false;
       $featured = ($from_store && isset($addon['featured']) && $addon['featured'] == '1') ? '<span class="icon-star mid-margin-left icon-orange with-tooltip" title="' . $lC_Language->get('text_featured') . '" style="cursor:pointer; vertical-align:-35%;"></span>' : NULL;
