@@ -203,7 +203,7 @@ class lC_Order {
     $Qstatus->bindInt(':orders_id', $insert_id);
     $Qstatus->bindInt(':orders_status_id', 1);
     $Qstatus->bindInt(':customer_notified', '0');
-    $Qstatus->bindValue(':comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : ''));
+    $Qstatus->bindValue(':comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : $_POST['comments']));
     $Qstatus->execute();
 
     foreach ($lC_ShoppingCart->getProducts() as $products) {
@@ -442,7 +442,7 @@ class lC_Order {
     $Qstatus->bindInt(':customer_notified', (SEND_EMAILS == '1') ? '1' : '0');
     $Qstatus->bindValue(':comments', '');
     $Qstatus->execute();
-
+    
     $lC_ShoppingCart->synchronizeWithDatabase();
     
     $Qproducts = $lC_Database->query('select products_id, products_quantity from :table_orders_products where orders_id = :orders_id');
@@ -509,7 +509,7 @@ class lC_Order {
       $Qupdate->bindInt(':products_id', $Qproducts->valueInt('products_id'));
       $Qupdate->execute();
     }
-
+    
     lC_Order::sendEmail($order_id);
 
     unset($_SESSION['prepOrderID']);
@@ -517,13 +517,14 @@ class lC_Order {
 
   public function sendEmail($id) {
     global $lC_Database, $lC_Language, $lC_Currencies, $lC_ShoppingCart;
-
+    
     $Qorder = $lC_Database->query('select * from :table_orders where orders_id = :orders_id limit 1');
     $Qorder->bindTable(':table_orders', TABLE_ORDERS);
     $Qorder->bindInt(':orders_id', $id);
     $Qorder->execute();
-
+    
     if ($Qorder->numberOfRows() === 1) {
+      
       $email_order = STORE_NAME . "\n" .
                      $lC_Language->get('email_order_separator') . "\n" .
                      sprintf($lC_Language->get('email_order_order_number'), $id) . "\n" .
@@ -536,7 +537,7 @@ class lC_Order {
       $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
       $Qproducts->bindInt(':orders_id', $id);
       $Qproducts->execute();
-
+      
       while ($Qproducts->next()) {
         $email_order .= $Qproducts->valueInt('products_quantity') . ' x ' . $Qproducts->value('products_name') . ' (' . $Qproducts->value('products_model') . ') = ' . $lC_Currencies->displayPriceWithTaxRate($Qproducts->value('products_price'), $Qproducts->value('products_tax'), $Qproducts->valueInt('products_quantity'), false, $Qorder->value('currency'), $Qorder->value('currency_value')) . "\n";
 
@@ -550,7 +551,7 @@ class lC_Order {
           $email_order .= "\t" . $Qvariants->value('group_title') . ': ' . $Qvariants->value('value_title') . "\n";
         }
       }
-
+      
       unset($Qproducts);
       unset($Qvariants);
 
@@ -560,11 +561,11 @@ class lC_Order {
       $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
       $Qtotals->bindInt(':orders_id', $id);
       $Qtotals->execute();
-
+      
       while ($Qtotals->next()) {
         $email_order .= strip_tags($Qtotals->value('title') . ' ' . $Qtotals->value('text')) . "\n";
       }
-
+      
       unset($Qtotals);
 
       if ( (lc_empty($Qorder->value('delivery_name')) === false) && (lc_empty($Qorder->value('delivery_street_address')) === false) ) {
@@ -587,7 +588,7 @@ class lC_Order {
 
         unset($address);
       }
-
+      
       $address = array('name' => $Qorder->value('billing_name'),
                        'company' => $Qorder->value('billing_company'),
                        'street_address' => $Qorder->value('billing_street_address'),
@@ -606,13 +607,13 @@ class lC_Order {
                       lC_Address::format($address) . "\n\n";
 
       unset($address);
-
+      
       $Qstatus = $lC_Database->query('select orders_status_name from :table_orders_status where orders_status_id = :orders_status_id and language_id = :language_id');
       $Qstatus->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
       $Qstatus->bindInt(':orders_status_id', $Qorder->valueInt('orders_status'));
       $Qstatus->bindInt(':language_id', $lC_Language->getID());
       $Qstatus->execute();
-
+      
       $email_order .= sprintf($lC_Language->get('email_order_status'), $Qstatus->value('orders_status_name')) . "\n" .
                       $lC_Language->get('email_order_separator') . "\n";
 
@@ -632,21 +633,21 @@ class lC_Order {
       if (is_object($lC_ShoppingCart)) {
         $email_order .= $lC_Language->get('email_order_payment_method') . "\n" .
                         $lC_Language->get('email_order_separator') . "\n";
-
+        
         $email_order .= $lC_ShoppingCart->getBillingMethod('title') . "\n\n";
-        if (isset($this->email_footer)) {
+        
+        /*if (isset($this->email_footer)) {
           $email_order .= $this->email_footer . "\n\n";
-        }
+        }*/
       }
-
+      
       lc_email($Qorder->value('customers_name'), $Qorder->value('customers_email_address'), $lC_Language->get('email_order_subject'), $email_order, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
-
+      
       // send emails to other people
       if (SEND_EXTRA_ORDER_EMAILS_TO != '') {
         lc_email('', SEND_EXTRA_ORDER_EMAILS_TO, $lC_Language->get('email_order_subject'), $email_order, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
       }
     }
-
     unset($Qorder);
   }
 
