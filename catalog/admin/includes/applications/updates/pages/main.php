@@ -99,7 +99,7 @@ $backupArr = lC_Updates_Admin::getBackups();
                 <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_reinstall_update'); ?></span>
               </a>               
             </td>
-            <td align="center">
+            <td align="center" id="td-download">
               <a id="download" href="#" class="button icon-download download-zip blue-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>">
                 <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_download_zip'); ?></span>
               </a>

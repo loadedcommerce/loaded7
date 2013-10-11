@@ -71,7 +71,7 @@ class output {
       if ($group == 'hidden') continue;
       
       $output .= '<li class="with-right-arrow">';
-      $output .= '  <span><span class="list-count">' . count($links) . '</span>' . lC_Access::getGroupTitle($group) . '</span>';
+      $output .= '  <span><span class="list-count" id="list-count-' . $group . '">' . count($links) . '</span>' . lC_Access::getGroupTitle($group) . '</span>';
       $output .= '  <ul class="big-menu ' . $_class . '">';
 
       foreach ( $links as $link) {
@@ -84,7 +84,7 @@ class output {
         
         if (count($link['subgroups']) > 0 && $link['module'] != 'configuration') {
           $output .= '<li class="with-right-arrow">';
-          $output .= '<span><span class="list-count">' . count($link['subgroups']) . '</span>' . $link['title'] . '</span>';
+          $output .= '<span><span class="list-count" id="list-count-' . $link['title'] . '">' . count($link['subgroups']) . '</span>' . $link['title'] . '</span>';
         } else {
           $output .= '<li><a class="' . $mOpenClass . '" id="big-menu_' . str_replace(" ", "_", strtolower($link['title'])) . '" href="' . lc_href_link_admin(FILENAME_DEFAULT, $link['module']) . '">';
           $output .= '<span>' . $link['title'] . '</span></a>';

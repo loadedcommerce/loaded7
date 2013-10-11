@@ -478,7 +478,8 @@
           </section>
         </div>
       </div>
-      
+      <!--VQMOD1-->
+                    
       <!--<div id="recentContainer" class="hide-below-992">
         <section>
           <ul class="title-menu">

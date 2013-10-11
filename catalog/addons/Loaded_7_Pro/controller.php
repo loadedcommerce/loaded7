@@ -21,7 +21,7 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     * The addon type (category)
     * valid types; payment, shipping, themes, checkout, catalog, admin, reports, connectors, other 
     */    
-    $this->_type = 'featured';
+    $this->_type = 'system';
    /**
     * The addon class name
     */    
