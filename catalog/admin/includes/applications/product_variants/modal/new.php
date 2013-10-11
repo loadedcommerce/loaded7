@@ -105,6 +105,7 @@ function newGroup() {
       $("#module").empty();  // clear the old values
       i = 0;
       $.each(data.modulesArray, function(val, text) {
+        var text = text.replace(/_/g, " ").replace(/\b./g, function(m){ return m.toUpperCase(); });
         if(i == 0) {
           $("#module").closest("span + *").prevAll("span.select-value:first").text(text);
           i++;
