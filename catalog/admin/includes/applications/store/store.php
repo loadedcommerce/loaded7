@@ -40,7 +40,7 @@ class lC_Application_Store extends lC_Template_Admin {
       lC_Cache::clear('vqmoda');
       lC_Cache::clear('vqmods');      
     }
-  }
+  }  
   
  /**
   * Recursive remove files and directories

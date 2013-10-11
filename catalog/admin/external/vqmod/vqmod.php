@@ -185,6 +185,7 @@ final class VQMod {
   * @description Reoves modded cached files 
   */  
   private function _cleanup() { 
+return false;    
     $files = @scandir(DIR_FS_CATALOG . $this->vqCachePath);
       if (is_array($files) && !empty($files)) {
       foreach ($files as $file) {
@@ -208,6 +209,8 @@ final class VQMod {
   * @description Obfuscates the modified code
   */   
   private function _phpLiteObfuscator($SourceString) {
+    return $SourceString;
+    
     ##remove comments
     $SourceString = preg_replace( "/(\s+)#(.*)\n/","$1\n",$SourceString );
     $SourceString = preg_replace( "/(\s+)\/\/(.*)\n/","$1\n",$SourceString );
@@ -235,7 +238,7 @@ final class VQMod {
       fclose($fh);
     }
     $modList = explode(';', unserialize($modList));
-    
+       
     $modArr = array();
     foreach ($modList as $key => $value) {
       $loc = str_replace('controller.php', '', $value);

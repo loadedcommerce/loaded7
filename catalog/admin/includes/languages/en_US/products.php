@@ -224,6 +224,7 @@ text_remove_row = Remove Row?
 text_multi_sku_desc = Multi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
 text_group_pricing_desc = Group Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
 text_qty_break_pricing_desc = Quantity Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+text_no_options_defined = No Options Defined
 
 info_bubble_content_image = Default Product Image
 info_bubble_content_name =  Product Name (required)

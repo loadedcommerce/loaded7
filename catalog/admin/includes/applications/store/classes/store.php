@@ -13,9 +13,11 @@
 
   @function The lC_Updater_Admin class manages zM services
 */
-require_once(DIR_FS_CATALOG . 'includes/classes/addons.php');
-require_once(DIR_FS_CATALOG . 'includes/classes/transport.php');
-require_once(DIR_FS_ADMIN . 'includes/applications/updates/classes/updates.php');
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
+require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/transport.php'));
+require_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/updates/classes/updates.php'));
 
 class lC_Store_Admin { 
  /*
@@ -38,7 +40,7 @@ class lC_Store_Admin {
     $result = array('aaData' => array());
     
     foreach ( $Qaddons as $key => $addon ) {
-      
+      /*VQMOD1*/
       $from_store = (isset($addon['from_store']) && $addon['from_store'] == '1') ? true : false;
       $featured = ($from_store && isset($addon['featured']) && $addon['featured'] == '1') ? '<span class="icon-star mid-margin-left icon-orange with-tooltip" title="' . $lC_Language->get('text_featured') . '" style="cursor:pointer; vertical-align:-35%;"></span>' : NULL;
       $inCloud = ($from_store) ? '<span class="mid-margin-left icon-cloud icon-green with-tooltip" title="' . $lC_Language->get('text_in_cloud') . '" style="vertical-align:-35%;"></span>' : NULL;
@@ -429,7 +431,7 @@ class lC_Store_Admin {
         $Qdel->execute();
       }   
       
-            // phsically remove the add-on
+      // phsically remove the add-on
       if (isset($key) && empty($key) === false) $_SESSION['deleteAddon'] = $key;   
 
       self::_resetAddons();
@@ -458,7 +460,7 @@ class lC_Store_Admin {
   * @return void
   */
   private static function _resetAddons() {
-    if (isset($_SESSION['lC_Addons_data'])) unset($_SESSION['lC_Addons_data']);
+    if (isset($_SESSION['lC_Addons_Admin_data'])) unset($_SESSION['lC_Addons_Admin_data']);
     lC_Cache::clear('modules-addons');
     lC_Cache::clear('configuration');
     lC_Cache::clear('templates');
