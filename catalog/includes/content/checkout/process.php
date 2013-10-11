@@ -40,8 +40,11 @@ class lC_Checkout_Process extends lC_Template {
     }
 
     // if no shipping method has been selected, redirect the customer to the shipping method selection page
-    if (($lC_ShoppingCart->hasShippingMethod() === false) && ($lC_ShoppingCart->getContentType() != 'virtual' || (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1'))) {
-      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
+    if (($lC_ShoppingCart->hasShippingMethod() === false) && ($lC_ShoppingCart->getContentType() != 'virtual')) {
+      if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1') {
+      } else {
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
+      }
     }
              
     // load selected payment module

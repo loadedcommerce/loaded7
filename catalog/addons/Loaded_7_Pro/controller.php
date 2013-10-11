@@ -94,7 +94,10 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     $lC_Database->simpleQuery("delete from " . TABLE_TEMPLATES_BOXES . " where code = 'product_classes'");
     $lC_Database->simpleQuery("insert into " . TABLE_TEMPLATES_BOXES . " (title, code, author_name, author_www, modules_group) VALUES ('Product Classes', 'product_classes', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes')");
     $lC_Database->simpleQuery("alter table " . TABLE_PRODUCTS . " ADD `is_subproduct` TINYINT( 1 ) NOT NULL DEFAULT '0'");
-    
+    // skip shipping
+    $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'SKIP_CHECKOUT_SHIPPING_PAGE'");
+    $lC_Database->simpleQuery("insert into lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(170, 'Skip Shipping Page', 'SKIP_CHECKOUT_SHIPPING_PAGE', '-1', 'Bypass the checkout shipping page? No shipping will be charged.', 19, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');");
+
     $this->_clearCache();
   }
  /**
