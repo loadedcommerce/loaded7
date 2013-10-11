@@ -969,7 +969,7 @@ class lC_ShoppingCart {
   }
 
   public function getTaxingAddress($id = null) {
-    if ( $this->getContentType() == 'virtual' ) {
+    if ( $this->getContentType() == 'virtual' || (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1') ) {
       return $this->getBillingAddress($id);
     }
 
