@@ -892,8 +892,7 @@ class lC_Products_Admin {
           $Qdel->execute();          
         }        
         
-        $subs = utility::cleanArr($data['sub_products_name']);
-        for ($i=0; $i < sizeof($subs); $i++) {
+        for ($i=0; $i < sizeof($data['sub_products_name']); $i++) {
           if ($data['sub_products_name'][$i] == '') continue;
 
           if (is_numeric($id) && @in_array($data['sub_products_id'][$i], $data['sub_products_id'])) {
@@ -916,7 +915,7 @@ class lC_Products_Admin {
           $Qsubproduct->bindInt(':products_status', $data['sub_products_status'][$i]);
           $Qsubproduct->bindInt(':products_tax_class_id', $data['tax_class_id']);
           $Qsubproduct->bindRaw(':products_date_added', 'now()');            
-          $Qsubproduct->bindInt(':is_subproduct', ($data['sub_products_default'][$i] == '1' || sizeof($subs) == 1) ? 2 : 1);            
+          $Qsubproduct->bindInt(':is_subproduct', ($data['sub_products_default'][$i] == '1' || sizeof($data['sub_products_name']) == 1) ? 2 : 1);            
           $Qsubproduct->setLogging($_SESSION['module'], $id);
           $Qsubproduct->execute();
           
