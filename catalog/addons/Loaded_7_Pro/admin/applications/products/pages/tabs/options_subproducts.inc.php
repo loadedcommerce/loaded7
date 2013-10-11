@@ -142,7 +142,8 @@ function addSubProductsRow(include_price_row, e, key) {
    
   if (include_price_row == '1') {       
     var ok = '<?php echo (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? '1' : '0'; ?>';
-    var groups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;                    
+    var groups = <?php echo json_encode(lC_Customer_groups_Admin::getAll()); ?>;
+    $('#no-options-' + val.customers_group_id).remove();
     $.each(groups.entries, function( key, val ) {
       var prow = '<tr class="trp-' + nextId + '">'+
                  '  <td id="name-td-' + nextId + '" class="element">' + prevName + '</td>'+

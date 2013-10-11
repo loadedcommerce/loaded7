@@ -1879,7 +1879,7 @@ class lC_Products_Admin {
       } else if (isset($pInfo) && $pInfo->get('has_variants') == '1') {
       
       } else {      
-        $content .= '<table class="simple-table"><tbody><tr><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
+        $content .= '<table class="simple-table"><tbody id="tbody-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
       }
                 
       $content .= '  </div>' .
