@@ -89,7 +89,7 @@ class lC_Categories_Admin {
       $count = count($cid);
       $cid = end($cid);
       if ($cid != $id && !in_array($cid, lC_Categories_Admin::getChildren($id))) {
-        $categories_array[$cid] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $count-1) . ' ' . $value['title'];
+        $categories_array[$cid] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;[" . $count . ']', $count-1) . ' ' . $value['title'];
       }
     }
     $result['categoriesArray'] = $categories_array;
@@ -459,12 +459,13 @@ class lC_Categories_Admin {
   */
   public static function getParent($id) {
     global $lC_Database;
-    $Qcategories = $lC_Database->query('select c.parent_id from :table_categories c where c.categories_id = :categories_id');
+    
+    $Qcategories = $lC_Database->query('select parent_id from :table_categories where categories_id = :categories_id');
     $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
     $Qcategories->bindInt(':categories_id', $id);
     $Qcategories->execute();
 
-    $parentID = $Qcategories->value('parent_id');
+    $parentID = $Qcategories->valueInt('parent_id');
 
     $Qcategories->freeResult();
 
@@ -515,18 +516,23 @@ class lC_Categories_Admin {
   }
 
   public static function getChildren($parent_id) {
-    $tree = array();
+    global $lC_Database;
     
     if (!empty($parent_id)) {
-      $tree = lC_Categories_Admin::getChild($parent_id);
+      $Qchildren = $lC_Database->query('select categories_id from :table_categories where parent_id = :parent_id');
+      $Qchildren->bindTable(':table_categories', TABLE_CATEGORIES);
+      $Qchildren->bindInt(':parent_id', $parent_id);
+      $Qchildren->execute();
       
-      foreach ($tree as $val) {
-        $ids = lC_Categories_Admin::getChildren($val);
-        $tree = array_merge($tree, $ids);
+      $cat_ids = array();
+      if ($Qchildren->numberOfRows !== 0) {
+        while ( $Qchildren->next() ) {  
+          $cat_ids[] = $Qchildren->value('categories_id');
+        }
       }
     }
     
-    return $tree;
+    return $cat_ids;
   }
  /*
   * Update category sorting

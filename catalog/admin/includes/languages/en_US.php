@@ -256,6 +256,8 @@ tooltip_quick_add = Quick Add (a)
 tooltip_messages = Messages (m)
 tooltip_settings = Settings (s) / Main Menu (escape)
 
+top_category = Top Category
+
 text_version = Version
 text_confirm_delete = Confirm Delete?
 text_sort = Sort
