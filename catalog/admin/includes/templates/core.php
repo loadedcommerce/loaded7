@@ -13,7 +13,7 @@
 */
 class lC_Template_core {
   var $_id,
-      $_title = 'LoadedCommerce Bootstrap 3.0 Core Template',
+      $_title = 'Loaded Commerce Bootstrap 3.0 Core Template',
       $_code = 'core',
       $_author_name = 'Loaded Commerce',
       $_author_www = 'http://www.loadedcommerce.com',
