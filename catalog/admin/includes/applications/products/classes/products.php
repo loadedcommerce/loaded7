@@ -1361,18 +1361,25 @@ class lC_Products_Admin {
           $error = true;
         }
       }
-
       if ( $error === false ) {
-        $Qim = $lC_Database->query('select id from :table_products_images where products_id = :products_id');
+        $Qim = $lC_Database->query('select id, image from :table_products_images where products_id = :products_id');
         $Qim->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
         $Qim->bindInt(':products_id', $id);
         $Qim->execute();
-
-        while ($Qim->next()) {
-          $lC_Image->delete($Qim->valueInt('id'));
+        
+        // added to check for other products using same image and do not delete
+        $Qop = $lC_Database->query('select id from :table_products_images where image = :image');
+        $Qop->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+        $Qop->bindInt(':image', $Qim->value('image'));
+        $Qop->execute();
+        
+        if ($Qop->numberOfRows() < 2) {
+          while ($Qim->next()) {
+            $lC_Image->delete($Qim->valueInt('id'));
+          }
         }
       }
-
+      
       // QPB
       if ( $error === false ) {
         $Qpb = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
