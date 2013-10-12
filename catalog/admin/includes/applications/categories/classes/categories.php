@@ -70,6 +70,50 @@ class lC_Categories_Admin {
     return $result;
   }
  /*
+  * Returns all child categories
+  *
+  * @param int $parent_id The category parent id
+  * @access public
+  * @return array
+  */
+  public static function getAllChildren($parent_id) {
+    global $lC_Database;
+    
+    $Qchildren = $lC_Database->query('select categories_id from :table_categories where parent_id = :parent_id');
+    $Qchildren->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qchildren->bindInt(':parent_id', $parent_id);
+    $Qchildren->execute();
+      
+    $children = array();    
+    if ($Qchildren->numberOfRows !== 0) {
+      while ( $Qchildren->next() ) {
+        $children[] = $Qchildren->valueInt('categories_id');
+        $arr = self::getAllChildren($Qchildren->valueInt('categories_id'));
+        if (count($arr) > 0) {
+          $children[] = self::getAllChildren($Qchildren->value('categories_id'));
+        }
+      }      
+    }
+    return $children;
+  }
+ /*
+  * Returns result of multidimensional array search
+  *
+  * @param $needle
+  * @param $haystack
+  * @param $strict
+  * @access public
+  * @return boolean true or false
+  */
+  public static function in_array_r($needle, $haystack, $strict = false) {
+    foreach ($haystack as $item) {
+      if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && self::in_array_r($needle, $item, $strict))) {
+        return true;
+      }
+    }
+    return false;
+  }
+ /*
   * Returns the data used on the dialog forms
   *
   * @param integer $id The category id
@@ -88,8 +132,9 @@ class lC_Categories_Admin {
       $cid = explode('_', $value['id']);
       $count = count($cid);
       $cid = end($cid);
-      if ($cid != $id && !in_array($cid, lC_Categories_Admin::getChildren($id))) {
-        $categories_array[$cid] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;[" . $count . ']', $count-1) . ' ' . $value['title'];
+      $acArr = lC_Categories_Admin::getAllChildren($id);
+      if ($cid != $id && !lC_Categories_Admin::in_array_r($cid, $acArr)) {
+        $categories_array[$cid] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $count-1) . ' ' . $value['title'];
       }
     }
     $result['categoriesArray'] = $categories_array;
