@@ -72,7 +72,12 @@ table_heading_action = Action
 
 text_coupon = Coupon
 text_rule = Rule
+text_new_rule_upsell_title = New Rule
 text_new_rule_upsell_desc = New Rule Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. 
+text_coupon_restrictions_upsell_title = Coupon Restrictions
+text_coupon_restrictions_upsell_desc = Coupon Restrictions Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. 
+text_free_product_upsell_title = Free Product
+text_free_product_upsell_desc = Free Product Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. 
 text_toggle_html_editor = Toggle Editor
 text_new_coupon = New Coupon
 
