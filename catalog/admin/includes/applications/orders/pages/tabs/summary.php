@@ -185,12 +185,12 @@
                     <div class="six-columns twelve-columns-mobile new-row-mobile">
                       <div class="columns">
                         <div class="twelve-columns">
-                          <font class="white font-eightteen mid-margin-right">Current Status</font>
+                          <font class="white font-eightteen mid-margin-right"><?php echo $lC_Language->get('text_address'); ?></font>
                           <?php echo lC_Orders_Admin::drawOrderStatusDropdown($_GET[$lC_Template->getModule()], 'anthracite-gradient'); ?>
                         </div>
                         <div class="twelve-columns">
                           <div>
-                            <?php echo lc_draw_textarea_field('comment', null, null, null, 'class="input autoexpanding full-width mid-pull-top" placeholder="Type here to send a message..."'); ?>
+                            <?php echo lc_draw_textarea_field('comment', null, null, null, 'class="input autoexpanding full-width mid-pull-top" placeholder="' . $lC_Language->get('text_comments_placeholder') .'"'); ?>
                           </div>
                         </div>
                       </div>

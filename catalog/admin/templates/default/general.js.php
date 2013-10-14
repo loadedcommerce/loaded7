@@ -33,6 +33,9 @@ $(document).ready(function() {
   } else if (module == 'orders') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-orders").addClass('current');   
+  } else if (module == 'orders_status') {
+    $("#shortcuts li").parent().find('li').removeClass("current");
+    $("#sc-orders").addClass('current');   
   } else if (module == 'categories' || module == 'content') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-content").addClass('current'); 
@@ -81,6 +84,8 @@ $(document).ready(function() {
       $("#big-menu_product_catalog").addClass('current navigable-current').change();
     } else if (module.indexOf("coupons") != -1 && document.location.href.indexOf("coupons") != -1) {
       $("#big-menu_coupon_manager").addClass('current navigable-current').change();
+    } else if (module.indexOf("orders") != -1 && document.location.href.indexOf("action=save") != -1) {
+      $("#big-menu_orders_list").addClass('current navigable-current').change();
     } else if (module.indexOf("product_variants") != -1 && document.location.href.indexOf("product_variants") != -1) {
       $("#big-menu_product_variants").addClass('current navigable-current').change();
     } else if (module.indexOf("statistics") != -1 && document.location.href.indexOf("statistics") != -1) {
