@@ -42,7 +42,8 @@ field_tax_class = Tax Class:
 field_url = URL:
 field_weight_class = Weight Class:
 field_active = Active:
-field_date_available = Date Available:
+field_date_available = Date Available
+field_availability_ends = Ends 
 field_non_shippable = Non Shippable
 
 heading_title = Products
@@ -208,7 +209,13 @@ text_remove_row = Remove Row?
 text_multi_sku_desc = Multi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
 text_group_pricing_desc = Group Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
 text_qty_break_pricing_desc = Quantity Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
-
+text_filter_by_class_desc = Filter by Class Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+text_add_new_group_desc = Add New Group Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+text_add_new_item_desc = Add New Item Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+text_availability_ends_desc = Availability Ends Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. 
+text_availability_ends = Availability Ends
+text_product_class_upsell_title = Product Classification
+text_product_class_upsell_desc = Product Class Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. 
 info_bubble_content_image = Default Product Image
 info_bubble_content_name =  Product Name (required)
 info_bubble_content_description =  Product Descripton (required)
