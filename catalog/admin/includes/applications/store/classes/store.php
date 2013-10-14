@@ -19,6 +19,7 @@ require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php')
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/transport.php'));
 require_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/updates/classes/updates.php'));
 
+if (!class_exists('lC_Store_Admin')) {
 class lC_Store_Admin { 
  /*
   * Returns the addons datatable data for listings
@@ -479,5 +480,6 @@ class lC_Store_Admin {
   private static function _usortAddonsByRating($a, $b) {
     return $a['rating'] == $b['rating'] ? 0 : $a['rating'] > $b['rating'] ? -1 : 1;
   } 
+}
 }
 ?>
