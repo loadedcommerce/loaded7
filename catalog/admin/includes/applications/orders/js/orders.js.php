@@ -72,7 +72,10 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     $("#order_statuses").change(function() {
       var text = $("#order_statuses > option:selected").text();
       $('#comment').val('<?php echo $lC_Language->get('text_status_update'); ?> ' + text);
-    }); 
+    });
+    $("#section_orders_summary").show('500'); 
+    $("#section_orders_status").show(); 
+    $("#section_orders_transactions").show(); 
   });
   
   function hideElements() {  

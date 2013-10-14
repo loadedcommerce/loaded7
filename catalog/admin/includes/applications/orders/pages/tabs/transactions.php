@@ -12,7 +12,7 @@
   @license    http://loadedcommerce.com/license.html
 */
 ?>
-          <div id="section_orders_transactions">
+          <div id="section_orders_transactions" style="display:none;">
             <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('text_transactions'); ?></h3>
             <div class="with-padding">
               <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table">
