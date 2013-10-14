@@ -16,6 +16,7 @@
 include_once('includes/applications/customer_groups/classes/customer_groups.php');
 include_once('includes/applications/product_variants/classes/product_variants.php');
 include_once('includes/applications/specials/classes/specials.php');
+include_once('includes/applications/categories/classes/categories.php');
 
 class lC_Products_Admin {
  /*
@@ -162,14 +163,52 @@ class lC_Products_Admin {
       $result['categoryPath'] = $in_categories_path;
     }
 
-    $categories_array = array('0' => $lC_Language->get('top_category'));
+    $categories_array = array('0' => '-- ' . $lC_Language->get('top_category') . ' --');
     foreach ( $lC_CategoryTree->getArray() as $value ) {
-      $categories_array[$value['id']] = $value['title'];
+      $pid = end(explode('_', $value['id']));
+      if (lC_Categories_Admin::getParent($pid) != 0) {
+        foreach (explode('_', $value['id']) as $cats) {
+          if ($pid != $cats) {
+            $Qcpn = $lC_Database->query('select categories_name from :table_categories_description where categories_id = :categories_id and language_id = :language_id');
+            $Qcpn->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+            $Qcpn->bindInt(':language_id', $lC_Language->getID());
+            $Qcpn->bindInt(':categories_id', $cats);
+            $Qcpn->execute();
+            
+            $titlestr .= $Qcpn->value('categories_name') . ' &raquo; ';
+          }
+        }
+        $title = $titlestr .  $value['title'];
+        unset($titlestr);
+      } else {
+        $title = $value['title'];
+      }
+      $categories_array[$value['id']] = $title;
     }
     $result['categoriesArray'] = $categories_array;
 
     return $result;
   }
+  // create path names
+  /*function createPathNames($id) {
+    global $lC_Database;
+    
+    $Qcpn = $lC_Database->query('select categories_name from :table_categories_description where parent_id = :categories_id and language_id = :language_id');
+    $Qcpn->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qcpn->bindInt(':language_id', $lC_Language->getID());
+    $Qcpn->bindInt(':categories_id', $id);
+    $Qcpn->execute();
+    
+    $result = $Qcpn->toArray();
+    
+    if ($result['categoryId'] == 0) {
+      $name = '<a href="index.php?action=listContent&categoryId=' . $result['id'] . '">' . $result['title'] . '</a>';  
+      return $name;
+    } else {
+      $name = ' > <a href="index.php?action=listContent&categoryId=' . $result['id'] . '">' . $result['title'] . '</a>';
+      return createPathNames($result['categoryId']) . " " . $name;
+    }
+  }*/
  /*
   * Return the data used on the preview dialog form
   *
@@ -937,7 +976,7 @@ class lC_Products_Admin {
   * @return boolean
   */
   public static function copy($id, $category_id, $type) {
-    global $lC_Database;
+    global $lC_Database, $lC_CategoryTree;
 
     $category_array = explode('_', $category_id);
 
@@ -995,18 +1034,34 @@ class lC_Products_Admin {
           $Qdesc->execute();
 
           while ( $Qdesc->next() ) {
-            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_tags, products_url, products_viewed)
-                                             values (:products_id, :language_id, :products_name, :products_description, :products_tags, :products_url, 0)');
-            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_tags, products_url, products_viewed) values (:products_id, :language_id, :products_name, :products_description, :products_tags, :products_url, 0)');
+            $Qnewdesc = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_keyword, products_tags, products_url, products_viewed) values (:products_id, :language_id, :products_name, :products_description, :products_keyword, :products_tags, :products_url, 0)');
             $Qnewdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
             $Qnewdesc->bindInt(':products_id', $new_product_id);
             $Qnewdesc->bindInt(':language_id', $Qdesc->valueInt('language_id'));
-            $Qnewdesc->bindValue(':products_name', $Qdesc->value('products_name'));
+            $Qnewdesc->bindValue(':products_name', $Qdesc->value('products_name') . '_Copy');
             $Qnewdesc->bindValue(':products_description', $Qdesc->value('products_description'));
+            $Qnewdesc->bindValue(':products_keyword', $Qdesc->value('products_keyword') . '-copy');
             $Qnewdesc->bindValue(':products_tags', $Qdesc->value('products_tags'));
             $Qnewdesc->bindValue(':products_url', $Qdesc->value('products_url'));
             $Qnewdesc->setLogging($_SESSION['module'], $new_product_id);
             $Qnewdesc->execute();
+
+            if ( $lC_Database->isError() ) {
+              $error = true;
+              break;
+            }
+            
+            // permalink addition
+            $lC_CategoryTree = new lC_CategoryTree_Admin();
+            $cPath = (end($category_array) != 0) ? $lC_CategoryTree->getcPath(end($category_array)) : 0;
+            $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
+            $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qpl->bindInt(':item_id', $new_product_id);
+            $Qpl->bindInt(':language_id', $Qdesc->valueInt('language_id'));
+            $Qpl->bindInt(':type', 2);
+            $Qpl->bindValue(':query', 'cPath=' . $cPath);
+            $Qpl->bindValue(':permalink', $Qdesc->value('products_keyword') . '-copy');
+            $Qpl->execute();
 
             if ( $lC_Database->isError() ) {
               $error = true;
@@ -1020,8 +1075,7 @@ class lC_Products_Admin {
           $Qpb->execute();
 
           while ( $Qpb->next() ) {
-            $Qnewpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added)
-                                           values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
+            $Qnewpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
             $Qnewpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
             $Qnewpb->bindInt(':products_id', $new_product_id);
             $Qnewpb->bindInt(':group_id', $Qpb->valueInt('group_id'));
@@ -1048,6 +1102,29 @@ class lC_Products_Admin {
 
             if ( $lC_Database->isError() ) {
               $error = true;
+            }
+          }
+
+          if ( $error === false ) {
+            $Qproductimages = $lC_Database->query('select * from :table_products_images where products_id = :products_id');
+            $Qproductimages->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+            $Qproductimages->bindInt(':products_id', $id);
+            $Qproductimages->execute();
+
+            while ( $Qproductimages->next() ) {
+              $Qpi = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added) values (:products_id, :image, :default_flag, :sort_order, :date_added)');
+              $Qpi->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+              $Qpi->bindInt(':products_id', $new_product_id);
+              $Qpi->bindValue(':image', $Qproductimages->value('image'));
+              $Qpi->bindInt(':default_flag', $Qproductimages->value('default_flag'));
+              $Qpi->bindInt(':sort_order', $Qproductimages->value('sort_order'));
+              $Qpi->bindRaw(':date_added', 'now()');
+              $Qpi->execute();
+
+              if ( $lC_Database->isError() ) {
+                $error = true;
+                break;
+              }
             }
           }
         } else {
@@ -1284,18 +1361,25 @@ class lC_Products_Admin {
           $error = true;
         }
       }
-
       if ( $error === false ) {
-        $Qim = $lC_Database->query('select id from :table_products_images where products_id = :products_id');
+        $Qim = $lC_Database->query('select id, image from :table_products_images where products_id = :products_id');
         $Qim->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
         $Qim->bindInt(':products_id', $id);
         $Qim->execute();
-
-        while ($Qim->next()) {
-          $lC_Image->delete($Qim->valueInt('id'));
+        
+        // added to check for other products using same image and do not delete
+        $Qop = $lC_Database->query('select id from :table_products_images where image = :image');
+        $Qop->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+        $Qop->bindInt(':image', $Qim->value('image'));
+        $Qop->execute();
+        
+        if ($Qop->numberOfRows() < 2) {
+          while ($Qim->next()) {
+            $lC_Image->delete($Qim->valueInt('id'));
+          }
         }
       }
-
+      
       // QPB
       if ( $error === false ) {
         $Qpb = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
@@ -1416,7 +1500,7 @@ class lC_Products_Admin {
   */
   public static function getPermalinkCount($permalink, $iid = null, $type = null) {
     global $lC_Database;
-
+    
     $Qpermalinks = $lC_Database->query('select count(*) as total, item_id, permalink from :table_permalinks where permalink = :permalink');
 
     if (is_numeric($iid)) {
@@ -1447,10 +1531,11 @@ class lC_Products_Admin {
     
     $validated = true;
     foreach($permalink_array as $permalink) {
+      echo '[' . $permalink . ']';
       if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
       if ( lC_Products_Admin::getPermalinkCount($permalink, $iid, $type) > 0) $validated = false;
     }
-
+    
     return $validated;
   }
  /*
@@ -1485,9 +1570,12 @@ class lC_Products_Admin {
         if ($module->getSection() == $section) {
           $lC_Language->loadIniFile('modules/product_attributes/' . $module->getCode() . '.php');
           $output .= '<div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
-                      <div class="twelve-columns strong small-margin-bottom">
-                        <span>' . $lC_Language->get('product_attributes_' . $module->getCode() . '_title') . '</span>' . lc_show_info_bubble($lC_Language->get('info_bubble_attributes_' . $module->getCode() . '_text')) . '</div>
-                        <div class="twelve-columns product-module-content margin-bottom">' . $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)) . '</div>
+                        <div class="twelve-columns strong mid-margin-bottom">
+                          <span>' . $lC_Language->get('product_attributes_' . $module->getCode() . '_title') . '</span>' . lc_show_info_bubble($lC_Language->get('info_bubble_attributes_' . $module->getCode() . '_text'), null, 'info-spot on-left grey float-right mid-margin-bottom') . '
+                        </div>
+                        <div class="twelve-columns product-module-content margin-bottom">
+                          ' . $module->setFunction((isset($attributes[$Qattributes->valueInt('id')]) ? $attributes[$Qattributes->valueInt('id')] : null)) . '
+                        </div>
                       </div>';
         }
       }

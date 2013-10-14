@@ -35,12 +35,12 @@
         <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom">
           <div class="columns">              
             <div class="new-row-mobile six-columns twelve-columns-mobile">
-              <span class="button-group">
+              <span class="button-group upsellwrapper">
                 <label for="mode_coupon" class="button blue-active">
                   <input type="radio" name="mode" id="mode_coupon" value="coupon" checked>
                   <?php echo $lC_Language->get('text_coupon'); ?>
                 </label>
-                <label for="mode_rule" class="button green-active disabled">
+                <label for="mode_rule" class="button green-active disabled upsellinfo" upselltitle="<?php echo $lC_Language->get('text_new_rule_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_new_rule_upsell_desc'); ?>">
                   <input type="radio" name="mode" id="mode_rule" value="rule" disabled>
                   <?php echo $lC_Language->get('text_rule') . lc_go_pro(); ?>
                 </label>
@@ -97,11 +97,11 @@
                 <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_shipping'); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_shipping'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
-              <div class="mid-margin-top">
+              <div class="mid-margin-top upsellwrapper">
                 <label for="type_free_product" class="label"></label>
                 <input type="radio" name="type" value="P" id="type_3" class="switch tiny mid-margin-right small-margin-left disabled<?php if (isset($cInfo)) { echo ($cInfo->get('type') == 'P') ? ' checked' : null; } ?>" onchange="updateRewardField($(this).val());">
                 <span class="input-info mid-margin-left"><?php echo $lC_Language->get('text_free_product'); ?></span>
-                <span class="small-margin-left"><?php echo lc_go_pro(); ?></span>
+                <span class="small-margin-left upsellinfo" upselltitle="<?php echo $lC_Language->get('text_free_product_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_free_product_upsell_desc'); ?>"><?php echo lc_go_pro(); ?></span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_free_product'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
               <input type="hidden" name="type" id="type" value="<?php echo $type; ?>" />
@@ -158,8 +158,8 @@
           </fieldset>
         </div>
         <div class="new-row-mobile twelve-columns twelve-columns-mobile" id="restrictions">
-          <fieldset class="fieldset fields-list">
-            <legend class="legend"><?php echo $lC_Language->get('legend_restrictions'); ?><?php echo lc_go_pro(true); ?></legend>
+          <fieldset class="fieldset fields-list upsellwrapper">
+            <legend class="legend upsellinfo" upselltitle="<?php echo $lC_Language->get('text_coupon_restrictions_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_coupon_restrictions_upsell_desc'); ?>"><?php echo $lC_Language->get('legend_restrictions'); ?><?php echo lc_go_pro(true); ?></legend>
             <div class="field-block button-height">
               <label for="" class="label"><b><?php echo $lC_Language->get('label_products'); ?></b></label>
               <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />  

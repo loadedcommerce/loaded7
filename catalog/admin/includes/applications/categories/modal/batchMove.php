@@ -50,15 +50,14 @@ function batchMove() {
                  '      <p><?php echo $lC_Language->get('introduction_batch_move_categories'); ?></p>'+
                  '      <p class="button-height inline-label">'+
                  '        <label for="new_category_id" class="label" style="width:125px;"><?php echo $lC_Language->get('field_parent_category'); ?></label>'+
-                 '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="select" style="width:93%;" id="moveNewCategoryId"'); ?>'+
+                 '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="input with-small-padding" style="width:93%;" id="moveNewCategoryId"'); ?>'+
                  '      </p>'+
                  '    </form>'+
                  '  </div>'+
                  '</div>',
         title: '<?php echo $lC_Language->get('modal_heading_batch_move_categories'); ?>',
         width: 300,
-        scrolling: false,
-        actions: {
+            actions: {
           'Close' : {
             color: 'red',
             click: function(win) { win.closeModal(); }

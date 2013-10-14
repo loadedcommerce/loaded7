@@ -29,7 +29,6 @@ function deleteCustomer(id, name) {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_delete_customer'); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

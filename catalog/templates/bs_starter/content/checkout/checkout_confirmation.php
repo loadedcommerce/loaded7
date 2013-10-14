@@ -7,7 +7,7 @@
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: checkout_confirmation.php v1.0 2013-08-08 datazen $
-*/ 
+*/
 ?>
 <!--content/checkout/checkout_confirmation.php start-->
 <div class="row">
@@ -70,8 +70,8 @@
               <div class="well relative clearfix small-padding-top small-padding-bottom"> 
                 <h4><?php echo $lC_Language->get('order_comment_title'); ?></h4>
                 <div class="form-group">
-                  <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), 60, 5, 'class="form-control" placeholder="' . $lC_Language->get('text_add_comment_to_order') . '"'); ?>
-                </div>                  
+                  <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), 60, 5, 'class="form-control" placeholder="' . $lC_Language->get('text_add_comment_to_order') . '" onblur="sendOrderCommentsToSession(this.value);"'); ?>
+                </div>                 
               </div>                                        
             </div>
             <div class="col-sm-8 col-lg-8">

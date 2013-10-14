@@ -44,16 +44,16 @@ function copyProduct(id, name) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="new_category_id" class="label" style="width:40%"><?php echo $lC_Language->get('field_copy_to_category'); ?></label>'+
-                   '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="select" style="width:73%;"'); ?>'+
+                   '        <?php echo lc_draw_pull_down_menu('new_category_id', null, null, 'class="input with-small-padding" style="width:73%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="copy_as" class="label" style="width:40%"><?php echo $lC_Language->get('field_copy_method'); ?></label>'+
                    '        <span class="button-group">'+
                    '          <label for="copy_as_1" class="button green-active">'+
-                   '            <input type="radio" name="copy_as" id="copy_as_1" value="link" checked><?php echo $lC_Language->get('copy_method_link'); ?>'+
+                   '            <input type="radio" name="copy_as" id="copy_as_1" value="link" checked><?php echo $lC_Language->get('text_copy_method_link'); ?>'+
                    '          </label>'+
                    '          <label for="copy_as_2" class="button green-active">'+
-                   '            <input type="radio" name="copy_as" id="copy_as_2" value="duplicate"><?php echo $lC_Language->get('copy_method_duplicate'); ?>'+
+                   '            <input type="radio" name="copy_as" id="copy_as_2" value="duplicate"><?php echo $lC_Language->get('text_copy_method_duplicate'); ?>'+
                    '          </label>'+
                    '        </span>'+
                    '      </p>'+
@@ -62,8 +62,7 @@ function copyProduct(id, name) {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_copy_product'); ?>',
           width: 500,
-          scrolling: false,
-          actions: {
+                actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }

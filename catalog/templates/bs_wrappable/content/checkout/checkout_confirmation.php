@@ -66,10 +66,11 @@
                   <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                 </div>                  
               </div>       
+              <form name="checkout_confirmation" id="checkout_confirmation" action="<?php echo ($lC_Payment->hasActionURL()) ? $lC_Payment->getActionURL() : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL'); ?>" method="post">
               <div class="well relative clearfix small-padding-top small-padding-bottom"> 
                 <h4><?php echo $lC_Language->get('order_comment_title'); ?></h4>
                 <div class="form-group">
-                  <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), 60, 5, 'class="form-control" placeholder="' . $lC_Language->get('text_add_comment_to_order') . '"'); ?>
+                  <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), 60, 5, 'class="form-control" placeholder="' . $lC_Language->get('text_add_comment_to_order') . '" onblur="sendOrderCommentsToSession(this.value);"'); ?>
                 </div>                  
               </div>                                        
             </div>
@@ -146,7 +147,6 @@
               /* ppec inject: we will be moving this to the addon */ 
               if (isset($_SESSION['PPEC_PROCESS']['LINK']) && $_SESSION['PPEC_PROCESS']['LINK'] != NULL) $form_action_url = $_SESSION['PPEC_PROCESS']['LINK']; ?>
               
-              <form name="checkout_confirmation" id="checkout_confirmation" action="<?php echo ($lC_Payment->hasActionURL()) ? $lC_Payment->getActionURL() : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL'); ?>" method="post">
                 <?php 
                 if ($lC_Payment->hasActive()) echo $lC_Payment->process_button();                 
                 if (DISPLAY_CONDITIONS_ON_CHECKOUT == '1') {

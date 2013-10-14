@@ -554,3 +554,6 @@
 #loaded7 .absolute-top-right-large-padding { position:absolute !important; top:20px !important; right:20px !important }
 
 #loaded7 .cursor-pointer { cursor:pointer !important; }
+
+#loaded7 .language-menu { list-style:none; }
+#loaded7 .language-menu li { display:inline-block; padding:0; margin-right:8px; }

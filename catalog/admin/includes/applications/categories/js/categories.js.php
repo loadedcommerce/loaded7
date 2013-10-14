@@ -84,11 +84,11 @@ $(document).ready(function() {
     if (ENABLE_EDITOR == '1') { 
       if (USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
         foreach ( $lC_Language->getAll() as $l ) {  
-          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser', contentsCss: '../templates/" . $lC_Template->getCode($lC_Template->getID) . "/css/styles.css', stylesSet: [] });";
+          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php', extraPlugins: 'stylesheetparser', contentsCss: '../templates/" . $lC_Template->getCode($lC_Template->getID) . "/css/styles.css', stylesSet: [] });";
         }
       } else {
         foreach ( $lC_Language->getAll() as $l ) {  
-          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php' });";
         }
       }
     } else {

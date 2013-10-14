@@ -105,6 +105,22 @@ class lC_Checkout_rpc {
     }
     
     echo json_encode($result);
+  }     
+ /*
+  * Add order comments to session
+  *
+  * @access public
+  * @return json
+  */
+  public static function sendOrderCommentsToSession() {
+    
+    $result = array();
+    if (isset($_GET['comments']) && $_GET['comments'] != '') {
+      $_SESSION['comments'] = $_GET['comments'];
+      $result['rpcStatus'] = '1';
+    }
+    
+    echo json_encode($result);
   }
 }
 ?>

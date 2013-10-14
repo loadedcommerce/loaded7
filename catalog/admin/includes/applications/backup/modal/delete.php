@@ -30,7 +30,6 @@ function deleteEntry(id) {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_delete_backup_files'); ?>',
     width: 380,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

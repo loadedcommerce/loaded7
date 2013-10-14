@@ -13,7 +13,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('../includes/classes/addons.php'));
+require_once($lC_Vqmod->modCheck('../includes/classes/addons.php'));
 
 class lC_Addons_Admin extends lC_Addons {
 

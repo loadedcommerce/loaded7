@@ -36,7 +36,6 @@ function batchDelete() {
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_batch_delete_newsletters'); ?>',
     width: 300,
-    scrolling: false,
     actions: {
       'Close' : {
         color: 'red',

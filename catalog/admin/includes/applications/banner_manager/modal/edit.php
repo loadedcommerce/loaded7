@@ -97,7 +97,6 @@ function editBanner(id) {
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_edit_banner'); ?>',
           width: 600,
-          scrolling: false,
           actions: {
             'Close' : {
               color: 'red',

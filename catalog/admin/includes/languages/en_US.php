@@ -257,6 +257,8 @@ tooltip_quick_add = Quick Add (a)
 tooltip_messages = Messages (m)
 tooltip_settings = Settings (s) / Main Menu (escape)
 
+top_category = Top Category
+
 text_version = Version
 text_confirm_delete = Confirm Delete?
 text_sort = Sort
@@ -289,10 +291,13 @@ site_maintenance_message_title = Maintenance Mode
 site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
 
 text_coming_soon = Pro Feature Coming Soon
-text_cick_for_info = &nbsp;Click for Info&nbsp;
+text_click_for_info = &nbsp;Click for Info&nbsp;
 text_pro = Pro
 text_b2b = B2B
+text_common = Common
+text_feature_information = Feature Information
 text_list = List
+top_category = -- Top --
 text_none = None
 text_no_restriction = No Restriction
 text_product_restriction = Product Restriction
@@ -307,6 +312,9 @@ text_free_shipping = Free Shipping
 text_free_product = Free Product
 
 text_actions = Actions
+text_free_product = Free Product
+text_upgrade_now = Upgrade Now
+text_full_pro_b2b_features_list = See Full Pro & B2B Feature List
 text_print_invoice = Print Invoice
 text_print_packing_slip = Print Packing Slip
 text_spin_off_order = Spin Off Order
