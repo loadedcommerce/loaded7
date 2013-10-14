@@ -16,6 +16,7 @@
 include_once('includes/applications/customer_groups/classes/customer_groups.php');
 include_once('includes/applications/product_variants/classes/product_variants.php');
 include_once('includes/applications/specials/classes/specials.php');
+include_once('includes/applications/categories/classes/categories.php');
 
 class lC_Products_Admin {
  /*
@@ -162,14 +163,52 @@ class lC_Products_Admin {
       $result['categoryPath'] = $in_categories_path;
     }
 
-    $categories_array = array('0' => $lC_Language->get('top_category'));
+    $categories_array = array('0' => '-- ' . $lC_Language->get('top_category') . ' --');
     foreach ( $lC_CategoryTree->getArray() as $value ) {
-      $categories_array[$value['id']] = $value['title'];
+      $pid = end(explode('_', $value['id']));
+      if (lC_Categories_Admin::getParent($pid) != 0) {
+        foreach (explode('_', $value['id']) as $cats) {
+          if ($pid != $cats) {
+            $Qcpn = $lC_Database->query('select categories_name from :table_categories_description where categories_id = :categories_id and language_id = :language_id');
+            $Qcpn->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+            $Qcpn->bindInt(':language_id', $lC_Language->getID());
+            $Qcpn->bindInt(':categories_id', $cats);
+            $Qcpn->execute();
+            
+            $titlestr .= $Qcpn->value('categories_name') . ' &raquo; ';
+          }
+        }
+        $title = $titlestr .  $value['title'];
+        unset($titlestr);
+      } else {
+        $title = $value['title'];
+      }
+      $categories_array[$value['id']] = $title;
     }
     $result['categoriesArray'] = $categories_array;
 
     return $result;
   }
+  // create path names
+  /*function createPathNames($id) {
+    global $lC_Database;
+    
+    $Qcpn = $lC_Database->query('select categories_name from :table_categories_description where parent_id = :categories_id and language_id = :language_id');
+    $Qcpn->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qcpn->bindInt(':language_id', $lC_Language->getID());
+    $Qcpn->bindInt(':categories_id', $id);
+    $Qcpn->execute();
+    
+    $result = $Qcpn->toArray();
+    
+    if ($result['categoryId'] == 0) {
+      $name = '<a href="index.php?action=listContent&categoryId=' . $result['id'] . '">' . $result['title'] . '</a>';  
+      return $name;
+    } else {
+      $name = ' > <a href="index.php?action=listContent&categoryId=' . $result['id'] . '">' . $result['title'] . '</a>';
+      return createPathNames($result['categoryId']) . " " . $name;
+    }
+  }*/
  /*
   * Return the data used on the preview dialog form
   *
@@ -1322,18 +1361,25 @@ class lC_Products_Admin {
           $error = true;
         }
       }
-
       if ( $error === false ) {
-        $Qim = $lC_Database->query('select id from :table_products_images where products_id = :products_id');
+        $Qim = $lC_Database->query('select id, image from :table_products_images where products_id = :products_id');
         $Qim->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
         $Qim->bindInt(':products_id', $id);
         $Qim->execute();
-
-        while ($Qim->next()) {
-          $lC_Image->delete($Qim->valueInt('id'));
+        
+        // added to check for other products using same image and do not delete
+        $Qop = $lC_Database->query('select id from :table_products_images where image = :image');
+        $Qop->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+        $Qop->bindInt(':image', $Qim->value('image'));
+        $Qop->execute();
+        
+        if ($Qop->numberOfRows() < 2) {
+          while ($Qim->next()) {
+            $lC_Image->delete($Qim->valueInt('id'));
+          }
         }
       }
-
+      
       // QPB
       if ( $error === false ) {
         $Qpb = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
