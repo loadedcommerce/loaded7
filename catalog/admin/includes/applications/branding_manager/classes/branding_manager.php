@@ -177,5 +177,33 @@
 
       echo json_encode($result);
     }
+
+    /*
+    * Delete Branding Manager Logo
+    * 
+    * @access public
+    * @return json
+    */
+    public static function deleteBmLogo($_logo) {
+      // add code to remove bm logo here
+      // 1) remove image from database
+      // 2) unlink the image file
+      // 3) return true if successful
+      return true;
+    }
+
+    /*
+    * Delete Branding Manager Open Graph Image
+    * 
+    * @access public
+    * @return json
+    */
+    public static function deleteOgImage($_logo) {
+      // add code to remove bm og image here
+      // 1) remove image from database
+      // 2) unlink the image file
+      // 3) return true if successful
+      return true;
+    }
   }
 ?>

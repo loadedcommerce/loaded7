@@ -96,7 +96,25 @@
               <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_branding_manager_logo'), 'margin-right:6px; margin-top:4px;'); ?> 
               <div class="mid-margin-top">
                 <div id="imagePreviewContainer" class="cat-image align-center">
-                  <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && !empty($site_image) ? 'branding/' . $site_image : 'no_image.png');?>" style="max-width: 100%; height: auto;" align="center" />
+                  <div style="position:relative;padding-top:10px;">
+                    <?php if (isset($bInfo) && !empty($site_image)) { ?>
+                    <style><!--
+                      #bmlogo_controls {
+                        display: none;
+                        position: absolute;
+                        bottom: 15px;
+                        left: 145px;
+                        z-index: 99;
+                      }
+                    --></style>
+                    <div id="bmlogo_controls" class="controls">
+                      <span class="button-group compact children-tooltip">
+                        <a onclick="deleteBmLogo($('#branding_manager_logo').val());" class="button icon-trash" href="#" title="Delete"></a>
+                      </span>
+                    </div>
+                    <?php } ?>
+                    <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && !empty($site_image) ? 'branding/' . $site_image : 'no_image.png');?>" style="max-width: 100%; height: auto;" align="center" />
+                  </div>
                   <input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="<?php echo (isset($bInfo) && isset($site_image) ? $site_image : '');?>">
                 </div>
               </div>  
@@ -110,12 +128,12 @@
                   </div>
                 </center>
               </div>
-                            <?php if(!empty($site_image)){ ?>
+              <?php /*if (!empty($site_image)){ ?>
               <span class="button-height block-label">
                 <label for="branding_chat_code" class="label margin-top"><?php echo $lC_Language->get('text_delete_image'); ?></label>
                 <span class="full-width autoexpanding small-margin-top mid-margin-bottom"><input value="1" type="checkbox" class="switch medium" name="branding_delete_logo" data-text-on="YES" data-text-off="NO"></span> 
               </span>
-              <?php } ?>
+              <?php }*/ ?>
             </div>
             <div class="eight-columns twelve-columns-mobile">
               <span class="button-height block-label">

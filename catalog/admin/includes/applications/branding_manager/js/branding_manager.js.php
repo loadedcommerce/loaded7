@@ -38,7 +38,19 @@ $(document).ready(function() {
       $("#branding_manager_tabs").removeClass("standard-tabs");
       $("#branding_manager_tabs").addClass("side-tabs");
     }
+  });  
+  
+  // remove log image
+  $("#imagePreviewContainer").mouseover(function() {
+    $("#bmlogo_controls").show();
+    $("#imagePreviewContainer").css("background", "none repeat scroll 0 0 rgba(0, 0, 0, 0.45)");
+    $("#imagePreviewContainer").css("border-radius", "4px 4px 4px 4px");
+  })
+  .mouseout(function() {
+    $("#bmlogo_controls").hide();
+    $("#imagePreviewContainer").css("background", "none");
   });
+                        
 });
 
 function validateForm() {
@@ -70,6 +82,24 @@ function ogUploader() {
       $('#ogimagePreviewContainer').html('<img src="../images/branding/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="' + fileName + '">');
     },
   });
+}
+
+function deleteBmLogo(logo) {
+  alert(logo);
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteBmLogo&logo=LOGO'); ?>';
+  $.getJSON(jsonLink.replace('LOGO', logo));
+  // here we update the logo preview div etc, change the below code to whats needed              
+  //$("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'0\')');
+  //$("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable_category'); ?>"></span>');
+}
+
+function deleteOgImage(ogimage) {
+  alert(ogimage);
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteOgImage&ogimage=OGIMAGE'); ?>';
+  $.getJSON(jsonLink.replace('OGIMAGE', ogimage));
+  // here we update the ogimage preview div etc, change the below code to whats needed              
+  //$("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'0\')');
+  //$("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable_category'); ?>"></span>');
 } 
 
 </script>

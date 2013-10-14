@@ -91,5 +91,39 @@
 
       echo json_encode($result);
     }
+
+    /*
+    * Deletes the store branding logo
+    *
+    * @access public
+    * @return json
+    */
+    public static function deleteBmLogo() {
+      
+      $result = lC_Branding_manager_Admin::deleteBmLogo($_GET['logo']);
+      if ($result == 1) {
+        $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+      }
+      $result = array('rpcStatus' => RPC_STATUS_SUCCESS);
+      
+      echo json_encode($result);
+    }
+
+    /*
+    * Deletes the store branding og image
+    *
+    * @access public
+    * @return json
+    */
+    public static function deleteOgImage() {
+      
+      $result = lC_Branding_manager_Admin::deleteOgImage($_GET['ogimage']);
+      if ($result == 1) {
+        $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+      }
+      $result = array('rpcStatus' => RPC_STATUS_SUCCESS);
+
+      echo json_encode($result);
+    }
   }
 ?>
