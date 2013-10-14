@@ -22,7 +22,7 @@
       </div>
     </form>
     <div class="btn-set small-margin-top clearfix">
-      <button class="pull-right btn btn-lg btn-primary" onclick="$('#account_newsletter').submit();" type="button"><?php echo $lC_Language->get('button_delete'); ?></button>
+      <button class="pull-right btn btn-lg btn-primary" onclick="$('#account_newsletter').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
       <form action="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div>     
   </div>
