@@ -110,6 +110,12 @@
                   </div>
                 </center>
               </div>
+                            <?php if(!empty($site_image)){ ?>
+              <span class="button-height block-label">
+                <label for="branding_chat_code" class="label margin-top"><?php echo $lC_Language->get('text_delete_image'); ?></label>
+                <span class="full-width autoexpanding small-margin-top mid-margin-bottom"><input value="1" type="checkbox" class="switch medium" name="branding_delete_logo" data-text-on="YES" data-text-off="NO"></span> 
+              </span>
+              <?php } ?>
             </div>
             <div class="eight-columns twelve-columns-mobile">
               <span class="button-height block-label">
@@ -136,6 +142,7 @@
                 <label for="branding_chat_code" class="label margin-top"><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_live_chat_code')); ?><?php echo $lC_Language->get('field_live_chat_code'); ?></label>
                 <span class="required input full-width autoexpanding small-margin-top mid-margin-bottom"><?php echo lc_draw_textarea_field('branding_chat_code', (isset($bInfo) && isset($chat_code) ? $chat_code : null) , 48, 2, 'class="required input-unstyled full-width autoexpanding"'); ?></span> 
               </span>
+
             </div>
           </div>
         </div>
@@ -181,6 +188,12 @@
                   </div>
                 </center>
               </div>
+              <?php if(!empty($og_image) && isset($og_image)){ ?>
+              <span class="button-height block-label">
+                <label for="branding_chat_code" class="label margin-top"><?php echo $lC_Language->get('text_delete_image'); ?></label>
+                <span class="full-width autoexpanding small-margin-top mid-margin-bottom"><input value="1" type="checkbox" class="switch" name="branding_delete_og" data-text-on="YES" data-text-off="NO"></span> 
+              </span>
+              <?php } ?>
             </div>
             <div class="eight-columns twelve-columns-mobile">
               <span class="button-height block-label">

@@ -83,17 +83,43 @@
         $QBrand->execute();
 
       }
+
+      // DELETE IMAGES
+      if($data['delete_logo'] == '1'){
+
+        $site_image = 'no_image.png';
+        if(file_exists('../images/branding/'.$data['site_image'])){
+          
+          unlink('../images/branding/'.$data['site_image']);
+        }
+      }else{
+
+        $site_image = $data['site_image'];
+      }
+
+      if($data['delete_og'] == '1'){
+
+        $og_image = 'no_image.png';
+        if(file_exists('../images/branding/'.$data['og_image'])){
+          
+          unlink('../images/branding/'.$data['og_image']);
+        }
+      }else{
+
+        $og_image = $data['og_image'];
+      }
+
       //save non language specific data
       $QbrandingData = $lC_Database->query('insert into :table_branding_data (site_image, chat_code, support_phone, support_email, sales_phone, sales_email, og_image, meta_delimeter, social_facebook_page, social_twitter, social_pinterest, social_google_plus, social_youtube, social_linkedin) values ( :site_image, :chat_code, :support_phone, :support_email, :sales_phone, :sales_email, :og_image, :meta_delimeter, :social_facebook_page, :social_twitter, :social_pinterest, :social_google_plus, :social_youtube, :social_linkedin)');
       $QbrandingData->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
-      $QbrandingData->bindValue(':site_image', $data['site_image']);
+      $QbrandingData->bindValue(':site_image', $site_image);
       $QbrandingData->bindValue(':chat_code', $data['chat_code']);
       $QbrandingData->bindValue(':address', $data['address']);
       $QbrandingData->bindValue(':support_phone', $data['support_phone']);
       $QbrandingData->bindValue(':support_email', $data['support_email']);
       $QbrandingData->bindValue(':sales_phone', $data['sales_phone']);
       $QbrandingData->bindValue(':sales_email', $data['sales_email']);
-      $QbrandingData->bindValue(':og_image', $data['og_image']);
+      $QbrandingData->bindValue(':og_image', $og_image);
       $QbrandingData->bindValue(':meta_delimeter', $data['meta_delimeter']);
       $QbrandingData->bindValue(':social_facebook_page', $data['social_facebook_page']);
       $QbrandingData->bindValue(':social_twitter', $data['social_twitter']);
