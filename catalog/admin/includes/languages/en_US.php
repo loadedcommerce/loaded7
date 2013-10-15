@@ -246,6 +246,9 @@ messaging_drafts = Drafts
 messaging_trash = Trash
 
 search_placeholder = Search
+slider_switch_enabled = ENABLED
+slider_switch_disabled = DISABLED
+slider_switch_preview = PREVIEW
 
 order_view_details = View details for order number
 customer_view_details = View details for
