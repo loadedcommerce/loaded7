@@ -39,7 +39,7 @@ function newGroup() {
                    '    <p><?php echo $lC_Language->get('introduction_new_customer_group'); ?></p>'+
                    '    <fieldset class="fieldset fields-list">'+
                    '    <form name="osNew" id="osNew" autocomplete="off" action="" method="post">'+
-                   '      <div class="field-block button-height">'+
+                   '      <div class="field-block button-height margin-bottom">'+
                    '        <label for="name" class="label anthracite"><?php echo $lC_Language->get('field_name'); ?></label>'+
                    '        <span id="newGroupNamesContainer"></span>'+
                    '      </div>'+
