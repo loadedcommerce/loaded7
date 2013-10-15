@@ -203,7 +203,7 @@ class lC_Order {
     $Qstatus->bindInt(':orders_id', $insert_id);
     $Qstatus->bindInt(':orders_status_id', 1);
     $Qstatus->bindInt(':customer_notified', '0');
-    $Qstatus->bindValue(':comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : $_POST['comments']));
+    $Qstatus->bindValue(':comments', '');
     $Qstatus->execute();
 
     foreach ($lC_ShoppingCart->getProducts() as $products) {
