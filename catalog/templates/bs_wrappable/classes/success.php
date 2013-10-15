@@ -315,7 +315,7 @@ class lC_Success {
   public static function getOrderComments($_oID) {
     global $lC_Database;
 
-    $QorderComments = $lC_Database->query('select comments from :table_orders_status_history where orders_id = :orders_id and customer_notified = 0');
+    $QorderComments = $lC_Database->query('select comments from :table_orders_status_history where orders_id = :orders_id and comments != ""');
     $QorderComments->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
     $QorderComments->bindInt(':orders_id', $_oID);
     $QorderComments->execute();

@@ -440,7 +440,7 @@ class lC_Order {
     $Qstatus->bindInt(':orders_id', $order_id);
     $Qstatus->bindInt(':orders_status_id', $status_id);
     $Qstatus->bindInt(':customer_notified', (SEND_EMAILS == '1') ? '1' : '0');
-    $Qstatus->bindValue(':comments', '');
+    $Qstatus->bindValue(':comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : $_POST['comments']));
     $Qstatus->execute();
     
     $lC_ShoppingCart->synchronizeWithDatabase();
