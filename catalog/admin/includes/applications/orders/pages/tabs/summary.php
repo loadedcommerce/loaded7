@@ -185,7 +185,7 @@
                     <div class="six-columns twelve-columns-mobile new-row-mobile">
                       <div class="columns">
                         <div class="twelve-columns">
-                          <font class="white font-eightteen mid-margin-right"><?php echo $lC_Language->get('text_address'); ?></font>
+                          <font class="white font-eightteen mid-margin-right"><?php echo $lC_Language->get('text_current_status'); ?></font>
                           <?php echo lC_Orders_Admin::drawOrderStatusDropdown($_GET[$lC_Template->getModule()], 'anthracite-gradient'); ?>
                         </div>
                         <div class="twelve-columns">
