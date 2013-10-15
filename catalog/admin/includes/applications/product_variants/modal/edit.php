@@ -105,6 +105,7 @@ function editGroup(id) {
       $("#editModule").empty();  // clear the old values
       $.each(data.modulesArray, function(val, text) {
         var selected = (data.pvData.module == val) ? 'selected="selected"' : '';
+        var text = text.replace(/_/g, " ").replace(/\b./g, function(m){ return m.toUpperCase(); });
         if(data.pvData.module == val) {
           $("#editModule").closest("span + *").prevAll("span.select-value:first").text(text);         
         }
