@@ -206,19 +206,6 @@
   .cell-drop b, .cell-drop strong {
     color: white;
   }
-.field-drop-product {
-  background: #3c4044 url(../img/textures/grid.png) !important;
-  background: url(../img/textures/grid.png), -webkit-gradient(linear, left top, left bottom, from(#6d7073), to(#3c4044)) !important;
-  background: url(../img/textures/grid.png), -webkit-linear-gradient(top, #6d7073, #3c4044) !important;
-  background: url(../img/textures/grid.png), -moz-linear-gradient(top, #6d7073, #3c4044) !important;
-  background: url(../img/textures/grid.png), -ms-linear-gradient(top, #6d7073, #3c4044) !important;
-  background: url(../img/textures/grid.png), -o-linear-gradient(top, #6d7073, #3c4044) !important;
-  background: url(../img/textures/grid.png), linear-gradient(top, #6d7073, #3c4044) !important;
-  color: #afafaf;
-  }
-  .field-drop-product b, .field-drop-product strong {
-    color: white;
-  }
 
 /********************************************************/
 /*                 4. Inputs & progress                 */
