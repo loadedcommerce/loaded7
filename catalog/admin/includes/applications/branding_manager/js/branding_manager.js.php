@@ -64,8 +64,8 @@ function createUploader() {
   var uploader = new qq.FileUploader({
     element: document.getElementById('fileUploaderImageContainer'),
     action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
-	  allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
-	  multiple: false,
+    allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+    multiple: false,
     onComplete: function(id, fileName, responseJSON) {
       $('#imagePreviewContainer').html('<img src="../images/branding/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="' + fileName + '">');
     },
@@ -76,8 +76,8 @@ function ogUploader() {
   var uploader = new qq.FileUploader({
     element: document.getElementById('ogfileUploaderImageContainer'),
     action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
-	  allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
-	  multiple: false,
+    allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+    multiple: false,
     onComplete: function(id, fileName, responseJSON) {
       $('#ogimagePreviewContainer').html('<img src="../images/branding/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="' + fileName + '">');
     },
@@ -85,21 +85,17 @@ function ogUploader() {
 }
 
 function deleteBmLogo(logo) {
-  alert(logo);
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteBmLogo&logo=LOGO'); ?>';
   $.getJSON(jsonLink.replace('LOGO', logo));
-  // here we update the logo preview div etc, change the below code to whats needed              
-  //$("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'0\')');
-  //$("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable_category'); ?>"></span>');
+
+  $("#imagePreviewContainer").html('<img src="../images/no_image.png" />');
 }
 
 function deleteOgImage(ogimage) {
-  alert(ogimage);
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteOgImage&ogimage=OGIMAGE'); ?>';
   $.getJSON(jsonLink.replace('OGIMAGE', ogimage));
-  // here we update the ogimage preview div etc, change the below code to whats needed              
-  //$("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'0\')');
-  //$("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable_category'); ?>"></span>');
+  
+  $("#ogimagePreviewContainer").html('<img src="../images/no_image.png" />');
 } 
 
 </script>

@@ -128,12 +128,7 @@
                   </div>
                 </center>
               </div>
-              <?php /*if (!empty($site_image)){ ?>
-              <span class="button-height block-label">
-                <label for="branding_chat_code" class="label margin-top"><?php echo $lC_Language->get('text_delete_image'); ?></label>
-                <span class="full-width autoexpanding small-margin-top mid-margin-bottom"><input value="1" type="checkbox" class="switch medium" name="branding_delete_logo" data-text-on="YES" data-text-off="NO"></span> 
-              </span>
-              <?php }*/ ?>
+ 
             </div>
             <div class="eight-columns twelve-columns-mobile">
               <span class="button-height block-label">
@@ -206,12 +201,6 @@
                   </div>
                 </center>
               </div>
-              <?php if(!empty($og_image) && isset($og_image)){ ?>
-              <span class="button-height block-label">
-                <label for="branding_chat_code" class="label margin-top"><?php echo $lC_Language->get('text_delete_image'); ?></label>
-                <span class="full-width autoexpanding small-margin-top mid-margin-bottom"><input value="1" type="checkbox" class="switch" name="branding_delete_og" data-text-on="YES" data-text-off="NO"></span> 
-              </span>
-              <?php } ?>
             </div>
             <div class="eight-columns twelve-columns-mobile">
               <span class="button-height block-label">
