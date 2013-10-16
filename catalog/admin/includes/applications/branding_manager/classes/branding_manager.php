@@ -179,7 +179,7 @@
     * @access public
     * @return json
     */
-    public static function deleteBmLogo($_logo) {
+    public static function deleteOgImage($_logo) {
       global $lC_Database;
 
         if (file_exists('../images/branding/' . $_logo)){
