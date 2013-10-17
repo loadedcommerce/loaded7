@@ -19,3 +19,15 @@ body.dragging, body.dragging * { cursor: move !important; }
 #simpleOptionsPricingTable input { width:55px; }
 #simpleOptionsPricingTable .inputs { width:80px; }
 #simpleOptionsPricingTable .element { padding-left:24px; vertical-align:middle; }
+
+
+.accordion > dt { 
+  background: -webkit-gradient(linear, left top, left bottom, from(#565656), to(#404040));
+  background: -webkit-linear-gradient(top, #565656, #404040);
+  background: -moz-linear-gradient(top, #565656, #404040);
+  background: -ms-linear-gradient(top, #565656, #404040);
+  background: -o-linear-gradient(top, #565656, #404040);
+  background: linear-gradient(top, #565656, #404040);
+  border-color: #282E36;
+  color: white;
+}
