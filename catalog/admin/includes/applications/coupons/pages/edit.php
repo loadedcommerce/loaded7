@@ -47,7 +47,7 @@
               </span>
             </div>              
             <div class="new-row-mobile six-columns twelve-columns-mobile align-right" id="switch">
-              <input type="checkbox" name="status" id="status" class="switch wider" data-text-off="DISABLED" data-text-on="ENABLED"<?php echo ((isset($cInfo) && $cInfo->get('status') != 1) ? null : ' checked'); ?> />
+              <input type="checkbox" name="status" id="status" class="switch wider" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_enabled'); ?>"<?php echo ((isset($cInfo) && $cInfo->get('status') != 1) ? null : ' checked'); ?> />
               <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_switch'), null, 'info-spot on-left grey mid-margin-left'); ?>
             </div>
           </div>
@@ -162,17 +162,17 @@
             <legend class="legend upsellinfo" upselltitle="<?php echo $lC_Language->get('text_coupon_restrictions_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_coupon_restrictions_upsell_desc'); ?>"><?php echo $lC_Language->get('legend_restrictions'); ?><?php echo lc_go_pro(true); ?></legend>
             <div class="field-block button-height">
               <label for="" class="label"><b><?php echo $lC_Language->get('label_products'); ?></b></label>
-              <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />  
+              <input type="checkbox" class="switch wider disabled" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_enabled'); ?>" />  
               <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_proucts_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
             </div>
             <div class="field-block button-height">
               <label for="" class="label"><b><?php echo $lC_Language->get('label_customers'); ?></b></label>
-              <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />
+              <input type="checkbox" class="switch wider disabled" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_enabled'); ?>" />
               <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_customers_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
             </div>
             <!-- div class="field-block button-height margin-bottom">
               <label for="" class="label"><b><?php //echo $lC_Language->get('label_groups'); ?></b><small class="tag orange-bg small-margin-left">B2B</small></label>
-              <input type="checkbox" class="switch wider disabled" data-text-off="DISABLED" data-text-on="ENABLED" />
+              <input type="checkbox" class="switch wider disabled" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_enabled'); ?>" />
               <?php //echo lc_show_info_bubble($lC_Language->get('info_bubble_groups_restrictions'), null, 'info-spot on-left grey margin-left'); ?>
             </div -->
           </fieldset>
