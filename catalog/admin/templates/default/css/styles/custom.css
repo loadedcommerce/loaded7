@@ -230,7 +230,15 @@ Custom Template CSS added by Loaded7 Dev Team
   -webkit-box-shadow: inset 0 1px 10px black;
   -moz-box-shadow: inset 0 1px 10px black;
   box-shadow: inset 0 1px 10px black;
-  position: relative;
+  position: relative;  
+  background: #3c4044 url(../../img/textures/grid.png) !important;
+  background: url(../../img/textures/grid.png), -webkit-gradient(linear, left top, left bottom, from(#6d7073), to(#3c4044)) !important;
+  background: url(../../img/textures/grid.png), -webkit-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../../img/textures/grid.png), -moz-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../../img/textures/grid.png), -ms-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../../img/textures/grid.png), -o-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../../img/textures/grid.png), linear-gradient(top, #6d7073, #3c4044) !important;
+  color: #afafaf;
   }
   .field-drop-product.button-height {
     margin-top: 0;
