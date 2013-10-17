@@ -39,13 +39,9 @@ function newGroup() {
                    '    <p><?php echo $lC_Language->get('introduction_new_customer_group'); ?></p>'+
                    '    <fieldset class="fieldset fields-list">'+
                    '    <form name="osNew" id="osNew" autocomplete="off" action="" method="post">'+
-                   '      <div class="field-block button-height">'+
+                   '      <div class="field-block button-height margin-bottom">'+
                    '        <label for="name" class="label anthracite"><?php echo $lC_Language->get('field_name'); ?></label>'+
                    '        <span id="newGroupNamesContainer"></span>'+
-                   '      </div>'+
-                   '      <div class="field-block button-height margin-bottom">'+
-                   '        <label for="default" class="label anthracite"><?php echo $lC_Language->get('field_set_as_default'); ?></label>'+
-                   '        <?php echo lc_draw_checkbox_field('default', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?>'+
                    '      </div>'+
                    '      <div class="field-drop button-height black-inputs">'+
                    '        <label for="baseline" class="label" style="width:63%;"><?php echo $lC_Language->get('field_baseline_discount'); ?></label>'+

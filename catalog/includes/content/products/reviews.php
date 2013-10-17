@@ -41,6 +41,8 @@
           $lC_Product = new lC_Product(lC_Reviews::getProductID($_GET[$this->_module]));
 
           $this->_page_title = $lC_Product->getTitle();
+          
+          $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/form_check.js.php');
 
           $this->addOGPTags('type', 'product');
           $this->addOGPTags('title', $lC_Product->getTitle() . ' ' . $lC_Product->getModel());
