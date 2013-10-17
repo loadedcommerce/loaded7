@@ -47,9 +47,12 @@ $Qspecials = lC_Specials::getListing();
           </select>
         </div>-->
       </div>
-      <div class="listingPageLinks">
-        <span style="float: right;"><?php echo $Qspecials->getBatchPageLinks(); ?></span>
-        <span style="float: left; margin-top:6px;"><?php echo $Qspecials->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></span>
+      <div class="product-listing-module-pagination margin-bottom">
+        
+        <div style="width:40%;" class="float-left"><?php echo $Qspecials->getBatchTotalPages($lC_Language->get('result_set_number_of_products')); ?></div>
+    <div style="width:40%;" class="float-right">
+      <ul class="pagination"><?php echo $Qspecials->getBatchPageLinks(); ?></ul>  
+    </div>
       </div>
       <div style="clear:both; height:10px;"></div> 
       <?php
