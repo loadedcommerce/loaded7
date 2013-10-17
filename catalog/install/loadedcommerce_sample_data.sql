@@ -196,10 +196,10 @@ INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, module
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(19, 'Free Shipping', 'free', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'shipping|Free_Shipping');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(20, 'Check or Money Order', 'moneyorder', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'payment|Money_Order');
 
-INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(6, 1, 'index/index', 'after', 10, 1);
-INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(7, 1, '*', 'left', 10, 0);
-INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(8, 1, '*', 'left', 20, 0);
-INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(9, 1, 'index/index', 'after', 20, 1);
-INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(10, 1, 'products/info', 'after', 20, 1);
-INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(11, 1, 'products/info', 'after', 10, 1);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(13, 1, 'index/index', 'after', 10, 1);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(14, 1, '*', 'left', 10, 0);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(15, 1, '*', 'left', 20, 0);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(16, 1, 'index/index', 'after', 20, 1);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(17, 1, 'products/info', 'after', 20, 1);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(18, 1, 'products/info', 'after', 10, 1);
 
