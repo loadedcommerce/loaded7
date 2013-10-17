@@ -18,7 +18,7 @@ global $lC_Template, $lC_Language, $lC_ObjectInfo;
 $(document).ready(function() {
   
   createUploader();
-  ogUploader();
+  createogUploader();
  
   <?php
   if (defined('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT')) {
@@ -40,15 +40,32 @@ $(document).ready(function() {
     }
   });  
   
-  // remove log image
+  // remove logo image
   $("#imagePreviewContainer").mouseover(function() {
-    $("#bmlogo_controls").show();
-    $("#imagePreviewContainer").css("background", "none repeat scroll 0 0 rgba(0, 0, 0, 0.45)");
-    $("#imagePreviewContainer").css("border-radius", "4px 4px 4px 4px");
+    var bmLogo = $('#branding_manager_logo').val();
+    if (bmLogo != '') {
+      $("#bmlogo_controls").show();
+      $("#imagePreviewContainer").css("background", "none repeat scroll 0 0 rgba(0, 0, 0, 0.45)");
+      $("#imagePreviewContainer").css("border-radius", "4px 4px 4px 4px");
+    }
   })
   .mouseout(function() {
     $("#bmlogo_controls").hide();
     $("#imagePreviewContainer").css("background", "none");
+  });  
+  
+  // remove og image
+  $("#ogimagePreviewContainer").mouseover(function() {
+    var ogLogo = $('#branding_graph_site_thumbnail').val();
+    if (ogLogo != '') {
+      $("#og_image_controls").show();
+      $("#ogimagePreviewContainer").css("background", "none repeat scroll 0 0 rgba(0, 0, 0, 0.45)");
+      $("#ogimagePreviewContainer").css("border-radius", "4px 4px 4px 4px");
+    }
+  })
+  .mouseout(function() {
+    $("#og_image_controls").hide();
+    $("#ogimagePreviewContainer").css("background", "none");
   });
                         
 });
@@ -67,35 +84,37 @@ function createUploader() {
     allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
     multiple: false,
     onComplete: function(id, fileName, responseJSON) {
-      $('#imagePreviewContainer').html('<img src="../images/branding/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="' + fileName + '">');
+      $('#imagePreviewContainer').html('<div style="position:relative;"><div id="bmlogo_controls" class="controls"><span class="button-group compact children-tooltip"><a onclick="deleteBmLogo($(\'#branding_manager_logo\').val());" class="button icon-trash" href="#" title="<?php echo $lC_Language->get('text_delete'); ?>"></a></span></div></div><img src="../images/branding/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="' + fileName + '">');
     },
   });
 } 
 
-function ogUploader() {
+function createogUploader() {
   var uploader = new qq.FileUploader({
     element: document.getElementById('ogfileUploaderImageContainer'),
     action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
     allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
     multiple: false,
     onComplete: function(id, fileName, responseJSON) {
-      $('#ogimagePreviewContainer').html('<img src="../images/branding/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="' + fileName + '">');
+      $('#ogimagePreviewContainer').html('<div style="position:relative;"><div id="og_image_controls" class="controls"><span class="button-group compact children-tooltip"><a onclick="deleteOgImage($(\'#branding_graph_site_thumbnail\').val());" class="button icon-trash" href="#" title="<?php echo $lC_Language->get('text_delete'); ?>"></a></span></div></div><img src="../images/branding/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="' + fileName + '">');
     },
   });
 }
 
 function deleteBmLogo(logo) {
+  $("#bmlogo_controls").hide();
+  $("#imagePreviewContainer").css("background", "none");
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteBmLogo&logo=LOGO'); ?>';
   $.getJSON(jsonLink.replace('LOGO', logo));
-
-  $("#imagePreviewContainer").html('<img src="../images/no_image.png" />');
+  $("#imagePreviewContainer").html('<div style="position:relative;"><div id="bmlogo_controls" class="controls"><span class="button-group compact children-tooltip"><a onclick="deleteBmLogo($(\'#branding_manager_logo\').val());" class="button icon-trash" href="#" title="<?php echo $lC_Language->get('text_delete'); ?>"></a></span></div></div><img src="../images/no_image.png" /><input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="">');
 }
 
 function deleteOgImage(ogimage) {
+  $("#og_image_controls").hide();
+  $("#ogimagePreviewContainer").css("background", "none");
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteOgImage&ogimage=OGIMAGE'); ?>';
   $.getJSON(jsonLink.replace('OGIMAGE', ogimage));
-  
-  $("#ogimagePreviewContainer").html('<img src="../images/no_image.png" />');
+  $("#ogimagePreviewContainer").html('<div style="position:relative;"><div id="og_image_controls" class="controls"><span class="button-group compact children-tooltip"><a onclick="deleteOgImage($(\'#branding_graph_site_thumbnail\').val());" class="button icon-trash" href="#" title="<?php echo $lC_Language->get('text_delete'); ?>"></a></span></div></div><img src="../images/no_image.png" /><input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="">');
 } 
 
 </script>

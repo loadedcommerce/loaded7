@@ -154,7 +154,7 @@
     }
 
     /*
-    * Delete Branding Manager Logo
+    * Delete Site Logo Image
     * 
     * @access public
     * @return json
@@ -163,31 +163,29 @@
       global $lC_Database;
 
         if (file_exists('../images/branding/' . $_logo)){
-          unlink('../images/branding/'.$_logo);
+          unlink('../images/branding/' . $_logo);
         }
-        $QbrandingImage = $lC_Database->query('update :table_branding_data set site_image = :site_image');
+        $QbrandingImage = $lC_Database->query('update :table_branding_data set site_image = ""');
         $QbrandingImage->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
-        $QbrandingImage->bindValue(':site_image', '');
         $QbrandingImage->execute();
       
       return true;
     }
 
     /*
-    * Delete Branding Manager Open Graph Image
+    * Delete Open Graph Image
     * 
     * @access public
     * @return json
     */
-    public static function deleteOgImage($_logo) {
+    public static function deleteOgImage($_ogimage) {
       global $lC_Database;
 
-        if (file_exists('../images/branding/' . $_logo)){
-          unlink('../images/branding/'.$_logo);
+        if (file_exists('../images/branding/' . $_ogimage)){
+          unlink('../images/branding/' . $_ogimage);
         }
-        $QbrandingImage = $lC_Database->query('update :table_branding_data set og_image = :og_image');
+        $QbrandingImage = $lC_Database->query('update :table_branding_data set og_image = ""');
         $QbrandingImage->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
-        $QbrandingImage->bindValue(':og_image', '');
         $QbrandingImage->execute();
       
       return true;

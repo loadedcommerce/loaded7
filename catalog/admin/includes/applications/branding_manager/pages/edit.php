@@ -96,25 +96,16 @@
               <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_branding_manager_logo'), 'margin-right:6px; margin-top:4px;'); ?> 
               <div class="mid-margin-top">
                 <div id="imagePreviewContainer" class="cat-image align-center">
-                  <div style="position:relative;padding-top:10px;">
-                    <?php if (isset($bInfo) && !empty($site_image)) { ?>
-                    <style><!--
-                      #bmlogo_controls {
-                        display: none;
-                        position: absolute;
-                        bottom: 15px;
-                        left: 145px;
-                        z-index: 99;
-                      }
-                    --></style>
+                  <?php if (isset($bInfo) && !empty($site_image)) { ?>
+                  <div style="position:relative;">
                     <div id="bmlogo_controls" class="controls">
                       <span class="button-group compact children-tooltip">
-                        <a onclick="deleteBmLogo($('#branding_manager_logo').val());" class="button icon-trash" href="#" title="Delete"></a>
+                        <a onclick="deleteBmLogo($('#branding_manager_logo').val());" class="button icon-trash" href="#" title="<?php echo $lC_Language->get('text_delete'); ?>"></a>
                       </span>
                     </div>
-                    <?php } ?>
-                    <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && !empty($site_image) ? 'branding/' . $site_image : 'no_image.png');?>" style="max-width: 100%; height: auto;" align="center" />
                   </div>
+                  <?php } ?>
+                  <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && !empty($site_image) ? 'branding/' . $site_image : 'no_image.png');?>" align="center" />
                   <input type="hidden" id="branding_manager_logo" name="branding_manager_logo" value="<?php echo (isset($bInfo) && isset($site_image) ? $site_image : '');?>">
                 </div>
               </div>  
@@ -188,8 +179,17 @@
               <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_open_graph_site_thumbnail'), 'margin-right:6px; margin-top:4px;'); ?> 
               <div class="mid-margin-top">
                 <div id="ogimagePreviewContainer" class="cat-image align-center">
-                  <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && isset($og_image) ? 'branding/' . $og_image : 'no_image.png');?>" style="max-width: 100%; height: auto;" align="center" />
-                  <input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="<?php echo (isset($bInfo) && isset($og_image) ? $og_image : 'no-image.png'); ?>">
+                  <?php if (isset($bInfo) && !empty($og_image)) { ?>
+                  <div style="position:relative;">
+                    <div id="og_image_controls" class="controls">
+                      <span class="button-group compact children-tooltip">
+                        <a onclick="deleteOgImage($('#branding_graph_site_thumbnail').val());" class="button icon-trash" href="#" title="<?php echo $lC_Language->get('text_delete'); ?>"></a>
+                      </span>
+                    </div>
+                  </div>
+                  <?php } ?>
+                  <img src="<?php echo '../' . DIR_WS_IMAGES . (isset($bInfo) && !empty($og_image) ? 'branding/' . $og_image : 'no_image.png'); ?>" align="center" />
+                  <input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="<?php echo (isset($bInfo) && isset($og_image) ? $og_image : ''); ?>">
                 </div>
               </div>
               <div class="thin mid-margin-top" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
