@@ -1807,7 +1807,7 @@ class lC_Products_Admin {
         $special = (isset($pInfo)) ? (float)$pInfo->get('products_special_price') : 0.00;
         $discount = (isset($base) && $base > 0.00) ? round( ((($base - $special) / $base) * 100), DECIMAL_PLACES) : 0.00; 
        
-        $content .= '<label for="products_special_pricing_enable' . $value['customers_group_id'] . '" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
+        $content .= '<!--<label for="products_special_pricing_enable' . $value['customers_group_id'] . '" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>-->' .
                     '<div class="columns">' .
                     '  <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom">' .
                     '    <input id="products_special_pricing_enable' . $value['customers_group_id'] . '" name="products_special_pricing_enable' . $value['customers_group_id'] . '" type="checkbox" class="margin-right medium switch"' . (($pInfo->get('status') != -1 && $value['customers_group_id'] == '1') ? ' checked' : ' disabled') . ' />' .
