@@ -6081,14 +6081,9 @@ INSERT INTO lc_zones_to_geo_zones (association_id,zone_country_id,zone_id,geo_zo
 
 INSERT INTO lc_templates (id, title, code, author_name, author_www, markup_version, css_based, `medium`) VALUES(1, 'Loaded Commerce Bootstrap 3.0 Core Template', 'core', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'HTML 5.0', 1, 'Screen');
 
-INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(1, 'Sub Total', 'sub_total', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'order_total');
-INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(2, 'Shipping', 'shipping', 'LoadedComerce', 'http://www.loadedcommerce.com', 'order_total');
-INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(3, 'Coupon', 'coupon', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'order_total');
-INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(4, 'Tax', 'tax', 'LoadedComerce', 'http://www.loadedcommerce.com', 'order_total');
-INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(5, 'Total', 'total', 'LoadedComerce', 'http://www.loadedcommerce.com', 'order_total');
-INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(6, 'Days to Ship', 'shipping_availability', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes');
-INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(7, 'Manufacturer', 'manufacturers', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes');
-INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(8, 'Date Available', 'date_available', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(1, 'Days to Ship', 'shipping_availability', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(2, 'Manufacturer', 'manufacturers', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(3, 'Date Available', 'date_available', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes');
 
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(1, 'g', 1, 'Gram(s)');
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(2, 'kg', 1, 'Kilogram(s)');
