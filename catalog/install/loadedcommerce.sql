@@ -6026,6 +6026,20 @@ INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (239,'MS','M
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (239,'MV','Masvingo');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (239,'MW','Mashonaland West');
 
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(1, '', 0, 10, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(2, '', 0, 10, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(3, '', 1, 20, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(4, '', 1, 30, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(1, 1, 'Information', 'Information', 'Information Blurb', '<p>Information Content</p>', 'information, tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(2, 1, 'Shipping & Returns', 'Shipping & Returns', 'Shipping & Returns Blurb', '<p>Shipping & Returns Content</p>', 'shipping, returns, tags'); 
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(3, 1, 'Privacy Policy', 'Privacy Policy', 'Privacy Policy Blurb', '<p>Privacy Policy Content</p>', 'privacy, policy, tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(4, 1, 'Terms & Conditions', 'Terms & Conditions', 'Terms & Conditions Blurb', '<p>Terms & Conditions Content</p>', 'terms, conditions, tags');
+
+INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (1, 1, 1, 1, 'cPath=1', 'information');
+INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (2, 2, 1, 1, 'cPath=1_2', 'shipping-returns');
+INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (3, 3, 1, 1, 'cPath=1_3', 'privacy-policy');
+INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (4, 4, 1, 1, 'cpath=1_4', 'terms-conditions');
 
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(1, 'American Express', '/^(34|37)\\d{13}$/', '1', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(2, 'Diners Club', '/^(30|36|38)\\d{12}$/', '0', 0);
