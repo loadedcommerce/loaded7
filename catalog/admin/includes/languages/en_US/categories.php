@@ -9,7 +9,7 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-access_levels_retail = Retail
+access_levels_registered = Registered
 access_levels_wholesale = Wholesale
 access_levels_dealer = Dealer
 
