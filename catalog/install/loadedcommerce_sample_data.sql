@@ -85,10 +85,10 @@ INSERT INTO lc_banners (banners_id, banners_title, banners_url, banners_target, 
 
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(5, 'women.jpg', 0, 10, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(6, 'men.jpg', 0, 20, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
-INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(7, 'women.jpg', 1, 10, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
-INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(8, 'watch-womens.jpg', 1, 20, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
-INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(9, 'men.jpg', 2, 10, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
-INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(10, 'watch-mens.jpg', 2, 20, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(7, 'women.jpg', 5, 10, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(8, 'watch-womens.jpg', 5, 20, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(9, 'men.jpg', 6, 10, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(10, 'watch-mens.jpg', 6, 20, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(11, 'no_image', 0, 30, 'specials', 0, 'products.php?specials', 1, 1, 0, '0000-00-00 00:00:00', NULL);
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(12, 'no_image.png', 0, 40, 'new', 0, 'products.php?new', 1, 1, 0, '0000-00-00 00:00:00', NULL);
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(13, 'no_image.png', 0, 50, 'info', 0, 'info.php', 1, 1, 0, '0000-00-00 00:00:00', NULL);
@@ -171,19 +171,18 @@ INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order
 INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order, date_added) VALUES(12, 11, 'womens-watch2.jpg', 1, 0, '2013-02-27 10:47:13');
 INSERT INTO lc_products_images (id, products_id, image, default_flag, sort_order, date_added) VALUES(15, 12, 'womens-watch3.jpg', 1, 0, '2013-02-27 11:02:38');
 
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(1, 3);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(2, 3);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(3, 3);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(4, 2);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(4, 5);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(5, 5);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(6, 5);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(7, 6);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(8, 6);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(9, 6);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(10, 4);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(11, 4);
-INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(12, 4);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(1, 7);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(2, 7);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(3, 7);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(4, 9);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(5, 9);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(6, 9);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(7, 10);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(8, 10);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(9, 10);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(10, 8);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(11, 8);
+INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(12, 8);
 
 INSERT INTO lc_reviews (reviews_id, products_id, customers_id, customers_name, reviews_rating, languages_id, reviews_text, date_added, last_modified, reviews_read, reviews_status) VALUES(1, 1, 0, 'Janice Shopper', 5, 1, 'Lorem ipsum dolor sit amet, quo in insolens democritum mediocritatem, dicit feugiat admodum vel ex. Antiopam principes ne per, ut duis vulputate eam, solum torquatos persecuti qui at. Usu discere intellegat ne, tollit meliore nam at. Ne pri idque inciderint, vim no nullam tempor nostrud. Ex his errem alterum complectitur, qui in enim consequuntur, ad appareat convenire facilisis nam.\r\n\r\nEa sea probo doming offendit, deleniti voluptatibus ea quo, veniam aliquando sed cu. His munere mediocritatem eu, at eum labitur adolescens, sed id meis oratio munere. Id vel dolor molestiae. Id eum audire aperiri, nec te alia omnis ullamcorper.\r\n\r\nTe stet veri vitae his. Ex dicit tation vix, exerci equidem cu sed. Cum at alienum periculis omittantur. Duis elaboraret ad vix. Vitae melius vis eu, nam at liber consectetuer reprehendunt.', '2013-02-27 08:38:29', NULL, 0, 1);
 
