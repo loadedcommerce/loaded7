@@ -1779,7 +1779,7 @@ class lC_Products_Admin {
      
       $content .= '<div>' .
                   '  <label for="" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
-                  '  <input type="checkbox" name="enable_group_pricing[' . $value['customers_group_id'] . ']" class="switch medium margin-right disabled" />' .
+                  '  <input type="checkbox" name="enable_group_pricing[' . $value['customers_group_id'] . ']" class="switch medium margin-right" checked />' .
                   '    <div class="inputs grey" style="display:inline; padding:8px 0;">' .
                   '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
                   '      <input type="text" onfocus="this.select();" name="group_price[' . $value['customers_group_id'] . ']" id="group_price_' . $value['customers_group_id'] . '" value="' . number_format($discounted_price, DECIMAL_PLACES) . '" class="input-unstyled small-margin-right grey disabled" style="width:60px;" READONLY/>' .
@@ -1802,36 +1802,37 @@ class lC_Products_Admin {
     $content = '';
     $groups = lC_Customer_groups_Admin::getAll();
     foreach($groups['entries'] as $key => $value) {
-      
-      $base = (isset($pInfo)) ? (float)$pInfo->get('products_price') : 0.00;
-      $special = (isset($pInfo)) ? (float)$pInfo->get('products_special_price') : 0.00;
-      $discount = (isset($base) && $base > 0.00) ? round( ((($base - $special) / $base) * 100), DECIMAL_PLACES) : 0.00; 
-     
-      $content .= '<label for="products_special_pricing_enable' . $value['customers_group_id'] . '" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
-                  '<div class="columns">' .
-                  '  <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom">' .
-                  '    <input id="products_special_pricing_enable' . $value['customers_group_id'] . '" name="products_special_pricing_enable' . $value['customers_group_id'] . '" type="checkbox" class="margin-right medium switch"' . (($pInfo->get('status') != -1 && $value['customers_group_id'] == '1') ? ' checked' : ' disabled') . ' />' .
-                  '    <div class="inputs' . (($value['customers_group_id'] == '1') ? '' : ' disabled grey') . '" style="display:inline; padding:8px 0;">' .
-                  '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                  '      <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" name="products_special_price[' . $value['customers_group_id'] . ']" id="products_special_price' . $value['customers_group_id'] . '" value="' . (($value['customers_group_id'] == '1') ? number_format($pInfo->get('products_special_price'), DECIMAL_PLACES) : '0.00') . '" class="sprice input-unstyled small-margin-right' . (($value['customers_group_id'] == '1') ? '' : ' grey disabled') . '" style="width:60px;"' . (($value['customers_group_id'] == '1') ? '' : ' READONLY') . '/>' .
-                  '    </div>' .
-                  '    <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_special_price') . (($value['customers_group_id'] == '1') ? '<span class="disctag tag glossy mid-margin-left">-' . number_format($discount, DECIMAL_PLACES) . '%</span>' : '') . '</small>' .
-                  '  </div>' .
-                  '  <div class="new-row-mobile twelve-columns twelve-columns-mobile">' .
-                  '    <span class="nowrap margin-right">' .
-                  '      <span class="input small-margin-top">' .
-                  '        <input name="products_special_start_date[' . $value['customers_group_id'] . ']" id="products_special_start_date' . $value['customers_group_id'] . '" type="text" placeholder="Start" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($value['customers_group_id'] == '1' && $special != '0.00') ? $pInfo->get('products_special_start_date') : '') . '" style="width:97px;" />' .
-                  '      </span>' .
-                  '      <span class="icon-calendar icon-size2 small-margin-left"></span>' .
-                  '    </span>' .
-                  '    <span class="nowrap">' .
-                  '      <span class="input small-margin-top">' .
-                  '        <input name="products_special_expires_date[' . $value['customers_group_id'] . ']" id="products_special_expires_date' . $value['customers_group_id'] . '" type="text" placeholder="End" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($value['customers_group_id'] == '1' && $special != '0.00') ? $pInfo->get('products_special_expires_date') : '') . '" style="width:97px;" />' .
-                  '      </span>' .
-                  '      <span class="icon-calendar icon-size2 small-margin-left"></span>' .
-                  '    </span>' .
-                  '  </div>' .
-                  '</div>';
+      if ($value['customers_group_id'] == 1) { // remove this line when specials per group is reintroduced
+        $base = (isset($pInfo)) ? (float)$pInfo->get('products_price') : 0.00;
+        $special = (isset($pInfo)) ? (float)$pInfo->get('products_special_price') : 0.00;
+        $discount = (isset($base) && $base > 0.00) ? round( ((($base - $special) / $base) * 100), DECIMAL_PLACES) : 0.00; 
+       
+        $content .= '<!--<label for="products_special_pricing_enable' . $value['customers_group_id'] . '" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>-->' .
+                    '<div class="columns">' .
+                    '  <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom">' .
+                    '    <input id="products_special_pricing_enable' . $value['customers_group_id'] . '" name="products_special_pricing_enable' . $value['customers_group_id'] . '" type="checkbox" class="margin-right medium switch"' . (($pInfo->get('status') != -1 && $value['customers_group_id'] == '1') ? ' checked' : ' disabled') . ' />' .
+                    '    <div class="inputs' . (($value['customers_group_id'] == '1') ? '' : ' disabled grey') . '" style="display:inline; padding:8px 0;">' .
+                    '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
+                    '      <input type="text" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" name="products_special_price[' . $value['customers_group_id'] . ']" id="products_special_price' . $value['customers_group_id'] . '" value="' . (($value['customers_group_id'] == '1') ? number_format($pInfo->get('products_special_price'), DECIMAL_PLACES) : '0.00') . '" class="sprice input-unstyled small-margin-right' . (($value['customers_group_id'] == '1') ? '' : ' grey disabled') . '" style="width:60px;"' . (($value['customers_group_id'] == '1') ? '' : ' READONLY') . '/>' .
+                    '    </div>' .
+                    '    <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_special_price') . (($value['customers_group_id'] == '1') ? '<span class="disctag tag glossy mid-margin-left">-' . number_format($discount, DECIMAL_PLACES) . '%</span>' : '') . '</small>' .
+                    '  </div>' .
+                    '  <div class="new-row-mobile twelve-columns twelve-columns-mobile">' .
+                    '    <span class="nowrap margin-right">' .
+                    '      <span class="input small-margin-top">' .
+                    '        <input name="products_special_start_date[' . $value['customers_group_id'] . ']" id="products_special_start_date' . $value['customers_group_id'] . '" type="text" placeholder="Start" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($value['customers_group_id'] == '1') ? $pInfo->get('products_special_start_date') : '') . '" style="width:97px;" />' .
+                    '      </span>' .
+                    '      <span class="icon-calendar icon-size2 small-margin-left"></span>' .
+                    '    </span>' .
+                    '    <span class="nowrap">' .
+                    '      <span class="input small-margin-top">' .
+                    '        <input name="products_special_expires_date[' . $value['customers_group_id'] . ']" id="products_special_expires_date' . $value['customers_group_id'] . '" type="text" placeholder="End" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($value['customers_group_id'] == '1') ? $pInfo->get('products_special_expires_date') : '') . '" style="width:97px;" />' .
+                    '      </span>' .
+                    '      <span class="icon-calendar icon-size2 small-margin-left"></span>' .
+                    '    </span>' .
+                    '  </div>' .
+                    '</div>';
+      } // remove this line when specials per group is reintroduced
     }
     
     return $content;
