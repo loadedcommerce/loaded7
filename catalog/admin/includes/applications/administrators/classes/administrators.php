@@ -537,7 +537,7 @@ class lC_Administrators_Admin {
         include($lC_DirectoryListing->getDirectory() . '/' . $file['name']);
       }
       $tmp_module = '';
-      if($module == 'option_manager' || $module == 'product_settings') {
+      if ($module == 'product_variants' || $module == 'product_settings') {
         $tmp_module = $module;
       }
       $module = 'lC_Access_' . ucfirst($module);

@@ -51,7 +51,7 @@
       </tfoot>
     </table>
     <div class="selectContainer">
-      <select <?php echo (((int)$_SESSION['admin']['access']['option_manager'] < 4) ? NULL : 'onchange="batchDeleteEntries();"'); ?> name="selectAction" id="selectAction" class="select blue-gradient glossy<?php echo (((int)$_SESSION['admin']['access']['option_manager'] < 4) ? ' disabled' : NULL); ?>">
+      <select <?php echo (((int)$_SESSION['admin']['access']['product_variants'] < 4) ? NULL : 'onchange="batchDeleteEntries();"'); ?> name="selectAction" id="selectAction" class="select blue-gradient glossy<?php echo (((int)$_SESSION['admin']['access']['product_variants'] < 4) ? ' disabled' : NULL); ?>">
         <option value="0" selected="selected">With Selected</option>
         <option value="delete">Delete</option>
       </select>
@@ -68,7 +68,7 @@
                   <span class="icon-reply"></span>
                 </span><?php echo $lC_Language->get('button_back'); ?>
               </a>&nbsp;
-              <a class="button<?php echo (((int)$_SESSION['admin']['access']['option_manager'] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access']['option_manager'] < 2) ? '#' : 'javascript://" onclick="newEntry(); return false;'); ?>">
+              <a class="button<?php echo (((int)$_SESSION['admin']['access']['product_variants'] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access']['product_variants'] < 2) ? '#' : 'javascript://" onclick="newEntry(); return false;'); ?>">
                 <span class="button-icon green-gradient">
                   <span class="icon-plus"></span>
                 </span><?php echo $lC_Language->get('button_new_variant_entry'); ?>
