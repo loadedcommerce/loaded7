@@ -106,7 +106,9 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   * @access public
   * @return array
   */
-  public function getKeys() {
+  public function getKeys() { 
+    global $lC_Database;
+    
     if (!isset($this->_keys)) {
       $this->_keys = array('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS');
     }
@@ -141,6 +143,9 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     // product classes
     $lC_Database->simpleQuery("DROP TABLE IF EXISTS `" . DB_TABLE_PREFIX . "product_classes`");
     $lC_Database->simpleQuery("alter table " . TABLE_PRODUCTS . " DROP COLUMN `is_subproduct`");
+    $lC_Database->simpleQuery("delete from " . TABLE_TEMPLATES_BOXES . " where modules_group like '%Loaded_7_Pro%'");   
+    $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'DEFAULT_PRODUCT_CLASSES_ID'");
+    $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'SKIP_CHECKOUT_SHIPPING_PAGE'");
     
     $this->_clearCache();
   }
