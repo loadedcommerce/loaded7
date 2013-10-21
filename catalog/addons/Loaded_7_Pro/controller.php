@@ -80,10 +80,11 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   */
   public function install() {
     global $lC_Database;
-    
+
     if (isset($_SESSION['remove_loaded_7_pro']) && $_SESSION['remove_loaded_7_pro'] == true) {
       unset($_SESSION['remove_loaded_7_pro']);
-    } else { 
+      $this->_clearCache();
+    } else if (!$this->_checkStatus()) { 
       $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS'");
       $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable AddOn', 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS', '1', 'Do you want to enable this addon?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
       $lC_Database->simpleQuery("delete from " . TABLE_TEMPLATES_BOXES . " where modules_group like '%Loaded_7_Pro%'");
@@ -166,6 +167,20 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     lC_Cache::clear('languages');
     lC_Cache::clear('addons');
     lC_Cache::clear('vqmoda');
+  }
+ /**
+  * Check the addon install status
+  *
+  * @access public
+  * @return void
+  */
+  private function _checkStatus() {
+    $addons = '';
+    if (file_exists('../includes/work/cache/addons.cache')) {
+      $addons = @file_get_contents('../includes/work/cache/addons.cache');
+    }
+
+    return (strstr($addons, 'Loaded_7_Pro/controller.php') != '') ? true : false;
   }
 }
 ?>
