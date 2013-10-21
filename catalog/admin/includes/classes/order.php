@@ -39,7 +39,8 @@
 
         $this->_order_id = $Qorder->valueInt('orders_id');
 
-        $this->_customer = array('name' => $Qorder->valueProtected('customers_name'),
+        $this->_customer = array('id' => $Qorder->value('customers_id'),
+                                 'name' => $Qorder->valueProtected('customers_name'),
                                  'company' => $Qorder->valueProtected('customers_company'),
                                  'street_address' => $Qorder->valueProtected('customers_street_address'),
                                  'suburb' => $Qorder->valueProtected('customers_suburb'),
@@ -118,7 +119,7 @@
 
       $history_array = array();
 
-      $Qhistory = $lC_Database->query('select osh.orders_status_id, osh.date_added, osh.customer_notified, osh.comments, os.orders_status_name from :table_orders_status_history osh left join :table_orders_status os on (osh.orders_status_id = os.orders_status_id and os.language_id = :language_id) where osh.orders_id = :orders_id order by osh.date_added');
+      $Qhistory = $lC_Database->query('select osh.orders_status_id, osh.date_added, osh.customer_notified, osh.comments, os.orders_status_name, osh.administrators_id, osh.append_comment from :table_orders_status_history osh left join :table_orders_status os on (osh.orders_status_id = os.orders_status_id and os.language_id = :language_id) where osh.orders_id = :orders_id order by osh.date_added');
       $Qhistory->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
       $Qhistory->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
 
@@ -130,11 +131,19 @@
       $Qhistory->execute();
 
       while ($Qhistory->next()) {
+        $QhAdmin = $lC_Database->query('select first_name, last_name, image from :table_administrators where id = :id limit 1');
+        $QhAdmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
+        $QhAdmin->bindInt(':id', $Qhistory->valueInt('administrators_id'));
+
         $history_array[] = array('status_id' => $Qhistory->valueInt('orders_status_id'),
                                  'status' => $Qhistory->value('orders_status_name'),
                                  'date_added' => $Qhistory->value('date_added'),
                                  'customer_notified' => $Qhistory->valueInt('customer_notified'),
-                                 'comment' => $Qhistory->valueProtected('comments'));
+                                 'comment' => $Qhistory->valueProtected('comments'),
+                                 'admin_name' => $QhAdmin->value('first_name') . ' ' . $QhAdmin->value('last_name'),
+                                 'admin_image' => $QhAdmin->value('image'),
+                                 'admin_id' => $Qhistory->valueInt('administrators_id'),
+                                 'append_comment' => $Qhistory->valueInt('append_comment'));
       }
 
       $this->_status_history = $history_array;
@@ -211,7 +220,8 @@
       $Qproducts->execute();
 
       while ($Qproducts->next()) {
-        $products_array[$key] = array('quantity' => $Qproducts->valueInt('products_quantity'),
+        $products_array[$key] = array('products_id' => $Qproducts->valueInt('orders_products_id'),
+                                      'quantity' => $Qproducts->valueInt('products_quantity'),
                                       'name' => $Qproducts->value('products_name'),
                                       'model' => $Qproducts->value('products_model'),
                                       'tax' => $Qproducts->value('products_tax'),
@@ -235,6 +245,42 @@
       }
 
       $this->_products = $products_array;
+    }    
+
+    function _getProduct($oid, $pid) {
+      global $lC_Database;
+
+      $Qproduct = $lC_Database->query('select products_name, products_model, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where orders_products_id = :orders_products_id and orders_id = :orders_id limit 1');
+      $Qproduct->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+      $Qproduct->bindInt(':orders_products_id', $pid);
+      $Qproduct->bindInt(':orders_id', $oid);
+      $Qproduct->execute();
+      
+      while ($Qproduct->next()) {
+        $product_array[$key] = array('quantity' => $Qproduct->valueInt('products_quantity'),
+                                     'name' => $Qproduct->value('products_name'),
+                                     'model' => $Qproduct->value('products_model'),
+                                     'tax' => $Qproduct->value('products_tax'),
+                                     'price' => $Qproduct->value('products_price'),
+                                     'options' => unserialize($Qproduct->value('products_simple_options_meta_data')));
+
+        $Qvariants = $lC_Database->query('select group_title, value_title from :table_orders_products_variants where orders_id = :orders_id and orders_products_id = :orders_products_id order by id');
+        $Qvariants->bindTable(':table_orders_products_variants', TABLE_ORDERS_PRODUCTS_VARIANTS);
+        $Qvariants->bindInt(':orders_id', $this->_order_id);
+        $Qvariants->bindInt(':orders_products_id', $id);
+        $Qvariants->execute();
+
+        if ( $Qvariants->numberOfRows() > 0 ) {
+          while ( $Qvariants->next() ) {
+            $product_array[$key]['attributes'][] = array('option' => $Qvariants->value('group_title'),
+                                                          'value' => $Qvariants->value('value_title'));
+          }
+        }
+
+        $key++;
+      }
+
+      $this->_product = $product_array;
     }
 
     function _getTotals() {
@@ -380,6 +426,14 @@
       }
 
       return $this->_products;
+    }
+
+    function getProduct($oid, $pid) {
+      if (!isset($this->_product)) {
+        $this->_getProduct($oid, $pid);
+      }
+
+      return $this->_product;
     }
 
     function getNumberOfProducts() {

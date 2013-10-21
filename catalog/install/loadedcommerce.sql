@@ -514,6 +514,8 @@ CREATE TABLE lc_orders_status_history (
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   customer_notified int(11) DEFAULT NULL,
   comments text,
+  administrators_id int(11) DEFAULT NULL,
+  append_comment int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (orders_status_history_id)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
 

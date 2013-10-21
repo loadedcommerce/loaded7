@@ -469,7 +469,7 @@ class lC_Customers_Admin {
           if ( $lC_Database->isError() ) {
             $error = true;
             $result['rpcStatus'] = -1;
-          }
+          } 
         }
       }
     }

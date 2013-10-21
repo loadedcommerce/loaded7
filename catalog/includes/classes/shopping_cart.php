@@ -813,7 +813,7 @@ class lC_ShoppingCart {
       $this->_shipping_address = array('id' => $address_id,
                                        'firstname' => $Qaddress->valueProtected('entry_firstname'),
                                        'lastname' => $Qaddress->valueProtected('entry_lastname'),
-                                       'company' => (!lc_empty($Qaddress->valueProtected('entry_company'))) ? $Qaddress->valueProtected('entry_company') : $lC_Language->get('field_customer_company'),
+                                       'company' => (!lc_empty($Qaddress->valueProtected('entry_company'))) ? $Qaddress->valueProtected('entry_company') : '',
                                        'street_address' => $Qaddress->valueProtected('entry_street_address'),
                                        'suburb' => $Qaddress->valueProtected('entry_suburb'),
                                        'city' => $Qaddress->valueProtected('entry_city'),

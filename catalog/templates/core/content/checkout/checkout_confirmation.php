@@ -70,7 +70,7 @@
               <div class="well relative clearfix small-padding-top small-padding-bottom"> 
                 <h4><?php echo $lC_Language->get('order_comment_title'); ?></h4>
                 <div class="form-group">
-                  <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), 60, 5, 'class="form-control" placeholder="' . $lC_Language->get('text_add_comment_to_order') . '" onblur="sendOrderCommentsToSession(this.value);"'); ?>
+                  <?php echo lc_draw_textarea_field('comments', (isset($_SESSION['comments']) ? $_SESSION['comments'] : null), 60, 5, 'class="form-control" placeholder="' . $lC_Language->get('text_add_comment_to_order') . '" onkeyup="sendOrderCommentsToSession(this.value);"'); ?>
                 </div>                 
               </div>                                        
             </div>

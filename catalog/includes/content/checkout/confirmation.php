@@ -51,13 +51,15 @@
       if ($lC_Services->isStarted('breadcrumb')) {
         $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_confirmation'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'SSL'));
       }
-
+      // added due to bootstrap not having order comments before confirmation page
+      $_POST['comments'] = $_POST['comments'];
+      ////////////////////////////////////////////
       if ( (isset($_POST['comments'])) && (isset($_SESSION['comments'])) && (empty($_POST['comments'])) ) {
         unset($_SESSION['comments']);
       } elseif (!empty($_POST['comments'])) {
         $_SESSION['comments'] = lc_sanitize_string($_POST['comments']);
       }
-
+      
       // load the selected payment module
       include($lC_Vqmod->modCheck('includes/classes/payment.php'));
       $lC_Payment = new lC_Payment((isset($_POST['payment_method']) ? $_POST['payment_method'] : $lC_ShoppingCart->getBillingMethod('id')));

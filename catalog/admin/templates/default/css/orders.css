@@ -1,0 +1,25 @@
+/* admin orders edit page specific css */
+
+/* products tab */
+.op-action { width: 45px; margin-right: 8px; }
+
+/* customers tab */
+.field-line-height { line-height: 16px; }
+.field-block { padding: 20px; }
+.field-block .label { width: 150px; margin: 0; text-align: left; }
+.field-block-address { position: relative; left: 150px; }
+.field-block-address-offset { margin-left: -150px; }
+.orders-print-packing-slip-button { float: right; position: relative; top: -48px; }
+
+/* custom media queries */
+@media screen and (min-width: 480px) and (max-width: 767px) {
+  .field-block-address { position: relative; left: 0; }
+  .field-block-address-offset { margin-left: 0; }
+  #section_orders_customer_content { margin: 0 -7px 0 -20px; }
+}  
+@media screen and (max-width: 479px) {
+  .field-block-address { position: relative; left: 0; }
+  .field-block-address-offset { margin-left: 0; }
+  #section_orders_customer_content { margin: 0 -10px 0 -20px; }
+  .orders-print-packing-slip-button-text { display: none; }
+}
