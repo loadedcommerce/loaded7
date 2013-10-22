@@ -133,9 +133,10 @@ class lC_Content_product_on_homepage extends lC_Modules {
           </div> 
         </form>
       </div>
-      EOF;
+EOF;
     }
   }
+  
  /*
   * Install the module
   *
