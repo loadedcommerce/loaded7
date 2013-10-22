@@ -234,7 +234,7 @@
             </div>
           </div>
         </div>
-
+        <a href="http://www.loadedcommerce.com" target="_blank"><div class="go-pro-menu-ad"></div></a>
         <!-- Big menu small navigation -->
         <ul id="access" class="children-tooltip">
           <li id="li-search"><a onclick="toggleSubMenu('search');" href="#" title="<?php echo $lC_Language->get('tooltip_search'); ?>"><span class="icon-search"></span></a></li>
