@@ -39,7 +39,7 @@ $(document).ready(function() {
   } else if (module == 'categories' || module == 'content') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-content").addClass('current'); 
-  } else if (module == 'specials' || module == 'manufacturers' || module == 'reviews' || (module.indexOf('product') != -1) ) {
+  } else if (module == 'specials' || module == 'manufacturers' || module == 'reviews' || module == 'image_groups' || module == 'weight_classes' || (module.indexOf('product') != -1) ) {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-products").addClass('current');
   } else if (module == 'banner_manager' || module == 'newsletters' || module == 'coupons' || module == 'branding_manager') {
