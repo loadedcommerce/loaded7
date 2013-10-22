@@ -184,20 +184,20 @@
 .row-drop > td,
 .cell-drop,
 .back {
-	background: #3c4044 url(../img/textures/grid.png) !important;
-	background: url(../img/textures/grid.png), -webkit-gradient(linear, left top, left bottom, from(#6d7073), to(#3c4044)) !important;
-	background: url(../img/textures/grid.png), -webkit-linear-gradient(top, #6d7073, #3c4044) !important;
-	background: url(../img/textures/grid.png), -moz-linear-gradient(top, #6d7073, #3c4044) !important;
-	background: url(../img/textures/grid.png), -ms-linear-gradient(top, #6d7073, #3c4044) !important;
-	background: url(../img/textures/grid.png), -o-linear-gradient(top, #6d7073, #3c4044) !important;
-	background: url(../img/textures/grid.png), linear-gradient(top, #6d7073, #3c4044) !important;
-	color: #afafaf;
-	}
-	.field-drop b, .field-drop strong,
-	.row-drop b, .row-drop strong,
-	.cell-drop b, .cell-drop strong {
-		color: white;
-	}
+  background: #3c4044 url(../img/textures/grid.png) !important;
+  background: url(../img/textures/grid.png), -webkit-gradient(linear, left top, left bottom, from(#6d7073), to(#3c4044)) !important;
+  background: url(../img/textures/grid.png), -webkit-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), -moz-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), -ms-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), -o-linear-gradient(top, #6d7073, #3c4044) !important;
+  background: url(../img/textures/grid.png), linear-gradient(top, #6d7073, #3c4044) !important;
+  color: #afafaf;
+  }
+  .field-drop b, .field-drop strong,
+  .row-drop b, .row-drop strong,
+  .cell-drop b, .cell-drop strong {
+    color: white;
+  }
 
 /********************************************************/
 /*                 4. Inputs & progress                 */
@@ -415,6 +415,12 @@
 /* White */
 .calendar-menu > li,
 li.calendar-menu,
+.orders-menu > li,
+li.orders-menu,
+.customers-menu > li,
+li.customers-menu,
+.products-menu > li,
+li.products-menu,
 .message-menu > li,
 li.message-menu,
 .message, .big-message,

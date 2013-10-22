@@ -60,7 +60,7 @@
               <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="newAdmin(); return false;'); ?>">
                 <span class="button-icon green-gradient">
                   <span class="icon-plus"></span>
-                </span class="button-text"><?php echo $lC_Language->get('button_add_member'); ?>
+                </span><?php echo $lC_Language->get('button_add_member'); ?>
               </a>&nbsp;
             </p>
           </div>
