@@ -87,7 +87,7 @@ $(document).ready(function() {
     } else if (module.indexOf("orders") != -1 && document.location.href.indexOf("action=save") != -1) {
       $("#big-menu_orders_list").addClass('current navigable-current').change();
     } else if (module.indexOf("product_variants") != -1 && document.location.href.indexOf("product_variants") != -1) {
-      $("#big-menu_product_variants").addClass('current navigable-current').change();
+      $("#big-menu_option_variants").addClass('current navigable-current').change();
     } else if (module.indexOf("statistics") != -1 && document.location.href.indexOf("statistics") != -1) {
       $("#big-menu_statistics").addClass('current navigable-current').change();
     } else if (module.indexOf("tax_classes") != -1 && document.location.href.indexOf("tax_classes") != -1) {

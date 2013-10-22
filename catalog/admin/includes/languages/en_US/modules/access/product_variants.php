@@ -1,4 +1,4 @@
-#  $Id: option_manager.php v1.0 2013-01-01 datazen $
+#  $Id: product_variants.php v1.0 2013-01-01 datazen $
 #
 #  LoadedCommerce, Innovative eCommerce Solutions
 #  http://www.loadedcommerce.com
@@ -9,5 +9,4 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-access_option_manager_title = Option Manager
-access_product_variants_title = Option Variants
+access_product_variants_title = Options Manager

@@ -42,8 +42,8 @@ class lC_Product_variants_Admin {
       $total = '<td>' . $Qentries->valueInt('total') . '</td>';
       $sort = '<td>' . $Qgroups->valueInt('sort_order') . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access']['option_manager'] < 3) ? '#' : 'javascript://" onclick="editGroup(\'' . $Qgroups->valueInt('id') . '\')') . '" class="button icon-pencil ' . ((int)($_SESSION['admin']['access']['option_manager'] < 3) ? 'disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access']['option_manager'] < 4) ? '#' : 'javascript://" onclick="deleteGroup(\'' . $Qgroups->valueInt('id') . '\', \'' . urlencode($Qgroups->valueProtected('title')) . '\');') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['option_manager'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   <a href="' . ((int)($_SESSION['admin']['access']['product_variants'] < 3) ? '#' : 'javascript://" onclick="editGroup(\'' . $Qgroups->valueInt('id') . '\')') . '" class="button icon-pencil ' . ((int)($_SESSION['admin']['access']['product_variants'] < 3) ? 'disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   <a href="' . ((int)($_SESSION['admin']['access']['product_variants'] < 4) ? '#' : 'javascript://" onclick="deleteGroup(\'' . $Qgroups->valueInt('id') . '\', \'' . urlencode($Qgroups->valueProtected('title')) . '\');') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['product_variants'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
       $result['aaData'][] = array("$check", "$group", "$total", "$sort", "$action");
 
