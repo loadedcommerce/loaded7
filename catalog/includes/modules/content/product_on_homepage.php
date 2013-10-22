@@ -11,6 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/transport.php'));
 class lC_Content_product_on_homepage extends lC_Modules {
  /* 
   * Public variables 
