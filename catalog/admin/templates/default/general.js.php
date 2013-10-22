@@ -386,7 +386,11 @@ $(document).ready(function() {
   } if ($(window).width() >= 1380) {
     $("#category_tabs").removeClass("standard-tabs");
     $("#category_tabs").addClass("side-tabs");
-  }        
+  }
+  
+  $(".go-pro-menu-ad").on('click', function(){
+    window.open("http://www.loadedcommerce.com/loaded-pre-order-p-395.html");    
+  });        
      
 });
 
