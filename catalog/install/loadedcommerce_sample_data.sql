@@ -108,14 +108,6 @@ INSERT INTO lc_configuration (configuration_title, configuration_key, configurat
 INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Shipping Cost', 'ADDONS_SHIPPING_FREE_SHIPPING_MINIMUM_ORDER', '0.00', 'The minimum order amount to apply free shipping to.', 6, 0, NULL, '2013-08-27 11:15:18', NULL, NULL);
 INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Shipping Zone', 'ADDONS_SHIPPING_FREE_SHIPPING_ZONE', '0', 'If a zone is selected, only enable this shipping method for that zone.', 6, 0, NULL, '2013-08-27 11:15:18', 'lc_cfg_use_get_zone_class_title', 'lc_cfg_set_zone_classes_pull_down_menu');
 
-INSERT INTO lc_manufacturers (manufacturers_id, manufacturers_name, manufacturers_image, date_added, last_modified) VALUES(1, 'Dell', 'dell.png', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-INSERT INTO lc_manufacturers (manufacturers_id, manufacturers_name, manufacturers_image, date_added, last_modified) VALUES(2, 'Microsoft', 'microsoft.png', '2013-10-22 15:34:57', NULL);
-INSERT INTO lc_manufacturers (manufacturers_id, manufacturers_name, manufacturers_image, date_added, last_modified) VALUES(3, 'HP', 'hp.png', '2013-10-22 15:35:10', NULL);
-
-INSERT INTO lc_manufacturers_info (manufacturers_id, languages_id, manufacturers_url, url_clicked, date_last_click) VALUES(1, 1, '', 0, NULL);
-INSERT INTO lc_manufacturers_info (manufacturers_id, languages_id, manufacturers_url, url_clicked, date_last_click) VALUES(2, 1, '', 0, NULL);
-INSERT INTO lc_manufacturers_info (manufacturers_id, languages_id, manufacturers_url, url_clicked, date_last_click) VALUES(3, 1, '', 0, NULL);
-
 INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (6, 6, 1, 1, 'cPath=6', 'women');
 INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (7, 7, 1, 1, 'cPath=7', 'men');
 INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (8, 8, 1, 1, 'cPath=6_8', 'dresses');
