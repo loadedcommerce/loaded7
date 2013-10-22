@@ -9,7 +9,7 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-heading_title = Product Variants
+heading_title = Product Options Manager
 
 button_new_variant_group = New Group
 button_new_variant_entry = New Variant
