@@ -50,7 +50,7 @@
                 <div style="padding-left:6px;" class="small-margin-top">
                   <div id="imagePreviewContainer" class="cat-image align-center">
                     <img src="../images/no_image.png" style="max-width: 100%; height: auto;" align="center" />
-                    <input type="hidden" id="categories_image" name="categories_image" value="no_image">
+                    <input type="hidden" id="categories_image" name="categories_image" value="">
                   </div>
                 </div>   
                 <p class="thin mid-margin-top" align="center"><?php echo $lC_Language->get('text_drag_drop_to_replace'); ?></p>
