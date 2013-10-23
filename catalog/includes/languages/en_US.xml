@@ -2789,6 +2789,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>ms_error_action_not_performed</key>
       <value><![CDATA[Error: There was a problem performing the action.]]></value>
       <group>general</group>
+    </definition>
+    <definition>
+      <key>no_products_found</key>
+      <value><![CDATA[The are no products found matching your criteria.]]></value>
+      <group>general</group>
     </definition>  
   </definitions>  
 </language>
