@@ -27,11 +27,10 @@ global $lC_Language, $pInfo;
               </a>            
             </li>
             <?php if ($pInfo) { ?>
-            <li id="additional-gallery-trigger">     
-              <a class="file-link" href="javascript:void(0);" onclick="showContent('additional');">
-                <span class="icon file-jpg"></span>
-                <b><?php echo $lC_Language->get('text_additional_images'); ?></b>
-              </a>            
+            <li id="additional-gallery-trigger" class="upsellwrapper">     
+              <span class="icon file-jpg"></span>
+              <b><?php echo $lC_Language->get('text_additional_images'); ?></b>
+              <span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('text_additional_images_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_additional_images_upsell_desc'); ?>"><?php echo lc_go_pro(); ?></span>
             </li>
             <?php } ?>            
           </ul>
@@ -85,12 +84,6 @@ global $lC_Language, $pInfo;
                     ?>
                     <div id="defaultImagesContainer">
                       <div id="defaultImages" style="overflow: auto;" class="small-margin-top"></div>
-                    </div>
-                    <div id="additionalImagesContainer" style="display:none;">
-                      <div class="message white-gradient"><span class="anthracite"><strong><?php echo $lC_Language->get('subsection_original_images'); ?></strong></span></div>
-                      <div id="additionalOriginal" style="overflow: auto;" class="small-margin-top"></div>
-                      <div class="message white-gradient"><span class="anthracite"><strong><?php echo $lC_Language->get('subsection_images'); ?></strong></span></div>
-                      <div id="additionalOther" style="overflow: auto;"></div>                    
                     </div>                    
                   <?php
                   }
