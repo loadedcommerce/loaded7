@@ -82,7 +82,7 @@
                     <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
                     <img src="<?php echo DIR_WS_HTTP_CATALOG . ((is_file('../images/categories/' . $lC_ObjectInfo->get('categories_image')) == true) ? 'images/categories/' . $lC_ObjectInfo->get('categories_image') : 'images/no_image.png'); ?>" style="max-width:100%;" />
                     <?php } else { ?>
-                    <img src="../images/categories/no_image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?>
+                    <img src="../images/no_image.png" style="max-width: 100%; height: auto;" align="center" />
                     <?php } ?>
                     <input type="hidden" id="categories_image" name="categories_image" value="<?php echo $lC_ObjectInfo->get('categories_image'); ?>">
                   </div>
