@@ -183,10 +183,12 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
             echo $lC_Banner->display();
           }     
         }
-
-        if ( $lC_Template->showDebugMessages() && ($lC_MessageStack->size('debug') > 0) ) {
-          echo '<div id="debug-info-container" style="display:none;" class="alert alert-warning"><span></span></div>';
-        }         
+        
+        if (isset($lC_Services) && $lC_Services->isStarted('debug')) {
+          if ( $lC_Template->showDebugMessages() && ($lC_MessageStack->size('debug') > 0) ) {
+            echo '<div id="debug-info-container" style="display:none;" class="alert alert-warning"><span></span></div>';
+          }         
+        }
         ?>       
       </div>  
       <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
