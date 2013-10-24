@@ -14,7 +14,7 @@
   function lc_cfg_set_product_on_homepage($default, $key = null) {
     global $lC_Database, $lC_Language;
     
-    $css_class = 'class="input with-small-padding"';
+    $css_class = 'class="input with-small-padding mid-margin-top"';
     
     $Qproducts = $lC_Database->query('select SQL_CALC_FOUND_ROWS products_id, products_name from :table_products_description where language_id = :language_id');
     $Qproducts->appendQuery('order by products_name');
@@ -25,6 +25,8 @@
     $name = (empty($key)) ? 'configuration_value' : 'configuration[' . $key . ']';
 
     $array = array();
+    $array[] = array('id' => '',
+                     'text' => $lC_Language->get('text_select_product'));
     while ( $Qproducts->next() ) {
       $array[] = array('id' => $Qproducts->value('products_id'),
                        'text' => $Qproducts->value('products_name'));

@@ -314,3 +314,4 @@ text_free_shipping = Free Shipping
 text_free_product = Free Product
 text_upgrade_now = Upgrade Now
 text_full_pro_b2b_features_list = See Full Pro & B2B Feature List
+text_select_product = Select Product
