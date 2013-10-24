@@ -34,6 +34,7 @@ class lC_Categories_Admin_rpc {
 
     echo json_encode($result);
   }
+  
  /*
   * Return the data used on the dialog forms
   *
@@ -48,7 +49,8 @@ class lC_Categories_Admin_rpc {
     $result['rpcStatus'] = RPC_STATUS_SUCCESS;
 
     echo json_encode($result);
-  } 
+  }
+   
  /*
   * Delete the category record
   *
@@ -66,6 +68,7 @@ class lC_Categories_Admin_rpc {
 
     echo json_encode($result);
   }
+  
  /*
   * Batch delete category records
   *
@@ -83,6 +86,7 @@ class lC_Categories_Admin_rpc {
 
     echo json_encode($result);
   }
+  
  /*
   * Move the category record
   *
@@ -101,6 +105,7 @@ class lC_Categories_Admin_rpc {
 
     echo json_encode($result);
   }
+  
  /*
   * Batch move category records
   *
@@ -119,6 +124,7 @@ class lC_Categories_Admin_rpc {
 
     echo json_encode($result);
   }
+  
  /*
   * Upload Category Image
   * 
@@ -148,6 +154,7 @@ class lC_Categories_Admin_rpc {
 
     echo json_encode($result);
   }
+  
  /*
   * update category sorting
   *
@@ -165,6 +172,7 @@ class lC_Categories_Admin_rpc {
 
     echo json_encode($result);
   }
+  
  /*
   * update category status
   *
@@ -182,6 +190,7 @@ class lC_Categories_Admin_rpc {
 
     echo json_encode($result);
   }
+  
  /*
   * update category show in top nav
   *
@@ -199,6 +208,7 @@ class lC_Categories_Admin_rpc {
 
     echo json_encode($result);
   }
+  
  /*
   * update category show in infobox
   *
@@ -215,7 +225,8 @@ class lC_Categories_Admin_rpc {
     }  
 
     echo json_encode($result);
-  } 
+  }
+   
  /*
   * Check category permalink
   *
@@ -230,6 +241,23 @@ class lC_Categories_Admin_rpc {
     $validated = lC_Categories_Admin::validatePermalink($data['categories_permalink'], $data['cid'], $data['type']);
 
     echo json_encode($validated);
+  }
+
+ /*
+  * Deletes the categories image
+  *
+  * @access public
+  * @return json
+  */
+  public static function deleteCatImage() {
+    
+    $result = lC_Categories_Admin::deleteCatImage($_GET['image'], $_GET['id']);
+    if ($result == 1) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    $result = array('rpcStatus' => RPC_STATUS_SUCCESS);
+    
+    echo json_encode($result);
   }
 }
 ?>
