@@ -386,6 +386,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>listing_sku_heading</key>
+      <value><![CDATA[SKU]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>listing_products_heading</key>
       <value><![CDATA[Products]]></value>
       <group>general</group>

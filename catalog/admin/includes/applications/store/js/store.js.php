@@ -22,7 +22,7 @@ $(document).ready(function() {
     if (sel == 'payment') showAddonType('2', 'Payment');   
     if (sel == 'shipping') showAddonType('3', 'Shipping');   
   } else { 
-    showAddonType('1', 'Featured');/*VQMOD3*/
+    showAddonType('1', 'Featured'); 
   }
   $(this).scrollTop(0); 
 });

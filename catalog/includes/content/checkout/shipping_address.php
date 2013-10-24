@@ -42,7 +42,7 @@
 
       // if the order contains only virtual products, forward the customer to the billing page as
       // a shipping address is not needed
-      if ($lC_ShoppingCart->getContentType() == 'virtual') {
+      if ($lC_ShoppingCart->getContentType() == 'virtual' || (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1')) {
         $lC_ShoppingCart->resetShippingAddress();
         $lC_ShoppingCart->resetShippingMethod();
 

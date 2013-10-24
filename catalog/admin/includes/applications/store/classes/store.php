@@ -208,8 +208,6 @@ class lC_Store_Admin {
 
     $types = utility::xml2arr($resultXML);     
        
-    /*VQMOD2*/
-           
     return $types['data'];
   }  
  /*

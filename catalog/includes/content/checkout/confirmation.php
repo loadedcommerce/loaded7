@@ -39,7 +39,10 @@
 
       // if no shipping method has been selected, redirect the customer to the shipping method selection page
       if ($lC_ShoppingCart->hasShippingAddress() == false) {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
+        if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1') {
+        } else {
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
+        }
       }
 
       include($lC_Vqmod->modCheck('includes/classes/order.php'));

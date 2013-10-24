@@ -16,6 +16,7 @@ global $lC_Vqmod;
 require($lC_Vqmod->modCheck('../includes/classes/template.php'));
 
 class lC_Template_Admin extends lC_Template {
+
   function &setup($module) {
     global $lC_Vqmod;
     
@@ -26,8 +27,10 @@ class lC_Template_Admin extends lC_Template {
 
       if ( file_exists('includes/applications/' . $module . '/actions/' . $_action . '.php') ) {
         include($lC_Vqmod->modCheck('includes/applications/' . $module . '/actions/' . $_action . '.php'));
-
         $class = 'lC_Application_' . ucfirst($module) . '_Actions_' . $_action;
+      } else if (lC_Addons_Admin::hasAdminModuleActions($module, $_action)) {
+        include($lC_Vqmod->modCheck(lC_Addons_Admin::getAdminModuleActionsPath($module, $_action)));
+        $class = 'lC_Application_' . ucfirst($module) . '_Actions_' . $_action;        
       }
     }
 
@@ -43,7 +46,7 @@ class lC_Template_Admin extends lC_Template {
   */
   public function loadModal($_module, $_sub = false) {
     global $lC_Language, $lC_Template, $lC_Vqmod;
-
+    
     if ( is_dir('includes/applications/' . $_module . '/modal') ) {
       $pattern = '/(\w*)\.php$/';
       $dir = opendir('includes/applications/' . $_module . '/modal');
@@ -58,7 +61,10 @@ class lC_Template_Admin extends lC_Template {
           }
         }
       }
+    } else if (lC_Addons_Admin::hasAdminModuleModals($_module)) {
+      lC_Addons_Admin::loadAdminModuleModals($_module);
     }
+    
     return true;
   }
   /*
@@ -72,6 +78,8 @@ class lC_Template_Admin extends lC_Template {
     
     if ( file_exists('includes/applications/' . $_module . '/js/' . $_module . '.js.php') ) {
       include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/js/' . $_module . '.js.php'));
+    } else if (lC_Addons_Admin::hasAdminModulePageScript($_module)) {
+      include($lC_Vqmod->modCheck(lC_Addons_Admin::getAdminModulePageScriptPath($_module)));
     }
 
     return true;
@@ -87,6 +95,8 @@ class lC_Template_Admin extends lC_Template {
     
     if ( file_exists('includes/applications/' . $_module . '/js/responsive.js.php') ) {
       include($lC_Vqmod->modCheck('includes/applications/' . $_module . '/js/responsive.js.php'));
+    } else if (lC_Addons_Admin::hasAdminModulePageResponsiveScript($_module)) {
+      include($lC_Vqmod->modCheck(lC_Addons_Admin::getAdminModulePageResponsiveScriptPath($_module)));
     }
 
     return true;
@@ -123,40 +133,22 @@ class lC_Template_Admin extends lC_Template {
 
     return $html;
   }
-  /*
-  * Check to see if page view is authorized
-  *
-  * @access public
-  * @return boolean
-  */
+  
   public function isAuthorized($_module) {
     $ok = FALSE;
-
     
-    if ((int)$_SESSION['admin']['access'][strtolower($_module)] > 0) {
-      $ok = TRUE;
-    } else if ($_module == 'login') {
-      $ok = TRUE;
-    } else if ($_module == 'store' && $_SESSION['admin']['access']['configuration'] > 0) {
-      $ok = TRUE;
-    } else if ($_module == 'index' && $this->getPageContentsFilename() == 'main.php') {
-      $ok = TRUE;
-    } else if ($_module == 'image_groups' && $_SESSION['admin']['access']['product_settings'] > 0) {
-      $ok = TRUE;
-    } else if ($_module == 'weight_classes' && $_SESSION['admin']['access']['product_settings'] > 0) {
-      $ok = TRUE;
-    } else if (stristr($_module, 'modules_') && $_SESSION['admin']['access']['modules'] > 0) {
-      $ok = TRUE;
-    } else if ($_module == 'services' && $_SESSION['admin']['access']['modules'] > 0) {
-      $ok = TRUE;
-    } else if ($_module == 'product_attributes' && $_SESSION['admin']['access']['modules'] > 0) {
-      $ok = TRUE;
-    } else if ($_module == 'product_variants' && $_SESSION['admin']['access']['product_variants'] > 0) {
-      $ok = TRUE;    
-    } else if ($_module == 'countries' && $_SESSION['admin']['access']['locale'] > 0) {    
-      $ok = TRUE;    
-    } else if ($_module == 'zone_groups' && $_SESSION['admin']['access']['locale'] > 0) {
-      $ok = TRUE;              
+    if ((int)$_SESSION['admin']['access'][strtolower($_module)] > 0) { $ok = TRUE;
+    } else if ($_module == 'login') { $ok = TRUE;
+    } else if ($_module == 'store' && $_SESSION['admin']['access']['configuration'] > 0) { $ok = TRUE;
+    } else if ($_module == 'index' && $this->getPageContentsFilename() == 'main.php') { $ok = TRUE;
+    } else if ($_module == 'image_groups' && $_SESSION['admin']['access']['product_settings'] > 0) { $ok = TRUE;
+    } else if ($_module == 'weight_classes' && $_SESSION['admin']['access']['product_settings'] > 0) { $ok = TRUE;
+    } else if (stristr($_module, 'modules_') && $_SESSION['admin']['access']['modules'] > 0) { $ok = TRUE;
+    } else if ($_module == 'services' && $_SESSION['admin']['access']['modules'] > 0) { $ok = TRUE;
+    } else if ($_module == 'product_attributes' && $_SESSION['admin']['access']['modules'] > 0) { $ok = TRUE;
+    } else if ($_module == 'product_variants' && $_SESSION['admin']['access']['option_manager'] > 0) { $ok = TRUE;    
+    } else if ($_module == 'countries' && $_SESSION['admin']['access']['locale'] > 0) { $ok = TRUE;    
+    } else if ($_module == 'zone_groups' && $_SESSION['admin']['access']['locale'] > 0) { $ok = TRUE;              
     }
 
     return $ok;

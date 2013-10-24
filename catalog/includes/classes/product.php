@@ -595,7 +595,110 @@ class lC_Product {
     
     return $output;    
   }
+ /*
+  * Determine if the product has subproducts
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return boolean
+  */    
+  public function hasSubProducts($id) {
+    global $lC_Database;
 
+    $Qchk = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id and is_subproduct = :is_subproduct limit 1');
+    $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qchk->bindInt(':parent_id', $id);
+    $Qchk->bindInt(':is_subproduct', 1);
+    $Qchk->execute();
+
+    if ( $Qchk->numberOfRows() === 1 ) {
+      return true;
+    }
+
+    return false;
+  }      
+ /*
+  * Retrieve the subproducts
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return array
+  */  
+  public function getSubProducts($id) {
+    global $lC_Database, $lC_Language;
+
+    $Qproducts = $lC_Database->query('select p.*, pd.products_name, pd.products_keyword from :table_products p, :table_products_description pd where p.parent_id = :parent_id and p.products_id = pd.products_id and pd.language_id = :language_id');
+    $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+    $Qproducts->bindInt(':parent_id', $id);
+    $Qproducts->bindInt(':language_id', $lC_Language->getID());
+    $Qproducts->execute();  
+    
+    $result = array();
+    while ($Qproducts->next()) {
+       
+      $image = array();
+      $Qimages = $lC_Database->query('select id, image, default_flag from :table_products_images where products_id = :products_id order by sort_order');
+      $Qimages->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+      $Qimages->bindInt(':products_id', $Qproducts->valueInt('products_id'));
+      $Qimages->execute();
+
+      while ($Qimages->next()) {
+        if ($Qimages->valueInt('default_flag') == '1') $image['image'] = $Qimages->value('image');
+      }
+      
+      $Qimages->freeResult();
+      
+      $result[] = array_merge((array)$Qproducts->toArray(), (array)$image); 
+    }
+   
+    $Qproducts->freeResult();
+    
+    return $result;  
+  }
+ /*
+  * Parse the subproduct data into HTML
+  *
+  * @param  integer  $group The product id
+  * @param  array    $data  The product id
+  * @access public
+  * @return array
+  */ 
+  public function parseSubProducts($data) {
+    global $lC_Image, $lC_Currencies, $lC_Language;
+    
+    $output = '';
+    foreach ($data as $key => $value) {
+      
+      $extra = (isset($value['products_model']) && empty($value['products_model']) === false) ? '<em>' . $lC_Language->get('listing_model_heading') . ': ' . $value['products_model'] . '</em>' : null;
+      if ($extra == null && isset($value['products_sku']) && empty($value['products_sku']) === false) $extra = '<em>' . $lC_Language->get('listing_sku_heading') . ': ' . $value['products_sku'] . '</em>';
+      
+      $output .= '<div class="row clear-both margin-bottom margin-top">' .
+                 '  <div class="col-sm-8 col-lg-8">' .
+                 '    <span class="subproduct-image pull-left margin-right">' . 
+                 '      <img class="img-responsive" src="' . $lC_Image->getAddress($value['image'], 'small') . '" title="' . $value['products_name'] . '" alt="' . $value['products_name'] . '" />' .
+                 '    </span>' .
+                 '    <span class="subproduct-name lead lt-blue no-margin-bottom">' . $value['products_name'] . '</span><br />' . 
+                 ((isset($extra) && $extra != null) ? '<span class="subproduct-model small-margin-left no-margin-top"><small>' . $extra . '</small></span>' : null) .
+                 '  </div>' .
+                 '  <div class="col-sm-4 col-lg-4">' .
+                 '    <span class="subproduct-price lead">' . $lC_Currencies->format($value['products_price']) . '</span>' .
+                 '    <span class="subproduct-buy-now pull-right">' . 
+                 '      <form method="post" action="' . lc_href_link(FILENAME_DEFAULT, $value['products_id'] . '&action=cart_add') . '"><button class="subproduct-buy-now-button btn btn-success" type="submit" onclick="$(this).closest(\'form\').submit();">Buy Now</button></form>' . 
+                 '    </span>' .
+                 '  </div>' .
+                 '</div>';
+    }
+    
+    return $output;
+  }
+ /*
+  * Custom variant sort
+  *
+  * @param integer $id The product id
+  * @access private
+  * @return boolean
+  */ 
   protected static function _usortVariantValues($a, $b) {
     if ( $a['sort_order'] == $b['sort_order'] ) {
       return strnatcasecmp($a['text'], $b['text']);
