@@ -1,0 +1,12 @@
+#clogo_controls {
+  display: none;
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  z-index: 99;
+}
+#imagePreviewContainer img {
+  max-width: 100%; 
+  height: auto;
+  padding: 10px 0;
+}
