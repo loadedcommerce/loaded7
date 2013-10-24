@@ -176,11 +176,11 @@ class lC_Template_output {
       $url = ($Qcategories->value('categories_custom_url') != null) ? $Qcategories->value('categories_custom_url') : FILENAME_DEFAULT . '?cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id'));
       $image = ($Qcategories->value('categories_image') != null) ? $Qcategories->value('categories_image') : 'no_image.png';
       
-      $output .= '<div class="content-categories-container"><div class="content-categories-image">' . "\n";
-      if(file_exists(DIR_WS_IMAGES . 'categories/' . $image)){
-     $output .=  '  ' . lc_link_object(lc_href_link($url), lc_image(DIR_WS_IMAGES . 'categories/' . $image, $Qcategories->value('categories_name'), null, null, 'class="content-categories-image-src"')) . "\n";
+      $output .= '<div class="content-categories-container">' . "\n";
+      if (file_exists(DIR_WS_IMAGES . 'categories/' . $image)) {
+        $output .=  '  <div class="content-categories-image">' . lc_link_object(lc_href_link($url), lc_image(DIR_WS_IMAGES . 'categories/' . $image, $Qcategories->value('categories_name'), null, null, 'class="content-categories-image-src padding-top"')) . '</div>' . "\n";
       }
-      $output .= '  </div><div class="content-categories-name">' . lc_link_object(lc_href_link($url), $Qcategories->value('categories_name'))  . '</div>' . "\n" . 
+      $output .= '  <div class="content-categories-name">' . lc_link_object(lc_href_link($url), $Qcategories->value('categories_name'))  . '</div>' . "\n" . 
                  '</div>' . "\n";      
     }    
     
