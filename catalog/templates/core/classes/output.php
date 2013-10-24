@@ -178,7 +178,7 @@ class lC_Template_output {
       
       $output .= '<div class="content-categories-container">' . "\n";
       if(file_exists(DIR_WS_IMAGES . 'categories/' . $image)){
-                 '  <div class="content-categories-image">' . lc_link_object(lc_href_link($url), lc_image(DIR_WS_IMAGES . 'categories/' . $image, $Qcategories->value('categories_name'), null, null, 'class="content-categories-image-src"'))  . '</div>' . "\n";
+     $output .=  '  <div class="content-categories-image">' . lc_link_object(lc_href_link($url), lc_image(DIR_WS_IMAGES . 'categories/' . $image, $Qcategories->value('categories_name'), null, null, 'class="content-categories-image-src"'))  . '</div>' . "\n";
       }
       $output .= '  <div class="content-categories-name">' . lc_link_object(lc_href_link($url), $Qcategories->value('categories_name'))  . '</div>' . "\n" . 
                  '</div>' . "\n";      
