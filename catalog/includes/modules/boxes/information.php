@@ -28,12 +28,14 @@ class lC_Boxes_information extends lC_Modules {
 
     $this->_title_link = lc_href_link(FILENAME_INFO);
    
-    $this->_content = (($lC_Customer->isLoggedOn()) ? '  <li>' . lc_link_object(lc_href_link(FILENAME_ACCOUNT), $lC_Language->get('my_account')) . '</li>' : '') . "\n" .
-                      '  <li class="box-information-shipping">' . lc_link_object(lc_href_link(FILENAME_INFO, 'shipping'), $lC_Language->get('box_information_shipping')) . '</li>' . "\n" .
-                      '  <li class="box-information-privacy">' . lc_link_object(lc_href_link(FILENAME_INFO, 'privacy'), $lC_Language->get('box_information_privacy')) . '</li>' . "\n" .
-                      '  <li class="box-information-conditions">' . lc_link_object(lc_href_link(FILENAME_INFO, 'conditions'), $lC_Language->get('box_information_conditions')) . '</li>' . "\n" .
-                      '  <li class="box-information-contact">' . lc_link_object(lc_href_link(FILENAME_INFO, 'contact'), $lC_Language->get('box_information_contact')) . '</li>' . "\n" .
-                      '  <li class="box-information-sitemap">' . lc_link_object(lc_href_link(FILENAME_INFO, 'sitemap'), $lC_Language->get('box_information_sitemap')) . '</li>' . "\n";
+    $this->_content = (($lC_Customer->isLoggedOn()) ? '  <li class="box-information-account">' . lc_link_object(lc_href_link(FILENAME_ACCOUNT), $lC_Language->get('my_account')) . '</li>' : '') . "\n" .
+                                                      '  <li class="box-information-shipping">' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_3'), $lC_Language->get('box_information_shipping')) . '</li>' . "\n" .
+                                                      '  <li class="box-information-privacy">' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_4'), $lC_Language->get('box_information_privacy')) . '</li>' . "\n" .
+                                                      '  <li class="box-information-conditions">' . lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_5'), $lC_Language->get('box_information_conditions')) . '</li>' . "\n" .
+                                                      '  <li class="box-information-contact">' . lc_link_object(lc_href_link(FILENAME_INFO, 'cookie'), $lC_Language->get('box_information_cookie')) . '</li>' . "\n" .
+                                                      '  <li class="box-information-contact">' . lc_link_object(lc_href_link(FILENAME_INFO, 'ssl_check'), $lC_Language->get('box_information_ssl_check')) . '</li>' . "\n" .
+                                                      '  <li class="box-information-contact">' . lc_link_object(lc_href_link(FILENAME_INFO, 'contact'), $lC_Language->get('box_information_contact')) . '</li>' . "\n" .
+                                                      '  <li class="box-information-sitemap">' . lc_link_object(lc_href_link(FILENAME_INFO, 'sitemap'), $lC_Language->get('box_information_sitemap')) . '</li>' . "\n";
   }
 }
 ?>
