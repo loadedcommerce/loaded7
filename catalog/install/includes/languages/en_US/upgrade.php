@@ -108,43 +108,43 @@ rpc_configfile_error = No previous installation found. Please check the path and
 rpc_sqlfile_error = Cannot locate source configuration file 
 
 param_import_categories = CATEGORIES
-param_import_categories_description = importing category data 
+param_import_categories_description = importing Category data 
 
 param_import_products = PRODUCTS
-param_import_products_description = importing product data
+param_import_products_description = importing Product data
 
 param_import_attributes = ATTRIBUTES
-param_import_attributes_description = importing product attributes 
+param_import_attributes_description = importing Product Attributes data
 
 param_import_customers = CUSTOMERS
-param_import_customers_description = importing customer data 
+param_import_customers_description = importing Customer data 
 
 param_import_customer_groups = CUSTOMER GROUPS
-param_import_customer_groups_description = importing customer groups
+param_import_customer_groups_description = importing Customer Groups data
 
 param_import_orders = ORDERS 
-param_import_orders_description = importing orders 
+param_import_orders_description = importing Orders data
 
-param_import_cds = CDS 
-param_import_cds_description = importing CDS data 
+param_import_cds = CONTENT DIRECTOR 
+param_import_cds_description = importing Content Director data 
 
 param_import_admin = ADMINISTRATORS 
 param_import_admin_description = importing Administrator data 
 
 param_import_newsletter = NEWSLETTER 
-param_import_newsletter_description = importing newsletter data 
+param_import_newsletter_description = importing Newsletter data 
 
 param_import_banners = BANNERS 
-param_import_banners_description = importing BANNER data 
+param_import_banners_description = importing Banner data 
 
 param_import_config = CONFIGURATION 
-param_import_config_description = importing configuration data 
+param_import_config_description = importing Configuration data 
 
 param_import_coupon = COUPONS 
-param_import_coupon_description = importing coupon data 
+param_import_coupon_description = importing Coupon data 
 
 param_import_tax = TAX CLASSES/RATES 
-param_import_tax_description = importing tax class and rate data 
+param_import_tax_description = importing Tax Class and Rate data 
 
 rpc_upgrade_success = import completed
 rpc_upgrade_inprogress = import in progress
@@ -165,13 +165,6 @@ upgrade_step2_desc_success = Successfully conected to the database server .
 
 upgrade_step3_title = Database Import
 upgrade_step3_desc = The installer will copy the existing database to the new database and convert the data to work with Loaded7 . This may take a few minutes. Please do not close the browser, press the back button or navigate away from this page .
-
-
-
-#
-#
-#
-#
 
 image_button_retry = Retry
 
@@ -223,8 +216,8 @@ upgrade_step3_page_errfound = ERROR(S) FOUND . Please correct to proceed
 upgrade_step4_page_title = Image Import
 upgrade_step4_page_desc = The installer will copy the existing images to the new database and convert the data to work with Loaded7 . This may take a few minutes. Please do not close the browser, press the back button or navigate away from this page .
 
-upgrade_step4_label_import_product_images = product images
-upgrade_step4_label_import_categ_images = category images
+upgrade_step4_label_import_product_images = Product Images
+upgrade_step4_label_import_categ_images = Category Images
 
 upgrade_step4_odesc_import_product_images = import product images
 upgrade_step4_odesc_import_categ_images = import category images

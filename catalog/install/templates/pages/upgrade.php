@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id: install.php v1.0 2012-12-08 datazen $
+  $Id: upgrade.php v1.0 2012-12-08 datazen $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -14,32 +14,7 @@
 $db_table_types = array(array('id' => 'mysqli', 'text' => 'MySQL - MyISAM (Default)'),
                         array('id' => 'mysqli_innodb', 'text' => 'MySQL - InnoDB (Transaction-Safe)'));
 ?>
-<?php
-
-	if(0){ // TEMPORARY CODE TO DROP TABLES BEFORE TESTING
-	
-			$mysqli = new mysqli("localhost", "algozone", "enteralgo", "cparaiso_LC7_upgrade");
-			$mysqli->query('SET foreign_key_checks = 0');
-			if ($result = $mysqli->query("SHOW TABLE STATUS"))
-			{
-			    while($row = $result->fetch_array(MYSQLI_NUM))
-			    {
-			        $mysqli->query('DROP TABLE IF EXISTS '.$row[0]);
-			    }
-			}
-			
-			$mysqli->query('SET foreign_key_checks = 1');
-			$mysqli->close();
-
-	}
-
-?>
 <script language="javascript" type="text/javascript" src="../includes/javascript/xmlhttp/xmlhttp.js"></script>
-<script language="javascript" type="text/javascript">
-<!--
-
-//-->
-</script>
 <style>
 	.upgrade_option{
 		padding : 20px;
@@ -118,5 +93,3 @@ $db_table_types = array(array('id' => 'mysqli', 'text' => 'MySQL - MyISAM (Defau
     </div>
   </fieldset>
 </form>
-<script>
-</script>

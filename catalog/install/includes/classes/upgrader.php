@@ -2352,8 +2352,8 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			// END LOAD products images info FROM SOURCE DB
 			
 			// PROCESS tmp_image_import DATA 
-			$to_zip = array();
-			
+			$to_zip = array();			
+      
 			foreach($source_images as $k => $images_info){
 				
 				$products_id = $images_info['products_id'];
@@ -2370,7 +2370,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
         		$this->_msg = $target_db->getError();
         		return false;
 					}
-					
 					// if not exist, loop to next ;
 					if (!file_exists($source_img_dir.$img_info) ||
  					    !is_readable($source_img_dir.$img_info)
@@ -2385,7 +2384,7 @@ class lC_LocalUpgrader extends lC_Upgrader{
 									
 				$source_images[$k]['status'] = 1;				
 			}
-			
+      
 			$o_dir = getcwd();
 			$target_img_dir =  str_replace("install", "", getcwd()).'images/products/originals/';
 			 
@@ -2403,7 +2402,7 @@ class lC_LocalUpgrader extends lC_Upgrader{
         $this->_msg = $lC_Language->get('upgrade_step4_import_product_images_zipextracteerror');
         return false;
 			}		
-			unlink($target_img_dir.$target_zip);
+	//		unlink($target_img_dir.$target_zip);
 			$this->chmod_r($target_img_dir);
 			chdir($o_dir);
 
