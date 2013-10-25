@@ -583,6 +583,7 @@ CREATE TABLE lc_products (
   manufacturers_id int(11) DEFAULT NULL,
   products_ordered int(11) NOT NULL DEFAULT '0',
   has_children int(11) DEFAULT NULL,
+  is_subproduct TINYINT(1) NOT NULL DEFAULT '0';
   PRIMARY KEY (products_id),
   KEY idx_products_date_added (products_date_added)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
