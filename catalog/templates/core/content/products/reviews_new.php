@@ -48,7 +48,7 @@
     </div>
   </div>                                                                                                                                                
   <div class="button-set clearfix large-margin-bottom">
-    <button class="pull-right btn btn-lg btn-primary large-margin-right" onclick="$('#reviews_new').submit();" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+    <button class="pull-right btn btn-lg btn-primary large-margin-right" onclick="$('#reviews_new').submit();" type="button"><?php echo $lC_Language->get('button_write_review'); ?></button>
     <button class="pull-left btn btn-lg btn-default large-margin-left" onclick="window.location.href='<?php echo  lc_href_link(FILENAME_PRODUCTS, 'reviews&' . $lC_Product->getID()); ?>'" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
   </div>    
 </div>
