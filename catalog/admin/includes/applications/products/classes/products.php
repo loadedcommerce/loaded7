@@ -2129,13 +2129,13 @@ class lC_Products_Admin {
                     '  <div class="new-row-mobile twelve-columns twelve-columns-mobile">' .
                     '    <span class="nowrap margin-right">' .
                     '      <span class="input small-margin-top">' .
-                    '        <input name="products_special_start_date[' . $value['customers_group_id'] . ']" id="products_special_start_date' . $value['customers_group_id'] . '" type="text" placeholder="Start" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($value['customers_group_id'] == '1') ? $pInfo->get('products_special_start_date') : '') . '" style="width:97px;" />' .
+                    '        <input name="products_special_start_date[' . $value['customers_group_id'] . ']" id="products_special_start_date' . $value['customers_group_id'] . '" type="text" placeholder="Start" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($special != '0.00') ? $pInfo->get('products_special_start_date') : '') . '" style="width:97px;" />' .
                     '      </span>' .
                     '      <span class="icon-calendar icon-size2 small-margin-left"></span>' .
                     '    </span>' .
                     '    <span class="nowrap">' .
                     '      <span class="input small-margin-top">' .
-                    '        <input name="products_special_expires_date[' . $value['customers_group_id'] . ']" id="products_special_expires_date' . $value['customers_group_id'] . '" type="text" placeholder="End" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($value['customers_group_id'] == '1') ? $pInfo->get('products_special_expires_date') : '') . '" style="width:97px;" />' .
+                    '        <input name="products_special_expires_date[' . $value['customers_group_id'] . ']" id="products_special_expires_date' . $value['customers_group_id'] . '" type="text" placeholder="End" class="input-unstyled datepicker' . (($value['customers_group_id'] == '1') ? '' : ' disabled') . '" value="' . (($special != '0.00') ? $pInfo->get('products_special_expires_date') : '') . '" style="width:97px;" />' .
                     '      </span>' .
                     '      <span class="icon-calendar icon-size2 small-margin-left"></span>' .
                     '    </span>' .
