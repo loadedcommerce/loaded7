@@ -64,32 +64,34 @@ $db_table_types = array(array('id' => 'mysqli', 'text' => 'MySQL - MyISAM (Defau
         <span id="mBoxContents"></span>
       </p> 
     </div>   
+    
+    <div id="upgradeTypesContainer" style="width:100%;" class="margin-left">
           
-    <div class="small-margin-top">
-    	<div class="upgrade_option">
-      <a href="javascript://" id="btn_checkpath" onclick="$('#mBox').hide(); $('#pBox').hide(); $('#upgrade_method').val('S'); $('#upgradeForm').submit();">
-        <span class="upgrade_option_title"><?php echo addslashes($lC_Language->get('upgrade_main_option_same')).'<br>'; ?></span>
-        <?php echo ($lC_Language->get('upgrade_main_option_same_desc')); ?>
-      </a>
+      <div style="width:29%; display:inline-block; min-height:200px;" class="mid-margin-left mid-margin-right"> 
+        <fieldset class="fieldset" style="padding-top:10px;">
+          <img src="images/same-server.png" style="margin-left:5%; margin-right:5%;">
+          <p class="message"><?php echo ($lC_Language->get('upgrade_main_option_same_desc')); ?></p>
+           <p style="text-align:center;"><a href="javascript://" id="btn_checkpath" class="button blue-gradient glossy" onclick="$('#mBox').hide(); $('#pBox').hide(); $('#upgrade_method').val('S'); $('#upgradeForm').submit();"><?php echo ($lC_Language->get('text_go')); ?></a></p>
+        </fieldset>
       </div>
-    </div>
 
-    <div class="small-margin-top" style="display:block;">
-    	<div class="upgrade_option">
-      <a href="upgrade.php?step=1&utype=R" onclick="return false;">
-        <span class="upgrade_option_title"><?php echo addslashes($lC_Language->get('upgrade_main_option_remote')).'<br>'; ?></span>
-        <?php echo ($lC_Language->get('upgrade_main_option_remote_desc')); ?>
-      </a>
+      <div style="width:29%;  display:inline-block;  min-height:200px;" class="mid-margin-left mid-margin-right">
+        <fieldset class="fieldset" style="padding-top:10px;">
+          <img src="images/server-to-server.png" style="margin-left:5%; margin-right:5%;">
+          <p class="message"><?php echo ($lC_Language->get('upgrade_main_option_remote_desc')); ?></p>
+           <p style="text-align:center;"><a href="upgrade.php?step=1&utype=R" class="button blue-gradient glossy disabled" onclick="return false;"><?php echo ($lC_Language->get('text_go')); ?></a></p>
+        </fieldset>
       </div>
-    </div>
 
-    <div class="small-margin-top" style="display:block;">
-    	<div class="upgrade_option">
-      <a href="upgrade.php?step=1&utype=D" onclick="return false;">
-        <span class="upgrade_option_title"><?php echo addslashes($lC_Language->get('upgrade_main_option_dbfile')).'<br>'; ?></span>
-        <?php echo ($lC_Language->get('upgrade_main_option_dbfile_desc')); ?>
-      </a>
+      <div style="width:29%; display:inline-block;  min-height:200px;" class="mid-margin-left mid-margin-right">
+        <fieldset class="fieldset" style="padding-top:10px;">
+          <img src="images/no-server.png" style="margin-left:5%; margin-right:5%;">
+          <p class="message"><?php echo ($lC_Language->get('upgrade_main_option_dbfile_desc')); ?></p>
+          <p style="text-align:center;"><a href="upgrade.php?step=1&utype=D" class="button blue-gradient glossy disabled" onclick="return false;"><?php echo ($lC_Language->get('text_go')); ?></a></p>
+        </fieldset>
       </div>
+    
     </div>
+    
   </fieldset>
 </form>
