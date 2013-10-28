@@ -463,6 +463,7 @@ class lC_Store_Admin {
   private static function _resetAddons() {
     if (isset($_SESSION['lC_Addons_Admin_data'])) unset($_SESSION['lC_Addons_Admin_data']);
     lC_Cache::clear('modules-addons');
+    lC_Cache::clear('modules-payment');
     lC_Cache::clear('configuration');
     lC_Cache::clear('templates');
     lC_Cache::clear('addons');
