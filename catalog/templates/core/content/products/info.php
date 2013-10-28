@@ -138,7 +138,7 @@
       <div class="col-sm-6 col-lg-6 align-right mid-margin-top">
         <div class="form-group">
           <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
-          <input type="text" name="content-products-info-qty-input" onfocus="this.select();" class="form-control content-products-info-qty-input" value="1">
+          <input type="text" name="quantity" onfocus="this.select();" class="form-control content-products-info-qty-input" value="1">
         </div>
       </div>
       <div class="col-sm-6 col-lg-6">
