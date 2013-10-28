@@ -32,17 +32,25 @@ require_once($lC_Vqmod->modCheck('includes/applications/index/classes/index.php'
       </div>
       <div class="three-columns twelve-columns-mobile new-row-mobile">
         <ul class="stats split-on-mobile">
-          <li><a href="#">
-              <strong><?php echo lC_Administrators_Index::get_live_data_total('Sessions'); ?></strong> <?php echo $lC_Language->get('text_new') . '<br />' . $lC_Language->get('text_visits'); ?>
-            </a></li>
-          <li><a href="#">
-              <strong><?php echo lC_Administrators_Index::get_live_data_total('Customers'); ?></strong> <?php echo $lC_Language->get('text_new') . '<br />' . $lC_Language->get('text_signups'); ?>
-            </a></li>
           <li>
-            <strong><?php echo lC_Administrators_Index::get_live_data_total('Carts'); ?></strong> <?php echo $lC_Language->get('text_cart') . '<br />' . $lC_Language->get('text_sessions'); ?>
+            <a href="#">
+              <strong><?php echo lC_Administrators_Index::get_live_data_total('Sessions'); ?></strong> <?php echo $lC_Language->get('text_new') . '<br />' . $lC_Language->get('text_visits'); ?>
+            </a>
           </li>
           <li>
-            <strong><?php echo lC_Administrators_Index::get_live_data_total('Orders'); ?></strong> <?php echo $lC_Language->get('text_new') . '<br />' . $lC_Language->get('text_orders'); ?>
+            <a href="#">
+              <strong><?php echo lC_Administrators_Index::get_live_data_total('Customers'); ?></strong> <?php echo $lC_Language->get('text_new') . '<br />' . $lC_Language->get('text_signups'); ?>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <strong><?php echo lC_Administrators_Index::get_live_data_total('Carts'); ?></strong> <?php echo $lC_Language->get('text_cart') . '<br />' . $lC_Language->get('text_sessions'); ?>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <strong><?php echo lC_Administrators_Index::get_live_data_total('Orders'); ?></strong> <?php echo $lC_Language->get('text_new') . '<br />' . $lC_Language->get('text_orders'); ?>
+            </a>
           </li>
         </ul>
       </div>
