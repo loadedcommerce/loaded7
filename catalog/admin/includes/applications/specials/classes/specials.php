@@ -101,8 +101,12 @@ class lC_Specials_Admin {
     $data = $Qspecial->toArray();
 
     $data['products_price_formatted'] = $lC_Currencies->format($Qspecial->value('products_price'));
-    $data['start_date_formatted'] = lC_DateTime::getShort($Qspecial->value('start_date'));
-    $data['expires_date_formatted'] = lC_DateTime::getShort($Qspecial->value('expires_date'));
+    if ($Qspecial->value('start_date') != null) {
+      $data['start_date_formatted'] = lC_DateTime::getShort($Qspecial->value('start_date'));
+    }
+    if ($Qspecial->value('expires_date') != null) {
+      $data['expires_date_formatted'] = lC_DateTime::getShort($Qspecial->value('expires_date'));
+    }
 
     $Qspecial->freeResult();
 
