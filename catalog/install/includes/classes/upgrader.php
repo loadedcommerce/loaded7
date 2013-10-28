@@ -30,6 +30,8 @@ abstract class lC_Upgrader{
 	
 	protected $_data_mapping; // array matching source data table fields with loaded7 data table fields 
 	
+	protected $_languages_id_default = 1 ; 
+	
   public function __construct(){
 	}
 
@@ -134,6 +136,7 @@ abstract class lC_Upgrader{
   	  rmdir($dir);
   	}
  	}
+ 	
 }
 
 class lC_LocalUpgrader extends lC_Upgrader{
@@ -451,21 +454,29 @@ class lC_LocalUpgrader extends lC_Upgrader{
 																												,	'orders_status_name'  => 'orders_status_name'
 																												)
 																,'orders_status_history'			=>		array(
-																													'orders_status_history_id' 			=> 'orders_status_history_id'
-																												,	'orders_id' 						=> 'orders_id'
+																													'orders_status_history_id'	=> 'orders_status_history_id'
+																												,	'orders_id' 								=> 'orders_id'
 																												,	'orders_status_id'   				=> 'orders_status_id'
-																												, 'date_added'						=> 'date_added'
+																												, 'date_added'								=> 'date_added'
 																												, 'customer_notified'					=> 'customer_notified'
-																												, 'comments'							=> 'comments'
+																												, 'comments'									=> 'comments'
 																												)
 																,'orders_total'			=>		array(
 																													'orders_total_id'					=> 'orders_total_id'
-																												, 'orders_id'							=> 'orders_id'
-																												, 'title'								=> 'title'
-																												, 'text'								=> 'text'
-																												, 'value'								=> 'value'
-																												, 'class'								=> 'class'
-																												, 'sort_order'						=> 'sort_order'
+																												, 'orders_id'								=> 'orders_id'
+																												, 'title'										=> 'title'
+																												, 'text'										=> 'text'
+																												, 'value'										=> 'value'
+																												, 'class'										=> 'class'
+																												, 'sort_order'							=> 'sort_order'
+																												)
+																,'permalink'	=>	array(
+																													'permalink_id'						=> 'permalink_id'
+																												,	'item_id' 								=> 'products_id'
+																												,	'language_id'   					=> 'language_id'
+																												, 'type'										=> 'type'
+																												, 'query'										=> 'query'
+																												, 'permalink'								=> 'products_name'
 																												)
 																,'products' =>  array(
 																												  'products_id' 						=> 'products_id'
@@ -756,6 +767,34 @@ class lC_LocalUpgrader extends lC_Upgrader{
 								       		); 
 								       		
 					$products[] = $product;
+				
+					$tQry = $target_db->query('insert into :table_products (products_id, parent_id, products_quantity, products_price, products_cost, products_msrp, products_model, products_sku, products_date_added, products_last_modified, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id, products_ordered, has_children) values (:products_id, :parent_id, :products_quantity, :products_price, :products_cost, :products_msrp, :products_model, :products_sku, :products_date_added, :products_last_modified, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :manufacturers_id, :products_ordered, :has_children)');
+	
+					$tQry->bindTable(':table_products'				, TABLE_PRODUCTS);
+					$tQry->bindInt  (':products_id'           , $product['products_id']);
+					$tQry->bindInt  (':parent_id'             , $product['parent_id']);
+					$tQry->bindInt  (':products_quantity'     , $product['products_quantity']);
+					$tQry->bindFloat(':products_price'        , $product['products_price']);
+					$tQry->bindFloat(':products_cost'         , $product['products_cost']);
+					$tQry->bindFloat(':products_msrp'         , $product['products_msrp']);
+					$tQry->bindValue(':products_model'        , $product['products_model']);
+					$tQry->bindValue(':products_sku'          , $product['products_sku']);
+					$tQry->bindDate (':products_date_added'   , $product['products_date_added']);
+					$tQry->bindDate (':products_last_modified', $product['products_last_modified']);
+					$tQry->bindFloat(':products_weight'       , $product['products_weight']);
+					$tQry->bindValue(':products_weight_class' , $product['products_weight_class']);
+					$tQry->bindInt  (':products_status'       , $product['products_status']);
+					$tQry->bindInt  (':products_tax_class_id' , $product['products_tax_class_id']);
+					$tQry->bindInt  (':manufacturers_id'      , $product['manufacturers_id']);
+					$tQry->bindInt  (':products_ordered'      , $product['products_ordered']);
+					$tQry->bindInt  (':has_children'          , $product['has_children']);
+					
+					$tQry->execute();
+					
+					if ( $target_db->isError() ) {
+	        	$this->_msg = $target_db->getError();
+	        	return false;
+					}
 					$cnt++;
 			  }
 			  
@@ -764,43 +803,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// END LOAD PRODUCTS FROM SOURCE DB
 
-			// LOAD PRODUCTS TO TARGET DB
-			
-			$iCnt = 0;
-			foreach($products as $product){
-				
-				$tQry = $target_db->query('insert into :table_products (products_id, parent_id, products_quantity, products_price, products_cost, products_msrp, products_model, products_sku, products_date_added, products_last_modified, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id, products_ordered, has_children) values (:products_id, :parent_id, :products_quantity, :products_price, :products_cost, :products_msrp, :products_model, :products_sku, :products_date_added, :products_last_modified, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :manufacturers_id, :products_ordered, :has_children)');
-
-				$tQry->bindTable(':table_products'				, TABLE_PRODUCTS);
-				$tQry->bindInt  (':products_id'           , $product['products_id']);
-				$tQry->bindInt  (':parent_id'             , $product['parent_id']);
-				$tQry->bindInt  (':products_quantity'     , $product['products_quantity']);
-				$tQry->bindFloat(':products_price'        , $product['products_price']);
-				$tQry->bindFloat(':products_cost'         , $product['products_cost']);
-				$tQry->bindFloat(':products_msrp'         , $product['products_msrp']);
-				$tQry->bindValue(':products_model'        , $product['products_model']);
-				$tQry->bindValue(':products_sku'          , $product['products_sku']);
-				$tQry->bindDate (':products_date_added'   , $product['products_date_added']);
-				$tQry->bindDate (':products_last_modified', $product['products_last_modified']);
-				$tQry->bindFloat(':products_weight'       , $product['products_weight']);
-				$tQry->bindValue(':products_weight_class' , $product['products_weight_class']);
-				$tQry->bindInt  (':products_status'       , $product['products_status']);
-				$tQry->bindInt  (':products_tax_class_id' , $product['products_tax_class_id']);
-				$tQry->bindInt  (':manufacturers_id'      , $product['manufacturers_id']);
-				$tQry->bindInt  (':products_ordered'      , $product['products_ordered']);
-				$tQry->bindInt  (':has_children'          , $product['has_children']);
-				
-				$tQry->execute();
-				
-				if ( $target_db->isError() ) {
-        	$this->_msg = $target_db->getError();
-        	return false;
-				}
-				$iCnt++;
-			}
-
-			// END LOAD PRODUCTS TO TARGET DB
-			
 			// LOAD PRODUCTS DESCRIPTION FROM SOURCE DB
 
 			$map  = $this->_data_mapping['products_desc'];
@@ -874,43 +876,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			// END LOAD PRODUCTS DESCRIPTION TO TARGET DB
 			
 			// ##########
-
-			$products_pricing = array();
-
-			// LOAD PRODUCTS PRICING FROM SOURCE DB
-
-			// END LOAD PRODUCTS PRICING FROM SOURCE DB
-
-			// LOAD PRODUCTS PRICING TO TARGET DB
-
-			$iCnt = 0;
-			foreach($products_pricing as $pricing){
-				
-				$tQry = $target_db->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) 
-				                           values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
-
-				$tQry->bindTable(':table_products_pricing'	, TABLE_PRODUCTS_PRICING);
-				$tQry->bindInt  (':products_id'    					, $pricing['products_id']);
-				$tQry->bindInt  (':group_id'   							, $pricing['group_id']);
-				$tQry->bindInt  (':tax_class_id'						, $pricing['tax_class_id']);
-				$tQry->bindInt  (':qty_break'   						, $pricing['qty_break']);
-				$tQry->bindInt  (':price_break'   					, $pricing['price_break']);
-				$tQry->bindDate (':date_added'     					, $pricing['date_added']);
-				
-				$tQry->execute();
-				
-				if ( $target_db->isError() ) {
-        	$this->_msg = $target_db->getError();
-        	return false;
-				}
-				
-				$iCnt++;
-			}
-			$tQry->freeResult();
-
-			// END LOAD PRODUCTS PRICING TO TARGET DB
-			
-			// ##########
 			
 			// LOAD PRODUCTS NOTIFICATIONS FROM SOURCE DB
 			
@@ -931,6 +896,23 @@ class lC_LocalUpgrader extends lC_Upgrader{
 								       		); 
 								       		
 					$products_notifs[] = $product;
+
+				
+					$tQry = $target_db->query('insert into :table_products_notifs (products_id, customers_id, date_added) 
+					                           values (:products_id, :customers_id, :date_added)');
+	
+					$tQry->bindTable(':table_products_notifs'	, TABLE_PRODUCTS_NOTIFICATIONS);
+					$tQry->bindInt  (':products_id'    , $product['products_id']);
+					$tQry->bindInt  (':customers_id'   , $product['customers_id']);
+					$tQry->bindDate (':date_added'     , $product['date_added']);
+					
+					$tQry->execute();
+					
+					if ( $target_db->isError() ) {
+	        	$this->_msg = $target_db->getError();
+	        	return false;
+					}
+
 					$cnt++;
 			  }
 			  
@@ -939,32 +921,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// END LOAD PRODUCTS DESCRIPTION FROM SOURCE DB
 
-			// LOAD PRODUCTS NOTIFICATIONS TO TARGET DB
-
-			$iCnt = 0;
-			foreach($products_notifs as $product){
-				
-				$tQry = $target_db->query('insert into :table_products_notifs (products_id, customers_id, date_added) 
-				                           values (:products_id, :customers_id, :date_added)');
-
-				$tQry->bindTable(':table_products_notifs'	, TABLE_PRODUCTS_NOTIFICATIONS);
-				$tQry->bindInt  (':products_id'    , $product['products_id']);
-				$tQry->bindInt  (':customers_id'   , $product['customers_id']);
-				$tQry->bindDate (':date_added'     , $product['date_added']);
-				
-				$tQry->execute();
-				
-				if ( $target_db->isError() ) {
-        	$this->_msg = $target_db->getError();
-        	return false;
-				}
-				
-				$iCnt++;
-			}
-			$tQry->freeResult();
-
-			// END LOAD PRODUCTS NOTIFICATIONS TO TARGET DB
-			
 			// ##########
 			
 			// LOAD PRODUCTS TO CATEGORIES FROM SOURCE DB
@@ -980,11 +936,24 @@ class lC_LocalUpgrader extends lC_Upgrader{
 				$cnt = 0;
 			  while ( $sQry->next() ) {
 					$product  = array(
-													 	'products_id'       => $sQry->value($map['products_id'])
-													,	'categories_id'      => $sQry->value($map['categories_id'])
+													 	'products_id'       => $sQry->value('products_id')
+													,	'categories_id'      => $sQry->value('categories_id')
 								       		); 
 								       		
-					$products_to_categs[] = $product;
+					$tQry = $target_db->query('insert into :table_products_to_categs (products_id, categories_id) 
+					                           values (:products_id, :categories_id)');
+	
+					$tQry->bindTable(':table_products_to_categs'	, TABLE_PRODUCTS_TO_CATEGORIES);
+					$tQry->bindInt  (':products_id'    , $product['products_id']);
+					$tQry->bindInt  (':categories_id'   , $product['categories_id']);
+					
+					$tQry->execute();
+					
+					if ( $target_db->isError() ) {
+	        	$this->_msg = $target_db->getError();
+	        	return false;
+					}
+
 					$cnt++;
 			  }
 			  
@@ -993,33 +962,99 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// END LOAD PRODUCTS TO CATEGORIES FROM SOURCE DB
 
-			// LOAD PRODUCTS TO CATEGORIES TO TARGET DB
+			// ##########
 			
-			$iCnt = 0;
-			foreach($products_to_categs as $product){
-				
-				$tQry = $target_db->query('insert into :table_products_to_categs (products_id, categories_id) 
-				                           values (:products_id, :categories_id)');
+			// LOAD PRODUCTS PERMALINK FROM SOURCE DB
 
-				$tQry->bindTable(':table_products_to_categs'	, TABLE_PRODUCTS_TO_CATEGORIES);
-				$tQry->bindInt  (':products_id'    , $product['products_id']);
-				$tQry->bindInt  (':categories_id'   , $product['categories_id']);
+			$map  = $this->_data_mapping['permalink'];
+
+			$permalink_array = array();
+			
+			$sQry = $source_db->query('select p.products_id, language_id, products_name, categories_id 
+																 from products as p, products_description as pd, products_to_categories p2c
+																 where p.products_id = pd.products_id
+																 and p.products_id = p2c.products_id 
+																 order by p.products_id, pd.language_id');
+			$sQry->execute();
 				
-				$tQry->execute();
-				
-				if ( $target_db->isError() ) {
-        	$this->_msg = $target_db->getError();
-        	return false;
-				}
-				
-				$iCnt++;
+			if ($sQry->numberOfRows() > 0) { 
+				$cnt = 0;
+			  while ( $sQry->next() ) {
+			  	
+			  	$cID = $sQry->value('categories_id') ;
+			  	
+					//  #### getCPATH CODE 			  
+					
+					$cat_list = $cID;
+					$catID 		= $cID;
+	
+					while($catID != 0){
+							
+			  			$the_categories_name_sql ="SELECT DISTINCT (
+		  	  															c.categories_id
+		  	  															), parent_id, categories_name, sort_order
+		  	  															FROM categories AS c, categories_description AS cd
+		  	  															WHERE c.categories_id =".$catID. "
+		  	  															AND c.categories_id = cd.categories_id
+		  	  															AND language_id =" . $this->_languages_id_default;
+													
+							$scQry = $source_db->query($the_categories_name_sql);
+							$scQry->execute();
+				  		$scQry->next();
+							
+		  				$catID = $scQry->value('parent_id');
+		  				
+		  				if($catID == 0){ break; }
+		  					
+		  				$cat_list = $catID."_".$cat_list;
+							
+							$scQry->freeResult();
+					}
+					if(empty($cat_list)){ $cat_list = '0_0_0_0'; }
+					$cat_list = "cPath=".$cat_list;
+					
+					//  #### END getCPATH CODE 			  
+			  
+					$permatext =  preg_replace("/&.{0,}?;/",'',$sQry->value('products_name'));
+					$permatext = str_replace(" ", "-", $permatext);
+			  	
+					$permalink  = array(
+													  'item_id'          					=> $sQry->value('products_id')
+													,	'categories_id'          	 	=> $sQry->value('categories_id')
+													,	'language_id'          	 		=> $sQry->value('language_id')
+													,	'type'        							=> 2
+													,	'query'      								=> ""
+													,	'permalink'        					=> $permatext
+								       		); 
+					
+					$tQry = $target_db->query('insert into :table_permalink (item_id, language_id, `type`, query, permalink) 
+					                           values (:item_id, :language_id, :typ, :query, :permalink)');
+					
+					$tQry->bindTable(':table_permalink'	, TABLE_PERMALINKS);
+					$tQry->bindInt  (':item_id'         , $permalink['item_id']);
+					$tQry->bindInt  (':language_id'     , $permalink['language_id']);
+					$tQry->bindInt  (':typ'       			, $permalink['type']);
+					$tQry->bindValue(':query'  					, $cat_list);
+					$tQry->bindValue(':permalink'				, $permalink['permalink']);
+					
+					$tQry->execute();
+					
+					if ( $target_db->isError() ) {
+	        	$this->_msg = $target_db->getError();
+	        	return false;
+					}
+					$cnt++;
+			  }
+			  
+			  $sQry->freeResult();
 			}
-			$tQry->freeResult();
+			
+			// END LOAD PRODUCTS PERMALINK FROM SOURCE DB
 
-			// END LOAD PRODUCTS TO CATEGORIES FROM SOURCE DB
+			// END LOAD PERMALINK TO TARGET DB
 
 			// ##########
-
+			
 			// LOAD MANUFACTURERS FROM SOURCE DB
 			$map  = $this->_data_mapping['manufacturers'];
 
@@ -1039,8 +1074,24 @@ class lC_LocalUpgrader extends lC_Upgrader{
 					  							,	'last_modified'           	  => $sQry->value($map['last_modified'])
 					  							
 					  					); 
-					  					
-					$manufacturers[] = $manufacturer;
+
+					$tQry = $target_db->query('insert into :table_manufacturers (manufacturers_id, manufacturers_name, manufacturers_image, date_added, last_modified) 
+					  					   values (:manufacturers_id, :manufacturers_name, :manufacturers_image, :date_added, :last_modified)');
+	
+					$tQry->bindTable(':table_manufacturers'				, TABLE_MANUFACTURERS);
+					$tQry->bindInt  (':manufacturers_id'         	, $manufacturer['manufacturers_id']);
+					$tQry->bindValue(':manufacturers_name'        , $manufacturer['manufacturers_name']);
+					$tQry->bindValue(':manufacturers_image'       , $manufacturer['manufacturers_image']);
+					$tQry->bindDate (':date_added'        				, $manufacturer['date_added']);
+					$tQry->bindDate (':last_modified'       			, $manufacturer['last_modified']);
+				  
+				  $tQry->execute();
+				  
+				  if ( $target_db->isError() ) {
+						$this->_msg = $target_db->getError();
+						return false;
+				  }
+
 					$cnt++;
 			  }
 			  
@@ -1048,32 +1099,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			}
 			
 			// END LOAD MANUFACTURERS FROM SOURCE DB
-
-			// LOAD MANUFACTURERS TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($manufacturers as $manufacturer){
-			  
-				$tQry = $target_db->query('insert into :table_manufacturers (manufacturers_id, manufacturers_name, manufacturers_image, date_added, last_modified) 
-				  					   values (:manufacturers_id, :manufacturers_name, :manufacturers_image, :date_added, :last_modified)');
-
-				$tQry->bindTable(':table_manufacturers'				, TABLE_MANUFACTURERS);
-				$tQry->bindInt  (':manufacturers_id'         	, $manufacturer['manufacturers_id']);
-				$tQry->bindValue(':manufacturers_name'        , $manufacturer['manufacturers_name']);
-				$tQry->bindValue(':manufacturers_image'       , $manufacturer['manufacturers_image']);
-				$tQry->bindDate (':date_added'        				, $manufacturer['date_added']);
-				$tQry->bindDate (':last_modified'       			, $manufacturer['last_modified']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-					$this->_msg = $target_db->getError();
-					return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD MANUFACTURERS TO TARGET DB
 			
 			// #############
 
@@ -1295,7 +1320,7 @@ class lC_LocalUpgrader extends lC_Upgrader{
 	*
 	*/
 	public function importCategories(){
-	
+			
 			$s_db = $this->_sDB;
 			$t_db = $this->_tDB;
 			$map  = $this->_data_mapping['categories'];
@@ -1343,37 +1368,65 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			$tQry = $target_db->query('truncate table '.TABLE_CATEGORIES_DESCRIPTION);
 			$tQry->execute();
-
+			
+			$tQry = $target_db->query('truncate table '.TABLE_PERMALINKS);
+			$tQry->execute();
+			
 			// END TRUNCATE CATEGORIES TABLES IN TARGET DB
 
 			// DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
 			$tQry = $target_db->query('SET GLOBAL sql_mode="NO_AUTO_VALUE_ON_ZERO"');
 			$tQry->execute();
 
-			// END CATEGORIES FROM SOURCE DB
-
+			// LOAD CATEGORIES FROM SOURCE DB
+			
 			$sQry = $source_db->query('select * from categories');
 			$sQry->execute();
-				
-			if ($sQry->numberOfRows() > 0) { 
+
+			$numrows = $sQry->numberOfRows();
+			if ($numrows > 0) { 
 				$cnt = 0;
 			  while ( $sQry->next() ) {
 					$category  = array(
-													  'categories_id'             => $sQry->value($map['products_id'])
-													,	'categories_image'          => $sQry->value($map['categories_image'])
-													,	'parent_id'                 => $sQry->value($map['parent_id'])
-													,	'sort_order'                => $sQry->value($map['sort_order'])
+													  'categories_id'             => $sQry->value('categories_id')
+													,	'categories_image'          => $sQry->value('categories_image')
+													,	'parent_id'                 => $sQry->value('parent_id')
+													,	'sort_order'                => $sQry->value('sort_order')
 													,	'categories_mode'           => 'category'
 													,	'categories_link_target'    => 0
-													,	'categories_custom_url'     => ($sQry->value($map['categories_custom_url']) != '' || $sQry->value($map['categories_custom_url']) != NULL  ) ? $sQry->value($map['categories_custom_url']) : ""
+													,	'categories_custom_url'     => ""
+													,	'categories_show_in_listings'=> 1
 													,	'categories_status'         => 1
 													,	'categories_visibility_nav' => 0
 													,	'categories_visibility_box' => 1
-													,	'date_added'                => $sQry->value($map['date_added'])
-													,	'last_modified'             => $sQry->value($map['last_modified'])
+													,	'date_added'                => $sQry->value('date_added')
+													,	'last_modified'             => $sQry->value('last_modified')
 								       		); 
-								       		
-					$categories[] = $category;
+
+					$tQry = $target_db->query('insert into :table_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) 
+					                           values (:categories_id, :categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_status, :categories_visibility_nav, :categories_visibility_box, :date_added, :last_modified)');
+		
+					$tQry->bindTable(':table_categories'				 , TABLE_CATEGORIES);
+					$tQry->bindInt  (':categories_id'            , $category['categories_id']);
+					$tQry->bindValue(':categories_image'         , $category['categories_image']);
+					$tQry->bindInt  (':parent_id'                , $category['parent_id']);
+					$tQry->bindInt  (':sort_order'               , $category['sort_order']);
+					$tQry->bindValue(':categories_mode'          , $category['categories_mode']);
+					$tQry->bindInt  (':categories_link_target'   , $category['categories_link_target']);
+					$tQry->bindValue(':categories_custom_url'    , $category['categories_custom_url']);
+					$tQry->bindInt  (':categories_status'        , $category['categories_status']);
+					$tQry->bindInt  (':categories_visibility_nav', $category['categories_visibility_nav']);
+					$tQry->bindInt  (':categories_visibility_box', $category['categories_visibility_box']);
+					$tQry->bindDate (':date_added'               , $category['date_added']);
+					$tQry->bindDate (':last_modified'            , $category['last_modified']);
+					
+					$tQry->execute();
+					
+					if ( $target_db->isError() ) {
+		        $this->_msg = $target_db->getError();
+		        return false;
+					}
+					
 					$cnt++;
 			  }
 			  
@@ -1382,37 +1435,7 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// END LOAD CATEGORIES FROM SOURCE DB
 
-			// LOAD CATEGORIES TO TARGET DB
-			$iCnt = 0;
-			foreach($categories as $category){
-				
-				$tQry = $target_db->query('insert into :table_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) 
-				                           values (:categories_id, :categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_status, :categories_visibility_nav, :categories_visibility_box, :date_added, :last_modified)');
-
-				$tQry->bindTable(':table_categories'				 , TABLE_CATEGORIES);
-				$tQry->bindInt  (':categories_id'            , $category['categories_id']);
-				$tQry->bindValue(':categories_image'         , $category['categories_image']);
-				$tQry->bindInt  (':parent_id'                , $category['parent_id']);
-				$tQry->bindInt  (':sort_order'               , $category['sort_order']);
-				$tQry->bindValue(':categories_mode'          , $category['categories_mode']);
-				$tQry->bindInt  (':categories_link_target'   , $category['categories_link_target']);
-				$tQry->bindValue(':categories_custom_url'    , $category['categories_custom_url']);
-				$tQry->bindInt  (':categories_status'        , $category['categories_status']);
-				$tQry->bindInt  (':categories_visibility_nav', $category['categories_visibility_nav']);
-				$tQry->bindInt  (':categories_visibility_box', $category['categories_visibility_box']);
-				$tQry->bindDate (':date_added'               , $category['date_added']);
-				$tQry->bindDate (':last_modified'            , $category['last_modified']);
-				
-				$tQry->execute();
-				
-				if ( $target_db->isError() ) {
-        	$this->_msg = $target_db->getError();
-        	return false;
-				}
-				$iCnt++;
-			}
-
-			// END LOAD CATEGROEIS TO TARGET DB
+			// ##########
 			
 			// LOAD CATEGORIES DESCRIPTION FROM SOURCE DB
 
@@ -1421,30 +1444,52 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			$sQry = $source_db->query('select * from categories_description');
 			$sQry->execute();
 
-			$categories_desc = array();
-			$c_keywords = array();
+			$categories_desc 	= array();
+			$c_keywords 			= array();
 				
-			if ($sQry->numberOfRows() > 0) { 
+			$numrows = $sQry->numberOfRows();
+			if ($numrows > 0) { 
 				$cnt = 0;
 			  while ( $sQry->next() ) {
 			  
-			  	$c_keyword = $sQry->value($map['categories_name']);
+			  	$c_ID = $sQry->value('categories_id');
+			  
+			  	$c_keyword = $sQry->value('categories_name');
 			  	$c_keyword = str_replace(" ", "-", strtolower($c_keyword));
-			  	if(in_array($c_keyword, $c_keywords))	$c_keyword.='-'.$sQry->value($map['categories_id']);
+			  	if(in_array($c_keyword, $c_keywords))	$c_keyword.='-'.$sQry->value('categories_id');
 			  	$c_keywords[] = $c_keyword;
 			  	
 					$category  = array(
-													  'categories_id'          => $sQry->value($map['categories_id'])
-													,	'language_id'          	 => $sQry->value($map['language_id'])
-													,	'categories_name'        => $sQry->value($map['categories_name'])
-													,	'categories_menu_name'   => ($sQry->value($map['categories_menu_name']) != '' || $sQry->value($map['categories_menu_name']) != NULL  ) ? $sQry->value($map['categories_menu_name']) : ""
-													,	'categories_blurb'       => ($sQry->value($map['categories_blurb']) != '' || $sQry->value($map['categories_blurb']) != NULL  ) ? $sQry->value($map['categories_blurb']) : ""
-													,	'categories_description' => $sQry->value($map['categories_description'])
+													  'categories_id'          => $c_ID
+													,	'language_id'          	 => $sQry->value('language_id')
+													,	'categories_name'        => $sQry->value('categories_name')
+													,	'categories_menu_name'   => ""
+													,	'categories_blurb'       => ""
+													,	'categories_description' => $sQry->value('categories_description')
 													,	'categories_keyword'     => $c_keyword
-													,	'categories_tags'        => ($sQry->value($map['categories_tags']) != '' || $sQry->value($map['categories_tags']) != NULL  ) ? $sQry->value($map['categories_tags']) : 1
+													,	'categories_tags'        => $sQry->value('categories_head_keywords_tag')
 								       		); 
-								       		
-					$categories_desc[] = $category;
+
+					$tQry = $target_db->query('insert into :table_categories_desc (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) 
+					                           values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_keyword, :categories_tags)');
+					
+					$tQry->bindTable(':table_categories_desc'	, TABLE_CATEGORIES_DESCRIPTION);
+					$tQry->bindInt  (':categories_id'         , $category['categories_id']);
+					$tQry->bindInt  (':language_id'           , $category['language_id']);
+					$tQry->bindValue(':categories_name'       , $category['categories_name']);
+					$tQry->bindValue(':categories_menu_name'  , $category['categories_menu_name']);
+					$tQry->bindValue(':categories_blurb'      , $category['categories_blurb']);
+					$tQry->bindValue(':categories_description', $category['categories_description']);
+					$tQry->bindValue(':categories_keyword'    , $category['categories_keyword']);
+					$tQry->bindValue(':categories_tags'       , substr($category['categories_tags'], 0, 255));
+					
+					$tQry->execute();
+					
+					if ( $target_db->isError() ) {
+	        	$this->_msg = $target_db->getError();
+	        	return false;
+					}
+
 					$cnt++;
 			  }
 			  
@@ -1453,36 +1498,88 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// END LOAD CATEGORIES DESCRIPTION FROM SOURCE DB
 
-			// LOAD CATEGORIES DESCRIPTION TO TARGET DB
+			// ##########
+
+			// LOAD CATEGORY PERMALINKs TO TARGET DB
 			
 			$iCnt = 0;
-			foreach($categories_desc as $category){
+			$permalink_array	= array();
+			$sQry = $source_db->query('select c.categories_id, cd.language_id, c.parent_id, cd.categories_name from categories as c, categories_description as cd where c.categories_id = cd.categories_id');
+			$sQry->execute();
 				
-				$tQry = $target_db->query('insert into :table_categories_desc (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) 
-				                           values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_keyword, :categories_tags)');
-				
-				$tQry->bindTable(':table_categories_desc'	, TABLE_CATEGORIES_DESCRIPTION);
-				$tQry->bindInt  (':categories_id'         , $category['categories_id']);
-				$tQry->bindInt  (':language_id'           , $category['language_id']);
-				$tQry->bindValue(':categories_name'       , $category['categories_name']);
-				$tQry->bindValue(':categories_menu_name'  , $category['categories_menu_name']);
-				$tQry->bindValue(':categories_blurb'      , $category['categories_blurb']);
-				$tQry->bindValue(':categories_description', $category['categories_description']);
-				$tQry->bindValue(':categories_keyword'    , $category['categories_keyword']);
-				$tQry->bindValue(':categories_tags'       , $category['categories_tags']);
-				
-				$tQry->execute();
-				
-				if ( $target_db->isError() ) {
-        	$this->_msg = $target_db->getError();
-        	return false;
-				}
-				$iCnt++;
-			}
+			$numrows = $sQry->numberOfRows();
+			if ($numrows > 0) { 
 			
-			$tQry->freeResult();
+			  while ( $sQry->next() ) {
 
-			// END LOAD CATEGORIES DESCRIPTION TO TARGET DB
+			  	$c_ID = $sQry->value('categories_id');
+
+					//  #### getCPATH CODE 			  
+				
+					$cat_list = $c_ID;
+					$catID 		= $c_ID;
+
+					while($catID != 0){
+							
+		  				$the_categories_name_sql ="SELECT DISTINCT (
+	  	  																c.categories_id
+	  	  																), parent_id, categories_name, sort_order
+	  	  																FROM categories AS c, categories_description AS cd
+	  	  																WHERE c.categories_id =".$catID. "
+	  	  																AND c.categories_id = cd.categories_id
+	  	  																AND language_id =" . $this->_languages_id_default;
+													
+							$sQry = $source_db->query($the_categories_name_sql);
+							$sQry->execute();
+			  			$sQry->next();
+							
+	  					$catID = $sQry->value('parent_id');
+	  					
+	  					if($catID == 0){ break; }
+	  						
+	  					$cat_list = $catID."_".$cat_list;
+							
+							$sQry->freeResult();
+					}
+					if(empty($cat_list)){ $cat_list = '0_0_0_0'; }
+					$cat_list = "cPath=".$cat_list;
+									
+					//  #### END getCPATH CODE 			  
+					
+			  	$permatext = $sQry->value('categories_name');
+			  	$permatext = str_replace(" ", "-", strtolower($permatext));
+			  	if(in_array($permatext, $permalink_array))	$permatext.='-'.$c_ID;
+			  	$permalink_array[] = $permatext;
+					
+					$permalink  = array(
+					  							  'item_id'          => $c_ID
+					  							,	'language_id'      => $sQry->value('language_id')
+					  		       		); 
+					
+					$tQry = $target_db->query('insert into :table_permalink (item_id, language_id, `type`, query, permalink) 
+					                           values (:item_id, :language_id, :typ, :query, :permalink)');
+					
+					$tQry->bindTable(':table_permalink'	, TABLE_PERMALINKS);
+					$tQry->bindInt  (':item_id'         , $permalink['item_id']);
+					$tQry->bindInt  (':language_id'     , $permalink['language_id']);
+					$tQry->bindInt  (':typ'       			, 1);
+					$tQry->bindValue(':query'  					, $cat_list);
+					$tQry->bindValue(':permalink'				, $permatext);
+					
+					$tQry->execute();
+					
+					if ( $target_db->isError() ) {
+        		$this->_msg = $target_db->getError();
+        		return false;
+					}
+					
+					$iCnt++;
+				}
+
+			  $sQry->freeResult();
+			}
+
+			// END LOAD PERMALINK TO TARGET DB
 
 			// DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
 			$tQry = $target_db->query('SET GLOBAL sql_mode=""');
@@ -1551,19 +1648,20 @@ class lC_LocalUpgrader extends lC_Upgrader{
 
 			// END LOAD CATEGORY PAGES FROM SOURCE DB
 
-			$sQry = $source_db->query('select * from pages_categories as pc, pages_categories_description pcd where pc.categories_id = pcd.categories_id');
-																 
-			$sQry->execute();
-
 			$c_keywords = array();
 			$page_categories = array();
+
+			$sQry = $source_db->query('select * from pages_categories');
+			$sQry->execute();
 				
-			if ($sQry->numberOfRows() > 0) { 
+			$numrows = $sQry->numberOfRows();
+			if ($numrows > 0) { 
 				$cnt = 0;
 			  while ( $sQry->next() ) {
 			  
-			  	$cID = $sQry->value($map['categories_id']);
-			  
+			  	$cID = $sQry->value('categories_id');
+
+					$c_mode = 'category';
 			  	if( $sQry->value($map['categories_custom_url'] != '' || $sQry->value($map['categories_custom_url']) != NULL  ) ) $c_mode = 'override';
 
 			  	$c_keyword = $sQry->value($map['categories_name']);
@@ -1574,45 +1672,19 @@ class lC_LocalUpgrader extends lC_Upgrader{
 					$category  = array(
 													  'new_categories_id'         => null
 													, 'categories_id'             => $cID
-													,	'categories_image'          => $sQry->value($map['categories_image'])
-													,	'parent_id'                 => $sQry->value($map['parent_id'])
-													,	'sort_order'                => $sQry->value($map['sort_order'])
-													,	'categories_mode'           => 'category'
-													,	'categories_link_target'    => $sQry->value($map['categories_link_target'])
-													,	'categories_custom_url'     => $sQry->value($map['categories_custom_url'])
-													,	'categories_status'         => $sQry->value($map['categories_status'])
+													,	'categories_image'          => $sQry->value('categories_image')
+													,	'parent_id'                 => $sQry->value('categories_parent_id')
+													,	'sort_order'                => $sQry->value('categories_sort_order')
+													,	'categories_mode'           => $c_mode
+													,	'categories_link_target'    => $sQry->value('categories_url_override_target')
+													,	'categories_custom_url'     => $sQry->value('categories_url_override')
+													,	'categories_status'         => $sQry->value('categories_status')
 													,	'categories_visibility_nav' => 0
-													,	'categories_visibility_box' => $sQry->value($map['categories_visibility_box'])
-													,	'date_added'                => $sQry->value($map['date_added'])
-													,	'last_modified'             => $sQry->value($map['last_modified'])
-													,	'language_id'          	 		=> $sQry->value($map['language_id'])
-													,	'categories_name'        		=> $sQry->value($map['categories_name'])
-													,	'categories_menu_name'   		=> $sQry->value($map['categories_menu_name'])
-													,	'categories_blurb'       		=> ($sQry->value($map['categories_blurb']) != '' || $sQry->value($map['categories_blurb']) != NULL  ) ? $sQry->value($map['categories_blurb']) : ""
-													,	'categories_description' 		=> $sQry->value($map['categories_description'])
-													,	'categories_keyword'     		=> $c_keyword
-													,	'categories_tags'        		=> ($sQry->value($map['categories_tags']) != '' || $sQry->value($map['categories_tags']) != NULL  ) ? $sQry->value($map['categories_tags']) : 1
+													,	'categories_visibility_box' => $sQry->value('categories_in_menu')
+													,	'date_added'                => $sQry->value('categories_date_added')
+													,	'last_modified'             => $sQry->value('categories_last_modified')
 								       		); 
 								       		
-					$page_categories[$cID][] = $category;
-					$cnt++;
-			  }
-			  
-			  $sQry->freeResult();
-			}
-			
-			// END LOAD CATEGORY PAGES FROM SOURCE DB
-
-			// LOAD CATEGORY PAGES TO TARGET DB
-			$c_keywords = array();
-			$iCnt = 1;
-			foreach($page_categories as $cInfo){
-			
-				$cCnt = 0; $insert_id = null;
-				
-				foreach($cInfo as $category){
-					if($cCnt == 0){
-				
 						$tQry = $target_db->query('insert into :table_categories (categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) 
 						                           values (:categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_status, :categories_visibility_nav, :categories_visibility_box, :date_added, :last_modified)');
 						
@@ -1637,117 +1709,97 @@ class lC_LocalUpgrader extends lC_Upgrader{
 						}
 						
 						$insert_id = $target_db->nextID();
-					}
-				
-			  	$c_keyword = $category['categories_name'];
-			  	$c_keyword = str_replace(" ", "-", strtolower($c_keyword));
-			  	if(in_array($c_keyword, $c_keywords))	$c_keyword.='-'.$insert_id;
-			  	$c_keywords[] = $c_keyword;
-					
-					$tQry = $target_db->query('insert into :table_categories_desc (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) 
-					                           values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_keyword, :categories_tags)');
-					
-					$tQry->bindTable(':table_categories_desc'	, TABLE_CATEGORIES_DESCRIPTION);
-					$tQry->bindInt  (':categories_id'         , $insert_id);
-					$tQry->bindInt  (':language_id'           , $category['language_id']);
-					$tQry->bindValue(':categories_name'       , $category['categories_name']);
-					$tQry->bindValue(':categories_menu_name'  , $category['categories_menu_name']);
-					$tQry->bindValue(':categories_blurb'      , $category['categories_blurb']);
-					$tQry->bindValue(':categories_description', $category['categories_description']);
-					$tQry->bindValue(':categories_keyword'    , $c_keyword);
-					$tQry->bindValue(':categories_tags'       , $category['categories_tags']);
-					
-					$tQry->execute();
-					
-					if ( $target_db->isError() ) {
-        		$this->_msg = $target_db->getError();
-        		return false;
-					}
-				
-					$page_categories[$iCnt][$cCnt]['new_categories_id']  =  $insert_id;
-					$cCnt++;
-				}
-
-				$iCnt++;
+						$page_categories[$cID] = $insert_id;
+						
+			  }
+			  
+			  $sQry->freeResult();
 			}
+			
+			// END LOAD CATEGORY PAGES FROM SOURCE DB
 
-			// END LOAD CATEGORY PAGES TO TARGET DB
+			foreach($page_categories as $cID => $insert_id){
+
+				$sQry = $source_db->query('select * from pages_categories_description pcd where pcd.categories_id = '.$cID);
+				$sQry->execute();
+				
+				$numrows = $sQry->numberOfRows();
+				if ($numrows > 0) { 
+					$cnt = 0;
+			  	while ( $sQry->next() ) {
+			  		$c_keyword = $sQry->value('categories_name');
+			  		$c_keyword = str_replace(" ", "-", strtolower($c_keyword));
+			  		if(in_array($c_keyword, $c_keywords))	$c_keyword.='-'.$insert_id;
+			  		$c_keywords[] = $c_keyword;
+					
+						$tQry = $target_db->query('insert into :table_categories_desc (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) 
+						                           values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_keyword, :categories_tags)');
+						
+						$tQry->bindTable(':table_categories_desc'	, TABLE_CATEGORIES_DESCRIPTION);
+						$tQry->bindInt  (':categories_id'         , $insert_id);
+						$tQry->bindInt  (':language_id'           , $sQry->value('language_id'));
+						$tQry->bindValue(':categories_name'       , $sQry->value('categories_name'));
+						$tQry->bindValue(':categories_menu_name'  , $sQry->value('categories_menu_name'));
+						$tQry->bindValue(':categories_blurb'      , $sQry->value('categories_blurb'));
+						$tQry->bindValue(':categories_description', $sQry->value('categories_description'));
+						$tQry->bindValue(':categories_keyword'    , $c_keyword);
+						$tQry->bindValue(':categories_tags'       , $sQry->value('categories_meta_description'));
+						
+						$tQry->execute();
+
+			  	}
+			  }
+			  
+			 	$sQry->freeResult();
+			}
+			
+			// LOAD CATEGORY PAGES TO TARGET DB
 			
 			// END LOAD PAGE PAGES FROM SOURCE DB
+			
 			$map  = $this->_data_mapping['page_pages'];
-
-			$sQry = $source_db->query('SELECT * FROM pages AS p, pages_description pd, pages_to_categories AS pc
-																 WHERE p.pages_id = pd.pages_id AND p.pages_id = pc.pages_id');
-																 
-			$sQry->execute();
 
 			$c_keywords = array();
 			$page_pages = array();
+
+			$sQry = $source_db->query('SELECT * FROM pages AS p, pages_to_categories AS pc
+																 WHERE p.pages_id = pc.pages_id');
+			$sQry->execute();
 				
-			if ($sQry->numberOfRows() > 0) { 
+			$numrows = $sQry->numberOfRows();
+			if ($numrows > 0) { 
 				$cnt = 0;
 			  while ( $sQry->next() ) {
 			  
-			  	$cID = $sQry->value($map['categories_id']);
+			  	$cID = $sQry->value('categories_id');
 			  
-			  	if( $sQry->value($map['categories_custom_url'] != '' || $sQry->value($map['categories_custom_url']) != NULL  ) ) $c_mode = 'override';
-
-			  	$c_keyword = $sQry->value($map['categories_name']);
+			  	$c_keyword = $sQry->value('pages_title');
 			  	$c_keyword = str_replace(" ", "-", strtolower($c_keyword));
 			  	if(in_array($c_keyword, $c_keywords))	$c_keyword.='-'.$sQry->value($map['categories_id']);
 			  	$c_keywords[] = $c_keyword;
 			  
 					$page  = array(
 													  'new_categories_id'         => null
-													, 'categories_id'             => $cID
-													,	'categories_image'          => $sQry->value($map['categories_image'])
-													,	'parent_id'                 => $sQry->value($map['parent_id'])
-													,	'sort_order'                => $sQry->value($map['sort_order'])
+													, 'categories_id'             => $page_categories[$cID]
+													,	'categories_image'          => $sQry->value('pages_image')
+													,	'parent_id'                 => $cID
+													,	'sort_order'                => $sQry->value('pages_sort_order')
 													,	'categories_mode'           => 'pages'
 													,	'categories_link_target'    => 0
 													,	'categories_custom_url'     => ""
-													,	'categories_status'         => $sQry->value($map['categories_status'])
+													,	'categories_status'         => $sQry->value('pages_status')
 													,	'categories_visibility_nav' => 0
-													,	'categories_visibility_box' => $sQry->value($map['categories_visibility_box'])
-													,	'date_added'                => $sQry->value($map['date_added'])
-													,	'last_modified'             => $sQry->value($map['last_modified'])
-													,	'language_id'          	 		=> $sQry->value($map['language_id'])
-													,	'categories_name'        		=> $sQry->value($map['categories_name'])
-													,	'categories_menu_name'   		=> ""
-													,	'categories_blurb'       		=> ($sQry->value($map['categories_blurb']) != '' || $sQry->value($map['categories_blurb']) != NULL  ) ? $sQry->value($map['categories_blurb']) : ""
-													,	'categories_description' 		=> $sQry->value($map['categories_description'])
-													,	'categories_keyword'     		=> $c_keyword
-													,	'categories_tags'        		=> ($sQry->value($map['categories_tags']) != '' || $sQry->value($map['categories_tags']) != NULL  ) ? $sQry->value($map['categories_tags']) : 1
+													,	'categories_visibility_box' => $sQry->value('pages_in_menu')
+													,	'date_added'                => $sQry->value('pages_date_added')
+													,	'last_modified'             => $sQry->value('pages_last_modified')
 								       		); 
-								       		
-					$page_pages[$cID][] = $page;
-					$cnt++;
-			  }
-			  
-			  $sQry->freeResult();
-			}
-			
-			// END LOAD PAGE PAGES FROM SOURCE DB
 
-			// LOAD PAGE PAGES DESCRIPTION TO TARGET DB
-			
-			$c_keywords = array();
-			$iCnt = 0;
-			foreach($page_pages as $pages){
-			
-				$cCnt = 0; $insert_id = null;
-				
-				foreach($pages as $page){
-					if($cCnt == 0){
-				
-						$parent_id_upd = $page_categories[$page['parent_id']][0]['new_categories_id'];
-				
 						$tQry = $target_db->query('insert into :table_categories (categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) 
 						                           values (:categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_status, :categories_visibility_nav, :categories_visibility_box, :date_added, :last_modified)');
 						
 						$tQry->bindTable(':table_categories'				 , TABLE_CATEGORIES);
 						$tQry->bindValue(':categories_image'         , $page['categories_image']);
-						$tQry->bindInt  (':parent_id'                , $parent_id_upd );
+						$tQry->bindInt  (':parent_id'                , $page['parent_id']);
 						$tQry->bindInt  (':sort_order'               , $page['sort_order']);
 						$tQry->bindValue(':categories_mode'          , $page['categories_mode']);
 						$tQry->bindInt  (':categories_link_target'   , $page['categories_link_target']);
@@ -1760,46 +1812,190 @@ class lC_LocalUpgrader extends lC_Upgrader{
 						
 						$tQry->execute();
 						
-						if ( $target_db->isError() ) {
-        			$this->_msg = $target_db->getError();
-        			return false;
-						}
-						
 						$insert_id = $target_db->nextID();
-					}
-					
-			  	$c_keyword = $page['categories_name'];
-			  	$c_keyword = str_replace(" ", "-", strtolower($c_keyword));
-			  	if(in_array($c_keyword, $c_keywords))	$c_keyword.='-'.$insert_id;
-			  	$c_keywords[] = $c_keyword;
-					
-					$tQry = $target_db->query('insert into :table_categories_desc (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) 
-					                           values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_keyword, :categories_tags)');
-					
-					$tQry->bindTable(':table_categories_desc'	, TABLE_CATEGORIES_DESCRIPTION);
-					$tQry->bindInt  (':categories_id'         , $insert_id);
-					$tQry->bindInt  (':language_id'           , $page['language_id']);
-					$tQry->bindValue(':categories_name'       , $page['categories_name']);
-					$tQry->bindValue(':categories_menu_name'  , $page['categories_menu_name']);
-					$tQry->bindValue(':categories_blurb'      , $page['categories_blurb']);
-					$tQry->bindValue(':categories_description', $page['categories_description']);
-					$tQry->bindValue(':categories_keyword'    , $c_keyword);
-					$tQry->bindValue(':categories_tags'       , $page['categories_tags']);
-					
-					$tQry->execute();
-					
-					if ( $target_db->isError() ) {
-        		$this->_msg = $target_db->getError();
-        		return false;
-					}
-								
-					$cCnt++;
-				}
+						$page_pages[$cID] = $insert_id;
 
-				$iCnt++;
+			  }
+			  
+			  $sQry->freeResult();
+			}
+			
+			// END LOAD PAGE PAGES FROM SOURCE DB
+
+			// LOAD PAGE PAGES DESCRIPTION TO TARGET DB
+			
+			$c_keywords = array();
+			foreach($page_pages as $cID => $insert_id){
+				
+				$sQry = $source_db->query('select * from pages_description pcd where pcd.pages_id = '.$cID);
+				$sQry->execute();
+			
+				$numrows = $sQry->numberOfRows();
+				if ($numrows > 0) { 
+					$cnt = 0;
+			  	while ( $sQry->next() ) {
+
+			  		$c_keyword = $sQry->value('pages_title');
+			  		$c_keyword = str_replace(" ", "-", strtolower($c_keyword));
+			  		if(in_array($c_keyword, $c_keywords))	$c_keyword.='-'.$insert_id;
+			  		$c_keywords[] = $c_keyword;
+						
+						$tQry = $target_db->query('insert into :table_categories_desc (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) 
+						                           values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_keyword, :categories_tags)');
+						
+						$tQry->bindTable(':table_categories_desc'	, TABLE_CATEGORIES_DESCRIPTION);
+						$tQry->bindInt  (':categories_id'         , $insert_id);
+						$tQry->bindInt  (':language_id'           , $sQry->value('language_id') );
+						$tQry->bindValue(':categories_name'       , $sQry->value('pages_title') );
+						$tQry->bindValue(':categories_menu_name'  , $sQry->value('pages_menu_name') );
+						$tQry->bindValue(':categories_blurb'      , $sQry->value('pages_blurb') );
+						$tQry->bindValue(':categories_description', $sQry->value('pages_body') );
+						$tQry->bindValue(':categories_keyword'    , $c_keyword);
+						$tQry->bindValue(':categories_tags'       , $sQry->value('pages_meta_keywords') );
+						
+						$tQry->execute();
+
+			  	}
+				}				
 			}
 
 			// END LOAD PAGE PAGES DESCRIPTION TO TARGET DB
+			
+			// LOAD CATEGORY PAGES PERMALINK FROM SOURCE DB
+
+			$permalink_text = array();
+			$permalink_array = array();
+			
+			$sQry = $source_db->query('select pc.categories_id, categories_parent_id, 1 as type, "cPath=0" as query, language_id, categories_name 
+																 from pages_categories as pc, pages_categories_description as pcd
+																 where pc.categories_id = pcd.categories_id');
+			$sQry->execute();
+				
+			if ($sQry->numberOfRows() > 0) { 
+				$cnt = 0;
+			  while ( $sQry->next() ) {
+			  	
+			  	$cID = $sQry->value('categories_id') ;
+			  	
+					$permalink =  preg_replace("/&.{0,}?;/",'',$sQry->value('categories_name'));
+					$permalink = strtolower($permalink);
+					$permalink = str_replace(" ", "-", $permalink);
+					if(in_array($permalink, $permalink_text)){ $permalink = $permalink . $cID; }
+			  	
+					$permalink  = array(
+													  'item_id'          					=> $sQry->value('categories_id')
+													,	'categories_id'          	 	=> $sQry->value('categories_id')
+													,	'language_id'          	 		=> $sQry->value('language_id')
+													,	'type'        							=> $sQry->value('type')
+													,	'query'      								=> $sQry->value('query')
+													,	'permalink'        					=> $permalink
+								       		); 
+								       		
+					$permalink_array[] = $permalink;
+					$cnt++;
+			  }
+			  
+			  $sQry->freeResult();
+			}
+			
+			// END LOAD CATEGORY PAGES PERMALINK FROM SOURCE DB
+
+			// LOAD PAGES PAGES PERMALINK FROM SOURCE DB
+			
+			$permalink_text = array();
+			
+			$sQry = $source_db->query('select p.pages_id, language_id, 1 as type, "cPath=0" as query, pages_title, categories_id
+																 from pages as p, pages_description as pd, pages_to_categories as p2c
+																 where p.pages_id = pd.pages_id 
+																 and p.pages_id = p2c.pages_id');
+			$sQry->execute();
+				
+			if ($sQry->numberOfRows() > 0) { 
+				$cnt = 0;
+			  while ( $sQry->next() ) {
+			  	
+			  	$cID = $sQry->value('categories_id') ;
+			  
+					$permalink =  preg_replace("/&.{0,}?;/",'',$sQry->value('pages_title'));
+					$permalink = strtolower($permalink);
+					$permalink = str_replace(" ", "-", $permalink);
+					if(in_array($permalink, $permalink_text)){ $permalink = $permalink . $cID; }
+			  	
+					$permalink  = array(
+													  'item_id'          					=> $sQry->value('pages_id')
+													,	'categories_id'          	 	=> $sQry->value('categories_id')
+													,	'language_id'          	 		=> $sQry->value('language_id')
+													,	'type'        							=> $sQry->value('type')
+													,	'query'      								=> $sQry->value('query')
+													,	'permalink'        					=> $permalink
+								       		); 
+								       		
+					$permalink_array[] = $permalink;
+					$cnt++;
+			  }
+			  
+			  $sQry->freeResult();
+			}
+
+			// END LOAD PAGES PAGES PERMALINK FROM SOURCE DB
+			
+			// SAVE CATEGORY PAGES AND PAGE PAGES PERMALINKS TO TARGET DB
+
+			$iCnt = 0;
+			
+			foreach($permalink_array as $permalink){
+
+				//  #### getCPATH CODE 			  
+				
+				$cat_list = $permalink['categories_id'];
+				$catID 		= $permalink['categories_id'];
+
+				while($catID != 0){
+						
+		  			$the_categories_name_sql ="SELECT categories_parent_id as parent_id
+	  	  															FROM pages_categories AS c
+	  	  															WHERE c.categories_id =".$catID;
+	  	  															
+						$sQry = $source_db->query($the_categories_name_sql);
+						$sQry->execute();
+			  		$sQry->next();
+						
+	  				$catID = $sQry->value('parent_id');
+	  				
+	  				if($catID == 0){ break; }
+	  					
+	  				$cat_list = $catID."_".$cat_list;
+						
+						$sQry->freeResult();
+				}
+				if(empty($cat_list)){ $cat_list = '0'; }
+				$cat_list = "cPath=".$cat_list;
+				
+				
+				//  #### END getCPATH CODE 			  
+				
+				$tQry = $target_db->query('insert into :table_permalink (item_id, language_id, `type`, query, permalink) 
+				                           values (:item_id, :language_id, :typ, :query, :permalink)');
+				
+				$tQry->bindTable(':table_permalink'	, TABLE_PERMALINKS);
+				$tQry->bindInt  (':item_id'         , $permalink['item_id']);
+				$tQry->bindInt  (':language_id'     , $permalink['language_id']);
+				$tQry->bindInt  (':typ'       			, $permalink['type']);
+				$tQry->bindValue(':query'  					, $cat_list);
+				$tQry->bindValue(':permalink'				, $permalink['permalink']);
+				
+				$tQry->execute();
+				
+				if ( $target_db->isError() ) {
+        	$this->_msg = $target_db->getError();
+        	return false;
+				}
+
+			}
+			
+			$tQry->freeResult();
+
+			// END LOAD PERMALINK TO TARGET DB
 
 			// DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
 			$tQry = $target_db->query('SET GLOBAL sql_mode=""');
@@ -1812,197 +2008,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 	} // end importPages
 	
-	/*
-	*  function name : importPagePages()
-	*
-	*  description : load categories and categories_description to loaded7
-	*
-	*  returns : true or false  
-	*
-	*/
-	public function importPagePages(){
-	
-			$s_db = $this->_sDB;
-			$t_db = $this->_tDB;
-			$map  = $this->_data_mapping['page_pages'];
-						
-			if(!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
-
-			// CONNNECT TO SOURCE DB
-			
-      require_once('../includes/database_tables.php');
-
-      require_once('../includes/classes/database/mysqli.php');
-      $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
-      $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
-			
-      if ($source_db->isError() === false) {
-        $source_db->selectDatabase($s_db['DB_DATABASE']);
-      }
-			
-      if ($source_db->isError()) {
-        $this->_msg = $source_db->getError();
-        return false;
-      }
-			// END CONNNECT TO SOURCE DB
-			
-			// CONNNECT TO TARGET DB
-
-      $class = 'lC_Database_' . $t_db['DB_CLASS'];
-      $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
-			
-      if ($target_db->isError() === false) {
-        $target_db->selectDatabase($t_db['DB_DATABASE']);
-      }
-			
-      if ($target_db->isError()) {
-        $this->_msg = $target_db->getError();
-        return false;
-      }
-
-			// END CONNNECT TO TARGET DB
-
-			// DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-			$tQry = $target_db->query('SET GLOBAL sql_mode="NO_AUTO_VALUE_ON_ZERO"');
-			$tQry->execute();
-
-			// END LOAD PAGE PAGES FROM SOURCE DB
-
-			$sQry = $source_db->query('SELECT * FROM pages AS p, pages_description pd, pages_to_categories AS pc
-																 WHERE p.pages_id = pd.pages_id AND p.pages_id = pc.pages_id');
-																 
-			$sQry->execute();
-
-			$c_keywords = array();
-			$categories = array();
-				
-			if ($sQry->numberOfRows() > 0) { 
-				$cnt = 0;
-			  while ( $sQry->next() ) {
-			  
-			  	$cID = $sQry->value($map['categories_id']);
-			  
-			  	if( $sQry->value($map['categories_custom_url'] != '' || $sQry->value($map['categories_custom_url']) != NULL  ) ) $c_mode = 'override';
-
-			  	$c_keyword = $sQry->value($map['categories_name']);
-			  	$c_keyword = str_replace(" ", "-", strtolower($c_keyword));
-			  	if(in_array($c_keyword, $c_keywords))	$c_keyword.='-'.$sQry->value($map['categories_id']);
-			  	$c_keywords[] = $c_keyword;
-			  
-					$category  = array(
-													  'new_categories_id'         => null
-													, 'categories_id'             => $cID
-													,	'categories_image'          => $sQry->value($map['categories_image'])
-													,	'parent_id'                 => $sQry->value($map['parent_id'])
-													,	'sort_order'                => $sQry->value($map['sort_order'])
-													,	'categories_mode'           => 'pages'
-													,	'categories_link_target'    => 0
-													,	'categories_custom_url'     => ""
-													,	'categories_status'         => $sQry->value($map['categories_status'])
-													,	'categories_visibility_nav' => 0
-													,	'categories_visibility_box' => $sQry->value($map['categories_visibility_box'])
-													,	'date_added'                => $sQry->value($map['date_added'])
-													,	'last_modified'             => $sQry->value($map['last_modified'])
-													,	'language_id'          	 		=> $sQry->value($map['language_id'])
-													,	'categories_name'        		=> $sQry->value($map['categories_name'])
-													,	'categories_menu_name'   		=> ""
-													,	'categories_blurb'       		=> ($sQry->value($map['categories_blurb']) != '' || $sQry->value($map['categories_blurb']) != NULL  ) ? $sQry->value($map['categories_blurb']) : ""
-													,	'categories_description' 		=> $sQry->value($map['categories_description'])
-													,	'categories_keyword'     		=> $c_keyword
-													,	'categories_tags'        		=> ($sQry->value($map['categories_tags']) != '' || $sQry->value($map['categories_tags']) != NULL  ) ? $sQry->value($map['categories_tags']) : 1
-								       		); 
-								       		
-					$categories[$cID][] = $category;
-					$cnt++;
-			  }
-			  
-			  $sQry->freeResult();
-			}
-			
-			// END LOAD PAGE PAGES FROM SOURCE DB
-
-			// LOAD PAGE PAGES DESCRIPTION TO TARGET DB
-			
-			$c_keywords = array();
-			$iCnt = 0;
-			foreach($categories as $cInfo){
-			
-				$cCnt = 0; $insert_id = null;
-				
-				foreach($cInfo as $category){
-					if($cCnt == 0){
-				
-						$tQry = $target_db->query('insert into :table_categories (categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) 
-						                           values (:categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_status, :categories_visibility_nav, :categories_visibility_box, :date_added, :last_modified)');
-						
-						$tQry->bindTable(':table_categories'				 , TABLE_CATEGORIES);
-						$tQry->bindValue(':categories_image'         , $category['categories_image']);
-						$tQry->bindInt  (':parent_id'                , $category['parent_id']);
-						$tQry->bindInt  (':sort_order'               , $category['sort_order']);
-						$tQry->bindValue(':categories_mode'          , $category['categories_mode']);
-						$tQry->bindInt  (':categories_link_target'   , $category['categories_link_target']);
-						$tQry->bindValue(':categories_custom_url'    , $category['categories_custom_url']);
-						$tQry->bindInt  (':categories_status'        , $category['categories_status']);
-						$tQry->bindInt  (':categories_visibility_nav', $category['categories_visibility_nav']);
-						$tQry->bindInt  (':categories_visibility_box', $category['categories_visibility_box']);
-						$tQry->bindDate (':date_added'               , $category['date_added']);
-						$tQry->bindDate (':last_modified'            , $category['last_modified']);
-						
-						$tQry->execute();
-						
-						if ( $target_db->isError() ) {
-        			$this->_msg = $target_db->getError();
-        			return false;
-						}
-						
-						$insert_id = $target_db->nextID();
-					
-					}
-				
-			  	$c_keyword = $category['categories_name'];
-			  	$c_keyword = str_replace(" ", "-", strtolower($c_keyword));
-			  	if(in_array($c_keyword, $c_keywords))	$c_keyword.='-'.$insert_id;
-			  	$c_keywords[] = $c_keyword;
-					
-					$tQry = $target_db->query('insert into :table_categories_desc (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) 
-					                           values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_keyword, :categories_tags)');
-					
-					$tQry->bindTable(':table_categories_desc'	, TABLE_CATEGORIES_DESCRIPTION);
-					$tQry->bindInt  (':categories_id'         , $insert_id);
-					$tQry->bindInt  (':language_id'           , $category['language_id']);
-					$tQry->bindValue(':categories_name'       , $category['categories_name']);
-					$tQry->bindValue(':categories_menu_name'  , $category['categories_menu_name']);
-					$tQry->bindValue(':categories_blurb'      , $category['categories_blurb']);
-					$tQry->bindValue(':categories_description', $category['categories_description']);
-					$tQry->bindValue(':categories_keyword'    , $c_keyword);
-					$tQry->bindValue(':categories_tags'       , $category['categories_tags']);
-					
-					$tQry->execute();
-					
-					if ( $target_db->isError() ) {
-        		$this->_msg = $target_db->getError();
-        		return false;
-					}
-				
-					$cCnt++;
-				}
-
-				$iCnt++;
-			}
-
-			// END LOAD PAGE PAGES DESCRIPTION TO TARGET DB
-
-			// DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-			$tQry = $target_db->query('SET GLOBAL sql_mode=""');
-			$tQry->execute();
-
-			$source_db->disconnect();	
-			$target_db->disconnect();	
-			
-			return true;
-			
-	} // end importPagePages
-
 	/*
 	*  function name : importCustomers()
 	*
@@ -2097,8 +2102,37 @@ class lC_LocalUpgrader extends lC_Upgrader{
 													,	'date_account_last_modified'   => ($sQry->value($map['date_account_last_modified']) != '' || $sQry->value($map['date_account_last_modified']) != NULL  ) ? $sQry->value($map['date_account_last_modified']) : ""
 													,	'global_product_notifications' => ($sQry->value($map['global_product_notifications']) != '' || $sQry->value($map['global_product_notifications']) != NULL  ) ? $sQry->value($map['global_product_notifications']) : 1
 								       		); 
-								       		
-					$customers[] = $customer;
+
+					$tQry = $target_db->query('insert into :table_customers (customers_id, customers_group_id, customers_gender, customers_firstname, customers_lastname, customers_dob, customers_email_address, customers_default_address_id, customers_telephone, customers_fax, customers_newsletter, customers_status, customers_ip_address, date_last_logon, number_of_logons, date_account_created, date_account_last_modified, global_product_notifications) 
+					                           values (:customers_id, :customers_group_id, :customers_gender, :customers_firstname, :customers_lastname, :customers_dob, :customers_email_address, :customers_default_address_id, :customers_telephone, :customers_fax, :customers_newsletter, :customers_status, :customers_ip_address, :date_last_logon, :number_of_logons, :date_account_created, :date_account_last_modified, :global_product_notifications)');
+	
+					$tQry->bindTable(':table_customers'				 				, TABLE_CUSTOMERS);
+					$tQry->bindInt  (':customers_id'            			, $customer['customers_id']);
+					$tQry->bindInt  (':customers_group_id'         		, $customer['customers_group_id']);
+					$tQry->bindInt  (':customers_gender'             	, $customer['customers_gender']);
+					$tQry->bindValue(':customers_firstname'           , $customer['customers_firstname']);
+					$tQry->bindValue(':customers_lastname'          	, $customer['customers_lastname']);
+					$tQry->bindDate (':customers_dob'            			, $customer['customers_dob']);
+					$tQry->bindValue(':customers_email_address'   		, $customer['customers_email_address']);
+					$tQry->bindInt  (':customers_default_address_id'	, $customer['customers_default_address_id']);
+					$tQry->bindValue(':customers_telephone'        		, $customer['customers_telephone']);
+					$tQry->bindValue(':customers_fax'									, $customer['customers_fax']);
+					$tQry->bindValue(':customers_newsletter'					, $customer['customers_newsletter']);
+					$tQry->bindInt  (':customers_status'             	, $customer['customers_status']);
+					$tQry->bindValue(':customers_ip_address'         	, $customer['customers_ip_address']);
+					$tQry->bindDate (':date_last_logon'            		, $customer['date_last_logon']);
+					$tQry->bindInt  (':number_of_logons'            	, $customer['number_of_logons']);
+					$tQry->bindDate (':date_account_created'   				, $customer['date_account_created']);
+					$tQry->bindDate (':date_account_last_modified'   	, $customer['date_account_last_modified']);
+					$tQry->bindInt  (':global_product_notifications' 	, $customer['global_product_notifications']);
+					
+					$tQry->execute();
+					
+					if ( $target_db->isError() ) {
+	        	$this->_msg = $target_db->getError();
+	        	return false;
+					}
+
 					$cnt++;
 			  }
 			  
@@ -2107,48 +2141,7 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// END LOAD CUSTOMERS FROM SOURCE DB
 			
-			print_r($customers);
-
-			// LOAD CUSTOMERS TO TARGET DB
-			
-			$iCnt = 0;
-			foreach($customers as $customer){
-				
-				$tQry = $target_db->query('insert into :table_customers (customers_id, customers_group_id, customers_gender, customers_firstname, customers_lastname, customers_dob, customers_email_address, customers_default_address_id, customers_telephone, customers_fax, customers_newsletter, customers_status, customers_ip_address, date_last_logon, number_of_logons, date_account_created, date_account_last_modified, global_product_notifications) 
-				                           values (:customers_id, :customers_group_id, :customers_gender, :customers_firstname, :customers_lastname, :customers_dob, :customers_email_address, :customers_default_address_id, :customers_telephone, :customers_fax, :customers_newsletter, :customers_status, :customers_ip_address, :date_last_logon, :number_of_logons, :date_account_created, :date_account_last_modified, :global_product_notifications)');
-
-				$tQry->bindTable(':table_customers'				 				, TABLE_CUSTOMERS);
-				$tQry->bindInt  (':customers_id'            			, $customer['customers_id']);
-				$tQry->bindInt  (':customers_group_id'         		, $customer['customers_group_id']);
-				$tQry->bindInt  (':customers_gender'             	, $customer['customers_gender']);
-				$tQry->bindValue(':customers_firstname'           , $customer['customers_firstname']);
-				$tQry->bindValue(':customers_lastname'          	, $customer['customers_lastname']);
-				$tQry->bindDate (':customers_dob'            			, $customer['customers_dob']);
-				$tQry->bindValue(':customers_email_address'   		, $customer['customers_email_address']);
-				$tQry->bindInt  (':customers_default_address_id'	, $customer['customers_default_address_id']);
-				$tQry->bindValue(':customers_telephone'        		, $customer['customers_telephone']);
-				$tQry->bindValue(':customers_fax'									, $customer['customers_fax']);
-				$tQry->bindValue(':customers_newsletter'					, $customer['customers_newsletter']);
-				$tQry->bindInt  (':customers_status'             	, $customer['customers_status']);
-				$tQry->bindValue(':customers_ip_address'         	, $customer['customers_ip_address']);
-				$tQry->bindDate (':date_last_logon'            		, $customer['date_last_logon']);
-				$tQry->bindInt  (':number_of_logons'            	, $customer['number_of_logons']);
-				$tQry->bindDate (':date_account_created'   				, $customer['date_account_created']);
-				$tQry->bindDate (':date_account_last_modified'   	, $customer['date_account_last_modified']);
-				$tQry->bindInt  (':global_product_notifications' 	, $customer['global_product_notifications']);
-				
-				$tQry->execute();
-				
-				if ( $target_db->isError() ) {
-        	$this->_msg = $target_db->getError();
-        	return false;
-				}
-				$iCnt++;
-			}
-			
-			$tQry->freeResult();
-
-			// END LOAD CUSTOMERS TO TARGET DB
+			// ##########
 
 			// LOAD ADDRESS BOOK FROM SOURCE DB
 			
@@ -2177,8 +2170,33 @@ class lC_LocalUpgrader extends lC_Upgrader{
 													,	'entry_telephone' 			=> $sQry->value($map['entry_telephone'])
 													,	'entry_fax' 						=> $sQry->value($map['entry_fax'])
 								       		); 
-								       		
-					$address_book[] = $address;
+
+					$tQry = $target_db->query('insert into :table_address_book (customers_id, entry_gender, entry_company, entry_firstname, entry_lastname, entry_street_address, entry_suburb, entry_postcode, entry_city, entry_state, entry_country_id, entry_zone_id, entry_telephone, entry_fax) 
+					                           values (:customers_id, :entry_gender, :entry_company, :entry_firstname, :entry_lastname, :entry_street_address, :entry_suburb, :entry_postcode, :entry_city, :entry_state, :entry_country_id, :entry_zone_id, :entry_telephone, :entry_fax)');
+					
+					$tQry->bindTable(':table_address_book'	, TABLE_ADDRESS_BOOK);
+					$tQry->bindInt  (':customers_id'        , $address['customers_id']);
+					$tQry->bindValue(':entry_gender'        , $address['entry_gender']);
+					$tQry->bindValue(':entry_company'       , $address['entry_company']);
+					$tQry->bindValue(':entry_firstname'     , $address['entry_firstname']);
+					$tQry->bindValue(':entry_lastname'      , $address['entry_lastname']);
+					$tQry->bindValue(':entry_street_address', $address['entry_street_address']);
+					$tQry->bindValue(':entry_suburb'   			, $address['entry_suburb']);
+					$tQry->bindValue(':entry_postcode'			, $address['entry_postcode']);
+					$tQry->bindValue(':entry_city'        	, $address['entry_city']);
+					$tQry->bindValue(':entry_state'					, $address['entry_state']);
+					$tQry->bindInt  (':entry_country_id'		, $address['entry_country_id']);
+					$tQry->bindInt  (':entry_zone_id'       , $address['entry_zone_id']);
+					$tQry->bindValue(':entry_telephone'     , $address['entry_telephone']);
+					$tQry->bindValue(':entry_fax'           , $address['entry_fax']);
+					
+					$tQry->execute();
+					
+					if ( $target_db->isError() ) {
+        		$this->_msg = $target_db->getError();
+        		return false;
+					}
+					
 					$cnt++;
 			  }
 			  
@@ -2186,43 +2204,8 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			}
 			
 			// END LOAD ADDRESS BOOK FROM SOURCE DB
-
-			// END LOAD ADDRESS BOOK TO TARGET DB
 			
-			$iCnt = 0;
-			foreach($address_book as $address){
-				
-				$tQry = $target_db->query('insert into :table_address_book (customers_id, entry_gender, entry_company, entry_firstname, entry_lastname, entry_street_address, entry_suburb, entry_postcode, entry_city, entry_state, entry_country_id, entry_zone_id, entry_telephone, entry_fax) 
-				                           values (:customers_id, :entry_gender, :entry_company, :entry_firstname, :entry_lastname, :entry_street_address, :entry_suburb, :entry_postcode, :entry_city, :entry_state, :entry_country_id, :entry_zone_id, :entry_telephone, :entry_fax)');
-
-				$tQry->bindTable(':table_address_book'	, TABLE_ADDRESS_BOOK);
-				$tQry->bindInt  (':customers_id'        , $address['customers_id']);
-				$tQry->bindValue(':entry_gender'        , $address['entry_gender']);
-				$tQry->bindValue(':entry_company'       , $address['entry_company']);
-				$tQry->bindValue(':entry_firstname'     , $address['entry_firstname']);
-				$tQry->bindValue(':entry_lastname'      , $address['entry_lastname']);
-				$tQry->bindValue(':entry_street_address', $address['entry_street_address']);
-				$tQry->bindValue(':entry_suburb'   			, $address['entry_suburb']);
-				$tQry->bindValue(':entry_postcode'			, $address['entry_postcode']);
-				$tQry->bindValue(':entry_city'        	, $address['entry_city']);
-				$tQry->bindValue(':entry_state'					, $address['entry_state']);
-				$tQry->bindInt  (':entry_country_id'		, $address['entry_country_id']);
-				$tQry->bindInt  (':entry_zone_id'       , $address['entry_zone_id']);
-				$tQry->bindValue(':entry_telephone'     , $address['entry_telephone']);
-				$tQry->bindValue(':entry_fax'           , $address['entry_fax']);
-				
-				$tQry->execute();
-				
-				if ( $target_db->isError() ) {
-        	$this->_msg = $target_db->getError();
-        	return false;
-				}
-				$iCnt++;
-			}
-			
-			$tQry->freeResult();
-
-			// END LOAD ADDRESS BOOK TO TARGET DB
+			// ##########
 
 			// DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
 			$tQry = $target_db->query('SET GLOBAL sql_mode=""');
@@ -2367,10 +2350,10 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			}
 			
 			// END LOAD products images info FROM SOURCE DB
-
-			// PROCESS tmp_image_import DATA 
-			$to_zip = array();
 			
+			// PROCESS tmp_image_import DATA 
+			$to_zip = array();			
+      
 			foreach($source_images as $k => $images_info){
 				
 				$products_id = $images_info['products_id'];
@@ -2380,7 +2363,13 @@ class lC_LocalUpgrader extends lC_Upgrader{
 				foreach($image_array as $k => $img_info){
 					
 					if(empty($img_info)) continue;
+				
+					$r = $this->saveToProductsImages($target_db, $products_id, $img_info, $sorder, ($k == 'products_image' ? 1 : 0 ));
 					
+					if ( $r == false ) {
+        		$this->_msg = $target_db->getError();
+        		return false;
+					}
 					// if not exist, loop to next ;
 					if (!file_exists($source_img_dir.$img_info) ||
  					    !is_readable($source_img_dir.$img_info)
@@ -2389,19 +2378,13 @@ class lC_LocalUpgrader extends lC_Upgrader{
  					}					
 					$files_to_zip[] = $source_img_dir.$img_info;
 					$to_zip[] = $img_info;
-					
-					$r = $this->saveToProductsImages($target_db, $products_id, $img_info, $sorder, ($k == 'products_image' ? 1 : 0 ));
-					
-					if ( $r == false ) {
-        		$this->_msg = $target_db->getError();
-        		return false;
-					}
+
 					$sorder++;
 				}
 									
 				$source_images[$k]['status'] = 1;				
 			}
-			
+      
 			$o_dir = getcwd();
 			$target_img_dir =  str_replace("install", "", getcwd()).'images/products/originals/';
 			 
@@ -2410,7 +2393,7 @@ class lC_LocalUpgrader extends lC_Upgrader{
 
 			$result = $this->create_zip($to_zip, $target_img_dir.$target_zip);	
 			if( $result == false ) {
-        $this->_msg = $lC_Language->get('upgrade_step4_import_product_images_zipextracteerror');
+        $this->_msg = $lC_Language->get('upgrade_step4_import_product_images_zipcreateerror');
         return false;
 			}		
 
@@ -2419,7 +2402,7 @@ class lC_LocalUpgrader extends lC_Upgrader{
         $this->_msg = $lC_Language->get('upgrade_step4_import_product_images_zipextracteerror');
         return false;
 			}		
-			unlink($target_img_dir.$target_zip);
+	//		unlink($target_img_dir.$target_zip);
 			$this->chmod_r($target_img_dir);
 			chdir($o_dir);
 
@@ -2613,8 +2596,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			$t_db = $this->_tDB;
 			$map  = $this->_data_mapping['customers_groups'];
 
-			return true;
-							
 			if(!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
 
 			// CONNNECT TO SOURCE DB
@@ -2678,13 +2659,28 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			if ($sQry->numberOfRows() > 0) { 
 			  $cnt = 0;
 			  while ( $sQry->next() ) {
-			  	$group  = array(
-			  										'customers_group_id'    => $sQry->value($map['customers_group_id'])
+			  	$customers_group  = array(
+			  										'customers_group_id'    => $sQry->value('customers_group_id')
 			  									,	'language_id'           => 1
-			  									,	'customers_group_name'	=> $sQry->value($map['customers_group_name'])
+			  									,	'customers_group_name'	=> $sQry->value('customers_group_name')
 			  				       		); 
 			  				       		
-			  	$customers_groups[] = $group;
+			  	$tQry = $target_db->query('insert into :table_customers_groups (customers_group_id, language_id, customers_group_name) 
+			  							   values (:customers_group_id, :language_id, :customers_group_name)');
+					
+			  	$tQry->bindTable(':table_customers_groups'		, TABLE_CUSTOMERS_GROUPS);
+			  	
+			  	$tQry->bindInt  (':customers_group_id'        , $customers_group['customers_group_id']);
+			  	$tQry->bindInt  (':language_id'         			, $customers_group['language_id']);
+			  	$tQry->bindValue(':customers_group_name'      , $customers_group['customers_group_name']);
+			  	
+			  	$tQry->execute();
+			  	
+			  	if ( $target_db->isError() ) {
+						$this->_msg = $target_db->getError();
+						return false;
+			  	}
+
 			  	$cnt++;
 			  }
 			  
@@ -2693,36 +2689,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// END LOAD CUSTOMERS GROUPS FROM SOURCE DB
 			
-			print_r($customers_groups);
-
-			// LOAD CUSTOMERS GROUPS TO TARGET DB
-				
-			$tQry = $source_db->query('ALTER TABLE '.TABLE_CUSTOMERS_GROUPS.' CHANGE customers_group_id customers_group_id int(11) NOT NULL');
-			$tQry->execute();
-				
-			$iCnt = 0;
-			foreach($customers_groups as $customers_group){
-			  
-			  $tQry = $target_db->query('insert into :table_customers_groups (customers_group_id, language_id, customers_group_name) 
-			  						   values (:customers_group_id, :language_id, :customers_group_name)');
-
-			  $tQry->bindTable(':table_customers_groups'		, TABLE_CUSTOMERS_GROUPS);
-			  
-			  $tQry->bindInt  (':customers_group_id'        , $customers_group['customers_group_id']);
-			  $tQry->bindInt  (':language_id'         			, $customers_group['language_id']);
-			  $tQry->bindValue(':customers_group_name'      , $customers_group['customers_group_name']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-					$this->_msg = $target_db->getError();
-					return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD CUSTOMER FROUPSS TO TARGET DB
-
 			// DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
 			$tQry = $target_db->query('SET GLOBAL sql_mode=""');
 			$tQry->execute();
@@ -2743,7 +2709,7 @@ class lC_LocalUpgrader extends lC_Upgrader{
 	*
 	*/
 		public function importOrders(){
-		
+			
 			$s_db = $this->_sDB;
 			$t_db = $this->_tDB;
 						
@@ -2815,7 +2781,208 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// ##########
 
+			// LOAD ORDERS STATUS  FROM SOURCE DB
+			
+			$map  = $this->_data_mapping['orders_status'];
+			$orders_status = array();
+
+			$sQry = $source_db->query('select * from orders_status');
+			$sQry->execute();
+			
+			$numrows = $sQry->numberOfRows();	
+			if ($numrows > 0) { 
+				$cnt = 0;
+			  while ( $sQry->next() ) {
+
+					$orders_stat  = array(
+															'orders_status_id'      		=> $sQry->value($map['orders_status_id'])
+														,	'language_id'         			=> $sQry->value($map['language_id'])
+														,	'orders_status_name'       	=> $sQry->value($map['orders_status_name'])
+														
+												); 
+												
+					$tQry = $target_db->query('insert into :table_orders_status (orders_status_id, language_id, orders_status_name) 
+					  					   values (:orders_status_id, :language_id, :orders_status_name)');
+					
+					$tQry->bindTable(':table_orders_status'	, TABLE_ORDERS_STATUS);
+					$tQry->bindInt  (':orders_status_id'    , $orders_stat['orders_status_id']);
+					$tQry->bindInt  (':language_id'        	, $orders_stat['language_id']);
+					$tQry->bindValue(':orders_status_name'	, $orders_stat['orders_status_name']);
+			  	
+			  	$tQry->execute();
+					$cnt++;
+					
+			  }
+			  
+			  $sQry->freeResult();
+			}
+			
+			// END LOAD ORDERS STATUS FROM SOURCE DB
+
+			$orders_stat = null;
+			
+			// ##########
+
+			// LOAD ORDERS STATUS HISTORY FROM SOURCE DB
+			
+			$map  = $this->_data_mapping['orders_status_history'];
+			$orders_status_histories = array();
+
+			$sQry = $source_db->query('select * from orders_status_history');
+			$sQry->execute();
+			
+			$numrows = $sQry->numberOfRows();
+			if ($numrows > 0) { 
+				$cnt = 0;
+			  while ( $sQry->next() ) {
+					$orders_status_history  = array(
+															'orders_status_history_id'	=> $sQry->value($map['orders_status_history_id'])
+														,	'orders_id'         				=> $sQry->value($map['orders_id'])
+														,	'orders_status_id'       	 	=> $sQry->value($map['orders_status_id'])
+														,	'date_added'               	=> $sQry->value($map['date_added'])
+														,	'customer_notified'         => $sQry->value($map['customer_notified'])
+														,	'comments'           				=> $sQry->value($map['comments'])
+												); 
+												
+					$tQry = $target_db->query('insert into :table_orders_status_history ( orders_status_history_id, orders_id, orders_status_id, date_added, customer_notified, comments) 
+					  					   values (:orders_status_history_id, :orders_id, :orders_status_id, :date_added, :customer_notified, :comments)');
+					
+					$tQry->bindTable(':table_orders_status_history'	, TABLE_ORDERS_STATUS_HISTORY);
+					$tQry->bindInt(':orders_status_history_id'    	, $orders_status_history['orders_status_history_id']);
+					$tQry->bindInt(':orders_id'        							, $orders_status_history['orders_id']);
+					$tQry->bindInt(':orders_status_id'        			, $orders_status_history['orders_status_id']);
+					$tQry->bindValue(':date_added'        					, $orders_status_history['date_added']);
+					$tQry->bindInt(':customer_notified'       			, $orders_status_history['customer_notified']);
+					$tQry->bindValue(':comments'       							, $orders_status_history['comments']);
+			  		
+			  	$tQry->execute();
+
+					$cnt++;
+
+			  }
+			  
+			  $sQry->freeResult();
+			}
+			
+			// END LOAD ORDERS STATUS HISTORY FROM SOURCE DB
+
+			$orders_status_history = null;
+						
+			// ##########
+
+			// LOAD ORDERS TOTAL FROM SOURCE DB
+			
+			$map  = $this->_data_mapping['orders_total'];
+			$orders_total = array();
+
+			$sQry = $source_db->query('select * from orders_total');
+			$sQry->execute();
+			
+			$orders_total_map = array(
+																	'ot_coupon' => 'coupon'
+																, 'ot_shipping' => 'shipping'
+																, 'ot_tax' => 'tax'
+																, 'ot_subtotal' => 'subtotal'
+																, 'ot_total' => 'total'
+																, 'xxxxxxxx' => 'low_order_fee'
+			);
+			
+			$numrows= $sQry->numberOfRows();
+			if ($numrows > 0) { 
+				$cnt = 0;
+			  while ( $sQry->next() ) {
+					$order_total  = array(
+															'orders_total_id'	=> $sQry->value('orders_total_id')
+														,	'orders_id'      	=> $sQry->value('orders_id')
+														,	'title'       		=> $sQry->value('title')
+														,	'text'       	 		=> $sQry->value('text')
+														,	'value'       		=> $sQry->value('value')
+														,	'class'       	 	=> $sQry->value('class')
+														,	'sort_order'      => $sQry->value('sort_order')
+														
+												); 
+
+					$tQry = $target_db->query('insert into :table_orders_total (orders_total_id, orders_id, title, text, value, class, sort_order) 
+					  					   values (:orders_total_id, :orders_id, :title, :text, :value, :class, :sort_order)');
+					
+					$tQry->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+					$tQry->bindInt(':orders_total_id'    	, $order_total['orders_total_id']);
+					$tQry->bindInt(':orders_id'        		, $order_total['orders_id']);
+					$tQry->bindValue(':title'        			, $order_total['title']);
+					$tQry->bindValue(':text'        			, $order_total['text']);
+					$tQry->bindValue(':value'        			, $order_total['value']);
+					$tQry->bindValue(':class'        			, $orders_total_map[$order_total['class']]);
+					$tQry->bindInt(':sort_order'        	, $order_total['sort_order']);
+			  	
+			  	$tQry->execute();
+			  	
+					$cnt++;
+
+			  }
+			  
+			  $sQry->freeResult();
+			}
+			
+			// END LOAD ORDERS TOTAL FROM SOURCE DB
+	
+			$orders_total = null;
+			
+			// END LOAD ORDERS TOTAL TO TARGET DB
+			
+			// ##########
+
+			// LOAD ORDERS PRODUCTS DOWNLOAD FROM SOURCE DB
+			
+			$map  = $this->_data_mapping['orders_products_download'];
+			$orders_products_download = array();
+
+			$sQry = $source_db->query('select * from orders_products_download');
+			$sQry->execute();
+				
+			$numrows= $sQry->numberOfRows();
+			if ($numrows > 0) { 
+				$cnt = 0;
+			  while ( $sQry->next() ) {
+				  $orders_product_download  = array(
+															'orders_products_download_id'	=> $sQry->value($map['orders_products_download_id'])
+														,	'orders_id'         					=> $sQry->value($map['orders_id'])
+														,	'orders_products_id'         	=> $sQry->value($map['orders_products_id'])
+														,	'orders_products_filename' 		=> $sQry->value($map['orders_products_filename'])
+														,	'download_maxdays'						=> $sQry->value($map['download_maxdays'])
+														,	'download_count'							=> $sQry->value($map['download_count'])
+														
+										  ); 
+												
+					$tQry = $target_db->query('insert into :table_orders_products_download (orders_products_download_id, orders_id, orders_products_id, orders_products_filename, download_maxdays, download_count) 
+					  					   values (:orders_products_download_id, :orders_id, :orders_products_id, :orders_products_filename, :download_maxdays, :download_count)');
+	
+					$tQry->bindTable(':table_orders_products_download', TABLE_ORDERS_PRODUCTS_DOWNLOAD);
+					$tQry->bindInt(':orders_products_download_id'			, $orders_product_download['orders_products_download_id']);
+					$tQry->bindInt(':orders_id'        								, $orders_product_download['orders_id']);
+					$tQry->bindInt(':orders_products_id'        			, $orders_product_download['orders_products_id']);
+					$tQry->bindValue(':orders_products_filename'			, $orders_product_download['orders_products_filename']);
+					$tQry->bindInt(':download_maxdays'       					, $orders_product_download['download_maxdays']);
+					$tQry->bindInt(':download_count'        					, $orders_product_download['download_count']);
+				  
+				  $tQry->execute();
+
+					$cnt++;
+
+			  }
+			  
+			  $sQry->freeResult();
+			}
+			
+			// END LOAD PRODUCTS DOWNLOAD FROM SOURCE DB
+
+			$orders_products_download = null;
+			
+			// END LOAD ORDERS PRODUCTS DOWNLOAD TO TARGET DB
+			
+			// ##########
+
 			// LOAD ORDERS FROM SOURCE DB
+
 			$map  = $this->_data_mapping['orders'];
 			$orders = array();
 
@@ -2823,15 +2990,16 @@ class lC_LocalUpgrader extends lC_Upgrader{
 								
 			$sQry->execute();
 				
-			if ($sQry->numberOfRows() > 0) { 
+			$numrows= $sQry->numberOfRows();
+			if ($numrows > 0) { 
 				$cnt = 0;
 			  while ( $sQry->next() ) {
 					$order = array(
-													'orders_id' 				=> $sQry->value($map['orders_id'])
-												,	'customers_id' 				=> $sQry->value($map['customers_id'])
-												,	'customers_name'   			=> $sQry->value($map['customers_name'])
-												, 'customers_company'			=> $sQry->value($map['customers_company'])
-												, 'customers_street_address'	=> $sQry->value($map['customers_street_address'])
+														'orders_id' 				=> $sQry->value($map['orders_id'])
+												,		'customers_id' 				=> $sQry->value($map['customers_id'])
+												,		'customers_name'   			=> $sQry->value($map['customers_name'])
+												, 	'customers_company'			=> $sQry->value($map['customers_company'])
+												, 	'customers_street_address'	=> $sQry->value($map['customers_street_address'])
 												, 	'customers_suburb'			=> $sQry->value($map['customers_suburb'])
 												, 	'customers_city'			=> $sQry->value($map['customers_city'])
 												, 	'customers_postcode'		=> $sQry->value($map['customers_postcode'])
@@ -2878,8 +3046,64 @@ class lC_LocalUpgrader extends lC_Upgrader{
 												, 	'currency_value'			=> $sQry->value($map['currency_value'])
 					  						); 
 					  					
-					$orders[] = $order;
+					$tQry = $target_db->query('insert into :table_orders (orders_id, customers_id, customers_name, customers_company, customers_street_address, customers_suburb, customers_city, customers_postcode, customers_state, customers_state_code, customers_country, customers_country_iso2, customers_country_iso3, customers_telephone, customers_email_address, customers_address_format, customers_ip_address, delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state, delivery_state_code, delivery_country, delivery_country_iso2, delivery_country_iso3, delivery_address_format, billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state, billing_state_code, billing_country, billing_country_iso2, billing_country_iso3, billing_address_format, payment_method, payment_module, last_modified, date_purchased, orders_status, orders_date_finished, currency, currency_value) 
+					  	values (:orders_id, :customers_id, :customers_name, :customers_company, :customers_street_address, :customers_suburb, :customers_city, :customers_postcode, :customers_state, :customers_state_code, :customers_country, :customers_country_iso2, :customers_country_iso3, :customers_telephone, :customers_email_address, :customers_address_format, :customers_ip_address, :delivery_name, :delivery_company, :delivery_street_address, :delivery_suburb, :delivery_city, :delivery_postcode, :delivery_state, :delivery_state_code, :delivery_country, :delivery_country_iso2, :delivery_country_iso3, :delivery_address_format, :billing_name, :billing_company, :billing_street_address, :billing_suburb, :billing_city, :billing_postcode, :billing_state, :billing_state_code, :billing_country, :billing_country_iso2, :billing_country_iso3, :billing_address_format, :payment_method, :payment_module, :last_modified, :date_purchased, :orders_status, :orders_date_finished, :currency, :currency_value)');
+					
+					$tQry->bindTable(':table_orders'						, TABLE_ORDERS);
+					$tQry->bindInt  (':orders_id'         					, $order['orders_id']);
+					$tQry->bindInt  (':customers_id' 							, $order['customers_id']);
+					$tQry->bindValue(':customers_name'   					, $order['customers_name']);
+					$tQry->bindValue(':customers_company'					, $order['customers_company']);
+					$tQry->bindValue(':customers_street_address'			, $order['customers_street_address']);
+					$tQry->bindValue(':customers_suburb'					, $order['customers_suburb']);
+					$tQry->bindValue(':customers_city'						, $order['customers_city']);
+					$tQry->bindValue(':customers_postcode'					, $order['customers_postcode']);
+					$tQry->bindValue(':customers_state'						, $order['customers_state']);
+					$tQry->bindValue(':customers_state_code'				, $order['customers_state_code']);
+					$tQry->bindValue(':customers_country'					, $order['customers_country']);
+					$tQry->bindValue(':customers_country_iso2'				, $order['customers_country_iso2']);
+					$tQry->bindValue(':customers_country_iso3'				, $order['customers_country_iso3']);
+					$tQry->bindValue(':customers_telephone'					, $order['customers_telephone']);
+					$tQry->bindValue(':customers_email_address'				, $order['customers_email_address']);
+					$tQry->bindInt  (':customers_address_format'				, $order['customers_address_format']);
+					$tQry->bindValue(':customers_ip_address'				, $order['customers_ip_address']);
+					$tQry->bindValue(':delivery_name'						, $order['delivery_name']);
+					$tQry->bindValue(':delivery_company'					, $order['delivery_company']);
+					$tQry->bindValue(':delivery_street_address'				, $order['delivery_street_address']);
+					$tQry->bindValue(':delivery_suburb'						, $order['delivery_suburb']);
+					$tQry->bindValue(':delivery_city'						, $order['delivery_city']);
+					$tQry->bindValue(':delivery_postcode'					, $order['delivery_postcode']);
+					$tQry->bindValue(':delivery_state'						, $order['delivery_state']);
+					$tQry->bindValue(':delivery_state_code'					, $order['delivery_state_code']);
+					$tQry->bindValue(':delivery_country'					, $order['delivery_country']);
+					$tQry->bindValue(':delivery_country_iso2'				, $order['delivery_country_iso2']);
+					$tQry->bindValue(':delivery_country_iso3'				, $order['delivery_country_iso3']);
+					$tQry->bindInt  (':delivery_address_format'				, $order['delivery_address_format']);
+					$tQry->bindValue(':billing_name'						, $order['billing_name']);
+					$tQry->bindValue(':billing_company'						, $order['billing_company']);
+					$tQry->bindValue(':billing_street_address'				, $order['billing_street_address']);
+					$tQry->bindValue(':billing_suburb'						, $order['billing_suburb']);
+					$tQry->bindValue(':billing_city'						, $order['billing_city']);
+					$tQry->bindValue(':billing_postcode'					, $order['billing_postcode']);
+					$tQry->bindValue(':billing_state'						, $order['billing_state']);
+					$tQry->bindValue(':billing_state_code'					, $order['billing_state_code']);
+					$tQry->bindValue(':billing_country'						, $order['billing_country']);
+					$tQry->bindValue(':billing_country_iso2'				, $order['billing_country_iso2']);
+					$tQry->bindValue(':billing_country_iso3'				, $order['billing_country_iso3']);
+					$tQry->bindInt  (':billing_address_format'				, $order['billing_address_format']);
+					$tQry->bindValue(':payment_method'						, $order['payment_method']);
+					$tQry->bindValue(':payment_module'						, $order['payment_info']);
+					$tQry->bindValue(':last_modified'						, $order['last_modified']);
+					$tQry->bindValue(':date_purchased'						, $order['date_purchased']);
+					$tQry->bindInt  (':orders_status'							, $order['orders_status']);
+					$tQry->bindValue(':orders_date_finished'				, $order['orders_date_finished']);
+					$tQry->bindValue(':currency'							, $order['currency']);
+					$tQry->bindValue(':currency_value'						, $order['currency_value']);
+			  	
+			  	$tQry->execute();
+					
 					$cnt++;
+
 			  }
 			  
 			  $sQry->freeResult();
@@ -2887,75 +3111,7 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// END LOAD ORDERS FROM SOURCE DB
 
-			// LOAD ORDERS TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($orders as $order){
-			
-				$tQry = $target_db->query('insert into :table_orders (orders_id, customers_id, customers_name, customers_company, customers_street_address, customers_suburb, customers_city, customers_postcode, customers_state, customers_state_code, customers_country, customers_country_iso2, customers_country_iso3, customers_telephone, customers_email_address, customers_address_format, customers_ip_address, delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state, delivery_state_code, delivery_country, delivery_country_iso2, delivery_country_iso3, delivery_address_format, billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state, billing_state_code, billing_country, billing_country_iso2, billing_country_iso3, billing_address_format, payment_method, payment_module, last_modified, date_purchased, orders_status, orders_date_finished, currency, currency_value) 
-				  	values (:orders_id, :customers_id, :customers_name, :customers_company, :customers_street_address, :customers_suburb, :customers_city, :customers_postcode, :customers_state, :customers_state_code, :customers_country, :customers_country_iso2, :customers_country_iso3, :customers_telephone, :customers_email_address, :customers_address_format, :customers_ip_address, :delivery_name, :delivery_company, :delivery_street_address, :delivery_suburb, :delivery_city, :delivery_postcode, :delivery_state, :delivery_state_code, :delivery_country, :delivery_country_iso2, :delivery_country_iso3, :delivery_address_format, :billing_name, :billing_company, :billing_street_address, :billing_suburb, :billing_city, :billing_postcode, :billing_state, :billing_state_code, :billing_country, :billing_country_iso2, :billing_country_iso3, :billing_address_format, :payment_method, :payment_module, :last_modified, :date_purchased, :orders_status, :orders_date_finished, :currency, :currency_value)');
-
-				$tQry->bindTable(':table_orders'						, TABLE_ORDERS);
-				$tQry->bindInt(':orders_id'         					, $order['orders_id']);
-				$tQry->bindInt(':customers_id' 							, $order['customers_id']);
-				$tQry->bindValue(':customers_name'   					, $order['customers_name']);
-				$tQry->bindValue(':customers_company'					, $order['customers_company']);
-				$tQry->bindValue(':customers_street_address'			, $order['customers_street_address']);
-				$tQry->bindValue(':customers_suburb'					, $order['customers_suburb']);
-				$tQry->bindValue(':customers_city'						, $order['customers_city']);
-				$tQry->bindValue(':customers_postcode'					, $order['customers_postcode']);
-				$tQry->bindValue(':customers_state'						, $order['customers_state']);
-				$tQry->bindValue(':customers_state_code'				, $order['customers_state_code']);
-				$tQry->bindValue(':customers_country'					, $order['customers_country']);
-				$tQry->bindValue(':customers_country_iso2'				, $order['customers_country_iso2']);
-				$tQry->bindValue(':customers_country_iso3'				, $order['customers_country_iso3']);
-				$tQry->bindValue(':customers_telephone'					, $order['customers_telephone']);
-				$tQry->bindValue(':customers_email_address'				, $order['customers_email_address']);
-				$tQry->bindInt(':customers_address_format'				, $order['customers_address_format']);
-				$tQry->bindValue(':customers_ip_address'				, $order['customers_ip_address']);
-				$tQry->bindValue(':delivery_name'						, $order['delivery_name']);
-				$tQry->bindValue(':delivery_company'					, $order['delivery_company']);
-				$tQry->bindValue(':delivery_street_address'				, $order['delivery_street_address']);
-				$tQry->bindValue(':delivery_suburb'						, $order['delivery_suburb']);
-				$tQry->bindValue(':delivery_city'						, $order['delivery_city']);
-				$tQry->bindValue(':delivery_postcode'					, $order['delivery_postcode']);
-				$tQry->bindValue(':delivery_state'						, $order['delivery_state']);
-				$tQry->bindValue(':delivery_state_code'					, $order['delivery_state_code']);
-				$tQry->bindValue(':delivery_country'					, $order['delivery_country']);
-				$tQry->bindValue(':delivery_country_iso2'				, $order['delivery_country_iso2']);
-				$tQry->bindValue(':delivery_country_iso3'				, $order['delivery_country_iso3']);
-				$tQry->bindInt(':delivery_address_format'				, $order['delivery_address_format']);
-				$tQry->bindValue(':billing_name'						, $order['billing_name']);
-				$tQry->bindValue(':billing_company'						, $order['billing_company']);
-				$tQry->bindValue(':billing_street_address'				, $order['billing_street_address']);
-				$tQry->bindValue(':billing_suburb'						, $order['billing_suburb']);
-				$tQry->bindValue(':billing_city'						, $order['billing_city']);
-				$tQry->bindValue(':billing_postcode'					, $order['billing_postcode']);
-				$tQry->bindValue(':billing_state'						, $order['billing_state']);
-				$tQry->bindValue(':billing_state_code'					, $order['billing_state_code']);
-				$tQry->bindValue(':billing_country'						, $order['billing_country']);
-				$tQry->bindValue(':billing_country_iso2'				, $order['billing_country_iso2']);
-				$tQry->bindValue(':billing_country_iso3'				, $order['billing_country_iso3']);
-				$tQry->bindInt(':billing_address_format'				, $order['billing_address_format']);
-				$tQry->bindValue(':payment_method'						, $order['payment_method']);
-				$tQry->bindValue(':payment_module'						, $order['payment_info']);
-				$tQry->bindValue(':last_modified'						, $order['last_modified']);
-				$tQry->bindValue(':date_purchased'						, $order['date_purchased']);
-				$tQry->bindInt(':orders_status'							, $order['orders_status']);
-				$tQry->bindValue(':orders_date_finished'				, $order['orders_date_finished']);
-				$tQry->bindValue(':currency'							, $order['currency']);
-				$tQry->bindValue(':currency_value'						, $order['currency_value']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-					$this->_msg = $target_db->getError();
-					return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD ORDERS TO TARGET DB
+			$order = null;
 			
 			// ##########
 
@@ -2963,15 +3119,17 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			$map  = $this->_data_mapping['orders_products'];
 			$orders_products = array();
+			$orders_products_metas = array();
 
 			$sQry = $source_db->query('SELECT o.orders_products_id, o.orders_id, o.products_id, o.products_model, o.products_name, o.products_price, o.products_tax, o.products_quantity FROM orders_products as o');
 			$sQry->execute();
 				
-			if ($sQry->numberOfRows() > 0) { 
+			$numrows= $sQry->numberOfRows();
+			if ($numrows > 0) { 
 				$cnt = 0;
 			  while ( $sQry->next() ) {
 			  	$orders_products_id = $sQry->value($map['orders_products_id']);
-			  	
+										  
 					$orders_product  = array(
 												'orders_products_id'            		=> $orders_products_id
 											,	'orders_id'         								=> $sQry->value($map['orders_id'])
@@ -2983,311 +3141,38 @@ class lC_LocalUpgrader extends lC_Upgrader{
 											,	'products_quantity'         				=> $sQry->value($map['products_quantity'])
 											,	'products_simple_options_meta_data' => null																						
 										  ); 
-												
-					$orders_products[$orders_products_id] = $orders_product;
+
+			  	$tQry = $target_db->query('insert into :table_orders_products (orders_products_id, orders_id, products_id, products_model, products_name, products_price, products_tax, products_quantity, products_simple_options_meta_data) 
+			  							   values (:orders_products_id, :orders_id, :products_id, :products_model, :products_name, :products_price, :products_tax, :products_quantity, :products_simple_options_meta_data)');
+					
+			  	$tQry->bindTable(':table_orders_products'							, TABLE_ORDERS_PRODUCTS);
+			  	$tQry->bindInt  (':orders_products_id'         				, $orders_product['orders_products_id']);
+			  	$tQry->bindInt  (':orders_id'        									, $orders_product['orders_id']);
+			  	$tQry->bindInt  (':products_id'        								, $orders_product['products_id']);
+			  	$tQry->bindValue(':products_model'        						, $orders_product['products_model']);
+			  	$tQry->bindValue(':products_name'       							, $orders_product['products_name']);
+			  	$tQry->bindValue(':products_price'        						, $orders_product['products_price']);
+			  	$tQry->bindValue(':products_tax'        							, $orders_product['products_tax']);
+			  	$tQry->bindValue(':products_quantity'        					, $orders_product['products_quantity']);
+			  	$tQry->bindValue(':products_simple_options_meta_data'	, $orders_product['products_simple_options_meta_data']);
+			  	
+			  	$tQry->execute();
+
+					$orders_products[] = $orders_products_id;
+
 					$cnt++;
+
 			  }
 			  
 			  $sQry->freeResult();
 			}
 
-			$orders_products_metas = array();
-			foreach($orders_products as $orders_product){
-
-				$sQry = $source_db->query('SELECT op.products_options , op.products_options_values, op.options_values_price, op.price_prefix, op.products_options_id, op.products_options_values_id FROM orders_products_attributes op where op.orders_products_id = '.$orders_product['orders_products_id']);
-				$sQry->execute();
-					
-				if ($sQry->numberOfRows() > 0) { 
-					$cnt = 0;
-				  while ( $sQry->next() ) {
-				  	
-						$orders_products_meta = array( 
-																		  'group_title' 		=> $sQry->value('products_options'),
-																		  'value_title' 		=> $sQry->value('products_options_values'),
-																		  'price_modifier'	=> $sQry->value('options_values_price'),
-																		  'group_id' 				=> $sQry->value('products_options_id'),
-																		  'value_id' 				=> $sQry->value('products_options_values_id')
-																		);
-													
-						$orders_products_metas[$orders_product['orders_products_id']][] = $orders_products_meta;
-						$cnt++;
-				  }
-				  
-				  $sQry->freeResult();
-				}
-			}			
-
-			foreach($orders_products_metas as $order_id => $meta){
-			
-				$orders_products[$order_id]['products_simple_options_meta_data'] = serialize($meta);
-
-			}
-			
 			// END LOAD ORDERS PRODUCTS FROM SOURCE DB
 			
-			print_r($orders_products);
-	
-			// LOAD ORDERS PRODUCTS TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($orders_products as $orders_product){
-			
-			  $tQry = $target_db->query('insert into :table_orders_products (orders_products_id, orders_id, products_id, products_model, products_name, products_price, products_tax, products_quantity, products_simple_options_meta_data) 
-			  						   values (:orders_products_id, :orders_id, :products_id, :products_model, :products_name, :products_price, :products_tax, :products_quantity, :products_simple_options_meta_data)');
-
-			  $tQry->bindTable(':table_orders_products'							, TABLE_ORDERS_PRODUCTS);
-			  $tQry->bindInt  (':orders_products_id'         				, $orders_product['orders_products_id']);
-			  $tQry->bindInt  (':orders_id'        									, $orders_product['orders_id']);
-			  $tQry->bindInt  (':products_id'        								, $orders_product['products_id']);
-			  $tQry->bindValue(':products_model'        						, $orders_product['products_model']);
-			  $tQry->bindValue(':products_name'       							, $orders_product['products_name']);
-			  $tQry->bindValue(':products_price'        						, $orders_product['products_price']);
-			  $tQry->bindValue(':products_tax'        							, $orders_product['products_tax']);
-			  $tQry->bindValue(':products_quantity'        					, $orders_product['products_quantity']);
-			  $tQry->bindValue(':products_simple_options_meta_data'	, $orders_product['products_simple_options_meta_data']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-			  	$this->_msg = $target_db->getError();
-			  	return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD ORDERS PRODUCTS TO TARGET DB
-			
-			// ##########
-
-			// LOAD ORDERS STATUS  FROM SOURCE DB
-			
-			$map  = $this->_data_mapping['orders_status'];
-			$orders_status = array();
-
-			$sQry = $source_db->query('select * from orders_status');
-			$sQry->execute();
-				
-			if ($sQry->numberOfRows() > 0) { 
-				$cnt = 0;
-			  while ( $sQry->next() ) {
-
-					$orders_stat  = array(
-															'orders_status_id'      		=> $sQry->value($map['orders_status_id'])
-														,	'language_id'         			=> $sQry->value($map['language_id'])
-														,	'orders_status_name'       	=> $sQry->value($map['orders_status_name'])
-														
-												); 
-												
-					$orders_status[] = $orders_stat;
-					$cnt++;
-			  }
-			  
-			  $sQry->freeResult();
-			}
-			
-			// END LOAD ORDERS STATUS FROM SOURCE DB
-
-			// LOAD ORDERS STATUS TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($orders_status as $orders_stat){
-			
-				$tQry = $target_db->query('insert into :table_orders_status (orders_status_id, language_id, orders_status_name) 
-				  					   values (:orders_status_id, :language_id, :orders_status_name)');
-
-				$tQry->bindTable(':table_orders_status'	, TABLE_ORDERS_STATUS);
-				$tQry->bindInt  (':orders_status_id'    , $orders_stat['orders_status_id']);
-				$tQry->bindInt  (':language_id'        	, $orders_stat['language_id']);
-				$tQry->bindValue(':orders_status_name'	, $orders_stat['orders_status_name']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-			  	$this->_msg = $target_db->getError();
-			  	return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD ORDERS STATUS TO TARGET DB
-			
-			// ##########
-
-			// LOAD ORDERS STATUS HISTORY FROM SOURCE DB
-			
-			$map  = $this->_data_mapping['orders_status_history'];
-			$orders_status_histories = array();
-
-			$sQry = $source_db->query('select * from orders_status_history');
-			$sQry->execute();
-				
-			if ($sQry->numberOfRows() > 0) { 
-				$cnt = 0;
-			  while ( $sQry->next() ) {
-					$orders_status_history  = array(
-															'orders_status_history_id'	=> $sQry->value($map['orders_status_history_id'])
-														,	'orders_id'         				=> $sQry->value($map['orders_id'])
-														,	'orders_status_id'       	 	=> $sQry->value($map['orders_status_id'])
-														,	'date_added'               	=> $sQry->value($map['date_added'])
-														,	'customer_notified'         => $sQry->value($map['customer_notified'])
-														,	'comments'           				=> $sQry->value($map['comments'])
-												); 
-												
-					$orders_status_histories[] = $orders_status_history;
-					$cnt++;
-			  }
-			  
-			  $sQry->freeResult();
-			}
-			
-			// END LOAD ORDERS STATUS HISTORY FROM SOURCE DB
-
-			// LOAD ORDERS STATUS HISTORY TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($orders_status_histories as $orders_status_history){
-			
-				$tQry = $target_db->query('insert into :table_orders_status_history ( orders_status_history_id, orders_id, orders_status_id, date_added, customer_notified, comments) 
-				  					   values (:orders_status_history_id, :orders_id, :orders_status_id, :date_added, :customer_notified, :comments)');
-
-				$tQry->bindTable(':table_orders_status_history'	, TABLE_ORDERS_STATUS_HISTORY);
-				$tQry->bindInt(':orders_status_history_id'    	, $orders_status_history['orders_status_history_id']);
-				$tQry->bindInt(':orders_id'        							, $orders_status_history['orders_id']);
-				$tQry->bindInt(':orders_status_id'        			, $orders_status_history['orders_status_id']);
-				$tQry->bindValue(':date_added'        					, $orders_status_history['date_added']);
-				$tQry->bindInt(':customer_notified'       			, $orders_status_history['customer_notified']);
-				$tQry->bindValue(':comments'       							, $orders_status_history['comments']);
-			  	
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-			  	$this->_msg = $target_db->getError();
-			  	return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD ORDERS STATUS HISTORY TO TARGET DB
-			
-			// ##########
-
-			// LOAD ORDERS TOTAL FROM SOURCE DB
-			
-			$map  = $this->_data_mapping['orders_total'];
-			$orders_total = array();
-
-			$sQry = $source_db->query('select * from orders_total');
-			$sQry->execute();
-				
-			if ($sQry->numberOfRows() > 0) { 
-				$cnt = 0;
-			  while ( $sQry->next() ) {
-					$order_total  = array(
-															'orders_total_id'	=> $sQry->value($map['orders_total_id'])
-														,	'orders_id'      	=> $sQry->value($map['orders_id'])
-														,	'title'       		=> $sQry->value($map['title'])
-														,	'text'       	 		=> $sQry->value($map['text'])
-														,	'value'       		=> $sQry->value($map['value'])
-														,	'class'       	 	=> $sQry->value($map['class'])
-														,	'sort_order'      => $sQry->value($map['sort_order'])
-														
-												); 
-												
-					$orders_total[] = $order_total;
-					$cnt++;
-			  }
-			  
-			  $sQry->freeResult();
-			}
-			
-			// END LOAD ORDERS TOTAL FROM SOURCE DB
-
-			// LOAD ORDERS TOTAL TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($orders_total as $order_total){
-			
-				$tQry = $target_db->query('insert into :table_orders_total (orders_total_id, orders_id, title, text, value, class, sort_order) 
-				  					   values (:orders_total_id, :orders_id, :title, :text, :value, :class, :sort_order)');
-
-				$tQry->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
-				$tQry->bindInt(':orders_total_id'    	, $order_total['orders_total_id']);
-				$tQry->bindInt(':orders_id'        		, $order_total['orders_id']);
-				$tQry->bindValue(':title'        			, $order_total['title']);
-				$tQry->bindValue(':text'        			, $order_total['text']);
-				$tQry->bindValue(':value'        			, $order_total['value']);
-				$tQry->bindValue(':class'        			, $order_total['class']);
-				$tQry->bindInt(':sort_order'        	, $order_total['sort_order']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-			  	$this->_msg = $target_db->getError();
-			  	return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD ORDERS TOTAL TO TARGET DB
-			
-			// ##########
-
-			// LOAD ORDERS PRODUCTS DOWNLOAD FROM SOURCE DB
-			
-			$map  = $this->_data_mapping['orders_products_download'];
-			$orders_products_download = array();
-
-			$sQry = $source_db->query('select * from orders_products_download');
-			$sQry->execute();
-				
-			if ($sQry->numberOfRows() > 0) { 
-				$cnt = 0;
-			  while ( $sQry->next() ) {
-				  $orders_product_download  = array(
-															'orders_products_download_id'	=> $sQry->value($map['orders_products_download_id'])
-														,	'orders_id'         					=> $sQry->value($map['orders_id'])
-														,	'orders_products_id'         	=> $sQry->value($map['orders_products_id'])
-														,	'orders_products_filename' 		=> $sQry->value($map['orders_products_filename'])
-														,	'download_maxdays'						=> $sQry->value($map['download_maxdays'])
-														,	'download_count'							=> $sQry->value($map['download_count'])
-														
-										  ); 
-												
-						$orders_products_download[] = $orders_product_download;
-					$cnt++;
-			  }
-			  
-			  $sQry->freeResult();
-			}
-			
-			// END LOAD PRODUCTS DOWNLOAD FROM SOURCE DB
-
-			// LOAD ORDERS PRODUCTS DOWNLOAD TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($orders_products_download as $orders_product_download){
-			
-				$tQry = $target_db->query('insert into :table_orders_products_download (orders_products_download_id, orders_id, orders_products_id, orders_products_filename, download_maxdays, download_count) 
-				  					   values (:orders_products_download_id, :orders_id, :orders_products_id, :orders_products_filename, :download_maxdays, :download_count)');
-
-				$tQry->bindTable(':table_orders_products_download', TABLE_ORDERS_PRODUCTS_DOWNLOAD);
-				$tQry->bindInt(':orders_products_download_id'			, $orders_product_download['orders_products_download_id']);
-				$tQry->bindInt(':orders_id'        								, $orders_product_download['orders_id']);
-				$tQry->bindInt(':orders_products_id'        			, $orders_product_download['orders_products_id']);
-				$tQry->bindValue(':orders_products_filename'			, $orders_product_download['orders_products_filename']);
-				$tQry->bindInt(':download_maxdays'       					, $orders_product_download['download_maxdays']);
-				$tQry->bindInt(':download_count'        					, $orders_product_download['download_count']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-			  	$this->_msg = $target_db->getError();
-			  	return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD ORDERS PRODUCTS DOWNLOAD TO TARGET DB
+			$orders_products = null;
+			$orders_product = null;
+			$orders_products_metas = null;
+			$orders_products_meta = null;
 			
 			// ##########
 
@@ -3386,14 +3271,30 @@ class lC_LocalUpgrader extends lC_Upgrader{
 				$cnt = 0;
 			  while ( $sQry->next() ) {
 					$group  = array(
-														'id'    			=> $sQry->value($map['id'])
-													,	'languages_id'=> $sQry->value($map['languages_id'])
-													,	'title'				=> $sQry->value($map['title'])
+														'id'    			=> $sQry->value('products_options_text_id')
+													,	'languages_id'=> $sQry->value('language_id')
+													,	'title'				=> $sQry->value('products_options_name')
 													,	'sort_order'	=> 0
 													,	'module'			=> "pulldown_menu"
 								       		); 
-								       		
-					$variants_groups[] = $group;
+								       					  
+				  $tQry = $target_db->query('insert into :table_products_variants_groups (id, languages_id, title, sort_order, module) 
+				  						   values (:id, :languages_id, :title, :sort_order, :module)');
+	
+				  $tQry->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
+				  
+				  $tQry->bindInt  (':id'         										, $group['id']);
+				  $tQry->bindInt  (':languages_id'         					, $group['languages_id']);
+				  $tQry->bindValue(':title'      										, $group['title']);
+				  $tQry->bindInt  (':sort_order'         						, $group['sort_order']);
+				  $tQry->bindValue(':module'      									, $group['module']);
+				  
+				  $tQry->execute();
+				  
+				  if ( $target_db->isError() ) {
+						$this->_msg = $target_db->getError();
+						return false;
+				  }
 					$cnt++;
 			  }
 			  
@@ -3401,33 +3302,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			}
 			
 			// END LOAD PRODUCTS VARIANTS GROUPS FROM SOURCE DB
-
-			// LOAD PRODUCTS VARIANTS GROUPS TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($variants_groups as $group){
-			  
-			  $tQry = $target_db->query('insert into :table_products_variants_groups (id, languages_id, title, sort_order, module) 
-			  						   values (:id, :languages_id, :title, :sort_order, :module)');
-
-			  $tQry->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
-			  
-			  $tQry->bindInt  (':id'         										, $group['id']);
-			  $tQry->bindInt  (':languages_id'         					, $group['languages_id']);
-			  $tQry->bindValue(':title'      										, $group['title']);
-			  $tQry->bindInt  (':sort_order'         						, $group['sort_order']);
-			  $tQry->bindValue(':module'      									, $group['module']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-					$this->_msg = $target_db->getError();
-					return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD PRODUCTS VARIANTS ROUPSS TO TARGET DB
 
 			// ##########
 
@@ -3444,12 +3318,27 @@ class lC_LocalUpgrader extends lC_Upgrader{
 					$group  = array(
 														'id'    											=> "NULL"
 													,	'languages_id'								=> $sQry->value($map['languages_id'])
-													,	'products_variants_groups_id'	=> $sQry->value($map['products_variants_groups_id'])
-													,	'title'												=> $sQry->value($map['title'])
+													,	'products_variants_groups_id'	=> $sQry->value('products_options_values_id')
+													,	'title'												=> $sQry->value('products_options_values_name')
 													,	'sort_order'									=> 0
 								       		); 
 								       		
-					$variants_groups[] = $group;
+				  $tQry = $target_db->query('insert into :table_products_variants_values ( languages_id, products_variants_groups_id, title, sort_order) 
+				  						   values ( :languages_id, :products_variants_groups_id, :title, :sort_order)');
+	
+				  $tQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+				  
+				  $tQry->bindInt  (':languages_id'         					, $group['languages_id']);
+				  $tQry->bindInt  (':products_variants_groups_id'   , $group['products_variants_groups_id']);
+				  $tQry->bindValue(':title'      										, $group['title']);
+				  $tQry->bindInt  (':sort_order'         						, $group['sort_order']);
+				  
+				  $tQry->execute();
+				  
+				  if ( $target_db->isError() ) {
+						$this->_msg = $target_db->getError();
+						return false;
+				  }
 					$cnt++;
 			  }
 			  
@@ -3457,33 +3346,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			}
 			
 			// END LOAD PRODUCTS VARIANTS VALUES FROM SOURCE DB
-			
-			// LOAD PRODUCTS VARIANTS VALUES TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($variants_groups as $group){
-			  
-			  $tQry = $target_db->query('insert into :table_products_variants_values ( languages_id, products_variants_groups_id, title, sort_order) 
-			  						   values ( :languages_id, :products_variants_groups_id, :title, :sort_order)');
-
-			  $tQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-			  
-//			  $tQry->bindInt  (':id'         										, $group['id']);
-			  $tQry->bindInt  (':languages_id'         					, $group['languages_id']);
-			  $tQry->bindInt  (':products_variants_groups_id'   , $group['products_variants_groups_id']);
-			  $tQry->bindValue(':title'      										, $group['title']);
-			  $tQry->bindInt  (':sort_order'         						, $group['sort_order']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-					$this->_msg = $target_db->getError();
-					return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD PRODUCTS VARIANTS VALUES TO TARGET DB
 
 			// ##########			
 
@@ -3499,24 +3361,27 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			if ($sQry->numberOfRows() > 0) { 
 				$cnt = 0;
 			  while ( $sQry->next() ) {
+			  
+			  	$options_id = $sQry->value('options_id') ; 
+			  	
 					$option  = array(
 														'id'    							=> "NULL"
-													,	'options_id'					=> $sQry->value($map_o['options_id'])
-													,	'products_id'					=> $sQry->value($map_o['products_id'])
-													,	'sort_order'					=> $sQry->value($map_o['sort_order'])
+													,	'options_id'					=> $options_id
+													,	'products_id'					=> $sQry->value('products_id')
+													,	'sort_order'					=> $sQry->value('sort_order')
 													,	'status'							=> 1
 								       		); 
 								       		
 					$simple_options[] = $option;
 
-					$prefix = ( $sQry->value($map_v['price_prefix']) == '+' ? 1 : -1 );
+					$prefix = ( $sQry->value('price_prefix') == '+' ? 1 : -1 );
 					
 					$value  = array(
 														'id'    							=> "NULL"
 													,	'customers_group_id'	=> 1
-													,	'values_id'						=> $sQry->value($map_v['values_id'])
-													,	'options_id'					=> $sQry->value($map_v['options_id'])
-													,	'price_modifier'			=> $sQry->value($map_v['price_modifier']) * $prefix
+													,	'values_id'						=> $sQry->value('options_values_id')
+													,	'options_id'					=> $options_id
+													,	'price_modifier'			=> $sQry->value('options_values_price') * $prefix
 								       		); 
 								       		
 					$simple_values[] = $value;
@@ -3651,9 +3516,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			$tQry = $target_db->query('truncate table '.TABLE_ADMINISTRATORS);
 			$tQry->execute();
-
-			$tQry = $target_db->query('truncate table '.TABLE_ADMINISTRATORS_GROUPS);
-			$tQry->execute();
 			
 			// END TRUNCATE ADMINS TABLE IN TARGET DB
 
@@ -3671,7 +3533,7 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			if ($sQry->numberOfRows() > 0) { 
 				$cnt = 0;
 			  while ( $sQry->next() ) {
-					$group  = array(
+					$admin  = array(
 														'id'    				 => $sQry->value($map['id'])
 													,	'user_name'      => $sQry->value($map['user_name'])
 													,	'user_password'  => $sQry->value($map['user_password'])
@@ -3681,7 +3543,27 @@ class lC_LocalUpgrader extends lC_Upgrader{
 													,	'access_goup_id' => $sQry->value($map['access_goup_id'])
 								       		); 
 								       		
-					$admins[] = $group;
+			  	$tQry = $target_db->query('insert into :table_admin (id, user_name, user_password, first_name, last_name, image, access_group_id) 
+			  							   						 values (:id, :user_name, :user_password, :first_name, :last_name, :image, :access_group_id  ) 
+			  							   ');
+					
+			  	$tQry->bindTable(':table_admin'	, TABLE_ADMINISTRATORS);
+			  	
+			  	$tQry->bindInt  (':id'         			, $admin['id']);
+			  	$tQry->bindValue(':user_name'       , $admin['user_name']);
+			  	$tQry->bindValue(':user_password'   , $admin['user_password']);
+			  	$tQry->bindValue(':first_name'      , $admin['first_name']);
+			  	$tQry->bindValue(':last_name'       , $admin['last_name']);
+			  	$tQry->bindValue(':image'       		, $admin['image']);
+			  	$tQry->bindInt  (':access_group_id'	, 1);
+			  	
+			  	$tQry->execute();
+			  	
+			  	if ( $target_db->isError() ) {
+						$this->_msg = $target_db->getError();
+						return false;
+			  	}
+
 					$cnt++;
 			  }
 			  
@@ -3690,40 +3572,10 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// END LOAD ADMINS FROM SOURCE DB
 
-			// LOAD ADMINS TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($admins as $admin){
-							  
-			  $tQry = $target_db->query('insert into :table_admin (id, user_name, user_password, first_name, last_name, image, access_group_id) 
-			  						   						 values (:id, :user_name, :user_password, :first_name, :last_name, :image, :access_group_id  ) 
-			  						   ');
-
-			  $tQry->bindTable(':table_admin'	, TABLE_ADMINISTRATORS);
-			  
-			  $tQry->bindInt  (':id'         			, $admin['id']);
-			  $tQry->bindValue(':user_name'       , $admin['user_name']);
-			  $tQry->bindValue(':user_password'   , $admin['user_password']);
-			  $tQry->bindValue(':first_name'      , $admin['first_name']);
-			  $tQry->bindValue(':last_name'       , $admin['last_name']);
-			  $tQry->bindValue(':image'       		, $admin['image']);
-			  $tQry->bindInt  (':access_group_id'	, $admin['access_group_id']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-					$this->_msg = $target_db->getError();
-					return false;
-			  }
-			  
-			  $iCnt++;
-			}
-
-			// END LOAD ADMINS TO TARGET DB
-
 			// LOAD ADMIN GROUPS FROM SOURCE DB
-			$map  = $this->_data_mapping['administrators_groups'];
-			$admins_groups = array();
+			
+			$tQry = $target_db->query('truncate table '.TABLE_ADMINISTRATORS_GROUPS);
+			$tQry->execute();
 
 			$sQry = $source_db->query('select * from admin_groups');
 			$sQry->execute();
@@ -3731,14 +3583,29 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			if ($sQry->numberOfRows() > 0) { 
 				$cnt = 0;
 			  while ( $sQry->next() ) {
-					$group  = array(
-														'id'    				=> $sQry->value($map['id'])
-													,	'name'          => $sQry->value($map['name'])
-													,	'date_added'		=> ""
-													, 'last_modified' => ""
+			  
+					$admin_group  = array(
+														'id'    				=> $sQry->value('admin_groups_id')
+													,	'name'          => $sQry->value('admin_groups_name')
+													,	'date_added'		=> "0000-00-00 00:00:00"
+													, 'last_modified' => "0000-00-00 00:00:00"
 								       		); 
-								       		
-					$admins_groups[] = $group;
+					
+			  	$tQry = $target_db->query('insert into :table_admins_groups (id, name, date_added, last_modified) 
+			  							   values (:id, :name, now(), now())');
+					
+			  	$tQry->bindTable(':table_admins_groups'	, TABLE_ADMINISTRATORS_GROUPS);
+			  	
+			  	$tQry->bindInt  (':id'         					, $admin_group['id']);
+			  	$tQry->bindValue(':name'         				, $admin_group['name']);
+			  	
+			  	$tQry->execute();
+			  	
+			  	if ( $target_db->isError() ) {
+						$this->_msg = $target_db->getError();
+						return false;
+			  	}
+			  	
 					$cnt++;
 			  }
 			  
@@ -3746,30 +3613,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			}
 			
 			// END LOAD ADMIN GROUPS FROM SOURCE DB
-
-			// LOAD ADMIN GROUPS TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($admins_groups as $admin_group){
-			  
-			  $tQry = $target_db->query('insert into :table_admins_groups (id, name, date_added, last_modified) 
-			  						   values (:id, :name, now(), now())');
-
-			  $tQry->bindTable(':table_admins_groups'	, TABLE_ADMINISTRATORS_GROUPS);
-			  
-			  $tQry->bindInt  (':id'         					, $admin_group['id']);
-			  $tQry->bindValue(':name'         				, $admin_group['name']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-					$this->_msg = $target_db->getError();
-					return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD ADMIN GROUPS TO TARGET DB
 
 			// END DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
 			$tQry = $target_db->query('SET GLOBAL sql_mode=""');
@@ -4182,8 +4025,10 @@ class lC_LocalUpgrader extends lC_Upgrader{
 
 			$sQry = $source_db->query('select * from configuration');
 			$sQry->execute();
+			
+			$numrows = $sQry->numberOfRows();
 				
-			if ($sQry->numberOfRows() > 0) { 
+			if ($numrows > 0) { 
 				$cnt = 0;
 			  while ( $sQry->next() ) {
 					$config  = array(
@@ -4199,8 +4044,26 @@ class lC_LocalUpgrader extends lC_Upgrader{
 													,	'use_function'							=> $sQry->value($map['use_function'])
 													,	'set_function'							=> $sQry->value($map['set_function'])
 								       		); 
-								       		
-					$configurations[] = $config;
+
+			  	$tQry = $target_db->query('insert into :table_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function ) 
+			  							   values (:configuration_id, :configuration_title, :configuration_key, :configuration_value, :configuration_description, :configuration_group_id, :sort_order, :last_modified, :date_added, :use_function, :set_function )');
+					
+			  	$tQry->bindTable(':table_configuration'		, TABLE_CONFIGURATION);
+			  	
+			  	$tQry->bindInt  (':configuration_id'         	, $config['configuration_id']);
+			  	$tQry->bindValue(':configuration_title'      	, $config['configuration_title']);
+			  	$tQry->bindValue(':configuration_key'      		, $config['configuration_key']);
+			  	$tQry->bindValue(':configuration_value'      	, $config['configuration_value']);
+			  	$tQry->bindValue(':configuration_description'	, $config['configuration_description']);
+			  	$tQry->bindInt  (':configuration_group_id'    , $config['configuration_group_id']);
+			  	$tQry->bindInt  (':sort_order'         				, $config['sort_order']);
+			  	$tQry->bindDate (':last_modified'         		, $config['last_modified']);
+			  	$tQry->bindDate (':date_added'         				, $config['date_added']);
+			  	$tQry->bindValue(':use_function'      				, $config['use_function']);
+			  	$tQry->bindValue(':set_function'      				, $config['set_function']);
+			  	
+			  	$tQry->execute();
+			  	
 					$cnt++;
 			  }
 			  
@@ -4208,39 +4071,6 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			}
 			
 			// END LOAD CONFIGURATION FROM SOURCE DB
-
-			// LOAD CONFIGURATION TO TARGET DB
-				
-			$iCnt = 0;
-			foreach($configurations as $config){
-			  
-			  $tQry = $target_db->query('insert into :table_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function ) 
-			  						   values (:configuration_id, :configuration_title, :configuration_key, :configuration_value, :configuration_description, :configuration_group_id, :sort_order, :last_modified, :date_added, :use_function, :set_function )');
-
-			  $tQry->bindTable(':table_configuration'		, TABLE_CONFIGURATION);
-			  
-			  $tQry->bindInt  (':configuration_id'         	, $config['configuration_id']);
-			  $tQry->bindValue(':configuration_title'      	, $config['configuration_title']);
-			  $tQry->bindValue(':configuration_key'      		, $config['configuration_key']);
-			  $tQry->bindValue(':configuration_value'      	, $config['configuration_value']);
-			  $tQry->bindValue(':configuration_description'	, $config['configuration_description']);
-			  $tQry->bindInt  (':configuration_group_id'    , $config['configuration_group_id']);
-			  $tQry->bindInt  (':sort_order'         				, $config['sort_order']);
-			  $tQry->bindDate (':last_modified'         		, $config['last_modified']);
-			  $tQry->bindDate (':date_added'         				, $config['date_added']);
-			  $tQry->bindValue(':use_function'      				, $config['use_function']);
-			  $tQry->bindValue(':set_function'      				, $config['set_function']);
-			  
-			  $tQry->execute();
-			  
-			  if ( $target_db->isError() ) {
-					$this->_msg = $target_db->getError();
-					return false;
-			  }
-			  $iCnt++;
-			}
-
-			// END LOAD CONFIGURATION TO TARGET DB
 
 			// LOAD CONFIGURATION GROUP FROM SOURCE DB
 			
@@ -4359,13 +4189,13 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// TRUNCATE COUPONS TABLE IN TARGET DB
 			
-			$tQry = $target_db->query('truncate table coupons');
+			$tQry = $target_db->query('truncate table '.DB_TABLE_PREFIX .'coupons');
 			$tQry->execute();
 
-			$tQry = $target_db->query('truncate table coupons_description');
+			$tQry = $target_db->query('truncate table '.DB_TABLE_PREFIX .'coupons_description');
 			$tQry->execute();
 
-			$tQry = $target_db->query('truncate table coupons_redeemed');
+			$tQry = $target_db->query('truncate table '.DB_TABLE_PREFIX .'coupons_redeemed');
 			$tQry->execute();
 			
 			// END TRUNCATE COUPONS TABLE IN TARGET DB
@@ -4416,8 +4246,16 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			
 			// LOAD COUPONS TO TARGET DB
 				
+			$coupon_types = array(
+				'F' => 'R'
+			, 'P' => 'T'
+			, 'S' => 'S'
+			);
+			
 			$iCnt = 0;
 			foreach($coupons as $coupon){
+			
+			  if($coupon['type'] == 'G') continue;
 			  
 			  $tQry = $target_db->query('insert into :table_coupons ( coupons_id, type, mode, code, reward, purchase_over, start_date, expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories,  restrict_to_customers, status, date_created, date_modified, sale_exclude, notes ) 
 			  						   values (:coupons_id, :type, :mode, :code, :reward, :purchase_over, :start_date, :expires_date, :uses_per_coupon, :uses_per_customer, :restrict_to_products, :restrict_to_categories,  :restrict_to_customers, :status, :date_created, :date_modified, :sale_exclude, :notes )');
@@ -4425,7 +4263,7 @@ class lC_LocalUpgrader extends lC_Upgrader{
 			  $tQry->bindTable(':table_coupons'	, DB_TABLE_PREFIX . 'coupons');
 			  
 			  $tQry->bindInt  (':coupons_id'         		, $coupon['coupons_id']);
-			  $tQry->bindValue(':type'      						, $coupon['type']);
+			  $tQry->bindValue(':type'      						, $coupon_types[$coupon['type']]);
 			  $tQry->bindValue(':mode'      						, $coupon['mode']);
 			  $tQry->bindValue(':code'      						, $coupon['code']);
 			  $tQry->bindFloat(':reward'      					, $coupon['reward']);

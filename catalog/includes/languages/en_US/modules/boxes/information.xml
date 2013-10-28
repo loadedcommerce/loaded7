@@ -22,6 +22,16 @@
       <group>modules-boxes</group>
     </definition>
     <definition>
+      <key>box_information_cookie</key>
+      <value><![CDATA[Cookie Usage]]></value>
+      <group>modules-boxes</group>
+    </definition>
+    <definition>
+      <key>box_information_ssl_check</key>
+      <value><![CDATA[Security Check]]></value>
+      <group>modules-boxes</group>
+    </definition>
+    <definition>
       <key>box_information_contact</key>
       <value><![CDATA[Contact Us]]></value>
       <group>modules-boxes</group>

@@ -173,14 +173,34 @@
 
     if ($no_tooltip) {
       $html = '<span class="upsell-spot">' . 
-              '  <a href="javascript:void(0);" onclick="showUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
-              '    <small class="tag red-bg" title="' . $lC_Language->get('text_cick_for_info') . '">' . $lC_Language->get('text_pro') . '</small>' . 
+              '  <a href="javascript:void(0);" onclick="showProUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
+              '    <small class="tag red-bg" title="' . $lC_Language->get('text_click_for_info') . '">' . $lC_Language->get('text_pro') . '</small>' . 
               '  </a>' .
               '</span>';
     } else {
       $html = '<span class="upsell-spot">' . 
-              '  <a href="javascript:void(0);" onclick="showUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
-              '    <small class="tag red-bg with-tooltip" title="' . $lC_Language->get('text_cick_for_info') . '" data-tooltip-options=\'{"classes":["anthracite-gradient glossy small no-padding"],"position":"right"}\'>' . $lC_Language->get('text_pro') . '</small>' . 
+              '  <a href="javascript:void(0);" onclick="showProUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
+              '    <small class="tag red-bg with-tooltip" title="' . $lC_Language->get('text_click_for_info') . '" data-tooltip-options=\'{"classes":["anthracite-gradient glossy small no-padding"],"position":"right"}\'>' . $lC_Language->get('text_pro') . '</small>' . 
+              '  </a>' .
+              '</span>';
+    }
+    
+    return $html;
+  }
+  
+  function lc_go_b2b($no_tooltip = false) {
+    global $lC_Language;
+
+    if ($no_tooltip) {
+      $html = '<span class="upsell-spot">' . 
+              '  <a href="javascript:void(0);" onclick="showB2BUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
+              '    <small class="tag orange-bg" title="' . $lC_Language->get('text_click_for_info') . '">' . $lC_Language->get('text_b2b') . '</small>' . 
+              '  </a>' .
+              '</span>';
+    } else {
+      $html = '<span class="upsell-spot">' . 
+              '  <a href="javascript:void(0);" onclick="showB2BUpsellSpot(this); return false;" style="cursor:pointer !important;">' .
+              '    <small class="tag orange-bg with-tooltip" title="' . $lC_Language->get('text_click_for_info') . '" data-tooltip-options=\'{"classes":["anthracite-gradient glossy small no-padding"],"position":"right"}\'>' . $lC_Language->get('text_b2b') . '</small>' . 
               '  </a>' .
               '</span>';
     }

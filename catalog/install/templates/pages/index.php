@@ -208,31 +208,39 @@ TD { height:19px; }
               <?php if (!$writeable) $ok = FALSE; ?>
             </tr>                           
           </table>
-          <p class="message icon-warning margin-top margin-right" style="color:#c09853; background:#fcf8e3; border-color:#fbeed5;">   
+          <!-- p class="message icon-warning margin-top margin-right" style="color:#c09853; background:#fcf8e3; border-color:#fbeed5;">   
             <span class="stripes animated"></span>
-            <?php echo sprintf($lC_Language->get('text_under_development'), $version); ?>
-          </p>   
+            <?php //echo sprintf($lC_Language->get('text_under_development'), $version); ?>
+          </p -->   
         </div>
       </div>
-      <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
-        <?php
-        if ($ok) {
-          ?>
+      <?php
+      if ($ok) {
+        ?>
+        <!-- div id="buttonContainer" class="large-margin-top margin-left" style="float:left">
+          <a href="javascript:void(0);" class="button" onclick="$('#mBox').hide(); $('#pBox').hide(); $('#upgrade_method').val('S'); window.location.href = 'upgrade.php?step=1'">
+            <span class="button-icon orange-gradient glossy"><span class="icon-cloud-upload"></span></span>
+            <?php //echo addslashes($lC_Language->get('image_button_upgrade')); ?>
+          </a>          
+        </div -->
+        <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
           <a href="install.php" class="button">
-            <span class="button-icon blue-gradient glossy"><span class="icon-download"></span></span>
+            <span class="button-icon blue-gradient glossy"><span class="icon-right-round"></span></span>
             <?php echo addslashes($lC_Language->get('image_button_install')); ?>
           </a>
-          <?php          
-        } else {
-          ?>
+        </div>
+        <?php          
+      } else {
+        ?>
+        <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
           <a href="index.php" class="button">
             <span class="button-icon red-gradient glossy"><span class="icon-refresh"></span></span>
             <?php echo addslashes($lC_Language->get('image_button_retry')); ?>
           </a>
-          <?php 
-        }
-        ?>
-      </div>      
+        </div>
+        <?php 
+      }
+      ?>
     </div>    
   </fieldset>  
 </form>

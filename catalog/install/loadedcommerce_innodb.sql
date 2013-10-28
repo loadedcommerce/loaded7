@@ -514,6 +514,8 @@ CREATE TABLE lc_orders_status_history (
   date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   customer_notified int(11) DEFAULT NULL,
   comments text,
+  administrators_id int(11) DEFAULT NULL,
+  append_comment int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (orders_status_history_id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
@@ -581,6 +583,7 @@ CREATE TABLE lc_products (
   manufacturers_id int(11) DEFAULT NULL,
   products_ordered int(11) NOT NULL DEFAULT '0',
   has_children int(11) DEFAULT NULL,
+  is_subproduct TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (products_id),
   KEY idx_products_date_added (products_date_added)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -906,9 +909,79 @@ CREATE TABLE lc_zones_to_geo_zones (
   PRIMARY KEY (association_id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-INSERT INTO lc_administrators_groups (id, `name`, date_added, last_modified) VALUES(1, 'Top Administrator', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-
 INSERT INTO lc_administrators_access (id, administrators_id, administrators_groups_id, module, level) VALUES(1, 1, 1, '*', 99);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'tools-error_log', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'tools-cache', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'tools-backup', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'tools-administrators_log', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-zone_groups', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-templates_modules_layout', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-templates_modules', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-templates', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-tax_classes', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-modules', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-languages', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-definitions', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-currencies', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-credit_cards', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-countries', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-configuration', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'settings-administrators', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'sales-orders', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'reports-whos_online', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'reports-statistics', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'products-specials', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'products-reviews', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'products-products_expected', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'products-products', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'products-product_variants', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'products-manufacturers', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'products-categories', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'marketing-newsletters', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'customers-customers', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'marketing-banner_manager', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'tools-updates', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'tools-server_info', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'tools-images', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 2, 'tools-file_manager', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-templates_modules', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-templates', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-tax_classes', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-modules', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-languages', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-definitions', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-currencies', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-credit_cards', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-countries', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-configuration', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-administrators', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'sales-orders', 3);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'reports-whos_online', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'reports-statistics', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'products-specials', 3);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'products-reviews', 3);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'products-products_expected', 3);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'products-products', 3);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'products-product_variants', 3);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'products-manufacturers', 3);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'products-categories', 3);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'marketing-newsletters', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'marketing-banner_manager', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'customers-customers', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'tools-updates', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'tools-server_info', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'tools-images', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'tools-file_manager', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'tools-error_log', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'tools-cache', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'tools-backup', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'tools-administrators_log', 4);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-zone_groups', 0);
+INSERT INTO lc_administrators_access (administrators_id, administrators_groups_id, module, level) VALUES(0, 3, 'settings-templates_modules_layout', 0);
+
+INSERT INTO lc_administrators_groups (id, `name`, date_added, last_modified) VALUES(1, 'Top Administrator', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO lc_administrators_groups (id, `name`, date_added, last_modified) VALUES(2, 'Customer Service', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO lc_administrators_groups (id, `name`, date_added, last_modified) VALUES(3, 'Support', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(1, 'Store Name', 'STORE_NAME', 'Loaded Comerce Demo Store', 'The name of my store', 1, 1, '2012-09-19 11:38:17', '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(2, 'Store Owner', 'STORE_OWNER', 'Store Owner', 'The name of my store owner', 1, 2, '2011-03-04 11:41:43', '2009-11-26 15:58:32', NULL, NULL);
@@ -951,7 +1024,7 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(39, 'Default Language', 'DEFAULT_LANGUAGE', 'en_US', 'Default Language', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(40, 'Default Order Status For New Orders', 'DEFAULT_ORDERS_STATUS_ID', '1', 'When a new order is created, this order status will be assigned to it.', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(41, 'Default Image Group', 'DEFAULT_IMAGE_GROUP_ID', '2', 'Default image group.', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(42, 'Default Template', 'DEFAULT_TEMPLATE', 'default', 'Default Template', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(42, 'Default Template', 'DEFAULT_TEMPLATE', 'core', 'Default Template', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(43, 'Country of Origin', 'SHIPPING_ORIGIN_COUNTRY', '223', 'Select the country of origin to be used in shipping quotes.', 7, 1, '2011-02-09 19:03:59', '2009-11-26 15:58:32', 'lC_Address::getCountryName', 'lc_cfg_set_countries_pulldown_menu(class=\"select\",');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(44, 'Postal Code', 'SHIPPING_ORIGIN_ZIP', 'NONE', 'Enter the Postal Code (ZIP) of the Store to be used in shipping quotes.', 7, 2, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(45, 'Enter the Maximum Package Weight you will ship', 'SHIPPING_MAX_WEIGHT', '50', 'Carriers have a max weight limit for a single package. This is a common one for all.', 7, 3, NULL, '2009-11-26 15:58:32', NULL, NULL);
@@ -967,7 +1040,7 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(55, 'Display Product Weight', 'PRODUCT_LIST_WEIGHT', '0', 'Do you want to display the Product Weight?', 8, 7, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(56, 'Display Buy Now column', 'PRODUCT_LIST_BUY_NOW', '4', 'Do you want to display the Buy Now column?', 8, 8, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(57, 'Display Category/Manufacturer Filter (0=disable; 1=enable)', 'PRODUCT_LIST_FILTER', '1', 'Do you want to display the Category/Manufacturer Filter?', 8, 9, NULL, '2009-11-26 15:58:32', NULL, NULL);
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(58, 'Location of Prev/Next Navigation Bar (1-top, 2-bottom, 3-both)', 'PREV_NEXT_BAR_LOCATION', '3', 'Sets the location of the Prev/Next Navigation Bar (1-top, 2-bottom, 3-both)', 8, 10, '2011-03-08 17:14:58', '2009-11-26 15:58:32', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(58, 'Location of Prev/Next Navigation Bar (1-top, 2-bottom, 3-both)', 'PREV_NEXT_BAR_LOCATION', '2', 'Sets the location of the Prev/Next Navigation Bar (1-top, 2-bottom, 3-both)', 8, 10, '2011-03-08 17:14:58', '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(59, 'Check stock level', 'STOCK_CHECK', '1', 'Check to see if sufficent stock is available', 9, 1, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(60, 'Subtract stock', 'STOCK_LIMITED', '1', 'Subtract product in stock by product orders', 9, 2, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(61, 'Allow Checkout', 'STOCK_ALLOW_CHECKOUT', '1', 'Allow customer to checkout even if there is insufficient stock', 9, 3, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
@@ -1025,15 +1098,15 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(113, 'Maximum searches to show', 'SERVICE_RECENTLY_VISITED_MAX_SEARCHES', '3', 'Maximum number of recent searches to display', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(114, 'Service Modules', 'MODULE_SERVICES_INSTALLED', 'output_compression;session;language;breadcrumb;currencies;core;whos_online;simple_counter;category_path;recently_visited;specials;reviews;banner;coupons', 'Installed services modules', 6, 0, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(115, 'Display Sub-Total', 'MODULE_ORDER_TOTAL_SUBTOTAL_STATUS', 'true', 'Do you want to display the order sub-total cost?', 6, 1, NULL, '2009-11-26 15:58:32', NULL, 'lc_cfg_set_boolean_value(array(''true'', ''false''))');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(116, 'Sort Order', 'MODULE_ORDER_TOTAL_SUBTOTAL_SORT_ORDER', '1', 'Sort order of display.', 6, 2, NULL, '2009-11-26 15:58:32', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(116, 'Sort Order', 'MODULE_ORDER_TOTAL_SUBTOTAL_SORT_ORDER', '100', 'Sort order of display.', 6, 2, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(117, 'Display Shipping', 'MODULE_ORDER_TOTAL_SHIPPING_STATUS', 'true', 'Do you want to display the order shipping cost?', 6, 1, NULL, '2009-11-26 15:58:32', NULL, 'lc_cfg_set_boolean_value(array(''true'', ''false''))');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(118, 'Sort Order', 'MODULE_ORDER_TOTAL_SHIPPING_SORT_ORDER', '2', 'Sort order of display.', 6, 2, NULL, '2009-11-26 15:58:32', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(118, 'Sort Order', 'MODULE_ORDER_TOTAL_SHIPPING_SORT_ORDER', '200', 'Sort order of display.', 6, 2, NULL, '2009-11-26 15:58:32', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(119, 'Max Pages Display on mainpage', 'MAX_DISPLAY_CMS_ARTICLES', '5', 'Maximum number of Pages listings to display on mainpage', 3, 10, '2009-12-20 15:15:34', '2009-12-17 03:06:52', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(120, 'Max Page Links to Display', 'BOX_CMS_LIST_SIZE', '10', 'Maximum number of Page Links to display in the infobox', 3, 11, '2009-12-17 03:16:14', '2009-12-17 03:16:14', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(121, 'Display Total', 'MODULE_ORDER_TOTAL_TOTAL_STATUS', 'true', 'Do you want to display the total order value?', 6, 1, NULL, '2009-12-17 19:00:33', NULL, 'lc_cfg_set_boolean_value(array(''true'', ''false''))');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(122, 'Sort Order', 'MODULE_ORDER_TOTAL_TOTAL_SORT_ORDER', '4', 'Sort order of display.', 6, 2, NULL, '2009-12-17 19:00:33', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(122, 'Sort Order', 'MODULE_ORDER_TOTAL_TOTAL_SORT_ORDER', '600', 'Sort order of display.', 6, 2, NULL, '2009-12-17 19:00:33', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(123, 'Display Tax', 'MODULE_ORDER_TOTAL_TAX_STATUS', 'true', 'Do you want to display the order tax value?', 6, 1, NULL, '2009-12-17 19:01:01', NULL, 'lc_cfg_set_boolean_value(array(''true'', ''false''))');
-INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(124, 'Sort Order', 'MODULE_ORDER_TOTAL_TAX_SORT_ORDER', '3', 'Sort order of display.', 6, 2, NULL, '2009-12-17 19:01:01', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(124, 'Sort Order', 'MODULE_ORDER_TOTAL_TAX_SORT_ORDER', '500', 'Sort order of display.', 6, 2, NULL, '2009-12-17 19:01:01', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(125, 'Tag Cloud Maiximum Listings', 'TAG_CLOUD_MAX_LIST', '6', 'The number of links to display in the tag cloud box.', 3, 99, '2012-09-21 18:33:12', '2009-12-20 03:41:27', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(126, 'Tag Cloud Font Size Setting', 'TAG_CLOUD_FONT_SIZE', '10,24', 'The low and high number of the font size to use for the link display in the tag cloud box, sperated by a comma.', 3, 98, NULL, '2009-12-20 03:41:27', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(127, 'Pricing Decimal Places', 'DECIMAL_PLACES', '2', 'Pad the pricing values this amount of decimal places', 1, 20, '2009-12-09 18:31:29', '2009-11-26 15:58:32', NULL, NULL);
@@ -6026,6 +6099,27 @@ INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (239,'MS','M
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (239,'MV','Masvingo');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (239,'MW','Mashonaland West');
 
+INSERT INTO lc_banners (banners_id, banners_title, banners_url, banners_target, banners_image, banners_group, banners_html_text, expires_impressions, expires_date, date_scheduled, date_added, date_status_change, status) VALUES(1, 'Mainpage Banner', '', 1, 'promo_cat_banner.jpg', 'mainpage', '', 0, NULL, NULL, '2012-12-19 19:18:20', NULL, 1);
+
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(1, '', 0, 10, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(2, '', 0, 20, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(3, 'returns.jpg', 2, 10, 'page', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(4, 'privacy.jpg', 2, 20, 'page', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(5, 'terms.png', 2, 30, 'page', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
+
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(1, 1, 'Products', 'Products', 'Products Blurb', '<p>Products Content</p>', 'products, tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(2, 1, 'Information', 'Information', 'Information Blurb', '<p>Information Content</p>', 'information, tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(3, 1, 'Shipping & Returns', 'Shipping & Returns', 'Shipping & Returns Blurb', '<p>Shipping & Returns Content</p>', 'shipping, returns, tags'); 
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(4, 1, 'Privacy Policy', 'Privacy Policy', 'Privacy Policy Blurb', '<p>Privacy Policy Content</p>', 'privacy, policy, tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(5, 1, 'Terms & Conditions', 'Terms & Conditions', 'Terms & Conditions Blurb', '<p>Terms & Conditions Content</p>', 'terms, conditions, tags');
+
+INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Enable AddOn', 'ADDONS_PAYMENT_CASH_ON_DELIVERY_STATUS', '1', 'Do you want to enable this addon?', 6, 0, NULL, '2013-08-28 10:46:22', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Payment Zone', 'ADDONS_PAYMENT_CASH_ON_DELIVERY_ZONE', '0', 'If a zone is selected, only enable this payment method for that zone.', 6, 0, NULL, '2013-08-28 10:46:22', 'lc_cfg_use_get_zone_class_title', 'lc_cfg_set_zone_classes_pull_down_menu');
+INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Order Status', 'ADDONS_PAYMENT_CASH_ON_DELIVERY_ORDER_STATUS_ID', '1', 'Set the status of orders made with this payment module to this value', 6, 0, NULL, '2013-08-28 10:46:22', 'lc_cfg_use_get_order_status_title', 'lc_cfg_set_order_statuses_pull_down_menu');
+INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Sort Order', 'ADDONS_PAYMENT_CASH_ON_DELIVERY_SORT_ORDER', '0', 'Sort order of display. Lowest is displayed first.', 6, 0, NULL, '2013-08-28 10:46:22', NULL, NULL);
+INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Enable AddOn', 'ADDONS_SHIPPING_FREE_SHIPPING_STATUS', '1', 'Do you want to enable this addon?', 6, 0, NULL, '2013-08-27 11:15:18', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
+INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Order Threshold', 'ADDONS_SHIPPING_FREE_SHIPPING_MINIMUM_ORDER', '0.00', 'The minimum order amount to apply free shipping to.', 6, 0, NULL, '2013-08-27 11:15:18', NULL, NULL);
+INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Shipping Zone', 'ADDONS_SHIPPING_FREE_SHIPPING_ZONE', '0', 'If a zone is selected, only enable this shipping method for that zone.', 6, 0, NULL, '2013-08-27 11:15:18', 'lc_cfg_use_get_zone_class_title', 'lc_cfg_set_zone_classes_pull_down_menu');
 
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(1, 'American Express', '/^(34|37)\\d{13}$/', '1', 0);
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(2, 'Diners Club', '/^(30|36|38)\\d{12}$/', '0', 0);
@@ -6045,7 +6139,7 @@ INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right
 INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(2, 'Euro', 'EUR', '€', '', '2', 1.20760000, '2012-12-07 09:25:45');
 INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(3, 'British Pounds', 'GBP', '£', '', '2', 1.75870001, '2012-12-07 09:25:45');
 
-INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(1, 1, 'Retail');
+INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(1, 1, 'Registered');
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(2, 1, 'Wholesale');
 
 INSERT INTO lc_languages (languages_id, `name`, code, locale, `charset`, date_format_short, date_format_long, time_format, text_direction, currencies_id, numeric_separator_decimal, numeric_separator_thousands, parent_id, sort_order) VALUES(1, 'English', 'en_US', 'en_US.UTF-8,en_US,english', 'utf-8', '%m/%d/%Y', '%A %B %d, %Y at %H:%M', '%H:%M:%S', 'ltr', 1, '.', ',', 0, 10);
@@ -6059,6 +6153,12 @@ INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(2, 1, 'Cancel');
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(3, 1, 'Approve');
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(4, 1, 'Inquiry');
+
+INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (1, 1, 1, 1, 'cPath=1', 'products');
+INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (2, 2, 1, 1, 'cPath=2', 'information');
+INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (3, 3, 1, 1, 'cPath=2_3', 'shipping-returns');
+INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (4, 4, 1, 1, 'cPath=2_4', 'privacy-policy');
+INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (5, 5, 1, 1, 'cpath=2_5', 'terms-conditions');
 
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(1, 1, 'Originals', 'originals', 0, 0, 0);
 INSERT INTO lc_products_images_groups (id, language_id, title, code, size_width, size_height, force_size) VALUES(2, 1, 'Thumbnails', 'thumbnails', 200, 240, 0);
@@ -6076,13 +6176,48 @@ INSERT INTO lc_tax_class VALUES (1, 'Taxable Goods', 'The following types of pro
 
 # USA/Florida
 INSERT INTO lc_tax_rates VALUES (1, 1, 1, 1, 7.0, 'FL TAX 7.0%', now(), now());
-INSERT INTO lc_geo_zones (geo_zone_id,geo_zone_name,geo_zone_description,date_added) VALUES (1,"Florida","Florida local sales tax zone",now());
-INSERT INTO lc_zones_to_geo_zones (association_id,zone_country_id,zone_id,geo_zone_id,date_added) VALUES (1,223,4031,1,now());
+INSERT INTO lc_geo_zones (geo_zone_id, geo_zone_name, geo_zone_description, date_added) VALUES (1, "Florida", "Florida local sales tax zone", now());
+INSERT INTO lc_zones_to_geo_zones (association_id, zone_country_id, zone_id, geo_zone_id, date_added) VALUES (1, 223, 4031, 1, now());
 
-INSERT INTO lc_templates (id, title, code, author_name, author_www, markup_version, css_based, `medium`) VALUES(1, 'Default Responsive Template', 'default', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'HTML 5.0', 1, 'Screen');
+INSERT INTO lc_templates (id, title, code, author_name, author_www, markup_version, css_based, `medium`) VALUES(1, 'Loaded Commerce Bootstrap 3.0 Core Template', 'core', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'HTML 5.0', 1, 'Screen');
+
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(1, 'Days to Ship', 'shipping_availability', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(2, 'Manufacturer', 'manufacturers', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(3, 'Date Available', 'date_available', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(4, 'Free Shipping', 'free', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'shipping|Free_Shipping');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(5, 'Cash On Delivery', 'cod', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'payment|Cash_On_Delivery');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(6, 'Categories', 'categories', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(7, 'Best Sellers', 'best_sellers', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(8, 'Currencies', 'currencies', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(9, 'Information', 'information', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(10, 'Languages', 'languages', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(11, 'Manufacturer Info', 'manufacturer_info', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(12, 'Manufacturers', 'manufacturers', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(13, 'New Products', 'whats_new', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(14, 'Order History', 'order_history', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(15, 'Ordering Steps', 'checkout_trail', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(16, 'Product Notifications', 'product_notifications', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(17, 'Reviews', 'reviews', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(18, 'Search', 'search', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(19, 'Shopping Cart', 'shopping_cart', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(20, 'Specials', 'specials', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(21, 'Tell a Friend', 'tell_a_friend', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(22, 'Templates', 'templates', 'LoadedCommerce', 'http://www.loadedcommerce.com', 'boxes');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(23, 'Banner on Mainpage', 'mainpage_banner', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(24, 'New Products', 'new_products', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(25, 'Your Recent History', 'recently_visited', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(26, 'Customers Who Purchased This Product Also Purchased', 'also_purchased_products', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(27, 'Content on Mainpage', 'mainpage_content', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(28, 'Upcoming Products', 'upcoming_products', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
+
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(23, 1, 'index/index', 'after', 10, 1);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(6, 1, '*', 'left', 10, 0);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(12, 1, '*', 'left', 20, 0);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(24, 1, 'index/index', 'after', 20, 1);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(26, 1, 'products/info', 'after', 30, 1);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(25, 1, 'products/info', 'after', 40, 1);
 
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(1, 'g', 1, 'Gram(s)');
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(2, 'kg', 1, 'Kilogram(s)');
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(3, 'oz', 1, 'Ounce(s)');
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(4, 'lb', 1, 'Pound(s)');
-

@@ -47,5 +47,5 @@ error_configuration_file_not_writeable = The webserver does not seem to be able 
 error_configuration_file_alternate_method = Alternatively you can copy the configuration parameters to the configuration file by hand.  This process will attempt to update the configuration file automatically at the end of the installation.
 error_javascript_disabled = Javascript is required for the installation procedure and administration of this installation. Please enable it on your browser and <a href="index.php">re-run the installation procedure</a>.
 
-image_button_install = Install
-image_button_upgrade = Upgrade
+image_button_install = New Install
+image_button_upgrade = Upgrade from 6.x Version

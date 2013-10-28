@@ -27,10 +27,12 @@
 
       if ($lC_Services->isStarted('reviews') === false) {
         lc_redirect(lc_href_link(FILENAME_DEFAULT));
-      }
+      }    
 
       $this->_page_title = $lC_Language->get('reviews_heading');
-      $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
+      $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'core';
+      
+      $this->addJavascriptPhpFilename('templates/' . $template_code . '/javascript/form_check.js.php');
 
       if ($lC_Services->isStarted('breadcrumb')) {
         $lC_Breadcrumb->add($lC_Language->get('breadcrumb_reviews'), lc_href_link(FILENAME_PRODUCTS, $this->_module));
@@ -41,7 +43,7 @@
           $lC_Product = new lC_Product(lC_Reviews::getProductID($_GET[$this->_module]));
 
           $this->_page_title = $lC_Product->getTitle();
-
+          
           $this->addOGPTags('type', 'product');
           $this->addOGPTags('title', $lC_Product->getTitle() . ' ' . $lC_Product->getModel());
           $this->addOGPTags('description', $lC_Currencies->displayPrice($lC_Product->getPriceBreak(), $lC_Product->getTaxClassID()) .  ' - ' . $lC_Product->getTitle() . ' ' . lc_clean_html($lC_Product->getDescription()));

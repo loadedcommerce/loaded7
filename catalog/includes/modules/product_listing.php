@@ -63,7 +63,7 @@ if ($Qlisting->numberOfRows() > 0) {
           break;
 
         case 'PRODUCT_LIST_PRICE':
-          $output .= '<div class="product-listing-module-price">' . $lC_Product->getPriceFormated() . '</div>' . "\n";
+          $output .= '<div class="product-listing-module-price">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n";
           break;
 
         case 'PRODUCT_LIST_QUANTITY':

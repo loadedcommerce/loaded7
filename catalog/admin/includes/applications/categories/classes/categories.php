@@ -70,6 +70,50 @@ class lC_Categories_Admin {
     return $result;
   }
  /*
+  * Returns all child categories
+  *
+  * @param int $parent_id The category parent id
+  * @access public
+  * @return array
+  */
+  public static function getAllChildren($parent_id) {
+    global $lC_Database;
+    
+    $Qchildren = $lC_Database->query('select categories_id from :table_categories where parent_id = :parent_id');
+    $Qchildren->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qchildren->bindInt(':parent_id', $parent_id);
+    $Qchildren->execute();
+      
+    $children = array();    
+    if ($Qchildren->numberOfRows !== 0) {
+      while ( $Qchildren->next() ) {
+        $children[] = $Qchildren->valueInt('categories_id');
+        $arr = self::getAllChildren($Qchildren->valueInt('categories_id'));
+        if (count($arr) > 0) {
+          $children[] = self::getAllChildren($Qchildren->value('categories_id'));
+        }
+      }      
+    }
+    return $children;
+  }
+ /*
+  * Returns result of multidimensional array search
+  *
+  * @param $needle
+  * @param $haystack
+  * @param $strict
+  * @access public
+  * @return boolean true or false
+  */
+  public static function in_array_r($needle, $haystack, $strict = false) {
+    foreach ($haystack as $item) {
+      if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && self::in_array_r($needle, $item, $strict))) {
+        return true;
+      }
+    }
+    return false;
+  }
+ /*
   * Returns the data used on the dialog forms
   *
   * @param integer $id The category id
@@ -88,7 +132,8 @@ class lC_Categories_Admin {
       $cid = explode('_', $value['id']);
       $count = count($cid);
       $cid = end($cid);
-      if ($cid != $id && !in_array($cid, lC_Categories_Admin::getChildren($id))) {
+      $acArr = lC_Categories_Admin::getAllChildren($id);
+      if ($cid != $id && !lC_Categories_Admin::in_array_r($cid, $acArr)) {
         $categories_array[$cid] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $count-1) . ' ' . $value['title'];
       }
     }
@@ -459,12 +504,13 @@ class lC_Categories_Admin {
   */
   public static function getParent($id) {
     global $lC_Database;
-    $Qcategories = $lC_Database->query('select c.parent_id from :table_categories c where c.categories_id = :categories_id');
+    
+    $Qcategories = $lC_Database->query('select parent_id from :table_categories where categories_id = :categories_id');
     $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
     $Qcategories->bindInt(':categories_id', $id);
     $Qcategories->execute();
 
-    $parentID = $Qcategories->value('parent_id');
+    $parentID = $Qcategories->valueInt('parent_id');
 
     $Qcategories->freeResult();
 
@@ -515,18 +561,23 @@ class lC_Categories_Admin {
   }
 
   public static function getChildren($parent_id) {
-    $tree = array();
+    global $lC_Database;
     
     if (!empty($parent_id)) {
-      $tree = lC_Categories_Admin::getChild($parent_id);
+      $Qchildren = $lC_Database->query('select categories_id from :table_categories where parent_id = :parent_id');
+      $Qchildren->bindTable(':table_categories', TABLE_CATEGORIES);
+      $Qchildren->bindInt(':parent_id', $parent_id);
+      $Qchildren->execute();
       
-      foreach ($tree as $val) {
-        $ids = lC_Categories_Admin::getChildren($val);
-        $tree = array_merge($tree, $ids);
+      $cat_ids = array();
+      if ($Qchildren->numberOfRows !== 0) {
+        while ( $Qchildren->next() ) {  
+          $cat_ids[] = $Qchildren->value('categories_id');
+        }
       }
     }
     
-    return $tree;
+    return $cat_ids;
   }
  /*
   * Update category sorting
@@ -700,6 +751,46 @@ class lC_Categories_Admin {
     }
     
     return $validated;
+  }
+
+ /*
+  * Delete Categories Image
+  * 
+  * @access public
+  * @return json
+  */
+  public static function deleteCatImage($_image, $_id = null) {
+    global $lC_Database;
+    
+    // added to check for other categories using same image and do not delete
+    $Qci = $lC_Database->query('select id from :table_categories where categories_image = :categories_image');
+    $Qci->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qci->bindInt(':categories_image', $_image);
+    $Qci->execute();
+        
+    if ($Qci->numberOfRows() < 2) {
+      if (file_exists('../images/categories/' . $_image)){
+        unlink('../images/categories/' . $_image);
+      }
+    }
+    
+    $Qci->freeResult();
+    
+    if (is_numeric($_id)) {
+      $Qcategoriesimage = $lC_Database->query('update :table_categories set categories_image = "" where categories_id = :categories_id');
+      $Qcategoriesimage->bindTable(':table_categories', TABLE_CATEGORIES);
+      $Qcategoriesimage->bindInt(':categories_id', $_id);
+      $Qcategoriesimage->execute();
+    }
+    
+    if ( !$lC_Database->isError() ) {
+      lC_Cache::clear('categories');
+      lC_Cache::clear('category_tree');
+      lC_Cache::clear('template');
+      lC_Cache::clear('also_purchased');
+    }
+      
+    return true;
   }
                           
 }

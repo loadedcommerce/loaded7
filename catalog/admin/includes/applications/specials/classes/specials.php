@@ -101,8 +101,12 @@ class lC_Specials_Admin {
     $data = $Qspecial->toArray();
 
     $data['products_price_formatted'] = $lC_Currencies->format($Qspecial->value('products_price'));
-    $data['start_date_formatted'] = lC_DateTime::getShort($Qspecial->value('start_date'));
-    $data['expires_date_formatted'] = lC_DateTime::getShort($Qspecial->value('expires_date'));
+    if ($Qspecial->value('start_date') != null) {
+      $data['start_date_formatted'] = lC_DateTime::getShort($Qspecial->value('start_date'));
+    }
+    if ($Qspecial->value('expires_date') != null) {
+      $data['expires_date_formatted'] = lC_DateTime::getShort($Qspecial->value('expires_date'));
+    }
 
     $Qspecial->freeResult();
 
@@ -143,7 +147,7 @@ class lC_Specials_Admin {
     }
     
     if ( $error === false ) {
-      if ( is_numeric($id) ) {
+      if ( $id > 0 ) {
         $Qspecial = $lC_Database->query('update :table_specials set specials_new_products_price = :specials_new_products_price, specials_last_modified = now(), expires_date = :expires_date, start_date = :start_date, status = :status where specials_id = :specials_id');
         $Qspecial->bindInt(':specials_id', $id);
       } else {

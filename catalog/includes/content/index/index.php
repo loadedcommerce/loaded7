@@ -28,7 +28,7 @@
       $this->_page_title = sprintf($lC_Language->get('index_heading'), STORE_NAME);
       $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
       
-      // attempting to match products url capability to get data from permalink
+      // attempting to match categories url capability to get data from permalink
       if (empty($_GET) === false) {
         $id = false;
        
@@ -47,6 +47,8 @@
         $cData = $lC_CategoryTree->getData($id);
         $cPath = end(explode("_", $cData['query']));
         $current_category_id = $cData['item_id'];
+      } else {
+        $cPath = end(explode("_", $_GET['cPath']));
       }
       
       if (isset($cPath) && (empty($cPath) === false)) {
@@ -69,7 +71,7 @@
           }          
 
         }
-
+        
         $lC_Category = new lC_Category($current_category_id);
         
         // added to check for category status and show not found page
@@ -100,6 +102,7 @@
             
             $this->_process();
           }
+          // ogp tags
           $this->addOGPTags('site_name', STORE_NAME);
           $this->addOGPTags('type', 'website');
           $this->addOGPTags('title', $this->_page_title);

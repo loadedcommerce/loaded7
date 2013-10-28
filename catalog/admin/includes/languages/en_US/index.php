@@ -20,3 +20,5 @@ text_signups = sign ups
 text_cart = cart
 text_sessions = sessions
 text_orders = orders
+
+text_chart_performance_current_month = Store Performance :: Current Month

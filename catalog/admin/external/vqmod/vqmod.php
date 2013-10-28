@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+//error_reporting(0);    
 /**
  * VQMod
  * @description Main Object used
@@ -39,8 +39,8 @@ final class VQMod {
     $this->vqCachePath = 'includes/work/cache/vqmod/';
     $this->modCache = 'includes/work/cache/vqmoda.cache';    
     $this->directorySeparator = defined('DIRECTORY_SEPARATOR') ? DIRECTORY_SEPARATOR : '/';
-    $this->protectedFilelist = DIR_WS_HTTPS_CATALOG . 'external/vqmod/vqprotect.txt';
-    $this->pathReplaces = DIR_WS_HTTPS_CATALOG . 'external/vqmod/pathReplaces.php';
+    $this->protectedFilelist = DIR_FS_ADMIN . 'external/vqmod/vqprotect.txt';
+    $this->pathReplaces = DIR_FS_ADMIN . 'external/vqmod/pathReplaces.php';
 
     if(!$path){
       $path = dirname(dirname(__FILE__));
@@ -83,8 +83,9 @@ final class VQMod {
       $this->dirCheck($cache_folder);
 
       // Store cache folder path to save on repeat checks for path validity
-      $this->_cachePathFull = $this->path($this->vqCachePath);
-
+      $this->_cachePathFull = DIR_FS_CATALOG . $this->vqCachePath;
+      $this->dirCheck($this->_cachePathFull);
+                                   
       $this->_folderChecks = true;
     }
     
@@ -173,7 +174,7 @@ final class VQMod {
   public function dirCheck($path) {
     if(!is_dir($path)) {
       if(!mkdir($path)) {
-        //die('ERROR! FOLDER CANNOT BE CREATED: ' . $path);
+        die('ERROR! FOLDER CANNOT BE CREATED: ' . $path);
       }
     }
   }
@@ -184,6 +185,7 @@ final class VQMod {
   * @description Reoves modded cached files 
   */  
   private function _cleanup() { 
+return false;    
     $files = @scandir(DIR_FS_CATALOG . $this->vqCachePath);
       if (is_array($files) && !empty($files)) {
       foreach ($files as $file) {
@@ -207,6 +209,8 @@ final class VQMod {
   * @description Obfuscates the modified code
   */   
   private function _phpLiteObfuscator($SourceString) {
+    return $SourceString;
+    
     ##remove comments
     $SourceString = preg_replace( "/(\s+)#(.*)\n/","$1\n",$SourceString );
     $SourceString = preg_replace( "/(\s+)\/\/(.*)\n/","$1\n",$SourceString );
@@ -234,11 +238,11 @@ final class VQMod {
       fclose($fh);
     }
     $modList = explode(';', unserialize($modList));
-    
+       
     $modArr = array();
     foreach ($modList as $key => $value) {
       $loc = str_replace('controller.php', '', $value);
-      $hooks = glob($loc . 'hooks/admin/*.xml');
+      $hooks = glob($loc . 'admin/hooks/*.xml');
       $modArr = array_merge((array)$modArr, (array)$hooks);
     }
     
@@ -338,7 +342,7 @@ final class VQMod {
     }
     
     if(!$result) {
-      //die('MODS CACHE PATH NOT WRITEABLE: ' . $modCache);
+      die('MODS CACHE PATH NOT WRITEABLE: ' . $modCache);
     }
   }
  /**
@@ -504,7 +508,7 @@ class VQModLog {
 
     $result = @file_put_contents($logPath, implode(PHP_EOL, $txt), ($append ? FILE_APPEND : 0));
     if(!$result) {
-      //die('LOG FILE COULD NOT BE WRITTEN: ' . $logPath);
+      die('LOG FILE COULD NOT BE WRITTEN: ' . $logPath);
     }
   }
 

@@ -142,8 +142,8 @@ function prepareWork() {
     <li class="hide-on-mobile"><span class="wizard-step">4</span><?php echo $lC_Language->get('upgrade_nav_text_4'); ?></li>
     <li class="hide-on-mobile"><span class="wizard-step">5</span><?php echo $lC_Language->get('upgrade_nav_text_5'); ?></li>
   </ul>
+
   <fieldset class="wizard-fieldset fields-list current active">
-    <legend class="legend">Server</legend>
     <div class="field-block margin-bottom" style="padding-left:20px;">
       <h4><?php echo $lC_Language->get('upgrade_step3_page_title'); ?></h4>
       <p><?php echo $lC_Language->get('upgrade_step3_page_desc'); ?></p>
@@ -157,215 +157,216 @@ function prepareWork() {
       </p>      
     </div>
     
-    <div id="mBox" style="display:none; padding:0px 20px 20px 20px"> 
+    <div id="mBox" style="display:none; padding:0px 20px 10px"> 
       <p class="message icon-warning red-gradient">   
         <span id="mBoxContents"></span>
       </p> 
     </div>      
     
-    <div id="mBoxSuccess" style="display:none; padding:0px 20px 20px 20px"> 
+    <div id="mBoxSuccess" style="display:none; padding:0px 20px 10px"> 
       <p class="message green-gradient">   
         <span id="mBoxSuccessContents"></span>
       </p> 
     </div>      
     
-    <div class="field-block button-height">
-      <label for="IMPORT_CATEGORIES" class="label"><b><?php echo $lC_Language->get('param_import_categories'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_categories_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_categories" style="height:25px; padding-top:5px;">   
-    		<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    		<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    		<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_categories" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_categories"></span>
-    	  </p> 
-    	</div>      
-    </div>
-    <div class="field-block button-height">
-      <label for="IMPORT_PRODUCTS" class="label"><b><?php echo $lC_Language->get('param_import_products'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_products_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_products" style="height:25px; padding-top:5px;">   
-    		<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    		<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    		<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_products" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_products"></span>
-    	  </p> 
-    	</div>      
-    </div>      
-    <div class="field-block button-height">
-      <label for="IMPORT_ATTRIBUTES" class="label"><b><?php echo $lC_Language->get('param_import_attributes'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_attributes_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_attributes" style="height:25px; padding-top:5px;">   
-    			<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    			<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_attributes" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_attributes"></span>
-    	  </p> 
-    	</div>      
-    </div>
-    <div class="field-block button-height">
-      <label for="IMPORT_CUSTOMERS" class="label"><b><?php echo $lC_Language->get('param_import_customers'); ?></b><span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_customers_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_customers" style="height:25px; padding-top:5px;">   
-    			<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    			<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_customers" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_customers"></span>
-    	  </p> 
-    	</div>      
-    </div> 
-    <div class="field-block button-height">
-      <label for="IMPORT_CUSTOMER_GROUPS" class="label"><b><?php echo $lC_Language->get('param_import_customer_groups'); ?></b><span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_customer_groups_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_customer_groups" style="height:25px; padding-top:5px;">   
-    			<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    			<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_customer_groups" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_customer_groups"></span>
-    	  </p> 
-    	</div>      
-    </div> 
-    <div class="field-block button-height">
-      <label for="IMPORT_ORDERS" class="label"><b><?php echo $lC_Language->get('param_import_orders'); ?></b><span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_orders_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_orders" style="height:25px; padding-top:5px;">   
-    			<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    			<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_orders" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_orders"></span>
-    	  </p> 
-    	</div>      
-    </div> 
-    <div class="field-block button-height">
-      <label for="IMPORT_CDS" class="label"><b><?php echo $lC_Language->get('param_import_cds'); ?></b><span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_cds_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_cds" style="height:25px; padding-top:5px;">   
-    			<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    			<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_cds" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_cds"></span>
-    	  </p> 
-    	</div>      
-    </div> 
+    <div class="with-padding">  
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_CATEGORIES" class="label"><b><?php echo $lC_Language->get('param_import_categories'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_categories" style="height:25px; padding-top:5px;">   
+    		  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    		  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    		  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_categories" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_categories"></span>
+    	    </p> 
+    	  </div>      
+      </div>
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_PRODUCTS" class="label"><b><?php echo $lC_Language->get('param_import_products'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_products" style="height:25px; padding-top:5px;">   
+    		  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    		  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    		  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_products" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_products"></span>
+    	    </p> 
+    	  </div>      
+      </div>      
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_ATTRIBUTES" class="label"><b><?php echo $lC_Language->get('param_import_attributes'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_attributes" style="height:25px; padding-top:5px;">   
+    			  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    			  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    			  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_attributes" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_attributes"></span>
+    	    </p> 
+    	  </div>      
+      </div>
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_CUSTOMERS" class="label"><b><?php echo $lC_Language->get('param_import_customers'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_customers" style="height:25px; padding-top:5px;">   
+    			  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    			  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    			  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_customers" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_customers"></span>
+    	    </p> 
+    	  </div>      
+      </div> 
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_CUSTOMER_GROUPS" class="label"><b><?php echo $lC_Language->get('param_import_customer_groups'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_customer_groups" style="height:25px; padding-top:5px;">   
+    			  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    			  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    			  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_customer_groups" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_customer_groups"></span>
+    	    </p> 
+    	  </div>      
+      </div> 
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_ORDERS" class="label"><b><?php echo $lC_Language->get('param_import_orders'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_orders" style="height:25px; padding-top:5px;">   
+    			  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    			  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    			  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_orders" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_orders"></span>
+    	    </p> 
+    	  </div>      
+      </div> 
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_CDS" class="label"><b><?php echo $lC_Language->get('param_import_cds'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_cds" style="height:25px; padding-top:5px;">   
+    			  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    			  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    			  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_cds" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_cds"></span>
+    	    </p> 
+    	  </div>      
+      </div> 
 
-    <div class="field-block button-height">
-      <label for="IMPORT_ADMIN" class="label"><b><?php echo $lC_Language->get('param_import_admin'); ?></b><span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_admin_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_administrators" style="height:25px; padding-top:5px;">   
-    			<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    			<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_administrators" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_administrators"></span>
-    	  </p> 
-    	</div>      
-    </div> 
-    <div class="field-block button-height">
-      <label for="IMPORT_NEWSLETTER" class="label"><b><?php echo $lC_Language->get('param_import_newsletter'); ?></b><span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_newsletter_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_newsletter" style="height:25px; padding-top:5px;">   
-    			<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    			<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	<div id="eBox_newsletter" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_newsletter"></span>
-    	  </p> 
-    	</div>      
-    	</div>      
-    </div> 
-    <div class="field-block button-height">
-      <label for="IMPORT_BANNERS" class="label"><b><?php echo $lC_Language->get('param_import_banners'); ?></b><span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_banners_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_banners" style="height:25px; padding-top:5px;">   
-    			<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    			<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_banners" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_banners"></span>
-    	  </p> 
-    	</div>      
-    </div> 
-    <div class="field-block button-height">
-      <label for="IMPORT_CONFIG" class="label"><b><?php echo $lC_Language->get('param_import_config'); ?></b><span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_config_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_configuration" style="height:25px; padding-top:5px;">   
-    			<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    			<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_configuration" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_configuration"></span>
-    	  </p> 
-    	</div>      
-    </div> 
-    <div class="field-block button-height">
-      <label for="IMPORT_COUPONS" class="label"><b><?php echo $lC_Language->get('param_import_coupon'); ?></b><span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_coupon_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_coupons" style="height:25px; padding-top:5px;">   
-    			<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    			<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_coupons" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_coupons"></span>
-    	  </p> 
-    	</div>      
-    </div> 
-    <div class="field-block button-height">
-      <label for="IMPORT_TAX" class="label"><b><?php echo $lC_Language->get('param_import_tax'); ?></b><span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_import_tax_description'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_taxclasses" style="height:25px; padding-top:5px;">   
-    			<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    			<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-    	<div id="eBox_taxclasses" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	  <p class="message icon-warning red-gradient">   
-    	    <span id="eBoxContents_taxclasses"></span>
-    	  </p> 
-    	</div>      
-    </div> 
-
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_ADMIN" class="label"><b><?php echo $lC_Language->get('param_import_admin'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_administrators" style="height:25px; padding-top:5px;">   
+    			  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    			  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    			  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_administrators" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_administrators"></span>
+    	    </p> 
+    	  </div>      
+      </div> 
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_NEWSLETTER" class="label"><b><?php echo $lC_Language->get('param_import_newsletter'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_newsletter" style="height:25px; padding-top:5px;">   
+    			  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    			  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    			  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  <div id="eBox_newsletter" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_newsletter"></span>
+    	    </p> 
+    	  </div>      
+    	  </div>      
+      </div> 
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_BANNERS" class="label"><b><?php echo $lC_Language->get('param_import_banners'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_banners" style="height:25px; padding-top:5px;">   
+    			  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    			  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    			  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_banners" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_banners"></span>
+    	    </p> 
+    	  </div>      
+      </div> 
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_CONFIG" class="label"><b><?php echo $lC_Language->get('param_import_config'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_configuration" style="height:25px; padding-top:5px;">   
+    			  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    			  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    			  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_configuration" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_configuration"></span>
+    	    </p> 
+    	  </div>      
+      </div> 
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_COUPONS" class="label"><b><?php echo $lC_Language->get('param_import_coupon'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_coupons" style="height:25px; padding-top:5px;">   
+    			  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    			  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    			  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_coupons" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_coupons"></span>
+    	    </p> 
+    	  </div>      
+      </div> 
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_TAX" class="label"><b><?php echo $lC_Language->get('param_import_tax'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 0px 0px"> 
+    	    <p id="pBoxContainer_taxclasses" style="height:25px; padding-top:5px;">   
+    			  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    			  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    			  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+    	  <div id="eBox_taxclasses" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+    	    <p class="message icon-warning red-gradient">   
+    	      <span id="eBoxContents_taxclasses"></span>
+    	    </p> 
+    	  </div>      
+      </div> 
+    </div>
     <div id="buttonContainer" class="large-margin-top margin-right" style="float:right; display:none;">
       <a id="btn_continue" href="javascript://" onclick="$('#mBox').hide(); $('#pBox').hide();$('#upgradeForm').submit();" class="button">
         <span class="button-icon blue-gradient glossy"><span class="icon-right-round"></span></span>

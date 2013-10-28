@@ -120,8 +120,24 @@ class lC_Account_Create extends lC_Template {
       if (lC_Account::createEntry($data)) {
         $lC_MessageStack->add('create', $lC_Language->get('success_account_updated'), 'success');
       }
-
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'create=success', 'SSL'));
+       
+      // added to redirect to keep customer in checkout stream
+      foreach ($_SESSION['lC_NavigationHistory_data'] as $data) {
+        foreach ($data as $page) {
+          foreach ($page as $key => $value) {
+            if ($key == 'shipping') {
+              $checkout = true;
+            }
+          }
+        }                        
+      }
+      
+      if ($checkout == true) {
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
+      } else {
+        lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'create=success', 'SSL'));
+      }
+      
     }
   }
 }

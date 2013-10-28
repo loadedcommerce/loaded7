@@ -52,9 +52,10 @@ $template = 'main_page';
   <link rel="stylesheet" href="templates/css/styles/switches.css?v=1">
 
   <!-- Modernizr is always at top and first -->
-  <script src="templates/js/modernizr.custom.js"></script>
+  <script src="templates/js/modernizr.custom.js"></script>  
   <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  
 
   <!-- For Modern Browsers -->
   <link rel="shortcut icon" href="img/favicons/favicon.png">

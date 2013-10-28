@@ -33,10 +33,13 @@ $(document).ready(function() {
   } else if (module == 'orders') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-orders").addClass('current');   
+  } else if (module == 'orders_status') {
+    $("#shortcuts li").parent().find('li').removeClass("current");
+    $("#sc-orders").addClass('current');   
   } else if (module == 'categories' || module == 'content') {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-content").addClass('current'); 
-  } else if (module == 'specials' || module == 'manufacturers' || module == 'reviews' || (module.indexOf('product') != -1) ) {
+  } else if (module == 'specials' || module == 'manufacturers' || module == 'reviews' || module == 'image_groups' || module == 'weight_classes' || (module.indexOf('product') != -1) ) {
     $("#shortcuts li").parent().find('li').removeClass("current");
     $("#sc-products").addClass('current');
   } else if (module == 'banner_manager' || module == 'newsletters' || module == 'coupons' || module == 'branding_manager') {
@@ -77,12 +80,16 @@ $(document).ready(function() {
     } else if (module.indexOf("templates_modules_layout") != -1 && document.location.href.indexOf("set=content") != -1) {
       $("#big-menu_templates_modules_layout").addClass('current navigable-current').change();
       cfg = true;
-    } else if (module.indexOf("products") != -1 && document.location.href.indexOf("products") != -1) {
-      $("#big-menu_product_catalog").addClass('current navigable-current').change();
+    } else if (module.indexOf("products") != -1 && document.location.href.indexOf("products") != -1 && module.indexOf("expected") == -1) {
+      $("#big-menu_products_list").addClass('current navigable-current').change();
+    } else if (module.indexOf("products_expected") != -1 && document.location.href.indexOf("expected") != -1) {
+      $("#big-menu_products_expected").addClass('current navigable-current').change();
     } else if (module.indexOf("coupons") != -1 && document.location.href.indexOf("coupons") != -1) {
       $("#big-menu_coupon_manager").addClass('current navigable-current').change();
+    } else if (module.indexOf("orders") != -1 && document.location.href.indexOf("action=save") != -1) {
+      $("#big-menu_orders_list").addClass('current navigable-current').change();
     } else if (module.indexOf("product_variants") != -1 && document.location.href.indexOf("product_variants") != -1) {
-      $("#big-menu_product_variants").addClass('current navigable-current').change();
+      $("#big-menu_options_manager").addClass('current navigable-current').change();
     } else if (module.indexOf("statistics") != -1 && document.location.href.indexOf("statistics") != -1) {
       $("#big-menu_statistics").addClass('current navigable-current').change();
     } else if (module.indexOf("tax_classes") != -1 && document.location.href.indexOf("tax_classes") != -1) {
@@ -139,18 +146,32 @@ $(document).ready(function() {
   
   // begin shortcut key additions
   $(window).bind("load", function() {
+    // bypass certain pages
+    var bypass = '<?php echo (isset($_GET['action']) && $_GET['action'] == 'save') ? '1' : '0'; ?>';
     // set the disable var to false to begin
     var disableKeyCombo = false; 
-    // if any inputs on the page are clicked into then set the disable var to true
+    // if any textareas on the page are clicked into then set the disable var to true
+    for (var i in CKEDITOR.instances) {
+      (function(i){
+        CKEDITOR.instances[i].on('focus', function() {
+          disableKeyCombo = true;
+        });
+      })(i);
+    }// if any inputs on the page are clicked into then set the disable var to true
     $(":input").focus(function(){
       disableKeyCombo = true;
     }); 
     // when the input fields are blurred set the disable var back to false
     $(":input").blur(function(){
-      disableKeyCombo = false;
+      if (bypass != '1') disableKeyCombo = false;
     });
     // when a key is pressed 
     $("*").keypress(function(e){
+      // check to see if input is datatables search
+      var attr = $("#batch input").attr('aria-controls');
+      if (attr) {
+        disableKeyCombo = true;
+      }
       // if the disable var is false we continue
       if (!disableKeyCombo == true) {
         // first check if the escape key has been presed
@@ -369,7 +390,11 @@ $(document).ready(function() {
   } if ($(window).width() >= 1380) {
     $("#category_tabs").removeClass("standard-tabs");
     $("#category_tabs").addClass("side-tabs");
-  }        
+  }
+  
+  $(".go-pro-menu-ad").on('click', function(){
+    window.open("http://www.loadedcommerce.com/loaded-pre-order-p-395.html");    
+  });        
      
 });
 
@@ -379,29 +404,25 @@ if ($(window).width() < 1380) {
   $("#product_tabs").addClass("standard-tabs");
 }
   
-/* show the upsell spot modal */
-function showUpsellSpot(e) {  
+/* show the pro upsell spot modal */
+function showProUpsellSpot(e) {  
   
-  var title = $(e).closest('.field-block').find('.label').text();
-  var desc = $(e).closest('.field-block').find('.label').attr('upsell');
-  if (title == '') { 
-    title = $(e).closest('.button').text().replace('Pro', '').replace('B2B', '');
-    desc = $(e).closest('.button').attr('upsell');
-  }
+  title = $(e).closest('.upsellwrapper').find('.upsellinfo').attr('upselltitle');
+  desc = $(e).closest('.upsellwrapper').find('.upsellinfo').attr('upselldesc');
   
   var text = '<style>.modal { padding:0; }</style>'+
              '<div id="spotMainContainer" class="with-mid-padding no-margin anthracite" style="width:280px; min-height:200px; background-color:#fff; border:3px solid white; border-radius:4px 4px 4px 4px;">'+
              '  <div id="spotMainOutline" class="relative with-mid-padding" min-height:180px; style="border:2px solid red; border-radius:4px 4px 4px 4px;">'+
              '    <a onclick="closeUpsellSpot($(this).getModalWindow());" href="javascript:void(0);"><span onclick="closeUpsellSpot($(this).getModalWindow());" class="close">X</span></a>'+
-             '    <div id="spotMainHeader" class="align-left"><small class="tag red-bg"><?php echo $lC_Language->get('text_pro'); ?></small><span class="thin mid-margin-left">Feature Information</span>'+ 
+             '    <div id="spotMainHeader" class="align-left"><small class="tag red-bg"><?php echo $lC_Language->get('text_pro'); ?></small><span class="thin mid-margin-left"><?php echo $lC_Language->get('text_feature_information'); ?></span>'+ 
              '    </div>'+
              '    <div id="spotMainTitle" class="align-left"><h3 class="align-left margin-top mid-margin-bottom">' + title + '</h3>'+
              '    </div>'+
              '    <div id="spotMainDesc" class="align-left">'+ desc +
              '    </div>'+
-             '    <div id="spotMainButton" class="with-padding"><a href="javascript:void(0);" class="button huge red-gradient glossy ">Upgrade Now</a>'+
+             '    <div id="spotMainButton" class="with-padding"><a href="http://www.loadedcommerce.com/" class="button huge red-gradient glossy "><?php echo $lC_Language->get('text_upgrade_now'); ?></a>'+
              '    </div>'+
-             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="#" style="text-decoration:underline;">See Full Pro & B2B Feature List</a>'+
+             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="http://www.loadedcommerce.com/" style="text-decoration:underline;"><?php echo $lC_Language->get('text_full_pro_b2b_features_list'); ?></a>'+
              '    </div>'+
              '    </div>';
              '</div>';
@@ -414,6 +435,39 @@ function showUpsellSpot(e) {
      buttons: {}
    });
 }
+  
+/* show the b2b upsell spot modal */
+function showB2BUpsellSpot(e) {  
+  
+  title = $(e).closest('.upsellwrapper').find('.upsellinfo').attr('upselltitle');
+  desc = $(e).closest('.upsellwrapper').find('.upsellinfo').attr('upselldesc');
+  
+  var text = '<style>.modal { padding:0; }</style>'+
+             '<div id="spotMainContainer" class="with-mid-padding no-margin anthracite" style="width:280px; min-height:200px; background-color:#fff; border:3px solid white; border-radius:4px 4px 4px 4px;">'+
+             '  <div id="spotMainOutline" class="relative with-mid-padding" min-height:180px; style="border:2px solid orange; border-radius:4px 4px 4px 4px;">'+
+             '    <a onclick="closeUpsellSpot($(this).getModalWindow());" href="javascript:void(0);"><span onclick="closeUpsellSpot($(this).getModalWindow());" class="close">X</span></a>'+
+             '    <div id="spotMainHeader" class="align-left"><small class="tag orange-bg"><?php echo $lC_Language->get('text_b2b'); ?></small><span class="thin mid-margin-left"><?php echo $lC_Language->get('text_feature_information'); ?></span>'+ 
+             '    </div>'+
+             '    <div id="spotMainTitle" class="align-left"><h3 class="align-left margin-top mid-margin-bottom">' + title + '</h3>'+
+             '    </div>'+
+             '    <div id="spotMainDesc" class="align-left">'+ desc +
+             '    </div>'+
+             '    <div id="spotMainButton" class="with-padding"><a href="http://www.loadedcommerce.com/" class="button huge orange-gradient glossy "><?php echo $lC_Language->get('text_upgrade_now'); ?></a>'+
+             '    </div>'+
+             '    <div id="spotMainFooter" class="small-margin-bottom"><a href="http://www.loadedcommerce.com/" style="text-decoration:underline;"><?php echo $lC_Language->get('text_full_pro_b2b_features_list'); ?></a>'+
+             '    </div>'+
+             '    </div>';
+             '</div>';
+  $.modal({
+     contentBg: false,
+     contentAlign: 'center',
+     content: text,
+     resizable: false,
+     actions: {},
+     buttons: {}
+   });
+}
+
 // added to prevent enter key on megasearch
 $('.noEnterSubmit').keypress(function(e){
   if (e.which == 13) return false;

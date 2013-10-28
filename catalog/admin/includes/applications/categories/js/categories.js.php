@@ -84,11 +84,11 @@ $(document).ready(function() {
     if (ENABLE_EDITOR == '1') { 
       if (USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
         foreach ( $lC_Language->getAll() as $l ) {  
-          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', extraPlugins: 'stylesheetparser', contentsCss: '../templates/" . $lC_Template->getCode($lC_Template->getID) . "/css/styles.css', stylesSet: [] });";
+          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php', extraPlugins: 'stylesheetparser', contentsCss: '../templates/" . $lC_Template->getCode($lC_Template->getID) . "/css/styles.css', stylesSet: [] });";
         }
       } else {
         foreach ( $lC_Language->getAll() as $l ) {  
-          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%' });";
+          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php' });";
         }
       }
     } else {
@@ -97,16 +97,39 @@ $(document).ready(function() {
       }
     }
   } ?>
+  // remove logo image
+  $("#imagePreviewContainer").mouseover(function() {
+    var cImage = $('#categories_image').val();
+    if (cImage != '') {
+      $("#clogo_controls").show();
+      $("#imagePreviewContainer").css("background", "none repeat scroll 0 0 rgba(0, 0, 0, 0.45)");
+      $("#imagePreviewContainer").css("border-radius", "4px 4px 4px 4px");
+    }
+  })
+  .mouseout(function() {
+    $("#clogo_controls").hide();
+    $("#imagePreviewContainer").css("background", "none");
+  });
 });
                   
 function createUploader() {
+  var cImage = $('#categories_image').val();
   var uploader = new qq.FileUploader({
     element: document.getElementById('fileUploaderImageContainer'),
     action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
     onComplete: function(id, fileName, responseJSON) {
-      $('#imagePreviewContainer').html('<img src="../images/categories/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="categories_image" name="categories_image" value="' + fileName + '">');
+      $('#imagePreviewContainer').html('<div style="position:relative;"><div id="clogo_controls" class="controls"><span class="button-group compact children-tooltip"><a onclick="deleteCatImage(<?php echo $_GET[$lC_Template->getModule()]; ?>);" class="button icon-trash" href="#" title="<?php echo $lC_Language->get('text_delete'); ?>"></a></span></div></div><img src="../images/categories/' + fileName + '" border="0" style="max-width:100%;" /><input type="hidden" id="categories_image" name="categories_image" value="' + fileName + '">');
     },
   });
+}
+
+function deleteCatImage(id) {
+  var cImage = $('#categories_image').val();
+  $("#clogo_controls").hide();
+  $("#imagePreviewContainer").css("background", "none");
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteCatImage&image=IMAGE&id=ID'); ?>';
+  $.getJSON(jsonLink.replace('IMAGE', cImage).replace('ID', id));
+  $("#imagePreviewContainer").html('<img src="../images/no_image.png" /><input type="hidden" id="categories_image" name="categories_image" value="">');
 }
 
 function doSelectFunction(e) {

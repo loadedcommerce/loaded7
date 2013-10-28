@@ -13,7 +13,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/store/classes/store.php'));
+require_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/store/classes/store.php'));
 
 class lC_Store_Admin_rpc {
  /*

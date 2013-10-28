@@ -83,6 +83,7 @@
         $QBrand->execute();
 
       }
+
       //save non language specific data
       $QbrandingData = $lC_Database->query('insert into :table_branding_data (site_image, chat_code, support_phone, support_email, sales_phone, sales_email, og_image, meta_delimeter, social_facebook_page, social_twitter, social_pinterest, social_google_plus, social_youtube, social_linkedin) values ( :site_image, :chat_code, :support_phone, :support_email, :sales_phone, :sales_email, :og_image, :meta_delimeter, :social_facebook_page, :social_twitter, :social_pinterest, :social_google_plus, :social_youtube, :social_linkedin)');
       $QbrandingData->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
@@ -113,6 +114,13 @@
       $QbrandingAddress->bindTable(':table_configuration', TABLE_CONFIGURATION);
       $QbrandingAddress->bindValue(':address', $data['address']);
       $QbrandingAddress->execute();
+      
+      $QbrandingHomeText = $lC_Database->query('update :table_configuration set configuration_value = :address where configuration_key = "MODULE_CONTENT_HOMEPAGE_HTML_CONTENT"');
+      $QbrandingHomeText->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $QbrandingHomeText->bindValue(':address', $data['home_page_text']);
+      $QbrandingHomeText->execute();
+      
+      lC_Cache::clear('configuration');
 
       return true;
     }
@@ -143,6 +151,44 @@
         'rpcStatus' => RPC_STATUS_SUCCESS);
 
       echo json_encode($result);
+    }
+
+    /*
+    * Delete Site Logo Image
+    * 
+    * @access public
+    * @return json
+    */
+    public static function deleteBmLogo($_logo) {
+      global $lC_Database;
+
+        if (file_exists('../images/branding/' . $_logo)){
+          unlink('../images/branding/' . $_logo);
+        }
+        $QbrandingImage = $lC_Database->query('update :table_branding_data set site_image = ""');
+        $QbrandingImage->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+        $QbrandingImage->execute();
+      
+      return true;
+    }
+
+    /*
+    * Delete Open Graph Image
+    * 
+    * @access public
+    * @return json
+    */
+    public static function deleteOgImage($_ogimage) {
+      global $lC_Database;
+
+        if (file_exists('../images/branding/' . $_ogimage)){
+          unlink('../images/branding/' . $_ogimage);
+        }
+        $QbrandingImage = $lC_Database->query('update :table_branding_data set og_image = ""');
+        $QbrandingImage->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+        $QbrandingImage->execute();
+      
+      return true;
     }
   }
 ?>

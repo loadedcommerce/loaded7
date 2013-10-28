@@ -43,11 +43,9 @@ switch($_POST['upgradeMethod']){
 	break;
 }
 ?>
-<script type="text/css">
-	.importstatus { 
-		height: 20px;
-	}
-</script>
+<style>
+.importstatus { height: 20px; }
+</style>
 <script language="javascript" type="text/javascript" src="../includes/javascript/xmlhttp/xmlhttp.js"></script>
 <script language="javascript" type="text/javascript" src="../includes/javascript/xmlhttp/autocomplete.js"></script>
 <script language="javascript" type="text/javascript">
@@ -91,42 +89,40 @@ String.prototype.wordWrap = function(m, b, c){
       </p>      
     </div>
     
-    <div id="mBox" style="display:none; padding:0px 20px 20px 20px"> 
+    <div id="mBox" style="display:none; padding:0px 20px 0px"> 
       <p class="message icon-warning red-gradient">   
         <span id="mBoxContents"></span>
       </p> 
     </div>      
     
-    <div id="mBoxSuccess" style="display:none; padding:0px 20px 20px 20px"> 
+    <div id="mBoxSuccess" style="display:none; padding:0px 20px 0px"> 
       <p class="message green-gradient">   
         <span id="mBoxSuccessContents"></span>
       </p> 
-    </div>      
-    
-    <div class="field-block button-height">
-
-      <label for="IMPORT_IMAGES" class="label"><b><?php echo $lC_Language->get('upgrade_step4_label_import_product_images'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('upgrade_step4_odesc_import_product_images'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_images" style="height:25px; padding-top:5px;">   
-    		<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    		<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    		<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-
     </div>
     
-    <div class="field-block button-height">
-
-      <label for="IMPORT_CATEGORY_IMAGES" class="label"><b><?php echo $lC_Language->get('upgrade_step4_label_import_categ_images'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('upgrade_step4_odesc_import_categ_images'); ?>"></span></label>
-    	<div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
-    	  <p id="pBoxContainer_category_images" style="height:25px; padding-top:5px;">   
-    		<img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
-    		<img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    		<img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
-    	  </p> 
-    	</div>      
-
+    <div class="with-padding">      
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_IMAGES" class="label"><b><?php echo $lC_Language->get('upgrade_step4_label_import_product_images'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
+    	    <p id="pBoxContainer_images" style="height:25px; padding-top:5px;">   
+    		  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    		  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    		  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+      </div>
+      
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_CATEGORY_IMAGES" class="label"><b><?php echo $lC_Language->get('upgrade_step4_label_import_categ_images'); ?></b></label>
+    	  <div id="mBox" style="display:block; padding:0px 20px 10px 0px"> 
+    	    <p id="pBoxContainer_category_images" style="height:25px; padding-top:5px;">   
+    		  <img id="img_copy_tick" class="tick" src="images/tick.png" align="right" />
+    		  <img id="img_copy_progress" class="progress" src="images/ajax-loader-1.gif" align="right" />
+    		  <img id="img_copy_cross" class="cross" src="images/cross.png" align="right" />
+    	    </p> 
+    	  </div>      
+      </div>
     </div>
     <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
       <a id="btn_continue" href="javascript://" onclick="$('#mBox').hide(); $('#pBox').hide();$('#updateForm').submit();" class="button">

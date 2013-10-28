@@ -28,7 +28,7 @@ class lC_Boxes_checkout_trail extends lC_Modules {
 
     $steps = array();
 
-    if ($lC_ShoppingCart->getContentType() != 'virtual') {
+    if ($lC_ShoppingCart->getContentType() != 'virtual' || (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1')) {
       $steps[] = array('title' => $lC_Language->get('box_ordering_steps_delivery'),
                        'code' => 'shipping',
                        'active' => (($lC_Template->getModule() == 'shipping') || ($lC_Template->getModule() == 'shipping_address') ? true : false));

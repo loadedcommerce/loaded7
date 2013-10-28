@@ -20,13 +20,13 @@ global $lC_Language, $pInfo;
         <div class="twelve-columns no-margin-bottom">
           <div class="strong"><?php echo $lC_Language->get('text_inventory_control'); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_inventory_control'), null, 'info-spot on-right grey margin-left'); ?></div>
           
-          <div id="optionsInvControlButtons" class="button-group small-margin-top">
+          <div id="optionsInvControlButtons" class="upsellwrapper button-group small-margin-top">
             <!-- lc_options_inventory_control begin -->
-            <label for="ioc_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
+            <label for="ioc_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? '' : ' active'); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_1" value="1" />
               <?php echo $lC_Language->get('text_simple'); ?>
             </label>
-            <label upsell="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ioc_radio_2" class="disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
+            <label upselltitle="<?php echo $lC_Language->get('text_multi_sku'); ?>" upselldesc="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ioc_radio_2" class="upsellinfo disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_2" value="2" />
               <?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left">' . lc_go_pro() . '</span>'; ?>
             </label>
@@ -39,9 +39,10 @@ global $lC_Language, $pInfo;
     <div id="multiSkuContainer" class="twelve-columns" style="position:relative; display:none;">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_multi_sku_options'); ?></legend>
-        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewMultiSkuOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
-        <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
-          <span class="thin"><?php echo $lC_Language->get('text_coming_soon'); ?>...</span>
+        <div class="twelve-columns"> 
+
+          <!--VQMOD1-->          
+
         </div>
       </fieldset>
     </div>
@@ -68,8 +69,8 @@ global $lC_Language, $pInfo;
     </div>
     <?php /*
     <div id="bundleProductsContainer" class="twelve-columns">
-      <fieldset class="fieldset">
-        <legend class="legend"><?php echo $lC_Language->get('text_bundle_products'); ?><?php echo lc_go_pro(); ?></legend>
+      <fieldset class="fieldset upsellwrapper">
+        <legend class="upsellinfo legend" upselltitle="<?php echo $lC_Language->get('text_bundle_products'); ?>" upselldesc="<?php echo $lC_Language->get('text_bundle_products_desc'); ?>"><?php echo $lC_Language->get('text_bundle_products'); ?><?php echo lc_go_pro(); ?></legend>
         <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewBundleOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
         <span class="thin"><?php echo $lC_Language->get('text_coming_soon'); ?>...</span>
       </fieldset>     

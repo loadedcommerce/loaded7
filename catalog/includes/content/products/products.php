@@ -26,7 +26,7 @@
       global $lC_Database, $lC_Services, $lC_Session, $lC_Language, $lC_Breadcrumb, $lC_Product, $lC_Image, $lC_Currencies;
       
       $template_code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'default';
-
+                                   
       if (empty($_GET) === false) {
         $id = false;
 

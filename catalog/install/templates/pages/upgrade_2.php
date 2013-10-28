@@ -258,7 +258,11 @@ if(($_POST['upgrade_method'] == 'S') && isset($_POST['save_settings'])){
 	
 //-->
 </script>
-
+<style>
+.field-block {
+  padding: 0 30px 0 170px;
+}
+</style>
 <form class="block wizard-enabled" name="upgrade" id="upgradeForm" action="<?php echo $form_action; ?>" method="post" onsubmit="return formValid();">
   <span style="width:48%;" class="with-small-padding" style="padding: 10px 0 10px 0;" id="image"><img src="templates/img/logo.png" border="0"></span>
   <span class="with-small-padding float-right hide-on-mobile" id="logoContainer"><img style="padding-right:10px;" src="templates/img/new_version.png" border="0"></span>
@@ -293,31 +297,33 @@ if(($_POST['upgrade_method'] == 'S') && isset($_POST['save_settings'])){
     </div>   
 <?php
 	if(!$db_imported){
-?>          
-    <div class="field-block button-height small-margin-top">
-      <label for="DB_SERVER" class="label"><b><?php echo $lC_Language->get('param_database_server'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_database_server_description'); ?>"></span></label>
+?> 
+<div>         
+    <div class="field-block button-height small-margin-top large-margin-left large-margin-right">
+      <label for="DB_SERVER" class="label"><b><?php echo $lC_Language->get('param_database_server'); ?></b></label>
       <input type="text" name="DB_SERVER" id="LC7_SERVER" value="" class="input" style="width:93%;">
     </div>
-    <div class="field-block button-height">
-      <label for="DB_SERVER_USERNAME" class="label"><b><?php echo $lC_Language->get('param_database_username'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_database_username_description'); ?>"></span></label>
+    <div class="field-block button-height large-margin-left large-margin-right">
+      <label for="DB_SERVER_USERNAME" class="label"><b><?php echo $lC_Language->get('param_database_username'); ?></b></label>
       <input type="text" name="DB_SERVER_USERNAME" id="LC7_USER" value="" class="input" style="width:93%;">
     </div>
-    <div class="field-block button-height">
-      <label for="DB_SERVER_PASSWORD" class="label"><b><?php echo $lC_Language->get('param_database_password'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_database_password_description'); ?>"></span></label>
+    <div class="field-block button-height large-margin-left large-margin-right">
+      <label for="DB_SERVER_PASSWORD" class="label"><b><?php echo $lC_Language->get('param_database_password'); ?></b></label>
       <input type="password" name="DB_SERVER_PASSWORD" id="LC7_PASSWORD" value="" class="input" style="width:93%;">
     </div> 
-    <div class="field-block button-height">
-      <label for="DB_DATABASE" class="label"><b><?php echo $lC_Language->get('param_database_name'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_database_name_description'); ?>"></span></label>
+    <div class="field-block button-height large-margin-left large-margin-right">
+      <label for="DB_DATABASE" class="label"><b><?php echo $lC_Language->get('param_database_name'); ?></b></label>
       <input type="text" name="DB_DATABASE" id="LC7_DB" value="" class="input" style="width:93%;">
     </div>
-    <div class="field-block button-height">
-      <label for="DB_DATABASE_CLASS" class="label"><b><?php echo $lC_Language->get('param_database_type'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_database_type_description'); ?>"></span></label>
+    <div class="field-block button-height large-margin-left large-margin-right">
+      <label for="DB_DATABASE_CLASS" class="label"><b><?php echo $lC_Language->get('param_database_type'); ?></b></label>
       <?php echo lc_draw_pull_down_menu('DB_DATABASE_CLASS', $db_table_types, null, 'class="input with-small-padding" style="width:96%;"'); ?>
     </div>
-    <div class="field-block button-height">
-      <label for="DB_TABLE_PREFIX" class="label"><b><?php echo $lC_Language->get('param_database_prefix'); ?></b>&nbsp;<span style="cursor:pointer;" class="hide-on-mobile hide-on-tablet icon-info-round icon-blue with-tooltip with-small-padding" data-tooltip-options='{"classes":["blue-gradient"],"position":"right"}' title="<?php echo $lC_Language->get('param_database_prefix_description'); ?>"></span></label>
+    <div class="field-block button-height large-margin-left large-margin-right">
+      <label for="DB_TABLE_PREFIX" class="label"><b><?php echo $lC_Language->get('param_database_prefix'); ?></b></label>
       <input type="text" name="DB_TABLE_PREFIX" id="LC7_PREFIX" value="lc_" class="input" style="width:93%;">
     </div>      
+    </div>
 <?php
 	}
 ?>    
