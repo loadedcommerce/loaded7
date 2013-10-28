@@ -19,11 +19,11 @@
     } else {
       require($lC_Vqmod->modCheck('includes/modules/product_listing.php')); 
     }
-    ?>     
-    <div class="button-set clearfix large-margin-bottom">
-      <button class="pull-left btn btn-lg btn-default" onclick="javascript: history.go(-1);" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
-    </div>   
+    ?>   
   </div>
+</div>     
+<div class="button-set clearfix large-margin-bottom">
+  <button class="pull-left btn btn-lg btn-default" onclick="javascript: history.go(-1);" type="button"><?php echo $lC_Language->get('button_back'); ?></button>
 </div>
 <script>
 $(document).ready(function() {
