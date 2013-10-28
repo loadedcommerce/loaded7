@@ -636,7 +636,7 @@ class lC_Template {
     foreach ($this->_ogp_tags as $key => $values) {
         for ($i=0; $i<=sizeof($values); $i++){
             if(!empty($values[$i])){
-                $tag_string .= '<meta property="og:' . $key . '" content="' . $values[$i] . '" />' . "\n";
+                $tag_string .= '<meta property="og:' . $key . '" content="' . str_replace(array("\r\n", "\r", "\n"), "", $values[$i]) . '" />' . "\n";
             }
         }
     }
