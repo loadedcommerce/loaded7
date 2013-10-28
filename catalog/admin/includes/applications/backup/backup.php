@@ -67,6 +67,14 @@ class lC_Application_Backup extends lC_Template_Admin {
             }
           }
           break;
+
+          case 'restoreLocal':
+          if (lC_Backup_Admin::restore()) {
+            return true;
+          } else {
+            return false;
+          }
+          break;
       }
     }
   }
