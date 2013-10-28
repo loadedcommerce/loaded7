@@ -858,16 +858,19 @@ class lC_Orders_Admin {
     global $lC_Language;
     $data = lC_Orders_Admin::getInfo($id);
     $cnt = 1;
-    foreach ($data['transactionHistoryData'] as $thData) {
-      $tData .= '<tr>' .
-                '  <td>' . lC_DateTime::getShort($thData['date_added'], false) . '</td>' .
-                '  <td>' . $thData['status'] . '&nbsp;&nbsp;' . $thData['return_status'] . '</td>' .
-                '  <td class="cursor-pointer transCommentsTrigger">More <span class="icon-triangle-down"></span></td>' .
-                '</tr>' . 
-                '<tr style="display:none;">' . 
-                '  <td colspan="3" class="force-text-break">' . $thData['return_value'] . '</td>' . 
-                '</tr>';
-      $cnt++;
+    
+    if ($data['transactionHistoryData'] != null) {
+      foreach ($data['transactionHistoryData'] as $thData) {
+        $tData .= '<tr>' .
+                  '  <td>' . lC_DateTime::getShort($thData['date_added'], false) . '</td>' .
+                  '  <td>' . $thData['status'] . '&nbsp;&nbsp;' . $thData['return_status'] . '</td>' .
+                  '  <td class="cursor-pointer transCommentsTrigger">More <span class="icon-triangle-down"></span></td>' .
+                  '</tr>' . 
+                  '<tr style="display:none;">' . 
+                  '  <td colspan="3" class="force-text-break">' . $thData['return_value'] . '</td>' . 
+                  '</tr>';
+        $cnt++;
+      }
     }      
     return $tData;
   }      
