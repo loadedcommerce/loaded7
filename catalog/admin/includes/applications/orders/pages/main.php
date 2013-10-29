@@ -12,6 +12,13 @@
   @license    http://loadedcommerce.com/license.html
 */
 ?>
+<?php
+$OrderstatusArray = array();
+$OrderstatusArray[] = array('id' => 0, 'text' => 'All');
+foreach(lC_Orders_Admin::getOrderstatusArray() as $id => $text) {
+  $OrderstatusArray[] = array('id' => $id, 'text' => $text);
+}
+?>
 <!-- Main content -->
 <section role="main" id="main">
   <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
@@ -33,6 +40,7 @@
   .selectContainer { position:absolute; bottom:29px; left:30px }  
   </style>
   <div class="with-padding-no-top">
+   <div id="templateSelectorContainer" style="position:absolute; top:98px; left:190px; z-index:2;"><div id="templateSelector"><form name="orders_status_batch" id="orders_status_batch" action="" onchange="updateOrderList();"><?php echo lc_draw_pull_down_menu('filter', $OrderstatusArray, null, 'class="input with-small-padding"');?></form></div></div>
     <form name="batch" id="batch" action="#" method="post">
     <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
       <thead>
@@ -40,8 +48,8 @@
           <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
           <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_oid'); ?></th>
           <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_customers'); ?></th>
-          <!--<th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_country'); ?></th>
-          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_items'); ?></th>-->
+          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_country'); ?></th>
+          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_items'); ?></th>
           <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_order_total'); ?></th>
           <th scope="col" class="align-center hide-on-tablet no-wrap"><?php echo $lC_Language->get('table_heading_date_purchased'); ?></th>
           <th scope="col" class="align-center hide-on-tablet"><?php echo $lC_Language->get('table_heading_time'); ?></th>

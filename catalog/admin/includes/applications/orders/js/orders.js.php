@@ -15,32 +15,52 @@ global $lC_Template, $lC_Language, $cSearch;
 $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '&cSearch=' . $_SESSION['cIDFilter'] : '';
 ?>
 <script>
-  $(document).ready(function() {
-    if (document.getElementById('dataTable')) {    
-      var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';            
-      var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA' . $cSearch); ?>';
+
+$(document).ready(function() {
+  updateOrderList();
+});
+
+function updateOrderList() {
+  var filter = $("#filter").val();
+  if (filter == null) filter = '<?php echo DEFAULT_ORDERS_STATUS_ID; ?>';  
+  var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';            
+  var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA&filter=FILTER' . $cSearch); ?>';
+  
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&filter=FILTER'); ?>';
+  $.getJSON(jsonLink.replace('FILTER', filter),
+    function (data) {
+      if (data.rpcStatus == -10) { // no session
+        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+        $(location).attr('href',url);
+      }
+      if (data.rpcStatus != 1) {
+        alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
+
       oTable = $('#dataTable').dataTable({
         "bProcessing": true,
         "bServerSide": true,
-        "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
+        "sAjaxSource": dataTableDataURL.replace('FILTER', filter).replace('MEDIA', $.template.mediaQuery.name),
         "sPaginationType": paginationType,     
         "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
         "aaSorting": [[1,'desc']],
+        "bDestroy": true,
         "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
                       { "sWidth": "5%", "bSortable": true, "sClass": "dataColOID" },
                       { "sWidth": "25%", "bSortable": true, "sClass": "dataColName hide-on-mobile-portrait" },
-                      //{ "sWidth": "5%", "bSortable": true,"sClass": "dataColCountry hide-on-tablet" },
-                      //{ "sWidth": "5%", "bSortable": true,"sClass": "dataColItems hide-on-tablet" },
-                      { "sWidth": "15%", "bSortable": true, "sClass": "dataColOTotal" },
-                      { "sWidth": "15%", "bSortable": true,"sClass": "dataColDate hide-on-tablet" },
-                      { "sWidth": "10%", "bSortable": true,"sClass": "dataColTime hide-on-tablet" },
+                      { "sWidth": "10%", "bSortable": true,"sClass": "dataColCountry hide-on-tablet" },
+                      { "sWidth": "8%", "bSortable": true,"sClass": "dataColItems hide-on-tablet" },
+                      { "sWidth": "11%", "bSortable": true, "sClass": "dataColOTotal" },
+                      { "sWidth": "13%", "bSortable": true,"sClass": "dataColDate hide-on-tablet" },
+                      { "sWidth": "5%", "bSortable": true,"sClass": "dataColTime hide-on-tablet" },
                       { "sWidth": "10%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile" },
-                      { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
+                      { "sWidth": "15%", "bSortable": false, "sClass": "dataColAction" }]
       });
       $('#dataTable').responsiveTable();
-          
+
       setTimeout('hideElements()', 500); // because of server-side processing we need to delay for race condition
-           
+
       if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
         $('#main-title > h1').attr('style', 'font-size:1.8em;');
         $('#main-title').attr('style', 'padding: 0 0 0 20px;');
@@ -50,9 +70,10 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         $('.on-mobile').show();
         $('.selectContainer').hide();   
       }   
-    }
-    
-    // on screen resize get the new menu width and apply it for click functions
+        
+
+
+        // on screen resize get the new menu width and apply it for click functions
     $(window).resize(function() {
       // if window width drops below 1280px change orders edit tabs from side to top
       if ($(window).width() < 1380) {
@@ -73,7 +94,15 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       var text = $("#order_statuses > option:selected").text();
       $('#comment').val('<?php echo $lC_Language->get('text_status_update'); ?> ' + text);
     });
-  });
+    
+           
+       
+    }
+  );
+}
+
+
+
   
   function hideElements() {  
     if ($.template.mediaQuery.name === 'mobile-portrait') { 
