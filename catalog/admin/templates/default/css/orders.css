@@ -12,17 +12,24 @@
 
 .orders-print-packing-slip-button { float: right; position: relative; top: -48px; }
 
-#statusSelectorContainer { position:absolute; top:98px; left:190px; z-index:2; }
+#statusSelectorContainer { position:absolute; top:95px; left:190px; z-index:2; }
 
 /* custom media queries */
 @media screen and (min-width: 480px) and (max-width: 767px) {
   .field-block-address { position: relative; left: 0; }
   .field-block-address-offset { margin-left: 0; }
   #section_orders_customer_content { margin: 0 -7px 0 -20px; }
-}  
+  .dataTables_filter { float: none; text-align: left; }
+  .dataTables_filter input { margin-top: 40px; }
+  #statusSelectorContainer { position:absolute; top:92px; left:15px; z-index:2; }
+}
+  
 @media screen and (max-width: 479px) {
   .field-block-address { position: relative; left: 0; }
   .field-block-address-offset { margin-left: 0; }
   #section_orders_customer_content { margin: 0 -10px 0 -20px; }
   .orders-print-packing-slip-button-text { display: none; }
+  .dataTables_filter { float: none; text-align: left; }
+  .dataTables_filter input { margin-top: 40px; }
+  #statusSelectorContainer { position:absolute; top:88px; left:15px; z-index:2; }
 }

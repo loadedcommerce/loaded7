@@ -36,7 +36,7 @@
     <div id="statusSelectorContainer">
       <div id="statusSelector">
         <form name="orders_status_filter" id="orders_status_filter" action="" onchange="updateOrderList();">
-          <label for="filter" class="white"><?php echo $lC_Language->get('text_status'); ?></label>
+          <label for="filter" class="white mid-margin-right"><?php echo $lC_Language->get('text_status'); ?>:</label>
           <?php echo lc_draw_pull_down_menu('filter', lC_Orders_Admin::getOrderStatusArray(), null, 'class="input with-small-padding"');?>
         </form>
       </div>
@@ -54,7 +54,12 @@
             <th scope="col" class="align-center hide-on-tablet no-wrap"><?php echo $lC_Language->get('table_heading_date_purchased'); ?></th>
             <th scope="col" class="align-center hide-on-tablet"><?php echo $lC_Language->get('table_heading_time'); ?></th>
             <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_status'); ?></th>
-            <th scope="col" class="align-right"><span class="button-group compact"><a href="javascript:void(0);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a></span><span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span></th>
+            <th scope="col" class="align-right">
+              <span class="button-group compact">
+                <a href="javascript:void(0);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a>
+              </span>
+              <span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span>
+            </th>
           </tr>
         </thead>
         <tbody>
