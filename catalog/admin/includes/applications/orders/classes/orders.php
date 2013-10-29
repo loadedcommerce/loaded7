@@ -884,18 +884,28 @@ class lC_Orders_Admin {
       }
     }
   }
-  function getOrderstatusArray() {
+  
+  public static function getOrderStatusArray() {
     global $lC_Language, $lC_Database;
+    
     // build the order status array
     $orders_status_array = array();
     $Qstatuses = $lC_Database->query('select orders_status_id, orders_status_name from :table_orders_status where language_id = :language_id');
     $Qstatuses->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
     $Qstatuses->bindInt(':language_id', $lC_Language->getID());
     $Qstatuses->execute();
+    
     while ($Qstatuses->next()) {
       $orders_status_array[$Qstatuses->valueInt('orders_status_id')] = $Qstatuses->value('orders_status_name');
     }
-    return $orders_status_array;
+    
+    $orderStatusArray = array();
+    $orderStatusArray[] = array('id' => 0, 'text' => $lC_Language->get('text_all'));
+    foreach($orders_status_array as $id => $text) {
+      $orderStatusArray[] = array('id' => $id, 'text' => $text);
+    }
+    
+    return $orderStatusArray;
   }      
 }
 ?>

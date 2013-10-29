@@ -9,7 +9,10 @@
 .field-block .label { width: 150px; margin: 0; text-align: left; }
 .field-block-address { position: relative; left: 150px; }
 .field-block-address-offset { margin-left: -150px; }
+
 .orders-print-packing-slip-button { float: right; position: relative; top: -48px; }
+
+#statusSelectorContainer { position:absolute; top:98px; left:190px; z-index:2; }
 
 /* custom media queries */
 @media screen and (min-width: 480px) and (max-width: 767px) {
