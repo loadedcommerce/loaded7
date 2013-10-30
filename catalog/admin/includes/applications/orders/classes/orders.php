@@ -114,7 +114,12 @@ class lC_Orders_Admin {
       $oid = '<td><a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qresult->valueInt('orders_id') . '&action=save')) . '"><span class="icon-price-tag icon-red"></span>&nbsp;' . $Qresult->valueInt('orders_id') . '</a></td>';
       $name = '<td>' . $Qresult->valueProtected('customers_name') . '</td>';
       $country = '<td>' . $Qresult->valueProtected('customers_country_iso3') . '</td>';
-      $items = '<td>' . count($Qresult->valueInt('products_id')) . '</td>';
+      
+      $Qresult_items = $lC_Database->query("SELECT sum(products_quantity) as items from :table_orders_products where orders_id = '".$Qresult->valueInt('orders_id')."' ");
+      $Qresult_items->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+      $Qresult_items->execute();
+      $items = '<td>' . $Qresult_items->valueInt('items') . '</td>';
+      
       $total = '<td>' . $lC_Currencies->format($Qresult->value('order_total')) . '</td>';
       number_format($Qresult->value('order_total'), DECIMAL_PLACES) . '</td>';
       $date = '<td>' . self::getTextDate($Qresult->value('date_purchased')) . '</td>';
