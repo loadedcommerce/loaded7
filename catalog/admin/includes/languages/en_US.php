@@ -259,6 +259,7 @@ tooltip_settings = Settings (s) / Main Menu (escape)
 
 top_category = Top Category
 
+text_all = All
 text_version = Version
 text_confirm_delete = Confirm Delete?
 text_sort = Sort
@@ -324,3 +325,7 @@ text_print_invoice = Print Invoice
 text_print_packing_slip = Print Packing Slip
 text_spin_off_order = Spin Off Order
 text_go_to_customer = Go to Customer
+
+slider_switch_enabled = ENABLED
+slider_switch_disabled = DISABLED
+slider_switch_preview = PREVIEW text_status = Statustext_select_product = Select Product

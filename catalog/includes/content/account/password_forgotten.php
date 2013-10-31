@@ -67,11 +67,9 @@ class lC_Account_Password_forgotten extends lC_Template {
         $email_text .= sprintf($lC_Language->get('email_password_reminder_body'), getenv('REMOTE_ADDR'), STORE_NAME, $password, STORE_OWNER_EMAIL_ADDRESS);
 
         lc_email($Qcheck->valueProtected('customers_firstname') . ' ' . $Qcheck->valueProtected('customers_lastname'), $Qcheck->valueProtected('customers_email_address'), sprintf($lC_Language->get('email_password_reminder_subject'), STORE_NAME), $email_text, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
-
-        $lC_MessageStack->add('login', $lC_Language->get('success_password_forgotten_sent'), 'success');
       }
 
-      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login', 'SSL'));
+      lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'login&success=' . urlencode($lC_Language->get('success_password_forgotten_sent')), 'SSL'));
     } else {
       $lC_MessageStack->add('password_forgotten', $lC_Language->get('error_password_forgotten_no_email_address_found'));
     }

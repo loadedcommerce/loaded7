@@ -27,9 +27,9 @@ info_bubble_uses_per_coupon = The maximum number of times the coupon can be used
 info_bubble_uses_per_customer = The maximum number of times the coupon can be used by each customer. Enter 0 for no limit.
 info_bubble_start_date = The starting date the coupon will be valid from (optional).
 info_bubble_expires_date =  The date the coupon expires (optional).
-info_bubble_proucts_restrictions = Restrict coupon redemption to spcific products.
-info_bubble_customers_restrictions = Restrict coupon redemption to spcific customers.
-info_bubble_groups_restrictions = Restrict coupon redemption to spcific customer groups.
+info_bubble_proucts_restrictions = Restrict coupon redemption to specific products.
+info_bubble_customers_restrictions = Restrict coupon redemption to specific customers.
+info_bubble_groups_restrictions = Restrict coupon redemption to specific customer groups.
 
 introduction_copy_coupon = Please verify the copy of the coupon 
 introduction_copy_coupon_note = <b>NOTE</b>: You will need to edit this new coupons Name and Code. 
