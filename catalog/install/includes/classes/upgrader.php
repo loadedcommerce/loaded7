@@ -1983,7 +1983,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $tQry = $target_db->query('insert into :table_categories_desc (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) 
                                        values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_keyword, :categories_tags)');
             
-            $tQry->bindTable(':table_categories_desc'  , TABLE_CATEGORIES_DESCRIPTION);
+            $tQry->bindTable(':table_categories_desc', TABLE_CATEGORIES_DESCRIPTION);
+            
             $tQry->bindInt  (':categories_id'         , $insert_id);
             $tQry->bindInt  (':language_id'           , $sQry->value('language_id'));
             $tQry->bindValue(':categories_name'       , $sQry->value('categories_name'));
