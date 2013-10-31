@@ -589,8 +589,15 @@ class lC_Product {
     
     $output = '';
     foreach ( $this->getImages() as $key => $value ) {
-      if ($value['default_flag'] == true) continue;
-      $output .= '<li><a href="' . (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'popup')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png') . '" title="<?php echo $lC_Product->getTitle(); ?>" class="thickbox"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $lC_Product->getTitle() . '" /></a></li>';
+      if ($value['default_flag'] == true) continue;      
+
+      if(file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))) {      
+        $link = lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'));
+      } else {
+        $link = lc_href_link(DIR_WS_IMAGES . 'no_image.png');
+      }
+      $output .= '<li><a href="' .$link. '" class="thickbox"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $this->getTitle() . '" /></a></li>';
+
     }
     
     return $output;    
