@@ -53,7 +53,7 @@
     $availability = ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) ) ? '<span class="product-out-of-stock red">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' : $lC_Product->getAttribute('shipping_availability');
     if ($lC_Product->getAttribute('manufacturers') != null || $lC_Product->hasModel()) {
       echo '<div class="content-products-info-manuf-model">' . "\n" . 
-           '  <span class="content-products-info-manuf small-margin-right">' . $lC_Product->getAttribute('manufacturers') . ':</span>' . "\n" .
+           (($lC_Product->getAttribute('manufacturers') != null) ? '<span class="content-products-info-manuf small-margin-right">' . $lC_Product->getAttribute('manufacturers') . ':</span>' . "\n" : null) .
            '  <span class="content-products-info-model">' . $lC_Product->getModel() . '</span>' . "\n" . 
            '</div>' . "\n";
     }
