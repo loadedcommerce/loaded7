@@ -57,9 +57,17 @@ TD { height:19px; }
       </div>
     </noscript>  
     <?php
+
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/work') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/backups'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/backups/') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs') , 0777);
+
     if (file_exists(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php') && !is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php')) {
       @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php', 0777);
     }
+
     if (file_exists(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php') && !is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php')) {
       ?>
       <p class="message icon-warning red-gradient">   

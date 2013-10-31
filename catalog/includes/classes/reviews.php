@@ -203,10 +203,11 @@
         while ($Qreviews->next()) {
           $counter++;
           if ($counter > 1) {
-            $output .= '<div></div>' . "\n";                                                                                     
+            $output .= '<br />' . "\n";                                                                                     
           }
+          $text = (strlen($Qreviews->valueProtected('reviews_text')) > 60) ? substr($Qreviews->valueProtected('reviews_text'), 0, 360) . '...' : $Qreviews->valueProtected('reviews_text');
           $output .= '<div class="content-reviews-stars">' . lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $Qreviews->valueInt('reviews_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $Qreviews->valueInt('reviews_rating'))) . '&nbsp;' . sprintf($lC_Language->get('reviewed_by'), $Qreviews->valueProtected('customers_name')) . '; ' . lC_DateTime::getLong($Qreviews->value('date_added')) . '</div>' . "\n";
-          $output .= '<div class="content-reviews-text"><em>' . nl2br(wordwrap($Qreviews->valueProtected('reviews_text'), 60, '&shy;')) . '</em></div>' . "\n";
+          $output .= '<div class="content-reviews-text"><em>' . nl2br($text) . '</em></div>' . "\n";
         }
       } else {
         $output ='<div>' . $lC_Language->get('no_reviews_available') . '</div>' . "\n"; 
