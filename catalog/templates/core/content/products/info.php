@@ -134,7 +134,7 @@
   <?php 
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>    
-    <div class="row">
+    <div class="row display-inline">
       <div class="col-sm-6 col-lg-6 align-right mid-margin-top">
         <div class="form-group">
           <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
