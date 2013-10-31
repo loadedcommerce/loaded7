@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>product_on_homepage_title</key>
+      <value><![CDATA[Product On Home Page]]></value>
+      <group>modules-content</group>
+    </definition>
+  </definitions>
+</language>

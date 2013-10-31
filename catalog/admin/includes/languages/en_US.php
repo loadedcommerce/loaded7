@@ -328,4 +328,4 @@ text_go_to_customer = Go to Customer
 
 slider_switch_enabled = ENABLED
 slider_switch_disabled = DISABLED
-slider_switch_preview = PREVIEW text_status = Status
+slider_switch_preview = PREVIEW text_status = Statustext_select_product = Select Product
