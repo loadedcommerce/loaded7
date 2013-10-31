@@ -259,6 +259,7 @@ tooltip_settings = Settings (s) / Main Menu (escape)
 
 top_category = Top Category
 
+text_all = All
 text_version = Version
 text_confirm_delete = Confirm Delete?
 text_sort = Sort
@@ -327,4 +328,4 @@ text_go_to_customer = Go to Customer
 
 slider_switch_enabled = ENABLED
 slider_switch_disabled = DISABLED
-slider_switch_preview = PREVIEW 
+slider_switch_preview = PREVIEW text_status = Status
