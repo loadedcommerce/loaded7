@@ -2800,5 +2800,10 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[The are no products found matching your criteria.]]></value>
       <group>general</group>
     </definition>  
+    <definition>
+      <key>no_description_available</key>
+      <value><![CDATA[]]></value>
+      <group>general</group>
+    </definition>      
   </definitions>  
 </language>
