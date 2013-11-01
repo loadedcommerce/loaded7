@@ -283,11 +283,39 @@ class lC_Backup_Admin {
        $sql_file = new upload('sql_file');
 
       if ( $sql_file->parse() ) {
-        $restore_query = fread(fopen($sql_file->tmp_filename, 'r'), filesize($sql_file->tmp_filename));
-        $filename = $sql_file->filename;
+
+        $extension = substr($sql_file->filename, -3);
+
+        switch ( $extension ) {
+            case 'sql':
+              $restore_from = $sql_file->tmp_filename;
+
+              $remove_raw = false;
+
+              break;
+
+            case '.gz':
+              $restore_from = substr($sql_file->tmp_filename, 0, -3);
+              exec(CFG_APP_GUNZIP . ' ' . $sql_file->tmp_filename . ' -c > ' . $restore_from);
+
+              $remove_raw = true;
+
+              break;
+
+            case 'zip':
+              $restore_from = substr($sql_file->filename, 0, -4);
+              exec(CFG_APP_UNZIP . ' ' . $sql_file->tmp_filename . ' -d ' . sys_get_temp_dir().'/');
+
+              $remove_raw = true;
+              
+              break;
+          }
+
+        $restore_query = fread(fopen($restore_from, 'rb'), filesize($restore_from));
+        $filename = $restore_from;
       }
     }
-
+    
     if ( isset($restore_query) && !empty($restore_query) ) {
       $sql_array = array();
       $sql_length = strlen($restore_query);
