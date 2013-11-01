@@ -44,6 +44,7 @@
           $lC_Product = new lC_Product($id);
           $lC_Product->incrementCounter();
 
+          $this->addPageTags('description', substr(strip_tags($lC_Product->getDescription()),0,300));
           $this->addPageTags('keywords', $lC_Product->getTitle());
           $this->addPageTags('keywords', $lC_Product->getModel());
 
