@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>addon_payment_vantiv_wl_title</key>
+      <value><![CDATA[Vantiv Whitelabel]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>addon_payment_vantiv_wl_description</key>
+      <value><![CDATA[Vantiv Whitelabel]]></value>
+      <group>checkout</group>
+    </definition>         
+  </definitions>
+</language>

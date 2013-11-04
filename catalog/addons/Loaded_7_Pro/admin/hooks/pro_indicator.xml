@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>After Logo Image, add Pro Indicator</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="templates/default/header.php">
+    <operation info="After Logo Image, add Pro Indicator">
+      <search position="after"><![CDATA[<!-- VQMOD1 -->]]></search>         
+      <add><![CDATA[<?php echo (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? '<span style="vertical-align:50%;"><span class="tag red-gradient glossy" style="padding-top:2px; font-size:1.0em;">PRO</span></span>' : null; ?>]]></add>
+    </operation>    
+  </file> 
+</modification>
