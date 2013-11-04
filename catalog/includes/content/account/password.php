@@ -57,9 +57,7 @@ class lC_Account_Password extends lC_Template {
     if ($lC_MessageStack->size('account_password') === 0) {
       if (lC_Account::checkPassword(trim($_POST['password_current']))) {
         if (lC_Account::savePassword(trim($_POST['password_new']))) {
-          $lC_MessageStack->add('account', $lC_Language->get('success_password_updated'), 'success');
-
-          lc_redirect(lc_href_link(FILENAME_ACCOUNT, null, 'SSL'));
+          lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'success=' . urlencode($lC_Language->get('success_password_updated')), 'SSL'));
         } else {
           $lC_MessageStack->add('account_password', sprintf($lC_Language->get('field_customer_password_new_error'), ACCOUNT_PASSWORD));
         }

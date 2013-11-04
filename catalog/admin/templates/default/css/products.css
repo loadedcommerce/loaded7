@@ -20,7 +20,6 @@ body.dragging, body.dragging * { cursor: move !important; }
 #simpleOptionsPricingTable .inputs { width:80px; }
 #simpleOptionsPricingTable .element { padding-left:24px; vertical-align:middle; }
 
-
 .accordion > dt { 
   background: -webkit-gradient(linear, left top, left bottom, from(#565656), to(#404040));
   background: -webkit-linear-gradient(top, #565656, #404040);
