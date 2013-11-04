@@ -1,15 +1,10 @@
 #  $Id: .htaccess.php v1.0 2013-01-01 datazen $
 #
-#  LoadedCommerce, Innovative eCommerce Solutions
-#  http://www.loadedcommerce.com
 #
-#  Copyright (c) 2013 Loaded Commerce, LLC
+# This is used with Apache WebServers with mod_expires, mod_headers
+# mod_deflate. Written for Apache 2.4.x (2013)
 #
-#  @author     Loaded Commerce Team
-#  @copyright  (c) 2013 Loaded Commerce Team
-#  @license    http://loadedcommerce.com/license.html
-#
-# This is used with Apache WebServers
+# Community support is available at http://loaded7.com/community/forums/main/loaded-commerce-support/install-config/
 #
 # For this to work, you must include the parameter 'Options' to
 # the AllowOverride configuration
@@ -25,6 +20,98 @@
 
 # The following makes adjustments to the SSL protocol for Internet
 # Explorer browsers
+# Fix certain PHP values
+# (commented out by default to prevent errors occuring on certain
+# servers)
+
+Options -Indexes -Multiviews +FollowSymLinks
+
+<IfModule mod_php5.c>
+  php_flag session.use_trans_sid Off
+  php_flag session.auto_start Off
+  php_flag register_long_arrays On
+  php_flag register_globals Off
+  php_flag display_errors Off
+  php_flag log_errors On
+  php_flag ignore_repeated_errors on
+  php_flag ignore_repeated_source on
+  php_flag allow_url_fopen on
+  php_flag allow_url_include off
+</IfModule>
+
+# Insert mod_deflate filter
+SetOutputFilter DEFLATE
+# Don't compress images
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ \
+no-gzip dont-vary
+# Don't compress binaries
+SetEnvIfNoCase Request_URI \
+\.(?:exe|t?gz|zip|bz2|sit|rar)$ \
+no-gzip dont-vary
+SetEnvIfNoCase Request_URI \.pdf$ no-gzip dont-vary
+
+# Netscape 4.x has some problems...
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+
+# Netscape 4.06-4.08 have some more problems
+BrowserMatch ^Mozilla/4\.0[678] no-gzip
+
+# MSIE masquerades as Netscape, but it is fine
+# BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+
+# NOTE: Due to a bug in mod_setenvif up to Apache 2.0.48
+# the above regex won't work. You can use the following
+# workaround to get the desired effect:
+# BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+
+# Make sure proxies don't deliver the wrong content
+Header append Vary User-Agent env=!dont-vary
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault "access plus 30 days"
+ExpiresByType image/x-icon A2592000
+ExpiresByType application/x-javascript "access plus 30 days"
+ExpiresByType text/css "access plus 60 days"
+ExpiresByType image/gif "access plus 30 days"
+ExpiresByType image/png "access plus 30 days"
+ExpiresByType image/jpeg "access plus 30 days"
+ExpiresByType text/plain "access plus 30 days"
+ExpiresByType application/x-shockwave-flash A604800
+ExpiresByType video/x-flv A604800
+ExpiresByType application/pdf A2419200
+ExpiresByType text/html "access plus 1 days"
+</IfModule>
+
+<IfModule mod_headers.c>
+# 3 Month
+<FilesMatch "\.(flv|gif|jpg|jpeg|png|ico|swf)$">
+    Header set Cache-Control "max-age=7257600, must-revalidate"
+</FilesMatch>
+
+# 1 Week
+<FilesMatch "\.(js|css|pdf|txt)$">
+    Header set Cache-Control "max-age=604800, must-revalidate"
+</FilesMatch>
+
+# 1 Day
+<FilesMatch "\.htc$">
+    Header set Cache-Control "max-age=86400, must-revalidate"
+</FilesMatch>
+
+# 10 Minutes
+<FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "max-age=600, must-revalidate"
+</FilesMatch>
+
+# NONE
+<FilesMatch "\.(pl|php|cgi|spl)$">
+    Header unset Cache-Control
+    Header unset Expires
+    Header unset Last-Modified
+    FileETag None
+    Header unset Pragma
+</FilesMatch>
 
 <IfModule mod_setenvif.c>
   <IfDefine SSL>
@@ -34,19 +121,14 @@
   </IfDefine>
 </IfModule>
 
-# Fix certain PHP values
-# (commented out by default to prevent errors occuring on certain
-# servers)
-
-#<IfModule mod_php4.c>
-#  php_value session.use_trans_sid 0
-#  php_value magic_quotes_gpc 0
-#</IfModule>
+# This rule does not apply to subdomains and should be omitted
 
 <IfModule mod_rewrite.c>
-  Options +FollowSymLinks
   RewriteEngine on
   RewriteBase /
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteRule ^ http://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
   RewriteRule category/(.*)$ index.php?$1
   RewriteRule product/(.*)/specials/(.*),(.*)$ products.php?$1&$2=$3
   RewriteRule product/reviews,new/(.*)/(.*),(.*)$ products.php?reviews=new&$1&$2=$3
@@ -55,4 +137,7 @@
   RewriteRule product/reviews/(.*)$ products.php?reviews&$1
   RewriteRule product/(.*)/(.*),(.*)$ products.php?$1&$2=$3
   RewriteRule product/(.*)$ products.php?$1
-</IfModule> 
+</IfModule>
+
+########### SEO URL REWRITE SHOULD GO HERE  ###############################
+#### Example: 301 catchy-category/c24/p587/best-product-ever/product_info.html http://catchy-category/c24/p587/new-product-ever/product_info.html
