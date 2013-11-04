@@ -2429,7 +2429,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         while ($sQry->next()) {
           $customer  = array(
                                'customers_id'                 => $sQry->value($map['customers_id'])
-                             , 'customers_group_id'           => 1
+                             , 'customers_group_id'           => $sQry->value($map['customers_group_id'])
                              , 'customers_gender'             => $sQry->value($map['customers_gender'])
                              , 'customers_firstname'          => $sQry->value($map['customers_firstname'])
                              , 'customers_lastname'           => $sQry->value($map['customers_lastname'])
@@ -3064,8 +3064,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // END TRUNCATE CUSTOMERS GROUPS TABLES IN TARGET DB
 
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
-      $tQry->execute();
+      $tQry = $target_db->query('SET sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+      $tQry->execute(); 
       
       $customers_groups = array();
       
@@ -3110,7 +3110,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // END LOAD CUSTOMERS GROUPS FROM SOURCE DB
       
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+      $tQry = $target_db->query('SET sql_mode = ""');
       $tQry->execute();
       
       $source_db->disconnect();  
