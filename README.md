@@ -7,8 +7,8 @@ Based on a 3rd generation e-commerce platform, Loaded 7 includes new mobile resp
 * Developer Forums here   http://www.loaded7.com/forums/
 
 <b>What we currently need:</b>
-* Langauge translations 
-* (will be separating the langauge folder for easier git access)
+* Language translations 
+* (will be separating the language folder for easier git access)
 * Bug fixes 
 * Promotion - tell your friends, tweet, blog, etc. 
 * Feedback - Tell us what you think and help us make Loaded 7 great!
