@@ -228,7 +228,7 @@ TD { height:19px; }
         <div id="buttonContainer" class="large-margin-top margin-left" style="float:left">
           <a href="javascript:void(0);" class="button" onclick="$('#mBox').hide(); $('#pBox').hide(); $('#upgrade_method').val('S'); window.location.href = 'upgrade.php?step=1'">
             <span class="button-icon orange-gradient glossy"><span class="icon-cloud-upload"></span></span>
-            <?php //echo addslashes($lC_Language->get('image_button_upgrade')); ?>
+            <?php echo addslashes($lC_Language->get('image_button_upgrade')); ?>
           </a>          
         </div>
         <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">

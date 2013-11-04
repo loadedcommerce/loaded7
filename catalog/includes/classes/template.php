@@ -265,7 +265,7 @@ class lC_Template {
       $tag_parts_keywords = ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords;
     } else if($this->_group == 'products'){
       $tag_parts_title =  $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix ;
-      $tag_parts_description .=  $meta_description ;
+      $tag_parts_description .=  ($this->_page_tags['description'] != '' ? implode(",", $this->_page_tags['description']) . ' ' : '' ) .$meta_description ;
       $tag_parts_keywords =  ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords ;
     } else {
       $tag_parts_title =  $meta_title_prefix . $meta_delimeter . $meta_title . $meta_delimeter . $meta_title_suffix;
@@ -636,7 +636,7 @@ class lC_Template {
     foreach ($this->_ogp_tags as $key => $values) {
         for ($i=0; $i<=sizeof($values); $i++){
             if(!empty($values[$i])){
-                $tag_string .= '<meta property="og:' . $key . '" content="' . $values[$i] . '" />' . "\n";
+                $tag_string .= '<meta property="og:' . $key . '" content="' . str_replace(array("\r\n", "\r", "\n"), "", $values[$i]) . '" />' . "\n";
             }
         }
     }
