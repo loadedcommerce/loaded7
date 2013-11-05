@@ -10,6 +10,7 @@
 */
 ?>
 <!--modules/boxes/whats_new.php start-->
+<aside role="complementary">
 <div class="well" >
   <ul class="box-whats-new list-unstyled">
     <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
@@ -32,4 +33,5 @@ $(document).ready(function() {
   $('.box-whats-new-image-src').addClass('img-responsive');
 });
 </script>
+</aside>
 <!--modules/boxes/whats_new.php end-->
