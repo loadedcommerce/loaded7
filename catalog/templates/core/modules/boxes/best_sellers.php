@@ -10,10 +10,12 @@
 */
 ?>
 <!--modules/boxes/best_sellers.php start-->
+<aside role="complementary">
 <div class="well" >
   <ul class="box-best-sellers list-unstyled list-indent-large">
     <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
     <?php echo $lC_Box->getContent(); ?>
   </ul>
-</div>
-<!--modules/boxes/best_sellers.php end-->
+  </div>
+</aside>
+<!-- modules/boxes/best_sellers.php end-->
