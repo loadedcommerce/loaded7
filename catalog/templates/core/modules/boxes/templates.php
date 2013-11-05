@@ -9,6 +9,7 @@
   @version    $Id: templates.php v1.0 2013-08-08 datazen $
 */
 ?>
+<aside role="complementary">
 <!--modules/boxes/templates.php start-->
 <div class="well" >
   <form role="form" name="templates" action="<?php echo lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), null, 'AUTO', false); ?>" class="box-templates-form no-margin-bottom form-inline" method="get">
@@ -25,4 +26,5 @@ $(document).ready(function() {
 $('.box-templates-selection').addClass('form-group full-width');
 $('.box-templates-select').addClass('form-control');
 </script>
+</aside>
 <!--modules/boxes/templates.php end-->
