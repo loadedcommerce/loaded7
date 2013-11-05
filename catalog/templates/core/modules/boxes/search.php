@@ -10,9 +10,8 @@
 */
 ?>
 <!--modules/boxes/search.php start-->
-<aside role="complementary">
 <div class="well" >
-  <form role="search" name="box-search-form" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" class="form-inline no-margin-bottom" method="get">
+  <form role="form" name="box-search-form" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" class="form-inline no-margin-bottom" method="get">
     <ul class="box-search list-unstyled list-indent-large">
       <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
         <?php echo $lC_Box->getContent(); ?>
@@ -32,5 +31,4 @@ $(document).ready(function() {
   }
 });
 </script>
-</aside>
 <!--modules/boxes/search.php end-->

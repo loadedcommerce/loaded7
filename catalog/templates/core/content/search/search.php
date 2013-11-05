@@ -10,9 +10,8 @@
 */
 ?>
 <!--content/search/search.php start-->
-<aside role="complementary">
 <div class="col-sm-12 col-lg-12">
-  <form role="search" class="form-horizontal" name="advanced_search" id="advanced_search" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" method="get" onsubmit="return check_form(this);">
+  <form role="form" class="form-horizontal" name="advanced_search" id="advanced_search" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" method="get" onsubmit="return check_form(this);">
     <div class="row">
       <div class="col-sm-12 col-lg-12 large-margin-bottom">
         <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
@@ -73,5 +72,4 @@ $(document).ready(function() {
   $('.datepicker').datepicker();
 });
 </script>
-</aside>
 <!--content/search/search.php end-->
