@@ -68,11 +68,7 @@ class lC_Checkout_Shipping extends lC_Template {
     }
 
     if ($lC_Customer->hasDefaultAddress() === false) {
-      $this->_page_title = $lC_Language->get('shipping_address_heading');
-      $this->_page_contents = 'checkout_shipping_address.php';
-
-      //$this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/checkout_shipping_address.js');
-      $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/addressBookDetails.js.php');
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'));
     } else {
       $this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/shipping.js.php');
 
