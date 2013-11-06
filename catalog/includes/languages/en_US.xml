@@ -2241,6 +2241,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <group>general</group>
     </definition>
     <definition>
+      <key>field_customer_name_error</key>
+      <value><![CDATA[Your Name must contain a minimum of %s characters.]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>field_customer_date_of_birth</key>
       <value><![CDATA[Date of Birth:]]></value>
       <group>general</group>
