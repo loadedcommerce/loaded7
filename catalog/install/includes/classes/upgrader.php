@@ -547,7 +547,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                  , 'products_variants_values'       => array(
                                                                                'id'                          => 'id'
                                                                              , 'languages_id'                => 'language_id'
-                                                                             , 'products_variants_groups_id' => 'products_options_values_id'
+                                                                             , 'products_variants_groups_id' => 'products_options_id'
                                                                              , 'title'                       => 'products_options_values_name'
                                                                              , 'sort_order'                  => 'sort_order'
                                                                               )
@@ -3915,7 +3915,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $map = $this->_data_mapping['products_variants_values'];
       $variants_groups = array();
 
-      $sQry = $source_db->query('SELECT * FROM products_options_values');
+      $sQry = $source_db->query('SELECT pov.*, povp.* FROM products_options_values pov LEFT JOIN products_options_values_to_products_options povp ON ( pov.products_options_values_id = povp.products_options_values_id )');
       $sQry->execute();
         
       if ($sQry->numberOfRows() > 0) { 
@@ -3924,7 +3924,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $group  = array(
                             'id'                          => "NULL"
                           , 'languages_id'                => $sQry->value($map['languages_id'])
-                          , 'products_variants_groups_id' => $sQry->value('products_options_values_id')
+                          , 'products_variants_groups_id' => $sQry->value('products_options_id')
                           , 'title'                       => $sQry->value('products_options_values_name')
                           , 'sort_order'                  => 0
                            ); 
