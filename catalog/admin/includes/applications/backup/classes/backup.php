@@ -303,8 +303,8 @@ class lC_Backup_Admin {
               break;
 
             case 'zip':
-              $restore_from = sys_get_temp_dir().'/'.substr($sql_file->filename, 0, -4);
-              exec(CFG_APP_UNZIP . ' ' . $sql_file->tmp_filename . ' -d ' . sys_get_temp_dir().'/');
+              $restore_from = DIR_FS_WORK.substr($sql_file->filename, 0, -4);
+              exec(CFG_APP_UNZIP . ' ' . $sql_file->tmp_filename . ' -d ' . DIR_FS_WORK);
 
               $remove_raw = true;
               
