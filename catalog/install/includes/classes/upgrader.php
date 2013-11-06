@@ -2490,7 +2490,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           
           $tQry->bindInt  (':customers_id'                , $customer['customers_id']);
           $tQry->bindInt  (':customers_group_id'          , $customer['customers_group_id']);
-          $tQry->bindInt  (':customers_gender'            , $customer['customers_gender']);
+          $tQry->bindValue(':customers_gender'            , $customer['customers_gender']);
           $tQry->bindValue(':customers_firstname'         , $customer['customers_firstname']);
           $tQry->bindValue(':customers_lastname'          , $customer['customers_lastname']);
           $tQry->bindDate (':customers_dob'               , $customer['customers_dob']);
