@@ -336,11 +336,14 @@ class lC_Orders_Admin {
     if ( !$lC_Order->isValid() ) {
       return array('error' => true, 'errmsg' => sprintf(ERROR_ORDER_DOES_NOT_EXIST, $id));
     }
+    
+   
     $result['customerId'] = $lC_Order->getCustomer('id');
     $result['customerAddress'] = lC_Address::format($lC_Order->getCustomer(), '<br />');
     $result['deliveryAddress'] = lC_Address::format($lC_Order->getDelivery(), '<br />');
     $result['billingAddress'] = lC_Address::format($lC_Order->getBilling(), '<br />');
     $result['paymentMethod'] = '<span>' . $lC_Order->getPaymentMethod() . '</span>';
+        
     if ($lC_Order->isValidCreditCard()) {
       $result['paymentMethod'] .= '<table border="0" cellspacing="0" cellpadding="0">
                                      <tr>
@@ -482,7 +485,7 @@ class lC_Orders_Admin {
     $Qstatustype->bindInt(':orders_status_id', $lC_Order->getStatusID());
     $Qstatustype->execute();     
     $result['ordersStatusType'] = $Qstatustype->value('orders_status_type');    
-    $Qstatuses->freeResult;
+    $Qstatuses->freeResult;  
     
     return $result;
   }
