@@ -185,4 +185,11 @@ if (!defined('DEFAULT_LANGUAGE')) {
 if (function_exists('ini_get') && ((bool)ini_get('file_uploads') == false) ) {
   $lC_MessageStack->add('header', $lC_Language->get('ms_warning_uploads_disabled'), 'warning');
 }
+
+//check for image resize flag
+if (file_exists('../includes/work/resize.tmp')) {
+  include_once('includes/applications/images/classes/images.php');
+  $result = lC_Images_Admin::resizeBatch();
+  unlink('../includes/work/resize.tmp');
+}
 ?>
