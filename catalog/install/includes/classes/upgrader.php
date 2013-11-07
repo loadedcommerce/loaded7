@@ -666,7 +666,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
       // CONNNECT TO SOURCE DB
       
-      require_once('../includes/database_tables.php');
+      require_once('../includes/database_tables.php');  
 
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
@@ -683,7 +683,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // END CONNNECT TO SOURCE DB
       
       // CONNNECT TO TARGET DB
-
+                  
       $class = 'lC_Database_' . $t_db['DB_CLASS'];
       $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
       
@@ -1472,9 +1472,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
       
       require_once('../includes/database_tables.php');
-
+      
       require_once('../includes/classes/database/mysqli.php');
-      $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
+      $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS']; 
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
       
       if ($source_db->isError() === false) {
@@ -1487,7 +1487,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       }
       // END CONNNECT TO SOURCE DB
       
-      // CONNNECT TO TARGET DB
+      // CONNNECT TO TARGET DB  
 
       $class = 'lC_Database_' . $t_db['DB_CLASS'];
       $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
@@ -1820,7 +1820,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
       
       require_once('../includes/database_tables.php');
-
+                                     
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -2373,7 +2373,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
       
       require_once('../includes/database_tables.php');
-
+                                                          
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -2647,7 +2647,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
       // CONNNECT TO SOURCE DB
       
-      require_once('../includes/database_tables.php');
+      require_once('../includes/database_tables.php');   
 
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
@@ -2852,7 +2852,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
       
       require_once('../includes/database_tables.php');
-
+                                             
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -3019,7 +3019,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -3144,7 +3144,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
       
       require_once('../includes/database_tables.php');
-
+                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -3810,7 +3810,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -4136,7 +4136,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -4316,7 +4316,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -4460,7 +4460,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                         
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -4692,7 +4692,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -4902,7 +4902,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
