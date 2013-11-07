@@ -27,9 +27,19 @@ class lC_Image_Admin extends lC_Image {
   }
 
   // Public methods
-  function &getGroups() {
+  function getGroups() {
     return $this->_groups;
   }
+  
+  function getGroupsBatch() {
+    $nvp = '';
+    foreach ($this->_groups as $grp) {
+      if ($grp['id'] == '1') continue; // originals
+      $nvp .= '&groups[]=' . $grp['id'];
+    }
+    
+    return substr($nvp, 1);
+  }  
 
   function resize($image, $group_id) {
     if (lc_empty(CFG_APP_IMAGEMAGICK_CONVERT) || ! @file_exists(CFG_APP_IMAGEMAGICK_CONVERT)) {
