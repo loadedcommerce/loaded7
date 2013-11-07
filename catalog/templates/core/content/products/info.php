@@ -90,9 +90,9 @@
         <?php       
         $Qreviews = lC_Reviews::getListing($lC_Product->getID());
         if ($lC_Reviews->getTotal($lC_Product->getID()) > 0) {
-          echo '<span><a href="' . lc_href_link(FILENAME_PRODUCTS, 'reviews&' . $lC_Product->getKeyword()) . '" target="_blank">(' . $lC_Language->get('more_information') . ')</a></span>' . "\n";
+          echo '<span><a href="' . lc_href_link(FILENAME_PRODUCTS, 'reviews&' . $lC_Product->getKeyword()) . '">(' . $lC_Language->get('more_information') . ')</a></span>' . "\n";
         } else {            
-          echo '<span><a href="' . lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()) . '" target="_blank">(' . $lC_Language->get('text_write_review_first') . '</a>)</span>' . "\n";
+          echo '<span><a href="' . lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()) . '">(' . $lC_Language->get('text_write_review_first') . '</a>)</span>' . "\n";
         }
         ?>      
       </div>  
