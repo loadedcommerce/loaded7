@@ -326,6 +326,8 @@ text_print_packing_slip = Print Packing Slip
 text_spin_off_order = Spin Off Order
 text_go_to_customer = Go to Customer
 
+text_resize_images = Resizing images ... Please wait
+
 slider_switch_enabled = ENABLED
 slider_switch_disabled = DISABLED
 slider_switch_preview = PREVIEW text_status = Statustext_select_product = Select Product

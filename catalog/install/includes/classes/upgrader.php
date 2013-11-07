@@ -2817,9 +2817,14 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
       $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
       $tQry->execute();
+
+      //SET THE RESIZE IMAGES FLAG
+      if (!file_exists('../includes/work/resize.tmp')) {
+        file_put_contents('../includes/work/resize.tmp', '1');
+      }
       
       $source_db->disconnect();  
-      $target_db->disconnect();  
+      $target_db->disconnect(); 
       
       return true;
       
