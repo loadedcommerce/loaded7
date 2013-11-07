@@ -402,7 +402,8 @@ $(document).ready(function() {
   //check for image resize flag and resize images if flag is set
   var resize = '<?php echo (file_exists('../includes/work/resize.tmp')) ? '1' : '0'; ?>';
   var isLoggedIn = '<?php echo (isset($_SESSION['admin']) && empty($_SESSION['admin']) === false) ? '1' : '0'; ?>';
-  if (resize == '1' && isLoggedIn == '1') {
+  var module = '<?php echo $lC_Template->getModule(); ?>';
+  if (resize == '1' && isLoggedIn == '1' && module != 'login') {
     _resizeImages();
   }        
 });

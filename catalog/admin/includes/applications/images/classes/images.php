@@ -158,6 +158,9 @@ class lC_Images_Admin {
     $result['html'] = $html;
 
     $Qgroup->freeResult; 
+    
+    //remove the resize flag if it exists
+    if (file_exists(DIR_FS_WORK . 'resize.tmp')) unlink(DIR_FS_WORK . 'resize.tmp');
 
     return $result;
   }
