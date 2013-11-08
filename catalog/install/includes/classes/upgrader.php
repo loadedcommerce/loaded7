@@ -28,7 +28,7 @@ abstract class lC_Upgrader {
   
   protected $_data_mapping; // array matching source data table fields with loaded7 data table fields 
   
-  protected $_languages_id_default = 1 ; 
+  protected $_languages_id_default = 1; 
   
   public function __construct(){
   }
@@ -872,8 +872,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // LOAD PRODUCTS DESCRIPTION TO TARGET DB
       
       $iCnt = 0;
-      foreach($products_desc as $product){
-      
+      foreach ($products_desc as $product) {      
         
         $permalink = preg_replace("/&.{0,}?;/", '', $product['products_name']);
         $permalink = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $permalink);
@@ -1056,35 +1055,35 @@ class lC_LocalUpgrader extends lC_Upgrader {
           //  #### getCPATH CODE         
           
           $cat_list = $cID;
-          $catID= $cID;
+          $catID = $cID;
   
           while ($catID != 0) {
-              $the_categories_name_sql = "SELECT DISTINCT (c.categories_id), 
-                                                           parent_id, 
-                                                           categories_name, 
-                                                           sort_order 
-                                                      FROM categories AS c, 
-                                                           categories_description AS cd 
-                                                     WHERE c.categories_id = " . $catID . " 
-                                                       AND c.categories_id = cd.categories_id 
-                                                       AND language_id = " . $this->_languages_id_default;
-                          
-              $scQry = $source_db->query($the_categories_name_sql);
-              $scQry->execute();
-              $scQry->next();
+            $the_categories_name_sql = "SELECT DISTINCT (c.categories_id), 
+                                                         parent_id, 
+                                                         categories_name, 
+                                                         sort_order 
+                                                    FROM categories AS c, 
+                                                         categories_description AS cd 
+                                                   WHERE c.categories_id = " . $catID . " 
+                                                     AND c.categories_id = cd.categories_id 
+                                                     AND language_id = " . $this->_languages_id_default;
+                        
+            $scQry = $source_db->query($the_categories_name_sql);
+            $scQry->execute();
+            $scQry->next();
+            
+            $catID = $scQry->value('parent_id');
+            
+            if ($catID == 0) { 
+              break; 
+            }
               
-              $catID = $scQry->value('parent_id');
-              
-              if ($catID == 0) { 
-                break; 
-              }
-                
-              $cat_list = $catID . "_" . $cat_list;
-              
-              $scQry->freeResult();
+            $cat_list = $catID . "_" . $cat_list;
+            
+            $scQry->freeResult();
           }
           if (empty($cat_list)) { 
-            $cat_list = '0_0_0_0'; 
+            $cat_list = '0'; 
           }
           $cat_list = "cPath=" . $cat_list;
           
@@ -1302,7 +1301,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // LOAD REVIEWS TO TARGET DB
       
       $iCnt = 0;
-      foreach($reviews as $review){
+      foreach ($reviews as $review) {
         
         $tQry = $target_db->query('INSERT INTO :table_reviews (reviews_id, 
                                                                products_id, 
@@ -1392,7 +1391,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // LOAD SPECIALS TO TARGET DB
       
       $iCnt = 0;
-      foreach($specials as $special){
+      foreach ($specials as $special) {
         
         $tQry = $target_db->query('INSERT INTO :table_reviews (specials_id, 
                                                                products_id, 
@@ -1452,6 +1451,71 @@ class lC_LocalUpgrader extends lC_Upgrader {
       return true;
       
   } // end importProducts
+
+  /*
+  *  function name : getcPath()
+  *
+  *  description : get the recursive parent cPath of a category from the source db
+  *
+  *  returns : string  
+  *
+  */
+  public function getcPath($_cid, $_path) {
+      
+      $s_db = $this->_sDB;
+      $t_db = $this->_tDB;
+      $map = $this->_data_mapping['categories'];
+            
+      if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+      // CONNNECT TO SOURCE DB
+      
+      require_once('../includes/database_tables.php');
+      
+      require_once('../includes/classes/database/mysqli.php');
+      $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS']; 
+      $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+      
+      if ($source_db->isError() === false) {
+        $source_db->selectDatabase($s_db['DB_DATABASE']);
+      }
+      
+      if ($source_db->isError()) {
+        $this->_msg = $source_db->getError();
+        return false;
+      }
+      // END CONNNECT TO SOURCE DB
+      
+      // BEGIN GET CPATH FOR CATEGORY
+      $pQry = $source_db->query("SELECT DISTINCT (c.categories_id), 
+                                                  parent_id, 
+                                                  categories_name, 
+                                                  sort_order 
+                                             FROM categories AS c, 
+                                                  categories_description AS cd 
+                                            WHERE c.categories_id = " . $_cid . " 
+                                              AND c.categories_id = cd.categories_id 
+                                              AND language_id = " . $this->_languages_id_default);
+      $pQry->execute();
+      
+      while ($pQry->next()) {
+        if ($pQry->value('parent_id') != 0) {
+          if ($_path != '') {
+            $_path = $pQry->value('parent_id') . "_" . $_path;
+            $path = lC_LocalUpgrader::getcPath($pQry->value('parent_id'), $_path) . "_" . $_path;
+          } else {
+            $path = $pQry->value('parent_id') . "_" . $_cid;
+          }
+        } else {
+          $path = $_cid;
+        }
+      }
+
+      $pQry->freeResult();
+      
+      return $path;
+      
+  }
 
   /*
   *  function name : importCategories()
@@ -1517,7 +1581,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // END TRUNCATE CATEGORIES TABLES IN TARGET DB
 
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+      $tQry = $target_db->query('SET sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
       $tQry->execute();
 
       // LOAD CATEGORIES FROM SOURCE DB
@@ -1626,7 +1690,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $c_keyword = str_replace("---", "-", $c_keyword);
           $c_keyword = str_replace("----", "-", $c_keyword);
           
-          if (in_array($c_keyword, $c_keywords)) $c_keyword .= '-' . $sQry->value('categories_id');
           $c_keywords[] = strtolower($c_keyword);
           
           $category  = array(
@@ -1688,7 +1751,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // LOAD CATEGORY PERMALINKs TO TARGET DB
       
       $iCnt = 0;
-      $permalink_array = array();
       $sQry = $source_db->query('SELECT c.categories_id, 
                                         cd.language_id, 
                                         c.parent_id, 
@@ -1704,52 +1766,18 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
           $c_ID = $sQry->value('categories_id');
 
-          //  #### getCPATH CODE         
-        
-          $cat_list = $c_ID;
-          $catID = $c_ID;
-
-          while ($catID != 0) {
-              $the_categories_name_sql ="SELECT DISTINCT (c.categories_id), 
-                                                          parent_id, 
-                                                          categories_name, 
-                                                          sort_order 
-                                                     FROM categories AS c, 
-                                                          categories_description AS cd 
-                                                    WHERE c.categories_id = " . $catID . " 
-                                                      AND c.categories_id = cd.categories_id 
-                                                      AND language_id = " . $this->_languages_id_default;
-                          
-              $sQry = $source_db->query($the_categories_name_sql);
-              $sQry->execute();
-              $sQry->next();
-              
-              $catID = $sQry->value('parent_id');
-              
-              if ($catID == 0) { 
-                break; 
-              }
-                
-              $cat_list = $catID . "_" . $cat_list;
-              
-              $sQry->freeResult();
-          }
-          if (empty($cat_list)) { 
-            $cat_list = '0_0_0_0'; 
-          }
-          $cat_list = "cPath=" . $cat_list;
+          //  #### getCPATH CODE
+          
+          $cat_list = "cPath=" . lC_LocalUpgrader::getcPath($c_ID);; 
                   
           //  #### END getCPATH CODE         
           
-          $permalink = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $sQry->value('categories_name'));
-          $permalink = str_replace("&", "and", $permalink);
-          $permalink = str_replace(".", "", $permalink);
-          $permalink = str_replace("--", "-", $permalink);
-          $permalink = str_replace("---", "-", $permalink);
-          $permalink = str_replace("----", "-", $permalink);
-          
-          if (in_array($permatext, $permalink_array)) $permatext .= '-' . $c_ID;
-          $permalink_array[] = $permatext;
+          $permatext = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $sQry->value('categories_name'));
+          $permatext = str_replace("&", "and", $permatext);
+          $permatext = str_replace(".", "", $permatext);
+          $permatext = str_replace("--", "-", $permatext);
+          $permatext = str_replace("---", "-", $permatext);
+          $permatext = str_replace("----", "-", $permatext);
           
           $permalink  = array(
                                 'item_id'     => $c_ID
@@ -1773,7 +1801,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->bindInt  (':language_id', $permalink['language_id']);
           $tQry->bindInt  (':type'       , 1);
           $tQry->bindValue(':query'      , $cat_list);
-          $tQry->bindValue(':permalink'  , str_replace("--", "-", strtolower($permatext)));
+          $tQry->bindValue(':permalink'  , strtolower($permatext));
           
           $tQry->execute();
           
@@ -1787,11 +1815,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
         $sQry->freeResult();
       }
-
+      
       // END LOAD PERMALINK TO TARGET DB
       
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+      $tQry = $target_db->query('SET sql_mode = ""');
       $tQry->execute();
 
       $source_db->disconnect();  
@@ -1800,6 +1828,71 @@ class lC_LocalUpgrader extends lC_Upgrader {
       return true;
       
   } // end importCategories
+
+  /*
+  *  function name : getcdsPath()
+  *
+  *  description : get the recursive parent CDpath of a cds category or page from the source db and convert it to cPath
+  *
+  *  returns : string  
+  *
+  */
+  public function getcdsPath($_cid, $_path) {
+      
+      $s_db = $this->_sDB;
+      $t_db = $this->_tDB;
+      $map = $this->_data_mapping['categories'];
+            
+      if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+      // CONNNECT TO SOURCE DB
+      
+      require_once('../includes/database_tables.php');
+      
+      require_once('../includes/classes/database/mysqli.php');
+      $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS']; 
+      $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+      
+      if ($source_db->isError() === false) {
+        $source_db->selectDatabase($s_db['DB_DATABASE']);
+      }
+      
+      if ($source_db->isError()) {
+        $this->_msg = $source_db->getError();
+        return false;
+      }
+      // END CONNNECT TO SOURCE DB
+      
+      // BEGIN GET CPATH FOR CDS CATEGORY/PAGE
+      /*$pQry = $source_db->query("SELECT DISTINCT (c.categories_id), 
+                                                  parent_id, 
+                                                  categories_name, 
+                                                  sort_order 
+                                             FROM categories AS c, 
+                                                  categories_description AS cd 
+                                            WHERE c.categories_id = " . $_cid . " 
+                                              AND c.categories_id = cd.categories_id 
+                                              AND language_id = " . $this->_languages_id_default);
+      $pQry->execute();
+      
+      while ($pQry->next()) {
+        if ($pQry->value('parent_id') != 0) {
+          if ($_path != '') {
+            $_path = $pQry->value('parent_id') . "_" . $_path;
+            $path = lC_LocalUpgrader::getcPath($pQry->value('parent_id'), $_path) . "_" . $_path;
+          } else {
+            $path = $pQry->value('parent_id') . "_" . $_cid;
+          }
+        } else {
+          $path = $_cid;
+        }
+      }
+
+      $pQry->freeResult();
+      
+      return $path;*/
+      
+  }
   
   /*
   *  function name : importPages()
@@ -2762,7 +2855,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // PROCESS tmp_image_import DATA 
       $to_zip = array();      
       
-      foreach($source_images as $k => $images_info){
+      foreach ($source_images as $k => $images_info) {
         
         $products_id = $images_info['products_id'];
         $image_array = unserialize($images_info['images']);
@@ -4060,7 +4153,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // LOAD PRODUCTS SIMPLE VALUES TO TARGET DB
         
       $iCnt = 0;
-      foreach($simple_values as $value){
+      foreach ($simple_values as $value) {
         
         $Qchk = $target_db->query('SELECT id from :products_simple_options_values WHERE options_id = :options_id and values_id = :values_id limit 1');
         $Qchk->bindInt  (':options_id' , $value['options_id']);
@@ -4390,7 +4483,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // LOAD NEWSLETTERS TO TARGET DB
         
       $iCnt = 0;
-      foreach($newsletters as $nl){
+      foreach ($newsletters as $nl) {
         
         $tQry = $target_db->query('INSERT INTO :table_newsletters (newsletters_id, 
                                                                    title, 
@@ -4629,7 +4722,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // LOAD BANNERS HISTORY TO TARGET DB
         
       $iCnt = 0;
-      foreach($banners as $banner){
+      foreach ($banners as $banner) {
         
         $tQry = $target_db->query('INSERT INTO :table_banners_history (banners_history_id, 
                                                                        banners_id, 

@@ -34,12 +34,14 @@
         ?>
         <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
         <li><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>"><?php echo $lC_Language->get('text_checkout'); ?></a></li>
+        <?php if ($lC_Template->getTopCategoriesSelection() != null) { ?>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <?php echo $lC_Template->getTopCategoriesSelection(); ?>
           </ul>
         </li>
+        <?php } ?>
       </ul>
       <div class="pull-right mid-margin-top large-margin-right">
         <ul class="language-menu">

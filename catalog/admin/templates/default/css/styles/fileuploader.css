@@ -55,3 +55,7 @@
 
 .qq-upload-failed-text {display:none;}
 .qq-upload-fail .qq-upload-failed-text {display:inline;}
+
+#sql_file{
+  max-width: 270px;
+}

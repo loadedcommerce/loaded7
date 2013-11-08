@@ -46,6 +46,7 @@ function restoreLocal() {
         classes:  'blue-gradient glossy',
         click:    function(win) {
           $("#bRestoreLocal").submit();
+          $('#dataTable_processing').css("visibility", "visible");
           win.closeModal();
         }
       }

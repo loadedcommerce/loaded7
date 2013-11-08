@@ -11,7 +11,7 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-global $lC_Template;
+global $lC_Template, $lC_Language;
 ?>
 <script>
 $(document).ready(function() {
@@ -43,6 +43,15 @@ $(document).ready(function() {
   if (error) {
     var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
     $.modal.alert(errmsg);
+  }
+  var restoreLocal = '<?php echo $_SESSION['restoreLocal']; ?>';
+  if (restoreLocal == true) {
+    setTimeout(function() {
+      $.modal.alert('<?php echo $lC_Language->get('message_backup_success'); ?>');
+    }, 1000);
+  <?php
+    $_SESSION['restoreLocal'] = false;
+  ?>
   }
 });
   
