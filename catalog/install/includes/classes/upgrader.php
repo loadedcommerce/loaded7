@@ -1508,9 +1508,10 @@ class lC_LocalUpgrader extends lC_Upgrader {
           }
         } else {
           $path = $_cid;
-          $pQry->freeResult();
         }
       }
+
+      $pQry->freeResult();
       
       return $path;
       
@@ -1765,171 +1766,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
           $c_ID = $sQry->value('categories_id');
 
-          //  #### getCPATH CODE         
-        
-          /*$p1Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                       parent_id, 
-                                                       categories_name, 
-                                                       sort_order 
-                                                  FROM categories AS c, 
-                                                       categories_description AS cd 
-                                                 WHERE c.categories_id = " . $c_ID . " 
-                                                   AND c.categories_id = cd.categories_id 
-                                                   AND language_id = " . $this->_languages_id_default);
-          $p1Qry->execute();
-          while ($p1Qry->next()) {
-            if ($p1Qry->value('parent_id') == 0) { 
-              $cat_list = $c_ID; 
-            } else {              
-              $p2Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                           parent_id, 
-                                                           categories_name, 
-                                                           sort_order 
-                                                      FROM categories AS c, 
-                                                           categories_description AS cd 
-                                                     WHERE c.categories_id = " . $p1Qry->value('parent_id') . " 
-                                                       AND c.categories_id = cd.categories_id 
-                                                       AND language_id = " . $this->_languages_id_default);
-              $p2Qry->execute();
-              while ($p2Qry->next()) {
-                if ($p2Qry->value('parent_id') == 0) { 
-                  $cat_list = $p1Qry->value('parent_id') . "_" . $c_ID; 
-                } else {              
-                  $p3Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                               parent_id, 
-                                                               categories_name, 
-                                                               sort_order 
-                                                          FROM categories AS c, 
-                                                               categories_description AS cd 
-                                                         WHERE c.categories_id = " . $p2Qry->value('parent_id') . " 
-                                                           AND c.categories_id = cd.categories_id 
-                                                           AND language_id = " . $this->_languages_id_default);
-                  $p3Qry->execute();
-                  while ($p3Qry->next()) {
-                    if ($p3Qry->value('parent_id') == 0) { 
-                      $cat_list = $p2Qry->value('parent_id') . "_" . $p1Qry->value('parent_id') . "_" . $c_ID; 
-                    } else {              
-                      $p4Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                                   parent_id, 
-                                                                   categories_name, 
-                                                                   sort_order 
-                                                              FROM categories AS c, 
-                                                                   categories_description AS cd 
-                                                             WHERE c.categories_id = " . $p3Qry->value('parent_id') . " 
-                                                               AND c.categories_id = cd.categories_id 
-                                                               AND language_id = " . $this->_languages_id_default);
-                      $p4Qry->execute();
-                      while ($p4Qry->next()) {
-                        if ($p4Qry->value('parent_id') == 0) { 
-                          $cat_list = $p3Qry->value('parent_id') . "_" . $p2Qry->value('parent_id') . "_" . $p1Qry->value('parent_id') . "_" . $c_ID; 
-                        } else {              
-                          $p5Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                                       parent_id, 
-                                                                       categories_name, 
-                                                                       sort_order 
-                                                                  FROM categories AS c, 
-                                                                       categories_description AS cd 
-                                                                 WHERE c.categories_id = " . $p4Qry->value('parent_id') . " 
-                                                                   AND c.categories_id = cd.categories_id 
-                                                                   AND language_id = " . $this->_languages_id_default);
-                          $p5Qry->execute();
-                          while ($p5Qry->next()) {
-                            if ($p5Qry->value('parent_id') == 0) { 
-                              $cat_list = $p4Qry->value('parent_id') . "_" . $p3Qry->value('parent_id') . "_" . $p2Qry->value('parent_id') . "_" . $p1Qry->value('parent_id') . "_" . $c_ID; 
-                            } else {              
-                              $p6Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                                           parent_id, 
-                                                                           categories_name, 
-                                                                           sort_order 
-                                                                      FROM categories AS c, 
-                                                                           categories_description AS cd 
-                                                                     WHERE c.categories_id = " . $p5Qry->value('parent_id') . " 
-                                                                       AND c.categories_id = cd.categories_id 
-                                                                       AND language_id = " . $this->_languages_id_default);
-                              $p6Qry->execute();
-                              while ($p6Qry->next()) {
-                                if ($p6Qry->value('parent_id') == 0) { 
-                                  $cat_list = $p5Qry->value('parent_id') . "_" . $p4Qry->value('parent_id') . "_" . $p3Qry->value('parent_id') . "_" . $p2Qry->value('parent_id') . "_" . $p1Qry->value('parent_id') . "_" . $c_ID; 
-                                } else {              
-                                  $p7Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                                               parent_id, 
-                                                                               categories_name, 
-                                                                               sort_order 
-                                                                          FROM categories AS c, 
-                                                                               categories_description AS cd 
-                                                                         WHERE c.categories_id = " . $p6Qry->value('parent_id') . " 
-                                                                           AND c.categories_id = cd.categories_id 
-                                                                           AND language_id = " . $this->_languages_id_default);
-                                  $p7Qry->execute();
-                                  while ($p7Qry->next()) {
-                                    if ($p7Qry->value('parent_id') == 0) { 
-                                      $cat_list = $p6Qry->value('parent_id') . "_" . $p5Qry->value('parent_id') . "_" . $p4Qry->value('parent_id') . "_" . $p3Qry->value('parent_id') . "_" . $p2Qry->value('parent_id') . "_" . $p1Qry->value('parent_id') . "_" . $c_ID; 
-                                    } else {              
-                                      $p8Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                                                   parent_id, 
-                                                                                   categories_name, 
-                                                                                   sort_order 
-                                                                              FROM categories AS c, 
-                                                                                   categories_description AS cd 
-                                                                             WHERE c.categories_id = " . $p7Qry->value('parent_id') . " 
-                                                                               AND c.categories_id = cd.categories_id 
-                                                                               AND language_id = " . $this->_languages_id_default);
-                                      $p8Qry->execute();
-                                      while ($p8Qry->next()) {
-                                        if ($p8Qry->value('parent_id') == 0) { 
-                                          $cat_list = $p7Qry->value('parent_id') . "_" . $p6Qry->value('parent_id') . "_" . $p5Qry->value('parent_id') . "_" . $p4Qry->value('parent_id') . "_" . $p3Qry->value('parent_id') . "_" . $p2Qry->value('parent_id') . "_" . $p1Qry->value('parent_id') . "_" . $c_ID; 
-                                        } else {              
-                                          $p9Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                                                       parent_id, 
-                                                                                       categories_name, 
-                                                                                       sort_order 
-                                                                                  FROM categories AS c, 
-                                                                                       categories_description AS cd 
-                                                                                 WHERE c.categories_id = " . $p8Qry->value('parent_id') . " 
-                                                                                   AND c.categories_id = cd.categories_id 
-                                                                                   AND language_id = " . $this->_languages_id_default);
-                                          $p9Qry->execute();
-                                          while ($p9Qry->next()) {
-                                            if ($p9Qry->value('parent_id') == 0) { 
-                                              $cat_list = $p8Qry->value('parent_id') . "_" . $p7Qry->value('parent_id') . "_" . $p6Qry->value('parent_id') . "_" . $p5Qry->value('parent_id') . "_" . $p4Qry->value('parent_id') . "_" . $p3Qry->value('parent_id') . "_" . $p2Qry->value('parent_id') . "_" . $p1Qry->value('parent_id') . "_" . $c_ID; 
-                                            } else {              
-                                              $p10Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                                                           parent_id, 
-                                                                                           categories_name, 
-                                                                                           sort_order 
-                                                                                      FROM categories AS c, 
-                                                                                           categories_description AS cd 
-                                                                                     WHERE c.categories_id = " . $p9Qry->value('parent_id') . " 
-                                                                                       AND c.categories_id = cd.categories_id 
-                                                                                       AND language_id = " . $this->_languages_id_default);
-                                              $p10Qry->execute();
-                                              while ($p10Qry->next()) {
-                                                if ($p10Qry->value('parent_id') == 0) {
-                                                  $cat_list = $p9Qry->value('parent_id') . "_" . $p8Qry->value('parent_id') . "_" . $p7Qry->value('parent_id') . "_" . $p6Qry->value('parent_id') . "_" . $p5Qry->value('parent_id') . "_" . $p4Qry->value('parent_id') . "_" . $p3Qry->value('parent_id') . "_" . $p2Qry->value('parent_id') . "_" . $p1Qry->value('parent_id') . "_" . $c_ID; 
-                                                } else {
-                                                  $cat_list = $p10Qry->value('parent_id') . "_" . $p9Qry->value('parent_id') . "_" . $p8Qry->value('parent_id') . "_" . $p7Qry->value('parent_id') . "_" . $p6Qry->value('parent_id') . "_" . $p5Qry->value('parent_id') . "_" . $p4Qry->value('parent_id') . "_" . $p3Qry->value('parent_id') . "_" . $p2Qry->value('parent_id') . "_" . $p1Qry->value('parent_id') . "_" . $c_ID; 
-                                                }
-                                              } 
-                                            }
-                                          } 
-                                        }
-                                      } 
-                                    }
-                                  } 
-                                }
-                              } 
-                            }
-                          } 
-                        }
-                      } 
-                    }
-                  } 
-                }
-              }
-            }
-          }*/
-          
-          //$p1Qry->freeResult();
+          //  #### getCPATH CODE
           
           $cat_list = "cPath=" . lC_LocalUpgrader::getcPath($c_ID);; 
                   
