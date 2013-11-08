@@ -1453,6 +1453,70 @@ class lC_LocalUpgrader extends lC_Upgrader {
   } // end importProducts
 
   /*
+  *  function name : getcPath()
+  *
+  *  description : get the recursive parent cPath of a category from the source db
+  *
+  *  returns : string  
+  *
+  */
+  public function getcPath($_cid, $_path) {
+      
+      $s_db = $this->_sDB;
+      $t_db = $this->_tDB;
+      $map = $this->_data_mapping['categories'];
+            
+      if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
+
+      // CONNNECT TO SOURCE DB
+      
+      require_once('../includes/database_tables.php');
+      
+      require_once('../includes/classes/database/mysqli.php');
+      $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS']; 
+      $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+      
+      if ($source_db->isError() === false) {
+        $source_db->selectDatabase($s_db['DB_DATABASE']);
+      }
+      
+      if ($source_db->isError()) {
+        $this->_msg = $source_db->getError();
+        return false;
+      }
+      // END CONNNECT TO SOURCE DB
+      
+      // BEGIN GET CPATH FOR CATEGORY
+      $pQry = $source_db->query("SELECT DISTINCT (c.categories_id), 
+                                                  parent_id, 
+                                                  categories_name, 
+                                                  sort_order 
+                                             FROM categories AS c, 
+                                                  categories_description AS cd 
+                                            WHERE c.categories_id = " . $_cid . " 
+                                              AND c.categories_id = cd.categories_id 
+                                              AND language_id = " . $this->_languages_id_default);
+      $pQry->execute();
+      
+      while ($pQry->next()) {
+        if ($pQry->value('parent_id') != 0) {
+          if ($_path != '') {
+            $_path = $pQry->value('parent_id') . "_" . $_path;
+            $path = lC_LocalUpgrader::getcPath($pQry->value('parent_id'), $_path) . "_" . $_path;
+          } else {
+            $path = $pQry->value('parent_id') . "_" . $_cid;
+          }
+        } else {
+          $path = $_cid;
+          $pQry->freeResult();
+        }
+      }
+      
+      return $path;
+      
+  }
+
+  /*
   *  function name : importCategories()
   *
   *  description : load categories and categories_description to loaded7
@@ -1703,7 +1767,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
           //  #### getCPATH CODE         
         
-          $p1Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
+          /*$p1Qry = $source_db->query("SELECT DISTINCT (c.categories_id), 
                                                        parent_id, 
                                                        categories_name, 
                                                        sort_order 
@@ -1863,11 +1927,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
                 }
               }
             }
-          }
+          }*/
           
-          $p1Qry->freeResult();
+          //$p1Qry->freeResult();
           
-          $cat_list = "cPath=" . $cat_list; 
+          $cat_list = "cPath=" . lC_LocalUpgrader::getcPath($c_ID);; 
                   
           //  #### END getCPATH CODE         
           
