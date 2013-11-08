@@ -11,8 +11,7 @@
   @copyright  (c) 2012 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-$db_table_types = array(array('id' => 'mysqli', 'text' => 'MySQL - MyISAM (Default)'),
-                        array('id' => 'mysqli_innodb', 'text' => 'MySQL - InnoDB (Transaction-Safe)'));
+$db_table_types = array(array('id' => 'mysqli', 'text' => 'MySQL - MyISAM (Default)'));
 
 $dir_fs_www_root = dirname(__FILE__);
 $dir_fs_www_root = lc_realpath(dirname(__FILE__) . '/../../');

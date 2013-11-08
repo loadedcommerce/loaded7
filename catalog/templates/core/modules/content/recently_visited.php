@@ -36,8 +36,11 @@ $(document).ready(function() {
     var newNameContentText = (nameContentText.length > 16) ? nameContentText.substr(0, 13) + '...' : nameContentText;
     nameContent = nameContent.replace(nameContentText, newNameContentText);
     
-    output = '<div class="' + thisContentClass + ' with-padding-no-top-bottom">'+
-             '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
+    // added for products with no image
+    if (!imageContent) imageContent = ''; 
+    
+    output = '<div class="' + thisContentClass + ' with-padding-no-top-bottom">' +
+             '  <div class="thumbnail align-center large-padding-top">' + imageContent +
              '    <div class="caption">' +
              '      <h3 class="content-recently-visited-text-name no-margin-top small-margin-bottom">' + nameContent + '</h3>' +
              '      <p class="text-center small-margin-top small-margin-bottom">' + fromContent + '</p>' +

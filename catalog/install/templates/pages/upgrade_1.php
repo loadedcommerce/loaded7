@@ -11,9 +11,7 @@
   @copyright  (c) 2012 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
-$db_table_types = array(array('id' => 'mysqli', 'text' => 'MySQL - MyISAM (Default)'),
-                        array('id' => 'mysqli_innodb', 'text' => 'MySQL - InnoDB (Transaction-Safe)'));
-
+$db_table_types = array(array('id' => 'mysqli', 'text' => 'MySQL - MyISAM (Default)'));
                         
 if($_POST){
 //	print_r($_POST);

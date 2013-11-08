@@ -666,7 +666,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
       // CONNNECT TO SOURCE DB
       
-      require_once('../includes/database_tables.php');
+      require_once('../includes/database_tables.php');  
 
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
@@ -683,7 +683,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // END CONNNECT TO SOURCE DB
       
       // CONNNECT TO TARGET DB
-
+                  
       $class = 'lC_Database_' . $t_db['DB_CLASS'];
       $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
       
@@ -1471,9 +1471,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
       
       require_once('../includes/database_tables.php');
-
+      
       require_once('../includes/classes/database/mysqli.php');
-      $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
+      $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS']; 
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
       
       if ($source_db->isError() === false) {
@@ -1486,7 +1486,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       }
       // END CONNNECT TO SOURCE DB
       
-      // CONNNECT TO TARGET DB
+      // CONNNECT TO TARGET DB  
 
       $class = 'lC_Database_' . $t_db['DB_CLASS'];
       $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
@@ -1947,7 +1947,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
       
       require_once('../includes/database_tables.php');
-
+                                     
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -2500,7 +2500,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
       
       require_once('../includes/database_tables.php');
-
+                                                          
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -2774,7 +2774,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
       // CONNNECT TO SOURCE DB
       
-      require_once('../includes/database_tables.php');
+      require_once('../includes/database_tables.php');   
 
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
@@ -2979,7 +2979,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
       
       require_once('../includes/database_tables.php');
-
+                                             
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -3146,7 +3146,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -3271,7 +3271,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
       
       require_once('../includes/database_tables.php');
-
+                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -3922,7 +3922,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   /*
   *  function name : importAttributes()
   *
-  *  description : load products_variants_groups, products_variants_values, products_simple_option, products_simpleoptions_values from source to loaded7
+  *  description : load products_variants_groups, products_variants_values, products_simple_option, products_simple_options_values from source to loaded7
   *
   *  returns : true or false  
   *
@@ -3937,7 +3937,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -4099,20 +4099,22 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $simple_options = array();
       $simple_values = array();
 
-      $sQry = $source_db->query('SELECT * FROM products_attributes');
+      $sQry = $source_db->query('SELECT * FROM products_attributes order by options_id asc');
       $sQry->execute();
         
       if ($sQry->numberOfRows() > 0) { 
         $cnt = 0;
         while ($sQry->next()) {
+          
+          if ($sQry->valueInt('products_id') == 0) continue;
         
-          $options_id = $sQry->value('options_id') ; 
+          $options_id = $sQry->valueInt('options_id') ; 
           
           $option  = array(
                              'id'          => "NULL"
                            , 'options_id'  => $options_id
-                           , 'products_id' => $sQry->value('products_id')
-                           , 'sort_order'  => $sQry->value('sort_order')
+                           , 'products_id' => $sQry->valueInt('products_id')
+                           , 'sort_order'  => $sQry->valueInt('sort_order')
                            , 'status'      => 1
                             ); 
                            
@@ -4123,9 +4125,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $value  = array(
                             'id'                 => "NULL"
                           , 'customers_group_id' => 1
-                          , 'values_id'          => $sQry->value('options_values_id')
+                          , 'values_id'          => $sQry->valueInt('options_values_id')
                           , 'options_id'         => $options_id
-                          , 'price_modifier'     => $sQry->value('options_values_price') * $prefix
+                          , 'price_modifier'     => $sQry->valueDecimal('options_values_price') * $prefix
                            ); 
                            
           $simple_values[] = $value;
@@ -4142,32 +4144,42 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $iCnt = 0;
       foreach ($simple_options as $option) {
         
-        $tQry = $target_db->query('INSERT INTO :products_simple_options (id, 
-                                                                         options_id, 
-                                                                         products_id, 
-                                                                         sort_order, 
-                                                                         status) 
-                                                                 VALUES (:id, 
-                                                                         :options_id, 
-                                                                         :products_id, 
-                                                                         :sort_order, 
-                                                                         :status)');
+        $Qchk = $target_db->query('SELECT id from :products_simple_options WHERE options_id = :options_id and products_id = :products_id limit 1');
+        $Qchk->bindInt  (':options_id' , $option['options_id']);
+        $Qchk->bindInt  (':products_id', $option['products_id']);
+        $Qchk->bindTable(':products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+        $Qchk->execute();        
+        
+        if ($Qchk->numberOfRows() == 0) {
+          $tQry = $target_db->query('INSERT INTO :products_simple_options (id, 
+                                                                           options_id, 
+                                                                           products_id, 
+                                                                           sort_order, 
+                                                                           status) 
+                                                                   VALUES (:id, 
+                                                                           :options_id, 
+                                                                           :products_id, 
+                                                                           :sort_order, 
+                                                                           :status)');
 
-        $tQry->bindTable(':products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
-        
-        $tQry->bindInt  (':id'         , $option['id']);
-        $tQry->bindInt  (':options_id' , $option['options_id']);
-        $tQry->bindInt  (':products_id', $option['products_id']);
-        $tQry->bindInt  (':sort_order' , $option['sort_order']);
-        $tQry->bindInt  (':status'     , $option['status']);
-        
-        $tQry->execute();
-        
-        if ($target_db->isError()) {
-          $this->_msg = $target_db->getError();
-          return false;
+          $tQry->bindTable(':products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+          
+          $tQry->bindInt  (':id'         , $option['id']);
+          $tQry->bindInt  (':options_id' , $option['options_id']);
+          $tQry->bindInt  (':products_id', $option['products_id']);
+          $tQry->bindInt  (':sort_order' , $option['sort_order']);
+          $tQry->bindInt  (':status'     , $option['status']);
+          
+          $tQry->execute();
+          
+          if ($target_db->isError()) {
+            $this->_msg = $target_db->getError();
+            return false;
+          } 
+          $iCnt++;
         }
-        $iCnt++;
+        
+        $Qchk->freeResult();
       }
 
       // END LOAD PRODUCTS SIMPLE OPTIONS TO TARGET DB
@@ -4177,32 +4189,42 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $iCnt = 0;
       foreach ($simple_values as $value) {
         
-        $tQry = $target_db->query('INSERT INTO :products_simple_options_values (id, 
-                                                                                customers_group_id, 
-                                                                                values_id, 
-                                                                                options_id, 
-                                                                                price_modifier) 
-                                                                        VALUES (:id, 
-                                                                                :customers_group_id, 
-                                                                                :values_id, 
-                                                                                :options_id, 
-                                                                                :price_modifier)');
+        $Qchk = $target_db->query('SELECT id from :products_simple_options_values WHERE options_id = :options_id and values_id = :values_id limit 1');
+        $Qchk->bindInt  (':options_id' , $value['options_id']);
+        $Qchk->bindInt  (':values_id', $value['values_id']);
+        $Qchk->bindTable(':products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+        $Qchk->execute();        
+        
+        if ($Qchk->numberOfRows() == 0) {
+          $tQry = $target_db->query('INSERT INTO :products_simple_options_values (id, 
+                                                                                  customers_group_id, 
+                                                                                  values_id, 
+                                                                                  options_id, 
+                                                                                  price_modifier) 
+                                                                          VALUES (:id, 
+                                                                                  :customers_group_id, 
+                                                                                  :values_id, 
+                                                                                  :options_id, 
+                                                                                  :price_modifier)');
 
-        $tQry->bindTable(':products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-        
-        $tQry->bindInt  (':id'                , $value['id']);
-        $tQry->bindInt  (':customers_group_id', $value['customers_group_id']);
-        $tQry->bindInt  (':values_id'         , $value['values_id']);
-        $tQry->bindInt  (':options_id'        , $value['options_id']);
-        $tQry->bindFloat(':price_modifier'    , $value['price_modifier']);
-        
-        $tQry->execute();
-        
-        if ($target_db->isError()) {
-          $this->_msg = $target_db->getError();
-          return false;
+          $tQry->bindTable(':products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+          
+          $tQry->bindInt  (':id'                , $value['id']);
+          $tQry->bindInt  (':customers_group_id', $value['customers_group_id']);
+          $tQry->bindInt  (':values_id'         , $value['values_id']);
+          $tQry->bindInt  (':options_id'        , $value['options_id']);
+          $tQry->bindFloat(':price_modifier'    , $value['price_modifier']);
+          
+          $tQry->execute();
+          
+          if ($target_db->isError()) {
+            $this->_msg = $target_db->getError();
+            return false;
+          }
+          $iCnt++;
         }
-        $iCnt++;
+
+        $Qchk->freeResult();
       }
 
       // END LOAD PRODUCTS SIMPLE VALUES TO TARGET DB
@@ -4241,7 +4263,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -4421,7 +4443,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -4565,7 +4587,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                         
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -4797,7 +4819,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
@@ -5007,7 +5029,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // CONNNECT TO SOURCE DB
         
       require_once('../includes/database_tables.php');
-
+                                                       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS'];
       $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
