@@ -219,7 +219,7 @@
     function saveEntry($data) {
       global $lC_Database, $lC_Language;
 
-      $Qreview = $lC_Database->query('insert into :table_reviews (products_id, customers_id, customers_name, reviews_rating, languages_id, reviews_text, reviews_status, date_added) values (:products_id, :customers_id, :customers_name, :reviews_rating, :languages_id, :reviews_text, :reviews_status, now())');
+      $Qreview = $lC_Database->query('insert into :table_reviews (products_id, customers_id, customers_name, reviews_rating, languages_id, reviews_text, reviews_status, date_added, reviews_read) values (:products_id, :customers_id, :customers_name, :reviews_rating, :languages_id, :reviews_text, :reviews_status, now(), :reviews_read)');
       $Qreview->bindTable(':table_reviews', TABLE_REVIEWS);
       $Qreview->bindInt(':products_id', $data['products_id']);
       $Qreview->bindInt(':customers_id', $data['customer_id']);
@@ -228,6 +228,7 @@
       $Qreview->bindInt(':languages_id', $lC_Language->getID());
       $Qreview->bindValue(':reviews_text', $data['review']);
       $Qreview->bindInt(':reviews_status', $data['status']);
+      $Qreview->bindInt(':reviews_read', 0);
       $Qreview->execute();
     }
   }
