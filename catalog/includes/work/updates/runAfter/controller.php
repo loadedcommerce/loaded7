@@ -184,6 +184,9 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = '-1' where `configuration_key` = 'USE_DEFAULT_TEMPLATE_STYLESHEET'");
     parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = '-1' where `configuration_key` = 'USE_DEFAULT_TEMPLATE_STYLESHEET'");
     
+    $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_title` = 'Tag Cloud Maximum Listings' where `configuration_key` = 'TAG_CLOUD_MAX_LIST'");
+    parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_title` = 'Tag Cloud Maximum Listings' where `configuration_key` = 'TAG_CLOUD_MAX_LIST'");
+    
   } 
 }  
 ?>
