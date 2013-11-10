@@ -20,6 +20,8 @@ You are encourage to fork our project and request pulls. See below for how to pa
 ### Loaded Commerce 7 Versions
 https://github.com/loadedcommerce/loaded7/releases
 
+=============================================================================================================
+
 [GPL V2](http://www.gnu.org/licenses/gpl-2.0.html#SEC2) This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
