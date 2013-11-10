@@ -1,5 +1,5 @@
 # Loaded7&trade; Commerce
-Based on the original [osCommerce platform](http://www.oscommerce.com "osCommerce Online Merchant") __Loaded 7&trade;__ includes new mobile responsive template in both admin and catalog.
+Based on the original [osCommerce platform](http://www.oscommerce.com "osCommerce Online Merchant"), **[Loaded 7]**&trade; includes new mobile responsive template in both admin and catalog.
 A whole new object oriented template system for extensible markup aside of the core cart development. Rework to core payment and shipping modules.
 ## A Responsive Ecommerce Web Application
 **Responsive Design** is rarely seen in open source shopping carts. We've taken it to the next level with full support for Android&trade; and Apple&trade;
@@ -42,3 +42,4 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 [Language Translations]: https://githubt.com/loadedcommerce/loaded7-langauges/
 [Feedback]: http://www.loaded7.com/forums/
 [Promotion]: http://www.loaded7.com/
+[Loaded 7]: http://www.loaded7.com
