@@ -1,27 +1,30 @@
-<h1>Loaded Commerce 7</h1>
-<h2>A Responsive Ecommerce Web Application</h2>
+# Loaded7&trade; Commerce
+Based on the original [osCommerce platform](http://www.oscommerce.com "osCommerce Online Merchant") __Loaded 7&trade;__ includes new mobile responsive template in both admin and catalog.
+A whole new object oriented template system for extensible markup aside of the core cart development. Rework to core payment and shipping modules.
+## A Responsive Ecommerce Web Application
+**Responsive Design** is rarely seen in open source shopping carts. We've taken it to the next level with full support for Android&trade; and Apple&trade;
+You are encourage to fork our project and request pulls. See below for how to participate.
 
-Based on a 3rd generation e-commerce platform, Loaded 7 includes new mobile responsive template in both admin and catalog. 
+- [Contributors] A graph of our community contributors
+- [Documentation] loaded7 project documentation
+- [Feature Requests] Vote or create issues and ideas
+- [Developer Forums] Ask our community developers questions or comments
 
-* Product Roadmap here http://www.loaded7.com/blog/loaded-7-roadmap/ 
-* Developer Forums here   http://www.loaded7.com/forums/
 
-<b>What we currently need:</b>
-* Langauge translations 
-* (will be separating the langauge folder for easier git access)
-* Bug fixes 
-* Promotion - tell your friends, tweet, blog, etc. 
-* Feedback - Tell us what you think and help us make Loaded 7 great!
+### How you can help
+* [Language Translations] Our langauge project.
+* [Bug Reports] Please post and vote on them!
+* [Promotion] - Visit project home page and pingback, tweet, facebook us.
+* [Feedback] - Talk to us in our project forums.
 
-<b>We currently are working on:</b>
-* Core Updater
-* Add-on Store browser and installer
-* Content Management
-* Menu System
+### Loaded Commerce 7 Versions
+https://github.com/loadedcommerce/loaded7/releases
 
-<b>Loaded Commerce 7 Versions</b> <a href="http://loadedcommerce.github.com/loaded7/">(Change Log)</a>
-<ul>
-<li>Version 7.0.0.1.3 - released 21-January-2013</li>
-<li>Version 7.0.0.1.2 - released 14-January-2013</li>
-<li>Version 7.0.0.1.1 - released 05-January-2013</li>
-</ul> 
+[Contributors]: https://github.com/loadedcommerce/loaded7/graphs/contributors/
+[Documentation]: http://www.docs.loaded7.com/
+[Feature Requests]: http://50.63.86.50/HelpDesk/Ideas.aspx
+[Bug Reports]: http://50.63.86.50/HelpDesk/Issues.aspx
+[Developer Forums]: http://loaded7.com/community/forums/main/developer-forum/
+[Language Translations]: https://githubt.com/loadedcommerce/loaded7-langauges/
+[Feedback]: http://www.loaded7.com/forums/
+[Promotion]: http://www.loaded7.com/
