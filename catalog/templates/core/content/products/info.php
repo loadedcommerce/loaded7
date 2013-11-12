@@ -33,12 +33,11 @@
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <hr>
+    </div><!-- /.modal -->    
     <?php
     if (sizeof($lC_Product->getImages()) > 1) {
       $_product_additionalimages = $lC_Product->getAdditionalImagesHtml(); 
-      echo '<div class="thumbnail img-responsive"><ul class="pr_gallery">' . $_product_additionalimages['images'] . '</ul></div><hr>' . "\n";
+      echo '<div class="thumbnail img-responsive"><ul class="pr_gallery">' . $_product_additionalimages['images'] . '</ul></div>' . "\n";
       echo $_product_additionalimages['model']. "\n";
     }
     ?>
