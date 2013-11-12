@@ -611,8 +611,10 @@ class lC_Template {
   * @access private
   */
   private function _getJavascriptPhpFilenames() {
-    foreach ($this->_javascript_php_filenames as $filenames) {
-      include($filenames);
+    foreach ($this->_javascript_php_filenames as $filename) {
+      if ( file_exists($filename) ) {
+        include($filename);
+      }
     }
   }
   /**
