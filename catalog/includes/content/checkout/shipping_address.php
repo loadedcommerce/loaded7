@@ -150,7 +150,7 @@
               $Qzone = $lC_Database->query('select zone_id from :table_zones where zone_country_id = :zone_country_id and zone_name like :zone_name');
               $Qzone->bindTable(':table_zones', TABLE_ZONES);
               $Qzone->bindInt(':zone_country_id', $_POST['country']);
-              $Qzone->bindValue(':zone_name', preg_replace('/[^A-Z\s]/', '', $_POST['state']) . '%');
+              $Qzone->bindValue(':zone_name', '%' . $_POST['state'] . '%');
               $Qzone->execute();
 
               if ($Qzone->numberOfRows() === 1) {
