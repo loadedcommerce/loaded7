@@ -585,9 +585,12 @@ class lC_Product {
   }
   
   public function getAdditionalImagesHtml($size = 'mini') {
-    global $lC_Image;
+    global $lC_Image, $lC_Language;
     
     $output = '';
+    $model = '';
+    $_product_additionalimages = '';
+    $$popup_image_modal_id = '';
     foreach ( $this->getImages() as $key => $value ) {
       if ($value['default_flag'] == true) continue;      
 
@@ -596,11 +599,35 @@ class lC_Product {
       } else {
         $link = lc_href_link(DIR_WS_IMAGES . 'no_image.png');
       }
-      $output .= '<li><a href="' .$link. '" class="thickbox"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $this->getTitle() . '" /></a></li>';
+      $output .= '<li><a data-toggle="modal" href="#popup-image-modal-'.$key.'"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $this->getTitle() . '" /></a></li>'; 
 
+      if(file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'originals'))) {
+        $link_image_modal = lc_href_link($lC_Image->getAddress($value['image'], 'originals'));
+      } else {
+        $link_image_modal = lc_href_link(DIR_WS_IMAGES . 'no_image.png');
+      }
+      $model .= '<!-- Modal -->
+    <div class="modal fade" id="popup-image-modal-'.$key.'">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">'. $this->getTitle() .'</h4>
+          </div>
+          <div class="modal-body">
+            <img class="img-responsive" alt="'. $this->getTitle() .'" src="'. $link_image_modal .'">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">'. $lC_Language->get('button_close').'</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->'. "\n";
     }
+    $_product_additionalimages['images'] = $output;
+    $_product_additionalimages['model'] = $model;
     
-    return $output;    
+    return $_product_additionalimages;    
   }
  /*
   * Determine if the product has subproducts
