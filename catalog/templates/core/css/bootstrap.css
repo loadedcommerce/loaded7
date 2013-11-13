@@ -5940,6 +5940,7 @@ button.close {
 
 .modal-open {
   overflow: hidden;
+  margin-right: 17px;
 }
 
 .modal {
