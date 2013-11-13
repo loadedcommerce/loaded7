@@ -59,6 +59,10 @@
         $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_shipping_address'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'SSL'));
       }
 
+      if(isset($_GET['account_created'])){
+        $lC_MessageStack->add('checkout_shipping_account', $lC_Language->get('success_account_updated'), 'success');
+      }
+      
       if (($_GET[$this->_module] == 'process')) {
         $this->_process();
       }

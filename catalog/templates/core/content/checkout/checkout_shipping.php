@@ -16,9 +16,6 @@
     <?php 
     if ( $lC_MessageStack->size('checkout_shipping') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_shipping') . '</div>' . "\n"; 
     ?>
-    <?php 
-    if ( $lC_MessageStack->size('checkout_shipping_account') > 0 ) echo '<div class="message-stack-container alert alert-success small-margin-bottom">' . $lC_MessageStack->get('checkout_shipping_account') . '</div>' . "\n"; 
-    ?>
     <form name="checkout_shipping" id="checkout_shipping" action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping=process', 'SSL'); ?>" method="post">
       <div id="content-checkout-shipping-container">      
         <div class="panel panel-default no-margin-bottom">

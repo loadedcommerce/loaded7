@@ -16,6 +16,9 @@
     <?php 
     if ( $lC_MessageStack->size('checkout_shipping_address') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_shipping_address') . '</div>' . "\n"; 
     ?>
+    <?php 
+    if ( $lC_MessageStack->size('checkout_shipping_account') > 0 ) echo '<div class="message-stack-container alert alert-success small-margin-bottom">' . $lC_MessageStack->get('checkout_shipping_account') . '</div>' . "\n"; 
+    ?>
     <div id="content-checkout-shipping-address-container">
       <div class="panel panel-default no-margin-bottom">
         <div class="panel-heading">

@@ -104,11 +104,7 @@ class lC_Checkout_Shipping extends lC_Template {
         }
       }
     } 
-    
-    if(isset($_GET['account_created'])){
-      $lC_MessageStack->add('checkout_shipping_account', $lC_Language->get('success_account_updated'), 'success');
-    }
-    
+
     if ($_GET[$this->_module] == 'process') {
       $this->_process();
     }
