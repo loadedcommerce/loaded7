@@ -44,13 +44,10 @@ class lC_Content_product_on_homepage extends lC_Modules {
       $lC_Product = new lC_Product(MODULE_CONTENT_PRODUCT_ON_HOMEPAGE);
 
       $product_url = HTTP_SERVER . DIR_WS_HTTP_CATALOG . 'products.php?' . $lC_Product->getKeyword();
-      $resultXML = transport::getResponse(array('url' => $product_url, 'method' => 'get'));
+      $resultHTML = transport::getResponse(array('url' => $product_url, 'method' => 'get'));
       
-      $doc = new DOMDocument();
-      $doc->loadHTML($resultXML);
-      $div = $doc->getElementById( 'content-center-main-container' );
-      $this->_content = $doc->saveHTML($div); 
-
+      $content = substr($resultHTML, strpos($resultHTML, '<!--content/products/info.php start'));
+      $this->_content = substr($content, strpos($content, '<!--content/products/info.php start'), strpos($content, 'content/products/info.php end-->')+32);
     }
   }
   
