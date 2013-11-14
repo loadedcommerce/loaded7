@@ -22,7 +22,7 @@
 
     /* Class constructor */
     function lC_Checkout_Shipping_address() {
-      global $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Vqmod;
+      global $lC_MessageStack, $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Vqmod;
 
       require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));
 
