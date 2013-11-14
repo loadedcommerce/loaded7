@@ -203,10 +203,11 @@
         while ($Qreviews->next()) {
           $counter++;
           if ($counter > 1) {
-            $output .= '<div></div>' . "\n";                                                                                     
+            $output .= '<br />' . "\n";                                                                                     
           }
+          $text = (strlen($Qreviews->valueProtected('reviews_text')) > 60) ? substr($Qreviews->valueProtected('reviews_text'), 0, 360) . '...' : $Qreviews->valueProtected('reviews_text');
           $output .= '<div class="content-reviews-stars">' . lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $Qreviews->valueInt('reviews_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $Qreviews->valueInt('reviews_rating'))) . '&nbsp;' . sprintf($lC_Language->get('reviewed_by'), $Qreviews->valueProtected('customers_name')) . '; ' . lC_DateTime::getLong($Qreviews->value('date_added')) . '</div>' . "\n";
-          $output .= '<div class="content-reviews-text"><em>' . nl2br(wordwrap($Qreviews->valueProtected('reviews_text'), 60, '&shy;')) . '</em></div>' . "\n";
+          $output .= '<div class="content-reviews-text"><em>' . nl2br($text) . '</em></div>' . "\n";
         }
       } else {
         $output ='<div>' . $lC_Language->get('no_reviews_available') . '</div>' . "\n"; 
@@ -218,7 +219,7 @@
     function saveEntry($data) {
       global $lC_Database, $lC_Language;
 
-      $Qreview = $lC_Database->query('insert into :table_reviews (products_id, customers_id, customers_name, reviews_rating, languages_id, reviews_text, reviews_status, date_added) values (:products_id, :customers_id, :customers_name, :reviews_rating, :languages_id, :reviews_text, :reviews_status, now())');
+      $Qreview = $lC_Database->query('insert into :table_reviews (products_id, customers_id, customers_name, reviews_rating, languages_id, reviews_text, reviews_status, date_added, reviews_read) values (:products_id, :customers_id, :customers_name, :reviews_rating, :languages_id, :reviews_text, :reviews_status, now(), :reviews_read)');
       $Qreview->bindTable(':table_reviews', TABLE_REVIEWS);
       $Qreview->bindInt(':products_id', $data['products_id']);
       $Qreview->bindInt(':customers_id', $data['customer_id']);
@@ -227,6 +228,7 @@
       $Qreview->bindInt(':languages_id', $lC_Language->getID());
       $Qreview->bindValue(':reviews_text', $data['review']);
       $Qreview->bindInt(':reviews_status', $data['status']);
+      $Qreview->bindInt(':reviews_read', 0);
       $Qreview->execute();
     }
   }

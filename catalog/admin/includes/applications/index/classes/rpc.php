@@ -234,5 +234,9 @@ class lC_Index_Admin_rpc {
 
     echo json_encode($result);
   } 
+  public static function getAll() {    
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    echo json_encode($result);
+  }
 }
 ?>

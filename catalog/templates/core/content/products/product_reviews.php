@@ -57,7 +57,7 @@
       <?php
       if ($lC_Reviews->is_enabled === true) {
         ?>  
-        <button class="pull-right btn btn-lg btn-primary large-margin-bottom" onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()); ?>'" type="button"><?php echo $lC_Language->get('button_continue'); ?></button>
+        <button class="pull-right btn btn-lg btn-primary large-margin-bottom" onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'reviews=new&' . $lC_Product->getKeyword()); ?>'" type="button"><?php echo $lC_Language->get('button_write_review'); ?></button>
         <?php 
       } 
       ?>

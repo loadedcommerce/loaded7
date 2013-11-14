@@ -185,7 +185,7 @@ String.prototype.wordWrap = function(m, b, c){
 			$('#mBoxContents').html('<?php echo $lC_Language->get('upgrade_step4_page_errfound'); ?>');
 	    $('#mBoxSuccess').hide();
     	$('#mBox').show();
-    }
+    } 
 		
 	});
 

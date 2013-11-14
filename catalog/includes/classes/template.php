@@ -265,7 +265,7 @@ class lC_Template {
       $tag_parts_keywords = ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords;
     } else if($this->_group == 'products'){
       $tag_parts_title =  $meta_title_prefix . $meta_delimeter . ($this->_page_title != '' ? $this->_page_title : $meta_title) . $meta_delimeter . $meta_title_suffix ;
-      $tag_parts_description .=  $meta_description ;
+      $tag_parts_description .=  ($this->_page_tags['description'] != '' ? implode(",", $this->_page_tags['description']) . ' ' : '' ) .$meta_description ;
       $tag_parts_keywords =  ($this->_page_tags['keywords'] != '' ? implode(",", $this->_page_tags['keywords']) . ',' : '' ) . $meta_keywords ;
     } else {
       $tag_parts_title =  $meta_title_prefix . $meta_delimeter . $meta_title . $meta_delimeter . $meta_title_suffix;
@@ -611,8 +611,10 @@ class lC_Template {
   * @access private
   */
   private function _getJavascriptPhpFilenames() {
-    foreach ($this->_javascript_php_filenames as $filenames) {
-      include($filenames);
+    foreach ($this->_javascript_php_filenames as $filename) {
+      if ( file_exists($filename) ) {
+        include($filename);
+      }
     }
   }
   /**
@@ -636,7 +638,7 @@ class lC_Template {
     foreach ($this->_ogp_tags as $key => $values) {
         for ($i=0; $i<=sizeof($values); $i++){
             if(!empty($values[$i])){
-                $tag_string .= '<meta property="og:' . $key . '" content="' . $values[$i] . '" />' . "\n";
+                $tag_string .= '<meta property="og:' . $key . '" content="' . str_replace(array("\r\n", "\r", "\n"), "", $values[$i]) . '" />' . "\n";
             }
         }
     }
@@ -750,7 +752,15 @@ class lC_Template {
         if ($menuItem['mode'] == 'override') {
           $output.= '<li><a href="' . $menuItem['custom_url'] . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
         } else {
-          $output.= '<li><a href="' . lc_href_link($menuItem['custom_url'], '', 'NONSSL') . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
+         
+          // Session bug fix
+          $link = lc_href_link($menuItem['custom_url'], '', 'NONSSL');
+          if(substr_count($link, '?') > 1){
+
+            $link = str_replace('?lCsid', '&lCsid', $link);
+          }
+
+          $output.= '<li><a href="' . $link . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
         }
       } else {
         $output .= '<li><a href="' . lc_href_link(FILENAME_DEFAULT, 'cPath=' . $menuItem['id'], 'NONSSL') . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';

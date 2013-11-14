@@ -24,11 +24,17 @@ class lC_Orders_Admin {
     global $lC_Language, $lC_Database, $lC_Currencies, $_module;
     
     $media = $_GET['media'];
+    $f_filter_c = '';
+    $f_filter   = '';    
+    if(isset($_GET['filter']) && $_GET['filter'] != NULL && $_GET['filter'] != '0') {
+      $f_filter_c = " where orders_status = '".$_GET['filter']."' ";
+      $f_filter = " o.orders_status = '".$_GET['filter']."' ";      
+    }
     
     $result = array('aaData' => array());
     
     /* Total Records */
-    $QresultTotal = $lC_Database->query('SELECT count(orders_id) as total from :table_orders');
+    $QresultTotal = $lC_Database->query('SELECT count(orders_id) as total from :table_orders'.$f_filter_c);
     $QresultTotal->bindTable(':table_orders', TABLE_ORDERS);
     $QresultTotal->execute();         
     $result['iTotalRecords'] = $QresultTotal->valueInt('total');
@@ -64,6 +70,11 @@ class lC_Orders_Admin {
     } else if (isset($_GET['oSearch']) && $_GET['oSearch'] != null) {
       $sWhere = " WHERE o.orders_id = '" . $_GET['oSearch'] . "' ";
     }
+    if($sWhere != '' && $f_filter != '') {      
+      $sWhere .= " and ".$f_filter;
+    } else if($sWhere == '' && $f_filter != '') {      
+      $sWhere .= " WHERE ".$f_filter;
+    }
 
     /* Total Filtered Records */
     $QresultFilterTotal = $lC_Database->query("SELECT count(o.orders_id) as total  
@@ -83,7 +94,7 @@ class lC_Orders_Admin {
     $QresultFilterTotal->freeResult();      
     
     /* Main Listing Query */
-    $Qresult = $lC_Database->query("SELECT o.orders_id, o.customers_id, o.customers_ip_address, o.customers_name, o.payment_method, o.date_purchased, o.last_modified, greatest(date_purchased, coalesce(last_modified, date_purchased)) as date_sort, o.currency, o.currency_value, ot.value as order_total, s.orders_status_name, s.orders_status_type     
+    $Qresult = $lC_Database->query("SELECT o.orders_id, o.customers_id, o.customers_ip_address, o.customers_name, o.payment_method, o.date_purchased, o.last_modified, o.customers_country_iso3, greatest(date_purchased, coalesce(last_modified, date_purchased)) as date_sort, o.currency, o.currency_value, ot.value as order_total, s.orders_status_name, s.orders_status_type     
                                       from :table_orders o 
                                  LEFT JOIN :table_orders_total ot 
                                         on (o.orders_id = ot.orders_id and ot.class = 'total')
@@ -102,8 +113,13 @@ class lC_Orders_Admin {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qresult->valueInt('orders_id') . '" id="' . $Qresult->valueInt('orders_id') . '"></td>';
       $oid = '<td><a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qresult->valueInt('orders_id') . '&action=save')) . '"><span class="icon-price-tag icon-red"></span>&nbsp;' . $Qresult->valueInt('orders_id') . '</a></td>';
       $name = '<td>' . $Qresult->valueProtected('customers_name') . '</td>';
-      //$country = '<td>USA</td>';
-      //$items = '<td>' . count($Qresult->valueInt('products_id')) . '</td>';
+      $country = '<td>' . $Qresult->valueProtected('customers_country_iso3') . '</td>';
+      
+      $Qresult_items = $lC_Database->query("SELECT sum(products_quantity) as items from :table_orders_products where orders_id = '".$Qresult->valueInt('orders_id')."' ");
+      $Qresult_items->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+      $Qresult_items->execute();
+      $items = '<td>' . $Qresult_items->valueInt('items') . '</td>';
+      
       $total = '<td>' . $lC_Currencies->format($Qresult->value('order_total')) . '</td>';
       number_format($Qresult->value('order_total'), DECIMAL_PLACES) . '</td>';
       $date = '<td>' . self::getTextDate($Qresult->value('date_purchased')) . '</td>';
@@ -115,7 +131,7 @@ class lC_Orders_Admin {
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteOrder(\'' . $Qresult->valueInt('orders_id') . '\', \'' . urlencode($Qresult->value('customers_name')) . '\')"') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';         
 
-      $result['aaData'][] = array("$check", "$oid", "$name"/*, "$country", "$items"*/, "$total", "$date", "$time", "$status", "$action");      
+      $result['aaData'][] = array("$check", "$oid", "$name", "$country", "$items", "$total", "$date", "$time", "$status", "$action");      
     }
     $result['sEcho'] = intval($_GET['sEcho']);
 
@@ -320,11 +336,14 @@ class lC_Orders_Admin {
     if ( !$lC_Order->isValid() ) {
       return array('error' => true, 'errmsg' => sprintf(ERROR_ORDER_DOES_NOT_EXIST, $id));
     }
+    
+   
     $result['customerId'] = $lC_Order->getCustomer('id');
     $result['customerAddress'] = lC_Address::format($lC_Order->getCustomer(), '<br />');
     $result['deliveryAddress'] = lC_Address::format($lC_Order->getDelivery(), '<br />');
     $result['billingAddress'] = lC_Address::format($lC_Order->getBilling(), '<br />');
     $result['paymentMethod'] = '<span>' . $lC_Order->getPaymentMethod() . '</span>';
+        
     if ($lC_Order->isValidCreditCard()) {
       $result['paymentMethod'] .= '<table border="0" cellspacing="0" cellpadding="0">
                                      <tr>
@@ -466,7 +485,7 @@ class lC_Orders_Admin {
     $Qstatustype->bindInt(':orders_status_id', $lC_Order->getStatusID());
     $Qstatustype->execute();     
     $result['ordersStatusType'] = $Qstatustype->value('orders_status_type');    
-    $Qstatuses->freeResult;
+    $Qstatuses->freeResult;  
     
     return $result;
   }
@@ -871,8 +890,31 @@ class lC_Orders_Admin {
                   '</tr>';
         $cnt++;
       }
-    }      
+    }
     return $tData;
+  }
+  
+  public static function getOrderStatusArray() {
+    global $lC_Language, $lC_Database;
+    
+    // build the order status array
+    $orders_status_array = array();
+    $Qstatuses = $lC_Database->query('select orders_status_id, orders_status_name from :table_orders_status where language_id = :language_id');
+    $Qstatuses->bindTable(':table_orders_status', TABLE_ORDERS_STATUS);
+    $Qstatuses->bindInt(':language_id', $lC_Language->getID());
+    $Qstatuses->execute();
+    
+    while ($Qstatuses->next()) {
+      $orders_status_array[$Qstatuses->valueInt('orders_status_id')] = $Qstatuses->value('orders_status_name');
+    }
+    
+    $orderStatusArray = array();
+    $orderStatusArray[] = array('id' => 0, 'text' => $lC_Language->get('text_all'));
+    foreach($orders_status_array as $id => $text) {
+      $orderStatusArray[] = array('id' => $id, 'text' => $text);
+    }
+    
+    return $orderStatusArray;
   }      
 }
 ?>

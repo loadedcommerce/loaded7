@@ -57,9 +57,17 @@ TD { height:19px; }
       </div>
     </noscript>  
     <?php
+
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/work') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/backups'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/backups/') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs') , 0777);
+
     if (file_exists(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php') && !is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php')) {
       @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php', 0777);
     }
+
     if (file_exists(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php') && !is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php')) {
       ?>
       <p class="message icon-warning red-gradient">   
@@ -220,7 +228,7 @@ TD { height:19px; }
         <!-- div id="buttonContainer" class="large-margin-top margin-left" style="float:left">
           <a href="javascript:void(0);" class="button" onclick="$('#mBox').hide(); $('#pBox').hide(); $('#upgrade_method').val('S'); window.location.href = 'upgrade.php?step=1'">
             <span class="button-icon orange-gradient glossy"><span class="icon-cloud-upload"></span></span>
-            <?php //echo addslashes($lC_Language->get('image_button_upgrade')); ?>
+            <?php echo addslashes($lC_Language->get('image_button_upgrade')); ?>
           </a>          
         </div -->
         <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">

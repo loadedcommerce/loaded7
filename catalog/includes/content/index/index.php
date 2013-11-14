@@ -120,7 +120,7 @@
         $this->addOGPTags('site_name', STORE_NAME);
         $this->addOGPTags('type', 'website');
         $this->addOGPTags('title', $this->_page_title);
-        $this->addOGPTags('description', $this->_page_title);
+        $this->addOGPTags('description', (lC_Template::getBranding('meta_description') != '' ? lC_Template::getBranding('meta_description') : $this->_page_title));
         $this->addOGPTags('url', lc_href_link(FILENAME_DEFAULT, '', 'NONSSL',false,true,true));
         if ($this->getBranding('og_image') && $this->getBranding('og_image') != 'no_image.png') {
           $this->addOGPTags('image', HTTP_SERVER . DIR_WS_CATALOG . DIR_WS_IMAGES . 'branding/' . $this->getBranding('og_image'));
