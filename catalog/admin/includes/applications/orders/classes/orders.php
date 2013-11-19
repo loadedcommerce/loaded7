@@ -338,6 +338,7 @@ class lC_Orders_Admin {
     }
     
    
+    $result['oID'] = $id;
     $result['customerId'] = $lC_Order->getCustomer('id');
     $result['customerAddress'] = lC_Address::format($lC_Order->getCustomer(), '<br />');
     $result['deliveryAddress'] = lC_Address::format($lC_Order->getDelivery(), '<br />');
