@@ -13,7 +13,7 @@
 
   @function The lC_Updater_Admin class manages zM services
 */
-//ini_set('error_reporting', 0);
+ini_set('error_reporting', 0);
 
 global $lC_Vqmod;
 
@@ -651,31 +651,18 @@ class lC_Updates_Admin {
       return(false);
     }
 
-    // See whether this is a file
     if (is_file($path)) {
-      // Chmod the file with our given filepermissions
-      chmod($path, $filePerm);
-
-      // If this is a directory...
+      @chmod($path, $filePerm);
     } elseif (is_dir($path)) {
-      // Then get an array of the contents
-      $foldersAndFiles = scandir($path);
-
-      // Remove "." and ".." from the list
-      $entries = array_slice($foldersAndFiles, 2);
-
-      // Parse every result...
+      $foldersAndFiles = @scandir($path);
+      $entries = @array_slice($foldersAndFiles, 2);
       foreach ($entries as $entry) {
-        // And call this function again recursively, with the same permissions
         self::chmod_r($path."/".$entry, $filePerm, $dirPerm);
       }
-
-      // When we are done with the contents of the directory, we chmod the directory itself
-      chmod($path, $dirPerm);
+      @chmod($path, $dirPerm);
     }
 
-    // Everything seemed to work out well, return true
-    return(true);
+    return true;
   }
  /**
   * Check if a log exists
