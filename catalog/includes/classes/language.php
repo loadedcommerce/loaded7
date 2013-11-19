@@ -50,7 +50,7 @@ class lC_Language {
   }
 
   /* Public methods */
-  public function load($key, $language_code = null) {
+  public function load($key, $language_code = null, $use_cache = true) {
     global $lC_Database, $lC_Addons;
 
     if ( is_null($language_code) ) {
@@ -65,7 +65,7 @@ class lC_Language {
     $Qdef->bindTable(':table_languages_definitions', TABLE_LANGUAGES_DEFINITIONS);
     $Qdef->bindInt(':languages_id', $this->getData('id', $language_code));
     $Qdef->bindValue(':content_group', $key);
-    $Qdef->setCache('languages-' . $language_code . '-' . $key);
+    if ($use_cache) $Qdef->setCache('languages-' . $language_code . '-' . $key);
     $Qdef->execute();
 
     while ($Qdef->next()) {
