@@ -651,7 +651,7 @@ class lC_Updates_Admin {
       if($file != "." AND $file != "..") {
         if(is_dir($file)){
           chmod($file, 0755);
-          chmod_r($path . "/" . $file);
+          self::chmod_r($path . "/" . $file);
         } else {
           chmod($path . "/" . $file, 0644);
         }
