@@ -176,5 +176,19 @@ class lC_Updates_Admin_rpc {
 
     echo json_encode($result);
   }  
+ /*
+  * Execute the runAfter process to update the database 
+  *
+  * @access public
+  * @return json
+  */
+  public static function updateDatabase() {
+    $result = array();
+    if (lC_Updates_Admin::doRunAfter()) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }  
 }
 ?>

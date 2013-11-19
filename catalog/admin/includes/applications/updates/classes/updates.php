@@ -526,20 +526,19 @@ class lC_Updates_Admin {
     }
     
     if ($pharWithPath == null) {
-      // execute run after script if exists
-      if (file_exists(DIR_FS_WORK . 'updates/runAfter/controller.php')) {
-        include_once(DIR_FS_WORK . 'updates/runAfter/controller.php');
-        lC_Updates_Admin_run_after::process();      
-      }
+      // execute run after process
+      self::doRunAfter();
       
-      // verify 644 permissions on PHP files
-      try {
-        exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
-        self::log('##### UPDATED Permissions on PHP files to 644');
-      } catch ( Exception $e ) {  
-        self::log('*** Could Not Set Permissions on PHP files to 644');
-      } 
-      self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
+      // verify 644 permissions on PHP files on Linux systems
+      if (utility::execEnabled() === true && utility::isLinux() === true) {
+        try {
+          exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
+          self::log('##### UPDATED Permissions on PHP files to 644');
+        } catch ( Exception $e ) {  
+          self::log('*** Could NOT Set Permissions on PHP files to 644');
+        } 
+        self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
+      }
     } else {
       self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
     }
@@ -547,6 +546,23 @@ class lC_Updates_Admin {
     self::log('##### ADDON INSTALL ' . $code . ' COMPLETE');
 
     return $phar_can_open;
+  }
+ /**
+  * Execute the runAfter process
+  *  
+  * @access public      
+  * @return boolean
+  */   
+  public static function doRunAfter() {
+    if (file_exists(DIR_FS_WORK . 'updates/runAfter/controller.php')) {
+      try {
+        include_once(DIR_FS_WORK . 'updates/runAfter/controller.php');
+        lC_Updates_Admin_run_after::process();
+        return true;
+      } catch ( Exception $e ) {      
+        return false;
+      }
+    }
   }
  /**
   * Make an update-log history entry
@@ -614,22 +630,7 @@ class lC_Updates_Admin {
     @rmdir($path);
     
     return true;
-  } 
-  /*  
-  protected static function rmdir_r($dir) {
-    foreach ( scandir($dir) as $file ) {
-      if ( !in_array($file, array('.', '..')) ) {
-        if ( is_dir($dir . '/' . $file) ) {
-          self::rmdir_r($dir . '/' . $file);
-        } else {
-          unlink($dir . '/' . $file);
-        }
-      }
-    }
-
-    return rmdir($dir);
-  } 
-  */ 
+  }  
  /**
   * Check if a log exists
   *  
@@ -729,14 +730,30 @@ class lC_Updates_Admin {
     if (file_exists(DIR_FS_WORK . 'updates/' . $backup_file)) unlink(DIR_FS_WORK . 'updates/' . $backup_file);
          
     // create full file backup
-    try {
-      exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x \*.zip\*');
-    } catch ( Exception $e ) {  
-      return false;
-    } 
-
-    return true;
+    if (utility::execEnabled() === true && utility::isLinux() === true) {
+      try {
+        exec(CFG_APP_ZIP . ' -r ' . DIR_FS_WORK . 'updates/' . $backup_file . ' ' . DIR_FS_CATALOG . '* -x \*.zip\*');
+      } catch ( Exception $e ) {  
+        return array('rpcStatus' => 0);
+      } 
+      
+      return array('rpcStatus' => 1);
+      
+    } else if (extension_loaded('zip')) {
+      try {
+        self::_makeZip(DIR_FS_CATALOG, DIR_FS_WORK . 'updates/' . $backup_file);  
+      } catch ( Exception $e ) {  
+        return array('rpcStatus' => 0);
+      }       
+      
+      return array('rpcStatus' => 1);
+      
+    } else {  
+      return array('rpcStatus' => -1);
+    }
   }
+  
+ 
  /**
   * Restore from full file backup zip
   *  
@@ -755,19 +772,31 @@ class lC_Updates_Admin {
       if (is_dir(DIR_FS_WORK . 'updates/' . $parent_dir[1])) self::rmdir_r(DIR_FS_WORK . 'updates/' . $parent_dir[1]);
 
       // restore full file backup
-      try {
-        // unzip the archive into work/updates/
-        exec(CFG_APP_UNZIP . ' ' . DIR_FS_WORK . 'updates/' . $restore_file .  ' -d ' . DIR_FS_WORK . 'updates/');
-        //copy the files
-        exec('\cp -fr ' . DIR_FS_WORK . 'updates' . DIR_FS_CATALOG . '* ' . DIR_FS_CATALOG); 
-        // cleanup
-        if (is_dir(DIR_FS_WORK . 'updates/' . $parent_dir[1])) self::rmdir_r(DIR_FS_WORK . 'updates/' . $parent_dir[1]);
-      } catch ( Exception $e ) {  
-        return false;
+      if (utility::execEnabled() === true && utility::isLinux() === true) {      
+        try {
+          // unzip the archive into work/updates/
+          exec(CFG_APP_UNZIP . ' ' . DIR_FS_WORK . 'updates/' . $restore_file .  ' -d ' . DIR_FS_WORK . 'updates/');
+          //copy the files
+          exec('\cp -fr ' . DIR_FS_WORK . 'updates' . DIR_FS_CATALOG . '* ' . DIR_FS_CATALOG); 
+          // cleanup
+          if (is_dir(DIR_FS_WORK . 'updates/' . $parent_dir[1])) self::rmdir_r(DIR_FS_WORK . 'updates/' . $parent_dir[1]);
+          return array('rpcStatus' => 1);
+        } catch ( Exception $e ) {  
+          return array('rpcStatus' => 0);
+        }
+      } else if (extension_loaded('zip')) {
+        try {
+          self::_extractZip(DIR_FS_WORK . 'updates/' . $restore_file, dirname(DIR_FS_CATALOG) );  
+          if (is_dir(DIR_FS_WORK . 'updates/' . $parent_dir[1])) self::rmdir_r(DIR_FS_WORK . 'updates/' . $parent_dir[1]);
+          return array('rpcStatus' => 1);          
+        } catch ( Exception $e ) {  
+          return array('rpcStatus' => 0);
+        }        
+      } else {
+        return array('rpcStatus' => -1);
       }
-      return true;
     } else {
-      return false;
+      return array('rpcStatus' => -2);
     }
   }  
  /**
@@ -884,5 +913,86 @@ class lC_Updates_Admin {
 
     return $file;
   } 
+ /**
+  * Create a ZIP archive using PHP ZipArchive method
+  *  
+  * @access private      
+  * @return boolean
+  */
+  private static function _makeZip($source, $destination, $include_dir = true) {
+
+    if (!extension_loaded('zip') || !file_exists($source)) {
+      return false;
+    }
+
+    if (file_exists($destination)) {
+      unlink ($destination);
+    }
+
+    $zip = new ZipArchive();
+    if (!$zip->open($destination, ZIPARCHIVE::CREATE)) {
+      return false;
+    }
+    $source = str_replace('\\', '/', realpath($source));
+
+    if (is_dir($source) === true) {
+
+      $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($source), RecursiveIteratorIterator::SELF_FIRST);
+
+      if ($include_dir) {
+
+        $arr = explode("/",$source);
+        $maindir = $arr[count($arr)- 1];
+
+        $source = "";
+        for ($i=0; $i < count($arr) - 1; $i++) { 
+          $source .= '/' . $arr[$i];
+        }
+
+        $source = substr($source, 1);
+
+        $zip->addEmptyDir($maindir);
+      }
+
+      foreach ($files as $file) {
+        $file = str_replace('\\', '/', $file);
+
+        // Ignore "." and ".." folders
+        if( in_array(substr($file, strrpos($file, '/')+1), array('.', '..')) ) continue;
+
+        $file = realpath($file);
+
+        if (is_dir($file) === true) {
+          $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+        } else if (is_file($file) === true) {
+          $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
+        }
+      }
+    } else if (is_file($source) === true) {
+      $zip->addFromString(basename($source), file_get_contents($source));
+    }
+
+    return $zip->close();
+  }
+ /**
+  * Extract a ZIP archive using PHP ZipArchive method
+  *  
+  * @access private      
+  * @return boolean
+  */
+  private static function _extractZip($source, $destination) {
+    
+    $zip = new ZipArchive;
+    
+    $status = false;
+    if ($zip->open($source)) {
+      if ($zip->extractTo($destination)) {
+        $status = true;
+      }
+      $zip->close();
+    }    
+
+    return $status;
+  }     
 }
 ?>

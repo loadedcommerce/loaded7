@@ -383,6 +383,20 @@ function undoUpdate() {
   });  
 } 
 
+function updateDatabase() {
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateDatabase'); ?>'
+  $.getJSON(jsonLink,
+    function (data) {
+      if (data.rpcStatus != 1) {
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      }
+      modalMessage('Database Update SUCCESS!');
+      return true;
+    }
+  );  
+}
+
 function __showStep(step, fini) {
   var loader = '<span class="icon-right icon-blue margin-left margin-right"></span><span class="loader"></span>';
   var done = '<span class="icon-right icon-blue margin-left margin-right"><span class="icon-tick icon-green margin-left margin-right"></span>';

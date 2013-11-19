@@ -13,6 +13,7 @@ heading_title = Core Updates
 
 heading_legend_version_info = Version Info
 heading_legend_tools = Tools
+heading_legend_manual = Manual Update
 heading_legend_history = History
 
 text_latest_version = Latest Version
@@ -53,6 +54,7 @@ button_download_zip = Download ZIP
 button_undo_last_update = Undo Last Update
 button_check_again = Check Again
 button_undo = Undo
+button_update_database = Update Database
 
 table_heading_action = Action
 table_heading_result = Result
