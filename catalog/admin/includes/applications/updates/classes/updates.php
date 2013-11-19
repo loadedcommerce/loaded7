@@ -533,12 +533,19 @@ class lC_Updates_Admin {
       if (utility::execEnabled() === true && utility::isLinux() === true) {
         try {
           exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
-          self::log('##### UPDATED Permissions on PHP files to 644');
+          self::log('##### UPDATED Permissions on PHP files/directories');
         } catch ( Exception $e ) {  
-          self::log('*** Could NOT Set Permissions on PHP files to 644');
+          self::log('*** Could NOT Set Permissions on PHP files/directories');
         } 
         self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
-      }
+      } else {
+        try {
+          self::chmod_r(DIR_FS_CATALOG);
+          self::log('##### UPDATED Permissions on PHP files/directories');
+        } catch ( Exception $e ) {  
+          self::log('*** Could NOT Set Permissions on PHP files/directories');
+        } 
+        self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');      }
     } else {
       self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
     }
@@ -628,6 +635,29 @@ class lC_Updates_Admin {
       }
     }
     @rmdir($path);
+    
+    return true;
+  }  
+ /**
+  * Recursive set permissions on files and folders
+  *  
+  * @param string $path The parent path to start from
+  * @access protected      
+  * @return boolean
+  */
+  protected static function chmod_r($path) {
+    $dp = opendir($path);
+    while($file = readdir($dp)) {
+      if($file != "." AND $file != "..") {
+        if(is_dir($file)){
+          chmod($file, 0755);
+          chmod_r($path . "/" . $file);
+        } else {
+          chmod($path . "/" . $file, 0644);
+        }
+      }
+    }
+    closedir($dp);
     
     return true;
   }  
