@@ -597,7 +597,6 @@
   <script src="templates/default/js/progress-slider.js"></script>
   <script src="templates/default/js/tooltip.js"></script>
   <script src="templates/default/js/confirm.js"></script>
-  <script src="templates/default/js/fittext.js"></script>
   <script src="templates/default/js/agenda.js"></script>
   <script src="templates/default/js/tabs.js"></script><!-- Must be loaded last -->
   <!-- Load page specific javascript -->
