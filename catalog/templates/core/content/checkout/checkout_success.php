@@ -71,7 +71,6 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
             <div class="col-sm-8 col-lg-8">
               <h3 class="no-margin-top">
                 <span class="pull-right"><?php echo $lC_Language->get('checkout_order_number') . '&nbsp;' . $_SESSION['cartID']; ?></span>
-                <span class="pull-left"><?php echo $lC_Language->get('checkout_order_id') . '&nbsp;' . $oID; ?></span>
               </h3>
               <div class="clearfix" id="content-checkout-success-products-table">
                 <table class="table responsive-table no-margin-bottom">
