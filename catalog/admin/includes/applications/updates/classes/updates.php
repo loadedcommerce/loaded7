@@ -645,7 +645,7 @@ class lC_Updates_Admin {
   * @access protected      
   * @return boolean
   */
-  protected static function recursiveChmod ($path, $filePerm=0644, $dirPerm=0755) {
+  protected static function chmod_r($path, $filePerm=0644, $dirPerm=0755) {
     // Check if the path exists
     if (!file_exists($path)) {
       return(false);
@@ -667,7 +667,7 @@ class lC_Updates_Admin {
       // Parse every result...
       foreach ($entries as $entry) {
         // And call this function again recursively, with the same permissions
-        self::recursiveChmod($path."/".$entry, $filePerm, $dirPerm);
+        self::chmod_r($path."/".$entry, $filePerm, $dirPerm);
       }
 
       // When we are done with the contents of the directory, we chmod the directory itself
