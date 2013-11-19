@@ -154,7 +154,7 @@ $(document).ready(function() {
     // set the disable var to false to begin
     var disableKeyCombo = false; 
     // if any textareas on the page are clicked into then set the disable var to true
-    if (CKEDITOR) {
+    if (typeof CKEDITOR != 'undefined') {
       for (var i in CKEDITOR.instances) {
         (function(i){
           CKEDITOR.instances[i].on('focus', function() {
