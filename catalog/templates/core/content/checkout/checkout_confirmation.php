@@ -75,7 +75,6 @@
               </div>                                        
             </div>
             <div class="col-sm-8 col-lg-8">
-              <h3 class="no-margin-top"><?php echo $lC_Language->get('checkout_order_number') . '&nbsp;' . $_SESSION['cartID']; ?></h3>
               <div class="" id="content-checkout-confirmation-products-table">
                 <table class="table responsive-table no-margin-bottom">
                   <?php
