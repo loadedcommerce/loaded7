@@ -530,7 +530,7 @@ class lC_Updates_Admin {
       self::doRunAfter();
       
       // verify 644 permissions on PHP files on Linux systems
-      if (utility::execEnabled() === true && utility::isLinux() === true) {
+      if (utility::execEnabled() === false && utility::isLinux() === true) {
         try {
           exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
           self::log('##### UPDATED Permissions on PHP files/directories');
