@@ -412,5 +412,51 @@ class utility {
 
     return $vInfo[1];  
   } 
+ /**
+  * Check if exec() is available and has permission to use
+  *
+  * @access public
+  * @return boolean
+  */
+  public static function execEnabled() {
+    if ( function_exists('exec') && !in_array('exec', array_map('trim',explode(', ', ini_get('disable_functions')))) ) {
+      if( @exec('echo EXEC') == 'EXEC' ){
+        return true;
+      }
+    }
+    
+    return false;
+  } 
+ /**
+  * Check which server OS
+  *
+  * @access public
+  * @return string
+  */
+  public static function serverOS() {
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        return 'windows';
+    } else {
+        return 'linux';
+    }    
+  } 
+ /**
+  * Check if server OS is Linux
+  *
+  * @access public
+  * @return boolean
+  */  
+  public static function isLinux() {
+    return (self::serverOS() == 'linux') ? true : false;
+  }
+ /**
+  * Check if server OS is Windows
+  *
+  * @access public
+  * @return boolean
+  */
+  public static function isWindows() {
+    return (self::serverOS() == 'windows') ? true : false;
+  }  
 } 
 ?>

@@ -45,6 +45,7 @@ class lC_Store_Admin {
       $from_store = (isset($addon['from_store']) && $addon['from_store'] == '1') ? true : false;
       $featured = ($from_store && isset($addon['featured']) && $addon['featured'] == '1') ? '<span class="icon-star mid-margin-left icon-orange with-tooltip" title="' . $lC_Language->get('text_featured') . '" style="cursor:pointer; vertical-align:-35%;"></span>' : NULL;
       $inCloud = ($from_store) ? '<span class="mid-margin-left icon-cloud icon-green with-tooltip" title="' . $lC_Language->get('text_in_cloud') . '" style="vertical-align:-35%;"></span>' : NULL;
+      $isInternal = (strstr($addon['title'], '(IO)')) ? '<span class="red strong">INTERNAL ONLY</span>' : NULL;
       
       if (  $type != NULL && ($type == $addon['type'] || ($type == 'featured' && $addon['featured'] == '1'))   ) {
         $mobileEnabled = (isset($addon['mobile']) && $addon['mobile'] == true) ? '<span class="mid-margin-left icon-mobile icon-blue with-tooltip" title="' . $lC_Language->get('text_mobile_enabled') . '" style="vertical-align:-40%;"></span>' : '';
@@ -63,6 +64,7 @@ class lC_Store_Admin {
         } else {  
           $action = '<button onclick="installAddon(\'' . $addon['code'] . '\',\'' . urlencode($addon['type']) . '\');" class="button icon-download orange-gradient glossy">Install</button><div class="mid-margin-top"><a href="#"><!-- span class="icon-search">More Info</span --></a></div>';
         }
+        if ($isInternal != NULL) $action .= $isInternal;
 
         $result['aaData'][] = array("$thumb", "$title", "$desc", "$action");
       }
@@ -204,7 +206,7 @@ class lC_Store_Admin {
     $checksum = hash('sha256', json_encode($request));
     $request['checksum'] = $checksum;
     
-    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/store/types/', 'method' => 'post', 'parameters' => $request));
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/store/types/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request));
 
     $types = utility::xml2arr($resultXML);     
        
@@ -227,7 +229,7 @@ class lC_Store_Admin {
     $checksum = hash('sha256', json_encode($request));
     $request['checksum'] = $checksum;
     
-    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/store/addons/', 'method' => 'post', 'parameters' => $request));
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/store/addons/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request));
 
     $available = utility::xml2arr($resultXML);  
     
