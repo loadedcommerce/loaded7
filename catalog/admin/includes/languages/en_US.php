@@ -154,6 +154,9 @@ icon_user_female = Female
 icon_user_male = Male
 icon_view = View
 icon_processing = Processing ...
+icon_create_order = Create Order
+icon_edit_customer = Edit Customer
+icon_view_orders = View Orders
 
 ms_success_action_performed = Success: The action was successfully performed.
 ms_success_upload_file_saved = Success: The file uploaded has been saved successfully.
