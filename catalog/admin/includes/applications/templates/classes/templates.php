@@ -38,12 +38,12 @@ class lC_Templates_Admin {
         $class = 'lC_Template_' . $code;
         if ( class_exists($class) ) {
           $module = new $class();
-          $image = lc_image(DIR_WS_CATALOG . 'templates/' . $code . '/images/' . $module->getScreenshot(), null, 160, 120);
+          $image = '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="showInfo(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '">' . lc_image(DIR_WS_CATALOG . 'templates/' . $code . '/images/' . $module->getScreenshot(), null, 160, 120) . '</a>';
           $module_title = $module->getTitle();
           if ( $module->getCode() == DEFAULT_TEMPLATE ) {
             $module_title .= '<small class="tag purple-gradient glossy margin-left">' . $lC_Language->get('default_entry') . '</small>';
           }
-          $name = '<span class="strong">' . $module_title . '</span>';
+          $name = '<div class="strong">' . $module_title . '</div><div class="mid-margin-top"><a href="' . $module->getAuthorAddress() . '" target="_blank">' . $module->getAuthorName() . '</a></div><div class="mid-margin-top"><small>' . $module->getMarkup() . ' ' . $module->getMedium(). '</small></div>';
           $action = '<span class="button-group compact">';
           if ( $module->isInstalled() && $module->isActive() ) {
             if ( $module->hasKeys() || ( $module->getCode() != DEFAULT_TEMPLATE ) ) {
@@ -55,7 +55,7 @@ class lC_Templates_Admin {
           } else {
             $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="installTemplate(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-plus-round icon-green with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_install') . '"></a>';
           }
-          $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="showInfo(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-question-round icon-blue with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_info') . '"></a>';
+          $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="showInfo(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-camera icon-blue with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_preview') . '"></a>';
 
           $result['aaData'][] = array("$image", "$name", "$action");
           $cnt++;

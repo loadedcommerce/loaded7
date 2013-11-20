@@ -30,33 +30,14 @@ function showInfo(id) {
         $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
         return false;
       }
+      var screenshot = ('<?php echo lc_image(DIR_WS_CATALOG . 'templates/TCODE/images/SSHOT', null, 640, 480); ?>').replace(/TCODE/g, id).replace(/SSHOT/g, data.screenshot);
       $.modal({
           content: '<div id="showInfo">'+
                    '  <div id="showInfoForm">'+
-                   '  <p class="align-center"><?php echo lc_image(DIR_WS_CATALOG . 'templates/' . $code . '/images/' . $lC_Template->getScreenshot(), null, 640, 480); ?></p>'+
-                   '    <p class="button-height inline-label">'+
-                   '      <label for="title" class="label"><?php echo $lC_Language->get('field_title'); ?></label>'+
-                   '      <span id="infoContentTitle"></span>'+
-                   '    </p>'+
-                   '    <p class="button-height inline-label">'+
-                   '      <label for="title" class="label"><?php echo $lC_Language->get('field_author'); ?></label>'+
-                   '      <span id="infoContentAuthor"></span>'+
-                   '    </p>'+
-                   '    <p class="button-height inline-label">'+
-                   '      <label for="markup" class="label"><?php echo $lC_Language->get('field_markup'); ?></label>'+
-                   '      <span id="infoContentMarkup"></span>'+
-                   '    </p>'+
-                   '    <p class="button-height inline-label">'+
-                   '      <label for="css_based" class="label"><?php echo $lC_Language->get('field_css_based'); ?></label>'+
-                   '      <span id="infoContentCssBased"></span>'+
-                   '    </p>'+
-                   '    <p class="button-height inline-label">'+
-                   '      <label for="presentation_medium" class="label"><?php echo $lC_Language->get('field_presentation_medium'); ?></label>'+
-                   '      <span id="infoContentMedium"></span>'+
-                   '    </p>'+
+                   '    <p class="align-center">' + screenshot + '</p>'+
                    '  </div>'+
                    '</div>',
-          title: '<?php echo $lC_Language->get('modal_heading_view_template_info'); ?>',
+          title: '<span id="infoContentTitle">' + data.title + '</span>',
           width: 680,
                 actions: {
             'Close' : {
@@ -72,11 +53,6 @@ function showInfo(id) {
           },
           buttonsLowPadding: true
       });
-      $("#infoContentTitle").html(data.title);
-      $("#infoContentAuthor").html(data.author);
-      $("#infoContentMarkup").html(data.markup);
-      $("#infoContentCssBased").html(data.css_based);
-      $("#infoContentMedium").html(data.medium);
       if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
         $('.modal').attr('style', 'top:10px !important; left: 19%;  margin-left: -50px;');  
       }      
