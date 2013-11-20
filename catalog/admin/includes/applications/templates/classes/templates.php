@@ -38,6 +38,7 @@ class lC_Templates_Admin {
         $class = 'lC_Template_' . $code;
         if ( class_exists($class) ) {
           $module = new $class();
+          $image = lc_image(DIR_WS_CATALOG . 'templates/' . $code . '/images/' . $module->getScreenshot());
           $module_title = $module->getTitle();
           if ( $module->getCode() == DEFAULT_TEMPLATE ) {
             $module_title .= ' (' . $lC_Language->get('default_entry') . ')';
@@ -56,7 +57,7 @@ class lC_Templates_Admin {
           }
           $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="showInfo(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-question-round icon-blue with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_info') . '"></a></td>';
 
-          $result['aaData'][] = array("$name", "$action");
+          $result['aaData'][] = array("$image", "$name", "$action");
           $cnt++;
         }
       }
