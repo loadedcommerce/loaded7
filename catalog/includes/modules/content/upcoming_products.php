@@ -1,12 +1,11 @@
 <?php
 /**
-  @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @package    catalog::modules::content
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
   @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: upcoming.php v1.0 2013-08-08 datazen $
+  @version    $Id: upcoming_products.php v1.0 2013-08-08 datazen $
 */
 class lC_Content_upcoming_products extends lC_Modules {
  /* 

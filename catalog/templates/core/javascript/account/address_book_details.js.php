@@ -5,7 +5,7 @@
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
 
-  Copyright (c) 2013 Loaded Commerce, LLC
+  Copyright (c) 2013 Loaded Commerce
 
   @author     LoadedCommerce Team
   @copyright  (c) 2013 LoadedCommerce Team

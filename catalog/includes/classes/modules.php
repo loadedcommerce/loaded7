@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: modules.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: modules.php v1.0 2013-08-08 datazen $
 */
 class lC_Modules {
   var $_modules,
@@ -22,7 +18,7 @@ class lC_Modules {
       $_keys,
       $_group;
 
-  function __construct($group) {
+  public function __construct($group) {
     global $lC_Database, $lC_Template, $lC_Cache;
 
     $this->_group = $group;
@@ -91,39 +87,39 @@ class lC_Modules {
     $this->_modules = $data;
   }
 
-  function getCode() {
+  public function getCode() {
     return $this->_code;
   }
 
-  function getTitle() {
+  public function getTitle() {
     return $this->_title;
   }
 
-  function getTitleLink() {
+  public function getTitleLink() {
     return $this->_title_link;
   }
 
-  function hasTitleLink() {
+  public function hasTitleLink() {
     return !empty($this->_title_link);
   }
 
-  function getContent() {
+  public function getContent() {
     return $this->_content;
   }
 
-  function hasContent() {
+  public function hasContent() {
     return !empty($this->_content);
   }
 
-  function getAuthorName() {
+  public function getAuthorName() {
     return $this->_author_name;
   }
 
-  function getAuthorAddress() {
+  public function getAuthorAddress() {
     return $this->_author_www;
   }
 
-  function getGroup($group) {
+  public function getGroup($group) {
     global $lC_Vqmod;
     
     $modules = array();
@@ -152,7 +148,7 @@ class lC_Modules {
     return $modules;
   }
 
-  function isInstalled($code = '', $group = '') {
+  public function isInstalled($code = '', $group = '') {
     global $lC_Database;
 
     if (empty($code) && empty($group)) {
@@ -175,7 +171,7 @@ class lC_Modules {
     return $is_installed;
   }
 
-  function hasKeys() {
+  public function hasKeys() {
     static $has_keys;
 
     if (isset($has_keys) === false) {
@@ -185,7 +181,7 @@ class lC_Modules {
     return $has_keys;
   }
 
-  function getKeys() {
+  public function getKeys() {
     if (isset($this->_keys) === false) {
       $this->_keys = array();
     }
@@ -193,11 +189,11 @@ class lC_Modules {
     return $this->_keys;
   }
 
-  function isActive() {
+  public function isActive() {
     return true;
   }
 
-  function install() {
+  public function install() {
     global $lC_Database, $lC_Language;
 
     $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
@@ -237,7 +233,7 @@ class lC_Modules {
     lC_Cache::clear('languages');
   }
 
-  function remove() {
+  public function remove() {
     global $lC_Database, $lC_Language;
 
     $Qmodule = $lC_Database->query('select id from :table_templates_boxes where code = :code and modules_group = :modules_group');

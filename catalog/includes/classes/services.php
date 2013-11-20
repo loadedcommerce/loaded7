@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: services.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: services.php v1.0 2013-08-08 datazen $
 */
 class lC_Services {
   var $services,
@@ -17,11 +13,11 @@ class lC_Services {
       $call_before_page_content = array(),
       $call_after_page_content = array();
 
-  function lC_Services() {
+  public function lC_Services() {
     $this->services = explode(';', MODULE_SERVICES_INSTALLED);
   }
 
-  function startServices() {
+  public function startServices() {
     $this->started_services = array();
 
     foreach ($this->services as $service) {
@@ -29,11 +25,11 @@ class lC_Services {
     }
   }
 
-  function stopServices() {
-/*
-ugly workaround to force the output_compression/GZIP service module to be stopped last
-to make sure all content in the buffer is compressed and sent to the client
-*/
+  public function stopServices() {
+    /*
+    ugly workaround to force the output_compression/GZIP service module to be stopped last
+    to make sure all content in the buffer is compressed and sent to the client
+    */
     if ($this->isStarted('output_compression')) {
       $key = array_search('output_compression', $this->started_services);
       unset($this->started_services[$key]);
@@ -46,7 +42,7 @@ to make sure all content in the buffer is compressed and sent to the client
     }
   }
 
-  function startService($service) {
+  public function startService($service) {
     global $lC_Vqmod;
     
     include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/modules/services/' . $service . '.php'));
@@ -56,36 +52,36 @@ to make sure all content in the buffer is compressed and sent to the client
     }
   }
 
-  function stopService($service) {
+  public function stopService($service) {
     @call_user_func(array(DIR_FS_CATALOG . 'lC_Services_' . $service, 'stop'));
   }
 
 
-  function isStarted($service) {
+  public function isStarted($service) {
     return in_array($service, $this->started_services);
   }
 
-  function addCallBeforePageContent($object, $method) {
+  public function addCallBeforePageContent($object, $method) {
     $this->call_before_page_content[] = array($object, $method);
   }
 
-  function addCallAfterPageContent($object, $method) {
+  public function addCallAfterPageContent($object, $method) {
     $this->call_after_page_content[] = array($object, $method);
   }
 
-  function hasBeforePageContentCalls() {
+  public function hasBeforePageContentCalls() {
     return !empty($this->call_before_page_content);
   }
 
-  function hasAfterPageContentCalls() {
+  public function hasAfterPageContentCalls() {
     return !empty($this->call_after_page_content);
   }
 
-  function getCallBeforePageContent() {
+  public function getCallBeforePageContent() {
     return $this->call_before_page_content;
   }
 
-  function getCallAfterPageContent() {
+  public function getCallAfterPageContent() {
     return $this->call_after_page_content;
   }
 }

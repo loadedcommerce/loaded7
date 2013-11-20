@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: order_total.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: order_total.php v1.0 2013-08-08 datazen $
 */
 class lC_OrderTotal {
   var $_modules = array(),
@@ -17,7 +13,7 @@ class lC_OrderTotal {
       $_group = 'order_total';
 
   // class constructor
-  function lC_OrderTotal() {
+  public function lC_OrderTotal() {
     global $lC_Database, $lC_Language, $lC_Vqmod;
 
     $Qmodules = $lC_Database->query('select code from :table_templates_boxes where modules_group = "order_total"');
@@ -51,7 +47,7 @@ class lC_OrderTotal {
   }
 
   // class methods
-  function removeModule($code) {
+  public function removeModule($code) {
     global $lC_Database;
     
     $Qmd = $lC_Database->query('delete from :table_templates_boxes where code = :code and modules_group = "order_total"');
@@ -60,27 +56,27 @@ class lC_OrderTotal {
     $Qmd->execute();    
   }
     
-  function getCode() {
+  public function getCode() {
     return $this->_code;
   }
 
-  function getTitle() {
+  public function getTitle() {
     return $this->_title;
   }
 
-  function getDescription() {
+  public function getDescription() {
     return $this->_description;
   }
 
-  function isEnabled() {
+  public function isEnabled() {
     return $this->_status;
   }
 
-  function getSortOrder() {
+  public function getSortOrder() {
     return $this->_sort_order;
   }
 
-  function &getResult() {
+  public function &getResult() {
     global $lC_ShoppingCart;
 
     $this->_data = array();
@@ -106,7 +102,7 @@ class lC_OrderTotal {
     return $this->_data;
   }
 
-  function hasActive() {
+  public function hasActive() {
     static $has_active;
 
     if (isset($has_active) === false) {
@@ -123,7 +119,7 @@ class lC_OrderTotal {
     return $has_active;
   }
 
-  function _usortModules($a, $b) {
+  private function _usortModules($a, $b) {
     if ($GLOBALS['lC_OrderTotal_' . $a]->getSortOrder() == $GLOBALS['lC_OrderTotal_' . $b]->getSortOrder()) {
       return strnatcasecmp($GLOBALS['lC_OrderTotal_' . $a]->getTitle(), $GLOBALS['lC_OrderTotal_' . $a]->getTitle());
     }

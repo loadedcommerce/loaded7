@@ -1,16 +1,12 @@
 <?php
 /**
-  $Id: shipping.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-*/     
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: shipping.php v1.0 2013-08-08 datazen $
+*/    
 require_once(DIR_FS_CATALOG . 'includes/classes/addons.php');
 
 class lC_Shipping {
@@ -28,7 +24,7 @@ class lC_Shipping {
 
     $Qmodules = $lC_Database->query("select code, modules_group from :table_templates_boxes where modules_group LIKE '%shipping%'");
     $Qmodules->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-    //$Qmodules->setCache('modules-shipping');
+    $Qmodules->setCache('modules-shipping');
     $Qmodules->execute();
 
     while ($Qmodules->next()) {

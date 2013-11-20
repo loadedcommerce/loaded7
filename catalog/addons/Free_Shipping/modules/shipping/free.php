@@ -1,15 +1,11 @@
 <?php
-/**  
-  $Id: lC_Shipping_free.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     Loaded Commerce Team
-  @copyright  (c) 2013 Loaded Commerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::addons::payment
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: controller.php v1.0 2013-08-08 datazen $
 */
 class lC_Shipping_free extends lC_Shipping {
 

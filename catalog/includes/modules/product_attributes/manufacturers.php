@@ -1,29 +1,24 @@
 <?php
-/*
-  $Id: $
-
-  LoadedCommerce, Open Source E-Commerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2007 LoadedCommerce
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License v2 (1991)
-  as published by the Free Software Foundation.
+/**
+  @package    catalog::modules::product_attributes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: manufacturers.php v1.0 2013-08-08 datazen $
 */
+class lC_ProductAttributes_manufacturers {
+  static public function getValue($value) {
+    global $lC_Database;
 
-  class lC_ProductAttributes_manufacturers {
-    static public function getValue($value) {
-      global $lC_Database;
+    $Qmanufacturer = $lC_Database->query('select manufacturers_name from :table_manufacturers where manufacturers_id = :manufacturers_id');
+    $Qmanufacturer->bindTable(':table_manufacturers');
+    $Qmanufacturer->bindInt(':manufacturers_id', $value);
+    $Qmanufacturer->execute();
 
-      $Qmanufacturer = $lC_Database->query('select manufacturers_name from :table_manufacturers where manufacturers_id = :manufacturers_id');
-      $Qmanufacturer->bindTable(':table_manufacturers');
-      $Qmanufacturer->bindInt(':manufacturers_id', $value);
-      $Qmanufacturer->execute();
-
-      if ( $Qmanufacturer->numberOfRows() === 1 ) {
-        return $Qmanufacturer->value('manufacturers_name');
-      }
+    if ( $Qmanufacturer->numberOfRows() === 1 ) {
+      return $Qmanufacturer->value('manufacturers_name');
     }
   }
+}
 ?>

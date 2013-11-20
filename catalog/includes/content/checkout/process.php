@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: process.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::content
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: process.php v1.0 2013-08-08 datazen $
 */
 class lC_Checkout_Process extends lC_Template {
 
@@ -17,7 +13,7 @@ class lC_Checkout_Process extends lC_Template {
   var $_module = 'process';
 
   /* Class constructor */
-  function lC_Checkout_Process() {
+  public function lC_Checkout_Process() {
     global $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_NavigationHistory, $lC_Payment, $lC_Vqmod;
     
     require($lC_Vqmod->modCheck('includes/classes/address_book.php'));

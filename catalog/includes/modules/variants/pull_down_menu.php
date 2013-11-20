@@ -1,15 +1,11 @@
 <?php
-/**  
-  $Id: pull_down_menu.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     Loaded Commerce Team
-  @copyright  (c) 2013 Loaded Commerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::modules::variants
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: pull_down_menu.php v1.0 2013-08-08 datazen $
 */
 class lC_Variants_pull_down_menu extends lC_Variants_Abstract {
   const ALLOW_MULTIPLE_VALUES = false;

@@ -1,15 +1,11 @@
 <?php
-/*
-  $Id: index.php v1.0 2012-12-08 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2012 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2012 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::install::templates
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: index.php v1.0 2013-08-08 datazen $
 */
 $vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents('..//includes/version.txt'), 2))));
 $version = $vInfo[0];

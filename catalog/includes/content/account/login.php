@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: login.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::content
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: login.php v1.0 2013-08-08 datazen $
 */
 class lC_Account_Login extends lC_Template {
 
@@ -21,7 +17,7 @@ class lC_Account_Login extends lC_Template {
       $_page_image = 'table_background_login.gif';
 
   /* Class constructor */
-  function lC_Account_Login() {
+  public function lC_Account_Login() {
     global $lC_Language, $lC_Services, $lC_Breadcrumb;
 
     // redirect the customer to a friendly cookie-must-be-enabled page if cookies are disabled (or the session has not started)
@@ -41,7 +37,7 @@ class lC_Account_Login extends lC_Template {
   }
 
   /* Private methods */
-  function _process() {
+  protected function _process() {
     global $lC_Database, $lC_Session, $lC_Language, $lC_ShoppingCart, $lC_MessageStack, $lC_Customer, $lC_NavigationHistory, $lC_Vqmod;
 
     require($lC_Vqmod->modCheck('includes/classes/account.php'));

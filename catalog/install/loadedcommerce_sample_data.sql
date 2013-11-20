@@ -1,13 +1,10 @@
-#  $Id: loadedcommerce.sql v1.0 2012-12-04 datazen $
-#
-#  LoadedCommerce, Innovative eCommerce Solutions
-#  http://www.loadedcommerce.com
-#
-#  Copyright (c) 2012 Loaded Commerce, LLC
-#
-#  @author     Loaded Commerce Team
-#  @copyright  (c) 2012 Loaded Commerce Team
-#  @license    http://loadedcommerce.com/license.html
+#  @package    catalog::install
+#  @author     Loaded Commerce
+#  @copyright  Copyright 2003-2014 Loaded Commerce
+#  @copyright  Portions Copyright 2003 osCommerce
+#  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+#  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+#  @version    $Id: loadedcommerce_sample_data.sql v1.0 2013-08-08 datazen $
 
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(6, 'women.jpg', 1, 10, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(7, 'men.jpg', 1, 20, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);

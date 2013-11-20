@@ -1,20 +1,16 @@
 <?php
-/*
-  $Id: image.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: image.php v1.0 2013-08-08 datazen $
 */
 class lC_Image {
   var $_groups;
 
-  function lC_Image() {
+  public function lC_Image() {
     global $lC_Database, $lC_Language;
 
     $this->_groups = array();
@@ -32,7 +28,7 @@ class lC_Image {
     $Qgroups->freeResult();
   }
 
-  function getID($code) {
+  public function getID($code) {
     foreach ($this->_groups as $group) {
       if ($group['code'] == $code) {
         return $group['id'];
@@ -42,23 +38,23 @@ class lC_Image {
     return 0;
   }
 
-  function getCode($id) {
+  public function getCode($id) {
     return $this->_groups[$id]['code'];
   }
 
-  function getWidth($code) {
+  public function getWidth($code) {
     return $this->_groups[$this->getID($code)]['size_width'];
   }
 
-  function getHeight($code) {
+  public function getHeight($code) {
     return $this->_groups[$this->getID($code)]['size_height'];
   }
 
-  function exists($code) {
+  public function exists($code) {
     return isset($this->_groups[$this->getID($code)]);
   }
 
-  function show($image, $title, $parameters = '', $group = '') {
+  public function show($image, $title, $parameters = '', $group = '') {
     if (empty($group) || !$this->exists($group)) {
       $group = $this->getCode(DEFAULT_IMAGE_GROUP_ID);
     }
@@ -81,7 +77,7 @@ class lC_Image {
     return lc_image(DIR_WS_IMAGES . $image, $title, $width, $height, $parameters);
   }
 
-  function getAddress($image, $group = 'default') {
+  public function getAddress($image, $group = 'default') {
     $group_id = $this->getID($group);
 
     return DIR_WS_IMAGES . 'products/' . $this->_groups[$group_id]['code'] . '/' . $image;
