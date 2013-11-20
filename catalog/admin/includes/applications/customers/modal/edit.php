@@ -564,8 +564,7 @@ function func_opnewindow(customers_id) {
   $.modal({
     content: '<div>'+
              '  <div>'+
-             '    <p><?php echo $lC_Language->get('introduction_new_customer_address'); ?>'+
-             '    </p>'+
+             '    <p class="align-center"><?php echo $lC_Language->get('introduction_new_customer_address'); ?></p>'+
              '  </div>'+
              '</div>',
     title: '<?php echo $lC_Language->get('modal_heading_new_address_book_entry'); ?>',
