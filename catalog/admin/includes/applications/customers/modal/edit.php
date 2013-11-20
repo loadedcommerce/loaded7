@@ -67,15 +67,15 @@ $pContent .= '<p class="button-height inline-label">' .
                '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
                   lc_draw_checkbox_field('status', '1', true, 'id="editStatus" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
              '</p>' .
-             '<p id = "id_button_create_order" class="button-height float-left">' .
-             '  <a class="button margin-bottom" href="javascript:void(0);" onclick="deleteThisCustomer(); return false;">' .
+             '<p id = "id_button_delete" class="button-height float-left">' .
+             '  <a class="button margin-bottom" href="javascript:void(0);" onclick="return false;">' .
              '    <span class="button-icon red-gradient">' .
              '      <span class="icon-cross"></span>' .
              '    </span>' . $lC_Language->get('button_delete') .
              '  </a>' .
              '</p>' .
-             '<p id = "id_button_create_order" class="button-height float-right">' .
-             '  <a class="button margin-bottom" href="#" onclick="return false;">' .
+             '<p class="button-height float-right">' .
+             '  <a id = "id_button_create_order" class="button margin-bottom" href="javascript:void(0);" onclick="createOrder(); return false;">' .
              '    <span class="button-icon blue-gradient">' .
              '      <span class="icon-plus"></span>' .
              '    </span>' . $lC_Language->get('button_create_order') .
@@ -560,10 +560,5 @@ function updateZones(selected) {
       }
     }
   );
-}
-function deleteThisCustomer() {
-  var cid = parseInt($("#abParentId").html());
-  var name = $("#editFirstname").val() + ' ' + $("#editLastname").val();
-  deleteCustomer(cid,name);
 }
 </script>
