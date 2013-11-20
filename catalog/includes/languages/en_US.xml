@@ -751,11 +751,6 @@
       <group>general</group>
     </definition>
     <definition>
-      <key>checkout_order_id</key>
-      <value><![CDATA[Order ID]]></value>
-      <group>general</group>
-    </definition>
-    <definition>
       <key>order_status</key>
       <value><![CDATA[Order Status:]]></value>
       <group>account</group>
