@@ -630,7 +630,7 @@ class lC_Updates_Admin {
       if($f->isFile()) {
         @unlink($f->getRealPath());
       } else if(!$f->isDot() && $f->isDir()) {
-        self::_rrmdir($f->getRealPath());
+        self::rmdir_r($f->getRealPath());
         @rmdir($f->getRealPath());
       }
     }
