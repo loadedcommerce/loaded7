@@ -74,7 +74,7 @@ class lC_Customers_Admin {
     $QresultFilterTotal->freeResult();
 
     /* Main Listing Query */
-    $Qcustomers = $lC_Database->query("SELECT c.customers_id, c.customers_group_id, c.customers_gender, c.customers_lastname, c.customers_firstname, c.customers_email_address, c.customers_status, c.customers_ip_address, c.date_account_created, c.date_account_last_modified, c.date_last_logon, c.number_of_logons, a.entry_country_id
+    $Qcustomers = $lC_Database->query("SELECT c.customers_id, c.customers_group_id, c.customers_gender, c.customers_lastname, c.customers_firstname, c.customers_email_address, c.customers_status, c.customers_ip_address, c.date_account_created, c.date_account_last_modified, c.date_last_logon, c.number_of_logons, c.customers_default_address_id, a.entry_country_id
                                          from :table_customers c
                                        LEFT JOIN :table_address_book a
                                          on (c.customers_id = a.customers_id and c.customers_default_address_id = a.address_book_id) " . $sWhere . $sOrder . $sLimit);
