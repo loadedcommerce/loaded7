@@ -26,7 +26,7 @@ button_new_customer = New Customer
 
 modal_heading_new_customer = New Customer
 modal_heading_edit_customer = Edit Customer
-modal_heading_new_address_book_entry = New Address Book Entry
+modal_heading_new_address_book_entry = New Address Book Entry?
 modal_heading_delete_customer = Delete Customer
 modal_heading_batch_delete_customers = Batch Delete Customers
 
