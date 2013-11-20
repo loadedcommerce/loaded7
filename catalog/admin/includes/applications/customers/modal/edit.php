@@ -66,27 +66,6 @@ $pContent .= '<p class="button-height inline-label">' .
              '<p class="button-height inline-label">' .
                '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
                   lc_draw_checkbox_field('status', '1', true, 'id="editStatus" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
-             '</p>' .
-             '<p id = "id_button_delete" class="button-height float-left">' .
-             '  <a class="button margin-bottom" href="javascript:void(0);" onclick="return false;">' .
-             '    <span class="button-icon red-gradient">' .
-             '      <span class="icon-cross"></span>' .
-             '    </span>' . $lC_Language->get('button_delete') .
-             '  </a>' .
-             '</p>' .
-             '<p class="button-height float-right">' .
-             '  <a id = "id_button_create_order" class="button margin-bottom" href="javascript:void(0);" onclick="createOrder(); return false;">' .
-             '    <span class="button-icon blue-gradient">' .
-             '      <span class="icon-plus"></span>' .
-             '    </span>' . $lC_Language->get('button_create_order') .
-             '  </a>' .
-             '</p>' .
-             '<p class="button-height float-right">' .
-             '  <a class="button margin-bottom" href="javascript:void(0);" onclick="saveCustomer(); return false;">' .
-             '    <span class="button-icon green-gradient">' .
-             '      <span class="icon-download"></span>' .
-             '    </span>' . $lC_Language->get('button_save_and_close') .
-             '  </a>&nbsp;&nbsp;' .
              '</p>';
 
 $aContent  = '<span id="addAddress" style="display:none;">';
@@ -217,9 +196,21 @@ function editCustomer(id) {
         }
       },
       buttons: {
-        '<?php echo $lC_Language->get('button_close'); ?>': {
-          classes:  'glossy',
+        '<?php echo $lC_Language->get('button_cancel'); ?>': {
+          classes:  'glossy align-right',
           click:    function(win) { win.closeModal(); }
+        },
+        '<?php echo $lC_Language->get('button_save_and_close'); ?>': {
+          classes:  'glossy align-right blue-gradient',
+          click:    function() { saveCustomer(); }
+        },
+        '<?php echo $lC_Language->get('button_create_order'); ?>': {
+          classes:  'glossy align-right green-gradient mid-margin-right',
+          click:    function() {  }
+        },
+        '<?php echo $lC_Language->get('button_delete'); ?>': {
+          classes:  'glossy float-left red-gradient',
+          click:    function() {  }
         }
       },
       buttonsLowPadding: true
@@ -374,8 +365,10 @@ function saveCustomer() {
           if (modPage == 'customers') {
             oTable.fnReloadAjax();
           }
+          cm = $('#editCustomerContainer').getModalWindow();
+          setTimeout("$(cm).closeModal()", 2300);
           // get new form data
-          getFormData(cid);
+          //getFormData(cid);
         }
       }
     );
