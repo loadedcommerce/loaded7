@@ -38,7 +38,7 @@ class lC_Templates_Admin {
         $class = 'lC_Template_' . $code;
         if ( class_exists($class) ) {
           $module = new $class();
-          $image = lc_image(DIR_WS_CATALOG . 'templates/' . $code . '/' . $module->getScreenshot(), null, 160, 120);
+          $image = lc_image(DIR_WS_CATALOG . 'templates/' . $code . '/images/' . $module->getScreenshot(), null, 160, 120);
           $module_title = $module->getTitle();
           if ( $module->getCode() == DEFAULT_TEMPLATE ) {
             $module_title .= '<small class="tag purple-gradient glossy margin-left">' . $lC_Language->get('default_entry') . '</small>';
@@ -102,6 +102,7 @@ class lC_Templates_Admin {
     $result['author'] = $module->getAuthorName() . ' (' . $module->getAuthorAddress() . ')';
     $result['markup'] = $module->getMarkup();
     $result['css_based'] = ( $module->isCSSBased() ? 'Yes' : 'No' );
+    $result['screenshot'] = $module->getScreenshot();
     $result['medium'] = $module->getMedium();
 
     return $result;

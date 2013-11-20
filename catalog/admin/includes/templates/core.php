@@ -20,7 +20,7 @@ class lC_Template_core {
       $_markup_version = 'HTML 5.0',
       $_css_based = '1', /* 0=No; 1=Yes */
       $_medium = 'Responsive UI',
-      $_screenshot = 'images/screenshot.png',
+      $_screenshot = 'core_screenshot.png',
       $_groups = array('boxes' => array('left', 'right'),
                        'content' => array('before', 'after')),
       $_keys;

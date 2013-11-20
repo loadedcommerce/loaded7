@@ -33,6 +33,7 @@ function showInfo(id) {
       $.modal({
           content: '<div id="showInfo">'+
                    '  <div id="showInfoForm">'+
+                   '  <p class="align-center"><?php echo lc_image(DIR_WS_CATALOG . 'templates/' . $code . '/images/' . $lC_Template->getScreenshot(), null, 640, 480); ?></p>'+
                    '    <p class="button-height inline-label">'+
                    '      <label for="title" class="label"><?php echo $lC_Language->get('field_title'); ?></label>'+
                    '      <span id="infoContentTitle"></span>'+
@@ -56,7 +57,7 @@ function showInfo(id) {
                    '  </div>'+
                    '</div>',
           title: '<?php echo $lC_Language->get('modal_heading_view_template_info'); ?>',
-          width: 500,
+          width: 680,
                 actions: {
             'Close' : {
               color: 'red',
