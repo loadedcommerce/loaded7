@@ -66,27 +66,6 @@ $pContent .= '<p class="button-height inline-label">' .
              '<p class="button-height inline-label">' .
                '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
                   lc_draw_checkbox_field('status', '1', true, 'id="editStatus" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
-             '</p>' .
-             '<p id = "id_button_delete" class="button-height float-left">' .
-             '  <a class="button margin-bottom" href="javascript:void(0);" onclick="deleteThisCustomer(); return false;">' .
-             '    <span class="button-icon red-gradient">' .
-             '      <span class="icon-cross"></span>' .
-             '    </span>' . $lC_Language->get('button_delete') .
-             '  </a>' .
-             '</p>' .
-             '<p class="button-height float-right">' .
-             '  <a id = "id_button_create_order" class="button margin-bottom disabled" href="javascript:void(0);" onclick="createOrder(); return false;">' .
-             '    <span class="button-icon blue-gradient">' .
-             '      <span class="icon-plus"></span>' .
-             '    </span>' . $lC_Language->get('button_create_order') .
-             '  </a>' .
-             '</p>' .
-             '<p class="button-height float-right">' .
-             '  <a class="button margin-bottom" href="javascript:void(0);" onclick="saveCustomer(); return false;">' .
-             '    <span class="button-icon green-gradient">' .
-             '      <span class="icon-download"></span>' .
-             '    </span>' . $lC_Language->get('button_save_and_close') .
-             '  </a>&nbsp;&nbsp;' .
              '</p>';
 
 $aContent  = '<span id="addAddress" style="display:none;">';
@@ -205,7 +184,6 @@ function editCustomer(id) {
                '      </form>'+
                '    </div>'+
                '    <span id="abParentId" style="display:none;"></span>'+
-               '    <span id="default_address_id" style="display:none;"></span>'+
                '    <span id="abId" style="display:none;"></span>'+
                '  </div>'+
                '</div>',
@@ -218,9 +196,21 @@ function editCustomer(id) {
         }
       },
       buttons: {
-        '<?php echo $lC_Language->get('button_close'); ?>': {
-          classes:  'glossy',
+        '<?php echo $lC_Language->get('button_cancel'); ?>': {
+          classes:  'glossy align-right',
           click:    function(win) { win.closeModal(); }
+        },
+        '<?php echo $lC_Language->get('button_save_and_close'); ?>': {
+          classes:  'glossy align-right blue-gradient',
+          click:    function() { saveCustomer(); }
+        },
+        '<?php echo $lC_Language->get('button_create_order'); ?>': {
+          classes:  'glossy align-right green-gradient mid-margin-right button_create_order disabled',
+          click:    function() {  }
+        },
+        '<?php echo $lC_Language->get('button_delete'); ?>': {
+          classes:  'glossy float-left red-gradient',
+          click:    function() {  }
         }
       },
       buttonsLowPadding: true
@@ -280,11 +270,12 @@ function getFormData(id) {
 
       // populate address book listing
       $("#addressListContainer").html(data.addressBook);
-      $("#default_address_id").html(data.customerData.customers_default_address_id); 
 
+      // if no default address disable the create order button
       if (parseInt(data.customerData.customers_default_address_id) > 0) {      
-        $("#id_button_create_order").removeClass("disabled");        
+        $(".button_create_order").removeClass("disabled");        
       }
+      
       // populate new address form
       $("#abParentId").html(id);
       $("#ab_gender_1").attr('checked', true);
@@ -379,8 +370,10 @@ function saveCustomer() {
           if (modPage == 'customers') {
             oTable.fnReloadAjax();
           }
+          cm = $('#editCustomerContainer').getModalWindow();
+          setTimeout("$(cm).closeModal()", 2300);
           // get new form data
-          getFormData(cid);
+          //getFormData(cid);
         }
       }
     );
@@ -565,15 +558,5 @@ function updateZones(selected) {
       }
     }
   );
-}
-function deleteThisCustomer() {
-  var cid = parseInt($("#abParentId").html());
-  var name = $("#editFirstname").val() + ' ' + $("#editLastname").val();
-  deleteCustomer(cid,name);
-}
-function createOrder() {
-  var cid = parseInt($("#abParentId").html());  
-  window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&cID='+cid+'");?>';
-  return false;
 }
 </script>
