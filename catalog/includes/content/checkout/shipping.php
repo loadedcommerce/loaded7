@@ -68,7 +68,11 @@ class lC_Checkout_Shipping extends lC_Template {
     }
 
     if ($lC_Customer->hasDefaultAddress() === false) {
+      if(isset($_GET['account_created'])){
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address&account_created=true', 'SSL'));
+    }else{
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'));
+    }
     } else {
       $this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/shipping.js.php');
 
@@ -104,7 +108,7 @@ class lC_Checkout_Shipping extends lC_Template {
         }
       }
     } 
-    
+
     if ($_GET[$this->_module] == 'process') {
       $this->_process();
     }

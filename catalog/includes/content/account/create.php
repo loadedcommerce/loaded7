@@ -133,7 +133,7 @@ class lC_Account_Create extends lC_Template {
       }
       
       if ($checkout == true) {
-        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'));
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping&account_created=true', 'SSL'));
       } else {
         lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'create=success', 'SSL'));
       }
