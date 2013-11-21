@@ -751,7 +751,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                             , 'products_cost'          => ($sQry->value($map['products_cost']) != '' || $sQry->value($map['products_cost']) != NULL) ? $sQry->value($map['products_cost']) : 0
                             , 'products_msrp'          => ($sQry->value($map['products_msrp']) != '' || $sQry->value($map['products_msrp']) != NULL) ? $sQry->value($map['products_msrp']) : 0
                             , 'products_model'         => $sQry->value($map['products_model'])
-                            , 'products_sku'           => ($sQry->value($map['products_sku']) != '' || $sQry->value($map['products_sku']) != NULL) ? $sQry->value($map['products_sku']) : 0
+                            , 'products_sku'           => ($sQry->value($map['products_sku']) != '' || $sQry->value($map['products_sku']) != NULL) ? $sQry->value($map['products_sku']) : null
                             , 'products_date_added'    => ($sQry->value($map['products_date_added']) != '' || $sQry->value($map['products_date_added']) != NULL) ? $sQry->value($map['products_date_added']) : "0000-00-00 00:00:00"
                             , 'products_last_modified' => $sQry->value($map['products_last_modified'])
                             , 'products_weight'        => $sQry->value($map['products_weight'])
@@ -2570,8 +2570,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
                             , 'entry_zone_id'        => $sQry->value($map['entry_zone_id'])
                             , 'entry_telephone'      => $sQry->value($map['entry_telephone'])
                             , 'entry_fax'            => $sQry->value($map['entry_fax'])
-                             ); 
-
+                             );
+                             
+          // get zone_name from source db 
+          $znQry = $source_db->query("SELECT zone_name FROM zones WHERE zone_id = " . $sQry->value($map['entry_zone_id']));
+          $znQry->execute();
+          
+          // get zone_code from new db 
+          $nzQry = $target_db->query("SELECT zone_id FROM " . $t_db['DB_PREFIX'] . "zones WHERE zone_country_id = " . $sQry->value($map['entry_country_id']) . " AND zone_name = '" . $znQry->value('zone_name') . "'");
+          $nzQry->execute();
+          
           $tQry = $target_db->query('INSERT INTO :table_address_book (customers_id, 
                                                                       entry_gender, 
                                                                       entry_company, 
@@ -2612,13 +2620,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->bindValue(':entry_suburb'        , $address['entry_suburb']);
           $tQry->bindValue(':entry_postcode'      , $address['entry_postcode']);
           $tQry->bindValue(':entry_city'          , $address['entry_city']);
-          $tQry->bindValue(':entry_state'         , $address['entry_state']);
+          $tQry->bindValue(':entry_state'         , $znQry->value('zone_name'));
           $tQry->bindInt  (':entry_country_id'    , $address['entry_country_id']);
-          $tQry->bindInt  (':entry_zone_id'       , $address['entry_zone_id']);
+          $tQry->bindInt  (':entry_zone_id'       , $nzQry->value('zone_id'));
           $tQry->bindValue(':entry_telephone'     , $address['entry_telephone']);
           $tQry->bindValue(':entry_fax'           , $address['entry_fax']);
           
           $tQry->execute();
+          
+          $znQry->freeResult();
+          $nzQry->freeResult();
           
           if ($target_db->isError()) {
             $this->_msg = $target_db->getError();
