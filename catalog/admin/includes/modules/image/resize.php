@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: resize.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    admin::modules
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: resize.php v1.0 2013-08-08 datazen $
 */
 global $lC_Vqmod;
 
@@ -22,7 +18,7 @@ class lC_Image_Admin_resize extends lC_Image_Admin {
       $_has_parameters = true;
 
   // Class constructor
-  function lC_Image_Admin_resize() {
+  public function lC_Image_Admin_resize() {
     global $lC_Language;
 
     parent::lC_Image_Admin();
@@ -33,7 +29,7 @@ class lC_Image_Admin_resize extends lC_Image_Admin {
   }
 
   // Public methods
-  function getParameters() {
+  public function getParameters() {
     global $lC_Language;
 
     $groups = array();
@@ -55,14 +51,14 @@ class lC_Image_Admin_resize extends lC_Image_Admin {
   }
 
   // Private methods
-  function _setHeader() {
+  protected function _setHeader() {
     global $lC_Language;
 
     $this->_header = array($lC_Language->get('images_resize_table_heading_groups'),
                            $lC_Language->get('images_resize_table_heading_total_resized'));
   }
 
-  function _setData() {
+  protected function _setData() {
     global $lC_Database, $lC_Language;
 
     $overwrite = false;

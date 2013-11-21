@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: maxmind_geolite_country.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    admin::modules
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: maxmind_geolite_country.php v1.0 2013-08-08 datazen $
 */
 class lC_GeoIP_maxmind_geolite_country extends lC_GeoIP_Admin {
 
@@ -20,7 +16,7 @@ class lC_GeoIP_maxmind_geolite_country extends lC_GeoIP_Admin {
   var $_author_www = 'http://www.loadedcommerce.com';
   var $_handler;
 
-  function lC_GeoIP_maxmind_geolite_country() {
+  public function lC_GeoIP_maxmind_geolite_country() {
     global $lC_Language;
 
     $this->_title = $lC_Language->get('geoip_maxmind_geolite_country_title');
@@ -28,7 +24,7 @@ class lC_GeoIP_maxmind_geolite_country extends lC_GeoIP_Admin {
     $this->_status = (defined('MODULE_DEFAULT_GEOIP') && (MODULE_DEFAULT_GEOIP == $this->_code));
   }
 
-  function activate() {
+  public function activate() {
     global $lC_Vqmod;
     
     include($lC_Vqmod->modCheck('external/maxmind/geoip/geoip.php'));
@@ -37,25 +33,25 @@ class lC_GeoIP_maxmind_geolite_country extends lC_GeoIP_Admin {
     $this->_active = true;
   }
 
-  function deactivate() {
+  public function deactivate() {
     geoip_close($this->_handler);
     unset($this->_handler);
     $this->_active = false;
   }
 
-  function isValid($ip_address) {
+  public function isValid($ip_address) {
     return (geoip_country_id_by_addr($this->_handler, $ip_address) !== false);
   }
 
-  function getCountryISOCode2($ip_address) {
+  public function getCountryISOCode2($ip_address) {
     return strtolower(geoip_country_code_by_addr($this->_handler, $ip_address));
   }
 
-  function getCountryName($ip_address) {
+  public function getCountryName($ip_address) {
     return geoip_country_name_by_addr($this->_handler, $ip_address);
   }
 
-  function getData($ip_address) {
+  public function getData($ip_address) {
     return array(lc_image('../images/worldflags/' . $this->getCountryISOCode2($ip_address) . '.png', $this->getCountryName($ip_address) . ', ' . $ip_address, 18, 12) . '&nbsp;' . $this->getCountryName($ip_address));
   }
 }
