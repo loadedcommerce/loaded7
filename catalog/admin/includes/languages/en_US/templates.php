@@ -11,8 +11,8 @@
 
 heading_title = Templates
 
-table_heading_templates = Template Info
-table_heading_preview = Template Preview
+table_heading_templates = Information
+table_heading_preview = Preview
 table_heading_action = Action
 
 modal_heading_edit_template = Edit Template
