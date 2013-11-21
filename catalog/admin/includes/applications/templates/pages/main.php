@@ -19,7 +19,7 @@
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   </hgroup>
   <style>
-  .dataColImage { text-align: left; }
+  .dataColImage { text-align: center; }
   .dataColTemplates { text-align: left; }
   .dataColAction { text-align: right; }
   </style>
@@ -28,7 +28,7 @@
     <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
       <thead>
         <tr>
-          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_preview'); ?></th>
+          <th scope="col" class="align-left" style="text-align:left !important;"><?php echo $lC_Language->get('table_heading_preview'); ?></th>
           <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_templates'); ?></th>
           <th scope="col" class="align-right"><span class="button-group compact"><a href="javascript:void(0);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a></span><span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span></th>
         </tr>
