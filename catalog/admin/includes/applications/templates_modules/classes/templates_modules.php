@@ -30,7 +30,7 @@ class lC_Templates_modules_Admin {
 
     include($lC_Vqmod->modCheck('../includes/classes/modules.php'));
 
-    $lC_Language->load('modules-' . $_GET['set']);
+    $lC_Language->load('modules-' . $_GET['set'], null, false);
 
     $result = array('aaData' => array());
     foreach ( $lC_DirectoryListing->getFiles() as $file ) {
@@ -166,6 +166,7 @@ class lC_Templates_modules_Admin {
       lC_Cache::clear('configuration');
       lC_Cache::clear('modules_' . $_GET['set']);
       lC_Cache::clear('templates_' . $_GET['set'] . '_layout');
+      lC_Cache::clear('languages-en');
 
       return true;
     }
@@ -196,6 +197,7 @@ class lC_Templates_modules_Admin {
       lC_Cache::clear('configuration');
       lC_Cache::clear('modules_' . $_GET['set']);
       lC_Cache::clear('templates_' . $_GET['set'] . '_layout');
+      lC_Cache::clear('languages-en');
 
       return true;
     }
