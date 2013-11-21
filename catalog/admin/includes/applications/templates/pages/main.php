@@ -19,7 +19,7 @@
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   </hgroup>
   <style>
-  .dataColImage { text-align: center; }
+  .dataColImage { text-align: left; }
   .dataColTemplates { text-align: left; }
   .dataColAction { text-align: right; }
   </style>
