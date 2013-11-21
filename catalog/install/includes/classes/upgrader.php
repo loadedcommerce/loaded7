@@ -3134,6 +3134,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
       // END LOAD CUSTOMERS GROUPS FROM SOURCE DB
       
+      // set default customers group to 0
+      $tQry = $target_db->query("UPDATE :table_configuration SET configuration_value = 0 WHERE configuration_key = 'DEFAULT_CUSTOMERS_GROUP_ID'");
+      $tQry->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $tQry->execute();
+      
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
       $tQry = $target_db->query('SET sql_mode = ""');
       $tQry->execute();
