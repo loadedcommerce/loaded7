@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: logoff.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::content
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: logoff.php v1.0 2013-08-08 datazen $
 */
 class lC_Account_Logoff extends lC_Template {
 
@@ -20,7 +16,7 @@ class lC_Account_Logoff extends lC_Template {
       $_page_contents = 'logoff.php';
 
   /* Class constructor */
-  function lC_Account_Logoff() {
+  public function lC_Account_Logoff() {
     global $lC_Language, $lC_Services, $lC_Breadcrumb;
 
     $this->_page_title = $lC_Language->get('sign_out_heading');
@@ -33,7 +29,7 @@ class lC_Account_Logoff extends lC_Template {
   }
 
   /* Private methods */
-  function _process() {
+  protected function _process() {
     global $lC_ShoppingCart, $lC_Customer;
 
     $lC_ShoppingCart->reset();

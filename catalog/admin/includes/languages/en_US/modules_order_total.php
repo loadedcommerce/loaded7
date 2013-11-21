@@ -1,13 +1,9 @@
-#  $Id: modules_order_total.php v1.0 2013-01-01 datazen $
-#
-#  LoadedCommerce, Innovative eCommerce Solutions
-#  http://www.loadedcommerce.com
-#
-#  Copyright (c) 2013 Loaded Commerce, LLC
-#
-#  @author     LoadedCommerce Team
-#  @copyright  (c) 2013 LoadedCommerce Team
-#  @license    http://loadedcommerce.com/license.html
+#  @package    admin::languages
+#  @author     Loaded Commerce
+#  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+#  @copyright  Portions Copyright 2003 osCommerce
+#  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+#  @version    $Id: modules_order_total.php v1.0 2013-08-08 datazen $
 
 heading_title = Order Total Modules
 

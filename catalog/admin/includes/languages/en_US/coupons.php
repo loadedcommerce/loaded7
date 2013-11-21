@@ -1,13 +1,9 @@
-#  $Id: coupons.php v1.0 2011-11-04 datazen $
-#
-#  LoadedCommerce, Innovative eCommerce Solutions
-#  http://www.loadedcommerce.com
-#
-#  Copyright (c) 2011 LoadedCommerce.com
-#
-#  @author     LoadedCommerce Team
-#  @copyright  (c) 2011 LoadedCommerce Team
-#  @license    http://loadedcommerce.com/license.html
+#  @package    admin::languages
+#  @author     Loaded Commerce
+#  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+#  @copyright  Portions Copyright 2003 osCommerce
+#  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+#  @version    $Id: coupons.php v1.0 2013-08-08 datazen $
 
 heading_title = Coupon Manager
 heading_title_new_coupon = New Coupon

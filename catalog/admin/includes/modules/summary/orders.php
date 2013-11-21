@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: orders.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    admin::modules
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: orders.php v1.0 2013-08-08 datazen $
 */
 if ( !class_exists('lC_Summary') ) {
   include($lC_Vqmod->modCheck('includes/classes/summary.php'));
@@ -21,7 +17,7 @@ class lC_Summary_orders extends lC_Summary {
       $sort_order = 30;
   
   /* Class constructor */
-  function __construct() {
+  public function __construct() {
     global $lC_Language;
 
     $lC_Language->loadIniFile('modules/summary/orders.php');
@@ -34,9 +30,25 @@ class lC_Summary_orders extends lC_Summary {
       $this->_setData();
     }
   }
+  
+  public function loadModal() {
+    global $lC_Database, $lC_Language, $lC_Template, $lC_Vqmod;
+    
+    if ( is_dir('includes/applications/orders/modal') ) {
+      if ( file_exists('includes/applications/orders/modal/edit.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/modal/edit.php'));
+    }
+    
+    if ( is_dir('includes/applications/orders/js') ) {
+      if ( file_exists('includes/applications/orders/js/orders.js.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/js/orders.js.php'));
+    } 
+    
+    if ( is_dir('includes/applications/orders/classes') ) {
+      if ( file_exists('includes/applications/orders/classes/orders.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/classes/orders.php'));
+    }       
+  }  
 
   /* Private methods */
-  function _setData() {
+  protected function _setData() {
     global $lC_Database, $lC_Language;
     
     if (!$this->enabled) {
@@ -74,22 +86,6 @@ class lC_Summary_orders extends lC_Summary {
       
       $this->_data .= $this->loadModal();      
     }
-  }
-   
-  function loadModal() {
-    global $lC_Database, $lC_Language, $lC_Template, $lC_Vqmod;
-    
-    if ( is_dir('includes/applications/orders/modal') ) {
-      if ( file_exists('includes/applications/orders/modal/edit.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/modal/edit.php'));
-    }
-    
-    if ( is_dir('includes/applications/orders/js') ) {
-      if ( file_exists('includes/applications/orders/js/orders.js.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/js/orders.js.php'));
-    } 
-    
-    if ( is_dir('includes/applications/orders/classes') ) {
-      if ( file_exists('includes/applications/orders/classes/orders.php') ) include_once($lC_Vqmod->modCheck('includes/applications/orders/classes/orders.php'));
-    }       
   }    
 }
 ?>

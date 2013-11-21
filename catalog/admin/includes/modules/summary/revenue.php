@@ -1,15 +1,11 @@
 <?php
-/*
-  $Id: revenue.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    admin::modules
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: revenue.php v1.0 2013-08-08 datazen $
 */
 global $lC_Vqmod;
 
@@ -23,7 +19,7 @@ class lC_Summary_revenue extends lC_Summary {
       $sort_order = 20;
   
   /* Class constructor */
-  function __construct() {
+  public function __construct() {
     global $lC_Language;
 
     $lC_Language->loadIniFile('modules/summary/revenue.php');
@@ -37,7 +33,7 @@ class lC_Summary_revenue extends lC_Summary {
   }
 
   /* Private methods */
-  function _setData() {
+  protected function _setData() {
     global $lC_Database, $lC_Language, $lC_Vqmod;
     
     if (!$this->enabled) {

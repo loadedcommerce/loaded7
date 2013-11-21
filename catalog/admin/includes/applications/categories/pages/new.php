@@ -1,28 +1,25 @@
 <?php
-/*
-  $Id: new.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: new.php v1.0 2013-08-08 datazen $
 */
-  $assignedCategoryTree = new lC_CategoryTree();
-  $assignedCategoryTree->setBreadcrumbUsage(false);
-  $assignedCategoryTree->setSpacerString('&nbsp;', 5);
+$assignedCategoryTree = new lC_CategoryTree();
+$assignedCategoryTree->setBreadcrumbUsage(false);
+$assignedCategoryTree->setSpacerString('&nbsp;', 5);
 
-  $lC_Template->loadModal($lC_Template->getModule());
+$lC_Template->loadModal($lC_Template->getModule());
 ?>
 <style>
-  .qq-upload-button { margin-top: -12px; }
-  .qq-upload-drop-area { min-height: 100px; top: -185px; }
-  .qq-upload-drop-area span { margin-top:-16px; }
-  LABEL { font-weight:bold; }
-  TD { padding: 5px 0 0 5px; }
+.qq-upload-button { margin-top: -12px; }
+.qq-upload-drop-area { min-height: 100px; top: -185px; }
+.qq-upload-drop-area span { margin-top:-16px; }
+LABEL { font-weight:bold; }
+TD { padding: 5px 0 0 5px; }
 </style>
 <!-- Main content -->
 <section role="main" id="main">

@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: notifications.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::content
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: notifications.php v1.0 2013-08-08 datazen $
 */
 class lC_Account_Notifications extends lC_Template {
 
@@ -21,7 +17,7 @@ class lC_Account_Notifications extends lC_Template {
       $_page_image = 'table_background_account.gif';
 
   /* Class constructor */
-  function lC_Account_Notifications() {
+  public function lC_Account_Notifications() {
     global $lC_Language, $lC_Services, $lC_Breadcrumb, $lC_Database, $lC_Customer, $Qglobal;
 
     $this->_page_title = $lC_Language->get('notifications_heading');
@@ -42,7 +38,7 @@ class lC_Account_Notifications extends lC_Template {
   }
 
   /* Public methods */
-  function &getListing() {
+  public function &getListing() {
     global $lC_Database, $lC_Session, $lC_Customer, $lC_Language;
 
     $Qproducts = $lC_Database->query('select pd.products_id, pd.products_name from :table_products_description pd, :table_products_notifications pn where pn.customers_id = :customers_id and pn.products_id = pd.products_id and pd.language_id = :language_id order by pd.products_name');
@@ -55,7 +51,7 @@ class lC_Account_Notifications extends lC_Template {
     return $Qproducts;
   }
 
-  function hasCustomerProductNotifications($id) {
+  public function hasCustomerProductNotifications($id) {
     global $lC_Database;
 
     $Qcheck = $lC_Database->query('select count(*) as total from :table_products_notifications where customers_id = :customers_id');
@@ -67,7 +63,7 @@ class lC_Account_Notifications extends lC_Template {
   }
 
   /* Private methods */
-  function _process() {
+  protected function _process() {
     global $lC_MessageStack, $lC_Database, $lC_Language, $lC_Customer, $Qglobal;
 
     $updated = false;

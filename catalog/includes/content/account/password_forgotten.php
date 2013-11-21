@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: password_forgotten.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::content
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: password_forgotten.php v1.0 2013-08-08 datazen $
 */
 class lC_Account_Password_forgotten extends lC_Template {
 
@@ -21,7 +17,7 @@ class lC_Account_Password_forgotten extends lC_Template {
       $_page_image = 'table_background_password_forgotten.gif';
 
   /* Class constructor */
-  function lC_Account_Password_forgotten() {
+  public function lC_Account_Password_forgotten() {
     global $lC_Language, $lC_Services, $lC_Breadcrumb, $lC_Vqmod;
 
     require_once($lC_Vqmod->modCheck('includes/classes/account.php'));
@@ -40,7 +36,7 @@ class lC_Account_Password_forgotten extends lC_Template {
   }
 
   /* Private methods */
-  function _process() {
+  protected function _process() {
     global $lC_MessageStack, $lC_Database, $lC_Language, $lC_Vqmod;
     
     require_once($lC_Vqmod->modCheck('includes/classes/account.php'));

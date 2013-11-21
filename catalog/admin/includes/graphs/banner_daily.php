@@ -1,17 +1,12 @@
 <?php
-/*
-  $Id: banner_daily.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    admin::graphs
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: banner_daily.php v1.0 2013-08-08 datazen $
 */
-
 function lc_banner_daily($_id, $_month, $_year) {
   global $lC_Database, $lC_Language, $lC_Vqmod;
 
