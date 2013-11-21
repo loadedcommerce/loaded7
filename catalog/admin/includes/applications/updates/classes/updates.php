@@ -528,12 +528,19 @@ class lC_Updates_Admin {
       if (utility::execEnabled() === true && utility::isLinux() === true) {
         try {
           exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
-          self::log('##### UPDATED Permissions on PHP files to 644');
+          self::log('##### UPDATED Permissions on PHP files/directories');
         } catch ( Exception $e ) {  
-          self::log('*** Could NOT Set Permissions on PHP files to 644');
+          self::log('*** Could NOT Set Permissions on PHP files/directories');
         } 
         self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
-      }
+      } else {
+        try {
+          self::chmod_r(DIR_FS_CATALOG);
+          self::log('##### UPDATED Permissions on PHP files/directories');
+        } catch ( Exception $e ) {  
+          self::log('*** Could NOT Set Permissions on PHP files/directories');
+        } 
+        self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');      }
     } else {
       self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
     }
@@ -618,7 +625,7 @@ class lC_Updates_Admin {
       if($f->isFile()) {
         @unlink($f->getRealPath());
       } else if(!$f->isDot() && $f->isDir()) {
-        self::_rrmdir($f->getRealPath());
+        self::rmdir_r($f->getRealPath());
         @rmdir($f->getRealPath());
       }
     }
@@ -626,6 +633,32 @@ class lC_Updates_Admin {
     
     return true;
   }  
+ /**
+  * Recursive set permissions on files and folders
+  *  
+  * @param string $path The parent path to start from
+  * @access protected      
+  * @return boolean
+  */
+  protected static function chmod_r($path, $filePerm=0644, $dirPerm=0755) {
+    // Check if the path exists
+    if (!file_exists($path)) {
+      return(false);
+    }
+
+    if (is_file($path)) {
+      @chmod($path, $filePerm);
+    } elseif (is_dir($path)) {
+      $foldersAndFiles = @scandir($path);
+      $entries = @array_slice($foldersAndFiles, 2);
+      foreach ($entries as $entry) {
+        self::chmod_r($path."/".$entry, $filePerm, $dirPerm);
+      }
+      @chmod($path, $dirPerm);
+    }
+
+    return true;
+  }
  /**
   * Check if a log exists
   *  

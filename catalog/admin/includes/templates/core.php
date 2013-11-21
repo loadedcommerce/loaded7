@@ -10,13 +10,14 @@
 */
 class lC_Template_core {
   var $_id,
-      $_title = 'Loaded Commerce Bootstrap 3.0 Core Template',
+      $_title = 'Bootstrap 3.0 Core Template',
       $_code = 'core',
-      $_author_name = 'Loaded Commerce',
+      $_author_name = 'Loaded Commerce, LLC',
       $_author_www = 'http://www.loadedcommerce.com',
-      $_markup_version = 'HTML 5.0',
+      $_markup_version = 'HTML5/CSS3',
       $_css_based = '1', /* 0=No; 1=Yes */
-      $_medium = 'Responsive UI',
+      $_medium = 'Mobile Responsive UI',
+      $_screenshot = 'core_screenshot.png',
       $_groups = array('boxes' => array('left', 'right'),
                        'content' => array('before', 'after')),
       $_keys;
@@ -66,6 +67,10 @@ class lC_Template_core {
 
   public function getGroups($group) {
     return $this->_groups[$group];
+  }
+  
+  function getScreenshot() {
+    return $this->_screenshot;
   }
 
   public function install() {

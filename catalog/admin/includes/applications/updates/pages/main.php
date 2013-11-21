@@ -109,13 +109,13 @@ $backupArr = lC_Updates_Admin::getBackups();
         <legend class="legend"><?php echo $lC_Language->get('heading_legend_manual'); ?></legend>
         <table id="manualButtonSet" style="margin-top:-4px;">
           <tr>
-            <td align="left" id="td-download" class="strong">Step 1:
+            <td align="left" id="td-download" class="strong">1)
               <a id="download" href="#" class="button icon-download download-zip blue-gradient glossy small-margin-left<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>">
                 <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_download_zip'); ?></span>
               </a>
             </td>
-            <td align="center" class="strong" style="padding-top:7px;">Step 2: FTP Files</td>
-            <td align="right" id="td-runafter" class="strong">Step 3:
+            <td align="center" class="strong" style="padding-top:7px;">2) FTP Files</td>
+            <td align="right" id="td-runafter" class="strong">3)
               <a id="runafter" href="javascript:void(0);" <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onclick="updateDatabase();"'); ?> class="button icon-database update-db blue-gradient glossy small-margin-left<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
                 <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('button_update_database'); ?></span>
               </a>

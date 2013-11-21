@@ -31,10 +31,6 @@
                 </address>
               </div>
               <div class="well">
-                <div class="clearfix">
-                  <span class="strong pull-left"><?php echo $lC_Language->get('checkout_order_number'); ?></span>
-                  <span class="strong pull-right"><?php echo $_SESSION['cartID']; ?></span>                
-                </div>
                 <?php 
                 foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
                   ?>

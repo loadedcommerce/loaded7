@@ -19,7 +19,8 @@ global $lC_Template;
       "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
       "sPaginationType": paginationType,
       "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-      "aoColumns": [{ "sWidth": "80%", "bSortable": false, "sClass": "dataColTemplates" },
+      "aoColumns": [{ "sWidth": "120px", "bSortable": false, "sClass": "dataColImage" },
+                    { "sWidth": "80%", "bSortable": false, "sClass": "dataColTemplates" },
                     { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
     });
     $('#dataTable').responsiveTable();
@@ -31,10 +32,5 @@ global $lC_Template;
       $('#dataTable_length').hide();
       $('#actionText').hide();
     }    
-    var error = '<?php echo $_SESSION['error']; ?>';
-    if (error) {
-      var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
-      $.modal.alert(errmsg);
-    }
   });
 </script>
