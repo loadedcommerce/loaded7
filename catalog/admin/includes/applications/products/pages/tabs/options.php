@@ -78,6 +78,11 @@ global $lC_Language, $pInfo;
     */ ?>
   </div>
 </div>
+<?php
+if ( is_dir('includes/applications/products/modal') ) {
+  if ( file_exists('includes/applications/products/modal/addSimpleOption.php') ) include_once($lC_Vqmod->modCheck('includes/applications/products/modal/addSimpleOption.php'));
+}
+?>
 <script>
 $(document).ready(function() {
   _setSimpleOptionsSortOrder();
