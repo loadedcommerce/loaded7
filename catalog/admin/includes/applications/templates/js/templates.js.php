@@ -23,7 +23,7 @@ global $lC_Template;
       "sPaginationType": paginationType,
       "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
       "aoColumns": [{ "sWidth": "120px", "bSortable": false, "sClass": "dataColImage" },
-                    { "sWidth": "80%", "bSortable": false, "sClass": "dataColTemplates" },
+                    { "sWidth": "80%", "bSortable": false, "sClass": "dataColTemplates hide-on-mobile-portrait" },
                     { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
     });
     $('#dataTable').responsiveTable();
