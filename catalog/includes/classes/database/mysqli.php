@@ -24,12 +24,12 @@ class lC_Database_mysqli extends lC_Database {
   
   public function connect() {
     if (defined('USE_PCONNECT') && (USE_PCONNECT == 'true')) {
-      $connect_public function = 'mysqli_pconnect';
+      $connect_function = 'mysqli_pconnect';
     } else {
-      $connect_public function = 'mysqli_connect';
+      $connect_function = 'mysqli_connect';
     }
 
-    if ($this->link = @$connect_public function($this->server, $this->username, $this->password)) {
+    if ($this->link = @$connect_function($this->server, $this->username, $this->password)) {
       $this->setConnected(true);
 
       if ( version_compare(mysqli_get_server_info($this->link), '5.0.2') >= 0 ) {
