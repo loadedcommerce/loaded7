@@ -578,7 +578,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                              , 'customers_id'   => 'customers_id'
                                                                              , 'customers_name' => 'customers_name'
                                                                              , 'reviews_rating' => 'reviews_rating'
-                                                                             , 'language_id'    => 'language_id'
+                                                                             , 'languages_id'   => 'languages_id'
                                                                              , 'reviews_text'   => 'reviews_text'
                                                                              , 'date_added'     => 'date_added'
                                                                              , 'last_modified'  => 'last_modified'
@@ -1338,7 +1338,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindDate (':date_added'    , $review['date_added']);
         $tQry->bindDate (':last_modified' , $review['last_modified']);
         $tQry->bindInt  (':reviews_read'  , $review['reviews_read']);
-        $tQry->bindInt  (':reviews_status', $review['reviews_status']);
+        $tQry->bindInt  (':reviews_status', 1);
         
         $tQry->execute();
         
