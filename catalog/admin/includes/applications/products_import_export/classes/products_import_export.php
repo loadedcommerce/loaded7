@@ -142,190 +142,66 @@ class lC_Products_import_export_Admin {
 	  }
 	  $url = $domain . '/' . str_replace(DIR_FS_CATALOG, "", $filepath);
 	  
-	  $version = 'CORE';
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	  if($version = 'CORE'){
-	    // CORE Edition Columns
-	    $sql_columns = array('products.products_id',
-		                 'products.parent_id',
-						 'products.products_quantity',
-						 'products.products_price',
-						 'products.products_cost',
-						 'products.products_msrp',
-						 'products.products_model',
-						 'products.products_sku',
-						 'products.products_date_added',
-						 'products.products_last_modified',
-						 'products.products_weight',
-						 'products.products_weight_class',
-						 'products.products_status',
-						 'products.products_tax_class_id',
-						 'products.manufacturers_id',
-						 'products.products_ordered',
-						 'products.has_children',
-						 
-						 'products_description.language_id',
-						 'products_description.products_name',
-						 'products_description.products_description',
-						 'products_description.products_keyword',
-						 'products_description.products_tags',
-						 'products_description.products_meta_title',
-						 'products_description.products_meta_keywords',
-						 'products_description.products_meta_description',
-						 'products_description.products_url',
-						 'products_description.products_viewed'
-						 );
-	    $columns = array('id',
-		                 'parent_id',
-						 'quantity',
-						 'price',
-						 'cost',
-						 'msrp',
-						 'model',
-						 'sku',
-						 'date_added',
-						 'last_modified',
-						 'weight',
-						 'weight_class',
-						 'status',
-						 'tax_class_id',
-						 'manufacturers_id',
-						 'products_ordered',
-						 'has_children',
-						 
-						 'language_id',
-						 'name',
-						 'description',
-						 'keyword',
-						 'tags',
-						 'meta_title',
-						 'meta_keywords',
-						 'meta_description',
-						 'url',
-						 'products_viewed'
-						 );
-	  } else if($version == 'PRO'){
-		// PRO Edition Columns
-	    $sql_columns = array('products.products_id',
-		                 'products.parent_id',
-						 'products.products_quantity',
-						 'products.products_price',
-						 'products.products_cost',
-						 'products.products_msrp',
-						 'products.products_model',
-						 'products.products_sku',
-						 'products.products_date_added',
-						 'products.products_last_modified',
-						 'products.products_weight',
-						 'products.products_weight_class',
-						 'products.products_status',
-						 'products.products_tax_class_id',
-						 'products.manufacturers_id',
-						 'products.products_ordered',
-						 'products.has_children',
-						 
-						 'products_description.language_id',
-						 'products_description.products_name',
-						 'products_description.products_description',
-						 'products_description.products_keyword',
-						 'products_description.products_tags',
-						 'products_description.products_meta_title',
-						 'products_description.products_meta_keywords',
-						 'products_description.products_meta_description',
-						 'products_description.products_url',
-						 'products_description.products_viewed'
-						 );
-	    $columns = array('id',
-		                 'parent_id',
-						 'quantity',
-						 'price',
-						 'cost',
-						 'msrp',
-						 'model',
-						 'sku',
-						 'date_added',
-						 'last_modified',
-						 'weight',
-						 'weight_class',
-						 'status',
-						 'tax_class_id',
-						 'manufacturers_id',
-						 'products_ordered',
-						 'has_children',
-						 
-						 'language_id',
-						 'name',
-						 'description',
-						 'keyword',
-						 'tags',
-						 'meta_title',
-						 'meta_keywords',
-						 'meta_description',
-						 'url',
-						 'products_viewed'
-						 );
-	  } else if($version == 'B2B'){
-		// B2B Edition Columns
-	    $sql_columns = array('products.products_id',
-		                 'products.parent_id',
-						 'products.products_quantity',
-						 'products.products_price',
-						 'products.products_cost',
-						 'products.products_msrp',
-						 'products.products_model',
-						 'products.products_sku',
-						 'products.products_date_added',
-						 'products.products_last_modified',
-						 'products.products_weight',
-						 'products.products_weight_class',
-						 'products.products_status',
-						 'products.products_tax_class_id',
-						 'products.manufacturers_id',
-						 'products.products_ordered',
-						 'products.has_children',
-						 
-						 'products_description.language_id',
-						 'products_description.products_name',
-						 'products_description.products_description',
-						 'products_description.products_keyword',
-						 'products_description.products_tags',
-						 'products_description.products_meta_title',
-						 'products_description.products_meta_keywords',
-						 'products_description.products_meta_description',
-						 'products_description.products_url',
-						 'products_description.products_viewed'
-						 );
-	    $columns = array('id',
-		                 'parent_id',
-						 'quantity',
-						 'price',
-						 'cost',
-						 'msrp',
-						 'model',
-						 'sku',
-						 'date_added',
-						 'last_modified',
-						 'weight',
-						 'weight_class',
-						 'status',
-						 'tax_class_id',
-						 'manufacturers_id',
-						 'products_ordered',
-						 'has_children',
-						 
-						 'language_id',
-						 'name',
-						 'description',
-						 'keyword',
-						 'tags',
-						 'meta_title',
-						 'meta_keywords',
-						 'meta_description',
-						 'url',
-						 'products_viewed'
-						 );
-	  }
+	  $sql_columns = array('products.products_id',
+	  					   'products.parent_id',
+						   'products.products_quantity',
+						   'products.products_price',
+						   'products.products_cost',
+						   'products.products_msrp',
+						   'products.products_model',
+						   'products.products_sku',
+						   'products.products_date_added',
+						   'products.products_last_modified',
+						   'products.products_weight',
+						   'products.products_weight_class',
+						   'products.products_status',
+						   'products.products_tax_class_id',
+						   'products.manufacturers_id',
+						   'products.products_ordered',
+						   'products.has_children',
+						   
+						   'products_description.language_id',
+						   'products_description.products_name',
+						   'products_description.products_description',
+						   'products_description.products_keyword',
+						   'products_description.products_tags',
+						   'products_description.products_meta_title',
+						   'products_description.products_meta_keywords',
+						   'products_description.products_meta_description',
+						   'products_description.products_url',
+						   'products_description.products_viewed'
+						   );
+	  $columns = array('id',
+		               'parent_id',
+					   'quantity',
+					   'price',
+					   'cost',
+					   'msrp',
+					   'model',
+					   'sku',
+					   'date_added',
+					   'last_modified',
+					   'weight',
+					   'weight_class',
+					   'status',
+					   'tax_class_id',
+					   'manufacturer',
+					   'products_ordered',
+					   'has_children',
+					   
+					   'language_id',
+					   'name',
+					   'description',
+					   'permalink',
+					   'tags',
+					   'meta_title',
+					   'meta_keywords',
+					   'meta_description',
+					   'url',
+					   'products_viewed'
+					   );
 	  
 	  $sql_columns = implode(", ", $sql_columns);
 	  
@@ -417,11 +293,8 @@ class lC_Products_import_export_Admin {
 	  }
 	  $url = $domain . '/' . str_replace(DIR_FS_CATALOG, "", $filepath);
 	  
-	  $version = 'CORE';
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	  if($version = 'CORE'){
-	    // CORE Edition Columns
 	    $sql_columns = array('categories.categories_id',
 		                 'categories.categories_image',
 		                 'categories.parent_id',
@@ -464,95 +337,6 @@ class lC_Products_import_export_Admin {
 						 'keyword',
 						 'tags'
 						 );
-	  } else if($version == 'PRO'){
-		// PRO Edition Columns
-	    $sql_columns = array('categories.categories_id',
-		                 'categories.categories_image',
-		                 'categories.parent_id',
-		                 'categories.sort_order',
-		                 'categories.categories_mode',
-		                 'categories.categories_link_target',
-		                 'categories.categories_custom_url',
-		                 'categories.categories_status',
-		                 'categories.categories_visibility_nav',
-		                 'categories.categories_visibility_box',
-		                 'categories.date_added',
-		                 'categories.last_modified',
-						 
-						 'categories_description.language_id',
-						 'categories_description.categories_name',
-						 'categories_description.categories_menu_name',
-						 'categories_description.categories_blurb',
-						 'categories_description.categories_description',
-						 'categories_description.categories_keyword',
-						 'categories_description.categories_tags',
-						 );
-	    $columns = array('id',
-		                 'categories.categories_image',
-		                 'parent_id',
-		                 'sort_order',
-		                 'mode',
-		                 'link_target',
-		                 'custom_url',
-		                 'status',
-		                 'visibility_nav',
-		                 'visibility_box',
-		                 'date_added',
-		                 'last_modified',
-						 
-						 'language_id',
-						 'name',
-						 'menu_name',
-						 'blurb',
-						 'description',
-						 'keyword',
-						 'tags'
-						 );
-	  } else if($version == 'B2B'){
-		// B2B Edition Columns
-	    $sql_columns = array('categories.categories_id',
-		                 'categories.categories_image',
-		                 'categories.parent_id',
-		                 'categories.sort_order',
-		                 'categories.categories_mode',
-		                 'categories.categories_link_target',
-		                 'categories.categories_custom_url',
-		                 'categories.categories_status',
-		                 'categories.categories_visibility_nav',
-		                 'categories.categories_visibility_box',
-		                 'categories.date_added',
-		                 'categories.last_modified',
-						 
-						 'categories_description.language_id',
-						 'categories_description.categories_name',
-						 'categories_description.categories_menu_name',
-						 'categories_description.categories_blurb',
-						 'categories_description.categories_description',
-						 'categories_description.categories_keyword',
-						 'categories_description.categories_tags',
-						 );
-	    $columns = array('id',
-		                 'categories.categories_image',
-		                 'parent_id',
-		                 'sort_order',
-		                 'mode',
-		                 'link_target',
-		                 'custom_url',
-		                 'status',
-		                 'visibility_nav',
-		                 'visibility_box',
-		                 'date_added',
-		                 'last_modified',
-						 
-						 'language_id',
-						 'name',
-						 'menu_name',
-						 'blurb',
-						 'description',
-						 'keyword',
-						 'tags'
-						 );
-	  }
 	  
 	  $sql_columns = implode(",", $sql_columns);
 	  
@@ -620,34 +404,14 @@ class lC_Products_import_export_Admin {
 	  }
 	  $url = $domain . '/' . str_replace(DIR_FS_CATALOG, "", $filepath);
 	  
-	  $version = 'CORE';
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	  if($version = 'CORE'){
-	    // CORE Edition Columns
 	    $columns = array('products_variants_groups.id',
 		                 'products_variants_groups.languages_id',
 		                 'products_variants_groups.title',
 		                 'products_variants_groups.sort_order',
 		                 'products_variants_groups.module',
 						 );
-	  } else if($version == 'PRO'){
-		// PRO Edition Columns
-	    $columns = array('products_variants_groups.id',
-		                 'products_variants_groups.languages_id',
-		                 'products_variants_groups.title',
-		                 'products_variants_groups.sort_order',
-		                 'products_variants_groups.module',
-						 );
-	  } else if($version == 'B2B'){
-		// B2B Edition Columns
-	    $columns = array('products_variants_groups.id',
-		                 'products_variants_groups.languages_id',
-		                 'products_variants_groups.title',
-		                 'products_variants_groups.sort_order',
-		                 'products_variants_groups.module',
-						 );
-	  }
 	  
 	  $sql_columns = implode(",", $columns);
 	  
@@ -717,31 +481,12 @@ class lC_Products_import_export_Admin {
 	  $version = 'CORE';
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	  if($version = 'CORE'){
-	    // CORE Edition Columns
 	    $columns = array('products_variants_values.id',
 		                 'products_variants_values.languages_id',
 		                 'products_variants_values.products_variants_groups_id',
 		                 'products_variants_values.title',
 		                 'products_variants_values.sort_order',
 						 );
-	  } else if($version == 'PRO'){
-		// PRO Edition Columns
-	    $columns = array('products_variants_values.id',
-		                 'products_variants_values.languages_id',
-		                 'products_variants_values.products_variants_groups_id',
-		                 'products_variants_values.title',
-		                 'products_variants_values.sort_order',
-						 );
-	  } else if($version == 'B2B'){
-		// B2B Edition Columns
-	    $columns = array('products_variants_values.id',
-		                 'products_variants_values.languages_id',
-		                 'products_variants_values.products_variants_groups_id',
-		                 'products_variants_values.title',
-		                 'products_variants_values.sort_order',
-						 );
-	  }
 	  
 	  $sql_columns = implode(",", $columns);
 	  
@@ -808,34 +553,14 @@ class lC_Products_import_export_Admin {
 	  }
 	  $url = $domain . '/' . str_replace(DIR_FS_CATALOG, "", $filepath);
 	  
-	  $version = 'CORE';
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	  if($version = 'CORE'){
-	    // CORE Edition Columns
 	    $columns = array('products_simple_options_values.id',
 		                 'products_simple_options_values.customers_group_id',
 		                 'products_simple_options_values.values_id',
 		                 'products_simple_options_values.options_id',
 		                 'products_simple_options_values.price_modifier',
 						 );
-	  } else if($version == 'PRO'){
-		// PRO Edition Columns
-	    $columns = array('products_simple_options_values.id',
-		                 'products_simple_options_values.customers_group_id',
-		                 'products_simple_options_values.values_id',
-		                 'products_simple_options_values.options_id',
-		                 'products_simple_options_values.price_modifier',
-						 );
-	  } else if($version == 'B2B'){
-		// B2B Edition Columns
-	    $columns = array('products_simple_options_values.id',
-		                 'products_simple_options_values.customers_group_id',
-		                 'products_simple_options_values.values_id',
-		                 'products_simple_options_values.options_id',
-		                 'products_simple_options_values.price_modifier',
-						 );
-	  }
 	  
 	  $sql_columns = implode(",", $columns);
 	  
@@ -945,14 +670,14 @@ class lC_Products_import_export_Admin {
 								 'has_children',
 								 
 								 'language_id',
-								 'products_name',
-								 'products_description',
-								 'products_keyword',
-								 'products_tags',
-								 'products_meta_title',
-								 'products_meta_keywords',
-								 'products_meta_description',
-								 'products_url',
+								 'name',
+								 'description',
+								 'keyword',
+								 'tags',
+								 'meta_title',
+								 'meta_keywords',
+								 'meta_description',
+								 'url',
 								 'products_viewed',
 								 
 								 'categories',
@@ -1026,17 +751,17 @@ class lC_Products_import_export_Admin {
 					$Qproduct->bindInt(':products_id', $products_id);
 					$Qproduct->bindRaw(':products_date_added', 'now()');
 					$Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
-					$Qproduct->bindInt(':products_quantity', $product['products.products_quantity']);
-					$Qproduct->bindFloat(':products_cost', $product['products.products_cost']);
-					$Qproduct->bindFloat(':products_price', $product['products.products_price']);
-					$Qproduct->bindFloat(':products_msrp', $product['products.products_msrp']);
-					$Qproduct->bindValue(':products_model', $product['products.products_model']);
-					$Qproduct->bindValue(':products_sku', $product['products.products_sku']);
-					$Qproduct->bindFloat(':products_weight', $product['products.products_weight']);
-					$Qproduct->bindInt(':products_weight_class', $product['products.products_weight_class']);
-					$Qproduct->bindInt(':products_status', $product['products.products_status']);
-					$Qproduct->bindInt(':products_tax_class_id', $product['products.products_tax_class_id']);
-					$Qproduct->setLogging($_SESSION['module'], $id);
+					$Qproduct->bindInt(':products_quantity', $product['quantity']);
+					$Qproduct->bindFloat(':products_cost', $product['cost']);
+					$Qproduct->bindFloat(':products_price', $product['price']);
+					$Qproduct->bindFloat(':products_msrp', $product['msrp']);
+					$Qproduct->bindValue(':products_model', $product['model']);
+					$Qproduct->bindValue(':products_sku', $product['sku']);
+					$Qproduct->bindFloat(':products_weight', $product['weight']);
+					$Qproduct->bindInt(':products_weight_class', $product['weight_class']);
+					$Qproduct->bindInt(':products_status', $product['status']);
+					$Qproduct->bindInt(':products_tax_class_id', $product['tax_class_id']);
+					$Qproduct->setLogging($_SESSION['module'], $products_id);
 					$Qproduct->execute();
 	
 					if ( $lC_Database->isError() ) {
@@ -1045,7 +770,7 @@ class lC_Products_import_export_Admin {
 				
 				
 				///////////////////////////// REVIEW PRICING
-				
+				/*
 				
 					  // remove any old pricing records
 					  $Qpricing = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
@@ -1087,7 +812,7 @@ class lC_Products_import_export_Admin {
 					  
 					  //////////////////// REVIEW PRICING
 					  
-					  
+					  */
 				
 					  $Qcategories = $lC_Database->query('delete from :table_products_to_categories where products_id = :products_id');
 					  $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
@@ -1118,6 +843,7 @@ class lC_Products_import_export_Admin {
 					}
 					
 					/////////////// KKEEEEEP GOING IMAGES
+					/*
 					
 					if ( $error === false ) {
 					  $images = array();
@@ -1176,33 +902,30 @@ class lC_Products_import_export_Admin {
 					///////////////////// REVIEW IMAGES ABOVE
 					
 					
-					
-					
+					*/
 					
 					if ( $error === false ) {
-					  foreach ($lC_Language->getAll() as $l) {
-						$Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_keyword, products_tags, products_url) values (:products_id, :language_id, :products_name, :products_description, :products_keyword, :products_tags, :products_url)');
-						$Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-						$Qpd->bindInt(':products_id', $products_id);
-						$Qpd->bindInt(':language_id', $l['id']);
-						$Qpd->bindValue(':products_name', $data['products_name'][$l['id']]);
-						$Qpd->bindValue(':products_description', $data['products_description'][$l['id']]);
-						$Qpd->bindValue(':products_keyword', $data['products_keyword'][$l['id']]);
-						$Qpd->bindValue(':products_tags', $data['products_tags'][$l['id']]);
-						$Qpd->bindValue(':products_url', $data['products_url'][$l['id']]);
-						$Qpd->setLogging($_SESSION['module'], $products_id);
-						$Qpd->execute();
-				
-						if ( $lC_Database->isError() ) {
-						  $error = true;
-						  break;
-						}
+					  $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_keyword, products_tags, products_url) values (:products_id, :language_id, :products_name, :products_description, :products_keyword, :products_tags, :products_url)');
+					  $Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+					  $Qpd->bindInt(':products_id', $products_id);
+					  $Qpd->bindInt(':language_id', $product['language_id']);
+					  $Qpd->bindValue(':products_name', $product['name']);
+					  $Qpd->bindValue(':products_description', $product['description']);
+					  $Qpd->bindValue(':products_keyword', $product['keyword']);
+					  $Qpd->bindValue(':products_tags', $product['tags']);
+					  $Qpd->bindValue(':products_url', $product['url']);
+					  $Qpd->setLogging($_SESSION['module'], $products_id);
+					  $Qpd->execute();
+			
+					  if ( $lC_Database->isError() ) {
+					    $error = true;
+					    break;
 					  }
 					}
 				
-				
-				
 				//////////////// ATRRIBUTES
+				
+				/*
 				
 				
 					if ( $error === false ) {
@@ -1240,7 +963,6 @@ class lC_Products_import_export_Admin {
 				
 				
 				/////////////////////////// VARIANTS COMBO? NOT HERE
-				
 				
 				
 					if ( $error === false ) {
@@ -1505,6 +1227,7 @@ class lC_Products_import_export_Admin {
 					  }      
 					}    
 				
+				*/
 					if ( $error === false ) {
 					  $lC_Database->commitTransaction();
 				
