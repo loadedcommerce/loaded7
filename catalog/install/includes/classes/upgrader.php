@@ -3125,6 +3125,28 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $this->_msg = $target_db->getError();
             return false;
           }
+          
+          $customers_group_data  = array(
+                                           'customers_group_id' => $sQry->value('customers_group_id')
+                                         , 'baseline_discount'  => $sQry->value('group_discount')
+                                          ); 
+                           
+          $tQry = $target_db->query('INSERT INTO :table_customers_groups_data (customers_group_id, 
+                                                                               baseline_discount) 
+                                                                       VALUES (:customers_group_id, 
+                                                                               :baseline_discount)');
+          
+          $tQry->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+          
+          $tQry->bindInt  (':customers_group_id', $customers_group_data['customers_group_id']);
+          $tQry->bindValue(':baseline_discount' , $customers_group_data['baseline_discount']);
+          
+          $tQry->execute();
+          
+          if ($target_db->isError()) {
+            $this->_msg = $target_db->getError();
+            return false;
+          }
 
           $cnt++;
         }
