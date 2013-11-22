@@ -3239,6 +3239,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
       if ($numrows > 0) { 
         $cnt = 0;
         while ($sQry->next()) {
+          if ($sQry->value($map['language_id']) == $this->_languages_id_default && $sQry->value($map['orders_status_name']) == 'Pending') {
+            $pending_id = $sQry->value($map['orders_status_id']);
+          }
           $orders_stat  = array(
                                   'orders_status_id'   => $sQry->value($map['orders_status_id'])
                                 , 'language_id'        => $sQry->value($map['language_id'])
@@ -3693,7 +3696,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->bindValue(':payment_module'          , $order['payment_info']);
           $tQry->bindValue(':last_modified'           , $order['last_modified']);
           $tQry->bindValue(':date_purchased'          , $order['date_purchased']);
-          $tQry->bindInt  (':orders_status'           , $order['orders_status']);
+          $tQry->bindInt  (':orders_status'           , ($order['orders_status'] == 0) ? $pending_id : $order['orders_status']);
           $tQry->bindValue(':orders_date_finished'    , $order['orders_date_finished']);
           $tQry->bindValue(':currency'                , $order['currency']);
           $tQry->bindValue(':currency_value'          , $order['currency_value']);
@@ -3701,6 +3704,27 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->execute();
           
           $cnt++;
+          
+          // added to check for orders status id of 0 and adjust new db values to avoid errors
+          if ($order['orders_status'] == 0) {
+            $osQry = $target_db->query("SELECT * FROM :table_orders_status_history WHERE orders_id = " . $order['orders_id']);
+            $osQry->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
+            $osQry->execute();
+            
+            $numrows = $osQry->numberOfRows();
+            if ($numrows < 1) {
+              $osQry = $target_db->query("INSERT INTO :table_orders_status_history (orders_id, orders_status_id) VALUES (:orders_id, :orders_status_id)");
+              $osQry->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
+              $osQry->bindInt  (':orders_id'                  , $order['orders_id']);
+              $osQry->bindInt  (':orders_status_id'           , $pending_id);
+              $osQry->execute();
+              
+              if ($target_db->isError()) {
+                $this->_msg = $target_db->getError();
+                return false;
+              }
+            }
+          }
 
         }
         
