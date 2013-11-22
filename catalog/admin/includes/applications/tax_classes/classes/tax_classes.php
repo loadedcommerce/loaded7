@@ -76,7 +76,11 @@ class lC_Tax_classes_Admin {
     $Qclasses->bindInt(':tax_class_id', $id);
     $Qclasses->execute();
 
-    $data = array_merge($Qclasses->toArray(), array('total_tax_rates' => self::getNumberOfTaxRates($id)));
+    if(is_array($Qclasses->toArray())) {
+      $data = array_merge($Qclasses->toArray(), array('total_tax_rates' => self::getNumberOfTaxRates($id)));
+    } else {
+      $data = array('total_tax_rates' => self::getNumberOfTaxRates($id));
+    }
 
     $Qclasses->freeResult();
 

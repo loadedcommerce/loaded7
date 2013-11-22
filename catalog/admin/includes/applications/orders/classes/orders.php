@@ -915,5 +915,24 @@ class lC_Orders_Admin {
     
     return $orderStatusArray;
   }      
+
+  public static function getordersproducts($id) {
+    global $lC_Language, $lC_Database, $lC_Vqmod;
+
+    $ordersproducts = array();    
+    require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+    require_once($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
+    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
+    $lC_Order = new lC_Order($id);   
+    
+    foreach ( $lC_Order->getProducts() as $products ) {
+      $tmpProducts = lC_Products_Admin::get($products['productID']);
+      $tmpTaxDetails = lC_Tax_classes_Admin:: get($tmpProducts['products_tax_class_id']);
+      $products['tax_class'] = $tmpTaxDetails['tax_class_title'];
+      $products['stock'] = 'In Stock';
+      $ordersproducts[] = $products;
+    }
+    return $ordersproducts;
+  }
 }
 ?>
