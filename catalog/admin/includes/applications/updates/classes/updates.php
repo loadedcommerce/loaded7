@@ -299,6 +299,9 @@ class lC_Updates_Admin {
 
       foreach ( $update_pkg as $file ) {
         $custom = false;
+        
+        // update the path with admin config value to account for a different admin/ dir
+        $file = str_replace('admin/', DIR_WS_ADMIN, $file);        
 
         $result['entries'][] = array('key' => $counter,
                                      'name' => $file,
