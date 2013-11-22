@@ -51,7 +51,7 @@ $(document).ready(function() {
              '      <p class="">' + descContent + '</p>' +
              '      <div class="row">' +
              '        <div class="col-sm-6 col-lg-6">' +
-             '          <p class="lead">' + priceContent + '</p>' +
+             '          <p class="lead small-margin-bottom">' + priceContent + '</p>' +
              '        </div>' +
              '        <div class="col-sm-6 col-lg-6 no-margin-left product-listing-module-buy-now a">' + buttonContent + '</div>' +
              '      </div>' +
@@ -67,5 +67,6 @@ $(document).ready(function() {
     $('.content-specials-listing-buy-now-button').text(textArr[0]);  
     $('.content-specials-listing-container p.lead').attr('style', 'font-size:1.1em;');  
   }
+  $('.thumbnail').equalHeights();
 });
 </script>
