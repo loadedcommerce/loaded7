@@ -3154,10 +3154,14 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $sQry->freeResult();
       }
       
-      // END LOAD CUSTOMERS GROUPS FROM SOURCE DB
+      // END LOAD CUSTOMERS GROUPS FROM SOURCE DB 
       
-      // set default customers group to 0
-      $tQry = $target_db->query("UPDATE :table_configuration SET configuration_value = 0 WHERE configuration_key = 'DEFAULT_CUSTOMERS_GROUP_ID'");
+      // get the lowest customers group id
+      $lidQry = $source_db->query("SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups");
+      $lidQry->execute();
+      
+      // set default customers group to lowest resulting id in above query
+      $tQry = $target_db->query("UPDATE :table_configuration SET configuration_value = " . $lidQry->value('customers_group_id') . " WHERE configuration_key = 'DEFAULT_CUSTOMERS_GROUP_ID'");
       $tQry->bindTable(':table_configuration', TABLE_CONFIGURATION);
       $tQry->execute();
       
