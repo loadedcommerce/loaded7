@@ -3161,8 +3161,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $lidQry->execute();
       
       // set default customers group to lowest resulting id in above query
-      $tQry = $target_db->query("UPDATE :table_configuration SET configuration_value = " . $lidQry->value('customers_group_id') . " WHERE configuration_key = 'DEFAULT_CUSTOMERS_GROUP_ID'");
+      $tQry = $target_db->query("UPDATE :table_configuration SET configuration_value = :configuration_value WHERE configuration_key = 'DEFAULT_CUSTOMERS_GROUP_ID'");
       $tQry->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $tQry->bindInt(':configuration_value', $lidQry->value('customers_group_id'));
       $tQry->execute();
       
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
