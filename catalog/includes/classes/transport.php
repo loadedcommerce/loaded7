@@ -14,12 +14,12 @@
   @function The lC_Updater_Admin class manages zM services
 */
 require_once(DIR_FS_CATALOG . 'includes/classes/transport/curl.php');  
-require_once(DIR_FS_CATALOG . 'includes/classes/transport/httpRequest.php');  
+require_once(DIR_FS_CATALOG . 'includes/classes/transport/webRequest.php');  
 require_once(DIR_FS_CATALOG . 'includes/classes/transport/stream.php');  
 
 class transport {  
 
-  protected static $_drivers = array('httpRequest', 'curl', 'stream');
+  protected static $_drivers = array('webRequest', 'curl', 'stream');
   
   /**
   * Transport Controller 
