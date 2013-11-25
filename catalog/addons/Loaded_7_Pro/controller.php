@@ -11,12 +11,15 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
 */
+global $lC_Vqmod;
+require_once($lC_Vqmod->modCheck('../includes/classes/transport.php'));
+
 class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   /*
   * Class constructor
   */
   public function Loaded_7_Pro() {    
-    global $lC_Language;    
+    global $lC_Language, $lC_Database;    
    /**
     * The addon type (category)
     * valid types; payment, shipping, themes, checkout, catalog, admin, reports, connectors, other 
@@ -56,8 +59,22 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/loaded7_pro.png', $this->_title);
    /**
     * The addon enable/disable switch
-    */    
-    $this->_enabled = (defined('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false; 
+    */ 
+    if (defined('INSTALLATION_ID') && INSTALLATION_ID != '') {
+//      if ($this->_timeToCheck() === true) {
+        $this->_enabled = $this->_validateSerial(INSTALLATION_ID);
+        if ($this->_enabled) $this->_updateLastChecked();
+//      } else {
+//        $this->_enabled = (defined('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;
+//      }
+      if (!$this->_enabled) {
+        $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '0' where configuration_key = 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS'");
+      } else {
+        $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '1' where configuration_key = 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS'");
+      }      
+    } else {
+      $this->_enabled = false;
+    }         
    /**
     * Automatically install the module
     */ 
@@ -182,5 +199,67 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
 
     return (strstr($addons, 'Loaded_7_Pro/controller.php') != '') ? true : false;
   }
+ /**
+  * Validate the serial is valid and active
+  *
+  * @access private
+  * @return boolean
+  */
+  private function _validateSerial($serial) {
+    $result = array();
+    $validateArr = array('serial' => $serial,
+                         'storeName' => STORE_NAME,
+                         'storeEmail' => STORE_OWNER_EMAIL_ADDRESS,
+                         'storeWWW' => HTTP_SERVER . DIR_WS_HTTP_CATALOG);
+                         
+    $checksum = hash('sha256', json_encode($validateArr));
+    $validateArr['checksum'] = $checksum;
+    
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/check/serial/?product=pro', 'method' => 'post', 'parameters' => $validateArr));  
+    $result = utility::xml2arr($resultXML);
+    
+    if ($result['data']['error'] == '1') return false;
+    
+    return ($result['data']['valid'] == '1') ? true : false;    
+  } 
+  /**
+  * Check to see if it's time to re-check addon validity
+  *  
+  * @access private      
+  * @return boolean
+  */   
+  private function _timeToCheck() {
+    global $lC_Database;
+
+    $check = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
+    if ($check == NULL) return TRUE;
+    
+    $Qcheck = $lC_Database->query('select last_modified from :table_configuration where configuration_key = :configuration_key');
+    $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qcheck->bindValue(':configuration_key', 'INSTALLATION_ID');
+    $Qcheck->execute();  
+    
+    $today = substr(lC_DateTime::getShort(date("Y-m-d H:m:s")), 3, 2);
+    $check = substr(lC_DateTime::getShort($Qcheck->value('last_modified')), 3, 2);
+    
+    $Qcheck->freeResult();
+
+    return (((int)$today != (int)$check) ? true : false);   
+  } 
+  /**
+  * Update the time last checked the install ID
+  *  
+  * @access private      
+  * @return void
+  */   
+  private function _updateLastChecked() {
+    global $lC_Database;
+
+    $Qcheck = $lC_Database->query('update :table_configuration set last_modified = :last_modified where configuration_key = :configuration_key');
+    $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qcheck->bindValue(':configuration_key', 'ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS');
+    $Qcheck->bindRaw(':last_modified', 'now()');
+    $Qcheck->execute();  
+  }     
 }
 ?>
