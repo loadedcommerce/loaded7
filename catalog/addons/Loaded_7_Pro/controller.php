@@ -12,7 +12,7 @@
   @license    http://loadedcommerce.com/license.html
 */
 global $lC_Vqmod;
-require_once($lC_Vqmod->modCheck('../includes/classes/transport.php'));
+require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/transport.php'));
 
 class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   /*
@@ -61,12 +61,12 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
     * The addon enable/disable switch
     */ 
     if (defined('INSTALLATION_ID') && INSTALLATION_ID != '') {
-//      if ($this->_timeToCheck() === true) {
+      if ($this->_timeToCheck() === true) {
         $this->_enabled = $this->_validateSerial(INSTALLATION_ID);
         if ($this->_enabled) $this->_updateLastChecked();
-//      } else {
-//        $this->_enabled = (defined('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;
-//      }
+      } else {
+        $this->_enabled = (defined('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;
+      }
       if (!$this->_enabled) {
         $lC_Database->simpleQuery("update " . TABLE_CONFIGURATION . " set configuration_value = '0' where configuration_key = 'ADDONS_SYSTEM_" . strtoupper($this->_code) . "_STATUS'");
       } else {
@@ -230,21 +230,32 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   */   
   private function _timeToCheck() {
     global $lC_Database;
-
-    $check = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
-    if ($check == NULL) return TRUE;
     
-    $Qcheck = $lC_Database->query('select last_modified from :table_configuration where configuration_key = :configuration_key');
-    $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
-    $Qcheck->bindValue(':configuration_key', 'INSTALLATION_ID');
-    $Qcheck->execute();  
+    $itsTime = false;
     
     $today = substr(lC_DateTime::getShort(date("Y-m-d H:m:s")), 3, 2);
-    $check = substr(lC_DateTime::getShort($Qcheck->value('last_modified')), 3, 2);
-    
-    $Qcheck->freeResult();
 
-    return (((int)$today != (int)$check) ? true : false);   
+    $instID = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
+    if ($instID == NULL) return true;
+    
+    $last_checked = (isset($_SESSION['Loaded_7_Pro']['last_checked']) && $_SESSION['Loaded_7_Pro']['last_checked'] != NULL) ? $_SESSION['Loaded_7_Pro']['last_checked'] : NULL;
+    
+    if ($last_checked == NULL || $today != substr(lC_DateTime::getShort($last_checked), 3, 2)) {
+      
+      $itsTime = true;
+      
+      $Qcheck = $lC_Database->query('select last_modified from :table_configuration where configuration_key = :configuration_key');
+      $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $Qcheck->bindValue(':configuration_key', 'ADDONS_SYSTEM_' . strtoupper($this->_code) . '_STATUS');
+      $Qcheck->execute();  
+  
+      $last_checked =  $Qcheck->value('last_modified');
+      $_SESSION['Loaded_7_Pro']['last_checked'] = $last_checked;
+                         
+      $Qcheck->freeResult();    
+    }
+    
+    return $itsTime;   
   } 
   /**
   * Update the time last checked the install ID
