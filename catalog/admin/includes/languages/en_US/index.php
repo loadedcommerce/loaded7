@@ -22,3 +22,7 @@ text_sessions = sessions
 text_orders = orders
 
 text_chart_performance_current_month = Store Performance :: Current Month
+
+button_understood = I Understand
+text_api_com_issue = API Communication
+text_api_com_issue_warnings = There were issues communicating with the API.

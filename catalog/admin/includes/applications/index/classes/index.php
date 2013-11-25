@@ -61,7 +61,9 @@ class lC_Administrators_Index {
     }        
     return $result;
   }
-
+ /*
+  *
+  */
   public static function get_live_data_total( $arg ) {
     global $lC_Database;
     switch ( $arg ) {
@@ -91,7 +93,9 @@ class lC_Administrators_Index {
     }        
     return $result;
   }
-
+ /*
+  *
+  */
   public static function get_column_data( $arg = 'month') {
     global $lC_Database;
 
@@ -113,10 +117,10 @@ class lC_Administrators_Index {
 
     }
   }
-
-
+ /*
+  *
+  */
   public static function get_Sessions_data() {
-
     global $lC_Database;
 
     /* Total Records */    
@@ -136,12 +140,14 @@ class lC_Administrators_Index {
     }      
     $result = substr($result,0,-1);
     return $result;
-**/
-    
+    **/    
 
     $result= "150, 173, 104, 129, 146, 176, 139, 149, 218, 194, 196, 153, 173, 104, 129, 146, 176, 139, 149, 218, 194, 196, 153, 173, 104, 129, 146, 176, 139, 149";    
     return $result;
   }
+ /*
+  *
+  */
   public static function get_Customers_data() {
     global $lC_Database;
 
@@ -163,9 +169,10 @@ class lC_Administrators_Index {
     $result = substr($result,0,-1);
     return $result;
   }
-
+ /*
+  *
+  */
   public static function get_Carts_data() {
-
     global $lC_Database;
 
     /* Total Records */    
@@ -186,6 +193,9 @@ class lC_Administrators_Index {
     $result = substr($result,0,-1);
     return $result;
   }
+ /*
+  *
+  */
   public static function get_Orders_data() {
 
     global $lC_Database;

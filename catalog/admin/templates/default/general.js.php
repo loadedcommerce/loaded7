@@ -408,8 +408,37 @@ $(document).ready(function() {
   var module = '<?php echo $lC_Template->getModule(); ?>';
   if (resize == '1' && isLoggedIn == '1' && module != 'login') {
     _resizeImages();
+  }
+  
+  // added for api communication health check
+  if (module == 'index') {
+    var apiNoCom = '<?php echo (file_exists('../includes/work/apinocom.tmp')) ? '1' : '0'; ?>';
+    if (apiNoCom == '1' && isLoggedIn == '1' && module != 'login') {
+      _apiHealthCheckAlert();
+      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'index' . '&action=removeApiTmp'); ?>';
+      $.getJSON(jsonLink,
+        function (data) {
+          return true;
+        }
+      );
+    }
   }        
 });
+
+function _apiHealthCheckAlert() {
+  var text = '<?php echo $lC_Language->get('text_api_health_check'); ?>';
+  api = $.modal({
+          title: '<?php echo $lC_Language->get('text_api_com_issue'); ?>',
+          content: '<?php echo $lC_Language->get('text_api_com_issue_warnings'); ?>',
+          buttons: {
+            '<?php echo $lC_Language->get('button_understood'); ?>': {
+              classes:  'glossy big full-width',
+              click:    function(win) { win.closeModal(); }
+            }
+          }
+        });
+  $(api);
+}
 
 function _resizeImages() {
   var text = '<?php echo $lC_Language->get('text_resize_images'); ?>';
