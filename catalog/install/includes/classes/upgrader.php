@@ -3954,7 +3954,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                           , 'languages_id' => $sQry->value('language_id')
                           , 'title'        => $sQry->value('products_options_name')
                           , 'sort_order'   => 0
-                          , 'module'       => "pulldown_menu"
+                          , 'module'       => "pull_down_menu"
                            ); 
                                    
           $tQry = $target_db->query('INSERT INTO :table_products_variants_groups (id, 

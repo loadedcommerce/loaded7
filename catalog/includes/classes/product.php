@@ -98,7 +98,7 @@ class lC_Product {
         $Qpb = $lC_Database->query('select tax_class_id, qty_break, price_break from :table_products_pricing where products_id = :products_id and group_id = :group_id order by group_id, qty_break');
         $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
         $Qpb->bindInt(':products_id', $this->_data['master_id']); 
-        $Qpb->bindInt(':group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : 1));
+        $Qpb->bindInt(':group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : DEFAULT_CUSTOMERS_GROUP_ID));
         $Qpb->execute();
 
         while ($Qpb->next()) {
@@ -155,7 +155,7 @@ class lC_Product {
           $QsimpleOptionsValues = $lC_Database->query('select values_id, price_modifier from :table_products_simple_options_values where options_id = :options_id and customers_group_id = :customers_group_id');
           $QsimpleOptionsValues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
           $QsimpleOptionsValues->bindInt(':options_id', $QsimpleOptions->valueInt('options_id'));
-          $QsimpleOptionsValues->bindInt(':customers_group_id', '1');
+          $QsimpleOptionsValues->bindInt(':customers_group_id', DEFAULT_CUSTOMERS_GROUP_ID);
           $QsimpleOptionsValues->execute();   
            
           while ( $QsimpleOptionsValues->next() ) {
