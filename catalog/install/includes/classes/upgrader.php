@@ -1956,7 +1956,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $c_keyword = str_replace("---", "-", $c_keyword);
           $c_keyword = str_replace("----", "-", $c_keyword); 
           
-          // added for category custom url (6.5 url override, only for external links and links to products)
+          // added for category custom url (6.5 url override, only for external links and links to products) 
           if ($sQry->value('categories_url_override') != '') {
             $c_mode = 'override';
             $c_override = 'index.php?old_urloverride=' . $sQry->value('categories_url_override');
