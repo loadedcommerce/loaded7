@@ -43,7 +43,7 @@ class lC_Categories_Admin {
 
     while ( $Qcategories->next() ) {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcategories->value('categories_id') . '" id="' . $Qcategories->value('categories_id') . '"></td>';
-      $category = '<td><span class="icon-list icon-size2 dragsort" title="' . $lC_Language->get('text_sort') . '" style="cursor:move;"></span><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-' . lC_Categories_Admin::getCategoryIcon($Qcategories->value('categories_mode')) . ' margin-left"></span>&nbsp;' . $Qcategories->value('categories_name') . '</a></td>';
+      $category = '<td><span class="icon-list icon-size2 dragsort" title="' . $lC_Language->get('text_sort') . '" style="cursor:move;"></span><a href="' . lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id')) . '"><span class="icon-' . lC_Categories_Admin::getCategoryIcon($Qcategories->value('categories_mode')) . ' margin-left"></span><span class="mid-margin-left">' . $Qcategories->value('categories_name') . '</span></a></td>';
       $status = '<td><span class="align-center" id="status_' . $Qcategories->value('categories_id') . '" onclick="updateStatus(\'' . $Qcategories->value('categories_id') . '\', \'' . (($Qcategories->value('categories_status') == 1) ? 0 : 1) . '\');">' . (($Qcategories->valueInt('categories_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_category') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_category') . '"></span>') . '</span></td>';
       $visibility = '<td>' .
                     (($Qcategories->valueInt('parent_id') == 0) ? 
@@ -687,7 +687,7 @@ class lC_Categories_Admin {
     } else if ($type == 'page') {
       $icon = 'page-list icon-black';
     } else if ($type == 'specials') {
-      $icon = 'price-tag icon-red';
+      $icon = 'star icon-red';
     } else if ($type == 'featured') {
       $icon = 'star icon-orange';
     } else if ($type == 'new') {
