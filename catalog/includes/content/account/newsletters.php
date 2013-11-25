@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: newsletters.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::content
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: edit.php v1.0 2013-08-08 datazen $
 */
 class lC_Account_Newsletters extends lC_Template {
 
@@ -21,7 +17,7 @@ class lC_Account_Newsletters extends lC_Template {
       $_page_image = 'table_background_account.gif';
 
   /* Class constructor */
-  function lC_Account_Newsletters() {
+  public function lC_Account_Newsletters() {
     global $lC_Language, $lC_Services, $lC_Breadcrumb, $lC_Database, $lC_Customer, $Qnewsletter;
 
     $this->_page_title = $lC_Language->get('newsletters_heading');
@@ -42,7 +38,7 @@ class lC_Account_Newsletters extends lC_Template {
   }
 
   /* Private methods */
-  function _process() {
+  protected function _process() {
     global $lC_MessageStack, $lC_Database, $lC_Language, $lC_Customer, $Qnewsletter;
 
     if (isset($_POST['newsletter_general']) && is_numeric($_POST['newsletter_general'])) {

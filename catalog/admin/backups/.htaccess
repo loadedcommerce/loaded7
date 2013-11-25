@@ -1,5 +1,3 @@
-# $Id$
-#
 # This is used with Apache WebServers
 # The following blocks direct HTTP requests in this directory recursively
 #
@@ -22,4 +20,3 @@ Options -Indexes
 Order Deny,Allow
 Deny from all
 </Files>
-

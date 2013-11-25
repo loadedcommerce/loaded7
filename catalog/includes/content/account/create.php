@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: create.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::content
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: create.php v1.0 2013-08-08 datazen $
 */
 class lC_Account_Create extends lC_Template {
 
@@ -21,7 +17,7 @@ class lC_Account_Create extends lC_Template {
       $_page_image = 'table_background_account.gif';
 
   /* Class constructor */
-  function lC_Account_Create() {
+  public function lC_Account_Create() {
     global $lC_Language, $lC_Services, $lC_Breadcrumb;
 
     $this->_page_title = $lC_Language->get('create_account_heading');
@@ -47,7 +43,7 @@ class lC_Account_Create extends lC_Template {
   }
 
   /* Private methods */
-  function _process() {
+  protected function _process() {
     global $lC_MessageStack, $lC_Database, $lC_Language, $lC_Customer, $lC_Vqmod;
 
     require($lC_Vqmod->modCheck('includes/classes/account.php'));
@@ -143,7 +139,6 @@ class lC_Account_Create extends lC_Template {
       } else {
         lc_redirect(lc_href_link(FILENAME_ACCOUNT, 'create=success', 'SSL'));
       }
-      
     }
   }
 }
