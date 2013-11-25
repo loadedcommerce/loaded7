@@ -1926,16 +1926,18 @@ li.message-menu {
   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
     /* IE10-specific styles go here */  
     [class^="icon-"]:before, [class*=" icon-"]:before {
-      font-size: 0.9em !important;
-      margin: 0 0.115em 0 -0.077em;
+      font-size: 0.8em !important;
+      margin-top: -0.1em;
     }  
     
     .icon-size2:before {
-      font-size: 2.8em;
-      margin: -0.09em 0.115em 0.09em -0.077em;
-    }      
+      font-size: 1.6em;
+      margin-top: -0.9em;
+      margin-bottom: -0.9em;
+    }    
+      
   }  
-
+  
 	/* Empty icons */
 	[class^="icon-"]:empty:before,
 	[class*=" icon-"]:empty:before {
