@@ -3936,8 +3936,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // END TRUNCATE PRODUCT VARIANTS TABLES IN TARGET DB
       
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      //$tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
-      //$tQry->execute();
+      // $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+      // $tQry->execute();
 
       // LOAD PRODUCTS VARIANTS GROUPS FROM SOURCE DB
       $map = $this->_data_mapping['products_variants_groups'];
@@ -4186,8 +4186,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // ##########
 
       // END DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      //$tQry = $target_db->query('SET GLOBAL sql_mode = ""');
-      //$tQry->execute();
+      // $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+      // $tQry->execute();
 
       // ##########
 
