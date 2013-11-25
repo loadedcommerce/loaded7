@@ -233,9 +233,26 @@ class lC_Index_Admin_rpc {
     }
 
     echo json_encode($result);
-  } 
+  }
+ /*
+  * @access public
+  * @return json
+  */
   public static function getAll() {    
     $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    echo json_encode($result);
+  }
+ /*
+  * Removes the api check status tmp file 
+  *
+  * @access public
+  * @return json
+  */ 
+  public static function removeApiTmp() {
+    @unlink(DIR_FS_WORK . 'apinocom.tmp');
+    
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    
     echo json_encode($result);
   }
 }

@@ -13,6 +13,10 @@
 
   @function The lC_Login_Admin class manages products expected
 */
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('../includes/classes/transport.php'));
+
 class lC_Login_Admin {
  /*
   * Validate the admin login credentials
@@ -213,7 +217,21 @@ class lC_Login_Admin {
     $result['rpcStatus'] = (preg_match("'<rpcStatus[^>]*?>(.*?)</rpcStatus>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;    
 
     return $result;
-  }  
-  
+  }
+ /*
+  * Returns the api check status
+  *
+  * @access public
+  * @return boolean true or false
+  */ 
+  public static function apiCheck() {
+    $apiCheck = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
+    $versions = utility::xml2arr($apiCheck);
+    
+    if ($versions == null) {
+      $file = @fopen(DIR_FS_WORK . 'apinocom.tmp', "w");
+      @fclose($file);
+    }
+  }
 }
 ?>

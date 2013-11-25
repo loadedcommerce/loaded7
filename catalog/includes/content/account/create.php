@@ -81,6 +81,12 @@ class lC_Account_Create extends lC_Template {
       $lC_MessageStack->add($this->_module, sprintf($lC_Language->get('field_customer_last_name_error'), ACCOUNT_LAST_NAME));
     }
 
+    if (isset($_POST['newsletter']) && $_POST['newsletter'] == '1'){
+      $data['newsletter'] = 1;
+    }else{
+      $data['newsletter'] = '';
+    }
+
     if (ACCOUNT_DATE_OF_BIRTH == '1') {     
       if (isset($_POST['dob']) && $_POST['dob'] != NULL) {
         $dateParts = explode("/", $_POST['dob']);

@@ -74,7 +74,7 @@
       $Qcustomer->bindValue(':customers_firstname', $data['firstname']);
       $Qcustomer->bindValue(':customers_lastname', $data['lastname']);
       $Qcustomer->bindValue(':customers_email_address', $data['email_address']);
-      $Qcustomer->bindValue(':customers_newsletter', (isset($data['newsletter']) && ($data['newsletter'] == '1') ? '1' : ''));
+      $Qcustomer->bindValue(':customers_newsletter', $data['newsletter']);
       $Qcustomer->bindValue(':customers_status', '1');
       $Qcustomer->bindValue(':customers_ip_address', lc_get_ip_address());
       $Qcustomer->bindValue(':customers_password', lc_encrypt_string($data['password']));
