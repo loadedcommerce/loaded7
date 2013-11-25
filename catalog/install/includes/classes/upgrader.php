@@ -3125,6 +3125,28 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $this->_msg = $target_db->getError();
             return false;
           }
+          
+          $customers_group_data  = array(
+                                           'customers_group_id' => $sQry->value('customers_group_id')
+                                         , 'baseline_discount'  => $sQry->value('group_discount')
+                                          ); 
+                           
+          $tQry = $target_db->query('INSERT INTO :table_customers_groups_data (customers_group_id, 
+                                                                               baseline_discount) 
+                                                                       VALUES (:customers_group_id, 
+                                                                               :baseline_discount)');
+          
+          $tQry->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+          
+          $tQry->bindInt  (':customers_group_id', $customers_group_data['customers_group_id']);
+          $tQry->bindValue(':baseline_discount' , $customers_group_data['baseline_discount']);
+          
+          $tQry->execute();
+          
+          if ($target_db->isError()) {
+            $this->_msg = $target_db->getError();
+            return false;
+          }
 
           $cnt++;
         }
@@ -3132,7 +3154,17 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $sQry->freeResult();
       }
       
-      // END LOAD CUSTOMERS GROUPS FROM SOURCE DB
+      // END LOAD CUSTOMERS GROUPS FROM SOURCE DB 
+      
+      // get the lowest customers group id
+      $lidQry = $source_db->query("SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups");
+      $lidQry->execute();
+      
+      // set default customers group to lowest resulting id in above query
+      $tQry = $target_db->query("UPDATE :table_configuration SET configuration_value = :configuration_value WHERE configuration_key = 'DEFAULT_CUSTOMERS_GROUP_ID'");
+      $tQry->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $tQry->bindInt(':configuration_value', $lidQry->value('customers_group_id'));
+      $tQry->execute();
       
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
       $tQry = $target_db->query('SET sql_mode = ""');
