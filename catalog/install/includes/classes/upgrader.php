@@ -3880,8 +3880,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // END TRUNCATE PRODUCT VARIANTS TABLES IN TARGET DB
       
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
-      $tQry->execute();
+      //$tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+      //$tQry->execute();
 
       // LOAD PRODUCTS VARIANTS GROUPS FROM SOURCE DB
       $map = $this->_data_mapping['products_variants_groups'];
@@ -3995,6 +3995,10 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $sQry = $source_db->query('SELECT * FROM products_attributes order by options_id asc');
       $sQry->execute();
         
+      // get the lowest customers group id from the target db
+      $tQry = $target_db->query('SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups');
+      $tQry->execute();
+        
       if ($sQry->numberOfRows() > 0) { 
         $cnt = 0;
         while ($sQry->next()) {
@@ -4017,7 +4021,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           
           $value  = array(
                             'id'                 => "NULL"
-                          , 'customers_group_id' => 1
+                          , 'customers_group_id' => $tQry->valueInt('customers_group_id')
                           , 'values_id'          => $sQry->valueInt('options_values_id')
                           , 'options_id'         => $options_id
                           , 'price_modifier'     => $sQry->valueDecimal('options_values_price') * $prefix
@@ -4028,6 +4032,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         }
         
         $sQry->freeResult();
+        $tQry->freeResult();
       }
       
       // LOAD PRODUCTS SIMPLE OPTIONS AND PRODUCTS SIMPLE OPTIONS VALUES FROM SOURCE DB
@@ -4125,8 +4130,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // ##########
 
       // END DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
-      $tQry->execute();
+      //$tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+      //$tQry->execute();
 
       // ##########
 
