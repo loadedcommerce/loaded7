@@ -586,7 +586,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                              , 'customers_id'   => 'customers_id'
                                                                              , 'customers_name' => 'customers_name'
                                                                              , 'reviews_rating' => 'reviews_rating'
-                                                                             , 'language_id'    => 'language_id'
+                                                                             , 'languages_id'   => 'languages_id'
                                                                              , 'reviews_text'   => 'reviews_text'
                                                                              , 'date_added'     => 'date_added'
                                                                              , 'last_modified'  => 'last_modified'
@@ -1346,7 +1346,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindDate (':date_added'    , $review['date_added']);
         $tQry->bindDate (':last_modified' , $review['last_modified']);
         $tQry->bindInt  (':reviews_read'  , $review['reviews_read']);
-        $tQry->bindInt  (':reviews_status', $review['reviews_status']);
+        $tQry->bindInt  (':reviews_status', 1);
         
         $tQry->execute();
         
@@ -1964,7 +1964,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $c_keyword = str_replace("---", "-", $c_keyword);
           $c_keyword = str_replace("----", "-", $c_keyword); 
           
-          // added for category custom url (6.5 url override, only for external links and links to products)
+          // added for category custom url (6.5 url override, only for external links and links to products) 
           if ($sQry->value('categories_url_override') != '') {
             $c_mode = 'override';
             $c_override = 'index.php?old_urloverride=' . $sQry->value('categories_url_override');
@@ -3133,6 +3133,28 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $this->_msg = $target_db->getError();
             return false;
           }
+          
+          $customers_group_data  = array(
+                                           'customers_group_id' => $sQry->value('customers_group_id')
+                                         , 'baseline_discount'  => $sQry->value('group_discount')
+                                          ); 
+                           
+          $tQry = $target_db->query('INSERT INTO :table_customers_groups_data (customers_group_id, 
+                                                                               baseline_discount) 
+                                                                       VALUES (:customers_group_id, 
+                                                                               :baseline_discount)');
+          
+          $tQry->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+          
+          $tQry->bindInt  (':customers_group_id', $customers_group_data['customers_group_id']);
+          $tQry->bindValue(':baseline_discount' , $customers_group_data['baseline_discount']);
+          
+          $tQry->execute();
+          
+          if ($target_db->isError()) {
+            $this->_msg = $target_db->getError();
+            return false;
+          }
 
           $cnt++;
         }
@@ -3140,7 +3162,17 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $sQry->freeResult();
       }
       
-      // END LOAD CUSTOMERS GROUPS FROM SOURCE DB
+      // END LOAD CUSTOMERS GROUPS FROM SOURCE DB 
+      
+      // get the lowest customers group id
+      $lidQry = $source_db->query("SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups");
+      $lidQry->execute();
+      
+      // set default customers group to lowest resulting id in above query
+      $tQry = $target_db->query("UPDATE :table_configuration SET configuration_value = :configuration_value WHERE configuration_key = 'DEFAULT_CUSTOMERS_GROUP_ID'");
+      $tQry->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $tQry->bindInt(':configuration_value', $lidQry->value('customers_group_id'));
+      $tQry->execute();
       
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
       $tQry = $target_db->query('SET sql_mode = ""');
@@ -3247,6 +3279,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
       if ($numrows > 0) { 
         $cnt = 0;
         while ($sQry->next()) {
+          if ($sQry->value($map['language_id']) == $this->_languages_id_default && $sQry->value($map['orders_status_name']) == 'Pending') {
+            $pending_id = $sQry->value($map['orders_status_id']);
+          }
           $orders_stat  = array(
                                   'orders_status_id'   => $sQry->value($map['orders_status_id'])
                                 , 'language_id'        => $sQry->value($map['language_id'])
@@ -3701,7 +3736,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->bindValue(':payment_module'          , $order['payment_info']);
           $tQry->bindValue(':last_modified'           , $order['last_modified']);
           $tQry->bindValue(':date_purchased'          , $order['date_purchased']);
-          $tQry->bindInt  (':orders_status'           , $order['orders_status']);
+          $tQry->bindInt  (':orders_status'           , ($order['orders_status'] == 0) ? $pending_id : $order['orders_status']);
           $tQry->bindValue(':orders_date_finished'    , $order['orders_date_finished']);
           $tQry->bindValue(':currency'                , $order['currency']);
           $tQry->bindValue(':currency_value'          , $order['currency_value']);
@@ -3709,6 +3744,27 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->execute();
           
           $cnt++;
+          
+          // added to check for orders status id of 0 and adjust new db values to avoid errors
+          if ($order['orders_status'] == 0) {
+            $osQry = $target_db->query("SELECT * FROM :table_orders_status_history WHERE orders_id = " . $order['orders_id']);
+            $osQry->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
+            $osQry->execute();
+            
+            $numrows = $osQry->numberOfRows();
+            if ($numrows < 1) {
+              $osQry = $target_db->query("INSERT INTO :table_orders_status_history (orders_id, orders_status_id) VALUES (:orders_id, :orders_status_id)");
+              $osQry->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
+              $osQry->bindInt  (':orders_id'                  , $order['orders_id']);
+              $osQry->bindInt  (':orders_status_id'           , $pending_id);
+              $osQry->execute();
+              
+              if ($target_db->isError()) {
+                $this->_msg = $target_db->getError();
+                return false;
+              }
+            }
+          }
 
         }
         
@@ -3888,8 +3944,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // END TRUNCATE PRODUCT VARIANTS TABLES IN TARGET DB
       
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
-      $tQry->execute();
+      // $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+      // $tQry->execute();
 
       // LOAD PRODUCTS VARIANTS GROUPS FROM SOURCE DB
       $map = $this->_data_mapping['products_variants_groups'];
@@ -4003,6 +4059,10 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $sQry = $source_db->query('SELECT * FROM products_attributes order by options_id asc');
       $sQry->execute();
         
+      // get the lowest customers group id from the target db
+      $tQry = $target_db->query('SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups');
+      $tQry->execute();
+        
       if ($sQry->numberOfRows() > 0) { 
         $cnt = 0;
         while ($sQry->next()) {
@@ -4025,7 +4085,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           
           $value  = array(
                             'id'                 => "NULL"
-                          , 'customers_group_id' => 1
+                          , 'customers_group_id' => $tQry->valueInt('customers_group_id')
                           , 'values_id'          => $sQry->valueInt('options_values_id')
                           , 'options_id'         => $options_id
                           , 'price_modifier'     => $sQry->valueDecimal('options_values_price') * $prefix
@@ -4036,6 +4096,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         }
         
         $sQry->freeResult();
+        $tQry->freeResult();
       }
       
       // LOAD PRODUCTS SIMPLE OPTIONS AND PRODUCTS SIMPLE OPTIONS VALUES FROM SOURCE DB
@@ -4133,8 +4194,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // ##########
 
       // END DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
-      $tQry->execute();
+      // $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+      // $tQry->execute();
 
       // ##########
 
