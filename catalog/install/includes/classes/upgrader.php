@@ -3001,6 +3001,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
   
   function saveToProductsImages($target_db, $pid, $image, $sort, $default_flag = 1){
   
+        $image = end(explode('/', $image));
+        
         $tQry = $target_db->query('INSERT INTO :table_products_images (products_id, 
                                                                        image, 
                                                                        default_flag, 
