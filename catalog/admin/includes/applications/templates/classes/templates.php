@@ -26,7 +26,23 @@ class lC_Templates_Admin {
 
     $cnt = 0;
     $result = array('aaData' => array());
+    
+    // sort the array of files so the default template is at top
+    $default = array();
+    $other = array();
     foreach ( $files as $file ) {
+      if (strpos($file['name'], '.') !== (int) 0) {
+        $code = substr($file['name'], 0, strrpos($file['name'], '.'));
+        if ($code == DEFAULT_TEMPLATE) {
+          $default[] = $file;
+        } else {
+          $other[] = $file;
+        }
+        $sorted = array_merge((array)$default, (array)$other);
+      }
+    }
+
+    foreach ( $sorted as $file ) {
       if (strpos($file['name'], '.') !== (int) 0) {
         include($lC_Vqmod->modCheck('includes/templates/' . $file['name']));
         $code = substr($file['name'], 0, strrpos($file['name'], '.'));
