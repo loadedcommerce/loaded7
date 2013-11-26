@@ -215,7 +215,16 @@ TD { height:19px; }
           <!-- p class="message icon-warning margin-top margin-right" style="color:#c09853; background:#fcf8e3; border-color:#fbeed5;">   
             <span class="stripes animated"></span>
             <?php //echo sprintf($lC_Language->get('text_under_development'), $version); ?>
-          </p -->   
+          </p -->
+          <h4 class="mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('page_heading_ioncube'); ?></h4>
+          <table id="ioncCubeTable" border="0" width="100%" cellspacing="0" cellpadding="2">
+            <tr>
+              <td><p class="mid-margin-left mid-margin-right mid-margin-bottom"><?php echo $lC_Language->get('page_text_ioncube'); ?></p></td>
+            </tr>
+            <tr>
+              <td><p class="mid-margin-left"><?php if (function_exists('ioncube_test')) { echo ioncube_test(); } ?></p></td>
+            </tr>
+          </table>   
         </div>
       </div>
       <?php
