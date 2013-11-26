@@ -58,7 +58,7 @@ function editBanner(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="image" class="label"><?php echo $lC_Language->get('field_image'); ?></label>'+
-                   '        <?php echo lc_draw_file_field('image', true, 'id="editImage" class="file"') . ' ' . $lC_Language->get('field_image_local') . '<br />' . realpath('../images/') . '/' . lc_draw_input_field('image_local', null, 'id="editImageLocal" class="input" style="width:93%;"'); ?>'+
+                   '        <?php echo lc_draw_file_field('image', true, 'id="editImage" class="file"') . ' ' . $lC_Language->get('field_image_local') . '<br />' . realpath('../images/banners/') . '/' . lc_draw_input_field('image_local', null, 'id="editImageLocal" class="input" style="width:93%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="address_format" class="label"><?php echo $lC_Language->get('field_image_target'); ?></label>'+
