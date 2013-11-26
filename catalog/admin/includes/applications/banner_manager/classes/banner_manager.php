@@ -252,8 +252,10 @@ class lC_Banner_manager_Admin {
       if(!file_exists(realpath('../images/' . $data['image_target']))){
         mkdir('../images/'.$data['image_target'].'/', 0777);
         $path = realpath('../images/'.$data['image_target']);
+        $insert_path = $data['image_target'].'/';
       }else{
         $path = realpath('../images/banners/');
+        $insert_path = 'banners/';
       }
 
       $image = new upload($data['image'], $path);
@@ -264,7 +266,7 @@ class lC_Banner_manager_Admin {
     }
     
     if ( $error === false ) {
-      $image_location = (!empty($data['image_local']) ? $data['image_local'] : (isset($image) ? $path . $image->filename : null));
+      $image_location = (!empty($data['image_local']) ? $data['image_local'] : (isset($image) ? $insert_path . $image->filename : null));
 
       if ( is_numeric($id) ) {
         $Qbanner = $lC_Database->query('update :table_banners set banners_title = :banners_title, banners_url = :banners_url, banners_target = :banners_target, banners_image = :banners_image, banners_group = :banners_group, banners_html_text = :banners_html_text, expires_date = :expires_date, expires_impressions = :expires_impressions, date_scheduled = :date_scheduled, status = :status where banners_id = :banners_id');
