@@ -759,7 +759,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                             , 'products_cost'          => ($sQry->value($map['products_cost']) != '' || $sQry->value($map['products_cost']) != NULL) ? $sQry->value($map['products_cost']) : 0
                             , 'products_msrp'          => ($sQry->value($map['products_msrp']) != '' || $sQry->value($map['products_msrp']) != NULL) ? $sQry->value($map['products_msrp']) : 0
                             , 'products_model'         => $sQry->value($map['products_model'])
-                            , 'products_sku'           => ($sQry->value($map['products_sku']) != '' || $sQry->value($map['products_sku']) != NULL) ? $sQry->value($map['products_sku']) : 0
+                            , 'products_sku'           => ($sQry->value($map['products_sku']) != '' || $sQry->value($map['products_sku']) != NULL) ? $sQry->value($map['products_sku']) : null
                             , 'products_date_added'    => ($sQry->value($map['products_date_added']) != '' || $sQry->value($map['products_date_added']) != NULL) ? $sQry->value($map['products_date_added']) : "0000-00-00 00:00:00"
                             , 'products_last_modified' => $sQry->value($map['products_last_modified'])
                             , 'products_weight'        => $sQry->value($map['products_weight'])
@@ -2579,7 +2579,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                             , 'entry_telephone'      => $sQry->value($map['entry_telephone'])
                             , 'entry_fax'            => $sQry->value($map['entry_fax'])
                              ); 
-
+          
           $tQry = $target_db->query('INSERT INTO :table_address_book (customers_id, 
                                                                       entry_gender, 
                                                                       entry_company, 
