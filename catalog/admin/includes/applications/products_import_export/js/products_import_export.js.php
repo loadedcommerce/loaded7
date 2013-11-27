@@ -25,21 +25,6 @@ global $lC_Template, $lC_Language, $modulesArr, $accessArr;
 	  }
     );
   }
-  function options_import_data_set(){
-	$.modal.alert('Import Options Data Set');
-  }
-  function options_get_groups_data_set(){
-	var filter = $('#options-filter').val();
-	$.modal.alert('get options groups data set init filter: '+filter);
-  }
-  function options_get_variants_data_set(){
-	var filter = $('#options-filter').val();
-	$.modal.alert('get options variants data set init filter: '+filter);
-  }
-  function options_get_p2c_data_set(){
-	var filter = $('#options-filter').val();
-	$.modal.alert('get options products to categories data set init filter: '+filter);
-  }
   $(document).ready(function() {
 	get_filter_total('none', 'products');
 	get_filter_total('none', 'categories');
