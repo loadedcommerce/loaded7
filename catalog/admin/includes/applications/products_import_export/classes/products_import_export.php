@@ -227,7 +227,7 @@ class lC_Products_import_export_Admin {
 			$content .= "\"" . trim(preg_replace('/\s+/', ' ', $column_output)) . "\"" . $delim;
 		}
 		
-		$Qcategories = $lC_Database->query("SELECT * FROM :table_products_to_categories, :table_categories_description, :table_weight_classes WHERE products_to_categories.products_id = :products_id AND products_to_categories.categories_id = categories_description.categories_id AND categories_description.language_id = :language_id");
+		$Qcategories = $lC_Database->query("SELECT * FROM :table_products_to_categories, :table_categories_description WHERE products_to_categories.products_id = :products_id AND products_to_categories.categories_id = categories_description.categories_id AND categories_description.language_id = :language_id");
 	    $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
 	    $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
 		$Qcategories->bindInt(':products_id', $product['products_id']);
