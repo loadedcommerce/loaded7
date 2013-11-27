@@ -667,8 +667,6 @@ class lC_Products_import_export_Admin {
 			$uploaddir = DIR_FS_WORK . 'products_import_export/imports/';
 			//$other .= 'Upload Dir: ' . $uploaddir;
 			$uploadfile = $uploaddir . basename($_FILES[$fileElementName]['name']);
-		
-			return array('other' => $uploadfile);
 			
 			if(is_null($pmapdata)){
 			
@@ -732,7 +730,7 @@ class lC_Products_import_export_Admin {
 		$match_count = 0;
 		$insert_count = 0;
 		
-		if($pwizard) {
+		if($pwizard != 'false') {
 			// p wizard stuff like return columns and etc.
 			//$other = 'pwizard ' . $pwizard;
 		} else {
@@ -750,10 +748,8 @@ class lC_Products_import_export_Admin {
 					$catCheck->bindValue(':categories_name', $cat_name);
 					$catCheck->execute();
 					
-					$catCheckNum = $catCheck->numberOfRows();
-					
-					if($catCheckNum > 0){
-						$category_ids[] = $catCheck->getValue('categories_id');
+					if($catCheck->numberOfRows()){
+						$category_ids[] = $catCheck->value('categories_id');
 					} else {
 						// insert a category that doesn't exist
 					}
@@ -766,16 +762,15 @@ class lC_Products_import_export_Admin {
 				$Qman->bindValue(':manufacturers_name', $product['manufacturer']);
 				$Qman->execute();
 				
-				$product['manufacturers_id'] = $Qman->getValue('manufacturers_id');
+				$product['manufacturers_id'] = $Qman->value('manufacturers_id');
 				
 				// check for a match in the database	  
 				$Qcheck = $lC_Database->query("SELECT * FROM :table_products WHERE products_id = :products_id");
 				$Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
 				$Qcheck->bindInt(':products_id', $products_id);
 				$Qcheck->execute();
-				$product_check = $Qcheck->numberOfRows();
 								
-				if($product_check > 0){
+				if($Qcheck->numberOfRows()){
 					// the product exists in the database so were just going to update the product with the new data
 					$match_count++;
 				  

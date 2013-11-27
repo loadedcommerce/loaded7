@@ -29,7 +29,7 @@ function importProducts() {
   if($('input[name="products-create-backup"]').is(':checked')){
 	pbackgup = true;
   }
-
+  
 	$("#loading").ajaxStart(function(){
 		$(this).show();
 	}).ajaxComplete(function(){
@@ -46,6 +46,7 @@ function importProducts() {
 	  dataType: 'json',
 	  data:{products_import_export: 'test', action:'importProducts'},
 	  success: function (data, status) {
+		console.log(data);
 		if(typeof(data.error) != 'undefined') {
 		  if(data.error != '') {
 			alert(data.error);
@@ -61,8 +62,8 @@ function importProducts() {
             var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
             $(location).attr('href',url);
           }
-	      console.log(data);
-          $.modal({
+		}
+        $.modal({
             content: '<div id="importProducts">'+
                      '  <div id="importProductsConfirm">'+
                      '    <p id="importProductsConfirmMessage">'+data.total+' <?php echo $lC_Language->get('text_records_imported'); ?>'+
@@ -83,8 +84,7 @@ function importProducts() {
               }
             },
             buttonsLowPadding: true
-          });
-	    }
+        });
 	  },
 	  error: function (data, status, e) {
 		alert(e);
