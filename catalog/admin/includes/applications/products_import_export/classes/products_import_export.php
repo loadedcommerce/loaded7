@@ -155,10 +155,10 @@ class lC_Products_import_export_Admin {
 						   'products.products_date_added',
 						   'products.products_last_modified',
 						   'products.products_weight',
-						   'products.products_weight_class',
+						   'weight_classes.weight_class_key',
 						   'products.products_status',
 						   'products.products_tax_class_id',
-						   'products.manufacturers_id',
+						   'manufacturers.manufacturers_name',
 						   'products.products_ordered',
 						   'products.has_children',
 						   
@@ -205,12 +205,10 @@ class lC_Products_import_export_Admin {
 	  
 	  $sql_columns = implode(", ", $sql_columns);
 	  
-	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products, :table_products_description WHERE products_description.products_id = products.products_id';
+	  $sql_statement = 'SELECT '.$sql_columns.' FROM products_description, weight_classes, products LEFT JOIN manufacturers ON (products.manufacturers_id = manufacturers.manufacturers_id) WHERE products_description.products_id = products.products_id AND products.products_weight_class = weight_classes.weight_class_id';
 	  
 	  // make this section get the data and make a file in work folder for the url to be returned.
 	  $Qproducts = $lC_Database->query($sql_statement);
-	  $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
-	  $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
 	  $Qproducts->execute();
 	  
 	  $columns[] = 'categories';
@@ -229,14 +227,16 @@ class lC_Products_import_export_Admin {
 			$content .= "\"" . trim(preg_replace('/\s+/', ' ', $column_output)) . "\"" . $delim;
 		}
 		
-		$Qcategories = $lC_Database->query("SELECT * FROM :table_products_to_categories WHERE products_id = :products_id");
+		$Qcategories = $lC_Database->query("SELECT * FROM :table_products_to_categories, :table_categories_description, :table_weight_classes WHERE products_to_categories.products_id = :products_id AND products_to_categories.categories_id = categories_description.categories_id AND categories_description.language_id = :language_id");
 	    $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+	    $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
 		$Qcategories->bindInt(':products_id', $product['products_id']);
+		$Qcategories->bindInt(':language_id', $product['language_id']);
 		$Qcategories->execute();
 		
 		$categories = array();
 		while ($Qcategories->next()) {
-			$categories[] = $Qcategories->value('categories_id');
+			$categories[] = $Qcategories->value('categories_name');
 		}
 		$content .= "\"" . implode($seperator, $categories) . "\"" . $delim;
 		
@@ -317,7 +317,7 @@ class lC_Products_import_export_Admin {
 						 'categories_description.categories_tags',
 						 );
 	    $columns = array('id',
-		                 'categories.categories_image',
+		                 'image',
 		                 'parent_id',
 		                 'sort_order',
 		                 'mode',
@@ -406,14 +406,20 @@ class lC_Products_import_export_Admin {
 	  
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	    $columns = array('products_variants_groups.id',
+	    $sql_columns = array('products_variants_groups.id',
 		                 'products_variants_groups.languages_id',
 		                 'products_variants_groups.title',
 		                 'products_variants_groups.sort_order',
 		                 'products_variants_groups.module',
 						 );
+	    $columns = array('id',
+		                 'languages_id',
+		                 'title',
+		                 'sort_order',
+		                 'module',
+						 );
 	  
-	  $sql_columns = implode(",", $columns);
+	  $sql_columns = implode(",", $sql_columns);
 	  
 	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_variants_groups';
 	  
@@ -481,14 +487,20 @@ class lC_Products_import_export_Admin {
 	  $version = 'CORE';
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	    $columns = array('products_variants_values.id',
+	    $sql_columns = array('products_variants_values.id',
 		                 'products_variants_values.languages_id',
 		                 'products_variants_values.products_variants_groups_id',
 		                 'products_variants_values.title',
 		                 'products_variants_values.sort_order',
 						 );
+	    $columns = array('id',
+		                 'languages_id',
+		                 'variants_groups_id',
+		                 'title',
+		                 'sort_order',
+						 );
 	  
-	  $sql_columns = implode(",", $columns);
+	  $sql_columns = implode(",", $sql_columns);
 	  
 	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_variants_values';
 	  
@@ -555,14 +567,20 @@ class lC_Products_import_export_Admin {
 	  
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	    $columns = array('products_simple_options_values.id',
+	    $sql_columns = array('products_simple_options_values.id',
 		                 'products_simple_options_values.customers_group_id',
 		                 'products_simple_options_values.values_id',
 		                 'products_simple_options_values.options_id',
 		                 'products_simple_options_values.price_modifier',
 						 );
+	    $columns = array('id',
+		                 'customers_group_id',
+		                 'values_id',
+		                 'options_id',
+		                 'price_modifier',
+						 );
 	  
-	  $sql_columns = implode(",", $columns);
+	  $sql_columns = implode(",", $sql_columns);
 	  
 	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_simple_options_values';
 	  
@@ -609,6 +627,7 @@ class lC_Products_import_export_Admin {
 		
 		$error = "";
 		$msg = "";
+		$other = "";
 		$fileElementName = 'productFile';
 		if(!empty($_FILES[$fileElementName]['error'])) {
 			switch($_FILES[$fileElementName]['error']) {
@@ -648,10 +667,12 @@ class lC_Products_import_export_Admin {
 			$uploaddir = DIR_FS_WORK . 'products_import_export/imports/';
 			//$other .= 'Upload Dir: ' . $uploaddir;
 			$uploadfile = $uploaddir . basename($_FILES[$fileElementName]['name']);
+		
+			return array('other' => $uploadfile);
 			
 			if(is_null($pmapdata)){
 			
-				$columns = array('products.products_id',
+				$columns = array('id',
 								 'parent_id',
 								 'quantity',
 								 'price',
@@ -665,7 +686,7 @@ class lC_Products_import_export_Admin {
 								 'weight_class',
 								 'status',
 								 'tax_class_id',
-								 'manufacturers_id',
+								 'manufacturer',
 								 'ordered',
 								 'has_children',
 								 
@@ -673,7 +694,7 @@ class lC_Products_import_export_Admin {
 								 'name',
 								 'description',
 								 'keyword',
-								 'tags',
+								 'permalink',
 								 'meta_title',
 								 'meta_keywords',
 								 'meta_description',
@@ -682,8 +703,8 @@ class lC_Products_import_export_Admin {
 								 
 								 'categories',
 								 'base_image'
-								 
 								 );
+								 
 			} else {
 				// do the mapping of columns here with the mapdata
 			}
@@ -713,25 +734,52 @@ class lC_Products_import_export_Admin {
 		
 		if($pwizard) {
 			// p wizard stuff like return columns and etc.
+			//$other = 'pwizard ' . $pwizard;
 		} else {
 			// do the import as usual
 			// utilize import array to go through each column and run on each to check for product id and if not matched import and remove from arrray
 			foreach($import_array as $product){
 				// Get the products ID for control
-				$products_id = $product['products.products_id'];
+				$products_id = $product['id'];
+				
+				// need to get ids for these categories if they dont exist we need to make them and return that id
+				$product['categories'] = explode(",",$product['categories']);
+				foreach($product['categories'] as $catName){
+					$catCheck = $lC_Database->query("SELECT * FROM :table_categories_description WHERE categories_desscription.categories_name = :categories_name");
+					$catCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+					$catCheck->bindValue(':categories_name', $cat_name);
+					$catCheck->execute();
+					
+					$catCheckNum = $catCheck->numberOfRows();
+					
+					if($catCheckNum > 0){
+						$category_ids[] = $catCheck->getValue('categories_id');
+					} else {
+						// insert a category that doesn't exist
+					}
+				}
+				$product['categories'] = $category_ids;
+				
+				// need to get the id for the manufacturer
+				$Qman = $lC_Database->query("SELECT * FROM :table_manufacturers WHERE manufacturers_name = :manufacturers_name");
+				$Qman->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
+				$Qman->bindValue(':manufacturers_name', $product['manufacturer']);
+				$Qman->execute();
+				
+				$product['manufacturers_id'] = $Qman->getValue('manufacturers_id');
 				
 				// check for a match in the database	  
 				$Qcheck = $lC_Database->query("SELECT * FROM :table_products WHERE products_id = :products_id");
 				$Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
 				$Qcheck->bindInt(':products_id', $products_id);
+				$Qcheck->execute();
 				$product_check = $Qcheck->numberOfRows();
-						
+								
 				if($product_check > 0){
 					// the product exists in the database so were just going to update the product with the new data
 					$match_count++;
 				  
 					// build data array of product information
-					$product['categories'] = explode(",",$product['categories']);
 					$data = $product;
 							
 					$lC_Products->save($products_id, $data);
@@ -747,7 +795,7 @@ class lC_Products_import_export_Admin {
 				
 					$lC_Database->startTransaction();
 					
-					$Qproduct = $lC_Database->query('insert into :table_products (products_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added) values (:products_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added)');
+					$Qproduct = $lC_Database->query('insert into :table_products (products_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id, products_date_added) values (:products_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :manufacturers_id, :products_date_added)');
 					$Qproduct->bindInt(':products_id', $products_id);
 					$Qproduct->bindRaw(':products_date_added', 'now()');
 					$Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
@@ -761,6 +809,7 @@ class lC_Products_import_export_Admin {
 					$Qproduct->bindInt(':products_weight_class', $product['weight_class']);
 					$Qproduct->bindInt(':products_status', $product['status']);
 					$Qproduct->bindInt(':products_tax_class_id', $product['tax_class_id']);
+					$Qproduct->bindInt(':manufacturers_id', $product['manufacturers_id']);
 					$Qproduct->setLogging($_SESSION['module'], $products_id);
 					$Qproduct->execute();
 	
@@ -911,7 +960,7 @@ class lC_Products_import_export_Admin {
 					  $Qpd->bindInt(':language_id', $product['language_id']);
 					  $Qpd->bindValue(':products_name', $product['name']);
 					  $Qpd->bindValue(':products_description', $product['description']);
-					  $Qpd->bindValue(':products_keyword', $product['keyword']);
+					  $Qpd->bindValue(':products_keyword', $product['permalink']);
 					  $Qpd->bindValue(':products_tags', $product['tags']);
 					  $Qpd->bindValue(':products_url', $product['url']);
 					  $Qpd->setLogging($_SESSION['module'], $products_id);
@@ -1235,9 +1284,9 @@ class lC_Products_import_export_Admin {
 					  lC_Cache::clear('category_tree');
 					  lC_Cache::clear('also_purchased');
 				
+					} else {
+					  $lC_Database->rollbackTransaction();
 					}
-				
-					$lC_Database->rollbackTransaction();
 					
 				}
 			}
