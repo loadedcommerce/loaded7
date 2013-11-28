@@ -258,6 +258,12 @@ class lC_Banner_manager_Admin {
         $insert_path = 'banners/';
       }
 
+      if( is_numeric($id) && file_exists($path)){
+        unlink($path.$data['image']);
+        echo $path.$data['image'];
+        exit();
+      }
+
       $image = new upload($data['image'], $path);
 
       if ( !$image->exists() || !$image->parse() || !$image->save() ) {
