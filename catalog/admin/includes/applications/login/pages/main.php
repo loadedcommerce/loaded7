@@ -65,8 +65,15 @@
   </div>
 </div>
 <script>
-
+$(function() {
+  var inputs = $('input');
+  inputs.attr('autocomplete', 'off');
+});
 $(document).ready(function() {
+  setTimeout(function() {
+    var inputs = $('input');
+    inputs.attr('autocomplete', 'on');
+  }, 100);
   /*
   * JS login effect
   * This script will enable effects for the login page
