@@ -258,10 +258,9 @@ class lC_Banner_manager_Admin {
         $insert_path = 'banners/';
       }
 
-      if( is_numeric($id) && file_exists($path)){
-        unlink($path.$data['image']);
-        echo $path.$data['image'];
-        exit();
+      // Remove existing image with the same name.
+      if(  file_exists($path.'/'.$data['image']['name'])){
+        unlink($path.'/'.$data['image']['name']);
       }
 
       $image = new upload($data['image'], $path);
