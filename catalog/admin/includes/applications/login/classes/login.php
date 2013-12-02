@@ -11,6 +11,8 @@
 global $lC_Vqmod;
 
 require_once($lC_Vqmod->modCheck('../includes/classes/transport.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/updates/classes/updates.php')); 
+require_once($lC_Vqmod->modCheck('includes/applications/store/classes/store.php')); 
 
 class lC_Login_Admin {
  /*
@@ -209,10 +211,48 @@ class lC_Login_Admin {
     
     $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/check/serial/', 'method' => 'post', 'parameters' => $validateArr));  
     
-    $result['rpcStatus'] = (preg_match("'<rpcStatus[^>]*?>(.*?)</rpcStatus>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;    
-
+    $resultArr = utility::xml2arr($resultXML);
+    
+    if (isset($resultArr['data']['valid']) && $resultArr['data']['valid'] == '1') {
+      $result['rpcStatus'] = '1';
+      // make sure the products for this serial have been downloaded from the cloud
+      if (isset($resultArr['data']['products']) && $resultArr['data']['products'] != NULL) self::_verifyProductsAreDownloaded($resultArr['data']['products']);
+    } else {
+      $result['rpcStatus'] = '0';  
+    }
+    
     return $result;
   }
+ /*
+  * Download the product PHARs
+  *
+  * @access private
+  * @return boolean
+  */
+  private static function _verifyProductsAreDownloaded($products) {
+    
+    if (!is_array($products)) return false;
+    
+    foreach ($products as $type => $product) {
+      
+      if ($type == 'template') {
+        if (!file_exists(DIR_FS_ADMIN . 'includes/templates/' . $product . '.php')) {
+          // get the template phar and apply it
+        }  
+      } else { // addon
+        if (!file_exists(DIR_FS_CATALOG . 'addons/' . $product . '/controller.php')) {
+          // download the addon phar
+          lC_Store_Admin::getAddonPhar($product);
+          
+          // apply the phar package
+          if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
+            lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $product . '.phar');
+          }
+        }
+      }
+    }
+  }
+  
  /*
   * Returns the api check status
   *

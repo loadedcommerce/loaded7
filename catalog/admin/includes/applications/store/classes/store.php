@@ -338,10 +338,12 @@ class lC_Store_Admin {
     
     if ( !file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
       // get the addon phar from the store
-      self::_getAddonPhar($key);
+      self::getAddonPhar($key);
       
       // apply the addon phar 
-      lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
+      if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
+        lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
+      }
     }
     
     if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
@@ -445,7 +447,7 @@ class lC_Store_Admin {
   * @access public
   * @return void
   */  
-  private static function _getAddonPhar($key) {
+  public static function getAddonPhar($key) {
 
     $response = file_get_contents('https://api.loadedcommerce.com/1_0/get/' . $key . '?type=addon&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']));
 
