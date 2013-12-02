@@ -18,6 +18,8 @@ button_back_to_list = Back to List
 button_backup = Backup
 button_cancel = Cancel
 button_close = Close
+button_save_and_close = Save & Close
+button_create_order = Create Order
 button_continue = Continue
 button_create_order = Create Order
 button_copy = Copy
@@ -331,3 +333,7 @@ text_spin_off_order = Spin Off Order
 text_go_to_customer = Go to Customer
 text_resize_images = Upgrade Clean Up: Creating Image Sets
 text_status = Status
+
+slider_switch_enabled = ENABLED
+slider_switch_disabled = DISABLED
+slider_switch_preview = PREVIEW text_status = Statustext_select_product = Select Product

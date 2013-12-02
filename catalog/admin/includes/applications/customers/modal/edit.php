@@ -181,6 +181,7 @@ function editCustomer(id) {
                '      </form>'+
                '    </div>'+
                '    <span id="abParentId" style="display:none;"></span>'+
+               '    <span id="default_aId" style="display:none;"></span>'+
                '    <span id="abId" style="display:none;"></span>'+
                '  </div>'+
                '</div>',
@@ -207,7 +208,13 @@ function editCustomer(id) {
         },
         '<?php echo $lC_Language->get('button_delete'); ?>': {
           classes:  'glossy float-left red-gradient',
-          click:    function() {  }
+          click:    function() {  },
+          classes:  'glossy align-right green-gradient mid-margin-right button_create_order disabled',
+          click:    function() { createOrder(); }
+        },
+        '<?php echo $lC_Language->get('button_delete'); ?>': {
+          classes:  'glossy float-left red-gradient',
+          click:    function() { deleteThisCustomer(); }
         }
       },
       buttonsLowPadding: true
@@ -267,7 +274,13 @@ function getFormData(id) {
 
       // populate address book listing
       $("#addressListContainer").html(data.addressBook);
+      $("#default_aId").html(data.customerData.customers_default_address_id); 
 
+      // if no default address disable the create order button
+      if (parseInt(data.customerData.customers_default_address_id) > 0) {      
+        $(".button_create_order").removeClass("disabled");        
+      }
+      
       // populate new address form
       $("#abParentId").html(id);
       $("#ab_gender_1").attr('checked', true);
@@ -551,6 +564,7 @@ function updateZones(selected) {
     }
   );
 }
+
 function createNewOrder(customers_id,default_address_id) {
   if(default_address_id > 0 ) {
     window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&cID='+customers_id+'");?>'; 
@@ -559,6 +573,7 @@ function createNewOrder(customers_id,default_address_id) {
     func_opnewindow(customers_id);          
   }  
 }
+
 function func_opnewindow(customers_id) { 
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 4) {
@@ -594,5 +609,23 @@ function func_opnewindow(customers_id) {
     },
     buttonsLowPadding: true
   });
+}
+  
+function deleteThisCustomer() {
+  var cid = parseInt($("#abParentId").html());
+  var name = $("#editFirstname").val() + ' ' + $("#editLastname").val();
+  deleteCustomer(cid,name);
+  cm = $('#editCustomerContainer').getModalWindow();
+  setTimeout("$(cm).closeModal()", 2300);
+}
+
+function createOrder() {
+  var cid = parseInt($("#abParentId").html()); 
+  var daId = parseInt($("#default_aId").html());
+  
+  if(daId > 0) {   
+    window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&cID='+cid+'");?>';
+  }
+  return false;
 }
 </script>
