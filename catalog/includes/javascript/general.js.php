@@ -14,7 +14,7 @@ $(document).ready(function() {
 
   function setMaintenanceMode(s) {
     if (s == 'on') {
-      $("body").mask('<span style="font-size:2em !important;"><?php echo $lC_Language->get('update_message_text1'); ?></span>');
+      $("body").mask('<span style="font-size:2em !important;"><?php echo $lC_Language->get('text_site_maintenance_message'); ?></span>');
       $('.loadmask-msg').css({'top':'200px'});
     } else {
       $("body").unmask();

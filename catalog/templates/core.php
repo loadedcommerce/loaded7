@@ -50,9 +50,9 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
 
     <!-- fav and touch icons -->
     <link rel="shortcut icon" href="templates/core/icons/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="templates/core/icons/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="templates/core/icons/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="templates/core/icons/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-144-precomposed.png" sizes="144x144">
+    <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-114-precomposed.png" sizes="114x114">
+    <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-72-precomposed.png" sizes="72x72">
     <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-57-precomposed.png">
     
     <!-- jQuery is always at top -->
@@ -63,7 +63,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
   <body>
     <div id="loaded7" class="loadedcommerce-main-wrapper">
       <!--[if lt IE 7]>
-          <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
       <![endif]-->  
       <?php
       // page header

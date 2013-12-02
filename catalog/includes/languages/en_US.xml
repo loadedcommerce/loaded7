@@ -2646,8 +2646,8 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <group>general</group>
     </definition> 
     <definition>
-      <key>update_message_text1</key>
-      <value><![CDATA[Please pardon our dust.  The store is temporarily offline for routine maintenance.  Please check back soon!]]></value>
+      <key>text_site_maintenance_message</key>
+      <value><![CDATA[Please pardon our dust.  The store is temporarily offline for routine maintenance.  Check back soon!]]></value>
       <group>general</group>
     </definition> 
     <definition>
