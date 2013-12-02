@@ -39,7 +39,12 @@ class lC_Services_seo_Admin {
     
     if ($exists == false) {
       $file = file_get_contents(DIR_FS_CATALOG . 'dot.htaccess');
-      $file = str_replace('RewriteBase /', 'RewriteBase ' . DIR_WS_HTTP_CATALOG, $file);
+      $lines = explode(PHP_EOL, $file);
+      foreach ($lines as $line) {
+        if (strpos($line, 'RewriteBase /')) {
+          $file = str_replace($line, '  RewriteBase ' . DIR_WS_HTTP_CATALOG, $file);
+        }
+      }
       file_put_contents(DIR_FS_CATALOG . 'dot.htaccess', $file);
       if (rename(DIR_FS_CATALOG . 'dot.htaccess', DIR_FS_CATALOG . '.htaccess')) {
       } else {
