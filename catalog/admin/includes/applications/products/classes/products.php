@@ -1859,11 +1859,10 @@ class lC_Products_Admin {
       foreach ($options as $key => $so) {
         if ( (isset($so['title']) && $so['title'] != NULL)  ){
           $items = '';
-          $itemsInput = '';    
-
+          $itemsInput = '';
           if (is_array($options['values'])) {
-            foreach ($options['values'] as $k => $v) {
-              if (($v['options_id'] == $so['options_id']) && $v['customers_group_id'] == '1') {
+            foreach ($options['values'] as $k => $v) {    
+              if (($v['options_id'] == $so['options_id']) && $v['customers_group_id'] == DEFAULT_CUSTOMERS_GROUP_ID) {
                 $items .= '<div class="small"><span class="icon-right icon-blue with-small-padding"></span>' . $v['title'] . '</div>';
                 $itemsInput .= '<input type="hidden" id="simple_options_entry_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry[' . $v['options_id'] . '][' . $v['values_id'] . ']" value="' . $v['title'] . '">';
               }
@@ -2039,7 +2038,7 @@ class lC_Products_Admin {
           if (is_array($options['values'])) {          
             foreach ($options['values'] as $k => $v) {
               if ($v['options_id'] == $so['options_id'] && $v['customers_group_id'] == $customers_group_id) {
-                if ($customers_group_id == '1') {
+                if ($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID) {
                   $mod = (isset($v['price_modifier']) && !empty($v['price_modifier'])) ? number_format($v['price_modifier'], DECIMAL_PLACES) : '0.00';
                 } else {
                   $mod = number_format(round(($basePrice * $baselineDiscount) * .01, DECIMAL_PLACES), DECIMAL_PLACES);
@@ -2048,9 +2047,9 @@ class lC_Products_Admin {
                           '  <td class="element">' . $v['title'] . '</td>' . 
                           '  <td>' .
                           '    <div id="div_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" class="icon-plus-round icon-green icon-size2" style="display:inline;">' .
-                          '      <div class="inputs' . (($customers_group_id != '1') ? ' disabled' : '') . '" style="display:inline; padding:8px 0;">' .
+                          '      <div class="inputs' . (($customers_group_id != DEFAULT_CUSTOMERS_GROUP_ID) ? ' disabled' : '') . '" style="display:inline; padding:8px 0;">' .
                           '        <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                          '        <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $mod . '" onblur="showSimpleOptionsPricingSymbol(this, \'' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['customers_group_id'] . '][' . $v['options_id'] . '][' . $v['values_id'] . ']" ' . (($customers_group_id != '1') ? ' DISABLED' : '') . '>' .
+                          '        <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $mod . '" onblur="showSimpleOptionsPricingSymbol(this, \'' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['customers_group_id'] . '][' . $v['options_id'] . '][' . $v['values_id'] . ']" ' . (($customers_group_id != DEFAULT_CUSTOMERS_GROUP_ID) ? ' DISABLED' : '') . '>' .
                           '      </div>' .
                           '    </div>' .
                           '  </td>' .
