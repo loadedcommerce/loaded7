@@ -205,6 +205,10 @@
   width: 50px;
 }
 
+#loaded7 #content-product-listing-category-description-container {
+  padding: 0 3px; 
+}
+
 /* product info page */     
 #loaded7 .content-products-info-price { 
   font-size:2.4em; 
