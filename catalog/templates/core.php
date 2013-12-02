@@ -96,6 +96,9 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       }
       ?>
       <div id="content-container" class="container">
+        <?php if(STORE_DOWN_FOR_MAINTENANCE == 1){ ?>
+        <?php echo $lC_Language->get('update_message_text1'); ?>
+        <?php }else{ ?>
         <div class="row"> 
           <!--left column -->
           <?php if (!empty($left)) echo '<div id="content-left-container" class="' . $box_class . ' hide-on-mobile">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
@@ -173,6 +176,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
                     
         </div> <!-- end row --> 
         
+        <?php } ?>
         <?php
         // page footer
         if ($lC_Template->hasPageFooter()) {
@@ -190,7 +194,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
             echo '<div id="debug-info-container" style="display:none;" class="alert alert-warning"><span></span></div>';
           }         
         }
-        ?>       
+        ?>    
       </div>  
       <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
       <script src="ext/jquery/respond.min.js"></script>    

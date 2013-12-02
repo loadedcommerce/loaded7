@@ -11,23 +11,6 @@ global $lC_Template, $lC_Language;
 ?>
 <script>
 $(document).ready(function() {
-
-  function setMaintenanceMode(s) {
-    if (s == 'on') {
-      $("body").mask('<span style="font-size:2em !important;"><?php echo $lC_Language->get('update_message_text1'); ?></span>');
-      $('.loadmask-msg').css({'top':'200px'});
-    } else {
-      $("body").unmask();
-    }
-  }
-
-  var maintMode = '<?php echo STORE_DOWN_FOR_MAINTENANCE; ?>';
-  
-  if (maintMode == 1) {
-    setMaintenanceMode('on');
-  } else {
-    setMaintenanceMode('off');
-  }
   
   var showDebug = '<?php echo $lC_Template->showDebugMessages(); ?>';
   if (showDebug) {
