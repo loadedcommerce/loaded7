@@ -18,23 +18,25 @@ require($lC_Vqmod->modCheck('../includes/classes/language.php'));
 class lC_Language_Admin extends lC_Language {
 
   /* Public methods */
-  public function loadIniFile($filename = null, $comment = '#', $language_code = null) {
+  public function loadIniFile($filename = null, $comment = '#', $language_code = null, $full_path = null) {
     global $lC_Addons;
-    
+
     if ( is_null($language_code) ) {
       $language_code = $this->_code;
     }
 
     if ( $this->_languages[$language_code]['parent_id'] > 0 ) {
-      $this->loadIniFile($filename, $comment, $this->getCodeFromID($this->_languages[$language_code]['parent_id']));
+      $this->loadIniFile($filename, $comment, $this->getCodeFromID($this->_languages[$language_code]['parent_id']), $full_path);
     }
 
-    if ( is_null($filename) ) {
+    if ( is_null($filename) && is_null($full_path) ) {
       if ( file_exists('includes/languages/' . $language_code . '.php') ) {
         $contents = file('includes/languages/' . $language_code . '.php');
       } else {
         return array();
       }
+    } else if ($full_path != null && empty($filename) === false) {
+      $contents = file($filename);
     } else {
       if ( substr(realpath('includes/languages/' . $language_code . '/' . $filename), 0, strlen(realpath('includes/languages/' . $language_code))) != realpath('includes/languages/' . $language_code) ) {
         return array();
@@ -45,7 +47,6 @@ class lC_Language_Admin extends lC_Language {
       }
 
       $contents = file('includes/languages/' . $language_code . '/' . $filename);
-      
     }
 
     $ini_array = array();
@@ -72,9 +73,9 @@ class lC_Language_Admin extends lC_Language {
     unset($contents);
 
     $this->_definitions = array_merge($this->_definitions, $ini_array);
-    
+
     // inject the addons language defines
-    if (isset($lC_Addons)) {    
+    if (isset($lC_Addons)) {
       $aoArr = $lC_Addons->getAddons();
       if (is_array($aoArr)) {
         foreach ($aoArr as $ao => $aoData) {
@@ -83,8 +84,8 @@ class lC_Language_Admin extends lC_Language {
             $this->injectAddonDefinitions($file, $language_code);
           }
         }
-      }    
-    }  
+      }
+    }
   }
 
   public function injectDefinitions($file, $language_code = null) {
@@ -191,7 +192,7 @@ class lC_Language_Admin extends lC_Language {
       $height = 10;
     }
 
-    $name = ($this->_languages[$code]['charset'] == 'utf-8') ? utf8_encode($this->_languages[$code]['name']) : $this->_languages[$code]['name']; 
+    $name = ($this->_languages[$code]['charset'] == 'utf-8') ? utf8_encode($this->_languages[$code]['name']) : $this->_languages[$code]['name'];
     return lc_image('../images/worldflags/' . $image_code . '.png', $name, $width, $height, $parameters);
   }
 
@@ -221,6 +222,5 @@ class lC_Language_Admin extends lC_Language {
     $QAdminLanguage->freeResult();
 
     return $result['code'];
-  } 
+  }
 }
-?>

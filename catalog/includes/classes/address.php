@@ -66,7 +66,7 @@
         $country = lC_Address::getCountryName($address['country_id']);
       }
 
-      if ( isset($address['format']) ) {
+      if ( isset($address['format']) && strlen($address['format']) > 4 ) {
         $address_format = $address['format'];
       } elseif ( isset($address['country_id']) && is_numeric($address['country_id']) && ($address['country_id'] > 0) ) {
         $address_format = lC_Address::getFormat($address['country_id']);
@@ -75,7 +75,7 @@
       if ( empty($address_format) ) {
         $address_format = ":name\n:street_address\n:postcode :city\n:country";
       }
-
+      
       $find_array = array('/\:name\b/',
                           '/\:street_address\b/',
                           '/\:suburb\b/',
@@ -93,7 +93,7 @@
                              lc_output_string_protected($state),
                              lc_output_string_protected($state_code),
                              lc_output_string_protected($country));
-
+                             
       $formated = preg_replace($find_array, $replace_array, $address_format);
 
       if ( (ACCOUNT_COMPANY > -1) && !empty($address['company']) ) {

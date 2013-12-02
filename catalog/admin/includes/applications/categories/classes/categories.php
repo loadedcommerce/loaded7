@@ -752,6 +752,46 @@ class lC_Categories_Admin {
     
     return $validated;
   }
+
+ /*
+  * Delete Categories Image
+  * 
+  * @access public
+  * @return json
+  */
+  public static function deleteCatImage($_image, $_id = null) {
+    global $lC_Database;
+    
+    // added to check for other categories using same image and do not delete
+    $Qci = $lC_Database->query('select id from :table_categories where categories_image = :categories_image');
+    $Qci->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qci->bindInt(':categories_image', $_image);
+    $Qci->execute();
+        
+    if ($Qci->numberOfRows() < 2) {
+      if (file_exists('../images/categories/' . $_image)){
+        unlink('../images/categories/' . $_image);
+      }
+    }
+    
+    $Qci->freeResult();
+    
+    if (is_numeric($_id)) {
+      $Qcategoriesimage = $lC_Database->query('update :table_categories set categories_image = "" where categories_id = :categories_id');
+      $Qcategoriesimage->bindTable(':table_categories', TABLE_CATEGORIES);
+      $Qcategoriesimage->bindInt(':categories_id', $_id);
+      $Qcategoriesimage->execute();
+    }
+    
+    if ( !$lC_Database->isError() ) {
+      lC_Cache::clear('categories');
+      lC_Cache::clear('category_tree');
+      lC_Cache::clear('template');
+      lC_Cache::clear('also_purchased');
+    }
+      
+    return true;
+  }
                           
 }
 ?>

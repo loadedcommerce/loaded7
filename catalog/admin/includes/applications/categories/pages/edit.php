@@ -79,10 +79,19 @@
                 <span class="strong margin-right"><?php echo $lC_Language->get('text_categories_image'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_categories_image'), null); ?>   
                 <div style="padding-left:6px;" class="small-margin-top">
                   <div id="imagePreviewContainer" class="cat-image align-center">
+                    <?php if ($lC_ObjectInfo->get('categories_image') != '') { ?>
+                    <div style="position:relative;">
+                      <div id="clogo_controls" class="controls">
+                        <span class="button-group compact children-tooltip">
+                          <a onclick="deleteCatImage(<?php echo $_GET[$lC_Template->getModule()]; ?>);" class="button icon-trash" href="#" title="<?php echo $lC_Language->get('text_delete'); ?>"></a>
+                        </span>
+                      </div>
+                    </div>
+                    <?php } ?>
                     <?php if ($lC_ObjectInfo->get('categories_image')) { ?>
                     <img src="<?php echo DIR_WS_HTTP_CATALOG . ((is_file('../images/categories/' . $lC_ObjectInfo->get('categories_image')) == true) ? 'images/categories/' . $lC_ObjectInfo->get('categories_image') : 'images/no_image.png'); ?>" style="max-width:100%;" />
                     <?php } else { ?>
-                    <img src="../images/categories/no_image.png" style="max-width: 100%; height: auto;" align="center" /><br /><?php echo $lC_Language->get('text_no_image'); ?>
+                    <img src="../images/no_image.png" style="max-width: 100%; height: auto;" align="center" />
                     <?php } ?>
                     <input type="hidden" id="categories_image" name="categories_image" value="<?php echo $lC_ObjectInfo->get('categories_image'); ?>">
                   </div>

@@ -144,9 +144,9 @@ function editSpecial(id) {
       $("#lbl-edit_products_name").html(data.products_price_formatted);
       $("#edit_specials_price").val(data.specials_new_products_price).focus();
       if (data.status == 1) {
-        $("#edit_specials_status").attr('checked', true);
+        $("#edit_specials_status").attr('checked', true).parent().addClass('checked');
       } else {
-        $("#edit_specials_status").attr('checked', false);
+        $("#edit_specials_status").attr('checked', false).parent().removeClass('checked');
       }
       $("#edit_specials_start_date").val(data.start_date_formatted);
       $("#edit_specials_expires_date").val(data.expires_date_formatted);

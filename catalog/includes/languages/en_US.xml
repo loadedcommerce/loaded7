@@ -386,6 +386,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>listing_sku_heading</key>
+      <value><![CDATA[SKU]]></value>
+      <group>general</group>
+    </definition>    
+    <definition>
       <key>listing_products_heading</key>
       <value><![CDATA[Products]]></value>
       <group>general</group>
@@ -2236,6 +2241,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <group>general</group>
     </definition>
     <definition>
+      <key>field_customer_name_error</key>
+      <value><![CDATA[Your Name must contain a minimum of %s characters.]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>field_customer_date_of_birth</key>
       <value><![CDATA[Date of Birth:]]></value>
       <group>general</group>
@@ -2784,6 +2794,11 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>ms_error_coupon_max_uses</key>
       <value><![CDATA[Coupon has reached maximum uses.]]></value>
       <group>checkout</group>
+    </definition>   
+    <definition>
+      <key>text_cancel</key>
+      <value><![CDATA[Cancel]]></value>
+      <group>general</group>
     </definition>  
     <definition>
       <key>ms_error_action_not_performed</key>
@@ -2795,5 +2810,10 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[The are no products found matching your criteria.]]></value>
       <group>general</group>
     </definition>  
+    <definition>
+      <key>no_description_available</key>
+      <value><![CDATA[]]></value>
+      <group>general</group>
+    </definition>      
   </definitions>  
 </language>

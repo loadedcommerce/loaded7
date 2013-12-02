@@ -53,7 +53,7 @@ class Cash_On_Delivery extends lC_Addon { // your addon must extend lC_Addon
    /**
     * The base64 encoded addon image used in the addons store listing
     */     
-    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/cod.png', $this->_title);
+    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/cod.png');
    /**
     * The addon enable/disable switch
     */    

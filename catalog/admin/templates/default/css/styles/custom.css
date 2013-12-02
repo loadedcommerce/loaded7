@@ -751,6 +751,9 @@ select.input {
   background:#f0f0f0;
 }
 
+.half-width { width:90%; }
+.align-middle { vertical-align:middle; }
+
 /* fix for icon-cross centering */
 .icon-cross { padding-left:2px; }
 

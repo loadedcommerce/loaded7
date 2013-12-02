@@ -13,7 +13,8 @@
 <div class="row">
   <div class="col-sm-12 col-lg-12">
     <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
-    <?php 
+    <?php
+      if (isset($_GET['success']) && $_GET['success'] != NULL) echo '<div class="message-success-container alert alert-success"><img class="margin-right" src="images/icons/success.gif">' . preg_replace('/[^a-zA-Z0-9]\'\.\,/', '', $_GET['success']) . '</div>' . "\n"; 
       if ( $lC_MessageStack->size('login') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom small-margin-left">' . $lC_MessageStack->get('login') . '</div>' . "\n"; 
     ?>
     <div class="row">

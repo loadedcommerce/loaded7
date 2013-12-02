@@ -19,6 +19,7 @@ page_heading_step_4 = Finished!
 text_installation = This web-based installation routine will correctly setup and configure Loaded Commerce to run on this server. Please following the on-screen instructions that will take you through the database server, web server, and store configuration options. If help is needed at any stage, please consult the documentation or seek help at the community support forums.
 text_successful_installation = The installation and configuration was successful!
 text_go_to_shop_after_cfg_file_is_saved = Please visit your store after the configuration file has been saved:
+text_go = Go
 
 param_database_server = Database Host
 param_database_server_description = The address of the database server in the form of a hostname or IP address.
@@ -108,43 +109,43 @@ rpc_configfile_error = No previous installation found. Please check the path and
 rpc_sqlfile_error = Cannot locate source configuration file 
 
 param_import_categories = CATEGORIES
-param_import_categories_description = importing category data 
+param_import_categories_description = importing Category data 
 
 param_import_products = PRODUCTS
-param_import_products_description = importing product data
+param_import_products_description = importing Product data
 
 param_import_attributes = ATTRIBUTES
-param_import_attributes_description = importing product attributes 
+param_import_attributes_description = importing Product Attributes data
 
 param_import_customers = CUSTOMERS
-param_import_customers_description = importing customer data 
+param_import_customers_description = importing Customer data 
 
 param_import_customer_groups = CUSTOMER GROUPS
-param_import_customer_groups_description = importing customer groups
+param_import_customer_groups_description = importing Customer Groups data
 
 param_import_orders = ORDERS 
-param_import_orders_description = importing orders 
+param_import_orders_description = importing Orders data
 
-param_import_cds = CDS 
-param_import_cds_description = importing CDS data 
+param_import_cds = CONTENT DIRECTOR 
+param_import_cds_description = importing Content Director data 
 
 param_import_admin = ADMINISTRATORS 
 param_import_admin_description = importing Administrator data 
 
 param_import_newsletter = NEWSLETTER 
-param_import_newsletter_description = importing newsletter data 
+param_import_newsletter_description = importing Newsletter data 
 
 param_import_banners = BANNERS 
-param_import_banners_description = importing BANNER data 
+param_import_banners_description = importing Banner data 
 
 param_import_config = CONFIGURATION 
-param_import_config_description = importing configuration data 
+param_import_config_description = importing Configuration data 
 
 param_import_coupon = COUPONS 
-param_import_coupon_description = importing coupon data 
+param_import_coupon_description = importing Coupon data 
 
 param_import_tax = TAX CLASSES/RATES 
-param_import_tax_description = importing tax class and rate data 
+param_import_tax_description = importing Tax Class and Rate data 
 
 rpc_upgrade_success = import completed
 rpc_upgrade_inprogress = import in progress
@@ -166,13 +167,6 @@ upgrade_step2_desc_success = Successfully conected to the database server .
 upgrade_step3_title = Database Import
 upgrade_step3_desc = The installer will copy the existing database to the new database and convert the data to work with Loaded7 . This may take a few minutes. Please do not close the browser, press the back button or navigate away from this page .
 
-
-
-#
-#
-#
-#
-
 image_button_retry = Retry
 
 upgrade_nav_text_1 = Welcome
@@ -181,18 +175,17 @@ upgrade_nav_text_3 = Configure
 upgrade_nav_text_4 = Settings
 upgrade_nav_text_5 = Finished 
 
-upgrade_main_page_title = Upgrade From Previous
-upgrade_main_page_desc = Use this option if you have a previous version of LoadedCommerce, also known as CRE Loaded. Upgradeable versions are 6.2 and up ( 6.3, 6.4, 6.5 ) Standard, Community Edition, Pre and B2B.
+upgrade_main_page_title = Upgrade From 6.x Version
+upgrade_main_page_desc = Use this option if you have a previous version of Loaded Commerce, also known as CRE Loaded. Upgradeable versions are 6.2 and up ( 6.3, 6.4, 6.5 ) Standard, Community Edition, Pro and B2B.
 
 upgrade_main_option_same = Same Server
-upgrade_main_option_same_desc = Your previous installation is located on the same server/hosting space and this script can access it's configure.php file to auto configure connections
+upgrade_main_option_same_desc = Your previous installation is located on the same server /hosting space as the new installation and this script can access it's configure file to auto configure necessary connections.
 
 upgrade_main_option_remote = Remote Server
-upgrade_main_option_remote_desc = Your previous installation is located on another service with remote DB access. You will need to configure all aspects of this installation but the database will automatically be converted
+upgrade_main_option_remote_desc = Your previous installation is located on another server with remote DB access. You will need to configure all aspects of the store but the database will be converted automatically.
 
-upgrade_main_option_dbfile = Upgrade from DB File
-upgrade_main_option_dbfile_desc = What previous installation? All you got is some database file you think came from your old store. You will need to configure this installation completely and hope we can import that DB file
-
+upgrade_main_option_dbfile = Database File
+upgrade_main_option_dbfile_desc = No previous installation but have a database backup of your old store? We can attempt to convert the data however you will need to configure all aspects of the store after the upgrade.
 
 upgrade_step1_page_title = Path to Existing Installation
 upgrade_step1_page_desc = Enter the directory path to your existing installation.
@@ -223,8 +216,8 @@ upgrade_step3_page_errfound = ERROR(S) FOUND . Please correct to proceed
 upgrade_step4_page_title = Image Import
 upgrade_step4_page_desc = The installer will copy the existing images to the new database and convert the data to work with Loaded7 . This may take a few minutes. Please do not close the browser, press the back button or navigate away from this page .
 
-upgrade_step4_label_import_product_images = product images
-upgrade_step4_label_import_categ_images = category images
+upgrade_step4_label_import_product_images = Product Images
+upgrade_step4_label_import_categ_images = Category Images
 
 upgrade_step4_odesc_import_product_images = import product images
 upgrade_step4_odesc_import_categ_images = import category images

@@ -98,7 +98,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       <div id="content-container" class="container">
         <div class="row"> 
           <!--left column -->
-          <?php if (!empty($left)) echo '<div id="content-left-container" class="' . $box_class . '">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
+          <?php if (!empty($left)) echo '<div id="content-left-container" class="' . $box_class . ' hide-on-mobile">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
              
           <!--content start-->  
           <div id="content-center-container" class="<?php echo $content_class; ?>">
@@ -168,6 +168,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
           </div>
             
           <!--right column-->
+          <?php if (!empty($left)) echo '<div id="content-left-mobile-container" class="' . $box_class . ' show-on-mobile">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
           <?php if (!empty($right)) echo '<div id="content-right-container" class="' . $box_class . '">' . $lC_Template->getInfoBoxHtml('right') . '</div>' . "\n"; ?>
                     
         </div> <!-- end row --> 
@@ -183,10 +184,12 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
             echo $lC_Banner->display();
           }     
         }
-
-        if ( $lC_Template->showDebugMessages() && ($lC_MessageStack->size('debug') > 0) ) {
-          echo '<div id="debug-info-container" style="display:none;" class="alert alert-warning"><span></span></div>';
-        }         
+        
+        if (isset($lC_Services) && $lC_Services->isStarted('debug')) {
+          if ( $lC_Template->showDebugMessages() && ($lC_MessageStack->size('debug') > 0) ) {
+            echo '<div id="debug-info-container" style="display:none;" class="alert alert-warning"><span></span></div>';
+          }         
+        }
         ?>       
       </div>  
       <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->

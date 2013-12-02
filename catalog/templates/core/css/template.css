@@ -231,7 +231,7 @@
 
 #loaded7 .content-products-info-manuf-model { 
   position:absolute; 
-  right:0; top:30px; 
+  right:0; top:15px; 
   right:20px;  
 } 
 
@@ -432,26 +432,55 @@
   padding:10px; 
 }
 
+#loaded7 .show-on-mobile {
+  display: none;
+}
+
 /********************************************************/
 /*              8. Media query styles                   */
 /********************************************************/  
   
-@media (max-width: 940px){
- 
+@media (min-width: 1200px) {
+
 }
 
-@media (max-width: 1200px) and (min-width: 940px){
+@media (min-width: 940px) and (max-width: 1199px) {
   
 }
 
-/* Desktops and laptops */
-@media (min-width : 1224px) {
+
+@media (min-width: 768px) and (max-width: 939px) {
 
 }
 
 
-@media (max-width: 940px) and (min-width: 768px){
+@media (min-width: 600px) and (max-width: 767px) {
+  #loaded7 .show-on-mobile {
+    display: block;
+  }
+  #loaded7 .hide-on-mobile {
+    display: none;
+  }
+}
 
+
+@media (min-width: 480px) and (max-width: 599px) {
+  #loaded7 .show-on-mobile {
+    display: block;
+  }
+  #loaded7 .hide-on-mobile {
+    display: none;
+  }
+}
+
+
+@media (max-width: 479px) {
+  #loaded7 .show-on-mobile {
+    display: block;
+  }
+  #loaded7 .hide-on-mobile {
+    display: none;
+  }
 }
 
 /********************************************************/

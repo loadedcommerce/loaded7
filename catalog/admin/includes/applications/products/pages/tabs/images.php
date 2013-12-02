@@ -26,13 +26,13 @@ global $lC_Language, $pInfo;
                 <b><?php echo $lC_Language->get('text_product_default_image'); ?></b>
               </a>            
             </li>
-            <?php if ($pInfo) { ?>
-            <li id="additional-gallery-trigger" class="upsellwrapper">     
-              <span class="icon file-jpg"></span>
-              <b><?php echo $lC_Language->get('text_additional_images'); ?></b>
-              <span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('text_additional_images_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_additional_images_upsell_desc'); ?>"><?php echo lc_go_pro(); ?></span>
-            </li>
-            <?php } ?>            
+            <?php 
+            if ($pInfo) { 
+              ?>
+              <li id="additional-gallery-trigger" class="upsellwrapper"><span class="icon file-jpg"></span><b><?php echo $lC_Language->get('text_additional_images'); ?></b><span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('text_additional_images_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_additional_images_upsell_desc'); ?>"><?php echo lc_go_pro(); ?></span></li>
+              <?php 
+            } 
+            ?>            
           </ul>
         </div> 
       </div>
@@ -84,7 +84,10 @@ global $lC_Language, $pInfo;
                     ?>
                     <div id="defaultImagesContainer">
                       <div id="defaultImages" style="overflow: auto;" class="small-margin-top"></div>
-                    </div>                    
+                    </div> 
+                    
+                    <!--VQMOD3-->                   
+                    
                   <?php
                   }
                 ?>

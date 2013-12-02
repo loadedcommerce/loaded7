@@ -22,11 +22,11 @@ global $lC_Language, $pInfo;
           
           <div id="optionsInvControlButtons" class="upsellwrapper button-group small-margin-top">
             <!-- lc_options_inventory_control begin -->
-            <label for="ioc_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? '' : ' active'); ?>">
+            <label for="ioc_radio_1" class="oicb button blue-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? '' : ' active'); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_1" value="1" />
               <?php echo $lC_Language->get('text_simple'); ?>
             </label>
-            <label upselltitle="<?php echo $lC_Language->get('text_multi_sku'); ?>" upselldesc="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ioc_radio_2" class="upsellinfo disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1) ? ' active' : ''); ?>">
+            <label upselltitle="<?php echo $lC_Language->get('text_multi_sku'); ?>" upselldesc="<?php echo $lC_Language->get('text_multi_sku_desc'); ?>" for="ioc_radio_2" class="upsellinfo disabled oicb button red-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 || $pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">
               <input type="radio" name="inventory_option_control_radio_group" id="ioc_radio_2" value="2" />
               <?php echo $lC_Language->get('text_multi_sku') . '<span class="small-margin-left">' . lc_go_pro() . '</span>'; ?>
             </label>
@@ -39,9 +39,10 @@ global $lC_Language, $pInfo;
     <div id="multiSkuContainer" class="twelve-columns" style="position:relative; display:none;">
       <fieldset class="fieldset">
         <legend class="legend"><?php echo $lC_Language->get('text_multi_sku_options'); ?></legend>
-        <span class="float-right" style="margin:-23px -8px 0 0;"><a class="button icon-plus-round green-gradient " href="javascript:void(0)" onclick="addNewMultiSkuOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
-        <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
-          <span class="thin"><?php echo $lC_Language->get('text_coming_soon'); ?>...</span>
+        <div class="twelve-columns"> 
+
+          <!--VQMOD1-->          
+
         </div>
       </fieldset>
     </div>
@@ -77,6 +78,11 @@ global $lC_Language, $pInfo;
     */ ?>
   </div>
 </div>
+<?php
+if ( is_dir('includes/applications/products/modal') ) {
+  if ( file_exists('includes/applications/products/modal/addSimpleOption.php') ) include_once($lC_Vqmod->modCheck('includes/applications/products/modal/addSimpleOption.php'));
+}
+?>
 <script>
 $(document).ready(function() {
   _setSimpleOptionsSortOrder();

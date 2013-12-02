@@ -1,4 +1,0 @@
-<FilesMatch "\.(txt|csv)$">
-Order allow,deny
-Allow from all
-</FilesMatch>

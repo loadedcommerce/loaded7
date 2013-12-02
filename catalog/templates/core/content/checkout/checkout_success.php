@@ -26,24 +26,31 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
           <div class="alert alert-success"><h3 class="no-margin-top no-margin-bottom"><img class="margin-right" alt="<?php echo $lC_Language->get('success_heading'); ?>" src="templates/core/images/icons/32/success.png"><?php echo $lC_Language->get('success_heading'); ?></h3></div>
           <div class="row">
             <div class="col-sm-4 col-lg-4">
-              <div class="well relative no-padding-bottom">
-                <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
-                <address>
-                  <?php echo lC_Address::format(lC_Success::getShippingAddress($oID, $lC_Customer->getID()), '<br />'); ?>                
-                </address>
-              </div>
-              <div class="well relative clearfix small-padding-top small-padding-bottom"> 
-                <h4><?php echo $lC_Language->get('shipping_method_heading'); ?></h4>
-                <p>              
-                <?php 
-                  foreach (lC_Success::getOrderTotals($oID) as $module) {
-                    if ($module['class'] == 'shipping') {
-                      echo $module['title']; 
-                    }                    
-                  } 
-                  ?>
-                </p>
-              </div>   
+              <?php
+              if (defined('SKIP_CHECKOUT_SHIPPING_PAGE') && SKIP_CHECKOUT_SHIPPING_PAGE == '1') {
+              } else {
+                ?>
+                <div class="well relative no-padding-bottom">
+                  <h4 class="no-margin-top"><?php echo $lC_Language->get('ship_to_address'); ?></h4>
+                  <address>
+                    <?php echo lC_Address::format(lC_Success::getShippingAddress($oID, $lC_Customer->getID()), '<br />'); ?>                
+                  </address>
+                </div>
+                <div class="well relative clearfix small-padding-top small-padding-bottom"> 
+                  <h4><?php echo $lC_Language->get('shipping_method_heading'); ?></h4>
+                  <p>              
+                  <?php 
+                    foreach (lC_Success::getOrderTotals($oID) as $module) {
+                      if ($module['class'] == 'shipping') {
+                        echo $module['title']; 
+                      }                    
+                    } 
+                    ?>
+                  </p>
+                </div>  
+              <?php
+              }
+              ?> 
               <div class="well relative no-padding-bottom">
                 <h4 class="no-margin-top"><?php echo $lC_Language->get('bill_to_address'); ?></h4>
                 <address>

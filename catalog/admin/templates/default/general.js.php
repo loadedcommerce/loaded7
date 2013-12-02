@@ -13,6 +13,9 @@
 */
 global $lC_Vqmod, $lC_Template, $lC_Language;
 require_once($lC_Vqmod->modCheck('includes/applications/updates/classes/updates.php'));    
+require_once($lC_Vqmod->modCheck('includes/applications/images/classes/images.php'));    
+require_once($lC_Vqmod->modCheck('includes/classes/image.php'));
+$lC_Image_Admin = new lC_Image_Admin();   
 ?>
 <script>
 $(document).ready(function() { 
@@ -146,6 +149,8 @@ $(document).ready(function() {
   
   // begin shortcut key additions
   $(window).bind("load", function() {
+    // bypass certain pages
+    var bypass = '<?php echo (isset($_GET['action']) && $_GET['action'] == 'save') ? '1' : '0'; ?>';
     // set the disable var to false to begin
     var disableKeyCombo = false; 
     // if any textareas on the page are clicked into then set the disable var to true
@@ -161,7 +166,7 @@ $(document).ready(function() {
     }); 
     // when the input fields are blurred set the disable var back to false
     $(":input").blur(function(){
-      disableKeyCombo = false;
+      if (bypass != '1') disableKeyCombo = false;
     });
     // when a key is pressed 
     $("*").keypress(function(e){
@@ -392,9 +397,37 @@ $(document).ready(function() {
   
   $(".go-pro-menu-ad").on('click', function(){
     window.open("http://www.loadedcommerce.com/loaded-pre-order-p-395.html");    
-  });        
-     
+  });  
+  
+  //check for image resize flag and resize images if flag is set
+  var resize = '<?php echo (file_exists('../includes/work/resize.tmp')) ? '1' : '0'; ?>';
+  var isLoggedIn = '<?php echo (isset($_SESSION['admin']) && empty($_SESSION['admin']) === false) ? '1' : '0'; ?>';
+  var module = '<?php echo $lC_Template->getModule(); ?>';
+  if (resize == '1' && isLoggedIn == '1' && module != 'login') {
+    _resizeImages();
+  }        
 });
+
+function _resizeImages() {
+  var text = '<?php echo $lC_Language->get('text_resize_images'); ?>';
+  mm = $.modal({
+          contentBg: false,
+          contentAlign: 'center',
+          content: '<span class="loader on-dark mid-margin-right"></span>' + text,
+          resizable: false,
+          actions: {},
+          buttons: {}
+        });
+  $(mm);
+
+  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'images' . '&action=resizeImages&overwrite=1&' . $lC_Image_Admin->getGroupsBatch()); ?>';
+  $.getJSON(jsonLink,
+    function (data) {
+      $(mm).closeModal();
+      return true;
+    }
+  );  
+}
 
 // check width of window for product edit tabs placement
 if ($(window).width() < 1380) {

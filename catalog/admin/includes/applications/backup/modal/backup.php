@@ -61,11 +61,13 @@ function doBackup() {
         classes:  'blue-gradient glossy',
         click:    function(win) {
           mask();
-          var checked = $("#download_only").attr('checked');
+          var checked = $("#download_only").is(':checked');
           if (checked == true) {
+            
+            var compression = $("#bBackup input[type='radio']:checked").val();
             unmask();
-            $("#backupContent").dialog('close');
-            window.location = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=backup&download_only=yes'); ?>";
+            win.closeModal();
+            window.location = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=backup&download_only=yes'); ?>&compression="+compression;
           }
           var nvp = $("#bBackup").serialize();  
           var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=doBackup&DATA'); ?>'  

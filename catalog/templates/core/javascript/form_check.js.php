@@ -115,6 +115,8 @@ function check_form(form_name) {
 
   check_input("firstname", <?php echo ACCOUNT_FIRST_NAME; ?>, "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_first_name_error'), ACCOUNT_FIRST_NAME); ?>");
   check_input("lastname", <?php echo ACCOUNT_LAST_NAME; ?>, "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_last_name_error'), ACCOUNT_LAST_NAME); ?>");
+  check_input("customer_name", "", "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_name_error'), ACCOUNT_FIRST_NAME); ?>");
+  check_input("customer_email_address", <?php echo ACCOUNT_EMAIL_ADDRESS; ?>, "<?php echo $GLOBALS['lC_Language']->get('field_customer_email_address_check_error'); ?>");
   check_input("email_address", <?php echo ACCOUNT_EMAIL_ADDRESS; ?>, "<?php echo sprintf($GLOBALS['lC_Language']->get('field_customer_email_address_error'), ACCOUNT_EMAIL_ADDRESS); ?>");
 
   <?php

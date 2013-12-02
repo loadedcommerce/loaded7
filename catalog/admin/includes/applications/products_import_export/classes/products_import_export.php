@@ -740,6 +740,9 @@ class lC_Products_import_export_Admin {
 				// Get the products ID for control
 				$products_id = $product['id'];
 				
+				// need to get the weight class since Im outputting lb and kg instead of the ids
+				
+				
 				// need to get ids for these categories if they dont exist we need to make them and return that id
 				$product['categories'] = explode(",",$product['categories']);
 				foreach($product['categories'] as $catName){
@@ -761,8 +764,15 @@ class lC_Products_import_export_Admin {
 				$Qman->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
 				$Qman->bindValue(':manufacturers_name', $product['manufacturer']);
 				$Qman->execute();
+					
+					if($Qman->numberOfRows()){
+						$product['manufacturers_id'] = $Qman->value('manufacturers_id');
+					} else {
+						// insert a manufacture that doesn't exist
+						// insert manufacturer $product['manufacturer'] which is the manufacturers name
+					}
 				
-				$product['manufacturers_id'] = $Qman->value('manufacturers_id');
+				
 				
 				// check for a match in the database	  
 				$Qcheck = $lC_Database->query("SELECT * FROM :table_products WHERE products_id = :products_id");
@@ -773,11 +783,93 @@ class lC_Products_import_export_Admin {
 				if($Qcheck->numberOfRows()){
 					// the product exists in the database so were just going to update the product with the new data
 					$match_count++;
-				  
-					// build data array of product information
-					$data = $product;
-							
-					$lC_Products->save($products_id, $data);
+					
+					$error = false;
+				
+					$lC_Database->startTransaction();
+					
+					$Qproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_cost = :products_cost, products_price =  :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id, manufacturers_id = :manufacturers_id, products_date_added = :products_date_added WHERE products_id = :products_id');
+					$Qproduct->bindInt(':products_id', $products_id);
+					$Qproduct->bindRaw(':products_date_added', $product['date_added']);
+					$Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
+					$Qproduct->bindInt(':products_quantity', $product['quantity']);
+					$Qproduct->bindFloat(':products_cost', $product['cost']);
+					$Qproduct->bindFloat(':products_price', $product['price']);
+					$Qproduct->bindFloat(':products_msrp', $product['msrp']);
+					$Qproduct->bindValue(':products_model', $product['model']);
+					$Qproduct->bindValue(':products_sku', $product['sku']);
+					$Qproduct->bindFloat(':products_weight', $product['weight']);
+					$Qproduct->bindInt(':products_weight_class', $product['weight_class']);
+					$Qproduct->bindInt(':products_status', $product['status']);
+					$Qproduct->bindInt(':products_tax_class_id', $product['tax_class_id']);
+					$Qproduct->bindInt(':manufacturers_id', $product['manufacturers_id']);
+					$Qproduct->setLogging($_SESSION['module'], $products_id);
+					$Qproduct->execute();
+	
+					if ( $lC_Database->isError() ) {
+					  $error = true;
+					} else {
+				
+					  $Qcategories = $lC_Database->query('delete from :table_products_to_categories where products_id = :products_id');
+					  $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+					  $Qcategories->bindInt(':products_id', $products_id);
+					  $Qcategories->setLogging($_SESSION['module'], $products_id);
+					  $Qcategories->execute();
+				
+					  if ( $lC_Database->isError() ) { 
+						$error = true;
+					  } else {
+						$categories = explode(',',$product['categories']);
+						if ( isset($categories) && !empty($categories) ) {
+						  foreach ($categories as $category_id) {
+							$Qp2c = $lC_Database->query('insert into :table_products_to_categories (products_id, categories_id) values (:products_id, :categories_id)');
+							$Qp2c->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+							$Qp2c->bindInt(':products_id', $products_id);
+							$Qp2c->bindInt(':categories_id', $category_id);
+							$Qp2c->setLogging($_SESSION['module'], $products_id);
+							$Qp2c->execute();
+				
+							if ( $lC_Database->isError() ) {
+							  $error = true;
+							  break;
+							}
+						  }
+						}
+					  }
+					}
+										
+					if ( $error === false ) {
+					  $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_keyword, products_tags, products_url) values (:products_id, :language_id, :products_name, :products_description, :products_keyword, :products_tags, :products_url)');
+					  $Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+					  $Qpd->bindInt(':products_id', $products_id);
+					  $Qpd->bindInt(':language_id', $product['language_id']);
+					  $Qpd->bindValue(':products_name', $product['name']);
+					  $Qpd->bindValue(':products_description', $product['description']);
+					  $Qpd->bindValue(':products_keyword', $product['permalink']);
+					  $Qpd->bindValue(':products_tags', $product['tags']);
+					  $Qpd->bindValue(':products_url', $product['url']);
+					  $Qpd->setLogging($_SESSION['module'], $products_id);
+					  $Qpd->execute();
+			
+					  if ( $lC_Database->isError() ) {
+					    $error = true;
+					    break;
+					  }
+					}
+					
+					
+					
+					if ( $error === false ) {
+					  $lC_Database->commitTransaction();
+				
+					  lC_Cache::clear('categories');
+					  lC_Cache::clear('category_tree');
+					  lC_Cache::clear('also_purchased');
+				
+					} else {
+					  $lC_Database->rollbackTransaction();
+					}
+					
 							
 				} else {
 					// the product doesnt exist so lets write it into the database
@@ -812,51 +904,6 @@ class lC_Products_import_export_Admin {
 					  $error = true;
 					} else {
 				
-				
-				///////////////////////////// REVIEW PRICING
-				/*
-				
-					  // remove any old pricing records
-					  $Qpricing = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
-					  $Qpricing->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
-					  $Qpricing->bindInt(':products_id', $products_id);
-					  $Qpricing->setLogging($_SESSION['module'], $products_id);
-					  $Qpricing->execute();
-				
-					  if ( $lC_Database->isError() ) {
-						$error = true;
-					  } else {
-						if ( isset($data['variants_combo']) && !empty($data['variants_combo']) ) {
-						} else {
-						  if ( isset($data['price_breaks']) && !empty($data['price_breaks']) ) {
-							for ($i=0; sizeof($data['price_breaks']['group_id']) > $i; $i++) {
-							  if (is_array($data['price_breaks']['group_id'][$i])) continue;
-							  if ($data['price_breaks']['group_id'][$i] == 0) continue;
-							  if ($data['price_breaks']['qty'][$i] == null) continue;
-							  if ($data['price_breaks']['price'][$i] == 0) continue;
-							  $Qpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
-							  $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
-							  $Qpb->bindInt(':products_id', $products_id );
-							  $Qpb->bindInt(':group_id', $data['price_breaks']['group_id'][$i] );
-							  $Qpb->bindInt(':tax_class_id', $data['price_breaks']['tax_class_id'][$i] );
-							  $Qpb->bindValue(':qty_break', $data['price_breaks']['qty'][$i] );
-							  $Qpb->bindValue(':price_break', $data['price_breaks']['price'][$i] );
-							  $Qpb->bindRaw(':date_added', 'now()');
-							  $Qpb->setLogging($_SESSION['module'], $products_id);
-							  $Qpb->execute();
-				
-							  if ( $lC_Database->isError() ) {
-								$error = true;
-								break;
-							  }
-							}
-						  }
-						}
-					  }
-					  
-					  //////////////////// REVIEW PRICING
-					  
-					  */
 				
 					  $Qcategories = $lC_Database->query('delete from :table_products_to_categories where products_id = :products_id');
 					  $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);

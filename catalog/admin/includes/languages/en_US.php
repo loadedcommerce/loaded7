@@ -259,6 +259,7 @@ tooltip_settings = Settings (s) / Main Menu (escape)
 
 top_category = Top Category
 
+text_all = All
 text_version = Version
 text_confirm_delete = Confirm Delete?
 text_sort = Sort
@@ -283,12 +284,17 @@ text_disable_category = Click to disable Category
 text_enable_coupon = Click to Enable Coupon
 text_disable_coupon = Click to Disable Coupon
 
+text_enable = Click to Enable
+text_disable = Click to Disable
+
 update_message_title = Updates are Available!
 update_message_text1 = New version
 update_message_text2 = released.
 
 site_maintenance_message_title = Maintenance Mode
 site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
+
+product_attributes_product_classes_title = Product Classes
 
 text_coming_soon = Pro Feature Coming Soon
 text_click_for_info = &nbsp;Click for Info&nbsp;
@@ -319,3 +325,9 @@ text_print_invoice = Print Invoice
 text_print_packing_slip = Print Packing Slip
 text_spin_off_order = Spin Off Order
 text_go_to_customer = Go to Customer
+
+text_resize_images = Upgrade Clean Up: Creating Image Sets
+
+slider_switch_enabled = ENABLED
+slider_switch_disabled = DISABLED
+slider_switch_preview = PREVIEW text_status = Statustext_select_product = Select Product

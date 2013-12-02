@@ -1,0 +1,63 @@
+AuthUserFile /var/www/vhosts/resultsonlyhosting.com/.htpasswd
+AuthType Basic
+AuthName "Loaded Beta 2"
+Require valid-user
+
+#  $Id: .htaccess.php v1.0 2013-01-01 datazen $
+#
+#  LoadedCommerce, Innovative eCommerce Solutions
+#  http://www.loadedcommerce.com
+#
+#  Copyright (c) 2013 Loaded Commerce, LLC
+#
+#  @author     Loaded Commerce Team
+#  @copyright  (c) 2013 Loaded Commerce Team
+#  @license    http://loadedcommerce.com/license.html
+#
+# This is used with Apache WebServers
+#
+# For this to work, you must include the parameter 'Options' to
+# the AllowOverride configuration
+#
+# Example:
+#
+# <Directory "/usr/local/apache/htdocs">
+#   AllowOverride Options
+# </Directory>
+#
+# 'All' with also work. (This configuration is in the
+# apache/conf/httpd.conf file)
+
+# The following makes adjustments to the SSL protocol for Internet
+# Explorer browsers
+
+<IfModule mod_setenvif.c>
+  <IfDefine SSL>
+    SetEnvIf User-Agent ".*MSIE.*" \
+             nokeepalive ssl-unclean-shutdown \
+             downgrade-1.0 force-response-1.0
+  </IfDefine>
+</IfModule>
+
+# Fix certain PHP values
+# (commented out by default to prevent errors occuring on certain
+# servers)
+
+#<IfModule mod_php4.c>
+#  php_value session.use_trans_sid 0
+#  php_value magic_quotes_gpc 0
+#</IfModule>
+
+<IfModule mod_rewrite.c>
+  Options +FollowSymLinks
+  RewriteEngine on
+  RewriteBase /
+  RewriteRule category/(.*)$ index.php?$1
+  RewriteRule product/(.*)/specials/(.*),(.*)$ products.php?$1&$2=$3
+  RewriteRule product/reviews,new/(.*)/(.*),(.*)$ products.php?reviews=new&$1&$2=$3
+  RewriteRule product/(.*)/reviews/(.*)/(.*),(.*)$ products.php?$1&reviews&$2&$3=$4
+  RewriteRule product/reviews,new/(.*)$ products.php?reviews=new&$1
+  RewriteRule product/reviews/(.*)$ products.php?reviews&$1
+  RewriteRule product/(.*)/(.*),(.*)$ products.php?$1&$2=$3
+  RewriteRule product/(.*)$ products.php?$1
+</IfModule> 

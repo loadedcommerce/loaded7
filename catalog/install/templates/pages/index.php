@@ -57,9 +57,17 @@ TD { height:19px; }
       </div>
     </noscript>  
     <?php
+
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/work') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/backups'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/backups/') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs') , 0777);
+
     if (file_exists(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php') && !is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php')) {
       @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php', 0777);
     }
+
     if (file_exists(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php') && !is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php')) {
       ?>
       <p class="message icon-warning red-gradient">   
@@ -208,31 +216,39 @@ TD { height:19px; }
               <?php if (!$writeable) $ok = FALSE; ?>
             </tr>                           
           </table>
-          <p class="message icon-warning margin-top margin-right" style="color:#c09853; background:#fcf8e3; border-color:#fbeed5;">   
+          <!-- p class="message icon-warning margin-top margin-right" style="color:#c09853; background:#fcf8e3; border-color:#fbeed5;">   
             <span class="stripes animated"></span>
-            <?php echo sprintf($lC_Language->get('text_under_development'), $version); ?>
-          </p>   
+            <?php //echo sprintf($lC_Language->get('text_under_development'), $version); ?>
+          </p -->   
         </div>
       </div>
-      <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
-        <?php
-        if ($ok) {
-          ?>
+      <?php
+      if ($ok) {
+        ?>
+        <!-- div id="buttonContainer" class="large-margin-top margin-left" style="float:left">
+          <a href="javascript:void(0);" class="button" onclick="$('#mBox').hide(); $('#pBox').hide(); $('#upgrade_method').val('S'); window.location.href = 'upgrade.php?step=1'">
+            <span class="button-icon orange-gradient glossy"><span class="icon-cloud-upload"></span></span>
+            <?php echo addslashes($lC_Language->get('image_button_upgrade')); ?>
+          </a>          
+        </div -->
+        <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
           <a href="install.php" class="button">
-            <span class="button-icon blue-gradient glossy"><span class="icon-download"></span></span>
+            <span class="button-icon blue-gradient glossy"><span class="icon-right-round"></span></span>
             <?php echo addslashes($lC_Language->get('image_button_install')); ?>
           </a>
-          <?php          
-        } else {
-          ?>
+        </div>
+        <?php          
+      } else {
+        ?>
+        <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
           <a href="index.php" class="button">
             <span class="button-icon red-gradient glossy"><span class="icon-refresh"></span></span>
             <?php echo addslashes($lC_Language->get('image_button_retry')); ?>
           </a>
-          <?php 
-        }
-        ?>
-      </div>      
+        </div>
+        <?php 
+      }
+      ?>
     </div>    
   </fieldset>  
 </form>

@@ -43,9 +43,11 @@ $lC_CategoryTree->setUseAria(true);
           <li><?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews'), $lC_Language->get('sitemap_reviews')); ?></li>
           <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO), $lC_Language->get('box_information_heading')); ?>
             <ul>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'shipping'), $lC_Language->get('box_information_shipping')); ?></li>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'privacy'), $lC_Language->get('box_information_privacy')); ?></li>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'conditions'), $lC_Language->get('box_information_conditions')); ?></li>
+              <li><?php echo lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_3'), $lC_Language->get('text_shipping_returns')); ?></li>
+              <li><?php echo lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_4'), $lC_Language->get('text_privacy')); ?></li>                                              
+              <li><?php echo lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_5'), $lC_Language->get('text_terms_conditions')); ?></li>
+              <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'cookie'), $lC_Language->get('breadcrumb_cookie_usage')); ?></li>
+              <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'ssl_check'), $lC_Language->get('breadcrumb_ssl_check')); ?></li>
               <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'contact'), $lC_Language->get('box_information_contact')); ?></li>
             </ul>
           </li>

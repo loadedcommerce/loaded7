@@ -39,13 +39,13 @@ class lC_Configuration_Admin {
         $value = $lC_Language->get('parameter_false');
       } elseif ($value == '0') {
         $value = $lC_Language->get('parameter_optional');
-      /*} elseif ($value == '1') {
+      } elseif ($value == '1') {
         // Value 1 or true/yes fix.
         if ($configuration_group_id == 7) {
           $value = 1;
         } else {
           $value = $lC_Language->get('parameter_true');
-        }*/
+        }
       } else if ($title == 'Country' || $title == 'Country of Origin') {
         $country = lc_get_country_data($value);
         $value = $country['countries_name'];
