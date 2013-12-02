@@ -104,7 +104,7 @@ function newCustomer() {
               classes:  'glossy',
               click:    function(win) { win.closeModal(); }
             },
-            '<?php echo $lC_Language->get('button_save'); ?>': {
+            '<?php echo $lC_Language->get('button_save_and_close'); ?>': {
               classes:  'blue-gradient glossy',
               click:    function(win) {
                 var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
@@ -154,6 +154,10 @@ function newCustomer() {
                   win.closeModal();
                 }
               }
+            },
+            '<?php echo $lC_Language->get('button_continue'); ?>': {
+              classes:  'green-gradient glossy',
+              click:    function(win) { addNewCustomer(); }
             }
           },
           buttonsLowPadding: true
@@ -172,5 +176,68 @@ function newCustomer() {
       $('.datepicker').glDatePicker({ startDate: new Date("January 1, 1960"), zIndex: 100 });
     }
   );
+}
+
+function addNewCustomer() {
+  var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
+  var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
+  var emailMin = '<?php echo ACCOUNT_EMAIL_ADDRESS; ?>';
+  var pwMin = '<?php echo ACCOUNT_PASSWORD; ?>';
+  var bValid = $("#customers").validate({
+    rules: {
+      firstname: { minlength: fnameMin, required: true },
+      lastname: { minlength: lnameMin, required: true },
+      email_address: { minlength: emailMin, email: true, required: true },
+      dob: { date: true },
+      password: { minlength: pwMin, required: true },
+      confirmation: { minlength: pwMin, required: true },
+    },
+    invalidHandler: function() {
+    }
+  }).form();
+  var passwd = $('#password').val();
+  var confirm = $('#confirmation').val();
+  if (passwd != confirm) {
+    $.modal.alert('<?php echo $lC_Language->get('ms_error_password_confirmation_invalid'); ?>');
+    return false;
+  }
+  if (bValid) {
+    var nvp = $('#customers').serialize();
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveCustomer&BATCH'); ?>'
+    $.getJSON(jsonLink.replace('BATCH', nvp),    
+      function (data) {
+        if (data.rpcStatus == -10) { // no session
+          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+          $(location).attr('href',url);
+        }         
+    
+        if (data.rpcStatus != 1) {
+          if (data.rpcStatus == -1) {
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+          } else if (data.rpcStatus == -2) {
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_email_address_exists'); ?>');
+          } else if (data.rpcStatus == -3) {
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_password_confirmation_invalid'); ?>');
+          }
+          return false;
+        }
+        modalMessage('<?php echo $lC_Language->get('text_changes_saved'); ?>');          
+        editCustomer(data.new_customer_id);  
+      }
+    );
+    win.closeModal();
+  }
+}
+function modalMessage(text) {
+  mm = $.modal({
+          contentBg: false,
+          contentAlign: 'center',
+          content: text,
+          resizable: false,
+          actions: {},
+          buttons: {}
+        });
+  $(mm);
+  setTimeout ("$(mm).closeModal()", 800);
 }
 </script>

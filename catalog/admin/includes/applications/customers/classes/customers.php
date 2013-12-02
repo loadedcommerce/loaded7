@@ -451,11 +451,12 @@ class lC_Customers_Admin {
       $Qcustomer->bindInt(':customers_status', $data['status']);
       $Qcustomer->bindInt(':customers_group_id', $data['group']);
       $Qcustomer->setLogging($_SESSION['module'], $id);
-      $Qcustomer->execute();
+      $Qcustomer->execute();      
 
       if ( !$lC_Database->isError() ) {
         if ( !empty($data['password']) ) {
           $customer_id = ( !empty($id) ) ? $id : $lC_Database->nextID();
+          $result['new_customer_id'] = $customer_id;
 
           $Qpassword = $lC_Database->query('update :table_customers set customers_password = :customers_password where customers_id = :customers_id');
           $Qpassword->bindTable(':table_customers', TABLE_CUSTOMERS);
