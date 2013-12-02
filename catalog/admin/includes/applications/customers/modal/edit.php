@@ -544,4 +544,48 @@ function updateZones(selected) {
     }
   );
 }
+function createNewOrder(customers_id,default_address_id) {
+  if(default_address_id > 0 ) {
+    window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&cID='+customers_id+'");?>'; 
+    return false;
+  } else {
+    func_opnewindow(customers_id);          
+  }  
+}
+function func_opnewindow(customers_id) { 
+  var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+  if (parseInt(accessLevel) < 4) {
+    $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+    return false;
+  }
+  $.modal({
+    content: '<div>'+
+             '  <div>'+
+             '    <p class="align-center"><?php echo $lC_Language->get('introduction_new_customer_address'); ?></p>'+
+             '  </div>'+
+             '</div>',
+    title: '<?php echo $lC_Language->get('modal_heading_new_address_book_entry'); ?>',
+    width: 300,
+    actions: {
+      'Close' : {
+        color: 'red',
+        click: function(win) { win.closeModal(); }
+      }
+    },
+    buttons: {
+      '<?php echo $lC_Language->get('button_cancel'); ?>': {
+        classes:  'glossy',
+        click:    function(win) { win.closeModal(); }
+      },
+      '<?php echo $lC_Language->get('button_ok'); ?>': {
+        classes:  'blue-gradient glossy',
+        click:    function(win) {
+          editCustomer(customers_id);
+          win.closeModal();
+        }
+      }
+    },
+    buttonsLowPadding: true
+  });
+}
 </script>

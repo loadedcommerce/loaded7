@@ -11,8 +11,8 @@ operation_title_search = Search:
 operation_new_address_book_entry = New Address Book Entry
 operation_save_address_book_entry = Save Address Book Entry
 
-table_heading_last_name = Last Name
-table_heading_first_name = First Name
+table_heading_name = Customer Name
+table_heading_order_count = Orders
 table_heading_email_address = Email Address
 table_heading_group = Group
 table_heading_date_created = Date Created
@@ -22,7 +22,7 @@ button_new_customer = New Customer
 
 modal_heading_new_customer = New Customer
 modal_heading_edit_customer = Edit Customer
-modal_heading_new_address_book_entry = New Address Book Entry
+modal_heading_new_address_book_entry = New Address Book Entry?
 modal_heading_delete_customer = Delete Customer
 modal_heading_batch_delete_customers = Batch Delete Customers
 
@@ -63,6 +63,7 @@ introduction_edit_customer = Please make the necessary changes for this customer
 introduction_delete_customer = Please verify the removal of this customer.
 introduction_batch_delete_customers = Please verify the removal of the selected customers.
 introduction_delete_address_book_entry = Please verify the removal of this address book entry.
+introduction_new_customer_address = This customer has no Addresses,<br>click OK to add one.
 
 delete_warning_primary_address_book_entry = Warning: The primary address of this customer cannot be removed. Please assign another address as the primary address and try again.
 

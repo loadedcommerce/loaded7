@@ -128,6 +128,9 @@ icon_user_female = Female
 icon_user_male = Male
 icon_view = View
 icon_processing = Processing ...
+icon_create_order = Create Order
+icon_edit_customer = Edit Customer
+icon_view_orders = View Orders
 
 introduction_profile_pass_change = Please make the necessary changes for this administrator.
 introduction_edit_administrator = Please make the necessary changes for this administrator.
