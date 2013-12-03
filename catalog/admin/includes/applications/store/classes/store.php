@@ -41,7 +41,7 @@ class lC_Store_Admin {
       $featured = ($from_store && isset($addon['featured']) && $addon['featured'] == '1') ? '<span class="icon-star mid-margin-left icon-orange with-tooltip" title="' . $lC_Language->get('text_featured') . '" style="cursor:pointer; vertical-align:-35%;"></span>' : NULL;
       $inCloud = ($from_store) ? '<span class="mid-margin-left icon-cloud icon-green with-tooltip" title="' . $lC_Language->get('text_in_cloud') . '" style="vertical-align:-35%;"></span>' : NULL;
       $isInternal = (strstr($addon['title'], '(IO)')) ? '<span class="red strong">INTERNAL ONLY</span>' : NULL;
-      
+      $upsell = '';
       if (  $type != NULL && ($type == $addon['type'] || ($type == 'featured' && $addon['featured'] == '1'))   ) {
         $mobileEnabled = (isset($addon['mobile']) && $addon['mobile'] == true) ? '<span class="mid-margin-left icon-mobile icon-blue with-tooltip" title="' . $lC_Language->get('text_mobile_enabled') . '" style="vertical-align:-40%;"></span>' : '';
         
@@ -52,8 +52,8 @@ class lC_Store_Admin {
         } else {
           $thumb = '<div style="position:relative;"><img width="' . $imgWidth . '" height="' . $imgHeight . '" src="' . $addon['thumbnail'] . '" alt="' . $addon['title'] . '"><div class="version-tag"><span class="tag black-gradient">' . $addon['version'] . '</span></div></div>';
         }
-        
-        $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom no-margin-left"') . $mobileEnabled . $inCloud . $featured . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . '</small>';
+        if ($type == 'pro template pack') $upsell = '<div class="anthracite mid-margin-top">' . $lC_Language->get('text_free_with_pro_edition') . '</div>';
+        $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom no-margin-left"') . $mobileEnabled . $inCloud . $featured . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . $upsell . '</small>';
         $desc = substr($addon['description'], 0, 300) . '...';     
        
         if ($addon['installed'] == '1') { 
@@ -226,6 +226,7 @@ class lC_Store_Admin {
                          
     $checksum = hash('sha256', json_encode($request));
     $request['checksum'] = $checksum;
+    $request['instID'] = INSTALLATION_ID;
     
     $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/store/addons/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request));
 
@@ -275,7 +276,7 @@ class lC_Store_Admin {
                         'from_store' => true,
                         'featured' => $val['featured'],
                         'featured_in_group' => $val['featured_in_group']);
-    }       
+    }    
     
     return $addons;
   } 

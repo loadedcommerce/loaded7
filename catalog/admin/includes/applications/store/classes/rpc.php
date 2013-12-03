@@ -37,7 +37,7 @@ class lC_Store_Admin_rpc {
     $result['rpcStatus'] = RPC_STATUS_SUCCESS;
 
     echo json_encode($result);
-  } 
+  }   
  /*
   * Save the addon data
   *
