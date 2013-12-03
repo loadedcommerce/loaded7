@@ -340,53 +340,74 @@ class lC_Store_Admin {
   public static function install($key) {
     global $lC_Database, $lC_Language, $lC_Vqmod;
     
-    if ( !file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
-      // get the addon phar from the store
-      self::getAddonPhar($key);
+    if (class_exists($key)) return false;
+
+    $isTemplate = (strstr($key, 'lC_Template_')) ? true : false;
+    if ($isTemplate) {
+      $key = str_replace('lC_Template_', '', $key);
+      if ( !file_exists(DIR_FS_ADMIN . 'includes/templates/' . $key . '.php') ) {
+        // get the addon phar from the store
+        self::getAddonPhar($key);
+        
+        // apply the addon phar 
+        if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
+          lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar', 'template');
+        }
+      }      
+      self::_resetAddons();
       
-      // apply the addon phar 
-      if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
-        lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
-      }
-    }
+      return true;
+
+    } else { // is addon
     
-    if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
-
-      include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
-
-      $addon = $key;
-      $addon = new $addon();
-
-      $addon->install();
-      
-      $modules_group = $addon->getAddonType() . '|' . $key;
-
-      $code = $addon->getAddonType(); 
-      if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType())) {
-        $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType());
-        $lC_DirectoryListing->setCheckExtension('php');
-            
-        foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
-          if (isset($ao['name'])) {
-            $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
-            break;  
-          }        
+      if ( !file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
+        // get the addon phar from the store
+        self::getAddonPhar($key);
+        
+        // apply the addon phar 
+        if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
+          lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
         }
       }
+      
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
 
-      if (empty($code) === false) {     
-        $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
-        $Qinstall->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-        $Qinstall->bindValue(':title', $addon->getAddonTitle());
-        $Qinstall->bindValue(':code', $code);
-        $Qinstall->bindValue(':author_name', $addon->getAddonAuthor());
-        $Qinstall->bindValue(':author_www', $addon->getAddonAuthorWWW());
-        $Qinstall->bindValue(':modules_group', $modules_group);
-        $Qinstall->execute();
+        include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
+
+        $addon = $key;
+        $addon = new $addon();
+
+        $addon->install();
         
-        self::_resetAddons();
+        $modules_group = $addon->getAddonType() . '|' . $key;
 
-        return true;
+        $code = $addon->getAddonType(); 
+        if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType())) {
+          $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType());
+          $lC_DirectoryListing->setCheckExtension('php');
+              
+          foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
+            if (isset($ao['name'])) {
+              $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
+              break;  
+            }        
+          }
+        }
+
+        if (empty($code) === false) {     
+          $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
+          $Qinstall->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+          $Qinstall->bindValue(':title', $addon->getAddonTitle());
+          $Qinstall->bindValue(':code', $code);
+          $Qinstall->bindValue(':author_name', $addon->getAddonAuthor());
+          $Qinstall->bindValue(':author_www', $addon->getAddonAuthorWWW());
+          $Qinstall->bindValue(':modules_group', $modules_group);
+          $Qinstall->execute();
+          
+          self::_resetAddons();
+
+          return true;
+        }
       }
     }
 

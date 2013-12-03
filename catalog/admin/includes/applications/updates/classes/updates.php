@@ -384,7 +384,7 @@ class lC_Updates_Admin {
   * @access public      
   * @return boolean
   */    
-  public static function applyPackage($pharWithPath = null) {
+  public static function applyPackage($pharWithPath = null, $pharType = 'addon') {
     $phar_can_open = true;
 
     $meta = array();
@@ -446,7 +446,11 @@ class lC_Updates_Admin {
           if ($pharWithPath == null) {
             $directory = realpath(DIR_FS_CATALOG) . '/';
           } else {
-            $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
+            if ($pharType == 'template') {
+              $directory = realpath(DIR_FS_CATALOG) . '/';
+            } else {
+              $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
+            }
           }
           
           if ( file_exists($directory . $file) ) {

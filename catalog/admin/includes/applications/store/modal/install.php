@@ -27,8 +27,13 @@ function installAddon(id, type) {
         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
-      oTable.fnReloadAjax();
-      editAddon(id, type);
+      if (type == 'templates') {
+        document.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'templates'); ?>';
+        exit();
+      } else {
+        oTable.fnReloadAjax();
+        editAddon(id, type);
+      }
     }
   );
 }
