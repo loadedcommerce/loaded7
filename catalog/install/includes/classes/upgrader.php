@@ -2581,11 +2581,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
                              );
                              
           // get zone_name from source db 
-          $znQry = $source_db->query("SELECT zone_name FROM zones WHERE zone_id = " . $sQry->value($map['entry_zone_id']));
-          $znQry->execute();
+          if ($sQry->value($map['entry_zone_id']) != 0) {
+            $znQry = $source_db->query("SELECT zone_name FROM zones WHERE zone_id = " . $sQry->value($map['entry_zone_id']));
+            $znQry->execute();
+            $zone_name = $znQry->value('zone_name');
+          } else {
+            $zone_name = $sQry->value($map['entry_state']);
+          }
           
           // get zone_code from new db 
-          $nzQry = $target_db->query("SELECT zone_id FROM " . $t_db['DB_PREFIX'] . "zones WHERE zone_country_id = " . $sQry->value($map['entry_country_id']) . " AND zone_name = '" . $znQry->value('zone_name') . "'");
+          $nzQry = $target_db->query("SELECT zone_id FROM " . $t_db['DB_PREFIX'] . "zones WHERE zone_country_id = " . $sQry->value($map['entry_country_id']) . " AND zone_name = '" . $zone_name . "'");
           $nzQry->execute();
           
           $tQry = $target_db->query('INSERT INTO :table_address_book (customers_id, 
