@@ -2581,7 +2581,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                              );
                              
           // get zone_name from source db 
-          if ($sQry->value($map['entry_zone_id']) != 0) {
+          if ($sQry->value($map['entry_zone_id']) != '0') {
             $znQry = $source_db->query("SELECT zone_name FROM zones WHERE zone_id = " . $sQry->value($map['entry_zone_id']));
             $znQry->execute();
             $zone_name = $znQry->value('zone_name');
