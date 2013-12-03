@@ -54,7 +54,7 @@ class lC_Store_Admin {
         }
         if ($type == 'pro template pack') $upsell = '<div class="anthracite mid-margin-top">' . $lC_Language->get('text_free_with_pro_edition') . '</div>';
         $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom no-margin-left"') . $mobileEnabled . $inCloud . $featured . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . $upsell . '</small>';
-        $desc = substr($addon['description'], 0, 300) . '...';     
+        $desc = ($media != 'tablet-portrait' && $media != 'tablet-landscape') ? substr($addon['description'], 0, 300) . '...' : null;     
        
         if ($addon['installed'] == '1') { 
           $bg = ($addon['enabled'] == '1') ? ' green-gradient' : ' silver-gradient'; 

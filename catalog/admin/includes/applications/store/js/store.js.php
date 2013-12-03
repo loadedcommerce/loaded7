@@ -45,9 +45,9 @@ function showAddonType(id, text) {
       "bInfo": false,
       "bDestroy": true,
       "aoColumns": [{ "sWidth": "80px", "sClass": "dataColThumb hide-on-mobile-portrait" },
-                    { "sWidth": "30%", "sClass": "dataColTitle" },
-                    { "sWidth": "50%", "sClass": "dataColDesc hide-on-mobile hide-on-tablet" },
-                    { "sWidth": "110px", "sClass": "dataColAction" }]
+                    { "sWidth": "35%", "sClass": "dataColTitle" },
+                    { "sWidth": "35%", "sClass": "dataColDesc hide-on-mobile hide-on-tablet" },
+                    { "sWidth": "30%", "sClass": "dataColAction" }]
   });  
   oTable.responsiveTable();  
   $('#dataTable thead').remove();
@@ -60,7 +60,7 @@ function showAddonType(id, text) {
     $("#menuLink" + id).addClass('store-type-selected');
   }
 
-  setTimeout('updateWindowSize()', 0);
+  setTimeout('updateWindowSize()', 50);
 }  
   
 function updateTitles() {
@@ -92,16 +92,20 @@ function updateWindowSize() {
       $('#storeHeaderRightContainer').css('width', '100%');    
       $('#storeSearchContainer').css('width', '100%').removeClass('no-margin-bottom').addClass('margin-top margin-bottom');    
       $('#storeFilterContainer').css('width', '100%').css('margin-left', '80px');    
-      $('#storeSearchContainerInput').removeClass('no-padding');    
+      $('#storeSearchContainerInput').removeClass('no-padding'); 
     }
   } else if ($.template.mediaQuery.name === 'tablet-portrait') {  
       $('#storeHeaderRightContainer').css('width', '100%');    
       $('#storeSearchContainer').css('width', '46%').css('float', 'right').addClass('margin-top');    
       $('#storeFilterContainer').css('width', '48%').css('float', 'left').addClass('margin-top'); 
+      $('.content-panel').css('width', '74%').css('padding-left', '181px');
+      $('.panel-navigation').css('width', '72%');
   } else if ($.template.mediaQuery.name === 'tablet-landscape') { 
       $('#storeHeaderRightContainer').css('width', '100%');    
       $('#storeSearchContainer').css('width', '46%').css('float', 'right').addClass('margin-top');    
       $('#storeFilterContainer').css('width', '48%').css('float', 'left').addClass('margin-top'); 
+      $('.content-panel').css('width', '74%').css('padding-left', '181px');
+      $('.panel-navigation').css('width', '72%');      
   } else { // desktop
   }   
 }
