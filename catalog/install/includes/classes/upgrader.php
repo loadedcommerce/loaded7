@@ -2585,8 +2585,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $znQry = $source_db->query("SELECT zone_name FROM zones WHERE zone_id = " . $sQry->value($map['entry_zone_id']));
             $znQry->execute();
             $zone_name = $znQry->value('zone_name');
-          } else {
-            $zone_name = $sQry->value($map['entry_state']);
+          }
+          if (!$zone_name) {
+            $zone_name = $address['entry_state'];
           }
           
           // get zone_code from new db 
