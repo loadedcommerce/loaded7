@@ -2581,13 +2581,12 @@ class lC_LocalUpgrader extends lC_Upgrader {
                              );
                              
           // get zone_name from source db 
-          if ($sQry->value($map['entry_zone_id']) != '0') {
+          if ($sQry->value($map['entry_zone_id']) != 0) {
             $znQry = $source_db->query("SELECT zone_name FROM zones WHERE zone_id = " . $sQry->value($map['entry_zone_id']));
             $znQry->execute();
             $zone_name = $znQry->value('zone_name');
-          }
-          if (!$zone_name) {
-            $zone_name = $address['entry_state'];
+          } else {
+            $zone_name = $sQry->value($map['entry_state']);
           }
           
           // get zone_code from new db 
@@ -2634,7 +2633,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->bindValue(':entry_suburb'        , $address['entry_suburb']);
           $tQry->bindValue(':entry_postcode'      , $address['entry_postcode']);
           $tQry->bindValue(':entry_city'          , $address['entry_city']);
-          $tQry->bindValue(':entry_state'         , $znQry->value('zone_name'));
+          $tQry->bindValue(':entry_state'         , $zone_name);
           $tQry->bindInt  (':entry_country_id'    , $address['entry_country_id']);
           $tQry->bindInt  (':entry_zone_id'       , $nzQry->value('zone_id'));
           $tQry->bindValue(':entry_telephone'     , $address['entry_telephone']);
