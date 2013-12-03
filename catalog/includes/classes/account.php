@@ -135,7 +135,6 @@
         $Qcustomer = $lC_Database->query('update :table_customers set customers_gender = :customers_gender, customers_firstname = :customers_firstname, customers_lastname = :customers_lastname, customers_email_address = :customers_email_address, date_account_last_modified = :date_account_last_modified where customers_id = :customers_id');
       }
 
-      $Qcustomer = $lC_Database->query('update :table_customers set customers_gender = :customers_gender, customers_firstname = :customers_firstname, customers_lastname = :customers_lastname, customers_email_address = :customers_email_address, customers_dob = :customers_dob, date_account_last_modified = :date_account_last_modified where customers_id = :customers_id');
       $Qcustomer->bindTable(':table_customers', TABLE_CUSTOMERS);
       $Qcustomer->bindValue(':customers_gender', ((ACCOUNT_GENDER > -1) && isset($data['gender']) && (($data['gender'] == 'm') || ($data['gender'] == 'f'))) ? $data['gender'] : '');
       $Qcustomer->bindValue(':customers_firstname', $data['firstname']);
