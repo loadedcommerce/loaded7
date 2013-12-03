@@ -179,7 +179,7 @@ class lC_Store_Admin {
   */
   public static function drawMenu() {
     foreach ( self::getAllTypes() as $key => $type ) {
-      $menu .= '<li style="cursor:pointer;" class="message-menu store-menu-' . strtolower($type['text']) . '" id="menuType' . ucwords($type['text']) . '">' . 
+      $menu .= '<li style="cursor:pointer;" class="message-menu store-menu-' . strtolower(str_replace(' ', '-', $type['text'])) . '" id="menuType' . str_replace(' ', '', ucwords($type['text'])) . '">' . 
                '  <a href="javascript:void(0);" class="" id="menuLink' . (int)$type['id'] . '" onclick="showAddonType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');">' . 
                '    <span class="message-status" style="padding-top:8px;"><img src="' . $type['icon'] . '" alt="' . $type['text'] . '"></span>' .
                '     <br><strong>' . lc_output_string_protected($type['text']) . '</strong>' .
