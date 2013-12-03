@@ -97,8 +97,6 @@ class lC_Account_Edit extends lC_Template {
         $lC_Customer->setLastName(trim($data['lastname']));
         $lC_Customer->setEmailAddress($data['email_address']);
 
-        $lC_Customer->updateCustomerInfo(); // Process the update
-        
         $lC_MessageStack->add('account', $lC_Language->get('success_account_updated'), 'success');
       }
 

@@ -310,7 +310,7 @@ class lC_Customer {
     }
   }
 
-  public function updateCustomerInfo(){
+  public function saveEntry($data){
     global $lC_Database;
 
     $Qcg = $lC_Database->query('update :table_customers set customers_first = :customers_firstname, customers_lastname = :customers_lastname, customers_email_address = :customers_email_address where customers_id = :customers_id');
