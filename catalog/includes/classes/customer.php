@@ -309,17 +309,5 @@ class lC_Customer {
       unset($_SESSION['lC_Customer_data']);
     }
   }
-
-  public function saveEntry($data){
-    global $lC_Database;
-
-    $Qcg = $lC_Database->query('update :table_customers set customers_first = :customers_firstname, customers_lastname = :customers_lastname, customers_email_address = :customers_email_address where customers_id = :customers_id');
-    $Qcg->bindTable(':table_customers', TABLE_CUSTOMERS);
-    $Qcg->bindInt(':customers_id', $this->getID());
-    $Qcg->bindValue(':customers_firstname', $this->_data['first_name']);
-    $Qcg->bindValue(':customers_lastname', $this->_data['last_name']);
-    $Qcg->bindValue(':customers_email_address', $this->_data['email_address']);
-    $Qcg->execute();
-  }
 }
 ?>
