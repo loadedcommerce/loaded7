@@ -1468,7 +1468,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : string  
   *
   */
-  public function getcPath($_cid, $_path) {
+  public function getcPath($_cid, $_path = null) {
       
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
