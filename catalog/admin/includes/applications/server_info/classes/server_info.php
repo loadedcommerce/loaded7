@@ -35,7 +35,6 @@ class lC_Server_info_Admin {
     $Qupdate->bindValue(':configuration_group_id', '6');      
     $Qupdate->bindValue(':last_modified', date("Y-m-d H:m:s"));   
     $Qupdate->execute();  
-    $Qupdate->execute();     
 
     lC_Cache::clear('configuration');
 
