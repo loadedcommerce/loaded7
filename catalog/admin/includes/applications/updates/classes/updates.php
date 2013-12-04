@@ -547,12 +547,14 @@ class lC_Updates_Admin {
         } catch ( Exception $e ) {  
           self::log('*** Could NOT Set Permissions on PHP files/directories');
         } 
+        // remove the update phar
+        if (file_exists(DIR_FS_WORK . 'updates/update.phar')) unlink(DIR_FS_WORK . 'updates/update.phar');          
         self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');      }
     } else {
-      self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
+      // remove the update phar
+      if (file_exists(DIR_FS_WORK . 'addons/update.phar')) unlink(DIR_FS_WORK . 'addons/update.phar');
+      self::log('##### ADDON INSTALL ' . $code . ' COMPLETE');
     }
-
-    self::log('##### ADDON INSTALL ' . $code . ' COMPLETE');
 
     return $phar_can_open;
   }
