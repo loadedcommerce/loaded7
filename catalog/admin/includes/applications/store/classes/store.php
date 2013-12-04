@@ -8,6 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: store.php v1.0 2013-08-08 datazen $
 */
+ini_set('display_errors', 1);
 global $lC_Vqmod;
 
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
@@ -338,10 +339,8 @@ class lC_Store_Admin {
   * @return boolean
   */
   public static function install($key) {
-    global $lC_Database, $lC_Language, $lC_Vqmod;
+    global $lC_Database, $lC_Language, $lC_Vqmod, $lC_Addons;
     
-    //if (class_exists($key)) return false;
-
     $isTemplate = (strstr($key, 'lC_Template_')) ? true : false;
     if ($isTemplate) {
       $key = str_replace('lC_Template_', '', $key);
@@ -369,17 +368,27 @@ class lC_Store_Admin {
           lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
         }
       }
-      
-      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
 
+      // sanity check to see if the object is already installed
+      $okToInstall = true;
+      
+      $Qchk = $lC_Database->query("select id from :table_templates_boxes where modules_group LIKE '%" . $key . "%'");
+      $Qchk->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+      $Qchk->execute();
+      
+      if ($Qchk->numberOfRows() > 0) $okToInstall = false;
+
+      $Qchk->freeResult();
+
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') && $okToInstall === true) {
         include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
 
         $addon = $key;
         $addon = new $addon();
 
-        $addon->install();
-        
         $modules_group = $addon->getAddonType() . '|' . $key;
+        
+        $addon->install();
 
         $code = $addon->getAddonType(); 
         if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType())) {
@@ -395,6 +404,11 @@ class lC_Store_Admin {
         }
 
         if (empty($code) === false) {     
+          $Qdel = $lC_Database->query('delete from :table_templates_boxes where modules_group = :modules_group');
+          $Qdel->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+          $Qdel->bindValue(':modules_group', $modules_group);
+          $Qdel->execute();          
+          
           $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
           $Qinstall->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
           $Qinstall->bindValue(':title', $addon->getAddonTitle());

@@ -19,9 +19,9 @@ class lC_Addons_Admin extends lC_Addons {
   public function __construct() {
     if (array_key_exists('login', $_GET)) return false;
 
-    if ( !isset($_SESSION['lC_Addons_Admin_data']) ) {
+//    if ( !isset($_SESSION['lC_Addons_Admin_data']) ) {
       self::_init();
-    }
+//    }
   }
  /*
   * Determine if the admin has addons
@@ -533,7 +533,7 @@ class lC_Addons_Admin extends lC_Addons {
   * @return void
   */ 
   private static function _init() {
-    global $lC_Vqmod, $lC_Language;
+    global $lC_Vqmod, $lC_Language, $lC_Database;
     
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
     $lC_DirectoryListing->setRecursive(true);
@@ -600,6 +600,26 @@ class lC_Addons_Admin extends lC_Addons {
     }
      
     self::$_data = $_SESSION['lC_Addons_Admin_data'];
+ 
+    // cleanup
+    $Qchk = $lC_Database->query("select * from :table_templates_boxes where modules_group LIKE '%|%'");
+    $Qchk->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+    $Qchk->execute();    
+    
+    while ($Qchk->next()) {
+      $parts = explode('|', $Qchk->value('modules_group'));
+      $type = $parts[0];
+      $addon = $parts[1];
+      
+      if (!file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/controller.php')) {
+        $Qdel = $lC_Database->query('delete from :table_templates_boxes where modules_group = :modules_group');
+        $Qdel->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+        $Qdel->bindValue(':modules_group', $Qchk->value('modules_group'));
+        $Qdel->execute();        
+      }
+    }
+    
+    $Qchk->freeResult();   
   } 
  /*
   * Retrieve a addon language definition value
