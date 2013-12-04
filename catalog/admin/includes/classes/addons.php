@@ -19,9 +19,9 @@ class lC_Addons_Admin extends lC_Addons {
   public function __construct() {
     if (array_key_exists('login', $_GET)) return false;
 
-//    if ( !isset($_SESSION['lC_Addons_Admin_data']) ) {
+    if ( !isset($_SESSION['lC_Addons_Admin_data']) ) {
       self::_init();
-//    }
+    }
   }
  /*
   * Determine if the admin has addons
