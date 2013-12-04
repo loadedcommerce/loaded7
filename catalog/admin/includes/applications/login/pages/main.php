@@ -195,11 +195,14 @@ $(document).ready(function() {
   /*
   * Get Pro
   */
-  $('#activation_serial').change(function(event) {
+  $('#activation_serial').keyup(function(event) {
     var serial = $('#activation_serial').val();
     var format = /[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/;
     var found = serial.match(format);
-    if (!found || serial.length != 24) {
+
+    if (serial.length != 24) return false;    
+    
+    if (!found) {
       $('#activate-pro').addClass('disabled');
       $('#buy-pro').removeClass('disabled');
       displayError('<?php echo $lC_Language->get('ms_error_serial_invalid'); ?>');
@@ -211,7 +214,6 @@ $(document).ready(function() {
       return true;
     }
   });  
-  
   
   /*
   * Register
