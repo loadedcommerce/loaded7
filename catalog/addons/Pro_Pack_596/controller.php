@@ -33,11 +33,11 @@ class Pro_Pack_596 extends lC_Addon { // your addon must extend lC_Addon
    /**
     * The developers name
     */    
-    $this->_author = 'Loaded Commerce, LLC';
+    $this->_author = 'Algozone, Inc.';
    /**
     * The developers web address
     */    
-    $this->_authorWWW = 'http://www.loadedcommerce.com';    
+    $this->_authorWWW = 'http://www.algozone.com';    
    /**
     * The addon version
     */     
