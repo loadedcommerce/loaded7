@@ -340,7 +340,7 @@ class lC_Store_Admin {
   public static function install($key) {
     global $lC_Database, $lC_Language, $lC_Vqmod;
     
-    if (class_exists($key)) return false;
+    //if (class_exists($key)) return false;
 
     $isTemplate = (strstr($key, 'lC_Template_')) ? true : false;
     if ($isTemplate) {
