@@ -45,7 +45,6 @@
   </div>                                                                                                                                                
   <div class="btn-set small-margin-top clearfix">
     <button class="pull-right btn btn-lg btn-primary" onclick="$('#contact').submit();" type="button"><?php echo $lC_Language->get('button_send_message'); ?></button>
-    <form action="<?php echo lc_href_link(FILENAME_INFO, null, 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
   </div>    
 </div>
 <!--content/info/info_contact.php end-->
