@@ -7,7 +7,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: index.php v1.0 2013-08-08 datazen $
 */
-$vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents('..//includes/version.txt'), 2))));
+$vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents('../includes/version.txt'), 2))));
 $version = $vInfo[0];
 $ok = TRUE;
 ?>
