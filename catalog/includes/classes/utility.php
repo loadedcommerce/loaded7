@@ -452,5 +452,20 @@ class utility {
   public static function isWindows() {
     return (self::serverOS() == 'windows') ? true : false;
   }  
+ /**
+  * Check if the Pro product is installed
+  *
+  * @access public
+  * @return boolean
+  */
+  public static function isPro() {
+    if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php') {
+      if (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') {
+        return true;
+      }
+    } 
+    
+    return false;
+  }  
 } 
 ?>
