@@ -126,13 +126,20 @@
     public static function saveEntry($data) {
       global $lC_Database, $lC_Customer;
 
-      $Qcustomer = $lC_Database->query('update :table_customers set customers_gender = :customers_gender, customers_firstname = :customers_firstname, customers_lastname = :customers_lastname, customers_email_address = :customers_email_address, customers_dob = :customers_dob, date_account_last_modified = :date_account_last_modified where customers_id = :customers_id');
+      if(ACCOUNT_DATE_OF_BIRTH == '1' && isset($data['dob'])){
+        
+        $Qcustomer = $lC_Database->query('update :table_customers set customers_gender = :customers_gender, customers_firstname = :customers_firstname, customers_lastname = :customers_lastname, customers_email_address = :customers_email_address, customers_dob = :customers_dob, date_account_last_modified = :date_account_last_modified where customers_id = :customers_id');
+        $Qcustomer->bindValue(':customers_dob', (ACCOUNT_DATE_OF_BIRTH == '1') ? @date('Ymd', $data['dob']) : '');
+      }else{
+
+        $Qcustomer = $lC_Database->query('update :table_customers set customers_gender = :customers_gender, customers_firstname = :customers_firstname, customers_lastname = :customers_lastname, customers_email_address = :customers_email_address, date_account_last_modified = :date_account_last_modified where customers_id = :customers_id');
+      }
+
       $Qcustomer->bindTable(':table_customers', TABLE_CUSTOMERS);
       $Qcustomer->bindValue(':customers_gender', ((ACCOUNT_GENDER > -1) && isset($data['gender']) && (($data['gender'] == 'm') || ($data['gender'] == 'f'))) ? $data['gender'] : '');
       $Qcustomer->bindValue(':customers_firstname', $data['firstname']);
       $Qcustomer->bindValue(':customers_lastname', $data['lastname']);
       $Qcustomer->bindValue(':customers_email_address', $data['email_address']);
-      $Qcustomer->bindValue(':customers_dob', (ACCOUNT_DATE_OF_BIRTH == '1') ? @date('Ymd', $data['dob']) : '');
       $Qcustomer->bindRaw(':date_account_last_modified', 'now()');
       $Qcustomer->bindInt(':customers_id', $lC_Customer->getID());
       $Qcustomer->execute();

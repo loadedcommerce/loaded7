@@ -41,22 +41,14 @@ $lC_CategoryTree->setUseAria(true);
           <li><?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'new'), $lC_Language->get('sitemap_products_new')); ?></li>
           <li><?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'specials'), $lC_Language->get('sitemap_specials')); ?></li>
           <li><?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, 'reviews'), $lC_Language->get('sitemap_reviews')); ?></li>
-          <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO), $lC_Language->get('box_information_heading')); ?>
-            <ul>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_3'), $lC_Language->get('text_shipping_returns')); ?></li>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_4'), $lC_Language->get('text_privacy')); ?></li>                                              
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_DEFAULT, 'cPath=2_5'), $lC_Language->get('text_terms_conditions')); ?></li>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'cookie'), $lC_Language->get('breadcrumb_cookie_usage')); ?></li>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'ssl_check'), $lC_Language->get('breadcrumb_ssl_check')); ?></li>
-              <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'contact'), $lC_Language->get('box_information_contact')); ?></li>
-            </ul>
-          </li>
+          <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'cookie'), $lC_Language->get('breadcrumb_cookie_usage')); ?></li>
+          <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'ssl_check'), $lC_Language->get('breadcrumb_ssl_check')); ?></li>
+          <li><?php echo lc_link_object(lc_href_link(FILENAME_INFO, 'contact'), $lC_Language->get('box_information_contact')); ?></li>
         </ul>    
       </div>
     </div>    
     <div class="btn-set clearfix">
       <form action="<?php echo lc_href_link(FILENAME_DEFAULT, null, 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-right btn btn-lg btn-primary" type="submit"><?php echo $lC_Language->get('button_continue'); ?></button></form>
-      <form action="<?php echo lc_href_link(FILENAME_INFO, null, 'AUTO'); ?>" method="post"><button onclick="$(this).closest('form').submit();" class="pull-left btn btn-lg btn-default" type="submit"><?php echo $lC_Language->get('button_back'); ?></button></form>
     </div>    
   </div>    
 </div>
