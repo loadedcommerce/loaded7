@@ -20,6 +20,11 @@ ini_set("display_errors", 1);
 ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
 
+// added for missing date.timezone in global php.ini
+if (!ini_get('date.timezone') && function_exists(date_default_timezone_set)) {
+   date_default_timezone_set('GMT');
+}
+
 // virtual hook system
 require_once('external/vqmod/vqmod.php');
 $lC_Vqmod = new VQMod();
