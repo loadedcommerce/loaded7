@@ -39,12 +39,7 @@ $(document).ready(function() {
     $('#actionText').hide();
     $('.on-mobile').show();
     $('.selectContainer').hide();   
-  }  
-  var error = '<?php echo $_SESSION['error']; ?>';
-  if (error) {
-    var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
-    $.modal.alert(errmsg);
-  }      
+  }        
 });
 
 function hideElements() {  
