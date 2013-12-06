@@ -22,7 +22,7 @@
 
     /* Class constructor */
     function lC_Checkout_Shipping_address() {
-      global $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Vqmod;
+      global $lC_MessageStack, $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Vqmod;
 
       require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));
 
@@ -59,6 +59,10 @@
         $lC_Breadcrumb->add($lC_Language->get('breadcrumb_checkout_shipping_address'), lc_href_link(FILENAME_CHECKOUT, $this->_module, 'SSL'));
       }
 
+      if(isset($_GET['account_created'])){
+        $lC_MessageStack->add('checkout_shipping_account', $lC_Language->get('success_account_created'), 'success');
+      }
+      
       if (($_GET[$this->_module] == 'process')) {
         $this->_process();
       }

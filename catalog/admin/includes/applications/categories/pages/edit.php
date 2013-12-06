@@ -1,52 +1,49 @@
 <?php
-/*
-  $Id: edit.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: edit.php v1.0 2013-08-08 datazen $
 */
-  if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
-    // categories data
-    $lC_ObjectInfo = new lC_ObjectInfo(lC_Categories_Admin::get($_GET[$lC_Template->getModule()]));
-    //categories description data
-    $Qcd = $lC_Database->query('select * from :table_categories_description where categories_id = :categories_id');
-    $Qcd->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
-    $Qcd->bindInt(':categories_id', $lC_ObjectInfo->get('categories_id'));
-    $Qcd->execute();
-    $categories_name = array();
-    $categories_menu_name = array();
-    $categories_blurb = array();
-    $categories_description = array();
-    $categories_tags = array();
-    while ($Qcd->next()) {
-      $categories_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_name');
-      $categories_menu_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_menu_name');
-      $categories_blurb[$Qcd->valueInt('language_id')] = $Qcd->value('categories_blurb');
-      $categories_description[$Qcd->valueInt('language_id')] = $Qcd->value('categories_description');
-      $categories_tags[$Qcd->valueInt('language_id')] = $Qcd->value('categories_tags');
-    }
-    // permalink data
-    $Qpermalink = $lC_Database->query('select language_id, permalink from :table_permalinks where item_id = :item_id and type = 1');
-    $Qpermalink->bindTable(':table_permalinks', TABLE_PERMALINKS);
-    $Qpermalink->bindInt(':item_id', $lC_ObjectInfo->get('categories_id'));
-    $Qpermalink->execute();
-    $categories_permalink = array();
-    while ($Qpermalink->next()) {
-      $categories_permalink[$Qpermalink->valueInt('language_id')] = $Qpermalink->value('permalink');
-    }
+if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
+  // categories data
+  $lC_ObjectInfo = new lC_ObjectInfo(lC_Categories_Admin::get($_GET[$lC_Template->getModule()]));
+  //categories description data
+  $Qcd = $lC_Database->query('select * from :table_categories_description where categories_id = :categories_id');
+  $Qcd->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+  $Qcd->bindInt(':categories_id', $lC_ObjectInfo->get('categories_id'));
+  $Qcd->execute();
+  $categories_name = array();
+  $categories_menu_name = array();
+  $categories_blurb = array();
+  $categories_description = array();
+  $categories_tags = array();
+  while ($Qcd->next()) {
+    $categories_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_name');
+    $categories_menu_name[$Qcd->valueInt('language_id')] = $Qcd->value('categories_menu_name');
+    $categories_blurb[$Qcd->valueInt('language_id')] = $Qcd->value('categories_blurb');
+    $categories_description[$Qcd->valueInt('language_id')] = $Qcd->value('categories_description');
+    $categories_tags[$Qcd->valueInt('language_id')] = $Qcd->value('categories_tags');
   }
-  
-  $assignedCategoryTree = new lC_CategoryTree();
-  $assignedCategoryTree->setBreadcrumbUsage(false);
-  $assignedCategoryTree->setSpacerString('&nbsp;', 5);
+  // permalink data
+  $Qpermalink = $lC_Database->query('select language_id, permalink from :table_permalinks where item_id = :item_id and type = 1');
+  $Qpermalink->bindTable(':table_permalinks', TABLE_PERMALINKS);
+  $Qpermalink->bindInt(':item_id', $lC_ObjectInfo->get('categories_id'));
+  $Qpermalink->execute();
+  $categories_permalink = array();
+  while ($Qpermalink->next()) {
+    $categories_permalink[$Qpermalink->valueInt('language_id')] = $Qpermalink->value('permalink');
+  }
+}
 
-  $lC_Template->loadModal($lC_Template->getModule());
+$assignedCategoryTree = new lC_CategoryTree();
+$assignedCategoryTree->setBreadcrumbUsage(false);
+$assignedCategoryTree->setSpacerString('&nbsp;', 5);
+
+$lC_Template->loadModal($lC_Template->getModule());
 ?>
 <style>
   .qq-upload-drop-area { min-height: 100px; top: -200px; }

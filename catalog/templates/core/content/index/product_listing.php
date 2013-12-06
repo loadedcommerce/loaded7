@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -109,7 +109,7 @@ $(document).ready(function() {
              '      <p class="">' + descContent + '</p>' +
              '      <div class="row">' +
              '        <div class="col-sm-6 col-lg-6">' +
-             '          <p class="lead">' + priceContent + '</p>' +
+             '          <p class="lead small-margin-bottom">' + priceContent + '</p>' +
              '        </div>' +
              '        <div class="col-sm-6 col-lg-6 no-margin-left product-listing-module-buy-now a">' + buttonContent + '</div>' +
              '      </div>' +
@@ -127,6 +127,7 @@ $(document).ready(function() {
     $('.product-listing-module-container p.lead').attr('style', 'font-size:1.1em;');  
     $('.product-listing-module-items').find('img').addClass('img-responsive');
   }
+  $('.thumbnail').equalHeights();
 });
 </script>
 <!--content/index/product_listing.php end-->

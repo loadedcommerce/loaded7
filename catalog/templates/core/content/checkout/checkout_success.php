@@ -1,8 +1,8 @@
 <?php
 /**  
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -70,8 +70,8 @@ $oID = lC_Success::getOrderID($lC_Customer->getID());
             </div>
             <div class="col-sm-8 col-lg-8">
               <h3 class="no-margin-top">
-                <span class="pull-right"><?php echo $lC_Language->get('checkout_order_number') . '&nbsp;' . $_SESSION['cartID']; ?></span>
-                <span class="pull-left"><?php echo $lC_Language->get('checkout_order_id') . '&nbsp;' . $oID; ?></span>
+                <span class="pull-left"></span>
+                <span class="pull-right"><?php echo $lC_Language->get('checkout_order_number') . '&nbsp;' . $oID; ?></span>
               </h3>
               <div class="clearfix" id="content-checkout-success-products-table">
                 <table class="table responsive-table no-margin-bottom">

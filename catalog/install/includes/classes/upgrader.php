@@ -1,4 +1,12 @@
 <?php
+/**
+  @package    catalog::install::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: upgrader.php v1.0 2013-08-08 datazen $
+*/
 
 class UpgraderFactory {
   public static function create($type) {
@@ -578,7 +586,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                              , 'customers_id'   => 'customers_id'
                                                                              , 'customers_name' => 'customers_name'
                                                                              , 'reviews_rating' => 'reviews_rating'
-                                                                             , 'language_id'    => 'language_id'
+                                                                             , 'languages_id'   => 'languages_id'
                                                                              , 'reviews_text'   => 'reviews_text'
                                                                              , 'date_added'     => 'date_added'
                                                                              , 'last_modified'  => 'last_modified'
@@ -751,7 +759,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                             , 'products_cost'          => ($sQry->value($map['products_cost']) != '' || $sQry->value($map['products_cost']) != NULL) ? $sQry->value($map['products_cost']) : 0
                             , 'products_msrp'          => ($sQry->value($map['products_msrp']) != '' || $sQry->value($map['products_msrp']) != NULL) ? $sQry->value($map['products_msrp']) : 0
                             , 'products_model'         => $sQry->value($map['products_model'])
-                            , 'products_sku'           => ($sQry->value($map['products_sku']) != '' || $sQry->value($map['products_sku']) != NULL) ? $sQry->value($map['products_sku']) : 0
+                            , 'products_sku'           => ($sQry->value($map['products_sku']) != '' || $sQry->value($map['products_sku']) != NULL) ? $sQry->value($map['products_sku']) : null
                             , 'products_date_added'    => ($sQry->value($map['products_date_added']) != '' || $sQry->value($map['products_date_added']) != NULL) ? $sQry->value($map['products_date_added']) : "0000-00-00 00:00:00"
                             , 'products_last_modified' => $sQry->value($map['products_last_modified'])
                             , 'products_weight'        => $sQry->value($map['products_weight'])
@@ -1338,7 +1346,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $tQry->bindDate (':date_added'    , $review['date_added']);
         $tQry->bindDate (':last_modified' , $review['last_modified']);
         $tQry->bindInt  (':reviews_read'  , $review['reviews_read']);
-        $tQry->bindInt  (':reviews_status', $review['reviews_status']);
+        $tQry->bindInt  (':reviews_status', 1);
         
         $tQry->execute();
         
@@ -1487,15 +1495,10 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // END CONNNECT TO SOURCE DB
       
       // BEGIN GET CPATH FOR CATEGORY
-      $pQry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                  parent_id, 
-                                                  categories_name, 
-                                                  sort_order 
-                                             FROM categories AS c, 
-                                                  categories_description AS cd 
-                                            WHERE c.categories_id = " . $_cid . " 
-                                              AND c.categories_id = cd.categories_id 
-                                              AND language_id = " . $this->_languages_id_default);
+      $pQry = $source_db->query("SELECT DISTINCT (categories_id), 
+                                                  parent_id 
+                                             FROM categories 
+                                            WHERE categories_id = " . $_cid);
       $pQry->execute();
       
       while ($pQry->next()) {
@@ -1674,7 +1677,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $sQry->execute();
 
       $categories_desc = array();
-      $c_keywords = array();
         
       $numrows = $sQry->numberOfRows();
       if ($numrows > 0) { 
@@ -1689,8 +1691,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $c_keyword = str_replace("--", "-", $c_keyword);
           $c_keyword = str_replace("---", "-", $c_keyword);
           $c_keyword = str_replace("----", "-", $c_keyword);
-          
-          $c_keywords[] = strtolower($c_keyword);
           
           $category  = array(
                                'categories_id'          => $c_ID
@@ -1768,7 +1768,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
           //  #### getCPATH CODE
           
-          $cat_list = "cPath=" . lC_LocalUpgrader::getcPath($c_ID);; 
+          $cat_list = "cPath=" . lC_LocalUpgrader::getcPath($c_ID); 
                   
           //  #### END getCPATH CODE         
           
@@ -1839,58 +1839,51 @@ class lC_LocalUpgrader extends lC_Upgrader {
   */
   public function getcdsPath($_cid, $_path) {
       
-      $s_db = $this->_sDB;
       $t_db = $this->_tDB;
-      $map = $this->_data_mapping['categories'];
             
       if (!defined('DB_TABLE_PREFIX')) define('DB_TABLE_PREFIX', $t_db['DB_PREFIX']);
 
-      // CONNNECT TO SOURCE DB
+      // CONNNECT TO TARGET DB
       
       require_once('../includes/database_tables.php');
       
       require_once('../includes/classes/database/mysqli.php');
       $class = 'lC_Database_mysqli'; // . $s_db['DB_DATABASE_CLASS']; 
-      $source_db = new $class($s_db['DB_SERVER'], $s_db['DB_SERVER_USERNAME'], $s_db['DB_SERVER_PASSWORD']);
+      $target_db = new $class($t_db['DB_SERVER'], $t_db['DB_SERVER_USERNAME'], $t_db['DB_SERVER_PASSWORD']);
       
-      if ($source_db->isError() === false) {
-        $source_db->selectDatabase($s_db['DB_DATABASE']);
+      if ($target_db->isError() === false) {
+        $target_db->selectDatabase($t_db['DB_DATABASE']);
       }
       
-      if ($source_db->isError()) {
-        $this->_msg = $source_db->getError();
+      if ($target_db->isError()) {
+        $this->_msg = $target_db->getError();
         return false;
       }
-      // END CONNNECT TO SOURCE DB
+      // END CONNNECT TO TARGET DB
       
       // BEGIN GET CPATH FOR CDS CATEGORY/PAGE
-      /*$pQry = $source_db->query("SELECT DISTINCT (c.categories_id), 
-                                                  parent_id, 
-                                                  categories_name, 
-                                                  sort_order 
-                                             FROM categories AS c, 
-                                                  categories_description AS cd 
-                                            WHERE c.categories_id = " . $_cid . " 
-                                              AND c.categories_id = cd.categories_id 
-                                              AND language_id = " . $this->_languages_id_default);
-      $pQry->execute();
+      $tQry = $target_db->query("SELECT DISTINCT (categories_id), 
+                                                  parent_id  
+                                             FROM " . $t_db['DB_PREFIX'] . "categories 
+                                            WHERE categories_id = " . $_cid);
+      $tQry->execute();
       
-      while ($pQry->next()) {
-        if ($pQry->value('parent_id') != 0) {
+      while ($tQry->next()) {
+        if ($tQry->value('parent_id') != 0) {
           if ($_path != '') {
-            $_path = $pQry->value('parent_id') . "_" . $_path;
-            $path = lC_LocalUpgrader::getcPath($pQry->value('parent_id'), $_path) . "_" . $_path;
+            $_path = $tQry->value('parent_id') . "_" . $_path;
+            $path = lC_LocalUpgrader::getcdsPath($tQry->value('parent_id'), $_path) . "_" . $_path;
           } else {
-            $path = $pQry->value('parent_id') . "_" . $_cid;
+            $path = $tQry->value('parent_id') . "_" . $_cid;
           }
         } else {
           $path = $_cid;
         }
       }
 
-      $pQry->freeResult();
+      $tQry->freeResult();
       
-      return $path;*/
+      return $path;
       
   }
   
@@ -1950,7 +1943,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
       // END LOAD CATEGORY PAGES FROM SOURCE DB
 
-      $c_keywords = array();
       $page_categories = array();
 
       $sQry = $source_db->query('SELECT * FROM pages_categories');
@@ -1972,18 +1964,14 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $c_keyword = str_replace("---", "-", $c_keyword);
           $c_keyword = str_replace("----", "-", $c_keyword); 
           
-          if (in_array($c_keyword, $c_keywords)) $c_keyword .= '-' . $sQry->value($map['categories_id']);
-          $c_keywords[] = strtolower($c_keyword);
-          
-          // added for category custom url (6.5 url override, only for external links and links to products)
+          // added for category custom url (6.5 url override, only for external links and links to products) 
           if ($sQry->value('categories_url_override') != '') {
             $c_mode = 'override';
             $c_override = 'index.php?old_urloverride=' . $sQry->value('categories_url_override');
           }           
           
           $category  = array(
-                               'new_categories_id'         => null
-                             , 'categories_id'             => $cID
+                               'categories_id'             => $cID
                              , 'categories_image'          => $sQry->value('categories_image')
                              , 'parent_id'                 => $sQry->value('categories_parent_id')
                              , 'sort_order'                => $sQry->value('categories_sort_order')
@@ -2054,6 +2042,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
       // END LOAD CATEGORY PAGES FROM SOURCE DB
       
+      // LOAD CATEGORY PAGES DESCRIPTION TO TARGET DB
+      
       foreach ($page_categories as $cID => $insert_id) {
 
         $sQry = $source_db->query('SELECT * FROM pages_categories_description pcd WHERE pcd.categories_id = ' . $cID);
@@ -2070,9 +2060,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $c_keyword = str_replace("---", "-", $c_keyword);
             $c_keyword = str_replace("----", "-", $c_keyword);
             
-            if (in_array($c_keyword, $c_keywords)) $c_keyword .= '-' . $insert_id;
-            $c_keywords[] = strtolower($c_keyword);
-          
             $tQry = $target_db->query('INSERT INTO :table_categories_desc (categories_id, 
                                                                            language_id, 
                                                                            categories_name, 
@@ -2109,13 +2096,12 @@ class lC_LocalUpgrader extends lC_Upgrader {
          $sQry->freeResult();
       }
       
-      // LOAD CATEGORY PAGES TO TARGET DB
+      // END LOAD CATEGORY PAGES DESCRIPTION TO TARGET DB
       
-      // END LOAD PAGE PAGES FROM SOURCE DB
+      // LOAD PAGE PAGES FROM SOURCE DB
       
       $map = $this->_data_mapping['page_pages'];
 
-      $c_keywords = array();
       $page_pages = array();
 
       $sQry = $source_db->query('SELECT * FROM pages AS p, pages_to_categories AS pc WHERE p.pages_id = pc.pages_id');
@@ -2123,11 +2109,27 @@ class lC_LocalUpgrader extends lC_Upgrader {
         
       $numrows = $sQry->numberOfRows();
       if ($numrows > 0) { 
-        $cnt = 0;
         while ($sQry->next()) {
-        
-          $cID = $sQry->value('categories_id');
-        
+          $pID = $sQry->value('pages_id');
+          
+          // get the original parent id from source db
+          $cidQry = $source_db->query("SELECT categories_id FROM pages_to_categories WHERE pages_id = " . $sQry->value('pages_id'));
+          $cidQry->execute();
+          
+          if ($cidQry->value('categories_id') != 0) {
+            // get the original parent name from the source db
+            $cnQry = $source_db->query("SELECT categories_name FROM pages_categories_description WHERE categories_id = " . $cidQry->value('categories_id'));
+            $cnQry->execute();
+            
+            // get the new categories id from the target db
+            $cnQry = $target_db->query("SELECT categories_id FROM " . $t_db['DB_PREFIX'] . "categories_description WHERE categories_name = '" . $cnQry->value('categories_name') . "'");
+            $cnQry->execute();
+            
+            $cID = $cnQry->value('categories_id');
+          } else {
+            $cID = 0;
+          }
+          
           $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $sQry->value('pages_title'));
           $c_keyword = str_replace("&", "and", $c_keyword);
           $c_keyword = str_replace(".", "", $c_keyword);
@@ -2135,16 +2137,12 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $c_keyword = str_replace("---", "-", $c_keyword);
           $c_keyword = str_replace("----", "-", $c_keyword);
           
-          if (in_array($c_keyword, $c_keywords))  $c_keyword .= '-' . $sQry->value($map['categories_id']);
-          $c_keywords[] = strtolower($c_keyword);
-        
           $page  = array(
-                           'new_categories_id'         => null
-                         , 'categories_id'             => $page_categories[$cID]
+                           'categories_id'             => $sQry->value('pages_id')
                          , 'categories_image'          => $sQry->value('pages_image')
                          , 'parent_id'                 => $cID
                          , 'sort_order'                => $sQry->value('pages_sort_order')
-                         , 'categories_mode'           => 'pages'
+                         , 'categories_mode'           => 'page'
                          , 'categories_link_target'    => 0
                          , 'categories_custom_url'     => ""
                          , 'categories_status'         => $sQry->value('pages_status')
@@ -2153,49 +2151,48 @@ class lC_LocalUpgrader extends lC_Upgrader {
                          , 'date_added'                => $sQry->value('pages_date_added')
                          , 'last_modified'             => $sQry->value('pages_last_modified')
                           ); 
-
-            $tQry = $target_db->query('INSERT INTO :table_categories (categories_image, 
-                                                                      parent_id, 
-                                                                      sort_order, 
-                                                                      categories_mode, 
-                                                                      categories_link_target, 
-                                                                      categories_custom_url, 
-                                                                      categories_status, 
-                                                                      categories_visibility_nav, 
-                                                                      categories_visibility_box, 
-                                                                      date_added, 
-                                                                      last_modified) 
-                                                              VALUES (:categories_image, 
-                                                                      :parent_id, 
-                                                                      :sort_order, 
-                                                                      :categories_mode, 
-                                                                      :categories_link_target, 
-                                                                      :categories_custom_url, 
-                                                                      :categories_status, 
-                                                                      :categories_visibility_nav, 
-                                                                      :categories_visibility_box, 
-                                                                      :date_added, 
-                                                                      :last_modified)');
+          
+          $tQry = $target_db->query('INSERT INTO :table_categories (categories_image, 
+                                                                    parent_id, 
+                                                                    sort_order, 
+                                                                    categories_mode, 
+                                                                    categories_link_target, 
+                                                                    categories_custom_url, 
+                                                                    categories_status, 
+                                                                    categories_visibility_nav, 
+                                                                    categories_visibility_box, 
+                                                                    date_added, 
+                                                                    last_modified) 
+                                                            VALUES (:categories_image, 
+                                                                    :parent_id, 
+                                                                    :sort_order, 
+                                                                    :categories_mode, 
+                                                                    :categories_link_target, 
+                                                                    :categories_custom_url, 
+                                                                    :categories_status, 
+                                                                    :categories_visibility_nav, 
+                                                                    :categories_visibility_box, 
+                                                                    :date_added, 
+                                                                    :last_modified)');
             
-            $tQry->bindTable(':table_categories', TABLE_CATEGORIES);
-            
-            $tQry->bindValue(':categories_image'         , $page['categories_image']);
-            $tQry->bindInt  (':parent_id'                , $page['parent_id']);
-            $tQry->bindInt  (':sort_order'               , $page['sort_order']);
-            $tQry->bindValue(':categories_mode'          , $page['categories_mode']);
-            $tQry->bindInt  (':categories_link_target'   , $page['categories_link_target']);
-            $tQry->bindValue(':categories_custom_url'    , $page['categories_custom_url']);
-            $tQry->bindInt  (':categories_status'        , $page['categories_status']);
-            $tQry->bindInt  (':categories_visibility_nav', $page['categories_visibility_nav']);
-            $tQry->bindInt  (':categories_visibility_box', $page['categories_visibility_box']);
-            $tQry->bindDate (':date_added'               , $page['date_added']);
-            $tQry->bindDate (':last_modified'            , $page['last_modified']);
-            
-            $tQry->execute();
-            
-            $insert_id = $target_db->nextID();
-            $page_pages[$cID] = $insert_id;
-
+          $tQry->bindTable(':table_categories', TABLE_CATEGORIES);
+          
+          $tQry->bindValue(':categories_image'         , $page['categories_image']);
+          $tQry->bindInt  (':parent_id'                , $page['parent_id']);
+          $tQry->bindInt  (':sort_order'               , $page['sort_order']);
+          $tQry->bindValue(':categories_mode'          , $page['categories_mode']);
+          $tQry->bindInt  (':categories_link_target'   , $page['categories_link_target']);
+          $tQry->bindValue(':categories_custom_url'    , $page['categories_custom_url']);
+          $tQry->bindInt  (':categories_status'        , $page['categories_status']);
+          $tQry->bindInt  (':categories_visibility_nav', $page['categories_visibility_nav']);
+          $tQry->bindInt  (':categories_visibility_box', $page['categories_visibility_box']);
+          $tQry->bindDate (':date_added'               , $page['date_added']);
+          $tQry->bindDate (':last_modified'            , $page['last_modified']);
+          
+          $tQry->execute();
+          
+          $insert_id = $target_db->nextID();
+          $page_pages[$pID] = $insert_id;
         }
         
         $sQry->freeResult();
@@ -2205,15 +2202,13 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
       // LOAD PAGE PAGES DESCRIPTION TO TARGET DB
       
-      $c_keywords = array();
-      foreach ($page_pages as $cID => $insert_id) {
+      foreach ($page_pages as $pID => $insert_id) {
         
-        $sQry = $source_db->query('SELECT * FROM pages_description pcd WHERE pcd.pages_id = ' . $cID);
-        $sQry->execute();
+        $sQry = $source_db->query('SELECT * FROM pages_description WHERE pages_id = ' . $pID);
+        $sQry->execute();        
       
         $numrows = $sQry->numberOfRows();
         if ($numrows > 0) { 
-          $cnt = 0;
           while ($sQry->next()) {
 
             $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $sQry->value('pages_title'));
@@ -2222,9 +2217,6 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $c_keyword = str_replace("--", "-", $c_keyword);
             $c_keyword = str_replace("---", "-", $c_keyword);
             $c_keyword = str_replace("----", "-", $c_keyword);
-            
-            if (in_array($c_keyword, $c_keywords)) $c_keyword .= '-' . $insert_id;
-            $c_keywords[] = strtolower($c_keyword);
             
             $tQry = $target_db->query('INSERT INTO :table_categories_desc (categories_id, 
                                                                            language_id, 
@@ -2259,109 +2251,78 @@ class lC_LocalUpgrader extends lC_Upgrader {
           }
         }        
       }
-
+      
       // END LOAD PAGE PAGES DESCRIPTION TO TARGET DB
       
-      // LOAD CATEGORY PAGES PERMALINK FROM SOURCE DB
+      // LOAD CATEGORY PAGES PERMALINK FROM TARGET DB
 
-      $permalink_text = array();
       $permalink_array = array();
       
-      $sQry = $source_db->query('SELECT pc.categories_id, 
-                                        categories_parent_id, 1 AS type, 
-                                        "cPath=0" AS query, 
-                                        language_id, 
-                                        categories_name 
-                                   FROM pages_categories AS pc, 
-                                        pages_categories_description AS pcd
-                                  WHERE pc.categories_id = pcd.categories_id');
-      $sQry->execute();
+      foreach ($page_categories as $cID => $insert_id) {
+        $tQry = $target_db->query("SELECT c.categories_id, 
+                                          cd.language_id, 
+                                          cd.categories_keyword 
+                                     FROM " . $t_db['DB_PREFIX'] . "categories AS c, 
+                                          " . $t_db['DB_PREFIX'] . "categories_description AS cd 
+                                    WHERE c.categories_id = " . $insert_id . "
+                                      AND c.categories_id = cd.categories_id 
+                                      AND cd.language_id = " . $this->_languages_id_default);
+        $tQry->execute();
         
-      if ($sQry->numberOfRows() > 0) { 
-        $cnt = 0;
-        while ($sQry->next()) {
-          
-          $cID = $sQry->value('categories_id') ;
-          
-          $permalink = preg_replace("/&.{0,}?;/", '', $sQry->value('categories_name'));
-          $permalink = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $permalink);
-          $permalink = str_replace("&", "and", $permalink);
-          $permalink = str_replace(".", "", $permalink);
-          $permalink = str_replace("--", "-", $permalink);
-          $permalink = str_replace("---", "-", $permalink);
-          $permalink = str_replace("----", "-", $permalink);
-          
-          if (in_array($permalink, $permalink_text)) { 
-            $permalink = $permalink . $cID; 
-          }
-          
-          $permalink  = array(
-                                'item_id'       => $sQry->value('categories_id')
-                              , 'categories_id' => $sQry->value('categories_id')
-                              , 'language_id'   => $sQry->value('language_id')
-                              , 'type'          => $sQry->value('type')
-                              , 'query'         => $sQry->value('query')
-                              , 'permalink'     => $permalink
-                               ); 
-                           
-          $permalink_array[] = $permalink;
-          $cnt++;
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
         }
         
-        $sQry->freeResult();
+        if ($tQry->numberOfRows() > 0) {
+          while ($tQry->next()) {
+            $permalink  = array(
+                                  'item_id'       => $tQry->value('categories_id')
+                                , 'language_id'   => $tQry->value('language_id')
+                                , 'type'          => 1
+                                , 'query'         => ''
+                                , 'permalink'     => $tQry->value('categories_keyword')
+                                 ); 
+                             
+            $permalink_array[] = $permalink;
+          }
+        }
       }
       
       // END LOAD CATEGORY PAGES PERMALINK FROM SOURCE DB
 
-      // LOAD PAGES PAGES PERMALINK FROM SOURCE DB
+      // LOAD PAGES PAGES PERMALINK FROM TARGET DB
       
-      $permalink_text = array();
-      
-      $sQry = $source_db->query('SELECT p.pages_id, 
-                                        language_id, 
-                                        1 AS type, 
-                                        "cPath=0" AS query, 
-                                        pages_title, 
-                                        categories_id
-                                   FROM pages AS p, 
-                                        pages_description AS pd, 
-                                        pages_to_categories AS p2c
-                                  WHERE p.pages_id = pd.pages_id 
-                                    AND p.pages_id = p2c.pages_id');
-      $sQry->execute();
+      foreach ($page_pages as $cID => $insert_id) {
+        $tQry = $target_db->query("SELECT c.categories_id, 
+                                          cd.language_id, 
+                                          cd.categories_keyword 
+                                     FROM " . $t_db['DB_PREFIX'] . "categories AS c, 
+                                          " . $t_db['DB_PREFIX'] . "categories_description AS cd 
+                                    WHERE c.categories_id = " . $insert_id . "
+                                      AND c.categories_id = cd.categories_id 
+                                      AND cd.language_id = " . $this->_languages_id_default);
+        $tQry->execute();
         
-      if ($sQry->numberOfRows() > 0) { 
-        $cnt = 0;
-        while ($sQry->next()) {
-          
-          $cID = $sQry->value('categories_id') ;
-        
-          $permalink = preg_replace("/&.{0,}?;/", '', $sQry->value('pages_title'));
-          $permalink = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $permalink);
-          $permalink = str_replace("&", "and", $permalink);
-          $permalink = str_replace(".", "", $permalink);
-          $permalink = str_replace("--", "-", $permalink);
-          $permalink = str_replace("---", "-", $permalink);
-          $permalink = str_replace("----", "-", $permalink);
-          
-          if (in_array($permalink, $permalink_text)) { 
-            $permalink = $permalink . $cID; 
-          }
-          
-          $permalink  = array(
-                                'item_id'       => $sQry->value('pages_id')
-                              , 'categories_id' => $sQry->value('categories_id')
-                              , 'language_id'   => $sQry->value('language_id')
-                              , 'type'          => $sQry->value('type')
-                              , 'query'         => $sQry->value('query')
-                              , 'permalink'     => $permalink
-                               ); 
-                           
-          $permalink_array[] = $permalink;
-          $cnt++;
+        if ($target_db->isError()) {
+          $this->_msg = $target_db->getError();
+          return false;
         }
         
-        $sQry->freeResult();
+        if ($tQry->numberOfRows() > 0) {
+          while ($tQry->next()) {            
+            $permalink  = array(
+                                  'item_id'       => $tQry->value('categories_id')
+                                , 'language_id'   => $tQry->value('language_id')
+                                , 'type'          => 1
+                                , 'query'         => ''
+                                , 'permalink'     => $tQry->value('categories_keyword')
+                                 ); 
+            print_r($permalink);                 
+            $permalink_array[] = $permalink;
+          }
+        }
+        $tQry->freeResult();
       }
 
       // END LOAD PAGES PAGES PERMALINK FROM SOURCE DB
@@ -2372,35 +2333,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
       foreach ($permalink_array as $permalink) {
 
-        //  #### getCPATH CODE         
-        
-        $cat_list = $permalink['categories_id'];
-        $catID = $permalink['categories_id'];
+        //  #### getCPATH CODE
 
-        while ($catID != 0) {
-            $the_categories_name_sql ="SELECT categories_parent_id AS parent_id
-                                         FROM pages_categories AS c
-                                        WHERE c.categories_id = " . $catID;
-                                      
-            $sQry = $source_db->query($the_categories_name_sql);
-            $sQry->execute();
-            $sQry->next();
-            
-            $catID = $sQry->value('parent_id');
-            
-            if ($catID == 0) { 
-              break; 
-            }
-              
-            $cat_list = $catID . "_" . $cat_list;
-            
-            $sQry->freeResult();
-        }
-        if (empty($cat_list)) { 
-          $cat_list = '0'; 
-        }
-        $cat_list = "cPath=" . $cat_list;
-        
+        $cat_list = "cPath=" . lC_LocalUpgrader::getcdsPath($permalink['item_id']);
         
         //  #### END getCPATH CODE         
         
@@ -2644,7 +2579,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                             , 'entry_telephone'      => $sQry->value($map['entry_telephone'])
                             , 'entry_fax'            => $sQry->value($map['entry_fax'])
                              ); 
-
+          
           $tQry = $target_db->query('INSERT INTO :table_address_book (customers_id, 
                                                                       entry_gender, 
                                                                       entry_company, 
@@ -3066,6 +3001,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
   
   function saveToProductsImages($target_db, $pid, $image, $sort, $default_flag = 1){
   
+        $image = end(explode('/', $image));
+        
         $tQry = $target_db->query('INSERT INTO :table_products_images (products_id, 
                                                                        image, 
                                                                        default_flag, 
@@ -3198,6 +3135,28 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $this->_msg = $target_db->getError();
             return false;
           }
+          
+          $customers_group_data  = array(
+                                           'customers_group_id' => $sQry->value('customers_group_id')
+                                         , 'baseline_discount'  => $sQry->value('group_discount')
+                                          ); 
+                           
+          $tQry = $target_db->query('INSERT INTO :table_customers_groups_data (customers_group_id, 
+                                                                               baseline_discount) 
+                                                                       VALUES (:customers_group_id, 
+                                                                               :baseline_discount)');
+          
+          $tQry->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+          
+          $tQry->bindInt  (':customers_group_id', $customers_group_data['customers_group_id']);
+          $tQry->bindValue(':baseline_discount' , $customers_group_data['baseline_discount']);
+          
+          $tQry->execute();
+          
+          if ($target_db->isError()) {
+            $this->_msg = $target_db->getError();
+            return false;
+          }
 
           $cnt++;
         }
@@ -3205,7 +3164,17 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $sQry->freeResult();
       }
       
-      // END LOAD CUSTOMERS GROUPS FROM SOURCE DB
+      // END LOAD CUSTOMERS GROUPS FROM SOURCE DB 
+      
+      // get the lowest customers group id
+      $lidQry = $source_db->query("SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups");
+      $lidQry->execute();
+      
+      // set default customers group to lowest resulting id in above query
+      $tQry = $target_db->query("UPDATE :table_configuration SET configuration_value = :configuration_value WHERE configuration_key = 'DEFAULT_CUSTOMERS_GROUP_ID'");
+      $tQry->bindTable(':table_configuration', TABLE_CONFIGURATION);
+      $tQry->bindInt(':configuration_value', $lidQry->value('customers_group_id'));
+      $tQry->execute();
       
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
       $tQry = $target_db->query('SET sql_mode = ""');
@@ -3312,6 +3281,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
       if ($numrows > 0) { 
         $cnt = 0;
         while ($sQry->next()) {
+          if ($sQry->value($map['language_id']) == $this->_languages_id_default && $sQry->value($map['orders_status_name']) == 'Pending') {
+            $pending_id = $sQry->value($map['orders_status_id']);
+          }
           $orders_stat  = array(
                                   'orders_status_id'   => $sQry->value($map['orders_status_id'])
                                 , 'language_id'        => $sQry->value($map['language_id'])
@@ -3766,7 +3738,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->bindValue(':payment_module'          , $order['payment_info']);
           $tQry->bindValue(':last_modified'           , $order['last_modified']);
           $tQry->bindValue(':date_purchased'          , $order['date_purchased']);
-          $tQry->bindInt  (':orders_status'           , $order['orders_status']);
+          $tQry->bindInt  (':orders_status'           , ($order['orders_status'] == 0) ? $pending_id : $order['orders_status']);
           $tQry->bindValue(':orders_date_finished'    , $order['orders_date_finished']);
           $tQry->bindValue(':currency'                , $order['currency']);
           $tQry->bindValue(':currency_value'          , $order['currency_value']);
@@ -3774,6 +3746,27 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->execute();
           
           $cnt++;
+          
+          // added to check for orders status id of 0 and adjust new db values to avoid errors
+          if ($order['orders_status'] == 0) {
+            $osQry = $target_db->query("SELECT * FROM :table_orders_status_history WHERE orders_id = " . $order['orders_id']);
+            $osQry->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
+            $osQry->execute();
+            
+            $numrows = $osQry->numberOfRows();
+            if ($numrows < 1) {
+              $osQry = $target_db->query("INSERT INTO :table_orders_status_history (orders_id, orders_status_id) VALUES (:orders_id, :orders_status_id)");
+              $osQry->bindTable(':table_orders_status_history', TABLE_ORDERS_STATUS_HISTORY);
+              $osQry->bindInt  (':orders_id'                  , $order['orders_id']);
+              $osQry->bindInt  (':orders_status_id'           , $pending_id);
+              $osQry->execute();
+              
+              if ($target_db->isError()) {
+                $this->_msg = $target_db->getError();
+                return false;
+              }
+            }
+          }
 
         }
         
@@ -3953,8 +3946,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // END TRUNCATE PRODUCT VARIANTS TABLES IN TARGET DB
       
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
-      $tQry->execute();
+      // $tQry = $target_db->query('SET GLOBAL sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
+      // $tQry->execute();
 
       // LOAD PRODUCTS VARIANTS GROUPS FROM SOURCE DB
       $map = $this->_data_mapping['products_variants_groups'];
@@ -3971,7 +3964,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                           , 'languages_id' => $sQry->value('language_id')
                           , 'title'        => $sQry->value('products_options_name')
                           , 'sort_order'   => 0
-                          , 'module'       => "pulldown_menu"
+                          , 'module'       => "pull_down_menu"
                            ); 
                                    
           $tQry = $target_db->query('INSERT INTO :table_products_variants_groups (id, 
@@ -4068,6 +4061,10 @@ class lC_LocalUpgrader extends lC_Upgrader {
       $sQry = $source_db->query('SELECT * FROM products_attributes order by options_id asc');
       $sQry->execute();
         
+      // get the lowest customers group id from the target db
+      $tQry = $target_db->query('SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups');
+      $tQry->execute();
+        
       if ($sQry->numberOfRows() > 0) { 
         $cnt = 0;
         while ($sQry->next()) {
@@ -4090,7 +4087,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           
           $value  = array(
                             'id'                 => "NULL"
-                          , 'customers_group_id' => 1
+                          , 'customers_group_id' => $tQry->valueInt('customers_group_id')
                           , 'values_id'          => $sQry->valueInt('options_values_id')
                           , 'options_id'         => $options_id
                           , 'price_modifier'     => $sQry->valueDecimal('options_values_price') * $prefix
@@ -4101,6 +4098,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         }
         
         $sQry->freeResult();
+        $tQry->freeResult();
       }
       
       // LOAD PRODUCTS SIMPLE OPTIONS AND PRODUCTS SIMPLE OPTIONS VALUES FROM SOURCE DB
@@ -4198,8 +4196,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // ##########
 
       // END DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
-      $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
-      $tQry->execute();
+      // $tQry = $target_db->query('SET GLOBAL sql_mode = ""');
+      // $tQry->execute();
 
       // ##########
 

@@ -1,30 +1,28 @@
 <?php
-/*
-  $Id: core.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::admin::templates
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: core.php v1.0 2013-08-08 datazen $
 */
 class lC_Template_core {
   var $_id,
-      $_title = 'Loaded Commerce Bootstrap 3.0 Core Template',
+      $_title = 'Bootstrap 3.0 Core Template',
       $_code = 'core',
-      $_author_name = 'Loaded Commerce',
+      $_author_name = 'Loaded Commerce, LLC',
       $_author_www = 'http://www.loadedcommerce.com',
-      $_markup_version = 'HTML 5.0',
+      $_markup_version = 'HTML5/CSS3',
       $_css_based = '1', /* 0=No; 1=Yes */
-      $_medium = 'Responsive UI',
+      $_medium = 'Mobile Responsive UI',
+      $_screenshot = 'core_screenshot.png',
       $_groups = array('boxes' => array('left', 'right'),
                        'content' => array('before', 'after')),
       $_keys;
 
-  function getID() {
+  public function getID() {
     global $lC_Database;
 
     if (isset($this->_id) === false) {
@@ -39,39 +37,43 @@ class lC_Template_core {
     return $this->_id;
   }
 
-  function getTitle() {
+  public function getTitle() {
     return $this->_title;
   }
 
-  function getCode() {
+  public function getCode() {
     return $this->_code;
   }
 
-  function getAuthorName() {
+  public function getAuthorName() {
     return $this->_author_name;
   }
 
-  function getAuthorAddress() {
+  public function getAuthorAddress() {
     return $this->_author_www;
   }
 
-  function getMarkup() {
+  public function getMarkup() {
     return $this->_markup_version;
   }
 
-  function isCSSBased() {
+  public function isCSSBased() {
     return ($this->_css_based == '1');
   }
 
-  function getMedium() {
+  public function getMedium() {
     return $this->_medium;
   }
 
-  function getGroups($group) {
+  public function getGroups($group) {
     return $this->_groups[$group];
   }
+  
+  function getScreenshot() {
+    return $this->_screenshot;
+  }
 
-  function install() {
+  public function install() {
     global $lC_Database;
 
     $Qinstall = $lC_Database->query('insert into :table_templates (title, code, author_name, author_www, markup_version, css_based, medium) values (:title, :code, :author_name, :author_www, :markup_version, :css_based, :medium)');
@@ -109,7 +111,7 @@ class lC_Template_core {
     }
   }
 
-  function remove() {
+  public function remove() {
     global $lC_Database;
 
     $Qdel = $lC_Database->query('delete from :table_templates_boxes_to_pages where templates_id = :templates_id');
@@ -130,7 +132,7 @@ class lC_Template_core {
     }
   }
 
-  function getKeys() {
+  public function getKeys() {
     if (!isset($this->_keys)) {
       $this->_keys = array();
     }
@@ -138,7 +140,7 @@ class lC_Template_core {
     return $this->_keys;
   }
 
-  function hasKeys() {
+  public function hasKeys() {
     static $has_keys;
 
     if (isset($has_keys) === false) {
@@ -148,7 +150,7 @@ class lC_Template_core {
     return $has_keys;
   }
 
-  function isInstalled() {
+  public function isInstalled() {
     global $lC_Database;
 
     static $is_installed;
@@ -165,7 +167,7 @@ class lC_Template_core {
     return $is_installed;
   }
 
-  function isActive() {
+  public function isActive() {
     return true;
   }
 }

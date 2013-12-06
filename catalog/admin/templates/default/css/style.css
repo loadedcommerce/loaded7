@@ -1914,13 +1914,30 @@ li.message-menu {
 	}
 
 	/* IE9 and 10 go crazy with relative font-sizes */
-	:root .icon-size2:before,
-	:root .icon-size3:before,
-	:root .icon-size4:before,
-	:root .icon-size5:before {
-		font-size: 0.25em \0/IE9; /* Ugly hack, but this is the only solution to target IE10 */
-	}
-
+  @media screen and (min-width:0\0) {  
+	  :root .icon-size2:before,
+	  :root .icon-size3:before,
+	  :root .icon-size4:before,
+	  :root .icon-size5:before {
+		  font-size: 0.25em;
+	  }
+  }
+  
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+    /* IE10-specific styles go here */  
+    [class^="icon-"]:before, [class*=" icon-"]:before {
+      font-size: 0.8em !important;
+      margin-top: -0.1em;
+    }  
+    
+    .icon-size2:before {
+      font-size: 1.6em;
+      margin-top: -0.9em;
+      margin-bottom: -0.9em;
+    }    
+      
+  }  
+  
 	/* Empty icons */
 	[class^="icon-"]:empty:before,
 	[class*=" icon-"]:empty:before {

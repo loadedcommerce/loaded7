@@ -1,18 +1,19 @@
 <?php
-/*
-  $Id: login.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-
-  @function The lC_Login_Admin class manages products expected
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: login.php v1.0 2013-08-08 datazen $
 */
+global $lC_Vqmod;
+
+require_once($lC_Vqmod->modCheck('../includes/classes/transport.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/updates/classes/updates.php')); 
+require_once($lC_Vqmod->modCheck('includes/applications/store/classes/store.php')); 
+
 class lC_Login_Admin {
  /*
   * Validate the admin login credentials
@@ -210,10 +211,62 @@ class lC_Login_Admin {
     
     $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/check/serial/', 'method' => 'post', 'parameters' => $validateArr));  
     
-    $result['rpcStatus'] = (preg_match("'<rpcStatus[^>]*?>(.*?)</rpcStatus>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;    
-
+    $resultArr = utility::xml2arr($resultXML);
+    
+    if (isset($resultArr['data']['valid']) && $resultArr['data']['valid'] == '1') {
+      $result['rpcStatus'] = '1';
+      // make sure the products for this serial have been downloaded from the cloud
+      if (isset($resultArr['data']['products']) && $resultArr['data']['products'] != NULL) self::_verifyProductsAreDownloaded($resultArr['data']['products']);
+    } else {
+      $result['rpcStatus'] = '0';  
+    }
+    
     return $result;
-  }  
+  }
+ /*
+  * Download the product PHARs
+  *
+  * @access private
+  * @return boolean
+  */
+  private static function _verifyProductsAreDownloaded($products) {
+    
+    if (!is_array($products)) return false;
+    
+    foreach ($products as $type => $product) {
+      
+      if ($type == 'template') {
+        if (!file_exists(DIR_FS_ADMIN . 'includes/templates/' . $product . '.php')) {
+          // get the template phar and apply it
+        }  
+      } else { // addon
+        if (!file_exists(DIR_FS_CATALOG . 'addons/' . $product . '/controller.php')) {
+          // download the addon phar
+          lC_Store_Admin::getAddonPhar($product);
+          
+          // apply the phar package
+          if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
+            lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $product . '.phar');
+          }
+        }
+      }
+    }
+  }
   
+ /*
+  * Returns the api check status
+  *
+  * @access public
+  * @return boolean true or false
+  */ 
+  public static function apiCheck() {
+    $apiCheck = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
+    $versions = utility::xml2arr($apiCheck);
+    
+    if ($versions == null) {
+      $file = @fopen(DIR_FS_WORK . 'apinocom.tmp', "w");
+      @fclose($file);
+    }
+  }
 }
 ?>

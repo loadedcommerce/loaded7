@@ -1,15 +1,11 @@
 <?php
-/*
-  $Id: application_top.php v1.0 2012-12-08 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2012 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2012 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::install
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: application_top.php v1.0 2013-08-08 datazen $
 */
 if(isset($_SERVER['HTTPS']) && $_SERVER["HTTPS"] == "on") {
   header('Location: http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);

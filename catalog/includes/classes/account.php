@@ -1,15 +1,11 @@
 <?php
-/*
-  $Id: account.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: account.php v1.0 2013-08-08 datazen $
 */
 
 /**
@@ -74,7 +70,7 @@
       $Qcustomer->bindValue(':customers_firstname', $data['firstname']);
       $Qcustomer->bindValue(':customers_lastname', $data['lastname']);
       $Qcustomer->bindValue(':customers_email_address', $data['email_address']);
-      $Qcustomer->bindValue(':customers_newsletter', (isset($data['newsletter']) && ($data['newsletter'] == '1') ? '1' : ''));
+      $Qcustomer->bindValue(':customers_newsletter', $data['newsletter']);
       $Qcustomer->bindValue(':customers_status', '1');
       $Qcustomer->bindValue(':customers_ip_address', lc_get_ip_address());
       $Qcustomer->bindValue(':customers_password', lc_encrypt_string($data['password']));

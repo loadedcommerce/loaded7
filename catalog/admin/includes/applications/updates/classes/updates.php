@@ -1,17 +1,12 @@
 <?php
 /**
-  $Id: updates.php v1.0 2011-11-04 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2011 LoadedCommerce.com
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2011 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-
-  @function The lC_Updater_Admin class manages zM services
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: updates.php v1.0 2013-08-08 datazen $
 */
 ini_set('error_reporting', 0);
 
@@ -299,6 +294,9 @@ class lC_Updates_Admin {
 
       foreach ( $update_pkg as $file ) {
         $custom = false;
+        
+        // update the path with admin config value to account for a different admin/ dir
+        $file = str_replace('admin/', DIR_WS_ADMIN, $file);        
 
         $result['entries'][] = array('key' => $counter,
                                      'name' => $file,

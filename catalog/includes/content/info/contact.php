@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: contact.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::content
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: contact.php v1.0 2013-08-08 datazen $
 */
 class lC_Info_Contact extends lC_Template {
 
@@ -21,7 +17,7 @@ class lC_Info_Contact extends lC_Template {
       $_page_image = 'table_background_contact_us.gif';
 
   /* Class constructor */
-  function lC_Info_Contact() {
+  public function lC_Info_Contact() {
     global $lC_Services, $lC_Language, $lC_Breadcrumb, $lC_MessageStack;
 
     $this->_page_title = $lC_Language->get('info_contact_heading');
@@ -39,7 +35,7 @@ class lC_Info_Contact extends lC_Template {
   }
 
   /* Private methods */
-  function _process() {
+  protected function _process() {
     global $lC_Language, $lC_MessageStack;
 
     $name = lc_sanitize_string($_POST['name']);

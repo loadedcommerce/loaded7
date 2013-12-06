@@ -1,17 +1,12 @@
 <?php
-/*
-  $Id: default.php v1.0 2012-08-08 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-
-  Based on the Developr theme
+/**
+  @package    catalog::admin::templates
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: default.php v1.0 2013-08-08 datazen $
 */
 ?>
 <!DOCTYPE html>
@@ -19,7 +14,7 @@
 <!--[if (IE 7)&!(IEMobile)]><html class="no-js ie7 oldie" lang="en"><![endif]-->
 <!--[if (IE 8)&!(IEMobile)]><html class="no-js ie8 oldie" lang="en"><![endif]-->
 <!--[if (IE 9)&!(IEMobile)]><html class="no-js ie9" lang="en"><![endif]-->
-<!--[if (gt IE 9)|(gt IEMobile 7)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!--[if (gt IE 9)|(gt IEMobile 7)]><!--><html class="no-js ie9" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -597,7 +592,6 @@
   <script src="templates/default/js/progress-slider.js"></script>
   <script src="templates/default/js/tooltip.js"></script>
   <script src="templates/default/js/confirm.js"></script>
-  <script src="templates/default/js/fittext.js"></script>
   <script src="templates/default/js/agenda.js"></script>
   <script src="templates/default/js/tabs.js"></script><!-- Must be loaded last -->
   <!-- Load page specific javascript -->

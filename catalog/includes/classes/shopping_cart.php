@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: shopping_cart.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: shopping_cart.php v1.0 2013-08-08 datazen $
 */
 class lC_ShoppingCart {
   private $_contents = array();
@@ -772,7 +768,7 @@ class lC_ShoppingCart {
 
     $Qstock = $lC_Database->query('select products_quantity from :table_products where products_id = :products_id');
     $Qstock->bindTable(':table_products', TABLE_PRODUCTS);
-    $Qstock->bindInt(':products_id', $this->_contents[$item_id]['id']);
+    $Qstock->bindInt(':products_id', $item_id);
     $Qstock->execute();
 
     if ( ($Qstock->valueInt('products_quantity') - $this->_contents[$item_id]['quantity']) > 0 ) {

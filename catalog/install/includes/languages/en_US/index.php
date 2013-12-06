@@ -1,21 +1,27 @@
-#  $Id: index.php v1.0 2012-12-08 datazen $
-#
-#  LoadedCommerce, Innovative eCommerce Solutions
-#  http://www.loadedcommerce.com
-#
-#  Copyright (c) 2012 Loaded Commerce, LLC
-#
-#  @author     LoadedCommerce Team
-#  @copyright  (c) 2012 LoadedCommerce Team
-#  @license    http://loadedcommerce.com/license.html
+#  @package    catalog::install::languages
+#  @author     Loaded Commerce
+#  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+#  @copyright  Portions Copyright 2003 osCommerce
+#  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+#  @version    $Id: index.php v1.0 2013-08-08 datazen $
 
 page_title_welcome = Welcome to Loaded Commerce v%s
 
 page_heading_server_requirements = Server Requirements
 page_heading_installation_type = Installation Type
 page_heading_permissions = File/Folder Permissions
+page_heading_ioncube = ionCube Configuration
+page_text_ioncube = ionCube is a required component needed for the functionality of Paid Addons such as Pro or B2B versions of Loaded 7, or individual Native & Third Party Addons.
 
+ioncube_no_additional_config = No additional configuration required.
+ioncube_installed_version = Installed: Version&nbsp;
+ioncube_not_installed_instructions = <br />&nbsp; - Please contact your web host and ask them to install ionCube loader on your server.<br />&nbsp; - Loaders can be downloaded from <a href="http://www.ioncube.com/loaders.php" target="_blank"><b>www.ioncube.com</b></a>.<br />&nbsp; - Installation Instructions can be found <a href="http://www.ioncube.com/loader_installation.php" target="_blank"><b>here</b></a>.<br />&nbsp; - For additional questions please contact <a href="http://www.loadedcommerce.com/support-memberships-pc-175_198.html" target="_blank"><b>Loaded Commerce Support</b></a>
+
+
+text_status = Status: 
+text_instructions = Instructions: 
 title_language = Language:
+text_not_installed = Not Installed
 
 text_welcome = Loaded Commerce is the next generation self-hosted open source ecommerce platform and is available for free under the GNU General Public License. A rich set of features and functionality allow store owners to setup, run, and maintain online stores with minimal effort and minimal cost.
 

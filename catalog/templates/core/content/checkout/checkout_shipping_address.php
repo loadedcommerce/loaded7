@@ -1,8 +1,8 @@
 <?php
 /**  
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -15,6 +15,9 @@
     <h1 class="no-margin-top"><?php echo $lC_Language->get('text_checkout'); ?></h1>
     <?php 
     if ( $lC_MessageStack->size('checkout_shipping_address') > 0 ) echo '<div class="message-stack-container alert alert-danger small-margin-bottom">' . $lC_MessageStack->get('checkout_shipping_address') . '</div>' . "\n"; 
+    ?>
+    <?php 
+    if ( $lC_MessageStack->size('checkout_shipping_account') > 0 ) echo '<div class="message-stack-container alert alert-success small-margin-bottom">' . $lC_MessageStack->get('checkout_shipping_account') . '</div>' . "\n"; 
     ?>
     <div id="content-checkout-shipping-address-container">
       <div class="panel panel-default no-margin-bottom">
@@ -31,10 +34,6 @@
                 </address>
               </div>
               <div class="well">
-                <div class="clearfix">
-                  <span class="strong pull-left"><?php echo $lC_Language->get('checkout_order_number'); ?></span>
-                  <span class="strong pull-right"><?php echo $_SESSION['cartID']; ?></span>                
-                </div>
                 <?php 
                 foreach ($lC_ShoppingCart->getOrderTotals() as $module) {   
                   ?>

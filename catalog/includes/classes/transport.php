@@ -1,25 +1,19 @@
 <?php
-/*
-  $Id: transport.php v1.0 2013-01-04 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce.com
-
-  @author     Loaded Commerce Team
-  @copyright  (c) 2013 Loaded Commerce Team
-  @license    http://loadedcommerce.com/license.html
-
-  @function The lC_Updater_Admin class manages zM services
+/**
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: transport.php v1.0 2013-08-08 datazen $
 */
 require_once(DIR_FS_CATALOG . 'includes/classes/transport/curl.php');  
-require_once(DIR_FS_CATALOG . 'includes/classes/transport/httpRequest.php');  
+require_once(DIR_FS_CATALOG . 'includes/classes/transport/webRequest.php');  
 require_once(DIR_FS_CATALOG . 'includes/classes/transport/stream.php');  
 
 class transport {  
 
-  protected static $_drivers = array('httpRequest', 'curl', 'stream');
+  protected static $_drivers = array('webRequest', 'curl', 'stream');
   
   /**
   * Transport Controller 
