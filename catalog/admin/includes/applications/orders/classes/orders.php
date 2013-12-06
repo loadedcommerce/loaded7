@@ -860,7 +860,7 @@ class lC_Orders_Admin {
   */
   public static function getTextDate($datetime) {
     $date = substr(lC_DateTime::getShort($datetime, true), 0, -8);
-    return date("M jS Y", strtotime($date));
+    return @date("M jS Y", @strtotime($date));
   }
  /*
   * Return the orders transaction history

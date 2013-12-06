@@ -43,10 +43,10 @@ class lC_Summary_revenue extends lC_Summary {
       require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
       $lC_Currencies = new lC_Currencies();
     
-      $lastMonth = date("m",strtotime("-1 month"));
-      $currentDay = date("d");
-      $currentMonth = date("m");
-      $currentYear = date("Y");
+      $lastMonth = @date("m", @strtotime("-1 month"));
+      $currentDay = @date("d");
+      $currentMonth = @date("m");
+      $currentYear = @date("Y");
            
       $Qorders = $lC_Database->query('select o.orders_id, ot.value as order_total, greatest(o.date_purchased, ifnull(o.last_modified, "1970-01-01")) as date_last_modified from :table_orders o, :table_orders_total ot where o.orders_id = ot.orders_id and ot.class = "total" order by date_last_modified desc limit 6');
       $Qorders->bindTable(':table_orders', TABLE_ORDERS);
