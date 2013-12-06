@@ -53,30 +53,32 @@ class lC_Access {
 
     $access = array();
 
-    foreach ( $_SESSION['admin']['access'] as $module => $level) {
-      if ((int)$level >= 1) { // at least View access
-        if ( file_exists('includes/modules/access/' . $module . '.php') ) {
-          $module_class = 'lC_Access_' . ucfirst($module);
+    if (is_array($_SESSION['admin']['access'])) {
+      foreach ( $_SESSION['admin']['access'] as $module => $level) {
+        if ((int)$level >= 1) { // at least View access
+          if ( file_exists('includes/modules/access/' . $module . '.php') ) {
+            $module_class = 'lC_Access_' . ucfirst($module);
 
-          if ( !class_exists( $module_class ) ) {
-            $lC_Language->loadIniFile('modules/access/' . $module . '.php');
-            include($lC_Vqmod->modCheck('includes/modules/access/' . $module . '.php'));
+            if ( !class_exists( $module_class ) ) {
+              $lC_Language->loadIniFile('modules/access/' . $module . '.php');
+              include($lC_Vqmod->modCheck('includes/modules/access/' . $module . '.php'));
+            }
+
+            $module_class = new $module_class();
+
+            $data = array('module' => $module,
+                          'icon' => $module_class->getIcon(),
+                          'title' => $module_class->getTitle(),
+                          'subgroups' => $module_class->getSubGroups());
+
+            if ( !isset( $access[$module_class->getGroup()][$module_class->getSortOrder()] ) ) {
+              $access[$module_class->getGroup()][$module_class->getSortOrder()] = $data;
+            } else {
+              $access[$module_class->getGroup()][] = $data;
+            }
+          } else if (lC_Addons_Admin::hasModulesAccess($module)) {
+            $access = lC_Addons_Admin::getModulesAccess($module, $level, $access);
           }
-
-          $module_class = new $module_class();
-
-          $data = array('module' => $module,
-                        'icon' => $module_class->getIcon(),
-                        'title' => $module_class->getTitle(),
-                        'subgroups' => $module_class->getSubGroups());
-
-          if ( !isset( $access[$module_class->getGroup()][$module_class->getSortOrder()] ) ) {
-            $access[$module_class->getGroup()][$module_class->getSortOrder()] = $data;
-          } else {
-            $access[$module_class->getGroup()][] = $data;
-          }
-        } else if (lC_Addons_Admin::hasModulesAccess($module)) {
-          $access = lC_Addons_Admin::getModulesAccess($module, $level, $access);
         }
       }
     }
