@@ -50,7 +50,7 @@
               <button type="button" onclick="window.location.href='<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>';" class="button glossy white-gradient full-width blue" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button>
               <p class="align-center mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('text_or'); ?></p>   
               <ul class="inputs black-input large">
-                <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
+                <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" style="width:85% !important;" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
               </ul>
               <p class="full-width"><button type="submit" class="button glossy red-gradient full-width disabled" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
               <button onclick="window.open('http://www.loadedcommerce.com/loaded-pre-order-p-395.html');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
@@ -200,11 +200,15 @@ $(document).ready(function() {
     var format = /[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/;
     var found = serial.match(format);
 
-    if (serial.length != 24) return false;    
+    if (serial.length != 24) {
+      $('#activate-pro').addClass('disabled');
+      $('#buy-pro').removeClass('disabled'); 
+      return false;
+    }    
     
     if (!found) {
       $('#activate-pro').addClass('disabled');
-      $('#buy-pro').removeClass('disabled');
+      $('#buy-pro').removeClass('disabled'); 
       displayError('<?php echo $lC_Language->get('ms_error_serial_invalid'); ?>');
       setTimeout(function(){ formWrapper.clearMessages() },3000);  
       return false;
