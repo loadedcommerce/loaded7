@@ -1,17 +1,12 @@
 <?php
 /**
-  $Id: controller.php v1.0 2011-11-04 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2011 LoadedCommerce.com
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2011 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-
-*/
+  @package    catalog::updates
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: controller.php v1.0 2013-08-08 datazen $
+*/ 
 require_once('includes/applications/updates/classes/updates.php'); 
  
 class lC_Updates_Admin_run_after extends lC_Updates_Admin {

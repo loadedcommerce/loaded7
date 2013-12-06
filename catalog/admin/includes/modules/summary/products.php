@@ -1,15 +1,11 @@
 <?php
-/*
-  $Id: products.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    admin::modules
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: products.php v1.0 2013-08-08 datazen $
 */
 global $lC_Vqmod;
 
@@ -25,7 +21,7 @@ class lC_Summary_products extends lC_Summary {
       $sort_order = 40;
   
   /* Class constructor */
-  function lC_Summary_products() {
+  public function lC_Summary_products() {
     global $lC_Language;
 
     $lC_Language->loadIniFile('modules/summary/products.php');
@@ -38,9 +34,18 @@ class lC_Summary_products extends lC_Summary {
       $this->_setData();
     }
   }
+  
+  public function loadModal() {
+    global $lC_Database, $lC_Language, $lC_Template, $lC_Vqmod;
+    
+    if ( is_dir('includes/applications/products/modal') ) {
+      if ( file_exists('includes/applications/products/modal/copy.php') ) include_once($lC_Vqmod->modCheck('includes/applications/products/modal/copy.php'));
+      if ( file_exists('includes/applications/products/modal/delete.php') ) include_once($lC_Vqmod->modCheck('includes/applications/products/modal/delete.php'));
+    }
+  }  
 
   /* Private methods */
-  function _setData() {
+  protected function _setData() {
     global $lC_Database, $lC_Language, $lC_Currencies, $lC_Vqmod;
 
     if (!$this->enabled) {
@@ -103,15 +108,6 @@ class lC_Summary_products extends lC_Summary {
       $Qproducts->freeResult();
       
       $this->_data .= $this->loadModal();      
-    }
-  }
-  
-  function loadModal() {
-    global $lC_Database, $lC_Language, $lC_Template, $lC_Vqmod;
-    
-    if ( is_dir('includes/applications/products/modal') ) {
-      if ( file_exists('includes/applications/products/modal/copy.php') ) include_once($lC_Vqmod->modCheck('includes/applications/products/modal/copy.php'));
-      if ( file_exists('includes/applications/products/modal/delete.php') ) include_once($lC_Vqmod->modCheck('includes/applications/products/modal/delete.php'));
     }
   }  
 }

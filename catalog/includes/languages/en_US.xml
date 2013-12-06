@@ -751,11 +751,6 @@
       <group>general</group>
     </definition>
     <definition>
-      <key>checkout_order_id</key>
-      <value><![CDATA[Order ID]]></value>
-      <group>general</group>
-    </definition>
-    <definition>
       <key>order_status</key>
       <value><![CDATA[Order Status:]]></value>
       <group>account</group>
@@ -1247,6 +1242,11 @@ Note: If you did not request this action via our password forgotten page, please
     <definition>
       <key>add_comment_to_order_title</key>
       <value><![CDATA[Add A Note To This Order]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>success_account_created</key>
+      <value><![CDATA[Your account has been successfully created!]]></value>
       <group>checkout</group>
     </definition>
     <definition>
@@ -1762,6 +1762,11 @@ Note: If you did not request this action via our password forgotten page, please
     <definition>
       <key>sitemap_advanced_search</key>
       <value><![CDATA[Advanced Search]]></value>
+      <group>info</group>
+    </definition>
+    <definition>
+      <key>sitemap_information_pages</key>
+      <value><![CDATA[Information Pages]]></value>
       <group>info</group>
     </definition>
     <definition>

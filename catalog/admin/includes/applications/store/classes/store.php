@@ -1,18 +1,14 @@
 <?php
-/*
-  $Id: store.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-
-  @function The lC_Updater_Admin class manages zM services
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: store.php v1.0 2013-08-08 datazen $
 */
+ini_set('display_errors', 1);
 global $lC_Vqmod;
 
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
@@ -46,17 +42,20 @@ class lC_Store_Admin {
       $featured = ($from_store && isset($addon['featured']) && $addon['featured'] == '1') ? '<span class="icon-star mid-margin-left icon-orange with-tooltip" title="' . $lC_Language->get('text_featured') . '" style="cursor:pointer; vertical-align:-35%;"></span>' : NULL;
       $inCloud = ($from_store) ? '<span class="mid-margin-left icon-cloud icon-green with-tooltip" title="' . $lC_Language->get('text_in_cloud') . '" style="vertical-align:-35%;"></span>' : NULL;
       $isInternal = (strstr($addon['title'], '(IO)')) ? '<span class="red strong">INTERNAL ONLY</span>' : NULL;
-      
+      $upsell = '';
       if (  $type != NULL && ($type == $addon['type'] || ($type == 'featured' && $addon['featured'] == '1'))   ) {
         $mobileEnabled = (isset($addon['mobile']) && $addon['mobile'] == true) ? '<span class="mid-margin-left icon-mobile icon-blue with-tooltip" title="' . $lC_Language->get('text_mobile_enabled') . '" style="vertical-align:-40%;"></span>' : '';
+        
+        $imgWidth = ($type == 'templates') ? '160px' : '80px';
+        $imgHeight = ($type == 'templates') ? '120px' : '60px';
         if ($from_store === false) {
           $thumb = '<div style="position:relative;">' . $addon['thumbnail'] . '<div class="version-tag"><span class="tag black-gradient">' . $addon['version'] . '</span></div></div>';
         } else {
-          $thumb = '<div style="position:relative;"><img src="' . $addon['thumbnail'] . '" alt="' . $addon['title'] . '"><div class="version-tag"><span class="tag black-gradient">' . $addon['version'] . '</span></div></div>';
+          $thumb = '<div style="position:relative;"><img width="' . $imgWidth . '" height="' . $imgHeight . '" src="' . $addon['thumbnail'] . '" alt="' . $addon['title'] . '"><div class="version-tag"><span class="tag black-gradient">' . $addon['version'] . '</span></div></div>';
         }
-        
-        $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom no-margin-left"') . $mobileEnabled . $inCloud . $featured . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . '</small>';
-        $desc = substr($addon['description'], 0, 300) . '...';     
+        if ($type == 'pro template pack') $upsell = '<div class="anthracite mid-margin-top">' . $lC_Language->get('text_free_with_pro_edition') . '</div>';
+        $title = '<div style="position:relative;"><strong>' . str_replace(' ', '&nbsp;', $addon['title']) . '</strong><br />' . lc_image('../images/stars_' . $addon['rating'] . '.png', sprintf($lC_Language->get('rating_from_5_stars'), $addon['rating']), null, null, 'class="mid-margin-top small-margin-bottom no-margin-left"') . $mobileEnabled . $inCloud . $featured . '<br /><small>' . str_replace(' ', '&nbsp;', $addon['author']) . $upsell . '</small>';
+        $desc = ($media != 'tablet-portrait' && $media != 'tablet-landscape') ? substr($addon['description'], 0, 300) . '...' : null;     
        
         if ($addon['installed'] == '1') { 
           $bg = ($addon['enabled'] == '1') ? ' green-gradient' : ' silver-gradient'; 
@@ -181,7 +180,7 @@ class lC_Store_Admin {
   */
   public static function drawMenu() {
     foreach ( self::getAllTypes() as $key => $type ) {
-      $menu .= '<li style="cursor:pointer;" class="message-menu store-menu-' . strtolower($type['text']) . '" id="menuType' . ucwords($type['text']) . '">' . 
+      $menu .= '<li style="cursor:pointer;" class="message-menu store-menu-' . strtolower(str_replace(' ', '-', $type['text'])) . '" id="menuType' . str_replace(' ', '', ucwords($type['text'])) . '">' . 
                '  <a href="javascript:void(0);" class="" id="menuLink' . (int)$type['id'] . '" onclick="showAddonType(\'' . (int)$type['id'] . '\', \'' . lc_output_string_protected($type['text']) . '\');">' . 
                '    <span class="message-status" style="padding-top:8px;"><img src="' . $type['icon'] . '" alt="' . $type['text'] . '"></span>' .
                '     <br><strong>' . lc_output_string_protected($type['text']) . '</strong>' .
@@ -228,6 +227,7 @@ class lC_Store_Admin {
                          
     $checksum = hash('sha256', json_encode($request));
     $request['checksum'] = $checksum;
+    $request['instID'] = INSTALLATION_ID;
     
     $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/store/addons/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request));
 
@@ -277,7 +277,7 @@ class lC_Store_Admin {
                         'from_store' => true,
                         'featured' => $val['featured'],
                         'featured_in_group' => $val['featured_in_group']);
-    }       
+    }    
     
     return $addons;
   } 
@@ -339,53 +339,89 @@ class lC_Store_Admin {
   * @return boolean
   */
   public static function install($key) {
-    global $lC_Database, $lC_Language, $lC_Vqmod;
+    global $lC_Database, $lC_Language, $lC_Vqmod, $lC_Addons;
     
-    if ( !file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
-      // get the addon phar from the store
-      self::_getAddonPhar($key);
+    $isTemplate = (strstr($key, 'lC_Template_')) ? true : false;
+    if ($isTemplate) {
+      $key = str_replace('lC_Template_', '', $key);
+      if ( !file_exists(DIR_FS_ADMIN . 'includes/templates/' . $key . '.php') ) {
+        // get the addon phar from the store
+        self::getAddonPhar($key);
+        
+        // apply the addon phar 
+        if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
+          lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar', 'template');
+        }
+      }      
+      self::_resetAddons();
       
-      // apply the addon phar 
-      lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
-    }
+      return true;
+
+    } else { // is addon
     
-    if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
-
-      include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
-
-      $addon = $key;
-      $addon = new $addon();
-
-      $addon->install();
-      
-      $modules_group = $addon->getAddonType() . '|' . $key;
-
-      $code = $addon->getAddonType(); 
-      if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType())) {
-        $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType());
-        $lC_DirectoryListing->setCheckExtension('php');
-            
-        foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
-          if (isset($ao['name'])) {
-            $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
-            break;  
-          }        
+      if ( !file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
+        // get the addon phar from the store
+        self::getAddonPhar($key);
+        
+        // apply the addon phar 
+        if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
+          lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
         }
       }
 
-      if (empty($code) === false) {     
-        $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
-        $Qinstall->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-        $Qinstall->bindValue(':title', $addon->getAddonTitle());
-        $Qinstall->bindValue(':code', $code);
-        $Qinstall->bindValue(':author_name', $addon->getAddonAuthor());
-        $Qinstall->bindValue(':author_www', $addon->getAddonAuthorWWW());
-        $Qinstall->bindValue(':modules_group', $modules_group);
-        $Qinstall->execute();
-        
-        self::_resetAddons();
+      // sanity check to see if the object is already installed
+      $okToInstall = true;
+      
+      $Qchk = $lC_Database->query("select id from :table_templates_boxes where modules_group LIKE '%" . $key . "%'");
+      $Qchk->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+      $Qchk->execute();
+      
+      if ($Qchk->numberOfRows() > 0) $okToInstall = false;
 
-        return true;
+      $Qchk->freeResult();
+
+      if ( file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') && $okToInstall === true) {
+        include_once(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php');
+
+        $addon = $key;
+        $addon = new $addon();
+
+        $modules_group = $addon->getAddonType() . '|' . $key;
+        
+        $addon->install();
+
+        $code = $addon->getAddonType(); 
+        if (is_dir(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType())) {
+          $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons/' . $addon->getAddonCode() . '/modules/' . $addon->getAddonType());
+          $lC_DirectoryListing->setCheckExtension('php');
+              
+          foreach ( $lC_DirectoryListing->getFiles() as $ao ) { 
+            if (isset($ao['name'])) {
+              $code = substr($ao['name'], 0, strpos($ao['name'], '.'));
+              break;  
+            }        
+          }
+        }
+
+        if (empty($code) === false) {     
+          $Qdel = $lC_Database->query('delete from :table_templates_boxes where modules_group = :modules_group');
+          $Qdel->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+          $Qdel->bindValue(':modules_group', $modules_group);
+          $Qdel->execute();          
+          
+          $Qinstall = $lC_Database->query('insert into :table_templates_boxes (title, code, author_name, author_www, modules_group) values (:title, :code, :author_name, :author_www, :modules_group)');
+          $Qinstall->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+          $Qinstall->bindValue(':title', $addon->getAddonTitle());
+          $Qinstall->bindValue(':code', $code);
+          $Qinstall->bindValue(':author_name', $addon->getAddonAuthor());
+          $Qinstall->bindValue(':author_www', $addon->getAddonAuthorWWW());
+          $Qinstall->bindValue(':modules_group', $modules_group);
+          $Qinstall->execute();
+          
+          self::_resetAddons();
+
+          return true;
+        }
       }
     }
 
@@ -450,7 +486,7 @@ class lC_Store_Admin {
   * @access public
   * @return void
   */  
-  private static function _getAddonPhar($key) {
+  public static function getAddonPhar($key) {
 
     $response = file_get_contents('https://api.loadedcommerce.com/1_0/get/' . $key . '?type=addon&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']));
 

@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: new.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: edit.php v1.0 2013-08-08 datazen $
 */
 ?>
 <style>
@@ -58,7 +55,7 @@ function editBanner(id) {
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="image" class="label"><?php echo $lC_Language->get('field_image'); ?></label>'+
-                   '        <?php echo lc_draw_file_field('image', true, 'id="editImage" class="file"') . ' ' . $lC_Language->get('field_image_local') . '<br />' . realpath('../images/') . '/' . lc_draw_input_field('image_local', null, 'id="editImageLocal" class="input" style="width:93%;"'); ?>'+
+                   '        <?php echo lc_draw_file_field('image', true, 'id="editImage" class="file"') . ' ' . $lC_Language->get('field_image_local') . '<br />' . realpath('../images/banners/') . '/' . lc_draw_input_field('image_local', null, 'id="editImageLocal" class="input" style="width:93%;"'); ?>'+
                    '      </p>'+
                    '      <p class="button-height inline-label">'+
                    '        <label for="address_format" class="label"><?php echo $lC_Language->get('field_image_target'); ?></label>'+

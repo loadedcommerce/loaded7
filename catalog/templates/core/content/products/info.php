@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -33,11 +33,12 @@
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <hr>
+    </div><!-- /.modal -->    
     <?php
     if (sizeof($lC_Product->getImages()) > 1) {
-      echo '<div class="thumbnail img-responsive"><ul>' . $lC_Product->getAdditionalImagesHtml() . '</ul></div><hr>' . "\n";
+      $_product_additionalimages = $lC_Product->getAdditionalImagesHtml(); 
+      echo '<div class="thumbnail img-responsive"><ul class="pr_gallery">' . $_product_additionalimages['images'] . '</ul></div>' . "\n";
+      echo $_product_additionalimages['model']. "\n";
     }
     ?>
   </div>

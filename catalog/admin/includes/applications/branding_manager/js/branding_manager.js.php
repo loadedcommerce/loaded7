@@ -1,17 +1,13 @@
 <?php
-/*
-  $Id: branding_manager.js.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: branding_manager.js.php v1.0 2013-08-08 datazen $
 */
-
 global $lC_Template, $lC_Language, $lC_ObjectInfo;
 ?>
 <script>
@@ -116,5 +112,4 @@ function deleteOgImage(ogimage) {
   $.getJSON(jsonLink.replace('OGIMAGE', ogimage));
   $("#ogimagePreviewContainer").html('<div style="position:relative;"><div id="og_image_controls" class="controls"><span class="button-group compact children-tooltip"><a onclick="deleteOgImage($(\'#branding_graph_site_thumbnail\').val());" class="button icon-trash" href="#" title="<?php echo $lC_Language->get('text_delete'); ?>"></a></span></div></div><img src="../images/no_image.png" /><input type="hidden" id="branding_graph_site_thumbnail" name="branding_graph_site_thumbnail" value="">');
 } 
-
 </script>

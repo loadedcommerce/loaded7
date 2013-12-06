@@ -1,15 +1,11 @@
 <?php
-/*
-  $Id: index.php v1.0 2012-12-08 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2012 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2012 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::install::templates
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: index.php v1.0 2013-08-08 datazen $
 */
 $vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents('..//includes/version.txt'), 2))));
 $version = $vInfo[0];
@@ -219,18 +215,27 @@ TD { height:19px; }
           <!-- p class="message icon-warning margin-top margin-right" style="color:#c09853; background:#fcf8e3; border-color:#fbeed5;">   
             <span class="stripes animated"></span>
             <?php //echo sprintf($lC_Language->get('text_under_development'), $version); ?>
-          </p -->   
+          </p -->
+          <h4 class="mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('page_heading_ioncube'); ?></h4>
+          <table id="ioncCubeTable" border="0" width="100%" cellspacing="0" cellpadding="2">
+            <tr>
+              <td><p class="mid-margin-left mid-margin-right mid-margin-bottom"><?php echo $lC_Language->get('page_text_ioncube'); ?></p></td>
+            </tr>
+            <tr>
+              <td><p class="mid-margin-left"><?php if (function_exists('ioncube_test')) { echo ioncube_test(); } ?></p></td>
+            </tr>
+          </table>   
         </div>
       </div>
       <?php
       if ($ok) {
         ?>
-        <!-- div id="buttonContainer" class="large-margin-top margin-left" style="float:left">
+        <div id="buttonContainer" class="large-margin-top margin-left" style="float:left">
           <a href="javascript:void(0);" class="button" onclick="$('#mBox').hide(); $('#pBox').hide(); $('#upgrade_method').val('S'); window.location.href = 'upgrade.php?step=1'">
             <span class="button-icon orange-gradient glossy"><span class="icon-cloud-upload"></span></span>
             <?php echo addslashes($lC_Language->get('image_button_upgrade')); ?>
           </a>          
-        </div -->
+        </div>
         <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
           <a href="install.php" class="button">
             <span class="button-icon blue-gradient glossy"><span class="icon-right-round"></span></span>

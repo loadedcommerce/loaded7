@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: application_top.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    admin
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: application_top.php v1.0 2013-08-08 datazen $
 */
 // start the timer for the page parse time log
 define('PAGE_PARSE_START_TIME', microtime());
@@ -23,6 +19,11 @@ error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 ini_set("display_errors", 1);
 ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
+
+// added for missing date.timezone in global php.ini
+if (!ini_get('date.timezone') && function_exists(date_default_timezone_set)) {
+   date_default_timezone_set('GMT');
+}
 
 // virtual hook system
 require_once('external/vqmod/vqmod.php');

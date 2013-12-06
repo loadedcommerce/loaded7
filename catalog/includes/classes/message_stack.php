@@ -111,7 +111,7 @@
               if ($imgLoc != null) {
                 $bullet_image = $imgLoc . 'error' . $ext;
               } else {
-                $bullet_image = DIR_WS_IMAGES . 'icons/error.gif';
+                $bullet_image = DIR_WS_IMAGES . 'pixel_trans.gif';
               }
               break;
 
@@ -119,7 +119,7 @@
               if ($imgLoc != null) {
                 $bullet_image = $imgLoc . 'warning' . $ext;
               } else {
-                $bullet_image = DIR_WS_IMAGES . 'icons/warning.gif';
+                $bullet_image = DIR_WS_IMAGES . 'pixel_trans.gif';
               }
               break;
 
@@ -127,12 +127,12 @@
               if ($imgLoc != null) {
                 $bullet_image = $imgLoc . 'success' . $ext;
               } else {
-                $bullet_image = DIR_WS_IMAGES . 'icons/success.gif';
+                $bullet_image = DIR_WS_IMAGES . 'pixel_trans.gif';
               }
               break;
 
             default:
-              $bullet_image = DIR_WS_IMAGES . 'icons/bullet_default.gif';
+              $bullet_image = DIR_WS_IMAGES . 'pixel_trans.gif';
           }
 
           $result .= '<li style="list-style-image: url(\'' . $bullet_image . '\')">' . lc_output_string($message['text']) . '</li>';

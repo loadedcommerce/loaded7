@@ -1,13 +1,10 @@
-#  $Id: loadedcommerce.sql v1.0 2012-12-04 datazen $
-#
-#  LoadedCommerce, Innovative eCommerce Solutions
-#  http://www.loadedcommerce.com
-#
-#  Copyright (c) 2012 Loaded Commerce, LLC
-#
-#  @author     Loaded Commerce Team
-#  @copyright  (c) 2012 Loaded Commerce Team
-#  @license    http://loadedcommerce.com/license.html
+#  @package    catalog::install
+#  @author     Loaded Commerce
+#  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+#  @copyright  Portions Copyright 2003 osCommerce
+#  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
+#  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+#  @version    $Id: loadedcommerce_sample_data.sql v1.0 2013-08-08 datazen $
 
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(6, 'women.jpg', 1, 10, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(7, 'men.jpg', 1, 20, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
@@ -20,24 +17,16 @@ INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_orde
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(14, 'no_image.png', 0, 50, 'info', 0, 'info.php', 1, 1, 0, '0000-00-00 00:00:00', NULL);
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(15, 'no_image.png', 0, 60, 'override', 1, 'http://loaded7.com', 1, 1, 0, '0000-00-00 00:00:00', NULL);
 
-INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(6, 1, 'Women', 'Women', 'Women Blurb', '<p>Women Content</p>', 'women, tags');
-INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(7, 1, 'Men', 'Men', 'Men Blurb', '<p>Men Content</p>', 'men, tags'); 
-INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(8, 1, 'Dresses', 'Dresses', 'Dresses Blurb', '<p>Dresses Content</p>', 'dresses, tags');
-INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(9, 1, 'Watches', 'Watches', 'Watches Blurb', '<p>Watches Content</p>', 'watches, tags');
-INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(10, 1, 'Shirts', 'Shirts', 'Shirts Blurb', '<p>Shirts Content</p>', 'shirts, tags');
-INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(11, 1, 'Watches', 'Watches', 'Watches Blurb', '<p>Watches Content</p>', 'watches');
-INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(12, 1, 'Specials', 'Specials', 'Specials Blurb', '<p>Specials Content</p>', 'specials');
-INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(13, 1, 'New Products', 'New Products', 'New Products Blurb', '<p>New Products Content</p>', 'new, products, tags');
-INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(14, 1, 'Information', 'Information', 'Information Blurb', '<p>Information Content</p>', 'information, tags');
-INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(15, 1, 'Loaded 7', 'Loaded 7', 'Loaded 7 Blurb', '<p>Loaded 7 Content</p>', 'loaded, tags');
-
-INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Enable AddOn', 'ADDONS_PAYMENT_CASH_ON_DELIVERY_STATUS', '1', 'Do you want to enable this addon?', 6, 0, NULL, '2013-08-28 10:46:22', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
-INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Payment Zone', 'ADDONS_PAYMENT_CASH_ON_DELIVERY_ZONE', '0', 'If a zone is selected, only enable this payment method for that zone.', 6, 0, NULL, '2013-08-28 10:46:22', 'lc_cfg_use_get_zone_class_title', 'lc_cfg_set_zone_classes_pull_down_menu');
-INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Order Status', 'ADDONS_PAYMENT_CASH_ON_DELIVERY_ORDER_STATUS_ID', '1', 'Set the status of orders made with this payment module to this value', 6, 0, NULL, '2013-08-28 10:46:22', 'lc_cfg_use_get_order_status_title', 'lc_cfg_set_order_statuses_pull_down_menu');
-INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Sort Order', 'ADDONS_PAYMENT_CASH_ON_DELIVERY_SORT_ORDER', '0', 'Sort order of display. Lowest is displayed first.', 6, 0, NULL, '2013-08-28 10:46:22', NULL, NULL);
-INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Enable AddOn', 'ADDONS_SHIPPING_FREE_SHIPPING_STATUS', '1', 'Do you want to enable this addon?', 6, 0, NULL, '2013-08-27 11:15:18', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');
-INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Shipping Cost', 'ADDONS_SHIPPING_FREE_SHIPPING_MINIMUM_ORDER', '0.00', 'The minimum order amount to apply free shipping to.', 6, 0, NULL, '2013-08-27 11:15:18', NULL, NULL);
-INSERT INTO lc_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Shipping Zone', 'ADDONS_SHIPPING_FREE_SHIPPING_ZONE', '0', 'If a zone is selected, only enable this shipping method for that zone.', 6, 0, NULL, '2013-08-27 11:15:18', 'lc_cfg_use_get_zone_class_title', 'lc_cfg_set_zone_classes_pull_down_menu');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(6, 1, 'Women', 'Women', 'Women Blurb', '<p>Women Content</p>', 'women', 'tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(7, 1, 'Men', 'Men', 'Men Blurb', '<p>Men Content</p>', 'men', 'tags'); 
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(8, 1, 'Dresses', 'Dresses', 'Dresses Blurb', '<p>Dresses Content</p>', 'dresses', 'tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(9, 1, 'Watches', 'Watches', 'Watches Blurb', '<p>Watches Content</p>', 'watches', 'tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(10, 1, 'Shirts', 'Shirts', 'Shirts Blurb', '<p>Shirts Content</p>', 'shirts', 'tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(11, 1, 'Watches', 'Watches', 'Watches Blurb', '<p>Watches Content</p>', 'watches', 'tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(12, 1, 'Specials', 'Specials', 'Specials Blurb', '<p>Specials Content</p>', 'specials', 'tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(13, 1, 'New Products', 'New Products', 'New Products Blurb', '<p>New Products Content</p>', 'new products', 'tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(14, 1, 'Information', 'Information', 'Information Blurb', '<p>Information Content</p>', 'information', 'tags');
+INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) VALUES(15, 1, 'Loaded 7', 'Loaded 7', 'Loaded 7 Blurb', '<p>Loaded 7 Content</p>', 'loaded', 'tags');
 
 INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (6, 6, 1, 1, 'cPath=1_6', 'women');
 INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (7, 7, 1, 1, 'cPath=1_7', 'men');

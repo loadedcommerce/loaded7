@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: general.js.php v1.0 2012-08-08 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::admin::templates
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: general.js.php v1.0 2013-08-08 datazen $
 */
 global $lC_Vqmod, $lC_Template, $lC_Language;
 require_once($lC_Vqmod->modCheck('includes/applications/updates/classes/updates.php'));    
@@ -154,13 +151,16 @@ $(document).ready(function() {
     // set the disable var to false to begin
     var disableKeyCombo = false; 
     // if any textareas on the page are clicked into then set the disable var to true
-    for (var i in CKEDITOR.instances) {
-      (function(i){
-        CKEDITOR.instances[i].on('focus', function() {
-          disableKeyCombo = true;
-        });
-      })(i);
-    }// if any inputs on the page are clicked into then set the disable var to true
+    if (typeof CKEDITOR != 'undefined') {
+      for (var i in CKEDITOR.instances) {
+        (function(i){
+          CKEDITOR.instances[i].on('focus', function() {
+            disableKeyCombo = true;
+          });
+        })(i);
+      }
+    }
+    // if any inputs on the page are clicked into then set the disable var to true
     $(":input").focus(function(){
       disableKeyCombo = true;
     }); 
@@ -405,8 +405,37 @@ $(document).ready(function() {
   var module = '<?php echo $lC_Template->getModule(); ?>';
   if (resize == '1' && isLoggedIn == '1' && module != 'login') {
     _resizeImages();
+  }
+  
+  // added for api communication health check
+  if (module == 'index') {
+    var apiNoCom = '<?php echo (file_exists('../includes/work/apinocom.tmp')) ? '1' : '0'; ?>';
+    if (apiNoCom == '1' && isLoggedIn == '1' && module != 'login') {
+      _apiHealthCheckAlert();
+      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'index' . '&action=removeApiTmp'); ?>';
+      $.getJSON(jsonLink,
+        function (data) {
+          return true;
+        }
+      );
+    }
   }        
 });
+
+function _apiHealthCheckAlert() {
+  var text = '<?php echo $lC_Language->get('text_api_health_check'); ?>';
+  api = $.modal({
+          title: '<?php echo $lC_Language->get('text_api_com_issue'); ?>',
+          content: '<?php echo $lC_Language->get('text_api_com_issue_warnings'); ?>',
+          buttons: {
+            '<?php echo $lC_Language->get('button_understood'); ?>': {
+              classes:  'glossy big full-width',
+              click:    function(win) { win.closeModal(); }
+            }
+          }
+        });
+  $(api);
+}
 
 function _resizeImages() {
   var text = '<?php echo $lC_Language->get('text_resize_images'); ?>';

@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: products_viewed.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    admin::modules
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: products_viewed.php v1.0 2013-08-08 datazen $
 */
 global $lC_Vqmod;
 
@@ -19,9 +15,8 @@ if ( !class_exists('lC_Statistics') ) {
 
 class lC_Statistics_Products_Viewed extends lC_Statistics {
 
-// Class constructor
-
-  function lC_Statistics_Products_Viewed() {
+  // Class constructor
+  public function lC_Statistics_Products_Viewed() {
     global $lC_Language;
 
     $lC_Language->loadIniFile('modules/statistics/products_viewed.php');
@@ -30,19 +25,18 @@ class lC_Statistics_Products_Viewed extends lC_Statistics {
     $this->_setTitle();
   }
 
-// Private methods
-
-  function _setIcon() {
+  // Private methods
+  protected function _setIcon() {
     $this->_icon = lc_icon_admin('products.png');
   }
 
-  function _setTitle() {
+  protected function _setTitle() {
     global $lC_Language;
 
     $this->_title = $lC_Language->get('statistics_products_viewed_title');
   }
 
-  function _setHeader() {
+  protected function _setHeader() {
     global $lC_Language;
 
     $this->_header = array($lC_Language->get('statistics_products_viewed_table_heading_products'),
@@ -50,7 +44,7 @@ class lC_Statistics_Products_Viewed extends lC_Statistics {
                            $lC_Language->get('statistics_products_viewed_table_heading_total'));
   }
 
-  function _setData() {
+  protected function _setData() {
     global $lC_Database, $lC_Language;
 
     $this->_data = array();

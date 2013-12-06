@@ -1,15 +1,11 @@
 <?php
-/*
-  $Id: revenue.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    admin::modules
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: revenue.php v1.0 2013-08-08 datazen $
 */
 global $lC_Vqmod;
 
@@ -23,7 +19,7 @@ class lC_Summary_revenue extends lC_Summary {
       $sort_order = 20;
   
   /* Class constructor */
-  function __construct() {
+  public function __construct() {
     global $lC_Language;
 
     $lC_Language->loadIniFile('modules/summary/revenue.php');
@@ -37,7 +33,7 @@ class lC_Summary_revenue extends lC_Summary {
   }
 
   /* Private methods */
-  function _setData() {
+  protected function _setData() {
     global $lC_Database, $lC_Language, $lC_Vqmod;
     
     if (!$this->enabled) {
@@ -47,10 +43,10 @@ class lC_Summary_revenue extends lC_Summary {
       require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
       $lC_Currencies = new lC_Currencies();
     
-      $lastMonth = date("m",strtotime("-1 month"));
-      $currentDay = date("d");
-      $currentMonth = date("m");
-      $currentYear = date("Y");
+      $lastMonth = @date("m", @strtotime("-1 month"));
+      $currentDay = @date("d");
+      $currentMonth = @date("m");
+      $currentYear = @date("Y");
            
       $Qorders = $lC_Database->query('select o.orders_id, ot.value as order_total, greatest(o.date_purchased, ifnull(o.last_modified, "1970-01-01")) as date_last_modified from :table_orders o, :table_orders_total ot where o.orders_id = ot.orders_id and ot.class = "total" order by date_last_modified desc limit 6');
       $Qorders->bindTable(':table_orders', TABLE_ORDERS);
