@@ -12,7 +12,7 @@
 <!--content/products/info.php start-->
 <div class="row">
   <div class="col-sm-4 col-lg-4 clearfix">
-    <div class="thumbnail large-margin-top no-margin-bottom text-center">
+    <div class="large-margin-top no-margin-bottom text-center">
       <a data-toggle="modal" href="#popup-image-modal" title="<?php echo $lC_Product->getTitle(); ?>"><img class="img-responsive" src="<?php echo $lC_Image->getAddress($lC_Product->getImage(), 'large'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="<?php echo $lC_Product->getTitle(); ?>" /></a>
     </div>  
     <!-- Button trigger modal -->
