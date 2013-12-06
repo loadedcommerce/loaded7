@@ -56,7 +56,8 @@ if (!class_exists('curl')) {
 
       curl_close($curl);
 
-      list($headers, $body) = explode("\r\n\r\n", $result, 2);
+      list($headers1, $body1,$body2) = explode("\r\n\r\n", $result, 3);
+      $body = (empty($body2)) ? $body1 : $body2;
 
       if ( ($http_code == 301) || ($http_code == 302) ) {
         if ( !isset($parameters['redir_counter']) || ($parameters['redir_counter'] < 6) ) {
