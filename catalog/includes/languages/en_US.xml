@@ -1765,6 +1765,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>info</group>
     </definition>
     <definition>
+      <key>sitemap_information_pages</key>
+      <value><![CDATA[Information Pages]]></value>
+      <group>info</group>
+    </definition>
+    <definition>
       <key>sitemap_products_new</key>
       <value><![CDATA[New Products]]></value>
       <group>info</group>
