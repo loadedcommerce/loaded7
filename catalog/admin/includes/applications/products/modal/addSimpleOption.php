@@ -162,9 +162,13 @@ function addSimpleOption(editRow) {
                       $(location).attr('href',url);
                     }
                     if (edata.rpcStatus != 1) {
-                      $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+                      if (edata.rpcStatus == -2) {
+                        $.modal.alert('<?php echo $lC_Language->get('ms_error_no_variant_entries'); ?>');
+                      } else {
+                        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+                      }
                       return false;
-                    }                
+                    }   
                     $.modal({
                         content: '<div id="addSimpleOptionEntry">'+
                                  '  <div id="addSimpleOptionEntryForm">'+

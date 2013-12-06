@@ -1827,8 +1827,10 @@ class lC_Products_Admin {
                                 'products_variants_groups_id' => $value['products_variants_groups_id'],
                                 'title' => $value['title'],
                                 'price_modifier' => $Qoption->valueDecimal('price_modifier'));
+      $Qoption->freeResult();
     }
-    $Qoption->freeResult();
+    
+    if (empty($optionsArr[0])) $optionsArr['rpcStatus'] = '-2';
     
     return $optionsArr;
   } 
