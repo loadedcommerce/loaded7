@@ -62,10 +62,6 @@ $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(),
             </div>
             <div class="col-sm-4 col-lg-4">
               <div class="well">
-                <span class="strong"><?php echo $lC_Language->get('checkout_order_number'); ?></span>
-                <span class="pull-right strong"><?php echo $_SESSION['cartID']; ?></span> 
-              </div>
-              <div class="well">
                 <span class="strong"><?php echo $lC_Language->get('text_amount_due'); ?></span>
                 <span class="pull-right strong"><?php echo $lC_Currencies->format($lC_ShoppingCart->getTotal()); ?></span>
               </div>
