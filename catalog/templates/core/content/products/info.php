@@ -85,7 +85,7 @@
       }
       ?>
       
-      <div class="content-products-info-reviews-container">
+      <div class="content-products-info-reviews-container large-margin-bottom">
         <label class="content-products-info-reviews-rating-label with-padding-no-top-bottom"><?php echo $lC_Language->get('average_rating'); ?></label>
         <span class="content-products-info-reviews-rating margin-right"><?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $lC_Product->getData('reviews_average_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $lC_Product->getData('reviews_average_rating'))); ?></span>
         <?php       
@@ -100,7 +100,7 @@
       <?php
       if ( $lC_Product->hasSimpleOptions() ) {
         ?>
-        <div id="content-products-info-simple-options-container">
+        <div id="content-products-info-simple-options-container margin-top">
           <?php
           $module = '';
           foreach ( $lC_Product->getSimpleOptions() as $group_id => $value ) {

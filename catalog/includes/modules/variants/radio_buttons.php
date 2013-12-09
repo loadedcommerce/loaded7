@@ -30,9 +30,9 @@ class lC_Variants_radio_buttons extends lC_Variants_Abstract {
       }      
       
       $string = '<div class="margin-left margin-bottom">' .
-                '  <table>' .
+                '  <table class="full-width">' .
                 '    <tr>' .
-                '      <td valign="top"><label class="margin-right">' . $group_title . '</label></td>' .
+                '      <td valign="top" class="third-width"><label class="margin-right small-margin-top">' . $group_title . '</label></td>' .
                 '      <td valign="top">';
 
       reset($data);
@@ -63,9 +63,9 @@ class lC_Variants_radio_buttons extends lC_Variants_Abstract {
           }
         }
 
-        $string = '<table border="0" cellspacing="0" cellpadding="2">' .
+        $string = '<table border="0" cellspacing="0" cellpadding="2" class="full-width">' .
                   '  <tr>' .
-                  '    <td valign="top">' . $data['title'] . ': </td>' . 
+                  '    <td valign="top" class="third-width">' . $data['title'] . ': </td>' . 
                   '    <td>' . lc_draw_radio_field('variants[' . $data['group_id'] . ']', $data['data'], $default_value, 'onchange="refreshVariants();" id="variants_' . $data['group_id'] . '"', '<br />') . '</td>' .
                   '  </tr>' .
                   '</table>';
