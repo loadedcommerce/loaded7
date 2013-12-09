@@ -136,10 +136,11 @@
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>    
     <div class="row display-inline">
+      <div class="col-sm-4 col-lg-4"></div>
       <div class="col-sm-4 col-lg-4 align-right mid-margin-top">
         <div class="form-group">
           <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
-          <input type="text" name="quantity" onfocus="this.select();" class="form-control content-products-info-qty-input" value="1">
+          <input type="text" name="quantity" onfocus="this.select();" class="form-control content-products-info-qty-input mid-margin-right" value="1">
         </div>
       </div>
       <div class="col-sm-4 col-lg-4">
