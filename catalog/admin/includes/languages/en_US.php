@@ -325,3 +325,7 @@ text_spin_off_order = Spin Off Order
 text_go_to_customer = Go to Customer
 text_resize_images = Upgrade Clean Up: Creating Image Sets
 text_status = Status
+text_inventory_control = Inventory Control
+text_inventory_control_has_children = Has Simple Options
+text_inventory_control_has_subproducts = Has Sub Products
+text_inventory_control_simple = Simple Product

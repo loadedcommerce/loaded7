@@ -1,13 +1,4 @@
 /**
- *
- * '||''|.                            '||
- *  ||   ||    ....  .... ...   ....   ||    ...   ... ...  ... ..
- *  ||    || .|...||  '|.  |  .|...||  ||  .|  '|.  ||'  ||  ||' ''
- *  ||    || ||        '|.|   ||       ||  ||   ||  ||    |  ||
- * .||...|'   '|...'    '|     '|...' .||.  '|..|'  ||...'  .||.
- *                                                  ||
- * --------------- By Display:inline ------------- '''' -----------
- *
  * Styles override for 992+ pixels screens
  */
 
@@ -24,6 +15,9 @@
 .hidden-on-desktop,
 .only-on-tablet {
 	display: none;
+}
+.hide-on-small-desktop {
+  display: none;
 }
 
 /* 7. Title bar */
