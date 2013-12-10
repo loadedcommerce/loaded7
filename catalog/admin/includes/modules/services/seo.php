@@ -39,7 +39,12 @@ class lC_Services_seo_Admin {
     
     if ($exists == false) {
       $file = file_get_contents(DIR_FS_CATALOG . 'dot.htaccess');
-      $file = str_replace('RewriteBase /', 'RewriteBase ' . DIR_WS_HTTP_CATALOG, $file);
+      $lines = explode(PHP_EOL, $file);
+      foreach ($lines as $line) {
+        if (strpos($line, 'RewriteBase /')) {
+          $file = str_replace($line, '  RewriteBase ' . DIR_WS_HTTP_CATALOG, $file);
+        }
+      }
       file_put_contents(DIR_FS_CATALOG . 'dot.htaccess', $file);
       if (rename(DIR_FS_CATALOG . 'dot.htaccess', DIR_FS_CATALOG . '.htaccess')) {
       } else {
@@ -49,7 +54,7 @@ class lC_Services_seo_Admin {
       return false;
     }
     
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_public function, set_public function, date_added) VALUES ('Add Category Parent Permalinks?', 'SERVICE_SEO_URL_ADD_CATEGORY_PARENT', '-1', 'Add each parent permalink to the url structure as you drill down into categories and products?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) VALUES ('Add Category Parent Permalinks?', 'SERVICE_SEO_URL_ADD_CATEGORY_PARENT', '-1', 'Add each parent permalink to the url structure as you drill down into categories and products?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
     
     lC_Cache::clear('category_tree');
     lC_Cache::clear('templates');

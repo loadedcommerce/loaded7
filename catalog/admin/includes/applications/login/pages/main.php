@@ -195,7 +195,14 @@ $(document).ready(function() {
   /*
   * Get Pro
   */
-  $('#activation_serial').keyup(function(event) {
+  $('#activation_serial').bind('paste', function(e){ 
+    // Short pause to wait for paste to complete
+    setTimeout( function() { _checkSerial(); }, 100);
+  })
+
+  $('#activation_serial').keyup(function(e) { _checkSerial(); });  
+  
+  function _checkSerial() {
     var serial = $('#activation_serial').val();
     var format = /[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/;
     var found = serial.match(format);
@@ -217,7 +224,7 @@ $(document).ready(function() {
       $('#activate-pro').removeClass('disabled');
       return true;
     }
-  });  
+  }
   
   /*
   * Register
