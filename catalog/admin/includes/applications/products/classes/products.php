@@ -81,7 +81,14 @@ class lC_Products_Admin {
         } 
         $cnt++;
       }
-      $Qcategories = null;
+      $Qcategories = null;      
+
+      $lC_Image = new lC_Image_Admin();
+      $Qimage = $lC_Database->query('select image from :table_products_images where products_id = :products_id and default_flag = 1');
+      $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
+      $Qimage->bindInt(':products_id', $Qproducts->valueInt('products_id'));
+      $Qimage->execute();
+      
       $cost = $lC_Currencies->format($Qproducts->value('products_cost'));
       $msrp = $lC_Currencies->format($Qproducts->value('products_msrp'));
       $products_status = ($Qproducts->valueInt('products_status') === 1);
@@ -133,11 +140,11 @@ class lC_Products_Admin {
                           'products_keyword' => $products_keyword);
 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qproducts->valueInt('products_id') . '" id="' . $Qproducts->valueInt('products_id') . '"></td>';
-      $products = '<td><a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')">' . $Qproducts->value('products_name') . ' <span class="small hide-on-mobile grey bold">(' . $Qproducts->value('products_model') . ')</span></a></td>';
+      $products = '<td>' . $lC_Image->show($Qimage->value('image'), '', 'class="mid-margin-right"', 'listing') . '<a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')">' . $Qproducts->value('products_name') . ' <span class="small hide-on-mobile grey bold">(' . $Qproducts->value('products_model') . ')</span></a></td>';
       $inv = '<td><span class="' . $product_icon . ' with-tooltip" title="' . $product_icon_title . '"></span></td>';
       $cats = '<td>' . $categories . '</td>';
       $categories = null;
-      $class = '<td>' . $products_class . '</td>';
+      $class = '<td>' . $lC_Language->get('text_common') . '</td>';
       $price = '<td>' . $price . '</td>';
       $qty = '<td>' . $products_quantity . '</td>';
       $feat = '<td>str</td>';
