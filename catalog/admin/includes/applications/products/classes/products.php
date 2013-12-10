@@ -148,7 +148,7 @@ class lC_Products_Admin {
       $price = '<td>' . $price . '</td>';
       $qty = '<td>' . $products_quantity . '</td>';
       $feat = '<td>str</td>';
-      $status = '<td>' . $products_status . '</td>'; 
+      $status = '<td><span class="align-center" id="status_' . $Qproducts->valueInt('products_id') . '" onclick="updateStatus(\'' . $Qproducts->valueInt('products_id') . '\', \'' . (($Qproducts->valueInt('products_status') == 1) ? 0 : 1) . '\');">' . (($Qproducts->valueInt('products_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_product') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_product') . '"></span>') . '</span></td>'; 
 
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qproducts->valueInt('products_id') . '&cID=' . $category_id . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
@@ -2186,8 +2186,7 @@ class lC_Products_Admin {
   *
   * @access public
   * @return boolean true or false
-  */
-  
+  */  
   public static function hasSpecial($id) {
     global $lC_Database;
 
@@ -2212,6 +2211,23 @@ class lC_Products_Admin {
     $Qchk->execute();    
     
     return $Qchk->valueInt('products_id');
+  }
+ /*
+  * update product status db entry
+  * 
+  * @access public
+  * @return true or false
+  */
+  public static function updateStatus($id, $val) {
+    global $lC_Database;
+    
+    $Qupdate = $lC_Database->query('update :table_products set products_status = :products_status where products_id = :products_id');
+    $Qupdate->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qupdate->bindInt(':products_status', $val);
+    $Qupdate->bindInt(':products_id', $id);
+    $Qupdate->execute();
+      
+    return true;
   }  
 }
 ?>

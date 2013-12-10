@@ -721,6 +721,18 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           }         
         }
       );
+    }    
+
+    function updateStatus(id, val) {
+      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateStatus&pid=PID&val=VAL'); ?>';
+      $.getJSON(jsonLink.replace('PID', id).replace('VAL', val));
+      if (val == 1) {               
+        $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'0\')');
+        $("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable_product'); ?>"></span>');
+      } else {               
+        $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'1\')');
+        $("#status_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_enable_product'); ?>"></span>');
+      }
     }
   </script>
   <?php

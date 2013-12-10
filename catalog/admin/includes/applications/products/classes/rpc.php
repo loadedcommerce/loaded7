@@ -392,6 +392,24 @@ class lC_Products_Admin_rpc {
     $result['rpcStatus'] = RPC_STATUS_SUCCESS;
 
     echo json_encode($result);
+  }
+  
+ /*
+  * update product status
+  *
+  * @param int $_GET the product id and new value of the status 
+  * @access public
+  * @return json
+  */
+  public static function updateStatus() {
+    $status = lC_Products_Admin::updateStatus($_GET['pid'], $_GET['val']);
+    
+    if ($status) {
+      lC_Cache::clear('category_tree');
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }  
+
+    echo json_encode($result);
   }     
   
 }
