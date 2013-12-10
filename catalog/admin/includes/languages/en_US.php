@@ -329,3 +329,5 @@ text_inventory_control = Inventory Control
 text_inventory_control_has_children = Has Simple Options
 text_inventory_control_has_subproducts = Has Sub Products
 text_inventory_control_simple = Simple Product
+text_more_category = more category
+text_more_categories = more categories

@@ -58,6 +58,30 @@ class lC_Products_Admin {
     $Qproducts->execute();
 
     while ( $Qproducts->next() ) {
+      $Qproductscategories = $lC_Database->query('select p2c.categories_id, cd.categories_name, c.categories_status from :table_products_to_categories p2c left join :table_categories c on (p2c.categories_id = c.categories_id) left join lc_categories_description cd on (p2c.categories_id = cd.categories_id) where p2c.products_id = :products_id');
+      $Qproductscategories->bindTable(':table_categories', TABLE_CATEGORIES);
+      $Qproductscategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+      $Qproductscategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+      $Qproductscategories->bindRaw(':products_id', $Qproducts->valueInt('products_id'));
+
+      $Qproductscategories->execute();
+      $catCount = ($Qproductscategories->numberOfRows()-1);
+      while ( $Qproductscategories->next() ) {
+        $Qcategories[] = array('name' => $Qproductscategories->value('categories_name'),
+                               'status' => $Qproductscategories->valueInt('categories_status'));
+      }
+      $cnt = 0;
+      foreach ($Qcategories as $cat) {
+        if ($cnt == 0) {
+          $categories = '<span class="tag with-small-padding mid-margin-right' . (($cat['status'] == 1) ? ' green-bg' : ' red-bg') . '">' . $cat['name'] . '</span>';
+        } 
+        if ($cnt == 1) {
+          $more_title = $cat['name'];
+          $categories .= '<span class="tag with-small-padding mid-margin-right green-bg with-tooltip" title="' . $catCount . ' ' . (($catCount > 1) ? $lC_Language->get('text_more_categories') : $lC_Language->get('text_more_category')) . '">...</span>';
+        } 
+        $cnt++;
+      }
+      $Qcategories = null;
       $cost = $lC_Currencies->format($Qproducts->value('products_cost'));
       $msrp = $lC_Currencies->format($Qproducts->value('products_msrp'));
       $products_status = ($Qproducts->valueInt('products_status') === 1);
@@ -109,9 +133,10 @@ class lC_Products_Admin {
                           'products_keyword' => $products_keyword);
 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qproducts->valueInt('products_id') . '" id="' . $Qproducts->valueInt('products_id') . '"></td>';
-      $products = '<td><a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')">' . $Qproducts->value('products_name') . ' <span class="small hide-on-mobile grey bold">(' . $Qproducts->value('products_model') . ')</span></td>';
+      $products = '<td><a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')">' . $Qproducts->value('products_name') . ' <span class="small hide-on-mobile grey bold">(' . $Qproducts->value('products_model') . ')</span></a></td>';
       $inv = '<td><span class="' . $product_icon . ' with-tooltip" title="' . $product_icon_title . '"></span></td>';
       $cats = '<td>' . $categories . '</td>';
+      $categories = null;
       $class = '<td>' . $products_class . '</td>';
       $price = '<td>' . $price . '</td>';
       $qty = '<td>' . $products_quantity . '</td>';

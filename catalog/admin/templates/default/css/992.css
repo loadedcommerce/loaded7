@@ -16,9 +16,6 @@
 .only-on-tablet {
 	display: none;
 }
-.hide-on-small-desktop {
-  display: none;
-}
 
 /* 7. Title bar */
 #title-bar {

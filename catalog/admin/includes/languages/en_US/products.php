@@ -103,7 +103,7 @@ subsection_original_images = Original Images
 subsection_images = Generated Images
 subsection_assigned_variants = Assigned Variants
 
-table_heading_products = Products
+table_heading_products = Name (Model/SKU)
 table_heading_inventory = Inv
 table_heading_price = Price
 table_heading_quantity = Quantity
