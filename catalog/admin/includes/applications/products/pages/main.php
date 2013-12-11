@@ -18,16 +18,16 @@
   <style>
   .dataColCheck { text-align: center; }
   .dataColProducts { text-align: left; }
-  .dataColInv { text-align: center; }
+  /*.dataColInv { text-align: center; }*/
   .dataColCats { text-align: left; }
   .dataColClass { text-align: left; }
   .dataColPrice { text-align: left; }
-  .dataColQty { text-align: center; }
-  .dataColFeat { text-align: center; }
+  .dataColQty { text-align: left; }
   .dataColStatus { text-align: center; }
   .dataColAction { text-align: right; }
   .dataTables_info { position:absolute; bottom: 42px; color:#4c4c4c; }
-  .selectContainer { position:absolute; bottom:29px; left:30px }  
+  .selectContainer { position:absolute; bottom:29px; left:30px }
+  .sorting:before { width: 0; margin-left: 0; }  
   </style>
   <div class="with-padding-no-top">
     <form name="batch" id="batch" action="#" method="post">
@@ -36,13 +36,11 @@
         <tr>
           <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
           <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_products'); ?></th>
-          <th scope="col" class="align-center hide-on-mobile"><?php echo $lC_Language->get('table_heading_inventory'); ?></th>
-          <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_categories'); ?></th>
-          <th scope="col" class="align-left hide-on-mobile"><?php echo $lC_Language->get('table_heading_class'); ?></th>
+          <th scope="col" class="align-left hide-on-tablet"><?php echo $lC_Language->get('table_heading_categories'); ?></th>
+          <th scope="col" class="align-left hide-on-tablet"><?php echo $lC_Language->get('table_heading_class'); ?></th>
           <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_price'); ?></th>
-          <th scope="col" class="align-center hide-on-tablet"><?php echo $lC_Language->get('table_heading_quantity'); ?></th>
-          <th scope="col" class="align-center hide-on-mobile"><?php echo $lC_Language->get('table_heading_featured'); ?></th>
-          <th scope="col" class="align-center hide-on-mobile"><?php echo $lC_Language->get('table_heading_status'); ?></th>
+          <th scope="col" class="align-center hide-on-mobile"><?php echo $lC_Language->get('table_heading_quantity'); ?></th>
+          <th scope="col" class="align-center hide-on-mobile no-wrap"><?php echo $lC_Language->get('table_heading_status'); ?></th>
           <th scope="col" class="align-right">
            <span class="button-group compact" style="white-space:nowrap;">
              <a style="display:none;" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&cID=' . $category_id . '&action=save')); ?>" title="<?php echo $lC_Language->get('button_new_product'); ?>"></a>

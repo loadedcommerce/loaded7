@@ -290,6 +290,8 @@ text_enable_coupon = Click to Enable Coupon
 text_disable_coupon = Click to Disable Coupon
 text_enable = Click to Enable
 text_disable = Click to Disable
+text_special_enabled = Has Special Price (Enabled)
+text_special_disabled = Has Special Price (Disabled)
 
 update_message_title = Updates are Available!
 update_message_text1 = New version

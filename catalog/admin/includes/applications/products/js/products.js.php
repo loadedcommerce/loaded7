@@ -698,15 +698,13 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             "aaSorting": [[1,'asc']],
             "iDisplayLength": 25,
             "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
-                          { "sWidth": "25%", "bSortable": true, "sClass": "dataColProducts" },
-                          { "sWidth": "5%", "bSortable": true, "sClass": "dataColInv hide-on-mobile" },
-                          { "sWidth": "10%", "bSortable": true, "sClass": "dataColCats hide-on-mobile" },
-                          { "sWidth": "10%", "bSortable": true, "sClass": "dataColClass hide-on-mobile" },
-                          { "sWidth": "5%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },
-                          { "sWidth": "10%", "bSortable": true, "sClass": "dataColQty hide-on-tablet" },
-                          { "sWidth": "8%", "bSortable": true, "sClass": "dataColFeat hide-on-mobile" },
-                          { "sWidth": "8%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile" },
-                          { "sWidth": "19%", "bSortable": false, "sClass": "dataColAction" }]
+                          { "sWidth": "30%", "bSortable": true, "sClass": "dataColProducts" },
+                          { "sWidth": "10%", "bSortable": false, "sClass": "dataColCats hide-on-tablet" },
+                          { "sWidth": "10%", "bSortable": false, "sClass": "dataColClass hide-on-tablet" },
+                          { "sWidth": "10%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },
+                          { "sWidth": "5%", "bSortable": false, "sClass": "dataColQty hide-on-mobile" },
+                          { "sWidth": "5%", "bSortable": false, "sClass": "dataColStatus hide-on-mobile" },
+                          { "sWidth": "30%", "bSortable": false, "sClass": "dataColAction no-wrap" }]
           }); 
           $('#dataTable').responsiveTable();
                

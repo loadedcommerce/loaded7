@@ -73,11 +73,11 @@ class lC_Products_Admin {
       $cnt = 0;
       foreach ($Qcategories as $cat) {
         if ($cnt == 0) {
-          $categories = '<span class="tag with-small-padding mid-margin-right' . (($cat['status'] == 1) ? ' green-bg' : ' red-bg') . '">' . $cat['name'] . '</span>';
+          $categories = '<small class="tag mid-margin-right glossy ' . (($cat['status'] == 1) ? ' green-gradient' : ' red-gradient') . '">' . $cat['name'] . '</small>';
         } 
         if ($cnt == 1) {
           $more_title = $cat['name'];
-          $categories .= '<span class="tag with-small-padding mid-margin-right green-bg with-tooltip" title="' . $catCount . ' ' . (($catCount > 1) ? $lC_Language->get('text_more_categories') : $lC_Language->get('text_more_category')) . '">...</span>';
+          $categories .= '<small class="tag mid-margin-right glossy green-gradient with-tooltip" title="' . $catCount . ' ' . (($catCount > 1) ? $lC_Language->get('text_more_categories') : $lC_Language->get('text_more_category')) . '">...</small>';
         } 
         $cnt++;
       }
@@ -94,7 +94,7 @@ class lC_Products_Admin {
       $products_status = ($Qproducts->valueInt('products_status') === 1);
       $products_keyword  = $Qproducts->value('products_keyword');
 
-      if ( $Qproducts->valueInt('has_children') === 1 ) {
+      /*if ( $Qproducts->valueInt('has_children') === 1 ) {
         $product_icon = 'icon-path icon-orange icon-size2';
         $product_icon_title = $lC_Language->get('text_inventory_control_has_children');
         $qtyArr = self::getMinMax($Qproducts->valueInt('products_id'));
@@ -108,12 +108,12 @@ class lC_Products_Admin {
         $products_quantity =  $qtyArr['low'] . ' - ' . $qtyArr['high'];
         $priceArr = self::getMinMax($Qproducts->valueInt('products_id'), 'products_price');
         $price =  $lC_Currencies->format($priceArr['low']) . ' - ' . $lC_Currencies->format($priceArr['high']);        
-      } else{
+      } else {
         $product_icon = 'icon-stop icon-anthracite icon-size2';
-        $product_icon_title = $lC_Language->get('text_inventory_control_simple');
+        $product_icon_title = $lC_Language->get('text_inventory_control_simple');*/
         $products_quantity = $Qproducts->valueInt('products_quantity');
         $price = $lC_Currencies->format($Qproducts->value('products_price'));
-      }
+      //}
       
       if ( $Qproducts->valueInt('has_children') === 1 ) {
         $Qvariants = $lC_Database->query('select min(products_price) as min_price, max(products_price) as max_price, sum(products_quantity) as total_quantity, min(products_status) as products_status from :table_products where parent_id = :parent_id');
@@ -131,6 +131,15 @@ class lC_Products_Admin {
         }
         $product_icon = 'icon-paperclip icon-blue';
       }
+      
+      $Qspecials = $lC_Database->query('select specials_new_products_price, status from :table_specials where products_id = :products_id');
+      $Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
+      $Qspecials->bindInt(':products_id', $Qproducts->valueInt('products_id'));
+      $Qspecials->execute();
+      
+      if ($Qspecials->numberOfRows() > 0) {
+        $price = $price . ' <span class="tag glossy with-tooltip' . (($Qspecials->valueInt('status') == 1) ? ' red-gradient' : ' grey-gradient') . '" title="' . (($Qspecials->valueInt('status') == 1) ? $lC_Language->get('text_special_enabled') : $lC_Language->get('text_special_disabled')) . '">' . $Qspecials->value('specials_new_products_price') . '</span>';
+      }
 
       $extra_data = array('products_cost_formatted' => $cost,
                           'products_price_formatted' => $price,
@@ -140,26 +149,33 @@ class lC_Products_Admin {
                           'products_keyword' => $products_keyword);
 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qproducts->valueInt('products_id') . '" id="' . $Qproducts->valueInt('products_id') . '"></td>';
-      $products = '<td>' . $lC_Image->show($Qimage->value('image'), '', 'class="mid-margin-right"', 'listing') . '<a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')">' . $Qproducts->value('products_name') . ' <span class="small hide-on-mobile grey bold">(' . $Qproducts->value('products_model') . ')</span></a></td>';
-      $inv = '<td><span class="' . $product_icon . ' with-tooltip" title="' . $product_icon_title . '"></span></td>';
+      $products = '<td>' . $lC_Image->show($Qimage->value('image'), '', 'class="mid-margin-right float-left" width="28" height="28"', 'mini') . '<a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')" class="bold">' . $Qproducts->value('products_name') . '</a><br /><span class="small grey">' . $Qproducts->value('products_model') . '</span></td>';
+      //$inv = '<td><span class="' . $product_icon . ' with-tooltip" title="' . $product_icon_title . '"></span></td>';
       $cats = '<td>' . $categories . '</td>';
       $categories = null;
       $class = '<td>' . $lC_Language->get('text_common') . '</td>';
       $price = '<td>' . $price . '</td>';
       $qty = '<td>' . $products_quantity . '</td>';
-      $feat = '<td>str</td>';
       $status = '<td><span class="align-center" id="status_' . $Qproducts->valueInt('products_id') . '" onclick="updateStatus(\'' . $Qproducts->valueInt('products_id') . '\', \'' . (($Qproducts->valueInt('products_status') == 1) ? 0 : 1) . '\');">' . (($Qproducts->valueInt('products_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_product') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_product') . '"></span>') . '</span></td>'; 
 
-      $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qproducts->valueInt('products_id') . '&cID=' . $category_id . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="copyProduct(\'' . $Qproducts->valueInt('products_id') . '\', \'' . urlencode($Qproducts->value('products_name')) . '\')') . '" class="button icon-pages with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_copy') . '"></a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteProduct(\'' . $Qproducts->valueInt('products_id') . '\', \'' . urlencode($Qproducts->value('products_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                 </span></td>';
-      $result['aaData'][] = array("$check", "$products", "$inv", "$cats", "$class", "$price", "$qty", "$feat", "$status", "$action");
+      $action = '<td class="align-right vertical-center">
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qproducts->valueInt('products_id') . '&cID=' . $category_id . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="copyProduct(\'' . $Qproducts->valueInt('products_id') . '\', \'' . urlencode($Qproducts->value('products_name')) . '\')') . '" class="button icon-pages with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_copy') . '"></a>
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="copyProduct(\'' . $Qproducts->valueInt('products_id') . '\', \'' . urlencode($Qproducts->value('products_name')) . '\')') . '" class="button icon-monitor with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_copy') . '"></a>
+                   </span>
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteProduct(\'' . $Qproducts->valueInt('products_id') . '\', \'' . urlencode($Qproducts->value('products_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   </span>
+                 </td>';
+      $result['aaData'][] = array("$check", "$products"/*, "$inv"*/, "$cats", "$class", "$price", "$qty", "$status", "$action");
       $result['entries'][] = array_merge($Qproducts->toArray(), $extra_data);
     }
 
     $Qproducts->freeResult();
+    $Qproductscategories->freeResult();
+    $Qimage->freeResult();
+    $Qspecials->freeResult();
 
     return $result;
   }
@@ -2228,6 +2244,6 @@ class lC_Products_Admin {
     $Qupdate->execute();
       
     return true;
-  }  
+  }
 }
 ?>
