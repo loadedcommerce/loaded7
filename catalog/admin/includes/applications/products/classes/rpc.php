@@ -389,7 +389,8 @@ class lC_Products_Admin_rpc {
   */
   public static function getSimpleOptionEntryData() {
     $result = lC_Products_Admin::getSimpleOptionEntryData($_GET);
-    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    
+    if (!isset($result['rpcStatus'])) $result['rpcStatus'] = RPC_STATUS_SUCCESS;
 
     echo json_encode($result);
   }     
