@@ -44,7 +44,12 @@ class lC_Variants_radio_buttons extends lC_Variants_Abstract {
         $group_id = $val['group_id'];
         $group_title = $val['group_title'];    
                     
-        $string .= '<div class="radio no-margin-top small-margin-bottom"><label><input type="radio" ' . (($cnt == 0) ? 'checked="checked"' : '') . ' name="simple_options[' . $group_id . ']" value="' . $val['value_id'] . '" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '"><span style="font-size:.9em;">' . ' ' . $val['value_title'] . ' ' . $price_formatted . '</span></label></div>';
+        $string .= '<div class="radio no-margin-top small-margin-bottom mid-margin-left">
+                      <label>
+                        <input type="radio" ' . (($cnt == 0) ? 'checked="checked"' : '') . ' name="simple_options[' . $group_id . ']" value="' . $val['value_id'] . '" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '">
+                        <span style="font-size:.9em;">' . ' ' . $val['value_title'] . ' ' . $price_formatted . '</span>
+                      </label>
+                    </div>';
         $cnt++;
       }                 
        
