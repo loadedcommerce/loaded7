@@ -243,7 +243,7 @@
               <td class="hide-below-480"></td>
               <td class="hide-below-480"></td>
               <td class="no-wrap small-padding-top bolder" align="right"><?php echo $lC_Language->get('text_product_sub_total'); ?></td>
-              <td class="small-padding-top bolder" align="right"><?php echo $oInfo->get('orderTotal'); ?></td>
+              <td class="small-padding-top bolder" align="right"><?php echo $oInfo->get('orderSubTotal'); ?></td>
               <td class="show-below-480"></td>
             </tr>
           </tbody>
