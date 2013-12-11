@@ -22,6 +22,12 @@ if ($lC_Payment->hasIframeParams()) {
 }
 $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
 $isIE = (isset($_SESSION['browserName']) && $_SESSION['browserName'] == 'msie') ? true : false;
+if ($isIE && $lC_Payment->selected_module = 'lC_Payment_authorizenet_cc') {
+  $fWidth = '650px';
+  $fHeight = '550px';
+  $fScroll = 'yes';
+  $fStyle = null;
+}
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <div class="row">
@@ -83,7 +89,8 @@ $isIE = (isset($_SESSION['browserName']) && $_SESSION['browserName'] == 'msie') 
               <?php
             } else {
               ?>
-                <div class="col-sm-12 col-lg-12 no-padding-left large-margin-bottom">
+              <div class="col-sm-1 col-lg-1"></div>
+              <div class="col-sm-11 col-lg-11">
                 <?php 
             } 
             ?>

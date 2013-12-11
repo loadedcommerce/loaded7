@@ -479,7 +479,7 @@ class utility {
     elseif ((strpos($userAgent,'safari')) != false && (strpos($userAgent,'chrome')) == false && (strpos($userAgent,'chrome')) == false){ 
       $name = 'safari'; 
     } 
-    elseif (preg_match('/msie/', $userAgent)) { 
+    elseif (preg_match('/msie/', $userAgent) || preg_match('/trident/', $userAgent)) { 
       $name = 'msie'; 
     } 
     elseif ((strpos($userAgent,'firefox')) != false) { 
