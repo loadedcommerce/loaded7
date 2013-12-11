@@ -40,10 +40,10 @@ class lC_Access {
 
       foreach ($lC_DirectoryListing->getFiles() as $file) {
         $modules[substr($file['name'], 0, strrpos($file['name'], '.'))] = '99';
-      }
-      
-      $modulesPlusAddons = lC_Addons_Admin::getModulesAccessTopAdmin($modules); 
+      }  
     }
+    
+    $modulesPlusAddons = lC_Addons_Admin::getModulesAccessTopAdmin($modules);
 
     return $modulesPlusAddons;
   }
@@ -52,7 +52,7 @@ class lC_Access {
     global $lC_Language, $lC_Vqmod;
 
     $access = array();
-
+ 
     foreach ( $_SESSION['admin']['access'] as $module => $level) {
       if ((int)$level >= 1) { // at least View access
         if ( file_exists('includes/modules/access/' . $module . '.php') ) {
