@@ -21,6 +21,7 @@ if ($lC_Payment->hasIframeParams()) {
   $fStyle = null;
 }
 $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(), 0, strpos($lC_Payment->getIframeURL(), '?')) : (($lC_Payment->hasRelayURL()) ?  $lC_Payment->getRelayURL() : NULL);
+$isIE = (isset($_SESSION['browserName']) && $_SESSION['browserName'] == 'msie') ? true : false;
 ?>
 <!--content/checkout/checkout_payment_template.php start-->
 <div class="row">
@@ -60,22 +61,32 @@ $secureUrl = ($lC_Payment->hasIframeURL()) ? substr($lC_Payment->getIframeURL(),
                 document.write(output);            
               </script>   
             </div>
-            <div class="col-sm-4 col-lg-4">
-              <div class="well">
-                <span class="strong"><?php echo $lC_Language->get('text_amount_due'); ?></span>
-                <span class="pull-right strong"><?php echo $lC_Currencies->format($lC_ShoppingCart->getTotal()); ?></span>
+            <?php 
+            if (!$isIE) {
+              ?>
+              <div class="col-sm-4 col-lg-4">
+                <div class="well">
+                  <span class="strong"><?php echo $lC_Language->get('text_amount_due'); ?></span>
+                  <span class="pull-right strong"><?php echo $lC_Currencies->format($lC_ShoppingCart->getTotal()); ?></span>
+                </div>
+                <div class="well relative no-padding-bottom">
+                  <h4 class="no-margin-top"><?php echo $lC_Language->get('bill_to_address'); ?></h4>
+                  <address>
+                    <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>                
+                  </address>
+                  <div class="btn-group clearfix absolute-top-right">
+                    <form action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>" method="post"><button type="button" onclick="$(this).closest('form').submit();" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></form>
+                  </div>                  
+                </div>
               </div>
-              <div class="well relative no-padding-bottom">
-                <h4 class="no-margin-top"><?php echo $lC_Language->get('bill_to_address'); ?></h4>
-                <address>
-                  <?php echo lC_Address::format($lC_ShoppingCart->getBillingAddress(), '<br />'); ?>                
-                </address>
-                <div class="btn-group clearfix absolute-top-right">
-                  <form action="<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment_address', 'SSL'); ?>" method="post"><button type="button" onclick="$(this).closest('form').submit();" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button></form>
-                </div>                  
-              </div>
-            </div>
-            <div class="col-sm-8 col-lg-8 no-padding-left large-margin-bottom">
+              <div class="col-sm-8 col-lg-8 no-padding-left large-margin-bottom">
+              <?php
+            } else {
+              ?>
+                <div class="col-sm-12 col-lg-12 no-padding-left large-margin-bottom">
+                <?php 
+            } 
+            ?>
               <div id="checkoutConfirmationDetails"> 
                 <div id="loading-container"><p id="iloader"></p></div>
                 <?php  

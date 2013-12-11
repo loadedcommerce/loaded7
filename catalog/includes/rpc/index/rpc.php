@@ -17,7 +17,10 @@ class lC_Index_rpc {
   public static function setMediaType() {
     $_SESSION['mediaType'] = $_GET['type'];
     $_SESSION['mediaSize'] = $_GET['size'];
-
+    $browserArr = utility::detectBrowser();
+    $_SESSION['browserName'] = $browserArr['name'];
+    $_SESSION['browserVersion'] = $browserArr['version'];
+    
     $result['rpcStatus'] = '1';
     
     echo json_encode($result);

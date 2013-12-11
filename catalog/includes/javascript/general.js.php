@@ -37,7 +37,7 @@ $(document).ready(function() {
   } else {
     $('#debug-info-container').hide();
   }  
-  
+   
   // run this last - determine media type
   setTimeout('_setMediaType()', 1000);
 

@@ -466,6 +466,39 @@ class utility {
     } 
     
     return false;
-  }  
+  }
+  
+  public static function detectBrowser() { 
+    $userAgent = strtolower($_SERVER['HTTP_USER_AGENT']); 
+    if ((substr($_SERVER['HTTP_USER_AGENT'],0,6)=="Opera/") || (strpos($userAgent,'opera')) != false ){ 
+      $name = 'opera';
+    } 
+    elseif ((strpos($userAgent,'chrome')) != false) { 
+      $name = 'chrome'; 
+    } 
+    elseif ((strpos($userAgent,'safari')) != false && (strpos($userAgent,'chrome')) == false && (strpos($userAgent,'chrome')) == false){ 
+      $name = 'safari'; 
+    } 
+    elseif (preg_match('/msie/', $userAgent)) { 
+      $name = 'msie'; 
+    } 
+    elseif ((strpos($userAgent,'firefox')) != false) { 
+      $name = 'firefox'; 
+    } 
+    else { 
+      $name = 'unrecognized'; 
+    } 
+    if (preg_match('/.+(?:me|ox|it|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches) && $browser['name']=='safari' ) { 
+      $version = $matches[1]; 
+    }
+    if (preg_match('/.+(?:me|ox|it|on|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches) && $browser['name']!='safari' ) { 
+      $version = $matches[1]; 
+    }
+    else { 
+      $version = 'unknown'; 
+    } 
+
+    return array('name' => $name, 'version' => $version); 
+  } 
 } 
 ?>
