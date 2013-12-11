@@ -396,7 +396,7 @@ $(document).ready(function() {
   }
   
   $(".go-pro-menu-ad").on('click', function(){
-    window.open("http://www.loadedcommerce.com/loaded-pre-order-p-395.html");    
+    window.open("http://www.loadedcommerce.com/pro");    
   });  
   
   //check for image resize flag and resize images if flag is set
