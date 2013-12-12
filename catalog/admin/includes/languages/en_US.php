@@ -127,6 +127,7 @@ icon_upload = Upload
 icon_user_female = Female
 icon_user_male = Male
 icon_view = View
+icon_view_in_catalog = View in catalog
 icon_processing = Processing ...
 
 introduction_profile_pass_change = Please make the necessary changes for this administrator.

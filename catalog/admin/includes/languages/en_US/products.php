@@ -239,6 +239,7 @@ text_product_class_upsell_desc = Product Class Lorem ipsum dolor sit amet, conse
 text_additional_images_upsell_title = Additional Images
 text_additional_images_upsell_desc = Additional Images Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. 
 text_no_options_defined = No Options Defined
+text_view_in_catalog = View in catalog
 
 info_bubble_content_image = Default Product Image
 info_bubble_content_name =  Product Name (required)
