@@ -657,6 +657,9 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
   <script>
     $(document).ready(function() {
       updateProductFilter();
+      setTimeout(function() {
+        $("#products_categories_filter").show();
+      }, 1000);
     });
 
     function doSelectFunction(e) {
