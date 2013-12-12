@@ -667,8 +667,8 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       }
     }
 
-    function updateProductFilter() {
-      var cid = $("#cid").val();
+    function updateProductFilter(filter) {
+      var cid = filter;
       var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';            
       var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA&cid=CID'); ?>';
       var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getCategoriesArray&cid=CID'); ?>';
@@ -682,13 +682,6 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
             return false;
           }
-          $("#cid").empty();
-          $.each(data.categoriesArray, function(val, text) {
-            var selected = (cid == val) ? 'selected="selected"' : '';
-            $("#cid").append(
-              $("<option " + selected + "></option>").val(val).html(text)
-            );
-          });
           oTable = $('#dataTable').dataTable({
             "bProcessing": true,
             "sAjaxSource": dataTableDataURL.replace('CID', cid).replace('MEDIA', $.template.mediaQuery.name),

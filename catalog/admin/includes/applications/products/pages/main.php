@@ -30,41 +30,54 @@
   .sorting:before { width: 0; margin-left: 0; }  
   </style>
   <div class="with-padding-no-top">
-    <form name="batch" id="batch" action="#" method="post">
-    <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
-      <thead>
-        <tr>
-          <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
-          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_products'); ?></th>
-          <th scope="col" class="align-left hide-on-tablet"><?php echo $lC_Language->get('table_heading_categories'); ?></th>
-          <th scope="col" class="align-left hide-on-tablet"><?php echo $lC_Language->get('table_heading_class'); ?></th>
-          <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_price'); ?></th>
-          <th scope="col" class="align-center hide-on-mobile"><?php echo $lC_Language->get('table_heading_quantity'); ?></th>
-          <th scope="col" class="align-center hide-on-mobile no-wrap"><?php echo $lC_Language->get('table_heading_status'); ?></th>
-          <th scope="col" class="align-right">
-           <span class="button-group compact" style="white-space:nowrap;">
-             <a style="display:none;" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&cID=' . $category_id . '&action=save')); ?>" title="<?php echo $lC_Language->get('button_new_product'); ?>"></a>
-             <a href="javascript:void(0);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a>
-           </span>
-           <span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span>
-          </th>        
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th colspan="10">&nbsp;</th>
-        </tr>
-      </tfoot>
-    </table>
-    <div class="selectContainer">
-      <select <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onchange="doSelectFunction(this);"'); ?> name="selectAction" id="selectAction" class="select blue-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
-        <option value="0" selected="selected">With Selected</option>
-        <option value="copy">Copy</option>
-        <option value="delete">Delete</option>
-      </select>
+    <div id="categories_filter_container">
+      <div id="categories_filter">
+        <form name="products_categories_filter" id="products_categories_filter" action="" onchange="updateProductFilter($('#filter').val());">
+          <label for="filter" class="white mid-margin-right"><?php echo $lC_Language->get('text_categories'); ?>:</label>
+          <select class="input with-small-padding" id="filter" name="filter">
+            <option value="0">Categories</option>
+            <option value="6">Women</option>
+            <option value="7">Men</option>
+          </select>
+          <?php //echo lc_draw_pull_down_menu('filter', /*lC_Products_Admin::getProductsCategoriesArray()*/null, null, 'class="input with-small-padding"');?>
+        </form>
+      </div>
     </div>
+    <form name="batch" id="batch" action="#" method="post">
+      <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
+        <thead>
+          <tr>
+            <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
+            <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_products'); ?></th>
+            <th scope="col" class="align-left hide-on-tablet"><?php echo $lC_Language->get('table_heading_categories'); ?></th>
+            <th scope="col" class="align-left hide-on-tablet"><?php echo $lC_Language->get('table_heading_class'); ?></th>
+            <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_price'); ?></th>
+            <th scope="col" class="align-center hide-on-mobile"><?php echo $lC_Language->get('table_heading_quantity'); ?></th>
+            <th scope="col" class="align-center hide-on-mobile no-wrap"><?php echo $lC_Language->get('table_heading_status'); ?></th>
+            <th scope="col" class="align-right">
+             <span class="button-group compact" style="white-space:nowrap;">
+               <a style="display:none;" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&cID=' . $category_id . '&action=save')); ?>" title="<?php echo $lC_Language->get('button_new_product'); ?>"></a>
+               <a href="javascript:void(0);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a>
+             </span>
+             <span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span>
+            </th>        
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="10">&nbsp;</th>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="selectContainer">
+        <select <?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? NULL : 'onchange="doSelectFunction(this);"'); ?> name="selectAction" id="selectAction" class="select blue-gradient glossy<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 4) ? ' disabled' : NULL); ?>">
+          <option value="0" selected="selected">With Selected</option>
+          <option value="copy">Copy</option>
+          <option value="delete">Delete</option>
+        </select>
+      </div>
     </form>
     <div class="clear-both"></div>
     <div class="six-columns twelve-columns-tablet">
