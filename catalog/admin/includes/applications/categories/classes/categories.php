@@ -303,7 +303,7 @@ class lC_Categories_Admin {
       lC_Cache::clear('category_tree');
       lC_Cache::clear('also_purchased');
 
-      return true;
+      return $coupon_id; // used for the save_close buttons
     }
 
     $lC_Database->rollbackTransaction();
