@@ -13,7 +13,7 @@
   @license    http://loadedcommerce.com/license.html
 */
 
-function button_save_close($save = false, $close = true, $save_close = false){
+function button_save_close($save = false, $save_close = false, $close = true){
 	global $lC_Language, $lC_Template;
 
 	?>

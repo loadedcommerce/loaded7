@@ -47,7 +47,7 @@ class lC_Application_Categories_Actions_save extends lC_Application_Categories {
 
           if ( is_numeric($id) ) {
             
-            if(!empty($_POST['save_close'])){
+            if(empty($_POST['save_close'])){
 
               lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $id . '&action=save&cid=' . $_GET['cid']));
             }else{

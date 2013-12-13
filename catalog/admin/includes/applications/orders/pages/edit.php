@@ -66,8 +66,8 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
             <p class="button-height" align="right">
                <?php
 
-              $close = lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule());
-              button_save_close(false, $close);
+               $close = lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule());
+               button_save_close(false, false, $close);
 
               ?>
               <select id="orders_edit_select" class="green-gradient select expandable-list" onchange="ordersEditSelect('<?php echo $oInfo->get('customerId'); ?>', '<?php echo $_GET[$lC_Template->getModule()]; ?>', this.value);">
