@@ -183,6 +183,8 @@
     <div class="six-columns twelve-columns-tablet">
       <div id="buttons-menu-div-listing">
         <div id="buttons-container" style="position: relative;" class="clear-both">
+          <div class="with-padding align-right">
+           <p class="button-height">
           <?php
 
           $save = (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '' : ' onclick="validateForm(\'#coupon\');"');
@@ -190,6 +192,8 @@
           button_save_close($save, $close);
 
           ?>
+        </p>
+      </div>
         </div>
       </div>
     </div>

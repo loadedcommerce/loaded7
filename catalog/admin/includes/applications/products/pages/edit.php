@@ -266,13 +266,15 @@ function getTaxClassOptionsString($id = null, $esc = false) {
     <div class="six-columns twelve-columns-tablet margin-bottom">
       <div id="buttons-menu-div-listing">
         <div id="buttons-container" style="position: relative;" class="clear-both">
-          <?php
+          <div class="with-padding align-right">
+              <p class="button-height">
+              <?php
 
-          $save = (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '' : ' onclick="validateForm(\'#product\');"');
-          $close = lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule());
-          button_save_close($save, $close);
+              $save = (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '' : ' onclick="validateForm(\'#product\');"');
+              $close = lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule());
+              button_save_close($save, $close);
 
-          ?>
+              ?>
               <!--<select class="select expandable-list"> 
                 <option id="" value="">Related</option>
                 <option id="create_order" value="create_order">Create Order</option>
@@ -286,6 +288,8 @@ function getTaxClassOptionsString($id = null, $esc = false) {
                 <option id="save" value="save">Save</option>
                 <option id="apply_changes" value="apply_changes">Apply</option>
               </select>&nbsp;-->
+            </p>
+          </div>
           </div>
         </div>
       </div>

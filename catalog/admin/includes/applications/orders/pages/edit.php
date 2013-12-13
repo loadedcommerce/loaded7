@@ -64,12 +64,12 @@ if ( is_numeric($_GET[$lC_Template->getModule()]) ) {
         <div id="buttons-container" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
-              <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>">
-                <span class="button-icon blue-gradient glossy">
-                  <span class="icon-list"></span>
-                </span>
-                <span><?php echo $lC_Language->get('button_back_to_list'); ?></span>
-              </a>&nbsp;
+               <?php
+
+              $close = lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule());
+              button_save_close(false, $close);
+
+              ?>
               <select id="orders_edit_select" class="green-gradient select expandable-list" onchange="ordersEditSelect('<?php echo $oInfo->get('customerId'); ?>', '<?php echo $_GET[$lC_Template->getModule()]; ?>', this.value);">
                 <option value=""><?php echo $lC_Language->get('text_actions'); ?></option>
                 <option value="invoice"><?php echo $lC_Language->get('text_print_invoice'); ?></option>

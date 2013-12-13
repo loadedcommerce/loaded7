@@ -13,36 +13,31 @@
   @license    http://loadedcommerce.com/license.html
 */
 
-function button_save_close($save, $close = false, $save_close = true){
+function button_save_close($save = false, $close = false, $save_close = true){
 	global $lC_Language, $lC_Template;
 
 	?>
-	<div class="with-padding align-right">
-		<p class="button-height">
+	<?php if($save_close || $save){ ?>
+	<span class="button-group">
 
-		<span class="button-group">
-
-			<button type="button" <?php echo $save; ?> class="button big icon-tick green-gradient"><?php echo $lC_Language->get('button_save'); ?></button>
-
-			<?php if($save_close){ ?>
-			<button type="submit" name="save_close" value="true" <?php echo $save; ?>  class="button big icon-squared-cross green-gradient"><?php echo $lC_Language->get('button_save_close'); ?></button>
-			<?php } ?>
-
-		</span>
-
-		<?php if($close){ ?>
-		<span class="button-group">
-
-			<a href="<?php echo $close; ?>" class="button big icon-cross-round red-gradient"></a>
-
-		</span>
+		<?php if($save){ ?>
+		<button type="button" <?php echo $save; ?> class="button big icon-tick green-gradient"><?php echo $lC_Language->get('button_save'); ?></button>
+		<?php } ?>
+		
+		<?php if($save_close){ ?>
+		<button type="submit" name="save_close" value="true" <?php echo $save; ?>  class="button big icon-squared-cross green-gradient"><?php echo $lC_Language->get('button_save_close'); ?></button>
 		<?php } ?>
 
-    </p>
- </div>
- <?php if($save_close){ ?>
-			<?php //echo lc_draw_hidden_field('save_close', '', 'id="save_close"'); ?>
-			<?php } ?>
+	</span>
+	<?php } ?>
+	
+	<?php if($close){ ?>
+	<span class="button-group">
+
+		<a href="<?php echo $close; ?>" class="button big icon-cross-round red-gradient"></a>
+
+	</span>
+	<?php } ?>
  <?php
 }
 
