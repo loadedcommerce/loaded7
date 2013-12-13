@@ -316,7 +316,7 @@ class lC_Products_Admin {
     $products_description = $lC_ObjectInfo->get('products_description');
     $products_url = $lC_ObjectInfo->get('products_url');
 
-    $result['previewHtml'] = '<div style="background-color: #fff3e7;">';
+    $result['previewHtml'] = '<div>';
     foreach ( $lC_Language->getAll() as $l ) {
       $result['previewHtml'] .= '<span id="lang_' . $l['code'] . '"' . (($l['code'] == $lC_Language->getCode()) ? ' class="highlight"' : '') . '><a href="javascript:toggleDivBlocks(\'pName_\', \'pName_' . $l['code'] . '\'); toggleClass(\'lang_\', \'lang_' . $l['code'] . '\', \'highlight\', \'span\');">' . $lC_Language->showImage($l['code']) . '</a></span>&nbsp;&nbsp;';
     }

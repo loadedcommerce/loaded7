@@ -32,11 +32,10 @@
   <div class="with-padding-no-top">
     <div id="categories_filter_container">
       <div id="categories_filter">
-        <form name="products_categories_filter" id="products_categories_filter" style="display:none;" action="" onchange="updateProductFilter($('#filter').val());">
+        <form name="products_categories_filter" id="products_categories_filter" action="" onchange="updateProductFilter($('#filter').val());">
           <label for="filter" class="white mid-margin-right"><?php echo $lC_Language->get('text_categories'); ?>:</label>
           <select class="input with-small-padding" id="filter" name="filter">
             <option value=""><?php echo $lC_Language->get('text_all'); ?></option>
-            <option value="0"><?php echo $lC_Language->get('text_top_category'); ?></option>
             <?php echo lC_Products_Admin::assignedCategoryTreeSelect(3); ?>
           </select>
         </form>

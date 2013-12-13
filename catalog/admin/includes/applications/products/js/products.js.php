@@ -657,10 +657,6 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
   <script>
     $(document).ready(function() {
       updateProductFilter();
-      setTimeout(function() {
-        $("#products_categories_filter").show();
-        $("#dataTable_length").find('select').addClass("input with-small-padding");
-      }, 700);
     });       
 
     function doSelectFunction(e) {
