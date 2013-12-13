@@ -186,4 +186,7 @@ if (!defined('DEFAULT_LANGUAGE')) {
 if (function_exists('ini_get') && ((bool)ini_get('file_uploads') == false) ) {
   $lC_MessageStack->add('header', $lC_Language->get('ms_warning_uploads_disabled'), 'warning');
 }
+
+// Include the button functions
+require_once('includes/functions/buttons.php');
 ?>

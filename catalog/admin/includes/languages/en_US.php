@@ -43,6 +43,7 @@ button_reset = Reset
 button_restore = Restore
 button_retry = Retry
 button_save = Save
+button_save_close = Save & Close
 button_send = Send
 button_send_to_server = Browse & Upload
 button_uninstall = Uninstall
