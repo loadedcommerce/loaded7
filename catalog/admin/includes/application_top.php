@@ -169,6 +169,9 @@ $BarcodeQR = new BarcodeQR();
 // templates general class
 require($lC_Vqmod->modCheck('templates/default/classes/general.php'));
 
+// templates general class
+require($lC_Vqmod->modCheck('templates/default/buttons.php'));
+
 // instantiate the addons class
 require_once('includes/classes/addons.php');
 $lC_Addons = new lC_Addons_Admin();
