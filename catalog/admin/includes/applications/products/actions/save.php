@@ -138,22 +138,18 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       if ( isset($_POST['price_breaks']) ) {
         $data['price_breaks'] = $_POST['price_breaks'];         
       }
-      
-//echo "<pre>";
-//print_r($data);
-//echo "</pre>";
-//die('end run');
 
       if ( $error === false ) {
         $id = lC_Products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);
         if ( is_numeric($id) ) {
 
-          if(isset($_POST['save_close'])){
-
-            lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '&cID=' . $_GET['cID']));
-          }else{
+          if(!empty($_POST['save_close'])){
 
             lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '='.$id.'&action=save&cID=' . $_GET['cID']));
+            
+          }else{
+
+            lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '&cID=' . $_GET['cID']));
           }
         } else {
           $_SESSION['error'] = true;                                                                                            
