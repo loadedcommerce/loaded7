@@ -31,7 +31,7 @@ body.dragging, body.dragging * { cursor: move !important; }
   color: white;
 }
 
-#categories_filter_container { position:absolute; top:95px; left:190px; z-index:2; }
+#categories_filter_container { position:absolute; top:95px; left:30px; z-index:2; }
 
 /* custom media queries */
 @media screen and (min-width: 480px) and (max-width: 767px) {

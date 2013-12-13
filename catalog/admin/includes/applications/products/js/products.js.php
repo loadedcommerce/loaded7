@@ -659,8 +659,9 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       updateProductFilter();
       setTimeout(function() {
         $("#products_categories_filter").show();
-      }, 1000);
-    });
+        $("#dataTable_length").find('select').addClass("input with-small-padding");
+      }, 700);
+    });       
 
     function doSelectFunction(e) {
       if (e.value == 'delete') {
@@ -693,6 +694,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             "bDestroy": true,
             "aaSorting": [[1,'asc']],
             "iDisplayLength": 25,
+            "sDom": '<"top"f>rt<"bottom"ilp>',
             "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
                           { "sWidth": "30%", "bSortable": true, "sClass": "dataColProducts" },
                           { "sWidth": "10%", "bSortable": false, "sClass": "dataColCats hide-on-tablet" },

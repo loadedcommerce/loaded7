@@ -15,17 +15,17 @@
   <hgroup id="main-title" class="thin">
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   </hgroup>
-  <style>
+  <style scoped="scoped">
   .dataColCheck { text-align: center; }
   .dataColProducts { text-align: left; }
-  /*.dataColInv { text-align: center; }*/
   .dataColCats { text-align: left; }
   .dataColClass { text-align: left; }
   .dataColPrice { text-align: left; }
   .dataColQty { text-align: left; }
   .dataColStatus { text-align: center; }
   .dataColAction { text-align: right; }
-  .dataTables_info { position:absolute; bottom: 42px; color:#4c4c4c; }
+  .dataTables_info { position:absolute; bottom:42px; color:#4c4c4c; }
+  .dataTables_length { float: right; }
   .selectContainer { position:absolute; bottom:29px; left:30px }
   .sorting:before { width: 0; margin-left: 0; }  
   </style>
@@ -35,7 +35,8 @@
         <form name="products_categories_filter" id="products_categories_filter" style="display:none;" action="" onchange="updateProductFilter($('#filter').val());">
           <label for="filter" class="white mid-margin-right"><?php echo $lC_Language->get('text_categories'); ?>:</label>
           <select class="input with-small-padding" id="filter" name="filter">
-            <option value="0"></option>
+            <option value=""><?php echo $lC_Language->get('text_all'); ?></option>
+            <option value="0"><?php echo $lC_Language->get('text_top_category'); ?></option>
             <?php echo lC_Products_Admin::assignedCategoryTreeSelect(3); ?>
           </select>
         </form>
