@@ -419,7 +419,9 @@ $(document).ready(function() {
         }
       );
     }
-  }        
+  }
+  
+  $("#dataTable_length").first().find("select").addClass("input");        
 });
 
 function _apiHealthCheckAlert() {

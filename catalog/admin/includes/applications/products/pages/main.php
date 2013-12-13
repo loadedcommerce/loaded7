@@ -7,7 +7,7 @@
   @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: main.php v1.0 2013-08-08 datazen $
-*/
+*/  
 ?>
 <!-- Main content -->
 <section role="main" id="main">
@@ -35,11 +35,9 @@
         <form name="products_categories_filter" id="products_categories_filter" style="display:none;" action="" onchange="updateProductFilter($('#filter').val());">
           <label for="filter" class="white mid-margin-right"><?php echo $lC_Language->get('text_categories'); ?>:</label>
           <select class="input with-small-padding" id="filter" name="filter">
-            <option value="0">Categories</option>
-            <option value="6">Women</option>
-            <option value="7">Men</option>
+            <option value="0"></option>
+            <?php echo lC_Products_Admin::assignedCategoryTreeSelect(3); ?>
           </select>
-          <?php //echo lc_draw_pull_down_menu('filter', /*lC_Products_Admin::getProductsCategoriesArray()*/null, null, 'class="input with-small-padding"');?>
         </form>
       </div>
     </div>

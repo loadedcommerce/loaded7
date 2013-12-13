@@ -169,13 +169,14 @@ class lC_Products_Admin {
                    </span>
                  </td>';
       $result['aaData'][] = array("$check", "$products"/*, "$inv"*/, "$cats", "$class", "$price", "$qty", "$status", "$action");
-      $result['entries'][] = array_merge($Qproducts->toArray(), $extra_data);
+      $result['entries'][] = array_merge($Qproducts->toArray(), $extra_data);      
+      
+      $Qproductscategories->freeResult();
+      $Qimage->freeResult();
+      $Qspecials->freeResult();
     }
 
     $Qproducts->freeResult();
-    $Qproductscategories->freeResult();
-    $Qimage->freeResult();
-    $Qspecials->freeResult();
 
     return $result;
   }
@@ -2244,6 +2245,26 @@ class lC_Products_Admin {
     $Qupdate->execute();
       
     return true;
+  }
+ /*
+  * get assignedCategoryTreeSelect options
+  * 
+  * @access public
+  * @return html
+  */
+  public static function assignedCategoryTreeSelect($spacer = 0) {
+    $assignedCategoryTree = new lC_CategoryTree();
+    $assignedCategoryTree->setBreadcrumbUsage(false);
+    $assignedCategoryTree->setSpacerString('&nbsp;', 3);
+    
+    $assignedCategoryTreeSelect = '';
+    foreach ($assignedCategoryTree->getArray() as $value) {
+      if ($value['mode'] == 'category') {
+        $assignedCategoryTreeSelect .= '<option value="' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
+      }
+    }
+      
+    return $assignedCategoryTreeSelect;
   }
 }
 ?>
