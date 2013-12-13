@@ -149,7 +149,7 @@ class lC_Products_Admin {
                           'products_keyword' => $products_keyword);
 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qproducts->valueInt('products_id') . '" id="' . $Qproducts->valueInt('products_id') . '"></td>';
-      $products = '<td>' . $lC_Image->show($Qimage->value('image'), '', 'class="mid-margin-right float-left" width="28" height="28"', 'mini') . '<a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')" class="bold">' . $Qproducts->value('products_name') . '</a><br /><span class="small grey">' . $Qproducts->value('products_model') . '</span></td>';
+      $products = '<td><div class="products-listing-thumb">' . $lC_Image->show($Qimage->value('image'), '', 'class="mid-margin-right float-left" width="28" height="28"', 'mini') . '</div><div class="products-listing-name-model"><a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')" class="bold">' . $Qproducts->value('products_name') . '</a><br /><span class="small grey">' . $Qproducts->value('products_model') . '</span></div></td>';
       //$inv = '<td><span class="' . $product_icon . ' with-tooltip" title="' . $product_icon_title . '"></span></td>';
       $cats = '<td>' . $categories . '</td>';
       $categories = null;
