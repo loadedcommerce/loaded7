@@ -1827,8 +1827,10 @@ class lC_Products_Admin {
                                 'products_variants_groups_id' => $value['products_variants_groups_id'],
                                 'title' => $value['title'],
                                 'price_modifier' => $Qoption->valueDecimal('price_modifier'));
+      $Qoption->freeResult();
     }
-    $Qoption->freeResult();
+    
+    if (empty($optionsArr[0])) $optionsArr['rpcStatus'] = '-2';
     
     return $optionsArr;
   } 
@@ -1876,7 +1878,7 @@ class lC_Products_Admin {
                     '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
                     '  <td width="16px" style="cursor:pointer;" onclick="toggleSimpleOptionsRow(\'#drope' . $so['options_id'] . '\');"><span id="drope' . $so['options_id'] . '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>' .
                     '  <td width="40%">' . $so['title'] . '<div class="small-margin-top dropall" id="drope' . $so['options_id'] . '" style="display:none;"><span>' . $items . '</span></div></td>' .
-                    '  <td width="30%" class="hide-below-480">' . $so['module'] . '</td>' .
+                    '  <td width="30%" class="hide-below-480">' . ucwords(str_replace('_', ' ', $so['module'])) . '</td>' .
                     '  <td width="10%" class="sort hide-below-480"></td>' .
                     '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleSimpleOptionsStatus(this, \'' . $so['options_id'] . '\');">' . $statusIcon . '</td>' .
                     '  <td width="15%" align="right">

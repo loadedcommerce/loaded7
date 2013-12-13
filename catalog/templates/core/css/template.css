@@ -529,7 +529,11 @@
 #loaded7 .no-padding-right { padding-right:0 !important; }
 
 #loaded7 .full-width { width:100% !important; }
+#loaded7 .three-quarter-width { width:74% !important; }
+#loaded7 .two-third-width { width:65% !important; }
 #loaded7 .half-width { width:49% !important; }
+#loaded7 .third-width { width:32% !important; }
+#loaded7 .quarter-width { width:24% !important; }
 
 #loaded7 .display-inline { display:inline !important; }
 

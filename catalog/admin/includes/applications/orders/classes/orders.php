@@ -401,6 +401,9 @@ class lC_Orders_Admin {
     $result['orderTotalsData'] = '';
     $otcnt = 0; 
     foreach ( $lC_Order->getTotals() as $totals ) {
+      if ($totals['class'] == 'sub_total') {
+        $result['orderSubTotal'] = '<span>' . $totals['text'] . '</span>';
+      }
       $result['orderTotals'] .= '<tr><td align="right" class="small-padding-bottom' . (($totals['class'] == 'total') ? ' bolder btop-anthracite small-padding-top' : null) . '">' . (($totals['class'] == 'total') ? $totals['title'] = $lC_Language->get('text_grand_total') : $totals['title']) . '</td><td align="right" width="100px" class="small-padding-bottom' . (($totals['class'] == 'total') ? ' bolder btop-anthracite small-padding-top' : null) . '">' . $totals['text'] . '</td></tr>';
       // enhanced order admin additions
       $result['orderTotalsData'][$otcnt]['title'] = $totals['title'];
