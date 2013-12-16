@@ -8,7 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: save.php v1.0 2013-08-08 datazen $
 */
-class lC_Application_Featured_products_Actions_save extends lC_Application_Coupons {
+class lC_Application_Featured_products_Actions_save extends lC_Application_Featured_products {
  /*
   * Class constructor
   */
