@@ -46,7 +46,7 @@ function updateStatus(id, val) {
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateStatus&fid=FID&val=VAL'); ?>';
   $.getJSON(jsonLink.replace('FID', id).replace('VAL', val));
   if (val == 1) {               
-    $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'0\')');
+    $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'-1\')');
     $("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable'); ?>"></span>');
   } else {               
     $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'1\')');
