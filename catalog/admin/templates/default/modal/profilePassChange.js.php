@@ -130,10 +130,10 @@ function profilePassChange(id) {
                         }
                         return false;
                       }
+                      modalMessage('<?php echo $lC_Language->get('text_password_updated'); ?>');
                     }
                   );
                   win.closeModal();
-                  modalMessage('<?php echo $lC_Language->get('text_password_updated'); ?>');
                 }
               }
             }
