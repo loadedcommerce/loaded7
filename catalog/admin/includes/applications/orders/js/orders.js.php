@@ -208,14 +208,14 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     );
   }
   /********************************/
-  function editOrderProduct(oid, pid) {
+  function getFormData(oid, opid) {
     var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
     if (parseInt(accessLevel) < 2) {
       $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
       return false;
     }
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getProduct&oid=OID&pid=PID'); ?>'  
-    $.getJSON(jsonLink.replace('OID', parseInt(oid)).replace('PID', parseInt(pid)),
+    $.getJSON(jsonLink.replace('OID', parseInt(oid)).replace('PID', parseInt(opid)),
       function (data) {
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
@@ -225,30 +225,164 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
           return false;
         }
+        // populate product data   
+        $("#oId").html(oid);
+        $("#opId").html(opid);
+        $("#editPrice").val(data.price);
+        $("#editQuantity").val(data.quantity);
+        $("#editProduct").empty();
+        $.each(data.productsArray, function(val, text) {          
+          var selected = (data.products_id == text['products_id']) ? 'selected="selected"' : '';
+          if (data.products_id == text['products_id']) {
+            $("#editProduct").closest("span + *").prevAll("span.select-value:first").text(text['products_name']);
+          }
+          $("#editProduct").append(
+            $("<option " + selected + "></option>").val(text['products_id']).html(text['products_name'])
+          );
+        });
+        $("#editTaxclass").empty();
+        var cnt = 1;
+        $.each(data.taxclassArray.entries, function(val, text) {
+          var selected = (data.tax_class_id == text['tax_class_id']) ? 'selected="selected"' : '';
+          if (cnt == 1) {
+            $("#editTaxclass").append(
+              $("<option></option>").val('0').html('<?php echo $lC_Language->get('text_none'); ?>')
+            );
+            cnt++;
+          }
+          if (data.tax_class_id == text['tax_class_id']) {
+            $("#editTaxclass").closest("span + *").prevAll("span.select-value:first").text(text['tax_class_title']);
+          }
+          $("#editTaxclass").append(
+            $("<option " + selected + "></option>").val(text['tax_class_id']).html(text['tax_class_title'])
+          );
+        });
+        $.modal.all.centerModal();        
+      }
+    );
+  }
 
+  function getProductFormData(pid) {    
+    var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+    if (parseInt(accessLevel) < 2) {
+      $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+      return false;
+    }
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getProductData&pid=PID'); ?>'  
+    $.getJSON(jsonLink.replace('PID', parseInt(pid)),
+      function (data) {
+        if (data.rpcStatus == -10) { // no session
+          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+          $(location).attr('href',url);
+        }
+        if (data.rpcStatus != 1) {
+          $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
+          return false;
+        } 
+        // populate product data   
+        //$("#oId").html(oid);
+        //$("#opId").html(opid);
+        $("#editPrice").val(data.price);
+        $("#editQuantity").val(1);
+        $("#editProduct").empty();
+        $.each(data.productsArray, function(val, text) {          
+          var selected = (data.products_id == text['products_id']) ? 'selected="selected"' : '';
+          if(data.products_id == text['products_id']) {
+            $("#editProduct").closest("span + *").prevAll("span.select-value:first").text(text['products_name']);
+          }
+          $("#editProduct").append(
+            $("<option " + selected + "></option>").val(text['products_id']).html(text['products_name'])
+          );
+        });
+         $("#editTaxclass").empty();
+        var cnt = 1;
+        $.each(data.taxclassArray.entries, function(val, text) {
+          var selected = (data.tax_class_id == text['tax_class_id']) ? 'selected="selected"' : '';
+          if (cnt == 1) {
+            $("#editTaxclass").append(
+              $("<option></option>").val('0').html('<?php echo $lC_Language->get('text_none'); ?>')
+            );
+            cnt++;
+          }
+          if (data.tax_class_id == text['tax_class_id']) {
+            $("#editTaxclass").closest("span + *").prevAll("span.select-value:first").text(text['tax_class_title']);
+          }
+          $("#editTaxclass").append(
+            $("<option " + selected + "></option>").val(text['tax_class_id']).html(text['tax_class_title'])
+          );
+        });
+        $.modal.all.centerModal();        
+      }
+    );
+  }
+  function updateEditProduct() {    
+    var pid = $("#editProduct").val();
+    var oid = parseInt($("#oId").html());
+    var opid = parseInt($("#opId").html());
+    getProductFormData(pid);
+  }
+  function saveEditproduct() {    
+    var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+    if (parseInt(accessLevel) < 2) {
+      $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+      return false;
+    }
+    var pid = $("#editProduct").val();
+    var oid = parseInt($("#oId").html());
+    var opid = parseInt($("#opId").html());
+    var formData = $("#editProductForm").serialize();
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateOrderProductData&oid=OID&opid=OPID&FORMDATA'); ?>'  
+    $.getJSON(jsonLink.replace('OID', parseInt(oid)).replace('OPID', parseInt(opid)).replace('FORMDATA', formData),
+      function (data) {
+        if (data.rpcStatus == -10) { // no session
+          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+          $(location).attr('href',url);
+        }
+        if (data.rpcStatus != 1) {
+          $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
+          return false;
+        } 
+        updateOrderList();        
+        url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders=OID&action=save'); ?>';
+        $(location).attr('href',url.replace('OID', oid));
+      }
+    );
+  }
+  function editOrderProduct(oid, opid) {
+    var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+    if (parseInt(accessLevel) < 2) {
+      $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+      return false;
+    }
         $.modal({
-            content: '<div class="standard-tabs same-height" id="editProductContainer">'+ 
-               '  Hello'+
-               /*'  <div class="clearfix tabs-content">'+
-               '    <div id="section_editProduct" class="with-padding">'+
+        content: '<div id="editProductContainer">'+
+                 '  <div id="section_editProduct">'+
                '      <form name="editProductForm" id="editProductForm" autocomplete="off" action="" method="post">'+               
                '        <p class="button-height inline-label">'+
-               '          <label for="product" class="label" style="width:30%;">'+ $lC_Language->get('text_product') . '</label> <?php echo lc_draw_pull_down_menu('product', null, null, 'id="editProduct"'); ?>
+                 '      <label for="product" class="label"><?php echo $lC_Language->get('text_products'); ?>'+
+                 '      <?php echo lc_draw_pull_down_menu('product', null, null, 'class="input with-small-padding mid-margin-top" id="editProduct" onchange="updateEditProduct();"'); ?>'+
+                 '      </label>'+
                '        </p>'+
                '        <p class="button-height inline-label">'+
-               '          <label for="taxClass" class="label" style="width:30%;">'+ $lC_Language->get('text_taxClass') . '</label> <?php echo lc_draw_pull_down_menu('taxClass', null, null, 'id="editTaxclass"'); ?>
+                 '      <label for="taxClass" class="label"><?php echo $lC_Language->get('text_tax_class'); ?>'+
+                 '      <?php echo lc_draw_pull_down_menu('taxClass', null, null, 'class="input with-small-padding mid-margin-top" id="editTaxclass"'); ?>'+
+                 '      </label>'+
                '        </p>'+
                '        <p class="button-height inline-label">'+
-               '          <label for="price" class="label" style="width:30%;">'+ $lC_Language->get('text_price') . '</label> <?php echo lc_draw_input_field('price', null, 'class="input" style="width:93%;" id="editPrice"') ;?>
+                 '      <label for="price" class="label"><?php echo $lC_Language->get('text_price'); ?>'+
+                 '      <?php echo lc_draw_input_field('price', null, 'class="input mid-margin-top" id="editPrice"'); ?>'+
+                 '      </label>'+
                '        </p>'+
                '        <p class="button-height inline-label">'+
-               '          <label for="quantity" class="label" style="width:30%;">'+ $lC_Language->get('text_quantity') . '</label> <?php echo lc_draw_input_field('quantity', null, 'class="input" style="width:93%;" id="editQuantity"') ;?>
+                 '      <label for="quantity" class="label"><?php echo $lC_Language->get('text_quantity'); ?>'+
+                 '      <?php echo lc_draw_input_field('quantity', null, 'class="input mid-margin-top" id="editQuantity"'); ?>'+
+                 '      </label>'+
                '        </p>'+               
                '      </form>'+
                '    </div>'+               
-               '    <span id="abParentId" style="display:none;"></span>'+
-               '    <span id="abId" style="display:none;"></span>'+
-               '  </div>'+*/
+                 '  <span id="oId" style="display:none;"></span>'+
+                 '  <span id="pId" style="display:none;"></span>'+
+                 '  <span id="opId" style="display:none;"></span>'+
                '</div>',
             title: '<?php echo $lC_Language->get('text_product_details'); ?>',
             width: 600,
@@ -260,6 +394,10 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
               }
             },
             buttons: {
+          '<?php echo $lC_Language->get('button_save'); ?>': {
+            classes:  'glossy',
+            click:    function(win) { saveEditproduct(); }
+          },
               '<?php echo $lC_Language->get('button_close'); ?>': {
                 classes:  'glossy',
                 click:    function(win) { win.closeModal(); }
@@ -267,34 +405,10 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
             },
             buttonsLowPadding: true
         });
-            /*
-        //$("#product_details").html(data.orderProduct);
-        $("#editPrice").html(data.price);
-        $("#editQuantity").html(data.quantity);
-        $("#editProduct").empty();
-        $.each(data.productsArray, function(val, text) {
-          var selected = (data.productsData.products_id == val) ? 'selected="selected"' : '';
-          if(data.productsData.products_id == val) {
-            $("#editProduct").closest("span + *").prevAll("span.select-value:first").text(text);
-          }
-          $("#editProduct").append(
-            $("<option " + selected + "></option>").val(val).html(text)
-          );
-        });
-        $("#editTaxclass").empty();
-        $.each(data.taxclassArray, function(val, text) {
-          var selected = (data.taxclass.id == val) ? 'selected="selected"' : '';
-          if(data.taxclass.id == val) {
-            $("#editTaxclass").closest("span + *").prevAll("span.select-value:first").text(text);
-          }
-          $("#editTaxclass").append(
-            $("<option " + selected + "></option>").val(val).html(text)
-          );
-        });*/
+
+    getFormData(oid, opid);
 
         $.modal.all.centerModal();
-      }
-    );
   }
   /*
   function editOrderProduct(val) {

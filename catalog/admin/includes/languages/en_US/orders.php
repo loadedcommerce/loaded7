@@ -133,6 +133,7 @@ text_last_payment = Last Payment
 text_fulfillment = Fulfillment
 text_tax_class = Tax Class
 text_price = Price 
+text_quantity = Quantity
 text_product_total = Product Total
 text_action = Action
 text_edit = Edit

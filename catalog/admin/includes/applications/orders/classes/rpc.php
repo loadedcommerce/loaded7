@@ -130,5 +130,19 @@ class lC_Orders_Admin_rpc {
     
     echo json_encode($result);
   }
+  public static function getProductData() {
+    $result = lC_Orders_Admin::getProductData($_GET['pid']);
+    if ($result !== false) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    echo json_encode($result);
+  }
+  public static function updateOrderProductData() {
+    $result = lC_Orders_Admin::updateOrderProductData();
+    if ($result !== false) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    echo json_encode($result);
+  }
 }
 ?>

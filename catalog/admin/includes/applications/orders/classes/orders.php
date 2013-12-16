@@ -743,6 +743,20 @@ class lC_Orders_Admin {
     // build a single product string  
     $result['orderProduct'] = ''; 
     foreach ( $lC_Order->getProduct($oid, $pid) as $product ) {
+      $result = $product;
+      require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+      require_once($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
+      $tmpProduct = lC_Products_Admin::get($product['products_id']);
+      $tmpTaxDetails = lC_Tax_classes_Admin::get($tmpProduct['products_tax_class_id']);
+      if ($tmpProduct['products_tax_class_id'] != 0) {
+        $result['tax_class'] = $tmpTaxDetails['tax_class_title'];
+        $result['tax_class_id'] = $tmpProduct['products_tax_class_id'];
+      } else {
+        $result['tax_class'] = 'None';
+        $result['tax_class_id'] = $tmpProduct['products_tax_class_id'];
+      }
+      $result['taxclassArray'] = lC_Tax_classes_Admin::getAll();
+      $result['productsArray'] = lC_Products_Admin::getproductsArray();
       $result['orderProduct'] .= '<div class="mid-padding-bottom">
                                     <label class="label small-padding-bottom" for="products_model">Model: </label>
                                     <span id="products_model" class="bolder">' . $product['model'] . '</span>
@@ -921,13 +935,133 @@ class lC_Orders_Admin {
     $lC_Order = new lC_Order($id);   
     
     foreach ( $lC_Order->getProducts() as $products ) {
-      $tmpProducts = lC_Products_Admin::get($products['productID']);
+      $tmpProducts = lC_Products_Admin::get($products['products_id']);
       $tmpTaxDetails = lC_Tax_classes_Admin:: get($tmpProducts['products_tax_class_id']);
       $products['tax_class'] = $tmpTaxDetails['tax_class_title'];
       $products['stock'] = 'In Stock';
       $ordersproducts[] = $products;
     }
     return $ordersproducts;
+  }
+
+  public static function getProductData($pId) {
+    global $lC_Language, $lC_Database, $lC_Vqmod;
+
+    require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+    require_once($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
+    $productData = lC_Products_Admin::getproductsArray($pId);
+    $result['products_id'] = $productData[0]['products_id'];
+    $result['price'] = $productData[0]['products_price'];
+    $result['tax_class_id'] = $productData[0]['products_tax_class_id'];
+    $result['productsArray'] = lC_Products_Admin::getproductsArray();
+    $result['taxclassArray'] = lC_Tax_classes_Admin::getAll();
+
+
+
+    return $result;
+  }
+  public static function updateOrderProductData() {
+    global $lC_Language, $lC_Database, $lC_Vqmod, $lC_Currencies;
+
+    $oID = $_GET['oid'];
+    $oPID = $_GET['opid'];
+    $products_id = $_GET['product'];
+    $products_price = $_GET['price'];
+    $products_quantity = $_GET['quantity'];
+    $products_tax_class_id = $_GET['taxClass'];
+    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
+    $lC_Order = new lC_Order($oID);
+
+
+    $Qrates = $lC_Database->query('select * from :table_tax_rates where tax_class_id = :tax_class_id');
+    $Qrates->bindTable(':table_tax_rates', TABLE_TAX_RATES);
+    $Qrates->bindInt(':tax_class_id', $products_tax_class_id);    
+    $Qrates->execute();
+    if ($Qrates->numberOfRows()) {
+      $products_tax_rate = $Qrates->value('tax_rate');
+    } else {
+      $products_tax_rate = 0;
+    }
+
+    require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+    $productData = lC_Products_Admin::getproductsArray($products_id);
+    $products_name = $productData[0]['products_name'];
+    $products_model = $productData[0]['products_model'];
+    $products_sku = $productData[0]['products_sku'];
+
+    $Qupdate = $lC_Database->query('update :table_orders_products set products_id = :products_id, products_model = :products_model, products_name = :products_name, products_price= :products_price, products_tax = :products_tax, products_quantity = :products_quantity where orders_products_id = :orders_products_id and orders_id = :orders_id');
+    $Qupdate->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+    $Qupdate->bindInt(':products_id', $products_id);
+    $Qupdate->bindValue(':products_model', $products_model);
+    $Qupdate->bindValue(':products_name', $products_name);
+    $Qupdate->bindValue(':products_price', $products_price);
+    $Qupdate->bindValue(':products_tax', $products_tax_rate);
+    $Qupdate->bindInt(':products_quantity', $products_quantity);        
+    $Qupdate->bindInt(':orders_products_id', $oPID);
+    $Qupdate->bindInt(':orders_id', $oID);
+    //$Qupdate->setLogging($_SESSION['module'], $id);
+    $Qupdate->execute();
+
+
+    $Qproducts = $lC_Database->query('select * from :table_orders_products where orders_id = :orders_id');
+    $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+    $Qproducts->bindInt(':orders_id', $oID);
+    $Qproducts->execute();
+
+    $Total = 0;
+    $Sub_Total = 0;
+    $Tax = 0;
+
+    while ($Qproducts->next()) {
+     $temp_subtotal = $Qproducts->value('products_price') * $Qproducts->value('products_quantity');     
+     $temp_Tax = ($temp_subtotal * ($Qproducts->value('products_tax')/100));
+     $Sub_Total += $temp_subtotal;
+     $Tax += $temp_Tax;
+    }
+
+    $Qtotals = $lC_Database->query('select * from :table_orders_total where orders_id = :orders_id order by sort_order');
+    $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+    $Qtotals->bindInt(':orders_id', $oID);
+    $Qtotals->execute();
+
+    $Total = $Sub_Total + $Tax;
+    while ($Qtotals->next()) {
+      if($Qtotals->value('class') != 'sub_total' && $Qtotals->value('class') != 'tax' && $Qtotals->value('class') != 'total') {
+        $Total += $Qtotals->value('value');        
+      } else {
+        if($Qtotals->value('class') == 'sub_total') {
+          $Qsub_total = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
+          $Qsub_total->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+          $Qsub_total->bindInt(':orders_id', $oID);          
+          $Qsub_total->bindValue(':text', $lC_Currencies->format($Sub_Total, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+          $Qsub_total->bindValue(':value', $Sub_Total);
+          $Qsub_total->bindValue(':class', $Qtotals->value('class'));
+          $Qsub_total->execute();    
+        } else if($Qtotals->value('class') == 'tax') {
+          $Qtax = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
+          $Qtax->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+          $Qtax->bindInt(':orders_id', $oID);          
+          $Qtax->bindValue(':text', $lC_Currencies->format($Tax, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+          $Qtax->bindValue(':value', $Tax);
+          $Qtax->bindValue(':class', $Qtotals->value('class'));
+          $Qtax->execute();
+        }        
+      }
+    }
+    $Qtotals = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
+    $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+    $Qtotals->bindInt(':orders_id', $oID);          
+    $Qtotals->bindValue(':text', $lC_Currencies->format($Total, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+    $Qtotals->bindValue(':value', $Total);
+    $Qtotals->bindValue(':class', 'total');
+    $Qtotals->execute();  
+    require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+    $productData = lC_Products_Admin::getproductsArray($pId);
+    $result['products_id'] = $productData[0]['products_id'];
+    $result['price'] = $productData[0]['products_price'];
+    $result['tax_class_id'] = $productData[0]['products_tax_class_id'];
+    $result['productsArray'] = lC_Products_Admin::getproductsArray();
+    return $result;
   }
 }
 ?>
