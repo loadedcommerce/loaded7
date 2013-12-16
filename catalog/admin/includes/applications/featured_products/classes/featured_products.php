@@ -33,11 +33,11 @@ class lC_Featured_products_Admin {
             
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qfeatured->valueInt('coupons_id') . '" id="' . $Qfeatured->valueInt('id') . '"></td>';
       $name = '<td>' . $Qname->value('products_name') . '</td>';
-      $status = '<td><span id="status_' . $Qfeatured->value('id') . '" onclick="updateStatus(\'' . $Qfeatured->value('id') . '\', \'' . (($Qfeatured->value('status') == 1) ? 0 : 1) . '\');">' . (($Qfeatured->valueInt('status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_featured_product') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_featured_product') . '"></span>') . '</span></td>';
+      $status = '<td><span id="status_' . $Qfeatured->value('id') . '" onclick="updateStatus(\'' . $Qfeatured->valueInt('id') . '\', \'' . (($Qfeatured->valueInt('status') == 1) ? 0 : 1) . '\');">' . (($Qfeatured->valueInt('status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable') . '"></span>') . '</span></td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qfeatured->valueInt('id') . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="copyFeaturedProduct(\'' . $Qfeatured->valueInt('id') . '\')') . '" class="button icon-pages with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_copy') . '"></a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteFeaturedProduct(\'' . $Qfeatured->valueInt('id') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="copyFeaturedProduct(\'' . $Qfeatured->valueInt('id') . '\', \'' . $Qname->value('products_name') . '\')') . '" class="button icon-pages with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_copy') . '"></a>
+                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteFeaturedProduct(\'' . $Qfeatured->valueInt('id') . '\', \'' . $Qname->value('products_name') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>'; 
       $result['aaData'][] = array("$check", "$name", "$status", "$action");
     }
@@ -164,7 +164,7 @@ class lC_Featured_products_Admin {
   * @access public
   * @return array
   */
-  public static function copyCoupon($id) {
+  public static function copy($id) {
     global $lC_Database, $lC_Language;
     
     /*$error = false;
@@ -259,24 +259,13 @@ class lC_Featured_products_Admin {
   public static function delete($id) {
     global $lC_Database;
 
-    /*$error = false;
+    $error = false;
 
     $lC_Database->startTransaction();
 
-    $Qcoupon = $lC_Database->query('delete from :table_coupons where coupons_id = :coupons_id');
-    $Qcoupon->bindTable(':table_coupons', TABLE_COUPONS);
-    $Qcoupon->bindInt(':coupons_id', $id);
-    $Qcoupon->setLogging($_SESSION['module'], $id);
-    $Qcoupon->execute();
-    
-    if ( $lC_Database->isError() ) {
-      $error = true;
-      break;
-    }
-
-    $Qcoupon = $lC_Database->query('delete from :table_coupons_description where coupons_id = :coupons_id');
-    $Qcoupon->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
-    $Qcoupon->bindInt(':coupons_id', $id);
+    $Qcoupon = $lC_Database->query('delete from :table_featured_products where id = :id');
+    $Qcoupon->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
+    $Qcoupon->bindInt(':id', $id);
     $Qcoupon->setLogging($_SESSION['module'], $id);
     $Qcoupon->execute();
     
@@ -293,7 +282,7 @@ class lC_Featured_products_Admin {
 
     $lC_Database->rollbackTransaction();
 
-    return false;*/
+    return false;
   }
  /**
   * Batch delete coupons records
@@ -317,12 +306,12 @@ class lC_Featured_products_Admin {
   public static function updateStatus($id, $val) {
     global $lC_Database;
     
-    /*$lC_Database->startTransaction();
+    $lC_Database->startTransaction();
 
-    $Qupdate = $lC_Database->query('update :table_coupons set status = :status where coupons_id = :coupons_id');
-    $Qupdate->bindTable(':table_coupons', TABLE_COUPONS);
+    $Qupdate = $lC_Database->query('update :table_featured_products set status = :status where id = :id');
+    $Qupdate->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
     $Qupdate->bindInt(':status', $val);
-    $Qupdate->bindInt(':coupons_id', $id);
+    $Qupdate->bindInt(':id', $id);
     $Qupdate->setLogging($_SESSION['module'], $id);
     $Qupdate->execute();
     
@@ -334,7 +323,7 @@ class lC_Featured_products_Admin {
 
     $lC_Database->rollbackTransaction();
 
-    return false;*/
+    return false;
   }
 }
 ?>

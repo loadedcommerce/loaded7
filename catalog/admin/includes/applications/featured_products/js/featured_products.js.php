@@ -43,45 +43,28 @@ $(document).ready(function() {
 function updateStatus(id, val) {
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateStatus&fid=FID&val=VAL'); ?>';
   $.getJSON(jsonLink.replace('FID', id).replace('VAL', val));
-  /*if (val == 1) {               
+  if (val == 1) {               
     $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'0\')');
-    $("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable_coupon'); ?>"></span>');
+    $("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable'); ?>"></span>');
   } else {               
     $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'1\')');
-    $("#status_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_enable_coupon'); ?>"></span>');
-  }*/
+    $("#status_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_enable'); ?>"></span>');
+  }
 }
 
 function validateForm(e) {
   // turn off messages
   jQuery.validator.messages.required = "";
 
-  var bValid = $("#coupon").validate({
+  var bValid = $("#featured_product").validate({
     invalidHandler: function() {
     },
     rules: {
-      <?php
-      foreach ( $lC_Language->getAll() as $l ) {
-        ?>
-        'name[<?php echo $l['id']; ?>]': {
-          required: true,
-        },
-        <?php
-      }
-      ?>
-    },
-    
+    },    
     messages: {
-      <?php
-      foreach ( $lC_Language->getAll() as $l ) {
-        ?>
-        //"products_keyword[<?php //echo $l['id']; ?>]": "<?php //echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
-        <?php
-      }
-      ?>
     } 
   }).form();
-  $("#languageTabs").refreshTabs();
+  
   if (bValid) {
     $(e).submit();
   } 

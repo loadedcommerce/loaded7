@@ -33,7 +33,7 @@ class lC_Featured_products_Admin_rpc {
   * @access public
   * @return json
   */
-  public static function deleteFeaturedProduct() {
+  public static function delete() {
     $deleted = lC_Featured_products_Admin::delete($_GET['fid']);
     
     if ($deleted) {
@@ -81,8 +81,8 @@ class lC_Featured_products_Admin_rpc {
   * @access public
   * @return json
   */
-  public static function copyFeaturedProduct() {
-    $copy = lC_Featured_products_Admin::copyFeatured($_GET['fid']);
+  public static function copy() {
+    $copy = lC_Featured_products_Admin::copy($_GET['fid']);
     
     if ($copy) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;

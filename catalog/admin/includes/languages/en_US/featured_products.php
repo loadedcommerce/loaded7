@@ -10,6 +10,8 @@ heading_title_new_featured_product = New Featured Product
 
 button_new_featured_product = New Featured Product
 
+introduction_delete_featured_product = Please make the necessary changes for this Featured Product
+
 modal_heading_copy_featured_product = Copy Featured Product
 modal_heading_delete_featured_product = Delete Featured Product
 modal_heading_batch_delete_featured_products = Batch Delete Featured Products
