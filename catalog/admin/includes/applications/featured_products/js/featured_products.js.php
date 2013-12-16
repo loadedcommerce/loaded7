@@ -22,9 +22,9 @@ $(document).ready(function() {
     "sPaginationType": paginationType, 
     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
-                  { "sWidth": "50%", "bSortable": true, "sClass": "dataColName" },
+                  { "sWidth": "60%", "bSortable": true, "sClass": "dataColName" },
                   { "sWidth": "10%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile", "sType": "string" },
-                  { "sWidth": "40%", "bSortable": false, "sClass": "dataColAction" }]
+                  { "sWidth": "30%", "bSortable": false, "sClass": "dataColAction" }]
   });
   $('#dataTable').responsiveTable();
   

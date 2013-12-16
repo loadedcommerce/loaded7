@@ -20,26 +20,29 @@ class lC_Featured_products_Admin {
 
     $media = $_GET['media'];
     
-    /*$Qcoupons = $lC_Database->query('select c.coupons_id, c.type, c.code, c.reward, c.purchase_over, c.start_date, c.expires_date, c.uses_per_coupon, c.uses_per_customer, c.restrict_to_products, c.restrict_to_categories, c.restrict_to_customers, c.status, c.notes, cd.name from :table_coupons c, :table_coupons_description cd where c.coupons_id = cd.coupons_id and cd.language_id = :language_id order by c.date_created desc');
-    $Qcoupons->bindTable(':table_coupons', TABLE_COUPONS);
-    $Qcoupons->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
-    $Qcoupons->bindInt(':language_id', $lC_Language->getID());
-    $Qcoupons->execute();*/
+    $Qfeatured = $lC_Database->query('select * from :table_featured_products');
+    $Qfeatured->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
+    $Qfeatured->execute();
     
     $result = array('aaData' => array());
-    /*while ( $Qcoupons->next() ) {      
-      $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcoupons->valueInt('coupons_id') . '" id="' . $Qcoupons->valueInt('coupons_id') . '"></td>';
-      $name = '<td>' . $Qcoupons->value('name') . '<br /><small>' . $Qcoupons->value('notes') . '</small></td>';
-      $status = '<td><span id="status_' . $Qcoupons->value('coupons_id') . '" onclick="updateStatus(\'' . $Qcoupons->value('coupons_id') . '\', \'' . (($Qcoupons->value('status') == 1) ? 0 : 1) . '\');">' . (($Qcoupons->valueInt('status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_coupon') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_coupon') . '"></span>') . '</span></td>';
+    while ( $Qfeatured->next() ) {
+      $Qname = $lC_Database->query('select products_name from :table_products_description where products_id = :products_id');
+      $Qname->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+      $Qname->bindInt(':products_id', $Qfeatured->value('products_id'));
+      $Qname->execute();
+            
+      $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qfeatured->valueInt('coupons_id') . '" id="' . $Qfeatured->valueInt('id') . '"></td>';
+      $name = '<td>' . $Qname->value('products_name') . '</td>';
+      $status = '<td><span id="status_' . $Qfeatured->value('id') . '" onclick="updateStatus(\'' . $Qfeatured->value('id') . '\', \'' . (($Qfeatured->value('status') == 1) ? 0 : 1) . '\');">' . (($Qfeatured->valueInt('status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_featured_product') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_featured_product') . '"></span>') . '</span></td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcoupons->valueInt('coupons_id') . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="copyCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\', \'' . $Qcoupons->value('name') . '\', \'' . $Qcoupons->value('code') . '\')') . '" class="button icon-pages with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_copy') . '"></a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\', \'' . $Qcoupons->value('name') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qfeatured->valueInt('id') . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="copyFeaturedProduct(\'' . $Qfeatured->valueInt('id') . '\')') . '" class="button icon-pages with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_copy') . '"></a>
+                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteFeaturedProduct(\'' . $Qfeatured->valueInt('id') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>'; 
       $result['aaData'][] = array("$check", "$name", "$status", "$action");
-    }*/
+    }
 
-    //$Qcoupons->freeResult;
+    $Qfeatured->freeResult;
 
     return $result;
   }
