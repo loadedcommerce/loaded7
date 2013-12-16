@@ -74,21 +74,5 @@ class lC_Featured_products_Admin_rpc {
 
     echo json_encode($result);
   }
- /*
-  * copy Featured product
-  *
-  * @param int $_GET the featured product id and create a copy in the database 
-  * @access public
-  * @return json
-  */
-  public static function copy() {
-    $copy = lC_Featured_products_Admin::copy($_GET['fid']);
-    
-    if ($copy) {
-      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
-    }  
-
-    echo json_encode($result);
-  }
 }
 ?>

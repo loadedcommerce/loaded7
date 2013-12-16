@@ -18,6 +18,7 @@
   <style>
   .dataColCheck { text-align: center; }
   .dataColName {  }
+  .dataColExpires {  }
   .dataColStatus { text-align: center; }
   .dataColAction { text-align: right; }
   .dataTables_info { position:absolute; bottom:42px; color:#4c4c4c; }
@@ -31,6 +32,7 @@
         <tr>
           <th scope="col" class="hide-on-mobile align-left"><input onclick="toggleCheck();" id="check-all" type="checkbox" value="1" name="check-all"></th>
           <th scope="col"><?php echo $lC_Language->get('table_heading_name'); ?></th>
+          <th scope="col"><?php echo $lC_Language->get('table_heading_expires'); ?></th>
           <th scope="col"><?php echo $lC_Language->get('table_heading_status'); ?></th>
           <th scope="col" class="align-right">
            <span class="button-group compact" style="white-space:nowrap;">
@@ -45,7 +47,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="7">&nbsp;</th>
+          <th colspan="5">&nbsp;</th>
         </tr>
       </tfoot>
     </table>

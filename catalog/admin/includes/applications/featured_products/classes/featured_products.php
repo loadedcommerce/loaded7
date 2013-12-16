@@ -31,15 +31,15 @@ class lC_Featured_products_Admin {
       $Qname->bindInt(':products_id', $Qfeatured->value('products_id'));
       $Qname->execute();
             
-      $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qfeatured->valueInt('coupons_id') . '" id="' . $Qfeatured->valueInt('id') . '"></td>';
+      $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qfeatured->valueInt('id') . '" id="' . $Qfeatured->valueInt('id') . '"></td>';
       $name = '<td>' . $Qname->value('products_name') . '</td>';
+      $expires = '<td>' . lC_DateTime::getShort($Qfeatured->value('expires_date')) . '</td>';
       $status = '<td><span id="status_' . $Qfeatured->value('id') . '" onclick="updateStatus(\'' . $Qfeatured->valueInt('id') . '\', \'' . (($Qfeatured->valueInt('status') == 1) ? 0 : 1) . '\');">' . (($Qfeatured->valueInt('status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable') . '"></span>') . '</span></td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qfeatured->valueInt('id') . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="copyFeaturedProduct(\'' . $Qfeatured->valueInt('id') . '\', \'' . $Qname->value('products_name') . '\')') . '" class="button icon-pages with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_copy') . '"></a>
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteFeaturedProduct(\'' . $Qfeatured->valueInt('id') . '\', \'' . $Qname->value('products_name') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>'; 
-      $result['aaData'][] = array("$check", "$name", "$status", "$action");
+      $result['aaData'][] = array("$check", "$name", "$expires", "$status", "$action");
     }
 
     $Qfeatured->freeResult;
@@ -157,99 +157,6 @@ class lC_Featured_products_Admin {
     return false;*/
   }
  /**
-  * Copy the coupon
-  *
-  * @param integer $id The coupons id used on copy
-  * @param array $data An array containing the coupons information
-  * @access public
-  * @return array
-  */
-  public static function copy($id) {
-    global $lC_Database, $lC_Language;
-    
-    /*$error = false;
-
-    $lC_Database->startTransaction();
-
-    // copy the data from the desired coupon into a new row
-    $Qcoupon = $lC_Database->query('insert into :table_coupons (type, mode, code, reward, purchase_over, start_date, expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, status, date_created, date_modified, sale_exclude, notes) select type, mode, code, reward, purchase_over, start_date, expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, status, date_created, date_modified, sale_exclude, notes from :table_coupons_from where coupons_id = :coupons_id');
-    $Qcoupon->bindTable(':table_coupons', TABLE_COUPONS);
-    $Qcoupon->bindTable(':table_coupons_from', TABLE_COUPONS);
-    $Qcoupon->bindInt(':coupons_id', $id);
-    $Qcoupon->setLogging($_SESSION['module'], $lC_Database->nextID());
-    $Qcoupon->execute();
-    
-    if ( $lC_Database->isError() ) {
-      $error = true;
-      break;
-    }
-    
-    $new_id = $lC_Database->nextID();
-    
-    // get the coupons code to update
-    $Qoldcode = $lC_Database->query('select code from :table_coupons where coupons_id = :coupons_id');
-    $Qoldcode->bindTable(':table_coupons', TABLE_COUPONS);
-    $Qoldcode->bindInt(':coupons_id', $new_id);
-    $Qoldcode->execute();
-    
-    if ( $lC_Database->isError() ) {
-      $error = true;
-      break;
-    }
-     
-    // update the new coupons code
-    $Qcouponcode = $lC_Database->query('update :table_coupons set code = :code where coupons_id = :coupons_id');
-    $Qcouponcode->bindTable(':table_coupons', TABLE_COUPONS);
-    $Qcouponcode->bindInt(':coupons_id', $new_id);
-    $Qcouponcode->bindValue(':code', $Qoldcode->value('code') . '_1');
-    $Qcouponcode->execute();
-    
-    if ( $lC_Database->isError() ) {
-      $error = true;
-      break;
-    }
-    
-    // update the coupons description table
-    if ( !$lC_Database->isError() ) {
-      foreach ( $lC_Language->getAll() as $l ) {
-        // get values to copy from
-        $Qolddescription = $lC_Database->query('select name from :table_coupons_description where coupons_id = :coupons_id and language_id = :language_id');
-        $Qolddescription->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
-        $Qolddescription->bindInt(':coupons_id', $id);
-        $Qolddescription->bindInt(':language_id', $l['id']);
-        $Qolddescription->execute();
-    
-        if ( $lC_Database->isError() ) {
-          $error = true;
-          break;
-        }
-         
-        // insert to new coupon description
-        $Qcoupondescription = $lC_Database->query('insert into :table_coupons_description (coupons_id, language_id, name) values (:coupons_id, :language_id, :name)');
-        $Qcoupondescription->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
-        $Qcoupondescription->bindInt(':coupons_id', $new_id);
-        $Qcoupondescription->bindInt(':language_id', $l['id']);
-        $Qcoupondescription->bindValue(':name', $Qolddescription->value('name') . '_1');
-        $Qcoupondescription->execute();
-        
-        if ( $lC_Database->isError() ) {
-          $error = true;
-          break;
-        }
-      }
-    }
-    
-    if ( $error === false ) {
-      $lC_Database->commitTransaction();
-
-      return true;
-    }
-
-    $lC_Database->rollbackTransaction();
-
-    return false;*/
-  }
- /**
   * Delete the coupons record
   *
   * @param integer $id The coupons id to delete
@@ -292,10 +199,10 @@ class lC_Featured_products_Admin {
   * @return boolean
   */
   public static function batchDelete($batch) {
-    /*foreach ( $batch as $id ) {
-      lC_Coupons_Admin::delete($id);
+    foreach ( $batch as $id ) {
+      lC_Featured_products_Admin::delete($id);
     }
-    return true;*/
+    return true;
   }
  /**
   * Update coupon status db entry

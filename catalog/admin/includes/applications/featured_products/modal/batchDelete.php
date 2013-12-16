@@ -28,12 +28,12 @@ function batchDelete() {
   $.modal({
     content: '<div id="batchDelete">'+
              '  <div id="batchDeleteConfirm">'+
-             '    <p id="batchDeleteConfirmMessage"><?php echo $lC_Language->get('introduction_batch_delete_coupons'); ?>'+
+             '    <p id="batchDeleteConfirmMessage"><?php echo $lC_Language->get('introduction_batch_delete_featured_products'); ?>'+
              '      <p><b>' + decodeURI(name.replace(/\+/g, '%20')) + '</b></p>'+
              '    </p>'+
              '  </div>'+
              '</div>',
-    title: '<?php echo $lC_Language->get('modal_heading_batch_delete_coupons'); ?>',
+    title: '<?php echo $lC_Language->get('modal_heading_batch_delete_featured_products'); ?>',
     width: 300,
     actions: {
       'Close' : {
