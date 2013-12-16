@@ -222,7 +222,11 @@ function addNewCustomer() {
           return false;
         }
         modalMessage('<?php echo $lC_Language->get('text_changes_saved'); ?>');          
-        editCustomer(data.new_customer_id);  
+        oTable.fnReloadAjax();
+        var add_addr = 1;
+        editCustomer(data.new_customer_id,add_addr);  
+        cm = $('#newCustomer').getModalWindow();
+        setTimeout("$(cm).closeModal()", 2300);
       }
     );
     win.closeModal();

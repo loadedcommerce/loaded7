@@ -79,11 +79,11 @@ $aContent .= '  <p class="button-height inline-label">' .
 }
 $aContent .= '<p class="button-height inline-label">' .
               '  <label for="ab_firstname" class="label" style="width:30%;">' . $lC_Language->get('field_first_name') . '</label>' .
-                 lc_draw_input_field('ab_firstname', null, 'class="input" style="width:93%;"') .
+                 lc_draw_input_field('ab_firstname', null, 'class="input" style="width:93%;" id="abFirstname"') .
               '</p>' .
               '<p class="button-height inline-label">' .
               '  <label for="ab_lastname" class="label" style="width:30%;">' . $lC_Language->get('field_last_name') . '</label>' .
-                 lc_draw_input_field('ab_lastname', null, 'class="input" style="width:93%;"') .
+                 lc_draw_input_field('ab_lastname', null, 'class="input" style="width:93%;" id="abLastname"') .
               '</p>';
 if ( ACCOUNT_COMPANY > -1 ) {
   $aContent .=  '<p class="button-height inline-label">' .
@@ -132,6 +132,7 @@ if ( ACCOUNT_FAX > -1 ) {
                 '</p>';
 }              
 $aContent .= '<p class="button-height inline-label" id="setPrimary"></p>';
+/*
 $aContent .= '  <p class="button-height float-right">' .
              '    <a class="button margin-bottom" href="javascript:void(0);" onclick="toggleAddressForm(true); return false;">' .
              '      <span class="button-icon red-gradient glossy">' .
@@ -143,8 +144,9 @@ $aContent .= '  <p class="button-height float-right">' .
              '        <span class="icon-download"></span>' .
              '      </span>' . $lC_Language->get('button_save') .
              '    </a>' .
-             '  </p>' . 
-             '</span>';
+             '  </p>';
+*/             
+$aContent .= '</span>';
 
 
 ?>
@@ -153,7 +155,7 @@ $aContent .= '  <p class="button-height float-right">' .
 .list > li > span { color: #666666; }
 </style>
 <script>
-function editCustomer(id) {
+function editCustomer(id,add_addr=0) {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -162,8 +164,8 @@ function editCustomer(id) {
   $.modal({
       content: '<div class="standard-tabs same-height" id="editCustomerContainer">'+
                '  <ul class="tabs">'+
-               '    <li class="active"><?php echo lc_link_object('#section_personal', $lC_Language->get('section_personal'), 'onclick="toggleAddAddressButton(false); return false;"'); ?></li>'+
-               '    <li><?php echo lc_link_object('#section_address_book', $lC_Language->get('section_address_book'), 'onclick="toggleAddAddressButton(true); return false;"'); ?></li>'+
+               '    <li class="active" id = "id_section_personal"><?php echo lc_link_object('#section_personal', $lC_Language->get('section_personal'), 'onclick="toggleAddAddressButton(false); return false;"'); ?></li>'+
+               '    <li id = "id_section_address_book"><?php echo lc_link_object('#section_address_book', $lC_Language->get('section_address_book'), 'onclick="toggleAddAddressButton(true); return false;"'); ?></li>'+
                '    <li id="li-toggle" style="display:none;"><a href="javascript:void(0);" onclick="toggleAddressForm(); return false;"><span class="icon-plus-round icon-green"><?php echo $lC_Language->get('operation_new_address_book_entry'); ?></span></a></li>'+
                '  </ul>'+
                '  <div class="clearfix tabs-content">'+
@@ -222,6 +224,14 @@ function editCustomer(id) {
   mask();
   getFormData(id);
   $('.datepicker').glDatePicker({ startDate: new Date("January 1, 1960"), zIndex: 100 });
+  if(add_addr ==1) {
+    $("#addressBookForm")[0].reset();
+    $("#addresBookPersonal").hide();
+    $("#addAddress").show();
+    $('#li-toggle').hide();
+    $('#id_section_personal').removeClass('active');
+    $('#id_section_address_book').addClass('active');
+  }
 }
 
 function getFormData(id) {
@@ -254,7 +264,9 @@ function getFormData(id) {
         $("#editGender_2").attr('checked', true).change();
       }
       $("#editFirstname").val(data.customerData.customers_firstname);
+      $("#abFirstname").val(data.customerData.customers_firstname);
       $("#editLastname").val(data.customerData.customers_lastname);
+      $("#abLastname").val(data.customerData.customers_lastname);
       $("#editDob").val(data.customerData.customers_dob_short);
       $("#editEmailAddress").val(data.customerData.customers_email_address);
       if (data.customerData.customers_newsletter == 1) {
@@ -383,6 +395,10 @@ function saveCustomer() {
       }
     );
   }
+  var isVisible = $('#addAddress').is(':visible');
+  if (isVisible) {
+    saveAddress();
+  }
 }
 
 function modalMessage(text) {
@@ -457,6 +473,7 @@ function saveAddress() {
           // added to clear form after successful save
           $("#addressBookForm")[0].reset();
           modalMessage('<?php echo $lC_Language->get('text_new_address_saved'); ?>');
+          oTable.fnReloadAjax();          
         }
       }
     );
