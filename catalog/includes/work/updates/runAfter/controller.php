@@ -182,6 +182,9 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_title` = 'Tag Cloud Maximum Listings' where `configuration_key` = 'TAG_CLOUD_MAX_LIST'");
     parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_title` = 'Tag Cloud Maximum Listings' where `configuration_key` = 'TAG_CLOUD_MAX_LIST'");
     
+    $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "featured_products` (id int(11) NOT NULL AUTO_INCREMENT, products_id int(11) NOT NULL DEFAULT '0', date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00', last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00', expires_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00', `status` int(1) DEFAULT '1', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");
+    parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "featured_products` (id int(11) NOT NULL AUTO_INCREMENT, products_id int(11) NOT NULL DEFAULT '0', date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00', last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00', expires_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00', `status` int(1) DEFAULT '1', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");
+
   } 
 }  
 ?>
