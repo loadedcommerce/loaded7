@@ -318,6 +318,17 @@ CREATE TABLE lc_customers_groups_data (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS lc_featured_products;
+CREATE TABLE lc_featured_products (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  products_id int(11) NOT NULL DEFAULT '0',
+  date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  expires_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `status` int(1) DEFAULT '1',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 DROP TABLE IF EXISTS lc_geo_zones;
 CREATE TABLE lc_geo_zones (
   geo_zone_id int(11) NOT NULL AUTO_INCREMENT,
