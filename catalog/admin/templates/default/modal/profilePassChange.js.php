@@ -133,7 +133,7 @@ function profilePassChange(id) {
                     }
                   );
                   win.closeModal();
-                  modalMessage(<?php echo $lC_Language->get('text_password_updated'); ?>);
+                  modalMessage('<?php echo $lC_Language->get('text_password_updated'); ?>');
                 }
               }
             }
