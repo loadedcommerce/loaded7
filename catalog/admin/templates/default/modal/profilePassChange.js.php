@@ -101,11 +101,10 @@ function profilePassChange(id) {
                       if (data.rpcStatus != 1) {
                         if (data.rpcStatus == -2 ) {
                           $.modal.alert('<?php echo $lC_Language->get('invalid_current_password'); ?>');
-                          return false;
                         } else {                      
                           $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-                          return false;
                         }
+                        return false;
                       }
                     }
                   );              
@@ -134,6 +133,7 @@ function profilePassChange(id) {
                     }
                   );
                   win.closeModal();
+                  modalMessage(<?php echo $lC_Language->get('text_password_updated'); ?>);
                 }
               }
             }
