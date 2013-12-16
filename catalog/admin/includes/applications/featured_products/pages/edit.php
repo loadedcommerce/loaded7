@@ -19,7 +19,7 @@
 <!-- Main content -->
 <section role="main" id="main">
   <hgroup id="main-title" class="thin">
-    <h1><?php echo (isset($fInfo)) ? '' : $lC_Language->get('heading_title_new_featured_product'); ?></h1>
+    <h1><?php echo (isset($fInfo)) ? lC_Featured_products_Admin::getFeaturedName($fInfo->get('products_id')) : $lC_Language->get('heading_title_new_featured_product'); ?></h1>
     <?php
       if ( $lC_MessageStack->exists($lC_Template->getModule()) ) {
         echo $lC_MessageStack->get($lC_Template->getModule());
@@ -27,16 +27,37 @@
     ?>
   </hgroup>
   <div class="with-padding-no-top">
-    <form name="featured" id="featured" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($cInfo) ? $cInfo->getInt('coupons_id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
+    <form name="featured" id="featured" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($fInfo) ? $fInfo->getInt('id') : '') . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <div id="featured_div" class="columns with-padding">
         <div class="new-row-mobile twelve-columns twelve-columns-mobile" id="content">
           <fieldset class="fieldset fields-list">
             <legend class="legend"><?php echo $lC_Language->get('legend_featured_product_details'); ?></legend>
+            <?php
+              if (!isset($fInfo)) {
+            ?>
             <div class="field-block button-height margin-bottom">
-              <label for="expires_date" class="label"><b><?php echo $lC_Language->get('label_status'); ?></b></label>
+              <label for="products_id" class="label"><b><?php echo $lC_Language->get('label_product'); ?></b></label>
               <div>
-                <input type="checkbox" name="status" id="status" class="switch wider" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_enabled'); ?>"<?php echo ((isset($fInfo) && $fInfo->get('status') != 1) ? null : ' checked'); ?> />
-                <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_expires_date'), null, 'info-spot on-left grey margin-left'); ?>
+                <select id="products_id" name="products_id" class="input with-small-padding">
+                  <option value="">Select Product</option>
+                  <option value="1">Product 1</option>
+                  <option value="2">Product 2</option>
+                  <option value="3">Product 3</option>
+                  <option value="4">Product 4</option>
+                </select>
+                <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_product'), null, 'info-spot on-left grey margin-left'); ?>
+              </div>
+            </div>
+            <?php 
+              } else {
+                echo lc_draw_hidden_field('products_id', $fInfo->getInt('products_id'));
+              }
+            ?>
+            <div class="field-block button-height margin-bottom">
+              <label for="status" class="label"><b><?php echo $lC_Language->get('label_status'); ?></b></label>
+              <div>
+                <input type="checkbox" name="status" id="status" class="switch wider" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_enabled'); ?>"<?php echo ((isset($fInfo) && $fInfo->getInt('status') != 1) ? null : ' checked'); ?> />
+                <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_status'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
             </div>
             <div class="field-block button-height margin-bottom">
@@ -44,7 +65,7 @@
               <div>
                 <span class="input">
                   <span class="icon-calendar"></span>
-                  <input type="text" name="expires_date" id="expires_date" value="<?php echo (isset($cInfo) ? $cInfo->get('expires_date') : null); ?>" class="input-unstyled datepicker" style="max-width:147px;">
+                  <input type="text" name="expires_date" id="expires_date" value="<?php echo (isset($fInfo) ? $fInfo->get('expires_date') : null); ?>" class="input-unstyled datepicker" style="max-width:147px;">
                 </span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_expires_date'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
@@ -66,7 +87,7 @@
                 </span>
                 <span><?php echo $lC_Language->get('button_cancel'); ?></span>
               </a>&nbsp;
-              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="validateForm(\'#coupon\');'); ?>">
+              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="$(\'#featured\').submit();'); ?>">
                 <span class="button-icon green-gradient glossy">
                   <span class="icon-download"></span>
                 </span>

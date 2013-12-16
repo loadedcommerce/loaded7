@@ -26,8 +26,16 @@ class lC_Application_Featured_products extends lC_Template_Admin {
     global $lC_Database, $lC_Language, $fInfo;
 
     $this->_page_title = $lC_Language->get('heading_title');
-    
+        
     $action = (isset($_GET['action']) && empty($_GET['action']) === false) ? preg_replace('/[^a-z\s]/', '', $_GET['action']) : NULL;
+    
+    switch ($action) {
+      case 'save' :
+        if ( is_numeric($_GET[$this->_module]) ) {          
+          $fInfo = new lC_ObjectInfo(lC_Featured_products_Admin::get($_GET[$this->_module]));          
+        }
+        break;
+    }
   }
 }
 ?>

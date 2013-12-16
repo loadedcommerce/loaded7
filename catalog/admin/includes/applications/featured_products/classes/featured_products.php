@@ -56,23 +56,18 @@ class lC_Featured_products_Admin {
   public static function get($id) {
     global $lC_Database, $lC_Language, $lC_Currencies, $lC_DateTime;
 
-    /*$Qcoupon = $lC_Database->query('select * from :table_coupons where coupons_id = :coupons_id limit 1');
-    $Qcoupon->bindTable(':table_coupons', TABLE_COUPONS);
-    $Qcoupon->bindInt(':coupons_id', $id);
-    $Qcoupon->execute();
+    $Qfeatured = $lC_Database->query('select * from :table_featured_products where id = :id limit 1');
+    $Qfeatured->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
+    $Qfeatured->bindInt(':id', $id);
+    $Qfeatured->execute();
 
-    $data = $Qcoupon->toArray();
-
-    if ($Qcoupon->value('type') == 'T' || $Qcoupon->value('type') == 'R') {
-      $data['reward'] = ($Qcoupon->value('type') == 'T') ? number_format($Qcoupon->value('reward'), DECIMAL_PLACES) . '%' : $lC_Currencies->format($Qcoupon->value('reward'));
-    }
-    $data['purchase_over'] = ($Qcoupon->value('purchase_over') > 0) ? number_format($Qcoupon->value('purchase_over'), DECIMAL_PLACES) : null;
-    $data['start_date'] = ($Qcoupon->value('start_date') != null) ? lC_DateTime::getShort($Qcoupon->value('start_date')) : null;
-    $data['expires_date'] = ($Qcoupon->value('expires_date') != null) ? lC_DateTime::getShort($Qcoupon->value('expires_date')) : null;
+    $data = $Qfeatured->toArray();
     
-    $Qcoupon->freeResult();
+    $data['expires_date'] = ($Qfeatured->value('expires_date') != null) ? lC_DateTime::getShort($Qfeatured->value('expires_date')) : null;
+    
+    $Qfeatured->freeResult();
 
-    return $data; */
+    return $data;
   }
  /**
   * Save the coupons information
@@ -84,66 +79,28 @@ class lC_Featured_products_Admin {
   */
   public static function save($id = null, $data) {
     global $lC_Database, $lC_Language;
-    
-    /*$coupon_id = '';
+      
     $error = false;
 
     $lC_Database->startTransaction();
 
     if ( is_numeric($id) ) {
-      $Qcoupon = $lC_Database->query('update :table_coupons set type = :type, mode = :mode, code = :code, reward = :reward, purchase_over = :purchase_over, start_date = :start_date, expires_date = :expires_date, uses_per_coupon = :uses_per_coupon, uses_per_customer = :uses_per_customer, restrict_to_products = :restrict_to_products, restrict_to_categories = :restrict_to_categories, restrict_to_customers = :restrict_to_customers, status = :status, date_modified = now(), sale_exclude = :sale_exclude, notes = :notes where coupons_id = :coupons_id');
-      $Qcoupon->bindInt(':coupons_id', $id);
+      $Qfeatured = $lC_Database->query('update :table_featured_products set expires_date = :expires_date, status = :status, last_modified = now() where id = :id');
+      $Qfeatured->bindInt(':id', $id);
     } else {
-      $Qcoupon = $lC_Database->query('insert into :table_coupons (type, mode, code, reward, purchase_over, start_date, expires_date, uses_per_coupon, uses_per_customer, restrict_to_products, restrict_to_categories, restrict_to_customers, status, date_created, date_modified, sale_exclude, notes) values (:type, :mode, :code, :reward, :purchase_over, :start_date, :expires_date, :uses_per_coupon, :uses_per_customer, :restrict_to_products, :restrict_to_categories, :restrict_to_customers, :status, now(), now(), :sale_exclude, :notes)');
+      $Qfeatured = $lC_Database->query('insert into :table_featured_products (products_id, date_added, last_modified, expires_date, status) values (:products_id, now(), now(), :expires_date, :status)');
+      $Qfeatured->bindInt(':products_id', $data['products_id']);
     }
      
-    // insert/update the coupons table
-    $Qcoupon->bindTable(':table_coupons', TABLE_COUPONS);
-    $Qcoupon->bindValue(':type', $data['type']);
-    $Qcoupon->bindValue(':mode', $data['mode']);
-    $Qcoupon->bindValue(':code', $data['code']);
-    $Qcoupon->bindValue(':reward', $data['reward']);
-    $Qcoupon->bindInt(':purchase_over', (($data['purchase_over'] > 0) ? str_replace('$', '', $data['purchase_over']) : 0.00));
-    $Qcoupon->bindDate(':start_date', (($data['start_date'] != '') ? ((strstr($data['start_date'], '/')) ? lC_DateTime::toDateTime($data['start_date']) : $data['start_date']) : null));
-    $Qcoupon->bindDate(':expires_date', (($data['expires_date'] != '') ? ((strstr($data['expires_date'], '/')) ? lC_DateTime::toDateTime($data['expires_date']) : $data['expires_date']) : null));
-    $Qcoupon->bindInt(':uses_per_coupon', $data['uses_per_coupon']);
-    $Qcoupon->bindInt(':uses_per_customer', $data['uses_per_customer']);
-    $Qcoupon->bindValue(':restrict_to_products', $data['restrict_to_products']);
-    $Qcoupon->bindValue(':restrict_to_categories', $data['restrict_to_categories']);
-    $Qcoupon->bindValue(':restrict_to_customers', $data['restrict_to_customers']);
-    $Qcoupon->bindInt(':status', $data['status']);
-    $Qcoupon->bindInt(':sale_exclude', $data['sale_exclude']);
-    $Qcoupon->bindValue(':notes', $data['notes']);
-    $Qcoupon->setLogging($_SESSION['module'], $id);
-    $Qcoupon->execute();
+    // insert/update the featured products table
+    $Qfeatured->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
+    $Qfeatured->bindDate(':expires_date', (($data['expires_date'] != '') ? ((strstr($data['expires_date'], '/')) ? lC_DateTime::toDateTime($data['expires_date']) : $data['expires_date']) : null));
+    $Qfeatured->bindInt(':status', $data['status']);
+    $Qfeatured->setLogging($_SESSION['module'], $id);
+    $Qfeatured->execute();
     
     if ( $lC_Database->isError() ) {
       $error = true;
-    }
-    
-    // insert/update the coupons description table
-    if ( !$lC_Database->isError() ) {
-      $coupon_id = (is_numeric($id)) ? $id : $lC_Database->nextID();
-      
-      foreach ( $lC_Language->getAll() as $l ) {
-        if ( is_numeric($id) ) {
-          $Qcoupondescription = $lC_Database->query('update :table_coupons_description set name = :name where coupons_id = :coupons_id and language_id = :language_id');
-          $Qcoupondescription->bindInt(':coupons_id', $coupon_id);
-        } else {
-          $Qcoupondescription = $lC_Database->query('insert into :table_coupons_description (coupons_id, language_id, name) values (:coupons_id, :language_id, :name)');
-          $Qcoupondescription->bindInt(':coupons_id', $coupon_id);
-        }
-
-        $Qcoupondescription->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
-        $Qcoupondescription->bindInt(':language_id', $l['id']);
-        $Qcoupondescription->bindValue(':name', $data['name'][$l['id']]);
-        $Qcoupondescription->execute();
-        
-        if ( $lC_Database->isError() ) {
-          $error = true;
-          break;
-        }
-      }
     }
     
     if ( $error === false ) {
@@ -154,7 +111,7 @@ class lC_Featured_products_Admin {
 
     $lC_Database->rollbackTransaction();
 
-    return false;*/
+    return false;
   }
  /**
   * Delete the coupons record
@@ -170,11 +127,11 @@ class lC_Featured_products_Admin {
 
     $lC_Database->startTransaction();
 
-    $Qcoupon = $lC_Database->query('delete from :table_featured_products where id = :id');
-    $Qcoupon->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
-    $Qcoupon->bindInt(':id', $id);
-    $Qcoupon->setLogging($_SESSION['module'], $id);
-    $Qcoupon->execute();
+    $Qdelete = $lC_Database->query('delete from :table_featured_products where id = :id');
+    $Qdelete->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
+    $Qdelete->bindInt(':id', $id);
+    $Qdelete->setLogging($_SESSION['module'], $id);
+    $Qdelete->execute();
     
     if ( $lC_Database->isError() ) {
       $error = true;
@@ -231,6 +188,28 @@ class lC_Featured_products_Admin {
     $lC_Database->rollbackTransaction();
 
     return false;
+  }
+ /**
+  * Get the featured products name
+  *
+  * @param integer $id The featured products id
+  * @access public
+  * @return array
+  */
+  public static function getFeaturedName($id) {
+    global $lC_Database, $lC_Language;
+
+    $Qname = $lC_Database->query('select * from :table_products_description where products_id = :products_id and language_id = :language_id');
+    $Qname->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+    $Qname->bindInt(':products_id', $id);
+    $Qname->bindInt(':language_id', $_SESSION['admin']['language_id']);
+    $Qname->execute();
+
+    $name = $Qname->value('products_name');
+    
+    $Qname->freeResult();
+
+    return $name;
   }
 }
 ?>

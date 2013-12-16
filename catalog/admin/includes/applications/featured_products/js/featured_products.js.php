@@ -53,24 +53,4 @@ function updateStatus(id, val) {
     $("#status_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_enable'); ?>"></span>');
   }
 }
-
-function validateForm(e) {
-  // turn off messages
-  jQuery.validator.messages.required = "";
-
-  var bValid = $("#featured_product").validate({
-    invalidHandler: function() {
-    },
-    rules: {
-    },    
-    messages: {
-    } 
-  }).form();
-  
-  if (bValid) {
-    $(e).submit();
-  } 
-
-  return false;
-}
 </script>
