@@ -106,34 +106,35 @@ function profilePassChange(id) {
                         }
                         return false;
                       }
-                    }
-                  );              
-                  var new_password = $('#profile_password_new').val();
-                  var confirm_password = $('#profile_password_confirm').val();
-                  if (new_password != confirm_password) {
-                    $.modal.alert('<?php echo $lC_Language->get('invalid_new_password_match'); ?>');
-                    return false;
-                  }
-                  var nvp = $("#pPassChange").serialize();
-                  var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'administrators&action=saveAdmin&aid=AID&BATCH&user_password=USERPASS'); ?>'
-                  $.getJSON(jsonLink.replace('AID', id).replace('BATCH', nvp).replace('USERPASS', $('#profile_password_confirm').val()),
-                    function (data) {
-                      if (data.rpcStatus == -10) { // no session
-                        var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-                        $(location).attr('href',url);
-                      }
-                      if (data.rpcStatus != 1) {
-                        if (data.rpcStatus == -2) {
-                          $.modal.alert('<?php echo $lC_Language->get('ms_error_username_already_exists'); ?>');
-                        } else {
-                          $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-                        }
+                      
+                      var new_password = $('#profile_password_new').val();
+                      var confirm_password = $('#profile_password_confirm').val();
+                      if (new_password != confirm_password) {
+                        $.modal.alert('<?php echo $lC_Language->get('invalid_new_password_match'); ?>');
                         return false;
                       }
-                      modalMessage('<?php echo $lC_Language->get('text_password_updated'); ?>');
+                      var nvp = $("#pPassChange").serialize();
+                      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'administrators&action=saveAdmin&aid=AID&BATCH&user_password=USERPASS'); ?>'
+                      $.getJSON(jsonLink.replace('AID', id).replace('BATCH', nvp).replace('USERPASS', $('#profile_password_confirm').val()),
+                        function (data) {
+                          if (data.rpcStatus == -10) { // no session
+                            var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+                            $(location).attr('href',url);
+                          }
+                          if (data.rpcStatus != 1) {
+                            if (data.rpcStatus == -2) {
+                              $.modal.alert('<?php echo $lC_Language->get('ms_error_username_already_exists'); ?>');
+                            } else {
+                              $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+                            }
+                            return false;
+                          }
+                          modalMessage('<?php echo $lC_Language->get('text_password_updated'); ?>');
+                        }
+                      );
+                      win.closeModal();                      
                     }
-                  );
-                  win.closeModal();
+                  );              
                 }
               }
             }
