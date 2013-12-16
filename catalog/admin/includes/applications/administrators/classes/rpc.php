@@ -143,7 +143,7 @@ class lC_Administrators_Admin_rpc {
   public static function validatePassword() {
     $result = array();
 
-    $result = lC_Administrators_Admin::validatePassword($_GET['plain'], $_GET['encrypted']);
+    $result = lc_validate_password($_GET['plain'], $_GET['encrypted']);
 
     echo json_encode($result);
   }
