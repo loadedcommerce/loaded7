@@ -419,7 +419,7 @@ function modalMessage(text) {
   setTimeout ("$(mm).closeModal()", 800);
 }
 
-function saveAddress() {
+function saveAddress(save) {
   
   $("#formProcessing").fadeIn('fast');
   var abid = parseInt($("#abId").html());
@@ -473,6 +473,9 @@ function saveAddress() {
             $.modal.alert('<?php echo sprintf($lC_Language->get('ms_error_state'), ACCOUNT_STATE); ?>');
           }
         } else {
+          if (save == 1) {
+            window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&cID=' + cid + '");?>';
+          }
           // get new form data
           getFormData(cid);
           // show the address listing
@@ -595,9 +598,8 @@ function createNewOrder() {
   
   var isVisible = $('#addAddress').is(':visible');
   if (isVisible) {    
-    saveAddress();
+    saveAddress(1);
   }
-  window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&cID=' + cid + '");?>';
 }
 
 function func_opnewindow(customers_id) { 
