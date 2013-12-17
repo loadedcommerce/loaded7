@@ -443,7 +443,19 @@ class lC_Updates_Admin {
           
           $file = substr($iteration->getPathName(), $pos+12);
           
-          $directory = realpath(DIR_FS_CATALOG) . '/';
+          if ($pharWithPath == null) {
+            $directory = realpath(DIR_FS_CATALOG) . '/';
+          } else {
+            if ($pharType == 'template') {
+              $directory = realpath(DIR_FS_CATALOG) . '/';
+            } else {
+              if (version_compare(utility::getVersion(), '7.002.0.0') != -1) {
+                $directory = realpath(DIR_FS_CATALOG) . '/';
+              } else {
+                $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
+              }
+            }
+          }
           
           if ( file_exists($directory . $file) ) {
             if ( rename($directory . $file, $directory . dirname($file) . '/.CU_' . basename($file)) ) {
