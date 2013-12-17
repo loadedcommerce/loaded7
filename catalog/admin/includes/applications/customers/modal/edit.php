@@ -156,8 +156,7 @@ $aContent .= '</span>';
 </style>
 <script>
 function editCustomer(id,add_addr=0) {
-  //alert("228");
-  alert(add_addr);
+ 
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -208,14 +207,10 @@ function editCustomer(id,add_addr=0) {
         },
         '<?php echo $lC_Language->get('button_create_order'); ?>': {
           classes:  'glossy align-right green-gradient mid-margin-right button_create_order',
-          click:    function() { createNewOrder(); }
-        },
-       /*'<?php echo $lC_Language->get('button_delete'); ?>': {
-          classes:  'glossy float-left red-gradient',
-          click:    function() {  },
-          classes:  'glossy align-right green-gradient mid-margin-right button_create_order disabled',
-          click:    function() { createOrder(); }
-        },*/
+          click:    function() {
+            createNewOrder();
+            }
+        },       
         '<?php echo $lC_Language->get('button_delete'); ?>': {
           classes:  'glossy float-left red-gradient',
           click:    function() { deleteThisCustomer(); }
@@ -427,6 +422,7 @@ function modalMessage(text) {
 }
 
 function saveAddress() {
+  
   $("#formProcessing").fadeIn('fast');
   var abid = parseInt($("#abId").html());
   var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
@@ -458,10 +454,11 @@ function saveAddress() {
       $("#formProcessing").fadeOut('fast');
     }
   }).form();
+  
   if (bValid) {
     var cid = parseInt($("#abParentId").html());
     var formData = $("#addressBookForm").serialize();
-    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveAddressEntry&customer_id=CID&abid=ABID&FORMDATA'); ?>'
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveAddressEntry&customer_id=CID&abid=ABID&FORMDATA'); ?>';
     $.getJSON(jsonLink.replace('CID', cid).replace('ABID', abid).replace('FORMDATA', formData),
       function (data) {
         if (data.rpcStatus == -10) { // no session
@@ -485,7 +482,8 @@ function saveAddress() {
           // added to clear form after successful save
           $("#addressBookForm")[0].reset();
           //modalMessage('<?php echo $lC_Language->get('text_new_address_saved'); ?>');
-          oTable.fnReloadAjax();          
+          oTable.fnReloadAjax(); 
+          return true;
         }
       }
     );
@@ -594,25 +592,14 @@ function updateZones(selected) {
   );
 }
 
-function createNewOrder(customers_id,default_address_id) {
+function createNewOrder() {
   var cid = parseInt($("#abParentId").html()); 
-  var daId = parseInt($("#default_aId").html());
-  var abId = parseInt($("#abId").html());
-  alert('cid : '+cid);
-  alert('daId : '+daId);
-  alert('abId : '+abId);
+  
   var isVisible = $('#addAddress').is(':visible');
   if (isVisible) {    
     saveAddress();
   }
-  window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=save&neworder&cID='+cid+'");?>'; 
-  /*
-  if(daId > 0 ) {
-    //window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&cID='+customers_id+'");?>'; 
-    //return false;
-  } else {
-    func_opnewindow(customers_id);          
-  } */ 
+  window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=save&neworder&cID='+cid+'");?>';
 }
 
 function func_opnewindow(customers_id) { 
@@ -660,13 +647,4 @@ function deleteThisCustomer() {
   setTimeout("$(cm).closeModal()", 2300);
 }
 
-function createOrder() {
-  var cid = parseInt($("#abParentId").html()); 
-  //var daId = parseInt($("#default_aId").html());
-  alert('hiiii');
-  //if(daId > 0) {   
-  //  window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&cID='+cid+'");?>';
-  //}
-  return false;
-}
 </script>
