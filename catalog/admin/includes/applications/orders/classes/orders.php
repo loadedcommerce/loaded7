@@ -679,18 +679,21 @@ class lC_Orders_Admin {
   public static function getOrderComments($id = null) {
     global $lC_Language;
     $data = lC_Orders_Admin::getInfo($id);
-    foreach ($data['orderStatusHistoryData'] as $oshData) {
-      if ($oshData['comment'] != '') {
-        $ocData .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
-                      <div class="small-margin-top">
-                        <span class="float-right with-min-padding small-margin-right' . (($oshData['admin_id'] == null) ? ' green-bg' : (($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg')) . '">' . (($oshData['admin_id'] == null) ? $lC_Language->get('text_order_comment') : (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'))) . '</span>
-                        <span class="small-margin-left float-left">
-                          ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
-                        </span>
-                        <span class="anthracite mid-margin-left">' . (($oshData['admin_id'] != null) ? $oshData['admin_name'] : $lC_Language->get('text_customer_comment')) . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
-                      </div>
-                      <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
-                    </div>';
+    $ocData = '';
+    if(is_array($data['orderStatusHistoryData'])) {
+      foreach ($data['orderStatusHistoryData'] as $oshData) {
+        if ($oshData['comment'] != '') {
+          $ocData .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
+                        <div class="small-margin-top">
+                          <span class="float-right with-min-padding small-margin-right' . (($oshData['admin_id'] == null) ? ' green-bg' : (($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg')) . '">' . (($oshData['admin_id'] == null) ? $lC_Language->get('text_order_comment') : (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'))) . '</span>
+                          <span class="small-margin-left float-left">
+                            ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
+                          </span>
+                          <span class="anthracite mid-margin-left">' . (($oshData['admin_id'] != null) ? $oshData['admin_name'] : $lC_Language->get('text_customer_comment')) . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
+                        </div>
+                        <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
+                      </div>';
+        }
       }
     }
     return $ocData;
