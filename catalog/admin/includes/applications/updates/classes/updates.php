@@ -443,15 +443,7 @@ class lC_Updates_Admin {
           
           $file = substr($iteration->getPathName(), $pos+12);
           
-          if ($pharWithPath == null) {
-            $directory = realpath(DIR_FS_CATALOG) . '/';
-          } else {
-            if ($pharType == 'template') {
-              $directory = realpath(DIR_FS_CATALOG) . '/';
-            } else {
-              $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
-            }
-          }
+          $directory = realpath(DIR_FS_CATALOG) . '/';
           
           if ( file_exists($directory . $file) ) {
             if ( rename($directory . $file, $directory . dirname($file) . '/.CU_' . basename($file)) ) {
