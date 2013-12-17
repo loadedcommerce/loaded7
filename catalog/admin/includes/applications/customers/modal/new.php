@@ -93,7 +93,7 @@ function newCustomer() {
           content: '<?php echo $content; ?>',
           title: '<?php echo $lC_Language->get('modal_heading_new_customer'); ?>',
           width: 600,
-                actions: {
+          actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }
@@ -163,6 +163,8 @@ function newCustomer() {
           },
           buttonsLowPadding: true
       });
+      var cont = document.getElementsByClassName('with-tooltip');
+      $(cont).attr("title", "<?php echo $lC_Language->get('button_continue_title_tag'); ?>");
       $("#group").html("");
       i=0;
       $.each(data.groupsArray, function(val, text) {
@@ -225,12 +227,12 @@ function addNewCustomer() {
         modalMessage('<?php echo $lC_Language->get('text_changes_saved'); ?>');          
         oTable.fnReloadAjax();
         var add_addr = 1;
-        editCustomer(data.new_customer_id,add_addr);  
+        editCustomer(data.new_customer_id,add_addr=1);  
         cm = $('#newCustomer').getModalWindow();
         setTimeout("$(cm).closeModal()", 2300);
       }
     );
-    win.closeModal();
+    $.modal.all.closeModal();
   }
 }
 function modalMessage(text) {

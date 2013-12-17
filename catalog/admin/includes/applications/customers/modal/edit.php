@@ -155,8 +155,7 @@ $aContent .= '</span>';
 .list > li > span { color: #666666; }
 </style>
 <script>
-function editCustomer(id,add_addr=0) {
- 
+function editCustomer(id,add_addr=0) { 
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -165,8 +164,8 @@ function editCustomer(id,add_addr=0) {
   $.modal({
       content: '<div class="standard-tabs same-height" id="editCustomerContainer">'+
                '  <ul class="tabs">'+
-               '    <li class="active" id = "id_section_personal"><?php echo lc_link_object('#section_personal', $lC_Language->get('section_personal'), 'onclick="toggleAddAddressButton(false); return false;"'); ?></li>'+
-               '    <li id = "id_section_address_book"><?php echo lc_link_object('#section_address_book', $lC_Language->get('section_address_book'), 'onclick="toggleAddAddressButton(true); return false;"'); ?></li>'+
+               '    <li class="active" id="id_section_personal"><?php echo lc_link_object('#section_personal', $lC_Language->get('section_personal'), 'onclick="toggleAddAddressButton(false); return false;"'); ?></li>'+
+               '    <li id="id_section_address_book"><?php echo lc_link_object('#section_address_book', $lC_Language->get('section_address_book'), 'onclick="toggleAddAddressButton(true); return false;"'); ?></li>'+
                '    <li id="li-toggle" style="display:none;"><a href="javascript:void(0);" onclick="toggleAddressForm(); return false;"><span class="icon-plus-round icon-green"><?php echo $lC_Language->get('operation_new_address_book_entry'); ?></span></a></li>'+
                '  </ul>'+
                '  <div class="clearfix tabs-content">'+
@@ -207,9 +206,7 @@ function editCustomer(id,add_addr=0) {
         },
         '<?php echo $lC_Language->get('button_create_order'); ?>': {
           classes:  'glossy align-right green-gradient mid-margin-right button_create_order',
-          click:    function() {
-            createNewOrder();
-            }
+          click:    function() { createNewOrder(); }
         },       
         '<?php echo $lC_Language->get('button_delete'); ?>': {
           classes:  'glossy float-left red-gradient',
@@ -219,10 +216,13 @@ function editCustomer(id,add_addr=0) {
       buttonsLowPadding: true
   });
 
-  if(add_addr ==1) { 
+  if (add_addr == 1) {
     // Display address tab
     $('#id_section_personal').removeClass('active');
     $('#id_section_address_book').addClass('active');
+    // Display Address form (Hide Personal Form)
+    $('#section_personal').hide();
+    $('#section_address_book').show();
 
     // Display address from
     $("#addressBookForm")[0].reset();
@@ -236,9 +236,7 @@ function editCustomer(id,add_addr=0) {
 
   mask();  
   getFormData(id); 
-  $('.datepicker').glDatePicker({ startDate: new Date("January 1, 1960"), zIndex: 100 });
-  
-  
+  $('.datepicker').glDatePicker({ startDate: new Date("January 1, 1960"), zIndex: 100 });  
 }
 
 function getFormData(id) {
@@ -599,7 +597,7 @@ function createNewOrder() {
   if (isVisible) {    
     saveAddress();
   }
-  window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=save&neworder&cID='+cid+'");?>';
+  window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&cID=' + cid + '");?>';
 }
 
 function func_opnewindow(customers_id) { 
