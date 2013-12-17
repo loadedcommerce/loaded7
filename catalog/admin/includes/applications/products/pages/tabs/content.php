@@ -98,23 +98,27 @@ global $lC_Language, $pInfo, $products_description, $products_keyword, $products
             </div>              
           </div>
           <div class="new-row-mobile new-row-tablet twelve-columns-mobile twelve-columns-tablet six-columns">
-            <span>
-              <span class="strong"><?php echo $lC_Language->get('field_status'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_status'), null, 'info-spot on-left grey margin-left'); ?>
-            </span><br />
-            <span class="button-group">
-              <label for="ps_radio_1" class="button blue-active">
-                <?php if (isset($pInfo)) { ?>
-                  <input type="radio" name="products_status" id="ps_radio_1" value="active"<?php echo ($pInfo->getInt('products_status') == 1 ? ' checked' : ''); ?> />
-                <?php } else { ?>
-                  <input type="radio" name="products_status" id="ps_radio_1" value="active" checked />
-                <?php } ?>
-                <?php echo $lC_Language->get('field_status_active'); ?>
-              </label>
-              <label for="ps_radio_2" class="button red-active">
-                <input type="radio" name="products_status" id="ps_radio_2" value="inactive"<?php echo ((isset($pInfo) && $pInfo->getInt('products_status') == -1) ? ' checked' : ''); ?> />
-                <?php echo $lC_Language->get('field_status_inactive'); ?>
-              </label>
-            </span>
+            <div class="columns">      
+              <div class="six-columns-mobile six-columns-tablet seven-columns margin-bottom">
+                <span>
+                  <span class="strong"><?php echo $lC_Language->get('field_status'); ?></span><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_content_status'), null, 'info-spot on-left grey margin-left'); ?>
+                </span><br />
+                <span class="button-group">
+                  <label for="ps_radio_1" class="button blue-active">
+                    <input type="radio" name="products_status" id="ps_radio_1" value="active"<?php echo ((isset($pInfo) && $pInfo->getInt('products_status') == 1) ? ' checked' : ''); ?> />
+                    <?php echo $lC_Language->get('field_status_active'); ?>
+                  </label>
+                  <label for="ps_radio_2" class="button red-active">
+                    <input type="radio" name="products_status" id="ps_radio_2" value="inactive"<?php echo ((isset($pInfo) && $pInfo->getInt('products_status') == -1) ? ' checked' : ''); ?> />
+                    <?php echo $lC_Language->get('field_status_inactive'); ?>
+                  </label>
+                </span>
+              </div>
+              <div class="six-columns-mobile six-columns-tablet five-columns margin-bottom">
+                <label for="featured" class="strong"><?php echo $lC_Language->get('text_featured'); ?></label><br />
+                <?php echo (isset($pInfo) && $pInfo->getInt('products_featured') == 1) ? '<span class="icon-star icon-size2 icon-orange strong"> ' . $lC_Language->get('text_yes') . '</span>' : '<span class="icon-star icon-size2 icon-black strong"> ' . $lC_Language->get('text_no') . '</span>'; ?>
+              </div>
+            </div>
           </div>                  
         </div>                  
       </div>

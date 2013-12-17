@@ -325,3 +325,6 @@ text_spin_off_order = Spin Off Order
 text_go_to_customer = Go to Customer
 text_resize_images = Upgrade Clean Up: Creating Image Sets
 text_status = Status
+text_featured = Featured
+text_yes = Yes
+text_no = No
