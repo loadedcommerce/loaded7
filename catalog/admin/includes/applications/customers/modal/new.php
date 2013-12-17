@@ -156,7 +156,8 @@ function newCustomer() {
               }
             },
             '<?php echo $lC_Language->get('button_continue'); ?>': {
-              classes:  'green-gradient glossy',
+              classes:  'green-gradient glossy with-tooltip',
+              title: '<?php echo $lC_Language->get('button_continue_title'); ?>',
               click:    function(win) { addNewCustomer(); }
             }
           },

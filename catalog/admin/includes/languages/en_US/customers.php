@@ -107,3 +107,4 @@ Please note: This account has been created for you by the store owner. Please us
 
 text_new_address_saved = New Address Saved
 text_changes_saved = Changes Saved
+button_continue_title = Add address
