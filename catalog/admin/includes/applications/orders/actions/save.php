@@ -17,6 +17,12 @@ class lC_Application_Orders_Actions_save extends lC_Application_Orders {
 
     $this->_page_contents = 'edit.php'; 
 
+    if(isset($_GET['neworder'])) {
+      if($order_insert_id = lC_Orders_Admin::createOrder($_GET['cID'])) {
+        lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $order_insert_id . '&action=save'));
+      }
+    }
+
     if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
       switch ( $_GET['action'] ) {
         case 'save':  

@@ -1063,5 +1063,81 @@ class lC_Orders_Admin {
     $result['productsArray'] = lC_Products_Admin::getproductsArray();
     return $result;
   }
+   public static function createOrder($customerID) {
+     global $lC_Vqmod, $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Coupons, $lC_Tax;
+  
+     require_once($lC_Vqmod->modCheck('../includes/classes/address.php'));
+     require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
+     $lC_Currencies = new lC_Currencies();
+     require_once($lC_Vqmod->modCheck('includes/applications/customers/classes/customers.php'));
+     $customerData = lC_Customers_Admin::getData($customerID);
+
+     $customerName = $customerData['customers_firstname'] . " " .$customerData['customers_lastname'];
+     $customer_address = array(
+                             'entry_company'  => $customerData['entry_company'],
+                             'entry_street_address'  => $customerData['entry_street_address'],
+                             'entry_suburb'  => $customerData['entry_suburb'],
+                             'entry_city'  => $customerData['entry_city'],
+                             'entry_postcode'  => $customerData['entry_postcode'],
+                             'entry_state'  => $customerData['entry_state'],
+                             'entry_zone_id'  => $customerData['entry_zone_id'],
+                             'entry_country_id'  => $customerData['entry_country_id'],
+                             'entry_telephone'  => $customerData['entry_telephone'],
+                             'entry_telephone'  => $customerData['entry_telephone'],
+                          );
+    $payment_module = '';
+    $payment_method = '';
+
+    $Qorder = $lC_Database->query('insert into :table_orders (customers_id, customers_name, customers_company, customers_street_address, customers_suburb, customers_city, customers_postcode, customers_state, customers_state_code, customers_country, customers_country_iso2, customers_country_iso3, customers_telephone, customers_email_address, customers_address_format, customers_ip_address, delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state, delivery_state_code, delivery_country, delivery_country_iso2, delivery_country_iso3, delivery_address_format, billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state, billing_state_code, billing_country, billing_country_iso2, billing_country_iso3, billing_address_format, payment_method, payment_module, date_purchased, orders_status, currency, currency_value) values (:customers_id, :customers_name, :customers_company, :customers_street_address, :customers_suburb, :customers_city, :customers_postcode, :customers_state, :customers_state_code, :customers_country, :customers_country_iso2, :customers_country_iso3, :customers_telephone, :customers_email_address, :customers_address_format, :customers_ip_address, :delivery_name, :delivery_company, :delivery_street_address, :delivery_suburb, :delivery_city, :delivery_postcode, :delivery_state, :delivery_state_code, :delivery_country, :delivery_country_iso2, :delivery_country_iso3, :delivery_address_format, :billing_name, :billing_company, :billing_street_address, :billing_suburb, :billing_city, :billing_postcode, :billing_state, :billing_state_code, :billing_country, :billing_country_iso2, :billing_country_iso3, :billing_address_format, :payment_method, :payment_module, now(), :orders_status, :currency, :currency_value)');
+    $Qorder->bindTable(':table_orders', TABLE_ORDERS);
+    $Qorder->bindInt(':customers_id', $customerID);
+    $Qorder->bindValue(':customers_name', $customerName);
+    $Qorder->bindValue(':customers_company', $customerData['entry_company']);
+    $Qorder->bindValue(':customers_street_address', $customerData['entry_street_address']);
+    $Qorder->bindValue(':customers_suburb', $customerData['entry_suburb']);
+    $Qorder->bindValue(':customers_city', $customerData['entry_city']);
+    $Qorder->bindValue(':customers_postcode', $customerData['entry_postcode']);
+    $Qorder->bindValue(':customers_state', $customerData['entry_state']);
+    $Qorder->bindValue(':customers_state_code', lC_Address::getZoneCode($customerData['entry_zone_id']));
+    $Qorder->bindValue(':customers_country', lC_Address::getCountryName($customerData['entry_country_id']));
+    $Qorder->bindValue(':customers_country_iso2', lC_Address::getCountryIsoCode2($customerData['entry_country_id']));
+    $Qorder->bindValue(':customers_country_iso3', lC_Address::getCountryIsoCode3($customerData['entry_country_id']));
+    $Qorder->bindValue(':customers_telephone', $customerData['entry_telephone']);
+    $Qorder->bindValue(':customers_email_address', $customerData['customers_email_address']);
+    $Qorder->bindValue(':customers_address_format', lC_Address::getFormat($customerData['entry_country_id']));
+    $Qorder->bindValue(':customers_ip_address', lc_get_ip_address());
+    $Qorder->bindValue(':delivery_name',  $customerName);
+    $Qorder->bindValue(':delivery_company', $customerData['entry_company']);
+    $Qorder->bindValue(':delivery_street_address', $customerData['entry_street_address']);
+    $Qorder->bindValue(':delivery_suburb', $customerData['entry_suburb']);
+    $Qorder->bindValue(':delivery_city', $customerData['entry_city']);
+    $Qorder->bindValue(':delivery_postcode', $customerData['entry_postcode']);
+    $Qorder->bindValue(':delivery_state', $customerData['entry_state']);
+    $Qorder->bindValue(':delivery_state_code', lC_Address::getZoneCode($customerData['entry_zone_id']));
+    $Qorder->bindValue(':delivery_country', lC_Address::getCountryName($customerData['entry_country_id']));
+    $Qorder->bindValue(':delivery_country_iso2', lC_Address::getCountryIsoCode2($customerData['entry_country_id']));
+    $Qorder->bindValue(':delivery_country_iso3', lC_Address::getCountryIsoCode3($customerData['entry_country_id']));
+    $Qorder->bindValue(':delivery_address_format', lC_Address::getFormat($customerData['entry_country_id']));
+    $Qorder->bindValue(':billing_name', $customerName);
+    $Qorder->bindValue(':billing_company', $customerData['entry_company']);
+    $Qorder->bindValue(':billing_street_address', $customerData['entry_street_address']);
+    $Qorder->bindValue(':billing_suburb',  $customerData['entry_suburb']);
+    $Qorder->bindValue(':billing_city',  $customerData['entry_city']);
+    $Qorder->bindValue(':billing_postcode', $customerData['entry_postcode']);
+    $Qorder->bindValue(':billing_state', $customerData['entry_state']);
+    $Qorder->bindValue(':billing_state_code',  lC_Address::getZoneCode($customerData['entry_zone_id']));
+    $Qorder->bindValue(':billing_country', lC_Address::getCountryName($customerData['entry_country_id']));
+    $Qorder->bindValue(':billing_country_iso2',lC_Address::getCountryIsoCode2($customerData['entry_country_id']));
+    $Qorder->bindValue(':billing_country_iso3', lC_Address::getCountryIsoCode3($customerData['entry_country_id']));
+    $Qorder->bindValue(':billing_address_format', lC_Address::getFormat($customerData['entry_country_id']));
+    $Qorder->bindValue(':payment_method', $payment_method);
+    $Qorder->bindValue(':payment_module', $payment_module);
+    $Qorder->bindInt(':orders_status', $status);
+    $Qorder->bindValue(':currency', $lC_Currencies->getCode());
+    $Qorder->bindValue(':currency_value', $lC_Currencies->value(DEFAULT_CURRENCY));
+    $Qorder->execute();
+    $insert_id = $lC_Database->nextID();
+    return $insert_id;
+  }
 }
 ?>
