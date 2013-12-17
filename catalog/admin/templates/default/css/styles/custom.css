@@ -881,7 +881,7 @@ select.error { border: 2px solid red !important; }
   overflow: hidden;
   background:url(../../../../images/get-pro.png) no-repeat center center;
 }
-=======
+
 .width-50 { width: 50%; }
 .width-66 { width: 66%; }
 .width-75 { width: 75%; }
@@ -913,6 +913,8 @@ select.error { border: 2px solid red !important; }
   word-wrap: break-word; /* IE */
   word-break: break-all;
 }
+
+#dataTable_filter { white-space:nowrap; }
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
@@ -1032,6 +1034,7 @@ select.error { border: 2px solid red !important; }
   }
   .branding-extra-line { margin-left: 10px; }
   #order_quick_info h4 { margin:0px 0px -10px;text-align:center; }
+  #buttons-menu-div-listing { top: 60px; }
 }  
   
 @media screen and (max-width: 479px) {
@@ -1114,6 +1117,9 @@ select.error { border: 2px solid red !important; }
   }
   .branding-extra-line { margin-left: 0px; }
   #order_quick_info h4 { margin:0px 0px -10px;text-align:center; }
+  #dataTable_filter { margin-right: 10px; }
+  #buttons-menu-div-listing { top: 60px; }
+  #featured_div { margin: 0 -30px; }
 }  
   
 @media screen and (max-width: 319px) {
@@ -1130,4 +1136,7 @@ select.error { border: 2px solid red !important; }
     width: 100%;
   }
   .branding-extra-line { margin-left: 0px; }
+  
+  #dataTable_filter { margin-right: 10px; }
+  #dataTable_filter input { max-width: 150px; }
 }

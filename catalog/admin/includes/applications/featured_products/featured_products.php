@@ -23,7 +23,7 @@ class lC_Application_Featured_products extends lC_Template_Admin {
   * Class constructor
   */
   public function __construct() {
-    global $lC_Database, $lC_Language, $fInfo;
+    global $lC_Database, $lC_Language, $fInfo, $products_array;
 
     $this->_page_title = $lC_Language->get('heading_title');
         
@@ -35,6 +35,19 @@ class lC_Application_Featured_products extends lC_Template_Admin {
           $fInfo = new lC_ObjectInfo(lC_Featured_products_Admin::get($_GET[$this->_module]));          
         }
         break;
+    }
+    
+    $Qproducts = $lC_Database->query('select SQL_CALC_FOUND_ROWS products_id, products_name from :table_products_description where language_id = :language_id order by products_name');
+    $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+    $Qproducts->bindInt(':language_id', $lC_Language->getID());
+    $Qproducts->execute();
+
+    $products_array = array();
+    $products_array[] = array('id' => '',
+                              'text' => $lC_Language->get('text_select_product'));
+    while ( $Qproducts->next() ) {
+      $products_array[] = array('id' => $Qproducts->value('products_id'),
+                                'text' => $Qproducts->value('products_name'));
     }
   }
 }

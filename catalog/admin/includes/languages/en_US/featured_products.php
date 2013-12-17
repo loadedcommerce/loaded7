@@ -6,9 +6,9 @@
 #  @version    $Id: featured_products.php v1.0 2013-08-08 datazen $
 
 heading_title = Featured Products
-heading_title_new_featured_product = New Featured Product
+heading_title_new_featured_product = New Featured
 
-button_new_featured_product = New Featured Product
+button_new_featured_product = New Featured
 
 info_bubble_expires_date = This is the featured products expiration date.
 info_bubble_product = Choose the desired product to feature.
@@ -30,3 +30,5 @@ table_heading_name = Product
 table_heading_expires = Expires
 table_heading_status = Status
 table_heading_action = Action
+
+text_select_product = Select Product

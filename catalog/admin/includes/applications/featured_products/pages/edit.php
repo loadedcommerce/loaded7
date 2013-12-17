@@ -17,7 +17,7 @@
   TD { padding: 5px 0 0 5px; }
 </style>
 <!-- Main content -->
-<section role="main" id="main">
+<section id="section_featured_products">
   <hgroup id="main-title" class="thin">
     <h1><?php echo (isset($fInfo)) ? lC_Featured_products_Admin::getFeaturedName($fInfo->get('products_id')) : $lC_Language->get('heading_title_new_featured_product'); ?></h1>
     <?php
@@ -38,13 +38,7 @@
             <div class="field-block button-height margin-bottom">
               <label for="products_id" class="label"><b><?php echo $lC_Language->get('label_product'); ?></b></label>
               <div>
-                <select id="products_id" name="products_id" class="input with-small-padding">
-                  <option value="">Select Product</option>
-                  <option value="1">Product 1</option>
-                  <option value="2">Product 2</option>
-                  <option value="3">Product 3</option>
-                  <option value="4">Product 4</option>
-                </select>
+                <?php echo lc_draw_pull_down_menu('products_id', $products_array, null, 'class="input with-small-padding"'); ?>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_product'), null, 'info-spot on-left grey margin-left'); ?>
               </div>
             </div>
