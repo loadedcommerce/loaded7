@@ -17,7 +17,7 @@
   TD { padding: 5px 0 0 5px; }
 </style>
 <!-- Main content -->
-<section id="section_featured_products">
+<section role="main" id="main">
   <hgroup id="main-title" class="thin">
     <h1><?php echo (isset($fInfo)) ? lC_Featured_products_Admin::getFeaturedName($fInfo->get('products_id')) : $lC_Language->get('heading_title_new_featured_product'); ?></h1>
     <?php

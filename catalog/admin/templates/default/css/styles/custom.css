@@ -914,7 +914,7 @@ select.error { border: 2px solid red !important; }
   word-break: break-all;
 }
 
-#dataTable_filter { white-space:nowrap; }
+#dataTable_filter { white-space: nowrap; }
 
 /* needed for custom media query settings */
 @media screen and (min-width: 1200px) {
@@ -1119,7 +1119,6 @@ select.error { border: 2px solid red !important; }
   #order_quick_info h4 { margin:0px 0px -10px;text-align:center; }
   #dataTable_filter { margin-right: 10px; }
   #buttons-menu-div-listing { top: 60px; }
-  #featured_div { margin: 0 -30px; }
 }  
   
 @media screen and (max-width: 319px) {

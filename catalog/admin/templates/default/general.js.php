@@ -84,6 +84,8 @@ $(document).ready(function() {
       $("#big-menu_products_list").addClass('current navigable-current').change();
     } else if (module.indexOf("products_expected") != -1 && document.location.href.indexOf("expected") != -1) {
       $("#big-menu_products_expected").addClass('current navigable-current').change();
+    } else if (module.indexOf("featured_products") != -1 && document.location.href.indexOf("featured") != -1) {
+      $("#big-menu_featured_products").addClass('current navigable-current').change();
     } else if (module.indexOf("coupons") != -1 && document.location.href.indexOf("coupons") != -1) {
       $("#big-menu_coupon_manager").addClass('current navigable-current').change();
     } else if (module.indexOf("orders") != -1 && document.location.href.indexOf("action=save") != -1) {
