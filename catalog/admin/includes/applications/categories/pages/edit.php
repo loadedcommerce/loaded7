@@ -350,7 +350,7 @@ $lC_Template->loadModal($lC_Template->getModule());
     <div class="six-columns twelve-columns-tablet">
       <div id="buttons-menu-div-listing">
         <div id="buttons-container" style="position: relative;" class="clear-both">
-          <div class="with-padding align-right">
+          <div class="align-right">
            <p class="button-height">
           <?php
 

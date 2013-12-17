@@ -266,7 +266,7 @@ function getTaxClassOptionsString($id = null, $esc = false) {
     <div class="six-columns twelve-columns-tablet margin-bottom">
       <div id="buttons-menu-div-listing">
         <div id="buttons-container" style="position: relative;" class="clear-both">
-          <div class="with-padding align-right">
+          <div class="align-right">
               <p class="button-height">
               <?php
 
