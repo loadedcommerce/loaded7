@@ -356,7 +356,7 @@ $lC_Template->loadModal($lC_Template->getModule());
 
           $save = (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? '' : ' onclick="validateForm(\'#category\');"');
           $close = lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . ($_GET['cid'] != '') ? 'categories=' . $_GET['cid'] : '');
-          button_save_close($save, $close);
+          button_save_close($save, true, $close);
 
           ?>
         </p>

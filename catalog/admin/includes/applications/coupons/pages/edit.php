@@ -189,7 +189,7 @@
 
           $save = (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '' : ' onclick="validateForm(\'#coupon\');"');
           $close = lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule());
-          button_save_close($save, $close);
+          button_save_close($save, true, $close);
 
           ?>
         </p>

@@ -272,7 +272,7 @@ function getTaxClassOptionsString($id = null, $esc = false) {
 
               $save = (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '' : ' onclick="validateForm(\'#product\');"');
               $close = lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule());
-              button_save_close($save, $close);
+              button_save_close($save, true, $close);
 
               ?>
               <!--<select class="select expandable-list"> 
