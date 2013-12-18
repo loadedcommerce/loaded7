@@ -220,6 +220,7 @@ function editCustomer(id,add_addr=0) {
     // Display address tab
     $('#id_section_personal').removeClass('active');
     $('#id_section_address_book').addClass('active');
+
     // Display Address form (Hide Personal Form)
     $('#section_personal').hide();
     $('#section_address_book').show();
@@ -231,7 +232,7 @@ function editCustomer(id,add_addr=0) {
     $('#li-toggle').hide();
 
     // Set 1st address as primary address for new customer
-    $("#setPrimary").html('<label for="default" class="label"><?php echo $lC_Language->get('field_set_as_primary'); ?></label>&nbsp;&nbsp;<?php echo '&nbsp;' . lc_draw_checkbox_field('ab_primary', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '" checked');?>');
+    $("#setPrimary").html('<label for="default" class="label"><?php echo $lC_Language->get('field_set_as_primary'); ?></label>&nbsp;&nbsp;<?php echo '&nbsp;' . lc_draw_checkbox_field('ab_primary', '1', true, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '" ');?>');
   }
 
   mask();  
