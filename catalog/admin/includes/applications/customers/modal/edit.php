@@ -79,11 +79,11 @@ $aContent .= '  <p class="button-height inline-label">' .
 }
 $aContent .= '<p class="button-height inline-label">' .
               '  <label for="ab_firstname" class="label" style="width:30%;">' . $lC_Language->get('field_first_name') . '</label>' .
-                 lc_draw_input_field('ab_firstname', null, 'class="input" style="width:93%;" id="abFirstname"') .
+                 lc_draw_input_field('ab_firstname', null, 'class="input" style="width:93%;" ') .
               '</p>' .
               '<p class="button-height inline-label">' .
               '  <label for="ab_lastname" class="label" style="width:30%;">' . $lC_Language->get('field_last_name') . '</label>' .
-                 lc_draw_input_field('ab_lastname', null, 'class="input" style="width:93%;" id="abLastname"') .
+                 lc_draw_input_field('ab_lastname', null, 'class="input" style="width:93%;" ') .
               '</p>';
 if ( ACCOUNT_COMPANY > -1 ) {
   $aContent .=  '<p class="button-height inline-label">' .
@@ -269,10 +269,12 @@ function getFormData(id) {
       } else if (data.customerData.customers_gender == 'f') {
         $("#editGender_2").attr('checked', true).change();
       }
+      //$("#ab_firstname").val(data.firstname);
+        //$("#ab_lastname").val(data.lastname);
       $("#editFirstname").val(data.customerData.customers_firstname);
-      $("#abFirstname").val(data.customerData.customers_firstname);
+      $("#ab_firstname").val(data.customerData.customers_firstname);
       $("#editLastname").val(data.customerData.customers_lastname);
-      $("#abLastname").val(data.customerData.customers_lastname);
+      $("#ab_lastname").val(data.customerData.customers_lastname);
       $("#editDob").val(data.customerData.customers_dob_short);
       $("#editEmailAddress").val(data.customerData.customers_email_address);
       if (data.customerData.customers_newsletter == 1) {
@@ -519,7 +521,7 @@ function editAddress(id, primary) {
         } else if (data.gender == 'f') {
           $("#ab_gender_1").attr('checked', false);
           $("#ab_gender_2").attr('checked', true);
-        }
+        }        
         $("#ab_firstname").val(data.firstname);
         $("#ab_lastname").val(data.lastname);
         $("#ab_company").val(data.company);
@@ -594,8 +596,10 @@ function updateZones(selected) {
   );
 }
 
-function createNewOrder() {
-  var cid = parseInt($("#abParentId").html()); 
+function createNewOrder(cid=null) {
+  if(parseInt(cid) > 0 ) {
+    window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&cID=' + cid + '");?>';
+  }
   
   var isVisible = $('#addAddress').is(':visible');
   if (isVisible) {    
