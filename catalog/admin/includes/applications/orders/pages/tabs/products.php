@@ -102,10 +102,10 @@
         ?>
 
          <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-bottom align-center">
-          Product Subtotal : <?php echo $product_sub_total;?>
+          <?php echo $lC_Language->get('text_product_sub_total'). ': ' .$product_sub_total;?>
         </div>
         <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-bottom align-center">
-          Add Product : <?php echo lc_draw_pull_down_menu('add_product', lC_Products_Admin::getProductDropdownArray());?>
+          <?php echo $lC_Language->get('text_add_product'). ': ' .lc_draw_pull_down_menu('add_product', lC_Products_Admin::getProductDropdownArray());?>
           
           <span class="button-group">
             <a class="button compact icon-plus" href="javascript:void(0);" onclick="addOrderProduct(<?php echo $orders_ID;?>);"><?php echo 'Add item'; ?></a>            

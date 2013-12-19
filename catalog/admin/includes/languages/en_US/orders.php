@@ -165,3 +165,6 @@ text_balance_due = Due
 text_customer_comment = Customer Comment
 text_payments = Payments
 text_current_status = Current Status
+
+text_product_sub_total = Products Subtotal
+text_add_product = Add Product
