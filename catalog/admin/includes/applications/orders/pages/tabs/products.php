@@ -36,11 +36,11 @@
         <div class="columns with-small-padding small-margin-left bbottom-grey">
           <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom">
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_sku_model'); ?> </span>
-                      <span id="products_model_<?php echo $products['orders_products_id']; ?>"><?php echo $products['model']; ?></span>
+            <span id="products_model_<?php echo $products['orders_products_id']; ?>"><?php echo $products['model']; ?></span>
           </div>
           <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom">
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_name'); ?> </span>
-                      <span id="products_name_<?php echo $products['orders_products_id']; ?>"><?php echo $products['name']; ?>
+            <span id="products_name_<?php echo $products['orders_products_id']; ?>"><?php echo $products['name']; ?>
             <?php
 
               if ( isset($product['attributes']) && is_array($product['attributes']) && ( sizeof($product['attributes']) > 0 ) ) {
@@ -59,29 +59,29 @@
           </div>
           <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom">
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_fulfillment'); ?> </span>
-                      <span id="products_stock_<?php echo $products['orders_products_id']; ?>"><?php echo $products['stock']; ?></span>
+            <span id="products_stock_<?php echo $products['orders_products_id']; ?>"><?php echo $products['stock']; ?></span>
           </div>
           <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom">
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_tax_class'); ?> </span>
-                      <span id="products_tax_class_<?php echo $products['orders_products_id']; ?>"><?php echo $products['tax_class']; ?></span>
+            <span id="products_tax_class_<?php echo $products['orders_products_id']; ?>"><?php echo $products['tax_class']; ?></span>
           </div>
           <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom">
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_price'); ?> </span>
-                      <span id="products_price_<?php echo $products['orders_products_id']; ?>"><?php echo $products['price']; ?></span>
+            <span id="products_price_<?php echo $products['orders_products_id']; ?>"><?php echo $products['price']; ?></span>
           </div>
           <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom">
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_qty'); ?> </span>
-                      <span id="products_qty_<?php echo $products['orders_products_id']; ?>"><?php echo $products['quantity']; ?></span>
+            <span id="products_qty_<?php echo $products['orders_products_id']; ?>"><?php echo $products['quantity']; ?></span>
           </div>
           <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom">
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_total'); ?> </span>
-                      <span id="products_total_<?php echo $products['orders_products_id']; ?>"><?php echo ($products['price']*$products['quantity']); ?></span>
+            <span id="products_total_<?php echo $products['orders_products_id']; ?>"><?php echo ($products['price']*$products['quantity']); ?></span>
           </div>
           <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom align-right">
-                      <span id="buttons_<?php echo $products['orders_products_id']; ?>">
+            <span id="buttons_<?php echo $products['orders_products_id']; ?>">
               <span class="button-group">
-                          <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct('<?php echo $orders_ID; ?>','<?php echo $products['orders_products_id']; ?>');"><?php echo $lC_Language->get('text_edit'); ?></a>
-                          <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['orders_products_id']; ?>');"></a>
+                <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct('<?php echo $orders_ID; ?>','<?php echo $products['orders_products_id']; ?>');"><?php echo $lC_Language->get('text_edit'); ?></a>
+                <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['orders_products_id']; ?>');"></a>
               </span>
             </span>
           </div>

@@ -92,6 +92,15 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
          
       }
     );
+    var v = parseInt('<?php echo $_GET["editProduct"];?>');    
+    if(v == 1) {
+      $("#id_tab_orders_summary").removeClass("active");
+      $("#id_tab_orders_products").addClass("active");
+
+      // Display Address form (Hide Personal Form)
+      $('#section_orders_summary').hide();
+      $('#section_orders_products').show();
+    }
   }
 
   function hideElements() {  
@@ -343,7 +352,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           return false;
         } 
         updateOrderList();        
-        url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders=OID&action=save'); ?>';
+        url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders=OID&action=save&editProduct=1'); ?>';
         $(location).attr('href',url.replace('OID', oid));
       }
     );
@@ -354,61 +363,60 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
       return false;
     }
-        $.modal({
-        content: '<div id="editProductContainer">'+
-                 '  <div id="section_editProduct">'+
-               '      <form name="editProductForm" id="editProductForm" autocomplete="off" action="" method="post">'+               
-               '        <p class="button-height inline-label">'+
-                 '      <label for="product" class="label"><?php echo $lC_Language->get('text_products'); ?>'+
-                 '      <?php echo lc_draw_pull_down_menu('product', null, null, 'class="input with-small-padding mid-margin-top" id="editProduct" onchange="updateEditProduct();"'); ?>'+
-                 '      </label>'+
-               '        </p>'+
-               '        <p class="button-height inline-label">'+
-                 '      <label for="taxClass" class="label"><?php echo $lC_Language->get('text_tax_class'); ?>'+
-                 '      <?php echo lc_draw_pull_down_menu('taxClass', null, null, 'class="input with-small-padding mid-margin-top" id="editTaxclass"'); ?>'+
-                 '      </label>'+
-               '        </p>'+
-               '        <p class="button-height inline-label">'+
-                 '      <label for="price" class="label"><?php echo $lC_Language->get('text_price'); ?>'+
-                 '      <?php echo lc_draw_input_field('price', null, 'class="input mid-margin-top" id="editPrice"'); ?>'+
-                 '      </label>'+
-               '        </p>'+
-               '        <p class="button-height inline-label">'+
-                 '      <label for="quantity" class="label"><?php echo $lC_Language->get('text_quantity'); ?>'+
-                 '      <?php echo lc_draw_input_field('quantity', null, 'class="input mid-margin-top" id="editQuantity"'); ?>'+
-                 '      </label>'+
-               '        </p>'+               
-               '      </form>'+
-               '    </div>'+               
-                 '  <span id="oId" style="display:none;"></span>'+
-                 '  <span id="pId" style="display:none;"></span>'+
-                 '  <span id="opId" style="display:none;"></span>'+
-               '</div>',
-            title: '<?php echo $lC_Language->get('text_product_details'); ?>',
-            width: 600,
-            scrolling: true,
-            actions: {
-              'Close' : {
-                color: 'red',
-                click: function(win) { win.closeModal(); }
-              }
-            },
-            buttons: {
-          '<?php echo $lC_Language->get('button_save'); ?>': {
+    $.modal({
+    content: '<div id="editProductContainer">'+
+             '  <div id="section_editProduct">'+
+           '      <form name="editProductForm" id="editProductForm" autocomplete="off" action="" method="post">'+               
+           '        <p class="button-height inline-label">'+
+             '      <label for="product" class="label"><?php echo $lC_Language->get('text_products'); ?>'+
+             '      <?php echo lc_draw_pull_down_menu('product', null, null, 'class="input with-small-padding mid-margin-top" id="editProduct" onchange="updateEditProduct();"'); ?>'+
+             '      </label>'+
+           '        </p>'+
+           '        <p class="button-height inline-label">'+
+             '      <label for="taxClass" class="label"><?php echo $lC_Language->get('text_tax_class'); ?>'+
+             '      <?php echo lc_draw_pull_down_menu('taxClass', null, null, 'class="input with-small-padding mid-margin-top" id="editTaxclass"'); ?>'+
+             '      </label>'+
+           '        </p>'+
+           '        <p class="button-height inline-label">'+
+             '      <label for="price" class="label"><?php echo $lC_Language->get('text_price'); ?>'+
+             '      <?php echo lc_draw_input_field('price', null, 'class="input mid-margin-top" id="editPrice"'); ?>'+
+             '      </label>'+
+           '        </p>'+
+           '        <p class="button-height inline-label">'+
+             '      <label for="quantity" class="label"><?php echo $lC_Language->get('text_quantity'); ?>'+
+             '      <?php echo lc_draw_input_field('quantity', null, 'class="input mid-margin-top" id="editQuantity"'); ?>'+
+             '      </label>'+
+           '        </p>'+               
+           '      </form>'+
+           '    </div>'+               
+             '  <span id="oId" style="display:none;"></span>'+
+             '  <span id="pId" style="display:none;"></span>'+
+             '  <span id="opId" style="display:none;"></span>'+
+           '</div>',
+        title: '<?php echo $lC_Language->get('text_product_details'); ?>',
+        width: 600,
+        scrolling: true,
+        actions: {
+          'Close' : {
+            color: 'red',
+            click: function(win) { win.closeModal(); }
+          }
+        },
+        buttons: {
+      '<?php echo $lC_Language->get('button_save'); ?>': {
+        classes:  'glossy',
+        click:    function(win) { saveEditproduct(); }
+      },
+          '<?php echo $lC_Language->get('button_close'); ?>': {
             classes:  'glossy',
-            click:    function(win) { saveEditproduct(); }
-          },
-              '<?php echo $lC_Language->get('button_close'); ?>': {
-                classes:  'glossy',
-                click:    function(win) { win.closeModal(); }
-              }
-            },
-            buttonsLowPadding: true
-        });
+            click:    function(win) { win.closeModal(); }
+          }
+        },
+        buttonsLowPadding: true
+    });
 
     getFormData(oid, opid);
-
-        $.modal.all.centerModal();
+    $.modal.all.centerModal();
   }
   /*
   function editOrderProduct(val) {
