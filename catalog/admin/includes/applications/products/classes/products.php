@@ -2202,5 +2202,30 @@ class lC_Products_Admin {
     }
     return $result;
   }
+  /*
+  * Returns an array of product for dropdown list
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return array
+  */
+  function getProductDropdownArray() {
+    global $lC_Database, $lC_Language, $lC_Currencies, $_module;
+    $result = array();
+
+    $Qproducts = $lC_Database->query('select SQL_CALC_FOUND_ROWS p.products_id, pd.products_name from :table_products p, :table_products_description pd where p.products_id = pd.products_id and pd.language_id = :language_id');
+    $Qproducts->appendQuery('order by p.products_id');
+    $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+    $Qproducts->bindInt(':language_id', $lC_Language->getID());
+    $Qproducts->execute();
+    if($Qproducts->numberOfRows()) {
+      while ( $Qproducts->next() ) {
+        $result[] = array('id' => $Qproducts->value('products_id'),
+                          'text' => $Qproducts->value('products_name'));
+      }
+    }
+    return $result;
+  }
 }
 ?>

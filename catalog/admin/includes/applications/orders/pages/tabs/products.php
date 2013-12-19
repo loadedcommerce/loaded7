@@ -30,6 +30,17 @@
         <?php                     
           $orders_ID = $_GET[$lC_Template->getModule()];
           $Qordersproducts = lC_Orders_Admin::getordersproducts($orders_ID);
+          
+          $order_total_array = $oInfo->get('orderTotalsData');
+          $product_sub_total = '';
+          foreach( $order_total_array as $v) {
+            if($v['title'] == 'Sub-Total:') {
+              $product_sub_total = $v['text'];
+              break;
+            }  
+          }
+          require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+         
 
           foreach ($Qordersproducts as $products) {
         ?>
@@ -75,7 +86,7 @@
           </div>
           <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom">
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_total'); ?> </span>
-            <span id="products_total_<?php echo $products['orders_products_id']; ?>"><?php echo ($products['price']*$products['quantity']); ?></span>
+            <span id="products_total_<?php echo $products['orders_products_id']; ?>"><?php echo number_format($products['price']*$products['quantity'], DECIMAL_PLACES); ?></span>
           </div>
           <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom align-right">
             <span id="buttons_<?php echo $products['orders_products_id']; ?>">
@@ -89,6 +100,21 @@
         <?php
           }
         ?>
+
+         <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-bottom align-center">
+          Product Subtotal : <?php echo $product_sub_total;?>
+        </div>
+        <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-bottom align-center">
+          Add Product : <?php echo lc_draw_pull_down_menu('add_product', lC_Products_Admin::getProductDropdownArray());?>
+          
+          <span class="button-group">
+            <a class="button compact icon-plus" href="javascript:void(0);" onclick="addOrderProduct(<?php echo $orders_ID;?>);"><?php echo 'Add item'; ?></a>            
+          </span>
+
+
+        </div>
+
+
       </fieldset>
     </div> 
   </div>

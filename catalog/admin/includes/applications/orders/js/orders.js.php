@@ -418,6 +418,12 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     getFormData(oid, opid);
     $.modal.all.centerModal();
   }
+  function addOrderProduct(oId) {    
+    var pid = parseInt($("#add_product").val()); 
+    url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&action=add_product&oID=OID&pID=PID'); ?>';
+    window.location = url.replace('OID', oId).replace('PID',pid);
+  }
+
   /*
   function editOrderProduct(val) {
     $("#buttons_" + val).html('<p><a class="button compact small-margin-top op-action" href="javascript:void(0);" onclick="saveOrderProduct(' + val + ');"><?php echo $lC_Language->get('text_save'); ?></a></p>'+

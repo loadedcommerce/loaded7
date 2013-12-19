@@ -330,8 +330,7 @@ class lC_Orders_Admin {
 
     if ( !$lC_Order->isValid() ) {
       return array('error' => true, 'errmsg' => sprintf(ERROR_ORDER_DOES_NOT_EXIST, $id));
-    }
-    
+    }    
    
     $result['customerId'] = $lC_Order->getCustomer('id');
     $result['customerAddress'] = lC_Address::format($lC_Order->getCustomer(), '<br />');
@@ -365,6 +364,7 @@ class lC_Orders_Admin {
     $result['orderComments'] = '<span>' . $lC_Language->get('number_of_comments') . ' ' . $lC_Order->getNumberOfComments() . '</span>';
     $result['orderTotal'] = '<span>' . $lC_Order->getTotal() . '</span>';
     $result['numberProducts'] = '<span>' . $lC_Language->get('number_of_products') . ' ' . $lC_Order->getNumberOfProducts() . '<br />' . $lC_Language->get('number_of_items') . ' ' . $lC_Order->getNumberOfItems . '</span>';
+    
     // build the product string  
     $result['orderProducts'] = ''; 
     foreach ( $lC_Order->getProducts() as $products ) {
@@ -962,6 +962,95 @@ class lC_Orders_Admin {
 
 
     return $result;
+  }
+  
+  public static function addOrderProductData() {
+    global $lC_Language, $lC_Database, $lC_Vqmod, $lC_Currencies;
+
+    $oID = $_GET['oID'];
+    $pID = $_GET['pID'];
+
+    require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
+    $lC_Currencies = new lC_Currencies();
+    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
+    $lC_Order = new lC_Order($oID);
+    require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+    $productData = lC_Products_Admin::getproductsArray($pID);
+
+    $products_id = $productData[0]['products_id'];
+    $products_model = $productData[0]['products_model'];
+    $products_name = $productData[0]['products_name'];
+    $products_price = $productData[0]['products_price'];
+    $products_tax_class_id = $productData[0]['products_tax_class_id'];   
+    $products_quantity = 1;
+
+    $Qrates = $lC_Database->query('select * from :table_tax_rates where tax_class_id = :tax_class_id');
+    $Qrates->bindTable(':table_tax_rates', TABLE_TAX_RATES);
+    $Qrates->bindInt(':tax_class_id', $products_tax_class_id);    
+    $Qrates->execute();
+    if ($Qrates->numberOfRows()) {
+      $products_tax_rate = $Qrates->value('tax_rate');
+      $products_tax = (($products_tax_rate/100)*$products_price);
+    } else {
+      $products_tax_rate = 0;
+    }
+    // Insert record in order product table
+    $Qinsert = $lC_Database->query('insert into :table_orders_products (orders_id, products_id, products_model, products_name, products_price, products_tax, products_quantity) values (:orders_id, :products_id, :products_model, :products_name, :products_price, :products_tax,  :products_quantity)');
+    $Qinsert->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+    $Qinsert->bindInt(':orders_id', $oID);
+    $Qinsert->bindInt(':products_id', $products_id);
+    $Qinsert->bindValue(':products_model', $products_model);
+    $Qinsert->bindValue(':products_name', $products_name);
+    $Qinsert->bindValue(':products_price', $products_price);
+    $Qinsert->bindValue(':products_tax', $products_tax_rate);
+    $Qinsert->bindInt(':products_quantity', $products_quantity);    
+    //$Qinsert->setLogging($_SESSION['module'], $id);
+    $Qinsert->execute();
+      
+    // Insert record in order total table
+    $Qtotals = $lC_Database->query('select * from :table_orders_total where orders_id = :orders_id order by sort_order');
+    $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+    $Qtotals->bindInt(':orders_id', $oID);
+    $Qtotals->execute();    
+
+    $Total = $Sub_Total + $Tax;
+    while ($Qtotals->next()) {
+      switch ($Qtotals->value('class')) {
+        case 'sub_total':
+          $Sub_Total = $Qtotals->value('value') + $products_price;
+          
+          $Qsub_total = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
+          $Qsub_total->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+          $Qsub_total->bindInt(':orders_id', $oID);          
+          $Qsub_total->bindValue(':text', $lC_Currencies->format($Sub_Total, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+          $Qsub_total->bindValue(':value', $Sub_Total);
+          $Qsub_total->bindValue(':class', $Qtotals->value('class')); 
+          $Qsub_total->execute();    
+          break;
+        case 'tax':
+          $Tax = $Qtotals->value('value')+ $products_tax;
+
+          $Qtax = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
+          $Qtax->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+          $Qtax->bindInt(':orders_id', $oID);          
+          $Qtax->bindValue(':text', $lC_Currencies->format($Tax, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+          $Qtax->bindValue(':value', $Tax);
+          $Qtax->bindValue(':class', $Qtotals->value('class'));
+          $Qtax->execute();
+          break;
+        case 'total':
+          $Total = $Qtotals->value('value') + $products_tax + $products_price;
+
+          $Qtotals = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
+          $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+          $Qtotals->bindInt(':orders_id', $oID);          
+          $Qtotals->bindValue(':text', $lC_Currencies->format($Total, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+          $Qtotals->bindValue(':value', $Total);
+          $Qtotals->bindValue(':class', 'total');
+          $Qtotals->execute();
+          break;
+      }        
+    }
   }
   public static function updateOrderProductData() {
     global $lC_Language, $lC_Database, $lC_Vqmod, $lC_Currencies;
