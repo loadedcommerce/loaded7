@@ -655,6 +655,8 @@ class lC_Customers_Admin {
   */
   public static function saveAddress($id = null, $data) {
     global $lC_Database;
+    
+    if ($id == 0) $id = null;
 
     $error = false;
     $result = array();
