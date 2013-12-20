@@ -560,6 +560,17 @@ class lC_Products_import_export_Admin {
 	  return array('url' => $url, 'sql_statement' => $sql_statement);
   }
   
+  /* Permalink function */
+  public static function generate_clean_permalink($str){
+	setlocale(LC_ALL, 'en_US.UTF8');
+	$plink = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+	$plink = preg_replace("/[^a-zA-Z0-9\/_| -]/", '', $plink);
+	$plink = strtolower(trim($plink, '-'));
+	$plink = preg_replace("/[\/_| -]+/", '-', $plink);
+	 
+	return $plink;
+  }
+  
  /*
   * Return the temp file name for downloading products
   *
@@ -678,6 +689,8 @@ class lC_Products_import_export_Admin {
 			}
 		}
 		
+		// Need to find and remove blank rows
+		
 		$match_count = 0;
 		$insert_count = 0;
 		
@@ -693,6 +706,8 @@ class lC_Products_import_export_Admin {
 				
 				// need to get the weight class since Im outputting lb and kg instead of the ids
 				
+				// convert the permalink to a safe output
+				$product['permalink'] = lC_Products_import_export_Admin::generate_clean_permalink($product['permalink']);
 				
 				// need to get ids for these categories if they dont exist we need to make them and return that id
 				$product['categories'] = explode(",",$product['categories']);
@@ -739,17 +754,17 @@ class lC_Products_import_export_Admin {
 				
 					$lC_Database->startTransaction();
 					
-					$Qproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_cost = :products_cost, products_price =  :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id, manufacturers_id = :manufacturers_id, products_date_added = :products_date_added WHERE products_id = :products_id');
+					$Qproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id, manufacturers_id = :manufacturers_id, products_date_added = :products_date_added WHERE products_id = :products_id');
 					$Qproduct->bindInt(':products_id', $products_id);
-					$Qproduct->bindRaw(':products_date_added', $product['date_added']);
+					$Qproduct->bindValue(':products_date_added', $product['date_added']);
 					$Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
-					$Qproduct->bindInt(':products_quantity', $product['quantity']);
-					$Qproduct->bindFloat(':products_cost', $product['cost']);
-					$Qproduct->bindFloat(':products_price', $product['price']);
-					$Qproduct->bindFloat(':products_msrp', $product['msrp']);
+					$Qproduct->bindValue(':products_quantity', $product['quantity']);
+					$Qproduct->bindValue(':products_cost', $product['cost']);
+					$Qproduct->bindValue(':products_price', $product['price']);
+					$Qproduct->bindValue(':products_msrp', $product['msrp']);
 					$Qproduct->bindValue(':products_model', $product['model']);
 					$Qproduct->bindValue(':products_sku', $product['sku']);
-					$Qproduct->bindFloat(':products_weight', $product['weight']);
+					$Qproduct->bindValue(':products_weight', $product['weight']);
 					$Qproduct->bindInt(':products_weight_class', $product['weight_class']);
 					$Qproduct->bindInt(':products_status', $product['status']);
 					$Qproduct->bindInt(':products_tax_class_id', $product['tax_class_id']);
@@ -759,6 +774,7 @@ class lC_Products_import_export_Admin {
 	
 					if ( $lC_Database->isError() ) {
 					  $error = true;
+						$errormsg .= '   initial: '.$products_id.'  '.$lC_Database->getError();
 					} else {
 				
 					  $Qcategories = $lC_Database->query('delete from :table_products_to_categories where products_id = :products_id');
@@ -790,7 +806,7 @@ class lC_Products_import_export_Admin {
 					}
 										
 					if ( $error === false ) {
-					  $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url WHERE products_id = :products_id AND language_id = :language_id');
+					  $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_description = :products_description, products_keyword = :products_keyword, products_tags = ":products_tags", products_url = ":products_url" WHERE products_id = :products_id AND language_id = :language_id');
 					  $Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
 					  $Qpd->bindInt(':products_id', $products_id);
 					  $Qpd->bindInt(':language_id', $product['language_id']);
@@ -819,6 +835,7 @@ class lC_Products_import_export_Admin {
 				
 					} else {
 					  $lC_Database->rollbackTransaction();
+					  $errormsg .= '    Error on product id: '.$products_id.'  ';
 					}
 					
 							
