@@ -32,21 +32,23 @@ $(document).ready(function() {
     var nameContentText = $(this).find('div.content-featured-products-name').text();;
     var priceContent = $(this).find('div.content-featured-products-price').html();
     var dateContent = $(this).find('div.content-featured-products-date').html();
+    var buttonContent = $(this).find('div.content-featured-products-button').html();
     
     var newNameContentText = (nameContentText.length > 16) ? nameContentText.substr(0, 13) + '...' : nameContentText;
     nameContent = nameContent.replace(nameContentText, newNameContentText);
     
-    output = '<div class="' + thisContentClass + ' with-padding-no-top-bottom">'+
-             '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
+    output = '<div class="' + thisContentClass + ' with-padding-no-top-bottom">' +
+             '  <div class="thumbnail align-center large-padding-top">' + imageContent +
              '    <div class="caption">' +
              '      <h3 class="content-featured-products-text-name small-margin-top">' + nameContent + '</h3>' +
              '      <div class="row">';
     if (mediaType == 'desktop') {
-      output += '     <div class="col-sm-12 col-lg-12">' +
-                '       <p class="lead content-featured-products-text-price">' + priceContent + '</p>' +
-                '     </div>';
+      output += '        <div class="col-sm-6 col-lg-6">' +
+                '          <p class="lead content-featured-products-text-price">' + priceContent + '</p>' +
+                '        </div>';
     }
-    output += '      </div>' +
+    output += '        <div class="col-sm-6 col-lg-6 no-margin-left">' + buttonContent + '</div>' +
+              '      </div>' +
               '    </div>' +
               '  </div>' +
               '</div>';
