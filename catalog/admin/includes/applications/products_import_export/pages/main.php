@@ -34,11 +34,11 @@
                   <p class="button-height">
                     <input type="radio" class="radio" checked value="tabbed" name="products-export-format" id="products-export-format-tabbed" /> <label class="label" for="export-format-tabbed">Tabbed</label>
                   </p>
-                  <p class="button-height">
+                  <!--<p class="button-height">
                     <?php echo $lC_Language->get('text_choose_a_data_set'); ?>
-                  </p>
+                  </p>-->
                   <p class="button-height">
-                    <button id="getProducts" type="button" class="button green-gradient" onClick="Javascript:getProducts('full');"><span class="icon-download"></span> <?php echo $lC_Language->get('button_full_data_set'); ?></button> 
+                    <button type="button" class="button green-gradient icon-download" onClick="Javascript:getProducts('full');"><?php echo $lC_Language->get('button_full_data_set'); ?></button> 
                   </p>
                   <p class="button-height">
                     <a href="/admin/includes/applications/products_import_export/samples/products_import_sample.txt" download>
