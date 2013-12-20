@@ -61,10 +61,11 @@ class lC_Content_featured_products extends lC_Modules {
                            '  <div class="content-featured-products-name">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Product->getTitle()) . '</div>' . "\n";
         
         if ($lC_Product->hasImage()) {
-          $this->_content .= '  <div class="content-featured-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-featured-products-image-src"', 'small')) . '</div>' . "\n";
+          $this->_content .= '  <div class="content-featured-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-featured-products-image-src"')) . '</div>' . "\n";
         }
-        $this->_content .= '  <div class="content-featured-products-price">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n" .
-                           '  <div class="content-featured-products-button"><button class="content-featured-products-add-button btn btn-success btn-block" onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('new_products_button_buy_now') . '</button></div>' . "\n" .
+        $this->_content .= '  <div class="content-featured-products-desc">' . substr(lc_clean_html($lC_Product->getDescription()), 0, 62) . '...</div>' . "\n" .
+                           '  <div class="content-featured-products-price">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n" .
+                           '  <div class="content-featured-products-button"><button class="content-featured-products-add-button" onclick="window.location.href=\'' . lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add') . '\'" type="button">' . $lC_Language->get('new_products_button_buy_now') . '</button></div>' . "\n" .
                            '</div>' . "\n";
       }
     }
