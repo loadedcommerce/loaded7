@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id: getProductsFile.php v1.0 2013-01-01 datazen $
+  $Id: getOptionProductsFile.php v1.0 2013-12-01 resultsonlyweb $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com

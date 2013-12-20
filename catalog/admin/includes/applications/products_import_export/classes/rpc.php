@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id: rpc.php v1.0 2013-01-01 datazen $
+  $Id: rpc.php v1.0 2013-12-01 resultsonlyweb $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -11,29 +11,12 @@
   @copyright  (c) 2013 LoadedCommerce Team
   @license    http://loadedcommerce.com/license.html
  
-  @function The lC_Product_variants_Admin_rpc class is for AJAX remote program control
+  @function The lC_Products_import_export_Admin_rpc class is for AJAX remote program control
 */
 global $lC_Vqmod;
-
 require_once($lC_Vqmod->modCheck('includes/applications/products_import_export/classes/products_import_export.php'));
 
 class lC_Products_import_export_Admin_rpc {
- /*
-  * Returns the entries data used on the dialog forms
-  *
-  * @param integer $_GET['pveid'] The product variant group entry id
-  * @access public
-  * @return json
-  */
-  public static function getEntryFormData() {
-    $result = lC_Products_import_export_Admin::getEntryFormData($_GET['pveid']);
-    if (!isset($result['rpcStatus'])) {
-      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
-    }
-
-    echo json_encode($result);
-  }
-  
  /*
   * Get total number of products to export after filter
   *
@@ -90,10 +73,10 @@ class lC_Products_import_export_Admin_rpc {
   }
   
  /*
-  * Get categories data set
+  * Get Option Groups data set
   *
-  * @param $_GET['cfilter'] An string filter type
-  * @param $_GET['cgformat'] An string export type
+  * @param $_GET['ofilter'] An string filter type
+  * @param $_GET['ogformat'] An string export type
   * @access public
   * @return json
   */ 
@@ -108,10 +91,10 @@ class lC_Products_import_export_Admin_rpc {
   }
   
  /*
-  * Get categories data set
+  * Get Option Variants data set
   *
-  * @param $_GET['cfilter'] An string filter type
-  * @param $_GET['cgformat'] An string export type
+  * @param $_GET['ofilter'] An string filter type
+  * @param $_GET['ogformat'] An string export type
   * @access public
   * @return json
   */ 
@@ -126,10 +109,10 @@ class lC_Products_import_export_Admin_rpc {
   }
   
  /*
-  * Get categories data set
+  * Get Options to Products data set
   *
-  * @param $_GET['cfilter'] An string filter type
-  * @param $_GET['cgformat'] An string export type
+  * @param $_GET['ofilter'] An string filter type
+  * @param $_GET['ogformat'] An string export type
   * @access public
   * @return json
   */ 
@@ -144,10 +127,11 @@ class lC_Products_import_export_Admin_rpc {
   }
   
  /*
-  * Get products data set
+  * Import Products from Import File
   *
-  * @param $_GET['filter'] An string filter type
-  * @param $_GET['pgtype'] An string export type
+  * @param $_GET['pwizard'] An array of mapping wizard data for mapping columns
+  * @param $_GET['ptype'] A string of the type of import
+  * @param $_GET['pbackkup'] An boolean whether to backup the products tables first
   * @access public
   * @return json
   */ 
@@ -162,10 +146,11 @@ class lC_Products_import_export_Admin_rpc {
   }
   
  /*
-  * Get products data set
+  * Import Categores from Import File
   *
-  * @param $_GET['filter'] An string filter type
-  * @param $_GET['pgtype'] An string export type
+  * @param $_GET['cwizard'] An array of mapping wizard data for mapping columns
+  * @param $_GET['ctype'] A string of the type of import
+  * @param $_GET['cbackkup'] An boolean whether to backup the categories tables first
   * @access public
   * @return json
   */ 
@@ -180,10 +165,11 @@ class lC_Products_import_export_Admin_rpc {
   }
   
  /*
-  * Get products data set
+  * Import Option Groups from Import File
   *
-  * @param $_GET['filter'] An string filter type
-  * @param $_GET['pgtype'] An string export type
+  * @param $_GET['owizard'] An array of mapping wizard data for mapping columns
+  * @param $_GET['otype'] A string of the type of import
+  * @param $_GET['obackkup'] An boolean whether to backup the products tables first
   * @access public
   * @return json
   */ 
@@ -198,10 +184,11 @@ class lC_Products_import_export_Admin_rpc {
   }
   
  /*
-  * Get products data set
+  * Import Option Variants from Import File
   *
-  * @param $_GET['filter'] An string filter type
-  * @param $_GET['pgtype'] An string export type
+  * @param $_GET['owizard'] An array of mapping wizard data for mapping columns
+  * @param $_GET['otype'] A string of the type of import
+  * @param $_GET['obackkup'] An boolean whether to backup the products tables first
   * @access public
   * @return json
   */ 
@@ -216,10 +203,11 @@ class lC_Products_import_export_Admin_rpc {
   }
   
  /*
-  * Get products data set
+  * Import Option to Products from Import File
   *
-  * @param $_GET['filter'] An string filter type
-  * @param $_GET['pgtype'] An string export type
+  * @param $_GET['owizard'] An array of mapping wizard data for mapping columns
+  * @param $_GET['otype'] A string of the type of import
+  * @param $_GET['obackkup'] An boolean whether to backup the products tables first
   * @access public
   * @return json
   */ 

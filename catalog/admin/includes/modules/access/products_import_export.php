@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id: definitions.php v1.0 2013-01-01 datazen $
+  $Id: products_import_export.php v1.0 2013-12-03 resultsonlyweb $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -13,7 +13,7 @@
 */
 
   class lC_Access_Products_import_export extends lC_Access {
-    var $_module = 'products',
+    var $_module = 'products_import_export',
         $_group = 'products',
         $_icon = 'products.png',
         $_title,
