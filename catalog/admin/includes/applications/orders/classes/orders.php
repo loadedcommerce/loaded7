@@ -1289,11 +1289,14 @@ class lC_Orders_Admin {
                   '&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotal('.$oID.','.$Qtotals->value('orders_total_id').')" class="button icon-minus-round icon-red with-tooltip" title="remove"></a></p>';     
        
     }
-    $result .=  '<div class="columns with-small-padding small-margin-left small-margin-bottom align-center">
+
+    if( $result != '' ) {
+      $result .=  '<div class="columns with-small-padding small-margin-left small-margin-bottom align-center">
           <span class="button-group">
             <a class="button compact icon-plus" href="javascript:void(0);" onclick="saveOrderTotal('. $oID .');">Save</a> 
           </span>
         </div>';
+    }
    
 
     return $result;
