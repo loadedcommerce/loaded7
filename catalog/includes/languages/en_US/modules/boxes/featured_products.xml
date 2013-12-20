@@ -3,7 +3,7 @@
   <definitions>
     <definition>
       <key>box_featured_products_heading</key>
-      <value><![CDATA[Featured]]></value>
+      <value><![CDATA[Featured Product]]></value>
       <group>modules-boxes</group>
     </definition>
   </definitions>
