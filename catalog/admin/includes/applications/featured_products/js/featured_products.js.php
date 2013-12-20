@@ -53,4 +53,31 @@ function updateStatus(id, val) {
     $("#status_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_enable'); ?>"></span>');
   }
 }
+
+function validateForm(e) {
+  // turn off messages
+  jQuery.validator.messages.required = "";
+
+  var bValid = $("#featured").validate({
+    invalidHandler: function() {
+    },
+    rules: {
+      'products_id': {
+        required: true,
+      },
+      'expires_date': {
+        required: true,
+      },
+    },    
+    messages: {
+      "products_id": "<?php echo $lC_Language->get('ms_error_featured_products_products_id_required'); ?>",
+      "expires_date": "<?php echo $lC_Language->get('ms_error_featured_products_expires_date_required'); ?>",
+    } 
+  }).form();
+  if (bValid) {
+    $(e).submit();
+  } 
+
+  return false;
+}
 </script>

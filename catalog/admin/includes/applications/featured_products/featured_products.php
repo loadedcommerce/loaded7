@@ -46,8 +46,15 @@ class lC_Application_Featured_products extends lC_Template_Admin {
     $products_array[] = array('id' => '',
                               'text' => $lC_Language->get('text_select_product'));
     while ( $Qproducts->next() ) {
-      $products_array[] = array('id' => $Qproducts->value('products_id'),
-                                'text' => $Qproducts->value('products_name'));
+      $Qfeatured = $lC_Database->query('select products_id from :table_featured_products where products_id = :products_id limit 1');
+      $Qfeatured->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
+      $Qfeatured->bindInt(':products_id', $Qproducts->value('products_id'));
+      $Qfeatured->execute();
+      
+      if ($Qfeatured->numberOfRows() < 1) {
+        $products_array[] = array('id' => $Qproducts->value('products_id'),
+                                  'text' => $Qproducts->value('products_name'));
+      }
     }
   }
 }
