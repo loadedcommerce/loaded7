@@ -23,7 +23,7 @@ class lC_Boxes_featured_products extends lC_Modules {
   }
 
   public function initialize() {
-    global $lC_Database, $lC_Product, $lC_Currencies, $lC_Cache, $lC_Language, $lC_Image;
+    global $lC_Database, $lC_Currencies, $lC_Cache, $lC_Language, $lC_Image;
 
     $this->_title_link = lc_href_link(FILENAME_PRODUCTS, 'featured_products');
 
