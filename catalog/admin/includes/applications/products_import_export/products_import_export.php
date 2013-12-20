@@ -1,6 +1,6 @@
 <?php
   /*
-  $Id: product_variants.php v1.0 2013-01-01 datazen $
+  $Id: products_import_export.php v1.0 2013-12-03 resultsonlyweb $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -13,10 +13,6 @@
  
   @function The lC_Application_Product_variants class manages the product variants GUI
 */
-global $lC_Vqmod;
-
-require_once($lC_Vqmod->modCheck('includes/applications/products_import_export/classes/products_import_export.php'));
-
 class lC_Application_Products_import_export extends lC_Template_Admin {  
  /*
   * Protected variables
@@ -28,16 +24,9 @@ class lC_Application_Products_import_export extends lC_Template_Admin {
   * Class constructor
   */
   function __construct() {
-    global $lC_Language, $breadcrumb_string;
+    global $lC_Language;
 
-    $this->_page_title = $lC_Language->get('heading_title');
-
-    $breadcrumb_array = array(lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, $this->_module), $lC_Language->get('heading_title'))); 
-    $breadcrumb_string = '<ul>';
-    foreach ($breadcrumb_array as $key => $value) {
-      $breadcrumb_string .= '<li>' . $value . '</li>';
-    }  
-    $breadcrumb_string .= '</ul>';     
+    $this->_page_title = $lC_Language->get('heading_title'); 
   }
 }
 ?>

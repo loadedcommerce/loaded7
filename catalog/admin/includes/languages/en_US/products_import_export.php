@@ -1,4 +1,4 @@
-#  $Id: products_import_export.php v1.0 2013-09-19 $
+#  $Id: products_import_export.php v1.0 2013-12-01 resultsonlyweb $
 #
 #  LoadedCommerce, Innovative eCommerce Solutions
 #  http://www.loadedcommerce.com
@@ -9,7 +9,7 @@
 #  @copyright  (c) 2013 LoadedCommerce Team
 #  @license    http://loadedcommerce.com/license.html
 
-heading_title = Import/Export Products
+heading_title = Products Import/Export
 
 block_title_products = Products
 block_title_categories = Categories

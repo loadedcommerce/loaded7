@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id: main.php v1.0 2013-09-19 $
+  $Id: main.php v1.0 2013-12-01 resultsonlyweb $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
@@ -18,7 +18,7 @@
   <hgroup id="main-title" class="thin">
 	<h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   </hgroup>
-  <div class="with-padding">
+  <div class="with-padding margin-top">
     <div class="columns">
       <div class="twelve-columns">
         <div class="block margin-bottom">
@@ -38,7 +38,7 @@
                     <?php echo $lC_Language->get('text_choose_a_data_set'); ?>
                   </p>
                   <p class="button-height">
-                    <button type="button" class="button green-gradient icon-download" onClick="Javascript:getProducts('full');"><?php echo $lC_Language->get('button_full_data_set'); ?></button> 
+                    <button id="getProducts" type="button" class="button green-gradient" onClick="Javascript:getProducts('full');"><span class="icon-download"></span> <?php echo $lC_Language->get('button_full_data_set'); ?></button> 
                   </p>
                   <p class="button-height">
                     <a href="/admin/includes/applications/products_import_export/samples/products_import_sample.txt" download>

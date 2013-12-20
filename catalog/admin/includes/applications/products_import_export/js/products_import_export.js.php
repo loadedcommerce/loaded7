@@ -1,6 +1,6 @@
 <?php
 /*
-  $Id: product_variants.js.php v1.0 2013-01-01 datazen $
+  $Id: products_import_export.js.php v1.0 2013-12-01 reusltsonlyweb $
 
   LoadedCommerce, Innovative eCommerce Solutions
   http://www.loadedcommerce.com
