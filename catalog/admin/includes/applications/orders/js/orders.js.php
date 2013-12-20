@@ -527,4 +527,162 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     
   }
 
+  
+  function addOrderTotal(oid) {
+    var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+    if (parseInt(accessLevel) < 2) {
+      $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+      return false;
+    }
+    $.modal({
+    content: '<div id="addOrderTotalContainer">'+
+             '  <div id="section_OrderTotal">'+
+           '      <form name="addOrderTotalForm" id="addOrderTotalForm" autocomplete="off" action="" method="post">'+               
+           '        <p class="button-height inline-label">'+
+             '      <label for="type" class="label"><?php echo $lC_Language->get('text_orders_total_type'); ?>'+
+             '      <?php echo lc_draw_pull_down_menu('orders_total_type', null, null, 'class="input with-small-padding mid-margin-top" id="id_orders_total_type" onchange="updateSubOrderTotal(this.value);"'); ?>'+
+             '      </label>'+
+           '        </p>'+
+           '        <span id = "id_shipping" style = "display:none"><p class="button-height inline-label" >'+
+             '      <label for="shipping" class="label"><?php echo $lC_Language->get('text_orders_total_shipping'); ?>'+
+             '      <?php echo lc_draw_pull_down_menu('orders_total_shipping', null, null, 'class="input with-small-padding mid-margin-top" id="id_orders_total_shipping"'); ?>'+
+             '      </label>'+
+           '        </p></span>'+
+            '        <span id = "id_coupon" style = "display:none"><p class="button-height inline-label" >'+
+             '      <label for="coupon" class="label"><?php echo $lC_Language->get('text_orders_total_coupon'); ?>'+
+             '      <?php echo lc_draw_pull_down_menu('orders_total_coupon', null, null, 'class="input with-small-padding mid-margin-top" id="id_orders_total_coupon"'); ?>'+
+             '      </label>'+
+           '        </p></span>'+     
+           '      </form>'+
+           '    </div>'+ 
+           '</div>',
+        title: '<?php echo $lC_Language->get('text_add_orders_total'); ?>',
+        width: 600,
+        scrolling: true,
+        actions: {
+          'Close' : {
+            color: 'red',
+            click: function(win) { win.closeModal(); }
+          }
+        },
+        buttons: {
+          '<?php echo $lC_Language->get('button_continue'); ?>': {
+          classes:  'glossy',
+          click:    function(win) { /*saveEditproduct();*/ }
+          },
+          '<?php echo $lC_Language->get('button_cancel'); ?>': {
+            classes:  'glossy',
+            click:    function(win) { win.closeModal(); }
+          }
+        },
+        buttonsLowPadding: true
+    });
+
+    //getFormData(oid, opid);
+    //$.modal.all.centerModal();
+
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getOrdersTotalData&oid=OID'); ?>'  
+    $.getJSON(jsonLink.replace('OID', parseInt(oid)),
+      function (data) {
+        if (data.rpcStatus == -10) { // no session
+          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+          $(location).attr('href',url);
+        }
+        if (data.rpcStatus != 1) {
+          $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
+          return false;
+        }       
+        
+        $("#id_orders_total_type").empty();  // clear the old values
+        $.each(data.order_total_modules.entries, function(val, text) {
+          var selected = (data.orders_total_type == val) ? 'selected="selected"' : '';
+          if(data.orders_total_type == val) {
+            $("#id_orders_total_type").prevAll(".select-value:first").text(text);
+          }
+          $("#id_orders_total_type").append(
+            $("<option " + selected + "></option>").val(val).html(text)
+          );
+        });
+
+        $("#id_orders_total_type").empty();
+        var cnt = 1;
+        $.each(data.order_total_modules.entries, function(val, text) {
+          var selected = (data.module_class == text['module_class']) ? 'selected="selected"' : '';
+          if (cnt == 1) {
+            $("#id_orders_total_type").append(
+              $("<option></option>").val('0').html('<?php echo $lC_Language->get('text_none'); ?>')
+            );
+            cnt++;
+          }
+          if (data.module_class == text['module_class']) {
+            $("#id_orders_total_type").closest("span + *").prevAll("span.select-value:first").text(text['module_title']);
+          }
+          $("#id_orders_total_type").append(
+            $("<option " + selected + "></option>").val(text['module_class']).html(text['module_title'])
+          );
+        });
+
+
+        $("#id_orders_total_coupon").empty();
+        var cnt = 1;
+        $.each(data.coupons.entries, function(val, text) {
+          var selected = (data.coupons_id == text['coupons_id']) ? 'selected="selected"' : '';
+          if (cnt == 1) {
+            $("#id_orders_total_coupon").append(
+              $("<option></option>").val('0').html('<?php echo $lC_Language->get('text_none'); ?>')
+            );
+            cnt++;
+          }
+          if (data.coupons_id == text['coupons_id']) {
+            $("#id_orders_total_coupon").closest("span + *").prevAll("span.select-value:first").text(text['name']);
+          }
+          $("#id_orders_total_coupon").append(
+            $("<option " + selected + "></option>").val(text['coupons_id']).html(text['name'])
+          );
+        });
+
+
+        $.modal.all.centerModal();
+
+
+
+/*
+        $("#editTaxclass").empty();
+        var cnt = 1;
+        $.each(data.taxclassArray.entries, function(val, text) {
+          var selected = (data.tax_class_id == text['tax_class_id']) ? 'selected="selected"' : '';
+          if (cnt == 1) {
+            $("#editTaxclass").append(
+              $("<option></option>").val('0').html('<?php echo $lC_Language->get('text_none'); ?>')
+            );
+            cnt++;
+          }
+          if (data.tax_class_id == text['tax_class_id']) {
+            $("#editTaxclass").closest("span + *").prevAll("span.select-value:first").text(text['tax_class_title']);
+          }
+          $("#editTaxclass").append(
+            $("<option " + selected + "></option>").val(text['tax_class_id']).html(text['tax_class_title'])
+          );
+        });
+        $.modal.all.centerModal();
+        */
+      }
+    );
+
+
+  }
+
+  function updateSubOrderTotal(type) { 
+    if(type == 'coupon') {
+      $('#id_coupon').show();
+      $('#id_shipping').hide();
+    } else if(type == 'shipping') {
+      $('#id_coupon').hide();
+      $('#id_shipping').show();
+    } else {
+      $('#id_shipping').hide();
+      $('#id_coupon').hide();
+    }
+  }
+
 </script>

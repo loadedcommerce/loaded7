@@ -1275,7 +1275,8 @@ class lC_Orders_Admin {
   }
 
   function getOrderTotalsList($oID) {
-    global $lC_Database;
+   global $lC_Vqmod, $lC_Database;
+
     $result = '';
     $Qtotals = $lC_Database->query('select * from :table_orders_total where orders_id = :orders_id order by sort_order');
     $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
@@ -1293,8 +1294,9 @@ class lC_Orders_Admin {
             <a class="button compact icon-plus" href="javascript:void(0);" onclick="saveOrderTotal('. $oID .');">Save</a> 
           </span>
         </div>';
+   
 
-        return $result;
+    return $result;
   
   }
   function removeOrderTotal() {
@@ -1305,6 +1307,24 @@ class lC_Orders_Admin {
     $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
     $Qtotals->bindInt(':orders_total_id', $orders_total_id);
     $Qtotals->execute();  
+  }
+  function OrdersTotalData() {
+    global $lC_Vqmod, $lC_Database, $lC_Language, $lC_Currencies;
+
+    require_once($lC_Vqmod->modCheck('includes/applications/modules_order_total/classes/modules_order_total.php'));     
+    $result['order_total_modules'] = lC_Modules_order_total_Admin::getAll();
+
+    $Qcoupons = $lC_Database->query('select c.coupons_id, c.type, c.code, c.reward, c.purchase_over, c.start_date, c.expires_date, c.uses_per_coupon, c.uses_per_customer, c.restrict_to_products, c.restrict_to_categories, c.restrict_to_customers, c.status, c.notes, cd.name from :table_coupons c, :table_coupons_description cd where c.coupons_id = cd.coupons_id and cd.language_id = :language_id order by c.date_created desc');
+    $Qcoupons->bindTable(':table_coupons', TABLE_COUPONS);
+    $Qcoupons->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
+    $Qcoupons->bindInt(':language_id', $lC_Language->getID());
+    $Qcoupons->execute();    
+    
+    while ( $Qcoupons->next() ) {
+      $result['coupons']['entries'][] = $Qcoupons->toArray();
+    }
+    
+    return $result;
   }
 }
 ?>

@@ -98,6 +98,8 @@ class lC_Coupons_Admin {
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\', \'' . $Qcoupons->value('name') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
       $result['aaData'][] = array("$check", "$name", "$status", "$code", "$reward", "$limits", "$restrictions", "$action");
+
+      $result['entries'][] = $Qcoupons->toArray();
       
     }
 
