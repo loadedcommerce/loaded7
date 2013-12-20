@@ -420,7 +420,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
   }
   function addOrderProduct(oId) {    
     var pid = parseInt($("#add_product").val()); 
-    url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&action=add_product&oID=OID&pID=PID'); ?>';
+    url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&action=add_product&oID=OID&pID=PID&editProduct=1'); ?>';
     window.location = url.replace('OID', oId).replace('PID',pid);
   }
 

@@ -477,7 +477,7 @@ function saveAddress(save) {
           }
         } else {
           if (save == 1) {
-            window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&cID=' + cid + '");?>';
+            window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
           }
           // get new form data
           getFormData(cid);
@@ -598,7 +598,7 @@ function updateZones(selected) {
 
 function createNewOrder(cid=null) {
   if(parseInt(cid) > 0 ) {
-    window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&cID=' + cid + '");?>';
+    window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
   }
   
   var isVisible = $('#addAddress').is(':visible');

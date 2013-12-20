@@ -33,11 +33,14 @@
           
           $order_total_array = $oInfo->get('orderTotalsData');
           $product_sub_total = '';
-          foreach( $order_total_array as $v) {
-            if($v['title'] == 'Sub-Total:') {
-              $product_sub_total = $v['text'];
-              break;
-            }  
+
+          if(is_array($order_total_array)) {
+            foreach( $order_total_array as $v) {
+              if($v['title'] == 'Sub-Total:') {
+                $product_sub_total = $v['text'];
+                break;
+              }  
+            }
           }
           require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
          

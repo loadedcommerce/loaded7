@@ -990,6 +990,7 @@ class lC_Orders_Admin {
     $Qrates->execute();
     if ($Qrates->numberOfRows()) {
       $products_tax_rate = $Qrates->value('tax_rate');
+      $products_tax_description = $Qrates->value('tax_description');
       $products_tax = (($products_tax_rate/100)*$products_price);
     } else {
       $products_tax_rate = 0;
@@ -1011,47 +1012,86 @@ class lC_Orders_Admin {
     $Qtotals = $lC_Database->query('select * from :table_orders_total where orders_id = :orders_id order by sort_order');
     $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
     $Qtotals->bindInt(':orders_id', $oID);
-    $Qtotals->execute();    
+    $Qtotals->execute(); 
 
-    $Total = $Sub_Total + $Tax;
-    while ($Qtotals->next()) {
-      switch ($Qtotals->value('class')) {
-        case 'sub_total':
-          $Sub_Total = $Qtotals->value('value') + $products_price;
-          
-          $Qsub_total = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
-          $Qsub_total->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
-          $Qsub_total->bindInt(':orders_id', $oID);          
-          $Qsub_total->bindValue(':text', $lC_Currencies->format($Sub_Total, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
-          $Qsub_total->bindValue(':value', $Sub_Total);
-          $Qsub_total->bindValue(':class', $Qtotals->value('class')); 
-          $Qsub_total->execute();    
-          break;
-        case 'tax':
-          $Tax = $Qtotals->value('value')+ $products_tax;
+    if ($Qtotals->numberOfRows()) {
+      while ($Qtotals->next()) {
+        switch ($Qtotals->value('class')) {
+          case 'sub_total':
+            $Sub_Total = $Qtotals->value('value') + $products_price;
+            
+            $Qsub_total = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
+            $Qsub_total->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+            $Qsub_total->bindInt(':orders_id', $oID);          
+            $Qsub_total->bindValue(':text', $lC_Currencies->format($Sub_Total, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+            $Qsub_total->bindValue(':value', $Sub_Total);
+            $Qsub_total->bindValue(':class', $Qtotals->value('class')); 
+            $Qsub_total->execute();    
+            break;
+          case 'tax':
+            $Tax = $Qtotals->value('value')+ $products_tax;
 
-          $Qtax = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
-          $Qtax->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
-          $Qtax->bindInt(':orders_id', $oID);          
-          $Qtax->bindValue(':text', $lC_Currencies->format($Tax, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
-          $Qtax->bindValue(':value', $Tax);
-          $Qtax->bindValue(':class', $Qtotals->value('class'));
-          $Qtax->execute();
-          break;
-        case 'total':
-          $Total = $Qtotals->value('value') + $products_tax + $products_price;
+            $Qtax = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
+            $Qtax->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+            $Qtax->bindInt(':orders_id', $oID);          
+            $Qtax->bindValue(':text', $lC_Currencies->format($Tax, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+            $Qtax->bindValue(':value', $Tax);
+            $Qtax->bindValue(':class', $Qtotals->value('class'));
+            $Qtax->execute();
+            break;
+          case 'total':
+            $Total = $Qtotals->value('value') + $products_tax + $products_price;
 
-          $Qtotals = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
-          $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
-          $Qtotals->bindInt(':orders_id', $oID);          
-          $Qtotals->bindValue(':text', $lC_Currencies->format($Total, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
-          $Qtotals->bindValue(':value', $Total);
-          $Qtotals->bindValue(':class', 'total');
-          $Qtotals->execute();
-          break;
-      }        
+            $Qtotal = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
+            $Qtotal->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+            $Qtotal->bindInt(':orders_id', $oID);          
+            $Qtotal->bindValue(':text', $lC_Currencies->format($Total, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+            $Qtotal->bindValue(':value', $Total);
+            $Qtotal->bindValue(':class', 'total');
+            $Qtotal->execute();
+            break;
+        }        
+      }
+    } else {
+
+      $Sub_Total = $products_price;            
+      $Qsub_total = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values(:orders_id, :title, :text, :value, :class, :sort_order)');
+      $Qsub_total->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+      $Qsub_total->bindInt(':orders_id', $oID);          
+      $Qsub_total->bindValue(':title', 'Sub-Total:');          
+      $Qsub_total->bindValue(':text', $lC_Currencies->format($Sub_Total, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+      $Qsub_total->bindValue(':value', $Sub_Total);
+      $Qsub_total->bindValue(':class', 'sub_total'); 
+      $Qsub_total->bindInt(':sort_order', '1'); 
+      $Qsub_total->execute(); 
+
+      if($products_tax > 0) {
+        $Tax = $products_tax;            
+        $Qtax = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values(:orders_id, :title, :text, :value, :class, :sort_order)');
+        $Qtax->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+        $Qtax->bindInt(':orders_id', $oID);          
+        $Qtax->bindValue(':title', $products_tax_description.":");          
+        $Qtax->bindValue(':text', $lC_Currencies->format($Tax, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+        $Qtax->bindValue(':value', $Tax);
+        $Qtax->bindValue(':class', 'tax'); 
+        $Qtax->bindInt(':sort_order', '1'); 
+        $Qtax->execute(); 
+      }
+
+      $Total = $products_tax + $products_price;            
+      $Qtotal = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values(:orders_id, :title, :text, :value, :class, :sort_order)');
+      $Qtotal->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+      $Qtotal->bindInt(':orders_id', $oID);          
+      $Qtotal->bindValue(':title', "Grand Total:");          
+      $Qtotal->bindValue(':text', $lC_Currencies->format($Total, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+      $Qtotal->bindValue(':value', $Total);
+      $Qtotal->bindValue(':class', 'total'); 
+      $Qtotal->bindInt(':sort_order', '1'); 
+      $Qtotal->execute(); 
+
     }
   }
+
   public static function updateOrderProductData() {
     global $lC_Language, $lC_Database, $lC_Vqmod, $lC_Currencies;
 
