@@ -105,6 +105,8 @@ class lC_Featured_products_Admin {
     
     if ( $error === false ) {
       $lC_Database->commitTransaction();
+      
+      lC_Cache::clear('featured_products');
 
       return true;
     }

@@ -258,6 +258,23 @@
   font-size:1.3em; 
 }
 
+#loaded7 .content-featured-products-image-tag { 
+  padding-top:20px; 
+}
+
+#loaded7 .content-featured-products-text-expected { 
+  font-size:.9em; 
+}
+
+#loaded7 .content-featured-products-text-price { 
+  font-size:1.3em; 
+}
+
+#loaded7 .content-featured-products-text-name { 
+  line-height:1.1; 
+  font-size:1.3em; 
+}
+
 #loaded7 .content-reviews-text { 
   padding-top:4px; 
 }
