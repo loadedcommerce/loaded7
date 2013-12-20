@@ -168,3 +168,7 @@ text_current_status = Current Status
 
 text_product_sub_total = Products Subtotal
 text_add_product = Add Product
+section_order_totals = Orders Totals
+text_orders_total = Orders Totals
+introduction_delete_orders_total = Please verify the removal of this orders total.
+modal_heading_delete_orders_total = Delete Orders Total

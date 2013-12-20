@@ -144,5 +144,12 @@ class lC_Orders_Admin_rpc {
     }
     echo json_encode($result);
   }
+  public static function removeOrderTotal() {
+    $result = lC_Orders_Admin::removeOrderTotal();
+    if ($result !== false) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    echo json_encode($result);
+  }
 }
 ?>

@@ -92,14 +92,22 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
          
       }
     );
-    var v = parseInt('<?php echo $_GET["editProduct"];?>');    
-    if(v == 1) {
+    var p = parseInt('<?php echo $_GET["editProduct"];?>');    
+    var o = parseInt('<?php echo $_GET["orderstotal"];?>');    
+    if(p == 1) {
       $("#id_tab_orders_summary").removeClass("active");
       $("#id_tab_orders_products").addClass("active");
 
       // Display Address form (Hide Personal Form)
       $('#section_orders_summary').hide();
       $('#section_orders_products').show();
+    } else if(o == 1) {
+      $("#id_tab_orders_summary").removeClass("active");
+      $("#id_tab_order_totals").addClass("active");
+
+      // Display Address form (Hide Personal Form)
+      $('#section_orders_summary').hide();
+      $('#section_order_totals').show();
     }
   }
 
@@ -459,4 +467,64 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       return false;
     });
   });
+
+  function removeOrderTotal(oid,otid) {
+    var name1 = "#title_"+otid;
+    var name2 = "#value_"+otid;
+    var name = $(name1).val() + $(name2).val();    
+
+    var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+    if (parseInt(accessLevel) < 4) {
+      $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+      return false;
+    }
+    $.modal({
+      content: '<div id="deleteOrdersTotal">'+
+             '  <div id="deleteConfirm">'+
+             '    <p id="deleteConfirmMessage"><?php echo $lC_Language->get('introduction_delete_orders_total'); ?>'+
+             '      <p><b>' + decodeURI(name.replace(/\+/g, '%20')) + '</b></p>'+
+             '    </p>'+
+             '  </div>'+
+             '</div>',
+    title: '<?php echo $lC_Language->get('modal_heading_delete_orders_total'); ?>',
+    width: 300,
+    actions: {
+      'Close' : {
+        color: 'red',
+        click: function(win) { win.closeModal(); }
+      }
+    },
+    buttons: {
+      '<?php echo $lC_Language->get('button_cancel'); ?>': {
+        classes:  'glossy',
+        click:    function(win) { win.closeModal(); }
+      },
+      '<?php echo $lC_Language->get('button_delete'); ?>': {
+        classes:  'blue-gradient glossy',
+        click:    function(win) {
+        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=removeOrderTotal&otId=OTID'); ?>'  
+        $.getJSON(jsonLink.replace('OTID', parseInt(otid)),
+            function (data) {
+              if (data.rpcStatus == -10) { // no session
+                var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+                $(location).attr('href',url);
+              }
+              if (data.rpcStatus != 1) {
+                $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+                return false;
+              }
+
+              window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders=' + oid + '&action=save&orderstotal=1");?>';
+            }            
+          );
+         
+          win.closeModal();
+        }
+      }
+    },
+    buttonsLowPadding: true
+  });
+    
+  }
+
 </script>

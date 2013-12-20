@@ -707,17 +707,19 @@ class lC_Orders_Admin {
   public static function getOrderStatusHistory($id = null) {
     global $lC_Language;
     $data = lC_Orders_Admin::getInfo($id);
-    foreach ($data['orderStatusHistoryData'] as $oshData) {
-      $osHistory .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
-                      <div class="small-margin-top">
-                        <span class="float-right with-min-padding small-margin-right' . (($oshData['admin_id'] == null) ? ' green-bg' : (($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg')) . '">' . (($oshData['admin_id'] == null) ? $lC_Language->get('text_order_comment') : (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'))) . '</span>
-                        <span class="small-margin-left float-left">
-                          ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
-                        </span>
-                        <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
-                      </div>
-                      <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
-                    </div>';
+    if(is_array($data['orderStatusHistoryData'])) {
+      foreach ($data['orderStatusHistoryData'] as $oshData) {
+        $osHistory .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
+                        <div class="small-margin-top">
+                          <span class="float-right with-min-padding small-margin-right' . (($oshData['admin_id'] == null) ? ' green-bg' : (($oshData['append_comment'] == 1) ? ' orange-bg' : ' anthracite-bg')) . '">' . (($oshData['admin_id'] == null) ? $lC_Language->get('text_order_comment') : (($oshData['append_comment'] == 1) ? $lC_Language->get('text_customer_message') : $lC_Language->get('text_admin_note'))) . '</span>
+                          <span class="small-margin-left float-left">
+                            ' . (($oshData['admin_image'] != '' && file_exists('images/avatar/' . $oshData['admin_image'])) ? '<img src="images/avatar/' . $oshData['admin_image'] . '" width="24" title="Status Update by ' . $oshData['admin_name'] . '" alt="Comment by ' . $oshData['admin_name'] . '" />' : '<span class="icon-user icon-size2 icon-anthracite small-margin-left small-margin-right" title="Status Update by ' . $oshData['admin_name'] . '"></span>') . '
+                          </span>
+                          <span class="anthracite mid-margin-left">' . $oshData['admin_name'] . '</span><small class="anthracite small-margin-left">' . $oshData['date_added'] . '</small><span class="anthracite mid-margin-left">(' . $oshData['status'] . ')</span>
+                        </div>
+                        <p class="with-small-padding margin-left-order-comments">' . $oshData['comment'] . '</p>
+                      </div>';
+      }
     }
     return $osHistory;
   }
@@ -1270,6 +1272,39 @@ class lC_Orders_Admin {
     $Qorder->execute();
     $insert_id = $lC_Database->nextID();
     return $insert_id;
+  }
+
+  function getOrderTotalsList($oID) {
+    global $lC_Database;
+    $result = '';
+    $Qtotals = $lC_Database->query('select * from :table_orders_total where orders_id = :orders_id order by sort_order');
+    $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+    $Qtotals->bindInt(':orders_id', $oID);
+    $Qtotals->execute();
+    while ($Qtotals->next()) {
+
+      $result .= '<p class="button-height inline-label">' .
+                  lc_draw_input_field("title_".$Qtotals->value('orders_total_id'), $Qtotals->value('title'), 'class="input" style="width:25%;"') . '&nbsp;&nbsp;' . lc_draw_input_field("value_".$Qtotals->value('orders_total_id'), $Qtotals->value('value'), 'class="input" style="width:25%;"') .
+                  '&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotal('.$oID.','.$Qtotals->value('orders_total_id').')" class="button icon-minus-round icon-red with-tooltip" title="remove"></a></p>';     
+       
+    }
+    $result .=  '<div class="columns with-small-padding small-margin-left small-margin-bottom align-center">
+          <span class="button-group">
+            <a class="button compact icon-plus" href="javascript:void(0);" onclick="saveOrderTotal('. $oID .');">Save</a> 
+          </span>
+        </div>';
+
+        return $result;
+  
+  }
+  function removeOrderTotal() {
+    global $lC_Database;
+    $orders_total_id = (int)$_GET['otId'];
+
+    $Qtotals = $lC_Database->query('delete from :table_orders_total where orders_total_id = :orders_total_id');
+    $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+    $Qtotals->bindInt(':orders_total_id', $orders_total_id);
+    $Qtotals->execute();  
   }
 }
 ?>
