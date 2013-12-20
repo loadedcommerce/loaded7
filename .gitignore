@@ -1,2 +1,5 @@
 
 catalog/admin/includes/applications/products_import_export/readme.txt
+catalog/admin/.htaccess
+catalog/.htaccess
+catalog/includes/config.php
