@@ -26,7 +26,6 @@ class lC_Featured_products {
                                   and status = 1 
                              order by expires_date desc');
     $Qf->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
-    $Qf->setBatchLimit((isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1), 6);
     $Qf->execute();
     
     while ( $Qf->next() ) {
