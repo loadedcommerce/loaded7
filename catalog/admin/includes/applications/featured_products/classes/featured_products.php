@@ -33,7 +33,7 @@ class lC_Featured_products_Admin {
             
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qfeatured->valueInt('id') . '" id="' . $Qfeatured->valueInt('id') . '"></td>';
       $name = '<td>' . $Qname->value('products_name') . '</td>';
-      $expires = '<td>' . lC_DateTime::getShort($Qfeatured->value('expires_date')) . '</td>';
+      $expires = '<td><span' . ((date("Y-m-d H:i:s") > $Qfeatured->value('expires_date')) ? ' class="red bold with-tooltip" title="' . $lC_Language->get('text_featured_product_expired') . '"' : null) . '>' . lC_DateTime::getShort($Qfeatured->value('expires_date')) . '</span></td>';
       $status = '<td><span id="status_' . $Qfeatured->value('id') . '" onclick="updateStatus(\'' . $Qfeatured->valueInt('id') . '\', \'' . (($Qfeatured->valueInt('status') == 1) ? -1 : 1) . '\');">' . (($Qfeatured->valueInt('status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable') . '"></span>') . '</span></td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qfeatured->valueInt('id') . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>

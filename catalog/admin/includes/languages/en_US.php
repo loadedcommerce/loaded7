@@ -328,3 +328,4 @@ text_status = Status
 text_featured = Featured
 text_yes = Yes
 text_no = No
+text_featured_product_expired = Featured Product has Expired!
