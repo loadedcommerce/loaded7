@@ -92,6 +92,8 @@ class lC_Products_import_export_Admin {
 		$url = HTTP_SERVER . DIR_WS_HTTP_CATALOG . DIR_WS_DOWNLOAD_PUBLIC . $filename;
 	  }
 	  
+	  $errormsg = '';
+	  
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
 	  $sql_columns = array('products.products_id',
@@ -161,6 +163,10 @@ class lC_Products_import_export_Admin {
 	  $Qproducts = $lC_Database->query($sql_statement);
 	  $Qproducts->execute();
 	  
+	  if($lC_Database->isError()){
+		  $errormsg .= $lC_Database->getError();
+	  }
+	  
 	  $columns[] = 'categories';
 	  $columns[] = 'base_image';
 	  
@@ -206,7 +212,7 @@ class lC_Products_import_export_Admin {
 	  fwrite($fp, implode($delim, $columns) . "\n" . $content);
 	  fclose($fp);
 	  
-	  return array('url' => $url, 'sql_statement' => $sql_statement);
+	  return array('url' => $url, 'sql_statement' => $sql_statement, 'errors' => $errormsg);
   }
   
  /*
@@ -291,11 +297,17 @@ class lC_Products_import_export_Admin {
 	  
 	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_categories, :table_categories_description WHERE categories_description.categories_id = categories.categories_id';
 	  
+	  $errormsg = '';
+	  
 	  // make this section get the data and make a file in work folder for the url to be returned.
 	  $Qcategories = $lC_Database->query($sql_statement);
 	  $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
 	  $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
 	  $Qcategories->execute();
+	  
+	  if($lC_Database->isError()){
+		  $errormsg .= $lC_Database->getError();
+	  }
 	  
 	  $categories = array();
       while ($Qcategories->next()) {
@@ -316,7 +328,7 @@ class lC_Products_import_export_Admin {
 	  fwrite($fp, implode($delim, $columns) . "\n" . $content);
 	  fclose($fp);
 	  
-	  return array('url' => $url, 'sql_statement' => $sql_statement);
+	  return array('url' => $url, 'sql_statement' => $sql_statement, 'errors' => $errormsg);
   }
   
  /*
@@ -371,10 +383,16 @@ class lC_Products_import_export_Admin {
 	  
 	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_variants_groups';
 	  
+	  $errormsg = '';
+	  
 	  // make this section get the data and make a file in work folder for the url to be returned.
 	  $Qoptiongroups = $lC_Database->query($sql_statement);
 	  $Qoptiongroups->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
 	  $Qoptiongroups->execute();
+	  
+	  if($lC_Database->isError()){
+		  $errormsg .= $lC_Database->getError();
+	  }
 	  
 	  $categories = array();
       while ($Qoptiongroups->next()) {
@@ -395,7 +413,7 @@ class lC_Products_import_export_Admin {
 	  fwrite($fp, implode($delim, $columns) . "\n" . $content);
 	  fclose($fp);
 	  
-	  return array('url' => $url, 'sql_statement' => $sql_statement);
+	  return array('url' => $url, 'sql_statement' => $sql_statement, 'errors' => $errormsg);
   }
   
  /*
@@ -449,10 +467,16 @@ class lC_Products_import_export_Admin {
 	  
 	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_variants_values';
 	  
+	  $errormsg = '';
+	  
 	  // make this section get the data and make a file in work folder for the url to be returned.
 	  $Qoptionvariants = $lC_Database->query($sql_statement);
 	  $Qoptionvariants->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
 	  $Qoptionvariants->execute();
+	  
+	  if($lC_Database->isError()){
+		  $errormsg .= $lC_Database->getError();
+	  }
 	  
 	  $categories = array();
       while ($Qoptionvariants->next()) {
@@ -473,7 +497,7 @@ class lC_Products_import_export_Admin {
 	  fwrite($fp, implode($delim, $columns) . "\n" . $content);
 	  fclose($fp);
 	  
-	  return array('url' => $url, 'sql_statement' => $sql_statement);
+	  return array('url' => $url, 'sql_statement' => $sql_statement, 'errors' => $errormsg);
   }
   
  /*
@@ -528,10 +552,16 @@ class lC_Products_import_export_Admin {
 	  
 	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_simple_options_values';
 	  
+	  $errormsg = '';
+	  
 	  // make this section get the data and make a file in work folder for the url to be returned.
 	  $Qoptionproducts = $lC_Database->query($sql_statement);
 	  $Qoptionproducts->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
 	  $Qoptionproducts->execute();
+	  
+	  if($lC_Database->isError()){
+		  $errormsg .= $lC_Database->getError();
+	  }
 	  
 	  $categories = array();
       while ($Qoptionproducts->next()) {
@@ -552,7 +582,7 @@ class lC_Products_import_export_Admin {
 	  fwrite($fp, implode($delim, $columns) . "\n" . $content);
 	  fclose($fp);
 	  
-	  return array('url' => $url, 'sql_statement' => $sql_statement);
+	  return array('url' => $url, 'sql_statement' => $sql_statement, 'errors' => $errormsg);
   }
   
   /* Permalink function */
