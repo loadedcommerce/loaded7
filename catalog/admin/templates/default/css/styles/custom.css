@@ -867,7 +867,7 @@ select.error { border: 2px solid red !important; }
   position:absolute;
   width:50%;
   background-color:transparent;
-  top:18px;
+  top:38px;
   right:0px;
   padding: 5px 20px;
 }
@@ -1032,6 +1032,7 @@ select.error { border: 2px solid red !important; }
   }
   .branding-extra-line { margin-left: 10px; }
   #order_quick_info h4 { margin:0px 0px -10px;text-align:center; }
+  #buttons-menu-div-listing { padding: 5px; }
 }  
   
 @media screen and (max-width: 479px) {
@@ -1114,6 +1115,7 @@ select.error { border: 2px solid red !important; }
   }
   .branding-extra-line { margin-left: 0px; }
   #order_quick_info h4 { margin:0px 0px -10px;text-align:center; }
+  #buttons-menu-div-listing { padding: 5px; }
 }  
   
 @media screen and (max-width: 319px) {
@@ -1130,4 +1132,5 @@ select.error { border: 2px solid red !important; }
     width: 100%;
   }
   .branding-extra-line { margin-left: 0px; }
+  #buttons-menu-div-listing { padding: 5px; }
 }
