@@ -96,34 +96,34 @@ class lC_Products_import_export_Admin {
 	  
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	  $sql_columns = array('products.products_id',
-	  					   'products.parent_id',
-						   'products.products_quantity',
-						   'products.products_price',
-						   'products.products_cost',
-						   'products.products_msrp',
-						   'products.products_model',
-						   'products.products_sku',
-						   'products.products_date_added',
-						   'products.products_last_modified',
-						   'products.products_weight',
-						   'weight_classes.weight_class_key',
-						   'products.products_status',
-						   'products.products_tax_class_id',
-						   'manufacturers.manufacturers_name',
-						   'products.products_ordered',
-						   'products.has_children',
+	  $sql_columns = array('p.products_id',
+	  					   'p.parent_id',
+						   'p.products_quantity',
+						   'p.products_price',
+						   'p.products_cost',
+						   'p.products_msrp',
+						   'p.products_model',
+						   'p.products_sku',
+						   'p.products_date_added',
+						   'p.products_last_modified',
+						   'p.products_weight',
+						   'wc.weight_class_key',
+						   'p.products_status',
+						   'p.products_tax_class_id',
+						   'm.manufacturers_name',
+						   'p.products_ordered',
+						   'p.has_children',
 						   
-						   'products_description.language_id',
-						   'products_description.products_name',
-						   'products_description.products_description',
-						   'products_description.products_keyword',
-						   'products_description.products_tags',
-						   'products_description.products_meta_title',
-						   'products_description.products_meta_keywords',
-						   'products_description.products_meta_description',
-						   'products_description.products_url',
-						   'products_description.products_viewed'
+						   'pd.language_id',
+						   'pd.products_name',
+						   'pd.products_description',
+						   'pd.products_keyword',
+						   'pd.products_tags',
+						   'pd.products_meta_title',
+						   'pd.products_meta_keywords',
+						   'pd.products_meta_description',
+						   'pd.products_url',
+						   'pd.products_viewed'
 						   );
 	  $columns = array('id',
 		               'parent_id',
@@ -157,10 +157,14 @@ class lC_Products_import_export_Admin {
 	  
 	  $sql_columns = implode(", ", $sql_columns);
 	  
-	  $sql_statement = 'SELECT '.$sql_columns.' FROM products_description, weight_classes, products LEFT JOIN manufacturers ON (products.manufacturers_id = manufacturers.manufacturers_id) WHERE products_description.products_id = products.products_id AND products.products_weight_class = weight_classes.weight_class_id';
+	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_description pd, :table_weight_classes wc, :table_products p LEFT JOIN :table_manufacturers m ON (p.manufacturers_id = m.manufacturers_id) WHERE pd.products_id = p.products_id AND p.products_weight_class = wc.weight_class_id';
 	  
 	  // make this section get the data and make a file in work folder for the url to be returned.
 	  $Qproducts = $lC_Database->query($sql_statement);
+	  $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+	  $Qproducts->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
+	  $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
+	  $Qproducts->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
 	  $Qproducts->execute();
 	  
 	  if($lC_Database->isError()){
@@ -183,7 +187,7 @@ class lC_Products_import_export_Admin {
 			$content .= "\"" . trim(preg_replace('/\s+/', ' ', $column_output)) . "\"" . $delim;
 		}
 		
-		$Qcategories = $lC_Database->query("SELECT * FROM :table_products_to_categories, :table_categories_description WHERE products_to_categories.products_id = :products_id AND products_to_categories.categories_id = categories_description.categories_id AND categories_description.language_id = :language_id");
+		$Qcategories = $lC_Database->query("SELECT * FROM :table_products_to_categories ptc, :table_categories_description cd WHERE ptc.products_id = :products_id AND ptc.categories_id = cd.categories_id AND cd.language_id = :language_id");
 	    $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
 	    $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
 		$Qcategories->bindInt(':products_id', $product['products_id']);
@@ -250,26 +254,26 @@ class lC_Products_import_export_Admin {
 	  
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	    $sql_columns = array('categories.categories_id',
-		                 'categories.categories_image',
-		                 'categories.parent_id',
-		                 'categories.sort_order',
-		                 'categories.categories_mode',
-		                 'categories.categories_link_target',
-		                 'categories.categories_custom_url',
-		                 'categories.categories_status',
-		                 'categories.categories_visibility_nav',
-		                 'categories.categories_visibility_box',
-		                 'categories.date_added',
-		                 'categories.last_modified',
+	    $sql_columns = array('c.categories_id',
+		                 'c.categories_image',
+		                 'c.parent_id',
+		                 'c.sort_order',
+		                 'c.categories_mode',
+		                 'c.categories_link_target',
+		                 'c.categories_custom_url',
+		                 'c.categories_status',
+		                 'c.categories_visibility_nav',
+		                 'c.categories_visibility_box',
+		                 'c.date_added',
+		                 'c.last_modified',
 						 
-						 'categories_description.language_id',
-						 'categories_description.categories_name',
-						 'categories_description.categories_menu_name',
-						 'categories_description.categories_blurb',
-						 'categories_description.categories_description',
-						 'categories_description.categories_keyword',
-						 'categories_description.categories_tags',
+						 'cd.language_id',
+						 'cd.categories_name',
+						 'cd.categories_menu_name',
+						 'cd.categories_blurb',
+						 'cd.categories_description',
+						 'cd.categories_keyword',
+						 'cd.categories_tags',
 						 );
 	    $columns = array('id',
 		                 'image',
@@ -295,7 +299,7 @@ class lC_Products_import_export_Admin {
 	  
 	  $sql_columns = implode(",", $sql_columns);
 	  
-	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_categories, :table_categories_description WHERE categories_description.categories_id = categories.categories_id';
+	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_categories c, :table_categories_description cd WHERE cd.categories_id = c.categories_id';
 	  
 	  $errormsg = '';
 	  
@@ -366,11 +370,11 @@ class lC_Products_import_export_Admin {
 	  
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	    $sql_columns = array('products_variants_groups.id',
-		                 'products_variants_groups.languages_id',
-		                 'products_variants_groups.title',
-		                 'products_variants_groups.sort_order',
-		                 'products_variants_groups.module',
+	    $sql_columns = array('pvg.id',
+		                 'pvg.languages_id',
+		                 'pvg.title',
+		                 'pvg.sort_order',
+		                 'pvg.module',
 						 );
 	    $columns = array('id',
 		                 'languages_id',
@@ -381,7 +385,7 @@ class lC_Products_import_export_Admin {
 	  
 	  $sql_columns = implode(",", $sql_columns);
 	  
-	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_variants_groups';
+	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_variants_groups pvg';
 	  
 	  $errormsg = '';
 	  
@@ -450,11 +454,11 @@ class lC_Products_import_export_Admin {
 	  }
 	  
 	  // make columns include full table names to i can implode into sql statement
-		$sql_columns = array('products_variants_values.id',
-						 'products_variants_values.languages_id',
-						 'products_variants_values.products_variants_groups_id',
-						 'products_variants_values.title',
-						 'products_variants_values.sort_order',
+		$sql_columns = array('pvv.id',
+						 'pvv.languages_id',
+						 'pvv.products_variants_groups_id',
+						 'pvv.title',
+						 'pvv.sort_order',
 						 );
 		$columns = array('id',
 						 'languages_id',
@@ -465,7 +469,7 @@ class lC_Products_import_export_Admin {
 	  
 	  $sql_columns = implode(",", $sql_columns);
 	  
-	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_variants_values';
+	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_variants_values pvv';
 	  
 	  $errormsg = '';
 	  
@@ -478,7 +482,7 @@ class lC_Products_import_export_Admin {
 		  $errormsg .= $lC_Database->getError();
 	  }
 	  
-	  $categories = array();
+	  $optionvariants = array();
       while ($Qoptionvariants->next()) {
         $optionvariants[] = $Qoptionvariants->toArray();
       }
@@ -535,11 +539,11 @@ class lC_Products_import_export_Admin {
 	  
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
-	    $sql_columns = array('products_simple_options_values.id',
-		                 'products_simple_options_values.customers_group_id',
-		                 'products_simple_options_values.values_id',
-		                 'products_simple_options_values.options_id',
-		                 'products_simple_options_values.price_modifier',
+	    $sql_columns = array('psov.id',
+		                 'psov.customers_group_id',
+		                 'psov.values_id',
+		                 'psov.options_id',
+		                 'psov.price_modifier',
 						 );
 	    $columns = array('id',
 		                 'customers_group_id',
@@ -550,7 +554,7 @@ class lC_Products_import_export_Admin {
 	  
 	  $sql_columns = implode(",", $sql_columns);
 	  
-	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_simple_options_values';
+	  $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_simple_options_values psov';
 	  
 	  $errormsg = '';
 	  
@@ -563,7 +567,7 @@ class lC_Products_import_export_Admin {
 		  $errormsg .= $lC_Database->getError();
 	  }
 	  
-	  $categories = array();
+	  $optionproducts = array();
       while ($Qoptionproducts->next()) {
         $optionproducts[] = $Qoptionproducts->toArray();
       }
