@@ -449,7 +449,7 @@ class lC_Updates_Admin {
             if ($pharType == 'template') {
               $directory = realpath(DIR_FS_CATALOG) . '/';
             } else {
-              if (version_compare(utility::getVersion(), '7.002.0.0') != -1) {
+              if (is_array($meta['api_version']) && $meta['api_version'] == '1.0') {
                 $directory = realpath(DIR_FS_CATALOG) . '/';
               } else {
                 $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
