@@ -85,13 +85,12 @@ class lC_Products_import_export_Admin {
 		  return false;
 	  }
 	  
-	  $filepath = DIR_FS_CATALOG . "pub/" . $filename;
+	  $filepath = DIR_FS_DOWNLOAD_PUBLIC . $filename;
 	  if( isset($_SERVER['HTTPS'] )  && $_SERVER['HTTPS'] != 'off' ) {
-        $domain = 'https://' . $_SERVER['HTTP_HOST'];
+        $url = HTTPS_SERVER . DIR_WS_HTTPS_CATALOG . DIR_WS_DOWNLOAD_PUBLIC . $filename;
       } else {
-		$domain = 'http://' . $_SERVER['HTTP_HOST'];
+		$url = HTTP_SERVER . DIR_WS_HTTP_CATALOG . DIR_WS_DOWNLOAD_PUBLIC . $filename;
 	  }
-	  $url = $domain . '/' . str_replace(DIR_FS_CATALOG, "", $filepath);
 	  
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
@@ -236,13 +235,12 @@ class lC_Products_import_export_Admin {
 		  return false;
 	  }
 	  
-	  $filepath = DIR_FS_CATALOG . "pub/" . $filename;
+	  $filepath = DIR_FS_DOWNLOAD_PUBLIC . $filename;
 	  if( isset($_SERVER['HTTPS'] )  && $_SERVER['HTTPS'] != 'off' ) {
-        $domain = 'https://' . $_SERVER['HTTP_HOST'];
+        $url = HTTPS_SERVER . DIR_WS_HTTPS_CATALOG . DIR_WS_DOWNLOAD_PUBLIC . $filename;
       } else {
-		$domain = 'http://' . $_SERVER['HTTP_HOST'];
+		$url = HTTP_SERVER . DIR_WS_HTTP_CATALOG . DIR_WS_DOWNLOAD_PUBLIC . $filename;
 	  }
-	  $url = $domain . '/' . str_replace(DIR_FS_CATALOG, "", $filepath);
 	  
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
@@ -347,13 +345,12 @@ class lC_Products_import_export_Admin {
 		  return false;
 	  }
 	  
-	  $filepath = DIR_FS_CATALOG . "pub/" . $filename;
+	  $filepath = DIR_FS_DOWNLOAD_PUBLIC . $filename;
 	  if( isset($_SERVER['HTTPS'] )  && $_SERVER['HTTPS'] != 'off' ) {
-        $domain = 'https://' . $_SERVER['HTTP_HOST'];
+        $url = HTTPS_SERVER . DIR_WS_HTTPS_CATALOG . DIR_WS_DOWNLOAD_PUBLIC . $filename;
       } else {
-		$domain = 'http://' . $_SERVER['HTTP_HOST'];
+		$url = HTTP_SERVER . DIR_WS_HTTP_CATALOG . DIR_WS_DOWNLOAD_PUBLIC . $filename;
 	  }
-	  $url = $domain . '/' . str_replace(DIR_FS_CATALOG, "", $filepath);
 	  
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
@@ -427,13 +424,12 @@ class lC_Products_import_export_Admin {
 		  return false;
 	  }
 	  
-	  $filepath = DIR_FS_CATALOG . "pub/" . $filename;
+	  $filepath = DIR_FS_DOWNLOAD_PUBLIC . $filename;
 	  if( isset($_SERVER['HTTPS'] )  && $_SERVER['HTTPS'] != 'off' ) {
-        $domain = 'https://' . $_SERVER['HTTP_HOST'];
+        $url = HTTPS_SERVER . DIR_WS_HTTPS_CATALOG . DIR_WS_DOWNLOAD_PUBLIC . $filename;
       } else {
-		$domain = 'http://' . $_SERVER['HTTP_HOST'];
+		$url = HTTP_SERVER . DIR_WS_HTTP_CATALOG . DIR_WS_DOWNLOAD_PUBLIC . $filename;
 	  }
-	  $url = $domain . '/' . str_replace(DIR_FS_CATALOG, "", $filepath);
 	  
 	  // make columns include full table names to i can implode into sql statement
 		$sql_columns = array('products_variants_values.id',
@@ -506,13 +502,12 @@ class lC_Products_import_export_Admin {
 		  return false;
 	  }
 	  
-	  $filepath = DIR_FS_CATALOG . "pub/" . $filename;
+	  $filepath = DIR_FS_DOWNLOAD_PUBLIC . $filename;
 	  if( isset($_SERVER['HTTPS'] )  && $_SERVER['HTTPS'] != 'off' ) {
-        $domain = 'https://' . $_SERVER['HTTP_HOST'];
+        $url = HTTPS_SERVER . DIR_WS_HTTPS_CATALOG . DIR_WS_DOWNLOAD_PUBLIC . $filename;
       } else {
-		$domain = 'http://' . $_SERVER['HTTP_HOST'];
+		$url = HTTP_SERVER . DIR_WS_HTTP_CATALOG . DIR_WS_DOWNLOAD_PUBLIC . $filename;
 	  }
-	  $url = $domain . '/' . str_replace(DIR_FS_CATALOG, "", $filepath);
 	  
 	  // make columns in clude full table names to i can implode into sql statement
 	  // add image and category and other product tables to columns and query
