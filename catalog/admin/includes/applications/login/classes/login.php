@@ -219,7 +219,7 @@ class lC_Login_Admin {
       $products = (is_array($resultArr['data']['products'])) ? $resultArr['data']['products']['line_0'] : $resultArr['data']['products'];
       if (isset($products) && empty($products) === false) self::_verifyProductsAreDownloaded($products);
     } else {
-      $result['rpcStatus'] = '0';  
+      $result['rpcStatus'] = $resultArr['data']['rpcStatus'];  
     }
     
     return $result;

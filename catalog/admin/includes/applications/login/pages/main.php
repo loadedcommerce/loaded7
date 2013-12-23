@@ -273,13 +273,13 @@ $(document).ready(function() {
         function (data) {  
           if (data.rpcStatus != 1) { 
             if (data.rpcStatus == -2) { 
-              displayError('<?php echo $lC_Language->get('text_error') . '(1) ' . $lC_Language->get('ms_error_serial_invalid'); ?>');   
+              displayError('<?php echo $lC_Language->get('text_error') . '(2) ' . $lC_Language->get('ms_error_serial_registered_to_another_domain'); ?>');   
             } else if (data.rpcStatus == -3) {
-              displayError('<?php echo $lC_Language->get('text_error') . '(2) ' . $lC_Language->get('ms_error_serial_invalid'); ?>');   
+              displayError('<?php echo $lC_Language->get('text_error') . '(3) ' . $lC_Language->get('ms_error_serial_expired'); ?>');   
             } else if (data.rpcStatus == -4) {            
-              displayError('<?php echo $lC_Language->get('text_error') . '(3) ' . $lC_Language->get('ms_error_serial_invalid');?>');
+              displayError('<?php echo $lC_Language->get('text_error') . '(4) ' . $lC_Language->get('ms_error_serial_invalid');?>');
             } else {                                      
-              displayError('<?php echo $lC_Language->get('text_error') . '(4) ' . $lC_Language->get('ms_error_serial_invalid'); ?>');   
+              displayError('<?php echo $lC_Language->get('text_error') . '(1) ' . $lC_Language->get('ms_error_serial_invalid'); ?>');   
             }
             setTimeout(function(){ formWrapper.clearMessages() },3000);
             return false;
