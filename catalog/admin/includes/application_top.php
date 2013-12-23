@@ -166,8 +166,17 @@ $lC_Api = new lC_Api();
 require('../includes/classes/BarcodeQR.php');
 $BarcodeQR = new BarcodeQR();
 
+/**
+ * TO DO: MAKE THESE LOAD DYNAMICALLY
+ */
+
+// templates general class
+require($lC_Vqmod->modCheck('templates/default/buttons.php'));
+
 // templates general class
 require($lC_Vqmod->modCheck('templates/default/classes/general.php'));
+
+
 
 // instantiate the addons class
 require_once('includes/classes/addons.php');
@@ -186,4 +195,5 @@ if (!defined('DEFAULT_LANGUAGE')) {
 if (function_exists('ini_get') && ((bool)ini_get('file_uploads') == false) ) {
   $lC_MessageStack->add('header', $lC_Language->get('ms_warning_uploads_disabled'), 'warning');
 }
+
 ?>

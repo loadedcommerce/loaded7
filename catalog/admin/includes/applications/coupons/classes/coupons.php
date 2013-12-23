@@ -208,7 +208,7 @@ class lC_Coupons_Admin {
     if ( $error === false ) {
       $lC_Database->commitTransaction();
 
-      return true;
+      return $coupon_id; // Return the coupon ID to with the save_close button
     }
 
     $lC_Database->rollbackTransaction();

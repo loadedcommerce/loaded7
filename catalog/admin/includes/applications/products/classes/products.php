@@ -1129,7 +1129,7 @@ class lC_Products_Admin {
       lC_Cache::clear('category_tree');
       lC_Cache::clear('also_purchased');
 
-      return true;
+      return $products_id; // Reutrn the products id for use with the save_close buttons
     }
 
     $lC_Database->rollbackTransaction();

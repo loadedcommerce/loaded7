@@ -176,29 +176,31 @@
         </div -->
       </div>
       <?php echo lc_draw_hidden_field('subaction', 'confirm'); ?>
-    </form>
+    
+
+
     <div class="clear-both"></div>
     <div class="six-columns twelve-columns-tablet">
       <div id="buttons-menu-div-listing">
         <div id="buttons-container" style="position: relative;" class="clear-both">
-          <div style="float:right;">
-            <p class="button-height" align="right">
-              <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>">
-                <span class="button-icon red-gradient glossy">
-                  <span class="icon-cross"></span>
-                </span>
-                <span><?php echo $lC_Language->get('button_cancel'); ?></span>
-              </a>&nbsp;
-              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="validateForm(\'#coupon\');'); ?>">
-                <span class="button-icon green-gradient glossy">
-                  <span class="icon-download"></span>
-                </span>
-                <span><?php echo $lC_Language->get('button_save'); ?></span> 
-              </a>&nbsp;
-            </p>
-          </div>
+          <div class="align-right">
+           <p class="button-height">
+          <?php
+
+          $save = (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '' : ' onclick="validateForm(\'#coupon\');"');
+          $close = lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule());
+          button_save_close($save, true, $close);
+
+          ?>
+        </p>
+      </div>
         </div>
       </div>
     </div>
+
+
+  </form>
+
+  
   </div>
 </section>
