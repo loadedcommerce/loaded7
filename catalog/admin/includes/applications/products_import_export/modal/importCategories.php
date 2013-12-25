@@ -36,7 +36,7 @@ function importCategories() {
 		$(this).hide();
     });
 
-	var jsonLink = '/admin/rpc.php?products_import_export&action=importCategories&cwizard=CWIZARD&ctype=CTYPE&cbackup=CBACKUP';
+	var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule()); ?>&action=importCategories&cwizard=CWIZARD&ctype=CTYPE&cbackup=CBACKUP';
 	jsonLink = jsonLink.replace('CWIZARD', cwizard).replace('CTYPE', ctype).replace('CBACKUP', cbackup);
 
 	$.ajaxFileUpload({

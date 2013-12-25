@@ -36,7 +36,7 @@ function importProducts() {
 		$(this).hide();
     });
 
-	var jsonLink = '/admin/rpc.php?products_import_export&action=importProducts&pwizard=PWIZARD&ptype=PTYPE&pbackup=PBACKUP';
+	var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule()); ?>&action=importProducts&pwizard=PWIZARD&ptype=PTYPE&pbackup=PBACKUP';
 	jsonLink = jsonLink.replace('PWIZARD', pwizard).replace('PTYPE', ptype).replace('PBACKUP', pbackup);
 
 	$.ajaxFileUpload({

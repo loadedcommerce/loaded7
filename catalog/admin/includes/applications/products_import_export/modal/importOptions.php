@@ -41,7 +41,7 @@ function importOptions() {
 }
 function importOptionGroups(owizard, otype, obackup, data){
 	if($('#optionsGroupsFile').val()){
-		var OGjsonLink = '/admin/rpc.php?products_import_export&action=importOptionGroups&owizard=OWIZARD&otype=OTYPE&obackup=OBACKUP';
+		var OGjsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule()); ?>&action=importOptionGroups&owizard=OWIZARD&otype=OTYPE&obackup=OBACKUP';
 		OGjsonLink = OGjsonLink.replace('OWIZARD', owizard).replace('OTYPE', otype).replace('OBACKUP', obackup);
 	
 		$.ajaxFileUpload({
