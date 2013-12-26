@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: shipping.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::content
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: shipping.php v1.0 2013-08-08 datazen $
 */
 class lC_Checkout_Shipping extends lC_Template {
 
@@ -21,7 +17,7 @@ class lC_Checkout_Shipping extends lC_Template {
       $_page_image = 'table_background_delivery.gif';
 
   /* Class constructor */
-  function lC_Checkout_Shipping() {  
+  public function lC_Checkout_Shipping() {  
     global $lC_Database, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Shipping, $lC_MessageStack, $lC_Vqmod;
        
     require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));    
@@ -68,7 +64,11 @@ class lC_Checkout_Shipping extends lC_Template {
     }
 
     if ($lC_Customer->hasDefaultAddress() === false) {
+      if(isset($_GET['account_created'])){
+      lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address&account_created=true', 'SSL'));
+    }else{
       lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'shipping_address', 'SSL'));
+    }
     } else {
       $this->addJavascriptFilename('templates/' . $this->getCode() . '/javascript/shipping.js.php');
 
@@ -104,14 +104,14 @@ class lC_Checkout_Shipping extends lC_Template {
         }
       }
     } 
-    
+
     if ($_GET[$this->_module] == 'process') {
       $this->_process();
     }
   }
 
   /* Private methods */
-  function _process() {
+  protected function _process() {
     global $lC_ShoppingCart, $lC_Shipping, $lC_Vqmod;
 
     require_once($lC_Vqmod->modCheck('includes/classes/address_book.php'));

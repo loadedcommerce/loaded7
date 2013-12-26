@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -12,7 +12,7 @@
 <!--content/products/info.php start-->
 <div class="row">
   <div class="col-sm-4 col-lg-4 clearfix">
-    <div class="thumbnail large-margin-top no-margin-bottom text-center">
+    <div class="large-margin-top no-margin-bottom text-center">
       <a data-toggle="modal" href="#popup-image-modal" title="<?php echo $lC_Product->getTitle(); ?>"><img class="img-responsive" src="<?php echo $lC_Image->getAddress($lC_Product->getImage(), 'large'); ?>" title="<?php echo $lC_Product->getTitle(); ?>" alt="<?php echo $lC_Product->getTitle(); ?>" /></a>
     </div>  
     <!-- Button trigger modal -->
@@ -33,11 +33,12 @@
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <hr>
+    </div><!-- /.modal -->    
     <?php
     if (sizeof($lC_Product->getImages()) > 1) {
-      echo '<div class="thumbnail img-responsive"><ul>' . $lC_Product->getAdditionalImagesHtml() . '</ul></div><hr>' . "\n";
+      $_product_additionalimages = $lC_Product->getAdditionalImagesHtml(); 
+      echo '<div class="thumbnail img-responsive"><ul class="pr_gallery">' . $_product_additionalimages['images'] . '</ul></div>' . "\n";
+      echo $_product_additionalimages['model']. "\n";
     }
     ?>
   </div>
@@ -84,7 +85,7 @@
       }
       ?>
       
-      <div class="content-products-info-reviews-container">
+      <div class="content-products-info-reviews-container large-margin-bottom">
         <label class="content-products-info-reviews-rating-label with-padding-no-top-bottom"><?php echo $lC_Language->get('average_rating'); ?></label>
         <span class="content-products-info-reviews-rating margin-right"><?php echo lc_image(DIR_WS_TEMPLATE_IMAGES . 'stars_' . $lC_Product->getData('reviews_average_rating') . '.png', sprintf($lC_Language->get('rating_of_5_stars'), $lC_Product->getData('reviews_average_rating'))); ?></span>
         <?php       
@@ -99,7 +100,7 @@
       <?php
       if ( $lC_Product->hasSimpleOptions() ) {
         ?>
-        <div id="content-products-info-simple-options-container">
+        <div id="content-products-info-simple-options-container margin-top">
           <?php
           $module = '';
           foreach ( $lC_Product->getSimpleOptions() as $group_id => $value ) {
@@ -135,10 +136,11 @@
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>    
     <div class="row display-inline">
+      <div class="col-sm-4 col-lg-4"></div>
       <div class="col-sm-4 col-lg-4 align-right mid-margin-top">
         <div class="form-group">
           <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
-          <input type="text" name="quantity" onfocus="this.select();" class="form-control content-products-info-qty-input" value="1">
+          <input type="text" name="quantity" onfocus="this.select();" class="form-control content-products-info-qty-input mid-margin-right" value="1">
         </div>
       </div>
       <div class="col-sm-4 col-lg-4">

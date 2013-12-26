@@ -1,48 +1,14 @@
-#  $Id: en_US.php v1.0 2013-01-01 datazen $
-#
-#  LoadedCommerce, Innovative eCommerce Solutions
-#  http://www.loadedcommerce.com
-#
-#  Copyright (c) 2013 Loaded Commerce, LLC
-#
-#  @author     LoadedCommerce Team
-#  @copyright  (c) 2013 LoadedCommerce Team
-#  @license    http://loadedcommerce.com/license.html
+#  @package    admin::languages
+#  @author     Loaded Commerce
+#  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+#  @copyright  Portions Copyright 2003 osCommerce
+#  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+#  @version    $Id: en_US.php v1.0 2013-08-08 datazen $
 
 header_title_admin_menu = Administration
 header_title_help = Help
 
-default = Default
-
-gender_male = Male
-gender_female = Female
-
-default_entry = default
-
-parameter_true = Yes
-parameter_false = No
-parameter_optional = Optional
-parameter_none = -- None --
-
-table_action_legend = Legend
 batch_results_number_of_entries = Displaying <b>%d</b> to <b>%d</b> (of <b>%d</b> entries)
-result_set_current_page = Page %s of %d
-maximum_file_upload_size = Max: %s
-
-text_top = Top
-text_hello = Hello
-text_with_selected = With Selected
-text_delete = Delete
-text_move = Move
-text_version_info = Version Info
-text_error = Error
-
-menu_title_addons = Add Ons
-menu_title_app_store = Add Ons
-menu_title_license_management = License Management
-menu_title_core_update = Core Update
-menu_title_report_issues = Report Issues
-menu_title_get_help = Get Help
 
 button_add = Add
 button_add_new = Add New
@@ -87,10 +53,18 @@ button_yes = Yes
 button_no = No
 button_info = Info
 
+customer_view_details = View details for
+
+default = Default
+default_entry = default
+
 field_admin_language = Admin Language:
 field_username = Email:
 field_first_name = First Name:
 field_last_name = Last Name:
+
+gender_male = Male
+gender_female = Female
 
 icon_all = All
 icon_app_store = Add Ons
@@ -155,6 +129,23 @@ icon_user_male = Male
 icon_view = View
 icon_processing = Processing ...
 
+introduction_profile_pass_change = Please make the necessary changes for this administrator.
+introduction_edit_administrator = Please make the necessary changes for this administrator.
+invalid_current_password = The current password you entered is not correct. Please re-enter it and try again.
+invalid_new_password_match = The new password and confirmation does not match. Please try again.
+
+maximum_file_upload_size = Max: %s
+
+menu_title_addons = Add Ons
+menu_title_app_store = Add Ons
+menu_title_license_management = License Management
+menu_title_core_update = Core Update
+menu_title_report_issues = Report Issues
+menu_title_get_help = Get Help
+
+modal_heading_profile_edit = Edit Profile
+modal_heading_profile_pass_change = Change Profile Password
+
 ms_success_action_performed = Success: The action was successfully performed.
 ms_success_upload_file_saved = Success: The file uploaded has been saved successfully.
 
@@ -178,23 +169,22 @@ ms_error_no_access = You do not have the access level required for this operatio
 ms_error_javascript_not_enabled_for_upload = Please enable JavaScript to use ajax file uploader.
 ms_error_javascript_not_enabled_warning = Your browser does not support JavaScript! Some features won't work as expected.
 
+password_change_success = You have successfully updated your password.
+parameter_true = Yes
+parameter_false = No
+parameter_optional = Optional
+parameter_none = -- None --
+
 profile_slate_edit_logout = edit or logout
 profile_slate_edit_profile = edit<br />profile
 profile_slate_change_password = change<br />password
 profile_slate_logout = log out
-modal_heading_profile_edit = Edit Profile
-modal_heading_profile_pass_change = Change Profile Password
 profile_password = Current Password
 profile_password_new = New Password
 profile_password_confirm = Confirm New Password
-introduction_profile_pass_change = Please make the necessary changes for this administrator.
-introduction_edit_administrator = Please make the necessary changes for this administrator.
 profile_password = Current Password
 profile_password_new = New Password
 profile_password_confirm = Confirm Password
-invalid_current_password = The current password you entered is not correct. Please re-enter it and try again.
-invalid_new_password_match = The new password and confirmation does not match. Please try again.
-password_change_success = You have successfully updated your password.
 profile_image = Profile Image:
 profile_new_image = New Image
 
@@ -207,7 +197,7 @@ quick_add_coupon = Coupon
 quick_add_manufacturer = Manufacturer
 quick_add_banner = Banner
 quick_add_newsletter = Newsletter
-
+ 
 quick_add_order_title = Add new Order
 quick_add_customer_title = Add new Customer
 quick_add_category_title = Add new Category
@@ -246,19 +236,33 @@ messaging_sent = Sent
 messaging_drafts = Drafts
 messaging_trash = Trash
 
-search_placeholder = Search
-
 order_view_details = View details for order number
-customer_view_details = View details for
+
 product_view_details = View details for
 
+result_set_current_page = Page %s of %d
+
+search_placeholder = Search
+site_maintenance_message_title = Maintenance Mode
+site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
+
+slider_switch_enabled = ENABLED
+slider_switch_disabled = DISABLED
+slider_switch_preview = PREVIEW text_status = Statustext_select_product = Select Product
+
+table_action_legend = Legend
 tooltip_search = Search (space bar)
 tooltip_quick_add = Quick Add (a)
 tooltip_messages = Messages (m)
 tooltip_settings = Settings (s) / Main Menu (escape)
-
 top_category = Top Category
-
+text_top = Top
+text_hello = Hello
+text_with_selected = With Selected
+text_delete = Delete
+text_move = Move
+text_version_info = Version Info
+text_error = Error
 text_all = All
 text_version = Version
 text_confirm_delete = Confirm Delete?
@@ -273,8 +277,7 @@ text_mode_search = Link To: Search Page
 text_mode_cart = Link To: Shopping Cart
 text_mode_account = Link To: My Account
 text_mode_info = Link To: Info
-text_mode_override = Custom Link 
-
+text_mode_override = Custom Link
 text_hide_in_nav = Click to hide in Top Nav
 text_hide_in_box = Click to hide in Infobox
 text_show_in_nav = Click to show in Top Nav
@@ -283,16 +286,12 @@ text_enable_category = Click to enable Category
 text_disable_category = Click to disable Category
 text_enable_coupon = Click to Enable Coupon
 text_disable_coupon = Click to Disable Coupon
-
 text_enable = Click to Enable
 text_disable = Click to Disable
 
 update_message_title = Updates are Available!
 update_message_text1 = New version
 update_message_text2 = released.
-
-site_maintenance_message_title = Maintenance Mode
-site_maintenance_message_text = Site is in Maintenance Mode.  Click here to disable it.
 
 product_attributes_product_classes_title = Product Classes
 
@@ -316,7 +315,6 @@ text_expire_date = To
 text_purchase_over = Minimum Purchase
 text_free_shipping = Free Shipping
 text_free_product = Free Product
-
 text_actions = Actions
 text_free_product = Free Product
 text_upgrade_now = Upgrade Now
@@ -325,9 +323,5 @@ text_print_invoice = Print Invoice
 text_print_packing_slip = Print Packing Slip
 text_spin_off_order = Spin Off Order
 text_go_to_customer = Go to Customer
-
 text_resize_images = Upgrade Clean Up: Creating Image Sets
-
-slider_switch_enabled = ENABLED
-slider_switch_disabled = DISABLED
-slider_switch_preview = PREVIEW text_status = Statustext_select_product = Select Product
+text_status = Status

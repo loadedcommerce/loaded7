@@ -1,15 +1,11 @@
 <?php
-/**  
-  $Id: pull_down_menu.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     Loaded Commerce Team
-  @copyright  (c) 2013 Loaded Commerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::modules::variants
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: pull_down_menu.php v1.0 2013-08-08 datazen $
 */
 class lC_Variants_pull_down_menu extends lC_Variants_Abstract {
   const ALLOW_MULTIPLE_VALUES = false;
@@ -35,7 +31,7 @@ class lC_Variants_pull_down_menu extends lC_Variants_Abstract {
       
       $string = '<div class="variant_sel form-group  margin-top margin-left">' . 
                 '  <label class="control-label">' . $group_title . '</label>' . 
-                '  <select class="form-control display-inline half-width small-margin-left" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '" name="simple_options[' . $group_id . ']">' . $options . '</select>' . 
+                '  <select class="form-control display-inline two-third-width mid-margin-right float-right" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '" name="simple_options[' . $group_id . ']">' . $options . '</select>' . 
                 '</div>';      
       
     } else {
@@ -50,7 +46,7 @@ class lC_Variants_pull_down_menu extends lC_Variants_Abstract {
       
       $string = '<div class="variant_sel form-group margin-top margin-left">' . 
                 '  <label class="control-label">' . $group_title . '</label>' . 
-                '  <select class="form-control display-inline half-width small-margin-left" onchange="refreshPrice();" value="' . $data['data'] . '" id="variants_' . $data['group_id'] . '" name="variants[' . $data['group_id'] . ']">' . $options . '</select>' . 
+                '  <select class="form-control display-inline two-third-width mid-margin-right float-right" onchange="refreshPrice();" value="' . $data['data'] . '" id="variants_' . $data['group_id'] . '" name="variants[' . $data['group_id'] . ']">' . $options . '</select>' . 
                 '</div>';       
     }              
 

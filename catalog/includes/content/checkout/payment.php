@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: payment.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::content
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: payment.php v1.0 2013-08-08 datazen $
 */
 class lC_Checkout_Payment extends lC_Template {
 
@@ -21,7 +17,7 @@ class lC_Checkout_Payment extends lC_Template {
       $_page_image = 'table_background_payment.gif';
 
   /* Class constructor */
-  function lC_Checkout_Payment() {
+  public function lC_Checkout_Payment() {
     global $lC_Database, $lC_Session, $lC_ShoppingCart, $lC_Customer, $lC_Services, $lC_Language, $lC_NavigationHistory, $lC_Breadcrumb, $lC_Payment, $lC_MessageStack, $lC_Vqmod;
 
     require($lC_Vqmod->modCheck('includes/classes/address_book.php'));
@@ -106,7 +102,6 @@ class lC_Checkout_Payment extends lC_Template {
         lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'confirmation', 'SSL'));
       }
     }
-
   }
 }
 ?>

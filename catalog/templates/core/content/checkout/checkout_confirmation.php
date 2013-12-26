@@ -1,8 +1,8 @@
 <?php
 /**  
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -31,7 +31,8 @@
         <div class="panel-heading">
           <h3 class="no-margin-top no-margin-bottom"><?php echo $lC_Language->get('box_ordering_steps_confirmation'); ?></h3>
         </div>
-        <div class="panel-body no-padding-bottom">
+        <div class="panel-body no-padding-bottom">   
+          <form name="checkout_confirmation" id="checkout_confirmation" action="<?php echo ($lC_Payment->hasActionURL() && !isset($_SESSION['PPEC_PROCESS']['LINK'])) ? $lC_Payment->getActionURL() : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL'); ?>" method="post">       
           <div class="row">
             <div class="col-sm-4 col-lg-4">
               <div class="well relative no-padding-bottom">
@@ -66,7 +67,6 @@
                   <button type="button" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'payment', 'SSL'); ?>';" class="btn btn-default btn-xs"><?php echo $lC_Language->get('button_edit'); ?></button>
                 </div>                  
               </div>
-              <form name="checkout_confirmation" id="checkout_confirmation" action="<?php echo ($lC_Payment->hasActionURL()) ? $lC_Payment->getActionURL() : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL'); ?>" method="post">       
               <div class="well relative clearfix small-padding-top small-padding-bottom"> 
                 <h4><?php echo $lC_Language->get('order_comment_title'); ?></h4>
                 <div class="form-group">
@@ -75,7 +75,6 @@
               </div>                                        
             </div>
             <div class="col-sm-8 col-lg-8">
-              <h3 class="no-margin-top"><?php echo $lC_Language->get('checkout_order_number') . '&nbsp;' . $_SESSION['cartID']; ?></h3>
               <div class="" id="content-checkout-confirmation-products-table">
                 <table class="table responsive-table no-margin-bottom">
                   <?php
@@ -143,9 +142,7 @@
                   ?>     
                 </div>
               </div>              
-              <?php 
-              /* ppec inject: we will be moving this to the addon */ 
-              if (isset($_SESSION['PPEC_PROCESS']['LINK']) && $_SESSION['PPEC_PROCESS']['LINK'] != NULL) $form_action_url = $_SESSION['PPEC_PROCESS']['LINK'];
+              <?php         
               if ($lC_Payment->hasActive()) echo $lC_Payment->process_button();                 
               if (DISPLAY_CONDITIONS_ON_CHECKOUT == '1') {
                 ?>     

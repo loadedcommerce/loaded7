@@ -1,13 +1,9 @@
-#  $Id: products.php v1.0 2013-01-01 datazen $
-#
-#  LoadedCommerce, Innovative eCommerce Solutions
-#  http://www.loadedcommerce.com
-#
-#  Copyright (c) 2013 Loaded Commerce, LLC
-#
-#  @author     LoadedCommerce Team
-#  @copyright  (c) 2013 LoadedCommerce Team
-#  @license    http://loadedcommerce.com/license.html
+#  @package    admin::languages
+#  @author     Loaded Commerce
+#  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+#  @copyright  Portions Copyright 2003 osCommerce
+#  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+#  @version    $Id: products.php v1.0 2013-08-08 datazen $
 
 button_new_product = New Product
 button_add_price_break = Add a Price Break
@@ -84,7 +80,8 @@ ms_error_product_keyword_empty = Error: This product has an empty product key wh
 ms_error_product_keyword_exists = This field is required and must be <u>one unique word</u> containing letters and numbers, and can be separated by underscores (_) and minus symbols (-) only.
 ms_error_product_keyword_invalid = Error: This product keyword is invalid. Product keywords must be one word containing letters and numbers (a-zA-Z0-9), and can be separated by underscores (_) and minus symbols (-) only.
 ms_error_check_all_lang_tabs = Check all language tabs for errors!
-ms_error_no_variant_groups = You must setup at least one Variant Group before using Simple Options.
+ms_error_no_variant_groups = You must setup at least one variant group before using simple options.
+ms_error_no_variant_entries = You must setup at least one entry before using this variant group.
 ms_warning_image_processor_not_available = Warning: An image processor is not available. Please install and check the location of ImageMagicks "convert" program in the Configuration -> Configuration -> Program Locations section.
 
 section_general = Content

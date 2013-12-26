@@ -1,1 +1,0 @@
-sample tab seperated file for products import

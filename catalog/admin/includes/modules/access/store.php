@@ -1,28 +1,23 @@
 <?php
-/*
-  $Id: store.php v1.0 2011-11-04 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2011 LoadedCommerce.com
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2011 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    admin::modules
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: store.php v1.0 2013-08-08 datazen $
 */
+class lC_Access_Store extends lC_Access {
+  var $_module = 'store',
+      $_group = 'hidden',
+      $_icon = '',
+      $_title,
+      $_sort_order = 10;
 
-  class lC_Access_Store extends lC_Access {
-    var $_module = 'store',
-        $_group = 'hidden',
-        $_icon = '',
-        $_title,
-        $_sort_order = 10;
+  public function lC_Access_Store() {
+    global $lC_Language;
 
-    function lC_Access_Store() {
-      global $lC_Language;
-
-      $this->_title = $lC_Language->get('access_store_title');
-    }
+    $this->_title = $lC_Language->get('access_store_title');
   }
+}
 ?>

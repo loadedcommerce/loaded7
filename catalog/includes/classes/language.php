@@ -1,17 +1,12 @@
 <?php
-/*
-  $Id: language.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: language.php v1.0 2013-08-08 datazen $
 */
-
 class lC_Language {
 
   /* Private variables */
@@ -50,7 +45,7 @@ class lC_Language {
   }
 
   /* Public methods */
-  public function load($key, $language_code = null) {
+  public function load($key, $language_code = null, $use_cache = true) {
     global $lC_Database, $lC_Addons;
 
     if ( is_null($language_code) ) {
@@ -65,7 +60,7 @@ class lC_Language {
     $Qdef->bindTable(':table_languages_definitions', TABLE_LANGUAGES_DEFINITIONS);
     $Qdef->bindInt(':languages_id', $this->getData('id', $language_code));
     $Qdef->bindValue(':content_group', $key);
-    $Qdef->setCache('languages-' . $language_code . '-' . $key);
+    if ($use_cache) $Qdef->setCache('languages-' . $language_code . '-' . $key);
     $Qdef->execute();
 
     while ($Qdef->next()) {

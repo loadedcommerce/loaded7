@@ -1,16 +1,12 @@
 <?php
-/*
-  $Id: downloads.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-*/
+/**
+  @package    catalog::modules
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: downloads.php v1.0 2013-08-08 datazen $
+*/ 
 if (!strstr($_SERVER['SCRIPT_FILENAME'], 'receipt')) {
   // Get last order id for checkout_success
   $Qorder = $lC_Database->query('select orders_id from :table_orders where customers_id = :customers_id order by orders_id desc limit 1');

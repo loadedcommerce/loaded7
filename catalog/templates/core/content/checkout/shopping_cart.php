@@ -1,8 +1,8 @@
 <?php
 /**  
   @package    catalog::templates::content
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -106,13 +106,30 @@
           ?>     
         </div>
       </div>
-      <div class="large-margin-top large-margin-bottom pull-left">
-        <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>'" class="btn btn-primary" type="button"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button>
-      </div>      
-      <div class="large-margin-top large-margin-bottom pull-right">
-        <button class="btn btn-lg btn-default" onclick="$('#shopping_cart').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
-        <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_checkout'); ?></button>
-      </div>   
+      <?php 
+      if (isset($_SESSION['PPEC_PROCESS']) && !empty($_SESSION['PPEC_PROCESS'])) { 
+      } else { 
+        if ((defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_STATUS') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_STATUS == '1') && (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_EC_STATUS') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_EC_STATUS == 'On')) { 
+          ?>
+          <div id="paypal-ec-button-container" style="float: right; margin:20px 4px 0px 0;">
+            <div id="paypal-ec-button">
+              <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping&ppec=process', 'SSL'); ?>"><img style="vertical-align: middle;" src="https://www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif"></a><br />
+              <span style="margin:0 58px;">-OR-</span>
+            </div>
+          </div>
+          <?php 
+        }
+      } 
+      ?>
+      <div class="clear-both btn-set">
+        <div class="margin-top large-margin-bottom pull-left">
+          <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>'" class="btn btn-primary" type="button"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button>
+        </div>      
+        <div class="margin-top large-margin-bottom pull-right">
+          <button class="btn btn-lg btn-default" onclick="$('#shopping_cart').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
+          <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_checkout'); ?></button>
+        </div>  
+      </div> 
       <?php
       if ($lC_Customer->isLoggedOn() !== false) {
         if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && 

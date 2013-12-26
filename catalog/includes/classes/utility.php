@@ -1,17 +1,11 @@
 <?php
- /*
-  $Id: utlity.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-
-  @function The lC_Updater_Admin class manages zM services
+/**
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: utility.php v1.0 2013-08-08 datazen $
 */
 class utility {
  /**
@@ -458,5 +452,53 @@ class utility {
   public static function isWindows() {
     return (self::serverOS() == 'windows') ? true : false;
   }  
+ /**
+  * Check if the Pro product is installed
+  *
+  * @access public
+  * @return boolean
+  */
+  public static function isPro() {
+    if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php')) {
+      if (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') {
+        return true;
+      }
+    } 
+    
+    return false;
+  }
+  
+  public static function detectBrowser() { 
+    $userAgent = strtolower($_SERVER['HTTP_USER_AGENT']); 
+    if ((substr($_SERVER['HTTP_USER_AGENT'],0,6)=="Opera/") || (strpos($userAgent,'opera')) != false ){ 
+      $name = 'opera';
+    } 
+    elseif ((strpos($userAgent,'chrome')) != false) { 
+      $name = 'chrome'; 
+    } 
+    elseif ((strpos($userAgent,'safari')) != false && (strpos($userAgent,'chrome')) == false && (strpos($userAgent,'chrome')) == false){ 
+      $name = 'safari'; 
+    } 
+    elseif (preg_match('/msie/', $userAgent) || preg_match('/trident/', $userAgent)) { 
+      $name = 'msie'; 
+    } 
+    elseif ((strpos($userAgent,'firefox')) != false) { 
+      $name = 'firefox'; 
+    } 
+    else { 
+      $name = 'unrecognized'; 
+    } 
+    if (preg_match('/.+(?:me|ox|it|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches) && $browser['name']=='safari' ) { 
+      $version = $matches[1]; 
+    }
+    if (preg_match('/.+(?:me|ox|it|on|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches) && $browser['name']!='safari' ) { 
+      $version = $matches[1]; 
+    }
+    else { 
+      $version = 'unknown'; 
+    } 
+
+    return array('name' => $name, 'version' => $version); 
+  } 
 } 
 ?>

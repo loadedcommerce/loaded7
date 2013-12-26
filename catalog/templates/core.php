@@ -1,8 +1,8 @@
 <?php
 /**
   @package    catalog::templates
-  @author     Loaded Commerce, LLC
-  @copyright  Copyright 2003-2013 Loaded Commerce Development Team
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
@@ -50,9 +50,9 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
 
     <!-- fav and touch icons -->
     <link rel="shortcut icon" href="templates/core/icons/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="templates/core/icons/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="templates/core/icons/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="templates/core/icons/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-144-precomposed.png" sizes="144x144">
+    <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-114-precomposed.png" sizes="114x114">
+    <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-72-precomposed.png" sizes="72x72">
     <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-57-precomposed.png">
     
     <!-- jQuery is always at top -->
@@ -63,7 +63,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
   <body>
     <div id="loaded7" class="loadedcommerce-main-wrapper">
       <!--[if lt IE 7]>
-          <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
       <![endif]-->  
       <?php
       // page header
@@ -190,7 +190,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
             echo '<div id="debug-info-container" style="display:none;" class="alert alert-warning"><span></span></div>';
           }         
         }
-        ?>       
+        ?>    
       </div>  
       <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
       <script src="ext/jquery/respond.min.js"></script>    

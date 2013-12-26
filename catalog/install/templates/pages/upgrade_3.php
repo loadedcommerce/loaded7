@@ -1,15 +1,11 @@
 <?php
-/*
-  $Id: install_2.php v1.0 2012-12-08 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2012 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2012 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::install::templates
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: upgrade_3.php v1.0 2013-08-08 datazen $
 */
 switch($_POST['upgradeMethod']){
 	case 'R':
@@ -186,36 +182,6 @@ function prepareWork() {
     	  </div>      
       </div>
       <div class="field-block button-height large-margin-left large-margin-right">
-        <label for="IMPORT_PRODUCTS" class="label"><b><?php echo $lC_Language->get('param_import_products'); ?></b></label>
-    	  <div style="display:block; padding:0px 20px 0px 0px"> 
-    	    <p id="pBoxContainer_products" style="height:25px; padding-top:5px;">   
-    		  <img style="display:none;" id="img_copy_tick_products" class="tick" src="images/tick.png" align="right" />
-    		  <img style="display:none;" id="img_copy_progress_products" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    		  <img style="display:none;" id="img_copy_cross_products" class="cross" src="images/cross.png" align="right" />
-    	    </p> 
-    	  </div>      
-    	  <div id="eBox_products" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	    <p class="message icon-warning red-gradient">   
-    	      <span id="eBoxContents_products"></span>
-    	    </p> 
-    	  </div>      
-      </div>      
-      <div class="field-block button-height large-margin-left large-margin-right">
-        <label for="IMPORT_ATTRIBUTES" class="label"><b><?php echo $lC_Language->get('param_import_attributes'); ?></b></label>
-    	  <div style="display:block; padding:0px 20px 0px 0px"> 
-    	    <p id="pBoxContainer_attributes" style="height:25px; padding-top:5px;">   
-    			  <img style="display:none;" id="img_copy_tick_attributes" class="tick" src="images/tick.png" align="right" />
-    			  <img style="display:none;" id="img_copy_progress_attributes" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			  <img style="display:none;" id="img_copy_cross_attributes" class="cross" src="images/cross.png" align="right" />
-    	    </p> 
-    	  </div>      
-    	  <div id="eBox_attributes" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	    <p class="message icon-warning red-gradient">   
-    	      <span id="eBoxContents_attributes"></span>
-    	    </p> 
-    	  </div>      
-      </div>
-      <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_CUSTOMERS" class="label"><b><?php echo $lC_Language->get('param_import_customers'); ?></b></label>
     	  <div style="display:block; padding:0px 20px 0px 0px"> 
     	    <p id="pBoxContainer_customers" style="height:25px; padding-top:5px;">   
@@ -244,6 +210,36 @@ function prepareWork() {
     	      <span id="eBoxContents_customer_groups"></span>
     	    </p> 
     	  </div>      
+      </div>
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_PRODUCTS" class="label"><b><?php echo $lC_Language->get('param_import_products'); ?></b></label>
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_products" style="height:25px; padding-top:5px;">   
+          <img style="display:none;" id="img_copy_tick_products" class="tick" src="images/tick.png" align="right" />
+          <img style="display:none;" id="img_copy_progress_products" class="progress" src="images/ajax-loader-1.gif" align="right" />
+          <img style="display:none;" id="img_copy_cross_products" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_products" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_products"></span>
+          </p> 
+        </div>      
+      </div>      
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_ATTRIBUTES" class="label"><b><?php echo $lC_Language->get('param_import_attributes'); ?></b></label>
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_attributes" style="height:25px; padding-top:5px;">   
+            <img style="display:none;" id="img_copy_tick_attributes" class="tick" src="images/tick.png" align="right" />
+            <img style="display:none;" id="img_copy_progress_attributes" class="progress" src="images/ajax-loader-1.gif" align="right" />
+            <img style="display:none;" id="img_copy_cross_attributes" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_attributes" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_attributes"></span>
+          </p> 
+        </div>      
       </div> 
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_ORDERS" class="label"><b><?php echo $lC_Language->get('param_import_orders'); ?></b></label>
@@ -412,41 +408,41 @@ $(document).ready(function() {
           $('#eBoxContents_categories').html(_rslt);
           $('#eBox_categories').show();
         }
-        
-        $('#img_copy_progress_products').show();
+            
+        $('#img_copy_progress_customers').show();
         setTimeout(function() {
-          _rslt = doImport('_products'); 
+          _rslt = doImport('_customers'); 
           if(_rslt === ""){  }
           else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
-            $('#eBoxContents_products').html(_rslt);
-            $('#eBox_products').show();
+            $('#eBoxContents_customers').html(_rslt);
+            $('#eBox_customers').show();
           }
 
-          $('#img_copy_progress_attributes').show();
+          $('#img_copy_progress_customer_groups').show();
           setTimeout(function() {
-            _rslt = doImport('_attributes'); 
+            _rslt = doImport('_customer_groups'); 
             if(_rslt === ""){  }
             else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
-              $('#eBoxContents_attributes').html(_rslt);
-              $('#eBox_attributes').show();
+              $('#eBoxContents_customer_groups').html(_rslt);
+              $('#eBox_customer_groups').show();
             }
-            
-            $('#img_copy_progress_customers').show();
+        
+            $('#img_copy_progress_products').show();
             setTimeout(function() {
-              _rslt = doImport('_customers'); 
+              _rslt = doImport('_products'); 
               if(_rslt === ""){  }
               else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
-                $('#eBoxContents_customers').html(_rslt);
-                $('#eBox_customers').show();
+                $('#eBoxContents_products').html(_rslt);
+                $('#eBox_products').show();
               }
 
-              $('#img_copy_progress_customer_groups').show();
+              $('#img_copy_progress_attributes').show();
               setTimeout(function() {
-                _rslt = doImport('_customer_groups'); 
+                _rslt = doImport('_attributes'); 
                 if(_rslt === ""){  }
                 else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
-                  $('#eBoxContents_customer_groups').html(_rslt);
-                  $('#eBox_customer_groups').show();
+                  $('#eBoxContents_attributes').html(_rslt);
+                  $('#eBox_attributes').show();
                 }
                 
                 $('#img_copy_progress_orders').show();

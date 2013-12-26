@@ -1,23 +1,17 @@
 <?php
 /**
-  $Id: general.js.php v1.0 2013-02-08 wa4u $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
- 
-  @function The lC_Default class manages default template functions
+  @package    catalog::javascript
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: general.js.php v1.0 2013-08-08 datazen $
 */
 global $lC_Template, $lC_Language; 
 ?>
 <script>
 $(document).ready(function() {
-
+  
   function setMaintenanceMode(s) {
     if (s == 'on') {
       $("body").mask('<span style="font-size:2em !important;"><?php echo $lC_Language->get('update_message_text1'); ?></span>');
@@ -34,7 +28,7 @@ $(document).ready(function() {
   } else {
     setMaintenanceMode('off');
   }
-  
+ 
   var showDebug = '<?php echo $lC_Template->showDebugMessages(); ?>';
   if (showDebug) {
     var debugOutput = <?php echo (isset($_SESSION['debugStack']) && !empty($_SESSION['debugStack'])) ? $_SESSION['debugStack'] : "''" ?>;
@@ -43,7 +37,7 @@ $(document).ready(function() {
   } else {
     $('#debug-info-container').hide();
   }  
-  
+   
   // run this last - determine media type
   setTimeout('_setMediaType()', 1000);
 
@@ -164,6 +158,22 @@ function removeCoupon(code) {
     }
   );  
 }
+
+// make product listing boxes equal heights
+(function($) {
+  $.fn.equalHeights = function(minHeight, maxHeight) {
+    tallest = (minHeight) ? minHeight : 0;
+    this.each(function() {
+      if($(this).height() > tallest) {
+        tallest = $(this).height();
+      }
+    });
+    if((maxHeight) && tallest > maxHeight) tallest = maxHeight;
+    return this.each(function() {
+      $(this).height(tallest).css("overflow","hidden");
+    });
+  }
+})(jQuery);
 
 ;function print_r (array, return_val) {
     // http://kevin.vanzonneveld.net

@@ -1,17 +1,12 @@
 <?php
-/*
-  $Id: $
-
-  LoadedCommerce, Open Source E-Commerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2007 LoadedCommerce
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License v2 (1991)
-  as published by the Free Software Foundation.
+/**
+  @package    catalog::modules::variants
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: radio_buttons.php v1.0 2013-08-08 datazen $
 */
-
 class lC_Variants_radio_buttons extends lC_Variants_Abstract {
   const ALLOW_MULTIPLE_VALUES = false;
   const HAS_CUSTOM_VALUE = false;
@@ -35,9 +30,9 @@ class lC_Variants_radio_buttons extends lC_Variants_Abstract {
       }      
       
       $string = '<div class="margin-left margin-bottom">' .
-                '  <table>' .
+                '  <table class="full-width">' .
                 '    <tr>' .
-                '      <td valign="top"><label class="margin-right">' . $group_title . '</label></td>' .
+                '      <td valign="top" class="third-width"><label class="margin-right small-margin-top">' . $group_title . '</label></td>' .
                 '      <td valign="top">';
 
       reset($data);
@@ -49,7 +44,12 @@ class lC_Variants_radio_buttons extends lC_Variants_Abstract {
         $group_id = $val['group_id'];
         $group_title = $val['group_title'];    
                     
-        $string .= '<div class="radio no-margin-top small-margin-bottom"><label><input type="radio" ' . (($cnt == 0) ? 'checked="checked"' : '') . ' name="simple_options[' . $group_id . ']" value="' . $val['value_id'] . '" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '"><span style="font-size:.9em;">' . ' ' . $val['value_title'] . ' ' . $price_formatted . '</span></label></div>';
+        $string .= '<div class="radio no-margin-top small-margin-bottom mid-margin-left">
+                      <label>
+                        <input type="radio" ' . (($cnt == 0) ? 'checked="checked"' : '') . ' name="simple_options[' . $group_id . ']" value="' . $val['value_id'] . '" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '">
+                        <span style="font-size:.9em;">' . ' ' . $val['value_title'] . ' ' . $price_formatted . '</span>
+                      </label>
+                    </div>';
         $cnt++;
       }                 
        
@@ -68,9 +68,9 @@ class lC_Variants_radio_buttons extends lC_Variants_Abstract {
           }
         }
 
-        $string = '<table border="0" cellspacing="0" cellpadding="2">' .
+        $string = '<table border="0" cellspacing="0" cellpadding="2" class="full-width">' .
                   '  <tr>' .
-                  '    <td valign="top">' . $data['title'] . ': </td>' . 
+                  '    <td valign="top" class="third-width">' . $data['title'] . ': </td>' . 
                   '    <td>' . lc_draw_radio_field('variants[' . $data['group_id'] . ']', $data['data'], $default_value, 'onchange="refreshVariants();" id="variants_' . $data['group_id'] . '"', '<br />') . '</td>' .
                   '  </tr>' .
                   '</table>';

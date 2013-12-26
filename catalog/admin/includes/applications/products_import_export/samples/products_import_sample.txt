@@ -1,2 +1,0 @@
-id	parent_id	quantity	price	cost	msrp	model	sku	date_added	last_modified	weight	weight_class	status	tax_class_id	manufacturer	products_ordered	has_children	language_id	name	description	permalink	tags	meta_title	meta_keywords	meta_description	url	products_viewed	categories	base_image
-"1"	"0"	"999"	"80.0000"	"0.0000"	"0.0000"	"WOM20091189"	""	"2013-02-27 08:33:11"	"2013-10-25 12:46:22"	"3.30"	"4"	"1"	"0"	"Results Only Web"	"0"	"0"	"1"	"Adding a name"	"to the stuff"	"womens-pink-dress"	"test tag, other"	""	""	""	""	""	"Dresses"	dress3.jpg

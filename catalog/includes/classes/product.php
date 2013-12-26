@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: product.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: product.php v1.0 2013-08-08 datazen $
 */
 class lC_Product {
   protected $_data = array();
@@ -98,7 +94,7 @@ class lC_Product {
         $Qpb = $lC_Database->query('select tax_class_id, qty_break, price_break from :table_products_pricing where products_id = :products_id and group_id = :group_id order by group_id, qty_break');
         $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
         $Qpb->bindInt(':products_id', $this->_data['master_id']); 
-        $Qpb->bindInt(':group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : 1));
+        $Qpb->bindInt(':group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : DEFAULT_CUSTOMERS_GROUP_ID));
         $Qpb->execute();
 
         while ($Qpb->next()) {
@@ -155,7 +151,7 @@ class lC_Product {
           $QsimpleOptionsValues = $lC_Database->query('select values_id, price_modifier from :table_products_simple_options_values where options_id = :options_id and customers_group_id = :customers_group_id');
           $QsimpleOptionsValues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
           $QsimpleOptionsValues->bindInt(':options_id', $QsimpleOptions->valueInt('options_id'));
-          $QsimpleOptionsValues->bindInt(':customers_group_id', '1');
+          $QsimpleOptionsValues->bindInt(':customers_group_id', DEFAULT_CUSTOMERS_GROUP_ID);
           $QsimpleOptionsValues->execute();   
            
           while ( $QsimpleOptionsValues->next() ) {
@@ -585,15 +581,49 @@ class lC_Product {
   }
   
   public function getAdditionalImagesHtml($size = 'mini') {
-    global $lC_Image;
+    global $lC_Image, $lC_Language;
     
     $output = '';
+    $model = '';
+    $_product_additionalimages = '';
+    $$popup_image_modal_id = '';
     foreach ( $this->getImages() as $key => $value ) {
-      if ($value['default_flag'] == true) continue;
-      $output .= '<li><a href="' . (file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))) ? lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'popup')) : lc_href_link(DIR_WS_IMAGES . 'no_image.png') . '" title="<?php echo $lC_Product->getTitle(); ?>" class="thickbox"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $lC_Product->getTitle() . '" /></a></li>';
+      if ($value['default_flag'] == true) continue;      
+
+      if(file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'))) {      
+        $link = lc_href_link(DIR_WS_CATALOG . $lC_Image->getAddress($value['image'], 'popup'));
+      } else {
+        $link = lc_href_link(DIR_WS_IMAGES . 'no_image.png');
+      }
+      $output .= '<li><a data-toggle="modal" href="#popup-image-modal-'.$key.'"><img src="' . $lC_Image->getAddress($value['image'], $size) . '" title="' . $this->getTitle() . '" /></a></li>'; 
+
+      if(file_exists(DIR_FS_CATALOG . $lC_Image->getAddress($value['image'], 'originals'))) {
+        $link_image_modal = lc_href_link($lC_Image->getAddress($value['image'], 'originals'));
+      } else {
+        $link_image_modal = lc_href_link(DIR_WS_IMAGES . 'no_image.png');
+      }
+      $model .= '<!-- Modal -->
+    <div class="modal fade" id="popup-image-modal-'.$key.'">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">'. $this->getTitle() .'</h4>
+          </div>
+          <div class="modal-body">
+            <img class="img-responsive" alt="'. $this->getTitle() .'" src="'. $link_image_modal .'">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">'. $lC_Language->get('button_close').'</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->'. "\n";
     }
+    $_product_additionalimages['images'] = $output;
+    $_product_additionalimages['model'] = $model;
     
-    return $output;    
+    return $_product_additionalimages;    
   }
  /*
   * Determine if the product has subproducts

@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: search.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    catalog::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: search.php v1.0 2013-08-08 datazen $
 */
 require('includes/classes/products.php');
 
@@ -27,7 +23,7 @@ class lC_Search extends lC_Products {
       $_manufacturer;
 
   /* Class constructor */
-  function lC_Search() {
+  public function lC_Search() {
     global $lC_Database;
 
     $Qproducts = $lC_Database->query('select min(year(products_date_added)) as min_year, max(year(products_date_added)) as max_year from :table_products limit 1');
@@ -39,39 +35,39 @@ class lC_Search extends lC_Products {
   }
 
   /* Public methods */
-  function getMinYear() {
+  public function getMinYear() {
     return $this->_period_min_year;
   }
 
-  function getMaxYear() {
+  public function getMaxYear() {
     return $this->_period_max_year;
   }
 
-  function getDateFrom() {
+  public function getDateFrom() {
     return $this->_date_from;
   }
 
-  function getDateTo() {
+  public function getDateTo() {
     return $this->_date_to;
   }
 
-  function getPriceFrom() {
+  public function getPriceFrom() {
     return $this->_price_from;
   }
 
-  function getPriceTo() {
+  public function getPriceTo() {
     return $this->_price_to;
   }
 
-  function getKeywords() {
+  public function getKeywords() {
     return $this->_keywords;
   }
 
-  function getNumberOfResults() {
+  public function getNumberOfResults() {
     return $this->_number_of_results;
   }
   
-  function hasDateSet($flag = null) {
+  public function hasDateSet($flag = null) {
     if ($flag == 'from') {
       return isset($this->_date_from);
     } else if ($flag == 'to') {
@@ -81,7 +77,7 @@ class lC_Search extends lC_Products {
     return isset($this->_date_from) && isset($this->_date_to);
   }
 
-  function hasPriceSet($flag = null) {
+  public function hasPriceSet($flag = null) {
     if ($flag == 'from') {
       return isset($this->_price_from);
     } elseif ($flag == 'to') {
@@ -91,44 +87,44 @@ class lC_Search extends lC_Products {
     return isset($this->_price_from) && isset($this->_price_to);
   }
 
-  function hasKeywords() {
+  public function hasKeywords() {
     return isset($this->_keywords) && !empty($this->_keywords);
   }
 
-  function hasManufacturer() {
+  public function hasManufacturer() {
     return isset($this->_manufacturer) && !empty($this->_manufacturer);
   }
 
-  function setCategory($category, $recursive) {
+  public function setCategory($category, $recursive) {
     $this->_category = $category;
     $this->_recursive = $recursive;
   }
 
-  function setDateFrom($timestamp) {
+  public function setDateFrom($timestamp) {
     $this->_date_from = $timestamp;
   }
 
-  function setDateTo($timestamp) {
+  public function setDateTo($timestamp) {
     $this->_date_to = $timestamp;
   }
 
-  function setPriceFrom($price) {
+  public function setPriceFrom($price) {
     $this->_price_from = $price;
   }
 
-  function setPriceTo($price) {
+  public function setPriceTo($price) {
     $this->_price_to = $price;
   }
   
-  function setRecursive($recursive) {
+  public function setRecursive($recursive) {
     $this->_recursive = $recursive;
   }
   
-  function setManufacturer($manufacturer) {
+  public function setManufacturer($manufacturer) {
     $this->_manufacturer = $manufacturer;
   }
 
-  function setKeywords($keywords) {
+  public function setKeywords($keywords) {
     $terms = explode(' ', trim($keywords));
 
     $terms_array = array();
@@ -150,11 +146,11 @@ class lC_Search extends lC_Products {
     $this->_keywords = implode(' ', $terms_array);
   }
 
-  function isRecursive() {
+  public function isRecursive() {
     return (isset($this->_recursive) && !empty($this->_recursive)) ? true : false;
   }
 
-  function &execute() {
+  public function &execute() {
     global $lC_Database, $lC_Customer, $lC_Currencies, $lC_Language, $lC_Image, $lC_CategoryTree;
 
     $Qlisting = $lC_Database->query('select SQL_CALC_FOUND_ROWS distinct p.*, pd.*, m.*, i.image, if(s.status, s.specials_new_products_price, null) as specials_new_products_price, if(s.status, s.specials_new_products_price, p.products_price) as final_price');
