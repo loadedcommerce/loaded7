@@ -65,13 +65,9 @@ function validateForm(e) {
       'products_id': {
         required: true,
       },
-      'expires_date': {
-        required: true,
-      },
     },    
     messages: {
       "products_id": "<?php echo $lC_Language->get('ms_error_featured_products_products_id_required'); ?>",
-      "expires_date": "<?php echo $lC_Language->get('ms_error_featured_products_expires_date_required'); ?>",
     } 
   }).form();
   if (bValid) {

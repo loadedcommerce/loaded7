@@ -23,7 +23,7 @@ class lC_Application_Featured_products_Actions_save extends lC_Application_Featu
       
       // validate the input
       $status = (isset($_POST['status']) && $_POST['status'] == 'on') ? 1 : 0;
-      $expires_date = (isset($_POST['expires_date']) && $_POST['expires_date'] != NULL) ? preg_replace('/[^0-9\s\/]/', '', $_POST['expires_date']) : NULL;
+      $expires_date = (isset($_POST['expires_date']) && $_POST['expires_date'] != NULL) ? preg_replace('/[^0-9\s\/]/', '', $_POST['expires_date']) : '0000-00-00 00:00:00';
       
       $data = array('products_id' => $_POST['products_id'],
                     'status' => $status,
