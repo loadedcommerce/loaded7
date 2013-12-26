@@ -1,12 +1,15 @@
 <?php
 /**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: coupons.php v1.0 2013-08-08 datazen $
+  $Id: coupons.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 class lC_Coupons_Admin {
  /**
@@ -91,13 +94,13 @@ class lC_Coupons_Admin {
       $code = '<td>' . $Qcoupons->value('code') . '</td>';
       $reward = '<td>' . $rewardStr . '</td>';
       $limits = '<td>' . (($Qcoupons->value('purchase_over') > 0 || $Qcoupons->value('uses_per_customer') > 0 || $Qcoupons->value('uses_per_coupon') > 0 || $Qcoupons->value('start_date') != null || $Qcoupons->value('expires_date') != null) ? (($Qcoupons->value('purchase_over') > 0) ? '<small class="tag purple-bg no-wrap">' . $lC_Language->get('text_purchase_over') . ': ' . $lC_Currencies->format($Qcoupons->value('purchase_over')) .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_customer') > 0) ? '<small class="tag orange-bg no-wrap">' . $Qcoupons->value('uses_per_customer') . ' ' . $lC_Language->get('text_per_customer') .'</small>' : null) . ' ' . (($Qcoupons->value('uses_per_coupon') > 0) ? '<small class="tag red-bg no-wrap">' . $Qcoupons->value('uses_per_coupon') . ' ' . $lC_Language->get('text_per_coupon') . '</small>' : null) . ' ' . (($Qcoupons->value('start_date') != null) ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_start_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('start_date')) . '</small>' : null) . ' ' . (($Qcoupons->value('expires_date') != null) ? '<small class="tag grey-bg no-wrap">' . $lC_Language->get('text_expire_date') . ': ' . lC_DateTime::getShort($Qcoupons->value('expires_date')) . '</small>' : null) : '<small class="tag green-bg no-wrap" title="' . $lC_Language->get('text_no_restrictions') . '">' . $lC_Language->get('text_none') . '</small>') . '</td>';
-  //    $restrictions = '<td>' . ((!empty($rtProdsString) || !empty($rtCatsString) || !empty($rtCustString)) ? $rtProdsString . ' ' . $rtCatsString . ' ' . $rtCustString : '<small class="tag green-bg no-wrap">' . $lC_Language->get('text_none') . '</small>') . '</td>';
+      $restrictions = '<td>' . ((!empty($rtProdsString) || !empty($rtCatsString) || !empty($rtCustString)) ? $rtProdsString . ' ' . $rtCatsString . ' ' . $rtCustString : '<small class="tag green-bg no-wrap">' . $lC_Language->get('text_none') . '</small>') . '</td>';
       $action = '<td class="align-right vertical-center"><span class="button-group compact">
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcoupons->valueInt('coupons_id') . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="copyCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\', \'' . $Qcoupons->value('name') . '\', \'' . $Qcoupons->value('code') . '\')') . '" class="button icon-pages with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_copy') . '"></a>
                    <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCoupon(\'' . $Qcoupons->valueInt('coupons_id') . '\', \'' . $Qcoupons->value('name') . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                  </span></td>';
-      $result['aaData'][] = array("$check", "$name", "$status", "$code", "$reward", "$limits", "$action");
+      $result['aaData'][] = array("$check", "$name", "$status", "$code", "$reward", "$limits", "$restrictions", "$action");
       
     }
 

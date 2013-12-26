@@ -1,11 +1,15 @@
 <?php
 /**
-  @package    admin::classes
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: addons.php v1.0 2013-08-08 datazen $
+  $Id: addons.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 global $lC_Vqmod;
 
@@ -533,7 +537,7 @@ class lC_Addons_Admin extends lC_Addons {
   * @return void
   */ 
   private static function _init() {
-    global $lC_Vqmod, $lC_Language, $lC_Database;
+    global $lC_Vqmod, $lC_Language;
     
     $lC_DirectoryListing = new lC_DirectoryListing(DIR_FS_CATALOG . 'addons');
     $lC_DirectoryListing->setRecursive(true);
@@ -600,26 +604,6 @@ class lC_Addons_Admin extends lC_Addons {
     }
      
     self::$_data = $_SESSION['lC_Addons_Admin_data'];
- 
-    // cleanup
-    $Qchk = $lC_Database->query("select * from :table_templates_boxes where modules_group LIKE '%|%'");
-    $Qchk->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-    $Qchk->execute();    
-    
-    while ($Qchk->next()) {
-      $parts = explode('|', $Qchk->value('modules_group'));
-      $type = $parts[0];
-      $addon = $parts[1];
-      
-      if (!file_exists(DIR_FS_CATALOG . 'addons/' . $addon . '/controller.php')) {
-        $Qdel = $lC_Database->query('delete from :table_templates_boxes where modules_group = :modules_group');
-        $Qdel->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
-        $Qdel->bindValue(':modules_group', $Qchk->value('modules_group'));
-        $Qdel->execute();        
-      }
-    }
-    
-    $Qchk->freeResult();   
   } 
  /*
   * Retrieve a addon language definition value

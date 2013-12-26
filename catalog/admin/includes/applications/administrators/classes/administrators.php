@@ -1,12 +1,17 @@
 <?php
-/**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: administrators.php v1.0 2013-08-08 datazen $
+/*
+  $Id: administrators.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
+
+  @function The lC_Administrators_Admin class manages administrators
 */
 class lC_Administrators_Admin {
  /**
@@ -131,15 +136,17 @@ class lC_Administrators_Admin {
       $lC_Database->startTransaction();
 
       if ( isset($id) && $id != null ) {
-        $Qadmin = $lC_Database->query('update :table_administrators set user_name = :user_name, first_name = :first_name, last_name = :last_name, image = :image, access_group_id = :access_group_id, language_id = :language_id, verify_key = :verify_key');
+        $Qadmin = $lC_Database->query('update :table_administrators set user_name = :user_name, first_name = :first_name, last_name = :last_name, image = :image, access_group_id = :access_group_id, language_id = :language_id ');
+
         if ( isset($data['user_password']) && !empty($data['user_password']) ) {
           $Qadmin->appendQuery(', user_password = :user_password');
           $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($data['user_password'])));
         }
+
         $Qadmin->appendQuery('where id = :id');
         $Qadmin->bindInt(':id', $id);
       } else {
-        $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, image, access_group_id, language_id, verify_key) values (:user_name, :user_password, :first_name, :last_name, :image, :access_group_id,:language_id, :verify_key)');
+        $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, image, access_group_id, language_id) values (:user_name, :user_password, :first_name, :last_name, :image, :access_group_id,:language_id)');
         $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($data['user_password'])));
       }
       
@@ -150,7 +157,6 @@ class lC_Administrators_Admin {
       $Qadmin->bindValue(':image', $data['avatar']);
       $Qadmin->bindInt(':access_group_id', $data['access_group_id']);
       $Qadmin->bindInt(':language_id', $data['language_id']);
-      $Qadmin->bindValue(':verify_key', '');
       $Qadmin->setLogging($_SESSION['module'], $id);
       $Qadmin->execute();
 
@@ -159,7 +165,6 @@ class lC_Administrators_Admin {
           $id = $lC_Database->nextID();
         }
       } else {
-die($lC_Database->getError());        
         $error = true;
       }
 

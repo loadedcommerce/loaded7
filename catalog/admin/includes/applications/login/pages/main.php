@@ -1,12 +1,15 @@
 <?php
 /**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: main.php v1.0 2013-08-08 datazen $
+  $Id: main.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 ?> 
 <style>
@@ -23,8 +26,8 @@
           <form id="form-login" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=process'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('heading_title'); ?>" accept-charset="utf-8">
             <ul class="inputs black-input large">
               <!-- The autocomplete="off" attributes is the only way to prevent webkit browsers from filling the inputs with yellow -->
-              <li><span class="icon-user mid-margin-right"></span><input type="text" onfocus="$('#form-wrapper').clearMessages();" name="user_name" id="user_name" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_username'); ?>" autocomplete="off"></li>
-              <li><span class="icon-lock mid-margin-right"></span><input type="password" onfocus="$('#form-wrapper').clearMessages();" name="user_password" id="user_password" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password'); ?>" autocomplete="off"></li>
+              <li><span class="icon-user mid-margin-right"></span><input type="text" onfocus="$('#form-wrapper').clearMessages();" name="user_name" id="user_name" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_username'); ?>" autocomplete="on"></li>
+              <li><span class="icon-lock mid-margin-right"></span><input type="password" onfocus="$('#form-wrapper').clearMessages();" name="user_password" id="user_password" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_password'); ?>" autocomplete="on"></li>
             </ul>
             <p align="center" class="small-margin-bottom">
               <button type="submit" class="button glossy silver-gradient" style="padding:0 20px;" id="login"><?php echo $lC_Language->get('button_login'); ?></button>
@@ -43,35 +46,20 @@
             </p>            
           </form>
           <?php
-            if (isset($_GET['action']) && $_GET['action'] == 'register') {
-          ?>
-          <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
-            <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
-            <button type="button" onclick="window.location.href='<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>';" class="button glossy white-gradient full-width blue" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button>
-            <p class="align-center mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('text_or'); ?></p>   
-            <ul class="inputs black-input large">
-              <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" style="width:85% !important;" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
-            </ul>
-            <p class="full-width"><button type="submit" class="button glossy red-gradient full-width disabled" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
-            <button onclick="window.open('http://www.loadedcommerce.com/loaded-pre-order-p-395.html');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
-          </form>
-          <?php
-            } else {
-          ?>
-          <form id="form-register" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
-            <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
-            <button type="button" onclick="window.location.href='<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>';" class="button glossy white-gradient full-width blue" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button>
-            <p class="align-center mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('text_or'); ?></p>   
-            <ul class="inputs black-input large">
-              <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" style="width:85% !important;" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
-            </ul>
-            <p class="full-width">
-              <button type="submit" class="button glossy red-gradient full-width disabled" id="register"><?php echo $lC_Language->get('heading_product_registration'); ?></button>
-            </p>
-            <button onclick="window.open('http://www.loadedcommerce.com/loaded-pre-order-p-395.html');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
-          </form>
-          <?php 
-            }
+          if (isset($_GET['action']) && $_GET['action'] == 'register') {
+            ?>
+            <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
+              <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
+              <button type="button" onclick="window.location.href='<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>';" class="button glossy white-gradient full-width blue" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button>
+              <p class="align-center mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('text_or'); ?></p>   
+              <ul class="inputs black-input large">
+                <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
+              </ul>
+              <p class="full-width"><button type="submit" class="button glossy red-gradient full-width disabled" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
+              <button onclick="window.open('http://www.loadedcommerce.com/loaded-pre-order-p-395.html');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
+            </form>
+            <?php
+          }
           ?>
         </div>
       </div>
@@ -80,6 +68,7 @@
   </div>
 </div>
 <script>
+
 $(document).ready(function() {
   /*
   * JS login effect
@@ -210,27 +199,13 @@ $(document).ready(function() {
   /*
   * Get Pro
   */
-  $('#activation_serial').bind('paste', function(e){ 
-    // Short pause to wait for paste to complete
-    setTimeout( function() { _checkSerial(); }, 100);
-  })
-
-  $('#activation_serial').keyup(function(e) { _checkSerial(); });  
-  
-  function _checkSerial() {
+  $('#activation_serial').change(function(event) {
     var serial = $('#activation_serial').val();
     var format = /[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/;
     var found = serial.match(format);
-
-    if (serial.length != 24) {
+    if (!found || serial.length != 24) {
       $('#activate-pro').addClass('disabled');
-      $('#buy-pro').removeClass('disabled'); 
-      return false;
-    }    
-    
-    if (!found) {
-      $('#activate-pro').addClass('disabled');
-      $('#buy-pro').removeClass('disabled'); 
+      $('#buy-pro').removeClass('disabled');
       displayError('<?php echo $lC_Language->get('ms_error_serial_invalid'); ?>');
       setTimeout(function(){ formWrapper.clearMessages() },3000);  
       return false;
@@ -239,7 +214,8 @@ $(document).ready(function() {
       $('#activate-pro').removeClass('disabled');
       return true;
     }
-  }
+  });  
+  
   
   /*
   * Register

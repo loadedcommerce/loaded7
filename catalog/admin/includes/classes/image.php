@@ -1,11 +1,15 @@
 <?php
 /**
-  @package    admin::classes
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: image.php v1.0 2013-08-08 datazen $
+  $Id: image.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 global $lC_Vqmod;
 
@@ -18,16 +22,16 @@ class lC_Image_Admin extends lC_Image {
   var $_has_parameters = false;
 
   // Class constructor
-  public function lC_Image_Admin() {
+  function lC_Image_Admin() {
     parent::lC_Image();
   }
 
   // Public methods
-  public function getGroups() {
+  function getGroups() {
     return $this->_groups;
   }
   
-  public function getGroupsBatch() {
+  function getGroupsBatch() {
     $nvp = '';
     foreach ($this->_groups as $grp) {
       if ($grp['id'] == '1') continue; // originals
@@ -37,8 +41,8 @@ class lC_Image_Admin extends lC_Image {
     return substr($nvp, 1);
   }  
 
-  public function resize($image, $group_id) {
-    if (lc_empty(CFG_APP_IMAGEMAGICK_CONVERT) || ! @file_exists(CFG_APP_IMAGEMAGICK_CONVERT) || utility::execEnabled() === false) {
+  function resize($image, $group_id) {
+    if (lc_empty(CFG_APP_IMAGEMAGICK_CONVERT) || ! @file_exists(CFG_APP_IMAGEMAGICK_CONVERT)) {
       return $this->resizeWithGD($image, $group_id);
     }
 
@@ -59,7 +63,7 @@ class lC_Image_Admin extends lC_Image {
     return false;
   }
 
-  public function resizeWithGD($image, $group_id) {
+  function resizeWithGD($image, $group_id) {
     $img_type = false;
 
     switch (substr($image, (strrpos($image, '.')+1))) {
@@ -165,32 +169,32 @@ class lC_Image_Admin extends lC_Image {
     }
   }
 
-  public function getModuleCode() {
+  function getModuleCode() {
     return $this->_code;
   }
 
-  public function &getTitle() {
+  function &getTitle() {
     return $this->_title;
   }
 
-  public function &getHeader() {
+  function &getHeader() {
     return $this->_header;
   }
 
-  public function &getData() {
+  function &getData() {
     return $this->_data;
   }
 
-  public function activate() {
+  function activate() {
     $this->_setHeader();
     $this->_setData();
   }
 
-  public function hasParameters() {
+  function hasParameters() {
     return $this->_has_parameters;
   }
 
-  public function existsInGroup($id, $group_id) {
+  function existsInGroup($id, $group_id) {
     global $lC_Database;
 
     $Qimage = $lC_Database->query('select image from :table_products_images where id = :id');
@@ -201,7 +205,7 @@ class lC_Image_Admin extends lC_Image {
     return @file_exists(DIR_FS_CATALOG . DIR_WS_IMAGES . 'products/' . $this->_groups[$group_id]['code'] . '/' . $Qimage->value('image'));
   }
 
-  public function delete($id) {
+  function delete($id) {
     global $lC_Database;
 
     $Qimage = $lC_Database->query('select image from :table_products_images where id = :id');
@@ -221,7 +225,7 @@ class lC_Image_Admin extends lC_Image {
     return ($Qdel->affectedRows() === 1);
   }
 
-  public function setAsDefault($id) {
+  function setAsDefault($id) {
     global $lC_Database;
 
     $Qimage = $lC_Database->query('select products_id from :table_products_images where id = :id');
@@ -247,7 +251,7 @@ class lC_Image_Admin extends lC_Image {
     }
   }
 
-  public function reorderImages($images_array) {
+  function reorderImages($images_array) {
     global $lC_Database;
 
     $counter = 0;
@@ -265,7 +269,7 @@ class lC_Image_Admin extends lC_Image {
     return ($counter > 0);
   }
 
-  public function show($image, $title, $parameters = '', $group = '') {
+  function show($image, $title, $parameters = '', $group = '') {
     if (empty($group) || !$this->exists($group)) {
       $group = $this->getCode(DEFAULT_IMAGE_GROUP_ID);
     }

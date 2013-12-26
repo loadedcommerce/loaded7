@@ -1,12 +1,17 @@
 <?php
-/**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: templates.php v1.0 2013-08-08 datazen $
+/*
+  $Id: templates.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
+
+  @function The lC_Templates_Admin class manages templates
 */
 class lC_Templates_Admin {
  /*
@@ -26,36 +31,19 @@ class lC_Templates_Admin {
 
     $cnt = 0;
     $result = array('aaData' => array());
-    
-    // sort the array of files so the default template is at top
-    $default = array();
-    $other = array();
     foreach ( $files as $file ) {
-      if (strpos($file['name'], '.') !== (int) 0) {
-        $code = substr($file['name'], 0, strrpos($file['name'], '.'));
-        if ($code == DEFAULT_TEMPLATE) {
-          $default[] = $file;
-        } else {
-          $other[] = $file;
-        }
-        $sorted = array_merge((array)$default, (array)$other);
-      }
-    }
-
-    foreach ( $sorted as $file ) {
       if (strpos($file['name'], '.') !== (int) 0) {
         include($lC_Vqmod->modCheck('includes/templates/' . $file['name']));
         $code = substr($file['name'], 0, strrpos($file['name'], '.'));
         $class = 'lC_Template_' . $code;
         if ( class_exists($class) ) {
           $module = new $class();
-          $image = '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="showInfo(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '">' . lc_image(DIR_WS_CATALOG . 'templates/' . $code . '/images/' . $module->getScreenshot(), null, 160, 120) . '</a>';
           $module_title = $module->getTitle();
           if ( $module->getCode() == DEFAULT_TEMPLATE ) {
-            $module_title .= '<small class="tag purple-gradient glossy margin-left">' . $lC_Language->get('default_entry') . '</small>';
+            $module_title .= ' (' . $lC_Language->get('default_entry') . ')';
           }
-          $name = '<div class="strong">' . $module_title . '</div><div class="mid-margin-top"><a href="' . $module->getAuthorAddress() . '" target="_blank">' . $module->getAuthorName() . '</a></div><div class="mid-margin-top"><small>' . $module->getMarkup() . ' ' . $module->getMedium(). '</small></div>';
-          $action = '<span class="button-group compact">';
+          $name = '<td>' . $module_title . '</td>';
+          $action = '<td class="align-right vertical-center"><span class="button-group compact">';
           if ( $module->isInstalled() && $module->isActive() ) {
             if ( $module->hasKeys() || ( $module->getCode() != DEFAULT_TEMPLATE ) ) {
               $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="editTemplate(\'' . str_ireplace('.php', '', $file['name']) . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>';
@@ -66,9 +54,9 @@ class lC_Templates_Admin {
           } else {
             $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="installTemplate(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-plus-round icon-green with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_install') . '"></a>';
           }
-          $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="showInfo(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-camera icon-blue with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_preview') . '"></a>';
+          $action .= '<a href="' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? '#' : 'javascript://" onclick="showInfo(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . $module->getTitle() . '\')') . '" class="button icon-question-round icon-blue with-tooltip' . ((int)($_SESSION['admin']['access']['templates'] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_info') . '"></a></td>';
 
-          $result['aaData'][] = array("$image", "$name", "$action");
+          $result['aaData'][] = array("$name", "$action");
           $cnt++;
         }
       }
@@ -113,7 +101,6 @@ class lC_Templates_Admin {
     $result['author'] = $module->getAuthorName() . ' (' . $module->getAuthorAddress() . ')';
     $result['markup'] = $module->getMarkup();
     $result['css_based'] = ( $module->isCSSBased() ? 'Yes' : 'No' );
-    $result['screenshot'] = $module->getScreenshot();
     $result['medium'] = $module->getMedium();
 
     return $result;

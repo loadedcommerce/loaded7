@@ -1,12 +1,15 @@
 <?php
-/**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: store.js.php v1.0 2013-08-08 datazen $
+/*
+  $Id: store.js.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 global $lC_Template, $lC_Language;
 ?>
@@ -45,9 +48,9 @@ function showAddonType(id, text) {
       "bInfo": false,
       "bDestroy": true,
       "aoColumns": [{ "sWidth": "80px", "sClass": "dataColThumb hide-on-mobile-portrait" },
-                    { "sWidth": "35%", "sClass": "dataColTitle" },
-                    { "sWidth": "35%", "sClass": "dataColDesc hide-on-mobile hide-on-tablet" },
-                    { "sWidth": "30%", "sClass": "dataColAction" }]
+                    { "sWidth": "30%", "sClass": "dataColTitle" },
+                    { "sWidth": "50%", "sClass": "dataColDesc hide-on-mobile hide-on-tablet" },
+                    { "sWidth": "110px", "sClass": "dataColAction" }]
   });  
   oTable.responsiveTable();  
   $('#dataTable thead').remove();
@@ -60,7 +63,7 @@ function showAddonType(id, text) {
     $("#menuLink" + id).addClass('store-type-selected');
   }
 
-  setTimeout('updateWindowSize()', 50);
+  setTimeout('updateWindowSize()', 0);
 }  
   
 function updateTitles() {
@@ -92,20 +95,16 @@ function updateWindowSize() {
       $('#storeHeaderRightContainer').css('width', '100%');    
       $('#storeSearchContainer').css('width', '100%').removeClass('no-margin-bottom').addClass('margin-top margin-bottom');    
       $('#storeFilterContainer').css('width', '100%').css('margin-left', '80px');    
-      $('#storeSearchContainerInput').removeClass('no-padding'); 
+      $('#storeSearchContainerInput').removeClass('no-padding');    
     }
   } else if ($.template.mediaQuery.name === 'tablet-portrait') {  
       $('#storeHeaderRightContainer').css('width', '100%');    
       $('#storeSearchContainer').css('width', '46%').css('float', 'right').addClass('margin-top');    
       $('#storeFilterContainer').css('width', '48%').css('float', 'left').addClass('margin-top'); 
-      $('.content-panel').css('width', '74%').css('padding-left', '181px');
-      $('.panel-navigation').css('width', '72%');
   } else if ($.template.mediaQuery.name === 'tablet-landscape') { 
       $('#storeHeaderRightContainer').css('width', '100%');    
       $('#storeSearchContainer').css('width', '46%').css('float', 'right').addClass('margin-top');    
       $('#storeFilterContainer').css('width', '48%').css('float', 'left').addClass('margin-top'); 
-      $('.content-panel').css('width', '74%').css('padding-left', '181px');
-      $('.panel-navigation').css('width', '72%');      
   } else { // desktop
   }   
 }

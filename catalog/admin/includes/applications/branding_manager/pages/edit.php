@@ -1,57 +1,61 @@
 <?php
-/**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: edit.php v1.0 2013-08-08 datazen $
-*/
-$bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModule()));
+ /*
+  $Id: edit.php v1.0 2011-11-04 datazen $
 
-$slogan = array();
-$meta_description = array();
-$meta_keywords = array();
-$meta_title = array();
-$meta_title_prefix = array();
-$meta_title_suffix = array();
-$footer_text = array();
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
 
-$QbrandingData = $lC_Database->query('select * from :table_branding_data');
-$QbrandingData->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
-$QbrandingData->execute();
+  Copyright (c) 2011 LoadedCommerce.com
 
-$site_image = $QbrandingData->value('site_image');
-$og_image = $QbrandingData->value('og_image');
-$chat_code = $QbrandingData->value('chat_code');
-$support_phone = $QbrandingData->value('support_phone');
-$support_email = $QbrandingData->value('support_email');
-$sales_phone = $QbrandingData->value('sales_phone');
-$sales_email = $QbrandingData->value('sales_email');
-$meta_delimeter = $QbrandingData->value('meta_delimeter');
-$social_facebook_page = $QbrandingData->value('social_facebook_page');
-$social_twitter = $QbrandingData->value('social_twitter');
-$social_pinterest = $QbrandingData->value('social_pinterest');
-$social_google_plus = $QbrandingData->value('social_google_plus');
-$social_youtube = $QbrandingData->value('social_youtube');
-$social_linkedin = $QbrandingData->value('social_linkedin');
+  @author     LoadedCommerce Team
+  @copyright  (c) 2011 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
+ */
 
-$Qbranding = $lC_Database->query('select * from :table_branding');
-$Qbranding->bindTable(':table_branding', TABLE_BRANDING);
-$Qbranding->execute();
+  $bInfo = new lC_ObjectInfo(lC_Branding_manager_Admin::get($lC_Template->getModule()));
 
-if ($Qbranding->numberOfRows() > 0) {
-  while ($Qbranding->next()) {
-    $slogan[$Qbranding->valueInt('language_id')] = $Qbranding->value('slogan');
-    $meta_description[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_description');
-    $meta_keywords[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_keywords');
-    $meta_title[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_title');
-    $meta_title_prefix[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_title_prefix');
-    $meta_title_suffix[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_title_suffix');
-    $footer_text[$Qbranding->valueInt('language_id')] = $Qbranding->value('footer_text');
+  $slogan = array();
+  $meta_description = array();
+  $meta_keywords = array();
+  $meta_title = array();
+  $meta_title_prefix = array();
+  $meta_title_suffix = array();
+  $footer_text = array();
+
+  $QbrandingData = $lC_Database->query('select * from :table_branding_data');
+  $QbrandingData->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+  $QbrandingData->execute();
+
+  $site_image = $QbrandingData->value('site_image');
+  $og_image = $QbrandingData->value('og_image');
+  $chat_code = $QbrandingData->value('chat_code');
+  $support_phone = $QbrandingData->value('support_phone');
+  $support_email = $QbrandingData->value('support_email');
+  $sales_phone = $QbrandingData->value('sales_phone');
+  $sales_email = $QbrandingData->value('sales_email');
+  $meta_delimeter = $QbrandingData->value('meta_delimeter');
+  $social_facebook_page = $QbrandingData->value('social_facebook_page');
+  $social_twitter = $QbrandingData->value('social_twitter');
+  $social_pinterest = $QbrandingData->value('social_pinterest');
+  $social_google_plus = $QbrandingData->value('social_google_plus');
+  $social_youtube = $QbrandingData->value('social_youtube');
+  $social_linkedin = $QbrandingData->value('social_linkedin');
+
+  $Qbranding = $lC_Database->query('select * from :table_branding');
+  $Qbranding->bindTable(':table_branding', TABLE_BRANDING);
+  $Qbranding->execute();
+
+  if ($Qbranding->numberOfRows() > 0) {
+    while ($Qbranding->next()) {
+      $slogan[$Qbranding->valueInt('language_id')] = $Qbranding->value('slogan');
+      $meta_description[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_description');
+      $meta_keywords[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_keywords');
+      $meta_title[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_title');
+      $meta_title_prefix[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_title_prefix');
+      $meta_title_suffix[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_title_suffix');
+      $footer_text[$Qbranding->valueInt('language_id')] = $Qbranding->value('footer_text');
+    }
   }
-}
 ?>
 <section role="main" id="main">
   <noscript class="message black-gradient simpler">

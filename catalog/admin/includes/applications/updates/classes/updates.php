@@ -1,12 +1,17 @@
 <?php
 /**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: updates.php v1.0 2013-08-08 datazen $
+  $Id: updates.php v1.0 2011-11-04 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2011 LoadedCommerce.com
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2011 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
+
+  @function The lC_Updater_Admin class manages zM services
 */
 ini_set('error_reporting', 0);
 
@@ -294,9 +299,6 @@ class lC_Updates_Admin {
 
       foreach ( $update_pkg as $file ) {
         $custom = false;
-        
-        // update the path with admin config value to account for a different admin/ dir
-        $file = str_replace('admin/', DIR_WS_ADMIN, $file);        
 
         $result['entries'][] = array('key' => $counter,
                                      'name' => $file,
@@ -384,7 +386,7 @@ class lC_Updates_Admin {
   * @access public      
   * @return boolean
   */    
-  public static function applyPackage($pharWithPath = null, $pharType = 'addon') {
+  public static function applyPackage($pharWithPath = null) {
     $phar_can_open = true;
 
     $meta = array();
@@ -446,11 +448,7 @@ class lC_Updates_Admin {
           if ($pharWithPath == null) {
             $directory = realpath(DIR_FS_CATALOG) . '/';
           } else {
-            if ($pharType == 'template') {
-              $directory = realpath(DIR_FS_CATALOG) . '/';
-            } else {
-              $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
-            }
+            $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
           }
           
           if ( file_exists($directory . $file) ) {
@@ -547,14 +545,12 @@ class lC_Updates_Admin {
         } catch ( Exception $e ) {  
           self::log('*** Could NOT Set Permissions on PHP files/directories');
         } 
-        // remove the update phar
-        if (file_exists(DIR_FS_WORK . 'updates/update.phar')) unlink(DIR_FS_WORK . 'updates/update.phar');          
         self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');      }
     } else {
-      // remove the update phar
-      if (file_exists(DIR_FS_WORK . 'addons/update.phar')) unlink(DIR_FS_WORK . 'addons/update.phar');
-      self::log('##### ADDON INSTALL ' . $code . ' COMPLETE');
+      self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
     }
+
+    self::log('##### ADDON INSTALL ' . $code . ' COMPLETE');
 
     return $phar_can_open;
   }

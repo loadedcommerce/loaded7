@@ -1,12 +1,15 @@
 <?php
-/**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: info.php v1.0 2013-08-08 datazen $
+/*
+  $Id: edit.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 ?>
 <script>
@@ -27,15 +30,33 @@ function showInfo(id) {
         $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
         return false;
       }
-      var screenshot = ('<?php echo lc_image(DIR_WS_CATALOG . 'templates/TCODE/images/SSHOT', null, 640, 480); ?>').replace(/TCODE/g, id).replace(/SSHOT/g, data.screenshot);
       $.modal({
           content: '<div id="showInfo">'+
                    '  <div id="showInfoForm">'+
-                   '    <p class="align-center">' + screenshot + '</p>'+
+                   '    <p class="button-height inline-label">'+
+                   '      <label for="title" class="label"><?php echo $lC_Language->get('field_title'); ?></label>'+
+                   '      <span id="infoContentTitle"></span>'+
+                   '    </p>'+
+                   '    <p class="button-height inline-label">'+
+                   '      <label for="title" class="label"><?php echo $lC_Language->get('field_author'); ?></label>'+
+                   '      <span id="infoContentAuthor"></span>'+
+                   '    </p>'+
+                   '    <p class="button-height inline-label">'+
+                   '      <label for="markup" class="label"><?php echo $lC_Language->get('field_markup'); ?></label>'+
+                   '      <span id="infoContentMarkup"></span>'+
+                   '    </p>'+
+                   '    <p class="button-height inline-label">'+
+                   '      <label for="css_based" class="label"><?php echo $lC_Language->get('field_css_based'); ?></label>'+
+                   '      <span id="infoContentCssBased"></span>'+
+                   '    </p>'+
+                   '    <p class="button-height inline-label">'+
+                   '      <label for="presentation_medium" class="label"><?php echo $lC_Language->get('field_presentation_medium'); ?></label>'+
+                   '      <span id="infoContentMedium"></span>'+
+                   '    </p>'+
                    '  </div>'+
                    '</div>',
-          title: '<span id="infoContentTitle">' + data.title + '</span>',
-          width: 680,
+          title: '<?php echo $lC_Language->get('modal_heading_view_template_info'); ?>',
+          width: 500,
                 actions: {
             'Close' : {
               color: 'red',
@@ -50,6 +71,11 @@ function showInfo(id) {
           },
           buttonsLowPadding: true
       });
+      $("#infoContentTitle").html(data.title);
+      $("#infoContentAuthor").html(data.author);
+      $("#infoContentMarkup").html(data.markup);
+      $("#infoContentCssBased").html(data.css_based);
+      $("#infoContentMedium").html(data.medium);
       if ($.template.mediaQuery.isSmallerThan('tablet-portrait')) {
         $('.modal').attr('style', 'top:10px !important; left: 19%;  margin-left: -50px;');  
       }      

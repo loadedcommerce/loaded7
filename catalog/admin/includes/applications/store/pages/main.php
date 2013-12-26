@@ -1,13 +1,16 @@
 <?php
-/**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: main.php v1.0 2013-08-08 datazen $
-*/
+  /*
+  $Id: main.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
+  */
 ?>
 <!-- main content -->
 <style>
@@ -32,7 +35,7 @@
 <?php
 $typesArr = lC_Store_Admin::getAllTypes();
 foreach ($typesArr as $key => $value) {
-  echo ".store-menu-" . strtolower(str_replace(' ', '-', $value['text'])) . " { background-size:16px 16px !important; background: url('templates/default/img/icons/16/" . $value['icon'] . "') no-repeat scroll 8px 15px transparent !important; }";
+  echo ".store-menu-" . strtolower($value['text']) . " { background-size:16px 16px !important; background: url('templates/default/img/icons/16/" . $value['icon'] . "') no-repeat scroll 8px 15px transparent !important; }";
 }
 ?>   
 </style>

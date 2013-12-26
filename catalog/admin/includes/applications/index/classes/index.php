@@ -1,12 +1,17 @@
 <?php
-/**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: index.php v1.0 2013-08-08 datazen $
+/*
+  $Id: banner_manager.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
+
+  @function The lC_Administrators_Index class manages newsletters
 */
 global $lC_Vqmod;
 
@@ -56,9 +61,7 @@ class lC_Administrators_Index {
     }        
     return $result;
   }
- /*
-  *
-  */
+
   public static function get_live_data_total( $arg ) {
     global $lC_Database;
     switch ( $arg ) {
@@ -88,9 +91,7 @@ class lC_Administrators_Index {
     }        
     return $result;
   }
- /*
-  *
-  */
+
   public static function get_column_data( $arg = 'month') {
     global $lC_Database;
 
@@ -112,10 +113,10 @@ class lC_Administrators_Index {
 
     }
   }
- /*
-  *
-  */
+
+
   public static function get_Sessions_data() {
+
     global $lC_Database;
 
     /* Total Records */    
@@ -135,14 +136,12 @@ class lC_Administrators_Index {
     }      
     $result = substr($result,0,-1);
     return $result;
-    **/    
+**/
+    
 
     $result= "150, 173, 104, 129, 146, 176, 139, 149, 218, 194, 196, 153, 173, 104, 129, 146, 176, 139, 149, 218, 194, 196, 153, 173, 104, 129, 146, 176, 139, 149";    
     return $result;
   }
- /*
-  *
-  */
   public static function get_Customers_data() {
     global $lC_Database;
 
@@ -164,10 +163,9 @@ class lC_Administrators_Index {
     $result = substr($result,0,-1);
     return $result;
   }
- /*
-  *
-  */
+
   public static function get_Carts_data() {
+
     global $lC_Database;
 
     /* Total Records */    
@@ -188,9 +186,6 @@ class lC_Administrators_Index {
     $result = substr($result,0,-1);
     return $result;
   }
- /*
-  *
-  */
   public static function get_Orders_data() {
 
     global $lC_Database;

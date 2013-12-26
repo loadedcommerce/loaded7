@@ -1,12 +1,15 @@
 <?php
-/**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: main.php v1.0 2013-08-08 datazen $
+/*
+  $Id: main.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 ?>
 <!-- Main content -->
@@ -39,7 +42,7 @@
           <th scope="col"><?php echo $lC_Language->get('table_heading_code'); ?></th>
           <th scope="col"><?php echo $lC_Language->get('table_heading_reward'); ?></th>
           <th scope="col"><?php echo $lC_Language->get('table_heading_limits'); ?></th>
-          <!-- th scope="col" class="no-wrap upsellwrapper"><span class="upsellinfo" upselltitle="<?php //echo $lC_Language->get('text_coupon_restrictions_upsell_title'); ?>" upselldesc="<?php //echo $lC_Language->get('text_coupon_restrictions_upsell_desc'); ?>"><?php //echo $lC_Language->get('table_heading_restrictions') . lc_go_pro(); ?></span></th -->
+          <th scope="col" class="no-wrap upsellwrapper"><span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('text_coupon_restrictions_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_coupon_restrictions_upsell_desc'); ?>"><?php echo $lC_Language->get('table_heading_restrictions') . lc_go_pro(); ?></span></th>
           <th scope="col" class="align-right">
            <span class="button-group compact" style="white-space:nowrap;">
              <a style="display:none;" href="javascript:void(0);" style="cursor:pointer" class="on-mobile button with-tooltip icon-plus-round green<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="newCoupon(); return false;'); ?>" title="<?php echo $lC_Language->get('button_new_coupon'); ?>"></a>
@@ -53,7 +56,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="7">&nbsp;</th>
+          <th colspan="8">&nbsp;</th>
         </tr>
       </tfoot>
     </table>
@@ -75,12 +78,12 @@
                   <span class="icon-plus"></span>
                 </span><?php echo $lC_Language->get('button_new_coupon'); ?>
               </a>&nbsp;
-              <!-- a upselltitle="<?php //echo $lC_Language->get('button_new_rule'); ?>" upselldesc="<?php //echo $lC_Language->get('text_new_rule_upsell_desc'); ?>" class="upsellinfo button" href="javascript:void(0);" onclick="showProUpsellSpot(this); return false;">
+              <a upselltitle="<?php echo $lC_Language->get('button_new_rule'); ?>" upselldesc="<?php echo $lC_Language->get('text_new_rule_upsell_desc'); ?>" class="upsellinfo button" href="javascript:void(0);" onclick="showProUpsellSpot(this); return false;">
                 <span class="button-icon green-gradient">
                   <span class="icon-plus"></span>
-                </span><?php //echo $lC_Language->get('button_new_rule'); ?>
-                <small data-tooltip-options="{&quot;classes&quot;:[&quot;anthracite-gradient glossy small no-padding&quot;],&quot;position&quot;:&quot;right&quot;}" title="&nbsp;<?php //echo $lC_Language->get('text_click_for_info'); ?>&nbsp;" class="tag red-bg with-tooltip"><?php echo $lC_Language->get('text_pro'); ?></small>
-              </a>&nbsp; -->
+                </span><?php echo $lC_Language->get('button_new_rule'); ?>
+                <small data-tooltip-options="{&quot;classes&quot;:[&quot;anthracite-gradient glossy small no-padding&quot;],&quot;position&quot;:&quot;right&quot;}" title="&nbsp;<?php echo $lC_Language->get('text_click_for_info'); ?>&nbsp;" class="tag red-bg with-tooltip"><?php echo $lC_Language->get('text_pro'); ?></small>
+              </a>&nbsp;
             </p>
           </div>
         </div>

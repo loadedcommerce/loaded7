@@ -375,7 +375,7 @@ return false;
   * @description Returns cache file name for a path
   */
   private function _cacheName($file) {
-    return $this->_cachePathFull . 'vq2-' . preg_replace('~[:/\\\\]+~', '_', $file);
+    return $this->_cachePathFull . 'vq2-' . preg_replace('~[/\\\\]+~', '_', $file);
   }
  /**
   * VQMod::_setCwd()

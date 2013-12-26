@@ -1,17 +1,20 @@
 <?php
-/**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: status.php v1.0 2013-08-08 datazen $
+/*
+  $Id: status.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 ?>
-<div id="section_orders_status" style="display:none;">
-  <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('section_status_history'); ?></h3>
-  <div class="with-padding">
-    <div class="btop-anthracite"><?php echo lC_Orders_Admin::getOrderStatusHistory($_GET[$lC_Template->getModule()]); ?></div>
-  </div>
-</div>
+          <div id="section_orders_status" style="display:none;">
+            <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('section_status_history'); ?></h3>
+            <div class="with-padding">
+              <div class="btop-anthracite"><?php echo lC_Orders_Admin::getOrderStatusHistory($_GET[$lC_Template->getModule()]); ?></div>
+            </div>
+          </div>

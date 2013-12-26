@@ -1,12 +1,15 @@
 <?php
-/**
-  @package    catalog::admin::applications
-  @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
-  @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
-  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: main.php v1.0 2013-08-08 datazen $
+/*
+  $Id: main.php v1.0 2013-01-01 datazen $
+
+  LoadedCommerce, Innovative eCommerce Solutions
+  http://www.loadedcommerce.com
+
+  Copyright (c) 2013 Loaded Commerce, LLC
+
+  @author     LoadedCommerce Team
+  @copyright  (c) 2013 LoadedCommerce Team
+  @license    http://loadedcommerce.com/license.html
 */
 ?>
 <!-- Main content -->
@@ -16,7 +19,6 @@
     <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   </hgroup>
   <style>
-  .dataColImage { text-align: center; }
   .dataColTemplates { text-align: left; }
   .dataColAction { text-align: right; }
   </style>
@@ -25,8 +27,7 @@
     <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
       <thead>
         <tr>
-          <th scope="col" class="align-left" style="text-align:left !important;"><?php echo $lC_Language->get('table_heading_preview'); ?></th>
-          <th scope="col" class="align-left hide-on-mobile-portrait"><?php echo $lC_Language->get('table_heading_templates'); ?></th>
+          <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_templates'); ?></th>
           <th scope="col" class="align-right"><span class="button-group compact"><a href="javascript:void(0);" style="cursor:pointer" onclick="oTable.fnReloadAjax();" class="button with-tooltip icon-redo blue" title="<?php echo $lC_Language->get('button_refresh'); ?>"></a></span><span id="actionText">&nbsp;&nbsp;<?php echo $lC_Language->get('table_heading_action'); ?></span></th>
         </tr>
       </thead>
@@ -34,7 +35,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="3">&nbsp;</th>
+          <th colspan="2">&nbsp;</th>
         </tr>
       </tfoot>
     </table>
