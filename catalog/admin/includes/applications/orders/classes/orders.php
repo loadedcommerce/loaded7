@@ -1284,19 +1284,21 @@ class lC_Orders_Admin {
     $Qtotals->execute();
     while ($Qtotals->next()) {
 
-      $result .= '<p class="button-height inline-label">' .
-                  lc_draw_input_field("title_".$Qtotals->value('orders_total_id'), $Qtotals->value('title'), 'class="input" style="width:25%;"') . '&nbsp;&nbsp;' . lc_draw_input_field("value_".$Qtotals->value('orders_total_id'), $Qtotals->value('value'), 'class="input" style="width:25%;"') .
-                  '&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotal('.$oID.','.$Qtotals->value('orders_total_id').')" class="button icon-minus-round icon-red with-tooltip" title="remove"></a></p>';     
+      $result .= '<p class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;' .
+                  lc_draw_input_field("title_".$Qtotals->value('orders_total_id'), $Qtotals->value('title'), ' style="width:20%;"') . '</span>&nbsp;&nbsp;' . lc_draw_input_field("value_".$Qtotals->value('orders_total_id'), $Qtotals->value('value'), ' style="width:20%; text-align:right"') .
+                  '&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotal('.$oID.','.$Qtotals->value('orders_total_id').')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';     
        
     }
 
     if( $result != '' ) {
+
       $result .=  '<div class="columns with-small-padding small-margin-left small-margin-bottom align-center">
           <span class="button-group">
             <a class="button compact icon-plus" href="javascript:void(0);" onclick="saveOrderTotal('. $oID .');">Save</a> 
           </span>
         </div>';
     }
+    
    
 
     return $result;
