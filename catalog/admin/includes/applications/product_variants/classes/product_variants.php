@@ -1,17 +1,12 @@
 <?php
-  /*
-  $Id: product_variants.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-
-  @function The lC_Product_variants_Admin class manages product variants
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: product_variants.php v1.0 2013-08-08 datazen $
 */
 class lC_Product_variants_Admin {
  /*
@@ -487,7 +482,7 @@ class lC_Product_variants_Admin {
   public static function getVariantGroups() {
     global $lC_Database, $lC_Language;
 
-    $Qgroups = $lC_Database->query('select * from :table_products_variants_groups where languages_id = :languages_id');
+    $Qgroups = $lC_Database->query('select * from :table_products_variants_groups where languages_id = :languages_id order by sort_order');
     $Qgroups->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
     $Qgroups->bindInt(':languages_id', $lC_Language->getID());
     $Qgroups->execute();
@@ -511,7 +506,7 @@ class lC_Product_variants_Admin {
   public static function getVariantEntries($id) {
     global $lC_Database, $lC_Language;
 
-    $Qvalues = $lC_Database->query('select * from :table_products_variants_values where products_variants_groups_id = :products_variants_groups_id and languages_id = :languages_id');
+    $Qvalues = $lC_Database->query('select * from :table_products_variants_values where products_variants_groups_id = :products_variants_groups_id and languages_id = :languages_id order by sort_order');
     $Qvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
     $Qvalues->bindInt(':products_variants_groups_id', $id);
     $Qvalues->bindInt(':languages_id', $lC_Language->getID());

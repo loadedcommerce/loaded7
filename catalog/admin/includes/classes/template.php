@@ -1,15 +1,11 @@
 <?php
 /**
-  $Id: template.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+  @package    admin::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: template.php v1.0 2013-08-08 datazen $
 */
 global $lC_Vqmod;
 
@@ -17,7 +13,7 @@ require($lC_Vqmod->modCheck('../includes/classes/template.php'));
 
 class lC_Template_Admin extends lC_Template {
 
-  function &setup($module) {
+  public function setup($module) {
     global $lC_Vqmod;
     
     $class = 'lC_Application_' . ucfirst($module);
@@ -133,7 +129,12 @@ class lC_Template_Admin extends lC_Template {
 
     return $html;
   }
-  
+  /*
+  * Check to see whether the user if authorized to view the page
+  *
+  * @access public
+  * @return boolean
+  */
   public function isAuthorized($_module) {
     $ok = FALSE;
     

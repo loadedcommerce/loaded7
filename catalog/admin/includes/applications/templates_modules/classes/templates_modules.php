@@ -1,17 +1,12 @@
 <?php
-/*
-  $Id: templates_modules.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-
-  @function The lC_Templates_modules_Admin class manages templates modules
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: templates_modules.php v1.0 2013-08-08 datazen $
 */
 class lC_Templates_modules_Admin {
  /*
@@ -30,7 +25,7 @@ class lC_Templates_modules_Admin {
 
     include($lC_Vqmod->modCheck('../includes/classes/modules.php'));
 
-    $lC_Language->load('modules-' . $_GET['set']);
+    $lC_Language->load('modules-' . $_GET['set'], null, false);
 
     $result = array('aaData' => array());
     foreach ( $lC_DirectoryListing->getFiles() as $file ) {
@@ -166,6 +161,7 @@ class lC_Templates_modules_Admin {
       lC_Cache::clear('configuration');
       lC_Cache::clear('modules_' . $_GET['set']);
       lC_Cache::clear('templates_' . $_GET['set'] . '_layout');
+      lC_Cache::clear('languages-en');
 
       return true;
     }
@@ -196,6 +192,7 @@ class lC_Templates_modules_Admin {
       lC_Cache::clear('configuration');
       lC_Cache::clear('modules_' . $_GET['set']);
       lC_Cache::clear('templates_' . $_GET['set'] . '_layout');
+      lC_Cache::clear('languages-en');
 
       return true;
     }

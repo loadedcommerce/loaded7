@@ -1,17 +1,12 @@
 <?php
-/*
-  $Id: orders.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-
-  @function The lC_Orders_Admin class manages orders
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: orders.php v1.0 2013-08-08 datazen $
 */
 class lC_Orders_Admin {
  /*
@@ -406,6 +401,9 @@ class lC_Orders_Admin {
     $result['orderTotalsData'] = '';
     $otcnt = 0; 
     foreach ( $lC_Order->getTotals() as $totals ) {
+      if ($totals['class'] == 'sub_total') {
+        $result['orderSubTotal'] = '<span>' . $totals['text'] . '</span>';
+      }
       $result['orderTotals'] .= '<tr><td align="right" class="small-padding-bottom' . (($totals['class'] == 'total') ? ' bolder btop-anthracite small-padding-top' : null) . '">' . (($totals['class'] == 'total') ? $totals['title'] = $lC_Language->get('text_grand_total') : $totals['title']) . '</td><td align="right" width="100px" class="small-padding-bottom' . (($totals['class'] == 'total') ? ' bolder btop-anthracite small-padding-top' : null) . '">' . $totals['text'] . '</td></tr>';
       // enhanced order admin additions
       $result['orderTotalsData'][$otcnt]['title'] = $totals['title'];
@@ -865,7 +863,7 @@ class lC_Orders_Admin {
   */
   public static function getTextDate($datetime) {
     $date = substr(lC_DateTime::getShort($datetime, true), 0, -8);
-    return date("M jS Y", strtotime($date));
+    return @date("M jS Y", @strtotime($date));
   }
  /*
   * Return the orders transaction history

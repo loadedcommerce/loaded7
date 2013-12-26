@@ -1,17 +1,12 @@
 <?php
-  /*
-  $Id: product_variants.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
- 
-  @function The lC_Application_Product_variants class manages the product variants GUI
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: product_variants.php v1.0 2013-08-08 datazen $
 */
 global $lC_Vqmod;
 
@@ -27,7 +22,7 @@ class lC_Application_Product_variants extends lC_Template_Admin {
  /*
   * Class constructor
   */
-  function __construct() {
+  public function __construct() {
     global $lC_Language, $breadcrumb_string;
 
     $this->_page_title = $lC_Language->get('heading_title');

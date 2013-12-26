@@ -1,17 +1,12 @@
 <?php
-/*
-  $Id: products.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
-
-  @function The lC_Products_Admin class manages products
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: products.php v1.0 2013-08-08 datazen $
 */
 include_once('includes/applications/customer_groups/classes/customer_groups.php');
 include_once('includes/applications/product_variants/classes/product_variants.php');
@@ -1832,8 +1827,10 @@ class lC_Products_Admin {
                                 'products_variants_groups_id' => $value['products_variants_groups_id'],
                                 'title' => $value['title'],
                                 'price_modifier' => $Qoption->valueDecimal('price_modifier'));
+      $Qoption->freeResult();
     }
-    $Qoption->freeResult();
+    
+    if (empty($optionsArr[0])) $optionsArr['rpcStatus'] = '-2';
     
     return $optionsArr;
   } 
@@ -1864,11 +1861,10 @@ class lC_Products_Admin {
       foreach ($options as $key => $so) {
         if ( (isset($so['title']) && $so['title'] != NULL)  ){
           $items = '';
-          $itemsInput = '';    
-
+          $itemsInput = '';
           if (is_array($options['values'])) {
-            foreach ($options['values'] as $k => $v) {
-              if (($v['options_id'] == $so['options_id']) && $v['customers_group_id'] == '1') {
+            foreach ($options['values'] as $k => $v) {    
+              if (($v['options_id'] == $so['options_id']) && $v['customers_group_id'] == DEFAULT_CUSTOMERS_GROUP_ID) {
                 $items .= '<div class="small"><span class="icon-right icon-blue with-small-padding"></span>' . $v['title'] . '</div>';
                 $itemsInput .= '<input type="hidden" id="simple_options_entry_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry[' . $v['options_id'] . '][' . $v['values_id'] . ']" value="' . $v['title'] . '">';
               }
@@ -1882,7 +1878,7 @@ class lC_Products_Admin {
                     '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
                     '  <td width="16px" style="cursor:pointer;" onclick="toggleSimpleOptionsRow(\'#drope' . $so['options_id'] . '\');"><span id="drope' . $so['options_id'] . '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>' .
                     '  <td width="40%">' . $so['title'] . '<div class="small-margin-top dropall" id="drope' . $so['options_id'] . '" style="display:none;"><span>' . $items . '</span></div></td>' .
-                    '  <td width="30%" class="hide-below-480">' . $so['module'] . '</td>' .
+                    '  <td width="30%" class="hide-below-480">' . ucwords(str_replace('_', ' ', $so['module'])) . '</td>' .
                     '  <td width="10%" class="sort hide-below-480"></td>' .
                     '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleSimpleOptionsStatus(this, \'' . $so['options_id'] . '\');">' . $statusIcon . '</td>' .
                     '  <td width="15%" align="right">
@@ -2044,7 +2040,7 @@ class lC_Products_Admin {
           if (is_array($options['values'])) {          
             foreach ($options['values'] as $k => $v) {
               if ($v['options_id'] == $so['options_id'] && $v['customers_group_id'] == $customers_group_id) {
-                if ($customers_group_id == '1') {
+                if ($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID) {
                   $mod = (isset($v['price_modifier']) && !empty($v['price_modifier'])) ? number_format($v['price_modifier'], DECIMAL_PLACES) : '0.00';
                 } else {
                   $mod = number_format(round(($basePrice * $baselineDiscount) * .01, DECIMAL_PLACES), DECIMAL_PLACES);
@@ -2053,9 +2049,9 @@ class lC_Products_Admin {
                           '  <td class="element">' . $v['title'] . '</td>' . 
                           '  <td>' .
                           '    <div id="div_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" class="icon-plus-round icon-green icon-size2" style="display:inline;">' .
-                          '      <div class="inputs' . (($customers_group_id != '1') ? ' disabled' : '') . '" style="display:inline; padding:8px 0;">' .
+                          '      <div class="inputs' . (($customers_group_id != DEFAULT_CUSTOMERS_GROUP_ID) ? ' disabled' : '') . '" style="display:inline; padding:8px 0;">' .
                           '        <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                          '        <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $mod . '" onblur="showSimpleOptionsPricingSymbol(this, \'' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['customers_group_id'] . '][' . $v['options_id'] . '][' . $v['values_id'] . ']" ' . (($customers_group_id != '1') ? ' DISABLED' : '') . '>' .
+                          '        <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $mod . '" onblur="showSimpleOptionsPricingSymbol(this, \'' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '\');" id="simple_options_entry_price_modifier_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry_price_modifier[' . $v['customers_group_id'] . '][' . $v['options_id'] . '][' . $v['values_id'] . ']" ' . (($customers_group_id != DEFAULT_CUSTOMERS_GROUP_ID) ? ' DISABLED' : '') . '>' .
                           '      </div>' .
                           '    </div>' .
                           '  </td>' .

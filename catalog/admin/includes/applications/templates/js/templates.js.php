@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: templates.js.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: template.js.php v1.0 2013-08-08 datazen $
 */
 global $lC_Template;
 ?>
@@ -22,7 +19,8 @@ global $lC_Template;
       "sAjaxSource": dataTableDataURL.replace('MEDIA', $.template.mediaQuery.name),
       "sPaginationType": paginationType,
       "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-      "aoColumns": [{ "sWidth": "80%", "bSortable": false, "sClass": "dataColTemplates" },
+      "aoColumns": [{ "sWidth": "120px", "bSortable": false, "sClass": "dataColImage" },
+                    { "sWidth": "80%", "bSortable": false, "sClass": "dataColTemplates hide-on-mobile-portrait" },
                     { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
     });
     $('#dataTable').responsiveTable();
@@ -34,10 +32,5 @@ global $lC_Template;
       $('#dataTable_length').hide();
       $('#actionText').hide();
     }    
-    var error = '<?php echo $_SESSION['error']; ?>';
-    if (error) {
-      var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
-      $.modal.alert(errmsg);
-    }
   });
 </script>
