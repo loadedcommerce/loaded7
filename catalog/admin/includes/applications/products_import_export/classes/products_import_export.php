@@ -398,7 +398,11 @@ class lC_Products_import_export_Admin {
 		  $errormsg .= $lC_Database->getError();
 	  }
 	  
+<<<<<<< HEAD
 	  $optiongroups = array();
+=======
+	  $categories = array();
+>>>>>>> cca577fcad8eb00e73dc5aa5587eb596a3130260
       while ($Qoptiongroups->next()) {
         $optiongroups[] = $Qoptiongroups->toArray();
       }
