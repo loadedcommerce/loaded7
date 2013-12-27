@@ -266,8 +266,6 @@ $(document).ready(function() {
       $("#form-activate-pro").bind("submit", preventDefault(event));
 
       var nvp = $("#form-activate-pro").serialize();
-      var domain = '<?php echo str_replace('http://', '', HTTP_SERVER); ?>';
-      
       var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateSerial&NVP'); ?>'; 
       $.getJSON(jsonLink.replace('NVP', nvp),        
         function (data) {  

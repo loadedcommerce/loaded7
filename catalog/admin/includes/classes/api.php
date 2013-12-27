@@ -12,17 +12,6 @@ require_once(DIR_FS_CATALOG . 'includes/classes/transport.php');
 
 class lC_Api {
   /**
-  * Perform the installation ID check
-  *  
-  * @access private      
-  * @return string
-  */ 
-  public function healthCheck($data = array()) {
-//    if ($this->_timeToCheck()) {
-//      return $this->_doHealthCheck($data);
-//    }
-  }
-  /**
   * Register the installation
   *  
   * @access private      
@@ -31,7 +20,6 @@ class lC_Api {
   public function register($data) {
     return $this->_doRegister($data);
   }  
-  
   /**
   * Validate the serial
   *  
