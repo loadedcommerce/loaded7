@@ -251,7 +251,7 @@ class lC_Login_Admin {
           lC_Store_Admin::getAddonPhar($item);
           
           // apply the phar package
-          if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
+          if (file_exists(DIR_FS_WORK . 'addons/' . $item . '.phar')) {
             lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $item . '.phar');
           }
         }
