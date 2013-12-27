@@ -8,7 +8,8 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: updates.php v1.0 2013-08-08 datazen $
 */
-ini_set('error_reporting', 0);
+ini_set('error_reporting', 1);
+ini_set('display_errors', 1);
 
 global $lC_Vqmod;
 
@@ -393,7 +394,7 @@ class lC_Updates_Admin {
     try {
       if ($pharWithPath == null) {
         $pharFile = 'update.phar';
-        $phar = new Phar(DIR_FS_WORK . 'updates/' . $pharFile, 0);
+        $phar = new Phar(DIR_FS_WORK . 'updates/' . $pharFile);
         $meta = $phar->getMetadata();     
         self::$_to_version = $meta['version_to'];
         // reset the log
@@ -403,7 +404,8 @@ class lC_Updates_Admin {
         self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED');
       } else {
         $pharFile = end(explode('/', $pharWithPath));
-        $phar = new Phar(DIR_FS_WORK . 'addons/update.phar', 0);
+        $phar = new Phar(DIR_FS_WORK . 'addons/update.phar');    
+        
         $meta = $phar->getMetadata();     
         // reset the log
         $pharCode = str_replace('.phar', '', $pharFile);
