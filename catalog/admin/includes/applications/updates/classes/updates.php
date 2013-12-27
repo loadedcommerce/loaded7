@@ -400,8 +400,9 @@ class lC_Updates_Admin {
         // reset the log
         if ( file_exists(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') && is_writable(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') ) {
           unlink(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
-        }   
-        self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED');
+        } 
+        $pharCode = '';  
+        self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED', $pharCode);
       } else {
         $pharFile = end(explode('/', $pharWithPath));
         $phar = new Phar(DIR_FS_WORK . 'addons/update.phar');    
@@ -469,34 +470,34 @@ class lC_Updates_Admin {
           }
 
           if ( $phar->extractTo($directory, $file, true) ) {
-            self::log('Extracted: ' . $file);
+            self::log('Extracted: ' . $file, $pharCode);
           } else {
-            self::log('*** Could Not Extract: ' . $file);
+            self::log('*** Could Not Extract: ' . $file, $pharCode);
           }
         }
       }
 
-      self::log('##### CLEANUP');
+      self::log('##### CLEANUP', $pharCode);
 
       foreach ( array_reverse($pro_hart, true) as $mess ) {
         if ( $mess['type'] == 'directory' ) {
           if ( self::rmdir_r($mess['where'] . $mess['path']) ) {
             if ( $mess['log'] === true ) {
-              self::log('Deleted: ' . str_replace('/.CU_', '/', $mess['path']));
+              self::log('Deleted: ' . str_replace('/.CU_', '/', $mess['path']), $pharCode);
             }
           } else {
             if ( $mess['log'] === true ) {
-              self::log('*** Could Not Delete: ' . str_replace('/.CU_', '/', $mess['path']));
+              self::log('*** Could Not Delete: ' . str_replace('/.CU_', '/', $mess['path']), $pharCode);
             }
           }
         } else {
           if ( unlink($mess['where'] . $mess['path']) ) {
             if ( $mess['log'] === true ) {
-              self::log('Deleted: ' . str_replace('/.CU_', '/', $mess['path']));
+              self::log('Deleted: ' . str_replace('/.CU_', '/', $mess['path']), $pharCode);
             }
           } else {
             if ( $mess['log'] === true ) {
-              self::log('*** Could Not Delete: ' . str_replace('/.CU_', '/', $mess['path']));
+              self::log('*** Could Not Delete: ' . str_replace('/.CU_', '/', $mess['path']), $pharCode);
             }
           }
         }
@@ -504,9 +505,9 @@ class lC_Updates_Admin {
     } catch ( Exception $e ) {
       $phar_can_open = false;
 
-      self::log('##### ERROR: ' . $e->getMessage());
+      self::log('##### ERROR: ' . $e->getMessage(), $pharCode);
 
-      self::log('##### REVERTING STARTED');
+      self::log('##### REVERTING STARTED', $pharCode);
 
       foreach ( array_reverse($pro_hart, true) as $mess ) {
         if ( $mess['type'] == 'directory' ) {
@@ -523,11 +524,11 @@ class lC_Updates_Admin {
           rename($mess['where'] . $mess['path'], $mess['where'] . str_replace('/.CU_', '/', $mess['path']));
         }
 
-        self::log('Reverted: ' . str_replace('/.CU_', '/', $mess['path']));
+        self::log('Reverted: ' . str_replace('/.CU_', '/', $mess['path']), $pharCode);
       }
 
-      self::log('##### REVERTING COMPLETE');
-      self::log('##### UPDATE TO ' . self::$_to_version . ' FAILED');
+      self::log('##### REVERTING COMPLETE', $pharCode);
+      self::log('##### UPDATE TO ' . self::$_to_version . ' FAILED', $pharCode);
 
       trigger_error($e->getMessage());
       trigger_error('Please review the update log at: ' . DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
@@ -541,25 +542,25 @@ class lC_Updates_Admin {
       if (utility::execEnabled() === true && utility::isLinux() === true) {
         try {
           exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
-          self::log('##### UPDATED Permissions on PHP files/directories');
+          self::log('##### UPDATED Permissions on PHP files/directories', $pharCode);
         } catch ( Exception $e ) {  
-          self::log('*** Could NOT Set Permissions on PHP files/directories');
+          self::log('*** Could NOT Set Permissions on PHP files/directories', $pharCode);
         } 
-        self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
+        self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE', $pharCode);
       } else {
         try {
           self::chmod_r(DIR_FS_CATALOG);
-          self::log('##### UPDATED Permissions on PHP files/directories');
+          self::log('##### UPDATED Permissions on PHP files/directories', $pharCode);
         } catch ( Exception $e ) {  
-          self::log('*** Could NOT Set Permissions on PHP files/directories');
+          self::log('*** Could NOT Set Permissions on PHP files/directories', $pharCode);
         } 
         // remove the update phar
         if (file_exists(DIR_FS_WORK . 'updates/update.phar')) unlink(DIR_FS_WORK . 'updates/update.phar');          
-        self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');      }
+        self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE', $pharCode);      }
     } else {
       // remove the update phar
       if (file_exists(DIR_FS_WORK . 'addons/update.phar')) unlink(DIR_FS_WORK . 'addons/update.phar');
-      self::log('##### ADDON INSTALL ' . $code . ' COMPLETE');
+      self::log('##### ADDON INSTALL ' . $code . ' COMPLETE', $pharCode);
     }
 
     return $phar_can_open;
