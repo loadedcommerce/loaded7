@@ -487,12 +487,15 @@ class lC_Store_Admin {
   * @return void
   */  
   public static function getAddonPhar($key) {  
-
     // remove the old phar if it exists
     if (file_exists(DIR_FS_WORK . 'addons/update.phar')) unlink(DIR_FS_WORK . 'addons/' . $key . '.phar'); 
     
     $response = file_get_contents('https://api.loadedcommerce.com/1_0/get/' . $key . '?type=addon&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']));
 
+    // add the pubkey
+    $pubkey = file_get_contents(DIR_FS_WORK . 'addons/update.phar.pubkey');
+    file_put_contents(DIR_FS_WORK . 'addons/' . $key . '.phar.pubkey', $pubkey);
+    
     return file_put_contents(DIR_FS_WORK . 'addons/' . $key . '.phar', $response);    
   }
  /*
