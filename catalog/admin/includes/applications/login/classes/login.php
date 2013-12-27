@@ -234,6 +234,7 @@ class lC_Login_Admin {
     
     $productsArr = explode('|', $products);
     
+    $cnt=0;
     foreach ($productsArr as $key => $product) {
       
       $parts = explode(':', $product);
@@ -249,12 +250,15 @@ class lC_Login_Admin {
           // download the addon phar
           lC_Store_Admin::getAddonPhar($item);
           
+          sleep(5);
+
           // apply the phar package
           if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
             lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $item . '.phar');
           }
         }
       }
+      $cnt++;
     }
   }
   
