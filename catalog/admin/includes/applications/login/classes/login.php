@@ -246,6 +246,8 @@ class lC_Login_Admin {
         }  
       } else { // addon
         if (!file_exists(DIR_FS_CATALOG . 'addons/' . $item . '/controller.php')) {
+          // remove the old phar if it exists
+          if (file_exists(DIR_FS_WORK . 'addons/update.phar')) unlink(DIR_FS_WORK . 'addons/update.phar');
           // download the addon phar
           lC_Store_Admin::getAddonPhar($item);
           

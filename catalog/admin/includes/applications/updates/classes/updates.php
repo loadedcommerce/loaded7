@@ -393,7 +393,7 @@ class lC_Updates_Admin {
     try {
       if ($pharWithPath == null) {
         $pharFile = 'update.phar';
-        $phar = $phar = new Phar(DIR_FS_WORK . 'updates/' . $pharFile, 0);
+        $phar = new Phar(DIR_FS_WORK . 'updates/' . $pharFile, 0);
         $meta = $phar->getMetadata();     
         self::$_to_version = $meta['version_to'];
         // reset the log
@@ -403,7 +403,7 @@ class lC_Updates_Admin {
         self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED');
       } else {
         $pharFile = end(explode('/', $pharWithPath));
-        $phar = $phar = new Phar(DIR_FS_WORK . 'addons/update.phar', 0);
+        $phar = new Phar(DIR_FS_WORK . 'addons/update.phar', 0);
         $meta = $phar->getMetadata();     
         // reset the log
         $pharCode = str_replace('.phar', '', $pharFile);
