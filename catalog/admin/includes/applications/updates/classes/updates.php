@@ -401,13 +401,14 @@ class lC_Updates_Admin {
         if ( file_exists(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') && is_writable(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') ) {
           unlink(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
         } 
-        $pharCode = '';  
+        $pharCode = 'update';  
         self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED', $pharCode);
       } else {
         $pharFile = end(explode('/', $pharWithPath));
-        $phar = new Phar(DIR_FS_WORK . 'addons/update.phar');    
+
+        $phar = new Phar(DIR_FS_WORK . 'addons/' . $pharFile);    
+        $meta = $phar->getMetadata();    
         
-        $meta = $phar->getMetadata();     
         // reset the log
         $pharCode = str_replace('.phar', '', $pharFile);
         if ( file_exists(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt') && is_writable(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt') ) {
@@ -442,9 +443,9 @@ class lC_Updates_Admin {
       // loop through each file individually as extractTo() does not work with
       // directories (see http://bugs.php.net/bug.php?id=54289)
       foreach ( new RecursiveIteratorIterator($phar) as $iteration ) {
-        if ( ($pos = strpos($iteration->getPathName(), 'update.phar')) !== false ) {
+        if ( ($pos = strpos($iteration->getPathName(), '.phar')) !== false ) {
           
-          $file = substr($iteration->getPathName(), $pos+12);
+          $file = substr($iteration->getPathName(), $pos+6);
           
           if ($pharWithPath == null) {
             $directory = realpath(DIR_FS_CATALOG) . '/';
@@ -452,7 +453,7 @@ class lC_Updates_Admin {
             if ($pharType == 'template') {
               $directory = realpath(DIR_FS_CATALOG) . '/';
             } else {
-              if (is_array($meta['api_version']) && $meta['api_version'] == '1.0') {
+              if (is_array($meta['api_version']) && $meta['api_version'] != '') {
                 $directory = realpath(DIR_FS_CATALOG) . '/';
               } else {
                 $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
@@ -558,8 +559,9 @@ class lC_Updates_Admin {
         if (file_exists(DIR_FS_WORK . 'updates/update.phar')) unlink(DIR_FS_WORK . 'updates/update.phar');          
         self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE', $pharCode);      }
     } else {
-      // remove the update phar
-      if (file_exists(DIR_FS_WORK . 'addons/update.phar')) unlink(DIR_FS_WORK . 'addons/update.phar');
+      // remove the addon phar & pubkey
+      if (file_exists(DIR_FS_WORK . 'addons/' . $pharCode . '.phar')) unlink(DIR_FS_WORK . 'addons/' . $pharCode . '.phar');
+      if (file_exists(DIR_FS_WORK . 'addons/' . $pharCode . '.phar.pubkey')) unlink(DIR_FS_WORK . 'addons/' . $pharCode . '.phar.pubkey');
       self::log('##### ADDON INSTALL ' . $code . ' COMPLETE', $pharCode);
     }
 
