@@ -44,6 +44,7 @@ if ($request_type == 'NONSSL') {
 } else {
   define('DIR_WS_CATALOG', DIR_WS_HTTPS_CATALOG);
 }
+define('API_VERSION', '1_0');
 
 // compatibility work-around logic for PHP4
 require($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/functions/compatibility.php'));

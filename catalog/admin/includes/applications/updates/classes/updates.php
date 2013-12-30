@@ -113,7 +113,8 @@ class lC_Updates_Admin {
     global $lC_Api;
       
     $result = array('entries' => array());
-    $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
+    $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+    $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
     $versions_array = utility::xml2arr($versions); 
 
     $counter = 0;
@@ -192,8 +193,8 @@ class lC_Updates_Admin {
         }
       }
     }
-    
-    if ($link == null) $link = 'https://api.loadedcommerce.com/1_0/get/' . str_replace(".", "", $version) . '?ref=' . urlencode($_SERVER['SCRIPT_FILENAME']);
+    $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+    if ($link == null) $link = 'https://api.loadedcommerce.com/' . $api_version . '/get/' . str_replace(".", "", $version) . '?ref=' . urlencode($_SERVER['SCRIPT_FILENAME']);
     if ($type != null) $link .= '&type=' . $type;
     
     $response = file_get_contents($link);

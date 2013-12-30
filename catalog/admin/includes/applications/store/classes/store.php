@@ -204,7 +204,8 @@ if (!class_exists('lC_Store_Admin')) {
       $checksum = hash('sha256', json_encode($request));
       $request['checksum'] = $checksum;
 
-      $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/store/types/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request));
+      $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+      $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/store/types/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request));
 
       $types = utility::xml2arr($resultXML);     
 
@@ -228,7 +229,8 @@ if (!class_exists('lC_Store_Admin')) {
       $request['checksum'] = $checksum;
       $request['instID'] = INSTALLATION_ID;
 
-      $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/store/addons/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request));
+      $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+      $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/store/addons/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'post', 'parameters' => $request));
 
       $available = utility::xml2arr($resultXML);  
 
@@ -489,7 +491,8 @@ if (!class_exists('lC_Store_Admin')) {
       // remove the old phar if it exists
       if (file_exists(DIR_FS_WORK . 'addons/update.phar')) unlink(DIR_FS_WORK . 'addons/' . $key . '.phar'); 
 
-      $response = file_get_contents('https://api.loadedcommerce.com/1_0/get/' . $key . '?type=addon&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']));
+      $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+      $response = file_get_contents('https://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']));
 
       // add the pubkey
       $pubkey = file_get_contents(DIR_FS_WORK . 'addons/update.phar.pubkey');
