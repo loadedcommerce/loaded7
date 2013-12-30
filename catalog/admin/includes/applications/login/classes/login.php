@@ -35,7 +35,12 @@ class lC_Login_Admin {
           $validated = true;
         }
       }
-    }   
+    } 
+    // check serial once per day and download any missing addons
+    $serial = (defined('INSTALLATION_ID') && INSTALLATION_ID != NULL) ? INSTALLATION_ID : NULL;
+    if (self::_timeToCheck() && $serial != NULL) {
+      self::validateSerial($serial);
+    }
    
     return $validated;
   }
@@ -226,11 +231,27 @@ class lC_Login_Admin {
     return $result;
   }
  /*
+  * Returns the api check status
+  *
+  * @access public
+  * @return boolean true or false
+  */ 
+  public static function apiCheck() {
+    $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+    $apiCheck = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/updates/available/?api_version=' . $api_version . '&ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
+    $versions = utility::xml2arr($apiCheck);
+    
+    if ($versions == null) {
+      $file = @fopen(DIR_FS_WORK . 'apinocom.tmp', "w");
+      @fclose($file);
+    }
+  }  
+ /*
   * Download the product PHARs
   *
   * @access private
   * @return boolean
-  */
+  */ 
   private static function _verifyProductsAreDownloaded($products) {
     
     $productsArr = explode('|', $products);
@@ -260,21 +281,29 @@ class lC_Login_Admin {
       $cnt++;
     }
   }
- /*
-  * Returns the api check status
-  *
-  * @access public
-  * @return boolean true or false
-  */ 
-  public static function apiCheck() {
-    $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
-    $apiCheck = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/updates/available/?api_version=' . $api_version . '&ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
-    $versions = utility::xml2arr($apiCheck);
+ /**
+  * Check to see if it's time to re-check validity; once per day
+  *  
+  * @access private      
+  * @return boolean
+  */   
+  private static function _timeToCheck() {
+    global $lC_Database;
+
+    $check = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
+    if ($check == NULL) return TRUE;
     
-    if ($versions == null) {
-      $file = @fopen(DIR_FS_WORK . 'apinocom.tmp', "w");
-      @fclose($file);
-    }
-  }
+    $Qcheck = $lC_Database->query('select last_modified from :table_configuration where configuration_key = :configuration_key');
+    $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qcheck->bindValue(':configuration_key', 'INSTALLATION_ID');
+    $Qcheck->execute();  
+    
+    $today = substr(lC_DateTime::getShort(date("Y-m-d H:m:s")), 3, 2);
+    $check = substr(lC_DateTime::getShort($Qcheck->value('last_modified')), 3, 2);
+    
+    $Qcheck->freeResult();
+
+    return (((int)$today != (int)$check) ? TRUE : FALSE);   
+  }  
 }
 ?>
