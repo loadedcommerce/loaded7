@@ -492,7 +492,7 @@ if (!class_exists('lC_Store_Admin')) {
       if (file_exists(DIR_FS_WORK . 'addons/update.phar')) unlink(DIR_FS_WORK . 'addons/' . $key . '.phar'); 
 
       $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
-      $response = file_get_contents('https://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']));
+      $response = file_get_contents('https://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&api_version=' . $api_version . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']));
 
       // add the pubkey
       $pubkey = file_get_contents(DIR_FS_WORK . 'addons/update.phar.pubkey');
