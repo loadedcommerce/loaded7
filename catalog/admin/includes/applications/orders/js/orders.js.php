@@ -552,7 +552,8 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
              '      <label for="coupon" class="label"><?php echo $lC_Language->get('text_orders_total_coupon'); ?>'+
              '      <?php echo lc_draw_pull_down_menu('orders_total_coupon', null, null, 'class="input with-small-padding mid-margin-top" id="id_orders_total_coupon"'); ?>'+
              '      </label>'+
-           '        </p></span>'+     
+           '        </p></span>'+
+           '        <span id="id_counter" style = "display:none">0</span>'+
            '      </form>'+
            '    </div>'+ 
            '</div>',
@@ -568,7 +569,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         buttons: {
           '<?php echo $lC_Language->get('button_continue'); ?>': {
           classes:  'glossy',
-          click:    function(win) { /*saveEditproduct();*/ }
+          click:    function(win) { showAddedOrderTotal(oid); }
           },
           '<?php echo $lC_Language->get('button_cancel'); ?>': {
             classes:  'glossy',
@@ -641,7 +642,6 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           );
         });
 
-
         $.modal.all.centerModal();
 
 
@@ -684,5 +684,60 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       $('#id_coupon').hide();
     }
   }
+  function showAddedOrderTotal(oID) {
 
+    var id_counter = parseInt($('#id_counter').html())+1;
+    var id_orders_total_type = $('#id_orders_total_type option:selected').text();    
+    var id_orders_total_shipping = $('#id_orders_total_shipping option:selected').text();   
+    var id_orders_total_coupon = $('#id_orders_total_coupon option:selected').text();
+
+    var title = id_orders_total_type;
+
+    if(id_orders_total_shipping != '' && id_orders_total_shipping != 'None') {
+      title += '' + id_orders_total_shipping; 
+    } else if (id_orders_total_coupon != ''  && id_orders_total_coupon != 'None') {
+      title += '' + id_orders_total_coupon; 
+    }   
+
+     var result = '<p id = "addedOrderTotalRow_'+id_counter+'" class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;<input type = "text" name = "title_'+id_counter+'" value = "'+title+'" style="width:30%;"></span>&nbsp;&nbsp; <input type = "text" name = "value_'+id_counter+'" value = "" style="width:10%;" onkeyup = "updateGrandTotal();">&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotalRow('+oID+','+id_counter+')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';
+
+     $('#addedOrderTotal').append(result);
+     $('#id_counter').html(id_counter);
+     $.modal.all.closeModal();
+
+  }
+  function removeOrderTotalRow(oId,rowId) {
+    var row = "#addedOrderTotalRow_"+rowId; 
+    $(row).hide();    
+  }
+  function updateGrandTotal() {   
+    
+  }
+  function saveOrderTotal(oId) {
+    
+    var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+    if (parseInt(accessLevel) < 2) {
+      $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+      return false;    }
+    
+    var formData = $("#order").serialize();
+    
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveOrderTotal&oid=OID&FORMDATA'); ?>'  
+    $.getJSON(jsonLink.replace('OID', parseInt(oId)).replace('FORMDATA', formData),
+      function (data) {
+        if (data.rpcStatus == -10) { // no session
+          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+          $(location).attr('href',url);
+        }
+        if (data.rpcStatus != 1) {
+          $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
+          return false;
+        }        
+        url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders=OID&action=save&orderstotal=1'); ?>';
+        $(location).attr('href',url.replace('OID', oId));
+      }
+    );
+    
+  
+  }
 </script>

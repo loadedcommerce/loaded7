@@ -104,11 +104,11 @@
           }
         ?>
 
-         <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-bottom align-center">
-          <?php echo $lC_Language->get('text_product_sub_total'). ': ' .$product_sub_total;?>
+         <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-bottom align-right height" >
+          <span class="with-margin-right"><?php echo $lC_Language->get('text_product_sub_total').'<span class="with-small-padding" ></span>'. ': '.'<span class="with-small-padding" ></span>' .$product_sub_total;?></span>
         </div>
-        <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-bottom align-center">
-          <?php echo $lC_Language->get('text_add_product'). ': ' .lc_draw_pull_down_menu('add_product', lC_Products_Admin::getProductDropdownArray());?>
+        <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-bottom align-left">
+           <span class="with-padding-left"><?php echo $lC_Language->get('text_add_product'). ': ' .lc_draw_pull_down_menu('add_product', lC_Products_Admin::getProductDropdownArray());?></span>
           
           <span class="button-group">
             <a class="button compact icon-plus" href="javascript:void(0);" onclick="addOrderProduct(<?php echo $orders_ID;?>);"><?php echo 'Add item'; ?></a>            

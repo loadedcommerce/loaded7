@@ -1275,7 +1275,7 @@ class lC_Orders_Admin {
   }
 
   function getOrderTotalsList($oID) {
-   global $lC_Vqmod, $lC_Database;
+   global $lC_Vqmod, $lC_Database, $lC_Language;
 
     $result = '';
     $Qtotals = $lC_Database->query('select * from :table_orders_total where orders_id = :orders_id order by sort_order');
@@ -1285,18 +1285,23 @@ class lC_Orders_Admin {
     while ($Qtotals->next()) {
 
       $result .= '<p class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;' .
-                  lc_draw_input_field("title_".$Qtotals->value('orders_total_id'), $Qtotals->value('title'), ' style="width:20%;"') . '</span>&nbsp;&nbsp;' . lc_draw_input_field("value_".$Qtotals->value('orders_total_id'), $Qtotals->value('value'), ' style="width:20%; text-align:right"') .
-                  '&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotal('.$oID.','.$Qtotals->value('orders_total_id').')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';     
+                  lc_draw_input_field("title_".$Qtotals->value('orders_total_id'), $Qtotals->value('title'), ' style="width:30%;"') . '</span>&nbsp;&nbsp;' . lc_draw_input_field("value_".$Qtotals->value('orders_total_id'), $Qtotals->value('value'), ' style="width:10%; text-align:right" onkeyup = "updateGrandTotal();"') .
+                  '&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotal('.$oID.','.$Qtotals->value('orders_total_id').')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';    
+      
+
        
     }
+    $result .='        <div id = "addedOrderTotal"></div>';
 
     if( $result != '' ) {
 
-      $result .=  '<div class="columns with-small-padding small-margin-left small-margin-bottom align-center">
-          <span class="button-group">
+      $result .=  '<p class="align-right padding4 bbottom-grey1">
+      <span class="padding5 ">Grand Total<span class="show-below-768 bold">'. $lC_Language->get('text_total').'</span>
+            <span  class="padding6" id="id_grand_total">'. number_format('65464.3232', DECIMAL_PLACES).'</span></span>
+          <span class="button-group1 padding ">
             <a class="button compact icon-plus" href="javascript:void(0);" onclick="saveOrderTotal('. $oID .');">Save</a> 
-          </span>
-        </div>';
+          </span></p>
+       ';	   
     }
     
    
@@ -1330,6 +1335,13 @@ class lC_Orders_Admin {
     }
     
     return $result;
+  }
+
+  function saveOrderTotal() {
+    print("<xmp>");
+    print_r($_GET);
+    print("</xmp>");
+    die('13444');
   }
 }
 ?>

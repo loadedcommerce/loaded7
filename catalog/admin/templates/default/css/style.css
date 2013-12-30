@@ -4724,3 +4724,38 @@ a:link {
 .invisible {
 	visibility: hidden;
 }
+/*product  page*/
+.padding1 { padding-left:30px; }
+
+.padding2 { padding-left:80px; }
+
+.with-margin-right{ margin-right:18%; }
+
+.with-padding-left{ padding-left:15px; }
+
+/*product page*/
+
+/*order_total  page*/
+.padding3 { padding-left:300px; }
+
+.padding4{ padding-right:35%; }
+
+.padding5 { padding-right:10%; padding-left:10%; }
+
+.padding6{ padding-right:1%; padding-left:6%;}
+
+.height{ height:25px;}
+	
+.bbottom-grey1 { border-top: 1px solid rgb(165, 165, 165);}
+
+.button-group1 {
+	    display: inline-block;
+    font-size: 13px;
+    line-height: 0px;
+    height:0px;
+    vertical-align: middle;
+    padding-left: 1px;
+}
+
+.padding{ padding-bottom:25px;padding-top:8px;}
+/*order_total  page*/

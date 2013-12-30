@@ -158,5 +158,12 @@ class lC_Orders_Admin_rpc {
     }
     echo json_encode($result);
   }
+  public static function saveOrderTotal() {
+    $result = lC_Orders_Admin::saveOrderTotal();
+    if ($result !== false) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    echo json_encode($result);
+  }
 }
 ?>
