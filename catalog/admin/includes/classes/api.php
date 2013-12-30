@@ -63,7 +63,8 @@ class lC_Api {
     $checksum = hash('sha256', json_encode($registerArr));
     $registerArr['checksum'] = $checksum;
     
-    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/register/install/', 'method' => 'post', 'parameters' => $registerArr));
+    $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/register/install/', 'method' => 'post', 'parameters' => $registerArr));
     $newInstallationID = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
     $products = (preg_match("'<products[^>]*?>(.*?)</products>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
 
