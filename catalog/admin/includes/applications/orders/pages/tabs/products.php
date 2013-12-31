@@ -79,15 +79,15 @@
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_tax_class'); ?> </span>
             <span id="products_tax_class_<?php echo $products['orders_products_id']; ?>"><?php echo $products['tax_class']; ?></span>
           </div>
-          <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom">
+          <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom align-right">
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_price'); ?> </span>
             <span id="products_price_<?php echo $products['orders_products_id']; ?>"><?php echo $products['price']; ?></span>
           </div>
-          <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom">
+          <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom align-center">
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_qty'); ?> </span>
             <span id="products_qty_<?php echo $products['orders_products_id']; ?>"><?php echo $products['quantity']; ?></span>
           </div>
-          <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom">
+          <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom align-right">
             <span class="show-below-768 bold"><?php echo $lC_Language->get('text_total'); ?> </span>
             <span id="products_total_<?php echo $products['orders_products_id']; ?>"><?php echo number_format($products['price']*$products['quantity'], DECIMAL_PLACES); ?></span>
           </div>
