@@ -157,21 +157,23 @@ class lC_Administrators_Admin {
       if ( !$lC_Database->isError() ) {
         if ( !is_numeric($id) ) {
           $id = $lC_Database->nextID();
+          $new = 1;
         }
       } else {
-die($lC_Database->getError());        
         $error = true;
       }
 
-      if ( $error === false ) {
+      if ( $error === false  ) {
         $lC_Database->commitTransaction();
-        // check for language changes and set session accordingly
-        if ($data['language_id'] != $Qcheck->value('language_id')) {
-          $_SESSION['admin']['language_id'] = $data['language_id'];
+        if (!$new) {
+          // check for language changes and set session accordingly
+          if ($data['language_id'] != $Qcheck->value('language_id')) {
+            $_SESSION['admin']['language_id'] = $data['language_id'];
+          }
+          $_SESSION['admin']['username'] = $data['user_name'];
+          $_SESSION['admin']['firstname'] = $data['first_name'];
+          $_SESSION['admin']['lastname'] = $data['last_name'];
         }
-        $_SESSION['admin']['username'] = $data['user_name'];
-        $_SESSION['admin']['firstname'] = $data['first_name'];
-        $_SESSION['admin']['lastname'] = $data['last_name'];
       } else {
         $lC_Database->rollbackTransaction();
         $result['rpcStatus'] = -1;
