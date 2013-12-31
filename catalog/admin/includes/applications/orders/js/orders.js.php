@@ -471,7 +471,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
   function removeOrderTotal(oid,ot_class) {
     var name1 = "#title_"+ot_class;
     var name2 = "#value_"+ot_class;
-    var name = $(name1).val() + $(name2).val();    
+    var name = $(name1).val() + ' ' + $(name2).val();    
 
     var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
     if (parseInt(accessLevel) < 4) {
@@ -693,12 +693,12 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     var title = id_orders_total_type_title;
 
     if(id_orders_total_shipping != '' && id_orders_total_shipping != 'None') {
-      title += '' + id_orders_total_shipping; 
+      title += ' (' + id_orders_total_shipping+')'; 
     } else if (id_orders_total_coupon != ''  && id_orders_total_coupon != 'None') {
-      title += '' + id_orders_total_coupon; 
+      title += ' (' + id_orders_total_coupon+')'; 
     } 
 
-     var result = '<p id = "addedOrderTotalRow_'+id_orders_total_type+'" class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;<input type = "text" name = "title_'+id_orders_total_type+'" value = "'+title+'" style="width:30%;"></span>&nbsp;&nbsp; <input type = "text" name = "value_'+id_orders_total_type+'" value = "" style="width:10%;" onkeyup = "updateGrandTotal();">&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotalRow('+oID+','+id_orders_total_type+')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';
+     var result = '<p id = "addedOrderTotalRow_'+id_orders_total_type+'" class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;<input type = "text" name = "title_'+id_orders_total_type+'" value = "'+title+'" style="width:30%;"></span>&nbsp;&nbsp;<input type = "text" name = "value_'+id_orders_total_type+'" value = "" style="width:10%;" onkeyup = "updateGrandTotal();">&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotalRow('+oID+',\''+id_orders_total_type+'\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';
 
      var flag = true;
      $.each($('input[type="text"]', '#order'),function(k){      
