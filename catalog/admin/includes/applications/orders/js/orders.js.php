@@ -690,9 +690,6 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     var id_orders_total_shipping = $('#id_orders_total_shipping option:selected').text();   
     var id_orders_total_coupon = $('#id_orders_total_coupon option:selected').text();
 
-alert(id_orders_total_type);
-alert(id_orders_total_type_title);
-
     var title = id_orders_total_type_title;
 
     if(id_orders_total_shipping != '' && id_orders_total_shipping != 'None') {
