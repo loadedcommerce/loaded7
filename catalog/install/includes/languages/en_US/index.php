@@ -11,10 +11,10 @@ page_heading_server_requirements = Server Requirements
 page_heading_installation_type = Installation Type
 page_heading_permissions = File/Folder Permissions
 page_heading_ioncube = ionCube Configuration
-page_text_ioncube = ionCube is a required component needed for the functionality of Paid Addons such as Pro or B2B versions of Loaded 7, or individual Native & Third Party Addons.
+page_text_ioncube = ionCube Loader is a required component for the functionality of paid addons such as Pro and B2B versions of Loaded 7, and some individual native & third party addons.
 
 ioncube_no_additional_config = No additional configuration required.
-ioncube_installed_version = Installed: Version&nbsp;
+ioncube_installed_version = Installed:
 ioncube_not_installed_instructions = <br />&nbsp; - Please contact your web host and ask them to install ionCube loader on your server.<br />&nbsp; - Loaders can be downloaded from <a href="http://www.ioncube.com/loaders.php" target="_blank"><b>www.ioncube.com</b></a>.<br />&nbsp; - Installation Instructions can be found <a href="http://www.ioncube.com/loader_installation.php" target="_blank"><b>here</b></a>.<br />&nbsp; - For additional questions please contact <a href="http://www.loadedcommerce.com/support-memberships-pc-175_198.html" target="_blank"><b>Loaded Commerce Support</b></a>
 
 

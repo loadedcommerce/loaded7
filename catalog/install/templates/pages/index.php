@@ -53,13 +53,38 @@ TD { height:19px; }
       </div>
     </noscript>  
     <?php
-
-    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../addons'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../addons') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/backups'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/backups') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/images/avatar'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/images/avatar') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/images/graphs'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/images/graphs') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/languages'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/languages') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/templates'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/templates') , 0777);
+    
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/languages'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/languages') , 0777);
     if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/work') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/addons'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/work/addons') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/cache'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/work/cache') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/cache/vqmod'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/work/cache/vqmod') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/logs'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/work/logs') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/logs/vqmod'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/work/logs/vqmod') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/qrcode'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/work/qrcode') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/updates'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes/work/updates') , 0777);   
     if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images') , 0777);
-    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/backups'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/backups/') , 0777);
-    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/banners'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images/banners') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/branding'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images/branding') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/categories'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images/categories') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/manufacturers'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images/manufacturers') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images/products') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/large'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images/products/large') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/mini'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images/products/mini') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/originals'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images/products/originals') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/popup'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images/products/popup') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/product_info'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images/products/product_info') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/thumbnails'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../images/products/thumbnails') , 0777);
+    if(is_dir(lc_realpath(dirname(__FILE__) . '/../../../templates'))) @chmod(lc_realpath(dirname(__FILE__) . '/../../../templates') , 0777);
 
+    
     if (file_exists(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php') && !is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php')) {
       @chmod(lc_realpath(dirname(__FILE__) . '/../../../includes') . '/config.php', 0777);
     }
@@ -165,6 +190,20 @@ TD { height:19px; }
             </table>
           </div>
         </div> 
+        
+        <div class="block margin-top">
+          <h4 class="block-title green-gradient glossy"><?php echo $lC_Language->get('page_heading_ioncube'); ?></h4>
+          <div style="padding: 0 7px 7px 7px;">
+            <table id="ioncCubeTable" border="0" width="100%" cellspacing="0" cellpadding="2">
+              <tr>
+                <td><p class="mid-margin-left mid-margin-right mid-margin-bottom"><?php echo $lC_Language->get('page_text_ioncube'); ?></p></td>
+              </tr>
+              <tr>
+                <td><p class="mid-margin-left"><?php if (function_exists('ioncube_test')) { echo ioncube_test(); } ?></p></td>
+              </tr>
+            </table>
+          </div>
+        </div>         
       </div>
       <div class="right-column">
         <div class="content-pane">
@@ -177,66 +216,226 @@ TD { height:19px; }
           <h4 class="no-margin-top mid-margin-bottom"><?php echo $lC_Language->get('page_heading_permissions'); ?></h4>
           <table id="permissionsTable" border="0" width="100%" cellspacing="0" cellpadding="2">
             <tr>
-              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../addons/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../addons/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../addons/'))), -4) >= "0755") ? TRUE : FALSE; ?>
               <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
-              <td style="padding-left:5px;">includes/</td>
+              <td style="padding-left:5px;">admin/backups/</td>
               <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
               <?php if (!$writeable) $ok = FALSE; ?>
-            </tr>        
+            </tr>          
             <tr>
-              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/work/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/work/'))), -4) >= "0755") ? TRUE : FALSE; ?>
-              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
-              <td style="padding-left:5px;">includes/work/</td>
-              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
-              <?php if (!$writeable) $ok = FALSE; ?>
-            </tr>           
-            <tr>
-              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/'))), -4) >= "0755") ? TRUE : FALSE; ?>
-              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
-              <td style="padding-left:5px;">images/</td>
-              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
-              <?php if (!$writeable) $ok = FALSE; ?>
-            </tr>            
-            <tr>
-              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/backups')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/backups')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../admin/backups/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/backups/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/backups/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../admin/backups/'))), -4) >= "0755") ? TRUE : FALSE; ?>
               <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
               <td style="padding-left:5px;">admin/backups/</td>
               <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
               <?php if (!$writeable) $ok = FALSE; ?>
             </tr>  
             <tr>
-              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/graphs/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/images/avatar/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/images/avatar/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../admin/images/avatar/'))), -4) >= "0755") ? TRUE : FALSE; ?>
               <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
-              <td style="padding-left:5px;">admin/includes/graphs</td>
+              <td style="padding-left:5px;">admin/images/avatar/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>            
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/images/graphs/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/images/graphs/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../admin/images/graphs/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">admin/images/graphs/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>  
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/languages/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/languages/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/languages/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">admin/includes/languages/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>  
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/templates/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/templates/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../admin/includes/templates/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">admin/includes/templates/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>                        
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">includes/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>  
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/languages/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/languages/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/languages/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">includes/languages/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>                                            
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/work/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/work/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">includes/work/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>        
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/addons/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/work/addons/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/work/addons/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">includes/work/addons/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>  
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/cache/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/work/cache/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/work/cache/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">includes/work/cache/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>             
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/cache/vqmod/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/work/cache/vqmod/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/work/cache/vqmod/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">includes/work/cache/vqmod/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>                      
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/logs/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/work/logs/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/work/logs/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">includes/work/logs/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>  
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/logs/vqmod/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/work/logs/vqmod/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/work/logs/vqmod/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">includes/work/logs/vqmod/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>                       
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/qrcode/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/work/qrcode/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/work/qrcode/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">includes/work/qrcode/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>   
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../includes/work/updates/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../includes/work/updates/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../includes/work/updates/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">includes/work/updates/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>                     
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr> 
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/banners/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/banners/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/banners/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/banners/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>                 
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/branding/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/branding/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/branding/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/branding/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>            
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/categories/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/categories/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/categories/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/categories/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/manufacturers/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/manufacturers/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/manufacturers/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/manufacturers/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>    
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/products/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/products/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/products/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>                    
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/large/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/products/large/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/products/large/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/products/large/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>            
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/mini/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/products/mini/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/products/mini/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/products/mini/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr> 
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/originals/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/products/originals/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/products/originals/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/products/originals/</td>
               <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
               <?php if (!$writeable) $ok = FALSE; ?>
             </tr>                           
-          </table>
-          <!-- p class="message icon-warning margin-top margin-right" style="color:#c09853; background:#fcf8e3; border-color:#fbeed5;">   
-            <span class="stripes animated"></span>
-            <?php //echo sprintf($lC_Language->get('text_under_development'), $version); ?>
-          </p -->
-          <h4 class="mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('page_heading_ioncube'); ?></h4>
-          <table id="ioncCubeTable" border="0" width="100%" cellspacing="0" cellpadding="2">
             <tr>
-              <td><p class="mid-margin-left mid-margin-right mid-margin-bottom"><?php echo $lC_Language->get('page_text_ioncube'); ?></p></td>
-            </tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/popup/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/products/popup/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/products/popup/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/products/popup/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>             
             <tr>
-              <td><p class="mid-margin-left"><?php if (function_exists('ioncube_test')) { echo ioncube_test(); } ?></p></td>
-            </tr>
-          </table>   
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/product_info/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/products/product_info/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/products/product_info/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/products/product_info/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>     
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/small/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/products/small/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/products/small/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/products/small/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>                     
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../images/products/thumbnails/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../images/products/thumbnails/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../images/products/thumbnails/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">images/products/thumbnails/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>  
+            <tr>
+              <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../templates/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../templates/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../templates/'))), -4) >= "0755") ? TRUE : FALSE; ?>
+              <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
+              <td style="padding-left:5px;">templates/</td>
+              <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
+              <?php if (!$writeable) $ok = FALSE; ?>
+            </tr>                        
+          </table> 
         </div>
       </div>
       <?php
       if ($ok) {
         ?>
-        <div id="buttonContainer" class="large-margin-top margin-left" style="float:left">
-          <a href="javascript:void(0);" class="button" onclick="$('#mBox').hide(); $('#pBox').hide(); $('#upgrade_method').val('S'); window.location.href = 'upgrade.php?step=1'">
+        <div id="buttonContainer" class="large-margin-top margin-left margin-bottom large-margin-right" style="float:right">
+          <a href="javascript:void(0);" class="button margin-right" onclick="$('#mBox').hide(); $('#pBox').hide(); $('#upgrade_method').val('S'); window.location.href = 'upgrade.php?step=1'">
             <span class="button-icon orange-gradient glossy"><span class="icon-cloud-upload"></span></span>
             <?php echo addslashes($lC_Language->get('image_button_upgrade')); ?>
           </a>          
-        </div>
-        <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
           <a href="install.php" class="button">
             <span class="button-icon blue-gradient glossy"><span class="icon-right-round"></span></span>
             <?php echo addslashes($lC_Language->get('image_button_install')); ?>
@@ -245,7 +444,7 @@ TD { height:19px; }
         <?php          
       } else {
         ?>
-        <div id="buttonContainer" class="large-margin-top margin-right" style="float:right">
+        <div id="buttonContainer" class="large-margin-top large-margin-right" style="float:right">
           <a href="index.php" class="button">
             <span class="button-icon red-gradient glossy"><span class="icon-refresh"></span></span>
             <?php echo addslashes($lC_Language->get('image_button_retry')); ?>
