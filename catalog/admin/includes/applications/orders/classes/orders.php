@@ -1342,10 +1342,61 @@ class lC_Orders_Admin {
   }
 
   function saveOrderTotal() {
-    print("<xmp>");
-    print_r($_GET);
-    print("</xmp>");
-    die('13444');
+    global $lC_Vqmod, $lC_Database, $lC_Language;
+    
+    $orders_id = $_GET['oid'];
+
+    require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
+    $lC_Currencies = new lC_Currencies();
+    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
+    $lC_Order = new lC_Order($orders_id);
+
+    foreach($_GET as $k => $v) {
+      $title = substr($k,0,6);
+      $class = substr($k,6);
+      if($title == "title_") {
+        $arr[$class]['title'] = $v;
+      } else if($title == "value_") {
+        $arr[$class]['value'] = $v;
+      }
+    }
+
+    foreach($arr as $k1 => $v1) {
+      $class = $k1;
+      $title = $v1['title'];
+      $value = $v1['value'];
+
+      $Qtotals = $lC_Database->query('select * from :table_orders_total where orders_id = :orders_id and class = :class');
+      $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+      $Qtotals->bindInt(':orders_id', $orders_id);
+      $Qtotals->bindValue(':class', $class);
+      $Qtotals->execute(); 
+      
+      if($Qtotals->numberOfRows()) {
+        $Qupdate = $lC_Database->query('update :table_orders_total set title = :title, text = :text, value = :value where class = :class and orders_id = :orders_id');
+        $Qupdate->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+        $Qupdate->bindInt(':orders_id', $orders_id);          
+        $Qupdate->bindValue(':title', $title);          
+        $Qupdate->bindValue(':text', $lC_Currencies->format($value, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+        $Qupdate->bindValue(':value', $value);
+        $Qupdate->bindValue(':class', $class); 
+        $Qupdate->execute();
+
+      } else {
+        // Insert record in order product table
+        $Qinsert = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values (:orders_id, :title, :text, :value, :class, :sort_order)');
+        $Qinsert->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
+        $Qinsert->bindInt(':orders_id', $orders_id);
+        $Qinsert->bindValue(':title', $title);
+        $Qinsert->bindValue(':text', $lC_Currencies->format($value, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+        $Qinsert->bindValue(':value', $value);
+        $Qinsert->bindValue(':class', $class);
+        $Qinsert->bindValue(':sort_order', 0);
+        //$Qinsert->setLogging($_SESSION['module'], $id);
+        $Qinsert->execute();
+      }
+    }
+    return true;
   }
 }
 ?>

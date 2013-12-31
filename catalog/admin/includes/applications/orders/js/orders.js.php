@@ -739,9 +739,11 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       return false;    }
     
     var formData = $("#order").serialize();
-    
-    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveOrderTotal&oid=OID&FORMDATA'); ?>'  
-    $.getJSON(jsonLink.replace('OID', parseInt(oId)).replace('FORMDATA', formData),
+    $("#order").submit();
+   
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveOrderTotal&oid=OID'); ?>' 
+      alert("111");
+    $.getJSON(jsonLink.replace('OID', parseInt(oId)),
       function (data) {
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
@@ -753,9 +755,9 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         }        
         url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders=OID&action=save&orderstotal=1'); ?>';
         $(location).attr('href',url.replace('OID', oId));
-      }
-    );
-    
-  
+      });  
+      
+
+        
   }
 </script>
