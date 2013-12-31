@@ -194,7 +194,7 @@ class lC_Updates_Admin {
       }
     }
     $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
-    if ($link == null) $link = 'https://api.loadedcommerce.com/' . $api_version . '/get/' . str_replace(".", "", $version) . '?api_version=' . $api_version . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']);
+    if ($link == null) $link = 'https://api.loadedcommerce.com/' . $api_version . '/get/' . str_replace(".", "", $version) . '?ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']);
     if ($type != null) $link .= '&type=' . $type;
     
     $response = file_get_contents($link);
