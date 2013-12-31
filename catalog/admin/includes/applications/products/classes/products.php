@@ -398,6 +398,14 @@ class lC_Products_Admin {
     }
     
     $Qspecials->freeResult();  
+    
+    $Qfeatured = $lC_Database->query('select status from :table_featured_products where products_id = :products_id limit 1');
+    $Qfeatured->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
+    $Qfeatured->bindInt(':products_id', $id);
+    $Qfeatured->execute();    
+    
+    $data['products_featured'] = $Qfeatured->valueInt('status');
+    $Qfeatured->freeResult();  
 
     $variants_array = array();
 

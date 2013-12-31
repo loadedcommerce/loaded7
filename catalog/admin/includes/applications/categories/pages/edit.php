@@ -185,7 +185,7 @@ $lC_Template->loadModal($lC_Template->getModule());
                           array('text' => $lC_Language->get('text_category'), 'value' => 'category'),
                           array('text' => $lC_Language->get('text_page'), 'value' => 'page'),
                           array('text' => $lC_Language->get('link_to_specials'), 'value' => 'specials'),
-                          //array('text' => $lC_Language->get('link_to_featured'), 'value' => 'featured'),
+                          array('text' => $lC_Language->get('link_to_featured'), 'value' => 'featured'),
                           array('text' => $lC_Language->get('link_to_new'), 'value' => 'new'),
                           array('text' => $lC_Language->get('link_to_search'), 'value' => 'search'),
                           array('text' => $lC_Language->get('link_to_cart'), 'value' => 'cart'),
