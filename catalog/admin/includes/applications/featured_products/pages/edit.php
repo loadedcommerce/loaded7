@@ -59,7 +59,7 @@
               <div>
                 <span class="input">
                   <span class="icon-calendar"></span>
-                  <input type="text" name="expires_date" id="expires_date" value="<?php echo (isset($fInfo) ? $fInfo->get('expires_date') : null); ?>" class="input-unstyled datepicker" style="max-width:147px;">
+                  <input type="text" name="expires_date" id="expires_date" value="<?php echo (isset($fInfo) && $fInfo->get('expires_date') != null ? $fInfo->get('expires_date') : null); ?>" class="input-unstyled datepicker" style="max-width:147px;">
                 </span>
                 <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_expires_date'), null, 'info-spot on-left grey margin-left'); ?>
               </div>

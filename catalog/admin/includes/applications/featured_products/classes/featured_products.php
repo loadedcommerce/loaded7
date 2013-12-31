@@ -63,7 +63,7 @@ class lC_Featured_products_Admin {
 
     $data = $Qfeatured->toArray();
     
-    $data['expires_date'] = ($Qfeatured->value('expires_date') != null) ? lC_DateTime::getShort($Qfeatured->value('expires_date')) : null;
+    $data['expires_date'] = ($Qfeatured->value('expires_date') != '0000-00-00 00:00:00') ? lC_DateTime::getShort($Qfeatured->value('expires_date')) : null;
     
     $Qfeatured->freeResult();
 
