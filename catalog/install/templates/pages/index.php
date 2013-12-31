@@ -218,7 +218,7 @@ TD { height:19px; }
             <tr>
               <?php $writeable = (is_dir(lc_realpath(dirname(__FILE__) . '/../../../addons/')) && is_writeable(lc_realpath(dirname(__FILE__) . '/../../../addons/')) && substr(sprintf('%o', fileperms(lc_realpath(dirname(__FILE__) . '/../../../addons/'))), -4) >= "0755") ? TRUE : FALSE; ?>
               <td width="23px" align="right"><img src="templates/img/icons/<?php echo ($writeable) ? 'tick.gif' : 'cross.gif'; ?>" border="0" width="16" height="16"></td>
-              <td style="padding-left:5px;">admin/backups/</td>
+              <td style="padding-left:5px;">admin/addons/</td>
               <td align="left"><?php echo ($writeable) ? $lC_Language->get('box_server_writeable') : $lC_Language->get('box_server_not_writeable'); ?></td>
               <?php if (!$writeable) $ok = FALSE; ?>
             </tr>          
