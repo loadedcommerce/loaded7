@@ -468,9 +468,9 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     });
   });
 
-  function removeOrderTotal(oid,otid) {
-    var name1 = "#title_"+otid;
-    var name2 = "#value_"+otid;
+  function removeOrderTotal(oid,ot_class) {
+    var name1 = "#title_"+ot_class;
+    var name2 = "#value_"+ot_class;
     var name = $(name1).val() + $(name2).val();    
 
     var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
@@ -502,8 +502,8 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       '<?php echo $lC_Language->get('button_delete'); ?>': {
         classes:  'blue-gradient glossy',
         click:    function(win) {
-        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=removeOrderTotal&otId=OTID'); ?>'  
-        $.getJSON(jsonLink.replace('OTID', parseInt(otid)),
+        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=removeOrderTotal&oId=OID&otClass=OTCLASS'); ?>'  
+        $.getJSON(jsonLink.replace('OID', oid).replace('OTCLASS', ot_class),
             function (data) {
               if (data.rpcStatus == -10) { // no session
                 var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
@@ -698,7 +698,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       title += '' + id_orders_total_coupon; 
     } 
 
-     var result = '<p id = "addedOrderTotalRow_'+id_counter+'" class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;<input type = "text" name = "title_'+id_orders_total_type+'" value = "'+title+'" style="width:30%;"></span>&nbsp;&nbsp; <input type = "text" name = "value_'+id_orders_total_type+'" value = "" style="width:10%;" onkeyup = "updateGrandTotal();">&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotalRow('+oID+','+id_counter+')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';
+     var result = '<p id = "addedOrderTotalRow_'+id_orders_total_type+'" class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;<input type = "text" name = "title_'+id_orders_total_type+'" value = "'+title+'" style="width:30%;"></span>&nbsp;&nbsp; <input type = "text" name = "value_'+id_orders_total_type+'" value = "" style="width:10%;" onkeyup = "updateGrandTotal();">&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotalRow('+oID+','+id_orders_total_type+')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';
 
      var flag = true;
      $.each($('input[type="text"]', '#order'),function(k){      

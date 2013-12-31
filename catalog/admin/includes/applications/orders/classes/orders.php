@@ -1290,7 +1290,7 @@ class lC_Orders_Admin {
       }
       $result .= '<p class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;' .
                   lc_draw_input_field("title_".$Qtotals->value('class'), $Qtotals->value('title'), ' style="width:30%;"') . '</span>&nbsp;&nbsp;' . lc_draw_input_field("value_".$Qtotals->value('class'), $Qtotals->value('value'), ' style="width:10%; text-align:right" onkeyup = "updateGrandTotal();"') .
-                  '&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotal('.$oID.','.$Qtotals->value('orders_total_id').')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';    
+                  '&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotal('.$oID.','.$Qtotals->value('class').')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';    
       
 
        
@@ -1315,13 +1315,17 @@ class lC_Orders_Admin {
   }
   function removeOrderTotal() {
     global $lC_Database;
-    $orders_total_id = (int)$_GET['otId'];
 
-    $Qtotals = $lC_Database->query('delete from :table_orders_total where orders_total_id = :orders_total_id');
+    $orders_id = (int)$_GET['oId'];
+    $otClass = $_GET['otClass'];
+
+    $Qtotals = $lC_Database->query('delete from :table_orders_total where orders_id = :orders_id and class = :class');
     $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
-    $Qtotals->bindInt(':orders_total_id', $orders_total_id);
+    $Qtotals->bindInt(':orders_id', $orders_id);
+    $Qtotals->bindValue(':class', $otClass);
     $Qtotals->execute();  
   }
+
   function OrdersTotalData() {
     global $lC_Vqmod, $lC_Database, $lC_Language, $lC_Currencies;
 
