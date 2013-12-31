@@ -1283,9 +1283,13 @@ class lC_Orders_Admin {
     $Qtotals->bindInt(':orders_id', $oID);
     $Qtotals->execute();
     while ($Qtotals->next()) {
-
+      if($Qtotals->value('class') == 'total') {
+        $total = $Qtotals->value('value');
+      } else {
+        $total += $Qtotals->value('value');
+      }
       $result .= '<p class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;' .
-                  lc_draw_input_field("title_".$Qtotals->value('orders_total_id'), $Qtotals->value('title'), ' style="width:30%;"') . '</span>&nbsp;&nbsp;' . lc_draw_input_field("value_".$Qtotals->value('orders_total_id'), $Qtotals->value('value'), ' style="width:10%; text-align:right" onkeyup = "updateGrandTotal();"') .
+                  lc_draw_input_field("title_".$Qtotals->value('class'), $Qtotals->value('title'), ' style="width:30%;"') . '</span>&nbsp;&nbsp;' . lc_draw_input_field("value_".$Qtotals->value('class'), $Qtotals->value('value'), ' style="width:10%; text-align:right" onkeyup = "updateGrandTotal();"') .
                   '&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotal('.$oID.','.$Qtotals->value('orders_total_id').')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';    
       
 
@@ -1296,10 +1300,10 @@ class lC_Orders_Admin {
     if( $result != '' ) {
 
       $result .=  '<p class="align-right padding4 bbottom-grey1">
-      <span class="padding5 ">Grand Total<span class="show-below-768 bold">'. $lC_Language->get('text_total').'</span>
-            <span  class="padding6" id="id_grand_total">'. number_format('65464.3232', DECIMAL_PLACES).'</span></span>
+      <span class="padding5 ">'.$lC_Language->get('text_grand_total').'<span class="show-below-768 bold">'. $lC_Language->get('text_total').'</span>
+            <span  class="padding6" id="id_grand_total">'. number_format($total, DECIMAL_PLACES).'</span></span>
           <span class="button-group1 padding ">
-            <a class="button compact icon-plus" href="javascript:void(0);" onclick="saveOrderTotal('. $oID .');">Save</a> 
+            <a class="button compact icon-plus" href="javascript:void(0);" onclick="saveOrderTotal('. $oID .');">'.$lC_Language->get('text_save').'</a> 
           </span></p>
        ';	   
     }

@@ -592,18 +592,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         if (data.rpcStatus != 1) {
           $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
           return false;
-        }       
-        
-        $("#id_orders_total_type").empty();  // clear the old values
-        $.each(data.order_total_modules.entries, function(val, text) {
-          var selected = (data.orders_total_type == val) ? 'selected="selected"' : '';
-          if(data.orders_total_type == val) {
-            $("#id_orders_total_type").prevAll(".select-value:first").text(text);
-          }
-          $("#id_orders_total_type").append(
-            $("<option " + selected + "></option>").val(val).html(text)
-          );
-        });
+        }        
 
         $("#id_orders_total_type").empty();
         var cnt = 1;
@@ -618,10 +607,19 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           if (data.module_class == text['module_class']) {
             $("#id_orders_total_type").closest("span + *").prevAll("span.select-value:first").text(text['module_title']);
           }
+          
           $("#id_orders_total_type").append(
-            $("<option " + selected + "></option>").val(text['module_class']).html(text['module_title'])
-          );
-        });
+              $("<option " + selected + "></option>").val(text['module_class']).html(text['module_title'])
+            );
+
+        });        
+        /*$.each($('input[type="text"]', '#order'),function(k){      
+          var name = $(this).attr('name');
+          if(name.substr(0,6) == "value_") {
+            alert(name.substr(6));
+            $("#id_orders_total_type option[value='"+name.substr(6)+"']").remove();
+          }
+        });*/
 
 
         $("#id_orders_total_coupon").empty();
@@ -687,21 +685,34 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
   function showAddedOrderTotal(oID) {
 
     var id_counter = parseInt($('#id_counter').html())+1;
-    var id_orders_total_type = $('#id_orders_total_type option:selected').text();    
+    var id_orders_total_type = $('#id_orders_total_type').val();    
+    var id_orders_total_type_title = $('#id_orders_total_type option:selected').text();    
     var id_orders_total_shipping = $('#id_orders_total_shipping option:selected').text();   
     var id_orders_total_coupon = $('#id_orders_total_coupon option:selected').text();
 
-    var title = id_orders_total_type;
+alert(id_orders_total_type);
+alert(id_orders_total_type_title);
+
+    var title = id_orders_total_type_title;
 
     if(id_orders_total_shipping != '' && id_orders_total_shipping != 'None') {
       title += '' + id_orders_total_shipping; 
     } else if (id_orders_total_coupon != ''  && id_orders_total_coupon != 'None') {
       title += '' + id_orders_total_coupon; 
-    }   
+    } 
 
-     var result = '<p id = "addedOrderTotalRow_'+id_counter+'" class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;<input type = "text" name = "title_'+id_counter+'" value = "'+title+'" style="width:30%;"></span>&nbsp;&nbsp; <input type = "text" name = "value_'+id_counter+'" value = "" style="width:10%;" onkeyup = "updateGrandTotal();">&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotalRow('+oID+','+id_counter+')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';
+     var result = '<p id = "addedOrderTotalRow_'+id_counter+'" class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;<input type = "text" name = "title_'+id_orders_total_type+'" value = "'+title+'" style="width:30%;"></span>&nbsp;&nbsp; <input type = "text" name = "value_'+id_orders_total_type+'" value = "" style="width:10%;" onkeyup = "updateGrandTotal();">&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotalRow('+oID+','+id_counter+')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';
 
+     var flag = true;
+     $.each($('input[type="text"]', '#order'),function(k){      
+      var name = $(this).attr('name');
+      if(name.substr(0,6) == "value_" && name.substr(6) == id_orders_total_type) {
+        flag = false;
+      }
+    });
+    if(flag == true) {
      $('#addedOrderTotal').append(result);
+    }
      $('#id_counter').html(id_counter);
      $.modal.all.closeModal();
 
@@ -710,8 +721,18 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     var row = "#addedOrderTotalRow_"+rowId; 
     $(row).hide();    
   }
-  function updateGrandTotal() {   
-    
+  function updateGrandTotal() { 
+    var total = 0;
+    $.each($('input[type="text"]', '#order'),function(k){      
+      var name = $(this).attr('name');
+      if(name.substr(0,6) == "value_" && name.substr(6) != 'total') {        
+        total += parseFloat($(this).val()); 
+      } else if(name.substr(0,6) == "value_" && name.substr(6) == 'coupon') {        
+        total += parseFloat($(this).val()); 
+      }
+    });   
+    $('#value_total').val(total);
+    $('#id_grand_total').html(total);
   }
   function saveOrderTotal(oId) {
     
