@@ -512,9 +512,8 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
               if (data.rpcStatus != 1) {
                 $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
                 return false;
-              }
-
-              window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders=' + oid + '&action=save&orderstotal=1");?>';
+              }              
+              removeOrderTotalRow(oid,ot_class);
             }            
           );
          

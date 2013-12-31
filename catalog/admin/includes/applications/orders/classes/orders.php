@@ -1288,7 +1288,7 @@ class lC_Orders_Admin {
       } else {
         $total += $Qtotals->value('value');
       }
-      $result .= '<p class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;' .
+      $result .= '<p id = "addedOrderTotalRow_'.$Qtotals->value('class').'"  class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;' .
                   lc_draw_input_field("title_".$Qtotals->value('class'), $Qtotals->value('title'), ' style="width:30%;"') . '</span>&nbsp;&nbsp;' . lc_draw_input_field("value_".$Qtotals->value('class'), $Qtotals->value('value'), ' style="width:10%; text-align:right" onkeyup = "updateGrandTotal();"') .
                   '&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotal('.$oID.',\''.$Qtotals->value('class').'\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';    
       
