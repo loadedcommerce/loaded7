@@ -706,7 +706,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         flag = false;
       }
     });
-    if(flag == true) {
+    if(flag == true && id_orders_total_type != 0) {
      $('#addedOrderTotal').append(result);
     }
      $('#id_counter').html(id_counter);
