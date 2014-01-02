@@ -715,16 +715,17 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
   }
   function removeOrderTotalRow(oId,rowId) {
     var row = "#addedOrderTotalRow_"+rowId; 
-    $(row).hide();    
+    $(row).remove(); 
+    updateGrandTotal();
   }
   function updateGrandTotal() { 
     var total = 0;
     $.each($('input[type="text"]', '#order'),function(k){      
       var name = $(this).attr('name');
-      if(name.substr(0,6) == "value_" && name.substr(6) != 'total') {        
+      if(name.substr(0,6) == "value_" && name.substr(6) != 'total' && name.substr(6) != 'coupon') {        
         total += parseFloat($(this).val()); 
       } else if(name.substr(0,6) == "value_" && name.substr(6) == 'coupon') {        
-        total += parseFloat($(this).val()); 
+        total = parseFloat(total) - parseFloat($(this).val()); 
       }
     });   
     $('#value_total').val(total);
