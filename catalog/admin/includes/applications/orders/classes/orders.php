@@ -1348,6 +1348,8 @@ class lC_Orders_Admin {
   function saveOrderTotal() {
     global $lC_Vqmod, $lC_Database, $lC_Language;
     
+    $_GET = $_POST; // for temporary use
+
     $orders_id = $_GET['oid'];
 
     require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
@@ -1399,7 +1401,7 @@ class lC_Orders_Admin {
         //$Qinsert->setLogging($_SESSION['module'], $id);
         $Qinsert->execute();
       }
-    }
+    }   
     return true;
   }
 }

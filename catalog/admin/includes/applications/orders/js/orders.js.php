@@ -738,8 +738,10 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       return false;    }
     
     var formData = $("#order").serialize();
-    $("#order").submit();
-   
+
+    $('#action_order_total').val('save_order_total');; // for temporary use
+    $("#order").submit(); // for temporary use
+   /*
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveOrderTotal&oid=OID'); ?>' 
       alert("111");
     $.getJSON(jsonLink.replace('OID', parseInt(oId)),
@@ -755,7 +757,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders=OID&action=save&orderstotal=1'); ?>';
         $(location).attr('href',url.replace('OID', oId));
       });  
-      
+      */
 
         
   }

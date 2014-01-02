@@ -46,6 +46,12 @@ class lC_Application_Orders extends lC_Template_Admin {
       lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $_GET['oID'] . '&action=save&editProduct=1'));
     }
 
+    // for temporary use
+    if(isset($_POST['action_order_total']) && $_POST['action_order_total'] == 'save_order_total') {
+      lC_Orders_Admin::saveOrderTotal(); 
+      lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $_POST['oid'] . '&action=save&orderstotal=1'));
+    }
+
     if ( !empty($_GET['action']) ) {
       switch ( $_GET['action'] ) {
         case 'invoice':
