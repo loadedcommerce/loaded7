@@ -462,6 +462,20 @@ class lC_Order {
     return false;
   }
 
+  public function getSubTotal($id = 'sub_total') {
+    if (!isset($this->_totals)) {
+      $this->_getTotals();
+    }
+
+    foreach ($this->_totals as $total) {
+      if ($total['class'] == $id) {
+        return strip_tags($total['text']);
+      }
+    }
+
+    return false;
+  }
+
   public function getTotals() {
     if (!isset($this->_totals)) {
       $this->_getTotals();

@@ -13,111 +13,90 @@
   <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('text_products'); ?></h3>
   <div class="columns with-padding">
     <div class="new-row-mobile twelve-columns twelve-columns-mobile">
-      <fieldset>
+      <fieldset class="mid-margin-bottom">
         <legend class="small-margin-bottom">
           <span class="icon-list icon-anthracite"><strong class="small-margin-left"><?php echo $lC_Language->get('text_products_ordered'); ?></strong></span>
         </legend>
-        <div class="columns with-small-padding small-margin-left hide-below-768 bbottom-grey">
-          <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom"><?php echo $lC_Language->get('text_sku_model'); ?></div>
-          <div class="new-row-mobile two-columns twelve-columns-mobil no-margin-bottom"><?php echo $lC_Language->get('text_name'); ?></div>
-          <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom"><?php echo $lC_Language->get('text_fulfillment'); ?></div>
-          <div class="new-row-mobile one-column twelve-columns-mobile no-margin-bottom"><?php echo $lC_Language->get('text_tax_class'); ?></div>
-          <div class="new-row-mobile one-column twelve-columns-mobile no-margin-bottom"><?php echo $lC_Language->get('text_price'); ?></div>
-          <div class="new-row-mobile one-column twelve-columns-mobile no-margin-bottom"><?php echo $lC_Language->get('text_qty'); ?></div>
-          <div class="new-row-mobile one-column twelve-columns-mobile no-margin-bottom"><?php echo $lC_Language->get('text_product_total'); ?></div>
-          <div class="new-row-mobile two-columns twelve-columns-mobile no-margin-bottom align-right"><?php echo $lC_Language->get('text_action'); ?></div>
-        </div>
-        <?php                     
-          $orders_ID = $_GET[$lC_Template->getModule()];
-          $Qordersproducts = lC_Orders_Admin::getordersproducts($orders_ID);
-          
-          $order_total_array = $oInfo->get('orderTotalsData');
-          $product_sub_total = '';
-
-          if(is_array($order_total_array)) {
-            foreach( $order_total_array as $v) {
-              if($v['title'] == 'Sub-Total:') {
-                $product_sub_total = $v['text'];
-                break;
-              }  
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="hide-on-mobile"><?php echo $lC_Language->get('text_sku_model'); ?></th>
+              <th><?php echo $lC_Language->get('text_name'); ?></th>
+              <th class="hide-on-mobile hide-on-tablet"><?php echo $lC_Language->get('text_fulfillment'); ?></th>
+              <th class="hide-on-mobile hide-on-tablet"><?php echo $lC_Language->get('text_tax_class'); ?></th>
+              <th class="align-right hide-on-mobile"><?php echo $lC_Language->get('text_price'); ?></th>
+              <th class="align-center hide-on-mobile"><?php echo $lC_Language->get('text_qty'); ?></th>
+              <th class="align-right hide-on-mobile"><?php echo $lC_Language->get('text_total'); ?></th>
+              <th class="align-right"><?php echo $lC_Language->get('text_action'); ?></th>
+            </tr>
+          </thead>
+          <tbody>
+          <?php
+            foreach (lC_Orders_Admin::getOrdersProducts($_GET[$lC_Template->getModule()]) as $products) {
+          ?>
+            <tr>
+              <td class="hide-on-mobile">
+                <span id="products_model_<?php echo $products['orders_products_id']; ?>"><?php echo $products['model']; ?></span>
+              </td>
+              <td>
+                <span id="products_name_<?php echo $products['orders_products_id']; ?>"><?php echo $products['name']; ?>
+                <?php
+                  if ( isset($product['attributes']) && is_array($product['attributes']) && ( sizeof($product['attributes']) > 0 ) ) {
+                    foreach ( $product['attributes'] as $attributes ) {
+                      echo '<br /><nobr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="large-margin-left"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
+                    }
+                  }              
+                  if ( isset($product['options']) && is_array($product['options']) && ( sizeof($product['options']) > 0 ) ) {
+                    foreach ( $product['options'] as $key => $val ) {
+                      echo '<br /><nobr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="small" class="large-margin-left"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
+                    }
+                  }
+                ?>
+              </td>
+              <td class="hide-on-mobile hide-on-tablet">
+                <span id="products_stock_<?php echo $products['orders_products_id']; ?>"><?php echo $products['stock']; ?></span>
+              </td>
+              <td class="hide-on-mobile hide-on-tablet">
+                <span id="products_tax_class_<?php echo $products['orders_products_id']; ?>"><?php echo ($products['tax_class'] != '') ? $products['tax_class'] : $lC_Language->get('text_none'); ?></span>
+              </td>
+              <td class="align-right hide-on-mobile">
+                <span id="products_price_<?php echo $products['orders_products_id']; ?>"><?php echo $lC_Currencies->format($products['price']); ?></span>
+              </td>
+              <td class="align-center hide-on-mobile">
+                <span id="products_qty_<?php echo $products['orders_products_id']; ?>"><?php echo $products['quantity']; ?></span>
+              </td>
+              <td class="align-right hide-on-mobile">
+                <span id="products_total_<?php echo $products['orders_products_id']; ?>"><?php echo $lC_Currencies->format(number_format($products['price']*$products['quantity'], DECIMAL_PLACES)); ?></span>
+              </td>
+              <td class="align-right" style="min-width:90px;">
+                <span id="buttons_<?php echo $products['orders_products_id']; ?>">
+                  <span class="button-group">
+                    <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct('<?php echo $_GET[$lC_Template->getModule()]; ?>','<?php echo $products['orders_products_id']; ?>');"><?php echo $lC_Language->get('text_edit'); ?></a>
+                    <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['orders_products_id']; ?>');"></a>
+                  </span>
+                </span>
+              </td>
+            </tr>
+          <?php
             }
-          }
-          require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
-         
-
-          foreach ($Qordersproducts as $products) {
-        ?>
-        <div class="columns with-small-padding small-margin-left bbottom-grey">
-          <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom">
-            <span class="show-below-768 bold"><?php echo $lC_Language->get('text_sku_model'); ?> </span>
-            <span id="products_model_<?php echo $products['orders_products_id']; ?>"><?php echo $products['model']; ?></span>
-          </div>
-          <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom">
-            <span class="show-below-768 bold"><?php echo $lC_Language->get('text_name'); ?> </span>
-            <span id="products_name_<?php echo $products['orders_products_id']; ?>"><?php echo $products['name']; ?>
-            <?php
-
-              if ( isset($product['attributes']) && is_array($product['attributes']) && ( sizeof($product['attributes']) > 0 ) ) {
-                foreach ( $product['attributes'] as $attributes ) {
-                  echo '<br /><nobr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="large-margin-left"><i>' . $attributes['option'] . ': ' . $attributes['value'] . '</i></span></nobr>';
-                }
-              }
-              
-              if ( isset($product['options']) && is_array($product['options']) && ( sizeof($product['options']) > 0 ) ) {
-                foreach ( $product['options'] as $key => $val ) {
-                  echo '<br /><nobr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="small" class="large-margin-left"><i>' . $val['group_title'] . ': ' . $val['value_title'] . '</i></span></nobr>';
-                }
-              }
-            ?>
-            </span>
-          </div>
-          <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom">
-            <span class="show-below-768 bold"><?php echo $lC_Language->get('text_fulfillment'); ?> </span>
-            <span id="products_stock_<?php echo $products['orders_products_id']; ?>"><?php echo $products['stock']; ?></span>
-          </div>
-          <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom">
-            <span class="show-below-768 bold"><?php echo $lC_Language->get('text_tax_class'); ?> </span>
-            <span id="products_tax_class_<?php echo $products['orders_products_id']; ?>"><?php echo $products['tax_class']; ?></span>
-          </div>
-          <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom align-right">
-            <span class="show-below-768 bold"><?php echo $lC_Language->get('text_price'); ?> </span>
-            <span id="products_price_<?php echo $products['orders_products_id']; ?>"><?php echo $products['price']; ?></span>
-          </div>
-          <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom align-center">
-            <span class="show-below-768 bold"><?php echo $lC_Language->get('text_qty'); ?> </span>
-            <span id="products_qty_<?php echo $products['orders_products_id']; ?>"><?php echo $products['quantity']; ?></span>
-          </div>
-          <div class="new-row-mobile one-column twelve-columns-mobile small-margin-bottom align-right">
-            <span class="show-below-768 bold"><?php echo $lC_Language->get('text_total'); ?> </span>
-            <span id="products_total_<?php echo $products['orders_products_id']; ?>"><?php echo number_format($products['price']*$products['quantity'], DECIMAL_PLACES); ?></span>
-          </div>
-          <div class="new-row-mobile two-columns twelve-columns-mobile small-margin-bottom align-right">
-            <span id="buttons_<?php echo $products['orders_products_id']; ?>">
-              <span class="button-group">
-                <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct('<?php echo $orders_ID; ?>','<?php echo $products['orders_products_id']; ?>');"><?php echo $lC_Language->get('text_edit'); ?></a>
-                <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['orders_products_id']; ?>');"></a>
-              </span>
-            </span>
-          </div>
+          ?>
+          </tbody>
+        </table>
+        <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-top small-margin-right small-margin-bottom align-right height bold">
+          <?php echo $lC_Language->get('text_product_sub_total') . ': ' . $oInfo->get('orderSubTotal'); ?>
         </div>
-        <?php
-          }
-        ?>
-
-         <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-bottom align-right height" >
-          <span class="with-margin-right"><?php echo $lC_Language->get('text_product_sub_total').'<span class="with-small-padding" ></span>'. ': '.'<span class="with-small-padding" ></span>' .$product_sub_total;?></span>
+        <div class="columns with-small-padding small-margin-left align-left">
+          <label class="label" for="add_product">
+            <?php echo $lC_Language->get('text_add_product'); ?>:
+          </label>
+          <?php echo lc_draw_pull_down_menu('add_product', lC_Products_Admin::getProductsDropdownArray(lC_Orders_Admin::getOrdersProductsIds($_GET[$lC_Template->getModule()])), null, 'class="input with-small-padding mid-margin-right mid-margin-bottom"'); ?>
+          <a href="javascript:void(0);" onclick="addOrderProduct(<?php echo $_GET[$lC_Template->getModule()];?>);">
+            <button class="button glossy" type="button">
+              <span class="button-icon green-gradient"><span class="icon-plus"></span></span>
+              <?php echo 'Add item'; ?>
+            </button>
+          </a>
         </div>
-        <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-bottom align-left">
-           <span class="with-padding-left"><?php echo $lC_Language->get('text_add_product'). ': ' .lc_draw_pull_down_menu('add_product', lC_Products_Admin::getProductDropdownArray());?></span>
-          
-          <span class="button-group">
-            <a class="button compact icon-plus" href="javascript:void(0);" onclick="addOrderProduct(<?php echo $orders_ID;?>);"><?php echo 'Add item'; ?></a>            
-          </span>
-
-
-        </div>
-
-
       </fieldset>
     </div> 
   </div>

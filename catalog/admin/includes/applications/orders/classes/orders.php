@@ -8,6 +8,15 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: orders.php v1.0 2013-08-08 datazen $
 */
+require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
+require_once($lC_Vqmod->modCheck('../includes/classes/address.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/tax.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/customers/classes/customers.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/modules_order_total/classes/modules_order_total.php'));    
+require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));     
+        
 class lC_Orders_Admin {
  /*
   * Returns the orders datatable data for listings
@@ -321,11 +330,8 @@ class lC_Orders_Admin {
 
     $lC_Language->loadIniFile('orders.php');
 
-    require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
     $lC_Currencies = new lC_Currencies();
-    require_once($lC_Vqmod->modCheck('includes/classes/tax.php'));
     $lC_Tax = new lC_Tax_Admin();
-    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
     $lC_Order = new lC_Order($id);
 
     if ( !$lC_Order->isValid() ) {
@@ -363,6 +369,7 @@ class lC_Orders_Admin {
     $result['orderStatus'] = '<span>' . $lC_Order->getStatus() . '<br />' . ($lC_Order->getDateLastModified() > $lC_Order->getDateCreated() ? lC_DateTime::getShort($lC_Order->getDateLastModified(), true) : lC_DateTime::getShort($lC_Order->getDateCreated(), true)) . '</span>';
     $result['orderComments'] = '<span>' . $lC_Language->get('number_of_comments') . ' ' . $lC_Order->getNumberOfComments() . '</span>';
     $result['orderTotal'] = '<span>' . $lC_Order->getTotal() . '</span>';
+    $result['orderSubTotal'] = '<span>' . $lC_Order->getSubTotal() . '</span>';
     $result['numberProducts'] = '<span>' . $lC_Language->get('number_of_products') . ' ' . $lC_Order->getNumberOfProducts() . '<br />' . $lC_Language->get('number_of_items') . ' ' . $lC_Order->getNumberOfItems . '</span>';
     
     // build the product string  
@@ -403,6 +410,7 @@ class lC_Orders_Admin {
     foreach ( $lC_Order->getTotals() as $totals ) {
       $result['orderTotals'] .= '<tr><td align="right" class="small-padding-bottom' . (($totals['class'] == 'total') ? ' bolder btop-anthracite small-padding-top' : null) . '">' . (($totals['class'] == 'total') ? $totals['title'] = $lC_Language->get('text_grand_total') : $totals['title']) . '</td><td align="right" width="100px" class="small-padding-bottom' . (($totals['class'] == 'total') ? ' bolder btop-anthracite small-padding-top' : null) . '">' . $totals['text'] . '</td></tr>';
       // enhanced order admin additions
+      $result['orderTotalsData'][$otcnt]['class'] = $totals['class'];
       $result['orderTotalsData'][$otcnt]['title'] = $totals['title'];
       $result['orderTotalsData'][$otcnt]['text'] = $totals['text'];
       $otcnt++;
@@ -564,7 +572,6 @@ class lC_Orders_Admin {
     $lC_Language->loadIniFile('orders.php');
 
     // build the order status array
-    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
     $lC_Order = new lC_Order($id);
 
     $orders_status_array = array();
@@ -735,11 +742,8 @@ class lC_Orders_Admin {
 
     $lC_Language->loadIniFile('orders.php');
 
-    require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
     $lC_Currencies = new lC_Currencies();
-    require_once($lC_Vqmod->modCheck('includes/classes/tax.php'));
     $lC_Tax = new lC_Tax_Admin();
-    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
     $lC_Order = new lC_Order($oid);
 
     if ( !$lC_Order->isValid() ) {
@@ -749,8 +753,6 @@ class lC_Orders_Admin {
     $result['orderProduct'] = ''; 
     foreach ( $lC_Order->getProduct($oid, $pid) as $product ) {
       $result = $product;
-      require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
-      require_once($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
       $tmpProduct = lC_Products_Admin::get($product['products_id']);
       $tmpTaxDetails = lC_Tax_classes_Admin::get($tmpProduct['products_tax_class_id']);
       if ($tmpProduct['products_tax_class_id'] != 0) {
@@ -761,7 +763,7 @@ class lC_Orders_Admin {
         $result['tax_class_id'] = $tmpProduct['products_tax_class_id'];
       }
       $result['taxclassArray'] = lC_Tax_classes_Admin::getAll();
-      $result['productsArray'] = lC_Products_Admin::getproductsArray();
+      $result['productsArray'] = lC_Products_Admin::getProductsArray();
       $result['orderProduct'] .= '<div class="mid-padding-bottom">
                                     <label class="label small-padding-bottom" for="products_model">Model: </label>
                                     <span id="products_model" class="bolder">' . $product['model'] . '</span>
@@ -930,35 +932,43 @@ class lC_Orders_Admin {
     return $orderStatusArray;
   }      
 
-  public static function getordersproducts($id) {
+  public static function getOrdersProducts($id) {
     global $lC_Language, $lC_Database, $lC_Vqmod;
 
-    $ordersproducts = array();    
-    require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
-    require_once($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
-    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
+    $ordersproducts = array();
     $lC_Order = new lC_Order($id);   
     
     foreach ( $lC_Order->getProducts() as $products ) {
       $tmpProducts = lC_Products_Admin::get($products['products_id']);
       $tmpTaxDetails = lC_Tax_classes_Admin:: get($tmpProducts['products_tax_class_id']);
       $products['tax_class'] = $tmpTaxDetails['tax_class_title'];
+      // need a possible turnery and text defines...
       $products['stock'] = 'In Stock';
       $ordersproducts[] = $products;
     }
     return $ordersproducts;
+  }      
+
+  public static function getOrdersProductsIds($id) {
+    global $lC_Language, $lC_Database, $lC_Vqmod;
+
+    $ordersproductsids = array();
+    $lC_Order = new lC_Order($id);   
+    
+    foreach ( $lC_Order->getProducts() as $products ) {
+      $ordersproductsids[] = $products['products_id'];
+    }
+    return $ordersproductsids;
   }
 
   public static function getProductData($pId) {
     global $lC_Language, $lC_Database, $lC_Vqmod;
 
-    require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
-    require_once($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
-    $productData = lC_Products_Admin::getproductsArray($pId);
+    $productData = lC_Products_Admin::getProductsArray($pId);
     $result['products_id'] = $productData[0]['products_id'];
     $result['price'] = $productData[0]['products_price'];
     $result['tax_class_id'] = $productData[0]['products_tax_class_id'];
-    $result['productsArray'] = lC_Products_Admin::getproductsArray();
+    $result['productsArray'] = lC_Products_Admin::getProductsArray();
     $result['taxclassArray'] = lC_Tax_classes_Admin::getAll();
 
 
@@ -972,12 +982,9 @@ class lC_Orders_Admin {
     $oID = $_GET['oID'];
     $pID = $_GET['pID'];
 
-    require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
     $lC_Currencies = new lC_Currencies();
-    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
     $lC_Order = new lC_Order($oID);
-    require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
-    $productData = lC_Products_Admin::getproductsArray($pID);
+    $productData = lC_Products_Admin::getProductsArray($pID);
 
     $products_id = $productData[0]['products_id'];
     $products_model = $productData[0]['products_model'];
@@ -1103,7 +1110,6 @@ class lC_Orders_Admin {
     $products_price = $_GET['price'];
     $products_quantity = $_GET['quantity'];
     $products_tax_class_id = $_GET['taxClass'];
-    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
     $lC_Order = new lC_Order($oID);
 
 
@@ -1117,8 +1123,7 @@ class lC_Orders_Admin {
       $products_tax_rate = 0;
     }
 
-    require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
-    $productData = lC_Products_Admin::getproductsArray($products_id);
+    $productData = lC_Products_Admin::getProductsArray($products_id);
     $products_name = $productData[0]['products_name'];
     $products_model = $productData[0]['products_model'];
     $products_sku = $productData[0]['products_sku'];
@@ -1189,21 +1194,17 @@ class lC_Orders_Admin {
     $Qtotals->bindValue(':value', $Total);
     $Qtotals->bindValue(':class', 'total');
     $Qtotals->execute();  
-    require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
-    $productData = lC_Products_Admin::getproductsArray($pId);
+    $productData = lC_Products_Admin::getProductsArray($pId);
     $result['products_id'] = $productData[0]['products_id'];
     $result['price'] = $productData[0]['products_price'];
     $result['tax_class_id'] = $productData[0]['products_tax_class_id'];
-    $result['productsArray'] = lC_Products_Admin::getproductsArray();
+    $result['productsArray'] = lC_Products_Admin::getProductsArray();
     return $result;
   }
    public static function createOrder($customerID) {
      global $lC_Vqmod, $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Coupons, $lC_Tax;
-  
-     require_once($lC_Vqmod->modCheck('../includes/classes/address.php'));
-     require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
+     
      $lC_Currencies = new lC_Currencies();
-     require_once($lC_Vqmod->modCheck('includes/applications/customers/classes/customers.php'));
      $customerData = lC_Customers_Admin::getData($customerID);
 
      $customerName = $customerData['customers_firstname'] . " " .$customerData['customers_lastname'];
@@ -1329,7 +1330,6 @@ class lC_Orders_Admin {
   function OrdersTotalData() {
     global $lC_Vqmod, $lC_Database, $lC_Language, $lC_Currencies;
 
-    require_once($lC_Vqmod->modCheck('includes/applications/modules_order_total/classes/modules_order_total.php'));     
     $result['order_total_modules'] = lC_Modules_order_total_Admin::getAll();
 
     $Qcoupons = $lC_Database->query('select c.coupons_id, c.type, c.code, c.reward, c.purchase_over, c.start_date, c.expires_date, c.uses_per_coupon, c.uses_per_customer, c.restrict_to_products, c.restrict_to_categories, c.restrict_to_customers, c.status, c.notes, cd.name from :table_coupons c, :table_coupons_description cd where c.coupons_id = cd.coupons_id and cd.language_id = :language_id order by c.date_created desc');
@@ -1352,9 +1352,7 @@ class lC_Orders_Admin {
 
     $orders_id = $_GET['oid'];
 
-    require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
     $lC_Currencies = new lC_Currencies();
-    require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
     $lC_Order = new lC_Order($orders_id);
 
     foreach($_GET as $k => $v) {

@@ -2147,8 +2147,7 @@ class lC_Products_Admin {
   *
   * @access public
   * @return boolean true or false
-  */
-  
+  */  
   public static function hasSpecial($id) {
     global $lC_Database;
 
@@ -2174,43 +2173,50 @@ class lC_Products_Admin {
     
     return $Qchk->valueInt('products_id');
   }  
-  /*
+ /*
   * Returns an array of product 
   *
   * @param integer $id The product id
   * @access public
   * @return array
   */
-  function getproductsArray($pID=null,$ppID=0) {
+  public static function getProductsArray($pID = null, $ppID = 0) {
     global $lC_Database, $lC_Language, $lC_Currencies, $_module;
+    
     $result = array();
+    
     $Qproducts = $lC_Database->query('select SQL_CALC_FOUND_ROWS p.*, pd.products_name, pd.products_keyword from :table_products p, :table_products_description pd where p.parent_id = :products_parent_id and p.products_id = pd.products_id and pd.language_id = :language_id');
+    
     if (is_numeric($pID)) {
       $Qproducts->appendQuery('and p.products_id = :products_id');
       $Qproducts->bindInt(':products_id', $pID);      
     }
+    
     $Qproducts->appendQuery('order by pd.products_name');
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qproducts->bindInt(':language_id', $lC_Language->getID());
     $Qproducts->bindInt(':products_parent_id', $ppID);
     $Qproducts->execute();
-    if($Qproducts->numberOfRows()) {
-      while ( $Qproducts->next() ) {
+    
+    if ($Qproducts->numberOfRows()) {
+      while ($Qproducts->next()) {
         $result[] = $Qproducts->toArray();
       }
     }
+    
     return $result;
   }
-  /*
+ /*
   * Returns an array of product for dropdown list
   *
   * @param integer $id The product id
   * @access public
   * @return array
   */
-  function getProductDropdownArray() {
+  public static function getProductsDropdownArray($exclude = array()) {
     global $lC_Database, $lC_Language, $lC_Currencies, $_module;
+    
     $result = array();
 
     $Qproducts = $lC_Database->query('select SQL_CALC_FOUND_ROWS p.products_id, pd.products_name from :table_products p, :table_products_description pd where p.products_id = pd.products_id and pd.language_id = :language_id');
@@ -2219,10 +2225,12 @@ class lC_Products_Admin {
     $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qproducts->bindInt(':language_id', $lC_Language->getID());
     $Qproducts->execute();
-    if($Qproducts->numberOfRows()) {
+    if ($Qproducts->numberOfRows()) {
       while ( $Qproducts->next() ) {
-        $result[] = array('id' => $Qproducts->value('products_id'),
-                          'text' => $Qproducts->value('products_name'));
+        if (!in_array($Qproducts->value('products_id'), $exclude)) {  
+          $result[] = array('id' => $Qproducts->value('products_id'),
+                            'text' => $Qproducts->value('products_name'));
+        }
       }
     }
     return $result;

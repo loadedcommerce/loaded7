@@ -131,7 +131,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
   
   function updateOrderStatus() {
     var nvp = $("#updateOrder").serialize();
-    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', 'orders&action=updateOrderStatus&NVP'); ?>'  
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateOrderStatus&NVP'); ?>'  
     $.getJSON(jsonLink.replace('NVP', nvp),     
       function (data) {
         $("[name=comment]").val(""); 
@@ -154,7 +154,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
 
   function executePostTransaction() {
     var nvp = $("#updateOrder").serialize();
-    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', '?orders&action=executePostTransaction&NVP'); ?>'  
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=executePostTransaction&NVP'); ?>'  
     $.getJSON(jsonLink.replace('NVP', nvp),     
       function (data) {
         if (data.rpcStatus == -10) { // no session
@@ -360,7 +360,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           return false;
         } 
         updateOrderList();        
-        url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders=OID&action=save&editProduct=1'); ?>';
+        url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=OID&action=save&editProduct=1'); ?>';
         $(location).attr('href',url.replace('OID', oid));
       }
     );
@@ -428,7 +428,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
   }
   function addOrderProduct(oId) {    
     var pid = parseInt($("#add_product").val()); 
-    url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&action=add_product&oID=OID&pID=PID&editProduct=1'); ?>';
+    url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=add_product&oID=OID&pID=PID&editProduct=1'); ?>';
     window.location = url.replace('OID', oId).replace('PID',pid);
   }
 
@@ -449,10 +449,10 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
   
   function ordersEditSelect(cid, oid, val) {
     if (val == 'invoice') {
-      url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&oid=OID&action=invoice'); ?>';
+      url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&oid=OID&action=invoice'); ?>';
       window.open(url.replace('OID', oid));
     } else if (val == 'packing') {
-      url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders&oid=OID&action=packaging_slip'); ?>';
+      url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&oid=OID&action=packaging_slip'); ?>';
       window.open(url.replace('OID', oid));
     } else if (val == 'customer') {
       url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'customers&cID=CID'); ?>';
@@ -755,7 +755,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
           return false;
         }        
-        url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'orders=OID&action=save&orderstotal=1'); ?>';
+        url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=OID&action=save&orderstotal=1'); ?>';
         $(location).attr('href',url.replace('OID', oId));
       });  
       */
