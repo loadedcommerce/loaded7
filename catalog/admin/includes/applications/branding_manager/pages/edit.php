@@ -43,6 +43,7 @@ $Qbranding->execute();
 
 if ($Qbranding->numberOfRows() > 0) {
   while ($Qbranding->next()) {
+    $homepage_text[$Qbranding->valueInt('language_id')] = $Qbranding->value('homepage_text');
     $slogan[$Qbranding->valueInt('language_id')] = $Qbranding->value('slogan');
     $meta_description[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_description');
     $meta_keywords[$Qbranding->valueInt('language_id')] = $Qbranding->value('meta_keywords');
@@ -74,17 +75,46 @@ if ($Qbranding->numberOfRows() > 0) {
         <li><a href="#footer"><?php echo $lC_Language->get('tab_footer_text'); ?></a></li>
       </ul>
       <div class="tabs-content">
-      <?php if (defined('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT')) { ?>
         <div id="home" class="with-padding">
           <div class="bold mid-margin-bottom">
             <?php echo $lC_Language->get('field_home_page_text'); ?><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_home_page')); ?>
           </div>
-            <span class="required full-width autoexpanding mid-margin-bottom">
-              <label for="ckEditor_branding_home_page_text"></label>
-              <?php echo lc_draw_textarea_field('branding_home_page_text', MODULE_CONTENT_HOMEPAGE_HTML_CONTENT, 48, 2, 'id="ckEditor_branding_home_page_text" style="width:97%;" class="required input-unstyled full-width autoexpanding"'); ?>
-            </span>
+            <!-- innrer tabs start -->
+            <div class="standard-tabs">
+              <!-- Tabs -->
+              <ul class="tabs">
+                <?php
+                  foreach ( $lC_Language->getAll() as $l ) {
+                    $active = '';
+                    if(DEFAULT_LANGUAGE == $l['code']){
+                      $active = ' class="active"';
+                    }
+                    echo '<li' . $active . '><a href="#tab-' . $l['id'] . '">' . $lC_Language->showImage($l['code']) . ' ' . $l['name'] . '</a></li>';
+                  }
+                ?>
+              </ul>
+              <!-- Content -->
+              <div class="tabs-content">
+                <?php
+                  foreach ( $lC_Language->getAll() as $l ) {
+                  ?>
+                  <div id="tab-<?php echo $l['id'];?>" class="with-padding">
+                  <span class="required full-width autoexpanding mid-margin-bottom">
+                    <label for="ckEditor_branding_home_page_text[<?php echo $l['id'];?>]"></label>
+                    <?php echo lc_draw_textarea_field('branding_home_page_text[' . $l['id'] . ']', (isset($bInfo) && isset($homepage_text[$l['id']]) ? $homepage_text[$l['id']] : null), 48, 2, 'id="ckEditor_branding_home_page_text[' . $l['id'] . ']" class="required input-unstyled full-width autoexpanding"'); ?>
+                    </span>
+                  </div>
+                  <?php
+                  }
+                ?>
+              </div>
+            </div>
+            <!-- inner tab eof -->
+
+          <?php if (!defined('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT')) { ?>
+            <p class="message mid-margin-top"> <?php echo $lC_Language->get('text_content_not_installed_message');?></p>
+            <?php } ?>
         </div>
-      <?php } ?>
         <div id="header" class="with-padding">
           <div class="columns">
             <div class="four-columns twelve-columns-mobile">
@@ -132,7 +162,7 @@ if ($Qbranding->numberOfRows() > 0) {
                   ?>
                   <span class="required input full-width mid-margin-bottom">
                     <label class="button silver-gradient glossy" for="branding_chat_code[<?php echo $l['id'];?>]"><?php echo  $lC_Language->showImage($l['code']); ?></label>
-                    <input type="text" value="<?php echo (isset($bInfo) && isset($slogan[$l['id']]) ? $slogan[$l['id']] : null);?>" class="input-unstyled ten-columns required" id="branding_slogan[<?php echo $l['id']; ?>]" name="branding_slogan[<?php echo $l['id']; ?>]">
+                    <input type="text" value="<?php echo (isset($bInfo) && isset($slogan[$l['id']]) ? $slogan[$l['id']] : null);?>" class="input-unstyled ten-columns required" id="branding_slogan[<?php echo $l['id']; ?>]" name="branding_slogan[<?php echo $l['id']; ?>]" maxlength="256">
                   </span> 
                   <?php
                   }
@@ -208,7 +238,7 @@ if ($Qbranding->numberOfRows() > 0) {
                 ?>
                 <span class="required input full-width mid-margin-bottom">
                   <label for="branding_meta_description[' . $l['id'] . ']" class="button silver-gradient glossy"><?php echo  $lC_Language->showImage($l['code']); ?></label>
-                  <?php echo lc_draw_textarea_field('branding_meta_description[' . $l['id'] . ']', (isset($bInfo) && isset($meta_description[$l['id']]) ? $meta_description[$l['id']] : null), 48, 2, 'id="branding_meta_description[' . $l['id'] . ']" class="input-unstyled full-width required autoexpanding"'); ?>
+                  <?php echo lc_draw_textarea_field('branding_meta_description[' . $l['id'] . ']', (isset($bInfo) && isset($meta_description[$l['id']]) ? $meta_description[$l['id']] : null), 48, 2, 'id="branding_meta_description[' . $l['id'] . ']" class="input-unstyled full-width required autoexpanding" maxlength="250"'); ?>
                 </span>
                 <?php
                 }
@@ -222,7 +252,7 @@ if ($Qbranding->numberOfRows() > 0) {
                 ?>
                 <span class="required input full-width mid-margin-bottom">
                   <label class="button silver-gradient glossy" for="branding_meta_keywords[<?php echo $l['id'];?>]"><?php echo  $lC_Language->showImage($l['code']); ?></label>
-                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_keywords[$l['id']]) ? $meta_keywords[$l['id']] : null);?>" class="input-unstyled ten-columns required" id="branding_meta_keywords[<?php echo $l['id']; ?>]" name="branding_meta_keywords[<?php echo $l['id']; ?>]">
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_keywords[$l['id']]) ? $meta_keywords[$l['id']] : null);?>" class="input-unstyled ten-columns required" id="branding_meta_keywords[<?php echo $l['id']; ?>]" name="branding_meta_keywords[<?php echo $l['id']; ?>]" maxlength="128">
                 </span>
                 <?php
                 }
@@ -237,7 +267,7 @@ if ($Qbranding->numberOfRows() > 0) {
                 ?>
                 <span class="required input full-width mid-margin-bottom">
                   <label class="button silver-gradient glossy" for="branding_meta_title[<?php echo $l['id'];?>]"><?php echo  $lC_Language->showImage($l['code']); ?></label>
-                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_title[$l['id']]) ? $meta_title[$l['id']] : null);?>" class="input-unstyled ten-columns required" id="branding_meta_title[<?php echo $l['id']; ?>]" name="branding_meta_title[<?php echo $l['id']; ?>]">
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_title[$l['id']]) ? $meta_title[$l['id']] : null);?>" class="input-unstyled ten-columns required" id="branding_meta_title[<?php echo $l['id']; ?>]" name="branding_meta_title[<?php echo $l['id']; ?>]" maxlength="128">
                 </span>
                 <?php
                 }
@@ -251,7 +281,7 @@ if ($Qbranding->numberOfRows() > 0) {
                 ?>
                 <span class="required input full-width mid-margin-bottom">
                   <label class="button silver-gradient glossy" for="branding_meta_title_prefix[<?php echo $l['id']; ?>]"><?php echo  $lC_Language->showImage($l['code']); ?></label>
-                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_title_prefix[$l['id']]) ? $meta_title_prefix[$l['id']] : null);?>" class="input-unstyled ten-columns required" id="branding_meta_title_prefix[<?php echo $l['id']; ?>]" name="branding_meta_title_prefix[<?php echo $l['id']; ?>]">
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_title_prefix[$l['id']]) ? $meta_title_prefix[$l['id']] : null);?>" class="input-unstyled ten-columns required" id="branding_meta_title_prefix[<?php echo $l['id']; ?>]" name="branding_meta_title_prefix[<?php echo $l['id']; ?>]" maxlength="128">
                 </span>
                 <?php
                 }
@@ -265,7 +295,7 @@ if ($Qbranding->numberOfRows() > 0) {
                 ?>
                 <span class="required input full-width mid-margin-bottom">
                   <label class="button silver-gradient glossy" for="branding_meta_title_suffix[<?php echo $l['id']; ?>]"><?php echo  $lC_Language->showImage($l['code']); ?></label>
-                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_title_suffix[$l['id']]) ? $meta_title_suffix[$l['id']] : null); ?>" class="input-unstyled ten-columns required" id="branding_meta_title_suffix[<?php echo $l['id']; ?>]" name="branding_meta_title_suffix[<?php echo $l['id']; ?>]">
+                  <input type="text" value="<?php echo (isset($bInfo) && isset($meta_title_suffix[$l['id']]) ? $meta_title_suffix[$l['id']] : null); ?>" class="input-unstyled ten-columns required" id="branding_meta_title_suffix[<?php echo $l['id']; ?>]" name="branding_meta_title_suffix[<?php echo $l['id']; ?>]" maxlength="128">
                 </span>
                 <?php
                 }
@@ -312,7 +342,7 @@ if ($Qbranding->numberOfRows() > 0) {
             ?>
             <span class="required input full-width autoexpanding mid-margin-bottom">
               <label for="branding_footer_text[<?php echo $l['id']; ?>]" class="button silver-gradient glossy"><?php echo  $lC_Language->showImage($l['code']); ?></label>
-              <?php echo lc_draw_textarea_field('branding_footer_text[' . $l['id'] . ']', (isset($bInfo) && isset($footer_text[$l['id']]) ? $footer_text[$l['id']] : null), 48, 2, 'id="branding_footer_text[' . $l['id'] . ']" class="required input-unstyled full-width autoexpanding"'); ?>
+              <?php echo lc_draw_textarea_field('branding_footer_text[' . $l['id'] . ']', (isset($bInfo) && isset($footer_text[$l['id']]) ? $footer_text[$l['id']] : null), 48, 2, 'id="branding_footer_text[' . $l['id'] . ']" class="required input-unstyled full-width autoexpanding" maxlength="256"'); ?>
             </span>
             <?php
             }

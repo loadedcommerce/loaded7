@@ -62,8 +62,9 @@ class lC_Branding_manager_Admin {
       $Qdelete->bindInt(':language_id', $l['id']);
       $Qdelete->execute();
       //save new data
-      $QBrand = $lC_Database->query('insert into :table_branding (language_id, slogan, meta_description, meta_keywords, meta_title, meta_title_prefix, meta_title_suffix, footer_text) values (:language_id, :slogan, :meta_description, :meta_keywords, :meta_title, :meta_title_prefix, :meta_title_suffix, :footer_text)');
+      $QBrand = $lC_Database->query('insert into :table_branding (language_id, homepage_text, slogan, meta_description, meta_keywords, meta_title, meta_title_prefix, meta_title_suffix, footer_text) values (:language_id, :homepage_text, :slogan, :meta_description, :meta_keywords, :meta_title, :meta_title_prefix, :meta_title_suffix, :footer_text)');
       $QBrand->bindTable(':table_branding', TABLE_BRANDING);
+      $QBrand->bindValue(':homepage_text', $data['home_page_text'][$l['id']]);
       $QBrand->bindValue(':slogan', $data['slogan'][$l['id']]);
       $QBrand->bindValue(':meta_description', $data['meta_description'][$l['id']]);
       $QBrand->bindValue(':meta_keywords', $data['meta_keywords'][$l['id']]);
@@ -107,12 +108,7 @@ class lC_Branding_manager_Admin {
     $QbrandingAddress->bindTable(':table_configuration', TABLE_CONFIGURATION);
     $QbrandingAddress->bindValue(':address', $data['address']);
     $QbrandingAddress->execute();
-    
-    $QbrandingHomeText = $lC_Database->query('update :table_configuration set configuration_value = :address where configuration_key = "MODULE_CONTENT_HOMEPAGE_HTML_CONTENT"');
-    $QbrandingHomeText->bindTable(':table_configuration', TABLE_CONFIGURATION);
-    $QbrandingHomeText->bindValue(':address', $data['home_page_text']);
-    $QbrandingHomeText->execute();
-    
+   
     lC_Cache::clear('configuration');
 
     return true;

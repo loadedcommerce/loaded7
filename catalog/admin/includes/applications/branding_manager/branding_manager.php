@@ -87,10 +87,8 @@ class lC_Application_Branding_manager extends lC_Template_Admin {
           );
 
           /*
-          * Save the banner information
+          * Save the Branding Information
           *
-          * @param integer $_GET['bid'] The banner id
-          * @param array $data The banner information
           * @access public
           * @return boolean
           */           
