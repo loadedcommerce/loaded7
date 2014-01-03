@@ -9,7 +9,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
 
 if ( !class_exists('lC_Summary') ) {
   include($lC_Vqmod->modCheck('includes/classes/summary.php'));

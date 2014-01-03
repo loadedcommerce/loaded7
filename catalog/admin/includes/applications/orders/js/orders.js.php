@@ -782,10 +782,12 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     var total = 0;
     $.each($('input[type="text"]', '#order'),function(k){      
       var name = $(this).attr('name');
+      var value = $(this).val();
+      var number = Number(value.replace(/[^0-9\.]+/g,""));
       if(name.substr(0,6) == "value_" && name.substr(6) != 'total' && name.substr(6) != 'coupon') {        
-        total += parseFloat($(this).val()); 
+        total += parseFloat(number); 
       } else if(name.substr(0,6) == "value_" && name.substr(6) == 'coupon') {        
-        total = parseFloat(total) - parseFloat($(this).val()); 
+        total = parseFloat(total) - parseFloat(number); 
       }
     });   
     $('#value_total').val(total);
