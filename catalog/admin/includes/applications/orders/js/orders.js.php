@@ -92,19 +92,19 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
          
       }
     );
+    
     var p = parseInt('<?php echo $_GET["editProduct"];?>');    
-    var o = parseInt('<?php echo $_GET["orderstotal"];?>');    
-    if(p == 1) {
+    var o = parseInt('<?php echo $_GET["orderstotal"];?>');
+        
+    if (p == 1) {
       $("#id_tab_orders_summary").removeClass("active");
       $("#id_tab_orders_products").addClass("active");
-
       // Display Address form (Hide Personal Form)
       $('#section_orders_summary').hide();
       $('#section_orders_products').show();
     } else if(o == 1) {
       $("#id_tab_orders_summary").removeClass("active");
       $("#id_tab_order_totals").addClass("active");
-
       // Display Address form (Hide Personal Form)
       $('#section_orders_summary').hide();
       $('#section_order_totals').show();
@@ -224,7 +224,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       }
     );
   }
-  /********************************/
+  
   function getFormData(oid, opid) {
     var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
     if (parseInt(accessLevel) < 2) {
@@ -332,12 +332,14 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       }
     );
   }
+  
   function updateEditProduct() {    
     var pid = $("#editProduct").val();
     var oid = parseInt($("#oId").html());
     var opid = parseInt($("#opId").html());
     getProductFormData(pid);
   }
+  
   function saveEditproduct() {    
     var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
     if (parseInt(accessLevel) < 2) {
@@ -365,6 +367,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       }
     );
   }
+  
   function editOrderProduct(oid, opid) {
     var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
     if (parseInt(accessLevel) < 2) {
@@ -374,33 +377,33 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     $.modal({
     content: '<div id="editProductContainer">'+
              '  <div id="section_editProduct">'+
-           '      <form name="editProductForm" id="editProductForm" autocomplete="off" action="" method="post">'+               
-           '        <p class="button-height inline-label">'+
-             '      <label for="product" class="label"><?php echo $lC_Language->get('text_products'); ?>'+
-             '      <?php echo lc_draw_pull_down_menu('product', null, null, 'class="input with-small-padding mid-margin-top" id="editProduct" onchange="updateEditProduct();"'); ?>'+
-             '      </label>'+
-           '        </p>'+
-           '        <p class="button-height inline-label">'+
-             '      <label for="taxClass" class="label"><?php echo $lC_Language->get('text_tax_class'); ?>'+
-             '      <?php echo lc_draw_pull_down_menu('taxClass', null, null, 'class="input with-small-padding mid-margin-top" id="editTaxclass"'); ?>'+
-             '      </label>'+
-           '        </p>'+
-           '        <p class="button-height inline-label">'+
-             '      <label for="price" class="label"><?php echo $lC_Language->get('text_price'); ?>'+
-             '      <?php echo lc_draw_input_field('price', null, 'class="input mid-margin-top" id="editPrice"'); ?>'+
-             '      </label>'+
-           '        </p>'+
-           '        <p class="button-height inline-label">'+
-             '      <label for="quantity" class="label"><?php echo $lC_Language->get('text_quantity'); ?>'+
-             '      <?php echo lc_draw_input_field('quantity', null, 'class="input mid-margin-top" id="editQuantity"'); ?>'+
-             '      </label>'+
-           '        </p>'+               
-           '      </form>'+
-           '    </div>'+               
+             '    <form name="editProductForm" id="editProductForm" autocomplete="off" action="" method="post">'+               
+             '      <p class="button-height inline-label">'+
+             '        <label for="product" class="label"><?php echo $lC_Language->get('text_products'); ?>'+
+             '          <?php echo lc_draw_pull_down_menu('product', null, null, 'class="input with-small-padding mid-margin-top" id="editProduct" onchange="updateEditProduct();"'); ?>'+
+             '        </label>'+
+             '      </p>'+
+             '      <p class="button-height inline-label">'+
+             '        <label for="taxClass" class="label"><?php echo $lC_Language->get('text_tax_class'); ?>'+
+             '        <?php echo lc_draw_pull_down_menu('taxClass', null, null, 'class="input with-small-padding mid-margin-top" id="editTaxclass"'); ?>'+
+             '        </label>'+
+             '      </p>'+
+             '      <p class="button-height inline-label">'+
+             '        <label for="price" class="label"><?php echo $lC_Language->get('text_price'); ?>'+
+             '        <?php echo lc_draw_input_field('price', null, 'class="input mid-margin-top" id="editPrice"'); ?>'+
+             '        </label>'+
+             '      </p>'+
+             '      <p class="button-height inline-label">'+
+             '        <label for="quantity" class="label"><?php echo $lC_Language->get('text_quantity'); ?>'+
+             '        <?php echo lc_draw_input_field('quantity', null, 'class="input mid-margin-top" id="editQuantity"'); ?>'+
+             '        </label>'+
+             '      </p>'+               
+             '    </form>'+
+             '  </div>'+               
              '  <span id="oId" style="display:none;"></span>'+
              '  <span id="pId" style="display:none;"></span>'+
              '  <span id="opId" style="display:none;"></span>'+
-           '</div>',
+             '</div>',
         title: '<?php echo $lC_Language->get('text_product_details'); ?>',
         width: 600,
         scrolling: true,
@@ -412,12 +415,12 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         },
         buttons: {
       '<?php echo $lC_Language->get('button_save'); ?>': {
-        classes:  'glossy',
-        click:    function(win) { saveEditproduct(); }
+        classes: 'glossy',
+        click: function(win) { saveEditproduct(); }
       },
           '<?php echo $lC_Language->get('button_close'); ?>': {
-            classes:  'glossy',
-            click:    function(win) { win.closeModal(); }
+            classes: 'glossy',
+            click: function(win) { win.closeModal(); }
           }
         },
         buttonsLowPadding: true
@@ -426,20 +429,13 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     getFormData(oid, opid);
     $.modal.all.centerModal();
   }
+  
   function addOrderProduct(oId) {    
     var pid = parseInt($("#add_product").val()); 
     url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=add_product&oID=OID&pID=PID&editProduct=1'); ?>';
     window.location = url.replace('OID', oId).replace('PID',pid);
   }
 
-  /*
-  function editOrderProduct(val) {
-    $("#buttons_" + val).html('<p><a class="button compact small-margin-top op-action" href="javascript:void(0);" onclick="saveOrderProduct(' + val + ');"><?php echo $lC_Language->get('text_save'); ?></a></p>'+
-                              '<p><a class="button compact small-margin-bottom op-action" href="javascript:void(0)" onclick="cancelOrderProductEdit(' + val + ');"><?php echo $lC_Language->get('text_cancel'); ?></a></p>');
-  }
-  */
-  /***********************************/
-  
   function cancelOrderProductEdit(val) {
     $("#buttons_" + val).html('<span class="button-group">'+
                               '  <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct(' + val + ');"><?php echo $lC_Language->get('text_edit'); ?></a>'+
@@ -468,9 +464,9 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     });
   });
 
-  function removeOrderTotal(oid,ot_class) {
-    var name1 = "#title_"+ot_class;
-    var name2 = "#value_"+ot_class;
+  function removeOrderTotal(oid, ot_class) {
+    var name1 = "#title_" + ot_class;
+    var name2 = "#value_" + ot_class;
     var name = $(name1).val() + ' ' + $(name2).val();    
 
     var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
@@ -478,54 +474,52 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
       return false;
     }
+    
     $.modal({
       content: '<div id="deleteOrdersTotal">'+
-             '  <div id="deleteConfirm">'+
-             '    <p id="deleteConfirmMessage"><?php echo $lC_Language->get('introduction_delete_orders_total'); ?>'+
-             '      <p><b>' + decodeURI(name.replace(/\+/g, '%20')) + '</b></p>'+
-             '    </p>'+
-             '  </div>'+
-             '</div>',
-    title: '<?php echo $lC_Language->get('modal_heading_delete_orders_total'); ?>',
-    width: 300,
-    actions: {
-      'Close' : {
-        color: 'red',
-        click: function(win) { win.closeModal(); }
-      }
-    },
-    buttons: {
-      '<?php echo $lC_Language->get('button_cancel'); ?>': {
-        classes:  'glossy',
-        click:    function(win) { win.closeModal(); }
-      },
-      '<?php echo $lC_Language->get('button_delete'); ?>': {
-        classes:  'blue-gradient glossy',
-        click:    function(win) {
-        var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=removeOrderTotal&oId=OID&otClass=OTCLASS'); ?>'  
-        $.getJSON(jsonLink.replace('OID', oid).replace('OTCLASS', ot_class),
-            function (data) {
-              if (data.rpcStatus == -10) { // no session
-                var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-                $(location).attr('href',url);
-              }
-              if (data.rpcStatus != 1) {
-                $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-                return false;
-              }              
-              removeOrderTotalRow(oid,ot_class);
-            }            
-          );
-         
-          win.closeModal();
+               '  <div id="deleteConfirm">'+
+               '    <p id="deleteConfirmMessage"><?php echo $lC_Language->get('introduction_delete_order_total'); ?>'+
+               '      <p><b>' + decodeURI(name.replace(/\+/g, '%20')) + '</b></p>'+
+               '    </p>'+
+               '  </div>'+
+               '</div>',
+      title: '<?php echo $lC_Language->get('modal_heading_delete_order_total'); ?>',
+      width: 300,
+      actions: {
+        'Close' : {
+          color: 'red',
+          click: function(win) { win.closeModal(); }
         }
-      }
-    },
-    buttonsLowPadding: true
-  });
-    
+      },
+      buttons: {
+        '<?php echo $lC_Language->get('button_cancel'); ?>': {
+          classes: 'glossy',
+          click: function(win) { win.closeModal(); }
+        },
+        '<?php echo $lC_Language->get('button_delete'); ?>': {
+          classes: 'blue-gradient glossy',
+          click: function(win) {
+          var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=removeOrderTotal&oId=OID&otClass=OTCLASS'); ?>'  
+          $.getJSON(jsonLink.replace('OID', oid).replace('OTCLASS', ot_class),
+              function (data) {
+                if (data.rpcStatus == -10) { // no session
+                  var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+                  $(location).attr('href',url);
+                }
+                if (data.rpcStatus != 1) {
+                  $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+                  return false;
+                }              
+                removeOrderTotalRow(oid, ot_class);
+              }            
+            );
+            win.closeModal();
+          }
+        }
+      },
+      buttonsLowPadding: true
+    });    
   }
-
   
   function addOrderTotal(oid) {
     var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
@@ -534,54 +528,58 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       return false;
     }
     $.modal({
-    content: '<div id="addOrderTotalContainer">'+
-             '  <div id="section_OrderTotal">'+
-           '      <form name="addOrderTotalForm" id="addOrderTotalForm" autocomplete="off" action="" method="post">'+               
-           '        <p class="button-height inline-label">'+
-             '      <label for="type" class="label"><?php echo $lC_Language->get('text_orders_total_type'); ?>'+
-             '      <?php echo lc_draw_pull_down_menu('orders_total_type', null, null, 'class="input with-small-padding mid-margin-top" id="id_orders_total_type" onchange="updateSubOrderTotal(this.value);"'); ?>'+
-             '      </label>'+
-           '        </p>'+
-           '        <span id = "id_shipping" style = "display:none"><p class="button-height inline-label" >'+
-             '      <label for="shipping" class="label"><?php echo $lC_Language->get('text_orders_total_shipping'); ?>'+
-             '      <?php echo lc_draw_pull_down_menu('orders_total_shipping', null, null, 'class="input with-small-padding mid-margin-top" id="id_orders_total_shipping"'); ?>'+
-             '      </label>'+
-           '        </p></span>'+
-            '        <span id = "id_coupon" style = "display:none"><p class="button-height inline-label" >'+
-             '      <label for="coupon" class="label"><?php echo $lC_Language->get('text_orders_total_coupon'); ?>'+
-             '      <?php echo lc_draw_pull_down_menu('orders_total_coupon', null, null, 'class="input with-small-padding mid-margin-top" id="id_orders_total_coupon"'); ?>'+
-             '      </label>'+
-           '        </p></span>'+
-           '        <span id="id_counter" style = "display:none">0</span>'+
-           '      </form>'+
-           '    </div>'+ 
-           '</div>',
-        title: '<?php echo $lC_Language->get('text_add_orders_total'); ?>',
-        width: 600,
-        scrolling: true,
-        actions: {
-          'Close' : {
-            color: 'red',
-            click: function(win) { win.closeModal(); }
-          }
+      content: '<div id="addOrderTotalContainer">'+
+               '  <div id="section_OrderTotal">'+
+               '    <form name="addOrderTotalForm" id="addOrderTotalForm" autocomplete="off" action="" method="post">'+               
+               '      <p class="button-height inline-label">'+
+               '        <label for="type" class="label"><?php echo $lC_Language->get('text_order_total_type'); ?>'+
+               '          <?php echo lc_draw_pull_down_menu('order_total_type', null, null, 'class="input with-small-padding mid-margin-top" id="id_order_total_type" onchange="updateSubOrderTotal(this.value);"'); ?>'+
+               '        </label>'+
+               /*'        <span id="id_shipping" style="display:none;">'+
+               '          <p class="button-height inline-label">'+
+               '            <label for="shipping" class="label"><?php echo $lC_Language->get('text_order_total_shipping'); ?>'+
+               '              <?php echo lc_draw_pull_down_menu('order_total_shipping', null, null, 'class="input with-small-padding mid-margin-top" id="id_order_total_shipping"'); ?>'+
+               '            </label>'+
+               '          </p>'+
+               '        </span>'+
+               '        <span id="id_coupon" style="display:none;">'+
+               '          <p class="button-height inline-label">'+
+               '            <label for="coupon" class="label"><?php echo $lC_Language->get('text_order_total_coupon'); ?>'+
+               '              <?php echo lc_draw_pull_down_menu('order_total_coupon', null, null, 'class="input with-small-padding mid-margin-top" id="id_order_total_coupon"'); ?>'+
+               '            </label>'+
+               '          </p>'+
+               '        </span>'+*/
+               '        <span id="id_counter" style="display:none;">0</span>'+
+               '      </p>'+  
+               '    </form>'+
+               '  </div>'+ 
+               '</div>',
+      title: '<?php echo $lC_Language->get('text_add_order_total'); ?>',
+      width: 600,
+      scrolling: true,
+      actions: {
+        'Close' : {
+          color: 'red',
+          click: function(win) { win.closeModal(); }
+        }
+      },
+      buttons: {
+        '<?php echo $lC_Language->get('button_continue'); ?>': {
+        classes: 'glossy',
+        click: function(win) { showAddedOrderTotal(oid); }
         },
-        buttons: {
-          '<?php echo $lC_Language->get('button_continue'); ?>': {
-          classes:  'glossy',
-          click:    function(win) { showAddedOrderTotal(oid); }
-          },
-          '<?php echo $lC_Language->get('button_cancel'); ?>': {
-            classes:  'glossy',
-            click:    function(win) { win.closeModal(); }
-          }
-        },
-        buttonsLowPadding: true
+        '<?php echo $lC_Language->get('button_cancel'); ?>': {
+          classes: 'glossy',
+          click: function(win) { win.closeModal(); }
+        }
+      },
+      buttonsLowPadding: true
     });
 
     //getFormData(oid, opid);
     //$.modal.all.centerModal();
 
-    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getOrdersTotalData&oid=OID'); ?>'  
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getOrderTotalsData&oid=OID'); ?>'  
     $.getJSON(jsonLink.replace('OID', parseInt(oid)),
       function (data) {
         if (data.rpcStatus == -10) { // no session
@@ -593,58 +591,55 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           return false;
         }        
 
-        $("#id_orders_total_type").empty();
+        $("#id_order_total_type").empty();
+        //$("#id_order_total_coupon").empty();
+        //$("#editTaxclass").empty();
+                
         var cnt = 1;
         $.each(data.order_total_modules.entries, function(val, text) {
           var selected = (data.module_class == text['module_class']) ? 'selected="selected"' : '';
           if (cnt == 1) {
-            $("#id_orders_total_type").append(
+            $("#id_order_total_type").append(
               $("<option></option>").val('0').html('<?php echo $lC_Language->get('text_none'); ?>')
             );
             cnt++;
           }
           if (data.module_class == text['module_class']) {
-            $("#id_orders_total_type").closest("span + *").prevAll("span.select-value:first").text(text['module_title']);
-          }
-          
-          $("#id_orders_total_type").append(
-              $("<option " + selected + "></option>").val(text['module_class']).html(text['module_title'])
-            );
-
-        });        
-        /*$.each($('input[type="text"]', '#order'),function(k){      
+            $("#id_order_total_type").closest("span + *").prevAll("span.select-value:first").text(text['module_title']);
+          }          
+          $("#id_order_total_type").append(
+            $("<option " + selected + "></option>").val(text['module_class']).html(text['module_title'])
+          );
+        });
+                
+        /*
+        $.each($('input[type="text"]', '#order'),function(k){      
           var name = $(this).attr('name');
-          if(name.substr(0,6) == "value_") {
+          if (name.substr(0, 6) == "value_") {
             alert(name.substr(6));
-            $("#id_orders_total_type option[value='"+name.substr(6)+"']").remove();
+            $("#id_order_total_type option[value='"+name.substr(6)+"']").remove();
           }
-        });*/
+        }); 
 
-
-        $("#id_orders_total_coupon").empty();
+                
         var cnt = 1;
         $.each(data.coupons.entries, function(val, text) {
           var selected = (data.coupons_id == text['coupons_id']) ? 'selected="selected"' : '';
           if (cnt == 1) {
-            $("#id_orders_total_coupon").append(
+            $("#id_order_total_coupon").append(
               $("<option></option>").val('0').html('<?php echo $lC_Language->get('text_none'); ?>')
             );
             cnt++;
           }
           if (data.coupons_id == text['coupons_id']) {
-            $("#id_orders_total_coupon").closest("span + *").prevAll("span.select-value:first").text(text['name']);
+            $("#id_order_total_coupon").closest("span + *").prevAll("span.select-value:first").text(text['name']);
           }
-          $("#id_orders_total_coupon").append(
+          $("#id_order_total_coupon").append(
             $("<option " + selected + "></option>").val(text['coupons_id']).html(text['name'])
           );
         });
-
-        $.modal.all.centerModal();
-
-
-
-/*
-        $("#editTaxclass").empty();
+        
+        
         var cnt = 1;
         $.each(data.taxclassArray.entries, function(val, text) {
           var selected = (data.tax_class_id == text['tax_class_id']) ? 'selected="selected"' : '';
@@ -661,12 +656,11 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
             $("<option " + selected + "></option>").val(text['tax_class_id']).html(text['tax_class_title'])
           );
         });
-        $.modal.all.centerModal();
         */
+
+        $.modal.all.centerModal();
       }
     );
-
-
   }
 
   function updateSubOrderTotal(type) { 
@@ -682,42 +676,50 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     }
   }
   function showAddedOrderTotal(oID) {
-
+    
     var id_counter = parseInt($('#id_counter').html())+1;
-    var id_orders_total_type = $('#id_orders_total_type').val();    
-    var id_orders_total_type_title = $('#id_orders_total_type option:selected').text();    
-    var id_orders_total_shipping = $('#id_orders_total_shipping option:selected').text();   
-    var id_orders_total_coupon = $('#id_orders_total_coupon option:selected').text();
+    var id_order_total_type = $('#id_order_total_type').val();    
+    var id_order_total_type_title = $('#id_order_total_type option:selected').text();    
+    var id_order_total_shipping = $('#id_order_total_shipping option:selected').text();   
+    var id_order_total_coupon = $('#id_order_total_coupon option:selected').text();
+    var title = id_order_total_type_title;
 
-    var title = id_orders_total_type_title;
-
-    if(id_orders_total_shipping != '' && id_orders_total_shipping != 'None') {
-      title += ' (' + id_orders_total_shipping+')'; 
-    } else if (id_orders_total_coupon != ''  && id_orders_total_coupon != 'None') {
-      title += ' (' + id_orders_total_coupon+')'; 
+    if (id_order_total_shipping != '' && id_order_total_shipping != 'None') {
+      title += ' (' + id_order_total_shipping + ')'; 
+    } else if (id_order_total_coupon != '' && id_order_total_coupon != 'None') {
+      title += ' (' + id_order_total_coupon + ')'; 
     } 
 
-     var result = '<p id = "addedOrderTotalRow_'+id_orders_total_type+'" class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;<input type = "text" name = "title_'+id_orders_total_type+'" value = "'+title+'" style="width:30%;"></span>&nbsp;&nbsp;<input type = "text" name = "value_'+id_orders_total_type+'" value = "" style="width:10%;" onkeyup = "updateGrandTotal();">&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotalRow('+oID+',\''+id_orders_total_type+'\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';
+    var result = '<div id="addedOrderTotalRow_' + id_order_total_type + '">' + 
+                 '  <span class="icon-list icon-anthracite">' +
+                 '    <input type="text" name="title_' + id_order_total_type + '" value="' + title + '" style="width:30%;">' +
+                 '  </span>&nbsp;' +
+                 '  <input type="text" name="value_' + id_order_total_type + '" value="" style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal();">&nbsp;&nbsp;' +
+                 '  <a href="javascript:void(0);" onclick="removeOrderTotalRow(' + oID + ', \'' + id_order_total_type + '\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a>' +
+                 '</div>';
 
-     var flag = true;
-     $.each($('input[type="text"]', '#order'),function(k){      
+    var flag = true;
+    $.each($('input[type="text"]', '#order'),function(k){      
       var name = $(this).attr('name');
-      if(name.substr(0,6) == "value_" && name.substr(6) == id_orders_total_type) {
+      if(name.substr(0,6) == "value_" && name.substr(6) == id_order_total_type) {
         flag = false;
       }
     });
-    if(flag == true && id_orders_total_type != 0) {
-     $('#addedOrderTotal').append(result);
+    
+    if (flag == true && id_order_total_type != 0) {
+      $('#addedOrderTotal').append(result);
     }
-     $('#id_counter').html(id_counter);
-     $.modal.all.closeModal();
-
+    
+    $('#id_counter').html(id_counter);
+    $.modal.all.closeModal();
   }
-  function removeOrderTotalRow(oId,rowId) {
+  
+  function removeOrderTotalRow(oId, rowId) {
     var row = "#addedOrderTotalRow_"+rowId; 
     $(row).remove(); 
     updateGrandTotal();
   }
+  
   function updateGrandTotal() { 
     var total = 0;
     $.each($('input[type="text"]', '#order'),function(k){      
@@ -731,20 +733,22 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     $('#value_total').val(total);
     $('#id_grand_total').html(total);
   }
-  function saveOrderTotal(oId) {
-    
+  
+  function saveOrderTotal(oId) {    
     var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
     if (parseInt(accessLevel) < 2) {
       $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
-      return false;    }
+      return false;
+    }
     
     var formData = $("#order").serialize();
 
     $('#action_order_total').val('save_order_total');; // for temporary use
     $("#order").submit(); // for temporary use
-   /*
+    
+    /* 
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveOrderTotal&oid=OID'); ?>' 
-      alert("111");
+    alert("111");
     $.getJSON(jsonLink.replace('OID', parseInt(oId)),
       function (data) {
         if (data.rpcStatus == -10) { // no session
@@ -757,9 +761,8 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         }        
         url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=OID&action=save&orderstotal=1'); ?>';
         $(location).attr('href',url.replace('OID', oId));
-      });  
-      */
-
-        
+      }
+    );  
+    */
   }
 </script>

@@ -151,8 +151,8 @@ class lC_Orders_Admin_rpc {
     }
     echo json_encode($result);
   }
-  public static function getOrdersTotalData() {
-    $result = lC_Orders_Admin::OrdersTotalData();
+  public static function getOrderTotalsData() {
+    $result = lC_Orders_Admin::orderTotalsData();
     if ($result !== false) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }

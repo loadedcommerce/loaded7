@@ -93,7 +93,7 @@
           <a href="javascript:void(0);" onclick="addOrderProduct(<?php echo $_GET[$lC_Template->getModule()];?>);">
             <button class="button glossy" type="button">
               <span class="button-icon green-gradient"><span class="icon-plus"></span></span>
-              <?php echo 'Add item'; ?>
+              <?php echo $lC_Language->get('text_add_item'); ?>
             </button>
           </a>
         </div>

@@ -1201,24 +1201,25 @@ class lC_Orders_Admin {
     $result['productsArray'] = lC_Products_Admin::getProductsArray();
     return $result;
   }
-   public static function createOrder($customerID) {
-     global $lC_Vqmod, $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Coupons, $lC_Tax;
-     
-     $lC_Currencies = new lC_Currencies();
-     $customerData = lC_Customers_Admin::getData($customerID);
-
-     $customerName = $customerData['customers_firstname'] . " " .$customerData['customers_lastname'];
-     $customer_address = array(
-                             'entry_company'  => $customerData['entry_company'],
-                             'entry_street_address'  => $customerData['entry_street_address'],
-                             'entry_suburb'  => $customerData['entry_suburb'],
-                             'entry_city'  => $customerData['entry_city'],
-                             'entry_postcode'  => $customerData['entry_postcode'],
-                             'entry_state'  => $customerData['entry_state'],
-                             'entry_zone_id'  => $customerData['entry_zone_id'],
-                             'entry_country_id'  => $customerData['entry_country_id'],
-                             'entry_telephone'  => $customerData['entry_telephone'],
-                             'entry_telephone'  => $customerData['entry_telephone'],
+  
+  public static function createOrder($customerID) {
+    global $lC_Vqmod, $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Coupons, $lC_Tax;
+    
+    $lC_Currencies = new lC_Currencies();
+    $customerData = lC_Customers_Admin::getData($customerID);
+  
+    $customerName = $customerData['customers_firstname'] . " " .$customerData['customers_lastname'];
+    $customer_address = array(
+                            'entry_company'  => $customerData['entry_company'],
+                            'entry_street_address'  => $customerData['entry_street_address'],
+                            'entry_suburb'  => $customerData['entry_suburb'],
+                            'entry_city'  => $customerData['entry_city'],
+                            'entry_postcode'  => $customerData['entry_postcode'],
+                            'entry_state'  => $customerData['entry_state'],
+                            'entry_zone_id'  => $customerData['entry_zone_id'],
+                            'entry_country_id'  => $customerData['entry_country_id'],
+                            'entry_telephone'  => $customerData['entry_telephone'],
+                            'entry_telephone'  => $customerData['entry_telephone'],
                           );
     $payment_module = '';
     $payment_method = '';
@@ -1275,46 +1276,57 @@ class lC_Orders_Admin {
     return $insert_id;
   }
 
-  function getOrderTotalsList($oID) {
-   global $lC_Vqmod, $lC_Database, $lC_Language;
+  public static function getOrderTotalsList($oID) {
+    global $lC_Vqmod, $lC_Database, $lC_Language, $lC_Currencies;
 
-    $result = '';
+    $result = '<div class="new-row-mobile twelve-columns twelve-columns-mobile with-small-padding no-margin-bottom">';
+    
     $Qtotals = $lC_Database->query('select * from :table_orders_total where orders_id = :orders_id order by sort_order');
     $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
     $Qtotals->bindInt(':orders_id', $oID);
     $Qtotals->execute();
+    
     while ($Qtotals->next()) {
-      if($Qtotals->value('class') == 'total') {
+      if ($Qtotals->value('class') == 'total') {
         $total = $Qtotals->value('value');
       } else {
         $total += $Qtotals->value('value');
       }
-      $result .= '<p id = "addedOrderTotalRow_'.$Qtotals->value('class').'"  class="button-height inline-label"><span class="icon-list icon-anthracite ">&nbsp;' .
-                  lc_draw_input_field("title_".$Qtotals->value('class'), $Qtotals->value('title'), ' style="width:30%;"') . '</span>&nbsp;&nbsp;' . lc_draw_input_field("value_".$Qtotals->value('class'), $Qtotals->value('value'), ' style="width:10%; text-align:right" onkeyup = "updateGrandTotal();"') .
-                  '&nbsp;&nbsp;<a href="javascript://" onclick="removeOrderTotal('.$oID.',\''.$Qtotals->value('class').'\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a></p>';    
+      $result .= '  <div class="with-small-padding" id="addedOrderTotalRow_' . $Qtotals->value('class') . '">' . 
+                 '    <span class="icon-list icon-anthracite">&nbsp;' .
+                        lc_draw_input_field("title_" . $Qtotals->value('class'), $Qtotals->value('title'), ' style="width:30%;"') . 
+                 '    </span>&nbsp;&nbsp;' . 
+                      lc_draw_input_field("value_" . $Qtotals->value('class'), $lC_Currencies->format($Qtotals->value('value')), ' style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal();"') . '&nbsp;&nbsp;' .
+                 '    <a href="javascript:void(0);" onclick="removeOrderTotal(' . $oID . ', \'' . $Qtotals->value('class') . '\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a>' . 
+                 '  </div>';    
       
 
        
     }
-    $result .='        <div id = "addedOrderTotal"></div>';
-
-    if( $result != '' ) {
-
-      $result .=  '<p class="align-right padding4 bbottom-grey1">
-      <span class="padding5 ">'.$lC_Language->get('text_grand_total').'<span class="show-below-768 bold">'. $lC_Language->get('text_total').'</span>
-            <span  class="padding6" id="id_grand_total">'. number_format($total, DECIMAL_PLACES).'</span></span>
-          <span class="button-group1 padding ">
-            <a class="button compact icon-plus" href="javascript:void(0);" onclick="saveOrderTotal('. $oID .');">'.$lC_Language->get('text_save').'</a> 
-          </span></p>
-       ';	   
+    $result .= '  <div id="addedOrderTotal" class="with-small-padding"></div>' . 
+               '</div>'; 
+                  
+    if ($result != '') {
+      $result .=  '<div class="new-row-mobile six-columns twelve-columns-mobile with-small-padding align-right">' . 
+                     $lC_Language->get('text_grand_total') . 
+                  '  <span class="mid-margin-right" id="id_grand_total">' . $lC_Currencies->format(number_format($total, DECIMAL_PLACES)) . '</span>' . 
+                  '  <span class="button-group">' . 
+                  '    <a href="javascript:void(0);" onclick="saveOrderTotal(' . $oID . ');">' . 
+                  '      <button type="button" class="button glossy">' . 
+                  '        <span class="button-icon green-gradient">' . 
+                  '          <span class="icon-plus"></span>' . 
+                  '        </span>' . 
+                           $lC_Language->get('text_save') . 
+                  '      </button>' . 
+                  '    </a>' .  
+                  '  </span>' . 
+                  '</div>';	   
     }
-    
-   
 
     return $result;
-  
   }
-  function removeOrderTotal() {
+  
+  public static function removeOrderTotal() {
     global $lC_Database;
 
     $orders_id = (int)$_GET['oId'];
@@ -1327,7 +1339,7 @@ class lC_Orders_Admin {
     $Qtotals->execute();  
   }
 
-  function OrdersTotalData() {
+  public static function orderTotalsData() {
     global $lC_Vqmod, $lC_Database, $lC_Language, $lC_Currencies;
 
     $result['order_total_modules'] = lC_Modules_order_total_Admin::getAll();
@@ -1345,7 +1357,7 @@ class lC_Orders_Admin {
     return $result;
   }
 
-  function saveOrderTotal() {
+  public static function saveOrderTotal() {
     global $lC_Vqmod, $lC_Database, $lC_Language;
     
     $_GET = $_POST; // for temporary use
@@ -1355,17 +1367,17 @@ class lC_Orders_Admin {
     $lC_Currencies = new lC_Currencies();
     $lC_Order = new lC_Order($orders_id);
 
-    foreach($_GET as $k => $v) {
-      $title = substr($k,0,6);
-      $class = substr($k,6);
-      if($title == "title_") {
+    foreach ($_GET as $k => $v) {
+      $title = substr($k, 0, 6);
+      $class = substr($k, 6);
+      if ($title == "title_") {
         $arr[$class]['title'] = $v;
-      } else if($title == "value_") {
+      } else if ($title == "value_") {
         $arr[$class]['value'] = $v;
       }
     }
 
-    foreach($arr as $k1 => $v1) {
+    foreach ($arr as $k1 => $v1) {
       $class = $k1;
       $title = $v1['title'];
       $value = $v1['value'];
@@ -1376,7 +1388,7 @@ class lC_Orders_Admin {
       $Qtotals->bindValue(':class', $class);
       $Qtotals->execute(); 
       
-      if($Qtotals->numberOfRows()) {
+      if ($Qtotals->numberOfRows()) {
         $Qupdate = $lC_Database->query('update :table_orders_total set title = :title, text = :text, value = :value where class = :class and orders_id = :orders_id');
         $Qupdate->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
         $Qupdate->bindInt(':orders_id', $orders_id);          
@@ -1385,7 +1397,6 @@ class lC_Orders_Admin {
         $Qupdate->bindValue(':value', $value);
         $Qupdate->bindValue(':class', $class); 
         $Qupdate->execute();
-
       } else {
         // Insert record in order product table
         $Qinsert = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values (:orders_id, :title, :text, :value, :class, :sort_order)');
