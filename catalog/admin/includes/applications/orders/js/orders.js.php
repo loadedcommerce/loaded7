@@ -701,29 +701,29 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
           // Gulmohar update the following for shipping method dropdown and remove commenting 
           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          /*
+          
           if (data.shipping) {
             var cnt = 1;
             $.each(data.shipping.methods, function(val, text) {
-              var selected = (data.xxxxxx_id == text['xxxxxx_id']) ? 'selected="selected"' : '';
+              var selected = (data.code == text['code']) ? 'selected="selected"' : '';
               if (cnt == 1) {
                 $("#id_order_total_shipping").append(
                   $("<option></option>").val('0').html('<?php echo $lC_Language->get('text_none'); ?>')
                 );
                 cnt++;
               }
-              if (data.coupons_id == text['xxxxxx_id']) {
-                $("#id_order_total_shipping").closest("span + *").prevAll("span.select-value:first").text(text['xxxx']);
+              if (data.coupons_id == text['code']) {
+                $("#id_order_total_shipping").closest("span + *").prevAll("span.select-value:first").text(text['title']);
               }
               $("#id_order_total_shipping").append(
-                $("<option " + selected + "></option>").val(text['xxxxxx_id']).html(text['XXXX'])
+                $("<option " + selected + "></option>").val(text['code']).html(text['title'])
               );
             });
             $('#id_shipping').show();
           } else {
             $("#id_shipping").html('<?php echo $lC_Language->get('text_no_shipping_methods_exist'); ?>');
             $('#id_shipping').show();
-          } */
+          } 
           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         }
       );

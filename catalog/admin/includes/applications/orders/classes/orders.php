@@ -1375,28 +1375,19 @@ class lC_Orders_Admin {
   }
 
   public static function shippingMethodsData() {
-    global $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language; 
     
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Gulmohar update the following for shipping methods and remove commenting
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /*
-    $Qshipping = $lC_Database->query('select  from :table_ , :table_  where and language_id = :language_id order by');
-    $Qshipping->bindTable(':table_', TABLE_);
-    $Qshipping->bindTable(':table_', TABLE_);
-    $Qshipping->bindInt(':language_id', $lC_Language->getID());
+    $Qshipping = $lC_Database->query('select code, title from :table_templates_boxes where modules_group like :like order by id');
+    $Qshipping->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+    $Qshipping->bindValue(':like', "shipping|%");
     $Qshipping->execute();    
     
     if ($Qshipping->numberOfRows() > 0) {
       while ( $Qshipping->next() ) {
-        $result['$Qshipping']['methods'][] = $Qshipping->toArray();
+        $result['shipping']['methods'][] = $Qshipping->toArray();
       }
-    } 
-    */
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+    }
+
     return $result;
   }
   
