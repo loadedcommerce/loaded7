@@ -17,14 +17,14 @@ $(document).ready(function() {
   createogUploader();
  
   <?php
+  foreach ( $lC_Language->getAll() as $l ) {
+    $lid = $l['id'];
     if (ENABLE_EDITOR == '1') { 
-      foreach ( $lC_Language->getAll() as $l ) {
-        $lid = $l['id'];
-        echo "CKEDITOR.replace('branding_home_page_text' . $lid . '', { height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php' });";
-      }
+        echo "CKEDITOR.replace('branding_home_page_text[$lid]', { height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php' });";
     } else {
-      echo '$("#branding_home_page_text").css("height", "200px").css("width", "99.8%");';
+      echo '$("#branding_home_page_text[$lid]").css("height", "200px").css("width", "99.8%");';
     }
+  }
   ?>
 
   $(window).resize(function() {
