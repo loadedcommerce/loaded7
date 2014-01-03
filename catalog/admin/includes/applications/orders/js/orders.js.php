@@ -535,20 +535,20 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
                '        <label for="type" class="label"><?php echo $lC_Language->get('text_order_total_type'); ?>'+
                '          <?php echo lc_draw_pull_down_menu('order_total_type', null, null, 'class="input with-small-padding mid-margin-top" id="id_order_total_type" onchange="updateSubOrderTotal(this.value);"'); ?>'+
                '        </label>'+
-               /*'        <span id="id_shipping" style="display:none;">'+
+               '        <div id="id_shipping" style="display:none;">'+
                '          <p class="button-height inline-label">'+
                '            <label for="shipping" class="label"><?php echo $lC_Language->get('text_order_total_shipping'); ?>'+
                '              <?php echo lc_draw_pull_down_menu('order_total_shipping', null, null, 'class="input with-small-padding mid-margin-top" id="id_order_total_shipping"'); ?>'+
                '            </label>'+
                '          </p>'+
-               '        </span>'+
-               '        <span id="id_coupon" style="display:none;">'+
+               '        </div>'+
+               '        <div id="id_coupon" style="display:none;">'+
                '          <p class="button-height inline-label">'+
                '            <label for="coupon" class="label"><?php echo $lC_Language->get('text_order_total_coupon'); ?>'+
                '              <?php echo lc_draw_pull_down_menu('order_total_coupon', null, null, 'class="input with-small-padding mid-margin-top" id="id_order_total_coupon"'); ?>'+
                '            </label>'+
                '          </p>'+
-               '        </span>'+*/
+               '        </div>'+
                '        <span id="id_counter" style="display:none;">0</span>'+
                '      </p>'+  
                '    </form>'+
@@ -577,7 +577,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     });
 
     //getFormData(oid, opid);
-    //$.modal.all.centerModal();
+    $.modal.all.centerModal();
 
     var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getOrderTotalsData&oid=OID'); ?>'  
     $.getJSON(jsonLink.replace('OID', parseInt(oid)),
@@ -592,10 +592,9 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         }        
 
         $("#id_order_total_type").empty();
-        //$("#id_order_total_coupon").empty();
-        //$("#editTaxclass").empty();
                 
         var cnt = 1;
+        
         $.each(data.order_total_modules.entries, function(val, text) {
           var selected = (data.module_class == text['module_class']) ? 'selected="selected"' : '';
           if (cnt == 1) {
@@ -611,7 +610,10 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
             $("<option " + selected + "></option>").val(text['module_class']).html(text['module_title'])
           );
         });
-                
+        
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////        
+        // if the following is not needed remove it
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /*
         $.each($('input[type="text"]', '#order'),function(k){      
           var name = $(this).attr('name');
@@ -619,28 +621,9 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
             alert(name.substr(6));
             $("#id_order_total_type option[value='"+name.substr(6)+"']").remove();
           }
-        }); 
-
-                
-        var cnt = 1;
-        $.each(data.coupons.entries, function(val, text) {
-          var selected = (data.coupons_id == text['coupons_id']) ? 'selected="selected"' : '';
-          if (cnt == 1) {
-            $("#id_order_total_coupon").append(
-              $("<option></option>").val('0').html('<?php echo $lC_Language->get('text_none'); ?>')
-            );
-            cnt++;
-          }
-          if (data.coupons_id == text['coupons_id']) {
-            $("#id_order_total_coupon").closest("span + *").prevAll("span.select-value:first").text(text['name']);
-          }
-          $("#id_order_total_coupon").append(
-            $("<option " + selected + "></option>").val(text['coupons_id']).html(text['name'])
-          );
-        });
+        });        
         
-        
-        var cnt = 1;
+        $("#editTaxclass").empty();
         $.each(data.taxclassArray.entries, function(val, text) {
           var selected = (data.tax_class_id == text['tax_class_id']) ? 'selected="selected"' : '';
           if (cnt == 1) {
@@ -657,24 +640,99 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           );
         });
         */
-
-        $.modal.all.centerModal();
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       }
     );
   }
 
-  function updateSubOrderTotal(type) { 
-    if(type == 'coupon') {
-      $('#id_coupon').show();
-      $('#id_shipping').hide();
-    } else if(type == 'shipping') {
-      $('#id_coupon').hide();
-      $('#id_shipping').show();
+  function updateSubOrderTotal(type) {
+    if (type == 'coupon') {
+      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getCouponOrderTotalsData'); ?>'  
+      $.getJSON(jsonLink,
+        function (data) {
+          if (data.rpcStatus == -10) { // no session
+            var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+            $(location).attr('href',url);
+          }
+          if (data.rpcStatus != 1) {
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
+            return false;
+          }
+          $("#id_order_total_coupon").empty();
+          if (data.coupons) {
+            var cnt = 1;
+            $.each(data.coupons.entries, function(val, text) {
+              var selected = (data.coupons_id == text['coupons_id']) ? 'selected="selected"' : '';
+              if (cnt == 1) {
+                $("#id_order_total_coupon").append(
+                  $("<option></option>").val('0').html('<?php echo $lC_Language->get('text_none'); ?>')
+                );
+                cnt++;
+              }
+              if (data.coupons_id == text['coupons_id']) {
+                $("#id_order_total_coupon").closest("span + *").prevAll("span.select-value:first").text(text['name']);
+              }
+              $("#id_order_total_coupon").append(
+                $("<option " + selected + "></option>").val(text['coupons_id']).html(text['name'])
+              );
+            });
+            $('#id_coupon').show();
+          } else {
+            $("#id_coupon").html('<?php echo $lC_Language->get('text_no_coupons_exist'); ?>');
+            $('#id_coupon').show();
+          }
+        }
+      );
+    } else if (type == 'shipping') {
+      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getShippingMethodsData'); ?>'  
+      $.getJSON(jsonLink,
+        function (data) {
+          if (data.rpcStatus == -10) { // no session
+            var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+            $(location).attr('href',url);
+          }
+          if (data.rpcStatus != 1) {
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
+            return false;
+          }
+          $("#id_order_total_shipping").empty();
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          // Gulmohar update the following for shipping method dropdown and remove commenting 
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          /*
+          if (data.shipping) {
+            var cnt = 1;
+            $.each(data.shipping.methods, function(val, text) {
+              var selected = (data.xxxxxx_id == text['xxxxxx_id']) ? 'selected="selected"' : '';
+              if (cnt == 1) {
+                $("#id_order_total_shipping").append(
+                  $("<option></option>").val('0').html('<?php echo $lC_Language->get('text_none'); ?>')
+                );
+                cnt++;
+              }
+              if (data.coupons_id == text['xxxxxx_id']) {
+                $("#id_order_total_shipping").closest("span + *").prevAll("span.select-value:first").text(text['xxxx']);
+              }
+              $("#id_order_total_shipping").append(
+                $("<option " + selected + "></option>").val(text['xxxxxx_id']).html(text['XXXX'])
+              );
+            });
+            $('#id_shipping').show();
+          } else {
+            $("#id_shipping").html('<?php echo $lC_Language->get('text_no_shipping_methods_exist'); ?>');
+            $('#id_shipping').show();
+          } */
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        }
+      );
     } else {
       $('#id_shipping').hide();
       $('#id_coupon').hide();
     }
   }
+  
   function showAddedOrderTotal(oID) {
     
     var id_counter = parseInt($('#id_counter').html())+1;
@@ -699,9 +757,9 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
                  '</div>';
 
     var flag = true;
-    $.each($('input[type="text"]', '#order'),function(k){      
+    $.each($('input[type="text"]', '#order'), function(k){      
       var name = $(this).attr('name');
-      if(name.substr(0,6) == "value_" && name.substr(6) == id_order_total_type) {
+      if (name.substr(0, 6) == "value_" && name.substr(6) == id_order_total_type) {
         flag = false;
       }
     });

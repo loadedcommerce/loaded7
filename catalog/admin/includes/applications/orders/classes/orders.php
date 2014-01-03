@@ -11,6 +11,7 @@
 require_once($lC_Vqmod->modCheck('../includes/classes/currencies.php'));
 require_once($lC_Vqmod->modCheck('../includes/classes/address.php'));
 require_once($lC_Vqmod->modCheck('includes/classes/order.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/payment.php'));
 require_once($lC_Vqmod->modCheck('includes/classes/tax.php'));
 require_once($lC_Vqmod->modCheck('includes/applications/customers/classes/customers.php'));
 require_once($lC_Vqmod->modCheck('includes/applications/modules_order_total/classes/modules_order_total.php'));    
@@ -74,7 +75,8 @@ class lC_Orders_Admin {
     } else if (isset($_GET['oSearch']) && $_GET['oSearch'] != null) {
       $sWhere = " WHERE o.orders_id = '" . $_GET['oSearch'] . "' ";
     }
-    if($sWhere != '' && $f_filter != '') {      
+    
+    if ($sWhere != '' && $f_filter != '') {      
       $sWhere .= " and ".$f_filter;
     } else if($sWhere == '' && $f_filter != '') {      
       $sWhere .= " WHERE ".$f_filter;
@@ -289,7 +291,7 @@ class lC_Orders_Admin {
   * @return boolean
   */  
   public static function batchDelete($batch, $restock) {
-    foreach ( $batch as $id ) {
+    foreach ($batch as $id) {
       lC_Orders_Admin::delete($id, $restock);
     }
     return true;
@@ -542,10 +544,9 @@ class lC_Orders_Admin {
     $Qorder->bindInt(':orders_id', $id);
     $Qorder->execute();
 
-    if ( ( $Qorder->numberOfRows() === 1) && !lc_empty($Qorder->value('payment_module')) ) {
-      if ( file_exists('includes/modules/payment/' . $Qorder->value('payment_module') . '.php') ) {
-        include($lC_Vqmod->modCheck('includes/classes/payment.php'));
-        include($lC_Vqmod->modCheck('includes/modules/payment/' . $Qorder->value('payment_module') . '.php'));
+    if (($Qorder->numberOfRows() === 1) && !lc_empty($Qorder->value('payment_module'))) {
+      if (file_exists('includes/modules/payment/' . $Qorder->value('payment_module') . '.php')) {
+        include_once($lC_Vqmod->modCheck('includes/modules/payment/' . $Qorder->value('payment_module') . '.php'));
         if ( is_callable(array('lC_Payment_' . $Qorder->value('payment_module'), $call_function)) ) {
           $payment_module = 'lC_Payment_' . $Qorder->value('payment_module');
           $payment_module = new $payment_module();
@@ -603,7 +604,7 @@ class lC_Orders_Admin {
     $Qupdate->execute();
 
     if ( !$lC_Database->isError() ) {
-      if ( $data['notify_customer'] === true ) {
+      if ($data['notify_customer'] === true) {
         $email_body = sprintf($lC_Language->get('email_body'), STORE_NAME) . "\n" . $lC_Language->get('email_underline') . "\n";
         $email_body .= sprintf($lC_Language->get('email_order_number'), $id) . "\n";
         $email_body .= sprintf($lC_Language->get('email_detailed_invoice'), lc_href_link(FILENAME_CATALOG_ACCOUNT, 'receipt=' . $id, 'SSL', false, false, true)) . "\n";
@@ -635,6 +636,7 @@ class lC_Orders_Admin {
     } else {
       $error = true;
     }
+    
     if ( $error === false ) {
       $lC_Database->commitTransaction();
       // build and return the udpated status history
@@ -664,18 +666,18 @@ class lC_Orders_Admin {
   * @return string
   */ 
   private static function fnColumnToField($i) {
-   if ( $i == 1 )
-    return "o.orders_id";
-   else if ( $i == 2 )
-    return "o.customers_name";
-   else if ( $i == 3 )
-    return "o.customers_id";
-   else if ( $i == 4 )
-    return "ot.value";
-   else if ( $i == 5 )
-    return "o.date_purchased"; 
-   else if ( $i == 6 )
-    return "s.orders_status_name";      
+    if ( $i == 1 )
+      return "o.orders_id";
+    else if ( $i == 2 )
+      return "o.customers_name";
+    else if ( $i == 3 )
+      return "o.customers_id";
+    else if ( $i == 4 )
+      return "ot.value";
+    else if ( $i == 5 )
+      return "o.date_purchased"; 
+    else if ( $i == 6 )
+      return "s.orders_status_name";      
   }
  /*
   * Return the orders comments
@@ -685,9 +687,11 @@ class lC_Orders_Admin {
   */ 
   public static function getOrderComments($id = null) {
     global $lC_Language;
+    
     $data = lC_Orders_Admin::getInfo($id);
     $ocData = '';
-    if(is_array($data['orderStatusHistoryData'])) {
+        
+    if (is_array($data['orderStatusHistoryData'])) {
       foreach ($data['orderStatusHistoryData'] as $oshData) {
         if ($oshData['comment'] != '') {
           $ocData .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
@@ -703,6 +707,7 @@ class lC_Orders_Admin {
         }
       }
     }
+    
     return $ocData;
   }
  /*
@@ -713,8 +718,10 @@ class lC_Orders_Admin {
   */ 
   public static function getOrderStatusHistory($id = null) {
     global $lC_Language;
+    
     $data = lC_Orders_Admin::getInfo($id);
-    if(is_array($data['orderStatusHistoryData'])) {
+    
+    if (is_array($data['orderStatusHistoryData'])) {
       foreach ($data['orderStatusHistoryData'] as $oshData) {
         $osHistory .= '<div class="with-small-padding bbottom-anthracite' . (($oshData['admin_id'] == null) ? ' silver-bg' : (($oshData['append_comment'] == 1) ? '' : ' grey-bg')) . '">
                         <div class="small-margin-top">
@@ -728,6 +735,7 @@ class lC_Orders_Admin {
                       </div>';
       }
     }
+    
     return $osHistory;
   }
  /*
@@ -738,7 +746,7 @@ class lC_Orders_Admin {
   * @return array
   */ 
   public static function getProduct($oid = null, $pid = null) {
-    global $lC_Language, $lC_Database, $lC_Vqmod;
+    global $lC_Language, $lC_Database;
 
     $lC_Language->loadIniFile('orders.php');
 
@@ -891,6 +899,7 @@ class lC_Orders_Admin {
   */ 
   public static function getOrderTransactions($id = null) {
     global $lC_Language;
+    
     $data = lC_Orders_Admin::getInfo($id);
     $cnt = 1;
     
@@ -933,7 +942,7 @@ class lC_Orders_Admin {
   }      
 
   public static function getOrdersProducts($id) {
-    global $lC_Language, $lC_Database, $lC_Vqmod;
+    global $lC_Language, $lC_Database;
 
     $ordersproducts = array();
     $lC_Order = new lC_Order($id);   
@@ -950,7 +959,7 @@ class lC_Orders_Admin {
   }      
 
   public static function getOrdersProductsIds($id) {
-    global $lC_Language, $lC_Database, $lC_Vqmod;
+    global $lC_Language, $lC_Database;
 
     $ordersproductsids = array();
     $lC_Order = new lC_Order($id);   
@@ -962,7 +971,7 @@ class lC_Orders_Admin {
   }
 
   public static function getProductData($pId) {
-    global $lC_Language, $lC_Database, $lC_Vqmod;
+    global $lC_Language, $lC_Database;
 
     $productData = lC_Products_Admin::getProductsArray($pId);
     $result['products_id'] = $productData[0]['products_id'];
@@ -977,15 +986,15 @@ class lC_Orders_Admin {
   }
   
   public static function addOrderProductData() {
-    global $lC_Language, $lC_Database, $lC_Vqmod, $lC_Currencies;
+    global $lC_Language, $lC_Database, $lC_Currencies;
 
     $oID = $_GET['oID'];
     $pID = $_GET['pID'];
 
     $lC_Currencies = new lC_Currencies();
     $lC_Order = new lC_Order($oID);
+    
     $productData = lC_Products_Admin::getProductsArray($pID);
-
     $products_id = $productData[0]['products_id'];
     $products_model = $productData[0]['products_model'];
     $products_name = $productData[0]['products_name'];
@@ -997,6 +1006,7 @@ class lC_Orders_Admin {
     $Qrates->bindTable(':table_tax_rates', TABLE_TAX_RATES);
     $Qrates->bindInt(':tax_class_id', $products_tax_class_id);    
     $Qrates->execute();
+    
     if ($Qrates->numberOfRows()) {
       $products_tax_rate = $Qrates->value('tax_rate');
       $products_tax_description = $Qrates->value('tax_description');
@@ -1004,6 +1014,7 @@ class lC_Orders_Admin {
     } else {
       $products_tax_rate = 0;
     }
+    
     // Insert record in order product table
     $Qinsert = $lC_Database->query('insert into :table_orders_products (orders_id, products_id, products_model, products_name, products_price, products_tax, products_quantity) values (:orders_id, :products_id, :products_model, :products_name, :products_price, :products_tax,  :products_quantity)');
     $Qinsert->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
@@ -1062,7 +1073,6 @@ class lC_Orders_Admin {
         }        
       }
     } else {
-
       $Sub_Total = $products_price;            
       $Qsub_total = $lC_Database->query('insert into :table_orders_total (orders_id, title, text, value, class, sort_order) values(:orders_id, :title, :text, :value, :class, :sort_order)');
       $Qsub_total->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
@@ -1102,7 +1112,7 @@ class lC_Orders_Admin {
   }
 
   public static function updateOrderProductData() {
-    global $lC_Language, $lC_Database, $lC_Vqmod, $lC_Currencies;
+    global $lC_Language, $lC_Database, $lC_Currencies;
 
     $oID = $_GET['oid'];
     $oPID = $_GET['opid'];
@@ -1111,7 +1121,6 @@ class lC_Orders_Admin {
     $products_quantity = $_GET['quantity'];
     $products_tax_class_id = $_GET['taxClass'];
     $lC_Order = new lC_Order($oID);
-
 
     $Qrates = $lC_Database->query('select * from :table_tax_rates where tax_class_id = :tax_class_id');
     $Qrates->bindTable(':table_tax_rates', TABLE_TAX_RATES);
@@ -1152,10 +1161,10 @@ class lC_Orders_Admin {
     $Tax = 0;
 
     while ($Qproducts->next()) {
-     $temp_subtotal = $Qproducts->value('products_price') * $Qproducts->value('products_quantity');     
-     $temp_Tax = ($temp_subtotal * ($Qproducts->value('products_tax')/100));
-     $Sub_Total += $temp_subtotal;
-     $Tax += $temp_Tax;
+      $temp_subtotal = $Qproducts->value('products_price') * $Qproducts->value('products_quantity');     
+      $temp_Tax = ($temp_subtotal * ($Qproducts->value('products_tax')/100));
+      $Sub_Total += $temp_subtotal;
+      $Tax += $temp_Tax;
     }
 
     $Qtotals = $lC_Database->query('select * from :table_orders_total where orders_id = :orders_id order by sort_order');
@@ -1165,7 +1174,7 @@ class lC_Orders_Admin {
 
     $Total = $Sub_Total + $Tax;
     while ($Qtotals->next()) {
-      if($Qtotals->value('class') != 'sub_total' && $Qtotals->value('class') != 'tax' && $Qtotals->value('class') != 'total') {
+      if ($Qtotals->value('class') != 'sub_total' && $Qtotals->value('class') != 'tax' && $Qtotals->value('class') != 'total') {
         $Total += $Qtotals->value('value');        
       } else {
         if($Qtotals->value('class') == 'sub_total') {
@@ -1176,7 +1185,7 @@ class lC_Orders_Admin {
           $Qsub_total->bindValue(':value', $Sub_Total);
           $Qsub_total->bindValue(':class', $Qtotals->value('class'));
           $Qsub_total->execute();    
-        } else if($Qtotals->value('class') == 'tax') {
+        } else if ($Qtotals->value('class') == 'tax') {
           $Qtax = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
           $Qtax->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
           $Qtax->bindInt(':orders_id', $oID);          
@@ -1203,7 +1212,7 @@ class lC_Orders_Admin {
   }
   
   public static function createOrder($customerID) {
-    global $lC_Vqmod, $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Coupons, $lC_Tax;
+    global $lC_Database, $lC_Customer, $lC_Language, $lC_Currencies, $lC_ShoppingCart, $lC_Coupons, $lC_Tax;
     
     $lC_Currencies = new lC_Currencies();
     $customerData = lC_Customers_Admin::getData($customerID);
@@ -1277,7 +1286,7 @@ class lC_Orders_Admin {
   }
 
   public static function getOrderTotalsList($oID) {
-    global $lC_Vqmod, $lC_Database, $lC_Language, $lC_Currencies;
+    global $lC_Database, $lC_Language, $lC_Currencies;
 
     $result = '<div class="new-row-mobile twelve-columns twelve-columns-mobile with-small-padding no-margin-bottom">';
     
@@ -1340,25 +1349,59 @@ class lC_Orders_Admin {
   }
 
   public static function orderTotalsData() {
-    global $lC_Vqmod, $lC_Database, $lC_Language, $lC_Currencies;
+    global $lC_Database, $lC_Language, $lC_Currencies;
 
     $result['order_total_modules'] = lC_Modules_order_total_Admin::getAll();
+    
+    return $result;
+  }
 
+  public static function couponOrderTotalsData() {
+    global $lC_Database, $lC_Language, $lC_Currencies;
+    
     $Qcoupons = $lC_Database->query('select c.coupons_id, c.type, c.code, c.reward, c.purchase_over, c.start_date, c.expires_date, c.uses_per_coupon, c.uses_per_customer, c.restrict_to_products, c.restrict_to_categories, c.restrict_to_customers, c.status, c.notes, cd.name from :table_coupons c, :table_coupons_description cd where c.coupons_id = cd.coupons_id and cd.language_id = :language_id order by c.date_created desc');
     $Qcoupons->bindTable(':table_coupons', TABLE_COUPONS);
     $Qcoupons->bindTable(':table_coupons_description', TABLE_COUPONS_DESCRIPTION);
     $Qcoupons->bindInt(':language_id', $lC_Language->getID());
     $Qcoupons->execute();    
     
-    while ( $Qcoupons->next() ) {
-      $result['coupons']['entries'][] = $Qcoupons->toArray();
-    }
+    if ($Qcoupons->numberOfRows() > 0) {
+      while ( $Qcoupons->next() ) {
+        $result['coupons']['entries'][] = $Qcoupons->toArray();
+      }
+    } 
     
     return $result;
   }
 
+  public static function shippingMethodsData() {
+    global $lC_Database, $lC_Language;
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Gulmohar update the following for shipping methods and remove commenting
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*
+    $Qshipping = $lC_Database->query('select  from :table_ , :table_  where and language_id = :language_id order by');
+    $Qshipping->bindTable(':table_', TABLE_);
+    $Qshipping->bindTable(':table_', TABLE_);
+    $Qshipping->bindInt(':language_id', $lC_Language->getID());
+    $Qshipping->execute();    
+    
+    if ($Qshipping->numberOfRows() > 0) {
+      while ( $Qshipping->next() ) {
+        $result['$Qshipping']['methods'][] = $Qshipping->toArray();
+      }
+    } 
+    */
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    return $result;
+  }
+  
   public static function saveOrderTotal() {
-    global $lC_Vqmod, $lC_Database, $lC_Language;
+    global $lC_Database, $lC_Language;
     
     $_GET = $_POST; // for temporary use
 
