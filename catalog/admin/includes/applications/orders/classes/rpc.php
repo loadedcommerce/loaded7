@@ -172,6 +172,34 @@ class lC_Orders_Admin_rpc {
     }
     echo json_encode($result);
   }
+  public static function getTaxMethodsData() {
+    $result = lC_Orders_Admin::taxMethodsData();
+    if ($result !== false) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    echo json_encode($result);
+  }  
+  public static function getCouponData() {
+    $result = lC_Orders_Admin::CouponData();
+    if ($result !== false) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    echo json_encode($result);
+  }  
+  public static function getShippingData() {
+    $result = lC_Orders_Admin::ShippingData();
+    if ($result !== false) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    echo json_encode($result);
+  }  
+  public static function getTaxData() {
+    $result = lC_Orders_Admin::TaxData();
+    if ($result !== false) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    echo json_encode($result);
+  }  
   public static function saveOrderTotal() {
     $result = lC_Orders_Admin::saveOrderTotal();
     if ($result !== false) {

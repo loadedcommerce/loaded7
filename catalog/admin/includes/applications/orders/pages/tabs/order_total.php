@@ -25,7 +25,7 @@
             </div>
             <div class="new-row-mobile seven-columns twelve-columns-mobile no-margin-bottom">
               <span class="button-group mid-margin-bottom">
-                <a href="javascript:void(0);" onclick="addOrderTotal(<?php echo $_GET[$lC_Template->getModule()]; ?>);">
+                <a href="javascript:void(0);" onclick="addOrderTotal(<?php echo $_GET[$lC_Template->getModule()]; ?>, '<?php echo $lC_Currencies->getSymbolLeft(); ?>');">
                   <button type="button" class="button glossy">
                     <span class="button-icon green-gradient">
                       <span class="icon-plus"></span>

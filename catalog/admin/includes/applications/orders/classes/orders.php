@@ -1305,20 +1305,20 @@ class lC_Orders_Admin {
                  '    <span class="icon-list icon-anthracite">&nbsp;' .
                         lc_draw_input_field("title_" . $Qtotals->value('class'), $Qtotals->value('title'), ' style="width:30%;"') . 
                  '    </span>&nbsp;&nbsp;' . 
-                      lc_draw_input_field("value_" . $Qtotals->value('class'), $lC_Currencies->format($Qtotals->value('value')), ' style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal();"') . '&nbsp;&nbsp;' .
-                 '    <a href="javascript:void(0);" onclick="removeOrderTotal(' . $oID . ', \'' . $Qtotals->value('class') . '\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a>' . 
+                      lc_draw_input_field("value_" . $Qtotals->value('class'), $lC_Currencies->format($Qtotals->value('value')), ' id = "value_'. $Qtotals->value('class'). '"  style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal(\''.$lC_Currencies->getSymbolLeft().'\');"') . '&nbsp;&nbsp;' .
+                 '    <a href="javascript:void(0);" onclick="removeOrderTotal(' . $oID . ', \'' . $Qtotals->value('class') . '\',\''.$lC_Currencies->getSymbolLeft().'\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a>' . 
                  '  </div>';    
       
 
        
     }
-    $result .= '  <div id="addedOrderTotal" class="with-small-padding"></div>' . 
+    $result .= '  <div id="addedOrderTotal"></div>' . 
                '</div>'; 
                   
     if ($result != '') {
       $result .=  '<div class="new-row-mobile six-columns twelve-columns-mobile with-small-padding align-right">' . 
                      $lC_Language->get('text_grand_total') . 
-                  '  <span class="mid-margin-right" id="id_grand_total">' . $lC_Currencies->format(number_format($total, DECIMAL_PLACES)) . '</span>' . 
+                  '  <span class="mid-margin-right" id="id_grand_total">' . $lC_Currencies->format(str_replace(',','',number_format($total, DECIMAL_PLACES))) . '</span>' . 
                   '  <span class="button-group">' . 
                   '    <a href="javascript:void(0);" onclick="saveOrderTotal(' . $oID . ');">' . 
                   '      <button type="button" class="button glossy">' . 
@@ -1390,6 +1390,52 @@ class lC_Orders_Admin {
 
     return $result;
   }
+
+  public static function taxMethodsData() {
+    global $lC_Database, $lC_Language; 
+    
+    $Qtax = $lC_Database->query('select tax_rates_id, tax_rate, tax_description from :table_tax_rates order by tax_rates_id');
+    $Qtax->bindTable(':table_tax_rates', TABLE_TAX_RATES);
+    $Qtax->execute();    
+    
+    if ($Qtax->numberOfRows() > 0) {
+      while ( $Qtax->next() ) {
+        $result['tax']['methods'][] = $Qtax->toArray();
+      }
+    }
+
+    return $result;
+  }  
+  
+  public static function CouponData() {
+    global $lC_Database, $lC_Language; 
+
+    $id = $_GET['cId'];
+    
+    $Qcoupon = $lC_Database->query('select * from :table_coupons where coupons_id = :coupons_id limit 1');
+    $Qcoupon->bindTable(':table_coupons', TABLE_COUPONS);
+    $Qcoupon->bindInt(':coupons_id', $id);
+    $Qcoupon->execute();
+    $data = $Qcoupon->toArray();
+
+    return $data;
+  }
+ 
+  public static function TaxData() {
+    global $lC_Database, $lC_Language; 
+
+    $id = $_GET['tId'];
+    
+    $Qtax = $lC_Database->query('select * from :table_tax_rates where tax_rates_id = :tax_rates_id limit 1');
+    $Qtax->bindTable(':table_tax_rates', TABLE_TAX_RATES);
+    $Qtax->bindInt(':tax_rates_id', $id);
+    $Qtax->execute();
+    $data = $Qtax->toArray();
+
+    return $data;
+  } 
+
+  
   
   public static function saveOrderTotal() {
     global $lC_Database, $lC_Language;
@@ -1414,7 +1460,7 @@ class lC_Orders_Admin {
     foreach ($arr as $k1 => $v1) {
       $class = $k1;
       $title = $v1['title'];
-      $value = $v1['value'];
+      $value = str_replace(',','',substr($v1['value'],1));
 
       $Qtotals = $lC_Database->query('select * from :table_orders_total where orders_id = :orders_id and class = :class');
       $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
@@ -1444,7 +1490,7 @@ class lC_Orders_Admin {
         //$Qinsert->setLogging($_SESSION['module'], $id);
         $Qinsert->execute();
       }
-    }   
+    } 
     return true;
   }
 }

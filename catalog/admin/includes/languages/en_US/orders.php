@@ -181,3 +181,5 @@ text_order_total_shipping = Shipping
 text_order_total_type = Type
 text_no_coupons_exist = No Coupons Exist
 text_no_shipping_methods_exist = No Shipping Methods Exist
+text_order_total_tax = Tax
+text_no_tax_rate_exist = No Tax Rates Avilable
