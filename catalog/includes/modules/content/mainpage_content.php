@@ -48,7 +48,7 @@ class lC_Content_mainpage_content extends lC_Modules {
 
     parent::install();
 
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added, use_function, set_function) values ('Home Page Content', 'MODULE_CONTENT_HOMEPAGE_HTML_CONTENT', '<h2>Welcome to Loaded Commerce!</h2><br>The Most Complete Open Source Shopping Cart Software.', 'The text area allows you to add / edit home page HTML content block.', '6', '0', now(), 'lc_cfg_set_textarea_field', 'lc_cfg_set_textarea_field')");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added, use_function, set_function) values ('Home Page Content', 'MODULE_CONTENT_HOMEPAGE_HTML_CONTENT', '1', 'This module enables Home Page Content using Branding Manager.', '6', '0', now(), 'lc_cfg_set_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))')");
 
   }
  /*

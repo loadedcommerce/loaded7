@@ -109,7 +109,7 @@ if ($Qbranding->numberOfRows() > 0) {
             </div>
             <!-- inner tab eof -->
 
-          <?php if (!defined('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT')) { ?>
+          <?php if (!defined('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT') || MODULE_CONTENT_HOMEPAGE_HTML_CONTENT != 1) { ?>
             <p class="message mid-margin-top"> <?php echo $lC_Language->get('text_content_not_installed_message');?></p>
             <?php } ?>
         </div>
