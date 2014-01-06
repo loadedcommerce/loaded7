@@ -7,32 +7,32 @@
   @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: branding_manager.php v1.0 2013-08-08 datazen $
-*/
+*/ 
 require('includes/applications/branding_manager/classes/branding_manager.php');
 
 class lC_Application_Branding_manager extends lC_Template_Admin {
-  /*
+ /*
   * Protected variables
   */
   protected $_module = 'branding_manager',
-  $_page_title,
-  $_page_contents = 'edit.php';
-  /*
+            $_page_title,
+            $_page_contents = 'main.php';
+  
+ /*
   * Class constructor
   */
-  public function __construct() {
+  function __construct() {
     global $lC_Language;
 
     $this->_page_title = $lC_Language->get('heading_title');
 
-    if ( !isset($_GET['action']) ) {
+    if (!isset($_GET['action'])) {
       $_GET['action'] = '';
     }
 
+    if (!empty($_GET['action']) && !($_SESSION['error'])) {
 
-    if ( !empty($_GET['action']) && !($_SESSION['error']) ) {
-
-      switch ( $_GET['action'] ) {
+      switch ($_GET['action']) {
         case 'save':
           $branding_image                = $_POST['branding_manager_logo'];
           $branding_name                 = $_POST['branding_name'];
@@ -59,36 +59,36 @@ class lC_Application_Branding_manager extends lC_Template_Admin {
           $branding_footer_text          = $_POST['branding_footer_text'];
           $branding_home_page_text       = $_POST['branding_home_page_text'];
 
-          $data = array('site_image' => $branding_image,
-            'name'                 => $branding_name,
-            'slogan'               => $branding_slogan,
-            'chat_code'            => $branding_chat_code,
-            'address'              => $branding_address,
-            'support_phone'        => $branding_support_phone,
-            'support_email'        => $branding_support_email,
-            'sales_phone'          => $branding_sales_phone,
-            'sales_email'          => $branding_sales_email,
-            'meta_description'     => $branding_meta_description,
-            'meta_keywords'        => $branding_meta_keywords,
-            'og_image'             => $branding_graph_site_thumbnail,
-            'meta_title'           => $branding_meta_title,
-            'meta_title_prefix'    => $branding_meta_title_prefix,
-            'meta_title_suffix'    => $branding_meta_title_suffix,
-            'meta_delimeter'       => $branding_meta_title_delimeter,
-            'social_facebook_page' => $branding_social_fb_page,
-            'social_twitter'       => $branding_social_twitter,
-            'social_pinterest'     => $branding_social_pinterest,
-            'social_google_plus'   => $branding_social_google_plus,
-            'social_youtube'       => $branding_social_youtube,
-            'social_linkedin'      => $branding_social_linkedin,
-            'footer_text'          => $branding_footer_text,
-            'home_page_text'       => $branding_home_page_text
+          $data = array('site_image'           => $branding_image,
+                        'name'                 => $branding_name,
+                        'slogan'               => $branding_slogan,
+                        'chat_code'            => $branding_chat_code,
+                        'address'              => $branding_address,
+                        'support_phone'        => $branding_support_phone,
+                        'support_email'        => $branding_support_email,
+                        'sales_phone'          => $branding_sales_phone,
+                        'sales_email'          => $branding_sales_email,
+                        'meta_description'     => $branding_meta_description,
+                        'meta_keywords'        => $branding_meta_keywords,
+                        'og_image'             => $branding_graph_site_thumbnail,
+                        'meta_title'           => $branding_meta_title,
+                        'meta_title_prefix'    => $branding_meta_title_prefix,
+                        'meta_title_suffix'    => $branding_meta_title_suffix,
+                        'meta_delimeter'       => $branding_meta_title_delimeter,
+                        'social_facebook_page' => $branding_social_fb_page,
+                        'social_twitter'       => $branding_social_twitter,
+                        'social_pinterest'     => $branding_social_pinterest,
+                        'social_google_plus'   => $branding_social_google_plus,
+                        'social_youtube'       => $branding_social_youtube,
+                        'social_linkedin'      => $branding_social_linkedin,
+                        'footer_text'          => $branding_footer_text,
+                        'home_page_text'       => $branding_home_page_text
+                        );
 
-          );
-
-          /*
-          * Save the Branding Information
+         /*
+          * Save the Branding information
           *
+          * @param array $data The Branding information
           * @access public
           * @return boolean
           */           

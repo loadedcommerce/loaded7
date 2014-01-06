@@ -33,8 +33,17 @@ class lC_Content_mainpage_content extends lC_Modules {
   * @return string
   */
   public function initialize() {
-    if (defined('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT')) {
-      $this->_content = MODULE_CONTENT_HOMEPAGE_HTML_CONTENT;
+    global $lC_Database, $lC_Language;
+    
+    $Qcontent = $lC_Database->query('select homepage_text from :table_branding where language_id = :language_id');
+    $Qcontent->bindTable(':table_branding', TABLE_BRANDING);
+    $Qcontent->bindInt(':language_id', $lC_Language->getID());
+    $Qcontent->execute();
+    
+    if ($Qcontent->numberOfRows() > 0) {
+      while ( $Qcontent->next() ) {
+        $this->_content = $Qcontent->value('homepage_text');
+      }
     }
   }
  /*
@@ -47,22 +56,6 @@ class lC_Content_mainpage_content extends lC_Modules {
     global $lC_Database;
 
     parent::install();
-
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added, use_function, set_function) values ('Home Page Content', 'MODULE_CONTENT_HOMEPAGE_HTML_CONTENT', '1', 'This module enables Home Page Content using Branding Manager.', '6', '0', now(), 'lc_cfg_set_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))')");
-
-  }
- /*
-  * Return the module keys
-  *
-  * @access public
-  * @return array
-  */
-  public function getKeys() {
-    if (!isset($this->_keys)) {
-      $this->_keys = array('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT');
-    }
-
-    return $this->_keys;
   }
 }
 ?>
