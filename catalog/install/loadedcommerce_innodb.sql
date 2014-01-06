@@ -108,6 +108,7 @@ CREATE TABLE lc_banners_history (
 DROP TABLE IF EXISTS lc_branding;
 CREATE TABLE IF NOT EXISTS lc_branding (
   language_id int(11) NOT NULL DEFAULT '1',
+  homepage_text TEXT NOT NULL DEFAULT '',
   slogan varchar(256) NOT NULL DEFAULT '',
   meta_description varchar(250) NOT NULL DEFAULT '',
   meta_keywords varchar(128) NOT NULL DEFAULT '',

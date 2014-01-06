@@ -12,7 +12,7 @@ class lC_Access_Banner_manager extends lC_Access {
       $_group = 'marketing',
       $_icon = 'windows.png',
       $_title,
-      $_sort_order = 100;
+      $_sort_order = 300;
 
   public function lC_Access_Banner_manager() {
     global $lC_Language;

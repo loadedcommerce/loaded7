@@ -65,9 +65,7 @@ if ($Qbranding->numberOfRows() > 0) {
     <form name="branding_manager" id="branding_manager" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . '&action=save'); ?>" method="post">
     <div class="side-tabs tab-opened"> 
       <ul class="tabs">
-      <?php if (defined('MODULE_CONTENT_HOMEPAGE_HTML_CONTENT')) { ?>
         <li class="active"><a href="#home"><?php echo $lC_Language->get('tab_home_page'); ?></a></li>
-      <?php } ?>
         <li><a href="#header"><?php echo $lC_Language->get('tab_header'); ?></a></li>
         <li><a href="#company"><?php echo $lC_Language->get('tab_company_info'); ?></a></li>
         <li><a href="#seo"><?php echo $lC_Language->get('tab_seo'); ?></a></li>
