@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>After VQMOD-002, add PayPal Express Checkout Logic</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/content/checkout/shipping.php">
+    <operation info="After VQMOD-002, add PayPal Express Checkout Logic">
+      <search position="after"><![CDATA[
+    /*VQMOD-002*/
+      ]]></search>        
+      <add><![CDATA[
+      // ppec intercept
+      if (isset($_GET['ppec']) && $_GET['ppec'] == 'process') {
+        // setExpressCheckout()
+        include_once(DIR_FS_CATALOG . 'includes/classes/order.php');
+        include_once(DIR_FS_CATALOG . 'includes/classes/payment.php');
+        
+        include_once(DIR_FS_CATALOG . 'addons/PayPal_Express_Checkout/modules/payment/paypal_EC.php');
+        
+        $ppec = new lC_Payment_paypal_EC();
+        $_SESSION['PPEC_TOKEN'] = $ppec->setExpressCheckout(); 
+        if (!$_SESSION['PPEC_TOKEN']) {
+          lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'cart', 'SSL')); 
+        }
+        // insert the order before leaving for paypal
+        $ppec->confirmation();
+        // redirect to paypal
+        lc_redirect($ppec->_ec_redirect_url . $_SESSION['PPEC_TOKEN']);
+      }     
+      ]]></add>
+    </operation>
+  </file>   
+</modification>

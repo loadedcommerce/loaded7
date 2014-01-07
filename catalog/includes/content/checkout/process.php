@@ -46,10 +46,10 @@ class lC_Checkout_Process extends lC_Template {
     // load selected payment module
     include($lC_Vqmod->modCheck('includes/classes/payment.php'));
 
-    /*VQMOD-003*/
+    /*VQMOD-003*/   
     if (isset($_SESSION['PPEC_TOKEN']) && $_SESSION['PPEC_TOKEN'] != NULL && isset($_GET['token']) && $_GET['token'] == $_SESSION['PPEC_TOKEN']) { 
-      $lC_Payment = new lC_Payment('paypal_adv');
-      $lC_ShoppingCart->setBillingMethod(array('id' => 'paypal_adv', 'title' => $GLOBALS['lC_Payment_paypal_adv']->getMethodTitle()));
+      $lC_Payment = new lC_Payment($lC_ShoppingCart->getBillingMethod('id'));
+      //$lC_ShoppingCart->setBillingMethod(array('id' => 'paypal_adv', 'title' => $GLOBALS['lC_Payment_paypal_adv']->getMethodTitle()));
       
       if (isset($_SESSION['cartSync']['cartID']) && $_SESSION['cartSync']['cartID'] != NULL) {
         $_SESSION['cartID'] = $_SESSION['cartSync']['cartID'];

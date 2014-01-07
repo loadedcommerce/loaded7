@@ -164,7 +164,8 @@ class lC_Template {
       }
     }
 
-    include('includes/content/' . $group . '/' . $module . '.php');
+    global $lC_Vqmod;
+    include_once($lC_Vqmod->modCheck('includes/content/' . $group . '/' . $module . '.php'));
     $_page_module_name = 'lC_' . ucfirst($group) . '_' . ucfirst($module);
     $object = new $_page_module_name();
     
