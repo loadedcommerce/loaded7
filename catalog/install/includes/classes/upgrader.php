@@ -771,7 +771,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                             , 'has_children'           => 0
                              ); 
                            
-          $products[] = $product;
+          $products[] = $product; 
         
           $tQry = $target_db->query('INSERT INTO :table_products (products_id, 
                                                                   parent_id, 
@@ -830,6 +830,28 @@ class lC_LocalUpgrader extends lC_Upgrader {
           
           $tQry->execute();
           
+          $mQry = $target_db->query('SELECT id FROM :table_templates_boxes WHERE code = "manufacturers"');
+          $mQry->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+          $mQry->execute(); 
+        
+          $aQry = $target_db->query('INSERT INTO :table_product_attributes (id, 
+                                                                            products_id, 
+                                                                            languages_id,  
+                                                                            value) 
+                                                                    VALUES (:id, 
+                                                                            :products_id, 
+                                                                            :languages_id, 
+                                                                            :value)');
+  
+          $aQry->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
+          
+          $aQry->bindInt(':id'           , $mQry->value('id'));
+          $aQry->bindInt(':products_id'  , $sQry->value($map['products_id']));
+          $aQry->bindInt(':languages_id' , 0);
+          $aQry->bindInt(':value'        , ($sQry->value($map['manufacturers_id']) != '' || $sQry->value($map['manufacturers_id']) != NULL) ? $sQry->value($map['manufacturers_id']) : 0);
+          
+          $aQry->execute();
+          
           if ($target_db->isError()) {
             $this->_msg = $target_db->getError();
             return false;
@@ -838,6 +860,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         }
         
         $sQry->freeResult();
+        $mQry->freeResult();
       }
       
       // END LOAD PRODUCTS FROM SOURCE DB
