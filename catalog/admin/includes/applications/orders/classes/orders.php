@@ -1127,6 +1127,7 @@ class lC_Orders_Admin {
     $Qrates->bindInt(':tax_class_id', $products_tax_class_id);    
     $Qrates->execute();
     if ($Qrates->numberOfRows()) {
+      $products_tax_rate_desc = $Qrates->value('tax_description');
       $products_tax_rate = $Qrates->value('tax_rate');
     } else {
       $products_tax_rate = 0;
@@ -1149,7 +1150,6 @@ class lC_Orders_Admin {
     $Qupdate->bindInt(':orders_id', $oID);
     //$Qupdate->setLogging($_SESSION['module'], $id);
     $Qupdate->execute();
-
 
     $Qproducts = $lC_Database->query('select * from :table_orders_products where orders_id = :orders_id');
     $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
@@ -1186,9 +1186,10 @@ class lC_Orders_Admin {
           $Qsub_total->bindValue(':class', $Qtotals->value('class'));
           $Qsub_total->execute();    
         } else if ($Qtotals->value('class') == 'tax') {
-          $Qtax = $lC_Database->query('update :table_orders_total set text = :text , value = :value where class = :class and orders_id = :orders_id');
+          $Qtax = $lC_Database->query('update :table_orders_total set title = :title , text = :text , value = :value where class = :class and orders_id = :orders_id');
           $Qtax->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
           $Qtax->bindInt(':orders_id', $oID);          
+          $Qtax->bindValue(':title', $products_tax_rate_desc);          
           $Qtax->bindValue(':text', $lC_Currencies->format($Tax, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
           $Qtax->bindValue(':value', $Tax);
           $Qtax->bindValue(':class', $Qtotals->value('class'));
