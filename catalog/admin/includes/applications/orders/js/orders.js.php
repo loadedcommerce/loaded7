@@ -479,7 +479,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       content: '<div id="deleteOrdersTotal">'+
                '  <div id="deleteConfirm">'+
                '    <p id="deleteConfirmMessage"><?php echo $lC_Language->get('introduction_delete_order_total'); ?>'+
-               '      <p><b>' + decodeURI(name.replace(/\+/g, '%20')) + '</b></p>'+
+               '      <p><b>' + decodeURI(name.replace(/\+/g, '%20').replace(/%/g, '')) + '</b></p>'+
                '    </p>'+
                '  </div>'+
                '</div>',
