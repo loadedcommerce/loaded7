@@ -25,8 +25,9 @@ class lC_Server_info_Admin {
     $Qchk->execute();
     
     if ($Qchk->numberOfRows() > 0) {
-      $Qupdate = $lC_Database->query('update :table_configuration set configuration_title = :configuration_title, configuration_key = :configuration_key, configuration_value = :configuration_value, configuration_description = :configuration_description, configuration_group_id = :configuration_group_id, last_modified = :last_modified where configuration_key = :configuration_key');
-      $Qupdate->bindValue(':date_added', date("Y-m-d H:m:s"));   
+      $Qupdate = $lC_Database->query('update :table_configuration set configuration_title = :configuration_title, configuration_key = :configuration_key, configuration_value = :configuration_value, configuration_description = :configuration_description, configuration_group_id = :configuration_group_id, date_added = :date_added where configuration_key = :configuration_key');
+      $Qupdate->bindValue(':date_added', date("Y-m-d H:m:s")); 
+      $Qupdate->bindValue(':configuration_key', 'INSTALLATION_ID');
     } else {
       $Qupdate = $lC_Database->query('insert into :table_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, last_modified) values (:configuration_title, :configuration_key, :configuration_value, :configuration_description, :configuration_group_id, :last_modified)');
       $Qupdate->bindValue(':last_modified', date("Y-m-d H:m:s"));   
