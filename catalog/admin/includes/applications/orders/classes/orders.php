@@ -1296,6 +1296,9 @@ class lC_Orders_Admin {
     $Qtotals->execute();
     
     while ($Qtotals->next()) {
+
+      $str_flag = ($Qtotals->value('class') == 'coupon') ? ' - ' : '' ;  
+
       if ($Qtotals->value('class') == 'total') {
         $total = $Qtotals->value('value');
       } else {
@@ -1305,7 +1308,7 @@ class lC_Orders_Admin {
                  '    <span class="icon-list icon-anthracite">&nbsp;' .
                         lc_draw_input_field("title_" . $Qtotals->value('class'), $Qtotals->value('title'), ' style="width:30%;"') . 
                  '    </span>&nbsp;&nbsp;' . 
-                      lc_draw_input_field("value_" . $Qtotals->value('class'), $lC_Currencies->format($Qtotals->value('value')), ' id = "value_'. $Qtotals->value('class'). '"  style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal(\''.$lC_Currencies->getSymbolLeft().'\');"') . '&nbsp;&nbsp;' .
+                      lc_draw_input_field("value_" . $Qtotals->value('class'), $str_flag.$lC_Currencies->format($Qtotals->value('value')), ' id = "value_'. $Qtotals->value('class'). '"  style="width:10%;text-align:right;min-width:65px;" onkeyup="updateGrandTotal(\''.$lC_Currencies->getSymbolLeft().'\');"') . '&nbsp;&nbsp;' .
                  '    <a href="javascript:void(0);" onclick="removeOrderTotal(' . $oID . ', \'' . $Qtotals->value('class') . '\',\''.$lC_Currencies->getSymbolLeft().'\')" class="icon-minus-round icon-red with-tooltip" title="remove"></a>' . 
                  '  </div>';    
       
@@ -1450,17 +1453,20 @@ class lC_Orders_Admin {
     foreach ($_GET as $k => $v) {
       $title = substr($k, 0, 6);
       $class = substr($k, 6);
+      //$str_flag = '' ;  
       if ($title == "title_") {
+        //$str_flag = ($class == 'coupon') ? '-' : '' ;  
         $arr[$class]['title'] = $v;
       } else if ($title == "value_") {
         $arr[$class]['value'] = $v;
       }
-    }
+    }   
 
     foreach ($arr as $k1 => $v1) {
       $class = $k1;
       $title = $v1['title'];
-      $value = str_replace(',','',substr($v1['value'],1));
+      //$value = str_replace(',','',substr($v1['value'],1));
+      $value = preg_replace("/[^0-9.]/", "", $v1['value']);
 
       $Qtotals = $lC_Database->query('select * from :table_orders_total where orders_id = :orders_id and class = :class');
       $Qtotals->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
@@ -1473,7 +1479,7 @@ class lC_Orders_Admin {
         $Qupdate->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
         $Qupdate->bindInt(':orders_id', $orders_id);          
         $Qupdate->bindValue(':title', $title);          
-        $Qupdate->bindValue(':text', $lC_Currencies->format($value, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+        $Qupdate->bindValue(':text', $str_flag.$lC_Currencies->format($value, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
         $Qupdate->bindValue(':value', $value);
         $Qupdate->bindValue(':class', $class); 
         $Qupdate->execute();
@@ -1483,7 +1489,7 @@ class lC_Orders_Admin {
         $Qinsert->bindTable(':table_orders_total', TABLE_ORDERS_TOTAL);
         $Qinsert->bindInt(':orders_id', $orders_id);
         $Qinsert->bindValue(':title', $title);
-        $Qinsert->bindValue(':text', $lC_Currencies->format($value, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
+        $Qinsert->bindValue(':text', $str_flag.$lC_Currencies->format($value, $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()));
         $Qinsert->bindValue(':value', $value);
         $Qinsert->bindValue(':class', $class);
         $Qinsert->bindValue(':sort_order', 0);
