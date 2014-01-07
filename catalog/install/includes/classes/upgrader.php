@@ -2335,7 +2335,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
         //  #### getCPATH CODE
 
-        $cat_list = "cPath=" . lC_LocalUpgrader::getcdsPath($permalink['item_id']);
+        $cat_list = "cPath=" . lC_LocalUpgrader::getcdsPath($permalink['item_id'], null);
         
         //  #### END getCPATH CODE         
         
@@ -3972,13 +3972,33 @@ class lC_LocalUpgrader extends lC_Upgrader {
       if ($sQry->numberOfRows() > 0) { 
         $cnt = 0;
         while ($sQry->next()) {
-          $group  = array(
-                            'id'           => $sQry->value('products_options_text_id')
-                          , 'languages_id' => $sQry->value('language_id')
-                          , 'title'        => $sQry->value('products_options_name')
-                          , 'sort_order'   => 0
-                          , 'module'       => "pull_down_menu"
-                           ); 
+          // From 6.X option types ////////////////////////////////
+          // if ($opt_type == 0) return 'Select';
+          // if ($opt_type == 1) return 'Text';
+          // if ($opt_type == 2) return 'Radio';
+          // if ($opt_type == 3) return 'Checkbox';
+          // if ($opt_type == 4) return 'Text Area';
+          // if ($opt_type == 5) return 'File Upload';
+          /////////////////////////////////////////////////////////
+          $otQry = $source_db->query('SELECT products_options_sort_order, options_type FROM products_options WHERE products_options_id = :products_options_id');
+          $otQry->bindInt(':products_options_id', $sQry->value('products_options_text_id'));
+          $otQry->execute();
+          $sort = $otQry->value('products_options_sort_order');
+          if ($otQry->value('options_type') == 1) {
+            $module = 'text_field';
+          } else if ($otQry->value('options_type') == 2) { 
+            $module = 'radio_buttons';
+          } else {
+            $module = 'pull_down_menu';
+          }
+          $otQry->freeResult();
+          $group = array(
+                           'id'           => $sQry->value('products_options_text_id')
+                         , 'languages_id' => $sQry->value('language_id')
+                         , 'title'        => $sQry->value('products_options_name')
+                         , 'sort_order'   => $sort
+                         , 'module'       => $module
+                          ); 
                                    
           $tQry = $target_db->query('INSERT INTO :table_products_variants_groups (id, 
                                                                                   languages_id, 
