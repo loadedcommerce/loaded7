@@ -38,10 +38,10 @@ abstract class lC_Upgrader {
   
   protected $_languages_id_default = 1; 
   
-  public function __construct(){
+  public function __construct() {
   }
 
-  public function printDataMap(){
+  public function printDataMap() {
     print_r($this->_data_mapping);
   }
   
@@ -97,7 +97,7 @@ abstract class lC_Upgrader {
       }
       //add the files
       foreach ($valid_files as $file) {
-        $zip->addFile($file, $file);
+        $zip->addFile($file, end(explode('/', $file)));
       }
       //debug
       //echo 'The zip archive contains ', $zip->numFiles,' files with a status of ', $zip->status;
@@ -2698,11 +2698,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importImages(){
+  public function importImages() {
       global $lC_Language;
 
       $source_img_dir = $this->_sDB['INSTALL_PATH'].$this->_sDB['IMAGE_PATH'];
-      $target_img_dir = getcwd().'/../images/products/originals/';
+      $target_img_dir = getcwd() . '/../images/products/originals/';
 
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -2842,7 +2842,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $this->_msg = $target_db->getError();
             return false;
           }
-          // if not exist, loop to next ;
+          // if not exist, loop to next;
           if (!file_exists($source_img_dir . $img_info) || !is_readable($source_img_dir . $img_info)) {
             continue;
           }          
@@ -2856,10 +2856,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       }
       
       $o_dir = getcwd();
-      $target_img_dir =  str_replace("install", "", getcwd()) . 'images/products/originals/';
-       
       chdir($source_img_dir);
-      $target_zip = 'my-images' . time() . '.zip';
+      $target_zip = 'my-product-images-' . time() . '.zip';
 
       $result = $this->create_zip($to_zip, $target_img_dir . $target_zip);  
       if ($result == false) {
@@ -2902,11 +2900,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCategoryImages(){
+  public function importCategoryImages() {
       global $lC_Language;
 
       $source_img_dir = $this->_sDB['INSTALL_PATH'].$this->_sDB['IMAGE_PATH'];
-      $target_img_dir = getcwd().'/../images/xtn/';
+      $target_img_dir = getcwd() . '/../images/categories/';
 
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -3002,10 +3000,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       }
 
       $o_dir = getcwd();
-      $target_img_dir = str_replace("install", "", getcwd()) . 'images/products/originals/';
-      
       chdir($source_img_dir);
-      $target_zip = 'my-images' . time() . '.zip';
+      $target_zip = 'my-category-images-' . time() . '.zip';
 
       $result = $this->create_zip($to_zip, $target_img_dir . $target_zip);  
       if ($result == false) {
@@ -3018,7 +3014,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $this->_msg = $lC_Language->get('upgrade_step4_import_category_images_zipextracterror');
         return false;
       }    
-      unlink($target_img_dir . $target_zip);
+      //unlink($target_img_dir . $target_zip);
       $this->chmod_r($target_img_dir);
       chdir($o_dir);
 
@@ -3073,7 +3069,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCustomerGroups(){
+  public function importCustomerGroups() {
     global $lC_Language;
     
       $s_db = $this->_sDB;
@@ -3232,7 +3228,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-    public function importOrders(){
+    public function importOrders() {
       
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -3922,7 +3918,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importAttributes(){
+  public function importAttributes() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -4273,7 +4269,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importAdministrators(){
+  public function importAdministrators() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -4452,7 +4448,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importNewsletter(){
+  public function importNewsletter() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -4597,7 +4593,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importBanners(){
+  public function importBanners() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -4827,7 +4823,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importConfiguration(){
+  public function importConfiguration() {
     
       return true; // temporarily disable this function until we decide to include configuration from older version of the cart 
       
@@ -5039,7 +5035,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCoupons(){
+  public function importCoupons() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -5357,7 +5353,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importTaxClassesRates(){
+  public function importTaxClassesRates() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
