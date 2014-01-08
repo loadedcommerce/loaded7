@@ -2869,8 +2869,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
       if ($result == false) {
         $this->_msg = $lC_Language->get('upgrade_step4_import_product_images_zipextracteerror');
         return false;
-      }    
-      // unlink($target_img_dir . $target_zip);
+      }
+          
+      unlink($target_img_dir . $target_zip);
       $this->chmod_r($target_img_dir);
       chdir($o_dir);
 
@@ -3013,8 +3014,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
       if ($result == false) {
         $this->_msg = $lC_Language->get('upgrade_step4_import_category_images_zipextracterror');
         return false;
-      }    
-      //unlink($target_img_dir . $target_zip);
+      }
+          
+      unlink($target_img_dir . $target_zip);
       $this->chmod_r($target_img_dir);
       chdir($o_dir);
 
