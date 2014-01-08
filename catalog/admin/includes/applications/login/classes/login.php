@@ -38,8 +38,10 @@ class lC_Login_Admin {
     } 
     // check serial once per day and download any missing addons
     $serial = (defined('INSTALLATION_ID') && INSTALLATION_ID != NULL) ? INSTALLATION_ID : NULL;
-    if (self::_timeToCheck() && $serial != NULL) {
-      self::validateSerial($serial);
+    if ($serial != NULL) {
+      if (self::_timeToCheck()) {
+        self::validateSerial($serial);
+      }
     }
    
     return $validated;
@@ -223,7 +225,7 @@ class lC_Login_Admin {
       $result['rpcStatus'] = '1';
       // make sure the products for this serial have been downloaded from the cloud
       $products = (is_array($resultArr['data']['products'])) ? $resultArr['data']['products']['line_0'] : $resultArr['data']['products'];
-      if (isset($products) && empty($products) === false) self::_verifyProductsAreDownloaded($products);
+      if (isset($products) && empty($products) === false) self::verifyProductsAreDownloaded($products);
     } else {
       $result['rpcStatus'] = $resultArr['data']['rpcStatus'];  
     }
@@ -252,7 +254,7 @@ class lC_Login_Admin {
   * @access private
   * @return boolean
   */ 
-  private static function _verifyProductsAreDownloaded($products) {
+  public static function verifyProductsAreDownloaded($products) {
     
     $productsArr = explode('|', $products);
     
@@ -293,10 +295,12 @@ class lC_Login_Admin {
     $check = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
     if ($check == NULL) return TRUE;
     
-    $Qcheck = $lC_Database->query('select last_modified from :table_configuration where configuration_key = :configuration_key');
+    $Qcheck = $lC_Database->query('select * from :table_configuration where configuration_key = :configuration_key limit 1');
     $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
     $Qcheck->bindValue(':configuration_key', 'INSTALLATION_ID');
     $Qcheck->execute();  
+    
+    if ($Qcheck->value('date_added') == '0000-00-00 00:00:00') return TRUE;
     
     $today = substr(lC_DateTime::getShort(date("Y-m-d H:m:s")), 3, 2);
     $check = substr(lC_DateTime::getShort($Qcheck->value('last_modified')), 3, 2);

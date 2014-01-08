@@ -350,7 +350,7 @@ if (!class_exists('lC_Store_Admin')) {
           self::getAddonPhar($key);
 
           // apply the addon phar 
-          if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
+          if (file_exists(DIR_FS_WORK . 'addons/' . $key . '.phar')) {
             lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar', 'template');
           }
         }      
@@ -365,7 +365,7 @@ if (!class_exists('lC_Store_Admin')) {
           self::getAddonPhar($key);
 
           // apply the addon phar 
-          if (file_exists(DIR_FS_WORK . 'addons/update.phar')) {
+          if (file_exists(DIR_FS_WORK . 'addons/' . $key . '.phar')) {
             lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
           }
         }
