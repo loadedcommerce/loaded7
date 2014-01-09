@@ -179,8 +179,61 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
                               '</span>');
   }
   
-  function deleteOrderProduct(val) {
-    alert('delete product: ' + val + ' from the order');
+  function deleteOrderProduct(val, name) {
+    var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
+    if (parseInt(accessLevel) < 2) {
+      $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
+      return false;
+    }
+    $.modal({
+      content: '<div id="deleteOrderProduct">'+
+               '  <div id="deleteProductConfirm">'+
+               '    <form name="opDelete" id="opDelete" action="" method="post">'+
+               '      <p id="deleteProductConfirmMessage"><?php echo $lC_Language->get('introduction_delete_order_product'); ?>'+
+               '        <p><b>' + name.replace(/\+/g, '%20') + '</b></p>'+
+               //'        <p><label for="restock" class="label"><?php echo $lC_Language->get('field_restock_product_quantity'); ?></label><?php echo '&nbsp;' . lc_draw_checkbox_field('restock', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?>'+
+               '      </p>'+
+               '    </form>'+
+               '  </div>'+
+               '</div>',
+      title: '<?php echo $lC_Language->get('modal_heading_delete_order_product'); ?>',
+      width: 300,
+      actions: {
+        'Close' : {
+          color: 'red',
+          click: function(win) { win.closeModal(); }
+        }
+      },
+      buttons: {
+        '<?php echo $lC_Language->get('button_cancel'); ?>': {
+          classes:  'glossy',
+          click:    function(win) { win.closeModal(); }
+        },
+        '<?php echo $lC_Language->get('button_delete'); ?>': {
+          classes:  'blue-gradient glossy',
+          click:    function(win) {
+            var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteOrderProduct&pid=PID'); ?>'  
+            $.getJSON(jsonLink.replace('PID', val),
+              function (data) {
+                if (data.rpcStatus == -10) { // no session
+                  var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+                  $(location).attr('href',url);
+                }
+                if (data.rpcStatus != 1) {
+                  $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
+                  return false;
+                }
+                if (data.rpcStatus == 1) {
+                  $("#orders_products_" + val).remove();
+                }
+              }
+            );
+            win.closeModal();
+          }
+        }
+      },
+      buttonsLowPadding: true
+    });
   }
   
   function orderProductDetails(oid, pid) {

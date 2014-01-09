@@ -31,10 +31,10 @@
             </tr>
           </thead>
           <tbody>
-          <?php
-            foreach (lC_Orders_Admin::getOrdersProducts($_GET[$lC_Template->getModule()]) as $products) {
-          ?>
-            <tr>
+            <?php
+              foreach (lC_Orders_Admin::getOrdersProducts($_GET[$lC_Template->getModule()]) as $products) {
+            ?>
+            <tr id="orders_products_<?php echo $products['orders_products_id']; ?>">
               <td class="hide-on-mobile">
                 <span id="products_model_<?php echo $products['orders_products_id']; ?>"><?php echo $products['model']; ?></span>
               </td>
@@ -72,14 +72,14 @@
                 <span id="buttons_<?php echo $products['orders_products_id']; ?>">
                   <span class="button-group">
                     <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct('<?php echo $_GET[$lC_Template->getModule()]; ?>','<?php echo $products['orders_products_id']; ?>');"><?php echo $lC_Language->get('text_edit'); ?></a>
-                    <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['orders_products_id']; ?>');"></a>
+                    <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['orders_products_id']; ?>', '<?php echo $products['name']; ?>');"></a>
                   </span>
                 </span>
               </td>
             </tr>
-          <?php
-            }
-          ?>
+            <?php
+              }
+            ?>
           </tbody>
         </table>
         <div class="columns with-small-padding small-margin-left bbottom-grey small-margin-top small-margin-right small-margin-bottom align-right height bold">

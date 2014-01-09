@@ -392,7 +392,7 @@ class lC_Orders_Admin {
         }
       }
             
-      $result['orderProducts'] .= '  </td>
+      $result['orderProducts'] .= '</td>
                                      <td valign="top" align="right" class="orders-products-listing-td hide-below-480">' . $products['quantity'] . '</td>
                                      <td valign="top" align="right" class="orders-products-listing-td hide-below-480">' . $lC_Currencies->format($products['price'] * $products['quantity'], $lC_Order->getCurrency(), $lC_Order->getCurrencyValue()) . '</td>
                                      <td align="right" class="orders-products-listing-td show-below-480"><i title="Product Details" class="icon-info-round icon-blue mid-margin-right cursor-pointer" onclick="orderProductDetails(\'' . $id . '\', \'' . $products['products_id'] . '\');"></i></td>
@@ -949,7 +949,7 @@ class lC_Orders_Admin {
     
     foreach ( $lC_Order->getProducts() as $products ) {
       $tmpProducts = lC_Products_Admin::get($products['products_id']);
-      $tmpTaxDetails = lC_Tax_classes_Admin:: get($tmpProducts['products_tax_class_id']);
+      $tmpTaxDetails = lC_Tax_classes_Admin::get($tmpProducts['products_tax_class_id']);
       $products['tax_class'] = $tmpTaxDetails['tax_class_title'];
       // need a possible turnery and text defines...
       $products['stock'] = 'In Stock';
@@ -979,8 +979,6 @@ class lC_Orders_Admin {
     $result['tax_class_id'] = $productData[0]['products_tax_class_id'];
     $result['productsArray'] = lC_Products_Admin::getProductsArray();
     $result['taxclassArray'] = lC_Tax_classes_Admin::getAll();
-
-
 
     return $result;
   }
@@ -1436,9 +1434,7 @@ class lC_Orders_Admin {
     $data = $Qtax->toArray();
 
     return $data;
-  } 
-
-  
+  }
   
   public static function saveOrderTotal() {
     global $lC_Database, $lC_Language;
@@ -1498,6 +1494,19 @@ class lC_Orders_Admin {
       }
     } 
     return true;
+  }
+ 
+  public static function deleteOrderProduct() {
+    global $lC_Database; 
+    
+    $Qproduct = $lC_Database->query('delete from :table_orders_products where orders_products_id = :orders_products_id limit 1');
+    $Qproduct->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+    $Qproduct->bindInt(':orders_products_id', $_GET['pid']);
+    $Qproduct->execute();
+    
+    $data = $Qproduct->toArray();
+
+    return $data;
   }
 }
 ?>

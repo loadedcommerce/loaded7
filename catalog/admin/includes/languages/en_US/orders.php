@@ -39,11 +39,13 @@ field_restock_product_quantity = Restock Product Quantity?
 introduction_delete_order = Please verify the removal of this order. 
 introduction_batch_delete_orders = Please verify the removal of the selected orders.
 introduction_delete_order_total = Please verify the removal of this order total.
+introduction_delete_order_product = Please verify the removal of this order product.
 
 modal_heading_edit_order_status = Edit Order Status
 modal_heading_delete_order = Delete Order
 modal_heading_batch_delete_orders = Batch Delete Orders
 modal_heading_delete_order_total = Delete Order Total
+modal_heading_delete_order_product = Delete Order Product
 
 number_of_comments = Comments:
 number_of_products = Products:

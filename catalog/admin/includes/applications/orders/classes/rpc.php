@@ -206,6 +206,13 @@ class lC_Orders_Admin_rpc {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     }
     echo json_encode($result);
+  }  
+  public static function deleteOrderProduct() {
+    $result = lC_Orders_Admin::deleteOrderProduct();
+    if ($result !== false) { 
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+    echo json_encode($result);
   }
 }
 ?>
