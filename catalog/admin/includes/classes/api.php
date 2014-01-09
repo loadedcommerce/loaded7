@@ -12,17 +12,6 @@ require_once(DIR_FS_CATALOG . 'includes/classes/transport.php');
 
 class lC_Api {
   /**
-  * Perform the installation ID check
-  *  
-  * @access private      
-  * @return string
-  */ 
-  public function healthCheck($data = array()) {
-//    if ($this->_timeToCheck()) {
-//      return $this->_doHealthCheck($data);
-//    }
-  }
-  /**
   * Register the installation
   *  
   * @access private      
@@ -31,7 +20,6 @@ class lC_Api {
   public function register($data) {
     return $this->_doRegister($data);
   }  
-  
   /**
   * Validate the serial
   *  
@@ -41,7 +29,7 @@ class lC_Api {
   public function validateSerial($data) {
     return $this->_validateSerial($data);
   }  
-  /**
+ /**
   * Register the new install with the LC API
   *  
   * @access private      
@@ -75,16 +63,20 @@ class lC_Api {
     $checksum = hash('sha256', json_encode($registerArr));
     $registerArr['checksum'] = $checksum;
     
-    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/register/install/', 'method' => 'post', 'parameters' => $registerArr));
+    $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+    $registerArr['ver'] = utility::getVersion();
+    
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/register/install/', 'method' => 'post', 'parameters' => $registerArr));
     $newInstallationID = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
+    $products = (preg_match("'<products[^>]*?>(.*?)</products>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
 
     if ( lC_Server_info_Admin::updateInstallID($newInstallationID) ) {
-      return utility::arr2xml(array('error' => FALSE, 'installationID' => $newInstallationID));
+      return utility::arr2xml(array('error' => FALSE, 'installationID' => $newInstallationID, 'products' => $products));
     } else {    
       return utility::arr2xml(array('error' => TRUE, 'message' => 'error processing the request'));
     }  
   }
-  /**
+ /**
   * Check to see if it's time to re-check installation validity
   *  
   * @access private      

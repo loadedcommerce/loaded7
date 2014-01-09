@@ -11,6 +11,8 @@
 global $lC_Vqmod;
 
 require_once($lC_Vqmod->modCheck('../includes/classes/transport.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/updates/classes/updates.php')); 
+require_once($lC_Vqmod->modCheck('includes/applications/store/classes/store.php')); 
 
 class lC_Login_Admin {
  /*
@@ -33,7 +35,14 @@ class lC_Login_Admin {
           $validated = true;
         }
       }
-    }   
+    } 
+    // check serial once per day and download any missing addons
+    $serial = (defined('INSTALLATION_ID') && INSTALLATION_ID != NULL) ? INSTALLATION_ID : NULL;
+    if ($serial != NULL) {
+      if (self::_timeToCheck()) {
+        self::validateSerial($serial);
+      }
+    }
    
     return $validated;
   }
@@ -207,10 +216,20 @@ class lC_Login_Admin {
     $checksum = hash('sha256', json_encode($validateArr));
     $validateArr['checksum'] = $checksum;
     
-    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/check/serial/', 'method' => 'post', 'parameters' => $validateArr));  
+    $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+    $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/check/serial/', 'method' => 'post', 'parameters' => $validateArr));  
     
-    $result['rpcStatus'] = (preg_match("'<rpcStatus[^>]*?>(.*?)</rpcStatus>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;    
-
+    $resultArr = utility::xml2arr($resultXML);
+    
+    if (isset($resultArr['data']['valid']) && $resultArr['data']['valid'] == '1') {
+      $result['rpcStatus'] = '1';
+      // make sure the products for this serial have been downloaded from the cloud
+      $products = (is_array($resultArr['data']['products'])) ? $resultArr['data']['products']['line_0'] : $resultArr['data']['products'];
+      if (isset($products) && empty($products) === false) self::verifyProductsAreDownloaded($products);
+    } else {
+      $result['rpcStatus'] = $resultArr['data']['rpcStatus'];  
+    }
+    
     return $result;
   }
  /*
@@ -220,13 +239,75 @@ class lC_Login_Admin {
   * @return boolean true or false
   */ 
   public static function apiCheck() {
-    $apiCheck = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
+    $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+    $apiCheck = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/updates/available/?ver=' . utility::getVersion() . '&ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
     $versions = utility::xml2arr($apiCheck);
     
     if ($versions == null) {
       $file = @fopen(DIR_FS_WORK . 'apinocom.tmp', "w");
       @fclose($file);
     }
+  }  
+ /*
+  * Download the product PHARs
+  *
+  * @access private
+  * @return boolean
+  */ 
+  public static function verifyProductsAreDownloaded($products) {
+    
+    $productsArr = explode('|', $products);
+    
+    $cnt=0;
+    foreach ($productsArr as $key => $product) {
+      
+      $parts = explode(':', $product);
+      $type = $parts[0];
+      $item = $parts[1];
+      
+      if ($type == 'template') {
+        if (!file_exists(DIR_FS_ADMIN . 'includes/templates/' . $item . '.php')) {
+          // get the template phar and apply it
+        }  
+      } else { // addon
+        if (!file_exists(DIR_FS_CATALOG . 'addons/' . $item . '/controller.php')) {
+          // download the addon phar
+          lC_Store_Admin::getAddonPhar($item);
+          
+          // apply the phar package
+          if (file_exists(DIR_FS_WORK . 'addons/' . $item . '.phar')) {
+            lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $item . '.phar');
+          }
+        }
+      }
+      $cnt++;
+    }
   }
+ /**
+  * Check to see if it's time to re-check validity; once per day
+  *  
+  * @access private      
+  * @return boolean
+  */   
+  private static function _timeToCheck() {
+    global $lC_Database;
+
+    $check = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
+    if ($check == NULL) return TRUE;
+    
+    $Qcheck = $lC_Database->query('select * from :table_configuration where configuration_key = :configuration_key limit 1');
+    $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qcheck->bindValue(':configuration_key', 'INSTALLATION_ID');
+    $Qcheck->execute();  
+    
+    if ($Qcheck->value('date_added') == '0000-00-00 00:00:00') return TRUE;
+    
+    $today = substr(lC_DateTime::getShort(date("Y-m-d H:m:s")), 3, 2);
+    $check = substr(lC_DateTime::getShort($Qcheck->value('last_modified')), 3, 2);
+    
+    $Qcheck->freeResult();
+
+    return (((int)$today != (int)$check) ? TRUE : FALSE);   
+  }  
 }
 ?>

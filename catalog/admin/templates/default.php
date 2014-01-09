@@ -233,7 +233,13 @@
             </div>
           </div>
         </div>
-        <div class="go-pro-menu-ad cursor-pointer"></div>
+        <?php
+        if (utility::isPro() === false) {
+          ?>
+          <div class="go-pro-menu-ad cursor-pointer"></div>
+          <?php
+        }
+        ?>
         <!-- Big menu small navigation -->
         <ul id="access" class="children-tooltip">
           <li id="li-search"><a onclick="toggleSubMenu('search');" href="#" title="<?php echo $lC_Language->get('tooltip_search'); ?>"><span class="icon-search"></span></a></li>

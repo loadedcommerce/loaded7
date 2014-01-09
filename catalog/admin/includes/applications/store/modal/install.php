@@ -11,6 +11,11 @@
 ?>
 <script>
 function installAddon(id, type) {
+  var po = (type.indexOf('pro+template+pack') != -1) ? true : false;
+  if (po == true) {
+    $.modal.alert('<?php echo $lC_Language->get('text_available_with_pro'); ?>');
+    return false;
+  }
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=installAddon&name=NAME'); ?>'
   $.getJSON(jsonLink.replace('NAME', id),
     function (data) {
@@ -22,8 +27,13 @@ function installAddon(id, type) {
         $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
         return false;
       }
-      oTable.fnReloadAjax();
-      editAddon(id, type);
+      if (type == 'templates') {
+        document.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'templates'); ?>';
+        exit();
+      } else {
+        oTable.fnReloadAjax();
+        editAddon(id, type);
+      }
     }
   );
 }

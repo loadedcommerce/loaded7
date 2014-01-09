@@ -743,23 +743,25 @@ class lC_Template {
   */
   public function getTopCategoriesSelection() {
     $output = '';
-    foreach ($this->getTopCategories() as $menuItem) {
-      if ($menuItem['custom_url'] != '') {
-        if ($menuItem['mode'] == 'override') {
-          $output.= '<li><a href="' . $menuItem['custom_url'] . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
-        } else {
-         
-          // Session bug fix
-          $link = lc_href_link($menuItem['custom_url'], '', 'NONSSL');
-          if(substr_count($link, '?') > 1){
+    if (is_array($this->getTopCategories())) {
+      foreach ($this->getTopCategories() as $menuItem) {
+        if ($menuItem['custom_url'] != '') {
+          if ($menuItem['mode'] == 'override') {
+            $output.= '<li><a href="' . $menuItem['custom_url'] . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
+          } else {
+           
+            // Session bug fix
+            $link = lc_href_link($menuItem['custom_url'], '', 'NONSSL');
+            if(substr_count($link, '?') > 1){
 
-            $link = str_replace('?lCsid', '&lCsid', $link);
+              $link = str_replace('?lCsid', '&lCsid', $link);
+            }
+
+            $output.= '<li><a href="' . $link . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
           }
-
-          $output.= '<li><a href="' . $link . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
+        } else {
+          $output .= '<li><a href="' . lc_href_link(FILENAME_DEFAULT, 'cPath=' . $menuItem['id'], 'NONSSL') . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
         }
-      } else {
-        $output .= '<li><a href="' . lc_href_link(FILENAME_DEFAULT, 'cPath=' . $menuItem['id'], 'NONSSL') . '"' . (($menuItem['target'] != '') ? ' target="_blank"' : '') . '>' . $menuItem['name'] . '</a></li>';
       }
     }
     

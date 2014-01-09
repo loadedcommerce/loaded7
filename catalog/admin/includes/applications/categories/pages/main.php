@@ -9,20 +9,11 @@
   @version    $Id: main.php v1.0 2013-08-08 datazen $
 */
 ?>
-<style>
-.dragging, .dragging * { cursor: move !important; }
-.dragged { position: absolute; opacity: 0.5; z-index: 2000; }
-.placeholder { position: relative; }
-.placeholder:before { position: absolute; }
-</style>
-<!-- Main content -->
-<section role="main" id="main">
-  <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
-  <hgroup id="main-title" class="thin margin-bottom">
-    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
-  </hgroup>
-  <div id="breadCrumbContainer"><div class="breadCrumbHolder"><div id="breadCrumb0" class="breadCrumb"><?php echo $breadcrumb_string; ?></div></div></div>
-  <style>
+<style scoped="scoped">
+  .dragging, .dragging * { cursor: move !important; }
+  .dragged { position: absolute; opacity: 0.5; z-index: 2000; }
+  .placeholder { position: relative; }
+  .placeholder:before { position: absolute; }
   .dataColCheck { text-align: center; }
   .dataColCategory { text-align: left; }
   .dataColStatus { text-align: center; }
@@ -32,7 +23,20 @@
   .dataColAction { text-align: right; }
   .dataTables_info { bottom: 42px; color:#4c4c4c; }
   .selectContainer { position:absolute; bottom:29px; left:30px }
-  </style>
+</style>
+<!-- Main content -->
+<section role="main" id="main">
+  <noscript class="message black-gradient simpler"><?php echo $lC_Language->get('ms_error_javascript_not_enabled_warning'); ?></noscript>
+  <hgroup id="main-title" class="thin margin-bottom">
+    <h1><?php echo $lC_Template->getPageTitle(); ?></h1>
+  </hgroup>
+  <div id="breadCrumbContainer">
+    <div class="breadCrumbHolder">
+      <div id="breadCrumb0" class="breadCrumb">
+        <?php echo $breadcrumb_string; ?>
+      </div>
+    </div>
+  </div>
   <div class="with-padding-no-top">
     <form name="batch" id="batch" action="#" method="post">
     <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table" id="dataTable">

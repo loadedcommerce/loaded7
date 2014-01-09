@@ -43,20 +43,35 @@
             </p>            
           </form>
           <?php
-          if (isset($_GET['action']) && $_GET['action'] == 'register') {
-            ?>
-            <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
-              <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
-              <button type="button" onclick="window.location.href='<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>';" class="button glossy white-gradient full-width blue" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button>
-              <p class="align-center mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('text_or'); ?></p>   
-              <ul class="inputs black-input large">
-                <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
-              </ul>
-              <p class="full-width"><button type="submit" class="button glossy red-gradient full-width disabled" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
-              <button onclick="window.open('http://www.loadedcommerce.com/loaded-pre-order-p-395.html');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
-            </form>
-            <?php
-          }
+            if (isset($_GET['action']) && $_GET['action'] == 'register') {
+          ?>
+          <form id="form-activate-pro" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
+            <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
+            <button type="button" onclick="window.location.href='<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>';" class="button glossy white-gradient full-width blue" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button>
+            <p class="align-center mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('text_or'); ?></p>   
+            <ul class="inputs black-input large">
+              <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" style="width:85% !important;" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
+            </ul>
+            <p class="full-width"><button type="submit" class="button glossy red-gradient full-width disabled" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
+            <button onclick="window.open('http://www.loadedcommerce.com/loaded-pre-order-p-395.html');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
+          </form>
+          <?php
+            } else {
+          ?>
+          <form id="form-register" method="post" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=pro_success'); ?>" class="input-wrapper blue-gradient glossy" title="<?php echo $lC_Language->get('title_register'); ?>">
+            <h3 class="align-center margin-bottom"><?php echo $lC_Language->get('heading_product_registration'); ?></h3>
+            <button type="button" onclick="window.location.href='<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=activate_free'); ?>';" class="button glossy white-gradient full-width blue" id="activate-free"><?php echo $lC_Language->get('button_activate_free'); ?></button>
+            <p class="align-center mid-margin-top mid-margin-bottom"><?php echo $lC_Language->get('text_or'); ?></p>   
+            <ul class="inputs black-input large">
+              <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" style="width:85% !important;" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
+            </ul>
+            <p class="full-width">
+              <button type="submit" class="button glossy red-gradient full-width disabled" id="register"><?php echo $lC_Language->get('heading_product_registration'); ?></button>
+            </p>
+            <button onclick="window.open('http://www.loadedcommerce.com/loaded-pre-order-p-395.html');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
+          </form>
+          <?php 
+            }
           ?>
         </div>
       </div>
@@ -195,13 +210,27 @@ $(document).ready(function() {
   /*
   * Get Pro
   */
-  $('#activation_serial').change(function(event) {
+  $('#activation_serial').bind('paste', function(e){ 
+    // Short pause to wait for paste to complete
+    setTimeout( function() { _checkSerial(); }, 100);
+  })
+
+  $('#activation_serial').keyup(function(e) { _checkSerial(); });  
+  
+  function _checkSerial() {
     var serial = $('#activation_serial').val();
     var format = /[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/;
     var found = serial.match(format);
-    if (!found || serial.length != 24) {
+
+    if (serial.length != 24) {
       $('#activate-pro').addClass('disabled');
-      $('#buy-pro').removeClass('disabled');
+      $('#buy-pro').removeClass('disabled'); 
+      return false;
+    }    
+    
+    if (!found) {
+      $('#activate-pro').addClass('disabled');
+      $('#buy-pro').removeClass('disabled'); 
       displayError('<?php echo $lC_Language->get('ms_error_serial_invalid'); ?>');
       setTimeout(function(){ formWrapper.clearMessages() },3000);  
       return false;
@@ -210,8 +239,7 @@ $(document).ready(function() {
       $('#activate-pro').removeClass('disabled');
       return true;
     }
-  });  
-  
+  }
   
   /*
   * Register
@@ -238,20 +266,18 @@ $(document).ready(function() {
       $("#form-activate-pro").bind("submit", preventDefault(event));
 
       var nvp = $("#form-activate-pro").serialize();
-      var domain = '<?php echo str_replace('http://', '', HTTP_SERVER); ?>';
-      
       var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validateSerial&NVP'); ?>'; 
       $.getJSON(jsonLink.replace('NVP', nvp),        
         function (data) {  
           if (data.rpcStatus != 1) { 
             if (data.rpcStatus == -2) { 
-              displayError('<?php echo $lC_Language->get('text_error') . '(1) ' . $lC_Language->get('ms_error_serial_invalid'); ?>');   
+              displayError('<?php echo $lC_Language->get('text_error') . '(2) ' . $lC_Language->get('ms_error_serial_registered_to_another_domain'); ?>');   
             } else if (data.rpcStatus == -3) {
-              displayError('<?php echo $lC_Language->get('text_error') . '(2) ' . $lC_Language->get('ms_error_serial_invalid'); ?>');   
+              displayError('<?php echo $lC_Language->get('text_error') . '(3) ' . $lC_Language->get('ms_error_serial_expired'); ?>');   
             } else if (data.rpcStatus == -4) {            
-              displayError('<?php echo $lC_Language->get('text_error') . '(3) ' . $lC_Language->get('ms_error_serial_invalid');?>');
+              displayError('<?php echo $lC_Language->get('text_error') . '(4) ' . $lC_Language->get('ms_error_serial_invalid');?>');
             } else {                                      
-              displayError('<?php echo $lC_Language->get('text_error') . '(4) ' . $lC_Language->get('ms_error_serial_invalid'); ?>');   
+              displayError('<?php echo $lC_Language->get('text_error') . '(1) ' . $lC_Language->get('ms_error_serial_invalid'); ?>');   
             }
             setTimeout(function(){ formWrapper.clearMessages() },3000);
             return false;

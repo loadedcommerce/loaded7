@@ -11,10 +11,10 @@ global $lC_Template, $lC_Language;
 ?>
 <script>
 $(document).ready(function() {
-
+  
   function setMaintenanceMode(s) {
     if (s == 'on') {
-      $("body").mask('<span style="font-size:2em !important;"><?php echo $lC_Language->get('update_message_text1'); ?></span>');
+      $("#loaded7").mask('<span style="font-size:2em !important;"><?php echo $lC_Language->get('update_message_text1'); ?></span>');
       $('.loadmask-msg').css({'top':'200px'});
     } else {
       $("body").unmask();
@@ -28,7 +28,7 @@ $(document).ready(function() {
   } else {
     setMaintenanceMode('off');
   }
-  
+ 
   var showDebug = '<?php echo $lC_Template->showDebugMessages(); ?>';
   if (showDebug) {
     var debugOutput = <?php echo (isset($_SESSION['debugStack']) && !empty($_SESSION['debugStack'])) ? $_SESSION['debugStack'] : "''" ?>;
@@ -37,7 +37,7 @@ $(document).ready(function() {
   } else {
     $('#debug-info-container').hide();
   }  
-  
+   
   // run this last - determine media type
   setTimeout('_setMediaType()', 1000);
 

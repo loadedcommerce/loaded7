@@ -13,6 +13,8 @@ modal_heading_uninstall_addon = Uninstall Add-On
 text_mobile_enabled = Mobile Enabled
 text_featured = Featured
 text_in_cloud = In Cloud
+text_available_with_pro = Available free with the <span class="tag red-gradient glossy">PRO</span> edition
+text_free_with_pro_edition = <span class="tag red-gradient glossy">PRO</span> Free with Pro Edition
 
 rating_from_5_stars = %s of 5 Stars!
 

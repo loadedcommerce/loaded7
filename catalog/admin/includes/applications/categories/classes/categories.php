@@ -188,12 +188,36 @@ class lC_Categories_Admin {
     $data['childs_count'] = sizeof($lC_CategoryTree->getChildren($Qcategories->valueInt('categories_id'), $dummy = array()));
     $data['products_count'] = $lC_CategoryTree->getNumberOfProducts($Qcategories->valueInt('categories_id'));
 
-    $Qcategories->freeResult(); 
+    $Qdescription = $lC_Database->query('select * from :table_categories_description where categories_id = :categories_id');
+    $Qdescription->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qdescription->bindInt(':categories_id', $id);
+    $Qdescription->execute();
     
-    if ( !empty($key) && isset($data[$key]) ) {
+    while ($Qdescription->next()) {
+      $data[$Qdescription->valueInt('language_id')]['categories_name'] = $Qdescription->value('categories_name');  
+      $data[$Qdescription->valueInt('language_id')]['categories_menu_name'] = $Qdescription->value('categories_menu_name');  
+      $data[$Qdescription->valueInt('language_id')]['categories_blurb'] = $Qdescription->value('categories_blurb');  
+      $data[$Qdescription->valueInt('language_id')]['categories_description'] = $Qdescription->value('categories_description');  
+      $data[$Qdescription->valueInt('language_id')]['categories_tags'] = $Qdescription->value('categories_tags');  
+    }
+    
+    $Qpermalink = $lC_Database->query('select language_id, permalink from :table_permalinks where item_id = :item_id and type = 1');
+    $Qpermalink->bindTable(':table_permalinks', TABLE_PERMALINKS);
+    $Qpermalink->bindInt(':item_id', $id);
+    $Qpermalink->execute();
+    
+    while ($Qpermalink->next()) {
+      $data[$Qpermalink->valueInt('language_id')]['permalink'] = $Qpermalink->value('permalink');
+    }
+    
+    $Qcategories->freeResult(); 
+    $Qdescription->freeResult(); 
+    $Qpermalink->freeResult(); 
+    
+    if (!empty($key) && isset($data[$key])) {
       $data = $data[$key];
     }
-
+    
     return $data;
   }
  /*
@@ -303,7 +327,7 @@ class lC_Categories_Admin {
       lC_Cache::clear('category_tree');
       lC_Cache::clear('also_purchased');
 
-      return true;
+      return $category_id; // used for the save_close buttons
     }
 
     $lC_Database->rollbackTransaction();

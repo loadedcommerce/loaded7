@@ -1765,6 +1765,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>info</group>
     </definition>
     <definition>
+      <key>sitemap_information_pages</key>
+      <value><![CDATA[Information Pages]]></value>
+      <group>info</group>
+    </definition>
+    <definition>
       <key>sitemap_products_new</key>
       <value><![CDATA[New Products]]></value>
       <group>info</group>
@@ -2646,8 +2651,8 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <group>general</group>
     </definition> 
     <definition>
-      <key>update_message_text1</key>
-      <value><![CDATA[Please pardon our dust.  The store is temporarily offline for routine maintenance.  Please check back soon!]]></value>
+      <key>text_site_maintenance_message</key>
+      <value><![CDATA[Please pardon our dust.  The store is temporarily offline for routine maintenance.  Check back soon!]]></value>
       <group>general</group>
     </definition> 
     <definition>
@@ -2812,7 +2817,17 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>  
     <definition>
       <key>no_description_available</key>
-      <value><![CDATA[]]></value>
+      <value><![CDATA[ ]]></value>
+      <group>general</group>
+    </definition>  
+    <definition>
+      <key>featured_products_heading</key>
+      <value><![CDATA[Featured Products]]></value>
+      <group>general</group>
+    </definition>  
+    <definition>
+      <key>breadcrumb_featured_products</key>
+      <value><![CDATA[Featured Products]]></value>
       <group>general</group>
     </definition>      
   </definitions>  

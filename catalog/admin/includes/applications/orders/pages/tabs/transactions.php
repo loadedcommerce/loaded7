@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        <?php echo lC_Orders_Admin::getOrderTransactions($_GET[$lC_Template->getModule()]); ?>
+                  <?php echo lC_Orders_Admin::getOrderTransactions($oInfo->get('oID')); ?>
       </tbody>
     </table>
   </div>

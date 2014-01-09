@@ -131,17 +131,15 @@ class lC_Administrators_Admin {
       $lC_Database->startTransaction();
 
       if ( isset($id) && $id != null ) {
-        $Qadmin = $lC_Database->query('update :table_administrators set user_name = :user_name, first_name = :first_name, last_name = :last_name, image = :image, access_group_id = :access_group_id, language_id = :language_id ');
-
+        $Qadmin = $lC_Database->query('update :table_administrators set user_name = :user_name, first_name = :first_name, last_name = :last_name, image = :image, access_group_id = :access_group_id, language_id = :language_id, verify_key = :verify_key');
         if ( isset($data['user_password']) && !empty($data['user_password']) ) {
           $Qadmin->appendQuery(', user_password = :user_password');
           $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($data['user_password'])));
         }
-
         $Qadmin->appendQuery('where id = :id');
         $Qadmin->bindInt(':id', $id);
       } else {
-        $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, image, access_group_id, language_id) values (:user_name, :user_password, :first_name, :last_name, :image, :access_group_id,:language_id)');
+        $Qadmin = $lC_Database->query('insert into :table_administrators (user_name, user_password, first_name, last_name, image, access_group_id, language_id, verify_key) values (:user_name, :user_password, :first_name, :last_name, :image, :access_group_id,:language_id, :verify_key)');
         $Qadmin->bindValue(':user_password', lc_encrypt_string(trim($data['user_password'])));
       }
       
@@ -152,26 +150,30 @@ class lC_Administrators_Admin {
       $Qadmin->bindValue(':image', $data['avatar']);
       $Qadmin->bindInt(':access_group_id', $data['access_group_id']);
       $Qadmin->bindInt(':language_id', $data['language_id']);
+      $Qadmin->bindValue(':verify_key', '');
       $Qadmin->setLogging($_SESSION['module'], $id);
       $Qadmin->execute();
 
       if ( !$lC_Database->isError() ) {
         if ( !is_numeric($id) ) {
           $id = $lC_Database->nextID();
+          $new = 1;
         }
       } else {
         $error = true;
       }
 
-      if ( $error === false ) {
+      if ( $error === false  ) {
         $lC_Database->commitTransaction();
-        // check for language changes and set session accordingly
-        if ($data['language_id'] != $Qcheck->value('language_id')) {
-          $_SESSION['admin']['language_id'] = $data['language_id'];
+        if (!$new) {
+          // check for language changes and set session accordingly
+          if ($data['language_id'] != $Qcheck->value('language_id')) {
+            $_SESSION['admin']['language_id'] = $data['language_id'];
+          }
+          $_SESSION['admin']['username'] = $data['user_name'];
+          $_SESSION['admin']['firstname'] = $data['first_name'];
+          $_SESSION['admin']['lastname'] = $data['last_name'];
         }
-        $_SESSION['admin']['username'] = $data['user_name'];
-        $_SESSION['admin']['firstname'] = $data['first_name'];
-        $_SESSION['admin']['lastname'] = $data['last_name'];
       } else {
         $lC_Database->rollbackTransaction();
         $result['rpcStatus'] = -1;

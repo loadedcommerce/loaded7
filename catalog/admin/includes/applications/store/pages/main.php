@@ -32,7 +32,7 @@
 <?php
 $typesArr = lC_Store_Admin::getAllTypes();
 foreach ($typesArr as $key => $value) {
-  echo ".store-menu-" . strtolower($value['text']) . " { background-size:16px 16px !important; background: url('templates/default/img/icons/16/" . $value['icon'] . "') no-repeat scroll 8px 15px transparent !important; }";
+  echo ".store-menu-" . strtolower(str_replace(' ', '-', $value['text'])) . " { background-size:16px 16px !important; background: url('templates/default/img/icons/16/" . $value['icon'] . "') no-repeat scroll 8px 15px transparent !important; }";
 }
 ?>   
 </style>

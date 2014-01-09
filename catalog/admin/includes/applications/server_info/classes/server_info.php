@@ -18,25 +18,31 @@ class lC_Server_info_Admin {
   */
   public static function updateInstallID($id) {
     global $lC_Database;
+    
+    $Qchk = $lC_Database->query('select * from :table_configuration where configuration_key = :configuration_key');
+    $Qchk->bindTable(':table_configuration', TABLE_CONFIGURATION);
+    $Qchk->bindValue(':configuration_key', 'INSTALLATION_ID');
+    $Qchk->execute();
+    
+    if ($Qchk->numberOfRows() > 0) {
+      $Qupdate = $lC_Database->query('update :table_configuration set configuration_title = :configuration_title, configuration_key = :configuration_key, configuration_value = :configuration_value, configuration_description = :configuration_description, configuration_group_id = :configuration_group_id, date_added = :date_added where configuration_key = :configuration_key');
+      $Qupdate->bindValue(':date_added', date("Y-m-d H:m:s")); 
+      $Qupdate->bindValue(':configuration_key', 'INSTALLATION_ID');
+    } else {
+      $Qupdate = $lC_Database->query('insert into :table_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, last_modified) values (:configuration_title, :configuration_key, :configuration_value, :configuration_description, :configuration_group_id, :last_modified)');
+      $Qupdate->bindValue(':last_modified', date("Y-m-d H:m:s"));   
+    }
 
-    // remove any old value that might be in the database
-    $Qdel = $lC_Database->query('delete from :table_configuration where configuration_key = :configuration_key');
-    $Qdel->bindTable(':table_configuration', TABLE_CONFIGURATION);
-    $Qdel->bindValue(':configuration_key', 'INSTALLATION_ID');
-    $Qdel->execute();      
-
-    // update configuration table and add the installation ID   
-    $Qupdate = $lC_Database->query('insert into :table_configuration (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, last_modified) values (:configuration_title, :configuration_key, :configuration_value, :configuration_description, :configuration_group_id, :last_modified)');
     $Qupdate->bindTable(':table_configuration', TABLE_CONFIGURATION);
     $Qupdate->bindValue(':configuration_title', 'Installation ID');
     $Qupdate->bindValue(':configuration_key', 'INSTALLATION_ID');
     $Qupdate->bindValue(':configuration_value', $id);
     $Qupdate->bindValue(':configuration_description', 'Installation ID');      
     $Qupdate->bindValue(':configuration_group_id', '6');      
-    $Qupdate->bindValue(':last_modified', date("Y-m-d H:m:s"));   
     $Qupdate->execute();  
-    $Qupdate->execute();     
 
+    $Qchk->freeResult();
+    
     lC_Cache::clear('configuration');
 
     if ( $lC_Database->isError() ) {

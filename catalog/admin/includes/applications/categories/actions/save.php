@@ -41,9 +41,15 @@ class lC_Application_Categories_Actions_save extends lC_Application_Categories {
           * @param array $data The categories information
           * @access public
           * @return boolean
-          */
-          if ( lC_Categories_Admin::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data) ) {
-            lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $data['parent_id'] . '&cid=' . $_GET['cid']));
+          */         
+          $id = lC_Categories_Admin::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data);
+
+          if ( is_numeric($id) ) {
+            if ( empty($_POST['save_close']) ) {
+              lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $id . '&cid=' . $_GET['cid'] . '&action=save'));
+            } else {
+              lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $data['parent_id']));
+            }
           } else {
             $_SESSION['error'] = true;
             $_SESSION['errmsg'] = $lC_Language->get('ms_error_action_not_performed');

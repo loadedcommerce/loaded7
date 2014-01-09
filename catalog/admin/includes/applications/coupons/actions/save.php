@@ -69,13 +69,24 @@ class lC_Application_Coupons_Actions_save extends lC_Application_Coupons {
                     'sale_exclude' => $sale_exclude,
                     'notes' => $notes);
 
-      if ( lC_Coupons_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data) ) {
-      } else {
-        $lC_MessageStack->add($this->_module, $lC_Language->get('ms_error_action_not_performed'), 'error');
-      }
+      $id = lC_Coupons_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);
 
-      lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module));
+      if ( is_numeric($id) && isset($id)){
+
+        if(!empty($_POST['save_close'])){
+
+          lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module));
+        }else{
+          
+          lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module.'='.$id.'&action=save'));
+        }
+      }else{
+
+        $lC_MessageStack->add($this->_module, $lC_Language->get('ms_error_action_not_performed'), 'error');
+        lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module));
+      }
     }
   }
 }
+
 ?>

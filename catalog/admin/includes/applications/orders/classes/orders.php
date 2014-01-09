@@ -340,6 +340,7 @@ class lC_Orders_Admin {
       return array('error' => true, 'errmsg' => sprintf(ERROR_ORDER_DOES_NOT_EXIST, $id));
     }    
    
+    $result['oID'] = $id;
     $result['customerId'] = $lC_Order->getCustomer('id');
     $result['customerAddress'] = lC_Address::format($lC_Order->getCustomer(), '<br />');
     $result['deliveryAddress'] = lC_Address::format($lC_Order->getDelivery(), '<br />');
@@ -410,6 +411,9 @@ class lC_Orders_Admin {
     $result['orderTotalsData'] = '';
     $otcnt = 0; 
     foreach ( $lC_Order->getTotals() as $totals ) {
+      if ($totals['class'] == 'sub_total') {
+        $result['orderSubTotal'] = '<span>' . $totals['text'] . '</span>';
+      }
       $result['orderTotals'] .= '<tr><td align="right" class="small-padding-bottom' . (($totals['class'] == 'total') ? ' bolder btop-anthracite small-padding-top' : null) . '">' . (($totals['class'] == 'total') ? $totals['title'] = $lC_Language->get('text_grand_total') : $totals['title']) . '</td><td align="right" width="100px" class="small-padding-bottom' . (($totals['class'] == 'total') ? ' bolder btop-anthracite small-padding-top' : null) . '">' . $totals['text'] . '</td></tr>';
       // enhanced order admin additions
       $result['orderTotalsData'][$otcnt]['class'] = $totals['class'];
@@ -889,7 +893,7 @@ class lC_Orders_Admin {
   */
   public static function getTextDate($datetime) {
     $date = substr(lC_DateTime::getShort($datetime, true), 0, -8);
-    return date("M jS Y", strtotime($date));
+    return @date("M jS Y", @strtotime($date));
   }
  /*
   * Return the orders transaction history

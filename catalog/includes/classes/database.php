@@ -121,8 +121,11 @@ class lC_Database {
   
   public function file_get_contents_utf8($fn) {
     $content = file_get_contents($fn);
-    return mb_convert_encoding($content, 'UTF-8',
-      mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
+    if (extension_loaded('mbstring')) {
+      return mb_convert_encoding($content, 'UTF-8',
+        mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
+    }
+    return $content;
   }    
 
   public function importSQL($sql_file, $database, $table_prefix = -1) {

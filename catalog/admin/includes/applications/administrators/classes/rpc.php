@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/administrators/classes/administrators.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/administrators/classes/administrators.php'));
 require_once($lC_Vqmod->modCheck('includes/applications/languages/classes/languages.php'));
 
 class lC_Administrators_Admin_rpc {
@@ -142,8 +142,9 @@ class lC_Administrators_Admin_rpc {
   */
   public static function validatePassword() {
     $result = array();
-
-    $result = lC_Administrators_Admin::validatePassword($_GET['plain'], $_GET['encrypted']);
+    if (lc_validate_password($_GET['plain'], $_GET['encrypted'])) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS; 
+    };
 
     echo json_encode($result);
   }

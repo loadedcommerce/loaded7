@@ -8,6 +8,10 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: summary.php v1.0 2013-08-08 datazen $
 */
+
+  if(!isset($oInfo)){
+    $oInfo = new lC_ObjectInfo(lC_Orders_Admin::getInfo($_GET['oID']));
+  }
 ?>
 <div id="section_orders_summary">
   <h3 class="show-below-768 margin-left margin-top no-margin-bottom"><?php echo $lC_Language->get('text_summary'); ?></h3>
@@ -168,14 +172,14 @@
           <div class="two-columns twelve-columns-mobile new-row-mobile no-wrap no-margin-bottom">
             <p class="white">
               <?php echo $lC_Language->get('text_balance'); ?> 
-              <small class="tag small-margin-left with-min-padding<?php echo ((lC_Orders_Admin::getBalanceState($_GET[$lC_Template->getModule()]) == 'Paid') ? ' green-bg' : ' red-bg'); ?>">
-                <?php echo lC_Orders_Admin::getBalanceState($_GET[$lC_Template->getModule()]); ?>
+                        <small class="tag small-margin-left with-min-padding<?php echo ((lC_Orders_Admin::getBalanceState($oInfo->get('oID')) == 'Paid') ? ' green-bg' : ' red-bg'); ?>">
+                          <?php echo lC_Orders_Admin::getBalanceState($oInfo->get('oID')); ?>
               </small>
             </p>
             <p class="white">
               <?php echo $lC_Language->get('text_address'); ?> 
-              <small class="tag small-margin-left with-min-padding<?php echo ((lC_Orders_Admin::getAddressMatching($_GET[$lC_Template->getModule()]) == 'Same') ? ' green-bg' : ' orange-bg'); ?>">
-                <?php echo lC_Orders_Admin::getAddressMatching($_GET[$lC_Template->getModule()]); ?>
+                        <small class="tag small-margin-left with-min-padding<?php echo ((lC_Orders_Admin::getAddressMatching($oInfo->get('oID')) == 'Same') ? ' green-bg' : ' orange-bg'); ?>">
+                          <?php echo lC_Orders_Admin::getAddressMatching($oInfo->get('oID')); ?>
               </small>
             </p>
           </div>
@@ -183,7 +187,7 @@
             <div class="columns">
               <div class="twelve-columns">
                 <font class="white font-eightteen mid-margin-right"><?php echo $lC_Language->get('text_current_status'); ?></font>
-                <?php echo lC_Orders_Admin::drawOrderStatusDropdown($_GET[$lC_Template->getModule()], 'anthracite-gradient'); ?>
+                          <?php echo lC_Orders_Admin::drawOrderStatusDropdown($oInfo->get('oID'), 'anthracite-gradient'); ?>
               </div>
               <div class="twelve-columns">
                 <div>
@@ -243,7 +247,7 @@
               <td class="hide-below-480"></td>
               <td class="hide-below-480"></td>
               <td class="no-wrap small-padding-top bolder" align="right"><?php echo $lC_Language->get('text_product_sub_total'); ?></td>
-              <td class="small-padding-top bolder" align="right"><?php echo $oInfo->get('orderTotal'); ?></td>
+              <td class="small-padding-top bolder" align="right"><?php echo $oInfo->get('orderSubTotal'); ?></td>
               <td class="show-below-480"></td>
             </tr>
           </tbody>
@@ -260,7 +264,7 @@
               <span class="icon-chat icon-size2 icon-anthracite mid-margin-left"><strong class="small-margin-left"><?php echo $lC_Language->get('text_recent_messages'); ?></strong></span>
             </legend>
             <div class="btop-anthracite">
-              <?php echo lC_Orders_Admin::getOrderComments($_GET[$lC_Template->getModule()]); ?>
+                        <?php echo lC_Orders_Admin::getOrderComments($oInfo->get('oID')); ?>
             </div>
           </fieldset>
         </div>
@@ -306,7 +310,7 @@
             </legend>
             <table width="100%" cellpadding="0" cellspacing="0">
               <tbody>
-                <?php echo lC_Orders_Admin::getOrderComments($_GET[$lC_Template->getModule()]); ?>
+                          <?php echo lC_Orders_Admin::getOrderComments($oInfo->get('oID')); ?>
               </tbody>
             </table>
           </fieldset>

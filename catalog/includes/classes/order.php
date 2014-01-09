@@ -27,8 +27,6 @@ class lC_Order {
 
     if (!empty($order_id)) {
       $this->query($order_id);
-    } else {
-      $this->cart();
     }
   }
 

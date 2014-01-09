@@ -16,9 +16,14 @@ require('../includes/config.php');
 
 // set the level of error reporting to E_ALL
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
-ini_set("display_errors", 1);
+//ini_set("display_errors", 1);
 ini_set('log_errors', true);
 ini_set('error_log', DIR_FS_WORK . 'php_errors.log');
+
+// added for missing date.timezone in global php.ini
+if (!ini_get('date.timezone') && function_exists(date_default_timezone_set)) {
+  date_default_timezone_set('GMT');
+}
 
 // virtual hook system
 require_once('external/vqmod/vqmod.php');
@@ -31,6 +36,7 @@ if ($request_type == 'NONSSL') {
 } else {
   define('DIR_WS_CATALOG', DIR_WS_HTTPS_CATALOG);
 }
+define('API_VERSION', '1_0');
 
 if (!defined('DIR_WS_ADMIN')) define('DIR_WS_ADMIN', 'admin/');
 if (!defined('DIR_FS_ADMIN')) define('DIR_FS_ADMIN', DIR_FS_CATALOG . 'admin/');
@@ -161,6 +167,9 @@ $lC_Api = new lC_Api();
 require('../includes/classes/BarcodeQR.php');
 $BarcodeQR = new BarcodeQR();
 
+/**
+ * TO DO: MAKE THESE LOAD DYNAMICALLY
+ */
 // templates general class
 require($lC_Vqmod->modCheck('templates/default/classes/general.php'));
 

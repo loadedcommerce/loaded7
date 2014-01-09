@@ -18,14 +18,14 @@ class lC_Application_Login_Actions_process extends lC_Application_Login {
       $Qadmin = $lC_Database->query('select * from :table_administrators where user_name = :user_name');
       $Qadmin->bindTable(':table_administrators', TABLE_ADMINISTRATORS);
       $Qadmin->bindValue(':user_name', $_POST['user_name']);
-      $Qadmin->execute();
+      $Qadmin->execute(); 
       if ( $Qadmin->numberOfRows() > 0) {
         if ( lc_validate_password($_POST['user_password'], $Qadmin->value('user_password')) ) {
           $_SESSION['admin'] = array('id' => $Qadmin->valueInt('id'),
                                      'firstname' => $Qadmin->value('first_name'),
                                      'lastname' => $Qadmin->value('last_name'),
                                      'username' => $Qadmin->value('user_name'),
-                                     'password' => $Qadmin->value('user_pasword'),
+                                     'password' => $Qadmin->value('user_password'),
                                      'access' => lC_Access::getUserLevels($Qadmin->valueInt('access_group_id')),
                                      'language_id' => $Qadmin->value('language_id'));
           $get_string = null;

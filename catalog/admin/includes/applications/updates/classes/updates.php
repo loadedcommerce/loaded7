@@ -8,7 +8,8 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: updates.php v1.0 2013-08-08 datazen $
 */
-ini_set('error_reporting', 0);
+ini_set('error_reporting', 1);
+ini_set('display_errors', 1);
 
 global $lC_Vqmod;
 
@@ -112,7 +113,8 @@ class lC_Updates_Admin {
     global $lC_Api;
       
     $result = array('entries' => array());
-    $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
+    $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+    $versions = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/updates/available/?ref=' . $_SERVER['SCRIPT_FILENAME'], 'method' => 'get'));
     $versions_array = utility::xml2arr($versions); 
 
     $counter = 0;
@@ -191,8 +193,8 @@ class lC_Updates_Admin {
         }
       }
     }
-    
-    if ($link == null) $link = 'https://api.loadedcommerce.com/1_0/get/' . str_replace(".", "", $version) . '?ref=' . urlencode($_SERVER['SCRIPT_FILENAME']);
+    $api_version = (defined('API_VERSION') && API_VERSION != NULL) ? API_VERSION : '1_0';
+    if ($link == null) $link = 'https://api.loadedcommerce.com/' . $api_version . '/get/' . str_replace(".", "", $version) . '?ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']);
     if ($type != null) $link .= '&type=' . $type;
     
     $response = file_get_contents($link);
@@ -384,7 +386,7 @@ class lC_Updates_Admin {
   * @access public      
   * @return boolean
   */    
-  public static function applyPackage($pharWithPath = null) {
+  public static function applyPackage($pharWithPath = null, $pharType = 'addon') {
     $phar_can_open = true;
 
     $meta = array();
@@ -393,18 +395,21 @@ class lC_Updates_Admin {
     try {
       if ($pharWithPath == null) {
         $pharFile = 'update.phar';
-        $phar = $phar = new Phar(DIR_FS_WORK . 'updates/' . $pharFile, 0);
+        $phar = new Phar(DIR_FS_WORK . 'updates/' . $pharFile);
         $meta = $phar->getMetadata();     
         self::$_to_version = $meta['version_to'];
         // reset the log
         if ( file_exists(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') && is_writable(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') ) {
           unlink(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
-        }   
-        self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED');
+        } 
+        $pharCode = 'update';  
+        self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED', $pharCode);
       } else {
         $pharFile = end(explode('/', $pharWithPath));
-        $phar = $phar = new Phar(DIR_FS_WORK . 'addons/update.phar', 0);
-        $meta = $phar->getMetadata();     
+
+        $phar = new Phar(DIR_FS_WORK . 'addons/' . $pharFile);    
+        $meta = $phar->getMetadata();    
+        
         // reset the log
         $pharCode = str_replace('.phar', '', $pharFile);
         if ( file_exists(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt') && is_writable(DIR_FS_WORK . 'logs/addon-' . $pharCode . '.txt') ) {
@@ -439,14 +444,22 @@ class lC_Updates_Admin {
       // loop through each file individually as extractTo() does not work with
       // directories (see http://bugs.php.net/bug.php?id=54289)
       foreach ( new RecursiveIteratorIterator($phar) as $iteration ) {
-        if ( ($pos = strpos($iteration->getPathName(), 'update.phar')) !== false ) {
+        if ( ($pos = strpos($iteration->getPathName(), '.phar')) !== false ) {
           
-          $file = substr($iteration->getPathName(), $pos+12);
+          $file = substr($iteration->getPathName(), $pos+6);
           
           if ($pharWithPath == null) {
             $directory = realpath(DIR_FS_CATALOG) . '/';
           } else {
-            $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
+            if ($pharType == 'template') {
+              $directory = realpath(DIR_FS_CATALOG) . '/';
+            } else {
+              if (isset($meta['api_version']) && $meta['api_version'] != NULL) {
+                $directory = realpath(DIR_FS_CATALOG) . '/';
+              } else {
+                $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
+              }
+            }
           }
           
           if ( file_exists($directory . $file) ) {
@@ -459,34 +472,34 @@ class lC_Updates_Admin {
           }
 
           if ( $phar->extractTo($directory, $file, true) ) {
-            self::log('Extracted: ' . $file);
+            self::log('Extracted: ' . $file, $pharCode);
           } else {
-            self::log('*** Could Not Extract: ' . $file);
+            self::log('*** Could Not Extract: ' . $file, $pharCode);
           }
         }
       }
 
-      self::log('##### CLEANUP');
+      self::log('##### CLEANUP', $pharCode);
 
       foreach ( array_reverse($pro_hart, true) as $mess ) {
         if ( $mess['type'] == 'directory' ) {
           if ( self::rmdir_r($mess['where'] . $mess['path']) ) {
             if ( $mess['log'] === true ) {
-              self::log('Deleted: ' . str_replace('/.CU_', '/', $mess['path']));
+              self::log('Deleted: ' . str_replace('/.CU_', '/', $mess['path']), $pharCode);
             }
           } else {
             if ( $mess['log'] === true ) {
-              self::log('*** Could Not Delete: ' . str_replace('/.CU_', '/', $mess['path']));
+              self::log('*** Could Not Delete: ' . str_replace('/.CU_', '/', $mess['path']), $pharCode);
             }
           }
         } else {
           if ( unlink($mess['where'] . $mess['path']) ) {
             if ( $mess['log'] === true ) {
-              self::log('Deleted: ' . str_replace('/.CU_', '/', $mess['path']));
+              self::log('Deleted: ' . str_replace('/.CU_', '/', $mess['path']), $pharCode);
             }
           } else {
             if ( $mess['log'] === true ) {
-              self::log('*** Could Not Delete: ' . str_replace('/.CU_', '/', $mess['path']));
+              self::log('*** Could Not Delete: ' . str_replace('/.CU_', '/', $mess['path']), $pharCode);
             }
           }
         }
@@ -494,9 +507,9 @@ class lC_Updates_Admin {
     } catch ( Exception $e ) {
       $phar_can_open = false;
 
-      self::log('##### ERROR: ' . $e->getMessage());
+      self::log('##### ERROR: ' . $e->getMessage(), $pharCode);
 
-      self::log('##### REVERTING STARTED');
+      self::log('##### REVERTING STARTED', $pharCode);
 
       foreach ( array_reverse($pro_hart, true) as $mess ) {
         if ( $mess['type'] == 'directory' ) {
@@ -513,11 +526,11 @@ class lC_Updates_Admin {
           rename($mess['where'] . $mess['path'], $mess['where'] . str_replace('/.CU_', '/', $mess['path']));
         }
 
-        self::log('Reverted: ' . str_replace('/.CU_', '/', $mess['path']));
+        self::log('Reverted: ' . str_replace('/.CU_', '/', $mess['path']), $pharCode);
       }
 
-      self::log('##### REVERTING COMPLETE');
-      self::log('##### UPDATE TO ' . self::$_to_version . ' FAILED');
+      self::log('##### REVERTING COMPLETE', $pharCode);
+      self::log('##### UPDATE TO ' . self::$_to_version . ' FAILED', $pharCode);
 
       trigger_error($e->getMessage());
       trigger_error('Please review the update log at: ' . DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
@@ -531,24 +544,27 @@ class lC_Updates_Admin {
       if (utility::execEnabled() === true && utility::isLinux() === true) {
         try {
           exec('\find ' . DIR_FS_CATALOG . ' \( -type f -exec chmod 644 {} \; \);');
-          self::log('##### UPDATED Permissions on PHP files/directories');
+          self::log('##### UPDATED Permissions on PHP files/directories', $pharCode);
         } catch ( Exception $e ) {  
-          self::log('*** Could NOT Set Permissions on PHP files/directories');
+          self::log('*** Could NOT Set Permissions on PHP files/directories', $pharCode);
         } 
-        self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
+        self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE', $pharCode);
       } else {
         try {
           self::chmod_r(DIR_FS_CATALOG);
-          self::log('##### UPDATED Permissions on PHP files/directories');
+          self::log('##### UPDATED Permissions on PHP files/directories', $pharCode);
         } catch ( Exception $e ) {  
-          self::log('*** Could NOT Set Permissions on PHP files/directories');
+          self::log('*** Could NOT Set Permissions on PHP files/directories', $pharCode);
         } 
-        self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');      }
+        // remove the update phar
+        if (file_exists(DIR_FS_WORK . 'updates/update.phar')) unlink(DIR_FS_WORK . 'updates/update.phar');          
+        self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE', $pharCode);      }
     } else {
-      self::log('##### UPDATE TO ' . self::$_to_version . ' COMPLETE');
+      // remove the addon phar & pubkey
+      if (file_exists(DIR_FS_WORK . 'addons/' . $pharCode . '.phar')) unlink(DIR_FS_WORK . 'addons/' . $pharCode . '.phar');
+      if (file_exists(DIR_FS_WORK . 'addons/' . $pharCode . '.phar.pubkey')) unlink(DIR_FS_WORK . 'addons/' . $pharCode . '.phar.pubkey');
+      self::log('##### ADDON INSTALL ' . $code . ' COMPLETE', $pharCode);
     }
-
-    self::log('##### ADDON INSTALL ' . $code . ' COMPLETE');
 
     return $phar_can_open;
   }
