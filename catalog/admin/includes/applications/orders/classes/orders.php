@@ -1219,18 +1219,17 @@ class lC_Orders_Admin {
     $customerData = lC_Customers_Admin::getData($customerID);
   
     $customerName = $customerData['customers_firstname'] . " " .$customerData['customers_lastname'];
-    $customer_address = array(
-                            'entry_company'  => $customerData['entry_company'],
-                            'entry_street_address'  => $customerData['entry_street_address'],
-                            'entry_suburb'  => $customerData['entry_suburb'],
-                            'entry_city'  => $customerData['entry_city'],
-                            'entry_postcode'  => $customerData['entry_postcode'],
-                            'entry_state'  => $customerData['entry_state'],
-                            'entry_zone_id'  => $customerData['entry_zone_id'],
-                            'entry_country_id'  => $customerData['entry_country_id'],
-                            'entry_telephone'  => $customerData['entry_telephone'],
-                            'entry_telephone'  => $customerData['entry_telephone'],
-                          );
+    $customer_address = array('entry_company'  => $customerData['entry_company'],
+                              'entry_street_address'  => $customerData['entry_street_address'],
+                              'entry_suburb'  => $customerData['entry_suburb'],
+                              'entry_city'  => $customerData['entry_city'],
+                              'entry_postcode'  => $customerData['entry_postcode'],
+                              'entry_state'  => $customerData['entry_state'],
+                              'entry_zone_id'  => $customerData['entry_zone_id'],
+                              'entry_country_id'  => $customerData['entry_country_id'],
+                              'entry_telephone'  => $customerData['entry_telephone'],
+                              'entry_telephone'  => $customerData['entry_telephone']
+                              );
     $payment_module = '';
     $payment_method = '';
 
@@ -1278,7 +1277,7 @@ class lC_Orders_Admin {
     $Qorder->bindValue(':billing_address_format', lC_Address::getFormat($customerData['entry_country_id']));
     $Qorder->bindValue(':payment_method', $payment_method);
     $Qorder->bindValue(':payment_module', $payment_module);
-    $Qorder->bindInt(':orders_status', $status);
+    $Qorder->bindInt(':orders_status', 1);
     $Qorder->bindValue(':currency', $lC_Currencies->getCode());
     $Qorder->bindValue(':currency_value', $lC_Currencies->value(DEFAULT_CURRENCY));
     $Qorder->execute();
