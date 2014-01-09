@@ -29,6 +29,8 @@ class lC_Products_Admin {
       $category_id = 0;
     }
 
+    $lC_Language->loadIniFile('products.php');
+
     $media = $_GET['media'];
     
     $result = array('aaData' => array());
@@ -115,6 +117,7 @@ class lC_Products_Admin {
         $price = $lC_Currencies->format($Qproducts->value('products_price'));
       //}
       
+      $icons = '';
       if ( $Qproducts->valueInt('has_children') === 1 ) {
         $Qvariants = $lC_Database->query('select min(products_price) as min_price, max(products_price) as max_price, sum(products_quantity) as total_quantity, min(products_status) as products_status from :table_products where parent_id = :parent_id');
         $Qvariants->bindTable(':table_products', TABLE_PRODUCTS);
@@ -129,7 +132,9 @@ class lC_Products_Admin {
         if ( $Qvariants->value('min_price') != $Qvariants->value('max_price') ) {
           $price .= ' - ' . $lC_Currencies->format($Qvariants->value('max_price'));
         }
-        $product_icon = 'icon-paperclip icon-blue';
+        $icons .= '<span class="icon-flow-tree icon-blue mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_variants') . '"></span>';
+      } else if ( self::hasSubProducts($Qproducts->valueInt('products_id')) === true ) {
+        $icons .= '<span class="icon-flow-cascade icon-red mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_subproducts') . '"></span>';
       }
       
       $Qspecials = $lC_Database->query('select specials_new_products_price, status from :table_specials where products_id = :products_id');
@@ -149,7 +154,7 @@ class lC_Products_Admin {
                           'products_keyword' => $products_keyword);
 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qproducts->valueInt('products_id') . '" id="' . $Qproducts->valueInt('products_id') . '"></td>';
-      $products = '<td><div class="products-listing-thumb">' . $lC_Image->show($Qimage->value('image'), '', 'class="mid-margin-right float-left" width="28" height="28"', 'mini') . '</div><div class="products-listing-name-model"><a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')" class="bold">' . $Qproducts->value('products_name') . '</a><br /><span class="small grey">' . $Qproducts->value('products_model') . '</span></div></td>';
+      $products = '<td><div class="products-listing-thumb">' . $lC_Image->show($Qimage->value('image'), '', 'class="mid-margin-right float-left" width="28" height="28"', 'mini') . '</div><div class="products-listing-name-model"><a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')" class="bold">' . $Qproducts->value('products_name') . '</a><br /><span class="small grey mid-margin-right">' . $Qproducts->value('products_model') . '</span><span class="mid-margin-right">' . $icons. '</span></div></td>';
       //$inv = '<td><span class="' . $product_icon . ' with-tooltip" title="' . $product_icon_title . '"></span></td>';
       $cats = '<td>' . $categories . '</td>';
       $categories = null;
