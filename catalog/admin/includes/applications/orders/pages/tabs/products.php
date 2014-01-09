@@ -72,7 +72,7 @@
                 <span id="buttons_<?php echo $products['orders_products_id']; ?>">
                   <span class="button-group">
                     <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct('<?php echo $_GET[$lC_Template->getModule()]; ?>','<?php echo $products['orders_products_id']; ?>');"><?php echo $lC_Language->get('text_edit'); ?></a>
-                    <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['orders_products_id']; ?>', '<?php echo $products['name']; ?>');"></a>
+                    <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['orders_products_id']; ?>', '<?php echo $products['products_id']; ?>', '<?php echo $products['name']; ?>');"></a>
                   </span>
                 </span>
               </td>

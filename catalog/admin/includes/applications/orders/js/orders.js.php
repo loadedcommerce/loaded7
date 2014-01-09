@@ -179,7 +179,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
                               '</span>');
   }
   
-  function deleteOrderProduct(val, name) {
+  function deleteOrderProduct(opid, pid, name) {
     var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
     if (parseInt(accessLevel) < 2) {
       $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -191,7 +191,8 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
                '    <form name="opDelete" id="opDelete" action="" method="post">'+
                '      <p id="deleteProductConfirmMessage"><?php echo $lC_Language->get('introduction_delete_order_product'); ?>'+
                '        <p><b>' + name.replace(/\+/g, '%20') + '</b></p>'+
-               //'        <p><label for="restock" class="label"><?php echo $lC_Language->get('field_restock_product_quantity'); ?></label><?php echo '&nbsp;' . lc_draw_checkbox_field('restock', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?>'+
+               // later we add restock functionality
+               // '        <p><label for="restock" class="label"><?php echo $lC_Language->get('field_restock_product_quantity'); ?></label><?php echo '&nbsp;' . lc_draw_checkbox_field('restock', null, null, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"'); ?>'+
                '      </p>'+
                '    </form>'+
                '  </div>'+
@@ -212,8 +213,8 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         '<?php echo $lC_Language->get('button_delete'); ?>': {
           classes:  'blue-gradient glossy',
           click:    function(win) {
-            var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteOrderProduct&pid=PID'); ?>'  
-            $.getJSON(jsonLink.replace('PID', val),
+            var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=deleteOrderProduct&opid=OPID&pid=PID&oid=OID'); ?>'  
+            $.getJSON(jsonLink.replace('OPID', opid).replace('PID', pid).replace('OID', '<?php echo $_GET[$lC_Template->getModule()]; ?>'),
               function (data) {
                 if (data.rpcStatus == -10) { // no session
                   var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
@@ -224,7 +225,8 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
                   return false;
                 }
                 if (data.rpcStatus == 1) {
-                  $("#orders_products_" + val).remove();
+                  url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=OID&action=save&editProduct=1'); ?>';
+                  $(location).attr('href', url.replace('OID', '<?php echo $_GET[$lC_Template->getModule()]; ?>'));
                 }
               }
             );
