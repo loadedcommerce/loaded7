@@ -549,11 +549,12 @@ class lC_Products_Admin {
     $lC_Database->startTransaction();
 
     if ( is_numeric($id) ) {
-      $Qproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id, products_last_modified = now() where products_id = :products_id');
+      $Qproduct = $lC_Database->query('update :table_products set parent_id = :parent_id, products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id, products_last_modified = now() where products_id = :products_id');
       $Qproduct->bindInt(':products_id', $id);
     } else {
-      $Qproduct = $lC_Database->query('insert into :table_products (products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added) values (:products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added)');
+      $Qproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_ordered, products_date_added) values (:parent_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_ordered, :products_date_added)');
       $Qproduct->bindRaw(':products_date_added', 'now()');
+      $Qproduct->bindInt(':products_ordered', $data['products_ordered']);
     }
     
     // set parent status
@@ -562,6 +563,7 @@ class lC_Products_Admin {
     if ( isset($_POST['products_status']) && $_POST['products_status'] == 'recurring' ) $data['status'] = 0;
     
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qproduct->bindInt(':parent_id', $data['parent_id']);
     $Qproduct->bindInt(':products_quantity', $data['quantity']);
     $Qproduct->bindFloat(':products_cost', $data['cost']);
     $Qproduct->bindFloat(':products_price', $data['price']);
@@ -570,8 +572,8 @@ class lC_Products_Admin {
     $Qproduct->bindValue(':products_sku', $data['sku']);
     $Qproduct->bindFloat(':products_weight', $data['weight']);
     $Qproduct->bindInt(':products_weight_class', $data['weight_class']);
+    $Qproduct->bindInt(':products_tax_class_id', $data['tax_class_id']);   
     $Qproduct->bindInt(':products_status', $data['status']);
-    $Qproduct->bindInt(':products_tax_class_id', $data['tax_class_id']);
     $Qproduct->setLogging($_SESSION['module'], $id);
     $Qproduct->execute();
 
@@ -968,7 +970,7 @@ class lC_Products_Admin {
         $Qupdate->execute();
       }
     }
-    
+
     // multi SKU sub products
     if ( $error === false ) {
       if (isset($data['sub_products_name'])) {
@@ -993,7 +995,6 @@ class lC_Products_Admin {
           $Qdel->bindInt(':is_subproduct', 1);
           $Qdel->execute();          
         }        
-     
 
         for ($i=0; $i < sizeof($data['sub_products_name']); $i++) {
           if ($data['sub_products_name'][$i] == '') continue;
@@ -1004,7 +1005,8 @@ class lC_Products_Admin {
             $Qsubproduct->bindInt(':products_id', $data['sub_products_id'][$i]);
           } else {
             // add new subproduct record
-            $Qsubproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_date_added, is_subproduct) values (:parent_id, :products_quantity, :products_cost, :products_price, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_date_added, :is_subproduct)');
+            $Qsubproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_ordered, products_date_added, is_subproduct) values (:parent_id, :products_quantity, :products_cost, :products_price, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_ordered, :products_date_added, :is_subproduct)');
+            $Qsubproduct->bindInt(':products_ordered', $data['products_ordered'][$i]);            
           }
           
           $Qsubproduct->bindTable(':table_products', TABLE_PRODUCTS);
