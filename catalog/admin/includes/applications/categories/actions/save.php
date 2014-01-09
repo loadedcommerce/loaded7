@@ -41,19 +41,14 @@ class lC_Application_Categories_Actions_save extends lC_Application_Categories {
           * @param array $data The categories information
           * @access public
           * @return boolean
-          */
-         
-         $id = lC_Categories_Admin::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data);
+          */         
+          $id = lC_Categories_Admin::save((isset($_GET['categories']) && is_numeric($_GET['categories']) ? $_GET['categories'] : null), $data);
 
           if ( is_numeric($id) ) {
-            
-            if(empty($_POST['save_close'])){
-
-              lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $id . '&action=save&cid=' . $_GET['cid']));
-            }else{
-
-              
-              lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module.'='.$data['parent_id']));
+            if ( empty($_POST['save_close']) ) {
+              lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $id . '&cid=' . $_GET['cid'] . '&action=save'));
+            } else {
+              lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $data['parent_id']));
             }
           } else {
             $_SESSION['error'] = true;
