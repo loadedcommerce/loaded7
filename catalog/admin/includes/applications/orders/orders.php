@@ -43,7 +43,7 @@ class lC_Application_Orders extends lC_Template_Admin {
     }
     
     if (isset($_GET['action']) && $_GET['action'] == "quick_add") {
-      if($order_insert_id = lC_Orders_Admin::createOrder($_GET['cID'])) {
+      if ($order_insert_id = lC_Orders_Admin::createOrder($_GET['cID'])) {
         lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $order_insert_id . '&action=save&editProduct=1'));
       }
     } else if (isset($_GET['action']) && $_GET['action'] == "add_product") {
