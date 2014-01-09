@@ -97,6 +97,8 @@ $(document).ready(function() {
     } else if (module.indexOf("tax_classes") != -1 && document.location.href.indexOf("tax_classes") != -1) {
       $("#big-menu_tax_classes").addClass('current navigable-current').change();        
       cfg = true;
+    } else if (module.indexOf("categories") != -1 && document.location.href.indexOf("categories") != -1) {
+      $("#big-menu_category_pages").addClass('current navigable-current').change();        
     }
   });
   if (cfg) toggleChildMenu('settings'); 

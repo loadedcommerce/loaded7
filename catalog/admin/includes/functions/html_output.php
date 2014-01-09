@@ -4,6 +4,7 @@
   @author     Loaded Commerce
   @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: html_output.php v1.0 2013-08-08 datazen $
 */
@@ -200,4 +201,32 @@
 
    return $html;    
  }
+ 
+ function button_save_close($save = false, $save_close = false, $close = true){
+  global $lC_Language, $lC_Template;
+
+  if ($save_close || $save) { 
+  ?>
+  <span class="button-group">
+
+    <?php if ($save) { ?>
+    <button type="button" <?php echo $save; ?> class="button big icon-tick green-gradient"><?php echo $lC_Language->get('button_save'); ?></button>
+    <?php } ?>
+    
+    <?php if ($save_close) { ?>
+    <button type="submit" name="save_close" value="true" <?php echo $save; ?>  class="button big icon-squared-cross green-gradient"><?php echo $lC_Language->get('button_save_close'); ?></button>
+    <?php } ?>
+
+  </span>
+  <?php 
+  } 
+  
+  if ($close) { 
+  ?>
+  <span class="button-group">
+    <a href="<?php echo $close; ?>" class="button big icon-cross-round red-gradient"></a>
+  </span>
+  <?php 
+  }
+}
 ?>
