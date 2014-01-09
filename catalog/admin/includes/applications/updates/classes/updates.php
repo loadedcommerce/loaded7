@@ -8,8 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: updates.php v1.0 2013-08-08 datazen $
 */
-ini_set('error_reporting', 1);
-ini_set('display_errors', 1);
+ini_set('error_reporting', 0);
 
 global $lC_Vqmod;
 
@@ -448,19 +447,7 @@ class lC_Updates_Admin {
           
           $file = substr($iteration->getPathName(), $pos+6);
           
-          if ($pharWithPath == null) {
-            $directory = realpath(DIR_FS_CATALOG) . '/';
-          } else {
-            if ($pharType == 'template') {
-              $directory = realpath(DIR_FS_CATALOG) . '/';
-            } else {
-              if (isset($meta['api_version']) && $meta['api_version'] != NULL) {
-                $directory = realpath(DIR_FS_CATALOG) . '/';
-              } else {
-                $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
-              }
-            }
-          }
+          $directory = realpath(DIR_FS_CATALOG) . '/';
           
           if ( file_exists($directory . $file) ) {
             if ( rename($directory . $file, $directory . dirname($file) . '/.CU_' . basename($file)) ) {
