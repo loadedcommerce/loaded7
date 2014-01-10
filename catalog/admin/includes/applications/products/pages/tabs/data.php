@@ -96,6 +96,9 @@ global $lC_Language, $pInfo, $tax_class_array;
     <div class="columns no-margin-bottom">
       <?php echo lC_Products_Admin::getProductAttributeModules('dataManagementSettings'); ?>
       <div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
+      <?php 
+      if (utility::isPro() === false) { 
+        ?>
         <div class="twelve-columns strong mid-margin-bottom upsellwrapper">
           <span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('text_product_class_upsell_title'); ?>" upselldesc="<?php echo $lC_Language->get('text_product_class_upsell_desc'); ?>"><?php echo $lC_Language->get('text_product_class') . lc_go_pro(); ?></span>
           <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_data_product_class')); ?>
@@ -110,6 +113,9 @@ global $lC_Language, $pInfo, $tax_class_array;
             <span class="drop-down"></span>
           </span>
         </div>
+        <?php
+      }
+      ?>
       </div>
     </div>
   </fieldset>

@@ -765,11 +765,23 @@ class lC_Products_Admin {
         foreach ( $data['attributes'] as $attributes_id => $value ) {
           if ( is_array($value) ) {
           } elseif ( !empty($value) ) {
-            $Qcheck = $lC_Database->query('select id from :table_product_attributes where products_id = :products_id and id = :id limit 1');
+            
+            $parts = array();
+            $append = false;
+            if (strstr($attributes_id, '_')) {
+              $parts = explode('_', $attributes_id);
+              $attributes_id = $parts[0];
+              $append = true;
+            }
+            
+            $Qcheck = $lC_Database->query('select * from :table_product_attributes where products_id = :products_id and id = :id limit 1');
             $Qcheck->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
             $Qcheck->bindInt(':products_id', $products_id);
             $Qcheck->bindInt(':id', $attributes_id);
             $Qcheck->execute();
+            
+            if ($append) $value = $Qcheck->value('value') . '|' . $value;
+
 
             if ( $Qcheck->numberOfRows() === 1 ) {
               $Qattribute = $lC_Database->query('update :table_product_attributes set value = :value where products_id = :products_id and id = :id');
