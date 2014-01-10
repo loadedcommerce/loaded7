@@ -150,12 +150,12 @@ $aContent .= '</span>';
 
 
 ?>
-<style>
+<style scoped="scoped">
 #editCustomer { padding-bottom:20px; }
 .list > li > span { color: #666666; }
 </style>
 <script>
-function editCustomer(id,add_addr=0) { 
+function editCustomer(id, add_addr=0) { 
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -206,7 +206,7 @@ function editCustomer(id,add_addr=0) {
         },
         '<?php echo $lC_Language->get('button_create_order'); ?>': {
           classes:  'glossy align-right green-gradient mid-margin-right button_create_order',
-          click:    function() { createNewOrder(); }
+          click:    function() { createNewOrder(id); }
         },       
         '<?php echo $lC_Language->get('button_delete'); ?>': {
           classes:  'glossy float-left red-gradient',
@@ -597,7 +597,7 @@ function updateZones(selected) {
 }
 
 function createNewOrder(cid=null) {
-  if(parseInt(cid) > 0 ) {
+  if (parseInt(cid) > 0 ) {
     window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
   }
   
