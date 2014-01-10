@@ -34,10 +34,14 @@ class lC_Orders_status_Admin {
       }
       $name = '<td>' . $status_name . '</td>';
       $type = '<td>' . $Qstatuses->value('orders_status_type') . '</td>';
-      $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? '#' : 'javascript://" onclick="editStatus(\'' . $Qstatuses->valueInt('orders_status_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access']['orders'] < 4 || $Qstatuses->valueInt('orders_status_id') == DEFAULT_ORDERS_STATUS_ID) ? '#' : 'javascript://" onclick="deleteStatus(\'' . $Qstatuses->valueInt('orders_status_id') . '\', \'' . urlencode($Qstatuses->valueProtected('title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['orders'] < 4 || $Qstatuses->valueInt('orders_status_id') == DEFAULT_ORDERS_STATUS_ID) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                 </span></td>';
+      $action = '<td class="align-right vertical-center">
+                   <span class="button-group"> 
+                     <a href="' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? '#' : 'javascript://" onclick="editStatus(\'' . $Qstatuses->valueInt('orders_status_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['orders'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   </span>
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access']['orders'] < 4 || $Qstatuses->valueInt('orders_status_id') == DEFAULT_ORDERS_STATUS_ID) ? '#' : 'javascript://" onclick="deleteStatus(\'' . $Qstatuses->valueInt('orders_status_id') . '\', \'' . urlencode($Qstatuses->valueProtected('title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['orders'] < 4 || $Qstatuses->valueInt('orders_status_id') == DEFAULT_ORDERS_STATUS_ID) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   </span>
+                 </td>';
       $result['aaData'][] = array("$name", "$type", "$action");
     }
 

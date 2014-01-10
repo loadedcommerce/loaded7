@@ -32,10 +32,14 @@ class lC_Specials_Admin {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qspecials->valueInt('specials_id') . '" id="' . $Qspecials->valueInt('specials_id') . '"></td>';
       $product = '<td>' . $Qspecials->value('products_name') . '</td>';
       $price = '<td><s>' . $lC_Currencies->format($Qspecials->value('products_price')) . '</s>&nbsp;<font color="red">' . $lC_Currencies->format($Qspecials->value('specials_new_products_price')) . '</font></td>';
-      $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editSpecial(\'' . $Qspecials->valueInt('specials_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteSpecial(\'' . $Qspecials->valueInt('specials_id') . '\', \'' . urlencode($Qspecials->valueProtected('products_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                 </span></td>';
+      $action = '<td class="align-right vertical-center">
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editSpecial(\'' . $Qspecials->valueInt('specials_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   </span>
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteSpecial(\'' . $Qspecials->valueInt('specials_id') . '\', \'' . urlencode($Qspecials->valueProtected('products_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   </span>
+                 </td>';
       $result['aaData'][] = array("$check", "$product", "$price", "$action");
     }
 

@@ -113,11 +113,15 @@ class lC_Customers_Admin {
       $email = '<td>' . $Qcustomers->value('customers_email_address') . '</td>';
       $group = '<td><small class="tag ' . $tagColor . ' glossy">' . lc_get_customer_groups_name($Qcustomers->valueInt('customers_group_id')) . '</small></td>';
       $date = '<td>' . lC_DateTime::getShort($Qcustomers->value('date_account_created')) . '</td>';
-      $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editCustomer(\'' . $Qcustomers->valueInt('customers_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'orders&cID=' . $Qcustomers->valueInt('customers_id'))) . '" class="button icon-price-tag with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_orders') . '"></a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCustomer(\'' . $Qcustomers->valueInt('customers_id') . '\', \'' . urlencode($full) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                 </span></td>';
+      $action = '<td class="align-right vertical-center">
+                   <span class="button-group" style="white-space:nowrap;">
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editCustomer(\'' . $Qcustomers->valueInt('customers_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'orders&cID=' . $Qcustomers->valueInt('customers_id'))) . '" class="button icon-price-tag with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_orders') . '"></a>
+                   </span>
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCustomer(\'' . $Qcustomers->valueInt('customers_id') . '\', \'' . urlencode($full) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   </span>
+                 </td>';
       $result['aaData'][] = array("$check", "$gender", "$last", "$first", "$email", "$group", "$date", "$action");
       $cnt++;
     }

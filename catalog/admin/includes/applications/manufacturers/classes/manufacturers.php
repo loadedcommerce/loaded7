@@ -33,10 +33,14 @@ class lC_Manufacturers_Admin {
 
       $name = '<td>' . $Qmanufacturers->value('manufacturers_name') . '</td>';
       $clicks = '<td>' . $Qclicks->valueInt('total') . '</td>';
-      $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 3) ? '#' : 'javascript://" onclick="editEntry(\'' . $Qmanufacturers->valueInt('manufacturers_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['languages'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="deleteEntry(\'' . $Qmanufacturers->valueInt('manufacturers_id') . '\', \'' . urlencode($Qmanufacturers->valueProtected('manufacturers_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                 </span></td>';
+      $action = '<td class="align-right vertical-center">
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 3) ? '#' : 'javascript://" onclick="editEntry(\'' . $Qmanufacturers->valueInt('manufacturers_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['languages'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   </span>
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="deleteEntry(\'' . $Qmanufacturers->valueInt('manufacturers_id') . '\', \'' . urlencode($Qmanufacturers->valueProtected('manufacturers_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   </span>
+                 </td>';
       $result['aaData'][] = array("$name", "$clicks", "$action");
       $result['entries'][] = $Qmanufacturers->toArray();
     }

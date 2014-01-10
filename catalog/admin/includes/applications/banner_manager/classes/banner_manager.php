@@ -38,11 +38,15 @@ class lC_Banner_manager_Admin {
       $group = '<td>' . $Qbanners->valueProtected('banners_group') . '</td>';
       $stats = '<td>' . $Qstats->valueInt('banners_shown') . ' / ' . $Qstats->valueInt('banners_clicked') . '</td>';
      
-      $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editBanner(\'' . $Qbanners->valueInt('banners_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? '#' : 'javascript://" onclick="showStats(\'' . $Qbanners->valueInt('banners_id') . '\', \'' . urlencode($Qbanners->value('banners_title')) . '\')') . '" class="button icon-list with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_statistics') . '"></a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteBanner(\'' . $Qbanners->valueInt('banners_id') . '\', \'' . urlencode($Qbanners->value('banners_title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                 </span></td>';
+      $action = '<td class="align-right vertical-center">
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editBanner(\'' . $Qbanners->valueInt('banners_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? '#' : 'javascript://" onclick="showStats(\'' . $Qbanners->valueInt('banners_id') . '\', \'' . urlencode($Qbanners->value('banners_title')) . '\')') . '" class="button icon-list with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_statistics') . '"></a>
+                   </span>
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteBanner(\'' . $Qbanners->valueInt('banners_id') . '\', \'' . urlencode($Qbanners->value('banners_title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   </span>
+                 </td>';
                 
       $result['aaData'][] = array("$check", "$banners", "$group", "$stats", "$action");
       $result['entries'][] = $Qbanners->toArray();

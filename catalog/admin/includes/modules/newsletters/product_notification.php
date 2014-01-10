@@ -41,7 +41,7 @@ class lC_Newsletter_product_notification {
     return false;
   }
   
-  public public function hasAudienceSize() {
+  public function hasAudienceSize() {
     global $lC_Database;
     
     if ( (isset($_GET['chosen']) && !empty($_GET['chosen'])) || (isset($_GET['global']) && ($_GET['global'] == 'true')) ) {
