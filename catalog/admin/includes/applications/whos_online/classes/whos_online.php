@@ -67,10 +67,14 @@ class lC_Whos_online_Admin {
       $click = '<td>' . @date('H:i:s', $Qwho->value('time_last_click')) . '</td>';
       $url = '<td>' . $last_page['page'] . '</td>';
       $total = '<td>' . $lC_Currencies->format($cart['total_cost'], true, $currency) . '</td>';
-      $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access']['whos_online'] < 2) ? '#' : 'javascript://" onclick="showInfo(\'' . $Qwho->value('session_id') . '\')') . '" class="button icon-question-round icon-blue' . ((int)($_SESSION['admin']['access']['whos_online'] < 2) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('button_info')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access']['whos_online'] < 4) ? '#' : 'javascript://" onclick="deleteEntry(\'' . $Qwho->value('session_id') . '\',\'' . $Qwho->value('full_name') . '\')"') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['whos_online'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                 </span></td>';         
+      $action = '<td class="align-right vertical-center">
+                   <span class="button-group"> 
+                     <a href="' . ((int)($_SESSION['admin']['access']['whos_online'] < 2) ? '#' : 'javascript://" onclick="showInfo(\'' . $Qwho->value('session_id') . '\')') . '" class="button icon-question-round icon-blue' . ((int)($_SESSION['admin']['access']['whos_online'] < 2) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('button_info')) . '</a>
+                   </span>
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access']['whos_online'] < 4) ? '#' : 'javascript://" onclick="deleteEntry(\'' . $Qwho->value('session_id') . '\',\'' . $Qwho->value('full_name') . '\')"') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['whos_online'] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   </span>
+                 </td>';         
 
       $result['aaData'][] = array("$check", "$who", "$online", "$customers", "$click", "$url", "$total", "$action");      
     }

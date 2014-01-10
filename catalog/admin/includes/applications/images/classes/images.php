@@ -32,7 +32,7 @@ class lC_Images_Admin {
       if ( class_exists($class) ) {  
         $module = new $class();  
         $name = '<td>' . $module->getTitle() . '</td>';
-        $action = '<td class="align-right vertical-center"><span class="button-group compact">
+        $action = '<td class="align-right vertical-center"><span class="button-group">
                    <a href="' . ((int)($_SESSION['admin']['access']['images'] < 3) ? '#' : 'javascript://" onclick="doAction(\'' . str_ireplace('.php', '', $file['name']) . '\', \'' . urlencode(str_ireplace('.php', '', $file['name'])) . '\')') . '" class="button icon-gear' . ((int)($_SESSION['admin']['access']['images'] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_run')) . '</a>
                  </span></td>';
         $result['aaData'][] = array("$name", "$action"); 

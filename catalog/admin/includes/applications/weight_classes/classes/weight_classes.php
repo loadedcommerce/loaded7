@@ -34,10 +34,14 @@ class lC_Weight_classes_Admin {
 
       $name = '<td>' . $class_name . '</td>';
       $unit = '<td>' . $Qclasses->value('weight_class_key') . '</td>';
-      $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access']['product_settings'] < 3) ? '#' : 'javascript://" onclick="editClass(\'' . $Qclasses->valueInt('weight_class_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['product_settings'] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access']['product_settings'] < 4 || $Qclasses->valueInt('weight_class_id') == SHIPPING_WEIGHT_UNIT) ? '#' : 'javascript://" onclick="deleteClass(\'' . $Qclasses->valueInt('weight_class_id') . '\', \'' . urlencode($Qclasses->valueProtected('weight_class_title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['product_settings'] < 4 || $Qclasses->valueInt('weight_class_id') == SHIPPING_WEIGHT_UNIT) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                 </span></td>';
+      $action = '<td class="align-right vertical-center">
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access']['product_settings'] < 3) ? '#' : 'javascript://" onclick="editClass(\'' . $Qclasses->valueInt('weight_class_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['product_settings'] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   </span>
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access']['product_settings'] < 4 || $Qclasses->valueInt('weight_class_id') == SHIPPING_WEIGHT_UNIT) ? '#' : 'javascript://" onclick="deleteClass(\'' . $Qclasses->valueInt('weight_class_id') . '\', \'' . urlencode($Qclasses->valueProtected('weight_class_title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['product_settings'] < 4 || $Qclasses->valueInt('weight_class_id') == SHIPPING_WEIGHT_UNIT) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   </span>
+                 </td>';
 
       $result['aaData'][] = array("$name", "$unit", "$action");
     }

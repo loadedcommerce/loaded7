@@ -34,7 +34,7 @@ class lC_Products_expected_Admin {
     while ( $Qproducts->next() ) {
       $product = '<td>' . $Qproducts->value('products_name') . '</td>';
       $date = '<td>' . lC_DateTime::getShort($Qproducts->value('products_date_available')) . '</td>';
-      $action = '<td class="align-right vertical-center"><span class="button-group compact">
+      $action = '<td class="align-right vertical-center"><span class="button-group">
                    <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 3) ? '#' : 'javascript://" onclick="editEntry(\'' . $Qproducts->valueInt('products_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['languages'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
                  </span></td>';
       $result['aaData'][] = array("$product", "$date", "$action");

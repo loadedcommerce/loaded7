@@ -29,7 +29,14 @@ class lC_Application_Featured_products_Actions_save extends lC_Application_Featu
                     'status' => $status,
                     'expires_date' => $expires_date);
 
-      if (lC_Featured_products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data)) {
+      $id = lC_Featured_products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);
+
+      if ( is_numeric($id) ) {
+        if ( empty($_POST['save_close']) ){
+          lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '=' . $id . '&action=save'));
+        } else {
+          lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module));
+        }
       } else {
         $lC_MessageStack->add($this->_module, $lC_Language->get('ms_error_action_not_performed'), 'error');
       }
