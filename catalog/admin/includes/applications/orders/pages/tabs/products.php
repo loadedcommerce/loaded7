@@ -23,7 +23,7 @@
               <th class="hide-on-mobile"><?php echo $lC_Language->get('text_sku_model'); ?></th>
               <th><?php echo $lC_Language->get('text_name'); ?></th>
               <th class="hide-on-mobile hide-on-tablet"><?php echo $lC_Language->get('text_fulfillment'); ?></th>
-              <th class="hide-on-mobile hide-on-tablet"><?php echo $lC_Language->get('text_tax_class'); ?></th>
+              <!--<th class="hide-on-mobile hide-on-tablet"><?php echo $lC_Language->get('text_tax'); ?></th>-->
               <th class="align-right hide-on-mobile"><?php echo $lC_Language->get('text_price'); ?></th>
               <th class="align-center hide-on-mobile"><?php echo $lC_Language->get('text_qty'); ?></th>
               <th class="align-right hide-on-mobile"><?php echo $lC_Language->get('text_total'); ?></th>
@@ -56,9 +56,9 @@
               <td class="hide-on-mobile hide-on-tablet">
                 <span id="products_stock_<?php echo $products['orders_products_id']; ?>"><?php echo $products['stock']; ?></span>
               </td>
-              <td class="hide-on-mobile hide-on-tablet">
-                <span id="products_tax_class_<?php echo $products['orders_products_id']; ?>"><?php echo ($products['tax_class'] != '') ? $products['tax_class'] : $lC_Language->get('text_none'); ?></span>
-              </td>
+              <!--<td class="hide-on-mobile hide-on-tablet">
+                <span id="products_tax_<?php echo $products['orders_products_id']; ?>"><?php echo ($products['tax'] != '') ? $lC_Currencies->format($products['tax']) : $lC_Currencies->format(0); ?></span>
+              </td>-->
               <td class="align-right hide-on-mobile">
                 <span id="products_price_<?php echo $products['orders_products_id']; ?>"><?php echo $lC_Currencies->format($products['price']); ?></span>
               </td>
@@ -71,8 +71,10 @@
               <td class="align-right" style="min-width:90px;">
                 <span id="buttons_<?php echo $products['orders_products_id']; ?>">
                   <span class="button-group">
-                    <a class="button compact icon-pencil" href="javascript:void(0);" onclick="editOrderProduct('<?php echo $_GET[$lC_Template->getModule()]; ?>','<?php echo $products['orders_products_id']; ?>');"><?php echo $lC_Language->get('text_edit'); ?></a>
-                    <a class="button compact icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['orders_products_id']; ?>', '<?php echo $products['products_id']; ?>', '<?php echo $products['name']; ?>');"></a>
+                    <a class="button icon-pencil" href="javascript:void(0);" onclick="editOrderProduct('<?php echo $_GET[$lC_Template->getModule()]; ?>','<?php echo $products['orders_products_id']; ?>');"><?php echo $lC_Language->get('text_edit'); ?></a>
+                  </span>
+                  <span class="button-group">
+                    <a class="button icon-trash with-tooltip" title="<?php echo $lC_Language->get('text_delete'); ?>" href="javascript:void(0)" onclick="deleteOrderProduct('<?php echo $products['orders_products_id']; ?>', '<?php echo $products['products_id']; ?>', '<?php echo $products['name']; ?>');"></a>
                   </span>
                 </span>
               </td>
@@ -89,7 +91,7 @@
           <label class="label" for="add_product">
             <?php echo $lC_Language->get('text_add_product'); ?>:
           </label>
-          <?php echo lc_draw_pull_down_menu('add_product', lC_Products_Admin::getProductsDropdownArray(lC_Orders_Admin::getOrdersProductsIds($_GET[$lC_Template->getModule()])), null, 'class="input with-small-padding mid-margin-right mid-margin-bottom"'); ?>
+          <?php echo lc_draw_pull_down_menu('add_product', lC_Products_Admin::getProductsDropdownArray(), null, 'class="input with-small-padding mid-margin-right mid-margin-bottom"'); ?>
           <a href="javascript:void(0);" onclick="addOrderProduct(<?php echo $_GET[$lC_Template->getModule()];?>);">
             <button class="button glossy" type="button">
               <span class="button-icon green-gradient"><span class="icon-plus"></span></span>

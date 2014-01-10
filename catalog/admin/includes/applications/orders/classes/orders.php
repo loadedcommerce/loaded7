@@ -131,11 +131,14 @@ class lC_Orders_Admin {
       $date = '<td>' . self::getTextDate($Qresult->value('date_purchased')) . '</td>';
       $time = '<td>' . self::get12HourTime($Qresult->value('date_purchased')) . '</td>';
       $status = '<td><span class="tag with-min-padding ' . (($Qresult->valueProtected('orders_status_type') == 'Approved') ? 'green-bg' : (($Qresult->valueProtected('orders_status_type') == 'Pending') ? 'orange-bg' : 'red-bg')) . '">' . $Qresult->valueProtected('orders_status_name') . '</span></td>'; 
-      $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qresult->valueInt('orders_id') . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <!--<a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="editOrder(\'' . $Qresult->valueInt('orders_id') . '\')') . '" class="button icon-pencil with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_edit') . '"></a>-->
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteOrder(\'' . $Qresult->valueInt('orders_id') . '\', \'' . urlencode($Qresult->value('customers_name')) . '\')"') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                 </span></td>';         
+      $action = '<td class="align-right vertical-center">
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qresult->valueInt('orders_id') . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                   </span>
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteOrder(\'' . $Qresult->valueInt('orders_id') . '\', \'' . urlencode($Qresult->value('customers_name')) . '\')"') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   </span>
+                 </td>';         
 
       $result['aaData'][] = array("$check", "$oid", "$name", "$country", "$items", "$total", "$date", "$time", "$status", "$action");      
     }

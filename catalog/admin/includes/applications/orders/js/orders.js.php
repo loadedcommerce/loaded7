@@ -27,7 +27,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       function (data) {
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-          $(location).attr('href',url);
+          $(location).attr('href', url);
         }
         if (data.rpcStatus != 1) {
           alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
@@ -137,7 +137,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         $("[name=comment]").val(""); 
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";     
-          $(location).attr('href',url);
+          $(location).attr('href', url);
         }   
         if (data.rpcStatus == 1) {
           if (typeof oTable !== 'undefined') {   
@@ -159,7 +159,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       function (data) {
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";     
-          $(location).attr('href',url);
+          $(location).attr('href', url);
         }    
         if (data.rpcStatus == 1) {
           $("#transactionInfoTable > tbody").html(data.transactionHistory);
@@ -218,7 +218,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
               function (data) {
                 if (data.rpcStatus == -10) { // no session
                   var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-                  $(location).attr('href',url);
+                  $(location).attr('href', url);
                 }
                 if (data.rpcStatus != 1) {
                   $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -249,7 +249,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       function (data) {
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-          $(location).attr('href',url);
+          $(location).attr('href', url);
         }
         if (data.rpcStatus != 1) {
           $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -291,7 +291,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       function (data) {
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-          $(location).attr('href',url);
+          $(location).attr('href', url);
         }
         if (data.rpcStatus != 1) {
           $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -312,7 +312,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
             $("<option " + selected + "></option>").val(text['products_id']).html(text['products_name'])
           );
         });
-        $("#editTaxclass").empty();
+        /*$("#editTaxclass").empty();
         var cnt = 1;
         $.each(data.taxclassArray.entries, function(val, text) {
           var selected = (data.tax_class_id == text['tax_class_id']) ? 'selected="selected"' : '';
@@ -328,7 +328,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           $("#editTaxclass").append(
             $("<option " + selected + "></option>").val(text['tax_class_id']).html(text['tax_class_title'])
           );
-        });
+        });*/
         $.modal.all.centerModal();        
       }
     );
@@ -345,7 +345,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       function (data) {
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-          $(location).attr('href',url);
+          $(location).attr('href', url);
         }
         if (data.rpcStatus != 1) {
           $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -366,7 +366,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
             $("<option " + selected + "></option>").val(text['products_id']).html(text['products_name'])
           );
         });
-         $("#editTaxclass").empty();
+        /*$("#editTaxclass").empty();
         var cnt = 1;
         $.each(data.taxclassArray.entries, function(val, text) {
           var selected = (data.tax_class_id == text['tax_class_id']) ? 'selected="selected"' : '';
@@ -382,7 +382,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
           $("#editTaxclass").append(
             $("<option " + selected + "></option>").val(text['tax_class_id']).html(text['tax_class_title'])
           );
-        });
+        });*/
         $.modal.all.centerModal();        
       }
     );
@@ -410,7 +410,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       function (data) {
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-          $(location).attr('href',url);
+          $(location).attr('href', url);
         }
         if (data.rpcStatus != 1) {
           $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -418,7 +418,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         } 
         updateOrderList();        
         url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=OID&action=save&editProduct=1'); ?>';
-        $(location).attr('href',url.replace('OID', oid));
+        $(location).attr('href', url.replace('OID', oid));
       }
     );
   }
@@ -438,11 +438,11 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
              '          <?php echo lc_draw_pull_down_menu('product', null, null, 'class="input with-small-padding mid-margin-top" id="editProduct" onchange="updateEditProduct();"'); ?>'+
              '        </label>'+
              '      </p>'+
-             '      <p class="button-height inline-label">'+
-             '        <label for="taxClass" class="label"><?php echo $lC_Language->get('text_tax_class'); ?>'+
-             '        <?php echo lc_draw_pull_down_menu('taxClass', null, null, 'class="input with-small-padding mid-margin-top" id="editTaxclass"'); ?>'+
-             '        </label>'+
-             '      </p>'+
+             //'      <p class="button-height inline-label">'+
+             //'        <label for="taxClass" class="label"><?php //echo $lC_Language->get('text_tax_class'); ?>'+
+             //'        <?php //echo lc_draw_pull_down_menu('taxClass', null, null, 'class="input with-small-padding mid-margin-top" id="editTaxclass"'); ?>'+
+             //'        </label>'+
+             //'      </p>'+
              '      <p class="button-height inline-label">'+
              '        <label for="price" class="label"><?php echo $lC_Language->get('text_price'); ?>'+
              '        <?php echo lc_draw_input_field('price', null, 'class="input mid-margin-top" id="editPrice"'); ?>'+
@@ -559,7 +559,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
               function (data) {
                 if (data.rpcStatus == -10) { // no session
                   var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-                  $(location).attr('href',url);
+                  $(location).attr('href', url);
                 }
                 if (data.rpcStatus != 1) {
                   $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
@@ -646,7 +646,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       function (data) {
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-          $(location).attr('href',url);
+          $(location).attr('href', url);
         }
         if (data.rpcStatus != 1) {
           $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -687,7 +687,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         function (data) {
           if (data.rpcStatus == -10) { // no session
             var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-            $(location).attr('href',url);
+            $(location).attr('href', url);
           }
           if (data.rpcStatus != 1) {
             $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -728,7 +728,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         function (data) {
           if (data.rpcStatus == -10) { // no session
             var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-            $(location).attr('href',url);
+            $(location).attr('href', url);
           }
           if (data.rpcStatus != 1) {
             $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -771,7 +771,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         function (data) {
           if (data.rpcStatus == -10) { // no session
             var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-            $(location).attr('href',url);
+            $(location).attr('href', url);
           }
           if (data.rpcStatus != 1) {
             $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -811,7 +811,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
     }
   }
   
-  function showAddedOrderTotal(oID,currencySymbolLeft) {
+  function showAddedOrderTotal(oID, currencySymbolLeft) {
     
     var id_counter = parseInt($('#id_counter').html())+1;
     var type = $('#id_order_total_type').val();    
@@ -829,7 +829,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         function (data) {
           if (data.rpcStatus == -10) { // no session
             var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-            $(location).attr('href',url);
+            $(location).attr('href', url);
           }
           if (data.rpcStatus != 1) {
             $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -863,7 +863,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         function (data) {
           if (data.rpcStatus == -10) { // no session
             var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-            $(location).attr('href',url);
+            $(location).attr('href', url);
           }
           if (data.rpcStatus != 1) {
             $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -885,7 +885,7 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
         function (data) {        
           if (data.rpcStatus == -10) { // no session
             var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-            $(location).attr('href',url);
+            $(location).attr('href', url);
           }
           if (data.rpcStatus != 1) {
             $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
@@ -976,14 +976,14 @@ $cSearch = (isset($_SESSION['cIDFilter']) && $_SESSION['cIDFilter'] != null) ? '
       function (data) {
         if (data.rpcStatus == -10) { // no session
           var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
-          $(location).attr('href',url);
+          $(location).attr('href', url);
         }
         if (data.rpcStatus != 1) {
           $.modal.alert('<?php echo $lC_Language->get('ms_error_retrieving_data'); ?>');
           return false;
         }        
         url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=OID&action=save&orderstotal=1'); ?>';
-        $(location).attr('href',url.replace('OID', oId));
+        $(location).attr('href', url.replace('OID', oId));
       }
     );  
     */

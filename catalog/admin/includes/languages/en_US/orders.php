@@ -141,6 +141,7 @@ text_order_totals = Order Totals
 text_last_payment = Last Payment
 text_fulfillment = Fulfillment
 text_tax_class = Tax Class
+text_tax = Tax
 text_price = Price 
 text_quantity = Quantity
 text_product_total = Product Total
