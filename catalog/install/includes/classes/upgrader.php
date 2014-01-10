@@ -4003,10 +4003,20 @@ class lC_LocalUpgrader extends lC_Upgrader {
           /////////////////////////////////////////////////////////
           $otQry = $source_db->query('SELECT products_options_sort_order, options_type FROM products_options WHERE products_options_id = :products_options_id');
           $otQry->bindInt(':products_options_id', $sQry->value('products_options_text_id'));
-          $otQry->execute();
+          $otQry->execute();          
           $sort = $otQry->value('products_options_sort_order');
+          
+          $asoQry = $source_db->query('SELECT products_options_sort_order FROM products_attributes WHERE options_id = :options_id');
+          $asoQry->bindInt(':options_id', $sQry->value('products_options_text_id'));
+          $asoQry->execute();
+          
           if ($otQry->value('options_type') == 1) {
             $module = 'text_field';
+            $text_field_data[] = array(
+                                         'products_variants_groups_id' => $sQry->value('products_options_text_id')
+                                       , 'title' => $sQry->value('products_options_instruct') 
+                                       , 'sort_order' => $asoQry->value('products_options_sort_order') 
+                                        );
           } else if ($otQry->value('options_type') == 2) { 
             $module = 'radio_buttons';
           } else {
@@ -4102,8 +4112,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $sQry->freeResult();
       }
       
-      // END LOAD PRODUCTS VARIANTS VALUES FROM SOURCE DB
-
+      // END LOAD PRODUCTS VARIANTS VALUES FROM SOURCE DB 
+      
       // ##########      
 
       // LOAD PRODUCTS SIMPLE OPTIONS AND PRODUCTS SIMPLE OPTIONS VALUES FROM SOURCE DB
@@ -4246,6 +4256,38 @@ class lC_LocalUpgrader extends lC_Upgrader {
       }
 
       // END LOAD PRODUCTS SIMPLE VALUES TO TARGET DB
+      
+      // ########## Added for text_field options    
+
+      foreach ($text_field_data as $text_field) {
+        $pvvQry = $target_db->query('INSERT INTO :table_products_variants_values (languages_id, 
+                                                                                 products_variants_groups_id, 
+                                                                                 title, 
+                                                                                 sort_order) 
+                                                                         VALUES (:languages_id, 
+                                                                                 :products_variants_groups_id, 
+                                                                                 :title, 
+                                                                                 :sort_order)');
+  
+        $pvvQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+        
+        $pvvQry->bindInt  (':languages_id'               , 1);
+        $pvvQry->bindInt  (':products_variants_groups_id', $text_field['products_variants_groups_id']);
+        $pvvQry->bindValue(':title'                      , $text_field['title']);
+        $pvvQry->bindInt  (':sort_order'                 , $text_field['sort_order']);
+        
+        $pvvQry->execute();
+        
+        $sovID = $target_db->nextID();        
+        $sovQry = $target_db->query('UPDATE :table_products_simple_options_values SET values_id = :values_id WHERE options_id = :options_id');
+  
+        $sovQry->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+        
+        $sovQry->bindInt  (':values_id' , $sovID);
+        $sovQry->bindInt  (':options_id', $text_field['products_variants_groups_id']);
+        
+        $sovQry->execute();
+      }
 
       // ##########
 
