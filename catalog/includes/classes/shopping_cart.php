@@ -1123,6 +1123,10 @@ class lC_ShoppingCart {
 
       $lC_OrderTotal = new lC_OrderTotal();
       $this->_order_totals = $lC_OrderTotal->getResult();
+       // coupons
+      if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && isset($lC_Coupons)) {
+        $lC_Coupons->displayCouponInOrderTotal();
+      }
     }     
   }
 

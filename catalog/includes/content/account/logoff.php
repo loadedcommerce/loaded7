@@ -30,10 +30,10 @@ class lC_Account_Logoff extends lC_Template {
 
   /* Private methods */
   protected function _process() {
-    global $lC_ShoppingCart, $lC_Customer;
+    global $lC_ShoppingCart, $lC_Customer, $lC_Coupons;
 
     $lC_ShoppingCart->reset();
-
+    $lC_Coupons->reset();
     $lC_Customer->reset();
   }
 }
