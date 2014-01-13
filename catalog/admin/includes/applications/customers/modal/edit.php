@@ -596,14 +596,29 @@ function updateZones(selected) {
   );
 }
 
-function createNewOrder(cid=null) {
-  if (parseInt(cid) > 0 ) {
-    window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
+function isDefaultAddressIDExists(cid=null,aid=null) {
+  if(parseInt(aid) > 0) {
+    return true;
+  } else if($("#default_aId").length == 0 && parseInt(aid) == 0) {
+    return false;
+  } else if($("#default_aId").length > 0 && parseInt($("#default_aId").html()) > 0) {
+    return true;
   }
-  
-  var isVisible = $('#addAddress').is(':visible');
-  if (isVisible) {    
-    saveAddress(1);
+}
+
+function createNewOrder(cid=null,aid=null) {
+  if(isDefaultAddressIDExists(cid,aid)) {
+    if(parseInt(cid) > 0 ) {
+      window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
+    }
+    
+    var isVisible = $('#addAddress').is(':visible');
+    if (isVisible) {    
+      saveAddress(1);
+    }
+  } else {
+    var add_addr = 1;
+    editCustomer(cid,add_addr=1);
   }
 }
 

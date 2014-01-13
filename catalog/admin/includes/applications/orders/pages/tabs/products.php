@@ -66,7 +66,7 @@
                 <span id="products_qty_<?php echo $products['orders_products_id']; ?>"><?php echo $products['quantity']; ?></span>
               </td>
               <td class="align-right hide-on-mobile">
-                <span id="products_total_<?php echo $products['orders_products_id']; ?>"><?php echo $lC_Currencies->format(number_format($products['price']*$products['quantity'], DECIMAL_PLACES)); ?></span>
+                <span id="products_total_<?php echo $products['orders_products_id']; ?>"><?php echo $lC_Currencies->format($products['price']*$products['quantity']); ?></span>
               </td>
               <td class="align-right" style="min-width:90px;">
                 <span id="buttons_<?php echo $products['orders_products_id']; ?>">
