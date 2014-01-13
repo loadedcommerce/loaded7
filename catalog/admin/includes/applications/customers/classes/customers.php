@@ -110,11 +110,13 @@ class lC_Customers_Admin {
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcustomers->valueInt('customers_id') . '" id="' . $Qcustomers->valueInt('customers_id') . '"></td>';
       $gender = '<td>' . $customer_icon . '</td>';
       $name = '<td>' . $Qcustomers->valueProtected('customers_firstname'). ' '.$Qcustomers->valueProtected('customers_lastname') . '</td>';
+      
       $Qcustomers_orders = $lC_Database->query("SELECT count(*) as order_count 
                                          from :table_orders 
                                          where customers_id = '".$Qcustomers->valueInt('customers_id')."'");
       $Qcustomers_orders->bindTable(':table_orders', TABLE_ORDERS);
       $Qcustomers_orders->execute();
+      
       $order_count = '<td>' . $Qcustomers_orders->valueInt('order_count') . '</td>';
       $email = '<td>' . $Qcustomers->value('customers_email_address') . '</td>';
       $group = '<td><small class="tag ' . $tagColor . ' glossy">' . lc_get_customer_groups_name($Qcustomers->valueInt('customers_group_id')) . '</small></td>';
