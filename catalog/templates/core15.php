@@ -6,10 +6,10 @@
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: core.php v1.0 2013-08-08 datazen $
+  @version    $Id: core15.php v1.0 2013-08-08 datazen $
 */
-require($lC_Vqmod->modCheck('templates/core/classes/output.php'));
-$code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'core';
+require($lC_Vqmod->modCheck('templates/core15/classes/output.php'));
+$code = (isset($_SESSION['template']['code']) && $_SESSION['template']['code'] != NULL) ? $_SESSION['template']['code'] : 'core15';
 if (!defined('DIR_WS_TEMPLATE')) define('DIR_WS_TEMPLATE', DIR_WS_CATALOG . 'templates/' . $code . '/');
 if (!defined('DIR_FS_TEMPLATE')) define('DIR_FS_TEMPLATE', DIR_FS_CATALOG . 'templates/' . $code . '/');
 if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_CATALOG . 'templates/' . $code . '/images/');  
@@ -28,14 +28,14 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="templates/core/css/bootstrap.css">
-    <link rel="stylesheet" href="templates/core/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="templates/core15/css/bootstrap.css">
+    <link rel="stylesheet" href="templates/core15/css/bootstrap-datepicker.css">
     
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700italic,700,500&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     
     <!-- Template CSS -->
-    <link rel="stylesheet" href="templates/core/css/template.css?v=1">
+    <link rel="stylesheet" href="templates/core15/css/template.css?v=1">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -49,11 +49,11 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     ?>
 
     <!-- fav and touch icons -->
-    <link rel="shortcut icon" href="templates/core/images/favicons/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" href="templates/core/images/favicons/apple-touch-icon-144-precomposed.png" sizes="144x144">
-    <link rel="apple-touch-icon-precomposed" href="templates/core/images/favicons/apple-touch-icon-114-precomposed.png" sizes="114x114">
-    <link rel="apple-touch-icon-precomposed" href="templates/core/images/favicons/apple-touch-icon-72-precomposed.png" sizes="72x72">
-    <link rel="apple-touch-icon-precomposed" href="templates/core/images/favicons/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="templates/core15/images/favicons/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="templates/core15/images/favicons/apple-touch-icon-144-precomposed.png" sizes="144x144">
+    <link rel="apple-touch-icon-precomposed" href="templates/core15/images/favicons/apple-touch-icon-114-precomposed.png" sizes="114x114">
+    <link rel="apple-touch-icon-precomposed" href="templates/core15/images/favicons/apple-touch-icon-72-precomposed.png" sizes="72x72">
+    <link rel="apple-touch-icon-precomposed" href="templates/core15/images/favicons/apple-touch-icon-57-precomposed.png">
     
     <!-- jQuery is always at top -->
     <script src="ext/jquery/jquery-1.9.1.min.js"></script>
