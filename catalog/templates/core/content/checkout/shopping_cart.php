@@ -57,15 +57,12 @@
                   }   
                   if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
                     foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
-                      echo'<pre>'; print_r($option); echo'</pre>';
-                      if(is_array($option['value_id'])){
-
+                      if (is_array($option['value_id'])) {
                         $title = $option['value_id'][1];
-                      }else{
-
+                      } else {
                         $title = $option['value_title'];
                       }
-                      echo '<br /><small>- ' . $option['group_title'] . ': ' . $title . '</span>' . "\n";
+                      echo '<br /><small>- ' . $option['group_title'] . ': ' . $title . '</small>' . "\n";
                     }
                   }                             
                   echo '</div>' . "\n";
