@@ -570,9 +570,9 @@ class lC_Payment_paypal_pro extends lC_Payment {
     $returnUrl = (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_PRO_TEMPLATE') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_PRO_TEMPLATE == 'IFRAME') ?  lc_href_link(FILENAME_IREDIRECT, '', 'SSL', true, true, true) : lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true);
 
     $postData = $this->_getUserParams('DoExpressCheckoutPayment') .  
-                "&PAYMENTACTION=" . $transType . 
+                "&PAYMENTREQUEST_0_PAYMENTACTION=" . $transType . 
                 "&BUTTONSOURCE=LoadedCommerce_Cart" .
-                "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
+                "&PAYMENTREQUEST_0_AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
                 "&TOKEN=" . $token . 
                 "&PAYERID=" . $payerID;
 
@@ -657,6 +657,7 @@ class lC_Payment_paypal_pro extends lC_Payment {
 
     $transType = ADDONS_PAYMENT_PAYPAL_PAYMENTS_PRO_TRXTYPE ;    
     $postData = $this->_getUserParams('SetExpressCheckout') .
+                "&PAYMENTREQUEST_0_PAYMENTACTION=" . $transType . 
                 "&REQCONFIRMSHIPPING=0" .
                 "&ADDROVERRIDE=1" . 
                 "&SOLUTIONTYPE=Sole" .                
