@@ -3,17 +3,17 @@
   <definitions>
     <definition>
       <key>addon_paypal_payments_pro_title</key>
-      <value><![CDATA[Paypal Payment Pro]]></value>
+      <value><![CDATA[PayPal Payments Pro]]></value>
       <group>checkout</group>
     </definition>
     <definition>
       <key>addon_paypal_payments_pro_description</key>
-      <value><![CDATA[Accept credit cards and PayPal with Paypal Express Checkout. <a target="_blank" href="https://www.paypal.com/in/webapps/mpp/express-checkout"><small><i><u>Learn More</u></i></small></a>]]></value>
+      <value><![CDATA[Accept credit cards and PayPal with Paypal Express Checkout. <a target="_blank" href="https://www.paypal.com/webapps/mpp/paypal-payments-pro"><small><i><u>Learn More</u></i></small></a>]]></value>
       <group>checkout</group>
     </definition>     
     <definition>
       <key>payment_paypal_pro_title</key>
-      <value><![CDATA[PayPal Express Checkout <a target="_blank" href="https://www.paypal.com/in/webapps/mpp/express-checkout"><small><i><u>Learn More</u></i></small></a>]]></value>
+      <value><![CDATA[PayPal Payments Pro <a target="_blank" href="https://www.paypal.com/webapps/mpp/paypal-payments-pro"><small><i><u>Learn More</u></i></small></a>]]></value>
       <group>checkout</group>
     </definition>       
     <definition>
@@ -23,7 +23,7 @@
     </definition> 
     <definition>
       <key>payment_paypal_pro_method_blurb</key>
-      <value><![CDATA[powered by <img src="addons/Paypal_Express_Checkout/images/paypal_express_small.png" alt="PayPal Express Checkout" style="vertical-align:middle;">]]></value>
+      <value><![CDATA[powered by <img src="addons/PayPal_Payments_Pro/images/paypal_pro_small.png" alt="PayPal Pro - Credit Card Payment" style="vertical-align:middle;">]]></value>
       <group>checkout</group>
     </definition>   
     
@@ -72,7 +72,7 @@
     </definition> 
     <definition>
       <key>payment_paypal_pro_express_method_blurb</key>
-      <value><![CDATA[powered by <img src="addons/Paypal_Express_Checkout/images/paypal_express_small.png" alt="PayPal Express Checkout" style="vertical-align:middle;">]]></value>
+      <value><![CDATA[powered by <img src="addons/PayPal_Payments_Pro/images/paypal_express_small.png" alt="PayPal Pro Express Checkout" style="vertical-align:middle;">]]></value>
       <group>checkout</group>
     </definition>     
     <definition>   
