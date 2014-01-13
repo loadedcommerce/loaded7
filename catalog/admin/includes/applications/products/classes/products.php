@@ -143,7 +143,7 @@ class lC_Products_Admin {
       $Qspecials->execute();
       
       if ($Qspecials->numberOfRows() > 0) {
-        $price = $price . ' <span class="tag glossy with-tooltip' . (($Qspecials->valueInt('status') == 1) ? ' red-gradient' : ' grey-gradient') . '" title="' . (($Qspecials->valueInt('status') == 1) ? $lC_Language->get('text_special_enabled') : $lC_Language->get('text_special_disabled')) . '">' . $Qspecials->value('specials_new_products_price') . '</span>';
+        $price = $price . ' <span class="tag glossy with-tooltip' . (($Qspecials->valueInt('status') == 1) ? ' red-gradient' : ' grey-gradient') . '" title="' . (($Qspecials->valueInt('status') == 1) ? $lC_Language->get('text_special_enabled') : $lC_Language->get('text_special_disabled')) . '">' . $lC_Currencies->format($Qspecials->value('specials_new_products_price')) . '</span>';
       }
 
       $extra_data = array('products_cost_formatted' => $cost,
