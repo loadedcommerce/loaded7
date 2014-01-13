@@ -77,6 +77,7 @@ class lC_Customers_Admin {
     $Qcustomers->bindTable(':table_customers', TABLE_CUSTOMERS);
     $Qcustomers->bindTable(':table_address_book', TABLE_ADDRESS_BOOK);
     $Qcustomers->execute();
+    
     $cnt = 1;
     $tagArr = array();
     while ( $Qcustomers->next() ) {
@@ -112,9 +113,9 @@ class lC_Customers_Admin {
       $Qcustomers_orders = $lC_Database->query("SELECT count(*) as order_count 
                                          from :table_orders 
                                          where customers_id = '".$Qcustomers->valueInt('customers_id')."'");
-      $Qcustomers_orders->bindTable(':table_orderss', TABLE_ORDERS);
+      $Qcustomers_orders->bindTable(':table_orders', TABLE_ORDERS);
       $Qcustomers_orders->execute();
-      $order_count = '<td>' . $Qcustomers->valueInt('order_count') . '</td>';
+      $order_count = '<td>' . $Qcustomers_orders->valueInt('order_count') . '</td>';
       $email = '<td>' . $Qcustomers->value('customers_email_address') . '</td>';
       $group = '<td><small class="tag ' . $tagColor . ' glossy">' . lc_get_customer_groups_name($Qcustomers->valueInt('customers_group_id')) . '</small></td>';
       $date = '<td>' . lC_DateTime::getShort($Qcustomers->value('date_account_created')) . '</td>';
