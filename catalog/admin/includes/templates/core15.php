@@ -17,7 +17,7 @@ class lC_Template_core15 {
       $_markup_version = 'HTML5/CSS3',
       $_css_based = '1', /* 0=No; 1=Yes */
       $_medium = 'Mobile Responsive UI',
-      $_screenshot = 'core.png',
+      $_screenshot = 'core15.png',
       $_version = '1.0.0',
       $_compatibility = '7.0',      
       $_groups = array('boxes' => array('left', 'right'),
