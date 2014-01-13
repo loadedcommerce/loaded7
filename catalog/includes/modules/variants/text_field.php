@@ -39,7 +39,7 @@ class lC_Variants_text_field extends lC_Variants_Abstract {
                           
         $string .= '<div class="form-group margin-left">
                       <label class="label-control">' . $val['value_title'] . '</label>
-                      <input class="form-control display-inline two-third-width mid-margin-left mid-margin-right float-right" type="text" name="variants[' . $data['group_id'] . '][' . $field['id'] . ']" value="" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '">
+                      <input class="form-control display-inline two-third-width mid-margin-left mid-margin-right float-right" type="text" name="simple_options[' . $group_id . '][' . $val['value_id'] . ']" value="" modifier="' . $val['price_modifier'] . '" onchange="refreshPrice();" id="simple_options_' . $group_id . '_' . $val['value_id'] . '">
                       <span class="small-margin-left">' . $price_formatted . '</span>
                     </div>';
         $cnt++;
@@ -53,7 +53,7 @@ class lC_Variants_text_field extends lC_Variants_Abstract {
         $i++;
         $string .= '<div class="form-group margin-left">
                       <label class="label-control">' . $field['text'] . '</label>
-                      <input type="text" class="form-control display-inline two-third-width mid-margin-left mid-margin-right float-right" name="variants[' . $data['group_id'] . '][' . $field['id'] . ']" id="variants_' . $data['group_id'] . '_' . $i . '">
+                      <input type="text" class="form-control display-inline two-third-width mid-margin-left mid-margin-right float-right" name="simple_options[' . $data['group_id'] . '][' . $field['id'] . ']" id="variants_' . $data['group_id'] . '_' . $i . '">
                     </div>';
       }
     }
