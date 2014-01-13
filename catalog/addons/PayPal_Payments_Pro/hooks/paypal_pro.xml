@@ -42,7 +42,7 @@
       <add><![CDATA[
         <table class="content-checkout-payment-methods-table table table-hover table-responsive no-margin-bottom">
         <?php
-          if($_POST['payment_method'] == 'paypal_pro_ec' && ADDONS_PAYMENT_PAYPAL_PAYMENTS_PRO_EC_STATUS == 'On') {  
+          if(ADDONS_PAYMENT_PAYPAL_PAYMENTS_PRO_EC_STATUS == 'On') {  
             echo '<tr class="module-row cursor-pointer" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
             if ($radio_buttons > 0) {
               ?>
