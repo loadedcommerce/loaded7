@@ -42,21 +42,22 @@
       <add><![CDATA[
         <table class="content-checkout-payment-methods-table table table-hover table-responsive no-margin-bottom">
         <?php
-
-          echo '<tr class="module-row cursor-pointer" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
-          if ($radio_buttons > 0) {
-            ?>
-            <td>            
-            <?php echo '<div class="payment-selection">' . $lC_Language->get('payment_paypal_pro_express_method_title') . '</div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_pro_method_blurb') . '</div>'; ?>
-            </td>
-            <td class="text-right"><?php echo lc_draw_radio_field('payment_method', 'paypal_pro_ec', ($lC_ShoppingCart->hasBillingMethod() ? $lC_ShoppingCart->getBillingMethod('id') : null), 'id="pm_' . $counter . '"',''); ?></td>
-            <?php
-          } else {
-            ?>
-            <td class="content-checkout-listing-blank no-padding-left"></td>
-            <td><?php echo '<div class="payment-selection">' . $lC_Language->get('payment_paypal_pro_express_method_title') . '</div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_pro_method_blurb') . '</div>' . lc_draw_hidden_field('payment_method', 'paypal_pro_ec'); ?></td>
-            <?php
-          }           
+          if($_POST['payment_method'] == 'paypal_pro_ec' && ADDONS_PAYMENT_PAYPAL_PAYMENTS_PRO_EC_STATUS == 'On') {  
+            echo '<tr class="module-row cursor-pointer" onclick="selectRowEffect(this, ' . $radio_buttons . ')">' . "\n";
+            if ($radio_buttons > 0) {
+              ?>
+              <td>            
+              <?php echo '<div class="payment-selection">' . $lC_Language->get('payment_paypal_pro_express_method_title') . '</div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_pro_method_blurb') . '</div>'; ?>
+              </td>
+              <td class="text-right"><?php echo lc_draw_radio_field('payment_method', 'paypal_pro_ec', ($lC_ShoppingCart->hasBillingMethod() ? $lC_ShoppingCart->getBillingMethod('id') : null), 'id="pm_' . $counter . '"',''); ?></td>
+              <?php
+            } else {
+              ?>
+              <td class="content-checkout-listing-blank no-padding-left"></td>
+              <td><?php echo '<div class="payment-selection">' . $lC_Language->get('payment_paypal_pro_express_method_title') . '</div><div class="payment-selection-title">' . $lC_Language->get('payment_paypal_pro_method_blurb') . '</div>' . lc_draw_hidden_field('payment_method', 'paypal_pro_ec'); ?></td>
+              <?php
+            } 
+          }
         ?>
         </table>        
       ]]></add>
