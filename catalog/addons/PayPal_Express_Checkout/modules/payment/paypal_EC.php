@@ -477,7 +477,7 @@ class lC_Payment_paypal_EC extends lC_Payment {
     $postData = $this->_getUserParams('DoExpressCheckoutPayment') .  
                 "&PAYMENTACTION=" . $transType . 
                 "&BUTTONSOURCE=LoadedCommerce_Cart" .
-                "&AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
+                "&PAYMENTREQUEST_0_AMT=" . $lC_Currencies->formatRaw($lC_ShoppingCart->getTotal(), $lC_Currencies->getCode()) .
                 "&TOKEN=" . $token . 
                 "&PAYERID=" . $payerID;
 
@@ -546,8 +546,6 @@ class lC_Payment_paypal_EC extends lC_Payment {
     $itemsString = '';
     foreach ($lC_ShoppingCart->getProducts() as $products) {
       $itemsString .= '&L_PAYMENTREQUEST_0_NAME' . (string)$cnt . '=' . urlencode($products['name']) .
-                      //'&PAYMENTREQUEST_0_DESC' . (string)$cnt . '=' . substr($products['description'], 0, 40) .
-                      //'&L_PAYMENTREQUEST_0_SKU' . (string)$cnt . '=' . $products['id'] .
                       '&L_PAYMENTREQUEST_0_QTY' . (string)$cnt . '=' . $products['quantity'] .
                       '&L_PAYMENTREQUEST_0_AMT' . (string)$cnt . '=' . $lC_Currencies->formatRaw($products['price'], $lC_Currencies->getCode()) ;
       $cnt++;                      
@@ -564,10 +562,11 @@ class lC_Payment_paypal_EC extends lC_Payment {
 
     $transType = ADDONS_PAYMENT_PAYPAL_EXPRESS_CHECKOUT_TRXTYPE ;    
     $postData = $this->_getUserParams('SetExpressCheckout') .
+                "&PAYMENTACTION=" . $transType .
                 "&REQCONFIRMSHIPPING=0" .
                 "&ADDROVERRIDE=1" . 
                 "&SOLUTIONTYPE=Sole" .
-                //"&USERSELECTEDFUNDINGSOURCE=BML" .
+                "&USERSELECTEDFUNDINGSOURCE=BML" .
                 "&RETURNURL=" . urlencode(lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true)) .
                 "&CANCELURL=" . urlencode(lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true)) .
                 "&PAYMENTREQUEST_0_CURRENCYCODE=" . $_SESSION['currency'] .

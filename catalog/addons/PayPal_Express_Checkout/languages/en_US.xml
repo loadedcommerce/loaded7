@@ -3,7 +3,7 @@
   <definitions>
     <definition>
       <key>addon_payment_paypal_EC_title</key>
-      <value><![CDATA[Paypal Express Checkout]]></value>
+      <value><![CDATA[PayPal Express Checkout]]></value>
       <group>checkout</group>
     </definition>
     <definition>
