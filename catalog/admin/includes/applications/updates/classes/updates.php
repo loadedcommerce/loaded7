@@ -447,7 +447,11 @@ class lC_Updates_Admin {
           
           $file = substr($iteration->getPathName(), $pos+6);
           
-          $directory = realpath(DIR_FS_CATALOG) . '/';
+          if (version_compare($meta['compatibility'], '7.002.0.0') != -1) {
+            $directory = realpath(DIR_FS_CATALOG) . '/';
+          } else {
+            $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
+          }          
           
           if ( file_exists($directory . $file) ) {
             if ( rename($directory . $file, $directory . dirname($file) . '/.CU_' . basename($file)) ) {

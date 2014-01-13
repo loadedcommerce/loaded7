@@ -127,7 +127,7 @@ table_heading_sub_products_name = Sub Product Name
 table_heading_sub_products_weight = Weight
 table_heading_sub_products_sku = SKU/EAN13
 table_heading_sub_products_qoh = QOH
-table_heading_sub_products_cost = Cost
+table_heading_sub_products_price = Base Price
 table_heading_sub_products_img = Image
 table_heading_sub_products_status = Status
 
