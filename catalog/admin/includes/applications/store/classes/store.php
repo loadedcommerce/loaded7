@@ -363,7 +363,7 @@ if (!class_exists('lC_Store_Admin')) {
         if ( !file_exists(DIR_FS_CATALOG . 'addons/' . $key . '/controller.php') ) {
           // get the addon phar from the store
           self::getAddonPhar($key);
-
+          
           // apply the addon phar 
           if (file_exists(DIR_FS_WORK . 'addons/' . $key . '.phar')) {
             lC_Updates_Admin::applyPackage(DIR_FS_WORK . 'addons/' . $key . '.phar');
