@@ -5593,7 +5593,7 @@ INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (220,'77','Ð
 
 INSERT INTO lc_countries VALUES (221,'United Arab Emirates','AE','ARE','');
 
-INSERT INTO lc_countries VALUES (222,'United Kingdom','GB','GBR',":name\n:street_address\n:city\n:postcode\n:country");
+INSERT INTO lc_countries VALUES (222,'United Kingdom','GB','GBR',":name\n:street_address\n:city\n:state\n:postcode\n:country");
 
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'ABD','Aberdeenshire');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'ABE','Aberdeen');
