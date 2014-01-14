@@ -12,7 +12,7 @@ class lC_Access_Newsletters extends lC_Access {
       $_group = 'marketing',
       $_icon = 'email_send.png',
       $_title,
-      $_sort_order = 200;
+      $_sort_order = 400;
 
   public function lC_Access_Newsletters() {
     global $lC_Language;
