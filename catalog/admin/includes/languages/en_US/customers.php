@@ -19,6 +19,7 @@ table_heading_date_created = Date Created
 table_heading_action = Action
 
 button_new_customer = New Customer
+button_no_default_address = Add default address
 
 modal_heading_new_customer = New Customer
 modal_heading_edit_customer = Edit Customer

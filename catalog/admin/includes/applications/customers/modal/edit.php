@@ -205,7 +205,7 @@ function editCustomer(id, add_addr=0) {
           click:    function() { saveCustomer(); }
         },
         '<?php echo $lC_Language->get('button_create_order'); ?>': {
-          classes:  'glossy align-right green-gradient mid-margin-right button_create_order',
+          classes:  'glossy align-right green-gradient mid-margin-right button_create_order with-tooltip disabled',
           click:    function() { createNewOrder(id); }
         },       
         '<?php echo $lC_Language->get('button_delete'); ?>': {
@@ -294,11 +294,16 @@ function getFormData(id) {
 
       // populate address book listing
       $("#addressListContainer").html(data.addressBook);
-      $("#default_aId").html(data.customerData.customers_default_address_id); 
-
+      $("#default_aId").html(data.customerData.customers_default_address_id);
+       
+      // add tooltip to create default address to create order
+      var bco = document.getElementsByClassName('button_create_order');
+      $(bco).attr("title", "<?php echo $lC_Language->get('button_no_default_address'); ?>");
+      
       // if no default address disable the create order button
-      if (parseInt(data.customerData.customers_default_address_id) > 0) {        
-        $(".button_create_order").removeClass("disabled");        
+      if (parseInt(data.customerData.customers_default_address_id) > 0) {
+        var bco = document.getElementsByClassName('button_create_order');
+        $(bco).removeAttr("title").removeClass("with-tooltip").removeClass("disabled");
       }
       
       // populate new address form
@@ -596,19 +601,19 @@ function updateZones(selected) {
   );
 }
 
-function isDefaultAddressIDExists(cid=null,aid=null) {
-  if(parseInt(aid) > 0) {
+function isDefaultAddressIDExists(cid=null, aid=null) {
+  if (parseInt(aid) > 0) {
     return true;
-  } else if($("#default_aId").length == 0 && parseInt(aid) == 0) {
+  } else if ($("#default_aId").length == 0 && parseInt(aid) == 0) {
     return false;
-  } else if($("#default_aId").length > 0 && parseInt($("#default_aId").html()) > 0) {
+  } else if ($("#default_aId").length > 0 && parseInt($("#default_aId").html()) > 0) {
     return true;
   }
 }
 
 function createNewOrder(cid=null,aid=null) {
-  if(isDefaultAddressIDExists(cid,aid)) {
-    if(parseInt(cid) > 0 ) {
+  if (isDefaultAddressIDExists(cid,aid)) {
+    if (parseInt(cid) > 0 ) {
       window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
     }
     
