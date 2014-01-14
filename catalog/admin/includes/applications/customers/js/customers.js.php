@@ -72,5 +72,13 @@ $cSearch = (isset($_GET['cID']) && $_GET['cID'] != null ? '&cSearch=' . $_GET['c
       $('.hide-on-tablet').hide();      
     }    
   }
+  function createOrder(cid=null,aid=null) {  
+     if(parseInt(cid) > 0  && parseInt(aid)) {
+       window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
+     } else {
+       var add_addr = 1;
+       editCustomer(cid,add_addr=1);
+     }
+  }
       
 </script>
