@@ -43,7 +43,7 @@ class lC_Checkout_Payment extends lC_Template {
     // Stock Check
     if ( (STOCK_CHECK == '1') && (STOCK_ALLOW_CHECKOUT == '-1') ) {
       foreach ($lC_ShoppingCart->getProducts() as $products) {
-        if ($lC_ShoppingCart->isInStock($products['item_id']) === false) {
+        if ($lC_ShoppingCart->isInStock($products['id']) === false) {
           lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'SSL'));
           break;
         }

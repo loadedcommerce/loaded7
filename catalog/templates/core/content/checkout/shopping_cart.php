@@ -47,7 +47,7 @@
                   if (!empty($products['model'])) {
                     echo '<small>' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</small>' . "\n";
                   }
-                  if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['item_id']) === false) ) {
+                  if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['id']) === false) ) {
                     echo '<span class="warning">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' . "\n";
                   }
                   if ( $lC_ShoppingCart->isVariant($products['item_id']) ) {
