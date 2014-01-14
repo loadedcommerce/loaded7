@@ -217,22 +217,10 @@ function editCustomer(id, add_addr=0) {
   });
 
   if (add_addr == 1) {
-    // Display address tab
-    $('#id_section_personal').removeClass('active');
-    $('#id_section_address_book').addClass('active');
 
-    // Display Address form (Hide Personal Form)
-    $('#section_personal').hide();
-    $('#section_address_book').show();
 
-    // Display address from
-    $("#addressBookForm")[0].reset();
-    $("#addresBookPersonal").hide();
-    $("#addAddress").show();
-    $('#li-toggle').hide();
+    showAddressTab();
 
-    // Set 1st address as primary address for new customer
-    $("#setPrimary").html('<label for="default" class="label"><?php echo $lC_Language->get('field_set_as_primary'); ?></label>&nbsp;&nbsp;<?php echo '&nbsp;' . lc_draw_checkbox_field('ab_primary', '1', true, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '" ');?>');
   }
 
   mask();  
@@ -596,18 +584,28 @@ function updateZones(selected) {
   );
 }
 
-function isDefaultAddressIDExists(cid=null,aid=null) {
-  if(parseInt(aid) > 0) {
-    return true;
-  } else if($("#default_aId").length == 0 && parseInt(aid) == 0) {
-    return false;
-  } else if($("#default_aId").length > 0 && parseInt($("#default_aId").html()) > 0) {
-    return true;
+function showAddressTab(flag_reset=true) {
+  // Display address tab
+    $('#id_section_personal').removeClass('active');
+    $('#id_section_address_book').addClass('active');
+    // Display Address form (Hide Personal Form)
+    $('#section_personal').hide();
+    $('#section_address_book').show();
+
+    // Display address from
+    if(flag_reset == true) {
+      $("#addressBookForm")[0].reset();
   }
+    $("#addresBookPersonal").hide();
+    $("#addAddress").show();
+    $('#li-toggle').hide();
+    // Set 1st address as primary address for new customer
+    $("#setPrimary").html('<label for="default" class="label"><?php echo $lC_Language->get('field_set_as_primary'); ?></label>&nbsp;&nbsp;<?php echo '&nbsp;' . lc_draw_checkbox_field('ab_primary', '1', true, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '" ');?>');
 }
 
-function createNewOrder(cid=null,aid=null) {
-  if(isDefaultAddressIDExists(cid,aid)) {
+function createNewOrder(cid=null) {
+  var daid = parseInt($("#default_aId").html());
+  if (parseInt(daid) > 0 ) {
     if(parseInt(cid) > 0 ) {
       window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
     }
@@ -617,8 +615,7 @@ function createNewOrder(cid=null,aid=null) {
       saveAddress(1);
     }
   } else {
-    var add_addr = 1;
-    editCustomer(cid,add_addr=1);
+    showAddressTab(flag_reset=false);
   }
 }
 
