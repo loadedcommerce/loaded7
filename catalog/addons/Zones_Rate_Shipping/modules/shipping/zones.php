@@ -52,9 +52,9 @@ class lC_Shipping_zones extends lC_Shipping {
     $shipping_weight = $lC_Weight->convert($lC_ShoppingCart->getWeight(), SHIPPING_WEIGHT_UNIT, ADDONS_SHIPPING_ZONES_RATE_SHIPPING_WEIGHT_UNIT);
 
     for ($i=1; $i<=$this->num_zones; $i++) {
-      $countries_table = constant('ADDONS_SHIPPING_ZONES_RATE_SHIPPING_COUNTRIES_' . $i);
+      $countries_table =  str_replace('UK', 'GB', constant('ADDONS_SHIPPING_ZONES_RATE_SHIPPING_COUNTRIES_' . $i));
       $country_zones = preg_split("/[,]/", $countries_table);
-      if (in_array($dest_country, $country_zones)) {
+      if (in_array($dest_country, $country_zones) ) {
         $dest_zone = $i;
         break;
       }
