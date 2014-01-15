@@ -7,6 +7,13 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: BarcodeQR.php v1.0 2013-08-08 datazen $
 */
+
+/**
+ * Original Script by: 
+ * @author Shay Anderson 05.11
+ * @link http://www.shayanderson.com/php/php-qr-code-generator-class.htm
+ * @license http://www.gnu.org/licenses/gpl.html GPL License
+*/
 final class BarcodeQR {
 	/**
 	 * Chart API URL
