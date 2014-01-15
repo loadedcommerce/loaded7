@@ -275,5 +275,9 @@ class lC_Coupons {
     
     $_SESSION['lC_ShoppingCart_data']['order_totals'] = $otArr;   
   }
+
+  public function displayCouponInOrderTotal() {
+    $this->_refreshCouponOrderTotals();
+  }
 }
 ?>

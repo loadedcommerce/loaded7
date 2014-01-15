@@ -12,7 +12,7 @@ class lC_Access_Branding_manager extends lC_Access {
       $_group = 'marketing',
       $_icon = '',
       $_title,
-      $_sort_order = 300;
+      $_sort_order = 100;
 
   public function lC_Access_Branding_manager() {
     global $lC_Language;

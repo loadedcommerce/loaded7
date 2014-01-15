@@ -108,6 +108,7 @@ CREATE TABLE lc_banners_history (
 DROP TABLE IF EXISTS lc_branding;
 CREATE TABLE IF NOT EXISTS lc_branding (
   language_id int(11) NOT NULL DEFAULT '1',
+  homepage_text TEXT NOT NULL,
   slogan varchar(256) NOT NULL DEFAULT '',
   meta_description varchar(250) NOT NULL DEFAULT '',
   meta_keywords varchar(128) NOT NULL DEFAULT '',
@@ -1160,6 +1161,8 @@ INSERT INTO lc_configuration (configuration_id, configuration_title, configurati
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(167, 'cURL Proxy Username', 'CURL_PROXY_USER', '', 'If your proxy requires a username, enter it here.', 21, 0, NULL, '0000-00-00 00:00:00', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(168, 'cURL Proxy Password', 'CURL_PROXY_PASSWORD', '', 'If your proxy requires a password, enter it here.', 21, 0, NULL, '0000-00-00 00:00:00', NULL, NULL);
 INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(169, 'cURL Proxy Port', 'CURL_PROXY_PORT', '', 'If your proxy requires a specific port, enter it here.', 21, 0, NULL, '0000-00-00 00:00:00', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(170, 'Cache Contents', 'BOX_WHATS_NEW_CACHE', '1', 'Number of minutes to keep the contents cached (0 = no cache)', 6, 0, NULL, '0000-00-00 00:00:00', NULL, NULL);
+INSERT INTO lc_configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES(171, 'Random New Product Selection', 'BOX_WHATS_NEW_RANDOM_SELECT', '10', 'Select a random new product from this amount of the newest products available', 6, 0, NULL, '0000-00-00 00:00:00', NULL, NULL);
 
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(1, 'My Store', 'General information about my store', 1, 1);
 INSERT INTO lc_configuration_group (configuration_group_id, configuration_group_title, configuration_group_description, sort_order, visible) VALUES(2, 'Minimum Values', 'The minimum values for functions / data', 2, 1);

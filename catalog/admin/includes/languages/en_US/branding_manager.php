@@ -66,3 +66,4 @@ tab_social_links = Social Links
 tab_home_page = Home Page
  
 text_drag_drop_to_replace = Drag & Drop or&nbsp;
+text_content_not_installed_message = This content is only displayed when the Template Content Module "Content on Main Page" is installed.<br>Go to Settings -> Setup -> Template Modules -> <a href="index.php?templates_modules&set=content">Content on Main Page</a> to install this module. If it is not installed Install it.<br>Then go to Settings -> Setup -> Template Modules Layout -> <a href="index.php?templates_modules_layout&set=content">Content on Main Page</a> to configure the page(s) and placement for your site.
