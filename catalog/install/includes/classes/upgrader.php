@@ -3986,10 +3986,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // LOAD PRODUCTS VARIANTS GROUPS FROM SOURCE DB
       $map = $this->_data_mapping['products_variants_groups'];
       $variants_groups = array();
+      $text_field_data = array();
 
       $sQry = $source_db->query('SELECT * FROM products_options_text');
       $sQry->execute();
-        
+      
       if ($sQry->numberOfRows() > 0) { 
         $cnt = 0;
         while ($sQry->next()) {
@@ -4003,31 +4004,47 @@ class lC_LocalUpgrader extends lC_Upgrader {
           /////////////////////////////////////////////////////////
           $otQry = $source_db->query('SELECT products_options_sort_order, options_type FROM products_options WHERE products_options_id = :products_options_id');
           $otQry->bindInt(':products_options_id', $sQry->value('products_options_text_id'));
-          $otQry->execute();          
-          $sort = $otQry->value('products_options_sort_order');
+          $otQry->execute();
           
           $asoQry = $source_db->query('SELECT products_options_sort_order FROM products_attributes WHERE options_id = :options_id');
           $asoQry->bindInt(':options_id', $sQry->value('products_options_text_id'));
           $asoQry->execute();
           
-          if ($otQry->value('options_type') == 1) {
+          if ($otQry->value('options_type') == '1') {
             $module = 'text_field';
             $text_field_data[] = array(
-                                         'products_variants_groups_id' => $sQry->value('products_options_text_id')
-                                       , 'title' => $sQry->value('products_options_instruct') 
-                                       , 'sort_order' => $asoQry->value('products_options_sort_order') 
-                                        );
-          } else if ($otQry->value('options_type') == 2) { 
+                                          'products_variants_groups_id' => $sQry->value('products_options_text_id')
+                                        , 'title'                       => $sQry->value('products_options_instruct') 
+                                        , 'sort_order'                  => $asoQry->value('products_options_sort_order') 
+                                         );
+          } else if ($otQry->value('options_type') == '2') { 
             $module = 'radio_buttons';
+          } else if ($otQry->value('options_type') == '3') { 
+            // $module = 'check_box'; // back to check_box once loaded7 supports it
+            $module = 'pull_down_menu';
+          } else if ($otQry->value('options_type') == '4') {
+            // $module = 'text_area'; // back to text_area once loaded7 supports it 
+            $module = 'text_field';
+            $text_field_data[] = array(
+                                          'products_variants_groups_id' => $sQry->value('products_options_text_id')
+                                        , 'title'                       => $sQry->value('products_options_instruct') 
+                                        , 'sort_order'                  => $asoQry->value('products_options_sort_order') 
+                                         );
+          // no support for file upload yet even for conversion
+          // } else if ($otQry->value('options_type') == '5') { 
+            // $module = 'file_upload'; // back to check_box once loaded7 supports it
           } else {
             $module = 'pull_down_menu';
           }
+          
           $otQry->freeResult();
+          $asoQry->freeResult();
+          
           $group = array(
                            'id'           => $sQry->value('products_options_text_id')
                          , 'languages_id' => $sQry->value('language_id')
                          , 'title'        => $sQry->value('products_options_name')
-                         , 'sort_order'   => $sort
+                         , 'sort_order'   => $otQry->value('products_options_sort_order')
                          , 'module'       => $module
                           ); 
                                    
@@ -4257,17 +4274,17 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
       // END LOAD PRODUCTS SIMPLE VALUES TO TARGET DB
       
-      // ########## Added for text_field options    
-
+      // ########## Added for text_field options
+      
       foreach ($text_field_data as $text_field) {
         $pvvQry = $target_db->query('INSERT INTO :table_products_variants_values (languages_id, 
-                                                                                 products_variants_groups_id, 
-                                                                                 title, 
-                                                                                 sort_order) 
-                                                                         VALUES (:languages_id, 
-                                                                                 :products_variants_groups_id, 
-                                                                                 :title, 
-                                                                                 :sort_order)');
+                                                                                  products_variants_groups_id, 
+                                                                                  title, 
+                                                                                  sort_order) 
+                                                                          VALUES (:languages_id, 
+                                                                                  :products_variants_groups_id, 
+                                                                                  :title, 
+                                                                                  :sort_order)');
   
         $pvvQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
         
