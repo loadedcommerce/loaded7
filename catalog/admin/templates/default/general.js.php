@@ -419,7 +419,10 @@ $(document).ready(function() {
         }
       );
     }
-  }        
+  }
+  setTimeout(function() {
+    $("#dataTable_length").find('select').addClass("input with-small-padding");
+  }, 700);        
 });
 
 function _apiHealthCheckAlert() {

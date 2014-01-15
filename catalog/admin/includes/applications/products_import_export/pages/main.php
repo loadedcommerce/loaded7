@@ -41,7 +41,7 @@
                     <button type="button" class="button green-gradient icon-download" onClick="Javascript:getProducts('full');"><?php echo $lC_Language->get('button_full_data_set'); ?></button> 
                   </p>
                   <p class="button-height">
-                    <a href="/admin/includes/applications/products_import_export/samples/products_import_sample.txt" download>
+                    <a href="includes/applications/products_import_export/samples/products_import_sample.txt" download>
                       <button type="button" class="button white-gradient"><?php echo $lC_Language->get('button_get_sample_file'); ?></button>
                     </a>
                   </p>
@@ -109,7 +109,7 @@
                     <button type="button" class="button green-gradient icon-download" onClick="Javascript:getCategories();"><?php echo $lC_Language->get('button_full_data_set'); ?></button>
                   </p>
                   <p class="button-height">
-                    <a href="/admin/includes/applications/products_import_export/samples/categories_import_sample.txt" download>
+                    <a href="includes/applications/products_import_export/samples/categories_import_sample.txt" download>
                       <button type="button" class="button white-gradient"><?php echo $lC_Language->get('button_get_sample_file'); ?></button>
                     </a>
                   </p>
@@ -151,7 +151,7 @@
                     <button type="button" class="button green-gradient icon-download" onClick="Javascript:getOptionGroups();"><?php echo $lC_Language->get('button_export_options_groups'); ?></button>
                   </p>
                   <p class="button-height">
-                    <a href="/admin/includes/applications/products_import_export/samples/options_groups_import_sample.txt" download>
+                    <a href="includes/applications/products_import_export/samples/options_groups_import_sample.txt" download>
                       <button type="button" class="button white-gradient"><?php echo $lC_Language->get('button_get_sample_file'); ?></button>
                     </a>
                   </p>
@@ -159,7 +159,7 @@
                     <button type="button" class="button green-gradient icon-download" onClick="Javascript:getOptionVariants();"><?php echo $lC_Language->get('button_export_option_variants'); ?></button>
                   </p>
                   <p class="button-height">
-                    <a href="/admin/includes/applications/products_import_export/samples/options_variants_import_sample.txt" download>
+                    <a href="includes/applications/products_import_export/samples/options_variants_import_sample.txt" download>
                       <button type="button" class="button white-gradient"><?php echo $lC_Language->get('button_get_sample_file'); ?></button>
                     </a>
                   </p>
@@ -167,7 +167,7 @@
                     <button type="button" class="button green-gradient icon-download" onClick="Javascript:getOptionProducts();"><?php echo $lC_Language->get('button_export_options_to_products'); ?></button>
                   </p>
                   <p class="button-height">
-                    <a href="/admin/includes/applications/products_import_export/samples/options_to_products_import_sample.txt" download>
+                    <a href="includes/applications/products_import_export/samples/options_to_products_import_sample.txt" download>
                       <button type="button" class="button white-gradient"><?php echo $lC_Language->get('button_get_sample_file'); ?></button>
                     </a>
                   </p>

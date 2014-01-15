@@ -1,31 +1,16 @@
 <?php
-/*
-  $Id: api.php v1.0 2013-01-01 datazen $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    admin::classes
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: api.php v1.0 2013-08-08 datazen $
 */
 require_once(DIR_FS_ADMIN . 'includes/applications/server_info/classes/server_info.php');
 require_once(DIR_FS_CATALOG . 'includes/classes/transport.php'); 
 
 class lC_Api {
-  /**
-  * Perform the installation ID check
-  *  
-  * @access private      
-  * @return string
-  */ 
-  public function healthCheck($data = array()) {
-//    if ($this->_timeToCheck()) {
-//      return $this->_doHealthCheck($data);
-//    }
-  }
   /**
   * Register the installation
   *  
@@ -35,7 +20,6 @@ class lC_Api {
   public function register($data) {
     return $this->_doRegister($data);
   }  
-  
   /**
   * Validate the serial
   *  
@@ -45,7 +29,7 @@ class lC_Api {
   public function validateSerial($data) {
     return $this->_validateSerial($data);
   }  
-  /**
+ /**
   * Register the new install with the LC API
   *  
   * @access private      
@@ -81,14 +65,15 @@ class lC_Api {
     
     $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/1_0/register/install/', 'method' => 'post', 'parameters' => $registerArr));
     $newInstallationID = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
+    $products = (preg_match("'<products[^>]*?>(.*?)</products>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
 
     if ( lC_Server_info_Admin::updateInstallID($newInstallationID) ) {
-      return utility::arr2xml(array('error' => FALSE, 'installationID' => $newInstallationID));
+      return utility::arr2xml(array('error' => FALSE, 'installationID' => $newInstallationID, 'products' => $products));
     } else {    
       return utility::arr2xml(array('error' => TRUE, 'message' => 'error processing the request'));
     }  
   }
-  /**
+ /**
   * Check to see if it's time to re-check installation validity
   *  
   * @access private      
