@@ -347,7 +347,7 @@ if (!class_exists('lC_Store_Admin')) {
         $key = str_replace('lC_Template_', '', $key);
         if ( !file_exists(DIR_FS_ADMIN . 'includes/templates/' . $key . '.php') ) {
           // get the addon phar from the store
-          self::getAddonPhar($key);
+          self::getAddonPhar($key, 'template');
 
           // apply the addon phar 
           if (file_exists(DIR_FS_WORK . 'addons/' . $key . '.phar')) {
@@ -487,7 +487,7 @@ if (!class_exists('lC_Store_Admin')) {
     * @access public
     * @return void
     */  
-    public static function getAddonPhar($key) {  
+    public static function getAddonPhar($key, $type = 'addon') {  
       // remove the old phar if it exists
       if (file_exists(DIR_FS_WORK . 'addons/' . $key . '.phar')) unlink(DIR_FS_WORK . 'addons/' . $key . '.phar'); 
 
@@ -495,9 +495,13 @@ if (!class_exists('lC_Store_Admin')) {
 
       // add the pubkey
       $pubkey = file_get_contents(DIR_FS_WORK . 'addons/update.phar.pubkey');
-      file_put_contents(DIR_FS_WORK . 'addons/' . $key . '.phar.pubkey', $pubkey);
-
-      $response = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']), 'method' => 'get'));
+      file_put_contents(DIR_FS_WORK . 'addons/' . $key . '.phar.pubkey', $pubkey);      
+      
+      if ($type == 'addon') {
+        $response = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']), 'method' => 'get'));
+      } else {        
+        $response = file_get_contents('https://api.loadedcommerce.com/' . $api_version . '/get/' . $key . '?type=addon&ver=' . utility::getVersion() . '&ref=' . urlencode($_SERVER['SCRIPT_FILENAME']));
+      }
 
       return file_put_contents(DIR_FS_WORK . 'addons/' . $key . '.phar', $response);    
     }
