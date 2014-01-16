@@ -51,6 +51,8 @@
   ?>
   <div class="col-sm-8 col-lg-8 clearfix">
     <?php
+
+
     $availability = ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) ) ? '<span class="product-out-of-stock red">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' : $lC_Product->getAttribute('shipping_availability');
     if ($lC_Product->getAttribute('manufacturers') != null || $lC_Product->hasModel()) {
       echo '<div class="content-products-info-manuf-model">' . "\n" . 
@@ -160,7 +162,7 @@
 $(document).ready(function() {
   $('#main-content-container').addClass('large-margin-top-neg');
   <?php
-  if( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) )  {
+  if( (STOCK_CHECK == '1') && (DISABLE_ADD_TO_CART == '1')&& ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) )  {
   ?>
   $('#button_buy_now_id').addClass('disabled');
   <?php
