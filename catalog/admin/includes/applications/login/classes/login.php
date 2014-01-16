@@ -39,8 +39,9 @@ class lC_Login_Admin {
     // check serial once per day and download any missing addons
     $serial = (defined('INSTALLATION_ID') && INSTALLATION_ID != NULL) ? INSTALLATION_ID : NULL;
     if ($serial != NULL) {
-      if (self::_timeToCheck()) {
+      if (self::_timeToCheck() || (isset($_SESSION['pro_success']) && $_SESSION['pro_success'] == true) ) {
         self::validateSerial($serial);
+        if (isset($_SESSION['pro_success'])) unset($_SESSION['pro_success']);
       }
     }
    

@@ -2,7 +2,7 @@
 /**
   @package    catalog::addons
   @author     Loaded Commerce
-  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Copyright 2003-2014 Loaded Commerce
   @copyright  Portions Copyright 2003 osCommerce
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: controller.php v1.0 2013-08-08 datazen $
@@ -41,11 +41,11 @@ class Free_Shipping extends lC_Addon { // your addon must extend lC_Addon
    /**
     * The addon version
     */     
-    $this->_version = '1.0.0';
+    $this->_version = '1.0.1';
    /**
     * The Loaded 7 core compatibility version
     */     
-    $this->_compatibility = '7.0.0.4.1'; // the addon is compatible with this core version and later   
+    $this->_compatibility = '7.002.0.0'; // the addon is compatible with this core version and later   
    /**
     * The addon image used in the addons store listing
     */     
@@ -54,7 +54,7 @@ class Free_Shipping extends lC_Addon { // your addon must extend lC_Addon
     * The addon enable/disable switch
     */    
     $this->_enabled = (defined('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') && @constant('ADDONS_SHIPPING_' . strtoupper($this->_code) . '_STATUS') == '1') ? true : false;
-    $this->_rating = '4';      
+    $this->_rating = '3';      
   }
  /**
   * Checks to see if the addon has been installed
