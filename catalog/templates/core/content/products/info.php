@@ -144,7 +144,7 @@
         </div>
       </div>
       <div class="col-sm-4 col-lg-4">
-        <p class="margin-top"><button onclick="$('#cart_quantity').submit();" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
+        <p class="margin-top"><button id = "button_buy_now_id" onclick="$('#cart_quantity').submit();" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
       </div>
     </div> 
     <?php
@@ -159,6 +159,14 @@
 <script>
 $(document).ready(function() {
   $('#main-content-container').addClass('large-margin-top-neg');
+  <?php
+  if( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) )  {
+  ?>
+  $('#button_buy_now_id').addClass('disabled');
+  <?php
+
+  }
+  ?>
   refreshPrice();
 });
 
