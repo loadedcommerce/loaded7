@@ -37,7 +37,7 @@ class lC_Api {
   */   
   private function _doRegister($data) {
     global $lC_Database, $lC_Cache;
-                  
+          
     if (isset($data['activation_email']) && $data['activation_email'] != NULL) {
       $storeEmail = $data['activation_email'];
     } else {
@@ -69,7 +69,7 @@ class lC_Api {
     $resultXML = transport::getResponse(array('url' => 'https://api.loadedcommerce.com/' . $api_version . '/register/install/', 'method' => 'post', 'parameters' => $registerArr));
     $newInstallationID = (preg_match("'<installationID[^>]*?>(.*?)</installationID>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
     $products = (preg_match("'<products[^>]*?>(.*?)</products>'i", $resultXML, $regs) == 1) ? $regs[1] : NULL;
-
+    
     if ( lC_Server_info_Admin::updateInstallID($newInstallationID) ) {
       return utility::arr2xml(array('error' => FALSE, 'installationID' => $newInstallationID, 'products' => $products));
     } else {    
