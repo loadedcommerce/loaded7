@@ -487,8 +487,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
 				$upgrader->setConnectDetails($_POST);
 	
-				$target_img_dir =  str_replace("install", "", getcwd()).'images/products/originals/';
-//				$upgrader->rrmdir($target_img_dir);
+				// $target_img_dir = str_replace("install", "", getcwd()).'images/products/originals/';
+        // $upgrader->rrmdir($target_img_dir);
 
 				$rslt = $upgrader->importImages();
 				
@@ -509,8 +509,8 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
 				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
 				$upgrader->setConnectDetails($_POST);
 	
-//				$target_img_dir =  str_replace("install", "", getcwd()).'images/products/originals/';
-//				$upgrader->rrmdir($target_img_dir);
+        // $target_img_dir = str_replace("install", "", getcwd()).'images/categories/';
+        // $upgrader->rrmdir($target_img_dir);
 
 				$rslt = $upgrader->importCategoryImages();
 				
