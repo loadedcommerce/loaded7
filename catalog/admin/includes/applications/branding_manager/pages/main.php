@@ -310,17 +310,8 @@ $bInfo = lC_Branding_manager_Admin::getAll();
       <div id="buttons-container" style="position: relative;" class="clear-both">
         <div style="float:right;">
           <p class="button-height" align="right">
-            <a class="button" href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule()); ?>">
-              <span class="button-icon blue-gradient">
-                <span class="icon-undo"></span>
-              </span>
-              <span class="button-text"><?php echo $lC_Language->get('button_reset'); ?></span>
-            </a>&nbsp; 
-            <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="validateForm(\'#branding_manager\');'); ?>">
-              <span class="button-icon green-gradient glossy">
-                <span class="icon-download"></span>
-              </span>
-              <span class="button-text"><?php echo $lC_Language->get('button_save'); ?></span>
+            <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 3) ? ' disabled' : NULL); ?> big icon-tick green-gradient" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : 'javascript://" onclick="validateForm(\'#branding_manager\');'); ?>">
+              <span><?php echo $lC_Language->get('button_save'); ?></span>
             </a>&nbsp;
           </p>
         </div>
