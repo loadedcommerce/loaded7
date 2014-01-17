@@ -38,10 +38,10 @@ abstract class lC_Upgrader {
   
   protected $_languages_id_default = 1; 
   
-  public function __construct(){
+  public function __construct() {
   }
 
-  public function printDataMap(){
+  public function printDataMap() {
     print_r($this->_data_mapping);
   }
   
@@ -97,7 +97,7 @@ abstract class lC_Upgrader {
       }
       //add the files
       foreach ($valid_files as $file) {
-        $zip->addFile($file, $file);
+        $zip->addFile($file, end(explode('/', $file)));
       }
       //debug
       //echo 'The zip archive contains ', $zip->numFiles,' files with a status of ', $zip->status;
@@ -771,7 +771,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                             , 'has_children'           => 0
                              ); 
                            
-          $products[] = $product;
+          $products[] = $product; 
         
           $tQry = $target_db->query('INSERT INTO :table_products (products_id, 
                                                                   parent_id, 
@@ -830,6 +830,28 @@ class lC_LocalUpgrader extends lC_Upgrader {
           
           $tQry->execute();
           
+          $mQry = $target_db->query('SELECT id FROM :table_templates_boxes WHERE code = "manufacturers"');
+          $mQry->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+          $mQry->execute(); 
+        
+          $aQry = $target_db->query('INSERT INTO :table_product_attributes (id, 
+                                                                            products_id, 
+                                                                            languages_id,  
+                                                                            value) 
+                                                                    VALUES (:id, 
+                                                                            :products_id, 
+                                                                            :languages_id, 
+                                                                            :value)');
+  
+          $aQry->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
+          
+          $aQry->bindInt(':id'           , $mQry->value('id'));
+          $aQry->bindInt(':products_id'  , $sQry->value($map['products_id']));
+          $aQry->bindInt(':languages_id' , 0);
+          $aQry->bindInt(':value'        , ($sQry->value($map['manufacturers_id']) != '' || $sQry->value($map['manufacturers_id']) != NULL) ? $sQry->value($map['manufacturers_id']) : 0);
+          
+          $aQry->execute();
+          
           if ($target_db->isError()) {
             $this->_msg = $target_db->getError();
             return false;
@@ -838,6 +860,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
         }
         
         $sQry->freeResult();
+        $mQry->freeResult();
       }
       
       // END LOAD PRODUCTS FROM SOURCE DB
@@ -2335,7 +2358,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
         //  #### getCPATH CODE
 
-        $cat_list = "cPath=" . lC_LocalUpgrader::getcdsPath($permalink['item_id']);
+        $cat_list = "cPath=" . lC_LocalUpgrader::getcdsPath($permalink['item_id'], null);
         
         //  #### END getCPATH CODE         
         
@@ -2675,11 +2698,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importImages(){
+  public function importImages() {
       global $lC_Language;
 
       $source_img_dir = $this->_sDB['INSTALL_PATH'].$this->_sDB['IMAGE_PATH'];
-      $target_img_dir = getcwd().'/../images/products/originals/';
+      $target_img_dir = getcwd() . '/../images/products/originals/';
 
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -2819,7 +2842,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $this->_msg = $target_db->getError();
             return false;
           }
-          // if not exist, loop to next ;
+          // if not exist, loop to next;
           if (!file_exists($source_img_dir . $img_info) || !is_readable($source_img_dir . $img_info)) {
             continue;
           }          
@@ -2833,10 +2856,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       }
       
       $o_dir = getcwd();
-      $target_img_dir =  str_replace("install", "", getcwd()) . 'images/products/originals/';
-       
       chdir($source_img_dir);
-      $target_zip = 'my-images' . time() . '.zip';
+      $target_zip = 'my-product-images-' . time() . '.zip';
 
       $result = $this->create_zip($to_zip, $target_img_dir . $target_zip);  
       if ($result == false) {
@@ -2848,8 +2869,9 @@ class lC_LocalUpgrader extends lC_Upgrader {
       if ($result == false) {
         $this->_msg = $lC_Language->get('upgrade_step4_import_product_images_zipextracteerror');
         return false;
-      }    
-      // unlink($target_img_dir . $target_zip);
+      }
+          
+      unlink($target_img_dir . $target_zip);
       $this->chmod_r($target_img_dir);
       chdir($o_dir);
 
@@ -2879,11 +2901,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCategoryImages(){
+  public function importCategoryImages() {
       global $lC_Language;
 
       $source_img_dir = $this->_sDB['INSTALL_PATH'].$this->_sDB['IMAGE_PATH'];
-      $target_img_dir = getcwd().'/../images/xtn/';
+      $target_img_dir = getcwd() . '/../images/categories/';
 
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -2979,10 +3001,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       }
 
       $o_dir = getcwd();
-      $target_img_dir = str_replace("install", "", getcwd()) . 'images/products/originals/';
-      
       chdir($source_img_dir);
-      $target_zip = 'my-images' . time() . '.zip';
+      $target_zip = 'my-category-images-' . time() . '.zip';
 
       $result = $this->create_zip($to_zip, $target_img_dir . $target_zip);  
       if ($result == false) {
@@ -2994,7 +3014,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
       if ($result == false) {
         $this->_msg = $lC_Language->get('upgrade_step4_import_category_images_zipextracterror');
         return false;
-      }    
+      }
+          
       unlink($target_img_dir . $target_zip);
       $this->chmod_r($target_img_dir);
       chdir($o_dir);
@@ -3050,7 +3071,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCustomerGroups(){
+  public function importCustomerGroups() {
     global $lC_Language;
     
       $s_db = $this->_sDB;
@@ -3209,7 +3230,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-    public function importOrders(){
+    public function importOrders() {
       
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -3899,7 +3920,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importAttributes(){
+  public function importAttributes() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -3965,20 +3986,67 @@ class lC_LocalUpgrader extends lC_Upgrader {
       // LOAD PRODUCTS VARIANTS GROUPS FROM SOURCE DB
       $map = $this->_data_mapping['products_variants_groups'];
       $variants_groups = array();
+      $text_field_data = array();
 
       $sQry = $source_db->query('SELECT * FROM products_options_text');
       $sQry->execute();
-        
+      
       if ($sQry->numberOfRows() > 0) { 
         $cnt = 0;
         while ($sQry->next()) {
-          $group  = array(
-                            'id'           => $sQry->value('products_options_text_id')
-                          , 'languages_id' => $sQry->value('language_id')
-                          , 'title'        => $sQry->value('products_options_name')
-                          , 'sort_order'   => 0
-                          , 'module'       => "pull_down_menu"
-                           ); 
+          // From 6.X option types ////////////////////////////////
+          // if ($opt_type == 0) return 'Select';
+          // if ($opt_type == 1) return 'Text';
+          // if ($opt_type == 2) return 'Radio';
+          // if ($opt_type == 3) return 'Checkbox';
+          // if ($opt_type == 4) return 'Text Area';
+          // if ($opt_type == 5) return 'File Upload';
+          /////////////////////////////////////////////////////////
+          $otQry = $source_db->query('SELECT products_options_sort_order, options_type FROM products_options WHERE products_options_id = :products_options_id');
+          $otQry->bindInt(':products_options_id', $sQry->value('products_options_text_id'));
+          $otQry->execute();
+          
+          $asoQry = $source_db->query('SELECT products_options_sort_order FROM products_attributes WHERE options_id = :options_id');
+          $asoQry->bindInt(':options_id', $sQry->value('products_options_text_id'));
+          $asoQry->execute();
+          
+          if ($otQry->value('options_type') == '1') {
+            $module = 'text_field';
+            $text_field_data[] = array(
+                                          'products_variants_groups_id' => $sQry->value('products_options_text_id')
+                                        , 'title'                       => $sQry->value('products_options_instruct') 
+                                        , 'sort_order'                  => $asoQry->value('products_options_sort_order') 
+                                         );
+          } else if ($otQry->value('options_type') == '2') { 
+            $module = 'radio_buttons';
+          } else if ($otQry->value('options_type') == '3') { 
+            // $module = 'check_box'; // back to check_box once loaded7 supports it
+            $module = 'pull_down_menu';
+          } else if ($otQry->value('options_type') == '4') {
+            // $module = 'text_area'; // back to text_area once loaded7 supports it 
+            $module = 'text_field';
+            $text_field_data[] = array(
+                                          'products_variants_groups_id' => $sQry->value('products_options_text_id')
+                                        , 'title'                       => $sQry->value('products_options_instruct') 
+                                        , 'sort_order'                  => $asoQry->value('products_options_sort_order') 
+                                         );
+          // no support for file upload yet even for conversion
+          // } else if ($otQry->value('options_type') == '5') { 
+            // $module = 'file_upload'; // back to check_box once loaded7 supports it
+          } else {
+            $module = 'pull_down_menu';
+          }
+          
+          $otQry->freeResult();
+          $asoQry->freeResult();
+          
+          $group = array(
+                           'id'           => $sQry->value('products_options_text_id')
+                         , 'languages_id' => $sQry->value('language_id')
+                         , 'title'        => $sQry->value('products_options_name')
+                         , 'sort_order'   => $otQry->value('products_options_sort_order')
+                         , 'module'       => $module
+                          ); 
                                    
           $tQry = $target_db->query('INSERT INTO :table_products_variants_groups (id, 
                                                                                   languages_id, 
@@ -4061,8 +4129,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $sQry->freeResult();
       }
       
-      // END LOAD PRODUCTS VARIANTS VALUES FROM SOURCE DB
-
+      // END LOAD PRODUCTS VARIANTS VALUES FROM SOURCE DB 
+      
       // ##########      
 
       // LOAD PRODUCTS SIMPLE OPTIONS AND PRODUCTS SIMPLE OPTIONS VALUES FROM SOURCE DB
@@ -4205,6 +4273,38 @@ class lC_LocalUpgrader extends lC_Upgrader {
       }
 
       // END LOAD PRODUCTS SIMPLE VALUES TO TARGET DB
+      
+      // ########## Added for text_field options
+      
+      foreach ($text_field_data as $text_field) {
+        $pvvQry = $target_db->query('INSERT INTO :table_products_variants_values (languages_id, 
+                                                                                  products_variants_groups_id, 
+                                                                                  title, 
+                                                                                  sort_order) 
+                                                                          VALUES (:languages_id, 
+                                                                                  :products_variants_groups_id, 
+                                                                                  :title, 
+                                                                                  :sort_order)');
+  
+        $pvvQry->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
+        
+        $pvvQry->bindInt  (':languages_id'               , 1);
+        $pvvQry->bindInt  (':products_variants_groups_id', $text_field['products_variants_groups_id']);
+        $pvvQry->bindValue(':title'                      , $text_field['title']);
+        $pvvQry->bindInt  (':sort_order'                 , $text_field['sort_order']);
+        
+        $pvvQry->execute();
+        
+        $sovID = $target_db->nextID();        
+        $sovQry = $target_db->query('UPDATE :table_products_simple_options_values SET values_id = :values_id WHERE options_id = :options_id');
+  
+        $sovQry->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+        
+        $sovQry->bindInt  (':values_id' , $sovID);
+        $sovQry->bindInt  (':options_id', $text_field['products_variants_groups_id']);
+        
+        $sovQry->execute();
+      }
 
       // ##########
 
@@ -4230,7 +4330,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importAdministrators(){
+  public function importAdministrators() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -4409,7 +4509,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importNewsletter(){
+  public function importNewsletter() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -4554,7 +4654,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importBanners(){
+  public function importBanners() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -4784,7 +4884,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importConfiguration(){
+  public function importConfiguration() {
     
       return true; // temporarily disable this function until we decide to include configuration from older version of the cart 
       
@@ -4996,7 +5096,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importCoupons(){
+  public function importCoupons() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;
@@ -5314,7 +5414,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
   *  returns : true or false  
   *
   */
-  public function importTaxClassesRates(){
+  public function importTaxClassesRates() {
     
       $s_db = $this->_sDB;
       $t_db = $this->_tDB;

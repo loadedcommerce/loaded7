@@ -15,7 +15,7 @@ class lC_Application_Orders_Actions_save extends lC_Application_Orders {
 
     parent::__construct();
 
-    $this->_page_contents = 'edit.php'; 
+    $this->_page_contents = 'edit.php';
 
     if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
       switch ( $_GET['action'] ) {

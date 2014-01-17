@@ -189,7 +189,7 @@ function customCheck() {
     $("#categories_link_target").parent("span").removeClass("checked");
     <?php
     foreach ( $lC_Language->getAll() as $l ) {
-      echo '$("#categories_permalink_' . $l['id'] . '").attr("value", "").parent().show();';
+      echo '$("#categories_permalink_' . $l['id'] . '").parent().show();';
     }
     ?>
   }

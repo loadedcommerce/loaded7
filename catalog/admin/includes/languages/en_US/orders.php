@@ -10,6 +10,9 @@ heading_sub_title = (showing results for cID: %s)
 
 all_statuses = -- All Statuses --
 
+button_continue = Continue
+button_cancel = Cancel
+
 credit_card_type = Credit Card Type:
 credit_card_owner_name = Credit Card Owner:
 credit_card_number = Credit Card Number:
@@ -35,10 +38,14 @@ field_restock_product_quantity = Restock Product Quantity?
 
 introduction_delete_order = Please verify the removal of this order. 
 introduction_batch_delete_orders = Please verify the removal of the selected orders.
+introduction_delete_order_total = Please verify the removal of this order total.
+introduction_delete_order_product = Please verify the removal of this order product.
 
 modal_heading_edit_order_status = Edit Order Status
 modal_heading_delete_order = Delete Order
 modal_heading_batch_delete_orders = Batch Delete Orders
+modal_heading_delete_order_total = Delete Order Total
+modal_heading_delete_order_product = Delete Order Product
 
 number_of_comments = Comments:
 number_of_products = Products:
@@ -62,6 +69,7 @@ section_orders_shipping = Shipping
 section_orders_status = Status History
 section_orders_fraud = Fraud
 section_orders_payments = Payments
+section_order_totals = Order Totals
 
 subsection_customer = Customer
 subsection_shipping_address = Shipping Address
@@ -90,6 +98,7 @@ table_heading_customer_notified = Customer Notified
 table_heading_country = Country
 table_heading_items = Items
 
+text_add_item = Add Item
 text_edit_order = Order
 text_order_number = Order Number
 text_amount = Amount
@@ -132,7 +141,9 @@ text_order_totals = Order Totals
 text_last_payment = Last Payment
 text_fulfillment = Fulfillment
 text_tax_class = Tax Class
+text_tax = Tax
 text_price = Price 
+text_quantity = Quantity
 text_product_total = Product Total
 text_action = Action
 text_edit = Edit
@@ -164,3 +175,14 @@ text_balance_due = Due
 text_customer_comment = Customer Comment
 text_payments = Payments
 text_current_status = Current Status
+text_product_sub_total = Products Subtotal
+text_add_product = Add Product
+text_order_totals = Order Totals
+text_add_order_total = Add Order Total
+text_order_total_coupon = Coupon
+text_order_total_shipping = Shipping
+text_order_total_type = Type
+text_no_coupons_exist = No Coupons Exist
+text_no_shipping_methods_exist = No Shipping Methods Exist
+text_order_total_tax = Tax
+text_no_tax_rate_exist = No Tax Rates Avilable

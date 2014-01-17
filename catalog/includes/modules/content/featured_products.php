@@ -41,7 +41,7 @@ class lC_Content_featured_products extends lC_Modules {
     
     $Qfeatured = $lC_Database->query('select products_id 
                                         from :table_featured_products 
-                                       where str_to_date(expires_date, "%Y-%m-%d") >= str_to_date(now(), "%Y-%m-%d") 
+                                       where (str_to_date(expires_date, "%Y-%m-%d") >= str_to_date(now(), "%Y-%m-%d") or expires_date = "0000-00-00 00:00:00") 
                                          and status = 1 
                                     order by rand() asc' . $limit);
     $Qfeatured->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);

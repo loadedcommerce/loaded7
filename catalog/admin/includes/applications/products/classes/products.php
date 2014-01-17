@@ -143,7 +143,7 @@ class lC_Products_Admin {
       $Qspecials->execute();
       
       if ($Qspecials->numberOfRows() > 0) {
-        $price = $price . ' <span class="tag glossy with-tooltip' . (($Qspecials->valueInt('status') == 1) ? ' red-gradient' : ' grey-gradient') . '" title="' . (($Qspecials->valueInt('status') == 1) ? $lC_Language->get('text_special_enabled') : $lC_Language->get('text_special_disabled')) . '">' . $lC_Currencies->format($Qspecials->value('specials_new_products_price')) . '</span>';
+        $price = $price . ' <span class="tag glossy with-tooltip' . (($Qspecials->valueInt('status') == 1) ? ' red-gradient' : ' grey-gradient') . '" title="' . (($Qspecials->valueInt('status') == 1) ? $lC_Language->get('text_special_enabled') : $lC_Language->get('text_special_disabled')) . '">' . $Qspecials->value('specials_new_products_price') . '</span>';
       }
 
       $extra_data = array('products_cost_formatted' => $cost,
@@ -765,23 +765,11 @@ class lC_Products_Admin {
         foreach ( $data['attributes'] as $attributes_id => $value ) {
           if ( is_array($value) ) {
           } elseif ( !empty($value) ) {
-            
-            $parts = array();
-            $append = false;
-            if (strstr($attributes_id, '_')) {
-              $parts = explode('_', $attributes_id);
-              $attributes_id = $parts[0];
-              $append = true;
-            }
-            
-            $Qcheck = $lC_Database->query('select * from :table_product_attributes where products_id = :products_id and id = :id limit 1');
+            $Qcheck = $lC_Database->query('select id from :table_product_attributes where products_id = :products_id and id = :id limit 1');
             $Qcheck->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
             $Qcheck->bindInt(':products_id', $products_id);
             $Qcheck->bindInt(':id', $attributes_id);
             $Qcheck->execute();
-            
-            if ($append) $value = $Qcheck->value('value') . '|' . $value;
-
 
             if ( $Qcheck->numberOfRows() === 1 ) {
               $Qattribute = $lC_Database->query('update :table_product_attributes set value = :value where products_id = :products_id and id = :id');
@@ -2294,6 +2282,68 @@ class lC_Products_Admin {
     }
       
     return $assignedCategoryTreeSelect;
+  }  
+ /*
+  * Returns an array of product 
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return array
+  */
+  public static function getProductsArray($pID = null, $ppID = 0) {
+    global $lC_Database, $lC_Language, $lC_Currencies, $_module;
+    
+    $result = array();
+    
+    $Qproducts = $lC_Database->query('select SQL_CALC_FOUND_ROWS p.*, pd.products_name, pd.products_keyword from :table_products p, :table_products_description pd where p.parent_id = :products_parent_id and p.products_id = pd.products_id and pd.language_id = :language_id');
+    
+    if (is_numeric($pID)) {
+      $Qproducts->appendQuery('and p.products_id = :products_id');
+      $Qproducts->bindInt(':products_id', $pID);      
+    }
+    
+    $Qproducts->appendQuery('order by pd.products_name');
+    $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+    $Qproducts->bindInt(':language_id', $lC_Language->getID());
+    $Qproducts->bindInt(':products_parent_id', $ppID);
+    $Qproducts->execute();
+    
+    if ($Qproducts->numberOfRows()) {
+      while ($Qproducts->next()) {
+        $result[] = $Qproducts->toArray();
+      }
+    }
+    
+    return $result;
+  }
+ /*
+  * Returns an array of product for dropdown list
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return array
+  */
+  public static function getProductsDropdownArray($exclude = array()) {
+    global $lC_Database, $lC_Language, $lC_Currencies, $_module;
+    
+    $result = array();
+
+    $Qproducts = $lC_Database->query('select SQL_CALC_FOUND_ROWS p.products_id, pd.products_name from :table_products p, :table_products_description pd where p.products_id = pd.products_id and pd.language_id = :language_id');
+    $Qproducts->appendQuery('order by p.products_id');
+    $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+    $Qproducts->bindInt(':language_id', $lC_Language->getID());
+    $Qproducts->execute();
+    if ($Qproducts->numberOfRows()) {
+      while ( $Qproducts->next() ) {
+        if (!in_array($Qproducts->value('products_id'), $exclude)) {  
+          $result[] = array('id' => $Qproducts->value('products_id'),
+                            'text' => $Qproducts->value('products_name'));
+        }
+      }
+    }
+    return $result;
   }
 }
 ?>
