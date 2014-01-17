@@ -162,30 +162,30 @@
   max-width: 1170px; 
 }
  
-#loaded7 .navbar .header-lang-dropdown { 
+#loaded7 .navbar .locale-header-dropdown { 
   left: -45px; 
 }
 
-#loaded7 .navbar .header-lang-dropdown > li {
+#loaded7 .navbar .locale-header-dropdown > li {
   width: 100%;
 }
 
-#loaded7 .lang-dropdown-image {
+#loaded7 .navbar .locale-dropdown-lang-image {
   position: relative;
   top: -1px;
 }
 
-#loaded7 .lang-header-currency {
-  color: #ffffff;
-}
-
-#loaded7 .lang-dropdown-title {
+#loaded7 .navbar .locale-dropdown-lang-title {
   margin-left: 4px;
 }
 
-#loaded7 .lang-header-icon {
+#loaded7 .navbar .locale-header-icon {
   position: relative;
   top: -1px;
+}
+
+#loaded7 .navbar .locale-header-currency {
+  color: #ffffff;
 }
 
 #loaded7 .navbar-inverse .container { 
@@ -202,9 +202,9 @@
 }    
 
 #loaded7 .page-header { 
-  border:none; 
+  border: none; 
   padding: 10px 0px 0px; 
-  margin: 0px 0 0px; 
+  margin: 56px 0px 0px; 
 }
 
 #loaded7 .logo { 
@@ -462,8 +462,12 @@
 }
 
 @media (min-width: 768px) {
-  .navbar {
-    border-radius: 0px;
+  .navbar {    
+    border-radius: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
   }
 }
 
@@ -601,8 +605,8 @@
 
 #loaded7 .cursor-pointer { cursor:pointer !important; }
 
-#loaded7 .language-menu { list-style:none; }
-#loaded7 .language-menu li { display:inline-block; padding:0; margin-right:8px; }
+#loaded7 .locale-menu { list-style:none; }
+#loaded7 .locale-menu li { display:inline-block; padding:0; margin-right:8px; }
                                             
 /********************************************************/
 /*             10. Site Maintenace masking              */

@@ -10,6 +10,8 @@
 */
 //echo '<pre>';
 //print_r($lC_Language);
+//print_r($lC_Currencies);
+//print_r($_SESSION);
 //echo '</pre>'; 
 ?>
 <!--header.php start-->
@@ -47,22 +49,22 @@
         <?php } ?>
       </ul>
       <div class="pull-right">
-        <ul class="language-menu nav navbar-nav">
+        <ul class="locale-menu nav navbar-nav">
           <li class="dropdown">
             <?php 
               echo '<a class="dropdown-toggle" data-toggle="dropdown" href="#">' . 
-                      $lC_Language->showImage($value['code'], '18', '12', 'class="lang-header-icon"') . 
-                   '  <span class="lang-header-currency">' . 
+                      $lC_Language->showImage($value['code'], '18', '12', 'class="locale-header-icon"') . 
+                   '  <span class="locale-header-currency">' . 
                         $lC_Currencies->getCode() . 
-                   '    (' . (($lC_Currencies->getSymbolLeft() != '') ? $lC_Currencies->getSymbolLeft() : $lC_Currencies->getSymbolRight()) . ')' . 
+                   '    (' . $lC_Currencies->getSessionSymbolLeft() . ')' . 
                    '  </span>' .  
                    '  <b class="caret"></b>' . 
                    '</a>'; 
             ?>
-            <ul class="dropdown-menu header-lang-dropdown">
+            <ul class="dropdown-menu locale-header-dropdown">
               <?php echo lC_Template_output::getTemplateLanguageSelection(true, true, ''); ?>
               <li role="presentation" class="divider"></li>
-              <?php //echo lC_Template_output::getTemplateCurrencySelection(true, true, ''); ?>
+              <?php echo lC_Template_output::getTemplateCurrenciesSelection(true, true, ''); ?>
             </ul>
           </li>
         </ul>

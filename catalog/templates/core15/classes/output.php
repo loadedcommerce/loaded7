@@ -338,7 +338,7 @@ class lC_Template_output {
     return $result;   
   }
  /*
-  * Return the language selection 
+  * Return the language selections 
   *
   * @access public
   * @return array
@@ -349,14 +349,44 @@ class lC_Template_output {
     $text = '';
     $output = '';
     foreach ($lC_Language->getAll() as $value) {
-      if ($include_image === true && $include_name === true) {
-        $text = '<span class="lang-dropdown-image">' . $lC_Language->showImage($value['code']) . '</span> <span class="lang-dropdown-title">' . $value['name'] . '</span>';
+      if ($include_name === true && $include_image === true) {
+        $text = '<span class="locale-dropdown-lang-image">' . $lC_Language->showImage($value['code']) . '</span> <span class="locale-dropdown-lang-title">' . $value['name'] . '</span>';
       } else if ($include_name === true && $include_image === false) {
         $text = $value['name'];
       } else {
         $text = $lC_Language->showImage($value['code'], null, null, $params);
       }
       $output .= '<li>' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('language', 'currency')) . '&language=' . $value['code'], 'AUTO'), $text) . '</li>';
+    }
+    
+    return $output;
+  }
+ /*
+  * Return the currency selections
+  *
+  * @access public
+  * @return array
+  */  
+  public function getTemplateCurrenciesSelection($include_symbol = true, $include_name = false, $params = '') {
+    global $lC_Currencies;
+    
+    $currency_data = array();
+    foreach ($lC_Currencies->currencies as $key => $value) {
+      $currency_data[] = array('id' => $key, 'text' => $value['title']);
+    }
+    foreach ($currency_data as $currency) {
+      if ($include_name === true && $include_symbol === true) {
+        $text = '<span class="locale-dropdown-cur-title">' . $currency['text'] . '</span> <span class="locale-dropdown-cur-symbol">(' . $currency['id'] . ')</span>';
+      } else if ($include_name === true && $include_symbol === false) {
+        $text = '<span class="locale-dropdown-cur-title">' . $currency['text'] . '</span>';
+      } else {
+        $text = '<span class="locale-dropdown-cur-symbol">' . $currency['id'] . '</span>';
+      }
+      echo '<li>
+              <a href="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('language', 'currency')) . '&currency=' . $currency['id'], 'AUTO') . '">
+                ' . $text . '
+              </a>
+            </li>';
     }
     
     return $output;
