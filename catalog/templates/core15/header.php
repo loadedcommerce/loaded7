@@ -7,7 +7,10 @@
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: header.php v1.0 2013-08-08 datazen $
-*/ 
+*/
+//echo '<pre>';
+//print_r($lC_Language);
+//echo '</pre>'; 
 ?>
 <!--header.php start-->
 <div class="navbar navbar-inverse" role="navigation">   
@@ -43,16 +46,32 @@
         </li>
         <?php } ?>
       </ul>
-      <div class="pull-right mid-margin-top large-margin-right">
-        <ul class="language-menu">
-          <?php echo $lC_Template->getLanguageSelection(true, false, ''); ?>
+      <div class="pull-right">
+        <ul class="language-menu nav navbar-nav">
+          <li class="dropdown">
+            <?php 
+              echo '<a class="dropdown-toggle" data-toggle="dropdown" href="#">' . 
+                      $lC_Language->showImage($value['code'], '18', '12', 'class="lang-header-icon"') . 
+                   '  <span class="lang-header-currency">' . 
+                        $lC_Currencies->getCode() . 
+                   '    (' . (($lC_Currencies->getSymbolLeft() != '') ? $lC_Currencies->getSymbolLeft() : $lC_Currencies->getSymbolRight()) . ')' . 
+                   '  </span>' .  
+                   '  <b class="caret"></b>' . 
+                   '</a>'; 
+            ?>
+            <ul class="dropdown-menu header-lang-dropdown">
+              <?php echo lC_Template_output::getTemplateLanguageSelection(true, true, ''); ?>
+              <li role="presentation" class="divider"></li>
+              <?php //echo lC_Template_output::getTemplateCurrencySelection(true, true, ''); ?>
+            </ul>
+          </li>
         </ul>
       </div>   
-      <?php if ($lC_Template->getBranding('chat_code') != '') { ?>
-        <div class="pull-right mid-margin-top large-margin-right">
-          <?php echo $lC_Template->getBranding('chat_code'); ?>
+      <!--<?php //if ($lC_Template->getBranding('chat_code') != '') { ?>
+        <div class="pull-right small-margin-top large-margin-right">
+          <?php //echo $lC_Template->getBranding('chat_code'); ?>
         </div>  
-      <?php } ?>    
+      <?php //} ?>-->    
     </div>
   </div>
 </div>

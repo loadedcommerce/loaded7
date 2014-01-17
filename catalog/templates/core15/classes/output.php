@@ -243,9 +243,7 @@ class lC_Template_output {
     }    
 
     return $output;    
-  }  
-
- 
+  }
  /*
   * Returns the product listing data
   *
@@ -338,6 +336,30 @@ class lC_Template_output {
     $Qcategories->execute();
     
     return $result;   
+  }
+ /*
+  * Return the language selection 
+  *
+  * @access public
+  * @return array
+  */  
+  public function getTemplateLanguageSelection($include_image = true, $include_name = false, $params = '') {
+    global $lC_Language;
+    
+    $text = '';
+    $output = '';
+    foreach ($lC_Language->getAll() as $value) {
+      if ($include_image === true && $include_name === true) {
+        $text = '<span class="lang-dropdown-image">' . $lC_Language->showImage($value['code']) . '</span> <span class="lang-dropdown-title">' . $value['name'] . '</span>';
+      } else if ($include_name === true && $include_image === false) {
+        $text = $value['name'];
+      } else {
+        $text = $lC_Language->showImage($value['code'], null, null, $params);
+      }
+      $output .= '<li>' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('language', 'currency')) . '&language=' . $value['code'], 'AUTO'), $text) . '</li>';
+    }
+    
+    return $output;
   }   
 }
 ?>

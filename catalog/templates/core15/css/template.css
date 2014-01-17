@@ -149,15 +149,50 @@
 /********************************************************/
 
 /* header/nav */
-#loaded7 .navbar .container  { 
-  max-width: 1170px; 
+#loaded7 .navbar { 
+  min-height: 0px;
 }
 
-#loaded7 .navbar-inverse .container{ 
+#loaded7 .navbar-nav > li > a {
+  padding-bottom: 7px;
+  padding-top: 7px;
+}
+
+#loaded7 .navbar .container { 
+  max-width: 1170px; 
+}
+ 
+#loaded7 .navbar .header-lang-dropdown { 
+  left: -45px; 
+}
+
+#loaded7 .navbar .header-lang-dropdown > li {
+  width: 100%;
+}
+
+#loaded7 .lang-dropdown-image {
+  position: relative;
+  top: -1px;
+}
+
+#loaded7 .lang-header-currency {
+  color: #ffffff;
+}
+
+#loaded7 .lang-dropdown-title {
+  margin-left: 4px;
+}
+
+#loaded7 .lang-header-icon {
+  position: relative;
+  top: -1px;
+}
+
+#loaded7 .navbar-inverse .container { 
   -webkit-border-radius: 0px; 
   -moz-border-radius: 0px; 
   border-radius: 0px; 
-  background:#282828; border:none; 
+  /*background:#282828; border:none;*/ 
 }
 
 #loaded7 .nav-tabs > li > a { 
@@ -423,9 +458,14 @@
 
 
 @media (min-width: 768px) and (max-width: 939px) {
-
+  
 }
 
+@media (min-width: 768px) {
+  .navbar {
+    border-radius: 0px;
+  }
+}
 
 @media (min-width: 600px) and (max-width: 767px) {
   #loaded7 .show-on-mobile {
