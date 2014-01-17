@@ -86,6 +86,8 @@ class Paypal_Payflow_Pro extends lC_Addon { // your addon must extend lC_Addon
     global $lC_Database;
 
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Enable AddOn', 'ADDONS_PAYMENT_" . strtoupper($this->_code) . "_STATUS', '-1', 'Do you want to enable this addon?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Credit Card Payments', 'ADDONS_PAYMENT_" . strtoupper($this->_code) . "_DP_STATUS', '1', 'Do you want to accept payment by Credit Card?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())"); 
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Express Checkout', 'ADDONS_PAYMENT_" . strtoupper($this->_code) . "_EC_STATUS', 'On', 'Show the PayPal Express Checkout shortcut button on the shopping cart page?', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(\'On\', \'Off\'))', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Partner', 'ADDONS_PAYMENT_" . strtoupper($this->_code) . "_PARTNER', 'PayPal', 'Enter your PayPal Partner ID.', '6', '0', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Merchant Login', 'ADDONS_PAYMENT_" . strtoupper($this->_code) . "_MERCH', '', 'Enter your PayPal Merchant Login.', '6', '0', now())");
     $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('User', 'ADDONS_PAYMENT_" . strtoupper($this->_code) . "_USER', '', 'Enter your PayPal User Name.', '6', '0', now())");
@@ -109,6 +111,8 @@ class Paypal_Payflow_Pro extends lC_Addon { // your addon must extend lC_Addon
   public function getKeys() {
     if (!isset($this->_keys)) {
       $this->_keys = array('ADDONS_PAYMENT_' . strtoupper($this->_code) . '_STATUS',
+                           'ADDONS_PAYMENT_' . strtoupper($this->_code) . '_DP_STATUS',
+                           'ADDONS_PAYMENT_' . strtoupper($this->_code) . '_EC_STATUS',
                            'ADDONS_PAYMENT_' . strtoupper($this->_code) . '_PARTNER',
                            'ADDONS_PAYMENT_' . strtoupper($this->_code) . '_MERCH',
                            'ADDONS_PAYMENT_' . strtoupper($this->_code) . '_USER',

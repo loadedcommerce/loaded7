@@ -23,7 +23,7 @@
     </definition>       
     <definition>
       <key>payment_payflow_pro_method_title</key>
-      <value><![CDATA[PayPal Payflow Pro]]></value>
+      <value><![CDATA[Payflow Pro - Credit Card Payment]]></value>
       <group>checkout</group>
     </definition> 
     <definition>
@@ -77,6 +77,17 @@
       <value><![CDATA[<a href="google.com"><u><i>(What is it?)</i></u></a>']]></value>
       <group>checkout</group>
     </definition> 
+
+    <definition>
+      <key>payment_payflow_pro_express_method_title</key>
+      <value><![CDATA[Payflow Pro - Express Checkout]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>payment_payflow_pro_express_method_blurb</key>
+      <value><![CDATA[powered by <img src="addons/PayPal_Payflow_Pro/images/payflow_express_small.png" alt="Payflow Pro Express Checkout" style="vertical-align:middle;">]]></value>
+      <group>checkout</group>
+    </definition>     
 
   </definitions>
 </language>
