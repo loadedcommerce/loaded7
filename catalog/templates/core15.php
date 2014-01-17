@@ -55,6 +55,9 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <link rel="apple-touch-icon-precomposed" href="templates/core15/images/favicons/apple-touch-icon-72-precomposed.png" sizes="72x72">
     <link rel="apple-touch-icon-precomposed" href="templates/core15/images/favicons/apple-touch-icon-57-precomposed.png">
     
+    <!-- font-awesome -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    
     <!-- jQuery is always at top -->
     <script src="ext/jquery/jquery-1.9.1.min.js"></script>
     <script src="ext/bootstrap/bootstrap.min.js"></script>
