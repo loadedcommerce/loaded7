@@ -235,6 +235,16 @@
   width: 100%;
 }
 
+#loaded7 .locale-menu {
+  list-style: none;
+}
+
+#loaded7 .locale-menu li {
+  display: inline-block;
+  padding: 0;
+  margin-right: 8px;
+}
+
 #loaded7 .navbar {
   min-height: 0px;
 }
@@ -559,6 +569,10 @@
 
   #loaded7 .hide-on-mobile {
     display: none;
+  }
+  
+  #loaded7 .locale-menu > li {
+    float: left !important;
   }
 }
 
@@ -887,16 +901,6 @@
 
 #loaded7 .cursor-pointer {
   cursor: pointer !important;
-}
-
-#loaded7 .locale-menu {
-  list-style: none;
-}
-
-#loaded7 .locale-menu li {
-  display: inline-block;
-  padding: 0;
-  margin-right: 8px;
 }
                                             
 /********************************************************/
