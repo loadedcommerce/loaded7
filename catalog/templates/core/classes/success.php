@@ -261,6 +261,8 @@ class lC_Success {
                            'suburb' => $QorderShipping->value('delivery_suburb'),
                            'city' => $QorderShipping->value('delivery_city'),
                            'postcode' => $QorderShipping->value('delivery_postcode'),
+                           'state' => lC_Address::getZoneName($QorderShipping->value('delivery_state_code'),
+                           'state_code' => lC_Address::getZoneCode($QorderShipping->value('delivery_state_code'),
                            'zone_code' => $QorderShipping->value('delivery_state_code'),
                            'country_title' => $QorderShipping->value('delivery_country'),
                            'format' => $QorderShipping->value('delivery_address_format'));
