@@ -44,6 +44,7 @@ box_server_mysqli = MySQLi
 box_server_gd = GD
 box_server_curl = cURL
 box_server_openssl = OpenSSL
+box_server_phar = Phar
 box_server_on = On
 box_server_off = Off
 box_server_writeable = Writeable
