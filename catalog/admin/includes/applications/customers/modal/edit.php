@@ -155,7 +155,8 @@ $aContent .= '</span>';
 .list > li > span { color: #666666; }
 </style>
 <script>
-function editCustomer(id, add_addr=0) { 
+function editCustomer(id, add_addr) {
+  if (add_addr == undefined) add_addr = 0; 
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -601,7 +602,7 @@ function updateZones(selected) {
   );
 }
 
-function isDefaultAddressIDExists(cid=null, aid=null) {
+function isDefaultAddressIDExists(cid, aid) {
   if (parseInt(aid) > 0) {
     return true;
   } else if ($("#default_aId").length == 0 && parseInt(aid) == 0) {
@@ -611,8 +612,8 @@ function isDefaultAddressIDExists(cid=null, aid=null) {
   }
 }
 
-function createNewOrder(cid=null,aid=null) {
-  if (isDefaultAddressIDExists(cid,aid)) {
+function createNewOrder(cid, aid) {
+  if (isDefaultAddressIDExists(cid, aid)) {
     if (parseInt(cid) > 0 ) {
       window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
     }
@@ -623,7 +624,7 @@ function createNewOrder(cid=null,aid=null) {
     }
   } else {
     var add_addr = 1;
-    editCustomer(cid,add_addr=1);
+    editCustomer(cid, add_addr=1);
   }
 }
 
