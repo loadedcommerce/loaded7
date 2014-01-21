@@ -1036,6 +1036,13 @@ select.error { border: 2px solid red !important; }
 }  
   
 @media screen and (max-width: 479px) {
+  #buttons-menu-div-listing {
+    width:100%;
+    top:0;
+  }
+  #main-title {
+    padding: 27px 20px 21px;
+  }
   .hide-below-768 { display: none; }
   .show-below-768 { display: block; }
   .hide-below-480 { display: none; }
