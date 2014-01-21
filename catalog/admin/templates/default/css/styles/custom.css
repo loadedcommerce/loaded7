@@ -867,7 +867,7 @@ select.error { border: 2px solid red !important; }
   position:absolute;
   width:50%;
   background-color:transparent;
-  top:38px;
+  top:30px;
   right:0px;
   padding: 5px 20px;
 }
