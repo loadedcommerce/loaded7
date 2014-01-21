@@ -58,7 +58,7 @@
                   if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
                     foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
                       if (is_array($option['value_id'])) {
-                        $title = $option['value_id'][1];
+                        $title = array_shift($option['value_id']);
                       } else {
                         $title = $option['value_title'];
                       }
