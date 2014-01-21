@@ -538,7 +538,7 @@ $(document).ready(function() {
     }).hide().slideDown('fast');
   };
   
-  $('#form-activate-pro-button').hide();
+  //$('#form-activate-pro-button').hide();
   
   // show the login page after it finishes loading
   $('#login-container').attr('style', 'visibility:normal');
