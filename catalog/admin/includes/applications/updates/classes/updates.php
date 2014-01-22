@@ -447,7 +447,7 @@ class lC_Updates_Admin {
           
           $file = substr($iteration->getPathName(), $pos+6);
           
-          if (version_compare($meta['compatibility'], '7.002.0.0') != -1 || $pharType == 'template') {
+          if (version_compare($meta['compatibility'], '7.002.0.0') != -1 || $pharType == 'template' || $pharWithPath == null) {
             $directory = realpath(DIR_FS_CATALOG) . '/';
           } else {
             $directory = realpath(DIR_FS_CATALOG) . '/addons/' . $pharCode . '/';
