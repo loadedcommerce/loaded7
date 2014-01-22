@@ -79,7 +79,7 @@ if ($Qlisting->numberOfRows() > 0) {
           break;
           
         case 'PRODUCT_LIST_BUY_NOW':
-          $output .= '<div class="product-listing-module-buy-now"><form action="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '" method="post"><button onclick="$(this).closest(\'form\').submit();" type="submit" class="product-listing-module-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></form></div>' . "\n"; 
+          $output .= '<div class="product-listing-module-buy-now"><form action="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $lC_Product->getKeyword() . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '" method="post"><button onclick="$(this).closest(\'form\').submit();" type="submit" class="product-listing-module-buy-now-button"' . ((DISABLE_ADD_TO_CART == 1 && $lC_Product->getQuantity() < 1) ? ' disabled' : null) . '>' . $lC_Language->get('button_buy_now') . '</button></form></div>' . "\n"; 
           break;
       }
     }

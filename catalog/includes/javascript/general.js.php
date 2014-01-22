@@ -40,6 +40,17 @@ $(document).ready(function() {
    
   // run this last - determine media type
   setTimeout('_setMediaType()', 1000);
+  
+  // hide buy now and qty for out of stock products
+  <?php
+    if (defined('DISABLE_ADD_TO_CART') && DISABLE_ADD_TO_CART == 1 && ($lC_Template->getModule() == 'products' || $lC_Template->getModule() == 'reviews')/*false !== strpos($_SERVER['REQUEST_URI'], 'products')*/) {
+  ?>
+    //$("#loaded7").find($("button:contains('<?php echo $lC_Language->get('button_buy_now'); ?>')")).attr("disabled");
+    $(":contains('<?php echo $lC_Language->get('button_buy_now'); ?>')").closest('button').removeClass("btn-success").addClass("btn-default").addClass("disabled").html('<?php echo $lC_Language->get('out_of_stock'); ?>');
+    $("input[name='quantity']").hide().parent().hide();
+  <?php
+    }
+  ?>
 
 });
 
