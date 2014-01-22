@@ -65,7 +65,7 @@ $pContent .= '<p class="button-height inline-label">' .
                   lc_draw_checkbox_field('status', '1', true, 'id="editStatus" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
              '</p>';
 
-$aContent  = '<span id="addAddress" style="display:none;">';
+$aContent  = '<div id="addAddress" style="display:none;">';
 if ( ACCOUNT_GENDER > -1 ) {
 $aContent .= '  <p class="button-height inline-label">' .
              '    <label for="gender" class="label" style="width:30%;">' . $lC_Language->get('field_gender') . '</label>' .
@@ -146,7 +146,7 @@ $aContent .= '  <p class="button-height float-right">' .
              '    </a>' .
              '  </p>';
 */             
-$aContent .= '</span>';
+$aContent .= '</div>';
 
 
 ?>
