@@ -461,7 +461,7 @@
               <li><a href="<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'store'); ?>"><?php echo $lC_Language->get('menu_title_addons'); ?></a></li>
               <?php echo $output->drawBigMenu('configuration', 'blue-gradient'); ?>
               <li><a href="http://support.loadedcommerce.com" target="_blank"><?php echo $lC_Language->get('menu_title_report_issues'); ?></a></li>
-              <li><a href="http://www.loadedcommerce.com/support-memberships-pc-175_198.html" target="_blank"><?php echo $lC_Language->get('menu_title_get_help'); ?></a></li>
+              <li><a href="http://loadedcommerce.com/support/" target="_blank"><?php echo $lC_Language->get('menu_title_get_help'); ?></a></li>
             </ul>
           </section>
           <section>
