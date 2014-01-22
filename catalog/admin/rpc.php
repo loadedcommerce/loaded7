@@ -42,7 +42,8 @@ if ( !isset($_SESSION['admin']) ) {
       isset($_GET['action']) && $_GET['action'] == 'lostPasswordConfirmEmail' || 
       isset($_GET['action']) && $_GET['action'] == 'lostPasswordConfirmKey' ||  
       isset($_GET['action']) && $_GET['action'] == 'passwordChange' ||  
-      isset($_GET['action']) && $_GET['action'] == 'apiHealthCheck'
+      isset($_GET['action']) && $_GET['action'] == 'apiHealthCheck' ||  
+      isset($_GET['action']) && $_GET['action'] == 'validateSerial'
       ) {
   } else {     
     echo json_encode(array('rpcStatus' => RPC_STATUS_NO_SESSION));

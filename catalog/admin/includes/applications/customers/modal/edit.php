@@ -65,7 +65,7 @@ $pContent .= '<p class="button-height inline-label">' .
                   lc_draw_checkbox_field('status', '1', true, 'id="editStatus" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
              '</p>';
 
-$aContent  = '<span id="addAddress" style="display:none;">';
+$aContent  = '<div id="addAddress" style="display:none;">';
 if ( ACCOUNT_GENDER > -1 ) {
 $aContent .= '  <p class="button-height inline-label">' .
              '    <label for="gender" class="label" style="width:30%;">' . $lC_Language->get('field_gender') . '</label>' .
@@ -146,7 +146,7 @@ $aContent .= '  <p class="button-height float-right">' .
              '    </a>' .
              '  </p>';
 */             
-$aContent .= '</span>';
+$aContent .= '</div>';
 
 
 ?>
@@ -155,7 +155,8 @@ $aContent .= '</span>';
 .list > li > span { color: #666666; }
 </style>
 <script>
-function editCustomer(id, add_addr=0) { 
+function editCustomer(id, add_addr) {
+  if (add_addr == undefined) add_addr = 0; 
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -601,7 +602,7 @@ function updateZones(selected) {
   );
 }
 
-function isDefaultAddressIDExists(cid=null, aid=null) {
+function isDefaultAddressIDExists(cid, aid) {
   if (parseInt(aid) > 0) {
     return true;
   } else if ($("#default_aId").length == 0 && parseInt(aid) == 0) {
@@ -611,8 +612,8 @@ function isDefaultAddressIDExists(cid=null, aid=null) {
   }
 }
 
-function createNewOrder(cid=null,aid=null) {
-  if (isDefaultAddressIDExists(cid,aid)) {
+function createNewOrder(cid, aid) {
+  if (isDefaultAddressIDExists(cid, aid)) {
     if (parseInt(cid) > 0 ) {
       window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
     }
@@ -623,7 +624,7 @@ function createNewOrder(cid=null,aid=null) {
     }
   } else {
     var add_addr = 1;
-    editCustomer(cid,add_addr=1);
+    editCustomer(cid, add_addr=1);
   }
 }
 

@@ -125,7 +125,7 @@ class lC_Order {
     } else if (isset($_SESSION['cartSync']['paymentMethod']) && $_SESSION['cartSync']['paymentMethod'] != NULL) {
       $payment_method = $_SESSION['cartSync']['paymentMethod'];
     }    
-    
+
     $Qorder = $lC_Database->query('insert into :table_orders (customers_id, customers_name, customers_company, customers_street_address, customers_suburb, customers_city, customers_postcode, customers_state, customers_state_code, customers_country, customers_country_iso2, customers_country_iso3, customers_telephone, customers_email_address, customers_address_format, customers_ip_address, delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state, delivery_state_code, delivery_country, delivery_country_iso2, delivery_country_iso3, delivery_address_format, billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state, billing_state_code, billing_country, billing_country_iso2, billing_country_iso3, billing_address_format, payment_method, payment_module, date_purchased, orders_status, currency, currency_value) values (:customers_id, :customers_name, :customers_company, :customers_street_address, :customers_suburb, :customers_city, :customers_postcode, :customers_state, :customers_state_code, :customers_country, :customers_country_iso2, :customers_country_iso3, :customers_telephone, :customers_email_address, :customers_address_format, :customers_ip_address, :delivery_name, :delivery_company, :delivery_street_address, :delivery_suburb, :delivery_city, :delivery_postcode, :delivery_state, :delivery_state_code, :delivery_country, :delivery_country_iso2, :delivery_country_iso3, :delivery_address_format, :billing_name, :billing_company, :billing_street_address, :billing_suburb, :billing_city, :billing_postcode, :billing_state, :billing_state_code, :billing_country, :billing_country_iso2, :billing_country_iso3, :billing_address_format, :payment_method, :payment_module, now(), :orders_status, :currency, :currency_value)');
     $Qorder->bindTable(':table_orders', TABLE_ORDERS);
     $Qorder->bindInt(':customers_id', $lC_Customer->getID());
@@ -135,7 +135,7 @@ class lC_Order {
     $Qorder->bindValue(':customers_suburb', $customer_address['entry_suburb']);
     $Qorder->bindValue(':customers_city', $customer_address['entry_city']);
     $Qorder->bindValue(':customers_postcode', $customer_address['entry_postcode']);
-    $Qorder->bindValue(':customers_state', $customer_address['entry_state']);
+    $Qorder->bindValue(':customers_state', (!$customer_address['entry_state']) ? lC_Address::getZoneName($customer_address['entry_zone_id']) : $customer_address['entry_state']);
     $Qorder->bindValue(':customers_state_code', lC_Address::getZoneCode($customer_address['entry_zone_id']));
     $Qorder->bindValue(':customers_country', lC_Address::getCountryName($customer_address['entry_country_id']));
     $Qorder->bindValue(':customers_country_iso2', lC_Address::getCountryIsoCode2($customer_address['entry_country_id']));

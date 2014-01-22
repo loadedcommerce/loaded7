@@ -5596,7 +5596,7 @@ INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (220,'77','Ð
 
 INSERT INTO lc_countries VALUES (221,'United Arab Emirates','AE','ARE','');
 
-INSERT INTO lc_countries VALUES (222,'United Kingdom','GB','GBR',":name\n:street_address\n:city\n:postcode\n:country");
+INSERT INTO lc_countries VALUES (222,'United Kingdom','GB','GBR',":name\n:street_address\n:city\n:state\n:postcode\n:country");
 
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'ABD','Aberdeenshire');
 INSERT INTO lc_zones (zone_country_id, zone_code, zone_name) VALUES (222,'ABE','Aberdeen');
@@ -6147,8 +6147,8 @@ INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, 
 INSERT INTO lc_credit_cards (id, credit_card_name, pattern, credit_card_status, sort_order) VALUES(13, 'Smartpay', '/^4\\d{12}(\\d{3})?$/', '0', 0);
 
 INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(1, 'US Dollar', 'USD', '$', '', '2', 1.00000000, '2012-12-07 09:25:45');
-INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(2, 'Euro', 'EUR', 'â‚¬', '', '2', 1.20760000, '2012-12-07 09:25:45');
-INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(3, 'British Pounds', 'GBP', 'Â£', '', '2', 1.75870001, '2012-12-07 09:25:45');
+INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(2, 'Euro', 'EUR', '€', '', '2', 1.20760000, '2012-12-07 09:25:45');
+INSERT INTO lc_currencies (currencies_id, title, code, symbol_left, symbol_right, decimal_places, value, last_updated) VALUES(3, 'British Pounds', 'GBP', '£', '', '2', 1.75870001, '2012-12-07 09:25:45');
 
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(1, 1, 'Registered');
 INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_group_name) VALUES(2, 1, 'Wholesale');

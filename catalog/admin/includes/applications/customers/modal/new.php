@@ -47,7 +47,7 @@ $content .=  '<p class="button-height inline-label">' .
 if ( ACCOUNT_NEWSLETTER == '1' ) {
   $content .= '<p class="button-height inline-label">' .
               '  <label for="newsletter" class="label" style="width:30%;">' . $lC_Language->get('field_newsletter_subscription') . '</label>' .
-                 lc_draw_checkbox_field('newsletter', '1', true, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
+                 lc_draw_checkbox_field('newsletter', '1', true, 'id="newsletterID" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
               '</p>';
 }
 $content .= '<p class="button-height inline-label">' .
@@ -64,7 +64,7 @@ $content .= '<p class="button-height inline-label">' .
             '</p>' .
             '<p class="button-height inline-label">' .
               '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
-                 lc_draw_checkbox_field('status', '1', true, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
+                 lc_draw_checkbox_field('status', '1', true, 'id="statusID" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
             '</p>';
 $content .= '</form></div></div>';
 ?>
