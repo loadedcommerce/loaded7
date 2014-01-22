@@ -33,16 +33,25 @@ global $lC_Language, $lC_Currencies, $pInfo;
       <?php echo lC_Products_Admin::getGroupPricingContent(isset($pInfo) ? $pInfo->get('products_price') : null); ?>
     </div>
 
-    <!--<div class="upsellwrapper field-block field-block-product button-height">
-      <label upselltitle="<?php echo $lC_Language->get('text_qty_break_pricing'); ?>" upselldesc="<?php echo $lC_Language->get('text_qty_break_pricing_desc'); ?>" for="" class="label upsellinfo"><b><?php echo $lC_Language->get('text_qty_break_pricing'); ?></b></label>
-      <input type="checkbox" class="switch wider disabled" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_enabled'); ?>" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_qty_price_breaks'), null, 'info-spot on-left grey margin-left'); ?>
+    
+    
+    <div class="upsellwrapper field-block field-block-product button-height">
+      <label for="qpb-switch" class="label upsellinfo"><b><?php echo $lC_Language->get('text_qty_break_pricing'); ?></b></label>
+      <input id="qpb-switch" type="checkbox" class="switch wider" onchange="togglePricingSection(this, 'qty_breaks_pricing_container');" data-text-off="<?php echo $lC_Language->get('slider_switch_disabled'); ?>" data-text-on="<?php echo $lC_Language->get('slider_switch_enabled'); ?>" /><?php echo lc_show_info_bubble($lC_Language->get('info_bubble_pricing_qty_price_breaks'), null, 'info-spot on-left grey margin-left'); ?>
       <span id="qty_breaks_number_of_break_points">
-        <?php echo lc_go_pro(); ?>
-        <div style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="qty_breaks_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
+        <div onclick="togglePricingSection(this, 'qty_breaks_pricing_container');" style="cursor:pointer;" class="field-block-chevron-container float-right"><span id="qty_breaks_pricing_container_span" class="icon-chevron-thin-down icon-size2"></span></div>
       </span>
     </div> 
     <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-    </div>-->
+      <?php //echo lC_Products_Admin::getQPBPricingContent(); ?>
+    </div>
+    
+    <script>
+    
+    </script>
+    
+    
+    
     
     <?php if ($pInfo) { ?>
     <div class="field-block field-block-product button-height">

@@ -118,17 +118,11 @@ function addSimpleOption(editRow) {
           content: '<div id="addSimpleOption">'+
                    '  <div id="addSimpleOptionForm">'+
                    '    <form name="sAdd" id="sAdd" action="" method="post">'+
-//                   '      <p class="upsellwrapper button-height inline-label">'+
-//                   '        <label for="filter" class="label upsellinfo" upselltitle="<?php echo $lC_Language->get('field_filter_by_class'); ?>" upselldesc="<?php echo $lC_Language->get('text_filter_by_class_desc'); ?>" style="width:47%"><?php echo $lC_Language->get('field_filter_by_class'); ?></label>'+
-//                   '        <?php echo lc_draw_pull_down_menu('filter', array(array('id' => '0', 'text' => 'Common')), null, 'style="width:81%;" class="input with-small-padding"') . lc_go_pro(true); ?>'+
-//                   '      </p>'+
+                   '      <input type="hidden" name="dummy" value="0">'+
                    '      <p class="button-height block-label">'+
                    '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_group'); ?></label>'+
                    '        <span id="groupSelectContainer"></span>'+
                    '      </p>'+
-//                   '      <p class="button-height block-label no-margin-bottom strong">OR'+
-//                   '        <div class="upsellwrapper"><span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('button_add_new_group'); ?>" upselldesc="<?php echo $lC_Language->get('text_add_new_group_desc'); ?>"><a href="javascript:void(0);" onclick="alert(\'Feature Not Present\');" class="button icon-plus-round green-gradient glossy"><?php echo $lC_Language->get('button_add_new_group'); ?></a><?php echo lc_go_pro(true); ?></span></div>'+
-//                   '      </p>'+                   
                    '    </form>'+
                    '  </div>'+
                    '</div>',
@@ -173,24 +167,18 @@ function addSimpleOption(editRow) {
                         content: '<div id="addSimpleOptionEntry">'+
                                  '  <div id="addSimpleOptionEntryForm">'+
                                  '    <form name="seAdd" id="seAdd" action="" method="post">'+
-//                                 '      <p class="upsellwrapper button-height inline-label">'+
-//                                 '        <label for="filter" class="label upsellinfo" upselltitle="<?php echo $lC_Language->get('field_filter_by_class'); ?>" upselldesc="<?php echo $lC_Language->get('text_filter_by_class_desc'); ?>" style="width:47%"><?php echo $lC_Language->get('field_filter_by_class'); ?></label>'+
-//                                 '        <?php echo lc_draw_pull_down_menu('efilter', array(array('id' => '0', 'text' => 'Common')), null, 'style="width:81%;" class="input with-small-padding"') . lc_go_pro(true); ?>'+
-//                                 '      </p>'+
+                                 '      <input type="hidden" name="dummy" value="0">'+
                                  '      <p class="button-height block-label">'+
                                  '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_option_items'); ?></label>'+
                                  '        <p class="silver-bg with-small-padding big-text ">&nbsp;' + groupText + '</p>'+
                                  '        <span id="entrySelectContainer"></span>'+
                                  '      </p>'+
-//                                 '      <p class="button-height block-label no-margin-bottom strong">OR'+
-//                                 '        <div class="upsellwrapper"><span class="upsellinfo" upselltitle="<?php echo $lC_Language->get('button_add_new_item'); ?>" upselldesc="<?php echo $lC_Language->get('text_add_new_item_desc'); ?>"><a href="javascript:void(0);" onclick="alert(\'Feature Not Present\');" class="button icon-plus-round green-gradient glossy"><?php echo $lC_Language->get('button_add_new_item'); ?></a><?php echo lc_go_pro(true); ?></span></div>'+
-//                                 '      </p>'+                   
                                  '    </form>'+
                                  '  </div>'+
                                  '</div>',
                         title: '<?php echo $lC_Language->get('modal_heading_new_simple_option'); ?>',
                         width: 320,
-                                            actions: {
+                        actions: {
                           'Close' : {
                             color: 'red',
                             click: function(ewin) { ewin.closeModal(); }
