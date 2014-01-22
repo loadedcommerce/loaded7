@@ -49,7 +49,11 @@ class lC_Featured_products {
         $output .= '  <div class="content-featured-products-listing-description">' . lc_clean_html($Qfeatured->value('products_description')) . '</div>' . "\n";
         $output .= '  <div class="content-featured-products-listing-price">' . $lC_Currencies->displayPrice($Qfeatured->value('products_price'), $Qfeatured->valueInt('products_tax_class_id')) . '</div>' . "\n";
         $output .= '  <div class="content-featured-products-listing-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $Qfeatured->value('products_keyword')), $lC_Image->show($Qfeatured->value('image'), $Qfeatured->value('products_name'))) . '</div>' . "\n";
-        $output .= '  <div class="content-featured-products-listing-buy-now"><button type="button" onclick="document.location.href=\'' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qfeatured->value('products_keyword') . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '\'" class="content-featured-products-listing-buy-now-button"' . ((DISABLE_ADD_TO_CART == 1 && $Qfeatured->valueInt('products_quantity') < 1) ? ' disabled' : '') . '>' . $lC_Language->get('button_buy_now') . '</button></div>' . "\n"; 
+        if (DISABLE_ADD_TO_CART == 1 && $Qfeatured->valueInt('products_quantity') < 1) {
+          $output .= '  <div class="content-featured-products-listing-buy-now"><button type="button" class="content-featured-products-listing-buy-now-button" disabled>' . $lC_Language->get('out_of_stock') . '</button></div>' . "\n"; 
+        } else {
+          $output .= '  <div class="content-featured-products-listing-buy-now"><button type="button" onclick="document.location.href=\'' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), $Qfeatured->value('products_keyword') . '&' . lc_get_all_get_params(array('action', 'new')) . '&action=cart_add') . '\'" class="content-featured-products-listing-buy-now-button">' . $lC_Language->get('button_buy_now') . '</button></div>' . "\n"; 
+        }
         $output .= '</div>' . "\n";
       }
     }

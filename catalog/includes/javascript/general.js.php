@@ -51,6 +51,7 @@ $(document).ready(function() {
   <?php
     }
   ?>
+  $(":contains('<?php echo $lC_Language->get('out_of_stock'); ?>')").closest('button').removeClass("btn-success").addClass("btn-default");
 
 });
 
