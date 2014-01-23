@@ -47,7 +47,7 @@ $content .=  '<p class="button-height inline-label">' .
 if ( ACCOUNT_NEWSLETTER == '1' ) {
   $content .= '<p class="button-height inline-label">' .
               '  <label for="newsletter" class="label" style="width:30%;">' . $lC_Language->get('field_newsletter_subscription') . '</label>' .
-                 lc_draw_checkbox_field('newsletter', '1', true, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
+                 lc_draw_checkbox_field('newsletter', '1', true, 'id="newsletterID" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
               '</p>';
 }
 $content .= '<p class="button-height inline-label">' .
@@ -64,7 +64,7 @@ $content .= '<p class="button-height inline-label">' .
             '</p>' .
             '<p class="button-height inline-label">' .
               '  <label for="status" class="label" style="width:30%;">' . $lC_Language->get('field_status') . '</label>' .
-                 lc_draw_checkbox_field('status', '1', true, 'class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
+                 lc_draw_checkbox_field('status', '1', true, 'id="statusID" class="switch medium" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"') .
             '</p>';
 $content .= '</form></div></div>';
 ?>
@@ -93,7 +93,7 @@ function newCustomer() {
           content: '<?php echo $content; ?>',
           title: '<?php echo $lC_Language->get('modal_heading_new_customer'); ?>',
           width: 600,
-                actions: {
+          actions: {
             'Close' : {
               color: 'red',
               click: function(win) { win.closeModal(); }
@@ -104,7 +104,7 @@ function newCustomer() {
               classes:  'glossy',
               click:    function(win) { win.closeModal(); }
             },
-            '<?php echo $lC_Language->get('button_save'); ?>': {
+            '<?php echo $lC_Language->get('button_save_and_close'); ?>': {
               classes:  'blue-gradient glossy',
               click:    function(win) {
                 var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
@@ -154,10 +154,16 @@ function newCustomer() {
                   win.closeModal();
                 }
               }
+            },
+            '<?php echo $lC_Language->get('button_continue'); ?>': {
+              classes:  'green-gradient glossy with-tooltip',
+              click:    function(win) { addNewCustomer(); }
             }
           },
           buttonsLowPadding: true
       });
+      var cont = document.getElementsByClassName('with-tooltip');
+      $(cont).attr("title", "<?php echo $lC_Language->get('button_continue_title_tag'); ?>");
       $("#group").html("");
       i=0;
       $.each(data.groupsArray, function(val, text) {
@@ -172,5 +178,72 @@ function newCustomer() {
       $('.datepicker').glDatePicker({ startDate: new Date("January 1, 1960"), zIndex: 100 });
     }
   );
+}
+
+function addNewCustomer() {
+  var fnameMin = '<?php echo ACCOUNT_FIRST_NAME; ?>';
+  var lnameMin = '<?php echo ACCOUNT_LAST_NAME; ?>';
+  var emailMin = '<?php echo ACCOUNT_EMAIL_ADDRESS; ?>';
+  var pwMin = '<?php echo ACCOUNT_PASSWORD; ?>';
+  var bValid = $("#customers").validate({
+    rules: {
+      firstname: { minlength: fnameMin, required: true },
+      lastname: { minlength: lnameMin, required: true },
+      email_address: { minlength: emailMin, email: true, required: true },
+      dob: { date: true },
+      password: { minlength: pwMin, required: true },
+      confirmation: { minlength: pwMin, required: true },
+    },
+    invalidHandler: function() {
+    }
+  }).form();
+  var passwd = $('#password').val();
+  var confirm = $('#confirmation').val();
+  if (passwd != confirm) {
+    $.modal.alert('<?php echo $lC_Language->get('ms_error_password_confirmation_invalid'); ?>');
+    return false;
+  }
+  if (bValid) {
+    var nvp = $('#customers').serialize();
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=saveCustomer&BATCH'); ?>'
+    $.getJSON(jsonLink.replace('BATCH', nvp),    
+      function (data) {
+        if (data.rpcStatus == -10) { // no session
+          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+          $(location).attr('href',url);
+        }         
+    
+        if (data.rpcStatus != 1) {
+          if (data.rpcStatus == -1) {
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+          } else if (data.rpcStatus == -2) {
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_email_address_exists'); ?>');
+          } else if (data.rpcStatus == -3) {
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_password_confirmation_invalid'); ?>');
+          }
+          return false;
+        }
+        modalMessage('<?php echo $lC_Language->get('text_changes_saved'); ?>');          
+        oTable.fnReloadAjax();
+        var add_addr = 1;
+        editCustomer(data.new_customer_id, add_addr=1);  
+        cm = $('#newCustomer').getModalWindow();
+        setTimeout("$(cm).closeModal()", 2300);
+      }
+    );
+    $.modal.all.closeModal();
+  }
+}
+function modalMessage(text) {
+  mm = $.modal({
+          contentBg: false,
+          contentAlign: 'center',
+          content: text,
+          resizable: false,
+          actions: {},
+          buttons: {}
+        });
+  $(mm);
+  setTimeout ("$(mm).closeModal()", 800);
 }
 </script>

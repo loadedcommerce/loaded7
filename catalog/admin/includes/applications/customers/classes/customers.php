@@ -69,7 +69,7 @@ class lC_Customers_Admin {
     $QresultFilterTotal->freeResult();
 
     /* Main Listing Query */
-    $Qcustomers = $lC_Database->query("SELECT c.customers_id, c.customers_group_id, c.customers_gender, c.customers_lastname, c.customers_firstname, c.customers_email_address, c.customers_status, c.customers_ip_address, c.date_account_created, c.date_account_last_modified, c.date_last_logon, c.number_of_logons, a.entry_country_id
+    $Qcustomers = $lC_Database->query("SELECT c.customers_id, c.customers_group_id, c.customers_gender, c.customers_lastname, c.customers_firstname, c.customers_email_address, c.customers_status, c.customers_ip_address, c.date_account_created, c.date_account_last_modified, c.date_last_logon, c.number_of_logons, c.customers_default_address_id, a.entry_country_id
                                          from :table_customers c
                                        LEFT JOIN :table_address_book a
                                          on (c.customers_id = a.customers_id and c.customers_default_address_id = a.address_book_id) " . $sWhere . $sOrder . $sLimit);
@@ -77,6 +77,7 @@ class lC_Customers_Admin {
     $Qcustomers->bindTable(':table_customers', TABLE_CUSTOMERS);
     $Qcustomers->bindTable(':table_address_book', TABLE_ADDRESS_BOOK);
     $Qcustomers->execute();
+    
     $cnt = 1;
     $tagArr = array();
     while ( $Qcustomers->next() ) {
@@ -108,17 +109,22 @@ class lC_Customers_Admin {
       $full = $Qcustomers->valueProtected('customers_firstname') . ' ' . $Qcustomers->valueProtected('customers_lastname');
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qcustomers->valueInt('customers_id') . '" id="' . $Qcustomers->valueInt('customers_id') . '"></td>';
       $gender = '<td>' . $customer_icon . '</td>';
-      $last = '<td>' . $Qcustomers->valueProtected('customers_lastname') . '</td>';
-      $first = '<td>' . $Qcustomers->valueProtected('customers_firstname') . '</td>';
+      $name = '<td>' . $Qcustomers->valueProtected('customers_firstname'). ' '.$Qcustomers->valueProtected('customers_lastname') . '</td>';
+      
+      $Qcustomers_orders = $lC_Database->query("SELECT count(*) as order_count 
+                                         from :table_orders 
+                                         where customers_id = '".$Qcustomers->valueInt('customers_id')."'");
+      $Qcustomers_orders->bindTable(':table_orders', TABLE_ORDERS);
+      $Qcustomers_orders->execute();
+      
+      $order_count = '<td>' . $Qcustomers_orders->valueInt('order_count') . '</td>';
       $email = '<td>' . $Qcustomers->value('customers_email_address') . '</td>';
       $group = '<td><small class="tag ' . $tagColor . ' glossy">' . lc_get_customer_groups_name($Qcustomers->valueInt('customers_group_id')) . '</small></td>';
       $date = '<td>' . lC_DateTime::getShort($Qcustomers->value('date_account_created')) . '</td>';
-      $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editCustomer(\'' . $Qcustomers->valueInt('customers_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'orders&cID=' . $Qcustomers->valueInt('customers_id'))) . '" class="button icon-price-tag with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_orders') . '"></a>
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteCustomer(\'' . $Qcustomers->valueInt('customers_id') . '\', \'' . urlencode($full) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                 </span></td>';
-      $result['aaData'][] = array("$check", "$gender", "$last", "$first", "$email", "$group", "$date", "$action");
+      $action = '<td class="align-right vertical-center">
+                   <span class="button-group" style="white-space:nowrap;"><a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editCustomer(\'' . $Qcustomers->valueInt('customers_id') . '\')') . '" class="button icon-pencil  with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '"  title="' . $lC_Language->get('icon_edit_customer') . '">' . '</a></span>&nbsp;<span class="button-group" style="white-space:nowrap;"><a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="createOrder(\'' . $Qcustomers->valueInt('customers_id') . '\',\''.$Qcustomers->valueInt('customers_default_address_id').'\')') . '" class="button icon-plus-round with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_create_order') . '"></a></span>&nbsp;<span class="button-group" style="white-space:nowrap;"><a href="' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'orders&cID=' . $Qcustomers->valueInt('customers_id'))) . '" class="button icon-price-tag with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_view_orders') . '"></a></span>
+                 </td>';
+      $result['aaData'][] = array("$check", "$gender", "$name", "$email", "$order_count", "$group", "$date", "$action");
       $cnt++;
     }
     $result['sEcho'] = intval($_GET['sEcho']);
@@ -448,11 +454,12 @@ class lC_Customers_Admin {
       $Qcustomer->bindInt(':customers_status', $data['status']);
       $Qcustomer->bindInt(':customers_group_id', $data['group']);
       $Qcustomer->setLogging($_SESSION['module'], $id);
-      $Qcustomer->execute();
+      $Qcustomer->execute();      
 
       if ( !$lC_Database->isError() ) {
         if ( !empty($data['password']) ) {
           $customer_id = ( !empty($id) ) ? $id : $lC_Database->nextID();
+          $result['new_customer_id'] = $customer_id;
 
           $Qpassword = $lC_Database->query('update :table_customers set customers_password = :customers_password where customers_id = :customers_id');
           $Qpassword->bindTable(':table_customers', TABLE_CUSTOMERS);
@@ -651,6 +658,8 @@ class lC_Customers_Admin {
   */
   public static function saveAddress($id = null, $data) {
     global $lC_Database;
+    
+    if ($id == 0) $id = null;
 
     $error = false;
     $result = array();

@@ -45,6 +45,7 @@ ms_error_user_invalid = E-mail not found. Please try again.
 ms_error_key_invalid = Invalid Key. Please try again.
 
 ms_error_serial_invalid = Invalid Serial. Please try again.
+ms_error_serial_registered_to_another_domain = Serial registered to another domain. Please try again.
 ms_error_password_change = An error occurred. Please try again.
 ms_error_blank_key = Key cannot be blank. Please try again.
 

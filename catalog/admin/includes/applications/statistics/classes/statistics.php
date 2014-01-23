@@ -31,7 +31,7 @@ class lC_Statistics_Admin {
       if ( class_exists($class) ) {
         $module = new $class();
         $name = '<td>' . lc_link_object(lc_href_link_admin(FILENAME_DEFAULT, 'statistics&module=' . substr($file['name'], 0, strrpos($file['name'], '.'))), $module->getIcon() . '&nbsp;' . $module->getTitle()) . '</td>';
-        $action = '<td class="align-right vertical-center"><span class="button-group compact">
+        $action = '<td class="align-right vertical-center"><span class="button-group">
                      <a href="' . ((int)($_SESSION['admin']['access']['banner_manager'] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'statistics&module=' . substr($file['name'], 0, strrpos($file['name'], '.')))) . '" class="button icon-gear' . ((int)($_SESSION['admin']['access']['banner_manager'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_run')) . '</a>
                    </span></td>';
         $result['aaData'][] = array("$name", "$action"); 

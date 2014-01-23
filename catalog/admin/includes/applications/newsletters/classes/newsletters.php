@@ -39,13 +39,14 @@ class lC_Newsletters_Admin {
       $module = '<td>' . $$newsletter_module_class->getTitle() . '</td>';  
       $sent = '<td>' . (($Qnewsletters->valueInt('status') === 1) ? '<span class="icon-tick icon-green icon-size2"></span>' : '<span class="icon-cross icon-red icon-size2"></span>') . '</td>';  
 
-      $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">';
+      $action = '<td class="align-right vertical-center"><span class="button-group" style="white-space:nowrap;">';
       if ( $Qnewsletters->valueInt('status') === 1 ) {
         $action .= '<a href="' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? '#' : 'javascript://" onclick="showLog(\'' . $Qnewsletters->valueInt('newsletters_id') . '\')') . '" class="button icon-read' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_log')) . '</a>';
       } else {
         $action .= '<a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : 'javascript://" onclick="editNewsletter(\'' . $Qnewsletters->valueInt('newsletters_id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? '#' : 'javascript://" onclick="' . lC_Newsletters_Admin::_u2c('send_' . $Qnewsletters->value('module')) . '(\'' . $Qnewsletters->valueInt('newsletters_id') . '\')') . '" class="button icon-mail with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_email_send') . '"></a>';
-      }    
+      }
+      $action .= '</span>&nbsp;<span class="button-group">';    
       $action .= '<a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteNewsletter(\'' . $Qnewsletters->valueInt('newsletters_id') . '\', \'' . urlencode($Qnewsletters->value('title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>';
           
       $action .= '</span></td>';

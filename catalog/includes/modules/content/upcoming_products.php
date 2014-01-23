@@ -35,7 +35,7 @@ class lC_Content_upcoming_products extends lC_Modules {
   public function initialize() {
     global $lC_Database, $lC_Language, $lC_Currencies, $lC_Image;
 
-    $Qupcoming = $lC_Database->query('select p.products_id, pa.value as date_expected from :table_products p, :table_templates_boxes tb, :table_product_attributes pa where tb.code = :code and tb.id = pa.id and to_days(str_to_date(pa.value, "%Y-%m-%d")) >= to_days(now()) and pa.products_id = p.products_id and p.products_status = :products_status order by pa.value limit :max_display_upcoming_products');
+    $Qupcoming = $lC_Database->query('select p.products_id, pa.value as date_expected from :table_products p, :table_templates_boxes tb, :table_product_attributes pa where tb.code = :code and tb.id = pa.id and to_days(str_to_date(pa.value, "%m/%d/%Y")) >= to_days(now()) and pa.products_id = p.products_id and p.products_status = :products_status order by pa.value limit :max_display_upcoming_products');
     $Qupcoming->bindTable(':table_products', TABLE_PRODUCTS);
     $Qupcoming->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
     $Qupcoming->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
@@ -62,7 +62,7 @@ class lC_Content_upcoming_products extends lC_Modules {
           $this->_content .= '<div class="content-upcoming-products-image">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-upcoming-products-image-src"', 'small')) . '</div>' . "\n";
         }
         $this->_content .= '<div class="content-upcoming-products-price">' . $lC_Product->getPriceFormated(true) . '</div>' . "\n" . 
-                           '<div class="content-upcoming-products-date">' . lC_DateTime::getShort($Qupcoming->value('date_expected')) . '</div>' . "\n" .
+                           '<div class="content-upcoming-products-date">' . $Qupcoming->value('date_expected') . '</div>' . "\n" .
                            '</div>' . "\n";
       }
     }

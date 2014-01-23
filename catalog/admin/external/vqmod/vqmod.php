@@ -310,12 +310,12 @@ return false;
     foreach($this->_modFileList as $modFileKey => $modFile) {
       if(file_exists($modFile)) {
         
-        if (function_exists('ioncube_read_file')) {
-           $xml = ioncube_read_file($modFile);
-           if (is_int($xml)) $xml = false;
-        } else {
+//        if (function_exists('ioncube_read_file')) {
+//           $xml = ioncube_read_file($modFile);
+//           if (is_int($xml)) $xml = false;
+//        } else {
           $xml = file_get_contents($modFile);
-        }        
+//        }        
         
         if(@$dom->loadXML($xml)) {
           $mod = $dom->getElementsByTagName('modification')->item(0);

@@ -73,8 +73,8 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
       parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Suppress Non-Mobile Payment Modules', 'CHECKOUT_SUPPRESS_NON_MOBILE_PAYMENT_MODULES', '-1', 'Suppress non-mobile payment modules in catalog when being viewed in mobile format.', 19, 0, NULL, '2012-10-09 18:17:08', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))')");
     }
     
-    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers` CHANGE `customers_password` `customers_password` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL");
-    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers` CHANGE `customers_password` `customers_password` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL");    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "customers` CHANGE `customers_password` `customers_password` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "customers` CHANGE `customers_password` `customers_password` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL");    
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "administrators` CHANGE `user_password` `user_password` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "administrators` CHANGE `user_password` `user_password` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL");     
     
@@ -145,43 +145,35 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "branding` (language_id INT(11) NOT NULL DEFAULT 1, slogan VARCHAR(256) NOT NULL DEFAULT '', meta_description VARCHAR(250) NOT NULL DEFAULT '', meta_keywords VARCHAR(128) NOT NULL DEFAULT '', meta_title VARCHAR(128) NOT NULL DEFAULT '', meta_title_prefix VARCHAR(128) NOT NULL, meta_title_suffix VARCHAR(128) NOT NULL, footer_text VARCHAR(256) NOT NULL DEFAULT '', PRIMARY KEY (language_id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");   
     $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "branding_data` (site_image VARCHAR(128) NOT NULL DEFAULT '', chat_code VARCHAR(8192) NOT NULL DEFAULT '', support_phone VARCHAR(16) NOT NULL DEFAULT '', support_email VARCHAR(128) NOT NULL DEFAULT '', sales_phone VARCHAR(16) NOT NULL DEFAULT '', sales_email VARCHAR(128) NOT NULL DEFAULT '', og_image VARCHAR(128) NOT NULL DEFAULT '', meta_delimeter VARCHAR(128) NOT NULL DEFAULT '', social_facebook_page VARCHAR(128) NOT NULL, social_twitter VARCHAR(128) NOT NULL, social_pinterest VARCHAR(128) NOT NULL, social_google_plus VARCHAR(128) NOT NULL, social_youtube VARCHAR(128) NOT NULL, social_linkedin VARCHAR(128) NOT NULL) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");
     parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "branding_data` (site_image VARCHAR(128) NOT NULL DEFAULT '', chat_code VARCHAR(8192) NOT NULL DEFAULT '', support_phone VARCHAR(16) NOT NULL DEFAULT '', support_email VARCHAR(128) NOT NULL DEFAULT '', sales_phone VARCHAR(16) NOT NULL DEFAULT '', sales_email VARCHAR(128) NOT NULL DEFAULT '', og_image VARCHAR(128) NOT NULL DEFAULT '', meta_delimeter VARCHAR(128) NOT NULL DEFAULT '', social_facebook_page VARCHAR(128) NOT NULL, social_twitter VARCHAR(128) NOT NULL, social_pinterest VARCHAR(128) NOT NULL, social_google_plus VARCHAR(128) NOT NULL, social_youtube VARCHAR(128) NOT NULL, social_linkedin VARCHAR(128) NOT NULL) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");
-    
-    $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = 'core' where `configuration_key` = 'DEFAULT_TEMPLATE'");
-    parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = 'core' where `configuration_key` = 'DEFAULT_TEMPLATE'");
-    
-    $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = 'output_compression;session;language;breadcrumb;currencies;core;whos_online;simple_counter;category_path;recently_visited;specials;reviews;banner;coupons' where `configuration_key` = 'MODULE_SERVICES_INSTALLED'");
-    parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = 'output_compression;session;language;breadcrumb;currencies;core;whos_online;simple_counter;category_path;recently_visited;specials;reviews;banner;coupons' where `configuration_key` = 'MODULE_SERVICES_INSTALLED'");
-    
-    $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = '-1' where `configuration_key` = 'ACCOUNT_GENDER'");
-    parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = '-1' where `configuration_key` = 'ACCOUNT_GENDER'");
-    
-    $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = '-1' where `configuration_key` = 'ACCOUNT_DATE_OF_BIRTH'");
-    parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = '-1' where `configuration_key` = 'ACCOUNT_DATE_OF_BIRTH'");
-    
-    $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = '2' where `configuration_key` = 'PREV_NEXT_BAR_LOCATION'");
-    parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = '2' where `configuration_key` = 'PREV_NEXT_BAR_LOCATION'");
-
+      
+    if (defined('DEFAULT_TEMPLATE') && DEFAULT_TEMPLATE == 'default') {    
+      $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = 'core' where `configuration_key` = 'DEFAULT_TEMPLATE'");
+      parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = 'core' where `configuration_key` = 'DEFAULT_TEMPLATE'");
+    }
+                                                                                                   
     $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = '100' where `configuration_key` = 'MODULE_ORDER_TOTAL_SUBTOTAL_SORT_ORDER'");
     parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = '100' where `configuration_key` = 'MODULE_ORDER_TOTAL_SUBTOTAL_SORT_ORDER'");
     
     $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = '200' where `configuration_key` = 'MODULE_ORDER_TOTAL_SHIPPING_SORT_ORDER'");
     parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = '200' where `configuration_key` = 'MODULE_ORDER_TOTAL_SHIPPING_SORT_ORDER'");
-    
+                                                  
     $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = '300' where `configuration_key` = 'MODULE_ORDER_TOTAL_COUPON_SORT_ORDER'");
     parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = '300' where `configuration_key` = 'MODULE_ORDER_TOTAL_COUPON_SORT_ORDER'");
-    
+                                                  
     $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = '500' where `configuration_key` = 'MODULE_ORDER_TOTAL_TAX_SORT_ORDER'");
     parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = '500' where `configuration_key` = 'MODULE_ORDER_TOTAL_TAX_SORT_ORDER'");
-    
+                                                  
     $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = '600' where `configuration_key` = 'MODULE_ORDER_TOTAL_TOTAL_SORT_ORDER'");
     parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = '600' where `configuration_key` = 'MODULE_ORDER_TOTAL_TOTAL_SORT_ORDER'");
-    
+                                                  
     $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_value` = '-1' where `configuration_key` = 'USE_DEFAULT_TEMPLATE_STYLESHEET'");
     parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_value` = '-1' where `configuration_key` = 'USE_DEFAULT_TEMPLATE_STYLESHEET'");
-    
+                                                  
     $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_title` = 'Tag Cloud Maximum Listings' where `configuration_key` = 'TAG_CLOUD_MAX_LIST'");
     parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_title` = 'Tag Cloud Maximum Listings' where `configuration_key` = 'TAG_CLOUD_MAX_LIST'");
-    
+    $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "featured_products` (id int(11) NOT NULL AUTO_INCREMENT, products_id int(11) NOT NULL DEFAULT '0', date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00', last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00', expires_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00', `status` int(1) DEFAULT '1', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");
+    parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "featured_products` (id int(11) NOT NULL AUTO_INCREMENT, products_id int(11) NOT NULL DEFAULT '0', date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00', last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00', expires_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00', `status` int(1) DEFAULT '1', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");
+
   } 
 }  
 ?>

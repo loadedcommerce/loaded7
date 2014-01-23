@@ -25,9 +25,9 @@ $cSearch = (isset($_GET['cID']) && $_GET['cID'] != null ? '&cSearch=' . $_GET['c
       "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
       "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "hide-on-mobile dataColCheck" },
                     { "sWidth": "10px", "bSortable": false, "sClass": "hide-on-mobile dataColIcon" },
-                    { "sWidth": "15%", "bSortable": true, "sClass": "dataColLast" },
-                    { "sWidth": "15%", "bSortable": true, "sClass": "hide-on-mobile-portrait dataColFirst" },
+                    { "sWidth": "22%", "bSortable": true, "sClass": "dataColLast" },
                     { "sWidth": "30%", "bSortable": true, "sClass": "hide-on-mobile hide-on-tablet dataColEmail" },
+                    { "sWidth": "8%", "bSortable": true, "sClass": "hide-on-mobile-portrait dataColFirst" },
                     { "sWidth": "10%", "bSortable": true, "sClass": "hide-on-mobile-portrait dataColGroup" },
                     { "sWidth": "10%", "bSortable": true, "sClass": "hide-on-tablet hide-on-mobile dataColDate" },
                     { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
@@ -71,6 +71,16 @@ $cSearch = (isset($_GET['cID']) && $_GET['cID'] != null ? '&cSearch=' . $_GET['c
       $('.hide-on-tablet-landscape').hide();      
       $('.hide-on-tablet').hide();      
     }    
+  }
+  function createOrder(cid, aid) {
+    if (cid == undefined) cid = 0;   
+    if (aid == undefined) aid = 0;   
+    if(parseInt(cid) > 0  && parseInt(aid)) {
+      window.location = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, "orders&action=quick_add&editProduct=1&cID=' + cid + '");?>';
+    } else {
+      var add_addr = 1;
+      editCustomer(cid,add_addr=1);
+    }
   }
       
 </script>

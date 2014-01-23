@@ -8,7 +8,7 @@
   @version    $Id: index.php v1.0 2013-08-08 datazen $
 */
 require('includes/application_top.php');
-require($lC_Vqmod->modCheck('includes/classes/template.php'));
+require_once($lC_Vqmod->modCheck('includes/classes/template.php'));
 
 $_SESSION['module'] = 'index';
 $_SESSION['moduleType'] = 'core';

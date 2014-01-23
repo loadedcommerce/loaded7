@@ -36,16 +36,6 @@ if (!function_exists('posix_getpwuid')) {
 }
 
 /*
-* posix_getgrgid() not implemented on Microsoft Windows platforms
-*/
-
-if (!function_exists('posix_getgrgid')) {
-  function posix_getgrgid($id) {
-    return '-?-';
-  }
-}
-
-/*
 * http_build_query() natively supported from PHP 5.0
 * From Pear::PHP_Compat
 */

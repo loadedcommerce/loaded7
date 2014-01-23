@@ -40,12 +40,13 @@ class lC_Access {
 
       foreach ($lC_DirectoryListing->getFiles() as $file) {
         $modules[substr($file['name'], 0, strrpos($file['name'], '.'))] = '99';
-      }  
+      } 
+      
+      $modulesPlusAddons = lC_Addons_Admin::getModulesAccessTopAdmin($modules);
+      $modules = $modulesPlusAddons;
     }
-    
-    $modulesPlusAddons = lC_Addons_Admin::getModulesAccessTopAdmin($modules);
 
-    return $modulesPlusAddons;
+    return $modules;
   }
 
   public function getLevels() {

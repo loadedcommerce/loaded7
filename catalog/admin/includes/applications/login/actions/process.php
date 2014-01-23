@@ -25,7 +25,7 @@ class lC_Application_Login_Actions_process extends lC_Application_Login {
                                      'firstname' => $Qadmin->value('first_name'),
                                      'lastname' => $Qadmin->value('last_name'),
                                      'username' => $Qadmin->value('user_name'),
-                                     'password' => $Qadmin->value('user_pasword'),
+                                     'password' => $Qadmin->value('user_password'),
                                      'access' => lC_Access::getUserLevels($Qadmin->valueInt('access_group_id')),
                                      'language_id' => $Qadmin->value('language_id'));
           $get_string = null;

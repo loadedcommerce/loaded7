@@ -657,7 +657,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
   <script>
     $(document).ready(function() {
       updateProductFilter();
-    });
+    });       
 
     function doSelectFunction(e) {
       if (e.value == 'delete') {
@@ -667,8 +667,8 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       }
     }
 
-    function updateProductFilter() {
-      var cid = $("#cid").val();
+    function updateProductFilter(filter) {
+      var cid = filter;
       var paginationType = ($.template.mediaQuery.isSmallerThan('tablet-portrait')) ? 'two_button' : 'full_numbers';            
       var dataTableDataURL = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getAll&media=MEDIA&cid=CID'); ?>';
       var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=getCategoriesArray&cid=CID'); ?>';
@@ -682,13 +682,6 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
             return false;
           }
-          $("#cid").empty();
-          $.each(data.categoriesArray, function(val, text) {
-            var selected = (cid == val) ? 'selected="selected"' : '';
-            $("#cid").append(
-              $("<option " + selected + "></option>").val(val).html(text)
-            );
-          });
           oTable = $('#dataTable').dataTable({
             "bProcessing": true,
             "sAjaxSource": dataTableDataURL.replace('CID', cid).replace('MEDIA', $.template.mediaQuery.name),
@@ -697,11 +690,15 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             "bDestroy": true,
             "aaSorting": [[1,'asc']],
             "iDisplayLength": 25,
+            "sDom": '<"top"f>rt<"bottom"ilp>',
             "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "dataColCheck hide-on-mobile" },
-                          { "sWidth": "50%", "bSortable": true, "sClass": "dataColProducts" },
-                          { "sWidth": "15%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },
-                          { "sWidth": "10%", "bSortable": true, "sClass": "dataColQty hide-on-tablet" },
-                          { "sWidth": "25%", "bSortable": false, "sClass": "dataColAction" }]
+                          { "sWidth": "30%", "bSortable": true, "sClass": "dataColProducts" },
+                          { "sWidth": "10%", "bSortable": false, "sClass": "dataColCats hide-on-tablet" },
+                          { "sWidth": "10%", "bSortable": false, "sClass": "dataColClass hide-on-tablet" },
+                          { "sWidth": "10%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },
+                          { "sWidth": "5%", "bSortable": false, "sClass": "dataColQty hide-on-mobile" },
+                          { "sWidth": "5%", "bSortable": false, "sClass": "dataColStatus hide-on-mobile" },
+                          { "sWidth": "30%", "bSortable": false, "sClass": "dataColAction no-wrap" }]
           }); 
           $('#dataTable').responsiveTable();
                
@@ -716,6 +713,18 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           }         
         }
       );
+    }    
+
+    function updateStatus(id, val) {
+      var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=updateStatus&pid=PID&val=VAL'); ?>';
+      $.getJSON(jsonLink.replace('PID', id).replace('VAL', val));
+      if (val == 1) {               
+        $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'0\')');
+        $("#status_" + id).html('<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_disable_product'); ?>"></span>');
+      } else {               
+        $("#status_" + id).attr('onclick', 'updateStatus(\'' + id + '\', \'1\')');
+        $("#status_" + id).html('<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="<?php echo $lC_Language->get('text_enable_product'); ?>"></span>');
+      }
     }
   </script>
   <?php

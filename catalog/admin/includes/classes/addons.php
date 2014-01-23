@@ -190,7 +190,6 @@ class lC_Addons_Admin extends lC_Addons {
     
     return false;
   }
-  
  /*
   * Determine if the module has responsive page script
   *
@@ -223,8 +222,6 @@ class lC_Addons_Admin extends lC_Addons {
     
     return false;
   }
-  
-    
  /*
   * Set top admin access to the addon modules
   *
@@ -280,6 +277,7 @@ class lC_Addons_Admin extends lC_Addons {
 
         if ( !class_exists( $module_class ) ) {
           $lC_Language->loadIniFile(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/languages/' . $lC_Language->getCode() . '/modules/access/' . $module . '.php', null, null, true);
+
           include($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/' . $addon . '/admin/modules/access/' . $module . '.php'));
         }
 

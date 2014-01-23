@@ -29,7 +29,7 @@ function installAddon(id, type) {
       }
       if (type == 'templates') {
         document.location.href = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'templates'); ?>';
-        exit();
+        return;
       } else {
         oTable.fnReloadAjax();
         editAddon(id, type);

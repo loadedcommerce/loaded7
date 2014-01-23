@@ -48,6 +48,9 @@ class lC_Modules_order_total_Admin {
 
         }
         $result['aaData'][] = array("$name", "$sort", "$action");
+        $result['entries'][] = array('module_class' => $class,
+                                     'module_title' => $module->_title
+                                    );
       }
     }
 

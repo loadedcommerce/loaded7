@@ -249,7 +249,7 @@ class lC_Success {
   public static function getShippingAddress($_oID, $_cID) {
     global $lC_Database;
 
-    $QorderShipping = $lC_Database->query('select delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state_code, delivery_country, delivery_address_format from :table_orders where orders_id = :orders_id');
+    $QorderShipping = $lC_Database->query('select delivery_name, delivery_company, delivery_street_address, delivery_suburb, delivery_city, delivery_postcode, delivery_state, delivery_state_code, delivery_country, delivery_address_format from :table_orders where orders_id = :orders_id');
     $QorderShipping->bindTable(':table_orders', TABLE_ORDERS);
     $QorderShipping->bindInt(':orders_id', $_oID);
     $QorderShipping->execute();
@@ -261,6 +261,8 @@ class lC_Success {
                            'suburb' => $QorderShipping->value('delivery_suburb'),
                            'city' => $QorderShipping->value('delivery_city'),
                            'postcode' => $QorderShipping->value('delivery_postcode'),
+                           'state' => $QorderShipping->value('delivery_state'),
+                           'state_code' => lC_Address::getZoneCode($QorderShipping->value('delivery_state_code')),
                            'zone_code' => $QorderShipping->value('delivery_state_code'),
                            'country_title' => $QorderShipping->value('delivery_country'),
                            'format' => $QorderShipping->value('delivery_address_format'));
@@ -279,7 +281,7 @@ class lC_Success {
   public static function getBillingAddress($_oID, $_cID) {
     global $lC_Database;
 
-    $QorderBilling = $lC_Database->query('select billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state_code, billing_country, billing_address_format from :table_orders where orders_id = :orders_id');
+    $QorderBilling = $lC_Database->query('select billing_name, billing_company, billing_street_address, billing_suburb, billing_city, billing_postcode, billing_state, billing_state_code, billing_country, billing_address_format from :table_orders where orders_id = :orders_id');
     $QorderBilling->bindTable(':table_orders', TABLE_ORDERS);
     $QorderBilling->bindInt(':orders_id', $_oID);
     $QorderBilling->execute();
@@ -290,6 +292,7 @@ class lC_Success {
                           'street_address' => $QorderBilling->value('billing_street_address'),
                           'suburb' => $QorderBilling->value('billing_suburb'),
                           'city' => $QorderBilling->value('billing_city'),
+                          'state' => $QorderBilling->value('billing_state'),
                           'postcode' => $QorderBilling->value('billing_postcode'),
                           'zone_code' => $QorderBilling->value('billing_state_code'),
                           'country_title' => $QorderBilling->value('billing_country'),

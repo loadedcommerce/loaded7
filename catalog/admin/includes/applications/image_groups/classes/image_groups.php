@@ -35,10 +35,14 @@ class lC_Image_groups_Admin {
       $name = '<td>' . $group_name . '</td>';
       
       if (strtolower($group_name) != 'originals') {
-        $action = '<td class="align-right vertical-center"><span class="button-group compact">
-                     <a href="' . ((int)($_SESSION['admin']['access']['product_settings'] < 3) ? '#' : 'javascript://" onclick="editGroup(\'' . $Qgroups->valueInt('id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['product_settings'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                     <a href="' . ((int)($_SESSION['admin']['access']['product_settings'] < 4 || $Qgroups->valueInt('id') == DEFAULT_IMAGE_GROUP_ID) ? '#' : 'javascript://" onclick="deleteGroup(\'' . $Qgroups->valueInt('id') . '\', \'' . urlencode($Qgroups->valueProtected('title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['product_settings'] < 4 || $Qgroups->valueInt('id') == DEFAULT_IMAGE_GROUP_ID) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                   </span></td>';
+        $action = '<td class="align-right vertical-center">
+                     <span class="button-group">
+                       <a href="' . ((int)($_SESSION['admin']['access']['product_settings'] < 3) ? '#' : 'javascript://" onclick="editGroup(\'' . $Qgroups->valueInt('id') . '\')') . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access']['product_settings'] < 3) ? ' disabled' : NULL) . '">' . (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                     </span>
+                     <span class="button-group">
+                       <a href="' . ((int)($_SESSION['admin']['access']['product_settings'] < 4 || $Qgroups->valueInt('id') == DEFAULT_IMAGE_GROUP_ID) ? '#' : 'javascript://" onclick="deleteGroup(\'' . $Qgroups->valueInt('id') . '\', \'' . urlencode($Qgroups->valueProtected('title')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access']['product_settings'] < 4 || $Qgroups->valueInt('id') == DEFAULT_IMAGE_GROUP_ID) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                     </span>
+                   </td>';
       } else {
         $action = '<td></td>';
       }

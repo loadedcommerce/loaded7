@@ -31,6 +31,7 @@ define('TABLE_CURRENCIES', DB_TABLE_PREFIX . 'currencies');
 define('TABLE_CUSTOMERS', DB_TABLE_PREFIX . 'customers');
 define('TABLE_CUSTOMERS_GROUPS', DB_TABLE_PREFIX . 'customers_groups');
 define('TABLE_CUSTOMERS_GROUPS_DATA', DB_TABLE_PREFIX . 'customers_groups_data');
+define('TABLE_FEATURED_PRODUCTS', DB_TABLE_PREFIX . 'featured_products');
 define('TABLE_GEO_ZONES', DB_TABLE_PREFIX . 'geo_zones');
 define('TABLE_LANGUAGES', DB_TABLE_PREFIX . 'languages');
 define('TABLE_LANGUAGES_DEFINITIONS', DB_TABLE_PREFIX . 'languages_definitions');

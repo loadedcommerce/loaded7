@@ -139,7 +139,14 @@ function doSelectFunction(e) {
 
 function customCheck() {
   var cModeVal = $("#categories_mode").val();
-  if (cModeVal == 'specials' /*|| cModeVal == 'featured' */|| cModeVal == 'new' || cModeVal == 'search' || cModeVal == 'cart' || cModeVal == 'account' || cModeVal == 'info' || cModeVal == 'override') {
+  if (cModeVal == 'specials' || 
+      cModeVal == 'featured' || 
+      cModeVal == 'new' || 
+      cModeVal == 'search' || 
+      cModeVal == 'cart' || 
+      cModeVal == 'account' || 
+      cModeVal == 'info' || 
+      cModeVal == 'override') {
     $("#categories_custom").show();
     $("#categories_custom_url").show();
     $("#categories_link_target_info").hide();
@@ -149,8 +156,8 @@ function customCheck() {
       $("#custom_url_text").hide();
       if (cModeVal == 'specials') {
         $("#categories_custom_url").val('products.php?specials');
-      //} else if (cModeVal == 'featured') {
-      //  $("#categories_custom_url").val('');
+      } else if (cModeVal == 'featured') {
+        $("#categories_custom_url").val('products.php?featured_products');
       } else if (cModeVal == 'new') {
         $("#categories_custom_url").val('products.php?new');
       } else if (cModeVal == 'search') {
@@ -182,7 +189,7 @@ function customCheck() {
     $("#categories_link_target").parent("span").removeClass("checked");
     <?php
     foreach ( $lC_Language->getAll() as $l ) {
-      echo '$("#categories_permalink_' . $l['id'] . '").attr("value", "").parent().show();';
+      echo '$("#categories_permalink_' . $l['id'] . '").parent().show();';
     }
     ?>
   }

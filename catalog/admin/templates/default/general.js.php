@@ -80,10 +80,12 @@ $(document).ready(function() {
     } else if (module.indexOf("templates_modules_layout") != -1 && document.location.href.indexOf("set=content") != -1) {
       $("#big-menu_templates_modules_layout").addClass('current navigable-current').change();
       cfg = true;
-    } else if (module.indexOf("products") != -1 && document.location.href.indexOf("products") != -1 && module.indexOf("expected") == -1) {
+    } else if (module.indexOf("products") != -1 && document.location.href.indexOf("products") != -1 && module.indexOf("expected") == -1 && module.indexOf("featured_products") == -1) {
       $("#big-menu_products_list").addClass('current navigable-current').change();
     } else if (module.indexOf("products_expected") != -1 && document.location.href.indexOf("expected") != -1) {
       $("#big-menu_products_expected").addClass('current navigable-current').change();
+    } else if (module.indexOf("featured_products") != -1 && document.location.href.indexOf("featured") != -1) {
+      $("#big-menu_featured_products").addClass('current navigable-current').change();
     } else if (module.indexOf("coupons") != -1 && document.location.href.indexOf("coupons") != -1) {
       $("#big-menu_coupon_manager").addClass('current navigable-current').change();
     } else if (module.indexOf("orders") != -1 && document.location.href.indexOf("action=save") != -1) {
@@ -95,6 +97,8 @@ $(document).ready(function() {
     } else if (module.indexOf("tax_classes") != -1 && document.location.href.indexOf("tax_classes") != -1) {
       $("#big-menu_tax_classes").addClass('current navigable-current').change();        
       cfg = true;
+    } else if (module.indexOf("categories") != -1 && document.location.href.indexOf("categories") != -1) {
+      $("#big-menu_category_pages").addClass('current navigable-current').change();        
     }
   });
   if (cfg) toggleChildMenu('settings'); 
@@ -419,7 +423,10 @@ $(document).ready(function() {
         }
       );
     }
-  }        
+  }
+  setTimeout(function() {
+    $("#dataTable_length").find('select').addClass("input with-small-padding");
+  }, 700);        
 });
 
 function _apiHealthCheckAlert() {

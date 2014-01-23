@@ -209,19 +209,20 @@ class lC_Order {
     $products_array = array();
     $key = 0;
 
-    $Qproducts = $lC_Database->query('select orders_products_id, products_name, products_model, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where orders_id = :orders_id');
-    $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
-    $Qproducts->bindInt(':orders_id', $this->_order_id);
-    $Qproducts->execute();
+      $Qproducts = $lC_Database->query('select orders_products_id, products_id, products_name, products_model, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where orders_id = :orders_id');
+      $Qproducts->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
+      $Qproducts->bindInt(':orders_id', $this->_order_id);
+      $Qproducts->execute();
 
-    while ($Qproducts->next()) {
-      $products_array[$key] = array('products_id' => $Qproducts->valueInt('orders_products_id'),
-                                    'quantity' => $Qproducts->valueInt('products_quantity'),
-                                    'name' => $Qproducts->value('products_name'),
-                                    'model' => $Qproducts->value('products_model'),
-                                    'tax' => $Qproducts->value('products_tax'),
-                                    'price' => $Qproducts->value('products_price'),
-                                    'options' => unserialize($Qproducts->value('products_simple_options_meta_data')));
+      while ($Qproducts->next()) {
+        $products_array[$key] = array('orders_products_id' => $Qproducts->valueInt('orders_products_id'),
+                                      'quantity' => $Qproducts->valueInt('products_quantity'),
+                                      'products_id' => $Qproducts->value('products_id'),
+                                      'name' => $Qproducts->value('products_name'),
+                                      'model' => $Qproducts->value('products_model'),
+                                      'tax' => $Qproducts->value('products_tax'),
+                                      'price' => $Qproducts->value('products_price'),
+                                      'options' => unserialize($Qproducts->value('products_simple_options_meta_data')));
 
       $Qvariants = $lC_Database->query('select group_title, value_title from :table_orders_products_variants where orders_id = :orders_id and orders_products_id = :orders_products_id order by id');
       $Qvariants->bindTable(':table_orders_products_variants', TABLE_ORDERS_PRODUCTS_VARIANTS);
@@ -240,44 +241,38 @@ class lC_Order {
     }
 
     $this->_products = $products_array;
-  }    
+  }
 
   protected function _getProduct($oid, $pid) {
     global $lC_Database;
-
-    $Qproduct = $lC_Database->query('select products_name, products_model, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where orders_products_id = :orders_products_id and orders_id = :orders_id limit 1');
+    $Qproduct = $lC_Database->query('select products_id, products_name, products_model, products_price, products_tax, products_quantity, products_simple_options_meta_data from :table_orders_products where orders_products_id = :orders_products_id and orders_id = :orders_id limit 1');
     $Qproduct->bindTable(':table_orders_products', TABLE_ORDERS_PRODUCTS);
     $Qproduct->bindInt(':orders_products_id', $pid);
     $Qproduct->bindInt(':orders_id', $oid);
     $Qproduct->execute();
-    
     while ($Qproduct->next()) {
       $product_array[$key] = array('quantity' => $Qproduct->valueInt('products_quantity'),
+                                   'products_id' => $Qproduct->value('products_id'),
                                    'name' => $Qproduct->value('products_name'),
                                    'model' => $Qproduct->value('products_model'),
                                    'tax' => $Qproduct->value('products_tax'),
                                    'price' => $Qproduct->value('products_price'),
                                    'options' => unserialize($Qproduct->value('products_simple_options_meta_data')));
-
       $Qvariants = $lC_Database->query('select group_title, value_title from :table_orders_products_variants where orders_id = :orders_id and orders_products_id = :orders_products_id order by id');
       $Qvariants->bindTable(':table_orders_products_variants', TABLE_ORDERS_PRODUCTS_VARIANTS);
       $Qvariants->bindInt(':orders_id', $this->_order_id);
       $Qvariants->bindInt(':orders_products_id', $id);
       $Qvariants->execute();
-
       if ( $Qvariants->numberOfRows() > 0 ) {
         while ( $Qvariants->next() ) {
           $product_array[$key]['attributes'][] = array('option' => $Qvariants->value('group_title'),
                                                         'value' => $Qvariants->value('value_title'));
         }
       }
-
       $key++;
     }
-
     $this->_product = $product_array;
   }
-
   protected function _getTotals() {
     global $lC_Database;
 
@@ -454,6 +449,20 @@ class lC_Order {
   }
 
   public function getTotal($id = 'total') {
+    if (!isset($this->_totals)) {
+      $this->_getTotals();
+    }
+
+    foreach ($this->_totals as $total) {
+      if ($total['class'] == $id) {
+        return strip_tags($total['text']);
+      }
+    }
+
+    return false;
+  }
+
+  public function getSubTotal($id = 'sub_total') {
     if (!isset($this->_totals)) {
       $this->_getTotals();
     }

@@ -9,34 +9,49 @@
   @version    $Id: branding_manager.php v1.0 2013-08-08 datazen $
 */
 class lC_Branding_manager_Admin {
-  /*
-  * Returns the store branding data
-  *
-  * @access public
-  * @return array
-  */
-  public static function get() {
-    global $lC_Database, $lC_Language;
+    /*
+    * Returns the store branding data
+    *
+    * @access public
+    * @return array
+    */
+    public static function getAll() {
+      global $lC_Database, $lC_Language;
 
-    if ( empty($language_id) ) {
-      $language_id = $lC_Language->getID();
+      if ( empty($language_id) ) {
+        $language_id = $lC_Language->getID();
+      }
+      
+      $branding_data = array();
+      
+      $QbrandingData = $lC_Database->query('select * from :table_branding_data');
+      $QbrandingData->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+      $QbrandingData->execute();
+      $branding_data = $QbrandingData->toArray();
+
+      $Qbranding = $lC_Database->query('select * from :table_branding');
+      $Qbranding->bindTable(':table_branding', TABLE_BRANDING);
+      $Qbranding->execute();
+      
+      if ($Qbranding->numberOfRows() > 0) {
+        while ($Qbranding->next()) {
+          $branding_data[$Qbranding->valueInt('language_id')]['homepage_text'] = $Qbranding->value('homepage_text');
+          $branding_data[$Qbranding->valueInt('language_id')]['slogan'] = $Qbranding->value('slogan');
+          $branding_data[$Qbranding->valueInt('language_id')]['meta_description'] = $Qbranding->value('meta_description');
+          $branding_data[$Qbranding->valueInt('language_id')]['meta_keywords'] = $Qbranding->value('meta_keywords');
+          $branding_data[$Qbranding->valueInt('language_id')]['meta_title'] = $Qbranding->value('meta_title');
+          $branding_data[$Qbranding->valueInt('language_id')]['meta_title_prefix'] = $Qbranding->value('meta_title_prefix');
+          $branding_data[$Qbranding->valueInt('language_id')]['meta_title_suffix'] = $Qbranding->value('meta_title_suffix');
+          $branding_data[$Qbranding->valueInt('language_id')]['footer_text'] = $Qbranding->value('footer_text');
+        }
+      }
+      
+      return $branding_data;
     }
-
-    $Qbranding = $lC_Database->query('select * from :table_branding where language_id = :language_id');
-    $Qbranding->bindTable(':table_branding', TABLE_BRANDING);
-    $Qbranding->bindInt(':language_id', $language_id);
-    $Qbranding->execute();
-
-    $data = $Qbranding->toArray();
-
-
-    return $data;
-  }
   /*
-  * Save the category record
+  * Save the branding data
   *
-  * @param integer $id The category id on update, null on insert
-  * @param array $data The category information
+  * @param array $data The branding information
   * @access public
   * @return boolean
   */
@@ -49,21 +64,20 @@ class lC_Branding_manager_Admin {
       $language_id = $lC_Language->getID();
     }
 
-
     $Qdelete = $lC_Database->query('delete from :table_branding_data');
     $Qdelete->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
     $Qdelete->execute();
 
-
     foreach ( $lC_Language->getAll() as $l ) {
-      //delete data first
+      // delete data first
       $Qdelete = $lC_Database->query('delete from :table_branding where language_id = :language_id');
       $Qdelete->bindTable(':table_branding', TABLE_BRANDING);
       $Qdelete->bindInt(':language_id', $l['id']);
       $Qdelete->execute();
       //save new data
-      $QBrand = $lC_Database->query('insert into :table_branding (language_id, slogan, meta_description, meta_keywords, meta_title, meta_title_prefix, meta_title_suffix, footer_text) values (:language_id, :slogan, :meta_description, :meta_keywords, :meta_title, :meta_title_prefix, :meta_title_suffix, :footer_text)');
+      $QBrand = $lC_Database->query('insert into :table_branding (language_id, homepage_text, slogan, meta_description, meta_keywords, meta_title, meta_title_prefix, meta_title_suffix, footer_text) values (:language_id, :homepage_text, :slogan, :meta_description, :meta_keywords, :meta_title, :meta_title_prefix, :meta_title_suffix, :footer_text)');
       $QBrand->bindTable(':table_branding', TABLE_BRANDING);
+      $QBrand->bindValue(':homepage_text', $data['home_page_text'][$l['id']]);
       $QBrand->bindValue(':slogan', $data['slogan'][$l['id']]);
       $QBrand->bindValue(':meta_description', $data['meta_description'][$l['id']]);
       $QBrand->bindValue(':meta_keywords', $data['meta_keywords'][$l['id']]);
@@ -74,7 +88,6 @@ class lC_Branding_manager_Admin {
       $QBrand->bindValue(':language_id', $l['id']);
       $QBrand->setLogging($_SESSION['module']);
       $QBrand->execute();
-
     }
 
     //save non language specific data
@@ -107,12 +120,7 @@ class lC_Branding_manager_Admin {
     $QbrandingAddress->bindTable(':table_configuration', TABLE_CONFIGURATION);
     $QbrandingAddress->bindValue(':address', $data['address']);
     $QbrandingAddress->execute();
-    
-    $QbrandingHomeText = $lC_Database->query('update :table_configuration set configuration_value = :address where configuration_key = "MODULE_CONTENT_HOMEPAGE_HTML_CONTENT"');
-    $QbrandingHomeText->bindTable(':table_configuration', TABLE_CONFIGURATION);
-    $QbrandingHomeText->bindValue(':address', $data['home_page_text']);
-    $QbrandingHomeText->execute();
-    
+   
     lC_Cache::clear('configuration');
 
     return true;
@@ -138,9 +146,9 @@ class lC_Branding_manager_Admin {
     $branding_manager_logo = $uploader->handleUpload('../images/branding/');
 
     $result = array('result' => 1,
-      'fileName' => $branding_manager_logo['filename'],
-      'success' => true,
-      'rpcStatus' => RPC_STATUS_SUCCESS);
+                    'fileName' => $branding_manager_logo['filename'],
+                    'success' => true,
+                    'rpcStatus' => RPC_STATUS_SUCCESS);
 
     echo json_encode($result);
   }
@@ -153,12 +161,13 @@ class lC_Branding_manager_Admin {
   public static function deleteBmLogo($_logo) {
     global $lC_Database;
 
-      if (file_exists('../images/branding/' . $_logo)){
-        unlink('../images/branding/' . $_logo);
-      }
-      $QbrandingImage = $lC_Database->query('update :table_branding_data set site_image = ""');
-      $QbrandingImage->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
-      $QbrandingImage->execute();
+    if (file_exists('../images/branding/' . $_logo)){
+      unlink('../images/branding/' . $_logo);
+    }
+    
+    $QbrandingImage = $lC_Database->query('update :table_branding_data set site_image = ""');
+    $QbrandingImage->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+    $QbrandingImage->execute();
     
     return true;
   }
@@ -171,14 +180,37 @@ class lC_Branding_manager_Admin {
   public static function deleteOgImage($_ogimage) {
     global $lC_Database;
 
-      if (file_exists('../images/branding/' . $_ogimage)){
-        unlink('../images/branding/' . $_ogimage);
-      }
-      $QbrandingImage = $lC_Database->query('update :table_branding_data set og_image = ""');
-      $QbrandingImage->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
-      $QbrandingImage->execute();
+    if (file_exists('../images/branding/' . $_ogimage)){
+      unlink('../images/branding/' . $_ogimage);
+    }
+    
+    $QbrandingImage = $lC_Database->query('update :table_branding_data set og_image = ""');
+    $QbrandingImage->bindTable(':table_branding_data', TABLE_BRANDING_DATA);
+    $QbrandingImage->execute();
     
     return true;
+  }
+  /*
+  * Check if Content on Manipage module is installed
+  * 
+  * @access public
+  * @return boolean true or false
+  */
+  public static function mainpageContentInstalled() {
+    global $lC_Database;
+
+    $Qcontent = $lC_Database->query('select code from :table_templates_boxes where code = :code');
+    $Qcontent->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
+    $Qcontent->bindValue(':code', 'mainpage_content');
+    $Qcontent->execute();
+    
+    if ($Qcontent->numberOfRows() > 0) {
+      $installed = true;
+    } else {
+      $installed = false;
+    }
+    
+    return $installed;
   }
 }
 ?>

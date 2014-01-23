@@ -12,7 +12,7 @@ class lC_Access_Coupons extends lC_Access {
       $_group = 'marketing',
       $_icon = 'people.png',
       $_title,
-      $_sort_order = 10;
+      $_sort_order = 200;
 
   public function lC_Access_Coupons() {
     global $lC_Language;

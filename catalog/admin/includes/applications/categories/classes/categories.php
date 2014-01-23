@@ -53,11 +53,15 @@ class lC_Categories_Admin {
                     '</td>';
       $mode = '<td>' . $lC_Language->get('text_mode_' . $Qcategories->value('categories_mode')) . '</td>';
       $sort = '<td>' . $Qcategories->valueInt('sort_order') . '<input type="hidden" name="sort_order_' . $Qcategories->value('categories_id') . '" value="' . $Qcategories->valueInt('sort_order') . '" class="sort" /></td>';
-      $action = '<td class="align-right vertical-center"><span class="button-group compact" style="white-space:nowrap;">
-                   <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id') . '&cid=' . (($_GET['categories']) ? $_GET['categories'] : 0) . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
-                   <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="moveCategory(\'' . $Qcategories->value('categories_id') . '\', \'' . urlencode($Qcategories->valueProtected('categories_name')) . '\')"') . '" class="button icon-cloud-upload with-tooltip ' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_move') . '"></a>
-                   <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="deleteCategory(\'' . $Qcategories->value('categories_id') . '\', \'' . urlencode($Qcategories->valueProtected('categories_name')) . '\')"') . '" class="button icon-trash with-tooltip ' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
-                 </span></td>';
+      $action = '<td class="align-right vertical-center">
+                   <span class="button-group" style="white-space:nowrap;">
+                     <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $_module . '=' . $Qcategories->value('categories_id') . '&cid=' . (($_GET['categories']) ? $_GET['categories'] : 0) . '&action=save')) . '" class="button icon-pencil' . ((int)($_SESSION['admin']['access'][$_module] < 3) ? ' disabled' : NULL) . '">' .  (($media === 'mobile-portrait' || $media === 'mobile-landscape') ? NULL : $lC_Language->get('icon_edit')) . '</a>
+                     <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="moveCategory(\'' . $Qcategories->value('categories_id') . '\', \'' . urlencode($Qcategories->valueProtected('categories_name')) . '\')"') . '" class="button icon-cloud-upload with-tooltip ' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_move') . '"></a>
+                   </span>
+                   <span class="button-group">
+                     <a href="' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? '#' : 'javascript://" onclick="deleteCategory(\'' . $Qcategories->value('categories_id') . '\', \'' . urlencode($Qcategories->valueProtected('categories_name')) . '\')"') . '" class="button icon-trash with-tooltip ' . ((int)($_SESSION['admin']['access']['languages'] < 4) ? 'disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
+                   </span>
+                 </td>';
       $result['aaData'][] = array("$check", "$category", "$status", "$visibility", "$mode", "$sort", "$action");
       $result['entries'][] = $Qcategories->toArray();
     }
@@ -188,12 +192,36 @@ class lC_Categories_Admin {
     $data['childs_count'] = sizeof($lC_CategoryTree->getChildren($Qcategories->valueInt('categories_id'), $dummy = array()));
     $data['products_count'] = $lC_CategoryTree->getNumberOfProducts($Qcategories->valueInt('categories_id'));
 
-    $Qcategories->freeResult(); 
+    $Qdescription = $lC_Database->query('select * from :table_categories_description where categories_id = :categories_id');
+    $Qdescription->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qdescription->bindInt(':categories_id', $id);
+    $Qdescription->execute();
     
-    if ( !empty($key) && isset($data[$key]) ) {
+    while ($Qdescription->next()) {
+      $data[$Qdescription->valueInt('language_id')]['categories_name'] = $Qdescription->value('categories_name');  
+      $data[$Qdescription->valueInt('language_id')]['categories_menu_name'] = $Qdescription->value('categories_menu_name');  
+      $data[$Qdescription->valueInt('language_id')]['categories_blurb'] = $Qdescription->value('categories_blurb');  
+      $data[$Qdescription->valueInt('language_id')]['categories_description'] = $Qdescription->value('categories_description');  
+      $data[$Qdescription->valueInt('language_id')]['categories_tags'] = $Qdescription->value('categories_tags');  
+    }
+    
+    $Qpermalink = $lC_Database->query('select language_id, permalink from :table_permalinks where item_id = :item_id and type = 1');
+    $Qpermalink->bindTable(':table_permalinks', TABLE_PERMALINKS);
+    $Qpermalink->bindInt(':item_id', $id);
+    $Qpermalink->execute();
+    
+    while ($Qpermalink->next()) {
+      $data[$Qpermalink->valueInt('language_id')]['permalink'] = $Qpermalink->value('permalink');
+    }
+    
+    $Qcategories->freeResult(); 
+    $Qdescription->freeResult(); 
+    $Qpermalink->freeResult(); 
+    
+    if (!empty($key) && isset($data[$key])) {
       $data = $data[$key];
     }
-
+    
     return $data;
   }
  /*
@@ -303,7 +331,7 @@ class lC_Categories_Admin {
       lC_Cache::clear('category_tree');
       lC_Cache::clear('also_purchased');
 
-      return true;
+      return $category_id; // used for the save_close buttons
     }
 
     $lC_Database->rollbackTransaction();
