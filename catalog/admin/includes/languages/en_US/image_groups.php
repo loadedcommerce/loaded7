@@ -12,6 +12,12 @@ action_heading_batch_delete_image_groups = Batch Delete Image Groups
 
 table_heading_image_groups = Image Groups
 table_heading_action = Action
+table_heading_groups = Groups
+table_heading_totals = Existing Images / Total Images
+table_heading_total_resized = Total Resized
+
+modal_heading_check_images = Check Images
+modal_heading_resize_images = Resize Images
 
 button_new_group = New Group
 
