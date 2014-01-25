@@ -51,6 +51,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
           // add the new records
           foreach($data['products_qty_break_point'][$group] as $key => $val) {
             
+            if ($val['qty_break'] == 1) continue; // do not save the base price in pricing table
             if ($data['products_qty_break_point'][$group][$key] == null) continue;
             
             $Qpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
@@ -64,7 +65,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
             $Qpb->setLogging($_SESSION['module'], $products_id);
             $Qpb->execute();
           }
-        }
+        }        
         
         if ( $error === false ) {
           $lC_Database->commitTransaction();
@@ -81,7 +82,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
   *
   * @param integer $id The product id
   * @access public
-  * @return array
+  * @return boolean
   */
   public static function hasQPBPricing($id) {
     global $lC_Database;
@@ -104,7 +105,8 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
  /*
   *  Retrieve qty price breaks
   *
-  * @param integer $id The product id
+  * @param integer $id    The product id
+  * @param integer $group The customer group id
   * @access public
   * @return array
   */
@@ -113,19 +115,21 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
 
     if ($group == null) $group = (defined('DEFAULT_CUSTOMERS_GROUP_ID') && DEFAULT_CUSTOMERS_GROUP_ID != null) ? (int)DEFAULT_CUSTOMERS_GROUP_ID : 1;
     
-    $Qpb = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and group_id = :group_id');
+    $Qpb = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and group_id = :group_id order by qty_break asc');
     $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
     $Qpb->bindInt(':products_id', $id);
     $Qpb->bindInt(':group_id', $group);
     $Qpb->execute();
     
-    $data = $Qpb->toArray();
+    $data = array();
+    while($Qpb->next()) {
+      $data[] = $Qpb->toArray();
+    }
     
     $Qpb->freeResult();
     
     return $data;
   }  
-
  /*
   *  Return the qty price breaks listing content
   *
@@ -133,9 +137,6 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
   * @return array
   */
   public static function getQPBPricingContent() {
-    
-ini_set('display_errors', 1);
-    
     global $lC_Language, $lC_Currencies, $pInfo;
     
     $content = '';
@@ -166,29 +167,49 @@ ini_set('display_errors', 1);
         if (self::hasQPBPricing($pInfo->get('products_id'))) {
           
           $qpbData = self::getQPBPricing($pInfo->get('products_id'), $value['customers_group_id']);
-
+          
+          $cnt = 0;
+          foreach ($qpbData as $key => $val) {
+            $content .= self::_getNewRow($val['group_id'], $key+1, $val);
+            $cnt = $key+1;
+          }
+          // add a new row
+          $content .= self::_getNewRow($value['customers_group_id'], $cnt+1);
         } else { // no qpb recorded, setup new
-          $content .= '  <div class="new-row-mobile twelve-columns small-margin-top">' .
-                      '    <div class="inputs" style="display:inline; padding:8px 0;">' .
-                      '      <span class="mid-margin-left no-margin-right">#</span>' .                  
-                      '      <input type="text" onblur="validateQPBPoint(this);" onfocus="this.select();" name="products_qty_break_point[' . $value['customers_group_id'] . '][1]" id="products_qty_break_point_' . $value['customers_group_id'] . '_1" value="" class="input-unstyled small-margin-right" style="width:60px;" />' .
-                      '    </div>' .         
-                      '    <small class="input-info mid-margin-left mid-margin-right no-wrap">Qty</small>' . 
-                      '    <div class="inputs" style="display:inline; padding:8px 0;">' .
-                      '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                      '      <input type="text" onblur="validateQPBPrice(this);" onfocus="this.select();" name="products_qty_break_price[' . $value['customers_group_id'] . '][1]" id="products_qty_break_price_' . $value['customers_group_id'] . '_1" value="" class="input-unstyled small-margin-right" style="width:60px;" />' .
-                      '    </div>' . 
-                      '    <small class="input-info mid-margin-left no-wrap">Price</small>' . 
-                      '  </div>';                      
+          $content .= self::_getNewRow($value['customers_group_id'], 1);
         }      
         
         $content .= '</div>';                
       } 
-    
     }
     
     return $content;
-  }  
-  
-  
+  } 
+ /*
+  *  Retrieve qty price break row
+  *
+  * @param integer $group The customer group id
+  * @param integer $cnt   The product id
+  * @param array   $data  The product data
+  * @access private
+  * @return string
+  */
+  private static function _getNewRow($group, $cnt, $data = array()) {
+    global $lC_Currencies;
+
+    $content = '  <div class="new-row-mobile twelve-columns small-margin-top">' .
+               '    <div class="inputs" style="display:inline; padding:8px 0;">' .
+               '      <span class="mid-margin-left no-margin-right">#</span>' .                  
+               '      <input type="text" onblur="validateQPBPoint(this);" onfocus="this.select();" name="products_qty_break_point[' . $group . '][' . $cnt . ']" id="products_qty_break_point_' . $group . '_' . $cnt . '" value="' . $data['qty_break'] . '" class="input-unstyled small-margin-right" style="width:60px;" />' .
+               '    </div>' .         
+               '    <small class="input-info mid-margin-left mid-margin-right no-wrap">Qty</small>' . 
+               '    <div class="inputs" style="display:inline; padding:8px 0;">' .
+               '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
+               '      <input type="text" onblur="validateQPBPrice(this);" onfocus="this.select();" name="products_qty_break_price[' . $group . '][' . $cnt . ']" id="products_qty_break_price_' . $group . '_' . $cnt . '" value="' . (($data['qty_break'] != null) ? number_format($data['price_break'], DECIMAL_PLACES) : null) . '" class="input-unstyled small-margin-right" style="width:60px;" />' .
+               '    </div>' . 
+               '    <small class="input-info mid-margin-left no-wrap">Price</small>' . 
+               '  </div>'; 
+                 
+    return $content;
+  } 
 }
