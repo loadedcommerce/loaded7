@@ -18,17 +18,64 @@ include_once($lC_Vqmod->modCheck('includes/applications/customer_groups/classes/
 //include_once($lC_Vqmod->modCheck('includes/classes/addons.php'));
 
 class lC_Products_Admin_Pro extends lC_Products_Admin {
-  
+ /*
+  * Save the product
+  *
+  * @param integer $id The products id to update, null on insert
+  * @param array $data The products information
+  * @access public
+  * @return boolean
+  */ 
   public static function save($id = null, $data) {
-    parent::save($id, $data);
+    global $lC_Database, $lC_Language;
     
-    echo "<pre>";
-    print_r($data);
-    echo "</pre>";
+    $error = false;
+    $products_id = parent::save($id, $data);
+    $group = (defined('DEFAULT_CUSTOMERS_GROUP_ID') && DEFAULT_CUSTOMERS_GROUP_ID != null) ? (int)DEFAULT_CUSTOMERS_GROUP_ID : 1;    
     
-    die('products pro');
+    if (is_array($data['products_qty_break_point'][$group]) && $data['products_qty_break_point'][$group][1] != null) {
+      if ($products_id != null) {
+        
+        $lC_Database->startTransaction();    
+
+        // remove any old pricing records
+        $Qpricing = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
+        $Qpricing->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+        $Qpricing->bindInt(':products_id', $products_id);
+        $Qpricing->setLogging($_SESSION['module'], $products_id);
+        $Qpricing->execute();
+        
+        if ( $lC_Database->isError() ) {
+          $error = true;
+        } else {        
+          // add the new records
+          foreach($data['products_qty_break_point'][$group] as $key => $val) {
+            
+            if ($data['products_qty_break_point'][$group][$key] == null) continue;
+            
+            $Qpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
+            $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $Qpb->bindInt(':products_id', $products_id );
+            $Qpb->bindInt(':group_id', $group);
+            $Qpb->bindInt(':tax_class_id', $data['tax_class_id'] );
+            $Qpb->bindValue(':qty_break', $data['products_qty_break_point'][$group][$key] );
+            $Qpb->bindValue(':price_break', $data['products_qty_break_price'][$group][$key] );
+            $Qpb->bindRaw(':date_added', 'now()');
+            $Qpb->setLogging($_SESSION['module'], $products_id);
+            $Qpb->execute();
+          }
+        }
+        
+        if ( $error === false ) {
+          $lC_Database->commitTransaction();
+
+          return $products_id; // Return the products id for use with the save_close buttons
+        }
+
+        $lC_Database->rollbackTransaction();        
+      }
+    }
   }
-  
  /*
   *  Determine if product has qty price breaks
   *
@@ -43,11 +90,15 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
     $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
     $Qpb->bindInt(':products_id', $id);
     $Qpb->execute();
-
-    if ( $Qpb->numberOfRows() > 0 ) {
+    
+    $rows = $Qpb->numberOfRows();
+    
+    $Qpb->freeResult();
+    
+    if ( $rows > 0 ) {
       return true;
     }
-
+    
     return false;
   }
  /*

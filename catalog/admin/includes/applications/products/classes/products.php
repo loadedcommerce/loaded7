@@ -593,44 +593,6 @@ class lC_Products_Admin {
         $products_id = $lC_Database->nextID();
       }
 
-      // remove any old pricing records
-      $Qpricing = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
-      $Qpricing->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
-      $Qpricing->bindInt(':products_id', $products_id);
-      $Qpricing->setLogging($_SESSION['module'], $products_id);
-      $Qpricing->execute();
-
-      if ( $lC_Database->isError() ) {
-        $error = true;
-      } else {
-        if ( isset($data['variants_combo']) && !empty($data['variants_combo']) ) {
-        } else {
-          if ( isset($data['price_breaks']) && !empty($data['price_breaks']) ) {
-            for ($i=0; sizeof($data['price_breaks']['group_id']) > $i; $i++) {
-              if (is_array($data['price_breaks']['group_id'][$i])) continue;
-              if ($data['price_breaks']['group_id'][$i] == 0) continue;
-              if ($data['price_breaks']['qty'][$i] == null) continue;
-              if ($data['price_breaks']['price'][$i] == 0) continue;
-              $Qpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
-              $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
-              $Qpb->bindInt(':products_id', $products_id );
-              $Qpb->bindInt(':group_id', $data['price_breaks']['group_id'][$i] );
-              $Qpb->bindInt(':tax_class_id', $data['price_breaks']['tax_class_id'][$i] );
-              $Qpb->bindValue(':qty_break', $data['price_breaks']['qty'][$i] );
-              $Qpb->bindValue(':price_break', $data['price_breaks']['price'][$i] );
-              $Qpb->bindRaw(':date_added', 'now()');
-              $Qpb->setLogging($_SESSION['module'], $products_id);
-              $Qpb->execute();
-
-              if ( $lC_Database->isError() ) {
-                $error = true;
-                break;
-              }
-            }
-          }
-        }
-      }
-
       $Qcategories = $lC_Database->query('delete from :table_products_to_categories where products_id = :products_id');
       $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
       $Qcategories->bindInt(':products_id', $products_id);
@@ -1202,7 +1164,7 @@ class lC_Products_Admin {
       lC_Cache::clear('category_tree');
       lC_Cache::clear('also_purchased');
 
-      return $products_id; // Reutrn the products id for use with the save_close buttons
+      return $products_id; // Return the products id for use with the save_close buttons
     }
 
     $lC_Database->rollbackTransaction();
