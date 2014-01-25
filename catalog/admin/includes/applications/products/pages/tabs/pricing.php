@@ -43,7 +43,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
       </span>
     </div> 
     <div id="qty_breaks_pricing_container" class="field-drop button-height black-inputs" style="display:none;">
-      <?php echo lC_Products_Admin::getQPBPricingContent(); ?>
+      <?php echo lC_Products_Admin_Pro::getQPBPricingContent(); ?>
     </div>
     
     <script>     
