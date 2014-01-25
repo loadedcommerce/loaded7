@@ -83,6 +83,8 @@ ms_error_check_all_lang_tabs = Check all language tabs for errors!
 ms_error_no_variant_groups = You must setup at least one variant group before using simple options.
 ms_error_no_variant_entries = You must setup at least one entry before using this variant group.
 ms_warning_image_processor_not_available = Warning: An image processor is not available. Please install and check the location of ImageMagicks "convert" program in the Configuration -> Configuration -> Program Locations section.
+ms_error_break_point_must_be_higher = The break point must be higher than the previous break point.
+ms_error_break_price_must_be_lower = The price must be lower than the previous price.
 
 section_general = Content
 section_pricing = Pricing 

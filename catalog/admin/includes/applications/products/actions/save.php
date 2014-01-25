@@ -8,6 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: save.php v1.0 2013-08-08 datazen $
 */
+if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php')) include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/classes/products.php'));
 class lC_Application_Products_Actions_save extends lC_Application_Products {
     
   public function __construct() {
@@ -140,7 +141,8 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       }
 
       if ( $error === false ) {
-        $id = lC_Products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);
+        //$id = lC_Products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);
+        $id = lC_Products_Admin_Pro::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);
         if ( is_numeric($id) ) {
 
           if(empty($_POST['save_close'])){

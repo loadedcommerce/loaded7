@@ -59,7 +59,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
         $.modal({
           content: '<div id="qpbMsg">'+
                    '  <div id="qpbConfirm">'+
-                   '    <p><?php echo $lC_Language->get('error_break_point_must_be_higher'); ?></p>'+
+                   '    <p><?php echo $lC_Language->get('ms_error_break_point_must_be_higher'); ?></p>'+
                    '  </div>'+
                    '</div>',
           title: '<?php echo $lC_Language->get('text_error'); ?>',
@@ -121,7 +121,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
         $.modal({
           content: '<div id="qpbMsg">'+
                    '  <div id="qpbConfirm">'+
-                   '    <p><?php echo $lC_Language->get('error_break_price_must_be_lower'); ?></p>'+
+                   '    <p><?php echo $lC_Language->get('ms_error_break_price_must_be_lower'); ?></p>'+
                    '  </div>'+
                    '</div>',
           title: '<?php echo $lC_Language->get('text_error'); ?>',
