@@ -12,7 +12,9 @@
   @license    http://loadedcommerce.com/license.html
 */
 global $lC_Vqmod;
+
 require_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/transport.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/includes/applications/products/classes/products.php'));
 
 class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
   /*
