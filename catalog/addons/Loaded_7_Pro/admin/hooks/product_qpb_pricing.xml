@@ -7,7 +7,7 @@
   <file name="includes/applications/products/pages/tabs/pricing.php">
     <operation info="Enable QPB Pricing">
       <search position="after"><![CDATA[<!--VQMOD PRICING-1 HOOK POINT - Do Not Change or Remove-->]]></search>         
-      <add><![CDATA[<?php if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/prigin_qpb.inc.php')) include_once(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/prigin_qpb.inc.php'); ?>]]></add>
+      <add><![CDATA[<?php if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/pricing_qpb.inc.php')) include_once(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/pricing_qpb.inc.php'); ?>]]></add>
     </operation>   
   </file>   
 </modification>
