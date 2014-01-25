@@ -14,5 +14,15 @@ include_once($lC_Vqmod->modCheck('includes/applications/products/classes/product
 
 class lC_Products_Admin_Pro extends lC_Products_Admin {
   
+  public static function save($id = null, $data) {
+    parent::save($id, $data);
+    
+    echo "<pre>";
+    print_r($data);
+    echo "</pre>";
+    
+    die('products pro');
+  }
+  
   
 }
