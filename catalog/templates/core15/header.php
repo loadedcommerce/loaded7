@@ -7,12 +7,7 @@
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: header.php v1.0 2013-08-08 datazen $
-*/
-//echo '<pre>';
-//print_r($lC_Language);
-//print_r($lC_Currencies);
-//print_r($_SESSION);
-//echo '</pre>'; 
+*/ 
 ?>
 <!--header.php start-->     
 <div class="topnav mid-margin-bottom">
@@ -55,10 +50,12 @@
       <ul class="cart-menu nav navbar-nav">
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <i class="fa fa-shopping-cart white small-margin-right"></i> (0) Items <b class="caret"></b>
+            <i class="fa fa-shopping-cart white small-margin-right"></i> (<?php echo $lC_ShoppingCart->numberOfItems(); ?>) Items <b class="caret"></b>
           </a>
           <ul class="dropdown-menu cart-dropdown">
-            <li><a>Cart Contents Go Here</a></li>
+            <li style="white-space: nowrap;">
+              <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'cart', 'NONSSL'); ?>">View Cart | Total: <?php echo $lC_Currencies->format($lC_ShoppingCart->getSubTotal()); ?> (<?php echo $lC_ShoppingCart->numberOfItems(); ?>)</a>
+            </li>
           </ul>
         </li>
       </ul>   
@@ -75,7 +72,7 @@
 <div class="page-header">
   <div class="container">
     <div class="row mid-margin-bottom">
-      <div class="col-sm-3 col-lg-3">
+      <div class="col-sm-12 col-lg-6">
         <h1 class="logo">
           <a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>">
           <?php 
@@ -91,37 +88,22 @@
           <p class="slogan clear-both"><?php echo $lC_Template->getBranding('slogan'); ?></p>
         <?php } ?>
       </div>
-      <div class="col-sm-9 col-lg-9">
-        <div class="row">
-          <div class="text-center col-sm-8 col-lg-8 small-margin-top">
-            <form role="form" class="form-inline" name="search" id="search" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" method="get">
-              <div class="input-append">
-                <input type="text" class="form-control search-query" name="keywords" id="keywords" style="width:50%; display:inline;"><?php echo lc_draw_hidden_session_id_field(); ?>
-                <button type="submit" class="btn"><?php echo $lC_Language->get('button_search'); ?></button>
-              </div>
-            </form>
-          </div>  
-          <div class="col-sm-4 col-lg-4">
-            <div class="text-right">
-              <?php
-                if ($lC_Template->getBranding('sales_email') != '' || $lC_Template->getBranding('sales_phone') != '') {
-                  echo '<div>';
-                  if ($lC_Template->getBranding('sales_email') != '') {
-                    echo $lC_Template->getBranding('sales_email');
-                  }
-                  if ($lC_Template->getBranding('sales_phone') != '') {
-                    echo ' | ' . $lC_Template->getBranding('sales_phone');
-                  }
-                  echo '</div>';
-                }
-              ?>
-              <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'cart', 'NONSSL'); ?>">View Cart</a> | Total: <?php echo $lC_Currencies->format($lC_ShoppingCart->getSubTotal()); ?> (<?php echo $lC_ShoppingCart->numberOfItems(); ?>)
-            </div>
-          </div>
-        </div>
+      <div class="col-sm-12 col-lg-6">
+        <div class="col-sm-12 col-lg-12 text-right">
+          <?php 
+            if ($lC_Template->getBranding('sales_phone') != '') { 
+              echo '<i class="fa fa-phone"></i> ' . $lC_Template->getBranding('sales_phone'); 
+            } 
+          ?>&nbsp;
+          <?php 
+            if ($lC_Template->getBranding('sales_email') != '') { 
+              echo '<i class="fa fa-envelope"></i> ' . $lC_Template->getBranding('sales_email'); 
+            } 
+          ?>
+        </div>  
       </div>       
     </div>
-    <div class="navbar navbar-inverse no-margin-bottom with-small-padding" role="navigation">   
+    <div class="navbar navbar-inverse no-margin-bottom" role="navigation">   
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -133,10 +115,10 @@
       </div>    
       <div class="no-margin-bottom">
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse small-margin-top small-margin-bottom">
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav">
             <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_home'); ?></a></li>
-            <?php echo $lC_Template->getTopCategoriesSelection(); ?>
+            <?php echo lC_Template_output::getCategoryNav(); ?>
           </ul>    
         </div>
       </div>

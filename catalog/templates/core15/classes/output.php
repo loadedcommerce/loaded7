@@ -187,6 +187,36 @@ class lC_Template_output {
     return $output;
   } 
  /*
+  * Returns the current category structure (with nav visibility)
+  *
+  * @access public
+  * @return array
+  */
+  function getCategoryNav($categoryId = 0) {
+    global $lC_Database, $lC_Language, $lC_CategoryTree;
+    
+    $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 order by sort_order, cd.categories_name');
+    $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qcategories->bindInt(':parent_id', $categoryId);
+    $Qcategories->bindInt(':language_id', $lC_Language->getID());
+    $Qcategories->execute();
+    
+    $output = array();
+    while ($Qcategories->next()) {
+      $hasChildren = $lC_CategoryTree->hasChildren($Qcategories->valueInt('categories_id'));
+      $url = ($Qcategories->value('categories_custom_url') != null) ? $Qcategories->value('categories_custom_url') : FILENAME_DEFAULT . '?cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id'));
+      $output[] .= '<li' . (($hasChildren > 0) ? ' class="dropdown-submenu"' : null) . '>' . 
+                     '<a href="' . $url . '">' . 
+                     $Qcategories->value('categories_name') .
+                     '</a>' . 
+                     lC_Template_output::getCategoryNav($Qcategories->valueInt('categories_id')) . 
+                   '</li>';
+    }
+    
+    return (($categoryId > 0) ? '<ul class="dropdown-menu">' : null) . implode('', $output) . (($categoryId > 0) ? '</ul>' : null);
+  } 
+ /*
   * Returns the current category information (i.e. description, blurb, meta data etc)
   *
   * @access public
