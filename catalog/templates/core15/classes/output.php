@@ -192,7 +192,7 @@ class lC_Template_output {
   * @access public
   * @return array
   */
-  function getCategoryNav($categoryId = 0) {
+  function getCategoryNav($categoryId = 0, $parent = 0) {
     global $lC_Database, $lC_Language, $lC_CategoryTree;
     
     $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 order by sort_order, cd.categories_name');
@@ -206,11 +206,9 @@ class lC_Template_output {
     while ($Qcategories->next()) {
       $hasChildren = $lC_CategoryTree->hasChildren($Qcategories->valueInt('categories_id'));
       $url = ($Qcategories->value('categories_custom_url') != null) ? $Qcategories->value('categories_custom_url') : FILENAME_DEFAULT . '?cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id'));
-      $output[] .= '<li' . (($hasChildren > 0) ? ' class="dropdown-submenu"' : null) . '>' . 
-                     '<a href="' . $url . '">' . 
-                     $Qcategories->value('categories_name') .
-                     '</a>' . 
-                     lC_Template_output::getCategoryNav($Qcategories->valueInt('categories_id')) . 
+      $output[] .= '<li' . (($hasChildren > 0) ? ' class="dropdown"' : null) . '>' . 
+                     lc_link_object(lc_href_link($url, '', 'AUTO'), $Qcategories->value('categories_name') . (($hasChildren > 0 && $parent == 0) ? '&nbsp;<b class="caret"></b>' : null), (($hasChildren > 0 && $parent == 0) ? ' data-toggle="dropdown" class="dropdown-toggle"' : null)) . 
+                     lC_Template_output::getCategoryNav($Qcategories->valueInt('categories_id'), $Qcategories->valueInt('parent_id')+1) . 
                    '</li>';
     }
     
