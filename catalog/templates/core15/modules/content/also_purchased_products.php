@@ -40,7 +40,7 @@ $(document).ready(function() {
     nameContent = nameContent.replace(nameContentText, newNameContentText);
     
     output = '<div class="' + thisContentClass + ' with-padding-no-top-bottom">'+
-             '  <div class="align-center large-padding-top">'+ imageContent +
+             '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 class="content-also-purchased-products-text-name small-margin-top no-margin-bottom">' + nameContent + '</h3>' +
              '      <div class="row">' +
@@ -62,6 +62,7 @@ $(document).ready(function() {
   }  
   $('.content-also-purchased-products-add-button').addClass('btn btn-success btn-block');
   $('.content-also-purchased-products-image-src').addClass('img-responsive');
+  $('.thumbnail').equalHeights();
 });
 </script>
 <!--modules/content/also_purchased_products.php end-->

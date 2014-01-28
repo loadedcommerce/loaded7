@@ -129,6 +129,7 @@ $(document).ready(function() {
     $('.product-listing-module-container p.lead').attr('style', 'font-size:1.1em;');  
     $('.product-listing-module-items').find('img').addClass('img-responsive');
   }
+  $('.thumbnail').equalHeights();
 });
 </script>
 <!--content/index/product_listing.php end-->

@@ -47,7 +47,7 @@ $(document).ready(function() {
     nameContent = nameContent.replace(nameContentText, newNameContentText);  
     
     output = '<div class="' + thisContentClass+ '">'+
-             '  <div class="align-center">' + imageContent +
+             '  <div class="thumbnail align-center">' + imageContent +
              '    <div class="caption">' +
              '      <h3 class="no-margin-top no-margin-bottom">' + nameContent + '</h3>' +
              '    </div>' +
@@ -58,6 +58,7 @@ $(document).ready(function() {
     cnt++;
   });
   $('.content-categories-image-src').addClass('img-responsive');
+  $('.thumbnail').equalHeights();
 });
 </script>
 <!--content/index/category_listing.php end-->

@@ -38,7 +38,7 @@ $(document).ready(function() {
     nameContent = nameContent.replace(nameContentText, newNameContentText);
     
     output = '<div class="' + thisContentClass + ' with-padding-no-top-bottom">'+
-             '  <div class="align-center large-padding-top">'+ imageContent +
+             '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 class="content-upcoming-products-text-name small-margin-top">' + nameContent + '</h3>' +
              '      <div class="row">';
@@ -57,6 +57,7 @@ $(document).ready(function() {
     $(this).html(output);  
   });
   $('.content-upcoming-products-image-src').addClass('img-responsive');
+  $('.thumbnail').equalHeights();
 });
 </script>
 <!--modules/content/upcoming_products.php end-->

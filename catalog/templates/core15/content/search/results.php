@@ -54,7 +54,7 @@ $(document).ready(function() {
     descContent = descContent.replace(descContentText, newDescContentText);      
     
     output = '<div class="' + thisContentClass+ ' with-padding-no-top-bottom">'+
-             '  <div class="align-center large-padding-top">'+ imageContent +
+             '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 style="line-height:1.1;">' + nameContent + '</h3>' +
              '      <p class="">' + descContent + '</p>' +
@@ -78,6 +78,7 @@ $(document).ready(function() {
     $('.product-listing-module-container p.lead').attr('style', 'font-size:1.1em;');  
     $('.product-listing-module-items').find('img').addClass('img-responsive');
   }
+  $('.thumbnail').equalHeights();
 });
 </script>
 <!--content/search/results.php end-->

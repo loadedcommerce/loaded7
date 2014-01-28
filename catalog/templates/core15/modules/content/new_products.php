@@ -45,7 +45,7 @@ $(document).ready(function() {
     
     
     output = '<div class="' + thisContentClass+ ' with-padding-no-top-bottom">'+
-             '  <div class="align-center large-padding-top">'+ imageContent +
+             '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 style="line-height:1.1;">' + nameContent + '</h3>' +
              '      <p class="">' + descContent + '</p>' +
@@ -68,6 +68,7 @@ $(document).ready(function() {
     $('.content-new-products-container p.lead').attr('style', 'font-size:1.1em;');  
   }
   $('.content-new-products-image-src').addClass('img-responsive');
+  $('.thumbnail').equalHeights();
 });
 </script>
 <!--modules/content/new_products.php end-->

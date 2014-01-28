@@ -40,7 +40,7 @@ $(document).ready(function() {
     if (!imageContent) imageContent = ''; 
     
     output = '<div class="' + thisContentClass + ' with-padding-no-top-bottom">' +
-             '  <div class="align-center large-padding-top">' + imageContent +
+             '  <div class="thumbnail align-center large-padding-top">' + imageContent +
              '    <div class="caption">' +
              '      <h3 class="content-recently-visited-text-name no-margin-top small-margin-bottom">' + nameContent + '</h3>' +
              '      <p class="text-center small-margin-top small-margin-bottom">' + fromContent + '</p>' +
@@ -51,6 +51,7 @@ $(document).ready(function() {
     $(this).html(output);  
   });
   $('.content-recently-visited-image-src').addClass('img-responsive');
+  $('.thumbnail').equalHeights();
 });
 </script>
 <!--modules/content/recently_visited.php end-->

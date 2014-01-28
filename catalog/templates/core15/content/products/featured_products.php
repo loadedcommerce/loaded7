@@ -43,7 +43,7 @@ $(document).ready(function() {
     descContent = descContent.replace(descContentText, newDescContentText);      
     
     output = '<div class="' + thisContentClass+ ' with-padding">'+
-             '  <div class="align-center large-padding-top">'+ imageContent +
+             '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 style="line-height:1.1;">' + nameContent + '</h3>' +
              '      <p class="">' + descContent + '</p>' +
@@ -65,6 +65,7 @@ $(document).ready(function() {
     $('.content-featured-products-listing-buy-now-button').text(textArr[0]);  
     $('.content-featured-products-listing-container p.lead').attr('style', 'font-size:1.1em;');
   }
+  $('.thumbnail').equalHeights();
 });
 </script>
 <!--content/index/product_listing.php end-->
