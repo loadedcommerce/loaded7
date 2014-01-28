@@ -204,7 +204,19 @@ TD { height:19px; }
                 <td><p class="mid-margin-left mid-margin-right mid-margin-bottom"><?php echo $lC_Language->get('page_text_ioncube'); ?></p></td>
               </tr>
               <tr>
-                <td><p class="mid-margin-left"><?php if (function_exists('ioncube_test')) { echo ioncube_test(); } ?></p></td>
+                <td>
+                  <p class="mid-margin-left">
+                  <?php 
+                    if (function_exists('ioncube_test')) {
+                      $ioncube = ioncube_test(); 
+                      echo $ioncube['txt'];
+                      if ($ioncube['ok'] != 1) {
+                        $ok = FALSE;
+                      }                       
+                    } 
+                  ?>
+                  </p>
+                </td>
               </tr>
             </table>
           </div>
