@@ -15,7 +15,7 @@ class lC_Product {
 
     if ( !empty($id) ) {
       if ( is_numeric($id) ) {
-        $Qproduct = $lC_Database->query('select products_id as id, parent_id, products_quantity as quantity, products_price as price, products_model as model, products_tax_class_id as tax_class_id, products_weight as weight, products_weight_class as weight_class_id, products_date_added as date_added, manufacturers_id, has_children from :table_products where products_id = :products_id and products_status = :products_status');
+        $Qproduct = $lC_Database->query('select products_id as id, parent_id, products_quantity as quantity, products_price as price, products_model as model, products_tax_class_id as tax_class_id, products_weight as weight, products_weight_class as weight_class_id, products_date_added as date_added, manufacturers_id, has_children, is_subproduct from :table_products where products_id = :products_id and products_status = :products_status');
         $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
         $Qproduct->bindInt(':products_id', $id);
         $Qproduct->bindInt(':products_status', 1);
@@ -26,8 +26,9 @@ class lC_Product {
 
           $this->_data['master_id'] = $Qproduct->valueInt('id');
           $this->_data['has_children'] = $Qproduct->valueInt('has_children');
+          $this->_data['is_subproduct'] = $Qproduct->valueInt('is_subproduct');
 
-          if ( $Qproduct->valueInt('parent_id') > 0 ) {
+          if ( $Qproduct->valueInt('parent_id') > 0 && $Qproduct->valueInt('is_subproduct') == 0 ) {
             $Qmaster = $lC_Database->query('select products_id, has_children from :table_products where products_id = :products_id and products_status = :products_status');
             $Qmaster->bindTable(':table_products', TABLE_PRODUCTS);
             $Qmaster->bindInt(':products_id', $Qproduct->valueInt('parent_id'));
@@ -43,13 +44,36 @@ class lC_Product {
           }
 
           if ( !empty($this->_data) ) {
+            
             $Qdesc = $lC_Database->query('select products_name as name, products_description as description, products_keyword as keyword, products_tags as tags, products_url as url from :table_products_description where products_id = :products_id and language_id = :language_id');
             $Qdesc->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
             $Qdesc->bindInt(':products_id', $this->_data['master_id']);
             $Qdesc->bindInt(':language_id', $lC_Language->getID());
             $Qdesc->execute();
+            
+            $desc = $Qdesc->toArray();
+           
+            if ($this->_data['is_subproduct'] > 0) {
+              $Qmaster = $lC_Database->query('select products_name as parent_name, products_description as description, products_keyword as keyword, products_tags as tags, products_url as url from :table_products_description where products_id = :products_id and language_id = :language_id limit 1');
+              $Qmaster->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+              $Qmaster->bindInt(':products_id', $Qproduct->valueInt('parent_id'));
+              $Qmaster->bindInt(':language_id', $lC_Language->getID());
+              $Qmaster->execute();              
+              
+              $parent_name = $Qmaster->value('parent_name');
+              
+              if (empty($parent_name) === false) {
+                $desc['name'] = $parent_name . ' - ' . $desc['name'];
+              }            
+              $desc['description'] = $Qmaster->value('description');
+              $desc['keyword'] = $Qmaster->value('keyword');
+              $desc['products_tags'] = $Qmaster->value('tags');
+              $desc['products_url'] = $Qmaster->value('url');
+            }
+              
+            $Qdesc->freeResult();
 
-            $this->_data = array_merge($this->_data, $Qdesc->toArray());
+            $this->_data = array_merge($this->_data, $desc);
           }
         }
       } else {
