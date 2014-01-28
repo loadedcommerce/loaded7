@@ -15,7 +15,7 @@
     <h1 class="no-margin-top"><?php echo $lC_Language->get('reviews_heading'); ?></h1>
     <div class="row">
       <div class="col-sm-4 col-lg-4 large-padding-left">
-        <div class="thumbnail align-center large-padding-top">
+        <div class="align-center large-padding-top">
           <?php echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()), $lC_Image->show($lC_Product->getImage(), $lC_Product->getTitle(), 'class="content-product-reviews-image-src"', 'small')); ?>
           <div class="caption">
             <h3 style="line-height:1.1;">
