@@ -486,7 +486,7 @@ class lC_Order {
             $Qupdate->execute();
           // }
 
-          if ((STOCK_ALLOW_CHECKOUT == '-1') && ($stock_left < 1)) {
+          if ((AUTODISABLE_OUT_OF_STOCK_PRODUCT == '1') && ($stock_left < 1)) {
             $Qupdate = $lC_Database->query('update :table_products set products_status = 0 where products_id = :products_id');
             $Qupdate->bindTable(':table_products', TABLE_PRODUCTS);
             $Qupdate->bindInt(':products_id', $Qproducts->valueInt('products_id'));
