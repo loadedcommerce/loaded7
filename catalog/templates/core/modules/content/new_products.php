@@ -68,7 +68,6 @@ $(document).ready(function() {
     $('.content-new-products-container p.lead').attr('style', 'font-size:1.1em;');  
   }
   $('.content-new-products-image-src').addClass('img-responsive');
-  $('.thumbnail').equalHeights();
 });
 </script>
 <!--modules/content/new_products.php end-->

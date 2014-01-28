@@ -159,22 +159,6 @@ function removeCoupon(code) {
   );  
 }
 
-// make product listing boxes equal heights
-(function($) {
-  $.fn.equalHeights = function(minHeight, maxHeight) {
-    tallest = (minHeight) ? minHeight : 0;
-    this.each(function() {
-      if($(this).height() > tallest) {
-        tallest = $(this).height();
-      }
-    });
-    if((maxHeight) && tallest > maxHeight) tallest = maxHeight;
-    return this.each(function() {
-      $(this).height(tallest).css("overflow","hidden");
-    });
-  }
-})(jQuery);
-
 ;function print_r (array, return_val) {
     // http://kevin.vanzonneveld.net
     // +   original by: Michael White (http://getsprink.com)

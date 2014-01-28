@@ -64,7 +64,6 @@ $(document).ready(function() {
     $('.content-featured-products-add-button').text(textArr[0]);  
     $('.content-featured-products-container p.lead').attr('style', 'font-size:1.1em;');  
   }
-  $('.thumbnail').equalHeights();
 });
 </script>
 <!--modules/content/featured_products.php end-->

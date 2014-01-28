@@ -48,7 +48,6 @@ $(document).ready(function() {
     cnt++;
   });
   $('.content-categories-image-src').addClass('img-responsive');
-  $('.thumbnail').equalHeights();
 });
 </script>
 <!--modules/content/mainpage_categories.php end-->

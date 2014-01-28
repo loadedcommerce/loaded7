@@ -57,7 +57,6 @@ $(document).ready(function() {
     $(this).html(output);  
   });
   $('.content-upcoming-products-image-src').addClass('img-responsive');
-  $('.thumbnail').equalHeights();
 });
 </script>
 <!--modules/content/upcoming_products.php end-->
