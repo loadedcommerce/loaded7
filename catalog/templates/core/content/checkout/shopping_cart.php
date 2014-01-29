@@ -83,7 +83,7 @@
         </table>   
         <?php
         if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->hasStock() === false) ) {
-          if (STOCK_ALLOW_CHECKOUT == '1') {
+          if (AUTODISABLE_OUT_OF_STOCK_PRODUCT == '-1') {
             echo '<p class="alert alert-danger text-center">' . sprintf($lC_Language->get('products_out_of_stock_checkout_possible'), STOCK_MARK_PRODUCT_OUT_OF_STOCK) . '</p>';
           } else {
             echo '<p class="alert alert-danger text-center">' . sprintf($lC_Language->get('products_out_of_stock_checkout_not_possible'), STOCK_MARK_PRODUCT_OUT_OF_STOCK) . '</p>';

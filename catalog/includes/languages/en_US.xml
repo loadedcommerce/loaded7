@@ -1370,6 +1370,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>checkout</group>
     </definition>
     <definition>
+      <key>out_of_stock</key>
+      <value><![CDATA[Out of Stock]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>products_out_of_stock_checkout_possible</key>
       <value><![CDATA[Products marked with %s don't exist in desired quantity in our stock.<br />You can buy them anyway and check the quantity we have in stock for immediate delivery in the checkout process.]]></value>
       <group>checkout</group>
