@@ -576,14 +576,29 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       jQuery.validator.messages.required = "";
 
       var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
-      var bValid = $("#product").validate({
-        invalidHandler: function() {
+      var bValid = $("#product").validate({ 
+        invalidHandler: function(event, validator) {
+          var errors = validator.numberOfInvalids();
+          if (errors) {
+            var message = 
+              (errors == 1) ? 
+                '<?php echo $lC_Language->get('validation_error_single'); ?>' : 
+                '<?php echo $lC_Language->get('validation_error_multiple_start'); ?> ' + 
+                errors + 
+                ' <?php echo $lC_Language->get('validation_error_multiple_end'); ?>';
+            $("#err-div span").html(message);
+            $("#err-div").show();
+          } 
         },
+        ignore: "",
         rules: {
           <?php
           foreach ( $lC_Language->getAll() as $l ) {
             ?>
             'products_name_<?php echo $l['id']; ?>': {
+              required: true,
+            },
+            'products_description[<?php echo $l['id']; ?>]': {
               required: true,
             },
             'products_keyword[<?php echo $l['id']; ?>]': {
@@ -592,17 +607,24 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             <?php
           }
           ?>
+          "categories[]": { 
+            required: true, 
+            minlength: 1
+          }
         },
         
         messages: {
           <?php
           foreach ( $lC_Language->getAll() as $l ) {
             ?>
-            "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_required'); ?>",
+            //"products_name[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_name_required'); ?>",
+            "products_description[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_products_description_required'); ?>",
+            //"products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_required'); ?>",
             <?php
           }
           ?>
-        } 
+          "categories[]": "<span class='bold'><?php echo $lC_Language->get('ms_error_products_categories_required'); ?></span>",
+        }, 
       }).form();
       $("#languageTabs").refreshTabs();
       if (bValid) {

@@ -82,6 +82,8 @@ ms_error_product_keyword_invalid = Error: This product keyword is invalid. Produ
 ms_error_check_all_lang_tabs = Check all language tabs for errors!
 ms_error_no_variant_groups = You must setup at least one variant group before using simple options.
 ms_error_no_variant_entries = You must setup at least one entry before using this variant group.
+ms_error_products_description_required = Products description is required.
+ms_error_products_categories_required = Please select at least one category relationship.
 ms_warning_image_processor_not_available = Warning: An image processor is not available. Please install and check the location of ImageMagicks "convert" program in the Configuration -> Configuration -> Program Locations section.
 
 section_general = Content
@@ -268,7 +270,6 @@ info_bubble_data_vendor = Product Vendor/Supplier
 info_bubble_data_tax_class = Product Tax Class
 info_bubble_data_price_with_tax = Product Price including Tax (calculated)
 info_bubble_data_product_class = The Product Classification
-
 
 info_bubble_shipping_weight = Product Weight
 info_bubble_shipping_weight_class = Product Weight Class 
