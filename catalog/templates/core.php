@@ -19,8 +19,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
   <head>
     <meta charset="utf-8">
     <!-- meta tags -->
-    <?php echo $lC_Template->getPageTags();?>
-    <!-- meta tags -->
+    <?php if ($lC_Template->hasPageTags()) { echo $lC_Template->getPageTags(); } ?>
     <meta name="author" content="Loaded Commerce">
     <base href="<?php echo lc_href_link(null, null, 'AUTO', false); ?>" />
     <!-- include open graph rags -->
@@ -43,9 +42,6 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!-- Load Page/Group Specific Tags -->
     <?php
       echo $lC_Template->loadCSS($lC_Template->getCode(), $lC_Template->getGroup());
-      if ($lC_Template->hasPageTags()) {
-        echo $lC_Template->getPageTags();
-      }
     ?>
 
     <!-- fav and touch icons -->
