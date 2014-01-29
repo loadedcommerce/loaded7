@@ -102,6 +102,13 @@
   margin: auto !important;
 }
 
+#loaded7 .same-height {
+  display: inline-block;
+  *display: inline;
+  vertical-align: top;
+  zoom: 1; 
+}
+
 /********************************************************/
 /*                    3. Typography                     */
 /********************************************************/
