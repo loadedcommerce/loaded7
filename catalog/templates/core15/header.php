@@ -116,10 +116,14 @@
       <div class="no-margin-bottom">
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav col-lg-10">
             <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_home'); ?></a></li>
             <?php echo lC_Template_output::getCategoryNav(); ?>
-          </ul>    
+          </ul>
+          <div class="text-right small-margin-top small-margin-bottom small-margin-right-neg">
+            <button type="button" class="btn btn-success btn-sm">Checkout</button>  
+            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-search"></i> Search</button>
+          </div>  
         </div>
       </div>
     </div>

@@ -192,10 +192,16 @@ class lC_Template_output {
   * @access public
   * @return array
   */
-  function getCategoryNav($categoryId = 0, $parent = 0) {
+  function getCategoryNav($categoryId = 0, $level = 0) {
     global $lC_Database, $lC_Language, $lC_CategoryTree;
     
-    $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 order by sort_order, cd.categories_name');
+    if ($level == 0) {
+      $visibility = 'and c.categories_visibility_nav = 1';
+    } else {
+      $visibility = '';
+    }
+    
+    $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 ' . $visibility . ' order by sort_order, cd.categories_name');
     $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
     $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
     $Qcategories->bindInt(':parent_id', $categoryId);
@@ -208,11 +214,11 @@ class lC_Template_output {
       if ($Qcategories->value('categories_mode') == 'override') {
         $url = '<a href="' . $Qcategories->value('categories_custom_url') . '"' . (($Qcategories->value('categories_link_target') == 1) ? ' target="_blank"' : null) . '>' . $Qcategories->value('categories_name') . '</a>';
       } else {
-        $url = lc_link_object(lc_href_link(FILENAME_DEFAULT . '?cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id')), '', 'AUTO'), $Qcategories->value('categories_name') . (($hasChildren > 0 && $parent == 0) ? '&nbsp;<b class="caret"></b>' : null), (($hasChildren > 0 && $parent == 0) ? ' data-toggle="dropdown" class="dropdown-toggle"' : null));
+        $url = lc_link_object(lc_href_link(FILENAME_DEFAULT . '?cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id')), '', 'AUTO'), $Qcategories->value('categories_name') . (($hasChildren > 0 && $level == 0) ? '&nbsp;<b class="caret"></b>' : null), (($hasChildren > 0 && $level == 0) ? ' data-toggle="dropdown" class="dropdown-toggle"' : null));
       }
       $output[] .= '<li' . (($hasChildren > 0) ? ' class="dropdown"' : null) . '>' . 
                      $url . 
-                     lC_Template_output::getCategoryNav($Qcategories->valueInt('categories_id'), $Qcategories->valueInt('parent_id')+1) . 
+                     lC_Template_output::getCategoryNav($Qcategories->valueInt('categories_id'), $level+1) . 
                    '</li>';
     }
     
