@@ -32,7 +32,7 @@ function importOptions() {
 	
   var data = {};
 	
-  if($('#optionsGroupsFile').val() || $('#optionsVariantsFile').val() || $('#optionsProductsFile').val()){
+  if( ogfilename || ovfilename || opfilename ){
     $("#loading").show();
 	importOptionGroups(owizard, otype, obackup, data);
   } else {
@@ -40,17 +40,10 @@ function importOptions() {
   }
 }
 function importOptionGroups(owizard, otype, obackup, data){
-	if($('#optionsGroupsFile').val()){
-		var OGjsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule()); ?>&action=importOptionGroups&owizard=OWIZARD&otype=OTYPE&obackup=OBACKUP';
-		OGjsonLink = OGjsonLink.replace('OWIZARD', owizard).replace('OTYPE', otype).replace('OBACKUP', obackup);
-	
-		$.ajaxFileUpload({
-		  url: OGjsonLink,
-		  secureuri:false,
-		  fileElementId:'optionsGroupsFile',
-		  dataType: 'json',
-		  data:{products_import_export: 'test', action:'importOptionGroups'},
-		  success: function (OGdata, OGstatus) {
+	if(ogfilename){
+		var OGjsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule()); ?>&action=importOptionGroups&ogfilename=OGFILENAME&owizard=OWIZARD&otype=OTYPE&obackup=OBACKUP';
+		$.getJSON(OGjsonLink.replace('OGFILENAME', ogfilename).replace('OWIZARD', owizard).replace('OTYPE', otype).replace('OBACKUP', obackup),
+		function (OGdata) {
 			if(typeof(OGdata.error) != 'undefined') {
 			  if(OGdata.error != '') {
 				$.modal.alert(OGdata.error);
@@ -71,27 +64,16 @@ function importOptionGroups(owizard, otype, obackup, data){
 			  data.OGdata = OGdata;
 			  importOptionVariants(owizard, otype, obackup, data);
 			}
-		  },
-		  error: function (OGdata, OGstatus, OGe) {
-			alert(OGe);
-		  }
 		});
 	} else {
 		importOptionVariants(owizard, otype, obackup, data);
 	}
 }
 function importOptionVariants(owizard, otype, obackup, data){
-	if($('#optionsVariantsFile').val()){
-		var OVjsonLink = '/admin/rpc.php?products_import_export&action=importOptionVariants&owizard=OWIZARD&otype=OTYPE&obackup=OBACKUP';
-		OVjsonLink = OVjsonLink.replace('OWIZARD', owizard).replace('OTYPE', otype).replace('OBACKUP', obackup);
-	
-		$.ajaxFileUpload({
-		  url: OVjsonLink,
-		  secureuri:false,
-		  fileElementId:'optionsVariantsFile',
-		  dataType: 'json',
-		  data:{products_import_export: 'test', action:'importOptionGroups'},
-		  success: function (OVdata, OVstatus) {
+	if(ovfilename){
+		var OVjsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule()); ?>&action=importOptionVariants&ovfilename=OVFILENAME&owizard=OWIZARD&otype=OTYPE&obackup=OBACKUP';
+		$.getJSON(OVjsonLink.replace('OVFILENAME', ovfilename).replace('OWIZARD', owizard).replace('OTYPE', otype).replace('OBACKUP', obackup),
+		function (OVdata) {
 			if(typeof(OVdata.error) != 'undefined') {
 			  if(OVdata.error != '') {
 				$.modal.alert(OVdata.error);
@@ -112,27 +94,16 @@ function importOptionVariants(owizard, otype, obackup, data){
 			  data.OVdata = OVdata;
 			  importOptionProducts(owizard, otype, obackup, data);
 			}
-		  },
-		  error: function (OVdata, OVstatus, OVe) {
-			alert(OVe);
-		  }
 		});
 	} else {
 		importOptionProducts(owizard, otype, obackup, data);
 	}
 }
 function importOptionProducts(owizard, otype, obackup, data){
-	if($('#optionsProductsFile').val()){
-		var OPjsonLink = '/admin/rpc.php?products_import_export&action=importOptionProducts&owizard=OWIZARD&otype=OTYPE&obackup=OBACKUP';
-		OPjsonLink = OPjsonLink.replace('OWIZARD', owizard).replace('OTYPE', otype).replace('OBACKUP', obackup);
-	
-		$.ajaxFileUpload({
-		  url: OPjsonLink,
-		  secureuri:false,
-		  fileElementId:'optionsProductsFile',
-		  dataType: 'json',
-		  data:{products_import_export: 'test', action:'importOptionProducts'},
-		  success: function (OPdata, OPstatus) {
+	if(opfilename){
+		var OPjsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule()); ?>&action=importOptionProducts&opfilename=OPFILENAME&owizard=OWIZARD&otype=OTYPE&obackup=OBACKUP';
+		$.getJSON(OPjsonLink.replace('OPFILENAME', opfilename).replace('OWIZARD', owizard).replace('OTYPE', otype).replace('OBACKUP', obackup),
+		function (OPdata) {
 			if(typeof(OPdata.error) != 'undefined') {
 			  if(OPdata.error != '') {
 				$.modal.alert(OPdata.error);
@@ -153,10 +124,6 @@ function importOptionProducts(owizard, otype, obackup, data){
 			  data.OPdata = OPdata;
 			  reportImportOptions(owizard, otype, obackup, data);
 			}
-		  },
-		  error: function (OPdata, OPstatus, OPe) {
-			alert(OPe);
-		  }
 		});
 	} else {
 		reportImportOptions(owizard, otype, obackup, data);

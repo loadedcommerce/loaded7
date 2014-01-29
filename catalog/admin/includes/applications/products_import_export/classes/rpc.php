@@ -136,7 +136,7 @@ class lC_Products_import_export_Admin_rpc {
   * @return json
   */ 
   public static function importProducts() {
-    $result = lC_Products_import_export_Admin::importProducts($_GET['pwizard'], $_GET['ptype'], $_GET['pbackup']);
+    $result = lC_Products_import_export_Admin::importProducts($_GET['pfilename'], $_GET['pwizard'], $_GET['ptype'], $_GET['pbackup']);
     if (isset($result['total']) && $result['total'] != null) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     } else {
@@ -155,7 +155,7 @@ class lC_Products_import_export_Admin_rpc {
   * @return json
   */ 
   public static function importCategories() {
-    $result = lC_Products_import_export_Admin::importCategories($_GET['cwizard'], $_GET['ctype'], $_GET['cbackup']);
+    $result = lC_Products_import_export_Admin::importCategories($_GET['cfilename'], $_GET['cwizard'], $_GET['ctype'], $_GET['cbackup']);
     if (isset($result['total']) && $result['total'] != null) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     } else {
@@ -174,7 +174,7 @@ class lC_Products_import_export_Admin_rpc {
   * @return json
   */ 
   public static function importOptionGroups() {
-    $result = lC_Products_import_export_Admin::importOptionGroups($_GET['owizard'], $_GET['otype'], $_GET['obackup']);
+    $result = lC_Products_import_export_Admin::importOptionGroups($_GET['ogfilename'], $_GET['owizard'], $_GET['otype'], $_GET['obackup']);
     if (isset($result['total']) && $result['total'] != null) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     } else {
@@ -193,7 +193,7 @@ class lC_Products_import_export_Admin_rpc {
   * @return json
   */ 
   public static function importOptionVariants() {
-    $result = lC_Products_import_export_Admin::importOptionVariants($_GET['owizard'], $_GET['otype'], $_GET['obackup']);
+    $result = lC_Products_import_export_Admin::importOptionVariants($_GET['ovfilename'], $_GET['owizard'], $_GET['otype'], $_GET['obackup']);
     if (isset($result['total']) && $result['total'] != null) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     } else {
@@ -212,7 +212,7 @@ class lC_Products_import_export_Admin_rpc {
   * @return json
   */ 
   public static function importOptionProducts() {
-    $result = lC_Products_import_export_Admin::importOptionProducts($_GET['owizard'], $_GET['otype'], $_GET['obackup']);
+    $result = lC_Products_import_export_Admin::importOptionProducts($_GET['opfilename'], $_GET['owizard'], $_GET['otype'], $_GET['obackup']);
     if (isset($result['total']) && $result['total'] != null) {
       $result['rpcStatus'] = RPC_STATUS_SUCCESS;
     } else {
@@ -220,5 +220,33 @@ class lC_Products_import_export_Admin_rpc {
 
     echo json_encode($result);
   }
+  public static function fileUpload() {
+    global $lC_Database, $lC_Vqmod, $_module;
+     
+      require_once($lC_Vqmod->modCheck('includes/classes/ajax_upload.php'));
+
+      // list of valid extensions, ex. array("jpeg", "xml", "bmp")
+      $allowedExtensions = array('gif', 'jpg', 'jpeg', 'png', 'txt', 'csv');
+      // max file size in bytes
+      $sizeLimit = 10 * 1024 * 1024;
+
+      $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+      
+      $import_file = $uploader->handleUpload('../includes/work/products_import_export/imports/'); 
+
+      if ( $import_file['exists'] == true ) {
+        if ( isset($import_file['filename']) && $import_file['filename'] != null ) {
+			$success = true;
+        }
+      }
+
+    $result = array('result' => 1,
+                    'success' => $success,
+                    'rpcStatus' => RPC_STATUS_SUCCESS,
+					'filename' => $import_file['filename']);
+
+    echo json_encode($result);
+  }
+  
 }
 ?>

@@ -52,9 +52,11 @@
               <form id="products-import-form">
                 <fieldset class="fieldset margin-top margin-bottom margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_products_import'); ?></legend>
-                  <p class="button-height">
-                    <input type="file" class="file" id="productFile" name="productFile" />
-                  </p>
+                  <div id="fileUploaderProductsContainer" class="small-margin-top">
+                    <noscript>
+                      <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
+                    </noscript>
+                  </div>
                   <p class="button-height">
                     <input type="radio" class="radio" checked value="addmatch" name="products-import-type" id="import-type-addmatch" /> <label class="label" for="products-import-type-addmatch"><?php echo $lC_Language->get('label_add_match'); ?></label>
                   </p>
@@ -120,9 +122,11 @@
               <form id="categories-import-form">
                 <fieldset class="fieldset margin-top margin-bottom margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_categories_import'); ?></legend>
-                  <p class="button-height">
-                    <input type="file" class="file" name="categoriesFile" id="categoriesFile" />
-                  </p>
+                  <div id="fileUploaderCategoriesContainer" class="small-margin-top">
+                    <noscript>
+                      <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
+                    </noscript>
+                  </div>
                   <p class="button-height">
                     <input type="radio" class="radio" checked value="tabbed" name="categories-import-type" id="categories-import-type-addmatch" /> <label class="label" for="categories-import-type-addmatch"><?php echo $lC_Language->get('label_add_match'); ?></label>
                   </p>
@@ -180,15 +184,27 @@
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_options_import'); ?></legend>
                   <p class="button-height block-label">
                     <label for="groups-file" class="label">Groups</label>
-                    <input type="file" id="optionsGroupsFile" name="optionsGroupsFile" class="file" />
+                  <div id="fileUploaderOptionsGroupsContainer" class="small-margin-top">
+                    <noscript>
+                      <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
+                    </noscript>
+                  </div>
                   </p>
                   <p class="button-height block-label">
                     <label for="variants-file" class="label">Variants</label>
-                    <input type="file" id="optionsVariantsFile" name="optionsVariantsFile" class="file" />
+                  <div id="fileUploaderOptionsVarientsContainer" class="small-margin-top">
+                    <noscript>
+                      <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
+                    </noscript>
+                  </div>
                   </p>
                   <p class="button-height block-label">
                     <label for="toproducts-file" class="label">To Products</label>
-                    <input type="file" id="optionsProductsFile" name="optionsProductsFile" class="file" />
+                  <div id="fileUploaderOptionsProductsContainer" class="small-margin-top">
+                    <noscript>
+                      <p><?php echo $lC_Language->get('ms_error_javascript_not_enabled_for_upload'); ?></p>
+                    </noscript>
+                  </div>
                   </p>
                   <p class="button-height">
                     <input type="radio" class="radio" checked value="tabbed" name="options-import-type" id="import-type-addmatch" /> <label class="label" for="options-import-type-addmatch"><?php echo $lC_Language->get('label_add_match'); ?></label>

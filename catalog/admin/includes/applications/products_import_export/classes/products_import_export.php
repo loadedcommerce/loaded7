@@ -584,7 +584,7 @@ class lC_Products_import_export_Admin {
   * @access public
   * @return array
   */
-  public static function importProducts($pwizard, $ptype, $pbackup, $pmapdata = NULL) {
+  public static function importProducts($filename, $pwizard, $ptype, $pbackup, $pmapdata = NULL) {
 	  global $lC_Database, $lC_Datetime, $lC_Language, $lC_Image;
 		
 		$lC_Products = new lC_Products_Admin();
@@ -592,105 +592,64 @@ class lC_Products_import_export_Admin {
 		$error = "";
 		$msg = "";
 		$other = "";
-		$fileElementName = 'productFile';
-		if(!empty($_FILES[$fileElementName]['error'])) {
-			switch($_FILES[$fileElementName]['error']) {
-				case '1':
-					$errormsg = 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
-					break;
-				case '2':
-					$errormsg = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form';
-					break;
-				case '3':
-					$errormsg = 'The uploaded file was only partially uploaded';
-					break;
-				case '4':
-					$errormsg = 'No file was uploaded.';
-					break;
-				case '6':
-					$errormsg = 'Missing a temporary folder';
-					break;
-				case '7':
-					$errormsg = 'Failed to write file to disk';
-					break;
-				case '8':
-					$errormsg = 'File upload stopped by extension';
-					break;
-				case '999':
-				default:
-					$errormsg = 'No error code avaiable';
-			}
-		} elseif(empty($_FILES[$fileElementName]['tmp_name']) || $_FILES[$fileElementName]['tmp_name'] == 'none') {
-			$errormsg = 'No file was uploaded...'; // didnt get a file to do the upload
+		
+		$uploaddir = DIR_FS_WORK . 'products_import_export/imports/';
+		$uploadfile = $uploaddir . basename($filename);
+		
+		if(is_null($pmapdata)){
+		
+			$columns = array('id',
+							 'parent_id',
+							 'quantity',
+							 'price',
+							 'cost',
+							 'msrp',
+							 'model',
+							 'sku',
+							 'date_added',
+							 'last_modified',
+							 'weight',
+							 'weight_class',
+							 'status',
+							 'tax_class_id',
+							 'manufacturer',
+							 'ordered',
+							 'has_children',
+							 
+							 'language_id',
+							 'name',
+							 'description',
+							 'permalink',
+							 'tags',
+							 'meta_title',
+							 'meta_keywords',
+							 'meta_description',
+							 'url',
+							 'products_viewed',
+							 
+							 'categories',
+							 'base_image'
+							 );
+							 
 		} else {
-			$msg .= " File Name: " . $_FILES[$fileElementName]['name'] . ", ";
-			$msg .= " File Size: " . @filesize($_FILES[$fileElementName]['tmp_name']);
-			//for security reason, we force to remove all uploaded file
-			//@unlink($_FILES[$fileElementName]);
-			
-			$uploaddir = DIR_FS_WORK . 'products_import_export/imports/';
-			//$other .= 'Upload Dir: ' . $uploaddir;
-			$uploadfile = $uploaddir . basename($_FILES[$fileElementName]['name']);
-			
-			if(is_null($pmapdata)){
-			
-				$columns = array('id',
-								 'parent_id',
-								 'quantity',
-								 'price',
-								 'cost',
-								 'msrp',
-								 'model',
-								 'sku',
-								 'date_added',
-								 'last_modified',
-								 'weight',
-								 'weight_class',
-								 'status',
-								 'tax_class_id',
-								 'manufacturer',
-								 'ordered',
-								 'has_children',
-								 
-								 'language_id',
-								 'name',
-								 'description',
-								 'permalink',
-					   			 'tags',
-								 'meta_title',
-								 'meta_keywords',
-								 'meta_description',
-								 'url',
-								 'products_viewed',
-								 
-								 'categories',
-								 'base_image'
-								 );
-								 
-			} else {
-				// do the mapping of columns here with the mapdata
-			}
-			
-			$ext = end(explode(".", $_FILES[$fileElementName]['name']));
-			$delim = (($ext == 'txt')?"\t":(($ext == 'csv')?",":"\t"));
+			// do the mapping of columns here with the mapdata
+		}
+		
+		$ext = end(explode(".", $filename));
+		$delim = (($ext == 'txt')?"\t":(($ext == 'csv')?",":"\t"));
 
-			$row = 0;
-			if (move_uploaded_file($_FILES[$fileElementName]['tmp_name'], $uploadfile)) {
-				if (($handle = fopen($uploadfile, "r")) !== FALSE) {
-					while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
-						$num = count($data);
-						for ($c=0; $c < $num; $c++) {
-							if($row != 0){
-								$import_array[$row][$columns[$c]] = $data[$c];
-							}
-						}
-						$row++;
+		$row = 0;
+		if (($handle = fopen($uploadfile, "r")) !== FALSE) {
+			while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
+				$num = count($data);
+				for ($c=0; $c < $num; $c++) {
+					if($row != 0){
+						$import_array[$row][$columns[$c]] = $data[$c];
 					}
-					fclose($handle);
 				}
-			} else {
-				// error on the move file so return the error
+				$row++;
 			}
+			fclose($handle);
 		}
 		
 		// Need to find and remove blank rows
@@ -1028,7 +987,7 @@ class lC_Products_import_export_Admin {
   * @access public
   * @return array
   */
-  public static function importCategories($cwizard, $ctype, $cbackup, $cmapdata = NULL) {
+  public static function importCategories($filename, $cwizard, $ctype, $cbackup, $cmapdata = NULL) {
 	  global $lC_Database, $lC_Datetime, $lC_Language, $lC_Image;
 		
 		if($cwizard == 'false'){
@@ -1042,45 +1001,10 @@ class lC_Products_import_export_Admin {
 		$error = FALSE;
 		$errormsg = "";
 		$msg = "";
-		$fileElementName = 'categoriesFile';
-		if(!empty($_FILES[$fileElementName]['error'])) {
-			switch($_FILES[$fileElementName]['error']) {
-				case '1':
-					$errormsg = 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
-					break;
-				case '2':
-					$errormsg = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form';
-					break;
-				case '3':
-					$errormsg = 'The uploaded file was only partially uploaded';
-					break;
-				case '4':
-					$errormsg = 'No file was uploaded.';
-					break;
-				case '6':
-					$errormsg = 'Missing a temporary folder';
-					break;
-				case '7':
-					$errormsg = 'Failed to write file to disk';
-					break;
-				case '8':
-					$errormsg = 'File upload stopped by extension';
-					break;
-				case '999':
-				default:
-					$errormsg = 'No error code avaiable';
-			}
-		} elseif(empty($_FILES[$fileElementName]['tmp_name']) || $_FILES[$fileElementName]['tmp_name'] == 'none') {
-			$errormsg = 'No file was uploaded...'; // didnt get a file to do the upload
-		} else {
-			$msg .= " File Name: " . $_FILES[$fileElementName]['name'] . ", ";
-			$msg .= " File Size: " . @filesize($_FILES[$fileElementName]['tmp_name']);
-			//for security reason, we force to remove all uploaded file
-			//@unlink($_FILES[$fileElementName]);
 			
 			$uploaddir = DIR_FS_WORK . 'products_import_export/imports/';
 			//$other .= 'Upload Dir: ' . $uploaddir;
-			$uploadfile = $uploaddir . basename($_FILES[$fileElementName]['name']);
+			$uploadfile = $uploaddir . basename($filename);
 			
 			if(is_null($cmapdata)){
 			
@@ -1131,7 +1055,7 @@ class lC_Products_import_export_Admin {
 								 );
 			}
 			
-			$ext = end(explode(".", $_FILES[$fileElementName]['name']));
+			$ext = end(explode(".", $filename));
 			if($ext == 'txt'){
 				$delim = "\t";
 			} else if($ext == 'csv'){
@@ -1141,22 +1065,19 @@ class lC_Products_import_export_Admin {
 			}
 
 			$row = 0;
-			if (move_uploaded_file($_FILES[$fileElementName]['tmp_name'], $uploadfile)) {
-				if (($handle = fopen($uploadfile, "r")) !== FALSE) {
-					while (($data = fgetcsv($handle, 1000, "\t")) !== FALSE) {
-						$num = count($data);
-						for ($c=0; $c < $num; $c++) {
-							if($row != 0){
-								$import_array[$row][$columns[$c]] = $data[$c];
-							}
+			if (($handle = fopen($uploadfile, "r")) !== FALSE) {
+				while (($data = fgetcsv($handle, 1000, "\t")) !== FALSE) {
+					$num = count($data);
+					for ($c=0; $c < $num; $c++) {
+						if($row != 0){
+							$import_array[$row][$columns[$c]] = $data[$c];
 						}
-						$row++;
 					}
-					fclose($handle);
+					$row++;
 				}
+				fclose($handle);
 			}
-		}
-		
+				
 		$match_count = 0;
 		$insert_count = 0;
 		
@@ -1258,10 +1179,6 @@ class lC_Products_import_export_Admin {
 				
 					if ( $error === false ) {
 					  $lC_Database->commitTransaction();
-					
-					  lC_Cache::clear('categories');
-					  lC_Cache::clear('category_tree');
-					  lC_Cache::clear('also_purchased');
 					} else {
 					  $lC_Database->rollbackTransaction();
 					}
@@ -1290,7 +1207,7 @@ class lC_Products_import_export_Admin {
   * @access public
   * @return array
   */
-  public static function importOptionGroups($owizard, $otype, $obackup, $omapdata = NULL) {
+  public static function importOptionGroups($filename, $owizard, $otype, $obackup, $omapdata = NULL) {
 	  global $lC_Database, $lC_Datetime, $lC_Language, $lC_Image;
 		
 		if($owizard == 'false'){
@@ -1302,45 +1219,10 @@ class lC_Products_import_export_Admin {
 		$error = FALSE;
 		$errormsg = "";
 		$msg = "";
-		$fileElementName = 'optionsGroupsFile';
-		if(!empty($_FILES[$fileElementName]['error'])) {
-			switch($_FILES[$fileElementName]['error']) {
-				case '1':
-					$errormsg = 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
-					break;
-				case '2':
-					$errormsg = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form';
-					break;
-				case '3':
-					$errormsg = 'The uploaded file was only partially uploaded';
-					break;
-				case '4':
-					$errormsg = 'No file was uploaded.';
-					break;
-				case '6':
-					$errormsg = 'Missing a temporary folder';
-					break;
-				case '7':
-					$errormsg = 'Failed to write file to disk';
-					break;
-				case '8':
-					$errormsg = 'File upload stopped by extension';
-					break;
-				case '999':
-				default:
-					$errormsg = 'No error code avaiable';
-			}
-		} elseif(empty($_FILES[$fileElementName]['tmp_name']) || $_FILES[$fileElementName]['tmp_name'] == 'none') {
-			$errormsg = 'No file was uploaded...'; // didnt get a file to do the upload
-		} else {
-			$msg .= " File Name: " . $_FILES[$fileElementName]['name'] . ", ";
-			$msg .= " File Size: " . @filesize($_FILES[$fileElementName]['tmp_name']);
-			//for security reason, we force to remove all uploaded file
-			//@unlink($_FILES[$fileElementName]);
 			
 			$uploaddir = DIR_FS_WORK . 'products_import_export/imports/';
 			//$other .= 'Upload Dir: ' . $uploaddir;
-			$uploadfile = $uploaddir . basename($_FILES[$fileElementName]['name']);
+			$uploadfile = $uploaddir . basename($filename);
 			
 			if(is_null($mapdata)){
 			
@@ -1354,7 +1236,7 @@ class lC_Products_import_export_Admin {
 				// do the mapping of columns here with the mapdata
 			}
 			
-			$ext = end(explode(".", $_FILES[$fileElementName]['name']));
+			$ext = end(explode(".", $filename));
 			if($ext == 'txt'){
 				$delim = "\t";
 			} else if($ext == 'csv'){
@@ -1364,21 +1246,18 @@ class lC_Products_import_export_Admin {
 			}
 
 			$row = 0;
-			if (move_uploaded_file($_FILES[$fileElementName]['tmp_name'], $uploadfile)) {
-				if (($handle = fopen($uploadfile, "r")) !== FALSE) {
-					while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
-						$num = count($data);
-						for ($c=0; $c < $num; $c++) {
-							if($row != 0){
-								$import_array[$row][$columns[$c]] = $data[$c];
-							}
+			if (($handle = fopen($uploadfile, "r")) !== FALSE) {
+				while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
+					$num = count($data);
+					for ($c=0; $c < $num; $c++) {
+						if($row != 0){
+							$import_array[$row][$columns[$c]] = $data[$c];
 						}
-						$row++;
 					}
-					fclose($handle);
+					$row++;
 				}
+				fclose($handle);
 			}
-		}
 		
 		$match_count = 0;
 		$insert_count = 0;
@@ -1474,7 +1353,7 @@ class lC_Products_import_export_Admin {
   * @access public
   * @return array
   */
-  public static function importOptionVariants($owizard, $otype, $obackup, $omapdata = NULL) {
+  public static function importOptionVariants($filename, $owizard, $otype, $obackup, $omapdata = NULL) {
 	  global $lC_Database, $lC_Datetime, $lC_Language, $lC_Image;
 		
 		if($owizard == 'false'){
@@ -1486,45 +1365,10 @@ class lC_Products_import_export_Admin {
 		$error = FALSE;
 		$errormsg = "";
 		$msg = "";
-		$fileElementName = 'optionsVariantsFile';
-		if(!empty($_FILES[$fileElementName]['error'])) {
-			switch($_FILES[$fileElementName]['error']) {
-				case '1':
-					$errormsg = 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
-					break;
-				case '2':
-					$errormsg = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form';
-					break;
-				case '3':
-					$errormsg = 'The uploaded file was only partially uploaded';
-					break;
-				case '4':
-					$errormsg = 'No file was uploaded.';
-					break;
-				case '6':
-					$errormsg = 'Missing a temporary folder';
-					break;
-				case '7':
-					$errormsg = 'Failed to write file to disk';
-					break;
-				case '8':
-					$errormsg = 'File upload stopped by extension';
-					break;
-				case '999':
-				default:
-					$errormsg = 'No error code avaiable';
-			}
-		} elseif(empty($_FILES[$fileElementName]['tmp_name']) || $_FILES[$fileElementName]['tmp_name'] == 'none') {
-			$errormsg = 'No file was uploaded...'; // didnt get a file to do the upload
-		} else {
-			$msg .= " File Name: " . $_FILES[$fileElementName]['name'] . ", ";
-			$msg .= " File Size: " . @filesize($_FILES[$fileElementName]['tmp_name']);
-			//for security reason, we force to remove all uploaded file
-			//@unlink($_FILES[$fileElementName]);
-			
+		
 			$uploaddir = DIR_FS_WORK . 'products_import_export/imports/';
 			//$other .= 'Upload Dir: ' . $uploaddir;
-			$uploadfile = $uploaddir . basename($_FILES[$fileElementName]['name']);
+			$uploadfile = $uploaddir . basename($filename);
 			
 			if(is_null($mapdata)){
 			
@@ -1538,7 +1382,7 @@ class lC_Products_import_export_Admin {
 				// do the mapping of columns here with the mapdata
 			}
 			
-			$ext = end(explode(".", $_FILES[$fileElementName]['name']));
+			$ext = end(explode(".", $filename));
 			if($ext == 'txt'){
 				$delim = "\t";
 			} else if($ext == 'csv'){
@@ -1548,21 +1392,18 @@ class lC_Products_import_export_Admin {
 			}
 
 			$row = 0;
-			if (move_uploaded_file($_FILES[$fileElementName]['tmp_name'], $uploadfile)) {
-				if (($handle = fopen($uploadfile, "r")) !== FALSE) {
-					while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
-						$num = count($data);
-						for ($c=0; $c < $num; $c++) {
-							if($row != 0){
-								$import_array[][$columns[$c]] = $data[$c];
-							}
+			if (($handle = fopen($uploadfile, "r")) !== FALSE) {
+				while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
+					$num = count($data);
+					for ($c=0; $c < $num; $c++) {
+						if($row != 0){
+							$import_array[][$columns[$c]] = $data[$c];
 						}
-						$row++;
 					}
-					fclose($handle);
+					$row++;
 				}
+				fclose($handle);
 			}
-		}
 		
 		$match_count = 0;
 		$insert_count = 0;
@@ -1658,7 +1499,7 @@ class lC_Products_import_export_Admin {
   * @access public
   * @return array
   */
-  public static function importOptionProducts($owizard, $otype, $obackup, $omapdata = NULL) {
+  public static function importOptionProducts($filename, $owizard, $otype, $obackup, $omapdata = NULL) {
 	  global $lC_Database, $lC_Datetime, $lC_Language, $lC_Image;
 		
 		if($owizard == 'false'){
@@ -1670,45 +1511,10 @@ class lC_Products_import_export_Admin {
 		$error = FALSE;
 		$errormsg = "";
 		$msg = "";
-		$fileElementName = 'optionsProductsFile';
-		if(!empty($_FILES[$fileElementName]['error'])) {
-			switch($_FILES[$fileElementName]['error']) {
-				case '1':
-					$errormsg = 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
-					break;
-				case '2':
-					$errormsg = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form';
-					break;
-				case '3':
-					$errormsg = 'The uploaded file was only partially uploaded';
-					break;
-				case '4':
-					$errormsg = 'No file was uploaded.';
-					break;
-				case '6':
-					$errormsg = 'Missing a temporary folder';
-					break;
-				case '7':
-					$errormsg = 'Failed to write file to disk';
-					break;
-				case '8':
-					$errormsg = 'File upload stopped by extension';
-					break;
-				case '999':
-				default:
-					$errormsg = 'No error code avaiable';
-			}
-		} elseif(empty($_FILES[$fileElementName]['tmp_name']) || $_FILES[$fileElementName]['tmp_name'] == 'none') {
-			$errormsg = 'No file was uploaded...'; // didnt get a file to do the upload
-		} else {
-			$msg .= " File Name: " . $_FILES[$fileElementName]['name'] . ", ";
-			$msg .= " File Size: " . @filesize($_FILES[$fileElementName]['tmp_name']);
-			//for security reason, we force to remove all uploaded file
-			//@unlink($_FILES[$fileElementName]);
-			
+		
 			$uploaddir = DIR_FS_WORK . 'products_import_export/imports/';
 			//$other .= 'Upload Dir: ' . $uploaddir;
-			$uploadfile = $uploaddir . basename($_FILES[$fileElementName]['name']);
+			$uploadfile = $uploaddir . basename($filename);
 			
 			if(is_null($mapdata)){
 			
@@ -1722,7 +1528,7 @@ class lC_Products_import_export_Admin {
 				// do the mapping of columns here with the mapdata
 			}
 			
-			$ext = end(explode(".", $_FILES[$fileElementName]['name']));
+			$ext = end(explode(".", $filename));
 			if($ext == 'txt'){
 				$delim = "\t";
 			} else if($ext == 'csv'){
@@ -1732,21 +1538,18 @@ class lC_Products_import_export_Admin {
 			}
 
 			$row = 0;
-			if (move_uploaded_file($_FILES[$fileElementName]['tmp_name'], $uploadfile)) {
-				if (($handle = fopen($uploadfile, "r")) !== FALSE) {
-					while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
-						$num = count($data);
-						for ($c=0; $c < $num; $c++) {
-							if($row != 0){
-								$import_array[$row][$columns[$c]] = $data[$c];
-							}
+			if (($handle = fopen($uploadfile, "r")) !== FALSE) {
+				while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
+					$num = count($data);
+					for ($c=0; $c < $num; $c++) {
+						if($row != 0){
+							$import_array[$row][$columns[$c]] = $data[$c];
 						}
-						$row++;
 					}
-					fclose($handle);
+					$row++;
 				}
+				fclose($handle);
 			}
-		}
 		
 		$match_count = 0;
 		$insert_count = 0;

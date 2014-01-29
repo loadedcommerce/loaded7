@@ -29,23 +29,10 @@ function importProducts() {
   if($('input[name="products-create-backup"]').is(':checked')){
 	pbackgup = true;
   }
-  
-	$("#loading").ajaxStart(function(){
-		$(this).show();
-	}).ajaxComplete(function(){
-		$(this).hide();
-    });
 
-	var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule()); ?>&action=importProducts&pwizard=PWIZARD&ptype=PTYPE&pbackup=PBACKUP';
-	jsonLink = jsonLink.replace('PWIZARD', pwizard).replace('PTYPE', ptype).replace('PBACKUP', pbackup);
-
-	$.ajaxFileUpload({
-      url: jsonLink,
-	  secureuri:false,
-	  fileElementId:'productFile',
-	  dataType: 'json',
-	  data:{products_import_export: 'test', action:'importProducts'},
-	  success: function (data, status) {
+	var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule()); ?>&action=importProducts&pfilename=PFILENAME&pwizard=PWIZARD&ptype=PTYPE&pbackup=PBACKUP';
+	$.getJSON(jsonLink.replace('PFILENAME', pfilename).replace('PWIZARD', pwizard).replace('PTYPE', ptype).replace('PBACKUP', pbackup),
+    function (data) {
 		console.log(data);
 		if(typeof(data.error) != 'undefined') {
 		  if(data.error != '') {
@@ -85,12 +72,7 @@ function importProducts() {
             },
             buttonsLowPadding: true
         });
-	  },
-	  error: function (data, status, e) {
-		alert(e);
-	  }
     });
       
-  //);
 }
 </script>
