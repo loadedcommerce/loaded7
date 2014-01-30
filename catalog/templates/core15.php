@@ -198,6 +198,9 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       <script src="ext/bootstrap/bootstrap-datepicker.js"></script>
       <script src="ext/jquery/jquery.loadmask.js"></script>
       
+      <!-- Added Template Specific JS -->
+      <script src="templates/core15/javascript/general.js.php"></script>
+      
       <?php 
       // core js
       if (file_exists('includes/javascript/general.js.php')) {

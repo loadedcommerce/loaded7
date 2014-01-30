@@ -102,6 +102,16 @@
   margin: auto !important;
 }
 
+#loaded7 .img-logo-responsive {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+#loaded7 .popover.left {
+  margin-left: -25px;
+}
+
 /********************************************************/
 /*                    3. Typography                     */
 /********************************************************/
@@ -616,6 +626,10 @@
   z-index: 1;
   color: #444444;
 }
+
+#loaded7 .popover-content {
+  padding: 5px 10px;
+}
   
 /********************************************************/
 /*                7. Error classes                      */
@@ -1060,6 +1074,15 @@
   #loaded7 #mobile-search {
     margin: 10px 35px 0px 0px;
   }
+
+  #loaded7 .popover {
+    min-width: 400px;
+    max-width: 400px;
+  }
+  
+  #loaded7 .popover.left {
+    margin-left: -25px;
+  }
 }
 
 @media (min-width: 480px) and (max-width: 599px) {
@@ -1078,6 +1101,15 @@
   
   #loaded7 #mobile-search {
     margin: 10px 35px 0px 0px;
+  }
+
+  #loaded7 .popover {
+    min-width: 300px;
+    max-width: 300px;
+  }
+  
+  #loaded7 .popover.left {
+    margin-left: -25px;
   }
 }
 
@@ -1128,5 +1160,14 @@
   #loaded7 input.navbar-search:focus {
     width: 25px;
     background: #b2b2b2;
+  }
+
+  #loaded7 .popover {
+    min-width: 200px;
+    max-width: 200px;
+  }
+  
+  #loaded7 .popover.left {
+    margin-left: -25px;
   }
 }
