@@ -131,13 +131,33 @@
       <div class="no-margin-bottom">
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav col-lg-9">
+          <ul class="nav navbar-nav col-lg-7">
             <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_home'); ?></a></li>
             <?php echo lC_Template_output::getCategoryNav(); ?>
           </ul>
-          <div class="text-right small-margin-top small-margin-bottom col-lg-3">
+          <div class="text-right small-margin-top small-margin-bottom col-lg-5">
             <form role="form" class="form-inline hide-on-mobile" name="search" id="search" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" method="get">
               <span class="text-right">
+                <?php
+                  if ($lC_Template->getBranding('social_facebook_page') != '') {
+                    echo lc_link_object(lc_href_link($lC_Template->getBranding('social_facebook_page'), '', 'NONSSL'), lc_image(DIR_WS_IMAGES . 'icons/fb-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                  }
+                  if ($lC_Template->getBranding('social_twitter') != '') {
+                    echo lc_link_object(lc_href_link($lC_Template->getBranding('social_twitter'), '', 'NONSSL'), lc_image(DIR_WS_IMAGES . 'icons/tw-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                  } 
+                  if ($lC_Template->getBranding('social_pinterest') != '') {
+                    echo lc_link_object(lc_href_link($lC_Template->getBranding('social_pinterest'), '', 'NONSSL'), lc_image(DIR_WS_IMAGES . 'icons/pn-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                  } 
+                  if ($lC_Template->getBranding('social_google_plus') != '') {
+                    echo lc_link_object(lc_href_link($lC_Template->getBranding('social_google_plus'), '', 'NONSSL'), lc_image(DIR_WS_IMAGES . 'icons/gp-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                  } 
+                  if ($lC_Template->getBranding('social_youtube') != '') {
+                    echo lc_link_object(lc_href_link($lC_Template->getBranding('social_youtube'), '', 'NONSSL'), lc_image(DIR_WS_IMAGES . 'icons/yt-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                  } 
+                  if ($lC_Template->getBranding('social_linkedin') != '') {
+                    echo lc_link_object(lc_href_link($lC_Template->getBranding('social_linkedin'), '', 'NONSSL'), lc_image(DIR_WS_IMAGES . 'icons/in-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                  }                  
+                ?>
                 <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
                 <i class="fa fa-search navbar-search-icon"></i>
                 <input type="text" class="navbar-search" name="keywords" id="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>

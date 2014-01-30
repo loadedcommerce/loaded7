@@ -1030,11 +1030,15 @@
 }
 
 @media (min-width: 940px) and (max-width: 1199px) {
+  .nav > li > a {
+    padding: 10px 6px;
+    font-size: 13px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 939px) {
   .nav > li > a {
-    padding: 10px 7px;
+    padding: 10px 6px;
     font-size: 13px;
   }
 }
