@@ -162,6 +162,7 @@
               <input type="text" class="navbar-search" name="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>
             </span>
           </form>
+          <div class="mobile-portrait-search-input-cover"></div>
         </div>
       </div>    
       <div class="no-margin-bottom">
