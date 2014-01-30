@@ -118,6 +118,15 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
+        <div class="text-right show-on-mobile">
+          <form role="form" class="form-inline" name="mobile-search" id="mobile-search" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" method="get">
+            <span class="text-right">
+              <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
+              <i class="fa fa-search navbar-search-icon cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_SEARCH, '', 'NONSSL'); ?>'"></i>
+              <input type="text" class="navbar-search" name="keywords" id="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>
+            </span>
+          </form>
+        </div>
       </div>    
       <div class="no-margin-bottom">
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -127,11 +136,13 @@
             <?php echo lC_Template_output::getCategoryNav(); ?>
           </ul>
           <div class="text-right small-margin-top small-margin-bottom col-lg-3">
-            <span class="text-right">
-              <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
-              <i class="fa fa-search navbar-search-icon"></i>
-              <input type="text" class="navbar-search" placeholder="Search">
-            </span>
+            <form role="form" class="form-inline hide-on-mobile" name="search" id="search" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" method="get">
+              <span class="text-right">
+                <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
+                <i class="fa fa-search navbar-search-icon"></i>
+                <input type="text" class="navbar-search" name="keywords" id="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>
+              </span>
+            </form>
           </div>  
         </div>
       </div>

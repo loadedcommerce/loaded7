@@ -17,9 +17,9 @@
  * 5. Main layout elements
  * 6. Main layout styles
  * 7. Error styles
- * 8. Media query styles
- * 9. Utility classes
- * 10. Site Maintenance masking
+ * 8. Utility classes
+ * 9. Site Maintenance masking
+ * 10. Media query styles
  */
 
 /********************************************************/
@@ -100,13 +100,6 @@
 
 #loaded7 .img-responsive {
   margin: auto !important;
-}
-
-#loaded7 .same-height {
-  display: inline-block;
-  *display: inline;
-  vertical-align: top;
-  zoom: 1; 
 }
 
 /********************************************************/
@@ -580,6 +573,49 @@
 #loaded7 .fa-bars-mobile {
   display: none;
 }
+
+#loaded7 input.navbar-search {
+  background: #b2b2b2;
+  border: 0 none;
+  font: bold 12px Arial,Helvetica,Sans-serif;
+  color: #000000;
+  width: 85px;
+  padding: 7px 15px 7px 25px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+  margin: 0 -24px 0 0; 
+}
+
+#loaded7 input.navbar-search:focus {
+  background: #fcfcfc;
+  color: #000000;
+  width: 150px;
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  margin: 0 -24px 0 0;
+  outline: none; 
+}
+
+#loaded7 input.navbar-search {
+  -webkit-transition: all 0.4s ease 0s;
+  -moz-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+}
+
+#loaded7 .navbar-search-icon {
+  margin: 0 -25px 0 8px;
+  position: relative;
+  z-index: 1;
+  color: #444444;
+}
   
 /********************************************************/
 /*                7. Error classes                      */
@@ -606,86 +642,7 @@
 }
 
 /********************************************************/
-/*              8. Media query styles                   */
-/********************************************************/  
-  
-@media (min-width: 1200px) {
-}
-
-@media (min-width: 940px) and (max-width: 1199px) {
-}
-
-@media (min-width: 768px) and (max-width: 939px) {
-}
-
-@media (min-width: 600px) and (max-width: 767px) {
-  #loaded7 .show-on-mobile {
-    display: block;
-  }
-
-  #loaded7 .hide-on-mobile {
-    display: none;
-  }
-
-  #loaded7 #content-center-main-container h1 {
-    padding-top: 10px;
-    margin-left: 13px;
-  }
-}
-
-@media (min-width: 480px) and (max-width: 599px) {
-  #loaded7 .show-on-mobile {
-    display: block;
-  }
-
-  #loaded7 .hide-on-mobile {
-    display: none;
-  }
-
-  #loaded7 #content-center-main-container h1 {
-    padding-top: 10px;
-    margin-left: 13px;
-  }
-}
-
-@media (max-width: 479px) {
-  #loaded7 .show-on-mobile {
-    display: block;
-  }
-  
-  #loaded7 .fa-bars-mobile {
-    display: inline-block;
-  }
-
-  #loaded7 .hide-on-mobile {
-    display: none;
-  }
-
-  #loaded7 .hide-on-mobile-portrait {
-    display: none !important;
-  }
-  
-  #loaded7 .locale-menu > li {
-    float: left !important;
-  }
-
-  #loaded7 #content-center-main-container h1 {
-    padding-top: 10px;
-    margin-left: 13px;
-  }
-
-  #loaded7 .topnav .nav-item {
-    padding: 5px 0 0 35px;
-  }
-  
-  #loaded7 .topnav-container {
-    float: left;
-    margin-left: -12px;
-  }
-}
-
-/********************************************************/
-/*                  9. Utility classes                  */
+/*                  8. Utility classes                  */
 /********************************************************/  
 #loaded7 .clear-left {
   clear: left !important;
@@ -1011,51 +968,8 @@
   cursor: pointer !important;
 }
 
-#loaded7 input.navbar-search {
-  background: #b2b2b2;
-  border: 0 none;
-  font: bold 12px Arial,Helvetica,Sans-serif;
-  color: #000000;
-  width: 85px;
-  padding: 7px 15px 7px 25px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-  margin: 0 -24px 0 0; 
-}
-
-#loaded7 input.navbar-search:focus {
-  background: #fcfcfc;
-  color: #000000;
-  width: 150px;
-  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
-  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.9) inset;
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-  margin: 0 -24px 0 0;
-  outline: none; 
-}
-
-#loaded7 input.navbar-search {
-  -webkit-transition: all 0.4s ease 0s;
-  -moz-transition: all 0.4s ease 0s;
-  -o-transition: all 0.4s ease 0s;
-  transition: all 0.4s ease 0s;
-}
-
-#loaded7 .navbar-search-icon {
-  margin: 0 -25px 0 8px;
-  position: relative;
-  z-index: 1;
-  color: #444444;
-}
-
 /********************************************************/
-/*             10. Site Maintenace masking              */
+/*             9. Site Maintenace masking              */
 /********************************************************/
 .loadmask {
   z-index: 100;
@@ -1106,4 +1020,109 @@
 
 .masked-hidden {
   visibility: hidden !important;
+}
+
+/********************************************************/
+/*              10. Media query styles                   */
+/********************************************************/  
+  
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 940px) and (max-width: 1199px) {
+}
+
+@media (min-width: 768px) and (max-width: 939px) {
+  .nav > li > a {
+    padding: 10px 7px;
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 767px) {
+  #loaded7 .show-on-mobile {
+    display: block;
+  }
+
+  #loaded7 .hide-on-mobile {
+    display: none;
+  }
+
+  #loaded7 #content-center-main-container h1 {
+    padding-top: 10px;
+    margin-left: 13px;
+  }
+  
+  #loaded7 #mobile-search {
+    margin: 10px 35px 0px 0px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 599px) {
+  #loaded7 .show-on-mobile {
+    display: block;
+  }
+
+  #loaded7 .hide-on-mobile {
+    display: none;
+  }
+
+  #loaded7 #content-center-main-container h1 {
+    padding-top: 10px;
+    margin-left: 13px;
+  }
+  
+  #loaded7 #mobile-search {
+    margin: 10px 35px 0px 0px;
+  }
+}
+
+@media (max-width: 479px) {
+  #loaded7 .show-on-mobile {
+    display: block;
+  }
+  
+  #loaded7 .fa-bars-mobile {
+    display: inline-block;
+  }
+
+  #loaded7 .hide-on-mobile {
+    display: none;
+  }
+
+  #loaded7 .hide-on-mobile-portrait {
+    display: none !important;
+  }
+  
+  #loaded7 .locale-menu > li {
+    float: left !important;
+  }
+
+  #loaded7 #content-center-main-container h1 {
+    padding-top: 10px;
+    margin-left: 13px;
+  }
+
+  #loaded7 .topnav .nav-item {
+    padding: 5px 0 0 35px;
+  }
+  
+  #loaded7 .topnav-container {
+    float: left;
+    margin-left: -12px;
+  }
+  
+  #loaded7 #mobile-search {
+    margin: 10px 35px 0px 0px;
+  }
+  
+  #loaded7 input.navbar-search {
+    width: 25px;
+    padding: 7px 10px 7px 20px;
+  }
+  
+  #loaded7 input.navbar-search:focus {
+    width: 25px;
+    background: #b2b2b2;
+  }
 }
