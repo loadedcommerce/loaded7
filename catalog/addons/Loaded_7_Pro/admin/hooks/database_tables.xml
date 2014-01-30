@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Add Pro DB Tables</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="../includes/database_tables.php">
+    <operation info="Add Pro DB Tables">
+      <search position="after"><![CDATA[define('TABLE_ZONES_TO_GEO_ZONES', DB_TABLE_PREFIX . 'zones_to_geo_zones');]]></search>         
+      <add><![CDATA[define('TABLE_PRODUCT_CLASSES', DB_TABLE_PREFIX . 'product_classes');]]></add>
+    </operation>    
+  </file> 
+</modification>
