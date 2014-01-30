@@ -11,9 +11,49 @@
 ?>
 <!--header.php start-->     
 <div class="topnav mid-margin-bottom">
-  <div class="container">
-    <div class="pull-right">
-      <ul class="locale-menu nav navbar-nav">
+  <div class="container topnav-container">
+    <div class="pull-right margin-right">   
+      <?php if ($lC_Template->getBranding('chat_code') != '') { ?>
+      <ul class="chat-menu nav-item pull-right no-margin-bottom">
+        <li>
+          <?php echo $lC_Template->getBranding('chat_code'); ?>
+        </li>
+      </ul>  
+      <?php } ?>
+      <ul class="cart-menu nav-item pull-right no-margin-bottom">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fa fa-shopping-cart white small-margin-right"></i> (<?php echo $lC_ShoppingCart->numberOfItems(); ?>) <span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('text_items'); ?></span> <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu cart-dropdown">
+            <!-- going to change -->
+            <li style="white-space: nowrap;">
+              <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'cart', 'NONSSL'); ?>"><?php echo $lC_Language->get('button_view_cart'); ?> | <?php echo $lC_Language->get('text_total'); ?>: <?php echo $lC_Currencies->format($lC_ShoppingCart->getSubTotal()); ?> (<?php echo $lC_ShoppingCart->numberOfItems(); ?>)</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="account-menu nav-item pull-right no-margin-bottom">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="fa fa-user white small-margin-right"></i> <i class="fa fa-bars fa-bars-mobile"></i><span class="hide-on-mobile-portrait"><?php echo $lC_Language->get('my_account'); ?></span> <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu account-dropdown">
+            <?php 
+            if ($lC_Customer->isLoggedOn()) { 
+              echo '<li><a href="' . lc_href_link(FILENAME_ACCOUNT, 'logoff', 'SSL') , '">' . $lC_Language->get('text_sign_out') . '</a></li>';
+            } else {
+              echo '<li><a href="' . lc_href_link(FILENAME_ACCOUNT, '', 'SSL') . '">' . $lC_Language->get('text_login') . '</a></li>';
+            }
+            ?>
+            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><?php echo $lC_Language->get('my_account'); ?></a></li>
+            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'orders', 'SSL'); ?>"><?php echo $lC_Language->get('text_my_orders'); ?></a></li>
+            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'address_book', 'SSL'); ?>"><?php echo $lC_Language->get('text_address_book'); ?></a></li>
+            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, 'password', 'SSL'); ?>"><?php echo $lC_Language->get('text_change_password'); ?></a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="locale-menu nav-item pull-right no-margin-bottom">
         <li class="dropdown">
           <?php 
             echo '<a class="dropdown-toggle" data-toggle="dropdown" href="#">' . 
@@ -32,40 +72,6 @@
           </ul>
         </li>
       </ul>
-      <ul class="account-menu nav navbar-nav">
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">My Account <b class="caret"></b></a>
-          <ul class="dropdown-menu account-dropdown">
-            <li><a href="<?php echo lc_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><?php echo $lC_Language->get('text_sign_in'); ?></a></li>
-            <?php 
-            if ($lC_Customer->isLoggedOn()) { 
-              echo '<li><a href="' . lc_href_link(FILENAME_ACCOUNT, 'logoff', 'SSL') , '">' . $lC_Language->get('text_sign_out') . '</a></li>';
-            } 
-            ?>
-            <li><a href="<?php echo lc_href_link(FILENAME_INFO, 'contact', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_contact'); ?></a></li>
-            <li><a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>"><?php echo $lC_Language->get('text_checkout'); ?></a></li>
-          </ul>
-        </li>
-      </ul>
-      <ul class="cart-menu nav navbar-nav">
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <i class="fa fa-shopping-cart white small-margin-right"></i> (<?php echo $lC_ShoppingCart->numberOfItems(); ?>) Items <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu cart-dropdown">
-            <li style="white-space: nowrap;">
-              <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'cart', 'NONSSL'); ?>">View Cart | Total: <?php echo $lC_Currencies->format($lC_ShoppingCart->getSubTotal()); ?> (<?php echo $lC_ShoppingCart->numberOfItems(); ?>)</a>
-            </li>
-          </ul>
-        </li>
-      </ul>   
-      <?php if ($lC_Template->getBranding('chat_code') != '') { ?>
-      <ul class="nav navbar-nav">
-        <li>
-          <?php echo $lC_Template->getBranding('chat_code'); ?>
-        </li>
-      </ul>  
-      <?php } ?>
     </div>
   </div>
 </div>
@@ -116,18 +122,21 @@
       <div class="no-margin-bottom">
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav col-lg-10">
+          <ul class="nav navbar-nav col-lg-9">
             <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_home'); ?></a></li>
             <?php echo lC_Template_output::getCategoryNav(); ?>
           </ul>
-          <div class="text-right small-margin-top small-margin-bottom small-margin-right-neg">
-            <button type="button" class="btn btn-success btn-sm">Checkout</button>  
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-search"></i> Search</button>
+          <div class="text-right small-margin-top small-margin-bottom col-lg-3">
+            <span class="text-right">
+              <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
+              <i class="fa fa-search navbar-search-icon"></i>
+              <input type="text" class="navbar-search" placeholder="Search">
+            </span>
           </div>  
         </div>
       </div>
     </div>
-    <div class="small-margin-top">
+    <div class="small-margin-top hide-on-mobile">
       <?php
       if ($lC_Services->isStarted('breadcrumb')) {
         echo '<ol class="breadcrumb">' . $lC_Breadcrumb->getPathList() . '</ol>' . "\n";
