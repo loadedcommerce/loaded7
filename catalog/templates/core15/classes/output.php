@@ -214,7 +214,7 @@ class lC_Template_output {
       if ($Qcategories->value('categories_mode') == 'override') {
         $url = '<a href="' . $Qcategories->value('categories_custom_url') . '"' . (($Qcategories->value('categories_link_target') == 1) ? ' target="_blank"' : null) . '>' . $Qcategories->value('categories_name') . '</a>';
       } else {
-        $url = lc_link_object(lc_href_link(FILENAME_DEFAULT . '?cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id')), '', 'AUTO'), $Qcategories->value('categories_name') . (($hasChildren > 0 && $level == 0) ? '&nbsp;<b class="caret"></b>' : null), (($hasChildren > 0 && $level == 0) ? ' data-toggle="dropdown" class="dropdown-toggle"' : null));
+        $url = lc_link_object(($Qcategories->value('categories_custom_url') != '' ? $Qcategories->value('categories_custom_url') : lc_href_link(FILENAME_DEFAULT . '?cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id')), '', 'AUTO')), $Qcategories->value('categories_name') . (($hasChildren > 0 && $level == 0) ? '&nbsp;<b class="caret"></b>' : null), (($hasChildren > 0 && $level == 0) ? ' data-toggle="dropdown" class="dropdown-toggle"' : null));
       }
       $output[] .= '<li' . (($hasChildren > 0) ? ' class="dropdown"' : null) . '>' . 
                      $url . 
