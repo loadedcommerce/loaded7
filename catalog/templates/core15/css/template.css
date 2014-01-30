@@ -1198,11 +1198,11 @@
   }
   
   #loaded7 .topnav {
-    min-height: 50px;
+    min-height: 35px;
   }
 
   #loaded7 .topnav .nav-item {
-    padding: 14px 0 0 35px;
+    padding: 7px 0 0 35px;
   }
 }
 
@@ -1233,11 +1233,11 @@
   }
   
   #loaded7 .topnav {
-    min-height: 50px;
+    min-height: 35px;
   }
 
   #loaded7 .topnav .nav-item {
-    padding: 14px 0 0 35px;
+    padding: 7px 0 0 35px;
   }
   
   #loaded7 .topnav-container {
