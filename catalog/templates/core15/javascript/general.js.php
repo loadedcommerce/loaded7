@@ -10,15 +10,15 @@
 */
 ?>
 $(document).ready(function() {
+  var isVisible = false;
+  var clickedAway = false;
   $('[data-toggle="popover-mobile"]').popover({
     trigger: 'click',
     'placement': 'left'
   }).click(function(e) {
       $('[data-toggle="popover-mobile"]').not(this).popover('hide');
-      $('.popover-content').append('<a class="close" style="position: absolute; top: 3px; right: 6px; color: red;"><i class="fa fa-times-circle red"></i></a>');
-      clickedAway = false;
       isVisible = true;
-      e.preventDefault();
+      clickedAway = false;
   });
   $(document).click(function (e) {
     if (isVisible & clickedAway) {

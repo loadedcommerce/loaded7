@@ -78,12 +78,12 @@
 <div class="page-header">
   <div class="container">
     <div class="row mid-margin-bottom">
-      <div class="col-xs-8 col-sm-6 col-lg-6">
+      <div class="col-xs-9 col-sm-6 col-lg-6">
         <h1 class="logo">
           <a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>">
           <?php 
             if ($lC_Template->getBranding('site_image') != '') {
-              echo lc_image(DIR_WS_IMAGES . 'branding/' . $lC_Template->getBranding('site_image'), STORE_NAME, null, null, 'class="small-margin-right img-logo-responsive" alt="' . STORE_NAME . '"');
+              echo lc_image(DIR_WS_IMAGES . 'branding/' . $lC_Template->getBranding('site_image'), STORE_NAME, null, null, 'class="small-margin-right img-logo-responsive"');
             } else { 
               echo STORE_NAME; 
             }
@@ -91,10 +91,10 @@
           </a>
         </h1>
         <?php if ($lC_Template->getBranding('slogan') != '') { ?>
-          <p class="slogan clear-both hide-on-mobile"><?php echo $lC_Template->getBranding('slogan'); ?></p>
+          <p class="slogan clear-both small-margin-top-neg"><?php echo $lC_Template->getBranding('slogan'); ?></p>
         <?php } ?>
       </div>
-      <div class="col-xs-4 col-sm-6 col-lg-6">
+      <div class="col-xs-3 col-sm-6 col-lg-6">
         <div class="text-right mid-margin-right">
           <span class="hide-on-mobile">
             <?php 
@@ -110,23 +110,16 @@
             if ($lC_Template->getBranding('sales_phone') != '') { 
           ?>
           <span class="show-on-mobile">
-            <i class="fa fa-phone cursor-pointer" title="<?php echo $lC_Language->get('sales_phone'); ?>" data-toggle="popover-mobile" data-content="<?php echo $lC_Template->getBranding('sales_phone'); ?>"></i>
+            <i class="fa fa-phone fa-lg fa-sales-phone small-margin-bottom cursor-pointer" title="<?php echo $lC_Language->get('sales_phone'); ?>" data-toggle="popover-mobile" data-content="<?php echo $lC_Template->getBranding('sales_phone'); ?>"></i>
           </span>
           <?php
             } 
             if ($lC_Template->getBranding('sales_email') != '') { 
           ?>
           <span class="show-on-mobile">
-            <i class="fa fa-envelope cursor-pointer" title="<?php echo $lC_Language->get('sales_email'); ?>" data-toggle="popover-mobile" data-content="<?php echo $lC_Template->getBranding('sales_email'); ?>"></i>
+            <i class="fa fa-envelope fa-lg fa-sales-email small-margin-bottom cursor-pointer" title="<?php echo $lC_Language->get('sales_email'); ?>" data-toggle="popover-mobile" data-content="<?php echo $lC_Template->getBranding('sales_email'); ?>"></i>
           </span>
           <?php
-            } 
-            if ($lC_Template->getBranding('slogan') != '') { 
-          ?>
-          <span class="show-on-mobile">
-            <i class="fa fa-info-circle cursor-pointer" title="<?php echo $lC_Language->get('site_slogan'); ?>" data-toggle="popover-mobile" data-content="<?php echo $lC_Template->getBranding('slogan'); ?>"></i>
-          </span>
-          <?php 
             } 
           ?>
         </div>  
@@ -166,7 +159,7 @@
               ?>
               <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
               <i class="fa fa-search navbar-search-icon cursor-pointer" onclick="window.location.href='<?php echo lc_href_link(FILENAME_SEARCH, '', 'NONSSL'); ?>'"></i>
-              <input type="text" class="navbar-search" name="keywords" id="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>
+              <input type="text" class="navbar-search" name="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>
             </span>
           </form>
         </div>
@@ -203,7 +196,7 @@
                 ?>
                 <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
                 <i class="fa fa-search navbar-search-icon"></i>
-                <input type="text" class="navbar-search" name="keywords" id="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>
+                <input type="text" class="navbar-search" name="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>
               </span>
             </form>
           </div>  
