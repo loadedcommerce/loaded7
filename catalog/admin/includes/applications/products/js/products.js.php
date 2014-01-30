@@ -607,10 +607,10 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             <?php
           }
           ?>
-          "categories[]": { 
+          /*"categories[]": { 
             required: true, 
             minlength: 1
-          }
+          }*/
         },
         
         messages: {
@@ -623,7 +623,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             <?php
           }
           ?>
-          "categories[]": "<span class='bold'><?php echo $lC_Language->get('ms_error_products_categories_required'); ?></span>",
+          //"categories[]": "<span class='bold'><?php echo $lC_Language->get('ms_error_products_categories_required'); ?></span>",
         }, 
       }).form();
       $("#languageTabs").refreshTabs();
