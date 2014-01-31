@@ -95,7 +95,7 @@
         <?php } ?>
       </div>
       <div class="col-xs-5 col-sm-6 col-lg-6 branding-sps">
-        <div class="text-right mid-margin-right">
+        <div class="float-right mid-margin-right">
           <span class="hide-on-mobile">
             <?php 
               if ($lC_Template->getBranding('sales_phone') != '') { 
