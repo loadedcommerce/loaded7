@@ -70,8 +70,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         if (file_exists('templates/' . $lC_Template->getCode() . '/header.php')) {
           include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/header.php'));
         }
-      }      
-
+      }
+      
       // set the format; 1, 2, or 3 columns
       $left = $lC_Template->getBoxModules('left');
       $right = $lC_Template->getBoxModules('right');
@@ -96,6 +96,34 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       ?>
       <div id="content-container" class="container">
         <div class="row"> 
+          <!--header content modules--> 
+          <div id="after-header-container" class="container">
+            <div class="row">
+              <div class="col-sm-12 col-lg-12 mobile-expand">
+                <?php
+                  if ($lC_Template->hasPageContentModules()) {
+                    foreach ($lC_Template->getContentModules('header') as $box) {
+                      $lC_Box = new $box();
+                      $lC_Box->initialize();
+                      if ($lC_Box->hasContent()) {
+                        if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+                          include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                        } else {
+                          if (file_exists('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php')) {
+                            include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                          } else {
+                            include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                          }
+                        }
+                      }
+                      unset($lC_Box);
+                    }
+                  }
+                ?>
+              </div>
+            </div>
+          </div>
+           
           <!--left column -->
           <?php if (!empty($left)) echo '<div id="content-left-container" class="' . $box_class . ' hide-on-mobile">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
              
@@ -165,13 +193,39 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
             }               
             ?>
           </div>
+          <!--footer content modules--> 
+          <div id="before-footer-container" class="container">
+            <div class="row">
+              <div class="col-sm-12 col-lg-12 mobile-expand">
+                <?php
+                  if ($lC_Template->hasPageContentModules()) {
+                    foreach ($lC_Template->getContentModules('footer') as $box) {
+                      $lC_Box = new $box();
+                      $lC_Box->initialize();
+                      if ($lC_Box->hasContent()) {
+                        if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+                          include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                        } else {
+                          if (file_exists('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php')) {
+                            include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                          } else {
+                            include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                          }
+                        }
+                      }
+                      unset($lC_Box);
+                    }
+                  }
+                ?>
+              </div>
+            </div>
+          </div>
             
           <!--right column-->
           <?php if (!empty($left)) echo '<div id="content-left-mobile-container" class="' . $box_class . ' show-on-mobile mobile-expand">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
           <?php if (!empty($right)) echo '<div id="content-right-container" class="' . $box_class . ' mobile-expand">' . $lC_Template->getInfoBoxHtml('right') . '</div>' . "\n"; ?>
                     
-        </div> <!-- end row --> 
-        
+        </div> <!-- end row -->
         <?php
         // page footer
         if ($lC_Template->hasPageFooter()) {

@@ -633,6 +633,10 @@
 #loaded7 .mobile-portrait-search-input-cover {
   display: none;
 }
+
+#loaded7 .breadcrumb {
+  margin-bottom: 5px;
+}
   
 /********************************************************/
 /*                7. Error classes                      */
