@@ -293,7 +293,11 @@
   /*background:#282828; border:none;*/;
 }
 
-.navbar-toggle {
+#loaded7 .navbar-nav > li > .dropdown-menu {
+  margin-top: 1px;
+}
+
+#loaded7 .navbar-toggle {
   /*background-color: rgba(0, 0, 0, 0);
   border: 1px solid rgba(0, 0, 0, 0);
   border-radius: 4px;*/
