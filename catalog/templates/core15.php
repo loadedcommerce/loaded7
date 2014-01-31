@@ -100,7 +100,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
           <?php if (!empty($left)) echo '<div id="content-left-container" class="' . $box_class . ' hide-on-mobile">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
              
           <!--content start-->  
-          <div id="content-center-container" class="<?php echo $content_class; ?>">
+          <div id="content-center-container" class="<?php echo $content_class; ?> mobile-expand">
             <?php
             if ($lC_MessageStack->size('header') > 0) {
               echo '<div class="alert alert-danger">' . $lC_MessageStack->get('header') . '</div>';
@@ -167,8 +167,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
           </div>
             
           <!--right column-->
-          <?php if (!empty($left)) echo '<div id="content-left-mobile-container" class="' . $box_class . ' show-on-mobile">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
-          <?php if (!empty($right)) echo '<div id="content-right-container" class="' . $box_class . '">' . $lC_Template->getInfoBoxHtml('right') . '</div>' . "\n"; ?>
+          <?php if (!empty($left)) echo '<div id="content-left-mobile-container" class="' . $box_class . ' show-on-mobile mobile-expand">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
+          <?php if (!empty($right)) echo '<div id="content-right-container" class="' . $box_class . ' mobile-expand">' . $lC_Template->getInfoBoxHtml('right') . '</div>' . "\n"; ?>
                     
         </div> <!-- end row --> 
         

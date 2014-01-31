@@ -218,16 +218,16 @@
 }
 
 #loaded7 .topnav .locale-header-dropdown {
-  margin-top: 7px;
+  margin-top: 8px;
 }
 
 #loaded7 .topnav .account-dropdown {
-  margin-top: 7px;
+  margin-top: 8px;
 }
 
 #loaded7 .topnav .cart-dropdown {
-  left: -95px;
-  margin-top: 7px;
+  left: -125px;
+  margin-top: 8px;
 }
 
 #loaded7 .topnav .locale-header-dropdown > li, #loaded7 .topnav .account-dropdown > li {
@@ -277,6 +277,9 @@
 
 #loaded7 .navbar {
   min-height: 0px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
 
 #loaded7 .navbar .container {
@@ -300,6 +303,10 @@
   /*margin-top: 8px;
   padding: 9px 10px;
   position: relative;*/
+}
+
+#loaded7 .dropdown-menu > li > a {
+  line-height: 2.0;
 }
 
 #loaded7 .navbar .dropdown-submenu { 
@@ -597,10 +604,6 @@
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
   -webkit-transition: all 0.4s ease 0s;
   -moz-transition: all 0.4s ease 0s;
   -o-transition: all 0.4s ease 0s;
@@ -612,10 +615,6 @@
   background: #fcfcfc;
   color: #000000;
   width: 150px;
-  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
   margin: 0 -24px 0 0;
   outline: none; 
 }
@@ -1084,42 +1083,36 @@
   }
 
   #loaded7 .popover {
-    min-width: 400px;
-    max-width: 400px;
+    min-width: 360px;
+    max-width: 360px;
   }
   
   #loaded7 .popover.left {
-    margin-left: -25px;
+    margin-left: 10px;
   }
   
   #loaded7 .fa-sales-phone {
-    border: 1px solid #e3e3e3;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    width: 40px;
-    height: 40px;
-    padding: 13px 12px;    
+    width: 28px;
+    padding: 4px 30px 0px;    
   }
   
   #loaded7 .fa-sales-email {
-    border: 1px solid #e3e3e3;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    width: 40px;
-    height: 40px;
-    padding: 12px 10px;
+    width: 28px;
+    padding: 0px 34px;
   }
   
   #loaded7 .fa-site-slogan {
-    border: 1px solid #e3e3e3;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    width: 40px;
-    height: 40px;
-    padding: 13px 11px;
+    width: 28px;
+    padding: 4px 34px 0px;
+  }
+  
+  #loaded7 .header-fa-icons {
+    float: left !important;
+    display: inline-block;
+  }
+  
+  #loaded7 .branding-sps {
+    margin: -5px 0 15px;
   }
   
   #loaded7 input.navbar-search:focus {
@@ -1146,55 +1139,49 @@
   }
 
   #loaded7 .popover {
-    min-width: 300px;
-    max-width: 300px;
+    min-width: 280px;
+    max-width: 280px;
   }
   
   #loaded7 .popover.left {
-    margin-left: -25px;
+    margin-left: 0px;
   }
   
   #loaded7 .fa-sales-phone {
-    border: 1px solid #e3e3e3;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    width: 40px;
-    height: 40px;
-    padding: 13px 12px;    
+    width: 28px;
+    padding: 4px 24px 0px;    
   }
   
   #loaded7 .fa-sales-email {
-    border: 1px solid #e3e3e3;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    width: 40px;
-    height: 40px;
-    padding: 12px 10px;
+    width: 28px;
+    padding: 0px 25px;
   }
   
   #loaded7 .fa-site-slogan {
-    border: 1px solid #e3e3e3;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    width: 40px;
-    height: 40px;
-    padding: 13px 11px;
+    width: 28px;
+    padding: 4px 26px 0px;
+  }
+  
+  #loaded7 .header-fa-icons {
+    float: left !important;
+    display: inline-block;
+  }
+  
+  #loaded7 .branding-sps {
+    margin: -5px 0 15px;
   }
 
   #loaded7 .topnav .locale-header-dropdown {
-    margin-top: 16px;
+    margin-top: 9px;
   }
 
   #loaded7 .topnav .account-dropdown {
-    margin-top: 16px;
+    margin-top: 9px;
   }
 
   #loaded7 .topnav .cart-dropdown {
-    left: -190px;
-    margin-top: 16px;
+    left: -125px;
+    margin-top: 9px;
   }
   
   #loaded7 .topnav {
@@ -1260,57 +1247,51 @@
   }
 
   #loaded7 .popover {
-    min-width: 200px;
-    max-width: 200px;
+    min-width: 180px;
+    max-width: 180px;
   }
   
   #loaded7 .popover.left {
-    margin-left: -25px;
+    margin-left: -10px;
   }
   
   #loaded7 .fa-sales-phone {
-    border: 1px solid #e3e3e3;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    width: 40px;
-    height: 40px;
-    padding: 13px 12px;    
+    width: 28px;
+    padding: 4px 9px 0px;    
   }
   
   #loaded7 .fa-sales-email {
-    border: 1px solid #e3e3e3;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    width: 40px;
-    height: 40px;
-    padding: 12px 10px;
+    width: 28px;
+    padding: 0px 8px;
   }
   
   #loaded7 .fa-site-slogan {
-    border: 1px solid #e3e3e3;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    width: 40px;
-    height: 40px;
-    padding: 13px 11px;
+    width: 28px;
+    padding: 4px 13px 0px;
+  }
+  
+  #loaded7 .header-fa-icons {
+    float: left !important;
+    display: inline-block;
+  }
+  
+  #loaded7 .branding-sps {
+    margin: -5px 0 0 0;
   }
 
   #loaded7 .topnav .locale-header-dropdown {
     left: -24px;
-    margin-top: 16px;
+    margin-top: 9px;
   }
 
   #loaded7 .topnav .account-dropdown {
-    left: -18px;
-    margin-top: 16px;
+    left: -20px;
+    margin-top: 9px;
   }
 
   #loaded7 .topnav .cart-dropdown {
-    left: -205px;
-    margin-top: 16px;
+    left: -150px;
+    margin-top: 9px;
   }
   
   #loaded7 .mobile-portrait-search-input-cover {
@@ -1322,5 +1303,9 @@
     width: 30px;
     z-index: 1;
     display: block;
+  }
+  
+  #loaded7 .mobile-expand {
+    margin: 0 -10px;
   }
 }

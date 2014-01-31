@@ -77,8 +77,8 @@
 </div>
 <div class="page-header">
   <div class="container">
-    <div class="row mid-margin-bottom">
-      <div class="col-xs-9 col-sm-6 col-lg-6">
+    <div class="row no-margin-bottom">
+      <div class="col-xs-7 col-sm-6 col-lg-6">
         <h1 class="logo">
           <a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>">
           <?php 
@@ -91,10 +91,10 @@
           </a>
         </h1>
         <?php if ($lC_Template->getBranding('slogan') != '') { ?>
-          <p class="slogan clear-both small-margin-top-neg"><?php echo $lC_Template->getBranding('slogan'); ?></p>
+          <p class="slogan clear-both small-margin-top-neg hide-on-mobile"><?php echo $lC_Template->getBranding('slogan'); ?></p>
         <?php } ?>
       </div>
-      <div class="col-xs-3 col-sm-6 col-lg-6">
+      <div class="col-xs-5 col-sm-6 col-lg-6 branding-sps">
         <div class="text-right mid-margin-right">
           <span class="hide-on-mobile">
             <?php 
@@ -109,15 +109,22 @@
           <?php 
             if ($lC_Template->getBranding('sales_phone') != '') { 
           ?>
-          <span class="show-on-mobile">
+          <span class="show-on-mobile header-fa-icons">
             <i class="fa fa-phone fa-lg fa-sales-phone small-margin-bottom cursor-pointer" title="<?php echo $lC_Language->get('sales_phone'); ?>" data-toggle="popover-mobile" data-content="<?php echo $lC_Template->getBranding('sales_phone'); ?>"></i>
           </span>
           <?php
             } 
             if ($lC_Template->getBranding('sales_email') != '') { 
           ?>
-          <span class="show-on-mobile">
+          <span class="show-on-mobile header-fa-icons">
             <i class="fa fa-envelope fa-lg fa-sales-email small-margin-bottom cursor-pointer" title="<?php echo $lC_Language->get('sales_email'); ?>" data-toggle="popover-mobile" data-content="<?php echo $lC_Template->getBranding('sales_email'); ?>"></i>
+          </span>
+          <?php
+            } 
+            if ($lC_Template->getBranding('slogan') != '') { 
+          ?>
+          <span class="show-on-mobile header-fa-icons">
+            <i class="fa fa-info-circle fa-lg fa-site-slogan small-margin-bottom cursor-pointer" title="<?php echo $lC_Language->get('site_slogan'); ?>" data-toggle="popover-mobile" data-content="<?php echo $lC_Template->getBranding('slogan'); ?>"></i>
           </span>
           <?php
             } 
@@ -125,7 +132,7 @@
         </div>  
       </div>       
     </div>
-    <div class="navbar navbar-inverse small-margin-bottom" role="navigation">   
+    <div class="navbar navbar-inverse small-margin-bottom mobile-expand" role="navigation">   
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
