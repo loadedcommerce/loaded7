@@ -175,7 +175,7 @@
       <div class="no-margin-bottom">
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav col-lg-7">
+          <ul class="nav navbar-nav col-lg-7 z-index-1">
             <li><a href="<?php echo lc_href_link(FILENAME_DEFAULT, '', 'NONSSL'); ?>"><?php echo $lC_Language->get('text_home'); ?></a></li>
             <?php echo lC_Template_output::getCategoryNav(); ?>
           </ul>

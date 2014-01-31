@@ -989,8 +989,12 @@
   right: 20px !important;
 }
 
- .cursor-pointer {
+.cursor-pointer {
   cursor: pointer !important;
+}
+
+.z-index-1 {
+  z-index: 1;
 }
 
 /********************************************************/
