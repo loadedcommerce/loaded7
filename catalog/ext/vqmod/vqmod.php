@@ -457,7 +457,7 @@ class VQModLog {
       return;
     }
 
-    if (!$this->logging) return;
+    if (!$this->_vqmod->logging) return;
 
     $logPath = $this->_vqmod->path($this->_vqmod->logFolder . date('D') . '.log', true);
           
