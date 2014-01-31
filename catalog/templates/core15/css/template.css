@@ -641,6 +641,18 @@
 #loaded7 .breadcrumb {
   margin-bottom: 5px;
 }
+
+#loaded7 .table-responsive {
+  border: none;
+}
+
+#loaded7 .table > thead > tr > th {
+  border-bottom: none;
+}
+
+#loaded7 table {
+  border-collapse: inherit;
+}
   
 /********************************************************/
 /*                7. Error classes                      */
