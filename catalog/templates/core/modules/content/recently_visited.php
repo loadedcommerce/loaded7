@@ -51,7 +51,6 @@ $(document).ready(function() {
     $(this).html(output);  
   });
   $('.content-recently-visited-image-src').addClass('img-responsive');
-  $('.thumbnail').equalHeights();
 });
 </script>
 <!--modules/content/recently_visited.php end-->
