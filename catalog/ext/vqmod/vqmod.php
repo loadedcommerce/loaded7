@@ -203,8 +203,12 @@ final class VQMod {
   * @param  array   $dicc
   * @return string
   * @description Obfuscates the modified code
+  * ( $SourceString, $_varsPrivate=array(), $_funcPrivate=array(), $classPrivate=array(), &$dicc)
+  * changed to 
+  * ( $SourceString, $_varsPrivate=array(), $_funcPrivate=array(), $classPrivate=array()) because the call above doesn't have the last parameter
+  * which also appears not to be used
   */   
-  private function _phpLiteObfuscator( $SourceString, $_varsPrivate=array(), $_funcPrivate=array(), $classPrivate=array(), &$dicc) {
+  private function _phpLiteObfuscator( $SourceString, $_varsPrivate=array(), $_funcPrivate=array(), $classPrivate=array() /*, &$dicc */) {
     ##remove comments
     $SourceString = preg_replace( "/(\s+)#(.*)\n/","$1\n",$SourceString );
     $SourceString = preg_replace( "/(\s+)\/\/(.*)\n/","$1\n",$SourceString );
@@ -457,7 +461,7 @@ class VQModLog {
       return;
     }
 
-    if (!$this->logging) return;
+    if (!$this->_vqmod->logging) return;
 
     $logPath = $this->_vqmod->path($this->_vqmod->logFolder . date('D') . '.log', true);
           

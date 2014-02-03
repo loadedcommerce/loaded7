@@ -31,6 +31,8 @@ if (isset($_POST['INSTALL_PATH']) && $_POST['INSTALL_PATH'] != '') {
   if (substr($_POST['INSTALL_PATH'], 0, 1) == '/') $_POST['INSTALL_PATH'] = substr($_POST['INSTALL_PATH'], 1);
   if (substr($_POST['INSTALL_PATH'], 0, 1) != '/') $_POST['INSTALL_PATH'] = '/' . $_POST['INSTALL_PATH'];
   $cre_path = $_POST['INSTALL_PATH'];  
+// If this is a windows install, we've added a leading slash erroneously
+  if (preg_match('/^\/[a-z]:\//i',$cre_path)) $cre_path = substr($cre_path,1);  
 } else {
   $cre_path = '';
 }
