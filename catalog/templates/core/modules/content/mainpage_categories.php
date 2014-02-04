@@ -10,9 +10,12 @@
 */
 ?>
 <!--modules/content/mainpage_categories.php start-->
-    <div class="col-sm-12 col-lg-12 container text-center">
+  <div class="col-sm-12 col-lg-12">
+    <div class="row">
+      <h3 class="no-margin-top"><?php echo $lC_Box->getTitle(); ?></h3>
       <?php echo $lC_Box->getContent(); ?>
     </div>
+  </div>
 <script>
 $(document).ready(function() {
 
@@ -36,10 +39,10 @@ $(document).ready(function() {
     var newNameContentText = (nameContentText.length > 18) ? nameContentText.substr(0, 15) + '...' : nameContentText;
     nameContent = nameContent.replace(nameContentText, newNameContentText);  
     
-    output = '<div class="' + thisContentClass+ '">'+
+    output = '<div class="' + thisContentClass+ ' with-padding-no-top-bottom">'+
              '  <div class="thumbnail align-center">' + imageContent +
              '    <div class="caption">' +
-             '      <h3 class="no-margin-top no-margin-bottom">' + nameContent + '</h3>' +
+             '      <h3 style="line-height:1.1;">' + nameContent + '</h3>' +
              '    </div>' +
              '  </div>' +
              '</div>';
@@ -48,7 +51,6 @@ $(document).ready(function() {
     cnt++;
   });
   $('.content-categories-image-src').addClass('img-responsive');
-  $('.thumbnail').equalHeights();
 });
 </script>
 <!--modules/content/mainpage_categories.php end-->
