@@ -70,8 +70,6 @@ class output {
       $output .= '  <ul class="big-menu ' . $_class . '">';
 
       foreach ( $links as $link) {
-        
-        if ($link['module'] == 'images') continue; // To hide image manager from Big menu
 
         if ($link['title'] == $lC_Language->get('access_orders_title') ||
             $link['title'] == $lC_Language->get('access_products_title') ||

@@ -55,6 +55,9 @@ class lC_Access {
     $access = array();
  
     foreach ( $_SESSION['admin']['access'] as $module => $level) {
+
+      if ($module == 'images') continue; // To hide image manager from Big menu
+
       if ((int)$level >= 1) { // at least View access
         if ( file_exists('includes/modules/access/' . $module . '.php') ) {
           $module_class = 'lC_Access_' . ucfirst($module);
