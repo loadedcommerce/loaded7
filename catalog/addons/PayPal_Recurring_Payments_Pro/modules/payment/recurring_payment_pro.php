@@ -309,6 +309,8 @@ class lC_Payment_recurring_payment_pro extends lC_Payment {
     $error = false;
     switch ($result) {
       case 'Success' :
+      case 'ActiveProfile' :
+      case 'PendingProfile' :
         // update order status
         lC_Order::process($this->_order_id, $this->_order_status_complete);
         break;
