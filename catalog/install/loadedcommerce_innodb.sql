@@ -671,6 +671,7 @@ CREATE TABLE lc_products_simple_options (
 DROP TABLE IF EXISTS lc_products_simple_options_values;
 CREATE TABLE lc_products_simple_options_values (
   id int(11) NOT NULL AUTO_INCREMENT,
+  products_id int(11) NOT NULL,
   customers_group_id int(11) NOT NULL DEFAULT '1',
   values_id int(11) NOT NULL,
   options_id int(11) NOT NULL,
