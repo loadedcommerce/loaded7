@@ -690,10 +690,8 @@ class lC_Payment_recurring_payment_pro extends lC_Payment {
                       '&L_PAYMENTREQUEST_0_QTY' . (string)$cnt . '=' . $products['quantity'] .
                       '&L_PAYMENTREQUEST_0_AMT' . (string)$cnt . '=' . $lC_Currencies->formatRaw($products['price'], $lC_Currencies->getCode()).
                       '&L_BILLINGTYPE' . (string)$cnt . '=RecurringPayments'.
-                      '&L_PAYMENTREQUEST_0_ITEMCATEGORY' . (string)$cnt . '=Digital'.
-                      //'&L_BILLINGAGREEMENTDESCRIPTION' . (string)$cnt . '=' . urlencode($products['name']) . ' - subscription'.
-                      '&L_BILLINGAGREEMENTDESCRIPTION' . (string)$cnt . '=' . urlencode('Loaded7 Subscription') .                      
-                      '&PAYMENTREQUEST_' . (string)$cnt . '_AMT=' . $lC_Currencies->formatRaw($products['price'], $lC_Currencies->getCode());
+                      '&L_PAYMENTREQUEST_0_ITEMCATEGORY' . (string)$cnt . '=Digital'.                      
+                      '&L_BILLINGAGREEMENTDESCRIPTION' . (string)$cnt . '=' . urlencode('Loaded7 Subscription') ;
       $cnt++;                      
     } 
 
@@ -717,7 +715,7 @@ class lC_Payment_recurring_payment_pro extends lC_Payment {
                 "&REQCONFIRMSHIPPING=0" .
                 "&ADDROVERRIDE=1" . 
                 "&SOLUTIONTYPE=Sole" .  
-                "&PROFILESTARTDATE=" . date("Y-m-dTh:m:i") .
+                "&PROFILESTARTDATE=" . date("Y-m-d h:m:i") .
                 "&BILLINGPERIOD=" . $billingPeriod .
                 "&BILLINGFREQUENCY=" . $billingFrequency .
                 "&RETURNURL=" . urlencode(lc_href_link(FILENAME_CHECKOUT, 'process', 'SSL', true, true, true)) .
