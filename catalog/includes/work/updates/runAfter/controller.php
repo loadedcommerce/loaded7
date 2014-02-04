@@ -37,6 +37,8 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
         
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_simple_options_values` ADD `products_id` INT( 11 ) NOT NULL AFTER `id`");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_simple_options_values` ADD `products_id` INT( 11 ) NOT NULL AFTER `id`");  
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_simple_options_values` ADD `sort_order` INT( 11 ) NOT NULL DEFAULT '0' AFTER `price_modifier`");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_simple_options_values` ADD `sort_order` INT( 11 ) NOT NULL DEFAULT '0' AFTER `price_modifier`");
     
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "orders_products` ADD `products_simple_options_meta_data` VARCHAR( 1024 ) NOT NULL AFTER `products_quantity`");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "orders_products` ADD `products_simple_options_meta_data` VARCHAR( 1024 ) NOT NULL AFTER `products_quantity`");  

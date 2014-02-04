@@ -663,7 +663,7 @@ CREATE TABLE lc_products_simple_options (
   id int(11) NOT NULL AUTO_INCREMENT,
   options_id int(11) NOT NULL,
   products_id int(11) NOT NULL,
-  sort_order int(11) NOT NULL,
+  sort_order int(11) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -676,6 +676,7 @@ CREATE TABLE lc_products_simple_options_values (
   values_id int(11) NOT NULL,
   options_id int(11) NOT NULL,
   price_modifier decimal(15,4) NOT NULL DEFAULT '0.0000',
+  sort_order int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   KEY idx_products_simple_options_values_customers_group_id (customers_group_id),
   KEY idx_products_simple_options_values_values_id (values_id),
