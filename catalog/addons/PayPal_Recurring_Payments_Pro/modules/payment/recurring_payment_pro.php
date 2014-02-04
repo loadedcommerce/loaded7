@@ -232,15 +232,20 @@ class lC_Payment_recurring_payment_pro extends lC_Payment {
   * @return string
   */ 
   public function process_button() { 
+    global $lC_Language, $lC_Database, $lC_MessageStack, $lC_ShoppingCart;
     
     if($_SESSION['recurring_payment_pro_ec'] == 0) { // Direct Credit Card Pyament
-      
+      if(!empty($_POST['recurring_payment_pro_cc_firstname']) ===  false || !empty($_POST['recurring_payment_pro_cc_lastname']) ===  false || !empty($_POST['recurring_payment_pro_cc_number']) ===  false || !empty($_POST['recurring_payment_pro_cc_cvv']) ===  false ) {
+        $errmsg = $lC_Language->get('payment_paypal_recurring_pro_error_invalid_details');       
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
+      } else {
       $recurring_payment_pro_cc_firstname  = $_POST['recurring_payment_pro_cc_firstname'];
       $recurring_payment_pro_cc_lastname   = $_POST['recurring_payment_pro_cc_lastname'];
       $recurring_payment_pro_cc_type       = $_POST['recurring_payment_pro_cc_type'];
       $recurring_payment_pro_cc_number     = $_POST['recurring_payment_pro_cc_number'];
       $recurring_payment_pro_cc_expiry     = $_POST['recurring_payment_pro_cc_expires_month'].$_POST['recurring_payment_pro_cc_expires_year'];
       $recurring_payment_pro_cc_cvv        = $_POST['recurring_payment_pro_cc_cvv'];
+      }
 
       echo lc_draw_hidden_field('recurring_payment_pro_cc_firstname', $recurring_payment_pro_cc_firstname);
       echo lc_draw_hidden_field('recurring_payment_pro_cc_lastname', $recurring_payment_pro_cc_lastname);
