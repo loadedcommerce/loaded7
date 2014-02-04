@@ -155,13 +155,13 @@
                   echo lc_link_object($lC_Template->getBranding('social_pinterest'), lc_image(DIR_WS_IMAGES . 'icons/pn-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
                 } 
                 if ($lC_Template->getBranding('social_google_plus') != '') {
-                  echo lc_link_object($lC_Template->getBranding('social_google_plus'), lc_image(DIR_WS_IMAGES . 'icons/gp-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                  echo lc_link_object($lC_Template->getBranding('social_google_plus'), lc_image(DIR_WS_IMAGES . 'icons/gp-ico.png', 'title', null, null, 'class="small-margin-right hide-on-mobile"'), 'target="_blank"');
                 } 
                 if ($lC_Template->getBranding('social_youtube') != '') {
-                  echo lc_link_object($lC_Template->getBranding('social_youtube'), lc_image(DIR_WS_IMAGES . 'icons/yt-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                  echo lc_link_object($lC_Template->getBranding('social_youtube'), lc_image(DIR_WS_IMAGES . 'icons/yt-ico.png', 'title', null, null, 'class="small-margin-right hide-on-mobile"'), 'target="_blank"');
                 } 
                 if ($lC_Template->getBranding('social_linkedin') != '') {
-                  echo lc_link_object($lC_Template->getBranding('social_linkedin'), lc_image(DIR_WS_IMAGES . 'icons/in-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                  echo lc_link_object($lC_Template->getBranding('social_linkedin'), lc_image(DIR_WS_IMAGES . 'icons/in-ico.png', 'title', null, null, 'class="small-margin-right hide-on-mobile"'), 'target="_blank"');
                 }                  
               ?>
               <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
@@ -193,13 +193,13 @@
                     echo lc_link_object($lC_Template->getBranding('social_pinterest'), lc_image(DIR_WS_IMAGES . 'icons/pn-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
                   } 
                   if ($lC_Template->getBranding('social_google_plus') != '') {
-                    echo lc_link_object($lC_Template->getBranding('social_google_plus'), lc_image(DIR_WS_IMAGES . 'icons/gp-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                    echo lc_link_object($lC_Template->getBranding('social_google_plus'), lc_image(DIR_WS_IMAGES . 'icons/gp-ico.png', 'title', null, null, 'class="small-margin-right social-nav-gp"'), 'target="_blank"');
                   } 
                   if ($lC_Template->getBranding('social_youtube') != '') {
-                    echo lc_link_object($lC_Template->getBranding('social_youtube'), lc_image(DIR_WS_IMAGES . 'icons/yt-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                    echo lc_link_object($lC_Template->getBranding('social_youtube'), lc_image(DIR_WS_IMAGES . 'icons/yt-ico.png', 'title', null, null, 'class="small-margin-right social-nav-yt"'), 'target="_blank"');
                   } 
                   if ($lC_Template->getBranding('social_linkedin') != '') {
-                    echo lc_link_object($lC_Template->getBranding('social_linkedin'), lc_image(DIR_WS_IMAGES . 'icons/in-ico.png', 'title', null, null, 'class="small-margin-right"'), 'target="_blank"');
+                    echo lc_link_object($lC_Template->getBranding('social_linkedin'), lc_image(DIR_WS_IMAGES . 'icons/in-ico.png', 'title', null, null, 'class="small-margin-right social-nav-in"'), 'target="_blank"');
                   }                  
                 ?>
                 <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
