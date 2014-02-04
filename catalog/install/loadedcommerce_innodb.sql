@@ -6159,9 +6159,10 @@ INSERT INTO lc_customers_groups (customers_group_id, language_id, customers_grou
 INSERT INTO lc_languages (languages_id, `name`, code, locale, `charset`, date_format_short, date_format_long, time_format, text_direction, currencies_id, numeric_separator_decimal, numeric_separator_thousands, parent_id, sort_order) VALUES(1, 'English', 'en_US', 'en_US.UTF-8,en_US,english', 'utf-8', '%m/%d/%Y', '%A %B %d, %Y at %H:%M', '%H:%M:%S', 'ltr', 1, '.', ',', 0, 10);
 
 INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(1, 1, 'Pending', 'Pending');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(2, 1, 'Processing', 'Pending');
-INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(3, 1, 'Preparing', 'Pending');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(2, 1, 'Processing', 'Approved');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(3, 1, 'Preparing', 'Approved');
 INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(4, 1, 'Delivered', 'Approved');
+INSERT INTO lc_orders_status (orders_status_id, language_id, orders_status_name, orders_status_type) VALUES(5, 1, 'Cancelled', 'Rejected');
 
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(1, 1, 'Authorize');
 INSERT INTO lc_orders_transactions_status (id, language_id, status_name) VALUES(2, 1, 'Cancel');

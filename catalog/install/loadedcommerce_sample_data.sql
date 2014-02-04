@@ -14,7 +14,6 @@ INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_orde
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(11, 'watch-mens.jpg', 7, 20, 'category', 0, '', 1, 0, 1, '0000-00-00 00:00:00', NULL);
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(12, 'no_image', 0, 30, 'specials', 0, 'products.php?specials', 1, 1, 0, '0000-00-00 00:00:00', NULL);
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(13, 'no_image.png', 0, 40, 'new', 0, 'products.php?new', 1, 1, 0, '0000-00-00 00:00:00', NULL);
-INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(14, 'no_image.png', 0, 50, 'info', 0, 'info.php', 1, 1, 0, '0000-00-00 00:00:00', NULL);
 INSERT INTO lc_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added, last_modified) VALUES(15, 'no_image.png', 0, 60, 'override', 1, 'http://loaded7.com', 1, 1, 0, '0000-00-00 00:00:00', NULL);
 
 INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) VALUES(6, 1, 'Women', 'Women', 'Women Blurb', '<p>Women Content</p>', 'women', 'tags');
@@ -25,7 +24,6 @@ INSERT INTO lc_categories_description (categories_id, language_id, categories_na
 INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) VALUES(11, 1, 'Watches', 'Watches', 'Watches Blurb', '<p>Watches Content</p>', 'watches', 'tags');
 INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) VALUES(12, 1, 'Specials', 'Specials', 'Specials Blurb', '<p>Specials Content</p>', 'specials', 'tags');
 INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) VALUES(13, 1, 'New Products', 'New Products', 'New Products Blurb', '<p>New Products Content</p>', 'new products', 'tags');
-INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) VALUES(14, 1, 'Information', 'Information', 'Information Blurb', '<p>Information Content</p>', 'information', 'tags');
 INSERT INTO lc_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_keyword, categories_tags) VALUES(15, 1, 'Loaded 7', 'Loaded 7', 'Loaded 7 Blurb', '<p>Loaded 7 Content</p>', 'loaded', 'tags');
 
 INSERT INTO lc_permalinks (permalink_id, item_id, language_id, `type`, query, permalink) VALUES (6, 6, 1, 1, 'cPath=1_6', 'women');
@@ -100,3 +98,20 @@ INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(11, 9)
 INSERT INTO lc_products_to_categories (products_id, categories_id) VALUES(12, 9);
 
 INSERT INTO lc_reviews (reviews_id, products_id, customers_id, customers_name, reviews_rating, languages_id, reviews_text, date_added, last_modified, reviews_read, reviews_status) VALUES(1, 1, 0, 'Janice Shopper', 5, 1, 'Lorem ipsum dolor sit amet, quo in insolens democritum mediocritatem, dicit feugiat admodum vel ex. Antiopam principes ne per, ut duis vulputate eam, solum torquatos persecuti qui at. Usu discere intellegat ne, tollit meliore nam at. Ne pri idque inciderint, vim no nullam tempor nostrud. Ex his errem alterum complectitur, qui in enim consequuntur, ad appareat convenire facilisis nam.\r\n\r\nEa sea probo doming offendit, deleniti voluptatibus ea quo, veniam aliquando sed cu. His munere mediocritatem eu, at eum labitur adolescens, sed id meis oratio munere. Id vel dolor molestiae. Id eum audire aperiri, nec te alia omnis ullamcorper.\r\n\r\nTe stet veri vitae his. Ex dicit tation vix, exerci equidem cu sed. Cum at alienum periculis omittantur. Duis elaboraret ad vix. Vitae melius vis eu, nam at liber consectetuer reprehendunt.', '2013-02-27 08:38:29', NULL, 0, 1);
+
+INSERT INTO lc_products_variants_groups (id, languages_id, title, sort_order, module) VALUES(1, 1, 'Size', 0, 'pull_down_menu');
+INSERT INTO lc_products_variants_groups (id, languages_id, title, sort_order, module) VALUES(2, 1, 'Color', 1, 'pull_down_menu');
+
+INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(1, 1, 1, 'Small', 1);
+INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(2, 1, 1, 'Medium', 2);
+INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(3, 1, 1, 'Large', 3);
+INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(4, 1, 2, 'Red', 1);
+INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(5, 1, 2, 'Green', 2);
+INSERT INTO lc_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) VALUES(6, 1, 2, 'Blue', 3);
+
+INSERT INTO lc_manufacturers (manufacturers_id, manufacturers_name, manufacturers_image, date_added, last_modified) VALUES(1, 'Inhouse', NULL, now(), now());
+INSERT INTO lc_manufacturers (manufacturers_id, manufacturers_name, manufacturers_image, date_added, last_modified) VALUES(2, 'Acme', NULL, now(), now());
+
+INSERT INTO lc_manufacturers_info (manufacturers_id, languages_id, manufacturers_url, url_clicked, date_last_click) VALUES(1, 1, '', 0, NULL);
+INSERT INTO lc_manufacturers_info (manufacturers_id, languages_id, manufacturers_url, url_clicked, date_last_click) VALUES(2, 1, '', 0, NULL);
+
