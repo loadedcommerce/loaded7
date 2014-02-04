@@ -10,8 +10,8 @@
 */
 global $lC_Vqmod;
 
-include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/applications/products/classes/products.php'));
-include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/applications/customer_groups/classes/customer_groups.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/products/classes/products.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/customer_groups/classes/customer_groups.php'));
 //include_once($lC_Vqmod->modCheck('includes/applications/product_variants/classes/product_variants.php'));
 //include_once($lC_Vqmod->modCheck('includes/applications/specials/classes/specials.php'));
 //include_once($lC_Vqmod->modCheck('includes/applications/categories/classes/categories.php'));
