@@ -88,6 +88,10 @@
       <value><![CDATA[powered by <img src="addons/PayPal_Payflow_Pro/images/payflow_express_small.png" alt="Payflow Pro Express Checkout" style="vertical-align:middle;">]]></value>
       <group>checkout</group>
     </definition>     
-
+    <definition>
+      <key>payment_payflow_pro_error_invalid_details</key>
+      <value><![CDATA[ERROR: Please filled the correct details for Credit Card and try again.]]></value>
+      <group>checkout</group>
+    </definition>
   </definitions>
 </language>

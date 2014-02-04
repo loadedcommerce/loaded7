@@ -232,22 +232,27 @@ class lC_Payment_paypal_pro extends lC_Payment {
   * @return string
   */ 
   public function process_button() { 
-    
-    if($_SESSION['paypal_pro_ec'] == 0) { // Direct Credit Card Pyament
-      
-      $paypal_pro_cc_firstname  = $_POST['paypal_pro_cc_firstname'];
-      $paypal_pro_cc_lastname   = $_POST['paypal_pro_cc_lastname'];
-      $paypal_pro_cc_type       = $_POST['paypal_pro_cc_type'];
-      $paypal_pro_cc_number     = $_POST['paypal_pro_cc_number'];
-      $paypal_pro_cc_expiry     = $_POST['paypal_pro_cc_expires_month'].$_POST['paypal_pro_cc_expires_year'];
-      $paypal_pro_cc_cvv        = $_POST['paypal_pro_cc_cvv'];
+    global $lC_Language, $lC_Database, $lC_MessageStack, $lC_ShoppingCart;
 
-      echo lc_draw_hidden_field('paypal_pro_cc_firstname', $paypal_pro_cc_firstname);
-      echo lc_draw_hidden_field('paypal_pro_cc_lastname', $paypal_pro_cc_lastname);
-      echo lc_draw_hidden_field('paypal_pro_cc_type', $paypal_pro_cc_type);
-      echo lc_draw_hidden_field('paypal_pro_cc_number', $paypal_pro_cc_number);
-      echo lc_draw_hidden_field('paypal_pro_cc_expiry', $paypal_pro_cc_expiry);
-      echo lc_draw_hidden_field('paypal_pro_cc_cvv', $paypal_pro_cc_cvv);
+    if($_SESSION['paypal_pro_ec'] == 0) { // Direct Credit Card Payment
+      
+      if(!empty($_POST['paypal_pro_cc_firstname']) ===  false || !empty($_POST['paypal_pro_cc_lastname']) ===  false || !empty($_POST['paypal_pro_cc_number']) ===  false || !empty($_POST['paypal_pro_cc_cvv']) ===  false ) {
+        $errmsg = $lC_Language->get('payment_paypal_pro_error_invalid_details');       
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
+      } else {
+        $paypal_pro_cc_firstname  = $_POST['paypal_pro_cc_firstname'];
+        $paypal_pro_cc_lastname   = $_POST['paypal_pro_cc_lastname'];
+        $paypal_pro_cc_type       = $_POST['paypal_pro_cc_type'];
+        $paypal_pro_cc_number     = $_POST['paypal_pro_cc_number'];
+        $paypal_pro_cc_expiry     = $_POST['paypal_pro_cc_expires_month'].$_POST['paypal_pro_cc_expires_year'];
+        $paypal_pro_cc_cvv        = $_POST['paypal_pro_cc_cvv'];
+        echo lc_draw_hidden_field('paypal_pro_cc_firstname', $paypal_pro_cc_firstname);
+        echo lc_draw_hidden_field('paypal_pro_cc_lastname', $paypal_pro_cc_lastname);
+        echo lc_draw_hidden_field('paypal_pro_cc_type', $paypal_pro_cc_type);
+        echo lc_draw_hidden_field('paypal_pro_cc_number', $paypal_pro_cc_number);
+        echo lc_draw_hidden_field('paypal_pro_cc_expiry', $paypal_pro_cc_expiry);
+        echo lc_draw_hidden_field('paypal_pro_cc_cvv', $paypal_pro_cc_cvv);
+      }
       
     } else if(!$_SESSION['PPEC_PAYDATA'] && $_SESSION['paypal_pro_ec'] == 1) {
 

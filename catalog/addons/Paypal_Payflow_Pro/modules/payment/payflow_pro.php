@@ -234,23 +234,27 @@ class lC_Payment_payflow_pro extends lC_Payment {
   * @return string
   */ 
   public function process_button() { 
-    global $lC_MessageStack;
+    global $lC_Language, $lC_Database, $lC_MessageStack, $lC_ShoppingCart;
 
     if($_SESSION['payflow_pro_ec'] == 0) {
+      if(!empty($_POST['payflow_pro_cc_firstname']) ===  false || !empty($_POST['payflow_pro_cc_lastname']) ===  false || !empty($_POST['payflow_pro_cc_number']) ===  false || !empty($_POST['payflow_pro_cc_cvv']) ===  false ) {
+        $errmsg = $lC_Language->get('payment_payflow_pro_error_invalid_details');       
+        lc_redirect(lc_href_link(FILENAME_CHECKOUT, 'payment&payment_error=' . $errmsg, 'SSL'));
+      } else {
+        $payflow_pro_cc_firstname  = $_POST['payflow_pro_cc_firstname'];
+        $payflow_pro_cc_lastname   = $_POST['payflow_pro_cc_lastname'];
+        $payflow_pro_cc_type       = $_POST['payflow_pro_cc_type'];
+        $payflow_pro_cc_number     = $_POST['payflow_pro_cc_number'];
+        $payflow_pro_cc_expiry     = $_POST['payflow_pro_cc_expires_month'].substr($_POST['payflow_pro_cc_expires_year'],0,2);
+        $payflow_pro_cc_cvv        = $_POST['payflow_pro_cc_cvv'];
 
-      $payflow_pro_cc_firstname  = $_POST['payflow_pro_cc_firstname'];
-      $payflow_pro_cc_lastname   = $_POST['payflow_pro_cc_lastname'];
-      $payflow_pro_cc_type       = $_POST['payflow_pro_cc_type'];
-      $payflow_pro_cc_number     = $_POST['payflow_pro_cc_number'];
-      $payflow_pro_cc_expiry     = $_POST['payflow_pro_cc_expires_month'].substr($_POST['payflow_pro_cc_expires_year'],0,2);
-      $payflow_pro_cc_cvv        = $_POST['payflow_pro_cc_cvv'];
-
-      echo lc_draw_hidden_field('payflow_pro_cc_firstname', $payflow_pro_cc_firstname);
-      echo lc_draw_hidden_field('payflow_pro_cc_lastname', $payflow_pro_cc_lastname);
-      echo lc_draw_hidden_field('payflow_pro_cc_type', $payflow_pro_cc_type);
-      echo lc_draw_hidden_field('payflow_pro_cc_number', $payflow_pro_cc_number);
-      echo lc_draw_hidden_field('payflow_pro_cc_expiry', $payflow_pro_cc_expiry);
-      echo lc_draw_hidden_field('payflow_pro_cc_cvv', $payflow_pro_cc_cvv);
+        echo lc_draw_hidden_field('payflow_pro_cc_firstname', $payflow_pro_cc_firstname);
+        echo lc_draw_hidden_field('payflow_pro_cc_lastname', $payflow_pro_cc_lastname);
+        echo lc_draw_hidden_field('payflow_pro_cc_type', $payflow_pro_cc_type);
+        echo lc_draw_hidden_field('payflow_pro_cc_number', $payflow_pro_cc_number);
+        echo lc_draw_hidden_field('payflow_pro_cc_expiry', $payflow_pro_cc_expiry);
+        echo lc_draw_hidden_field('payflow_pro_cc_cvv', $payflow_pro_cc_cvv);
+      }
 
     } else if(!$_SESSION['PPEC_PAYDATA'] && $_SESSION['payflow_pro_ec'] == 1) {       
       $_SESSION['PPEC_TOKEN'] = $this->setExpressCheckout(); 

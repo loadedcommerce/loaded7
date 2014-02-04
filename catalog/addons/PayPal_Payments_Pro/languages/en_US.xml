@@ -85,5 +85,10 @@
       <value><![CDATA[ERROR: %s. Please try again.]]></value>
       <group>checkout</group>
     </definition>
+    <definition>
+      <key>payment_paypal_pro_error_invalid_details</key>
+      <value><![CDATA[ERROR: Please filled the correct details for Credit Card and try again.]]></value>
+      <group>checkout</group>
+    </definition>
   </definitions>
 </language>
