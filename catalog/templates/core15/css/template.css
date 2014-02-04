@@ -666,6 +666,11 @@
 #loaded7 table {
   border-collapse: inherit;
 }
+
+#loaded7 .navbar-toggle {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
   
 /********************************************************/
 /*                7. Error classes                      */
