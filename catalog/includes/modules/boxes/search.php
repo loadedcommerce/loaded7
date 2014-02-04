@@ -10,7 +10,7 @@
 class lC_Boxes_search extends lC_Modules {
   var $_title,
       $_code = 'search',
-      $_author_name = 'LoadedCommerce',
+      $_author_name = 'Loaded Commerce',
       $_author_www = 'http://www.loadedcommerce.com',
       $_group = 'boxes';
 

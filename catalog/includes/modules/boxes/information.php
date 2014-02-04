@@ -10,7 +10,7 @@
 class lC_Boxes_information extends lC_Modules {
   var $_title,
       $_code = 'information',
-      $_author_name = 'LoadedCommerce',
+      $_author_name = 'Loaded Commerce',
       $_author_www = 'http://www.loadedcommerce.com',
       $_group = 'boxes';
 
