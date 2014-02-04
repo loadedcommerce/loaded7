@@ -109,18 +109,27 @@ class Loaded_7_Pro extends lC_Addon { // your addon must extend lC_Addon
       $lC_Database->simpleQuery("delete from " . TABLE_TEMPLATES_BOXES . " where modules_group like '%Loaded_7_Pro%'");
       $lC_Database->simpleQuery("insert into " . TABLE_TEMPLATES_BOXES . " (title, code, author_name, author_www, modules_group) values ('Loaded 7 Pro', '" . $this->_type . "', '" . $this->_author . "','" . $this->_authorWWW . "', 'systems|Loaded_7_Pro')");
       // product classes
-      $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'DEFAULT_PRODUCT_CLASSES_ID'");
-      $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'DEFAULT_PRODUCT_CLASSES_ID', '1', '', '6', '0', '', '', now())");
-      $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . DB_TABLE_PREFIX . "product_classes` (id int(11) NOT NULL AUTO_INCREMENT,`name` varchar(128) NOT NULL DEFAULT '', `comment` varchar(255) DEFAULT NULL, `status` tinyint(1) NOT NULL DEFAULT '0', language_id int(11) NOT NULL DEFAULT '1', PRIMARY KEY (id)) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=2;");
-      $lC_Database->simpleQuery("delete from `" . DB_TABLE_PREFIX . "product_classes` where id = '1'");
-      $lC_Database->simpleQuery("insert into `" . DB_TABLE_PREFIX . "product_classes` (id, name, comment, status, language_id) VALUES ('1', 'Common', 'Common Class', 1, 1);");
-      $lC_Database->simpleQuery("delete from " . TABLE_TEMPLATES_BOXES . " where code = 'product_classes'");
-      $lC_Database->simpleQuery("insert into " . TABLE_TEMPLATES_BOXES . " (title, code, author_name, author_www, modules_group) VALUES ('Product Classes', 'product_classes', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes')");
-      $lC_Database->simpleQuery("alter table " . TABLE_PRODUCTS . " ADD `is_subproduct` TINYINT( 1 ) NOT NULL DEFAULT '0'");
+      if (!defined('DEFAULT_PRODUCT_CLASSES_ID')) {
+        $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'DEFAULT_PRODUCT_CLASSES_ID'");
+        $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('', 'DEFAULT_PRODUCT_CLASSES_ID', '1', '', '6', '0', '', '', now())");
+        $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . DB_TABLE_PREFIX . "product_classes` (id int(11) NOT NULL AUTO_INCREMENT,`name` varchar(128) NOT NULL DEFAULT '', `comment` varchar(255) DEFAULT NULL, `status` tinyint(1) NOT NULL DEFAULT '0', language_id int(11) NOT NULL DEFAULT '1', PRIMARY KEY (id)) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT=2;");
+        $lC_Database->simpleQuery("delete from `" . DB_TABLE_PREFIX . "product_classes` where id = '1'");
+        $lC_Database->simpleQuery("insert into `" . DB_TABLE_PREFIX . "product_classes` (id, name, comment, status, language_id) VALUES ('1', 'Common', 'Common Class', 1, 1);");
+        $lC_Database->simpleQuery("delete from " . TABLE_TEMPLATES_BOXES . " where code = 'product_classes'");
+        $lC_Database->simpleQuery("insert into " . TABLE_TEMPLATES_BOXES . " (title, code, author_name, author_www, modules_group) VALUES ('Product Classes', 'product_classes', 'Loaded Commerce, LLC', 'http://www.loadedcommerce.com', 'product_attributes')");
+        $lC_Database->simpleQuery("alter table " . TABLE_PRODUCTS . " ADD `is_subproduct` TINYINT( 1 ) NOT NULL DEFAULT '0'");
+      }
       // skip shipping
-      $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'SKIP_CHECKOUT_SHIPPING_PAGE'");
-      $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Skip Shipping Page', 'SKIP_CHECKOUT_SHIPPING_PAGE', '-1', 'Bypass the checkout shipping page? No shipping will be charged.', 19, 0, NULL, now(), 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))')");
-
+      if (!defined('SKIP_CHECKOUT_SHIPPING_PAGE')) {
+        $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'SKIP_CHECKOUT_SHIPPING_PAGE'");
+        $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Skip Shipping Page', 'SKIP_CHECKOUT_SHIPPING_PAGE', '-1', 'Bypass the checkout shipping page? No shipping will be charged.', 19, 0, NULL, now(), 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))')");
+      }
+      // qty breaks config
+      if (!defined('PRODUCT_PRICING_QPB_FORMAT')) {
+        $lC_Database->simpleQuery("delete from " . TABLE_CONFIGURATION . " where configuration_key = 'PRODUCT_PRICING_QPB_FORMAT'");
+        $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Price Break Format', 'PRODUCT_PRICING_QPB_FORMAT', 'Range', 'The price break format shown on the product listing pages.', 8, 11, NULL, now(), NULL, 'lc_cfg_set_boolean_value(array(''None'', ''Range'', ''Starts At'', ''Low As''))')");
+      }
+      
       $this->_clearCache();
     }
   }
