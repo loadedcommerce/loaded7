@@ -671,6 +671,10 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+#loaded7 #search {
+  margin-top: 3px;
+}
   
 /********************************************************/
 /*                7. Error classes                      */
@@ -1093,6 +1097,10 @@
     padding: 10px 6px;
     font-size: 13px;
   }
+
+  #loaded7 #search {
+    margin-top: 7px;
+  }
 }
 
 @media (min-width: 940px) and (max-width: 1024px) {
@@ -1157,6 +1165,10 @@
   
   #loaded7 .social-nav-in {
     display: none;
+  }
+
+  #loaded7 #search {
+    margin-top: 7px;
   }
 }
 
