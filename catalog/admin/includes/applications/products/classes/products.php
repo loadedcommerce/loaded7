@@ -73,7 +73,8 @@ class lC_Products_Admin {
                                'status' => $Qproductscategories->valueInt('categories_status'));
       }
       $cnt = 0;
-      foreach ($Qcategories as $cat) {
+      $catArr = (is_array($Qcategories)) ? $Qcategories : array();
+      foreach ($catArr as $cat) {
         if ($cnt == 0) {
           $categories = '<small class="tag mid-margin-right glossy ' . (($cat['status'] == 1) ? ' green-gradient' : ' red-gradient') . '">' . $cat['name'] . '</small>';
         } 
