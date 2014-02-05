@@ -111,7 +111,6 @@ class lC_Product {
           $Qsubproducts->execute();
 
           while ( $Qsubproducts->next() ) {
-            //$this->_data['variants'][$Qsubproducts->valueInt('products_id')]['data'] = array('price' => $this->getPriceBreak(),
             $this->_data['variants'][$Qsubproducts->valueInt('products_id')]['data'] = array('price' => $Qsubproducts->value('products_price'),
                                                                                              'tax_class_id' => $Qsubproducts->valueInt('products_tax_class_id'),
                                                                                              //'tax_class_id' => $this->getTaxClassID(),
@@ -254,55 +253,224 @@ class lC_Product {
   public function getTags() {
     return $this->_data['tags'];
   }
+  
+  //######## PRICING #########//
+  public function getPriceInfo($product_id, $customers_group_id = 1, $data) {
+    global $lC_Specials, $lC_Database, $lC_Language, $lC_Customer, $lC_Services, $lC_Currencies;
 
+    $quantity = (isset($_GET['quantity']) && $_GET['quantity'] != null) ? (int)$_GET['quantity'] : 1;
+
+    // #### SET BASE PRICE #### //
+    
+    // initial price = base price    
+    $base_price = $this->getBasePrice();
+    $price = (float)$base_price;
+    
+    //options modifiers
+    if (is_array($data['simple_options']) && count($data['simple_options']) > 0) {
+      $modTotal = 0;
+      foreach ($data['simple_options'] as $options_id => $values_id) {
+        $QsimpleOptions = $lC_Database->query("select price_modifier from :table_products_simple_options_values where customers_group_id = :customers_group_id and options_id = :options_id and values_id = :values_id limit 1");
+        $QsimpleOptions->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+        $QsimpleOptions->bindInt(':customers_group_id', $customers_group_id);        
+        $QsimpleOptions->bindInt(':options_id', $options_id);        
+        $QsimpleOptions->bindInt(':values_id', $values_id);        
+        $QsimpleOptions->execute();
+        
+        $modTotal = (float)$modTotal + $QsimpleOptions->valueDecimal('price_modifier');
+      }  
+    }  
+    
+    // if has special price, base price becomes special price
+    $special_price = 0.00;
+    if ($lC_Services->isStarted('specials') && $lC_Specials->isActive($product_id)) {
+      $special_price = $lC_Specials->getPrice($product_id);
+      $price = ((float)$special_price < (float)$price) ? (float)$special_price : (float)$price;
+    }       
+    
+    // if has qty price breaks, adjust base price to break price
+    $qpbText = '';
+    if ($this->hasQtyPriceBreaks($product_id, $customers_group_id)) {
+
+      $qpbArr = $this->getQtyPriceBreaks($product_id, $customers_group_id);
+      usort($qpbArr, "self::_usortBreakPoint"); 
+      
+      $maxBreak = end($qpbArr);
+        
+      $cnt = 0;
+      foreach($qpbArr as $key => $value) {
+        if ((int)$value['qty_break'] <= (int)$quantity ) {
+          if ($lC_Services->isStarted('specials') && $lC_Specials->isActive($product_id)) {
+            $price = ($special_price < (float)$value['price_break']) ? $special_price : (float)$value['price_break'];
+          } else {
+            $price = (float)$value['price_break'];
+          }
+          $cnt = $key;
+        }
+      }
+      
+      if (defined('PRODUCT_PRICING_QPB_FORMAT') && PRODUCT_PRICING_QPB_FORMAT != NULL) {
+        switch (PRODUCT_PRICING_QPB_FORMAT) {
+          case 'None' :
+            $listing = $lC_Currencies->displayPrice($price, DECIMAL_PLACES);
+            break;
+          case 'Starts At' :
+            $listing = '<div class="margin-top-neg"><span class="lt-blue">' . $lC_Language->get('pricing_starts_at') . '</span><p class="lead small-margin-bottom small-margin-top-neg">' . $lC_Currencies->displayPrice($this->getBasePrice(), $this->getTaxClassID()) . '</p></div>';          
+            break;
+          case 'Low As' :
+            $listing = '<div class="margin-top-neg"><span class="lt-blue">' . $lC_Language->get('pricing_low_as')  . '</span><p class="lead small-margin-bottom small-margin-top-neg">' . $lC_Currencies->displayPrice( ($maxBreak['price_break'] < $price) ? $maxBreak['price_break'] : $price, $this->getTaxClassID()) . '</p></div>';          
+            break;
+          default :
+            $listing =  $lC_Currencies->displayPrice( ($maxBreak['price_break'] < $price) ? $maxBreak['price_break'] : $price, $this->getTaxClassID()) . ' - ' . $lC_Currencies->displayPrice($price, $this->getTaxClassID());
+        }
+      }
+      
+      // if has special and qpb determine the next break point based off special price and adjust $cnt
+      if ($special_price != 0.00) {
+        $cnt = 0;
+        usort($qpbArr, "self::_usortBreakPoint"); 
+        foreach($qpbArr as $key => $value) {
+          if ((int)$value['price_break'] < $special_price) {
+            $cnt = $key;
+            break;
+          }
+        }
+      } else if ($quantity > 1 && $quantity >= $qpbArr[$cnt]['qty_break']) {
+        $cnt++; 
+      }
+      
+      $youSave =( ((int)$quantity == 1) ? round( ( 1- ( (float)$qpbArr[$cnt]['price_break'] / (float)$this->getBasePrice() )) * 100, DECIMAL_PLACES) : (((int)$quantity >= (int)$maxBreak['qty_break']) ? round( ( 1- ( (float)$maxBreak['price_break'] / (float)$this->getBasePrice() )) * 100, DECIMAL_PLACES) : round( ( 1- ( (float)$qpbArr[$cnt]['price_break'] / (float)$this->getBasePrice() )) * 100, DECIMAL_PLACES)));
+      $qpbData = array('nextBreak' => ( ((int)$quantity == 1) ? (int)$qpbArr[$cnt]['qty_break'] : (($quantity >= (int)$maxBreak['qty_break']) ? $maxBreak['qty_break'] : $qpbArr[$cnt]['qty_break'])  ),
+                       'nextPrice' => ( ((int)$quantity == 1) ? number_format($qpbArr[$cnt]['price_break'] + $modTotal, DECIMAL_PLACES) : (((int)$quantity >= $maxBreak['qty_break']) ? number_format($maxBreak['price_break'] + $modTotal, DECIMAL_PLACES) : number_format($qpbArr[$cnt]['price_break'] + $modTotal, DECIMAL_PLACES) ) ),
+                       'youSave' => number_format($youSave, 0) . '%',
+                       'listing' => $listing);
+    }
+    
+    $price = $price + $modTotal;
+    
+    if ($lC_Services->isStarted('specials') && $lC_Specials->isActive($product_id)) {
+      $formatted = '<s>' . $lC_Currencies->displayPrice($this->getBasePrice() + $modTotal, $this->_data['tax_class_id']) . '</s> <span class="product-special-price">' . $lC_Currencies->displayPrice($price, $this->_data['tax_class_id']) . '</span>';
+    } else {
+      $formatted = $lC_Currencies->displayPrice($price, $this->getTaxClassID());
+    }
+    
+    // #### DISCOUNTS #### //
+   /*
+    // set the adjusted base price var
+    $base_price = $price;    
+    // if logged in and has a group baseline discount, apply to price
+    if ($lC_Customer->isLoggedOn()) {
+      $baseline_discount = $lC_Customer->getBaselineDiscount($customers_group_id);
+      $price = round((float)$base_price * ((float)$baseline_discount * .01), DECIMAL_PLACES); 
+    }
+   */ 
+    $return = array('base' => number_format($this->getBasePrice(), DECIMAL_PLACES),
+                    'price' => number_format($price, DECIMAL_PLACES),
+                    'formatted' => $formatted,
+                    'modTotal' => $modTotal,
+                    'qpbData' => $qpbData
+                    );
+//echo "<pre>return ";
+//print_r($return);
+//echo "</pre>";
+//die('55');                    
+                    
+    return $return;                    
+  }
+  
+  public function getPrice() {
+    $data = $this->getPriceInfo($this->getID(), 1, array());
+    
+    return $data['price'];
+  }
+
+ /*
+  * Retrieve the base price
+  *
+  * @access public
+  * @return array
+  */  
   public function getBasePrice() {
     return $this->_data['price'];
   }
-  
-  public function getPriceBreak($qty = 1) {
-    $base_price = $this->_data['price'];  
-       
-    if (isset($this->_data['price_breaks'])) {
-      reset($this->_data['price_breaks']);
-      foreach ($this->_data['price_breaks'] as $value) {
-        if ($qty >= $value['qty_break']) {
-          $base_price = $value['price_break'];
-        }    
-      }    
+ /*
+  * Determine if product has quantity price breaks
+  *
+  * @param integer $products_id       The product id
+  * @param integer $customers_group_id The customer group id
+  * @access public
+  * @return boolean
+  */   
+  public function hasQtyPriceBreaks($products_id, $customers_group_id = 1) {
+    global $lC_Database;
+    
+    $Qpb = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and group_id = :group_id limit 1');
+    $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+    $Qpb->bindInt(':products_id', $products_id);
+    $Qpb->bindInt(':group_id', $customers_group_id);
+    $Qpb->execute();  
+    
+    $hasQPB = false;
+    if ($Qpb->numberOfRows() > 0) $hasQPB = true;
+    
+    $Qpb->freeResult();
+    
+    return $hasQPB;
+  }
+ /*
+  * Retrieve quantity price breaks data
+  *
+  * @param integer $products_id       The product id
+  * @param integer $customers_group_id The customer group id
+  * @access public
+  * @return array
+  */   
+  public function getQtyPriceBreaks($products_id, $customers_group_id = 1) {
+    global $lC_Database;
+    
+    $Qpb = $lC_Database->query('select * from :table_products_pricing where products_id = :products_id and group_id = :group_id');
+    $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+    $Qpb->bindInt(':products_id', $products_id);
+    $Qpb->bindInt(':group_id', $customers_group_id);
+    $Qpb->execute();  
+    
+    $data = array();
+    while($Qpb->next()) {
+      $data[] = $Qpb->toArray();
     }
     
-    return $base_price;        
-  }   
-  
-  public function getTaxClassID($qty = 1) {
-    $tax_class_id = $this->_data['tax_class_id'];     
-    if (isset($this->_data['price_breaks'])) {
-      reset($this->_data['price_breaks']);
-      foreach ($this->_data['price_breaks'] as $value) {
-        if ($qty >= $value['qty_break']) {
-          $tax_class_id = $value['tax_class_id'];
-        }    
-      }    
-    }
+    $Qpb->freeResult();
     
-    return $tax_class_id;        
-  }         
-
+    return $data;
+  }  
+  
   public function getPriceFormated($with_special = false) {
     global $lC_Services, $lC_Specials, $lC_Currencies;
-
-    if (($with_special === true) && $lC_Services->isStarted('specials') && ($new_price = $lC_Specials->getPrice($this->_data['id'])) && ($lC_Specials->getPrice($this->_data['id']) < $this->getPriceBreak())  ) {
-     // $price = '<big>' . $lC_Currencies->displayPrice($new_price, $this->_data['tax_class_id']) . '</big><small>' . $lC_Currencies->displayPrice($this->_data['price'], $this->_data['tax_class_id']) . '</small>'; 
+    
+    $pData = $this->getPriceInfo($this->getID(), 1, array());
+    
+    if (isset($pData['qpbData']['listing']) && empty($pData['qpbData']['listing']) === false) {
+      $result = $pData['qpbData']['listing'];
+    } else {
+      $result = $pData['formatted'];
+    }
+    
+    
+    return $result;
+    
+    /*
+    if (($with_special === true) && $lC_Services->isStarted('specials') && ($new_price = $lC_Specials->getPrice($this->_data['id'])))  {
         $price = '<s>' . $lC_Currencies->displayPrice($this->_data['price'], $this->_data['tax_class_id']) . '</s> <span class="product-special-price">' . $lC_Currencies->displayPrice($new_price, $this->_data['tax_class_id']) . '</span>';
     } else {
       if ( $this->hasVariants() ) {
         $price = 'from&nbsp;' . $lC_Currencies->displayPrice($this->getVariantMinPrice(), $this->_data['tax_class_id']);
       } else {
-        $price = $lC_Currencies->displayPrice($this->getPriceBreak(), $this->getTaxClassID());
+        $price = $lC_Currencies->displayPrice($this->getPrice(), $this->getTaxClassID());
       }
     }
 
     return $price;
+    */
   }
 
   public function getVariantMinPrice() {
@@ -329,6 +497,8 @@ class lC_Product {
     return $price;
   }
 
+  //######## PRICING eof #########//
+  
   public function getQuantity() {
     $quantity = $this->_data['quantity'];
 
@@ -341,7 +511,21 @@ class lC_Product {
 
     return $quantity;
   }
-
+  
+  public function getTaxClassID($qty = 1) {
+    $tax_class_id = $this->_data['tax_class_id'];     
+    if (isset($this->_data['price_breaks'])) {
+      reset($this->_data['price_breaks']);
+      foreach ($this->_data['price_breaks'] as $value) {
+        if ($qty >= $value['qty_break']) {
+          $tax_class_id = $value['tax_class_id'];
+        }    
+      }    
+    }
+    
+    return $tax_class_id;        
+  }
+  
   public function getWeight() {
     global $lC_Weight;
 
@@ -737,5 +921,16 @@ class lC_Product {
 
     return ( $a['sort_order'] < $b['sort_order'] ) ? -1 : 1;
   }
-}
+ /*
+  * Custom quantity price breaks sort
+  *
+  * @param integer $a The 1st sort value
+  * @param integer $b The 2nd sort value
+  * @access protected
+  * @return boolean
+  */ 
+  protected static function _usortBreakPoint($a, $b) {
+    return $a['qty_break'] == $b['qty_break'] ? 0 : $a['qty_break'] > $b['qty_break'] ? 1 : -1;
+  }  
+} 
 ?>

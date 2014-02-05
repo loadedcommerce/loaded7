@@ -203,11 +203,19 @@ class lC_Template {
     if (is_numeric($id)) {
       foreach ($this->getTemplates() as $template) {
         if ($template['id'] == $id) {
-          return $template['code'];
+          if (file_exists(DIR_FS_CATALOG . 'templates/' . $template['code'] . '.php')) {
+            return $template['code'];
+          } else {
+            return 'core';
+          }
         }
       }
     } else {
-      return $this->_template;
+      if (file_exists(DIR_FS_CATALOG . 'templates/' . $this->_template . '.php')) {
+        return $this->_template;
+      } else {
+        return 'core';
+      }      
     }
   }
   /**
