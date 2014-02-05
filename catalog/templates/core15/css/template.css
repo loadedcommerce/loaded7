@@ -602,7 +602,7 @@
   background: #b2b2b2;
   border: 0 none;
   font: bold 12px Arial,Helvetica,Sans-serif;
-  color: #000000;
+  color: #444444;
   width: 85px;
   padding: 7px 15px 7px 25px;
   -webkit-border-radius: 3px;
@@ -617,7 +617,7 @@
 
 #loaded7 input.navbar-search:focus {
   background: #fcfcfc;
-  color: #000000;
+  color: #444444;
   width: 150px;
   margin: 0 -24px 0 0;
   outline: none; 
@@ -631,16 +631,16 @@
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
-  color: #000;
+  color: #444444;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  color: #000;
+  color: #444444;
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-  color: #000;
+  color: #444444;
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
-  color: #000;
+  color: #444444;
 }
 
 #loaded7 .popover-content {
