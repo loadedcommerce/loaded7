@@ -239,7 +239,11 @@ if (!function_exists('lc_email')) {
     }
 
     $lC_Mail = new lC_Mail($to_name, $to_email_address, $from_name, $from_email_address, $subject);
-    $lC_Mail->setBodyPlain($body);
+    if(EMAIL_USE_HTML == '-1'){
+      $lC_Mail->setBodyHTML($body);
+    }else{
+      $lC_Mail->setBodyPlain($body);
+    }
     $lC_Mail->send();
   }
 }
