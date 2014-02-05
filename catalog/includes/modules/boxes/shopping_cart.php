@@ -10,7 +10,7 @@
 class lC_Boxes_shopping_cart extends lC_Modules {
   var $_title,
       $_code = 'shopping_cart',
-      $_author_name = 'LoadedCommerce',
+      $_author_name = 'Loaded Commerce',
       $_author_www = 'http://www.loadedcommerce.com',
       $_group = 'boxes';
 

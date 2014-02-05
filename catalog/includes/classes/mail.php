@@ -18,7 +18,7 @@ class lC_Mail {
       $_attachments = array(),
       $_images = array(),
       $_boundary,
-      $_headers = array('X-Mailer' => 'LoadedCommerce'),
+      $_headers = array('X-Mailer' => 'Loaded Commerce'),
       $_body,
       $_content_transfer_encoding = '7bit',
       $_charset = 'iso-8859-1';

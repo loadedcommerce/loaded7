@@ -3,7 +3,7 @@
   <definitions>
     <definition>
       <key>mainpage_categories_title</key>
-      <value><![CDATA[Top Categories on Mainpage]]></value>
+      <value><![CDATA[Top Categories]]></value>
       <group>modules-content</group>
     </definition>
   </definitions>
