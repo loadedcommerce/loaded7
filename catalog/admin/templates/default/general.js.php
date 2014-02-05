@@ -175,7 +175,7 @@ $(document).ready(function() {
     // when a key is pressed 
     $("*").keypress(function(e){
       // check to see if input is datatables search
-      var attr = $("#batch input").attr('aria-controls');
+      var attr = $("input[aria-controls='dataTable']").hasClass("focus");
       if (attr) {
         disableKeyCombo = true;
       }
