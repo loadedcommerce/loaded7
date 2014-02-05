@@ -513,7 +513,7 @@ class lC_Products_Admin {
     $Qsubproducts->freeResult();      
     
     // load simple options
-    $Qoptions = $lC_Database->query('select so.options_id, so.sort_order, so.status, vg.title, vg.module from :table_products_simple_options so left join :table_products_variants_groups vg on (so.options_id = vg.id) where so.products_id = :products_id and vg.languages_id = :languages_id order by so.sort_order');
+    $Qoptions = $lC_Database->query('select so.options_id, so.products_id, so.sort_order, so.status, vg.title, vg.module from :table_products_simple_options so left join :table_products_variants_groups vg on (so.options_id = vg.id) where so.products_id = :products_id and vg.languages_id = :languages_id order by so.sort_order');
     $Qoptions->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
     $Qoptions->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
     $Qoptions->bindInt(':products_id', $id);
@@ -523,7 +523,7 @@ class lC_Products_Admin {
     while ($Qoptions->next()) {
       $data['simple_options'][] = $Qoptions->toArray();      
       
-      $Qvalues = $lC_Database->query('select sov.options_id, sov.values_id, sov.price_modifier, sov.customers_group_id, vv.title from :table_products_simple_options_values sov left join :table_products_variants_values vv on (sov.values_id = vv.id) where sov.options_id = :options_id and vv.languages_id = :languages_id');
+      $Qvalues = $lC_Database->query('select sov.products_id, sov.options_id, sov.values_id, sov.price_modifier, sov.customers_group_id, vv.title from :table_products_simple_options_values sov left join :table_products_variants_values vv on (sov.values_id = vv.id) where sov.options_id = :options_id and vv.languages_id = :languages_id');
       $Qvalues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
       $Qvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
       $Qvalues->bindInt(':options_id', $Qoptions->valueInt('options_id'));
@@ -1113,30 +1113,22 @@ class lC_Products_Admin {
     // simple options
     if ( $error === false ) {
       
-      // remove old values
-      $Qcheck = $lC_Database->query('select options_id from :table_products_simple_options where products_id = :products_id');
-      $Qcheck->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
-      $Qcheck->bindInt(':products_id', $products_id);
-      $Qcheck->execute();
-      // delete the simple options values
-      while ( $Qcheck->next() ) {
-        $Qdel = $lC_Database->query('delete from :table_products_simple_options_values where options_id = :options_id');
-        $Qdel->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-        $Qdel->bindInt(':options_id', $Qcheck->valueInt('options_id'));
-        $Qdel->setLogging($_SESSION['module'], $products_id);
-        $Qdel->execute();
-      } 
-      // delete the simple option
+      // delete the simple options
       $Qdel = $lC_Database->query('delete from :table_products_simple_options where products_id = :products_id');
       $Qdel->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
       $Qdel->bindInt(':products_id', $products_id);
       $Qdel->setLogging($_SESSION['module'], $products_id);
       $Qdel->execute();                    
       
-      $Qcheck->freeResult();      
-     
+      // delete the simple options values
+      $Qdel = $lC_Database->query('delete from :table_products_simple_options_values where products_id = :products_id');
+      $Qdel->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+      $Qdel->bindInt(':products_id', $products_id);
+      $Qdel->setLogging($_SESSION['module'], $products_id);
+      $Qdel->execute();      
+      
       // if values are set, save them
-      if ( isset($data['simple_options_group_name']) && !empty($data['simple_options_group_name']) ) {
+      if ( isset($data['simple_options_group_name']) && !empty($data['simple_options_group_name']) ) {   
         foreach ( $data['simple_options_group_name'] as $group_id => $value ) {
           
           // add the new option
@@ -1159,14 +1151,15 @@ class lC_Products_Admin {
             foreach ( $options as $options_id => $option_value ) {
               if ($options_id == $group_id) {
                 foreach ( $option_value as $values_id => $price_modifier ) {
-                  $Qoptions = $lC_Database->query('insert into :table_products_simple_options_values (values_id, options_id, customers_group_id, price_modifier) values (:values_id, :options_id, :customers_group_id, :price_modifier)');
-                  $Qoptions->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-                  $Qoptions->bindInt(':values_id', $values_id);
-                  $Qoptions->bindInt(':options_id', $options_id);
-                  $Qoptions->bindInt(':customers_group_id', $customers_group_id);
-                  $Qoptions->bindFloat(':price_modifier', (float)$price_modifier);
-                  $Qoptions->setLogging($_SESSION['module'], $products_id);
-                  $Qoptions->execute();
+                  $Qoptval = $lC_Database->query('insert into :table_products_simple_options_values (products_id, values_id, options_id, customers_group_id, price_modifier) values (:products_id, :values_id, :options_id, :customers_group_id, :price_modifier)');
+                  $Qoptval->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+                  $Qoptval->bindInt(':products_id', $products_id);
+                  $Qoptval->bindInt(':values_id', $values_id);
+                  $Qoptval->bindInt(':options_id', $options_id);
+                  $Qoptval->bindInt(':customers_group_id', $customers_group_id);
+                  $Qoptval->bindFloat(':price_modifier', (float)$price_modifier);
+                  $Qoptval->setLogging($_SESSION['module'], $products_id);
+                  $Qoptval->execute();
 
                   if ( $lC_Database->isError() ) {
                     $error = true;
@@ -1936,7 +1929,7 @@ class lC_Products_Admin {
           $itemsInput = '';
           if (is_array($options['values'])) {
             foreach ($options['values'] as $k => $v) {    
-              if (($v['options_id'] == $so['options_id']) && $v['customers_group_id'] == DEFAULT_CUSTOMERS_GROUP_ID) {
+              if (($v['options_id'] == $so['options_id']) && $v['customers_group_id'] == DEFAULT_CUSTOMERS_GROUP_ID && $so['products_id'] == $v['products_id']) {
                 $items .= '<div class="small"><span class="icon-right icon-blue with-small-padding"></span>' . $v['title'] . '</div>';
                 $itemsInput .= '<input type="hidden" id="simple_options_entry_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry[' . $v['options_id'] . '][' . $v['values_id'] . ']" value="' . $v['title'] . '">';
               }
@@ -2109,9 +2102,9 @@ class lC_Products_Admin {
       foreach ($options as $key => $so) {
         if ((isset($so['title']) && $so['title'] != NULL)) {
           $items = '';
-          if (is_array($options['values'])) {          
+          if (is_array($options['values'])) {  
             foreach ($options['values'] as $k => $v) {
-              if ($v['options_id'] == $so['options_id'] && $v['customers_group_id'] == $customers_group_id) {
+              if ($v['options_id'] == $so['options_id'] && $v['customers_group_id'] == $customers_group_id && $v['products_id'] == $pInfo->get('products_id')) {
                 if ($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID) {
                   $mod = (isset($v['price_modifier']) && !empty($v['price_modifier'])) ? number_format($v['price_modifier'], DECIMAL_PLACES) : '0.00';
                 } else {

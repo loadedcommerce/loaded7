@@ -172,8 +172,9 @@ class lC_Product {
         $QsimpleOptions->execute();
                
         while ( $QsimpleOptions->next() ) {
-          $QsimpleOptionsValues = $lC_Database->query('select values_id, price_modifier from :table_products_simple_options_values where options_id = :options_id and customers_group_id = :customers_group_id');
+          $QsimpleOptionsValues = $lC_Database->query('select values_id, price_modifier from :table_products_simple_options_values where products_id = :products_id and options_id = :options_id and customers_group_id = :customers_group_id order by sort_order asc');
           $QsimpleOptionsValues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+          $QsimpleOptionsValues->bindInt(':products_id', $this->_data['master_id']);
           $QsimpleOptionsValues->bindInt(':options_id', $QsimpleOptions->valueInt('options_id'));
           $QsimpleOptionsValues->bindInt(':customers_group_id', DEFAULT_CUSTOMERS_GROUP_ID);
           $QsimpleOptionsValues->execute();   
