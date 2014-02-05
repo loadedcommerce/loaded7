@@ -14,10 +14,6 @@ if (!defined('DIR_FS_ADMIN')) return false;
 
 include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/products/classes/products.php'));
 include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/customer_groups/classes/customer_groups.php'));
-//include_once($lC_Vqmod->modCheck('includes/applications/product_variants/classes/product_variants.php'));
-//include_once($lC_Vqmod->modCheck('includes/applications/specials/classes/specials.php'));
-//include_once($lC_Vqmod->modCheck('includes/applications/categories/classes/categories.php'));
-//include_once($lC_Vqmod->modCheck('includes/classes/addons.php'));
 
 class lC_Products_Admin_Pro extends lC_Products_Admin {
  /*
@@ -53,10 +49,11 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
           $error = true;
         } else {        
           // add the new records
+          
           foreach($data['products_qty_break_point'][$group] as $key => $val) {
             
-            if ($val['qty_break'] == 1) continue; // do not save the base price in pricing table
             if ($data['products_qty_break_point'][$group][$key] == null) continue;
+            if ($data['products_qty_break_point'][$group][$key] == '1') continue;
             
             $Qpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
             $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
@@ -76,7 +73,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
 
           return $products_id; // Return the products id for use with the save_close buttons
         }
-
+        
         $lC_Database->rollbackTransaction();        
       }
     }
