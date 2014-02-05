@@ -21,7 +21,7 @@ class lC_Template_core15 {
       $_version = '1.0.0',
       $_compatibility = '7.0',      
       $_groups = array('boxes' => array('left', 'right'),
-                       'content' => array('before', 'after')),
+                       'content' => array('header', 'before', 'after', 'footer')),
       $_keys;
 
   public function getID() {
