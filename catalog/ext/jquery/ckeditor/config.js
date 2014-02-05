@@ -8,32 +8,25 @@ CKEDITOR.editorConfig = function( config ) {
   // For the complete reference:
   // http://docs.ckeditor.com/#!/api/CKEDITOR.config
 
-  config.extraPlugins = 'font,colorbutton,autogrow';
+
+  config.extraPlugins = 'autogrow,font,colorbutton,tliyoutube,pastefromword';
   
   //below seeting is for removing editor footer
   config.removePlugins = 'elementspath,resize';
   config.resize_enabled = false;
 
   // The toolbar groups arrangement, optimized for two toolbar rows.
-  config.toolbarGroups = [
-    { name: 'styles' },
-    { name: 'basicstyles', groups: [ 'basicstyles' ] },
-    { name: 'colors' },
-    { name: 'paragraph', groups: [ 'list'] },
-    { name: 'links' },
-    { name: 'insert'},
-    { name: 'clipboard', groups: [ 'clipboard' ] },
-    { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
-    { name: 'tools' },
-    { name: 'others' }/*,
-    { name: 'about' }*/
-  ];
-
-
+  config.toolbar = [
+        { name: 'styles', items: [ 'FontSize' ] },
+	      { name: 'basicstyles', groups: [ 'basicstyles', 'colors' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'TextColor' ] },
+	      { name: 'paragraph', groups: [ 'list' ], items: [ 'NumberedList', 'BulletedList' ] },
+	      { name: 'links', groups: ['links','insert'], items: [ 'Link', 'Unlink', '-', 'HorizontalRule', 'Image', 'tliyoutube' ] },
+	      { name: 'clipboard', groups: [ 'clipboard', 'basicstyles' ], items: [  'PasteFromWord', '-', 'RemoveFormat' ] },
+        ];
 
   // Remove some buttons, provided by the standard plugins, which we don't
   // need to have in the Standard(s) toolbar.
-  config.removeButtons = 'Subscript,Superscript,Strike,Table,Styles,Format,Font,BGColor,Cut,Copy,Anchor,HorizontalRule,SpecialChar';
+  config.removeButtons = 'Superscript,Strike,Table,Styles,Font,BGColor,Cut,Copy,Anchor';
 
   // Se the most common block elements.
   config.format_tags = 'p;h1;h2;h3;pre';
