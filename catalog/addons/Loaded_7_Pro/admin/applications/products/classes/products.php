@@ -10,6 +10,8 @@
 */
 global $lC_Vqmod;
 
+if (!defined('DIR_FS_ADMIN')) return false;
+
 include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/products/classes/products.php'));
 include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/customer_groups/classes/customer_groups.php'));
 //include_once($lC_Vqmod->modCheck('includes/applications/product_variants/classes/product_variants.php'));
@@ -30,7 +32,9 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
     global $lC_Database, $lC_Language;
     
     $error = false;
+    
     $products_id = parent::save($id, $data);
+    
     $group = (defined('DEFAULT_CUSTOMERS_GROUP_ID') && DEFAULT_CUSTOMERS_GROUP_ID != null) ? (int)DEFAULT_CUSTOMERS_GROUP_ID : 1;    
     
     if (is_array($data['products_qty_break_point'][$group]) && $data['products_qty_break_point'][$group][1] != null) {
