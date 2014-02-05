@@ -4,7 +4,7 @@
   @author     Loaded Commerce
   @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
-  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: products.php v1.0 2013-08-08 datazen $
 */
@@ -34,7 +34,7 @@ class lC_Products_Admin {
     $lC_Language->loadIniFile('products.php');
 
     $media = $_GET['media'];
-    
+
     $result = array('aaData' => array());
 
     if ( $category_id > 0 ) {
@@ -78,21 +78,21 @@ class lC_Products_Admin {
       foreach ($Qcategories as $cat) {
         if ($cnt == 0) {
           $categories = '<small class="tag mid-margin-right glossy ' . (($cat['status'] == 1) ? ' green-gradient' : ' red-gradient') . '">' . $cat['name'] . '</small>';
-        } 
+        }
         if ($cnt == 1) {
           $more_title = $cat['name'];
           $categories .= '<small class="tag mid-margin-right glossy green-gradient with-tooltip" title="' . $catCount . ' ' . (($catCount > 1) ? $lC_Language->get('text_more_categories') : $lC_Language->get('text_more_category')) . '">...</small>';
-        } 
+        }
         $cnt++;
       }
-      $Qcategories = null;      
+      $Qcategories = null;
 
       $lC_Image = new lC_Image_Admin();
       $Qimage = $lC_Database->query('select image from :table_products_images where products_id = :products_id and default_flag = 1');
       $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
       $Qimage->bindInt(':products_id', $Qproducts->valueInt('products_id'));
       $Qimage->execute();
-      
+
       $cost = $lC_Currencies->format($Qproducts->value('products_cost'));
       $msrp = $lC_Currencies->format($Qproducts->value('products_msrp'));
       $products_status = ($Qproducts->valueInt('products_status') === 1);
@@ -102,23 +102,23 @@ class lC_Products_Admin {
         $product_icon = 'icon-path icon-orange icon-size2';
         $product_icon_title = $lC_Language->get('text_inventory_control_has_children');
         $qtyArr = self::getMinMax($Qproducts->valueInt('products_id'));
-        $products_quantity =  $qtyArr['low'] . '-' . $qtyArr['high'];    
+        $products_quantity =  $qtyArr['low'] . '-' . $qtyArr['high'];
         $priceArr = self::getMinMax($Qproducts->valueInt('products_id'), 'products_price');
-        $price =  $lC_Currencies->format($priceArr['low']) . ' - ' . $lC_Currencies->format($priceArr['high']);            
+        $price =  $lC_Currencies->format($priceArr['low']) . ' - ' . $lC_Currencies->format($priceArr['high']);
       } else if ( self::hasSubProducts($Qproducts->valueInt('products_id')) === true ) {
         $product_icon = 'icon-flow-tree icon-red icon-size2';
         $product_icon_title = $lC_Language->get('text_inventory_control_has_subproducts');
         $qtyArr = self::getMinMax($Qproducts->valueInt('products_id'));
         $products_quantity =  $qtyArr['low'] . ' - ' . $qtyArr['high'];
         $priceArr = self::getMinMax($Qproducts->valueInt('products_id'), 'products_price');
-        $price =  $lC_Currencies->format($priceArr['low']) . ' - ' . $lC_Currencies->format($priceArr['high']);        
+        $price =  $lC_Currencies->format($priceArr['low']) . ' - ' . $lC_Currencies->format($priceArr['high']);
       } else {
         $product_icon = 'icon-stop icon-anthracite icon-size2';
         $product_icon_title = $lC_Language->get('text_inventory_control_simple');*/
         $products_quantity = $Qproducts->valueInt('products_quantity');
         $price = $lC_Currencies->format($Qproducts->value('products_price'));
       //}
-      
+
       $icons = '';
       if ( $Qproducts->valueInt('has_children') === 1 ) {
         $Qvariants = $lC_Database->query('select min(products_price) as min_price, max(products_price) as max_price, sum(products_quantity) as total_quantity, min(products_status) as products_status from :table_products where parent_id = :parent_id');
@@ -138,12 +138,12 @@ class lC_Products_Admin {
       } else if ( self::hasSubProducts($Qproducts->valueInt('products_id')) === true ) {
         $icons .= '<span class="icon-flow-cascade icon-red mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_subproducts') . '"></span>';
       }
-      
+
       $Qspecials = $lC_Database->query('select specials_new_products_price, status from :table_specials where products_id = :products_id');
       $Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
       $Qspecials->bindInt(':products_id', $Qproducts->valueInt('products_id'));
       $Qspecials->execute();
-      
+
       if ($Qspecials->numberOfRows() > 0) {
         $price = $price . ' <span class="tag glossy with-tooltip' . (($Qspecials->valueInt('status') == 1) ? ' red-gradient' : ' grey-gradient') . '" title="' . (($Qspecials->valueInt('status') == 1) ? $lC_Language->get('text_special_enabled') : $lC_Language->get('text_special_disabled')) . '">' . $Qspecials->value('specials_new_products_price') . '</span>';
       }
@@ -163,7 +163,7 @@ class lC_Products_Admin {
       $class = '<td>' . $lC_Language->get('text_common') . '</td>';
       $price = '<td>' . $price . '</td>';
       $qty = '<td>' . $products_quantity . '</td>';
-      $status = '<td><span class="align-center" id="status_' . $Qproducts->valueInt('products_id') . '" onclick="updateStatus(\'' . $Qproducts->valueInt('products_id') . '\', \'' . (($Qproducts->valueInt('products_status') == 1) ? 0 : 1) . '\');">' . (($Qproducts->valueInt('products_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_product') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_product') . '"></span>') . '</span></td>'; 
+      $status = '<td><span class="align-center" id="status_' . $Qproducts->valueInt('products_id') . '" onclick="updateStatus(\'' . $Qproducts->valueInt('products_id') . '\', \'' . (($Qproducts->valueInt('products_status') == 1) ? 0 : 1) . '\');">' . (($Qproducts->valueInt('products_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_product') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_product') . '"></span>') . '</span></td>';
 
       $action = '<td class="align-right vertical-center">
                    <span class="button-group">
@@ -176,8 +176,8 @@ class lC_Products_Admin {
                    </span>
                  </td>';
       $result['aaData'][] = array("$check", "$products"/*, "$inv"*/, "$cats", "$class", "$price", "$qty", "$status", "$action");
-      $result['entries'][] = array_merge($Qproducts->toArray(), $extra_data);      
-      
+      $result['entries'][] = array_merge($Qproducts->toArray(), $extra_data);
+
       $Qproductscategories->freeResult();
       $Qimage->freeResult();
       $Qspecials->freeResult();
@@ -248,7 +248,7 @@ class lC_Products_Admin {
             $Qcpn->bindInt(':language_id', $lC_Language->getID());
             $Qcpn->bindInt(':categories_id', $cats);
             $Qcpn->execute();
-            
+
             $titlestr .= $Qcpn->value('categories_name') . ' &raquo; ';
           }
         }
@@ -266,17 +266,17 @@ class lC_Products_Admin {
   // create path names
   /*function createPathNames($id) {
     global $lC_Database;
-    
+
     $Qcpn = $lC_Database->query('select categories_name from :table_categories_description where parent_id = :categories_id and language_id = :language_id');
     $Qcpn->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
     $Qcpn->bindInt(':language_id', $lC_Language->getID());
     $Qcpn->bindInt(':categories_id', $id);
     $Qcpn->execute();
-    
+
     $result = $Qcpn->toArray();
-    
+
     if ($result['categoryId'] == 0) {
-      $name = '<a href="index.php?action=listContent&categoryId=' . $result['id'] . '">' . $result['title'] . '</a>';  
+      $name = '<a href="index.php?action=listContent&categoryId=' . $result['id'] . '">' . $result['title'] . '</a>';
       return $name;
     } else {
       $name = ' > <a href="index.php?action=listContent&categoryId=' . $result['id'] . '">' . $result['title'] . '</a>';
@@ -387,32 +387,32 @@ class lC_Products_Admin {
     $Qproducts->execute();
 
     $data = array_merge(array('products_id' => $id), (array)$Qproducts->toArray());
-    
-    $Qproducts->freeResult(); 
-    
+
+    $Qproducts->freeResult();
+
     $Qspecials = $lC_Database->query('select * from :table_specials where products_id = :products_id');
     $Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
     $Qspecials->bindInt(':products_id', $id);
-    $Qspecials->execute();    
-    
+    $Qspecials->execute();
+
     $data['products_special_status'] = $Qspecials->valueInt('status');
     $data['products_special_price'] = $Qspecials->valueDecimal('specials_new_products_price');
     if ($Qspecials->value('start_date') != null) {
       $data['products_special_start_date'] = lC_DateTime::getShort($Qspecials->value('start_date'));
     }
     if ($Qspecials->value('expires_date') != null) {
-      $data['products_special_expires_date'] = lC_DateTime::getShort($Qspecials->value('expires_date'));  
+      $data['products_special_expires_date'] = lC_DateTime::getShort($Qspecials->value('expires_date'));
     }
-    
-    $Qspecials->freeResult();  
-    
+
+    $Qspecials->freeResult();
+
     $Qfeatured = $lC_Database->query('select status from :table_featured_products where products_id = :products_id limit 1');
     $Qfeatured->bindTable(':table_featured_products', TABLE_FEATURED_PRODUCTS);
     $Qfeatured->bindInt(':products_id', $id);
-    $Qfeatured->execute();    
-    
+    $Qfeatured->execute();
+
     $data['products_featured'] = $Qfeatured->valueInt('status');
-    $Qfeatured->freeResult();  
+    $Qfeatured->freeResult();
 
     $variants_array = array();
 
@@ -467,14 +467,14 @@ class lC_Products_Admin {
 
     while ( $Qattributes->next() ) {
       // if the value is date, reformat for datepicker
-      $value = (substr($Qattributes->value('value'), 4, 1) == '-') ? lC_DateTime::getShort($Qattributes->value('value')) : $Qattributes->value('value');      
+      $value = (substr($Qattributes->value('value'), 4, 1) == '-') ? lC_DateTime::getShort($Qattributes->value('value')) : $Qattributes->value('value');
       $attributes_array[$Qattributes->valueInt('id')] = $value;
     }
 
     $data['attributes'] = $attributes_array;
-    
-    $Qattributes->freeResult(); 
-    
+
+    $Qattributes->freeResult();
+
     $Qimages = $lC_Database->query('select id, image, default_flag from :table_products_images where products_id = :products_id order by sort_order');
     $Qimages->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
     $Qimages->bindInt(':products_id', $id);
@@ -485,17 +485,17 @@ class lC_Products_Admin {
         $data['image'] = $Qimages->value('image');
       }
     }
-    
+
     $Qimages->freeResult();
-    
+
     // load subproducts
     $Qsubproducts = $lC_Database->query('select p.*, pd.* from :table_products p, :table_products_description pd where p.parent_id = :products_id and p.products_id = pd.products_id and pd.language_id = :language_id');
     $Qsubproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qsubproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qsubproducts->bindInt(':products_id', $id);
-    $Qsubproducts->bindInt(':language_id', $lC_Language->getID());    
+    $Qsubproducts->bindInt(':language_id', $lC_Language->getID());
     $Qsubproducts->execute();
-    
+
     $subproducts_array = array();
     while ( $Qsubproducts->next() ) {
       // subproduct images
@@ -505,39 +505,39 @@ class lC_Products_Admin {
       $Qimages->execute();
 
       $subproducts_array[] = array_merge((array)$Qsubproducts->toArray(), array('image' => $Qimages->value('image')));
-      
-      $Qimages->freeResult();      
-    }    
+
+      $Qimages->freeResult();
+    }
     $data['subproducts'] = $subproducts_array;
     if (sizeof($data['subproducts']) > 0) $data['has_subproducts'] = 1;
-    
-    $Qsubproducts->freeResult();      
-    
+
+    $Qsubproducts->freeResult();
+
     // load simple options
-    $Qoptions = $lC_Database->query('select so.options_id, so.sort_order, so.status, vg.title, vg.module from :table_products_simple_options so left join :table_products_variants_groups vg on (so.options_id = vg.id) where so.products_id = :products_id and vg.languages_id = :languages_id order by so.sort_order');
+    $Qoptions = $lC_Database->query('select so.options_id, so.products_id, so.sort_order, so.status, vg.title, vg.module from :table_products_simple_options so left join :table_products_variants_groups vg on (so.options_id = vg.id) where so.products_id = :products_id and vg.languages_id = :languages_id order by so.sort_order');
     $Qoptions->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
     $Qoptions->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
     $Qoptions->bindInt(':products_id', $id);
     $Qoptions->bindInt(':languages_id', $lC_Language->getID());
     $Qoptions->execute();
-    
+
     while ($Qoptions->next()) {
-      $data['simple_options'][] = $Qoptions->toArray();      
-      
-      $Qvalues = $lC_Database->query('select sov.options_id, sov.values_id, sov.price_modifier, sov.customers_group_id, vv.title from :table_products_simple_options_values sov left join :table_products_variants_values vv on (sov.values_id = vv.id) where sov.options_id = :options_id and vv.languages_id = :languages_id');
+      $data['simple_options'][] = $Qoptions->toArray();
+
+      $Qvalues = $lC_Database->query('select sov.products_id, sov.options_id, sov.values_id, sov.price_modifier, sov.customers_group_id, vv.title from :table_products_simple_options_values sov left join :table_products_variants_values vv on (sov.values_id = vv.id) where sov.options_id = :options_id and vv.languages_id = :languages_id');
       $Qvalues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
       $Qvalues->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
       $Qvalues->bindInt(':options_id', $Qoptions->valueInt('options_id'));
       $Qvalues->bindInt(':languages_id', $lC_Language->getID());
       $Qvalues->execute();
-      
+
       while ($Qvalues->next()) {
-        $data['simple_options']['values'][] = $Qvalues->toArray();      
+        $data['simple_options']['values'][] = $Qvalues->toArray();
       }
-      $Qvalues->freeResult();    
+      $Qvalues->freeResult();
     }
-    $Qoptions->freeResult();    
-    
+    $Qoptions->freeResult();
+
     return $data;
   }
  /*
@@ -563,12 +563,12 @@ class lC_Products_Admin {
       $Qproduct->bindRaw(':products_date_added', 'now()');
       $Qproduct->bindInt(':products_ordered', $data['products_ordered']);
     }
-    
+
     // set parent status
     if ( isset($_POST['products_status']) && $_POST['products_status'] == 'active' ) $data['status'] = 1;
     if ( isset($_POST['products_status']) && $_POST['products_status'] == 'inactive' ) $data['status'] = -1;
     if ( isset($_POST['products_status']) && $_POST['products_status'] == 'recurring' ) $data['status'] = 0;
-    
+
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproduct->bindInt(':parent_id', $data['parent_id']);
     $Qproduct->bindInt(':products_quantity', $data['quantity']);
@@ -579,7 +579,7 @@ class lC_Products_Admin {
     $Qproduct->bindValue(':products_sku', $data['sku']);
     $Qproduct->bindFloat(':products_weight', $data['weight']);
     $Qproduct->bindInt(':products_weight_class', $data['weight_class']);
-    $Qproduct->bindInt(':products_tax_class_id', $data['tax_class_id']);   
+    $Qproduct->bindInt(':products_tax_class_id', $data['tax_class_id']);
     $Qproduct->bindInt(':products_status', $data['status']);
     $Qproduct->setLogging($_SESSION['module'], $id);
     $Qproduct->execute();
@@ -593,13 +593,51 @@ class lC_Products_Admin {
         $products_id = $lC_Database->nextID();
       }
 
+      // remove any old pricing records
+      $Qpricing = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
+      $Qpricing->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+      $Qpricing->bindInt(':products_id', $products_id);
+      $Qpricing->setLogging($_SESSION['module'], $products_id);
+      $Qpricing->execute();
+
+      if ( $lC_Database->isError() ) {
+        $error = true;
+      } else {
+        if ( isset($data['variants_combo']) && !empty($data['variants_combo']) ) {
+        } else {
+          if ( isset($data['price_breaks']) && !empty($data['price_breaks']) ) {
+            for ($i=0; sizeof($data['price_breaks']['group_id']) > $i; $i++) {
+              if (is_array($data['price_breaks']['group_id'][$i])) continue;
+              if ($data['price_breaks']['group_id'][$i] == 0) continue;
+              if ($data['price_breaks']['qty'][$i] == null) continue;
+              if ($data['price_breaks']['price'][$i] == 0) continue;
+              $Qpb = $lC_Database->query('insert into :table_products_pricing (products_id, group_id, tax_class_id, qty_break, price_break, date_added) values (:products_id, :group_id, :tax_class_id, :qty_break, :price_break, :date_added)');
+              $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+              $Qpb->bindInt(':products_id', $products_id );
+              $Qpb->bindInt(':group_id', $data['price_breaks']['group_id'][$i] );
+              $Qpb->bindInt(':tax_class_id', $data['price_breaks']['tax_class_id'][$i] );
+              $Qpb->bindValue(':qty_break', $data['price_breaks']['qty'][$i] );
+              $Qpb->bindValue(':price_break', $data['price_breaks']['price'][$i] );
+              $Qpb->bindRaw(':date_added', 'now()');
+              $Qpb->setLogging($_SESSION['module'], $products_id);
+              $Qpb->execute();
+
+              if ( $lC_Database->isError() ) {
+                $error = true;
+                break;
+              }
+            }
+          }
+        }
+      }
+
       $Qcategories = $lC_Database->query('delete from :table_products_to_categories where products_id = :products_id');
       $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
       $Qcategories->bindInt(':products_id', $products_id);
       $Qcategories->setLogging($_SESSION['module'], $products_id);
       $Qcategories->execute();
 
-      if ( $lC_Database->isError() ) { 
+      if ( $lC_Database->isError() ) {
         $error = true;
       } else {
         if ( isset($data['categories']) && !empty($data['categories']) ) {
@@ -619,12 +657,12 @@ class lC_Products_Admin {
         }
       }
     }
-    
+
     if ( $error === false ) {
       $images = array();
 
       $products_image = new upload('products_image');
-      
+
       $products_image->set_extensions(array('gif', 'jpg', 'jpeg', 'png'));
 
       if ( $products_image->exists() ) {
@@ -649,7 +687,7 @@ class lC_Products_Admin {
       }
 
       $default_flag = 1;
-      
+
       foreach ($images as $image) {
         $Qimage = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added) values (:products_id, :image, :default_flag, :sort_order, :date_added)');
         $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
@@ -674,7 +712,7 @@ class lC_Products_Admin {
         $default_flag = 0;
       }
     }
-    
+
     if ( $error === false ) {
       if ( isset($data['categories']) && !empty($data['categories']) ) {
         $cPath = $lC_CategoryTree->getcPath($data['categories'][0]);
@@ -702,7 +740,7 @@ class lC_Products_Admin {
           $error = true;
           break;
         }
-        
+
         // added for permalink
         if (is_numeric($id)) {
           $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink, query = :query where item_id = :item_id and type = :type and language_id = :language_id');
@@ -741,7 +779,7 @@ class lC_Products_Admin {
               $Qattribute = $lC_Database->query('insert into :table_product_attributes (id, products_id, languages_id, value) values (:id, :products_id, :languages_id, :value)');
               $Qattribute->bindInt(':languages_id', 0);
             }
-            
+
             $Qattribute->bindTable(':table_product_attributes', TABLE_PRODUCT_ATTRIBUTES);
             $Qattribute->bindValue(':value', $value);
             $Qattribute->bindInt(':products_id', $products_id);
@@ -950,20 +988,20 @@ class lC_Products_Admin {
           $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
           $Qchk->bindInt(':parent_id', $products_id);
           $Qchk->execute();
-          
+
           while( $Qchk->next() ) {
             if (! @in_array($Qchk->valueInt('products_id'), $data['sub_products_id'])) {
-              self::delete($Qchk->valueInt('products_id'));              
+              self::delete($Qchk->valueInt('products_id'));
             }
           }
-        } else { 
+        } else {
           // delete any possible ghosts for sanity
           $Qdel = $lC_Database->query('delete from :table_products where parent_id = :products_id and is_subproduct = :is_subproduct');
           $Qdel->bindTable(':table_products', TABLE_PRODUCTS);
           $Qdel->bindInt(':parent_id', $products_id);
           $Qdel->bindInt(':is_subproduct', 1);
-          $Qdel->execute();          
-        }        
+          $Qdel->execute();
+        }
 
         for ($i=0; $i < sizeof($data['sub_products_name']); $i++) {
           if ($data['sub_products_name'][$i] == '') continue;
@@ -975,9 +1013,9 @@ class lC_Products_Admin {
           } else {
             // add new subproduct record
             $Qsubproduct = $lC_Database->query('insert into :table_products (parent_id, products_quantity, products_cost, products_price, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, products_ordered, products_date_added, is_subproduct) values (:parent_id, :products_quantity, :products_cost, :products_price, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :products_ordered, :products_date_added, :is_subproduct)');
-            $Qsubproduct->bindInt(':products_ordered', $data['products_ordered'][$i]);            
+            $Qsubproduct->bindInt(':products_ordered', $data['products_ordered'][$i]);
           }
-          
+
           $Qsubproduct->bindTable(':table_products', TABLE_PRODUCTS);
           $Qsubproduct->bindInt(':parent_id', $products_id);
           $Qsubproduct->bindInt(':products_quantity', $data['sub_products_qoh'][$i]);
@@ -988,11 +1026,11 @@ class lC_Products_Admin {
           $Qsubproduct->bindInt(':products_weight_class', $data['weight_class']);
           $Qsubproduct->bindInt(':products_status', $data['sub_products_status'][$i]);
           $Qsubproduct->bindInt(':products_tax_class_id', $data['tax_class_id']);
-          $Qsubproduct->bindRaw(':products_date_added', 'now()');            
-          $Qsubproduct->bindInt(':is_subproduct', ($data['sub_products_default'][$i] == '1' || sizeof($data['sub_products_name']) == 2) ? 2 : 1);            
+          $Qsubproduct->bindRaw(':products_date_added', 'now()');
+          $Qsubproduct->bindInt(':is_subproduct', ($data['sub_products_default'][$i] == '1' || sizeof($data['sub_products_name']) == 2) ? 2 : 1);
           $Qsubproduct->setLogging($_SESSION['module'], $products_id);
           $Qsubproduct->execute();
-          
+
           if ( $lC_Database->isError() ) {
             $error = true;
           } else {
@@ -1000,7 +1038,7 @@ class lC_Products_Admin {
               $sub_products_id = $data['sub_products_id'][$i];
             } else {
               $sub_products_id = self::_getLastID();
-            }                              
+            }
             // subproduct description
             foreach ($lC_Language->getAll() as $l) {
               if (is_numeric($id) && @in_array($data['sub_products_id'][$i], $data['sub_products_id'])) {
@@ -1020,9 +1058,9 @@ class lC_Products_Admin {
                 break;
               }
             }
-          }            
+          }
 
-          //subproduct images 
+          //subproduct images
           if ( $error === false ) {
             if (empty($_FILES['sub_products_image']['name'][$i]) === false) {
               $images = array();
@@ -1032,7 +1070,7 @@ class lC_Products_Admin {
                             'tmp_name' => $_FILES['sub_products_image']['tmp_name'][$i]);
 
               $products_image = new upload($file);
-              
+
               $products_image->set_extensions(array('gif', 'jpg', 'jpeg', 'png'));
 
               if ( $products_image->exists() ) {
@@ -1044,7 +1082,7 @@ class lC_Products_Admin {
               }
 
               $default_flag = 1;
-              
+
               foreach ($images as $image) {
                 $Qimage = $lC_Database->query('insert into :table_products_images (products_id, image, default_flag, sort_order, date_added) values (:products_id, :image, :default_flag, :sort_order, :date_added)');
                 $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
@@ -1068,40 +1106,32 @@ class lC_Products_Admin {
                 $default_flag = 0;
               }
             }
-          }            
-        }  
+          }
+        }
       }
-    }  
-    
+    }
+
     // simple options
     if ( $error === false ) {
-      
-      // remove old values
-      $Qcheck = $lC_Database->query('select options_id from :table_products_simple_options where products_id = :products_id');
-      $Qcheck->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
-      $Qcheck->bindInt(':products_id', $products_id);
-      $Qcheck->execute();
-      // delete the simple options values
-      while ( $Qcheck->next() ) {
-        $Qdel = $lC_Database->query('delete from :table_products_simple_options_values where options_id = :options_id');
-        $Qdel->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-        $Qdel->bindInt(':options_id', $Qcheck->valueInt('options_id'));
-        $Qdel->setLogging($_SESSION['module'], $products_id);
-        $Qdel->execute();
-      } 
-      // delete the simple option
+
+      // delete the simple options
       $Qdel = $lC_Database->query('delete from :table_products_simple_options where products_id = :products_id');
       $Qdel->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
       $Qdel->bindInt(':products_id', $products_id);
       $Qdel->setLogging($_SESSION['module'], $products_id);
-      $Qdel->execute();                    
-      
-      $Qcheck->freeResult();      
-     
+      $Qdel->execute();
+
+      // delete the simple options values
+      $Qdel = $lC_Database->query('delete from :table_products_simple_options_values where products_id = :products_id');
+      $Qdel->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+      $Qdel->bindInt(':products_id', $products_id);
+      $Qdel->setLogging($_SESSION['module'], $products_id);
+      $Qdel->execute();
+
       // if values are set, save them
       if ( isset($data['simple_options_group_name']) && !empty($data['simple_options_group_name']) ) {
         foreach ( $data['simple_options_group_name'] as $group_id => $value ) {
-          
+
           // add the new option
           $Qoptions = $lC_Database->query('insert into :table_products_simple_options (options_id, products_id, sort_order, status) values (:options_id, :products_id, :sort_order, :status)');
           $Qoptions->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
@@ -1115,34 +1145,35 @@ class lC_Products_Admin {
           if ( $lC_Database->isError() ) {
             $error = true;
             break;
-          }  
-          
+          }
+
           // add the new option values
           foreach ( $data['simple_options_entry_price_modifier'] as $customers_group_id => $options ) {
             foreach ( $options as $options_id => $option_value ) {
               if ($options_id == $group_id) {
                 foreach ( $option_value as $values_id => $price_modifier ) {
-                  $Qoptions = $lC_Database->query('insert into :table_products_simple_options_values (values_id, options_id, customers_group_id, price_modifier) values (:values_id, :options_id, :customers_group_id, :price_modifier)');
-                  $Qoptions->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-                  $Qoptions->bindInt(':values_id', $values_id);
-                  $Qoptions->bindInt(':options_id', $options_id);
-                  $Qoptions->bindInt(':customers_group_id', $customers_group_id);
-                  $Qoptions->bindFloat(':price_modifier', (float)$price_modifier);
-                  $Qoptions->setLogging($_SESSION['module'], $products_id);
-                  $Qoptions->execute();
+                  $Qoptval = $lC_Database->query('insert into :table_products_simple_options_values (products_id, values_id, options_id, customers_group_id, price_modifier) values (:products_id, :values_id, :options_id, :customers_group_id, :price_modifier)');
+                  $Qoptval->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+                  $Qoptval->bindInt(':products_id', $products_id);
+                  $Qoptval->bindInt(':values_id', $values_id);
+                  $Qoptval->bindInt(':options_id', $options_id);
+                  $Qoptval->bindInt(':customers_group_id', $customers_group_id);
+                  $Qoptval->bindFloat(':price_modifier', (float)$price_modifier);
+                  $Qoptval->setLogging($_SESSION['module'], $products_id);
+                  $Qoptval->execute();
 
                   if ( $lC_Database->isError() ) {
                     $error = true;
                     break 4;
-                  }            
+                  }
                 }
               }
             }
           }
         }
-      }      
+      }
     }
-    
+
     // specials pricing
     if ( $error === false ) {
       if ($data['specials_pricing_switch'] == 1) {
@@ -1155,7 +1186,7 @@ class lC_Products_Admin {
                                'specials_status' => (($data['products_special_pricing_enable1'] != '') ? 1 : 0));
         lC_Specials_Admin::save((int)$specials_id, $specials_data);
       }
-    }   
+    }
 
     if ( $error === false ) {
       $lC_Database->commitTransaction();
@@ -1164,7 +1195,7 @@ class lC_Products_Admin {
       lC_Cache::clear('category_tree');
       lC_Cache::clear('also_purchased');
 
-      return $products_id; // Return the products id for use with the save_close buttons
+      return $products_id; // Reutrn the products id for use with the save_close buttons
     }
 
     $lC_Database->rollbackTransaction();
@@ -1255,7 +1286,7 @@ class lC_Products_Admin {
               $error = true;
               break;
             }
-            
+
             // permalink addition
             $lC_CategoryTree = new lC_CategoryTree_Admin();
             $cPath = (end($category_array) != 0) ? $lC_CategoryTree->getcPath(end($category_array)) : 0;
@@ -1571,20 +1602,20 @@ class lC_Products_Admin {
         $Qim->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
         $Qim->bindInt(':products_id', $id);
         $Qim->execute();
-        
+
         // added to check for other products using same image and do not delete
         $Qop = $lC_Database->query('select id from :table_products_images where image = :image');
         $Qop->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
         $Qop->bindInt(':image', $Qim->value('image'));
         $Qop->execute();
-        
+
         if ($Qop->numberOfRows() < 2) {
           while ($Qim->next()) {
             $lC_Image->delete($Qim->valueInt('id'));
           }
         }
       }
-      
+
       // QPB
       if ( $error === false ) {
         $Qpb = $lC_Database->query('delete from :table_products_pricing where products_id = :products_id');
@@ -1597,7 +1628,7 @@ class lC_Products_Admin {
           $error = true;
         }
       }
-      
+
       // permalink
       if ( $error === false ) {
         $Qpb = $lC_Database->query('delete from :table_permalinks where item_id = :item_id');
@@ -1610,14 +1641,14 @@ class lC_Products_Admin {
         }
       }
     }
-    
+
     // delete subproducts
     if ( ($error === false) && ($delete_product === true) ) {
       $Qcheck = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id');
       $Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
       $Qcheck->bindInt(':parent_id', $id);
-      $Qcheck->execute();  
-      
+      $Qcheck->execute();
+
       while ( $Qcheck->next() ) {
         // delete the description data
         $Qdel = $lC_Database->query('delete from :table_products_description where products_id = :products_id');
@@ -1625,26 +1656,26 @@ class lC_Products_Admin {
         $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
         $Qdel->setLogging($_SESSION['module'], $id);
         $Qdel->execute();
-        
+
         // delete the image data
         $Qdel = $lC_Database->query('delete from :table_products_images where products_id = :products_id');
         $Qdel->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
         $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
         $Qdel->setLogging($_SESSION['module'], $id);
-        $Qdel->execute();        
-      }     
+        $Qdel->execute();
+      }
       // delete the subproduct
       $Qdel = $lC_Database->query('delete from :table_products where products_id = :products_id');
       $Qdel->bindTable(':table_products', TABLE_PRODUCTS);
       $Qdel->bindInt(':products_id', $Qcheck->valueInt('products_id'));
       $Qdel->setLogging($_SESSION['module'], $id);
-      $Qdel->execute();                      
-      
+      $Qdel->execute();
+
       if ( $lC_Database->isError() ) {
         $error = true;
-      }         
+      }
     }
-    
+
     // delete simple options
     if ( ($error === false) && ($delete_product === true) ) {
       $Qcheck = $lC_Database->query('select options_id from :table_products_simple_options where products_id = :products_id');
@@ -1658,21 +1689,21 @@ class lC_Products_Admin {
         $Qdel->bindInt(':options_id', $Qcheck->valueInt('options_id'));
         $Qdel->setLogging($_SESSION['module'], $id);
         $Qdel->execute();
-      } 
+      }
       // delete the simple option
       $Qdel = $lC_Database->query('delete from :table_products_simple_options where products_id = :products_id');
       $Qdel->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
       $Qdel->bindInt(':products_id', $id);
       $Qdel->setLogging($_SESSION['module'], $id);
-      $Qdel->execute();                    
-      
+      $Qdel->execute();
+
       $Qcheck->freeResult();
-      
+
       if ( $lC_Database->isError() ) {
         $error = true;
       }
     }
-    
+
     if ( $error === false ) {
       $lC_Database->commitTransaction();
 
@@ -1739,7 +1770,7 @@ class lC_Products_Admin {
   */
   public static function getPermalinkCount($permalink, $iid = null, $type = null) {
     global $lC_Database;
-    
+
     $Qpermalinks = $lC_Database->query('select count(*) as total, item_id, permalink from :table_permalinks where permalink = :permalink');
 
     if (is_numeric($iid)) {
@@ -1750,13 +1781,13 @@ class lC_Products_Admin {
     $Qpermalinks->bindTable(':table_permalinks', TABLE_PERMALINKS);
     $Qpermalinks->bindValue(':permalink', $permalink);
     $Qpermalinks->execute();
-    
+
     if ($iid == $Qpermalinks->valueInt('item_id') && $permalink == $Qpermalinks->value('permalink')) {
       $permalink_count = 0;
-    } else {  
+    } else {
       $permalink_count = $Qpermalinks->valueInt('total');
     }
-    
+
     return $permalink_count;
   }
  /*
@@ -1767,14 +1798,14 @@ class lC_Products_Admin {
   * @return array
   */
   public static function validatePermalink($permalink_array, $iid = null, $type = null) {
-    
+
     $validated = true;
     foreach($permalink_array as $permalink) {
       echo '[' . $permalink . ']';
       if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
       if ( lC_Products_Admin::getPermalinkCount($permalink, $iid, $type) > 0) $validated = false;
     }
-    
+
     return $validated;
   }
  /*
@@ -1783,15 +1814,15 @@ class lC_Products_Admin {
   * @param string $section The product page section to display in
   * @access public
   * @return string
-  */  
+  */
   public static function getProductAttributeModules($section = '') {
     global $lC_Database, $lC_Language, $_module;
 
     $aInfo = new lC_ObjectInfo(lC_Products_Admin::get($_GET[$_module]));
-    $attributes = $aInfo->get('attributes');  
-    
+    $attributes = $aInfo->get('attributes');
+
     $output = '';
-    
+
     $Qattributes = $lC_Database->query('select id, code from :table_templates_boxes where modules_group = :modules_group order by code desc');
     $Qattributes->bindTable(':table_templates_boxes');
     $Qattributes->bindValue(':modules_group', 'product_attributes');
@@ -1814,7 +1845,7 @@ class lC_Products_Admin {
           } else {
             lC_Addons_Admin::loadAdminAddonsProductAttributesDefinitions($module->getCode());
           }
-          
+
           $output .= '<div class="new-row-mobile six-columns six-columns-tablet twelve-columns-mobile no-margin-bottom">
                         <div class="twelve-columns strong mid-margin-bottom">
                           <span>' . $lC_Language->get('product_attributes_' . $module->getCode() . '_title') . '</span>' . lc_show_info_bubble($lC_Language->get('info_bubble_attributes_' . $module->getCode() . '_text'), null, 'info-spot on-left grey float-right mid-margin-bottom') . '
@@ -1825,8 +1856,8 @@ class lC_Products_Admin {
                       </div>';
         }
       }
-    }    
-    
+    }
+
     return $output;
   }
  /*
@@ -1837,26 +1868,26 @@ class lC_Products_Admin {
   */
   public static function getSimpleOptionData() {
     return lC_Product_variants_Admin::getVariantGroups();
-  } 
+  }
  /*
-  * Return the product variant entry data for options wizard modal 
+  * Return the product variant entry data for options wizard modal
   *
   * @access public
   * @return array
   */
-  public static function getSimpleOptionEntryData($eData) { 
+  public static function getSimpleOptionEntryData($eData) {
     global $lC_Database;
-    
+
     $veData = lC_Product_variants_Admin::getVariantEntries($eData['group']);
-    
+
     $optionsArr = array();
     foreach($veData as $key => $value) {
       $Qoption = $lC_Database->query('select price_modifier from :table_products_simple_options_values where options_id = :options_id limit 1');
       $Qoption->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
       $Qoption->bindValue(':options_id', $value['id']);
       $Qoption->bindValue(':languages_id', $value['languages_id']);
-      $Qoption->execute();      
-      
+      $Qoption->execute();
+
       $optionsArr[$key] = array('id' => $value['id'],
                                 'languages_id' => $value['languages_id'],
                                 'products_variants_groups_id' => $value['products_variants_groups_id'],
@@ -1864,12 +1895,12 @@ class lC_Products_Admin {
                                 'price_modifier' => $Qoption->valueDecimal('price_modifier'));
       $Qoption->freeResult();
     }
-    
+
     if (empty($optionsArr[0])) $optionsArr['rpcStatus'] = '-2';
-    
+
     return $optionsArr;
-  } 
-  
+  }
+
  /*
   *  Return the product simple options accordian listing content
   *
@@ -1878,37 +1909,37 @@ class lC_Products_Admin {
   */
   public static function getSimpleOptionsContent($options = array()) {
     $content = '';
-    
+
     $content .= self::_getSimpleOptionsTbody($options);
-    
+
     return $content;
-  }     
+  }
  /*
   * Return the product simple options tbody content
   *
   * @param array $options The product simple options array
   * @access public
   * @return string
-  */  
+  */
   private static function _getSimpleOptionsTbody($options) {
-    $tbody = '';    
+    $tbody = '';
     if (isset($options) && !empty($options)) {
       foreach ($options as $key => $so) {
         if ( (isset($so['title']) && $so['title'] != NULL)  ){
           $items = '';
           $itemsInput = '';
           if (is_array($options['values'])) {
-            foreach ($options['values'] as $k => $v) {    
-              if (($v['options_id'] == $so['options_id']) && $v['customers_group_id'] == DEFAULT_CUSTOMERS_GROUP_ID) {
+            foreach ($options['values'] as $k => $v) {
+              if (($v['options_id'] == $so['options_id']) && $v['customers_group_id'] == DEFAULT_CUSTOMERS_GROUP_ID && $so['products_id'] == $v['products_id']) {
                 $items .= '<div class="small"><span class="icon-right icon-blue with-small-padding"></span>' . $v['title'] . '</div>';
                 $itemsInput .= '<input type="hidden" id="simple_options_entry_' . $v['options_id'] . '_' . $v['values_id'] . '" name="simple_options_entry[' . $v['options_id'] . '][' . $v['values_id'] . ']" value="' . $v['title'] . '">';
               }
             }
           }
-          
+
           $statusIcon = (isset($so['status']) && $so['status'] == '1') ? '<span class="icon-tick icon-size2 icon-green"></span>' : '<span class="icon-cross icon-size2 icon-red"></span>';
-          
-          
+
+
           $tbody .= '<tr id="tre-' . $so['options_id'] .'">' .
                     '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
                     '  <td width="16px" style="cursor:pointer;" onclick="toggleSimpleOptionsRow(\'#drope' . $so['options_id'] . '\');"><span id="drope' . $so['options_id'] . '_span" class="toggle-icon icon-squared-plus icon-grey icon-size2"></span></td>' .
@@ -1928,8 +1959,8 @@ class lC_Products_Admin {
         }
       }
     }
-    
-    return $tbody;    
+
+    return $tbody;
   }
  /*
   *  Return the product simple options accordian price listing content
@@ -1939,45 +1970,45 @@ class lC_Products_Admin {
   */
   public static function getOptionsPricingContent() {
     global $lC_Language, $pInfo;
-    
+
     $content = '';
     $groups = lC_Customer_groups_Admin::getAll();
     foreach($groups['entries'] as $key => $value) {
       $content .= '<dt><span class="strong">' . $value['customers_group_name'] . '</span></dt>' .
                   '<dd>' .
                   '  <div class="with-padding">';
-                  
-      if (isset($pInfo) && is_array($pInfo->get('simple_options'))) {                  
+
+      if (isset($pInfo) && is_array($pInfo->get('simple_options'))) {
         $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
                     '    <table style="" id="simpleOptionsPricingTable" class="simple-table">' .
                     '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . self::_getSimpleOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
                     '    </table>';
-                    
+
       } else if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {
         $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_sub_products') . '</div>' .
                     '    <table id="subProductsPricingTable" class="simple-table">' .
                     '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . self::_getSubProductsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
-                    '    </table>';        
-        
+                    '    </table>';
+
       } else if (isset($pInfo) && $pInfo->get('has_variants') == '1') {
-      
-      } else {      
-        $content .= '<table class="simple-table"><tbody id="tbody-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
+
+      } else {
+        $content .= '<table class="simple-table"><tbody id="tbody-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>';
       }
-                
+
       $content .= '  </div>' .
-                  '</dd>';  
+                  '</dd>';
     }
-    
+
     return $content;
-  } 
+  }
  /*
   * Determine if the product has subproducts
   *
   * @param integer $id The product id
   * @access public
   * @return boolean
-  */   
+  */
   public static function hasSubProducts($id) {
     global $lC_Database;
 
@@ -1992,7 +2023,7 @@ class lC_Products_Admin {
     }
 
     return false;
-  }  
+  }
  /*
   * Determine the min/max product values based on key
   *
@@ -2000,7 +2031,7 @@ class lC_Products_Admin {
   * @param  string   $key  The product column key
   * @access public
   * @return array
-  */   
+  */
   public static function getMinMax($id, $key = 'products_quantity') {
     global $lC_Database;
 
@@ -2009,34 +2040,34 @@ class lC_Products_Admin {
     $Qproducts->bindInt(':parent_id', $id);
     $Qproducts->bindInt(':is_subproduct', 0);
     $Qproducts->execute();
-   
+
     $result = $Qproducts->toArray();
-    
+
     $Qproducts->freeResult();
-    
+
     return $result;
-  }  
+  }
  /*
   * Return the sub products pricing content
   *
   * @param array $data The product data object
   * @access private
   * @return string
-  */  
+  */
   private static function _getSubProductsPricingTbody($pInfo, $customers_group_id) {
     global $lC_Currencies;
-    
-    if ($customers_group_id == '') return false;  
+
+    if ($customers_group_id == '') return false;
     $ok = (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? true : false;
-    
-    $tbody = ''; 
-    $cnt = 0; 
+
+    $tbody = '';
+    $cnt = 0;
     if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {
       foreach ($pInfo->get('subproducts') as $key => $sub) {
         if ((isset($sub['products_name']) && $sub['products_name'] != NULL)) {
 
           $tbody .= '<tr class="trp-' . $cnt . '">' .
-                    '  <td id="name-td-' . $cnt . '" class="element">' . $sub['products_name'] . '</td>' . 
+                    '  <td id="name-td-' . $cnt . '" class="element">' . $sub['products_name'] . '</td>' .
                     '  <td>' .
                     '    <div class="inputs' . (($customers_group_id == '1' || $ok) ? '' : ' disabled') . '" style="display:inline; padding:8px 0;">' .
                     '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
@@ -2044,11 +2075,11 @@ class lC_Products_Admin {
                     '    </div>' .
                     '  </td>' .
                     '</tr>';
-          $cnt++;                    
-        } 
+          $cnt++;
+        }
       }
-    }    
-    
+    }
+
     return $tbody;
   }
  /*
@@ -2057,31 +2088,31 @@ class lC_Products_Admin {
   * @param array $options The product simple options array
   * @access public
   * @return string
-  */  
+  */
   private static function _getSimpleOptionsPricingTbody($options, $customers_group_id) {
     global $lC_Currencies, $pInfo;
-    
+
     if ($customers_group_id == '') return false;
-    
+
     $gData = lC_Customer_groups_Admin::getData($customers_group_id);
     $baselineDiscount = (float)$gData['baseline_discount'];
     $basePrice = (isset($pInfo)) ? (float)$pInfo->get('products_price') : 0.00;
 
-    $tbody = '';  
+    $tbody = '';
     if (isset($options) && !empty($options)) {
       foreach ($options as $key => $so) {
         if ((isset($so['title']) && $so['title'] != NULL)) {
           $items = '';
-          if (is_array($options['values'])) {          
+          if (is_array($options['values'])) {
             foreach ($options['values'] as $k => $v) {
-              if ($v['options_id'] == $so['options_id'] && $v['customers_group_id'] == $customers_group_id) {
+              if ($v['options_id'] == $so['options_id'] && $v['customers_group_id'] == $customers_group_id && $v['products_id'] == $pInfo->get('products_id')) {
                 if ($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID) {
                   $mod = (isset($v['price_modifier']) && !empty($v['price_modifier'])) ? number_format($v['price_modifier'], DECIMAL_PLACES) : '0.00';
                 } else {
                   $mod = number_format(round(($basePrice * $baselineDiscount) * .01, DECIMAL_PLACES), DECIMAL_PLACES);
                 }
                 $items .= '<tr class="trp-' . $v['options_id'] . '">' .
-                          '  <td class="element">' . $v['title'] . '</td>' . 
+                          '  <td class="element">' . $v['title'] . '</td>' .
                           '  <td>' .
                           '    <div id="div_' . $v['customers_group_id'] . '_' . $v['options_id'] . '_' . $v['values_id'] . '" class="icon-plus-round icon-green icon-size2" style="display:inline;">' .
                           '      <div class="inputs' . (($customers_group_id != DEFAULT_CUSTOMERS_GROUP_ID) ? ' disabled' : '') . '" style="display:inline; padding:8px 0;">' .
@@ -2094,15 +2125,15 @@ class lC_Products_Admin {
               }
             }
           }
-                   
+
           $tbody .= '<tr id="trp-' . $so['options_id'] . '" class="trp-' . $so['options_id'] . '"><td width="100px" class="strong">' . $so['title'] . '</td></tr>' . $items;
 
         }
       }
     }
-    
-    return $tbody;    
-  }  
+
+    return $tbody;
+  }
  /*
   *  Return the product simple options accordian price listing content
   *
@@ -2111,14 +2142,14 @@ class lC_Products_Admin {
   */
   public static function getGroupPricingContent($base_price) {
     global $lC_Language, $lC_Currencies;
-    
+
     $content = '';
     $groups = lC_Customer_groups_Admin::getAll();
     foreach($groups['entries'] as $key => $value) {
 
-      $discount = round((float)$base_price * ((float)$value['baseline_discount'] * .01), DECIMAL_PLACES); 
+      $discount = round((float)$base_price * ((float)$value['baseline_discount'] * .01), DECIMAL_PLACES);
       $discounted_price = $base_price - $discount;
-     
+
       $content .= '<div>' .
                   '  <label for="" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>' .
                   '  <input type="checkbox" name="enable_group_pricing[' . $value['customers_group_id'] . ']" class="switch medium margin-right" disabled />' .
@@ -2126,12 +2157,12 @@ class lC_Products_Admin {
                   '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
                   '      <input type="text" onfocus="this.select();" name="group_price[' . $value['customers_group_id'] . ']" id="group_price_' . $value['customers_group_id'] . '" value="' . number_format($discounted_price, DECIMAL_PLACES) . '" class="input-unstyled small-margin-right grey disabled" style="width:60px;" READONLY/>' .
                   '    </div>' .
-                  '  <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_price') . '<span class="tag glossy mid-margin-left">-' . number_format($value['baseline_discount'], DECIMAL_PLACES) . '%</span><!-- if specials enabled /Special--></small>' . 
+                  '  <small class="input-info mid-margin-left no-wrap">' . $lC_Language->get('text_price') . '<span class="tag glossy mid-margin-left">-' . number_format($value['baseline_discount'], DECIMAL_PLACES) . '%</span><!-- if specials enabled /Special--></small>' .
                   '</div>';
     }
-    
+
     return $content;
-  }  
+  }
  /*
   *  Return the product simple options accordian price listing content
   *
@@ -2140,15 +2171,15 @@ class lC_Products_Admin {
   */
   public static function getSpecialPricingContent() {
     global $lC_Language, $lC_Currencies, $pInfo;
-    
+
     $content = '';
     $groups = lC_Customer_groups_Admin::getAll();
     foreach($groups['entries'] as $key => $value) {
       if ($value['customers_group_id'] == 1) { // remove this line when specials per group is reintroduced
         $base = (isset($pInfo)) ? (float)$pInfo->get('products_price') : 0.00;
         $special = (isset($pInfo)) ? (float)$pInfo->get('products_special_price') : 0.00;
-        $discount = (isset($base) && $base > 0.00) ? round( ((($base - $special) / $base) * 100), DECIMAL_PLACES) : 0.00; 
-       
+        $discount = (isset($base) && $base > 0.00) ? round( ((($base - $special) / $base) * 100), DECIMAL_PLACES) : 0.00;
+
         $content .= '<!--<label for="products_special_pricing_enable' . $value['customers_group_id'] . '" class="label margin-right"><b>'. $value['customers_group_name'] .'</b></label>-->' .
                     '<div class="columns">' .
                     '  <div class="new-row-mobile twelve-columns twelve-columns-mobile mid-margin-bottom">' .
@@ -2176,15 +2207,15 @@ class lC_Products_Admin {
                     '</div>';
       } // remove this line when specials per group is reintroduced
     }
-    
+
     return $content;
-  }  
+  }
  /*
   *  Return true if product has special in db, false if none
   *
   * @access public
   * @return boolean true or false
-  */  
+  */
   public static function hasSpecial($id) {
     global $lC_Database;
 
@@ -2192,44 +2223,44 @@ class lC_Products_Admin {
     $Qspecial->bindTable(':table_specials', TABLE_SPECIALS);
     $Qspecial->bindInt(':products_id', $id);
     $Qspecial->execute();
-    
+
     if ( $Qspecial->numberOfRows() > 0 ) {
       return $Qspecial->value('specials_id');
     }
 
     return false;
-  }  
-  
+  }
+
   private static function _getLastID() {
     global $lC_Database;
-    
+
     $Qchk = $lC_Database->query('select products_id from :table_products order by products_id desc');
     $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
     $Qchk->bindInt(':parent_id', $products_id);
-    $Qchk->execute();    
-    
+    $Qchk->execute();
+
     return $Qchk->valueInt('products_id');
   }
  /*
   * update product status db entry
-  * 
+  *
   * @access public
   * @return true or false
   */
   public static function updateStatus($id, $val) {
     global $lC_Database;
-    
+
     $Qupdate = $lC_Database->query('update :table_products set products_status = :products_status where products_id = :products_id');
     $Qupdate->bindTable(':table_products', TABLE_PRODUCTS);
     $Qupdate->bindInt(':products_status', $val);
     $Qupdate->bindInt(':products_id', $id);
     $Qupdate->execute();
-      
+
     return true;
   }
  /*
   * get assignedCategoryTreeSelect options
-  * 
+  *
   * @access public
   * @return html
   */
@@ -2237,18 +2268,18 @@ class lC_Products_Admin {
     $assignedCategoryTree = new lC_CategoryTree();
     $assignedCategoryTree->setBreadcrumbUsage(false);
     $assignedCategoryTree->setSpacerString('&nbsp;', 3);
-    
+
     $assignedCategoryTreeSelect = '';
     foreach ($assignedCategoryTree->getArray() as $value) {
       if ($value['mode'] == 'category') {
         $assignedCategoryTreeSelect .= '<option value="' . $value['id'] . '">' . $value['title'] . '</option>' . "\n";
       }
     }
-      
+
     return $assignedCategoryTreeSelect;
-  }  
+  }
  /*
-  * Returns an array of product 
+  * Returns an array of product
   *
   * @param integer $id The product id
   * @access public
@@ -2256,29 +2287,29 @@ class lC_Products_Admin {
   */
   public static function getProductsArray($pID = null, $ppID = 0) {
     global $lC_Database, $lC_Language, $lC_Currencies, $_module;
-    
+
     $result = array();
-    
+
     $Qproducts = $lC_Database->query('select SQL_CALC_FOUND_ROWS p.*, pd.products_name, pd.products_keyword from :table_products p, :table_products_description pd where p.parent_id = :products_parent_id and p.products_id = pd.products_id and pd.language_id = :language_id');
-    
+
     if (is_numeric($pID)) {
       $Qproducts->appendQuery('and p.products_id = :products_id');
-      $Qproducts->bindInt(':products_id', $pID);      
+      $Qproducts->bindInt(':products_id', $pID);
     }
-    
+
     $Qproducts->appendQuery('order by pd.products_name');
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qproducts->bindInt(':language_id', $lC_Language->getID());
     $Qproducts->bindInt(':products_parent_id', $ppID);
     $Qproducts->execute();
-    
+
     if ($Qproducts->numberOfRows()) {
       while ($Qproducts->next()) {
         $result[] = $Qproducts->toArray();
       }
     }
-    
+
     return $result;
   }
  /*
@@ -2290,7 +2321,7 @@ class lC_Products_Admin {
   */
   public static function getProductsDropdownArray($exclude = array()) {
     global $lC_Database, $lC_Language, $lC_Currencies, $_module;
-    
+
     $result = array();
 
     $Qproducts = $lC_Database->query('select SQL_CALC_FOUND_ROWS p.products_id, pd.products_name from :table_products p, :table_products_description pd where p.products_id = pd.products_id and pd.language_id = :language_id');
@@ -2301,7 +2332,7 @@ class lC_Products_Admin {
     $Qproducts->execute();
     if ($Qproducts->numberOfRows()) {
       while ( $Qproducts->next() ) {
-        if (!in_array($Qproducts->value('products_id'), $exclude)) {  
+        if (!in_array($Qproducts->value('products_id'), $exclude)) {
           $result[] = array('id' => $Qproducts->value('products_id'),
                             'text' => $Qproducts->value('products_name'));
         }
