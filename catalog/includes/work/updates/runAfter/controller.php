@@ -176,10 +176,13 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
 
     $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_key` = 'AUTODISABLE_OUT_OF_STOCK_PRODUCT',`configuration_title` = 'Autodisable out of stock product',`configuration_description` = 'Set product as IN-ACTIVE if there is insufficient stock that is 0 or below' WHERE `configuration_id` =61");
     parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_key` = 'AUTODISABLE_OUT_OF_STOCK_PRODUCT',`configuration_title` = 'Autodisable out of stock product',`configuration_description` = 'Set product as IN-ACTIVE if there is insufficient stock that is 0 or below' WHERE `configuration_id` =61");
+    
+    $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('171', 'Disable Add to Cart for out of stock products', 'DISABLE_ADD_TO_CART', '1', 'Disabled the add to cart button on the product page displays text that product is out of stock', 9, 3, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');");
+    parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('171', 'Disable Add to Cart for out of stock products', 'DISABLE_ADD_TO_CART', '1', 'Disabled the add to cart button on the product page displays text that product is out of stock', 9, 3, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');");
 
-    $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('171', 'Disable Add to Cart for out of stock products', 'DISABLE_ADD_TO_CART', '1', 'Disabled the add to cart button on the product page displays text that product is out of stock', 9, 3, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');");
-    parent::log("Database Update: INSERT INTO `" . $pf . "configuration (configuration_id, configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('171', 'Disable Add to Cart for out of stock products', 'DISABLE_ADD_TO_CART', '1', 'Disabled the add to cart button on the product page displays text that product is out of stock', 9, 3, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');");
+    $lC_Database->simpleQuery("ALTER TABLE `" . $pf . "branding` ADD `homepage_text` TEXT NOT NULL AFTER `language_id`;");
+    parent::log("Database Update: ALTER TABLE `" . $pf . "branding` ADD `homepage_text` TEXT NOT NULL AFTER `language_id`;");
 
-  } 
+  }
 }  
 ?>
