@@ -27,7 +27,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
         if (ENABLE_EDITOR == '1' and EDITOR_CONFIGURATION_HOMEPAGE != 'Off') { 
           if (USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
             foreach ( $lC_Language->getAll() as $l ) {  
-              echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', {toolbar: '" . EDITOR_CONFIGURATION_PRODUCT . "', height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php', extraPlugins: 'stylesheetparser',contentsCss: '../templates/default/css/base.css',stylesSet: [] });";
+              echo "CKEDITOR.replace('ckEditorProductDescription_" . $l['id'] . "', {toolbar: '" . EDITOR_CONFIGURATION_PRODUCT . "', height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php', contentsCss: '../templates/" . DEFAULT_TEMPLATE . "/css/styles.css', stylesSet: [] });";
             }
           } else {
             foreach ( $lC_Language->getAll() as $l ) {  

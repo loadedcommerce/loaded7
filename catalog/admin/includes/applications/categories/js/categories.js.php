@@ -81,7 +81,7 @@ $(document).ready(function() {
     if (ENABLE_EDITOR == '1' and EDITOR_CONFIGURATION_HOMEPAGE != 'Off') { 
       if (USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
         foreach ( $lC_Language->getAll() as $l ) {  
-          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { toolbar: '" . EDITOR_CONFIGURATION_CATEGORY . "', height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php', extraPlugins: 'stylesheetparser', contentsCss: '../templates/" . $lC_Template->getCode($lC_Template->getID) . "/css/styles.css', stylesSet: [] });";
+          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { toolbar: '" . EDITOR_CONFIGURATION_CATEGORY . "', height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php', contentsCss: '../templates/" . DEFAULT_TEMPLATE . "/css/styles.css', stylesSet: [] });";
         }
       } else {
         foreach ( $lC_Language->getAll() as $l ) {  

@@ -20,7 +20,7 @@ $(document).ready(function() {
   foreach ( $lC_Language->getAll() as $l ) {
     $lid = $l['id'];
     if (ENABLE_EDITOR == '1' and EDITOR_CONFIGURATION_HOMEPAGE != 'Off') { 
-        echo "CKEDITOR.replace('branding_home_page_text[$lid]', { toolbar: '" . EDITOR_CONFIGURATION_HOMEPAGE . "', height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php' });";
+        echo "CKEDITOR.replace('branding_home_page_text[$lid]', { toolbar: '" . EDITOR_CONFIGURATION_HOMEPAGE . "', height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php', contentsCss: '../templates/" . DEFAULT_TEMPLATE . "/css/styles.css', stylesSet: [] });";
     } else {
       echo '$("#branding_home_page_text[$lid]").css("height", "200px").css("width", "99.8%");';
     }
