@@ -60,7 +60,13 @@ class transport {
       $parameters['header'][] = 'Authorization: Basic ' . base64_encode($parameters['server']['user'] . ':' . $parameters['server']['pass']);
     }
 
-    return trim(call_user_func(array($driver, 'execute'), $parameters));
+    $result = trim(call_user_func(array($driver, 'execute'), $parameters));
+    
+    if (strlen($result) == 0) {
+      $result = self::getResponse($parameters, 'stream');
+    }
+    
+    return $result;
   }
 }
 ?>
