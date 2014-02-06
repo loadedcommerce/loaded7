@@ -157,18 +157,6 @@
   ?>
 </div>
 <script>
-  $(document).ready(function() {
-    $('#main-content-container').addClass('large-margin-top-neg');
-    <?php
-      if( (STOCK_CHECK == '1') && (DISABLE_ADD_TO_CART == '1')&& ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) )  {
-    ?>
-    $('#button_buy_now_id').addClass('disabled');
-    <?php
-      }
-    ?>
-    refreshPrice();
-  });
-
   function refreshPrice() {
     var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
     var basePrice = '<?php echo $lC_Product->getPriceFormated(true); ?>';
