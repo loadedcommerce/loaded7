@@ -428,6 +428,24 @@ class lC_Template_output {
     }
     
     return $output;
+  }
+ /*
+  * return the top cats for nav
+  *
+  * @access public
+  * @return array
+  */
+  public static function getProductsStock($key = null) {
+    global $lC_Database, $lC_Language;
+    
+    $Qstock = $lC_Database->query('select p.products_quantity from :table_products p left join :table_products_description pd on(p.products_id = pd.products_id) where pd.products_keyword = :products_keyword and pd.language_id = :language_id');
+    $Qstock->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qstock->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+    $Qstock->bindValue(':products_keyword', $key);
+    $Qstock->bindInt(':language_id', $lC_Language->getID());
+    $Qstock->execute();
+    
+    return $Qstock->valueInt('products_quantity');   
   }   
 }
 ?>
