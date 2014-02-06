@@ -45,11 +45,11 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     ?>
 
     <!-- fav and touch icons -->
-    <link rel="shortcut icon" href="templates/core/icons/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-144-precomposed.png" sizes="144x144">
-    <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-114-precomposed.png" sizes="114x114">
-    <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-72-precomposed.png" sizes="72x72">
-    <link rel="apple-touch-icon-precomposed" href="templates/core/icons/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="templates/core/images/favicons/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" href="templates/core/images/favicons/apple-touch-icon-144-precomposed.png" sizes="144x144">
+    <link rel="apple-touch-icon-precomposed" href="templates/core/images/favicons/apple-touch-icon-114-precomposed.png" sizes="114x114">
+    <link rel="apple-touch-icon-precomposed" href="templates/core/images/favicons/apple-touch-icon-72-precomposed.png" sizes="72x72">
+    <link rel="apple-touch-icon-precomposed" href="templates/core/images/favicons/apple-touch-icon-57-precomposed.png">
     
     <!-- jQuery is always at top -->
     <script src="ext/jquery/jquery-1.9.1.min.js"></script>

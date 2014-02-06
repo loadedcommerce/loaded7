@@ -25,6 +25,8 @@ class lC_Search_Search extends lC_Template {
     $this->_page_title = $lC_Language->get('search_heading');
 
     $lC_Search = new lC_Search();
+    
+    $this->addJavascriptPhpFilename('templates/' . $this->getCode() . '/javascript/form_check.js.php');
 
     if (isset($_GET['keywords'])) {
       $this->_page_title = $lC_Language->get('search_results_heading');
