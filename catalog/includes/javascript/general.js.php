@@ -7,7 +7,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: general.js.php v1.0 2013-08-08 datazen $
 */
-global $lC_Template, $lC_Language; 
+global $lC_Template, $lC_Language, $lC_Product; 
 ?>
 <script>
 $(document).ready(function() {
@@ -44,7 +44,15 @@ $(document).ready(function() {
   // hide buy now and qty for out of stock products
   <?php
     if (defined('DISABLE_ADD_TO_CART') && DISABLE_ADD_TO_CART == 1 && ($lC_Template->getModule() == 'products' || $lC_Template->getModule() == 'reviews')/*false !== strpos($_SERVER['REQUEST_URI'], 'products')*/) {
+      foreach ($_GET as $key => $value) {
+        $key = end(explode("/", $key));
+        if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) ) {
+          $id = $key;
+        }
+      }
+      
   ?>
+    alert('<?php echo $id; ?>');
     //$("#loaded7").find($("button:contains('<?php echo $lC_Language->get('button_buy_now'); ?>')")).attr("disabled");
     $(":contains('<?php echo $lC_Language->get('button_buy_now'); ?>')").closest('button').removeClass("btn-success").addClass("btn-default").addClass("disabled").html('<?php echo $lC_Language->get('out_of_stock'); ?>');
     $("input[name='quantity']").hide().parent().hide();
@@ -170,22 +178,6 @@ function removeCoupon(code) {
     }
   );  
 }
-
-// make product listing boxes equal heights
-(function($) {
-  $.fn.equalHeights = function(minHeight, maxHeight) {
-    tallest = (minHeight) ? minHeight : 0;
-    this.each(function() {
-      if($(this).height() > tallest) {
-        tallest = $(this).height();
-      }
-    });
-    if((maxHeight) && tallest > maxHeight) tallest = maxHeight;
-    return this.each(function() {
-      $(this).height(tallest).css("overflow","hidden");
-    });
-  }
-})(jQuery);
 
 ;function print_r (array, return_val) {
     // http://kevin.vanzonneveld.net

@@ -62,7 +62,6 @@ $(document).ready(function() {
   }  
   $('.content-also-purchased-products-add-button').addClass('btn btn-success btn-block');
   $('.content-also-purchased-products-image-src').addClass('img-responsive');
-  $('.thumbnail').equalHeights();
 });
 </script>
 <!--modules/content/also_purchased_products.php end-->

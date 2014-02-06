@@ -45,19 +45,19 @@
                   echo '<h4 class="no-margin-top no-margin-bottom">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $products['name']) . '</h4>' . "\n";
                   echo '<div class="clearfix primary">' . "\n";
                   if (!empty($products['model'])) {
-                    echo '<small>- ' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</small>' . "\n";
+                    echo '<small>' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</small>' . "\n";
                   }
                   if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['id']) === false) ) {
                     echo '<span class="warning">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' . "\n";
                   }
                   if ( $lC_ShoppingCart->isVariant($products['item_id']) ) {
                     foreach ( $lC_ShoppingCart->getVariant($products['item_id']) as $variant) {
-                      echo '<br /><small>- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</small>' . "\n";
+                      echo '<br />- ' . $variant['group_title'] . ': ' . $variant['value_title'] . "\n";
                     }
                   }   
                   if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
                     foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
-                      echo '<br /><small>- ' . $option['group_title'] . ': ' . $option['value_title'] . '</small>' . "\n";
+                      echo '<br /><small>- ' . $option['group_title'] . ': ' . $option['value_title'] . '</span>' . "\n";
                     }
                   }                             
                   echo '</div>' . "\n";
@@ -83,7 +83,7 @@
         </table>   
         <?php
         if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->hasStock() === false) ) {
-          if (AUTODISABLE_OUT_OF_STOCK_PRODUCT == '-1') {
+          if (STOCK_ALLOW_CHECKOUT == '1') {
             echo '<p class="alert alert-danger text-center">' . sprintf($lC_Language->get('products_out_of_stock_checkout_possible'), STOCK_MARK_PRODUCT_OUT_OF_STOCK) . '</p>';
           } else {
             echo '<p class="alert alert-danger text-center">' . sprintf($lC_Language->get('products_out_of_stock_checkout_not_possible'), STOCK_MARK_PRODUCT_OUT_OF_STOCK) . '</p>';

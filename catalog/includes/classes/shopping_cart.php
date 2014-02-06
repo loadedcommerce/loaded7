@@ -335,7 +335,7 @@ class lC_ShoppingCart {
       if ( $this->exists($product_id) ) {
         $item_id = $this->getBasketID($product_id);
 
-        if ( !is_numeric($quantity) ) {
+        if ( is_numeric($quantity) ) {
           $quantity = $this->getQuantity($item_id) + 1;
         }
 
@@ -568,6 +568,15 @@ class lC_ShoppingCart {
           foreach ( $product['variants'] as $variant ) {
             if ( $variant['has_custom_value'] === true ) {
               return false;
+            }
+          }
+        } else if ( isset($product['simple_options']) ) { 
+          foreach ( $product['simple_options'] as $simple_options ) {              
+            $group_id = $simple_options['group_id'];
+            if(array_key_exists ( $group_id , $_POST['simple_options'] )) {
+              if($simple_options['value_id'] != $_POST['simple_options'][$group_id]) {
+                return false;
+              }
             }
           }
         }

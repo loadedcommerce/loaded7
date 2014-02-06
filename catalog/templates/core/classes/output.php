@@ -5,7 +5,7 @@
   @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: core.php v1.0 2013-08-08 datazen $
+  @version    $Id: output.php v1.0 2013-08-08 datazen $
 */
 //error_reporting(0);        
 class lC_Template_output { 
@@ -187,6 +187,44 @@ class lC_Template_output {
     return $output;
   } 
  /*
+  * Returns the current category structure (with nav visibility)
+  *
+  * @access public
+  * @return array
+  */
+  function getCategoryNav($categoryId = 0, $level = 0) {
+    global $lC_Database, $lC_Language, $lC_CategoryTree;
+    
+    if ($level == 0) {
+      $visibility = 'and c.categories_visibility_nav = 1';
+    } else {
+      $visibility = '';
+    }
+    
+    $Qcategories = $lC_Database->query('select c.categories_id, cd.categories_name, c.parent_id, c.categories_mode, c.categories_link_target, c.categories_custom_url from :table_categories c, :table_categories_description cd where c.parent_id = :parent_id and c.categories_id = cd.categories_id and cd.language_id = :language_id and c.categories_status = 1 ' . $visibility . ' order by sort_order, cd.categories_name');
+    $Qcategories->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qcategories->bindInt(':parent_id', $categoryId);
+    $Qcategories->bindInt(':language_id', $lC_Language->getID());
+    $Qcategories->execute();
+    
+    $output = array();
+    while ($Qcategories->next()) {
+      $hasChildren = $lC_CategoryTree->hasChildren($Qcategories->valueInt('categories_id'));
+      if ($Qcategories->value('categories_mode') == 'override') {
+        $url = '<a href="' . $Qcategories->value('categories_custom_url') . '"' . (($Qcategories->value('categories_link_target') == 1) ? ' target="_blank"' : null) . '>' . $Qcategories->value('categories_name') . '</a>';
+      } else {
+        $url = lc_link_object(($Qcategories->value('categories_custom_url') != '' ? lc_href_link($Qcategories->value('categories_custom_url'), '', 'AUTO') : lc_href_link(FILENAME_DEFAULT . '?cPath=' . $lC_CategoryTree->buildBreadcrumb($Qcategories->valueInt('categories_id')), '', 'AUTO')), $Qcategories->value('categories_name') . (($hasChildren > 0 && $level == 0) ? '&nbsp;<b class="caret"></b>' : null), (($hasChildren > 0 && $level == 0) ? ' data-toggle="dropdown" class="dropdown-toggle"' : null));
+      }
+      $output[] .= '<li' . (($hasChildren > 0) ? ' class="dropdown"' : null) . '>' . 
+                     $url . 
+                     lC_Template_output::getCategoryNav($Qcategories->valueInt('categories_id'), $level+1) . 
+                   '</li>';
+    }
+    
+    return (($categoryId > 0) ? '<ul class="dropdown-menu">' : null) . implode('', $output) . (($categoryId > 0) ? '</ul>' : null);
+  } 
+ /*
   * Returns the current category information (i.e. description, blurb, meta data etc)
   *
   * @access public
@@ -243,9 +281,7 @@ class lC_Template_output {
     }    
 
     return $output;    
-  }  
-
- 
+  }
  /*
   * Returns the product listing data
   *
@@ -338,6 +374,60 @@ class lC_Template_output {
     $Qcategories->execute();
     
     return $result;   
+  }
+ /*
+  * Return the language selections 
+  *
+  * @access public
+  * @return array
+  */  
+  public function getTemplateLanguageSelection($include_image = true, $include_name = false, $params = '') {
+    global $lC_Language;
+    
+    $text = '';
+    $output = '';
+    foreach ($lC_Language->getAll() as $value) {
+      if ($include_name === true && $include_image === true) {
+        $text = '<span class="locale-dropdown-lang-image">' . $lC_Language->showImage($value['code']) . '</span> <span class="locale-dropdown-lang-title">' . $value['name'] . '</span>';
+      } else if ($include_name === true && $include_image === false) {
+        $text = $value['name'];
+      } else {
+        $text = $lC_Language->showImage($value['code'], null, null, $params);
+      }
+      $output .= '<li>' . lc_link_object(lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('language', 'currency')) . '&language=' . $value['code'], 'AUTO'), $text) . '</li>';
+    }
+    
+    return $output;
+  }
+ /*
+  * Return the currency selections
+  *
+  * @access public
+  * @return array
+  */  
+  public function getTemplateCurrenciesSelection($include_symbol = true, $include_name = false, $params = '') {
+    global $lC_Currencies;
+    
+    $currency_data = array();
+    foreach ($lC_Currencies->currencies as $key => $value) {
+      $currency_data[] = array('id' => $key, 'text' => $value['title']);
+    }
+    foreach ($currency_data as $currency) {
+      if ($include_name === true && $include_symbol === true) {
+        $text = '<span class="locale-dropdown-cur-title">' . $currency['text'] . '</span> <span class="locale-dropdown-cur-symbol">(' . $currency['id'] . ')</span>';
+      } else if ($include_name === true && $include_symbol === false) {
+        $text = '<span class="locale-dropdown-cur-title">' . $currency['text'] . '</span>';
+      } else {
+        $text = '<span class="locale-dropdown-cur-symbol">' . $currency['id'] . '</span>';
+      }
+      echo '<li>
+              <a href="' . lc_href_link(basename($_SERVER['SCRIPT_FILENAME']), lc_get_all_get_params(array('language', 'currency')) . '&currency=' . $currency['id'], 'AUTO') . '">
+                ' . $text . '
+              </a>
+            </li>';
+    }
+    
+    return $output;
   }   
 }
 ?>

@@ -67,6 +67,5 @@ $(document).ready(function() {
     $('.content-specials-listing-buy-now-button').text(textArr[0]);  
     $('.content-specials-listing-container p.lead').attr('style', 'font-size:1.1em;');  
   }
-  $('.thumbnail').equalHeights();
 });
 </script>

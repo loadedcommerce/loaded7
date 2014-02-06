@@ -91,6 +91,43 @@ class lC_Image_groups_Admin_rpc {
     }
 
     echo json_encode($result);
-  }    
+  } 
+  /*
+  * Checks for images
+  *
+  * @access public
+  * @return json
+  */
+  public static function checkImages() {
+    $result = lC_Images_Admin::check();
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+
+    echo json_encode($result);
+  }
+ /*
+  * Returns the data used on the resize dialog form
+  *
+  * @access public
+  * @return json
+  */
+  public static function getResizeInfo() {
+    $result = lC_Images_Admin::getInfo();
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+
+    echo json_encode($result);
+  }
+ /*
+  * Resize images
+  *
+  * @access public
+  * @return json
+  */
+  public static function resizeImages() {
+    $result = lC_Images_Admin::resizeBatch();
+    $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+
+    echo json_encode($result);
+  }
+ 
 }
 ?>

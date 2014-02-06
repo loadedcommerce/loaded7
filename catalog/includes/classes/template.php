@@ -916,7 +916,7 @@ class lC_Template {
       $data = $QbrandingData->value('social_facebook_page');
       break;
       
-      case 'social_tweeter':
+      case 'social_twitter':
       $data = $QbrandingData->value('social_twitter');
       break;
       
