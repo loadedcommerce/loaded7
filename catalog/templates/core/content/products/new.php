@@ -82,14 +82,13 @@ $(document).ready(function() {
   var buttonContentText;
   var mediaType = _setMediaType();
   var mainContentClass = $('#main-content-container').attr('class');
-  if(mainContentClass == 'col-sm-6 col-lg-6') {
+  if (mainContentClass == 'col-sm-6 col-lg-6') {
     thisContentClass = 'col-sm-6 col-lg-6';
   } else {
     thisContentClass = 'col-sm-4 col-lg-4';
   }  
   
-  $(".product-listing-module-items").each(function(){
-    
+  $(".product-listing-module-items").each(function() {    
     var imageContent = $(this).find('div.product-listing-module-image').html();
     var nameContent = $(this).find('div.product-listing-module-name').html();
     var nameContentText = $(this).find('div.product-listing-module-name').text();
@@ -105,7 +104,7 @@ $(document).ready(function() {
     var newDescContentText = (descContentText.length > 65) ? descContentText.substr(0, 62) + '...' : descContentText;
     descContent = descContent.replace(descContentText, newDescContentText);      
     
-    output = '<div class="' + thisContentClass+ ' with-padding">'+
+    output = '<div class="' + thisContentClass + ' with-padding">'+
              '  <div class="thumbnail align-center large-padding-top">'+ imageContent +
              '    <div class="caption">' +
              '      <h3 style="line-height:1.1;">' + nameContent + '</h3>' +
