@@ -50,13 +50,14 @@ $(document).ready(function() {
           $id = $key;
         }
       }
-      include_once($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/classes/output.php'));
-      if (lC_Template_output::getProductsStock($id) < 1) {
+      if (file_exists('templates/' . $lC_Template->getCode() . '/classes/output.php')) {
+        include_once($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/classes/output.php'));
+        if (lC_Template_output::getProductsStock($id) < 1) {
   ?>
-    //$("#loaded7").find($("button:contains('<?php echo $lC_Language->get('button_buy_now'); ?>')")).attr("disabled");
     $(":contains('<?php echo $lC_Language->get('button_buy_now'); ?>')").closest('button').removeClass("btn-success").addClass("btn-default").addClass("disabled").html('<?php echo $lC_Language->get('out_of_stock'); ?>');
     $("input[name='quantity']").hide().parent().hide();
   <?php
+        }
       }
     }
   ?>
