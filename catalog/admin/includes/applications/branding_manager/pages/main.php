@@ -55,7 +55,7 @@ $bInfo = lC_Branding_manager_Admin::getAll();
                 <div id="tab-<?php echo $l['id'];?>" class="with-padding">
                 <span class="required full-width autoexpanding mid-margin-bottom">
                   <label for="ckEditor_branding_home_page_text[<?php echo $l['id'];?>]"></label>
-                  <?php echo lc_draw_textarea_field('branding_home_page_text[' . $l['id'] . ']', (isset($bInfo) && isset($bInfo[$l['id']]['homepage_text']) ? $bInfo[$l['id']]['homepage_text'] : null), 48, 2, 'id="ckEditor_branding_home_page_text[' . $l['id'] . ']" class="required input-unstyled full-width autoexpanding"'); ?>
+                  <?php echo lc_draw_textarea_field('branding_home_page_text[' . $l['id'] . ']', (isset($bInfo) && isset($bInfo[$l['id']]['homepage_text']) ? $bInfo[$l['id']]['homepage_text'] : null), 48, 2, 'id="ckEditor_branding_home_page_text[' . $l['id'] . ']" class="required input full-width autoexpanding"'); ?>
                   </span>
                 </div>
                 <?php
