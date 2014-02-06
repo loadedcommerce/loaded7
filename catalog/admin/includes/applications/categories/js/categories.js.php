@@ -8,7 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: categories.js.php v1.0 2013-08-08 datazen $
 */
-global $lC_Template, $lC_Language, $lC_ObjectInfo;
+global $lC_Template, $lC_Language, $cInfo;
 ?>
 <script>  
 function _refreshDataTable() {
@@ -318,13 +318,15 @@ function validatePermalink(pl) {
   return false;
 }
 
-<?php 
-  foreach ( $lC_Language->getAll() as $l ) { 
+<?php
+  if (!$cInfo) { 
+    foreach ( $lC_Language->getAll() as $l ) { 
 ?>
 $("#categories_name_<?php echo $l['id']; ?>").blur(function(){
   $("#categories_permalink_<?php echo $l['id']; ?>").val($("#categories_name_<?php echo $l['id']; ?>").val().toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, ''));
 });
-<?php 
+<?php
+    } 
   }
 }
 ?>           
