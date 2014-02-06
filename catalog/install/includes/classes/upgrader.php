@@ -768,8 +768,30 @@ class lC_LocalUpgrader extends lC_Upgrader {
                             , 'products_tax_class_id'  => $sQry->value($map['products_tax_class_id'])
                             , 'manufacturers_id'       => ($sQry->value($map['manufacturers_id']) != '' || $sQry->value($map['manufacturers_id']) != NULL) ? $sQry->value($map['manufacturers_id']) : 0
                             , 'products_ordered'       => $sQry->value($map['products_ordered'])
+                            , 'products_price1'        => $sQry->value('products_price1')
+                            , 'products_price2'        => $sQry->value('products_price2')
+                            , 'products_price3'        => $sQry->value('products_price3')
+                            , 'products_price4'        => $sQry->value('products_price4')
+                            , 'products_price5'        => $sQry->value('products_price5')
+                            , 'products_price6'        => $sQry->value('products_price6')
+                            , 'products_price7'        => $sQry->value('products_price7')
+                            , 'products_price8'        => $sQry->value('products_price8')
+                            , 'products_price9'        => $sQry->value('products_price9')
+                            , 'products_price10'       => $sQry->value('products_price10')
+                            , 'products_price11'       => $sQry->value('products_price11')
+                            , 'products_price1_qty'    => $sQry->value('products_price1_qty')
+                            , 'products_price2_qty'    => $sQry->value('products_price2_qty')
+                            , 'products_price3_qty'    => $sQry->value('products_price3_qty')
+                            , 'products_price4_qty'    => $sQry->value('products_price4_qty')
+                            , 'products_price5_qty'    => $sQry->value('products_price5_qty')
+                            , 'products_price6_qty'    => $sQry->value('products_price6_qty')
+                            , 'products_price7_qty'    => $sQry->value('products_price7_qty')
+                            , 'products_price8_qty'    => $sQry->value('products_price8_qty')
+                            , 'products_price9_qty'    => $sQry->value('products_price9_qty')
+                            , 'products_price10_qty'   => $sQry->value('products_price10_qty')
+                            , 'products_price11_qty'   => $sQry->value('products_price11_qty')
                             , 'has_children'           => 0
-                             ); 
+                             );
                            
           $products[] = $product; 
         
@@ -789,7 +811,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                   products_tax_class_id, 
                                                                   manufacturers_id, 
                                                                   products_ordered, 
-                                                                  has_children) 
+                                                                  has_children,
+                                                                  is_subproduct) 
                                                           VALUES (:products_id, 
                                                                   :parent_id, 
                                                                   :products_quantity, 
@@ -806,7 +829,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                   :products_tax_class_id, 
                                                                   :manufacturers_id, 
                                                                   :products_ordered, 
-                                                                  :has_children)');
+                                                                  :has_children,
+                                                                  :is_subproduct)');
   
           $tQry->bindTable(':table_products', TABLE_PRODUCTS);
           
@@ -827,8 +851,261 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->bindInt  (':manufacturers_id'      , $product['manufacturers_id']);
           $tQry->bindInt  (':products_ordered'      , $product['products_ordered']);
           $tQry->bindInt  (':has_children'          , $product['has_children']);
+          $tQry->bindInt  (':is_subproduct'         , ($product['parent_id'] != 0) ? 1 : 0);
           
           $tQry->execute();
+          
+          // Added for qty price breaks START ////////////////////////////////////////////////////////////
+          
+          // get the lowest customers group id
+          $lcgidQry = $source_db->query("SELECT MIN(customers_group_id) AS customers_group_id FROM customers_groups");
+          $lcgidQry->execute();
+          
+          if ($product['products_price1'] > 0) {
+            $tp1Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
+                                                                              group_id,
+                                                                              tax_class_id,
+                                                                              qty_break,
+                                                                              price_break) 
+                                                                      VALUES (:products_id,
+                                                                              :group_id,
+                                                                              :tax_class_id,
+                                                                              :qty_break,
+                                                                              :price_break)');
+                                                                      
+            $tp1Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $tp1Qry->bindInt(':products_id'             , $product['products_id']);
+            $tp1Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+            $tp1Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
+            $tp1Qry->bindInt(':qty_break'               , $product['products_price1_qty']);
+            $tp1Qry->bindFloat(':price_break'           , $product['products_price1']);
+            
+            $tp1Qry->execute();
+          }
+          
+          if ($product['products_price2'] > 0) {
+            $tp2Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
+                                                                              group_id,
+                                                                              tax_class_id,
+                                                                              qty_break,
+                                                                              price_break) 
+                                                                      VALUES (:products_id,
+                                                                              :group_id,
+                                                                              :tax_class_id,
+                                                                              :qty_break,
+                                                                              :price_break)');
+                                                                      
+            $tp2Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $tp2Qry->bindInt(':products_id'             , $product['products_id']);
+            $tp2Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+            $tp2Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
+            $tp2Qry->bindInt(':qty_break'               , $product['products_price2_qty']);
+            $tp2Qry->bindFloat(':price_break'           , $product['products_price2']);
+            
+            $tp2Qry->execute();
+          }
+          
+          if ($product['products_price3'] > 0) {
+            $tp3Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
+                                                                              group_id,
+                                                                              tax_class_id,
+                                                                              qty_break,
+                                                                              price_break) 
+                                                                      VALUES (:products_id,
+                                                                              :group_id,
+                                                                              :tax_class_id,
+                                                                              :qty_break,
+                                                                              :price_break)');
+                                                                      
+            $tp3Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $tp3Qry->bindInt(':products_id'             , $product['products_id']);
+            $tp3Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+            $tp3Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
+            $tp3Qry->bindInt(':qty_break'               , $product['products_price3_qty']);
+            $tp3Qry->bindFloat(':price_break'           , $product['products_price3']);
+            
+            $tp3Qry->execute();
+          }
+          
+          if ($product['products_price4'] > 0) {
+            $tp4Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
+                                                                              group_id,
+                                                                              tax_class_id,
+                                                                              qty_break,
+                                                                              price_break) 
+                                                                      VALUES (:products_id,
+                                                                              :group_id,
+                                                                              :tax_class_id,
+                                                                              :qty_break,
+                                                                              :price_break)');
+                                                                      
+            $tp4Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $tp4Qry->bindInt(':products_id'             , $product['products_id']);
+            $tp4Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+            $tp4Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
+            $tp4Qry->bindInt(':qty_break'               , $product['products_price4_qty']);
+            $tp4Qry->bindFloat(':price_break'           , $product['products_price4']);
+            
+            $tp4Qry->execute();
+          }
+          
+          if ($product['products_price5'] > 0) {
+            $tp5Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
+                                                                              group_id,
+                                                                              tax_class_id,
+                                                                              qty_break,
+                                                                              price_break) 
+                                                                      VALUES (:products_id,
+                                                                              :group_id,
+                                                                              :tax_class_id,
+                                                                              :qty_break,
+                                                                              :price_break)');
+                                                                      
+            $tp5Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $tp5Qry->bindInt(':products_id'             , $product['products_id']);
+            $tp5Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+            $tp5Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
+            $tp5Qry->bindInt(':qty_break'               , $product['products_price5_qty']);
+            $tp5Qry->bindFloat(':price_break'           , $product['products_price5']);
+            
+            $tp5Qry->execute();
+          }
+          
+          if ($product['products_price1'] > 0) {
+            $tp6Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
+                                                                              group_id,
+                                                                              tax_class_id,
+                                                                              qty_break,
+                                                                              price_break) 
+                                                                      VALUES (:products_id,
+                                                                              :group_id,
+                                                                              :tax_class_id,
+                                                                              :qty_break,
+                                                                              :price_break)');
+                                                                      
+            $tp6Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $tp6Qry->bindInt(':products_id'             , $product['products_id']);
+            $tp6Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+            $tp6Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
+            $tp6Qry->bindInt(':qty_break'               , $product['products_price6_qty']);
+            $tp6Qry->bindFloat(':price_break'           , $product['products_price6']);
+            
+            $tp6Qry->execute();
+          }
+          
+          if ($product['products_price7'] > 0) {
+            $tp7Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
+                                                                              group_id,
+                                                                              tax_class_id,
+                                                                              qty_break,
+                                                                              price_break) 
+                                                                      VALUES (:products_id,
+                                                                              :group_id,
+                                                                              :tax_class_id,
+                                                                              :qty_break,
+                                                                              :price_break)');
+                                                                      
+            $tp7Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $tp7Qry->bindInt(':products_id'             , $product['products_id']);
+            $tp7Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+            $tp7Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
+            $tp7Qry->bindInt(':qty_break'               , $product['products_price7_qty']);
+            $tp7Qry->bindFloat(':price_break'           , $product['products_price7']);
+            
+            $tp7Qry->execute();
+          }
+          
+          if ($product['products_price8'] > 0) {
+            $tp8Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
+                                                                              group_id,
+                                                                              tax_class_id,
+                                                                              qty_break,
+                                                                              price_break) 
+                                                                      VALUES (:products_id,
+                                                                              :group_id,
+                                                                              :tax_class_id,
+                                                                              :qty_break,
+                                                                              :price_break)');
+                                                                      
+            $tp8Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $tp8Qry->bindInt(':products_id'             , $product['products_id']);
+            $tp8Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+            $tp8Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
+            $tp8Qry->bindInt(':qty_break'               , $product['products_price8_qty']);
+            $tp8Qry->bindFloat(':price_break'           , $product['products_price8']);
+            
+            $tp8Qry->execute();
+          }
+          
+          if ($product['products_price9'] > 0) {
+            $tp9Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
+                                                                              group_id,
+                                                                              tax_class_id,
+                                                                              qty_break,
+                                                                              price_break) 
+                                                                      VALUES (:products_id,
+                                                                              :group_id,
+                                                                              :tax_class_id,
+                                                                              :qty_break,
+                                                                              :price_break)');
+                                                                      
+            $tp9Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $tp9Qry->bindInt(':products_id'             , $product['products_id']);
+            $tp9Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+            $tp9Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
+            $tp9Qry->bindInt(':qty_break'               , $product['products_price9_qty']);
+            $tp9Qry->bindFloat(':price_break'           , $product['products_price9']);
+            
+            $tp9Qry->execute();
+          }
+          
+          if ($product['products_price10'] > 0) {
+            $tp10Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
+                                                                               group_id,
+                                                                               tax_class_id,
+                                                                               qty_break,
+                                                                               price_break) 
+                                                                       VALUES (:products_id,
+                                                                               :group_id,
+                                                                               :tax_class_id,
+                                                                               :qty_break,
+                                                                               :price_break)');
+                                                                      
+            $tp10Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $tp10Qry->bindInt(':products_id'             , $product['products_id']);
+            $tp10Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+            $tp10Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
+            $tp10Qry->bindInt(':qty_break'               , $product['products_price10_qty']);
+            $tp10Qry->bindFloat(':price_break'           , $product['products_price10']);
+            
+            $tp10Qry->execute();
+          }
+          
+          if ($product['products_price11'] > 0) {
+            $tp11Qry = $target_db->query('INSERT INTO :table_products_pricing (products_id,
+                                                                               group_id,
+                                                                               tax_class_id,
+                                                                               qty_break,
+                                                                               price_break) 
+                                                                       VALUES (:products_id,
+                                                                               :group_id,
+                                                                               :tax_class_id,
+                                                                               :qty_break,
+                                                                               :price_break)');
+                                                                      
+            $tp11Qry->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
+            $tp11Qry->bindInt(':products_id'             , $product['products_id']);
+            $tp11Qry->bindInt(':group_id'                , $lcgidQry->value('customers_group_id'));
+            $tp11Qry->bindInt(':tax_class_id'            , $product['products_tax_class_id']);
+            $tp11Qry->bindInt(':qty_break'               , $product['products_price11_qty']);
+            $tp11Qry->bindFloat(':price_break'           , $product['products_price11']);
+            
+            $tp11Qry->execute();
+          }
+          
+          $lcgidQry->freeResult();
+          
+          // Added for qty price breaks END //////////////////////////////////////////////////////////////
           
           $mQry = $target_db->query('SELECT id FROM :table_templates_boxes WHERE code = "manufacturers"');
           $mQry->bindTable(':table_templates_boxes', TABLE_TEMPLATES_BOXES);
