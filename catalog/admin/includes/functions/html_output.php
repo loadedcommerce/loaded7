@@ -210,7 +210,7 @@
   <span class="button-group">
 
     <?php if ($save) { ?>
-    <button type="button" <?php echo $save; ?> class="button big icon-tick green-gradient"><?php echo $lC_Language->get('button_save'); ?></button>
+    <button type="submit" <?php echo $save; ?> class="button big icon-tick green-gradient"><?php echo $lC_Language->get('button_save'); ?></button>
     <?php } ?>
     
     <?php if ($save_close) { ?>
