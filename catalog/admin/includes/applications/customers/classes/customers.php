@@ -392,6 +392,8 @@ class lC_Customers_Admin {
   public static function save($id = null, $data, $send_email = true) { 
     global $lC_Database, $lC_Language, $lC_DateTime;
 
+    $lC_Language->loadIniFile('customers.php'); 
+
     $error = false;
     $result = array();
 
@@ -492,7 +494,8 @@ class lC_Customers_Admin {
             $email_text .= sprintf($lC_Language->get('email_greet_general'), $full_name) . "\n\n";
           }
           $email_text .= sprintf($lC_Language->get('email_text'), STORE_NAME, STORE_OWNER_EMAIL_ADDRESS, trim($data['password']));
-          lc_email($full_name, $data['email_address'], $lC_Language->get('email_subject'), $email_text, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
+          $email_subject = sprintf($lC_Language->get('email_subject'), STORE_NAME);
+          lc_email($full_name, $data['email_address'], $email_subject, $email_text, STORE_OWNER, STORE_OWNER_EMAIL_ADDRESS);
         }
       }
 
