@@ -115,6 +115,13 @@
   <meta name="application-name" content="Loaded Commerce Admin">
   <meta name="msapplication-tooltip" content="Loaded Commerce Cross-Platform Admin Template">
   <meta name="msapplication-starturl" content="<?php echo $_SERVER['PHP_SELF']; ?>">
+<?php
+if(defined('EDITOR_UPLOADCARE_PUBLIC_KEY') && EDITOR_UPLOADCARE_PUBLIC_KEY != ''  ){
+?>
+<script> UPLOADCARE_PUBLIC_KEY = '<?php echo EDITOR_UPLOADCARE_PUBLIC_KEY;?>'; </script>
+<?php
+}
+?>
 </head>
 
 <body class="clearfix with-menu with-shortcuts">
