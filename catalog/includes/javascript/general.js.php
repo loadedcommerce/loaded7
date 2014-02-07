@@ -7,7 +7,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: general.js.php v1.0 2013-08-08 datazen $
 */
-global $lC_Template, $lC_Language, $lC_Product; 
+global $lC_Template, $lC_Language, $lC_Vqmod, $lC_Session; 
 ?>
 <script>
 $(document).ready(function() {
@@ -43,20 +43,22 @@ $(document).ready(function() {
   
   // hide buy now and qty for out of stock products
   <?php
-    if (defined('DISABLE_ADD_TO_CART') && DISABLE_ADD_TO_CART == 1 && ($lC_Template->getModule() == 'products' || $lC_Template->getModule() == 'reviews')/*false !== strpos($_SERVER['REQUEST_URI'], 'products')*/) {
+    if (defined('DISABLE_ADD_TO_CART') && DISABLE_ADD_TO_CART == 1 && ($lC_Template->getModule() == 'products' || $lC_Template->getModule() == 'reviews') ) {
       foreach ($_GET as $key => $value) {
-        $key = end(explode("/", $key));
-        if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) ) {
+        $keys = end(explode("/", $key));
+        if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) && ($key != 'cPath') ) {
           $id = $key;
         }
       }
-      
+      if (file_exists('templates/' . $lC_Template->getCode() . '/classes/output.php')) {
+        include_once($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/classes/output.php'));
+        if (lC_Template_output::getProductsStock($id) < 1) {
   ?>
-    alert('<?php echo $id; ?>');
-    //$("#loaded7").find($("button:contains('<?php echo $lC_Language->get('button_buy_now'); ?>')")).attr("disabled");
     $(":contains('<?php echo $lC_Language->get('button_buy_now'); ?>')").closest('button').removeClass("btn-success").addClass("btn-default").addClass("disabled").html('<?php echo $lC_Language->get('out_of_stock'); ?>');
     $("input[name='quantity']").hide().parent().hide();
   <?php
+        }
+      }
     }
   ?>
   $(":contains('<?php echo $lC_Language->get('out_of_stock'); ?>')").closest('button').removeClass("btn-success").addClass("btn-default");

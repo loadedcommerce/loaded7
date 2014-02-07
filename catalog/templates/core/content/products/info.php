@@ -157,43 +157,38 @@
   ?>
 </div>
 <script>
-$(document).ready(function() {
-  $('#main-content-container').addClass('large-margin-top-neg');
-  refreshPrice();
-});
+  function refreshPrice() {
+    var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
+    var basePrice = '<?php echo $lC_Product->getPriceFormated(true); ?>';
 
-function refreshPrice() {
-  var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
-  var basePrice = '<?php echo $lC_Product->getPriceFormated(true); ?>';
-
-  var priceModTotal = 0;
-  // loop thru any options select fields
-  $('#content-products-info-simple-options-container select > option:selected').each(function() {
-    priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
-  }); 
-  
-  // loop thru any options radio fields
-  $('#content-products-info-simple-options-container input:radio:checked').each(function() {
-    priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
-  }); 
-  
-  // loop thru any options text fields
-  $('#content-products-info-simple-options-container input[type="text"]').each(function() {
-    if($(this).val()) {
+    var priceModTotal = 0;
+    // loop thru any options select fields
+    $('#content-products-info-simple-options-container select > option:selected').each(function() {
       priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
+    }); 
+    
+    // loop thru any options radio fields
+    $('#content-products-info-simple-options-container input:radio:checked').each(function() {
+      priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
+    }); 
+    
+    // loop thru any options text fields
+    $('#content-products-info-simple-options-container input[type="text"]').each(function() {
+      if($(this).val()) {
+        priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
+      }
+    });  
+    
+    var adjPrice = (parseFloat(basePrice) + parseFloat(priceModTotal));
+    var adjPriceFormatted = currencySymbolLeft + adjPrice.toFixed(<?php echo DECIMAL_PLACES; ?>);
+    
+    if (isNaN(adjPriceFormatted)) {
+      
+      $('.content-products-info-price').html(basePrice); // Special price
+    } else {
+      
+      $('.content-products-info-price').html(adjPriceFormatted);
     }
-  });  
-  
-  var adjPrice = (parseFloat(basePrice) + parseFloat(priceModTotal));
-  var adjPriceFormatted = currencySymbolLeft + adjPrice.toFixed(<?php echo DECIMAL_PLACES; ?>);
-  
-  if(isNaN(adjPriceFormatted)){
-    
-    $('.content-products-info-price').html(basePrice); // Special price
-  }else{
-    
-    $('.content-products-info-price').html(adjPriceFormatted);
   }
-}
 </script>
 <!--content/products/info.php end-->
