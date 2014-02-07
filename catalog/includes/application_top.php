@@ -12,7 +12,7 @@
 define('PAGE_PARSE_START_TIME', microtime());
 
 // check for config, include server parameters or go to install
-if (File_exists(__DIR__ . '/config.php')) {
+if (file_exists(__DIR__ . '/config.php')) {
   @require(__DIR__ . '/config.php');
 }
 
