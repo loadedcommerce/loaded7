@@ -535,6 +535,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                               )
                                  , 'products_simple_options_values' => array(
                                                                                'id'                 => 'id'
+                                                                             , 'products_id'        => 'products_id'
                                                                              , 'customers_group_id' => 'customers_group_id'
                                                                              , 'values_id'          => 'options_values_id'
                                                                              , 'options_id'         => 'options_id'
@@ -4283,17 +4284,17 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $otQry->bindInt(':products_options_id', $sQry->value('products_options_text_id'));
           $otQry->execute();
           
-          $asoQry = $source_db->query('SELECT products_options_sort_order FROM products_attributes WHERE options_id = :options_id');
+          $asoQry = $source_db->query('SELECT products_id, products_options_sort_order FROM products_attributes WHERE options_id = :options_id');
           $asoQry->bindInt(':options_id', $sQry->value('products_options_text_id'));
           $asoQry->execute();
           
           if ($otQry->value('options_type') == '1') {
             $module = 'text_field';
-            $text_field_data[] = array(
-                                          'products_variants_groups_id' => $sQry->value('products_options_text_id')
-                                        , 'title'                       => $sQry->value('products_options_instruct') 
-                                        , 'sort_order'                  => $asoQry->value('products_options_sort_order') 
-                                         );
+            $text_field_data[] = array('products_id'                 => $asoQry->value('products_id'),
+                                       'products_variants_groups_id' => $sQry->value('products_options_text_id'),
+                                       'title'                       => $sQry->value('products_options_instruct'), 
+                                       'sort_order'                  => $asoQry->value('products_options_sort_order') 
+                                       );
           } else if ($otQry->value('options_type') == '2') { 
             $module = 'radio_buttons';
           } else if ($otQry->value('options_type') == '3') { 
@@ -4302,11 +4303,11 @@ class lC_LocalUpgrader extends lC_Upgrader {
           } else if ($otQry->value('options_type') == '4') {
             // $module = 'text_area'; // back to text_area once loaded7 supports it 
             $module = 'text_field';
-            $text_field_data[] = array(
-                                          'products_variants_groups_id' => $sQry->value('products_options_text_id')
-                                        , 'title'                       => $sQry->value('products_options_instruct') 
-                                        , 'sort_order'                  => $asoQry->value('products_options_sort_order') 
-                                         );
+            $text_field_data[] = array('products_id'                 => $asoQry->value('products_id'),
+                                       'products_variants_groups_id' => $sQry->value('products_options_text_id'),
+                                       'title'                       => $sQry->value('products_options_instruct'), 
+                                       'sort_order'                  => $asoQry->value('products_options_sort_order') 
+                                       );
           // no support for file upload yet even for conversion
           // } else if ($otQry->value('options_type') == '5') { 
             // $module = 'file_upload'; // back to check_box once loaded7 supports it
@@ -4445,6 +4446,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           
           $value  = array(
                             'id'                 => "NULL"
+                          , 'products_id'        => $sQry->valueInt('products_id')
                           , 'customers_group_id' => $tQry->valueInt('customers_group_id')
                           , 'values_id'          => $sQry->valueInt('options_values_id')
                           , 'options_id'         => $options_id
@@ -4518,12 +4520,24 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $Qchk->execute();        
         
         if ($Qchk->numberOfRows() == 0) {
+          
+          //get products_id from products_simple_options
+          $Qso = $target_db->query('SELECT products_id from :products_simple_options WHERE options_id = :options_id and products_id = :products_id limit 1');
+          $Qso->bindInt  (':options_id' , $option['options_id']);
+          $Qso->bindInt  (':products_id', $option['products_id']);
+          $Qso->bindTable(':products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+          $Qso->execute();           
+          
+          
+          
           $tQry = $target_db->query('INSERT INTO :products_simple_options_values (id, 
+                                                                                  products_id,
                                                                                   customers_group_id, 
                                                                                   values_id, 
                                                                                   options_id, 
                                                                                   price_modifier) 
                                                                           VALUES (:id, 
+                                                                                  :products_id,
                                                                                   :customers_group_id, 
                                                                                   :values_id, 
                                                                                   :options_id, 
@@ -4532,6 +4546,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->bindTable(':products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
           
           $tQry->bindInt  (':id'                , $value['id']);
+          $tQry->bindInt  (':products_id', $value['products_id']);
           $tQry->bindInt  (':customers_group_id', $value['customers_group_id']);
           $tQry->bindInt  (':values_id'         , $value['values_id']);
           $tQry->bindInt  (':options_id'        , $value['options_id']);
@@ -4573,11 +4588,12 @@ class lC_LocalUpgrader extends lC_Upgrader {
         $pvvQry->execute();
         
         $sovID = $target_db->nextID();        
-        $sovQry = $target_db->query('UPDATE :table_products_simple_options_values SET values_id = :values_id WHERE options_id = :options_id');
+        $sovQry = $target_db->query('UPDATE :table_products_simple_options_values SET values_id = :values_id, products_id = :products_id WHERE options_id = :options_id');
   
         $sovQry->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
         
         $sovQry->bindInt  (':values_id' , $sovID);
+        $sovQry->bindInt  (':products_id' , $text_field['products_id']);
         $sovQry->bindInt  (':options_id', $text_field['products_variants_groups_id']);
         
         $sovQry->execute();
