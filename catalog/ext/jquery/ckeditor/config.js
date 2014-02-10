@@ -49,7 +49,7 @@ CKEDITOR.editorConfig = function( config ) {
   ];
 
   // The Full toolbar groups arrangement.
-  config.toolbar_FULL = [
+  config.toolbar_Full = [
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] },
     { name: 'styles', items: [  'Format', 'Font', 'FontSize' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ] },
