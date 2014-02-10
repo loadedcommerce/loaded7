@@ -2885,5 +2885,15 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <value><![CDATA[Support Phone]]></value>
       <group>general</group>
     </definition>      
+    <definition>
+      <key>pricing_starts_at</key>
+      <value><![CDATA[Starts At]]></value>
+      <group>general</group>
+    </definition>     
+    <definition>
+      <key>pricing_low_as</key>
+      <value><![CDATA[Low As]]></value>
+      <group>general</group>
+    </definition> 
   </definitions>  
 </language>

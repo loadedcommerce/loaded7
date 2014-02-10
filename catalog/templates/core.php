@@ -54,6 +54,9 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!-- font-awesome -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     
+    <!-- font-awesome -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        
     <!-- jQuery is always at top -->
     <script src="ext/jquery/jquery-1.9.1.min.js"></script>
     <script src="ext/bootstrap/bootstrap.min.js"></script>
