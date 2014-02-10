@@ -19,7 +19,7 @@ $(document).ready(function() {
   <?php
   foreach ( $lC_Language->getAll() as $l ) {
     if (ENABLE_EDITOR == 1 && EDITOR_CONFIGURATION_HOMEPAGE != 'Off') { 
-      echo "CKEDITOR.replace('branding_home_page_text[" . $l['id'] . "]', { toolbar: '" . ((EDITOR_CONFIGURATION_HOMEPAGE == 'Full') ? strtoupper(EDITOR_CONFIGURATION_HOMEPAGE) : EDITOR_CONFIGURATION_HOMEPAGE) . "', height: 200, width: '99.9%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php', contentsCss: '../templates/" . DEFAULT_TEMPLATE . "/css/styles.css', stylesSet: [] });";
+      echo "CKEDITOR.replace('branding_home_page_text[" . $l['id'] . "]', { toolbar: '" . EDITOR_CONFIGURATION_HOMEPAGE . "', height: 200, width: '99.9%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php', contentsCss: '../templates/" . DEFAULT_TEMPLATE . "/css/styles.css', stylesSet: [] });";
     } else {
       echo '$("#branding_home_page_text[' . $l['id'] . ']").css("height", "200px").css("width", "99.9%");';
     }

@@ -7,7 +7,7 @@ CKEDITOR.editorConfig = function( config ) {
   // For the complete reference:
   // http://docs.ckeditor.com/#!/api/CKEDITOR.config
   
-  config.extraPlugins = 'autogrow,font,colorbutton,image2,pastefromword,oembed,tabletools,imagepaste,uploadcare,blockquote,specialchar,slideshow,stylesheetparser';
+  config.extraPlugins = 'autogrow,font,colorbutton,image2,pastefromword,oembed,tliyoutube,tabletools,imagepaste,uploadcare,blockquote,specialchar,slideshow,stylesheetparser';
  
   //below seeting is for removing editor footer
   //config.removePlugins = 'resize';
@@ -36,28 +36,29 @@ CKEDITOR.editorConfig = function( config ) {
 
   // The Standard toolbar groups arrangement.
   config.toolbar_Standard = [
-    { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+    { name: 'styles', items: [  'Format', 'Font', 'FontSize' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ] },
     { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
     { name: 'paragraph', groups: [ 'list', 'indent', 'align' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
     { name: 'links', groups: ['links'], items: [ 'Link', 'Unlink', 'Anchor' ] },
-    { name: 'insert',  groups: ['table','insert'], items: [  'Image', 'Table', 'tliyoutube', 'HorizontalRule', 'SpecialChar' ] },
-    { name: 'clipboard', groups: [ 'clipboard' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord' ] },
+    { name: 'insert',  groups: ['table','insert'], items: [  'Image', 'Flash', 'Table', 'tliyoutube', 'HorizontalRule', 'SpecialChar' ] },
+    { name: 'clipboard', groups: [ 'clipboard' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'RemoveFormat' ] },
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] },
     { name: 'tools', items: [ 'Maximize' ] },
     { name: 'about', items: [ 'About' ] }
   ];
 
   // The Full toolbar groups arrangement.
-  config.toolbar_Full = [
-    { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+  config.toolbar_FULL = [
+    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] },
+    { name: 'styles', items: [  'Format', 'Font', 'FontSize' ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ] },
     { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-    { name: 'paragraph', groups: [ 'list', 'indent', 'align' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+    { name: 'paragraph', groups: [ 'list', 'indent', 'align' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+    { name: 'insert',  groups: ['insert', 'table'], items: [  'Image', 'Table', 'oembed', 'tliyoutube', 'HorizontalRule', 'SpecialChar', '-', 'Slideshow', 'Uploadcare' ] },
     { name: 'links', groups: ['links'], items: [ 'Link', 'Unlink', 'Anchor' ] },
-    { name: 'insert',  groups: ['insert', 'table'], items: [  'Image', 'Table', 'oembed', 'HorizontalRule', 'SpecialChar', '-', 'Slideshow', 'Uploadcare' ] },
-    { name: 'clipboard', groups: [ 'clipboard' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord' ] },
-    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] },
+    { name: 'clipboard', groups: [ 'clipboard' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'RemoveFormat' ] },
+  { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
     { name: 'tools', items: [ 'Maximize' ] },
     { name: 'about', items: [ 'About' ] }
   ];
