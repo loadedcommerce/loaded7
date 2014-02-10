@@ -913,10 +913,11 @@ class lC_Product {
      // $extra = (isset($value['products_model']) && empty($value['products_model']) === false) ? '<em>' . $lC_Language->get('listing_model_heading') . ': ' . $value['products_model'] . '</em>' : null;
      // if ($extra == null && isset($value['products_sku']) && empty($value['products_sku']) === false) $extra = '<em>' . $lC_Language->get('listing_sku_heading') . ': ' . $value['products_sku'] . '</em>';
       
+      $img = (isset($value['image']) && empty($value['image']) === false) ? $value['image'] : 'no_image.png';
       $output .= '<div class="row clear-both margin-bottom margin-top">' .
                  '  <div class="col-sm-8 col-lg-8">' .
                  '    <span class="subproduct-image pull-left margin-right">' . 
-                 '      <img class="img-responsive" src="' . $lC_Image->getAddress($value['image'], 'small') . '" title="' . $value['products_name'] . '" alt="' . $value['products_name'] . '" />' .
+                 '      <img class="img-responsive" src="' . $lC_Image->getAddress($img, 'small') . '" title="' . $value['products_name'] . '" alt="' . $value['products_name'] . '" />' .
                  '    </span>' .
                  '    <span class="subproduct-name lead lt-blue no-margin-bottom">' . $value['products_name'] . '</span><br />' . 
                  ((isset($extra) && $extra != null) ? '<span class="subproduct-model small-margin-left no-margin-top"><small>' . $extra . '</small></span>' : null) .
