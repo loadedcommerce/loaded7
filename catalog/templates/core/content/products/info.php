@@ -135,12 +135,15 @@
   <?php 
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>    
+    <div id="qpb-message"></div>
     <div class="row display-inline">
       <div class="col-sm-4 col-lg-4"></div>
       <div class="col-sm-4 col-lg-4 align-right mid-margin-top">
         <div class="form-group">
           <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
-          <input type="text" name="quantity" onfocus="this.select();" class="form-control content-products-info-qty-input mid-margin-right" value="1">
+          <i class="fa fa-plus-square-o fa-lg" style="position:absolute; right:-1px; top:3px; opacity:.3; cursor:pointer;" onclick="setQty('up');"></i>
+          <input type="text" id="quantity" name="quantity" onfocus="this.select();" onchange="refreshPrice();" class="form-control content-products-info-qty-input mid-margin-right" value="1">
+          <i class="fa fa-minus-square-o fa-lg" style="position:absolute; right:-1px; top:19px; opacity:.3; cursor:pointer;" onclick="setQty('dn');"></i>
         </div>
       </div>
       <div class="col-sm-4 col-lg-4">
@@ -157,38 +160,48 @@
   ?>
 </div>
 <script>
-  function refreshPrice() {
-    var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
-    var basePrice = '<?php echo $lC_Product->getPriceFormated(true); ?>';
-
-    var priceModTotal = 0;
-    // loop thru any options select fields
-    $('#content-products-info-simple-options-container select > option:selected').each(function() {
-      priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
-    }); 
-    
-    // loop thru any options radio fields
-    $('#content-products-info-simple-options-container input:radio:checked').each(function() {
-      priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
-    }); 
-    
-    // loop thru any options text fields
-    $('#content-products-info-simple-options-container input[type="text"]').each(function() {
-      if($(this).val()) {
-        priceModTotal = parseFloat(priceModTotal) + parseFloat($(this).attr('modifier'));
-      }
-    });  
-    
-    var adjPrice = (parseFloat(basePrice) + parseFloat(priceModTotal));
-    var adjPriceFormatted = currencySymbolLeft + adjPrice.toFixed(<?php echo DECIMAL_PLACES; ?>);
-    
-    if (isNaN(adjPriceFormatted)) {
-      
-      $('.content-products-info-price').html(basePrice); // Special price
-    } else {
-      
-      $('.content-products-info-price').html(adjPriceFormatted);
-    }
+$(document).ready(function() {
+  var buyNowDisabled = '<?php echo (STOCK_CHECK == '1' && DISABLE_ADD_TO_CART == '1' && $lC_ShoppingCart->isInStock($lC_Product->getID()) === false) ? '1' : '0';  ?>';
+  if (buyNowDisabled == '1') {
+    $('#main-content-container').addClass('large-margin-top-neg');
   }
+
+  refreshPrice();
+});
+
+function setQty(mode) {
+  var val = $('#quantity').val();
+  if (mode == 'dn') val = parseInt(val) - 1;
+  if (mode == 'up') val = parseInt(val) + 1;
+  if (parseInt(val) < 1) val = 1;
+  $('#quantity').val(val);
+  refreshPrice();
+}
+
+  function refreshPrice() {
+  var group = '<?php echo DEFAULT_CUSTOMERS_GROUP_ID; ?>';
+  var id = '<?php echo $lC_Product->getID(); ?>';
+  var module = '<?php echo $lC_Template->getModule(); ?>';
+  var nvp = $('#cart_quantity').serialize();
+  var jsonLink = '<?php echo lc_href_link('rpc.php', 'products&action=getPriceInfo&id=PID&group=GROUP&NVP', 'AUTO'); ?>';   
+  $.getJSON(jsonLink.replace('PID', id).replace('GROUP', group).replace('NVP', nvp).split('amp;').join(''),
+    function (data) {
+     // if (data.rpcStatus != 1) {
+     //   $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+     //   return false;
+     // }
+    var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
+      var basePrice = currencySymbolLeft + data.price; 
+      if (data.formatted != null) { 
+        $('.content-products-info-price').html(data.formatted);
+      } else {
+        $('.content-products-info-price').html(basePrice);
+      }
+      if (data.qpbData != undefined) {
+        $('#qpb-message').html('<div class="row"><div class="col-sm-4 col-lg-4"></div><div class="col-sm-8 col-lg-8" style="padding:0 30px 0 20px;"><div class="alert alert-warning large-margin-bottom-neg"><span class="text-left"><i class="fa fa-caret-right"></i> Buy ' + data.qpbData.nextBreak + ' for <b>' + currencySymbolLeft + data.qpbData.nextPrice + '</b> each and <b><i>save ' + data.qpbData.youSave + '</span></i></b></span></div></div></div>');
+      }
+    }
+  );  
+}
 </script>
 <!--content/products/info.php end-->

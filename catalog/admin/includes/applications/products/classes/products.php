@@ -8,11 +8,13 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: products.php v1.0 2013-08-08 datazen $
 */
-include_once('includes/applications/customer_groups/classes/customer_groups.php');
-include_once('includes/applications/product_variants/classes/product_variants.php');
-include_once('includes/applications/specials/classes/specials.php');
-include_once('includes/applications/categories/classes/categories.php');
-include_once('includes/classes/addons.php');
+global $lC_Vqmod;
+
+include_once($lC_Vqmod->modCheck('includes/applications/customer_groups/classes/customer_groups.php'));
+include_once($lC_Vqmod->modCheck('includes/applications/product_variants/classes/product_variants.php'));
+include_once($lC_Vqmod->modCheck('includes/applications/specials/classes/specials.php'));
+include_once($lC_Vqmod->modCheck('includes/applications/categories/classes/categories.php'));
+include_once($lC_Vqmod->modCheck('includes/classes/addons.php'));
 
 class lC_Products_Admin {
  /*
@@ -1125,8 +1127,8 @@ class lC_Products_Admin {
       $Qdel->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
       $Qdel->bindInt(':products_id', $products_id);
       $Qdel->setLogging($_SESSION['module'], $products_id);
-      $Qdel->execute();      
-      
+      $Qdel->execute();
+
       // if values are set, save them
       if ( isset($data['simple_options_group_name']) && !empty($data['simple_options_group_name']) ) {   
         foreach ( $data['simple_options_group_name'] as $group_id => $value ) {
@@ -2102,7 +2104,7 @@ class lC_Products_Admin {
       foreach ($options as $key => $so) {
         if ((isset($so['title']) && $so['title'] != NULL)) {
           $items = '';
-          if (is_array($options['values'])) {  
+          if (is_array($options['values'])) {
             foreach ($options['values'] as $k => $v) {
               if ($v['options_id'] == $so['options_id'] && $v['customers_group_id'] == $customers_group_id && $v['products_id'] == $pInfo->get('products_id')) {
                 if ($customers_group_id == DEFAULT_CUSTOMERS_GROUP_ID) {
