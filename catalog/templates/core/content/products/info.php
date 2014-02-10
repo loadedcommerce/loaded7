@@ -194,12 +194,12 @@ function setQty(mode) {
       var basePrice = currencySymbolLeft + data.price; 
       if (data.formatted != null) { 
         $('.content-products-info-price').html(data.formatted);
-    } else {
+      } else {
         $('.content-products-info-price').html(basePrice);
-    }
+      }
       if (data.qpbData != undefined) {
         $('#qpb-message').html('<div class="row"><div class="col-sm-4 col-lg-4"></div><div class="col-sm-8 col-lg-8" style="padding:0 30px 0 20px;"><div class="alert alert-warning large-margin-bottom-neg"><span class="text-left"><i class="fa fa-caret-right"></i> Buy ' + data.qpbData.nextBreak + ' for <b>' + currencySymbolLeft + data.qpbData.nextPrice + '</b> each and <b><i>save ' + data.qpbData.youSave + '</span></i></b></span></div></div></div>');
-  }
+      }
     }
   );  
 }
