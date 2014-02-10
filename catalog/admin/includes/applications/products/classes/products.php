@@ -12,6 +12,8 @@ include_once('includes/applications/customer_groups/classes/customer_groups.php'
 include_once('includes/applications/product_variants/classes/product_variants.php');
 include_once('includes/applications/specials/classes/specials.php');
 include_once('includes/applications/categories/classes/categories.php');
+include_once('includes/applications/tax_classes/classes/tax_classes.php');
+include_once('includes/applications/zone_groups/classes/zone_groups.php');
 include_once('includes/classes/addons.php');
 
 class lC_Products_Admin {
@@ -537,6 +539,12 @@ class lC_Products_Admin {
     }
     $Qoptions->freeResult();    
     
+    if(DISPLAY_PRICE_WITH_TAX == 1) {
+      $tax_data = lC_Tax_classes_Admin::getEntry($data['products_tax_class_id']);
+      $data['products_price_with_tax'] =  $data['products_price'] + ($tax_data['tax_rate']/100)*$data['products_price'];
+      //$data['products_cost_with_tax'] = $data['products_cost'] + ($tax_data['tax_rate']/100)*$data['products_cost'];
+      $data['products_msrp_with_tax'] = $data['products_msrp'] + ($tax_data['tax_rate']/100)*$data['products_msrp'];
+    }
     return $data;
   }
  /*
