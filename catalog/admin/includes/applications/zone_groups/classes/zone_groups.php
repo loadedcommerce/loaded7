@@ -335,7 +335,7 @@ class lC_Zone_groups_Admin {
       $countries_array[$country['id']] = $country['name'];
     }
     $result['countriesArray'] = $countries_array;
-    $result['zonesArray'] = array('' => $lC_Language->get('all_zones'));
+    $result['zonesArray'] = array('0' => $lC_Language->get('all_zones'));
 
     if ( isset($zaid) && $zaid != null ) {
       $result['zoneData'] = lC_Zone_groups_Admin::getEntry($zaid);
@@ -361,7 +361,7 @@ class lC_Zone_groups_Admin {
     $Qzones->bindInt(':zone_country_id', $id);
     $Qzones->execute();
 
-    $zones_array = array('' => $lC_Language->get('all_zones'));
+    $zones_array = array('0' => $lC_Language->get('all_zones'));
     while ( $Qzones->next() ) {
       $zones_array[$Qzones->value('zone_id')] = $Qzones->value('zone_name');
     }

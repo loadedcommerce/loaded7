@@ -382,7 +382,6 @@ class utility {
 
     return array_values($ordered); // array_values() added for identical result with multisort
 }  
-  
  /**
   * Return the product version
   *
@@ -472,26 +471,21 @@ class utility {
     $userAgent = strtolower($_SERVER['HTTP_USER_AGENT']); 
     if ((substr($_SERVER['HTTP_USER_AGENT'],0,6)=="Opera/") || (strpos($userAgent,'opera')) != false ){ 
       $name = 'opera';
-    } 
-    elseif ((strpos($userAgent,'chrome')) != false) { 
+    } elseif ((strpos($userAgent,'chrome')) != false) { 
       $name = 'chrome'; 
-    } 
-    elseif ((strpos($userAgent,'safari')) != false && (strpos($userAgent,'chrome')) == false && (strpos($userAgent,'chrome')) == false){ 
+    } elseif ((strpos($userAgent,'safari')) != false && (strpos($userAgent,'chrome')) == false && (strpos($userAgent,'chrome')) == false){ 
       $name = 'safari'; 
-    } 
-    elseif (preg_match('/msie/', $userAgent) || preg_match('/trident/', $userAgent)) { 
+    } elseif (preg_match('/msie/', $userAgent) || preg_match('/trident/', $userAgent)) { 
       $name = 'msie'; 
-    } 
-    elseif ((strpos($userAgent,'firefox')) != false) { 
+    } elseif ((strpos($userAgent,'firefox')) != false) { 
       $name = 'firefox'; 
-    } 
-    else { 
+    } else { 
       $name = 'unrecognized'; 
     } 
-    if (preg_match('/.+(?:me|ox|it|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches) && $browser['name']=='safari' ) { 
+    if (preg_match('/.+(?:me|ox|it|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches) && $browser['name'] == 'safari' ) { 
       $version = $matches[1]; 
     }
-    if (preg_match('/.+(?:me|ox|it|on|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches) && $browser['name']!='safari' ) { 
+    if (preg_match('/.+(?:me|ox|it|on|ra|ie)[\/: ]([\d.]+)/', $userAgent, $matches) && $browser['name'] != 'safari' ) { 
       $version = $matches[1]; 
     }
     else { 
@@ -500,5 +494,20 @@ class utility {
 
     return array('name' => $name, 'version' => $version); 
   } 
+  
+  public static function rmdir_r($path) {
+    $i = new DirectoryIterator($path);
+    foreach($i as $f) {
+      if($f->isFile()) {
+        @unlink($f->getRealPath());
+      } else if(!$f->isDot() && $f->isDir()) {
+        self::rmdir_r($f->getRealPath());
+        @rmdir($f->getRealPath());
+      }
+    }
+    @rmdir($path);
+    
+    return true;
+  }
 } 
 ?>

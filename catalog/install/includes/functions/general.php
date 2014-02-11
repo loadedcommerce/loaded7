@@ -34,27 +34,31 @@ function ioncube_test() {
     $ioncube_loader_version = ioncube_loader_version_array();
     $status .= $lC_Language->get('ioncube_installed_version') . $ioncube_loader_version['version'];
     $status_icon = "<img src=\"templates/img/icons/tick.gif\" border=\"0\" width=\"16\" height=\"16\" class=\"small-margin-bottom\">";
-    /*if ($ioncube_loader_version['major'] < 4 || ($ioncube_loader_version['major'] == 4 && $ioncube_loader_version['minor'] < 1)) {
-      $instructions .= "Ioncube loader is installed but needs to be updated.<br />
-                        Loaded 7 Commercial Addons will only work with ioncube loader version 4.1 or later.<br />
-                        The most recent version of the loader can be found
-                        <a href=\"http://www.ioncube.com/loaders.php\" target=\"_blank\">here</a>.";
-      $status_class = "orange";
-    } else {*/
+    if ($ioncube_loader_version['major'] < 4 || ($ioncube_loader_version['major'] == 4 && $ioncube_loader_version['minor'] < 1)) {
+      $status_icon = "<img src=\"templates/img/icons/cross.gif\" border=\"0\" width=\"16\" height=\"16\" class=\"small-margin-bottom\">";
+      $instructions .= $lC_Language->get('ioncube_update_needed');
+      $status_class = "red";
+      $ok = FALSE;
+    } else {
       $instructions .= $lC_Language->get('ioncube_no_additional_config');
       $status_class = "green";
-    //}
+      $ok = TRUE;
+    }
   } else {
     $status .= $lC_Language->get('text_not_installed');
     $status_icon = "<img src=\"templates/img/icons/cross.gif\" border=\"0\" width=\"16\" height=\"16\" class=\"small-margin-bottom\">";
     $instructions .= $lC_Language->get('ioncube_not_installed_instructions');
+    $ok = FALSE;
   }                  
 
-  $body = "$status_icon
-           <b><font color=\"$status_class\">ionCube Loader</font></b><br /> 
-           <b>" . $lC_Language->get('text_status') . "</b> $status<br /> 
-           <b>" . $lC_Language->get('text_instructions') . "</b> $instructions";
+  $txt = "$status_icon
+         <b><font color=\"$status_class\">ionCube Loader</font></b><br /> 
+         <b>" . $lC_Language->get('text_status') . "</b> $status<br /> 
+         <b>" . $lC_Language->get('text_instructions') . "</b> $instructions";
+         
+  $check = array('txt' => $txt,
+                 'ok' => $ok);
 
-  return $body;
+  return $check;
 }
 ?>

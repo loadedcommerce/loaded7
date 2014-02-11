@@ -156,6 +156,14 @@ class lC_Currencies {
         return $value['symbol_right'];
       }
     }
+  }
+  
+  public function getSessionSymbolLeft() {
+    foreach ($this->currencies as $key => $value) {
+      if ($key == $_SESSION['currency']) {
+        return $value['symbol_left'];
+      }
+    }
   }     
 }
 ?>

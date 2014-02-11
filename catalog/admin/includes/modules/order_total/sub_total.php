@@ -10,7 +10,7 @@
 class lC_OrderTotal_sub_total extends lC_Modules_order_total_Admin {
   var $_title,
       $_code = 'sub_total',
-      $_author_name = 'LoadedCommerce',
+      $_author_name = 'Loaded Commerce',
       $_author_www = 'http://www.loadedcommerce.com',
       $_status = false,
       $_sort_order;

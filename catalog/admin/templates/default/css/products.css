@@ -36,6 +36,11 @@ body.dragging, body.dragging * { cursor: move !important; }
 .products-listing-thumb { float:left; width:32px; }
 .products-listing-name-model { margin-left:40px; }
 
+#err-div {
+  display:none;
+  color:#ff0000;
+}
+
 /* custom media queries */
 @media screen and (min-width: 480px) and (max-width: 767px) {
   .dataTables_filter { float: none; text-align: left; }

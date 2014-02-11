@@ -13,7 +13,7 @@ class lC_Content_featured_products extends lC_Modules {
   */    
   public $_title,
          $_code = 'featured_products',
-         $_author_name = 'LoadedCommerce',
+         $_author_name = 'Loaded Commerce',
          $_author_www = 'http://www.loadedcommerce.com',
          $_group = 'content';
  /*   

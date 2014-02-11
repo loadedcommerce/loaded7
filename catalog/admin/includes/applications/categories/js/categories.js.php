@@ -8,7 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: categories.js.php v1.0 2013-08-08 datazen $
 */
-global $lC_Template, $lC_Language, $lC_ObjectInfo;
+global $lC_Template, $lC_Language, $cInfo;
 ?>
 <script>  
 function _refreshDataTable() {
@@ -78,14 +78,14 @@ $(document).ready(function() {
   ?>
     createUploader();
   <?php
-    if (ENABLE_EDITOR == '1') { 
-      if (USE_DEFAULT_TEMPLATE_STYLESHEET == "1") {
+    if (ENABLE_EDITOR == 1 && EDITOR_CONFIGURATION_CATEGORY != 'Off') { 
+      if (USE_DEFAULT_TEMPLATE_STYLESHEET == 1) {
         foreach ( $lC_Language->getAll() as $l ) {  
-          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php', extraPlugins: 'stylesheetparser', contentsCss: '../templates/" . $lC_Template->getCode($lC_Template->getID) . "/css/styles.css', stylesSet: [] });";
+          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { toolbar: '" . EDITOR_CONFIGURATION_CATEGORY . "', height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php', contentsCss: '../templates/" . DEFAULT_TEMPLATE . "/css/styles.css', stylesSet: [] });";
         }
       } else {
         foreach ( $lC_Language->getAll() as $l ) {  
-          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php' });";
+          echo "CKEDITOR.replace('ckEditorCategoriesDescription_" . $l['id'] . "', { toolbar: '" . EDITOR_CONFIGURATION_CATEGORY . "', height: 200, width: '99%', filebrowserUploadUrl: '../ext/jquery/ckeditor/ck_upload.php' });";
         }
       }
     } else {
@@ -318,13 +318,15 @@ function validatePermalink(pl) {
   return false;
 }
 
-<?php 
-  foreach ( $lC_Language->getAll() as $l ) { 
+<?php
+  if (!$cInfo) { 
+    foreach ( $lC_Language->getAll() as $l ) { 
 ?>
 $("#categories_name_<?php echo $l['id']; ?>").blur(function(){
   $("#categories_permalink_<?php echo $l['id']; ?>").val($("#categories_name_<?php echo $l['id']; ?>").val().toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, ''));
 });
-<?php 
+<?php
+    } 
   }
 }
 ?>           

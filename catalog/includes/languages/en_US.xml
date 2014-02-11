@@ -86,6 +86,11 @@
       <group>general</group>
     </definition>
     <definition>
+      <key>text_address_book</key>
+      <value><![CDATA[Address Book]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>text_my_updates_alerts</key>
       <value><![CDATA[My Updates & Alerts]]></value>
       <group>general</group>
@@ -501,6 +506,11 @@
       <group>account</group>
     </definition>
     <definition>
+      <key>text_change_password</key>
+      <value><![CDATA[Change Password]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>breadcrumb_my_orders</key>
       <value><![CDATA[Orders]]></value>
       <group>account</group>
@@ -584,6 +594,11 @@
       <key>login_details_title</key>
       <value><![CDATA[Login Details]]></value>
       <group>account</group>
+    </definition>     
+    <definition>
+      <key>text_login</key>
+      <value><![CDATA[Login]]></value>
+      <group>general</group>
     </definition>    
     <definition>
       <key>account_password_heading</key>
@@ -594,6 +609,11 @@
       <key>orders_heading</key>
       <value><![CDATA[My Orders]]></value>
       <group>account</group>
+    </definition>
+    <definition>
+      <key>text_my_orders</key>
+      <value><![CDATA[My Orders]]></value>
+      <group>general</group>
     </definition>
     <definition>
       <key>order_information_heading</key>
@@ -1270,6 +1290,11 @@ Note: If you did not request this action via our password forgotten page, please
       <group>general</group>
     </definition>
     <definition>
+      <key>total</key>
+      <value><![CDATA[Total]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
       <key>address_book_entries_title</key>
       <value><![CDATA[Address Book Entries]]></value>
       <group>checkout</group>
@@ -1368,6 +1393,11 @@ Note: If you did not request this action via our password forgotten page, please
       <key>products_out_of_stock_checkout_not_possible</key>
       <value><![CDATA[Products marked with %s don't exist in desired quantity in our stock.<br />Please change the quantity of the marked products.]]></value>
       <group>checkout</group>
+    </definition>
+    <definition>
+      <key>out_of_stock</key>
+      <value><![CDATA[Out of Stock]]></value>
+      <group>general</group>
     </definition>
     <definition>
       <key>products_out_of_stock_checkout_possible</key>
@@ -2829,6 +2859,41 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
       <key>breadcrumb_featured_products</key>
       <value><![CDATA[Featured Products]]></value>
       <group>general</group>
+    </definition> 
+    <definition>
+      <key>site_slogan</key>
+      <value><![CDATA[Site Slogan]]></value>
+      <group>general</group>
+    </definition> 
+    <definition>
+      <key>sales_email</key>
+      <value><![CDATA[Sales Email]]></value>
+      <group>general</group>
+    </definition> 
+    <definition>
+      <key>sales_phone</key>
+      <value><![CDATA[Sales Phone]]></value>
+      <group>general</group>
+    </definition> 
+    <definition>
+      <key>support_email</key>
+      <value><![CDATA[Support Email]]></value>
+      <group>general</group>
+    </definition> 
+    <definition>
+      <key>support_phone</key>
+      <value><![CDATA[Support Phone]]></value>
+      <group>general</group>
     </definition>      
+    <definition>
+      <key>pricing_starts_at</key>
+      <value><![CDATA[Starts At]]></value>
+      <group>general</group>
+    </definition>     
+    <definition>
+      <key>pricing_low_as</key>
+      <value><![CDATA[Low As]]></value>
+      <group>general</group>
+    </definition> 
   </definitions>  
 </language>

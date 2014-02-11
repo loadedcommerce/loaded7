@@ -223,6 +223,7 @@
       }
     ?>
   </hgroup>
+  <div id="err-div" class="bold with-padding" style="display:none;color:#ff0000;"><span></span></div>
   <div class="with-padding-no-top small-margin-top">
     <form name="product" id="product" class="dataForm" action="<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . (isset($lC_ObjectInfo) ? $lC_ObjectInfo->getInt('products_id') : '') . '&cID=' . $_GET['cID'] . '&action=save'); ?>" method="post" enctype="multipart/form-data">
       <input type="hidden" name="products_id" value="<?php echo (int)$_GET[$lC_Template->getModule()]; ?>">

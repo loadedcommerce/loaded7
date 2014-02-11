@@ -49,11 +49,18 @@
         <div id="buttons-container" style="position: relative;" class="clear-both">
           <div style="float:right;">
             <p class="button-height" align="right">
-              <a class="button<?php echo (((int)$_SESSION['admin']['access']['product_settings'] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access']['product_settings'] < 2) ? '#' : 'javascript://" onclick="newGroup(); return false;'); ?>">
+					    <a class="button" href="javascript://" onclick=" doAction('check','check'); return false;">
+                <span class="button-icon blue-gradient">
+                  <span class="icon-tick"></span>
+                </span>Check</a>&nbsp; 
+							<a class="button" href="javascript://" onclick=" doAction('resize','resize'); return false;">
+                <span class="button-icon red-gradient">
+                  <span class="icon-cycle"></span>
+                </span>Resize</a>&nbsp; 
+              <a class="button" href="javascript://" onclick="newGroup(); return false;">
                 <span class="button-icon green-gradient">
                   <span class="icon-plus"></span>
-                </span><?php echo $lC_Language->get('button_new_group'); ?>
-              </a>&nbsp;
+                </span>New Group</a>&nbsp;
             </p>
           </div>
         </div>

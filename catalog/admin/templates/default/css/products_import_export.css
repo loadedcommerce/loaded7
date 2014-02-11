@@ -1,0 +1,14 @@
+/* admin product import/export page specific css */
+
+/* custom media queries */
+@media screen and (min-width: 480px) and (max-width: 767px) {
+}
+  
+@media screen and (max-width: 479px) {
+  #products-export-form { margin: -10px; }
+  #products-import-form { margin: -10px; }
+  #categories-export-form { margin: -10px; }
+  #categories-import-form { margin: -10px; }
+  #options-export-form { margin: -10px; }
+  #options-import-form { margin: -10px; }
+}

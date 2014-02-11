@@ -37,6 +37,29 @@ class lC_Customer {
 
     return false;
   }    
+  
+  public function getBaselineDiscount($id = null) {
+    if (isset($this->_data['baseline_discount']) && is_numeric($this->_data['baseline_discount'])) {
+      return $this->_data['baseline_discount'];
+    } else if (is_numeric($id)) {
+      $Qcg = $lC_Database->query('select baseline_discount from :table_customers_groups_data where customers_group_id = :customers_group_id limit 1');
+      $Qcg->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
+      $Qcg->bindInt(':customers_group_id', $id);
+      $Qcg->execute(); 
+      
+if ($lC_Database->isError()) die($lC_Database->getError());
+           
+      if ($Qcg->numberOfRows() > 0) {
+        $discount = $Qcg->valueDecimal('baseline_discount');
+        $Qcg->freeResult();
+        
+        return $discount;
+      }
+      $Qcg->freeResult();
+    }
+
+    return false;
+  }  
 
   public function getFirstName() {
     static $first_name = null;
@@ -192,12 +215,15 @@ class lC_Customer {
         }
         
         if (is_numeric($Qcustomer->value('customers_group_id')) && ($Qcustomer->value('customers_group_id') > 0)) {
-          $Qcg = $lC_Database->query('select customers_group_name from :table_customers_groups where customers_group_id = :customers_group_id and language_id = :language_id');
+          $Qcg = $lC_Database->query('select cg.customers_group_name, cgd.baseline_discount from :table_customers_groups cg left join :table_customers_groups_data cgd on (cg.customers_group_id = cgd.customers_group_id) where cg.customers_group_id = :customers_group_id and cg.language_id = :language_id');
           $Qcg->bindTable(':table_customers_groups', TABLE_CUSTOMERS_GROUPS);
+          $Qcg->bindTable(':table_customers_groups_data', TABLE_CUSTOMERS_GROUPS_DATA);
           $Qcg->bindInt(':customers_group_id', $Qcustomer->value('customers_group_id'));
           $Qcg->bindInt(':language_id', $lC_Language->getID());
           $Qcg->execute();
 
+if ($lC_Database->isError()) die($lC_Database->getError());
+          
           if ($Qcg->numberOfRows() === 1) {
             $this->setGroupName($Qcg->value('customers_group_name'));
 

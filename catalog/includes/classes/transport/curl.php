@@ -55,30 +55,8 @@ if (!class_exists('curl')) {
       $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
       curl_close($curl);
-
-      list($headers1, $body1,$body2) = explode("\r\n\r\n", $result, 3);
-      $body = (empty($body2)) ? $body1 : $body2;
-
-      if ( ($http_code == 301) || ($http_code == 302) ) {
-        if ( !isset($parameters['redir_counter']) || ($parameters['redir_counter'] < 6) ) {
-          if ( !isset($parameters['redir_counter']) ) {
-            $parameters['redir_counter'] = 0;
-          }
-
-          $matches = array();
-          preg_match('/(Location:|URI:)(.*?)\n/i', $headers, $matches);
-
-          $redir_url = trim(array_pop($matches));
-
-          $parameters['redir_counter']++;
-
-          $redir_params = array('url' => $redir_url,
-                                'method' => $parameters['method'],
-                                'redir_counter', $parameters['redir_counter']);
-
-          $body = transport::getResponse($redir_params, 'curl');
-        }
-      }
+      
+      list($headers, $body) = explode("\r\n\r\n", $result, 2);
 
       return $body;
     }

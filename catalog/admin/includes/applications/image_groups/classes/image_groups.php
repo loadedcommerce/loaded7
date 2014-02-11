@@ -8,6 +8,8 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: image_groups.php v1.0 2013-08-08 datazen $
 */
+  require($lC_Vqmod->modCheck('includes/applications/images/classes/images.php'));
+
 class lC_Image_groups_Admin {
  /*
   * Returns the image groups datatable data for listings

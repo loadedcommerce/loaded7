@@ -34,6 +34,11 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` ADD `products_msrp` DECIMAL( 15, 4 ) NOT NULL DEFAULT '0' AFTER `products_price`");    
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products` ADD `products_sku` VARCHAR( 255 ) NOT NULL AFTER `products_model`");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products` ADD `products_sku` VARCHAR( 255 ) NOT NULL AFTER `products_model`");  
+        
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_simple_options_values` ADD `products_id` INT( 11 ) NOT NULL AFTER `id`");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_simple_options_values` ADD `products_id` INT( 11 ) NOT NULL AFTER `id`");  
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "products_simple_options_values` ADD `sort_order` INT( 11 ) NOT NULL DEFAULT '0' AFTER `price_modifier`");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "products_simple_options_values` ADD `sort_order` INT( 11 ) NOT NULL DEFAULT '0' AFTER `price_modifier`");
     
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "orders_products` ADD `products_simple_options_meta_data` VARCHAR( 1024 ) NOT NULL AFTER `products_quantity`");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "orders_products` ADD `products_simple_options_meta_data` VARCHAR( 1024 ) NOT NULL AFTER `products_quantity`");  
@@ -174,6 +179,33 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     $lC_Database->simpleQuery("CREATE TABLE IF NOT EXISTS `" . $pf . "featured_products` (id int(11) NOT NULL AUTO_INCREMENT, products_id int(11) NOT NULL DEFAULT '0', date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00', last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00', expires_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00', `status` int(1) DEFAULT '1', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");
     parent::log("Database Update: CREATE TABLE IF NOT EXISTS `" . $pf . "featured_products` (id int(11) NOT NULL AUTO_INCREMENT, products_id int(11) NOT NULL DEFAULT '0', date_added datetime NOT NULL DEFAULT '0000-00-00 00:00:00', last_modified datetime NOT NULL DEFAULT '0000-00-00 00:00:00', expires_date datetime NOT NULL DEFAULT '0000-00-00 00:00:00', `status` int(1) DEFAULT '1', PRIMARY KEY (id)) ENGINE=" . $engine . " CHARACTER SET utf8 COLLATE utf8_general_ci");
 
-  } 
+    $lC_Database->simpleQuery("UPDATE `" . $pf . "configuration` SET `configuration_key` = 'AUTODISABLE_OUT_OF_STOCK_PRODUCT',`configuration_title` = 'Autodisable out of stock product',`configuration_description` = 'Set product as IN-ACTIVE if there is insufficient stock that is 0 or below' WHERE `configuration_id` = 61");
+    parent::log("Database Update: UPDATE `" . $pf . "configuration` SET `configuration_key` = 'AUTODISABLE_OUT_OF_STOCK_PRODUCT',`configuration_title` = 'Autodisable out of stock product',`configuration_description` = 'Set product as IN-ACTIVE if there is insufficient stock that is 0 or below' WHERE `configuration_id` = 61");
+    
+    if (!defined('DISABLE_ADD_TO_CART')) {
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Disable Add to Cart for out of stock products', 'DISABLE_ADD_TO_CART', '1', 'Disabled the add to cart button on the product page displays text that product is out of stock', 9, 3, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Disable Add to Cart for out of stock products', 'DISABLE_ADD_TO_CART', '1', 'Disabled the add to cart button on the product page displays text that product is out of stock', 9, 3, NULL, '2009-11-26 15:58:32', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))');");
+    }
+    if (!defined('EDITOR_CONFIGURATION_PRODUCT')) {
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Product Description Editor Configuration', 'EDITOR_CONFIGURATION_PRODUCT', 'Minimum', 'Set Product description editor configuration.', 20, 3, NULL, now(), NULL, 'lc_cfg_set_boolean_value(array(''Off'',''Minimum'', ''Standard'',''Full''))');");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Product Description Editor Configuration', 'EDITOR_CONFIGURATION_PRODUCT', 'Minimum', 'Set Product description editor configuration.', 20, 3, NULL, now(), NULL, 'lc_cfg_set_boolean_value(array(''Off'',''Minimum'', ''Standard'',''Full''))');");
+    }
+    if (!defined('EDITOR_CONFIGURATION_CATEGORY')) {
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Category Description Editor Configuration', 'EDITOR_CONFIGURATION_CATEGORY', 'Full', 'Set Category description editor configuration.', 20, 4, NULL, now(), NULL, 'lc_cfg_set_boolean_value(array(''Off'',''Minimum'', ''Standard'',''Full''))');");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Category Description Editor Configuration', 'EDITOR_CONFIGURATION_CATEGORY', 'Full', 'Set Category description editor configuration.', 20, 4, NULL, now(), NULL, 'lc_cfg_set_boolean_value(array(''Off'',''Minimum'', ''Standard'',''Full''))');");
+    }
+    if (!defined('EDITOR_CONFIGURATION_HOMEPAGE')) {
+      $lC_Database->simpleQuery("INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Home Page Editor Configuration', 'EDITOR_CONFIGURATION_HOMEPAGE', 'Full', 'Set Home Page editor configuration.', 20, 5, NULL, now(), NULL, 'lc_cfg_set_boolean_value(array(''Off'',''Minimum'', ''Standard'',''Full''))');");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Home Page Editor Configuration', 'EDITOR_CONFIGURATION_HOMEPAGE', 'Full', 'Set Home Page editor configuration.', 20, 5, NULL, now(), NULL, 'lc_cfg_set_boolean_value(array(''Off'',''Minimum'', ''Standard'',''Full''))');");
+    }
+    if (!defined('EDITOR_UPLOADCARE_PUBLIC_KEY')) {
+      $lC_Database->simpleQuery("INSERT IGNORE INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Uploadcare Public Key', 'EDITOR_UPLOADCARE_PUBLIC_KEY', '', 'Add your Uploadcare public key. <a href=\"https://uploadcare.com/accounts/settings/\" target=\"_blank\">Get your Uploadcare Public Key</a>', 20, 6, NULL, now(), NULL, NULL);");
+      parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Uploadcare Public Key', 'EDITOR_UPLOADCARE_PUBLIC_KEY', '', 'Add your Uploadcare public key. <a href=\"https://uploadcare.com/accounts/settings/\" target=\"_blank\">Get your Uploadcare Public Key</a>', 20, 6, NULL, now(), NULL, NULL);");
+    }
+          
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` TEXT NOT NULL AFTER `language_id`;");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` TEXT NOT NULL AFTER `language_id`;");    
+      
+  }
 }  
 ?>

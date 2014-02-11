@@ -401,7 +401,9 @@ class lC_Updates_Admin {
         if ( file_exists(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') && is_writable(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt') ) {
           unlink(DIR_FS_WORK . 'logs/update-' . self::$_to_version . '.txt');
         } 
-        $pharCode = 'update';  
+        $pharCode = 'update';
+        if (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && is_dir(DIR_FS_CATALOG . 'addons/Loaded_7_Pro')) self::rmdir_r(DIR_FS_CATALOG . 'addons/Loaded_7_Pro');   
+        if (defined('ADDONS_SYSTEM_LOADED_7_B2B_STATUS') && is_dir(DIR_FS_CATALOG . 'addons/Loaded_7_B2B')) self::rmdir_r(DIR_FS_CATALOG . 'addons/Loaded_7_B2B');          
         self::log('##### UPDATE TO ' . self::$_to_version . ' STARTED', $pharCode);
       } else {
         $pharFile = end(explode('/', $pharWithPath));

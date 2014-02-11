@@ -10,7 +10,7 @@
 class lC_Boxes_manufacturers extends lC_Modules {
   var $_title,
       $_code = 'manufacturers',
-      $_author_name = 'LoadedCommerce',
+      $_author_name = 'Loaded Commerce',
       $_author_www = 'http://www.loadedcommerce.com',
       $_group = 'boxes';
 
@@ -29,15 +29,23 @@ class lC_Boxes_manufacturers extends lC_Modules {
     $Qmanufacturers->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
     $Qmanufacturers->setCache('manufacturers');
     $Qmanufacturers->execute();
-
+    
+    $manufacturers = '';
     $manufacturers_array = array(array('id' => '', 'text' => $lC_Language->get('pull_down_default')));
 
     while ($Qmanufacturers->next()) {
       $manufacturers_array[] = $Qmanufacturers->toArray();
     }
-    $Qmanufacturers->freeResult();
-
-    $this->_content = '<li class="box-manufacturers-selection">' . lc_draw_pull_down_menu('manufacturers', $manufacturers_array, null, 'id="box-manufacturers-select" class="box-manufacturers-select" onchange="$(this).closest(\'form\').submit();" size="' . BOX_MANUFACTURERS_LIST_SIZE . '"') . lc_draw_hidden_session_id_field() . '</li>' . "\n";
+    $Qmanufacturers->freeResult();    
+    
+    foreach ($manufacturers_array as $man) {
+      $manufacturers .= '<option value="' . $man['id'] . '">' . $man['text'] . '</option>';
+    }
+    $this->_content = '<li class="box-manufacturers-selection">' . 
+                      '  <select name="manufacturers" class="box-manufacturers-select" onchange="$(this).closest(\'form\').submit();" size="' . BOX_MANUFACTURERS_LIST_SIZE . '">' . 
+                           $manufacturers . 
+                      '  </select>' . lc_draw_hidden_session_id_field() . "\n";
+                      '</li>' . "\n";
   }
 
   public function install() {

@@ -65,7 +65,6 @@ $(document).ready(function() {
     $('.content-featured-products-listing-buy-now-button').text(textArr[0]);  
     $('.content-featured-products-listing-container p.lead').attr('style', 'font-size:1.1em;');
   }
-  $('.thumbnail').equalHeights();
 });
 </script>
 <!--content/index/product_listing.php end-->

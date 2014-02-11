@@ -335,7 +335,7 @@ class lC_ShoppingCart {
       if ( $this->exists($product_id) ) {
         $item_id = $this->getBasketID($product_id);
 
-        if ( !is_numeric($quantity) ) {
+        if ( is_numeric($quantity) ) {
           $quantity = $this->getQuantity($item_id) + 1;
         }
 
@@ -353,12 +353,32 @@ class lC_ShoppingCart {
         if ( !is_numeric($quantity) ) {
           $quantity = 1;
         } 
-
-          $Qdescription = $lC_Database->query('select products_name, products_keyword, products_description from :table_products_description where products_id = :products_id and language_id = :language_id');
-          $Qdescription->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-          $Qdescription->bindInt(':products_id', ($Qproduct->valueInt('parent_id') > 0 && $Qproduct->valueInt('is_subproduct') != 1) ? $Qproduct->valueInt('parent_id') : $product_id);
-          $Qdescription->bindInt(':language_id', $lC_Language->getID());
-          $Qdescription->execute();
+        
+        $Qdescription = $lC_Database->query('select products_name, products_keyword, products_description, products_tags, products_url from :table_products_description where products_id = :products_id and language_id = :language_id');
+        $Qdescription->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+        $Qdescription->bindInt(':products_id', $product_id);
+        $Qdescription->bindInt(':language_id', $lC_Language->getID());
+        $Qdescription->execute();   
+        
+        $desc = $Qdescription->toArray();
+        
+        if ($Qproduct->valueInt('is_subproduct') > 0) {
+          $Qmaster = $lC_Database->query('select products_name as parent_name, products_description as description, products_keyword as keyword, products_tags as tags, products_url as url from :table_products_description where products_id = :products_id and language_id = :language_id limit 1');
+          $Qmaster->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+          $Qmaster->bindInt(':products_id', $Qproduct->valueInt('parent_id'));
+          $Qmaster->bindInt(':language_id', $lC_Language->getID());
+          $Qmaster->execute();              
+          
+          $parent_name = $Qmaster->value('parent_name');
+          
+          if (empty($parent_name) === false) {
+            $desc['products_name'] = $parent_name . ' - ' . $desc['products_name'];
+          }            
+          $desc['products_description'] = $Qmaster->value('description');
+          $desc['products_keyword'] = $Qmaster->value('keyword');
+          $desc['products_tags'] = $Qmaster->value('tags');
+          $desc['products_url'] = $Qmaster->value('url');
+        }
 
         // load price break array
         $price_breaks = array();
@@ -413,10 +433,12 @@ class lC_ShoppingCart {
         $this->_contents[$item_id] = array('item_id' => $item_id,
                                            'id' => $product_id,
                                            'parent_id' => $Qproduct->valueInt('parent_id'),
-                                           'name' => $Qdescription->value('products_name'),
+                                           'name' => $desc['products_name'],
                                            'model' => $Qproduct->value('products_model'),
-                                           'keyword' => $Qdescription->value('products_keyword'),
-                                           'description' => $Qdescription->value('products_description'),
+                                           'keyword' => $desc['products_keyword'],
+                                           'tags' => $desc['products_tags'],
+                                           'url' => $desc['products_url'],
+                                           'description' => $desc['products_description'],
                                            'image' => $image,
                                            'price' => $price,
                                            'quantity' => $quantity,
@@ -546,6 +568,15 @@ class lC_ShoppingCart {
           foreach ( $product['variants'] as $variant ) {
             if ( $variant['has_custom_value'] === true ) {
               return false;
+            }
+          }
+        } else if ( isset($product['simple_options']) ) { 
+          foreach ( $product['simple_options'] as $simple_options ) {              
+            $group_id = $simple_options['group_id'];
+            if(array_key_exists ( $group_id , $_POST['simple_options'] )) {
+              if($simple_options['value_id'] != $_POST['simple_options'][$group_id]) {
+                return false;
+              }
             }
           }
         }

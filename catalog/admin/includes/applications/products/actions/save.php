@@ -78,7 +78,11 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
         if (isset($_POST['sub_products_id']) && $_POST['sub_products_id'] != NULL) $data['sub_products_id'] = $_POST['sub_products_id'];
         if (isset($_POST['sub_products_cost']) && $_POST['sub_products_cost'] != NULL) $data['sub_products_cost'] = $_POST['sub_products_cost'];
         if (isset($_POST['sub_products_price']) && $_POST['sub_products_price'] != NULL) $data['sub_products_price'] = $_POST['sub_products_price'];
-      }                                         
+      }      
+      
+      // qpb
+      if (isset($_POST['products_qty_break_point']) && $_POST['products_qty_break_point'] != NULL) $data['products_qty_break_point'] = $_POST['products_qty_break_point'];
+      if (isset($_POST['products_qty_break_price']) && $_POST['products_qty_break_price'] != NULL) $data['products_qty_break_price'] = $_POST['products_qty_break_price'];
       
       // multi SKU combo
       if ($has_variants === true) {
@@ -140,15 +144,13 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       }
 
       if ( $error === false ) {
+        // the line below is used as a hook match point - do not not modify or remove
         $id = lC_Products_Admin::save((isset($_GET[$this->_module]) && is_numeric($_GET[$this->_module]) ? $_GET[$this->_module] : null), $data);
+        
         if ( is_numeric($id) ) {
-
           if(empty($_POST['save_close'])){
-
             lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '='.$id.'&action=save&cID=' . $_GET['cID']));
-            
-          }else{
-
+          } else {
             lc_redirect_admin(lc_href_link_admin(FILENAME_DEFAULT, $this->_module . '&cID=' . $_GET['cID']));
           }
         } else {

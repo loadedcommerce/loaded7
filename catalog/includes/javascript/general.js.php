@@ -7,14 +7,14 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: general.js.php v1.0 2013-08-08 datazen $
 */
-global $lC_Template, $lC_Language; 
+global $lC_Template, $lC_Language, $lC_Vqmod, $lC_Session; 
 ?>
 <script>
 $(document).ready(function() {
   
   function setMaintenanceMode(s) {
     if (s == 'on') {
-      $("#loaded7").mask('<span style="font-size:2em !important;"><?php echo $lC_Language->get('update_message_text1'); ?></span>');
+      $("#loaded7").mask('<span style="font-size:2em !important;"><?php echo $lC_Language->get('text_site_maintenance_message'); ?></span>');
       $('.loadmask-msg').css({'top':'200px'});
     } else {
       $("body").unmask();
@@ -40,6 +40,28 @@ $(document).ready(function() {
    
   // run this last - determine media type
   setTimeout('_setMediaType()', 1000);
+  
+  // hide buy now and qty for out of stock products
+  <?php
+    if (defined('DISABLE_ADD_TO_CART') && DISABLE_ADD_TO_CART == 1 && ($lC_Template->getModule() == 'products' || $lC_Template->getModule() == 'reviews') ) {
+      foreach ($_GET as $key => $value) {
+        $keys = end(explode("/", $key));
+        if ( (preg_match('/^[0-9]+(#?([0-9]+:?[0-9]+)+(;?([0-9]+:?[0-9]+)+)*)*$/', $key) || preg_match('/^[a-zA-Z0-9 -_]*$/', $key)) && ($key != $lC_Session->getName()) && ($key != 'cPath') ) {
+          $id = $key;
+        }
+      }
+      if (file_exists('templates/' . $lC_Template->getCode() . '/classes/output.php')) {
+        include_once($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/classes/output.php'));
+        if (lC_Template_output::getProductsStock($id) < 1) {
+  ?>
+    $(":contains('<?php echo $lC_Language->get('button_buy_now'); ?>')").closest('button').removeClass("btn-success").addClass("btn-default").addClass("disabled").html('<?php echo $lC_Language->get('out_of_stock'); ?>');
+    $("input[name='quantity']").hide().parent().hide();
+  <?php
+        }
+      }
+    }
+  ?>
+  $(":contains('<?php echo $lC_Language->get('out_of_stock'); ?>')").closest('button').removeClass("btn-success").addClass("btn-default");
 
 });
 
@@ -158,22 +180,6 @@ function removeCoupon(code) {
     }
   );  
 }
-
-// make product listing boxes equal heights
-(function($) {
-  $.fn.equalHeights = function(minHeight, maxHeight) {
-    tallest = (minHeight) ? minHeight : 0;
-    this.each(function() {
-      if($(this).height() > tallest) {
-        tallest = $(this).height();
-      }
-    });
-    if((maxHeight) && tallest > maxHeight) tallest = maxHeight;
-    return this.each(function() {
-      $(this).height(tallest).css("overflow","hidden");
-    });
-  }
-})(jQuery);
 
 ;function print_r (array, return_val) {
     // http://kevin.vanzonneveld.net

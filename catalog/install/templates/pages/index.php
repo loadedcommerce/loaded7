@@ -7,6 +7,25 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: index.php v1.0 2013-08-08 datazen $
 */
+function cURLTest(){  
+  $testText = 'data';
+  $ch = curl_init(); 
+  curl_setopt($ch, CURLOPT_URL, 'https://api.loadedcommerce.com/1_0/check/serial/'); 
+  curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"); 
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+  curl_setopt($ch, CURLOPT_TIMEOUT, 10); 
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+  $response = curl_exec($ch); 
+  $errmsg = curl_error($ch); 
+  $cInfo = curl_getinfo($ch); 
+  curl_close($ch); 
+  if (strlen($response) > 0) { 
+    return true;
+  } else { 
+    return false;
+  }
+}
+
 $vInfo = explode('|', array_shift(array_values(preg_split('/\r\n|\r|\n/', file_get_contents('../includes/version.txt'), 2))));
 $version = $vInfo[0];
 $ok = TRUE;
@@ -179,8 +198,16 @@ TD { height:19px; }
               </tr>
               <tr>
                 <td><?php echo $lC_Language->get('box_server_curl'); ?></td>
-                <?php if (!extension_loaded('curl')) $ok = FALSE; ?>
-                <td align="right"><img src="templates/img/icons/<?php echo (extension_loaded('curl') ? 'tick.gif' : 'cross.gif'); ?>" border="0" width="16" height="16"></td>
+                <?php 
+                $okCurl = true;
+                if (!extension_loaded('curl')) {
+                  $okCurl = false;
+                } else {
+                  $okCurl = cURLTest();
+                }
+                if (!$okCurl) $ok = false;
+                ?>                
+                <td align="right"><img src="templates/img/icons/<?php echo (($okCurl) ? 'tick.gif' : 'cross.gif'); ?>" border="0" width="16" height="16"></td>
               </tr>
               <tr>
                 <td><?php echo $lC_Language->get('box_server_openssl'); ?></td>
@@ -204,7 +231,19 @@ TD { height:19px; }
                 <td><p class="mid-margin-left mid-margin-right mid-margin-bottom"><?php echo $lC_Language->get('page_text_ioncube'); ?></p></td>
               </tr>
               <tr>
-                <td><p class="mid-margin-left"><?php if (function_exists('ioncube_test')) { echo ioncube_test(); } ?></p></td>
+                <td>
+                  <p class="mid-margin-left">
+                  <?php 
+                    if (function_exists('ioncube_test')) {
+                      $ioncube = ioncube_test(); 
+                      echo $ioncube['txt'];
+                      if ($ioncube['ok'] != 1) {
+                        $ok = FALSE;
+                      }                       
+                    } 
+                  ?>
+                  </p>
+                </td>
               </tr>
             </table>
           </div>

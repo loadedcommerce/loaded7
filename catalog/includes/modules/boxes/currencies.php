@@ -10,7 +10,7 @@
 class lC_Boxes_currencies extends lC_Modules {
   var $_title,
       $_code = 'currencies',
-      $_author_name = 'LoadedCommerce',
+      $_author_name = 'Loaded Commerce',
       $_author_www = 'http://www.loadedcommerce.com',
       $_group = 'boxes';
 

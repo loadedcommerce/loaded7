@@ -15,6 +15,7 @@ page_text_ioncube = ionCube Loader is a required component for the functionality
 
 ioncube_no_additional_config = No additional configuration required.
 ioncube_installed_version = Installed:
+ioncube_update_needed = Ioncube loader is installed but needs to be updated. Loaded 7 paid addons will only work with ioncube loader version 4.4.1 or later. The most recent version of the loader can be found <a href="http://www.ioncube.com/loaders.php" target="_blank"><b>here</b></a>.
 ioncube_not_installed_instructions = <br />&nbsp; - Please contact your web host and ask them to install ionCube loader on your server.<br />&nbsp; - Loaders can be downloaded from <a href="http://www.ioncube.com/loaders.php" target="_blank"><b>www.ioncube.com</b></a>.<br />&nbsp; - Installation Instructions can be found <a href="http://www.ioncube.com/loader_installation.php" target="_blank"><b>here</b></a>.<br />&nbsp; - For additional questions please contact <a href="http://www.loadedcommerce.com/support-memberships-pc-175_198.html" target="_blank"><b>Loaded Commerce Support</b></a>
 
 
@@ -42,7 +43,7 @@ upload_max_filesize_text = 10M
 box_server_php_extensions = PHP Extensions
 box_server_mysqli = MySQLi
 box_server_gd = GD
-box_server_curl = cURL
+box_server_curl = curlSSL
 box_server_openssl = OpenSSL
 box_server_phar = Phar
 box_server_on = On

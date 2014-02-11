@@ -87,7 +87,7 @@ class lC_Language {
   public function get($key) {
     
     if (isset($this->_definitions[$key])) {
-      return $this->_definitions[$key];
+      return ($this->_languages[$this->_code]['charset'] == 'utf-8') ? utf8_encode($this->_definitions[$key]) : $this->_definitions[$key];
     }
 
     return $key;
@@ -202,7 +202,7 @@ class lC_Language {
   }
 
   public function getName() {
-    return $this->_languages[$this->_code]['name'];
+    return ($this->_languages[$this->_code]['charset'] == 'utf-8') ? utf8_encode($this->_languages[$this->_code]['name']) : $this->_languages[$this->_code]['name'];
   }
 
   public function getCode() {

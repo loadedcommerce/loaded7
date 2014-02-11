@@ -53,6 +53,40 @@ image_retrieving_local_files = Retrieving local images..
 image_multiple_upload_progress = Uploading images to server..
 image_loading_from_server = Loading images from server..
 
+info_bubble_content_image = Default Product Image
+info_bubble_content_name =  Product Name (required)
+info_bubble_content_description =  Product Descripton (required)
+info_bubble_content_keyword = Product Unique Keyword (required)
+info_bubble_content_tags = Product Tags Cloud (optional)
+info_bubble_content_base_price = Product Base Price
+info_bubble_content_status = Product Status
+info_bubble_content_model = Product Model Number
+info_bubble_content_weight = Product Weight
+
+info_bubble_inventory_control = Simple product with no variants or Multi-SKU product with variants.
+
+info_bubble_pricing_base_price = Product Base Price
+info_bubble_pricing_group_pricing = Separate Pricing Per Customer Group
+info_bubble_pricing_qty_price_breaks = Quantity Price Breaks
+info_bubble_pricing_specials = Product Specials Pricing
+
+info_bubble_data_model = Product Model Number
+info_bubble_data_msrp = Manufacturer Suggested Retail Price
+info_bubble_data_track_inventory_override = Track Inventory Overrides
+info_bubble_data_vendor = Product Vendor/Supplier 
+info_bubble_data_tax_class = Product Tax Class
+info_bubble_data_price_with_tax = Product Price including Tax (calculated)
+info_bubble_data_product_class = The Product Classification
+
+info_bubble_shipping_weight = Product Weight
+info_bubble_shipping_weight_class = Product Weight Class 
+info_bubble_shipping_non_shippable = Select for products that do not require shipping
+info_bubble_shipping_dimensions = Product Dimensions 
+info_bubble_shipping_handling_fee = Shipping Handling Fee
+info_bubble_shipping_fee_override = Shipping Fee Override
+info_bubble_shipping_warehouse = Product Warehouse 
+info_bubble_shipping_date_expected = Producr Expected Date
+
 introduction_select_local_images = The following images are available on the server where additional images can be uploaded via FTP. The listing can be refreshed by clicking on the Local Files link.<br /><br />Please select from the following listing which images to assign to this product.
 introduction_delete_image = Please verify the removal of the product image.
 introduction_copy_product = Please select a category this product should be copied to.
@@ -82,7 +116,11 @@ ms_error_product_keyword_invalid = Error: This product keyword is invalid. Produ
 ms_error_check_all_lang_tabs = Check all language tabs for errors!
 ms_error_no_variant_groups = You must setup at least one variant group before using simple options.
 ms_error_no_variant_entries = You must setup at least one entry before using this variant group.
+ms_error_products_description_required = Products description is required.
+ms_error_products_categories_required = Please select at least one category relationship.
 ms_warning_image_processor_not_available = Warning: An image processor is not available. Please install and check the location of ImageMagicks "convert" program in the Configuration -> Configuration -> Program Locations section.
+ms_error_break_point_must_be_higher = The break point must be higher than the previous break point.
+ms_error_break_price_must_be_lower = The price must be lower than the previous price.
 
 section_general = Content
 section_pricing = Pricing 
@@ -94,6 +132,10 @@ section_categories = Categories
 section_options = Options
 section_shipping = Shipping
 section_relationships = Relationships
+
+slider_switch_disabled = DISABLED
+slider_switch_enabled = ENABLED
+slider_switch_preview = PREVIEW
 
 subsection_price = Price
 subsection_pricing_modifiers = Pricing Modifiers
@@ -203,10 +245,7 @@ text_sku = SKU Number
 text_special_price = Special Price
 text_special_pricing = Special Pricing
 text_status_disabled = Disabled
-slider_switch_disabled = DISABLED
 text_status_enabled = Enabled
-slider_switch_enabled = ENABLED
-slider_switch_preview = PREVIEW
 text_stock_date_expected = Date Expected for Stock
 text_sub_products = Sub Products
 text_sub_products_edit = Full Edit
@@ -244,37 +283,6 @@ text_additional_images_upsell_desc = Additional Images Lorem ipsum dolor sit ame
 text_no_options_defined = No Options Defined
 text_view_in_catalog = View in catalog
 
-info_bubble_content_image = Default Product Image
-info_bubble_content_name =  Product Name (required)
-info_bubble_content_description =  Product Descripton (required)
-info_bubble_content_keyword = Product Unique Keyword (required)
-info_bubble_content_tags = Product Tags Cloud (optional)
-info_bubble_content_base_price = Product Base Price
-info_bubble_content_status = Product Status
-info_bubble_content_model = Product Model Number
-info_bubble_content_weight = Product Weight
-
-info_bubble_inventory_control = Simple product with no variants or Multi-SKU product with variants.
-
-info_bubble_pricing_base_price = Product Base Price
-info_bubble_pricing_group_pricing = Separate Pricing Per Customer Group
-info_bubble_pricing_qty_price_breaks = Quantity Price Breaks
-info_bubble_pricing_specials = Product Specials Pricing
-
-info_bubble_data_model = Product Model Number
-info_bubble_data_msrp = Manufacturer Suggested Retail Price
-info_bubble_data_track_inventory_override = Track Inventory Overrides
-info_bubble_data_vendor = Product Vendor/Supplier 
-info_bubble_data_tax_class = Product Tax Class
-info_bubble_data_price_with_tax = Product Price including Tax (calculated)
-info_bubble_data_product_class = The Product Classification
-
-
-info_bubble_shipping_weight = Product Weight
-info_bubble_shipping_weight_class = Product Weight Class 
-info_bubble_shipping_non_shippable = Select for products that do not require shipping
-info_bubble_shipping_dimensions = Product Dimensions 
-info_bubble_shipping_handling_fee = Shipping Handling Fee
-info_bubble_shipping_fee_override = Shipping Fee Override
-info_bubble_shipping_warehouse = Product Warehouse 
-info_bubble_shipping_date_expected = Producr Expected Date
+validation_error_single = You have an error on the page. Check all tabs and proceed.
+validation_error_multiple_start = You have
+validation_error_multiple_end = errors on the page. Check all tabs and proceed. 

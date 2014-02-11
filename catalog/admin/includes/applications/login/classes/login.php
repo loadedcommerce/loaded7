@@ -296,6 +296,9 @@ class lC_Login_Admin {
     $check = (defined('INSTALLATION_ID') && INSTALLATION_ID != '') ? INSTALLATION_ID : NULL;
     if ($check == NULL) return TRUE;
     
+    if (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && !file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/controller.php')) return TRUE;
+    if (defined('ADDONS_SYSTEM_LOADED_7_B2B_STATUS') && !file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_B2B/controller.php')) return TRUE;
+    
     $Qcheck = $lC_Database->query('select * from :table_configuration where configuration_key = :configuration_key limit 1');
     $Qcheck->bindTable(':table_configuration', TABLE_CONFIGURATION);
     $Qcheck->bindValue(':configuration_key', 'INSTALLATION_ID');

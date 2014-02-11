@@ -12,7 +12,7 @@ class lC_GeoIP_maxmind_geolite_country extends lC_GeoIP_Admin {
   var $_title;
   var $_description;
   var $_code = 'maxmind_geolite_country';
-  var $_author_name = 'LoadedCommerce';
+  var $_author_name = 'Loaded Commerce';
   var $_author_www = 'http://www.loadedcommerce.com';
   var $_handler;
 

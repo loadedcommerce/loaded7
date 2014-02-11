@@ -10,8 +10,10 @@
 class lC_Services {
   var $services,
       $started_services,
+      $call_after_header_content = array(),
       $call_before_page_content = array(),
-      $call_after_page_content = array();
+      $call_after_page_content = array(),
+      $call_before_footer_content = array();
 
   public function lC_Services() {
     $this->services = explode(';', MODULE_SERVICES_INSTALLED);
@@ -61,12 +63,24 @@ class lC_Services {
     return in_array($service, $this->started_services);
   }
 
+  public function addCallAfterHeaderContent($object, $method) {
+    $this->call_after_header_content[] = array($object, $method);
+  }
+
   public function addCallBeforePageContent($object, $method) {
     $this->call_before_page_content[] = array($object, $method);
   }
 
   public function addCallAfterPageContent($object, $method) {
     $this->call_after_page_content[] = array($object, $method);
+  }
+
+  public function addCallBeforeFooterContent($object, $method) {
+    $this->call_before_footer_content[] = array($object, $method);
+  }
+
+  public function hasAfterHeaderContentCalls() {
+    return !empty($this->call_after_header_content);
   }
 
   public function hasBeforePageContentCalls() {
@@ -77,12 +91,24 @@ class lC_Services {
     return !empty($this->call_after_page_content);
   }
 
+  public function hasBeforeFooterContentCalls() {
+    return !empty($this->call_before_footer_content);
+  }
+
+  public function getCallAfterHeaderContent() {
+    return $this->call_after_header_content;
+  }
+
   public function getCallBeforePageContent() {
     return $this->call_before_page_content;
   }
 
   public function getCallAfterPageContent() {
     return $this->call_after_page_content;
+  }
+
+  public function getCallBeforeFooterContent() {
+    return $this->call_before_footer_content;
   }
 }
 ?>
