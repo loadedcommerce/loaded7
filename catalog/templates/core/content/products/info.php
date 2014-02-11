@@ -136,8 +136,7 @@
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>    
     <div id="qpb-message"></div>
-    <div class="row display-inline">
-      <div class="col-sm-4 col-lg-4"></div>
+    <div class="display-inline">
       <div class="col-sm-4 col-lg-4 align-right mid-margin-top">
         <div class="form-group">
           <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
@@ -182,6 +181,7 @@ function setQty(mode) {
   var group = '<?php echo DEFAULT_CUSTOMERS_GROUP_ID; ?>';
   var id = '<?php echo $lC_Product->getID(); ?>';
   var module = '<?php echo $lC_Template->getModule(); ?>';
+  var isPro = '<?php echo (utility::isPro() == true) ? 1 : 0 ?>';
   var nvp = $('#cart_quantity').serialize();
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'products&action=getPriceInfo&id=PID&group=GROUP&NVP', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('PID', id).replace('GROUP', group).replace('NVP', nvp).split('amp;').join(''),
@@ -197,8 +197,8 @@ function setQty(mode) {
       } else {
         $('.content-products-info-price').html(basePrice);
       }
-      if (data.qpbData != undefined) {
-        $('#qpb-message').html('<div class="row"><div class="col-sm-4 col-lg-4"></div><div class="col-sm-8 col-lg-8" style="padding:0 30px 0 20px;"><div class="alert alert-warning large-margin-bottom-neg"><span class="text-left"><i class="fa fa-caret-right"></i> Buy ' + data.qpbData.nextBreak + ' for <b>' + currencySymbolLeft + data.qpbData.nextPrice + '</b> each and <b><i>save ' + data.qpbData.youSave + '</span></i></b></span></div></div></div>');
+      if (data.qpbData != undefined && isPro == 1) {
+        $('#qpb-message').html('<div class=""><div class="col-sm-4 col-lg-4"></div><div class="col-sm-8 col-lg-8" style="padding:0 15px;"><div class="alert alert-warning small-margin-bottom"><span class="text-left"><i class="fa fa-caret-right"></i> Buy ' + data.qpbData.nextBreak + ' for <b>' + currencySymbolLeft + data.qpbData.nextPrice + '</b> each and <b><i>save ' + data.qpbData.youSave + '</span></i></b></span></div></div></div>');
       }
     }
   );  
