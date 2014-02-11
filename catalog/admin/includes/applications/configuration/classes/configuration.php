@@ -26,7 +26,11 @@ class lC_Configuration_Admin {
     $result = array('entries' => array());
     $result = array('aaData' => array());
     while ( $Qcfg->next() ) {
-      $title = $Qcfg->valueProtected('configuration_title');
+      if ($Qcfg->valueProtected('configuration_title') == 'Zip Code' && STORE_COUNTRY != 223) {
+        $title = 'Postal Code';
+      } else {
+        $title = $Qcfg->valueProtected('configuration_title');
+      }
       $value = $Qcfg->valueProtected('configuration_value');
       $configuration_group_id = $Qcfg->valueProtected('configuration_group_id');
 
