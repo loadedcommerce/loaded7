@@ -54,9 +54,9 @@ $template = 'main_page';
   
 
   <!-- For Modern Browsers -->
-  <link rel="shortcut icon" href="img/favicons/favicon.png">
+  <link rel="shortcut icon" href="templates/img/favicon.png">
   <!-- For everything else -->
-  <link rel="shortcut icon" href="img/favicons/favicon.ico">
+  <link rel="shortcut icon" href="templates/img/favicon.ico">
   <!-- For retina screens -->
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/favicons/apple-touch-icon-retina.png">
   <!-- For iPad 1-->
