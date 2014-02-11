@@ -203,8 +203,8 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
       parent::log("Database Update: INSERT INTO `" . $pf . "configuration` (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) VALUES('Uploadcare Public Key', 'EDITOR_UPLOADCARE_PUBLIC_KEY', '', 'Add your Uploadcare public key. <a href=\"https://uploadcare.com/accounts/settings/\" target=\"_blank\">Get your Uploadcare Public Key</a>', 20, 6, NULL, now(), NULL, NULL);");
     }
           
-    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` TEXT NOT NULL AFTER `language_id`;");
-    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` TEXT NOT NULL AFTER `language_id`;");    
+    $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` VARCHAR(20000) NOT NULL DEFAULT '' AFTER `language_id`;");
+    parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` VARCHAR(20000) NOT NULL DEFAULT '' AFTER `language_id`;");    
       
   }
 }  
