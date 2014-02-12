@@ -15,6 +15,7 @@
 */
 include_once('includes/applications/products/classes/products.php');
 include_once('includes/applications/categories/classes/categories.php');
+include_once('includes/classes/category_tree.php');
 
 class lC_Products_import_export_Admin {
  /*
