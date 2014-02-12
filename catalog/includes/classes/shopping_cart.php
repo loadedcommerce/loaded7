@@ -443,7 +443,7 @@ class lC_ShoppingCart {
             $Qvariants->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
             $Qvariants->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
             $Qvariants->bindInt(':options_id', $options_id);
-            $Qvariants->bindInt(':values_id', $values_id);
+            $Qvariants->bindInt(':values_id', $options_id);
             $Qvariants->bindInt(':languages_id', $lC_Language->getID());
             $Qvariants->bindInt(':languages_id', $lC_Language->getID());
             $Qvariants->execute();
