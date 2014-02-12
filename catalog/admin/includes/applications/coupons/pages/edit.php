@@ -117,7 +117,7 @@
             <label for="purchase_over" class="label"><b><?php echo $lC_Language->get('label_purchase_over'); ?></b></label>
             <div class="inputs" style="display:inline; padding:8px 0;">
               <span class="mid-margin-left no-margin-right"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
-              <input type="text" style="width:152px;" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" class="input-unstyled" name="purchase_over" id="purchase_over" value="<?php echo (isset($cInfo) ? number_format(lc_round($cInfo->get('purchase_over'), DECIMAL_PLACES), DECIMAL_PLACES) : number_format(0.00, DECIMAL_PLACES)); ?>" class="input strong" />
+              <input type="text" style="width:152px;" onfocus="this.select();" onchange="updatePricingDiscountDisplay();" class="input-unstyled" name="purchase_over" id="purchase_over" value="<?php echo (isset($cInfo) ? $cInfo->get('purchase_over') : number_format(0.00, DECIMAL_PLACES)); ?>" class="input strong" />
             </div>              
             <?php echo lc_show_info_bubble($lC_Language->get('info_bubble_purchase_over'), null, 'info-spot on-left grey margin-left'); ?>
           </div>
