@@ -914,10 +914,12 @@ class lC_Product {
      // if ($extra == null && isset($value['products_sku']) && empty($value['products_sku']) === false) $extra = '<em>' . $lC_Language->get('listing_sku_heading') . ': ' . $value['products_sku'] . '</em>';
       
       $img = (isset($value['image']) && empty($value['image']) === false) ? $lC_Image->getAddress($value['image'], 'small') : 'images/pixel_trans.gif';
+      $height = (isset($value['image']) && empty($value['image']) === false) ? $lC_Image->getHeight('small') : 1;
+      $hcss = (isset($value['image']) && empty($value['image']) === false) ? null : ' style="height:1px;" ';
       $output .= '<div class="row clear-both margin-bottom margin-top">' .
                  '  <div class="col-sm-8 col-lg-8">' .
                  '    <span class="subproduct-image pull-left margin-right">' . 
-                 '      <img class="img-responsive" src="' . $img . '" title="' . $value['products_name'] . '" height="' . $lC_Image->getHeight('small') . '" width="' . $lC_Image->getWidth('small') . '" alt="' . $value['products_name'] . '" />' .
+                 '      <img class="img-responsive" ' . $hcss . 'src="' . $img . '" title="' . $value['products_name'] . '" height="' . $height . '" width="' . $lC_Image->getWidth('small') . '" alt="' . $value['products_name'] . '" />' .
                  '    </span>' .
                  '    <span class="subproduct-name lead lt-blue no-margin-bottom">' . $value['products_name'] . '</span><br />' . 
                  ((isset($extra) && $extra != null) ? '<span class="subproduct-model small-margin-left no-margin-top"><small>' . $extra . '</small></span>' : null) .
