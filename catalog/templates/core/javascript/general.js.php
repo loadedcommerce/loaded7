@@ -91,10 +91,14 @@ equalheight = function(container) {
 }
   
 $(window).load(function() {
-  equalheight('.thumbnail');
+  equalheight('.content-new-products-container.thumbnail');
+  equalheight('#content-categories-container .thumbnail');
+  
 });
 
 $(window).resize(function(){
-  equalheight('.thumbnail');
+  equalheight('.content-new-products-container.thumbnail');
+  equalheight('#content-categories-container .thumbnail');
+
 });
 //--></script>
