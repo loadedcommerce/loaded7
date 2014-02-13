@@ -21,7 +21,7 @@
     ?>
   </div>
   
-  <div class="content-product-listing-container">
+  <div class="content-product-listing-div">
     <?php 
     if (PRODUCT_LIST_FILTER == '1') echo lC_Template_output::getManufacturerFilter();
     $Qlisting = lC_Template_output::getProductsListingSql();
