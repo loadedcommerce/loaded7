@@ -9,10 +9,10 @@
   @version    $Id: product_on_homepage.php v1.0 2013-08-08 Kiran $
 */
 ?>
-<!--modules/content/product-on-home-page.php start-->
+<!--modules/content/product_on_homepage.php start-->
 <div class="col-sm-12 col-lg-12">
-  <div class="row content-mainpage-content-container margin-bottom">
+  <div class="row content-product-on-homepage-div margin-bottom">
     <?php echo $lC_Box->getContent(); ?>
   </div>
 </div>
-<!--modules/content/product-on-home-page.php end-->
+<!--modules/content/product_on_homepage.php end-->

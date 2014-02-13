@@ -11,13 +11,13 @@
 ?>
 <!--modules/content/mainpage_banner.php start-->     
 <div class="col-sm-12 col-lg-12">
-  <div class="row content-mainpage-banner-container margin-bottom clear-both">
+  <div class="row content-mainpage-banner-div margin-bottom clear-both">
     <?php echo $lC_Box->getContent(); ?>
   </div>
 </div>
 <!--modules/content/mainpage_banner.php end-->
 <script>
 $(document).ready(function() {     
-  $('.content-mainpage-banner-container img').addClass('img-responsive');
+  $('.content-mainpage-banner-div img').addClass('img-responsive');
 });
 </script>
