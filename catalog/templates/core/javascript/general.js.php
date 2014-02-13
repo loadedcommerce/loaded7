@@ -92,13 +92,21 @@ equalheight = function(container) {
   
 $(window).load(function() {
   equalheight('.content-new-products-container.thumbnail');
-  equalheight('#content-categories-container .thumbnail');
-  
+  equalheight('.product-listing-module-container.thumbnail');
+  equalheight('.content-categories-container.thumbnail');
+  equalheight('.content-also-purchased-products-container.thumbnail');
+  equalheight('.content-featured-products-container.thumbnail');
+  equalheight('.content-recently-visited-container.thumbnail');
+  equalheight('.content-upcoming-products-container.thumbnail');
 });
 
 $(window).resize(function(){
   equalheight('.content-new-products-container.thumbnail');
-  equalheight('#content-categories-container .thumbnail');
-
+  equalheight('.product-listing-module-container.thumbnail');
+  equalheight('.content-categories-container.thumbnail');
+  equalheight('.content-also-purchased-products-container.thumbnail');
+  equalheight('.content-featured-products-container.thumbnail');
+  equalheight('.content-recently-visited-container.thumbnail');
+  equalheight('.content-upcoming-products-container.thumbnail');
 });
 //--></script>
