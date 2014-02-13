@@ -9,6 +9,7 @@
   @version    $Id: general.js.php v1.0 2013-08-08 datazen $
 */
 ?>
+<script>
 $(document).ready(function() {
   var isVisible = false;
   var clickedAway = false;
@@ -96,3 +97,4 @@ $(window).load(function() {
 $(window).resize(function(){
   equalheight('.thumbnail');
 });
+</script>
