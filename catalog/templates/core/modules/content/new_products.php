@@ -10,7 +10,7 @@
 */
 ?>
 <!--modules/content/new_products.php start-->
-<div class="col-sm-12 col-lg-12">
+<div class="content-new-products-container col-sm-12 col-lg-12">
   <div class="row margin-bottom">
     <h3 class="no-margin-top"><?php echo $lC_Box->getTitle(); ?></h3>
     <?php echo $lC_Box->getContent(); ?>
