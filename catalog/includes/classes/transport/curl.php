@@ -16,7 +16,7 @@ if (!class_exists('curl')) {
     * @access public      
     * @return mixed
     */  
-    public static function execute($parameters) {
+    public static function execute($parameters, $rawResponse = false) {
       $curl = curl_init($parameters['server']['scheme'] . '://' . $parameters['server']['host'] . $parameters['server']['path'] . (isset($parameters['server']['query']) ? '?' . $parameters['server']['query'] : ''));
 
       $curl_options = array(CURLOPT_PORT => $parameters['server']['port'],
@@ -56,7 +56,11 @@ if (!class_exists('curl')) {
 
       curl_close($curl);
       
-      list($headers, $body) = explode("\r\n\r\n", $result, 2);
+      if ($rawResponse === true) {
+        $body = $result;
+      } else {
+        list($headers, $body) = explode("\r\n\r\n", $result, 2);
+      }
 
       return $body;
     }
