@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>Hide Pro Template Pack</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="includes/applications/store/classes/store.php">
+    <operation info="Hide Pro Template Pack">
+      <search position="after"><![CDATA[foreach ( self::getAllTypes() as $key => $type ) {]]></search>         
+      <add><![CDATA[if ($type['text'] == 'Pro Template Pack') continue; ]]></add>
+    </operation>        
+  </file> 
+</modification>
