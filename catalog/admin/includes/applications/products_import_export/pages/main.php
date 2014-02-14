@@ -18,7 +18,7 @@
   <hgroup id="main-title" class="thin">
 	<h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   </hgroup>
-  <div class="with-padding margin-top">
+  <div id="section_import_export" class="with-padding margin-top">
     <div class="columns">
       <div class="twelve-columns">
         <div class="block margin-bottom">
@@ -26,7 +26,7 @@
           <div class="columns">
             <div class="six-columns twelve-columns-mobile">
               <form id="products-export-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-left">
+                <fieldset class="fieldset margin-top margin-bottom margin-left margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_products_export'); ?></legend>
                   <p>
                     <span id="products-filter-total">0</span> <?php echo $lC_Language->get('text_records_to_be_exported'); ?>
@@ -35,7 +35,7 @@
                     <input type="radio" class="radio" checked value="tabbed" name="products-export-format" id="products-export-format-tabbed" /> <label class="label" for="export-format-tabbed">Tabbed</label>
                   </p>
                   <!--<p class="button-height">
-                    <?php echo $lC_Language->get('text_choose_a_data_set'); ?>
+                    <?php //echo $lC_Language->get('text_choose_a_data_set'); ?>
                   </p>-->
                   <p class="button-height">
                     <button type="button" class="button green-gradient icon-download" onClick="Javascript:getProducts('full');"><?php echo $lC_Language->get('button_full_data_set'); ?></button> 
@@ -50,7 +50,7 @@
             </div>
             <div class="six-columns twelve-columns-mobile">
               <form id="products-import-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-right">
+                <fieldset class="fieldset margin-top margin-bottom margin-left margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_products_import'); ?></legend>
                   <div id="fileUploaderProductsContainer" class="small-margin-top">
                     <noscript>
@@ -99,7 +99,7 @@
           <div class="columns">
             <div class="six-columns twelve-columns-mobile">
               <form id="categories-export-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-left">
+                <fieldset class="fieldset margin-top margin-bottom margin-right margin-left">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_categories_export'); ?></legend>
                   <p>
                     <span id="categories-filter-total">0</span> <?php echo $lC_Language->get('text_records_to_be_exported'); ?>
@@ -120,7 +120,7 @@
             </div>
             <div class="six-columns twelve-columns-mobile">
               <form id="categories-import-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-right">
+                <fieldset class="fieldset margin-top margin-bottom margin-left margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_categories_import'); ?></legend>
                   <div id="fileUploaderCategoriesContainer" class="small-margin-top">
                     <noscript>
@@ -143,7 +143,7 @@
           <div class="columns">
             <div class="six-columns twelve-columns-mobile">
               <form id="options-export-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-left">
+                <fieldset class="fieldset margin-top margin-bottom margin-left margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_options_export'); ?></legend>
                   <p>
                     <span id="options-filter-total">0</span> <?php echo $lC_Language->get('text_records_to_be_exported'); ?>
@@ -180,7 +180,7 @@
             </div>
             <div class="six-columns twelve-columns-mobile">
               <form id="options-import-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-right">
+                <fieldset class="fieldset margin-top margin-bottom margin-left margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_options_import'); ?></legend>
                   <p class="button-height block-label">
                     <label for="groups-file" class="label">Groups</label>
