@@ -322,8 +322,12 @@ function validatePermalink(pl) {
   if (!$cInfo) { 
     foreach ( $lC_Language->getAll() as $l ) { 
 ?>
-$("#categories_name_<?php echo $l['id']; ?>").blur(function(){
-  $("#categories_permalink_<?php echo $l['id']; ?>").val($("#categories_name_<?php echo $l['id']; ?>").val().toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, ''));
+$("#categories_name_<?php echo $l['id']; ?>").blur(function(){ 
+  var catPermLink = $("#categories_name_<?php echo $l['id']; ?>").val();
+  if (catPermLink.match(/category$/i)) {
+    catPermLink = catPermLink + '-link';
+  }
+  $("#categories_permalink_<?php echo $l['id']; ?>").val(catPermLink.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '').replace(/---/g, '-').replace(/--/g, '-'));
 });
 <?php
     } 
