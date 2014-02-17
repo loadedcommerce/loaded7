@@ -526,9 +526,9 @@
 }
 
 #loaded7 .content-shopping-cart-qty-input {
-  width: 60px;
+  text-align: center; width: 67% !important; float: right; margin-right: 26px; 
 }
-
+  
 #loaded7 .content-shopping-cart-remove-td {
   width: 16px;
 }

@@ -23,7 +23,7 @@ function deleteItem(id) {
         window.location = location.href;
       }
       $('#tr-' + id).remove();
-      $('#totals-table tbody').html(data.otText);
+      $('#content-shopping-cart-order-totals-right').html(data.otText);
     }
   );
 }
