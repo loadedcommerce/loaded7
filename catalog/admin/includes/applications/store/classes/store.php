@@ -112,7 +112,9 @@ if (!class_exists('lC_Store_Admin')) {
           if (stristr($key, 'password')) {
             $keys .= lc_draw_password_field('configuration[' . $key . ']', 'class="input" onfocus="this.select();"', $Qkey->value('configuration_value'));
           } else {
-            if (stristr($key, '_COST') || stristr($key, '_HANDLING') || stristr($key, '_PRICE') || stristr($key, '_FEE') || stristr($key, '_MINIMUM_ORDER')) {
+            // Match to the end of the key name rather than the middle to avoid a match with addons containing these words
+            //if (stristr($key, '_COST') || stristr($key, '_HANDLING') || stristr($key, '_PRICE') || stristr($key, '_FEE') || stristr($key, '_MINIMUM_ORDER')) {
+            if (preg_match('/(_COST|_HANDLING|_PRICE|_FEE|_MINIMUM_ORDER)$/i',$key)) {
               $keys .= '<div class="inputs" style="display:inline; padding:8px 0;">' .
               '  <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
               lc_draw_input_field('configuration[' . $key . ']', @number_format($Qkey->value('configuration_value'), DECIMAL_PLACES), 'class="input-unstyled" onfocus="this.select();"') .
