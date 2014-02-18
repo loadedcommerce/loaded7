@@ -38,13 +38,7 @@
                 <?php 
                   echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $lC_Image->show($products['image'], $products['name'], null, 'mini')); 
                 ?>
-              </td>
-<style>
-#shopping-cart-table em { font-size:0.9em; font-style:italic; font-weight:200; }
-#content-shopping-cart-order-totals { margin-right:25px; }
-.cart-options-div { line-height:1.1; }
-
-</style>  
+              </td>  
               <td class="text-left hide-on-mobile-portrait">
                 <?php 
                   echo '<div class="pull-right">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), strtolower($lC_Language->get('button_edit'))) . '</div>' . "\n";
