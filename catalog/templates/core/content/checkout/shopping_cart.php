@@ -39,39 +39,46 @@
                   echo lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $lC_Image->show($products['image'], $products['name'], null, 'mini')); 
                 ?>
               </td>
+<style>
+#shopping-cart-table em { font-size:0.9em; font-style:italic; font-weight:200; }
+#content-shopping-cart-order-totals { margin-right:25px; }
+.cart-options-div { line-height:1.1; }
+
+</style>  
               <td class="text-left hide-on-mobile-portrait">
                 <?php 
                   echo '<div class="pull-right">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), strtolower($lC_Language->get('button_edit'))) . '</div>' . "\n";
-                  echo '<h4 class="no-margin-top no-margin-bottom">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $products['name']) . '</h4>' . "\n";
-                  echo '<div class="clearfix primary">' . "\n";
+                  echo '<h4 class="no-margin-top small-margin-bottom">' . lc_link_object(lc_href_link(FILENAME_PRODUCTS, $products['keyword']), $products['name']) . '</h4>' . "\n";
+                  echo '<div class="clearfix primary cart-options-div">' . "\n";
                   if (!empty($products['model'])) {
-                    echo '<small>- ' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</small>' . "\n";
+                    echo '<div class="small">- ' . $lC_Language->get('listing_model_heading') . ': ' . $products['model'] . '</div>' . "\n";
                   }
                   if ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($products['id']) === false) ) {
                     echo '<span class="warning">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' . "\n";
                   }
                   if ( $lC_ShoppingCart->isVariant($products['item_id']) ) {
                     foreach ( $lC_ShoppingCart->getVariant($products['item_id']) as $variant) {
-                      echo '<br /><small>- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</small>' . "\n";
+                      echo '<div class="small">- ' . $variant['group_title'] . ': ' . $variant['value_title'] . '</div>' . "\n";
                     }
                   }   
                   if ( $lC_ShoppingCart->hasSimpleOptions($products['item_id']) ) {
                     foreach ( $lC_ShoppingCart->getSimpleOptions($products['item_id']) as $option) {
-                      echo '<br /><small>- ' . $option['group_title'] . ': ' . $option['value_title'] . '</small>' . "\n";
+                      $mod_price = (($option['price_modifier'] > 0) ? '+' . $option['price_modifier'] : (($option['price_modifier'] == 0) ? null : $option['price_modifier']));
+                      echo '<div class="small">- ' . $option['group_title'] . ': ' . $option['value_title'] . ' <em>' . $mod_price . '</em></div>' . "\n";
                     }
                   }                             
                   echo '</div>' . "\n";
                 ?>
               </td>
-              <td class="text-right hide-on-mobile-portrait"><span><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td>             
+              <td class="text-right hide-on-mobile-portrait content-shopping-cart-price-td"><span id="display-price-<?php echo $products['item_id']; ?>"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td>             
               <td class="text-right content-shopping-cart-qty-input-td">
                 <div class="form-group relative no-margin-bottom">
-                  <i class="fa fa-plus-square-o fa-lg" style="position:absolute; right:9px; top:3px; opacity:.3; cursor:pointer;" onclick="setQty('<?php echo $products['item_id']; ?>', 'up', '<?php echo $products['price']; ?>');"></i>
-                  <input type="text" id="products_<?php echo $products['item_id']; ?>" name="products[<?php echo $products['item_id']; ?>]" onfocus="this.select();" onchange="refreshPrice();" class="form-control content-shopping-cart-qty-input" value="<?php echo $products['quantity']; ?>">
-                  <i class="fa fa-minus-square-o fa-lg" style="position:absolute; right:9px; top:20px; opacity:.3; cursor:pointer;" onclick="setQty('<?php echo $products['item_id']; ?>', 'dn', '<?php echo $products['price']; ?>');"></i>
+                  <i class="fa fa-plus-square-o fa-lg" style="position:absolute; right:9px; top:3px; opacity:.3; cursor:pointer;" onclick="setQty('<?php echo $products['item_id']; ?>', 'up');"></i>
+                  <input type="text" id="products_<?php echo $products['item_id']; ?>" name="products[<?php echo $products['item_id']; ?>]" onfocus="this.select();" onchange="_update('<?php echo $products['item_id']; ?>', this.value);" class="form-control content-shopping-cart-qty-input" value="<?php echo $products['quantity']; ?>">
+                  <i class="fa fa-minus-square-o fa-lg" style="position:absolute; right:9px; top:20px; opacity:.3; cursor:pointer;" onclick="setQty('<?php echo $products['item_id']; ?>', 'dn');"></i>
                 </div>              
               </td>
-              <td class="text-right"><span class="price" id="price_<?php echo $products['item_id']; ?>"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']); ?></span></td>
+              <td class="text-right"><span class="price" id="total-price-<?php echo $products['item_id']; ?>"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']); ?></span></td>
               <td class="text-center content-shopping-cart-remove-td"><a href="javascript:void(0);" onclick="deleteItem('<?php echo $products['item_id']; ?>');"><?php echo lc_icon('cart_remove.png'); ?></a></td>
             </tr>
             <?php 
@@ -133,8 +140,8 @@
           <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>'" class="btn btn-primary" type="button"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button>
         </div>      
         <div class="margin-top large-margin-bottom pull-right">
-          <button class="btn btn-lg btn-default" onclick="$('#shopping_cart').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button>
-          <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" class="btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_checkout'); ?></button>
+          <!-- button class="btn btn-lg btn-default" onclick="$('#shopping_cart').submit();" type="button"><?php echo $lC_Language->get('button_update'); ?></button -->
+          <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'" id="btn-checkout" class="btn btn-lg btn-success" type="button"><?php echo $lC_Language->get('button_checkout'); ?></button>
         </div>  
       </div> 
       <?php
@@ -190,31 +197,44 @@ $(document).ready(function() {
   }
 });
 
-function setQty(row, mode, price) {
-  var val = $('#products_' + row).val();
-  var decimals = '<?php echo DECIMAL_PLACES; ?>';
-  if (mode == 'dn') val = parseInt(val) - 1;
-  if (mode == 'up') val = parseInt(val) + 1;
-  if (parseInt(val) < 1) val = 1;
-  newPrice = (parseFloat(price) * val).toFixed(decimals);
-  $('#products_' + row).val(val);
-  $('#price_' + row).html('$' + newPrice.toString());
-  
-  refreshPrice(row, val);
+function setQty(row, mode) {
+  var qty = $('#products_' + row).val();
+  if (mode == 'dn') qty = parseInt(qty) - 1;
+  if (mode == 'up') qty = parseInt(qty) + 1;
+  if (parseInt(qty) < 1) qty = 1;
+
+  _update(row, qty);
 }
 
-function refreshPrice(row, val) {
+function _update(row, qty) {
+  // disable checkout button until ajax finishes loading
+  var href = $('#btn-checkout').attr('onclick');
+  $('#btn-checkout').attr('onclick', '');
+  var decimals = '<?php echo DECIMAL_PLACES; ?>';
+  var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
+  var dPrice = parseFloat($('#display-price-' + row).text().replace(currencySymbolLeft, ''));
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'checkout&action=update&item=ITEM&qty=QTY', 'AUTO'); ?>';   
-  $.getJSON(jsonLink.replace('ITEM', row).replace('QTY', val).split('amp;').join(''),
+  $.getJSON(jsonLink.replace('ITEM', row).replace('QTY', qty).split('amp;').join(''),
     function (data) {
-      if (data.rpcStatus != 1) {
-        alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-        return false;
-      }
+
       if (data.redirect == '1') {
         window.location = location.href;
       }
+      
+      if (data.priceData.price != undefined && data.priceData.price > 0) {
+        newPrice = parseFloat(data.priceData.price).toFixed(decimals);
+      } else {        
+        newPrice = dPrice.toFixed(decimals);
+      }
+      newTotal = (newPrice * qty).toFixed(decimals);
+        
+      $('#products_' + row).val(qty);
+      $('#display-price-' + row).text(currencySymbolLeft + newPrice.toString());      
+      $('#total-price-' + row).html(currencySymbolLeft + newTotal.toString());      
+      
       $('#content-shopping-cart-order-totals-right').html(data.otText);
+      // enable checkout button
+      $('#btn-checkout').attr('onclick', href);
     }
   );  
   

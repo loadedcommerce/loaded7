@@ -40,13 +40,13 @@ class lC_Checkout_rpc {
 
     $result = array();
     
-    $lC_ShoppingCart->update($_GET['item'], $_GET['qty']);
+    $data = $lC_ShoppingCart->update($_GET['item'], $_GET['qty']);
     
-     echo json_encode(self::_getCartHtml());
+     echo json_encode(self::_getCartHtml($data));
   }
     
   
-  protected static function _getCartHtml() {
+  protected static function _getCartHtml($data) {
     global $lC_Database, $lC_Language, $lC_Currencies, $lC_Customer, $lC_ShoppingCart, $lC_Image;
 
     $result = array();
@@ -64,6 +64,7 @@ class lC_Checkout_rpc {
                  '</div>';
     }
     
+    $result['priceData'] = $data;
     $result['otText'] = $otText;
     
     if (is_array($result)) $result['rpcStatus'] = '1';

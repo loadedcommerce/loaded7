@@ -53,7 +53,7 @@ class lC_ShoppingCart {
     $this->_billing_address =& $_SESSION['lC_ShoppingCart_data']['billing_address'];
     $this->_billing_method =& $_SESSION['lC_ShoppingCart_data']['billing_method'];
     $this->_shipping_quotes =& $_SESSION['lC_ShoppingCart_data']['shipping_quotes'];
-    $this->_order_totals =& $_SESSION['lC_ShoppingCart_data']['order_totals'];
+    $this->_order_totals =& $_SESSION['lC_ShoppingCart_data']['order_totals'];    
   }
 
   public function refresh($recalc = false) {
@@ -177,7 +177,7 @@ class lC_ShoppingCart {
           if ( $new_price = $lC_Specials->getPrice($Qproducts->valueInt('products_id')) ) {
             $price = $new_price;
           }
-        }
+        }     
 
         $this->_contents[$Qproducts->valueInt('item_id')] = array('item_id' => $Qproducts->valueInt('item_id'),
                                                                   'id' => $Qproducts->valueInt('products_id'),
@@ -306,12 +306,12 @@ class lC_ShoppingCart {
   }
 
   public function add($product_id, $quantity = null) {
-    global $lC_Database, $lC_Services, $lC_Language, $lC_Customer;
+    global $lC_Database, $lC_Services, $lC_Language, $lC_Customer, $lC_Product;
 
     if ( !is_numeric($product_id) ) {
       return false;
     }
-
+    
     $Qproduct = $lC_Database->query('select p.parent_id, p.products_price, p.products_tax_class_id, p.products_model, p.products_weight, p.products_weight_class, p.products_status, p.is_subproduct, i.image from :table_products p left join :table_products_images i on (p.products_id = i.products_id and i.default_flag = :default_flag) where p.products_id = :products_id');
     $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproduct->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
@@ -380,41 +380,10 @@ class lC_ShoppingCart {
           $desc['products_url'] = $Qmaster->value('url');
         }
 
-        // load price break array
-        $price_breaks = array();
-
-        $Qpb = $lC_Database->query('select tax_class_id, qty_break, price_break from :table_products_pricing where products_id = :products_id and group_id = :group_id order by group_id, qty_break');
-        $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
-        $Qpb->bindInt(':products_id', $product_id); 
-        $Qpb->bindInt(':group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : 1));
-        $Qpb->execute();
+        // we get the product price from the product class - price already includes options, etc.
+        if (!isset($lC_Product)) $lC_Product = new lC_Product($product_id);
+        $price = $lC_Product->getPrice($product_id, $lC_Customer->getCustomerGroup(), $_POST);        
         
-        while ($Qpb->next()) {
-          $price_breaks[] = $Qpb->toArray();
-        }               
-        
-        $price = $Qproduct->value('products_price');
-        $tax_class_id = $Qproduct->valueInt('products_tax_class_id');
-        
-        // check for price break
-        if (isset($price_breaks)) {
-          foreach ($price_breaks as $value) {
-            if ($quantity >= $value['qty_break']) {
-              $price = $value['price_break'];
-              $tax_class_id = $value['tax_class_id'];
-            }    
-          }    
-        }
-                         
-        if ( $lC_Services->isStarted('specials') ) {
-          global $lC_Specials;
-
-          if ( $new_price = $lC_Specials->getPrice($product_id) ) {
-            // if specials price is lower than qty breaks price, use it
-            if ($new_price < $price) $price = $new_price;
-          }
-        }
-
         if ( $lC_Customer->isLoggedOn() ) {
           $Qid = $lC_Database->query('select max(item_id) as item_id from :table_shopping_carts where customers_id = :customers_id');
           $Qid->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
@@ -450,10 +419,8 @@ class lC_ShoppingCart {
         // simple options
         if (isset($_POST['simple_options']) && empty($_POST['simple_options']) === false) {
           
-          $total_modifier = 0.00;
-          
           foreach($_POST['simple_options'] as $options_id => $values_id) {
-            
+                     
             $QsimpleOptionsValues = $lC_Database->query('select price_modifier from :table_products_simple_options_values where options_id = :options_id and values_id = :values_id and customers_group_id = :customers_group_id');
             $QsimpleOptionsValues->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
             $QsimpleOptionsValues->bindInt(':options_id', $options_id);
@@ -475,17 +442,11 @@ class lC_ShoppingCart {
                                                                    'group_title' => $Qvariants->value('group_title'),
                                                                    'value_title' => $Qvariants->value('value_title'),
                                                                    'price_modifier' => $QsimpleOptionsValues->valueDecimal('price_modifier'));
-                                                                   
-            $total_modifier = (float)$total_modifier + (float)$QsimpleOptionsValues->valueDecimal('price_modifier');                                                                   
-                                                                   
             $QsimpleOptionsValues->freeResult();                      
             $Qvariants->freeResult();                      
           }
-          
-          $this->_contents[$item_id]['price'] = (float)$price + (float)$total_modifier;
-        
         }                                             
-                                             
+                                           
         if ( $lC_Customer->isLoggedOn() ) {
           $Qnew = $lC_Database->query('insert into :table_shopping_carts (customers_id, item_id, products_id, quantity, meta_data, date_added) values (:customers_id, :item_id, :products_id, :quantity, :meta_data, :date_added)');
           $Qnew->bindTable(':table_shopping_carts', TABLE_SHOPPING_CARTS);
@@ -533,7 +494,7 @@ class lC_ShoppingCart {
         }
 
       }
-
+      
       $this->_cleanUp();
       $this->_calculate();
     }
@@ -592,7 +553,7 @@ class lC_ShoppingCart {
     global $lC_Database, $lC_Customer, $lC_Services;
 
     if ( !is_numeric($quantity) ) {
-      $quantity = $this->getQuantity($item_id) + 1;
+      $quantity = $this->getQuantity($item_id);
     }
 
     $this->_contents[$item_id]['quantity'] = $quantity;
@@ -607,52 +568,27 @@ class lC_ShoppingCart {
     }
     
     if ($quantity == 1) {
-      // get default base price and tax_class_id
-      $Qproduct = $lC_Database->query('select products_price as price, products_tax_class_id as tax_class_id from :table_products where products_id = :products_id and products_status = :products_status');
+      // get default tax_class_id
+      $Qproduct = $lC_Database->query('select products_tax_class_id as tax_class_id from :table_products where products_id = :products_id and products_status = :products_status');
       $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
       $Qproduct->bindInt(':products_id', $this->_contents[$item_id]['id']);
       $Qproduct->bindInt(':products_status', 1);
       $Qproduct->execute();
 
       if ( $Qproduct->numberOfRows() === 1 ) {
-        $this->_contents[$item_id]['price'] = $Qproduct->value('price');
         $this->_contents[$item_id]['tax_class_id'] = $Qproduct->valueInt('tax_class_id');
       }
     }
 
-    // load price break array
-    $price_breaks = array();
-
-    $Qpb = $lC_Database->query('select tax_class_id, qty_break, price_break from :table_products_pricing where products_id = :products_id and group_id = :group_id order by group_id, qty_break');
-    $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
-    $Qpb->bindInt(':products_id', $this->_contents[$item_id]['id']); 
-    $Qpb->bindInt(':group_id', (isset($_SESSION['lC_Customer_data']['customers_group_id'])? $_SESSION['lC_Customer_data']['customers_group_id'] : 1));
-    $Qpb->execute();
+    // we get the product price from the product class - price already includes options, etc.
+    if (!isset($lC_Product)) $lC_Product = new lC_Product($this->_contents[$item_id]['id']);
+    $this->_contents[$item_id]['price_data'] = $lC_Product->getPriceInfo($this->_contents[$item_id]['id'], $lC_Customer->getCustomerGroup(), array('quantity' => $quantity));
+    $this->_contents[$item_id]['price'] = $this->_contents[$item_id]['price_data']['price'];
         
-    while ($Qpb->next()) {
-      $price_breaks[] = $Qpb->toArray();
-    }               
-        
-    // check for price break
-    if (isset($price_breaks)) {
-      foreach ($price_breaks as $value) {
-        if ($quantity >= $value['qty_break']) {
-          $this->_contents[$item_id]['price'] = $value['price_break'];
-          $this->_contents[$item_id]['tax_class_id'] = $value['tax_class_id'];
-        }    
-      }    
-    }
-    
-    if ( $lC_Services->isStarted('specials') ) {
-      global $lC_Specials;
-        if ( $new_price = $lC_Specials->getPrice($product_id) ) {
-        // if specials price is lower than qty breaks price, use it
-        if ($new_price < $price) $price = $new_price;
-      }
-    }
-    
     $this->_cleanUp();
-    $this->_calculate();    
+    $this->_calculate(); 
+    
+    return $this->_contents[$item_id]['price_data'];   
   }
 
   public function remove($item_id) {
@@ -1047,7 +983,9 @@ class lC_ShoppingCart {
     global $lC_Database, $lC_Customer;
 
     foreach ( $this->_contents as $item_id => $data ) {
+      
       if ( $data['quantity'] < 1 ) {
+
         unset($this->_contents[$item_id]);
 
         if ( $lC_Customer->isLoggedOn() ) {
