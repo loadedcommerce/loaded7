@@ -46,7 +46,7 @@ class lC_Actions_cart_add {
           return false;
         }
       } else {
-        if ($lC_Product->hasSubProducts($lC_Product->getID())) {
+        if ($lC_Product->hasSubProducts($lC_Product->getID()) || $lC_Product->hasSimpleOptions()) {
           lc_redirect(lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword()));
         }
         $lC_ShoppingCart->add($lC_Product->getID(), $quantity);

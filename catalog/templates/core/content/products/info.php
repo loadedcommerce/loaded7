@@ -146,7 +146,7 @@
         </div>
       </div>
       <div class="col-sm-4 col-lg-4">
-        <p class="margin-top"><button onclick="$('#cart_quantity').submit();" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
+        <p class="margin-top"><button onclick="$('#cart_quantity').submit();" class="btn btn-block btn-lg btn-success btn-buy-now"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
       </div>
     </div> 
     <?php
@@ -177,7 +177,11 @@ function setQty(mode) {
   refreshPrice();
 }
 
-  function refreshPrice() {
+function refreshPrice() {
+  // disable checkout button until ajax finishes loading
+  var href = $('#btn-buy-now').attr('onclick');
+  $('#btn-buy-now').attr('onclick', '');    
+    
   var group = '<?php echo DEFAULT_CUSTOMERS_GROUP_ID; ?>';
   var id = '<?php echo $lC_Product->getID(); ?>';
   var module = '<?php echo $lC_Template->getModule(); ?>';
@@ -186,10 +190,6 @@ function setQty(mode) {
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'products&action=getPriceInfo&id=PID&group=GROUP&NVP', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('PID', id).replace('GROUP', group).replace('NVP', nvp).split('amp;').join(''),
     function (data) {
-     // if (data.rpcStatus != 1) {
-     //   $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
-     //   return false;
-     // }
     var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
       var basePrice = currencySymbolLeft + data.price; 
       if (data.formatted != null) { 
@@ -200,6 +200,7 @@ function setQty(mode) {
       if (data.qpbData != undefined && isPro == 1) {
         $('#qpb-message').html('<div class=""><div class="col-sm-4 col-lg-4"></div><div class="col-sm-8 col-lg-8" style="padding:0 15px;"><div class="alert alert-warning small-margin-bottom"><span class="text-left"><i class="fa fa-caret-right"></i> Buy ' + data.qpbData.nextBreak + ' for <b>' + currencySymbolLeft + data.qpbData.nextPrice + '</b> each and <b><i>save ' + data.qpbData.youSave + '</span></i></b></span></div></div></div>');
       }
+      $('#btn-buy-now').attr('onclick', href);
     }
   );  
 }
