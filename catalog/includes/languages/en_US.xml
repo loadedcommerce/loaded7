@@ -2347,7 +2347,12 @@ Your friend, %s, thought that you would be interested in %s from %s.]]></value>
     </definition>
     <definition>
       <key>field_customer_post_code</key>
-      <value><![CDATA[Post Code:]]></value>
+      <value><![CDATA[Postal Code:]]></value>
+      <group>general</group>
+    </definition>
+    <definition>
+      <key>field_customer_zip_code</key>
+      <value><![CDATA[Zip Code:]]></value>
       <group>general</group>
     </definition>
     <definition>
