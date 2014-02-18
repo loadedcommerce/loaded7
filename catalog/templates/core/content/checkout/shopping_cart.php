@@ -207,7 +207,7 @@ function _update(row, qty) {
   var decimals = '<?php echo DECIMAL_PLACES; ?>';
   var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
   var dPrice = parseFloat($('#display-price-' + row).text().replace(currencySymbolLeft, ''));
-  var jsonLink = '<?php echo lc_href_link('rpc.php', 'checkout&action=update&item=ITEM&qty=QTY', 'AUTO'); ?>';   
+  var jsonLink = '<?php echo lc_href_link('rpc.php', 'checkout&action=update&item=ITEM&quantity=QTY', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('ITEM', row).replace('QTY', qty).split('amp;').join(''),
     function (data) {
 
