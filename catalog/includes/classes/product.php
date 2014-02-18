@@ -279,11 +279,11 @@ class lC_Product {
     return $this->_data['tags'];
   }
   
-  //######## PRICING #########//
+  //######## PRICING - ALL PRICING TO COME FROM HERE #########//
   public function getPriceInfo($product_id, $customers_group_id = 1, $data) {
     global $lC_Specials, $lC_Database, $lC_Language, $lC_Customer, $lC_Services, $lC_Currencies;
 
-    $quantity = (isset($_GET['quantity']) && $_GET['quantity'] != null) ? (int)$_GET['quantity'] : 1;
+    $quantity = (isset($data['quantity']) && $data['quantity'] != null) ? (int)$data['quantity'] : 1;
 
     // #### SET BASE PRICE #### //
     
@@ -395,6 +395,7 @@ class lC_Product {
                     'modTotal' => $modTotal,
                     'qpbData' => $qpbData
                     );
+                    
 //echo "<pre>return ";
 //print_r($return);
 //echo "</pre>";
@@ -403,8 +404,12 @@ class lC_Product {
     return $return;                    
   }
   
-  public function getPrice() {
-    $data = $this->getPriceInfo($this->getID(), 1, array());
+  public function getPrice($id = null, $group = 1, $data = array()) {
+    
+    if ($id == null) $id = $this->getID();
+    if ($group == null) $group = 1;
+    
+    $data = $this->getPriceInfo($id, $group, $data);
     
     return $data['price'];
   }
