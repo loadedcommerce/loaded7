@@ -579,10 +579,17 @@ class lC_ShoppingCart {
         $this->_contents[$item_id]['tax_class_id'] = $Qproduct->valueInt('tax_class_id');
       }
     }
+    
+    $simple_options = array();
+    if (isset($this->_contents[$item_id]['simple_options'])) {
+      foreach($this->_contents[$item_id]['simple_options'] as $key => $val) {
+        $simple_options[$val['group_id']] = $val['value_id'];
+      }     
+    }
 
     // we get the product price from the product class - price already includes options, etc.
     if (!isset($lC_Product)) $lC_Product = new lC_Product($this->_contents[$item_id]['id']);
-    $this->_contents[$item_id]['price_data'] = $lC_Product->getPriceInfo($this->_contents[$item_id]['id'], $lC_Customer->getCustomerGroup(), array('quantity' => $quantity));
+    $this->_contents[$item_id]['price_data'] = $lC_Product->getPriceInfo($this->_contents[$item_id]['id'], $lC_Customer->getCustomerGroup(), array('quantity' => $quantity, 'simple_options' => $simple_options));
     $this->_contents[$item_id]['price'] = $this->_contents[$item_id]['price_data']['price'];
         
     $this->_cleanUp();

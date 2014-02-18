@@ -295,17 +295,21 @@ class lC_Product {
     if (is_array($data['simple_options']) && count($data['simple_options']) > 0) {
       $modTotal = 0;
       foreach ($data['simple_options'] as $options_id => $values_id) {
-        $QsimpleOptions = $lC_Database->query("select price_modifier from :table_products_simple_options_values where customers_group_id = :customers_group_id and options_id = :options_id and values_id = :values_id limit 1");
+        $QsimpleOptions = $lC_Database->query("select * from :table_products_simple_options_values where customers_group_id = :customers_group_id and options_id = :options_id and values_id = :values_id and products_id = :products_id limit 1");
         $QsimpleOptions->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
         $QsimpleOptions->bindInt(':customers_group_id', $customers_group_id);        
+        $QsimpleOptions->bindInt(':products_id', $product_id);        
         $QsimpleOptions->bindInt(':options_id', $options_id);        
         $QsimpleOptions->bindInt(':values_id', $values_id);        
+        $QsimpleOptions->setDebug(true);
         $QsimpleOptions->execute();
-        
+
         $modTotal = (float)$modTotal + $QsimpleOptions->valueDecimal('price_modifier');
+        
+        $QsimpleOptions->freeResult();
       }  
     }  
-    
+
     // if has special price, base price becomes special price
     $special_price = 0.00;
     if ($lC_Services->isStarted('specials') && $lC_Specials->isActive($product_id)) {

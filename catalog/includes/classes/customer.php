@@ -33,9 +33,9 @@ class lC_Customer {
   public function getCustomerGroup() {
     if (isset($this->_data['customers_group']) && is_numeric($this->_data['customers_group'])) {
       return $this->_data['customers_group'];
+    } else {
+      return DEFAULT_CUSTOMERS_GROUP_ID;
     }
-
-    return false;
   }    
   
   public function getBaselineDiscount($id = null) {
