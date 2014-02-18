@@ -189,6 +189,12 @@ class lC_Order {
       $Qtotals->bindValue(':class', $module['code']);
       $Qtotals->bindInt(':sort_order', $module['sort_order']);
       $Qtotals->execute();
+      if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && isset($lC_Coupons)) {
+          if ($lC_Coupons->is_enabled) {
+            preg_match('#\((.*?)\)#', $module['title'], $match);
+            $lC_Coupons->redeem($match[1], $order_id); 
+          }      
+        }
     }    
 
     $Qstatus = $lC_Database->query('insert into :table_orders_status_history (orders_id, orders_status_id, date_added, customer_notified, comments) values (:orders_id, :orders_status_id, now(), :customer_notified, :comments)');
