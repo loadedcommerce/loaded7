@@ -67,6 +67,12 @@ class lC_Checkout_rpc {
     $result['priceData'] = $data;
     $result['otText'] = $otText;
     
+    if ($lC_ShoppingCart->hasContents()) {
+      $result['redirect'] = '0';
+    } else {
+      $result['redirect'] = '1';
+    }     
+    
     if (is_array($result)) $result['rpcStatus'] = '1';
     
     return $result;
