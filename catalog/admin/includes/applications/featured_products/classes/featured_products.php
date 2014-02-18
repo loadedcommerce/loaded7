@@ -112,7 +112,11 @@ class lC_Featured_products_Admin {
       
       lC_Cache::clear('featured_products');
 
-      return $id;
+      if ( is_numeric($id) ) {
+       return $id;
+      } else {
+        return $lC_Database->nextID();
+      }
     }
 
     $lC_Database->rollbackTransaction();
