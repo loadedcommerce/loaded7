@@ -45,7 +45,7 @@
   <?php
   if ( $lC_Product->hasSubProducts($lC_Product->getID()) === false) {
     ?>  
-    <form role="form" class="form-horizontal" name="cart_quantity" id="cart_quantity" action="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add'); ?>" method="post">
+    <form role="form" class="form-horizontal" name="cart_quantity" id="cart_quantity" action="<?php echo lc_href_link(FILENAME_PRODUCTS, $lC_Product->getKeyword() . '&action=cart_add&info=1'); ?>" method="post">
     <?php
   }
   ?>
@@ -146,7 +146,7 @@
         </div>
       </div>
       <div class="col-sm-4 col-lg-4">
-        <p class="margin-top"><button onclick="$('#cart_quantity').submit();" class="btn btn-block btn-lg btn-success btn-buy-now"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
+        <p class="margin-top"><button onclick="$('#cart_quantity').submit();" id="btn-buy-now" class="btn btn-block btn-lg btn-success"><?php echo $lC_Language->get('button_buy_now'); ?></button></p>
       </div>
     </div> 
     <?php
