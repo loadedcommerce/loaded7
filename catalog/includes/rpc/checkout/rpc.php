@@ -40,7 +40,7 @@ class lC_Checkout_rpc {
 
     $result = array();
     
-    $data = $lC_ShoppingCart->update($_GET['item'], $_GET['qty']);
+    $data = $lC_ShoppingCart->update($_GET['item'], $_GET['quantity']);
     
      echo json_encode(self::_getCartHtml($data));
   }
