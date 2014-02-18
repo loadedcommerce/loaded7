@@ -296,6 +296,7 @@ class lC_Categories_Admin {
         
         // added for permalink
         if ($data['permalink'][$l['id']] != 'no-permalink') {
+          
           if (is_numeric($id) && lC_Categories_Admin::validatePermalink(array($data['permalink'][$l['id']]), $category_id, 1) == 1) {
             $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink where item_id = :item_id and type = :type and language_id = :language_id');
           } else {
@@ -768,9 +769,14 @@ class lC_Categories_Admin {
   * @return array
   */
   public static function validatePermalink($permalink_array, $cid = null, $type = null) {
-    
     $validated = true;
-    foreach($permalink_array as $permalink) {
+    
+    if (is_array($permalink_array)) {
+      foreach($permalink_array as $permalink) {
+        if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
+        if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type) > 0) $validated = false;
+      }
+    } else {
       if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
       if ( lC_Categories_Admin::getPermalinkCount($permalink, $cid, $type) > 0) $validated = false;
     }
