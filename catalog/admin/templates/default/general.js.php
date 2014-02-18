@@ -176,11 +176,17 @@ $(document).ready(function() {
     });
     // when a key is pressed 
     $("*").keypress(function(e){
-      // check to see if input is datatables search
-      var attr = $("#batch input").attr('aria-controls');
-      if (attr) {
-        disableKeyCombo = true;
-      }
+      // added for datatables search input issue
+      var escCheck = e.keyCode ? e.keyCode : e.which;
+      if (escCheck == 27) {
+        $("input[aria-controls='dataTable']").removeClass("focus").blur();
+        disableKeyCombo = false;
+      } else {         
+        var attr = $("input[aria-controls='dataTable']").hasClass("focus");
+        if (attr) {
+          disableKeyCombo = true;
+        }
+      }      
       // if the disable var is false we continue
       if (!disableKeyCombo == true) {
         // first check if the escape key has been presed
