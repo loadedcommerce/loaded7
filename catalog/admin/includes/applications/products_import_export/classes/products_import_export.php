@@ -202,7 +202,7 @@ class lC_Products_import_export_Admin {
       // $content .= '\'' . implode('\'' . "\t" . '\'', $product) . '\'' . "\n";
     }
 
-    $fp = fopen($filepath,"wb");
+    $fp = fopen($filepath, "wb");
     fwrite($fp, implode($delim, $columns) . "\n" . $content);
     fclose($fp);
 
@@ -631,14 +631,14 @@ class lC_Products_import_export_Admin {
     }
 
     $ext = end(explode(".", $filename));
-    $delim = (($ext == 'txt')?"\t":(($ext == 'csv')?",":"\t"));
+    $delim = (($ext == 'txt') ? "\t" : (($ext == 'csv') ? "," : "\t"));
 
     $row = 0;
     if (($handle = fopen($uploadfile, "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
         $num = count($data);
         for ($c=0; $c < $num; $c++) {
-          if($row != 0){
+          if ($row != 0) {
             $import_array[$row][$columns[$c]] = $data[$c];
           }
         }
@@ -722,9 +722,11 @@ class lC_Products_import_export_Admin {
             }
           }
           $product['categories'] = $category_ids;
+          $currentCatId = null;
+          $category_ids = null;
         }
 
-        // need to get the id for the manufacturerif($product['manufacturer'] != ''){
+        // need to get the id for the manufacturer
         if ($product['manufacturer'] != '') {
           $Qman = $lC_Database->query("SELECT * FROM :table_manufacturers WHERE manufacturers_name = :manufacturers_name");
           $Qman->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
@@ -753,7 +755,7 @@ class lC_Products_import_export_Admin {
         $Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
         $Qcheck->bindInt(':products_id', $products_id);
         $Qcheck->execute();
-
+        
         if ($Qcheck->numberOfRows()) {
           // the product exists in the database so were just going to update the product with the new data
           $match_count++;
@@ -779,20 +781,20 @@ class lC_Products_import_export_Admin {
           $Qproduct->bindInt(':manufacturers_id', $product['manufacturers_id']);
           $Qproduct->setLogging($_SESSION['module'], $products_id);
           $Qproduct->execute();
-
-          if ( $lC_Database->isError() ) {
-            $error = true;
-            $errormsg .= '   initial: '.$products_id.'  '.$lC_Database->getError();
-          } else { 
+          
+          //if ( $lC_Database->isError() ) {
+          //  $error = true;
+          //  $errormsg .= '   initial: ' . $products_id . ' ' . $lC_Database->getError();
+          //} else {
             $Qcategories = $lC_Database->query('delete from :table_products_to_categories where products_id = :products_id');
             $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
             $Qcategories->bindInt(':products_id', $products_id);
-            $Qcategories->setLogging($_SESSION['module'], $products_id);
-            $Qcategories->execute();
-
-            if ( $lC_Database->isError() ) { 
-              $error = true;
-            } else {
+            //$Qcategories->setLogging($_SESSION['module'], $products_id);
+            //$Qcategories->execute();
+            
+            //if ( $lC_Database->isError() ) {
+            //  $error = true;
+            //} else {
               $categories = $product['categories'];
               if ( isset($categories) && !empty($categories) ) {
                 foreach ($categories as $category_id) {
@@ -800,20 +802,20 @@ class lC_Products_import_export_Admin {
                   $Qp2c->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
                   $Qp2c->bindInt(':products_id', $products_id);
                   $Qp2c->bindInt(':categories_id', $category_id);
-                  $Qp2c->setLogging($_SESSION['module'], $products_id);
-                  $Qp2c->execute();
-
-                  if ( $lC_Database->isError() ) {
-                    $error = true;
-                    break;
-                  }
+                  //$Qp2c->setLogging($_SESSION['module'], $products_id);
+                  //$Qp2c->execute();
+                  
+                  //if ( $lC_Database->isError() ) {
+                  //  $error = true;
+                  //  break;
+                  //}
                 }
               }
-            }
-          }
+            //}
+          //}
 
           if ( $error === false ) {
-            $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_description = :products_description, products_keyword = :products_keyword, products_tags = ":products_tags", products_url = ":products_url" WHERE products_id = :products_id AND language_id = :language_id');
+            $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url WHERE products_id = :products_id AND language_id = :language_id');
             $Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
             $Qpd->bindInt(':products_id', $products_id);
             $Qpd->bindInt(':language_id', $product['language_id']);
@@ -824,13 +826,13 @@ class lC_Products_import_export_Admin {
             $Qpd->bindValue(':products_url', $product['url']);
             $Qpd->setLogging($_SESSION['module'], $products_id);
             $Qpd->execute();
-
+            
             if ( $lC_Database->isError() ) {
               $error = true;
               break;
             }
           }
-
+          
           if ( $error === false ) {
             $lC_Database->commitTransaction();
 
@@ -839,7 +841,7 @@ class lC_Products_import_export_Admin {
             lC_Cache::clear('also_purchased');
           } else {
             $lC_Database->rollbackTransaction();
-            $errormsg .= '    Error on product id: '.$products_id.'  ';
+            $errormsg .= '    Error on product id: ' . $products_id . '  ';
           }
         } else {
           // the product doesnt exist so lets write it into the database
@@ -879,7 +881,7 @@ class lC_Products_import_export_Admin {
             if ( $lC_Database->isError() ) { 
               $error = true;
             } else {
-              $categories = explode(',',$product['categories']);
+              $categories = explode(',', $product['categories']);
               if ( isset($categories) && !empty($categories) ) {
                 foreach ($categories as $category_id) {
                   $Qp2c = $lC_Database->query('insert into :table_products_to_categories (products_id, categories_id) values (:products_id, :categories_id)');
@@ -945,6 +947,7 @@ class lC_Products_import_export_Admin {
           }
         }
       }
+      die();
     } // end if $do
     // for all left in array match and update the records
     // use columns from import to figure out what columns are what
@@ -1010,7 +1013,6 @@ class lC_Products_import_export_Admin {
                        'tags',
                        );
     } else {
-
       // do the mapping of columns here with the mapdata
       $columns = array('categories_id',
                        'image',
