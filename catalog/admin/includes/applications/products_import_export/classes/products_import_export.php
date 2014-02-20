@@ -64,7 +64,7 @@ class lC_Products_import_export_Admin {
   */
   public static function getProducts($pfilter, $pgtype, $pgformat) {
     global $lC_Database, $lC_Datetime, $lC_Language;
-
+    
     // generate file name to use with this file
     $datetime = ''; // lC_Datetime::getTimestamp();
     $filename = 'products-' . $datetime . $pgtype;
@@ -147,7 +147,7 @@ class lC_Products_import_export_Admin {
 
     $sql_columns = implode(", ", $sql_columns);
 
-    $sql_statement = 'SELECT '.$sql_columns.' FROM :table_products_description pd, :table_weight_classes wc, :table_products p LEFT JOIN :table_manufacturers m ON (p.manufacturers_id = m.manufacturers_id) WHERE pd.products_id = p.products_id AND p.products_weight_class = wc.weight_class_id';
+    $sql_statement = 'SELECT ' . $sql_columns . ' FROM :table_products_description pd, :table_weight_classes wc, :table_products p LEFT JOIN :table_manufacturers m ON (p.manufacturers_id = m.manufacturers_id) WHERE pd.products_id = p.products_id AND p.products_weight_class = wc.weight_class_id';
 
     // make this section get the data and make a file in work folder for the url to be returned.
     $Qproducts = $lC_Database->query($sql_statement);
@@ -162,6 +162,7 @@ class lC_Products_import_export_Admin {
     }
 
     $columns[] = 'categories';
+    $columns[] = 'parent_categories';
     $columns[] = 'base_image';
 
     $products = array();
@@ -176,7 +177,8 @@ class lC_Products_import_export_Admin {
       foreach ($product as $column_output) {
         $content .= "\"" . trim(preg_replace('/\s+/', ' ', $column_output)) . "\"" . $delim;
       }
-
+      
+      // categories
       $Qcategories = $lC_Database->query("SELECT * FROM :table_products_to_categories ptc, :table_categories_description cd WHERE ptc.products_id = :products_id AND ptc.categories_id = cd.categories_id AND cd.language_id = :language_id");
       $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
@@ -187,21 +189,32 @@ class lC_Products_import_export_Admin {
       $categories = array();
       while ($Qcategories->next()) {
         $categories[] = $Qcategories->value('categories_name');
+        $catids[] = $Qcategories->value('categories_id');
       }
       $content .= "\"" . implode($seperator, $categories) . "\"" . $delim;
-
+      
+      foreach ($catids as $cat) {
+        $path = '';
+        $path = self::getParents($cat, $product['language_id']); 
+      }
+      $pathParts = explode(",", $path);
+      $pArr = array_reverse(array_filter($pathParts));
+      unset($catids);
+      
+      $content .= "\"" . implode($seperator, $pArr) . "\"" . $delim; 
+      
       $Qimage = $lC_Database->query("SELECT * FROM :table_products_images WHERE products_id = :products_id");
       $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
       $Qimage->bindInt(':products_id', $product['products_id']);
       $Qimage->execute();
 
-      $content .= $Qimage->value('image');
+      $content .= "\"" . $Qimage->value('image') . "\"" . $delim;
 
-      $content .= "\n";
+      $content .= "\n";  
 
       // $content .= '\'' . implode('\'' . "\t" . '\'', $product) . '\'' . "\n";
     }
-
+    
     $fp = fopen($filepath, "wb");
     fwrite($fp, implode($delim, $columns) . "\n" . $content);
     fclose($fp);
@@ -733,7 +746,7 @@ class lC_Products_import_export_Admin {
           $Qman->bindValue(':manufacturers_name', $product['manufacturer']);
           $Qman->execute();
 
-          if($Qman->numberOfRows()){
+          if ($Qman->numberOfRows()) {
             $product['manufacturers_id'] = $Qman->value('manufacturers_id');
           } else {
             // insert a manufacture that doesn't exist
@@ -742,7 +755,7 @@ class lC_Products_import_export_Admin {
             $QmanInsert->bindValue(':manufacturers_name', $product['manufacturer']);
             $QmanInsert->execute();
 
-            if($lC_Database->isError()){
+            if ($lC_Database->isError()) {
               $errormsg .= 'man insert err '.$lC_Database->getError();;
             } else {
               $product['manufacturers_id'] = $lC_Database->nextID();
@@ -782,19 +795,19 @@ class lC_Products_import_export_Admin {
           $Qproduct->setLogging($_SESSION['module'], $products_id);
           $Qproduct->execute();
           
-          //if ( $lC_Database->isError() ) {
-          //  $error = true;
-          //  $errormsg .= '   initial: ' . $products_id . ' ' . $lC_Database->getError();
-          //} else {
+          if ( $lC_Database->isError() ) {
+            $error = true;
+            $errormsg .= '   initial: ' . $products_id . ' ' . $lC_Database->getError();
+          } else {
             $Qcategories = $lC_Database->query('delete from :table_products_to_categories where products_id = :products_id');
             $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
             $Qcategories->bindInt(':products_id', $products_id);
-            //$Qcategories->setLogging($_SESSION['module'], $products_id);
-            //$Qcategories->execute();
+            $Qcategories->setLogging($_SESSION['module'], $products_id);
+            $Qcategories->execute();
             
-            //if ( $lC_Database->isError() ) {
-            //  $error = true;
-            //} else {
+            if ( $lC_Database->isError() ) {
+              $error = true;
+            } else {
               $categories = $product['categories'];
               if ( isset($categories) && !empty($categories) ) {
                 foreach ($categories as $category_id) {
@@ -802,17 +815,17 @@ class lC_Products_import_export_Admin {
                   $Qp2c->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
                   $Qp2c->bindInt(':products_id', $products_id);
                   $Qp2c->bindInt(':categories_id', $category_id);
-                  //$Qp2c->setLogging($_SESSION['module'], $products_id);
-                  //$Qp2c->execute();
+                  $Qp2c->setLogging($_SESSION['module'], $products_id);
+                  $Qp2c->execute();
                   
-                  //if ( $lC_Database->isError() ) {
-                  //  $error = true;
-                  //  break;
-                  //}
+                  if ( $lC_Database->isError() ) {
+                    $error = true;
+                    break;
+                  }
                 }
               }
-            //}
-          //}
+            }
+          }
 
           if ( $error === false ) {
             $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url WHERE products_id = :products_id AND language_id = :language_id');
@@ -947,7 +960,6 @@ class lC_Products_import_export_Admin {
           }
         }
       }
-      die();
     } // end if $do
     // for all left in array match and update the records
     // use columns from import to figure out what columns are what
@@ -1613,6 +1625,51 @@ class lC_Products_import_export_Admin {
     $iopreturn['total'] = $match_count+$insert_count;
 
     return $iopreturn;
+  }
+
+ /*
+  * Return the category parents for a product
+  *
+  * @param string $cat A category name
+  * @access public
+  * @return array
+  */
+  public static function getParents($id = null, $lang = 1) {
+    global $lC_Database, $lC_Language;
+    
+    $Qpid = $lC_Database->query("SELECT parent_id FROM :table_categories WHERE categories_id = :categories_id");
+    $Qpid->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qpid->bindInt(':categories_id', $id);
+    $Qpid->execute();
+    
+    $parents = '';
+    while ($Qpid->next()) {
+      $parent .= self::getParentName($Qpid->value('parent_id'), $lang);
+      if ($Qpid->value('parent_id') != 0) {
+        $parents .= $parent . ',' . self::getParents($Qpid->value('parent_id'), $lang);
+      }
+    }
+    
+    return $parents;
+  }
+
+ /*
+  * Return the category parent name
+  *
+  * @param id $id A category id
+  * @access public
+  * @return array
+  */
+  public static function getParentName($id = null, $lang = 1) {
+    global $lC_Database, $lC_Language;
+    
+    $Qcatname = $lC_Database->query("SELECT categories_name FROM :table_categories_description WHERE categories_id = :categories_id AND language_id = :language_id");
+    $Qcatname->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+    $Qcatname->bindInt(':categories_id', $id);
+    $Qcatname->bindInt(':language_id', $lang);
+    $Qcatname->execute();
+                    
+    return $Qcatname->value('categories_name');
   }
 }
 ?>
