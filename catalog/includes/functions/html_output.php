@@ -64,12 +64,16 @@ if (!function_exists('lc_href_link')) {
     }
 
     $link .= $page;
-
+    
     if (!empty($parameters)) {
       $link .= '?' . lc_output_string($parameters);
       $separator = '&';
     } else {
-      $separator = '?';
+      if (!stristr($link, '?')) {
+        $separator = '?';
+      } else {
+        $separator = '&';
+      }
     }
 
     while ( (substr($link, -1) == '&') || (substr($link, -1) == '?') ) {
@@ -86,15 +90,21 @@ if (!function_exists('lc_href_link')) {
         }
       }
     }
-
+    
+    $domain = parse_url($link);
+    
     if (isset($_sid)) {
-      $link .= $separator . lc_output_string($_sid);
+      if (!empty($domain['host']) && !stristr(HTTP_COOKIE_DOMAIN, $domain['host'])) {
+        $link = $link;
+      } else {
+        $link .= $separator . lc_output_string($_sid);
+      }
     }
 
     while (strstr($link, '&&')) {
       $link = str_replace('&&', '&', $link);
     }
-
+    
     if (!stristr($link, 'rpc.php')) {
       if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('seo')) {
         $cat_path = '';
@@ -157,7 +167,13 @@ if (!function_exists('lc_href_link')) {
           if ( (strpos($link, 'products.php') && !strpos($link, '&')) || (strpos($link, 'cPath=') && !strpos($link, '&')) ) {
             $link = str_replace(array('?', '&', '=', 'products.php'), array('/', '/', ',', 'product'), $link);
           } else {
-            $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
+            $str = array_unique(explode('http', $link));
+            if (!empty($str[2])) {
+              $parts = explode('?lCsid=', $str[2]);
+              $link = 'http' . $parts[0];              
+            } else { 
+              $link = str_replace(array('?', '&', '='), array('/', '/', ','), $link);
+            }
           }
         }
       } else {

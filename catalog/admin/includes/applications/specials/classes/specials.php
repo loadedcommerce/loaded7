@@ -140,7 +140,7 @@ class lC_Specials_Admin {
       $error = true;
     }
     
-    if ( $data['specials_expires_date'] < $data['specials_start_date'] ) {
+    if ( strtotime($data['specials_expires_date']) < strtotime($data['specials_start_date']) ) {
       $result['rpcStatus'] = -2;
       $error = true;
     }

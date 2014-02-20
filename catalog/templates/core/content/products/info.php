@@ -50,6 +50,7 @@
   }
   ?>
   <div class="col-sm-8 col-lg-8 clearfix">
+    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <?php
     $availability = ( (STOCK_CHECK == '1') && ($lC_ShoppingCart->isInStock($lC_Product->getID()) === false) ) ? '<span class="product-out-of-stock red">' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '</span>' : $lC_Product->getAttribute('shipping_availability');
     if ($lC_Product->getAttribute('manufacturers') != null || $lC_Product->hasModel()) {
@@ -59,7 +60,6 @@
            '</div>' . "\n";
     }
     ?>
-    <h1 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h1>
     <hr class="small-margin-top small-margin-bottom">
     <p class="content-products-info-desc"><?php echo ($lC_Product->getDescription() != null) ? $lC_Product->getDescription() : $lC_Language->get('no_description_available'); ?></p>
     <?php

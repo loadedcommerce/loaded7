@@ -1184,12 +1184,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
       foreach ($products_desc as $product) {      
         
         $permalink = preg_replace("/&.{0,}?;/", '', $product['products_name']);
-        $permalink = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $permalink);
+        $permalink = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\"", "%"), "-", $permalink);
         $permalink = str_replace("&", "and", $permalink);
         $permalink = str_replace(".", "", $permalink);
-        $permalink = str_replace("--", "-", $permalink);
-        $permalink = str_replace("---", "-", $permalink);
         $permalink = str_replace("----", "-", $permalink);
+        $permalink = str_replace("---", "-", $permalink);
+        $permalink = str_replace("--", "-", $permalink);
+        
+        if (preg_match('/product$/i', $permalink)) {
+          $permalink .= '-link';
+        }
         
         $tQry = $target_db->query('INSERT INTO :table_products_desc (products_id, 
                                                                      language_id, 
@@ -1361,7 +1365,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
           
           $cID = $sQry->value('categories_id') ;
           
-          //  #### getCPATH CODE         
+          // getCPATH CODE         
           
           $cat_list = $cID;
           $catID = $cID;
@@ -1396,15 +1400,19 @@ class lC_LocalUpgrader extends lC_Upgrader {
           }
           $cat_list = "cPath=" . $cat_list;
           
-          //  #### END getCPATH CODE         
+          // END getCPATH CODE         
         
           $permatext = preg_replace("/&.{0,}?;/", '', $sQry->value('products_name'));
-          $permatext = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $permatext);
+          $permatext = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\"", "%"), "-", $permatext);
           $permatext = str_replace("&", "and", $permatext);
           $permatext = str_replace(".", "", $permatext);
-          $permatext = str_replace("--", "-", $permatext);
-          $permatext = str_replace("---", "-", $permatext);
           $permatext = str_replace("----", "-", $permatext);
+          $permatext = str_replace("---", "-", $permatext);
+          $permatext = str_replace("--", "-", $permatext);
+        
+          if (preg_match('/product$/i', $permatext)) {
+            $permatext .= '-link';
+          }
           
           $permalink  = array(
                                 'item_id'       => $sQry->value('products_id')
@@ -1986,12 +1994,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
         
           $c_ID = $sQry->value('categories_id');
         
-          $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $sQry->value('categories_name'));
+          $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\"", "%"), "-", $sQry->value('categories_name'));
           $c_keyword = str_replace("&", "and", $c_keyword);
           $c_keyword = str_replace(".", "", $c_keyword);
-          $c_keyword = str_replace("--", "-", $c_keyword);
-          $c_keyword = str_replace("---", "-", $c_keyword);
           $c_keyword = str_replace("----", "-", $c_keyword);
+          $c_keyword = str_replace("---", "-", $c_keyword);
+          $c_keyword = str_replace("--", "-", $c_keyword);
+        
+          if (preg_match('/category$/i', $c_keyword)) {
+            $c_keyword .= '-link';
+          }
           
           $category  = array(
                                'categories_id'          => $c_ID
@@ -2073,12 +2085,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
                   
           //  #### END getCPATH CODE         
           
-          $permatext = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $sQry->value('categories_name'));
+          $permatext = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\"", "%"), "-", $sQry->value('categories_name'));
           $permatext = str_replace("&", "and", $permatext);
           $permatext = str_replace(".", "", $permatext);
-          $permatext = str_replace("--", "-", $permatext);
-          $permatext = str_replace("---", "-", $permatext);
           $permatext = str_replace("----", "-", $permatext);
+          $permatext = str_replace("---", "-", $permatext);
+          $permatext = str_replace("--", "-", $permatext);
+        
+          if (preg_match('/category$/i', $permatext)) {
+            $permatext .= '-link';
+          }
           
           $permalink  = array(
                                 'item_id'     => $c_ID
@@ -2258,12 +2274,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
 
           $c_mode = 'category';
           
-          $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $sQry->value($map['categories_name']));
+          $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\"", "%"), "-", $sQry->value($map['categories_name']));
           $c_keyword = str_replace("&", "and", $c_keyword);
           $c_keyword = str_replace(".", "", $c_keyword);
-          $c_keyword = str_replace("--", "-", $c_keyword);
+          $c_keyword = str_replace("----", "-", $c_keyword);
           $c_keyword = str_replace("---", "-", $c_keyword);
-          $c_keyword = str_replace("----", "-", $c_keyword); 
+          $c_keyword = str_replace("--", "-", $c_keyword);
+        
+          if (preg_match('/category$/i', $c_keyword)) {
+            $c_keyword .= '-link';
+          } 
           
           // added for category custom url (6.5 url override, only for external links and links to products) 
           if ($sQry->value('categories_url_override') != '') {
@@ -2354,12 +2374,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
         if ($numrows > 0) { 
           $cnt = 0;
           while ($sQry->next()) {
-            $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $sQry->value('categories_name'));
+            $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\"", "%"), "-", $sQry->value('categories_name'));
             $c_keyword = str_replace("&", "and", $c_keyword);
             $c_keyword = str_replace(".", "", $c_keyword);
-            $c_keyword = str_replace("--", "-", $c_keyword);
-            $c_keyword = str_replace("---", "-", $c_keyword);
             $c_keyword = str_replace("----", "-", $c_keyword);
+            $c_keyword = str_replace("---", "-", $c_keyword);
+            $c_keyword = str_replace("--", "-", $c_keyword);
+        
+            if (preg_match('/category$/i', $c_keyword)) {
+              $c_keyword .= '-link';
+            }
             
             $tQry = $target_db->query('INSERT INTO :table_categories_desc (categories_id, 
                                                                            language_id, 
@@ -2431,12 +2455,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
             $cID = 0;
           }
           
-          $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $sQry->value('pages_title'));
+          $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\"", "%"), "-", $sQry->value('pages_title'));
           $c_keyword = str_replace("&", "and", $c_keyword);
           $c_keyword = str_replace(".", "", $c_keyword);
-          $c_keyword = str_replace("--", "-", $c_keyword);
-          $c_keyword = str_replace("---", "-", $c_keyword);
           $c_keyword = str_replace("----", "-", $c_keyword);
+          $c_keyword = str_replace("---", "-", $c_keyword);
+          $c_keyword = str_replace("--", "-", $c_keyword);
+        
+          if (preg_match('/category$/i', $c_keyword)) {
+            $c_keyword .= '-link';
+          }
           
           $page  = array(
                            'categories_id'             => $sQry->value('pages_id')
@@ -2512,12 +2540,16 @@ class lC_LocalUpgrader extends lC_Upgrader {
         if ($numrows > 0) { 
           while ($sQry->next()) {
 
-            $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\""), "-", $sQry->value('pages_title'));
+            $c_keyword = str_replace(array(" ", ",", "/", "(", ")", "'", ":", "?", ";", "\"", "%"), "-", $sQry->value('pages_title'));
             $c_keyword = str_replace("&", "and", $c_keyword);
             $c_keyword = str_replace(".", "", $c_keyword);
-            $c_keyword = str_replace("--", "-", $c_keyword);
-            $c_keyword = str_replace("---", "-", $c_keyword);
             $c_keyword = str_replace("----", "-", $c_keyword);
+            $c_keyword = str_replace("---", "-", $c_keyword);
+            $c_keyword = str_replace("--", "-", $c_keyword);
+        
+            if (preg_match('/category$/i', $c_keyword)) {
+              $c_keyword .= '-link';
+            }
             
             $tQry = $target_db->query('INSERT INTO :table_categories_desc (categories_id, 
                                                                            language_id, 

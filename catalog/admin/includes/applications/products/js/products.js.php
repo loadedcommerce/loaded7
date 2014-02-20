@@ -84,8 +84,13 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       if (!$pInfo) { 
         foreach ( $lC_Language->getAll() as $l ) { 
       ?>
-      $("#products_name_<?php echo $l['id']; ?>").blur(function(){
-        $("#products_keyword_<?php echo $l['id']; ?>").val($("#products_name_<?php echo $l['id']; ?>").val().toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, ''));
+      $("#products_name_<?php echo $l['id']; ?>").blur(function(){ 
+        var prodPermLink = $("#products_name_<?php echo $l['id']; ?>").val().toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '').replace(/---/g, '-').replace(/--/g, '-');
+        if (prodPermLink.match(/product$/i)) {
+          prodPermLink = prodPermLink + '-link';
+        }
+        validatePermalink(prodPermLink);
+        $("#products_keyword_<?php echo $l['id']; ?>").val(prodPermLink).focus();
       });
       <?php 
         } 
@@ -640,8 +645,8 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       // turn off messages
       jQuery.validator.messages.required = "";
 
-      var iid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
-      var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validatePermalink&iid=IID&type=2'); ?>';
+      var pid = '<?php echo $_GET[$lC_Template->getModule()]; ?>';
+      var jsonVKUrl = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=validatePermalink&pid=PID&type=2'); ?>';
       var bValid = $("#product").validate({
         invalidHandler: function() {
         },
@@ -650,7 +655,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           foreach ( $lC_Language->getAll() as $l ) {
             ?>
             'products_keyword[<?php echo $l['id']; ?>]': {
-              remote: jsonVKUrl.replace('IID', iid),
+              remote: jsonVKUrl.replace('PID', pid),
             },
             <?php
           }
@@ -661,13 +666,14 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           <?php
           foreach ( $lC_Language->getAll() as $l ) {
             ?>
-            "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_exists'); ?>",
+            "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_invalid'); ?>",
             <?php
           }
           ?>
         } 
       }).form();
       $("#languageTabs").refreshTabs();
+      $("#products_price0").removeClass("error");
 
       return false;
     }       

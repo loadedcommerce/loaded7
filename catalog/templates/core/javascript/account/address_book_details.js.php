@@ -20,6 +20,11 @@ function getZonesDropdown(country, zone) {
         return false;
       }
       $('.address-book-state-container').html(data.zonesHtml);
+      if (country != 223) {
+        $("#postcode").attr("placeholder", "<?php echo $lC_Language->get('field_customer_post_code'); ?>");
+      } else {
+        $("#postcode").attr("placeholder", "<?php echo $lC_Language->get('field_customer_zip_code'); ?>");
+      }
     }
   );
 }

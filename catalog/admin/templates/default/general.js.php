@@ -88,6 +88,8 @@ $(document).ready(function() {
       $("#big-menu_featured_products").addClass('current navigable-current').change();
     } else if (module.indexOf("coupons") != -1 && document.location.href.indexOf("coupons") != -1) {
       $("#big-menu_coupon_manager").addClass('current navigable-current').change();
+    } else if (module.indexOf("branding_manager") != -1 && document.location.href.indexOf("branding_manager") != -1) {
+      $("#big-menu_branding_manager").addClass('current navigable-current').change();
     } else if (module.indexOf("orders") != -1 && document.location.href.indexOf("action=save") != -1) {
       $("#big-menu_orders_list").addClass('current navigable-current').change();
     } else if (module.indexOf("product_variants") != -1 && document.location.href.indexOf("product_variants") != -1) {
@@ -174,11 +176,17 @@ $(document).ready(function() {
     });
     // when a key is pressed 
     $("*").keypress(function(e){
-      // check to see if input is datatables search
-      var attr = $("#batch input").attr('aria-controls');
-      if (attr) {
-        disableKeyCombo = true;
-      }
+      // added for datatables search input issue
+      var escCheck = e.keyCode ? e.keyCode : e.which;
+      if (escCheck == 27) {
+        $("input[aria-controls='dataTable']").removeClass("focus").blur();
+        disableKeyCombo = false;
+      } else {         
+        var attr = $("input[aria-controls='dataTable']").hasClass("focus");
+        if (attr) {
+          disableKeyCombo = true;
+        }
+      }      
       // if the disable var is false we continue
       if (!disableKeyCombo == true) {
         // first check if the escape key has been presed

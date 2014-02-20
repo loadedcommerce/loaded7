@@ -80,6 +80,7 @@ ms_error_nothing_to_move = You have not selected anything to move!
 ms_error_image_directory_not_writable = Error: The directory containing the category images is not writable: %s
 ms_error_image_directory_non_existant = Error: The directory to store the category images does not exist: %s 
 ms_error_categories_permalink_exists = That Permalink already exists. Please try another.
+ms_error_categories_permalink_invalid = Error: This category permalink is invalid or already exists. Category permalinks must contain only uppercase and lowercase letters and numbers (a-z or A-Z or 0-9), and can be separated by dashes (-) only.
 ms_error_categories_permalink_required = The Permalink is required.
 
 section_general = Content
