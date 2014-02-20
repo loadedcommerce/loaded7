@@ -519,12 +519,16 @@
 }
 
 #loaded7 .content-shopping-cart-qty-input {
-  width: 60px;
+  text-align: center; width: 67% !important; float: right; margin-right: 26px; 
 }
-
+  
 #loaded7 .content-shopping-cart-remove-td {
   width: 16px;
 }
+
+#loaded7 #shopping-cart-table em { font-size:0.9em; font-style:italic; font-weight:200; }
+#loaded7 #content-shopping-cart-order-totals { margin-right:25px; }
+#loaded7 .cart-options-div { line-height:1.1; }
 
 #loaded7 .content-checkout-confirmation-qty-td {
   width: 30px;
