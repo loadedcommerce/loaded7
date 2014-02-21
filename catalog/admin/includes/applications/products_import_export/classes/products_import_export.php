@@ -610,7 +610,7 @@ class lC_Products_import_export_Admin {
 
     $uploaddir = DIR_FS_WORK . 'products_import_export/imports/';
     $uploadfile = $uploaddir . basename($filename);
-
+    
     if (is_null($pmapdata)) {
       $columns = array('id',
                        'parent_id',
@@ -878,9 +878,10 @@ class lC_Products_import_export_Admin {
 
           $lC_Database->startTransaction();
 
-          $Qproduct = $lC_Database->query('insert into :table_products (products_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id, products_date_added) values (:products_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :manufacturers_id, :products_date_added)');
+          $Qproduct = $lC_Database->query('insert into :table_products (products_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id, products_date_added, products_last_modified) values (:products_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :manufacturers_id, :products_date_added, :products_last_modified)');
           $Qproduct->bindInt(':products_id', $products_id);
           $Qproduct->bindRaw(':products_date_added', 'now()');
+          $Qproduct->bindRaw(':products_last_modified', 'now()');
           $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
           $Qproduct->bindInt(':products_quantity', $product['quantity']);
           $Qproduct->bindFloat(':products_cost', $product['cost']);
@@ -905,10 +906,10 @@ class lC_Products_import_export_Admin {
             $Qcategories->setLogging($_SESSION['module'], $products_id);
             $Qcategories->execute();
 
-            if ( $lC_Database->isError() ) { 
+            if ( $lC_Database->isError() ) {
               $error = true;
             } else {
-              $categories = explode(',', $product['categories']);
+              $categories = $product['categories'];
               if ( isset($categories) && !empty($categories) ) {
                 foreach ($categories as $category_id) {
                   $Qp2c = $lC_Database->query('insert into :table_products_to_categories (products_id, categories_id) values (:products_id, :categories_id)');
@@ -1158,14 +1159,12 @@ class lC_Products_import_export_Admin {
           $Qcat->setLogging($_SESSION['module'], $id);
           $Qcat->execute();
 
-
           // remove this line from categories for it to be re inserted
           $Qrcd = $lC_Database->query('delete from :table_categories_description where categories_id = :categories_id and language_id = :language_id');
           $Qrcd->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
           $Qrcd->bindInt(':categories_id', $categories_id);
           $Qrcd->bindInt(':language_id', $category['language_id']);
           $Qrcd->execute();
-
 
           $Qcd = $lC_Database->query('insert into :table_categories_description (categories_id, language_id, categories_name, categories_menu_name, categories_blurb, categories_description, categories_tags) values (:categories_id, :language_id, :categories_name, :categories_menu_name, :categories_blurb, :categories_description, :categories_tags)');
 
@@ -1320,7 +1319,7 @@ class lC_Products_import_export_Admin {
 
           $lC_Database->startTransaction();
 
-          $Qcat = $lC_Database->query('insert into :table_products_variants_groups (id, languages_id, title, sort_order, module) values (:id, :languages_id, :title, :sort_order, :module');
+          $Qcat = $lC_Database->query('insert into :table_products_variants_groups (id, languages_id, title, sort_order, module) values (:id, :languages_id, :title, :sort_order, :module)');
           $Qcat->bindInt(':id', $group['id']);
           $Qcat->bindInt(':languages_id', $group['languages_id']);
 
@@ -1329,6 +1328,7 @@ class lC_Products_import_export_Admin {
           $Qcat->bindInt(':sort_order', $group['sort_order']);
           $Qcat->bindValue(':module', $group['module']);
           $Qcat->setLogging($_SESSION['module'], $group_id);
+          
           $Qcat->execute();
 
           if ( $lC_Database->isError() ) {
@@ -1466,7 +1466,7 @@ class lC_Products_import_export_Admin {
 
           $lC_Database->startTransaction();
 
-          $Qvar = $lC_Database->query('insert into :table_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) values (:id, :languages_id, :products_variants_groups_id, :title, :sort_order');
+          $Qvar = $lC_Database->query('insert into :table_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) values (:id, :languages_id, :products_variants_groups_id, :title, :sort_order)');
           $Qvar->bindInt(':id', $variant['id']);
           $Qvar->bindInt(':languages_id', $variant['languages_id']);
 
@@ -1556,7 +1556,7 @@ class lC_Products_import_export_Admin {
       while (($data = fgetcsv($handle, null, $delim)) !== FALSE) {
         $num = count($data);
         for ($c=0; $c < $num; $c++) {
-          if($row != 0){
+          if ($row != 0) {
             $import_array[$row][$columns[$c]] = $data[$c];
           }
         }
@@ -1607,38 +1607,40 @@ class lC_Products_import_export_Admin {
 
           $Qcheck->freeResult();
         } else {
-          // the product simple option value doesnt exist so lets write it into the database
-          $insert_count++;
+          if (isset($vproduct['id']) && !empty($vproduct['id'])) {
+            // the product simple option value doesnt exist so lets write it into the database
+            $insert_count++;
 
-          $error = false;
+            $error = false;
 
-          $lC_Database->startTransaction();
+            $lC_Database->startTransaction();
 
-          $Qvprod = $lC_Database->query('insert into :table_products_simple_options_values (products_id, customers_group_id, values_id, options_id, sort_order, price_modifier) values (:products_id, :customers_group_id, :values_id, :options_id, :sort_order, :price_modifier)');
-          
-          $Qvprod->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
-          $Qvprod->bindInt(':products_id', $vproduct['products_id']);
-          $Qvprod->bindInt(':customers_group_id', $vproduct['customers_group_id']);
-          $Qvprod->bindInt(':values_id', $vproduct['values_id']);
-          $Qvprod->bindInt(':options_id', $vproduct['options_id']);
-          $Qvprod->bindInt(':sort_order', $vproduct['sort_order']);
-          $Qvprod->bindInt(':price_modifier', $vproduct['price_modifier']);
-          $Qvprod->setLogging($_SESSION['module'], $vproduct_id);
-          $Qvprod->execute();
+            $Qvprod = $lC_Database->query('insert into :table_products_simple_options_values (products_id, customers_group_id, values_id, options_id, sort_order, price_modifier) values (:products_id, :customers_group_id, :values_id, :options_id, :sort_order, :price_modifier)');
+            
+            $Qvprod->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+            $Qvprod->bindInt(':products_id', $vproduct['products_id']);
+            $Qvprod->bindInt(':customers_group_id', $vproduct['customers_group_id']);
+            $Qvprod->bindInt(':values_id', $vproduct['values_id']);
+            $Qvprod->bindInt(':options_id', $vproduct['options_id']);
+            $Qvprod->bindInt(':sort_order', $vproduct['sort_order']);
+            $Qvprod->bindInt(':price_modifier', $vproduct['price_modifier']);
+            $Qvprod->setLogging($_SESSION['module'], $vproduct_id);
+            $Qvprod->execute();
 
-          if ( $lC_Database->isError() ) {
-            $error = true;
-            break;
-          }
+            if ( $lC_Database->isError() ) {
+              $error = true;
+              break;
+            }
 
-          if ( $error === false ) {
-            $lC_Database->commitTransaction();
-          } else {
-            $lC_Database->rollbackTransaction();
+            if ( $error === false ) {
+              $lC_Database->commitTransaction();
+            } else {
+              $lC_Database->rollbackTransaction();
+            }
           } 
         }
       }
-    } // end if $do
+    } // end if $do 
     // for all left in array match and update the records
     // use columns from import to figure out what columns are what
     if ($error || $errormsg != '') {
