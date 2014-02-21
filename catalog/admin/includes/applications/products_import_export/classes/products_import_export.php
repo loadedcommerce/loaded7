@@ -1277,7 +1277,7 @@ class lC_Products_import_export_Admin {
 
         // check for a match in the database	  
         $Qcheck = $lC_Database->query("SELECT * FROM :table_products_variants_groups WHERE id = :id and language_id = :language_id");
-        $Qcheck->bindTable(':table_products_variants_groups', 'products_variants_groups');
+        $Qcheck->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
         $Qcheck->bindInt(':id', $group_id);
         $Qcheck->bindInt(':language_id', $group['language_id']);
         $group_check = $Qcheck->numberOfRows();
@@ -1293,7 +1293,7 @@ class lC_Products_import_export_Admin {
           $Qcat->bindInt(':id', $group['id']);
           $Qcat->bindInt(':language_id', $group['language_id']);
 
-          $Qcat->bindTable(':table_products_variants_groups', 'products_variants_groups');
+          $Qcat->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
           $Qcat->bindValue(':title', $group['title']);
           $Qcat->bindInt(':sort_order', $group['sort_order']);
           $Qcat->bindValue(':module', $group['module']);
@@ -1313,7 +1313,7 @@ class lC_Products_import_export_Admin {
           $Qcat->bindInt(':id', $group['id']);
           $Qcat->bindInt(':language_id', $group['language_id']);
 
-          $Qcat->bindTable(':table_products_variants_groups', 'products_variants_groups');
+          $Qcat->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
           $Qcat->bindValue(':title', $group['title']);
           $Qcat->bindInt(':sort_order', $group['sort_order']);
           $Qcat->bindValue(':module', $group['module']);
@@ -1422,7 +1422,7 @@ class lC_Products_import_export_Admin {
 
         // check for a match in the database	  
         $Qcheck = $lC_Database->query("SELECT * FROM :table_products_variants_values WHERE id = :id AND languages_id = :languages_id");
-        $Qcheck->bindTable(':table_products_variants_values', 'products_variants_values');
+        $Qcheck->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
         $Qcheck->bindInt(':id', $variant_id);
         $Qcheck->bindInt(':languages_id', $variant['languages_id']);
         $variant_check = $Qcheck->numberOfRows();
@@ -1438,7 +1438,7 @@ class lC_Products_import_export_Admin {
           $Qvar->bindInt(':id', $variant['id']);
           $Qvar->bindInt(':languages_id', $variant['languages_id']);
 
-          $Qvar->bindTable(':table_products_variants_values', 'products_variants_values');
+          $Qvar->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
           $Qvar->bindInt(':groups_id', $variant['groups_id']);
           $Qvar->bindValue(':title', $variant['title']);
           $Qvar->bindInt(':sort_order', $variant['sort_order']);
@@ -1458,7 +1458,7 @@ class lC_Products_import_export_Admin {
           $Qvar->bindInt(':id', $variant['id']);
           $Qvar->bindInt(':languages_id', $variant['languages_id']);
 
-          $Qvar->bindTable(':table_products_variants_values', 'products_variants_values');
+          $Qvar->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
           $Qvar->bindInt(':groups_id', $variant['groups_id']);
           $Qvar->bindValue(':title', $variant['title']);
           $Qvar->bindInt(':sort_order', $variant['sort_order']);
@@ -1568,7 +1568,7 @@ class lC_Products_import_export_Admin {
 
         // check for a match in the database	  
         $Qcheck = $lC_Database->query("SELECT * FROM :table_products_simple_options_values WHERE id = :id");
-        $Qcheck->bindTable(':table_products_simple_options_values', 'products_simple_options_values');
+        $Qcheck->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
         $Qcheck->bindInt(':id', $vproduct_id);
         $vproduct_check = $Qcheck->numberOfRows();
 
@@ -1582,7 +1582,7 @@ class lC_Products_import_export_Admin {
           $Qvprod = $lC_Database->query('update :table_products_simple_options_values set customers_group_id = :customers_group_id, values_id = :values_id, options_id = :options_id, price_modifier = :price_modifier where id = :id');
           $Qvprod->bindInt(':id', $vproduct['id']);
 
-          $Qvprod->bindTable(':table_products_simple_options_values', 'products_simple_options_values');
+          $Qvprod->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
           $Qvprod->bindInt(':customers_group_id', $vproduct['customers_group_id']);
           $Qvprod->bindInt(':values_id', $vproduct['values_id']);
           $Qvprod->bindInt(':options_id', $vproduct['options_id']);
@@ -1602,7 +1602,7 @@ class lC_Products_import_export_Admin {
           $Qvprod = $lC_Database->query('insert into :table_products_simple_options_values (id, title, sort_order, module) values (:id, :language_id, :title, :sort_order, :module');
           $Qvprod->bindInt(':id', $vproduct['id']);
 
-          $Qvprod->bindTable(':table_products_simple_options_values', 'products_simple_options_values');
+          $Qvprod->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
           $Qvprod->bindInt(':customers_group_id', $vproduct['customers_group_id']);
           $Qvprod->bindInt(':values_id', $vproduct['values_id']);
           $Qvprod->bindInt(':options_id', $vproduct['options_id']);
