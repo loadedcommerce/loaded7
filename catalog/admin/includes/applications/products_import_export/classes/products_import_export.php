@@ -524,15 +524,19 @@ class lC_Products_import_export_Admin {
     // make columns in clude full table names to i can implode into sql statement
     // add image and category and other product tables to columns and query
     $sql_columns = array('psov.id',
+                         'psov.products_id',
                          'psov.customers_group_id',
                          'psov.values_id',
                          'psov.options_id',
+                         'psov.sort_order',
                          'psov.price_modifier',
                          );
     $columns = array('id',
+                     'products_id',
                      'customers_group_id',
                      'values_id',
                      'options_id',
+                     'sort_order',
                      'price_modifier',
                      );
 
@@ -1070,7 +1074,7 @@ class lC_Products_import_export_Admin {
 
     $row = 0;
     if (($handle = fopen($uploadfile, "r")) !== FALSE) {
-      while (($data = fgetcsv($handle, 1000, "\t")) !== FALSE) {
+      while (($data = fgetcsv($handle, null, "\t")) !== FALSE) {
         $num = count($data);
         for ($c=0; $c < $num; $c++) {
           if($row != 0){
@@ -1230,7 +1234,7 @@ class lC_Products_import_export_Admin {
 
     if (is_null($mapdata)) {
       $columns = array('id',
-                       'language_id',
+                       'languages_id',
                        'title',
                        'sort_order',
                        'module',
@@ -1250,10 +1254,10 @@ class lC_Products_import_export_Admin {
 
     $row = 0;
     if (($handle = fopen($uploadfile, "r")) !== FALSE) {
-      while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
+      while (($data = fgetcsv($handle, null, $delim)) !== FALSE) {
         $num = count($data);
         for ($c=0; $c < $num; $c++) {
-          if($row != 0){
+          if ($row != 0) {
             $import_array[$row][$columns[$c]] = $data[$c];
           }
         }
@@ -1261,38 +1265,42 @@ class lC_Products_import_export_Admin {
       }
       fclose($handle);
     }
-
+    
     $match_count = 0;
     $insert_count = 0;
-
+    
     if ($owizard) {
       // o wizard stuff like return columns and etc.
     } else {
       // do the import as usual
       // utilize import array to go through each column and run on each to check for product id and if not matched import and remove from arrray
       $znum = count($import_array);
-      for ($z=0; $z < $znum; $z++) {
+      for ($z=1; $z < $znum+1; $z++) {
         $group = $import_array[$z];
+        
         // Get the products ID for control
         $group_id = $group['id'];
 
         // check for a match in the database	  
-        $Qcheck = $lC_Database->query("SELECT * FROM :table_products_variants_groups WHERE id = :id and language_id = :language_id");
+        $Qcheck = $lC_Database->query("SELECT * FROM :table_products_variants_groups WHERE id = :id and languages_id = :languages_id");
         $Qcheck->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
         $Qcheck->bindInt(':id', $group_id);
-        $Qcheck->bindInt(':language_id', $group['language_id']);
+        $Qcheck->bindInt(':languages_id', $group['languages_id']);
+        $Qcheck->execute();
+        
         $group_check = $Qcheck->numberOfRows();
 
         if ($group_check > 0) {
+          
           // the product exists in the database so were just going to update the product with the new data
           $match_count++;
 
           // build data array of product information
           $lC_Database->startTransaction();
 
-          $Qcat = $lC_Database->query('update :table_products_variants_groups set title = :title, sort_order = :sort_order, module = :module where id = :id and language_id = :language_id');
+          $Qcat = $lC_Database->query('update :table_products_variants_groups set title = :title, sort_order = :sort_order, module = :module where id = :id and languages_id = :languages_id');
           $Qcat->bindInt(':id', $group['id']);
-          $Qcat->bindInt(':language_id', $group['language_id']);
+          $Qcat->bindInt(':languages_id', $group['languages_id']);
 
           $Qcat->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
           $Qcat->bindValue(':title', $group['title']);
@@ -1300,6 +1308,8 @@ class lC_Products_import_export_Admin {
           $Qcat->bindValue(':module', $group['module']);
           $Qcat->setLogging($_SESSION['module'], $group_id);
           $Qcat->execute();
+          
+          $Qcheck->freeResult();
 
         } else {
           // the product doesnt exist so lets write it into the database
@@ -1310,9 +1320,9 @@ class lC_Products_import_export_Admin {
 
           $lC_Database->startTransaction();
 
-          $Qcat = $lC_Database->query('insert into :table_products_variants_groups (id, language_id, title, sort_order, module) values (:id, :language_id, :title, :sort_order, :module');
+          $Qcat = $lC_Database->query('insert into :table_products_variants_groups (id, languages_id, title, sort_order, module) values (:id, :languages_id, :title, :sort_order, :module');
           $Qcat->bindInt(':id', $group['id']);
-          $Qcat->bindInt(':language_id', $group['language_id']);
+          $Qcat->bindInt(':languages_id', $group['languages_id']);
 
           $Qcat->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
           $Qcat->bindValue(':title', $group['title']);
@@ -1376,7 +1386,7 @@ class lC_Products_import_export_Admin {
     if (is_null($mapdata)) {
       $columns = array('id',
                        'languages_id',
-                       'groups_id',
+                       'variants_groups_id',
                        'title',
                        'sort_order',
                        );
@@ -1395,18 +1405,18 @@ class lC_Products_import_export_Admin {
 
     $row = 0;
     if (($handle = fopen($uploadfile, "r")) !== FALSE) {
-      while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
+      while (($data = fgetcsv($handle, null, $delim)) !== FALSE) {
         $num = count($data);
         for ($c=0; $c < $num; $c++) {
           if($row != 0){
-            $import_array[][$columns[$c]] = $data[$c];
+            $import_array[$row][$columns[$c]] = $data[$c];
           }
         }
         $row++;
       }
       fclose($handle);
     }
-
+    
     $match_count = 0;
     $insert_count = 0;
 
@@ -1416,7 +1426,7 @@ class lC_Products_import_export_Admin {
       // do the import as usual
       // utilize import array to go through each column and run on each to check for product id and if not matched import and remove from arrray
       $znum = count($import_array);
-      for ($z=0; $z < $znum; $z++) {
+      for ($z=1; $z < $znum+1; $z++) {
         $variant = $import_array[$z];
         // Get the products ID for control
         $variant_id = $variant['id'];
@@ -1435,17 +1445,18 @@ class lC_Products_import_export_Admin {
           // build data array of product information
           $lC_Database->startTransaction();
 
-          $Qvar = $lC_Database->query('update :table_products_variants_values set groups_id = :groups_id, title = :title, sort_order = :sort_order where id = :id and languages_id = :languages_id');
+          $Qvar = $lC_Database->query('update :table_products_variants_values set products_variants_groups_id = :products_variants_groups_id, title = :title, sort_order = :sort_order where id = :id and languages_id = :languages_id');
           $Qvar->bindInt(':id', $variant['id']);
           $Qvar->bindInt(':languages_id', $variant['languages_id']);
 
           $Qvar->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-          $Qvar->bindInt(':groups_id', $variant['groups_id']);
+          $Qvar->bindInt(':products_variants_groups_id', $variant['variants_groups_id']);
           $Qvar->bindValue(':title', $variant['title']);
           $Qvar->bindInt(':sort_order', $variant['sort_order']);
           $Qvar->setLogging($_SESSION['module'], $variant_id);
           $Qvar->execute();
 
+          $Qcheck->freeResult();
         } else {
           // the product doesnt exist so lets write it into the database
           $insert_count++;
@@ -1455,12 +1466,12 @@ class lC_Products_import_export_Admin {
 
           $lC_Database->startTransaction();
 
-          $Qvar = $lC_Database->query('insert into :table_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) values (:id, :languages_id, :groups_id, :title, :sort_order');
+          $Qvar = $lC_Database->query('insert into :table_products_variants_values (id, languages_id, products_variants_groups_id, title, sort_order) values (:id, :languages_id, :products_variants_groups_id, :title, :sort_order');
           $Qvar->bindInt(':id', $variant['id']);
           $Qvar->bindInt(':languages_id', $variant['languages_id']);
 
           $Qvar->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
-          $Qvar->bindInt(':groups_id', $variant['groups_id']);
+          $Qvar->bindInt(':products_variants_groups_id', $variant['variants_groups_id']);
           $Qvar->bindValue(':title', $variant['title']);
           $Qvar->bindInt(':sort_order', $variant['sort_order']);
           $Qvar->setLogging($_SESSION['module'], $variant_id);
@@ -1518,14 +1529,15 @@ class lC_Products_import_export_Admin {
     // $other .= 'Upload Dir: ' . $uploaddir;
     $uploadfile = $uploaddir . basename($filename);
 
-    if (is_null($mapdata)) {
-
+    if (is_null($mapdata)) { 
       $columns = array('id',
-        'customers_group_id',
-        'values_id',
-        'options_id',
-        'price_modifier',
-      );
+                       'products_id',
+                       'customers_group_id',
+                       'values_id',
+                       'options_id',
+                       'sort_order',
+                       'price_modifier',
+                       );
     } else {
       // do the mapping of columns here with the mapdata
     }
@@ -1541,7 +1553,7 @@ class lC_Products_import_export_Admin {
 
     $row = 0;
     if (($handle = fopen($uploadfile, "r")) !== FALSE) {
-      while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
+      while (($data = fgetcsv($handle, null, $delim)) !== FALSE) {
         $num = count($data);
         for ($c=0; $c < $num; $c++) {
           if($row != 0){
@@ -1552,7 +1564,7 @@ class lC_Products_import_export_Admin {
       }
       fclose($handle);
     }
-
+    
     $match_count = 0;
     $insert_count = 0;
 
@@ -1562,7 +1574,7 @@ class lC_Products_import_export_Admin {
       // do the import as usual
       // utilize import array to go through each column and run on each to check for product id and if not matched import and remove from arrray
       $znum = count($import_array);
-      for ($z=0; $z < $znum; $z++) {
+      for ($z=1; $z < $znum+1; $z++) {
         $vproduct = $import_array[$z];
         // Get the products ID for control
         $vproduct_id = $vproduct['id'];
@@ -1574,39 +1586,42 @@ class lC_Products_import_export_Admin {
         $vproduct_check = $Qcheck->numberOfRows();
 
         if ($vproduct_check > 0) {
-          // the product exists in the database so were just going to update the product with the new data
+          // the product simple option value exists in the database so were just going to update with the new data
           $match_count++;
 
-          // build data array of product information
+          // build data array of simple option valus information
           $lC_Database->startTransaction();
 
-          $Qvprod = $lC_Database->query('update :table_products_simple_options_values set customers_group_id = :customers_group_id, values_id = :values_id, options_id = :options_id, price_modifier = :price_modifier where id = :id');
+          $Qvprod = $lC_Database->query('update :table_products_simple_options_values set products_id = :products_id, customers_group_id = :customers_group_id, values_id = :values_id, options_id = :options_id, sort_order = :sort_order, price_modifier = :price_modifier where id = :id');
           $Qvprod->bindInt(':id', $vproduct['id']);
 
           $Qvprod->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+          $Qvprod->bindInt(':products_id', $vproduct['products_id']);
           $Qvprod->bindInt(':customers_group_id', $vproduct['customers_group_id']);
           $Qvprod->bindInt(':values_id', $vproduct['values_id']);
           $Qvprod->bindInt(':options_id', $vproduct['options_id']);
+          $Qvprod->bindInt(':sort_order', $vproduct['sort_order']);
           $Qvprod->bindInt(':price_modifier', $vproduct['price_modifier']);
           $Qvprod->setLogging($_SESSION['module'], $vproduct_id);
           $Qvprod->execute();
 
+          $Qcheck->freeResult();
         } else {
-          // the product doesnt exist so lets write it into the database
+          // the product simple option value doesnt exist so lets write it into the database
           $insert_count++;
 
-          // Insert using code from the catgories class
           $error = false;
 
           $lC_Database->startTransaction();
 
-          $Qvprod = $lC_Database->query('insert into :table_products_simple_options_values (id, title, sort_order, module) values (:id, :language_id, :title, :sort_order, :module');
-          $Qvprod->bindInt(':id', $vproduct['id']);
-
+          $Qvprod = $lC_Database->query('insert into :table_products_simple_options_values (products_id, customers_group_id, values_id, options_id, sort_order, price_modifier) values (:products_id, :customers_group_id, :values_id, :options_id, :sort_order, :price_modifier)');
+          
           $Qvprod->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+          $Qvprod->bindInt(':products_id', $vproduct['products_id']);
           $Qvprod->bindInt(':customers_group_id', $vproduct['customers_group_id']);
           $Qvprod->bindInt(':values_id', $vproduct['values_id']);
           $Qvprod->bindInt(':options_id', $vproduct['options_id']);
+          $Qvprod->bindInt(':sort_order', $vproduct['sort_order']);
           $Qvprod->bindInt(':price_modifier', $vproduct['price_modifier']);
           $Qvprod->setLogging($_SESSION['module'], $vproduct_id);
           $Qvprod->execute();
