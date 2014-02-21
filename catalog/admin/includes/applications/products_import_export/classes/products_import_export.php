@@ -156,7 +156,7 @@ class lC_Products_import_export_Admin {
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindTable(':table_manufacturers', TABLE_MANUFACTURERS);
     $Qproducts->execute();
-
+    
     if ($lC_Database->isError()) {
       $errormsg .= $lC_Database->getError();
     }
@@ -169,7 +169,7 @@ class lC_Products_import_export_Admin {
     while ($Qproducts->next()) {
       $products[] = $Qproducts->toArray();
     }
-
+    
     // seperate out all categories and images and comma delimited columns
 
     $content = '';
@@ -179,13 +179,13 @@ class lC_Products_import_export_Admin {
       }
       
       // categories
-      $Qcategories = $lC_Database->query("SELECT * FROM :table_products_to_categories ptc, :table_categories_description cd WHERE ptc.products_id = :products_id AND ptc.categories_id = cd.categories_id AND cd.language_id = :language_id");
+      $Qcategories = $lC_Database->query("SELECT cd.* FROM :table_products_to_categories ptc, :table_categories_description cd WHERE ptc.products_id = :products_id AND ptc.categories_id = cd.categories_id AND cd.language_id = :language_id");
       $Qcategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
       $Qcategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qcategories->bindInt(':products_id', $product['products_id']);
       $Qcategories->bindInt(':language_id', $product['language_id']);
       $Qcategories->execute();
-
+      
       $categories = array();
       while ($Qcategories->next()) {
         $categories[] = $Qcategories->value('categories_name');
@@ -211,7 +211,7 @@ class lC_Products_import_export_Admin {
       $content .= "\"" . $Qimage->value('image') . "\"" . $delim;
 
       $content .= "\n";  
-
+      
       // $content .= '\'' . implode('\'' . "\t" . '\'', $product) . '\'' . "\n";
     }
     
@@ -637,9 +637,10 @@ class lC_Products_import_export_Admin {
                        'products_viewed',
 
                        'categories',
+                       'parent_categories',
                        'base_image'
                        );
-    } else {
+    } else { 
       // do the mapping of columns here with the mapdata
     }
 
@@ -648,7 +649,7 @@ class lC_Products_import_export_Admin {
 
     $row = 0;
     if (($handle = fopen($uploadfile, "r")) !== FALSE) {
-      while (($data = fgetcsv($handle, 1000, $delim)) !== FALSE) {
+      while (($data = fgetcsv($handle, null, $delim)) !== FALSE) {
         $num = count($data);
         for ($c=0; $c < $num; $c++) {
           if ($row != 0) {
@@ -659,7 +660,7 @@ class lC_Products_import_export_Admin {
       }
       fclose($handle);
     }
-
+    
     // Need to find and remove blank rows
     $match_count = 0;
     $insert_count = 0;
@@ -673,7 +674,7 @@ class lC_Products_import_export_Admin {
       foreach ($import_array as $product) {
         // Get the products ID for control
         $products_id = $product['id'];
-
+        
         // need to get the weight class since Im outputting lb and kg instead of the ids
         if ($product['weight_class'] != '') {
           $QweightClass = $lC_Database->query("SELECT * FROM :table_weight_classes wc WHERE wc.weight_class_key = :weight_class_key");
@@ -696,12 +697,20 @@ class lC_Products_import_export_Admin {
           $product['categories'] = explode(",", $product['categories']);
           foreach ($product['categories'] as $catName) {
             if ($catName != '') {
-              $catCheck = $lC_Database->query("SELECT * FROM :table_categories_description cd WHERE cd.categories_name = :categories_name");
+              $parentCheck = $lC_Database->query("SELECT categories_id FROM :table_categories_description WHERE categories_name = :categories_name AND language_id = :language_id");
+              $parentCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+              $parentCheck->bindValue(':categories_name', end(explode(",", $product['parent_categories'])));
+              $parentCheck->bindInt(':language_id', $product['language_id']);
+              $parentCheck->execute();
+              
+              $catCheck = $lC_Database->query("SELECT cd.* FROM :table_categories_description cd LEFT JOIN :table_categories c on (cd.categories_id = c.categories_id) WHERE cd.categories_name = :categories_name AND c.parent_id = :parent_id");
               $catCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+              $catCheck->bindTable(':table_categories', TABLE_CATEGORIES);
               $catCheck->bindValue(':categories_name', $catName);
+              $catCheck->bindInt(':parent_id', $parentCheck->value('categories_id'));
               $catCheck->execute();
-
-              if ($catCheck->numberOfRows()) {
+              
+              if ($catCheck->numberOfRows()) {              
                 $category_ids[] = $catCheck->value('categories_id');
               } else {
                 // insert a category that doesnt exist
@@ -738,7 +747,7 @@ class lC_Products_import_export_Admin {
           $currentCatId = null;
           $category_ids = null;
         }
-
+        
         // need to get the id for the manufacturer
         if ($product['manufacturer'] != '') {
           $Qman = $lC_Database->query("SELECT * FROM :table_manufacturers WHERE manufacturers_name = :manufacturers_name");
@@ -1647,6 +1656,8 @@ class lC_Products_import_export_Admin {
       $parent .= self::getParentName($Qpid->value('parent_id'), $lang);
       if ($Qpid->value('parent_id') != 0) {
         $parents .= $parent . ',' . self::getParents($Qpid->value('parent_id'), $lang);
+      } else {
+        $parents .= $parent;
       }
     }
     
@@ -1670,6 +1681,54 @@ class lC_Products_import_export_Admin {
     $Qcatname->execute();
                     
     return $Qcatname->value('categories_name');
+  }
+
+ /*
+  * Return the category path for a product
+  *
+  * @param string $cat A category path
+  * @access public
+  * @return array
+  */
+  public static function getParentsPath($id = null) {
+    global $lC_Database;
+    
+    $Qpid = $lC_Database->query("SELECT parent_id FROM :table_categories WHERE categories_id = :categories_id");
+    $Qpid->bindTable(':table_categories', TABLE_CATEGORIES);
+    $Qpid->bindInt(':categories_id', $id);
+    $Qpid->execute();
+    
+    $cPath = '';
+    while ($Qpid->next()) {
+      $path .= $Qpid->value('parent_id');
+      if ($Qpid->value('parent_id') != 0) {
+        $cPath .= $path . '_' . self::getParentsPath($Qpid->value('parent_id'));
+      } else {
+        $cPath .= $path;
+      }
+    }
+    
+    return $cPath;
+  }
+
+ /*
+  * Return the products cPath from permalinks table
+  *
+  * @param string $cPath A cpath for the product
+  * @access public
+  * @return array
+  */
+  public static function getPermalinkCpath($id = null, $lang = 1) {
+    global $lC_Database, $lC_Language;
+    
+    $Qpcpath = $lC_Database->query("SELECT query FROM :table_permalinks WHERE item_id = :item_id AND type = :type AND language_id = :language_id");
+    $Qpcpath->bindTable(':table_permalinks', TABLE_PERMALINKS);
+    $Qpcpath->bindInt(':item_id', $id);
+    $Qpcpath->bindInt(':type', 2);
+    $Qpcpath->bindInt(':language_id', $lang);
+    $Qpcpath->execute();
+                    
+    return str_replace("cPath=", "", $Qpcpath->value('query'));
   }
 }
 ?>
