@@ -26,8 +26,6 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       
       $error = false;
 
-      $has_variants = (isset($_POST['has_variants']) && $_POST['has_variants'] == 'on') ? true : false;   
-
       $data = array('id' => (isset($_POST['products_id']) && $has_variants === false) ? $_POST['products_id'] : 0,
                     'quantity' => (isset($_POST['products_quantity']) && $has_variants === false) ? $_POST['products_quantity'] : 0,
                     'cost' => (is_numeric($_POST['products_cost']) && $has_variants === false) ? $_POST['products_cost'] : 0,
@@ -84,63 +82,21 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       if (isset($_POST['products_qty_break_point']) && $_POST['products_qty_break_point'] != NULL) $data['products_qty_break_point'] = $_POST['products_qty_break_point'];
       if (isset($_POST['products_qty_break_price']) && $_POST['products_qty_break_price'] != NULL) $data['products_qty_break_price'] = $_POST['products_qty_break_price'];
       
-      // multi SKU combo
-      if ($has_variants === true) {
-        if ( isset($_POST['variants_status']) ) {
-          $data['variants_status'] = $_POST['variants_status'];
-        }
-
-        if ( isset($_POST['variants_cost']) ) {
-          $data['variants_cost'] = $_POST['variants_cost'];
-        }
-
-        if ( isset($_POST['variants_price']) ) {
-          $data['variants_price'] = $_POST['variants_price'];
-        }
-
-        if ( isset($_POST['variants_msrp']) ) {
-          $data['variants_msrp'] = $_POST['variants_msrp'];
-        }
-
-        if ( isset($_POST['variants_model']) ) {
-          $data['variants_model'] = $_POST['variants_model'];
-        }
-
-        if ( isset($_POST['variants_sku']) ) {
-          $data['variants_sku'] = $_POST['variants_sku'];
-        }
-
-        if ( isset($_POST['variants_tax_class_id']) ) {
-          $data['variants_tax_class_id'] = $_POST['variants_tax_class_id'];
-        }
-
-        if ( isset($_POST['variants_quantity']) ) {
-          $data['variants_quantity'] = $_POST['variants_quantity'];
-        }
-
-        if ( isset($_POST['variants_combo']) ) {
-          $data['variants_combo'] = $_POST['variants_combo'];
-        }
-
-        if ( isset($_POST['variants_combo_db']) ) {
-          $data['variants_combo_db'] = $_POST['variants_combo_db'];
-        }
-
-        if ( isset($_POST['variants_weight']) ) {
-          $data['variants_weight'] = $_POST['variants_weight'];
-        }
-
-        if ( isset($_POST['variants_weight_class']) ) {
-          $data['variants_weight_class'] = $_POST['variants_weight_class'];
-        }
-
-        if ( isset($_POST['variants_default_combo']) ) {
-          $data['variants_default_combo'] = $_POST['variants_default_combo'];
-        }
-      } 
-        
-      if ( isset($_POST['price_breaks']) ) {
-        $data['price_breaks'] = $_POST['price_breaks'];         
+      // multi SKU options
+      if (isset($_POST['variants_quantity']) && $_POST['variants_quantity'] > 0) {      
+        if ( isset($_POST['variants_status']) && $_POST['variants_status'] != NULL ) $data['variants']['status'] = $_POST['variants_status'];
+        if ( isset($_POST['variants_cost']) && $_POST['variants_cost'] != NULL ) $data['variants']['cost'] = $_POST['variants_cost'];
+        if ( isset($_POST['variants_price']) && $_POST['variants_price'] != NULL ) $data['variants']['price'] = $_POST['variants_price'];
+        if ( isset($_POST['variants_msrp']) && $_POST['variants_msrp'] != NULL ) $data['variants']['msrp'] = $_POST['variants_msrp'];
+        if ( isset($_POST['variants_model']) && $_POST['variants_model'] != NULL ) $data['variants']['model'] = $_POST['variants_model'];
+        if ( isset($_POST['variants_sku']) && $_POST['variants_sku'] != NULL ) $data['variants']['sku'] = $_POST['variants_sku'];
+        if ( isset($_POST['variants_tax_class_id']) && $_POST['variants_tax_class_id'] != NULL ) $data['variants']['tax_class_id'] = $_POST['variants_tax_class_id'];
+        if ( isset($_POST['variants_quantity']) && $_POST['variants_quantity'] != NULL ) $data['variants']['quantity'] = $_POST['variants_quantity'];
+        if ( isset($_POST['variants_combo']) && $_POST['variants_combo'] != NULL ) $data['variants']['combo'] = $_POST['variants_combo'];
+        if ( isset($_POST['variants_combo_db']) && $_POST['variants_combo_db'] != NULL ) $data['variants']['combo_db'] = $_POST['variants_combo_db'];
+        if ( isset($_POST['variants_weight']) && $_POST['variants_weight'] != NULL ) $data['variants']['weight'] = $_POST['variants_weight'];
+        if ( isset($_POST['variants_weight_class']) && $_POST['variants_weight_class'] != NULL ) $data['variants']['weight_class'] = $_POST['variants_weight_class'];
+        if ( isset($_POST['variants_default_combo']) && $_POST['variants_default_combo'] != NULL ) $data['variants']['default_combo'] = $_POST['variants_default_combo'];      
       }
 
       if ( $error === false ) {

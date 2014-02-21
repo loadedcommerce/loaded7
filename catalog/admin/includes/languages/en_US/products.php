@@ -209,6 +209,10 @@ text_manufacturer = Manufacturer
 text_more_product_information = For more information please visit this products <a href="http://%s" target="_blank">website</a>.
 text_msrp = MSRP
 text_multi_sku = Multi SKU
+text_multi_sku_options_remove = Remove Row
+text_multi_sku_options_set_as_default = Set as Default
+text_multi_sku_options_enable_disable = Enable / Disable
+text_multi_sku_options_select_image = Select Image
 text_new_inventory_option_combo_set = Create New Inventory Option Combo Set
 text_new_simple_inventory_option = Create New Simple Inventory Option
 text_new_simple_option = Create New Simple Option
@@ -253,7 +257,6 @@ text_sub_products_remove = Remove Row
 text_sub_products_set_as_default = Set as Default
 text_sub_products_enable_disable = Enable / Disable
 text_sub_products_select_image = Select Image
-
 text_supplier_characteristics = Supplier Characteristics
 text_tax_class = Tax Class
 text_tax_settings = Tax Settings

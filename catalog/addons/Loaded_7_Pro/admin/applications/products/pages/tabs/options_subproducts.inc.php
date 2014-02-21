@@ -24,12 +24,45 @@ global $lC_Language, $pInfo;
   </label>
 </div>  
          
-<div id="comboOptionsContainer" class="">
-  Coming Soon ...
-</div>       
+<div id="multiSKUOptionsContainer" class="margin-top">    	    	     	
+  <table width="100%" id="multiSKUOptionsTable" class="simple-table">
+    <thead>
+      <tr>
+        <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_multi_sku_options_name'); ?></th>
+        <th scope="col" class="align-center hide-below-480"><?php echo $lC_Language->get('table_heading_multi_sku_options_status'); ?></th>
+        <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_multi_sku_options_weight'); ?></th>
+        <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_multi_sku_options_sku'); ?></th>
+        <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_multi_sku_options_qoh'); ?></th>
+        <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_multi_sku_options_price'); ?></th>
+        <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_multi_sku_options_img'); ?></th>
+        <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
+      </tr>
+    </thead>      
+    <tbody class=""></tbody>   
+  </table>  
+  
+  
+	<span class="float-right" style="margin:-46px 0px 4px 0;"><a class="button icon-plus-round green-gradient glossy compact" href="javascript:void(0)" onclick="addMultiSKUOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
+	<table width="100%" style="margin-top:-8px;" id="multiSKUOptionsTable" class="simple-table">
+	  <thead>
+	    <tr>
+	      <th scope="col" class="align-center">&nbsp;</th>
+	      <th scope="col" class="align-left with-tooltip" onclick="toggleAllMultiSKUOptionsRows();" data-tooltip-options='{"classes":["grey-gradient"],"position":"left"}' title="<?php echo $lC_Language->get('text_expand_collapse_all'); ?>" width="16px" style="cursor:pointer; font-size:1em;"><span id="toggle-all" class="icon-squared-plus icon-grey icon-size2"></span></th>
+	      <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_name'); ?></th>
+	      <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_type'); ?></th>
+	      <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_sort'); ?></th>
+	      <th scope="col" class="align-center"><?php echo $lC_Language->get('table_heading_on'); ?></th>
+	      <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
+	    </tr>
+	  </thead>
+	  <tbody class="sorted_table"><?php echo (isset($pInfo) ? lC_Products_Admin_Pro::getMultiSKUOptionsContent($pInfo->get('variants')) : null); ?></tbody>
+	</table>  
+  
+         	
+</div>
 
 <div id="subProductsContainer" class="margin-top">    
-  <table width="100%" style="" id="subProductsTable" class="simple-table">
+  <table width="100%" id="subProductsTable" class="simple-table">
     <thead>
       <tr>
         <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_sub_products_name'); ?></th>
@@ -42,8 +75,7 @@ global $lC_Language, $pInfo;
         <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
       </tr>
     </thead>      
-    <tbody class="">
-    </tbody>
+    <tbody class=""></tbody>
   </table>          
 </div>       
 <script>

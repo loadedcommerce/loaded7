@@ -213,4 +213,14 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
                  
     return $content;
   } 
+ /*
+  *  Return the multi sku options listing content
+  *
+  * @param array $options The multi sku options array
+  * @access public
+  * @return array
+  */  
+  public static function getMultiSKUOptionsContent($options = array()) {
+  	return true;
+  }   
 }

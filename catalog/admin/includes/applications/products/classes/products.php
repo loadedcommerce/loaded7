@@ -2350,6 +2350,6 @@ class lC_Products_Admin {
       }
     }
     return $result;
-  }
+  }   
 }
 ?>
