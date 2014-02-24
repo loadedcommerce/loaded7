@@ -287,6 +287,7 @@ class lC_Categories_Admin {
         $Qcd->bindValue(':categories_blurb', $data['blurb'][$l['id']]);
         $Qcd->bindValue(':categories_description', $data['description'][$l['id']]);
         $Qcd->bindValue(':categories_tags', $data['tags'][$l['id']]);
+        
         $Qcd->setLogging($_SESSION['module'], $category_id);
         $Qcd->execute();
 
@@ -324,7 +325,7 @@ class lC_Categories_Admin {
         }
       }
     }
-
+    
     if ( $error === false ) {
       $lC_Database->commitTransaction();
 

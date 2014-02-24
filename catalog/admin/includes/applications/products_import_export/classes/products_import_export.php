@@ -1033,7 +1033,6 @@ class lC_Products_import_export_Admin {
                        'nav',
                        'box',
                        'date_added',
-                       'last_modified',
 
                        'language_id',
                        'name',
@@ -1056,7 +1055,6 @@ class lC_Products_import_export_Admin {
                        'nav',
                        'box',
                        'date_added',
-                       'last_modified',
                                                
                        'language_id',
                        'name',
@@ -1116,7 +1114,7 @@ class lC_Products_import_export_Admin {
           
           $cdaParts = explode("/", $category['date_added']);
           $category_date_added = date("Y-m-d H:i:s", mktime(0, 0, 0, $cdaParts[0], $cdaParts[1], $cdaParts[2]));
-
+          
           // build data array of category information
           $data['categories_id'] = $category['categories_id'];
           $data['image'] = $category['image'];
