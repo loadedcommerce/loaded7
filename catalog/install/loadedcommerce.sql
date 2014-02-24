@@ -6235,7 +6235,7 @@ INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, module
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(29, 'Featured Products', 'featured_products', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(30, 'Top Categories on Mainpage', 'mainpage_categories', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
 
-INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(23, 1, 'index/index', 'after', 10, 1);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(23, 1, 'index/index', 'header', 10, 1);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(27, 1, 'index/index', 'after', 20, 1);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(29, 1, 'index/index', 'after', 30, 1);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(24, 1, 'index/index', 'after', 40, 1);
