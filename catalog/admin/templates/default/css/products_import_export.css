@@ -2,9 +2,12 @@
 
 /* custom media queries */
 @media screen and (min-width: 480px) and (max-width: 767px) {
+  #main-title h1 { margin: -45px 0 0; padding-bottom: 15px; }
 }
   
 @media screen and (max-width: 479px) {
+  #main-title h1 { margin: -35px 0 -10px; }
+  #section_import_export { margin: 0 -15px; }
   #products-export-form { margin: -10px; }
   #products-import-form { margin: -10px; }
   #categories-export-form { margin: -10px; }

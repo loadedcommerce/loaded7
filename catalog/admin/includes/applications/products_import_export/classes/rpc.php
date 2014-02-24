@@ -1,17 +1,12 @@
 <?php
-/*
-  $Id: rpc.php v1.0 2013-12-01 resultsonlyweb $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
- 
-  @function The lC_Products_import_export_Admin_rpc class is for AJAX remote program control
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: rpc.php v1.0 2013-12-01 resultsonlyweb $
 */
 global $lC_Vqmod;
 require_once($lC_Vqmod->modCheck('includes/applications/products_import_export/classes/products_import_export.php'));
@@ -223,30 +218,31 @@ class lC_Products_import_export_Admin_rpc {
   public static function fileUpload() {
     global $lC_Database, $lC_Vqmod, $_module;
      
-      require_once($lC_Vqmod->modCheck('includes/classes/ajax_upload.php'));
+    require_once($lC_Vqmod->modCheck('includes/classes/ajax_upload.php'));
 
-      // list of valid extensions, ex. array("jpeg", "xml", "bmp")
-      $allowedExtensions = array('gif', 'jpg', 'jpeg', 'png', 'txt', 'csv');
-      // max file size in bytes
-      $sizeLimit = 10 * 1024 * 1024;
+    // list of valid extensions, ex. array("jpeg", "xml", "bmp")
+    $allowedExtensions = array('gif', 'jpg', 'jpeg', 'png', 'txt', 'csv');
+    
+    // max file size in bytes
+    $sizeLimit = 10 * 1024 * 1024;
 
-      $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
-      
-      $import_file = $uploader->handleUpload('../includes/work/products_import_export/imports/'); 
+    $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+    
+    $import_file = $uploader->handleUpload('../includes/work/products_import_export/imports/', TRUE); 
 
-      if ( $import_file['exists'] == true ) {
-        if ( isset($import_file['filename']) && $import_file['filename'] != null ) {
-			$success = true;
-        }
+    if ( $import_file['exists'] == true ) {
+      if ( isset($import_file['filename']) && $import_file['filename'] != null ) {
+		    $success = true;
       }
+    }
 
     $result = array('result' => 1,
                     'success' => $success,
                     'rpcStatus' => RPC_STATUS_SUCCESS,
-					'filename' => $import_file['filename']);
+					          'filename' => $import_file['filename']
+                    );
 
     echo json_encode($result);
-  }
-  
+  }   
 }
 ?>
