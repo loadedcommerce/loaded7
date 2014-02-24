@@ -1608,6 +1608,32 @@ class lC_Products_import_export_Admin {
           $Qcheck->freeResult();
         } else {
           if (isset($vproduct['id']) && !empty($vproduct['id'])) {
+            // check for options_id in the products_simple_options table and add if does not exist
+            $Qcheck = $lC_Database->query("SELECT * FROM :table_products_simple_options");
+            $Qcheck->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+            
+            while ($Qcheck->next()) {
+              $vsoArr[] = $Qcheck->valueInt('options_id');
+              $sortArr[] = $Qcheck->valueInt('sort_order');
+            }
+            
+            if (!in_array($vproduct['options_id'], $vsoArr)) {
+              $Qvprod = $lC_Database->query('insert into :table_products_simple_options (options_id, products_id, sort_order, status) values (:options_id, :products_id, :sort_order, :status)');
+            
+              $Qvprod->bindTable(':table_products_simple_options', TABLE_PRODUCTS_SIMPLE_OPTIONS);
+              $Qvprod->bindInt(':options_id', $vproduct['options_id']);
+              $Qvprod->bindInt(':products_id', $vproduct['products_id']);
+              $Qvprod->bindInt(':sort_order', (max($sortArr)+10));
+              $Qvprod->bindInt(':status', 1);
+              $Qvprod->setLogging($_SESSION['module'], $vproduct_id);
+              $Qvprod->execute();
+              
+              if ( $lC_Database->isError() ) {
+                $error = true;
+                break;
+              }
+            }
+            
             // the product simple option value doesnt exist so lets write it into the database
             $insert_count++;
 
@@ -1615,9 +1641,10 @@ class lC_Products_import_export_Admin {
 
             $lC_Database->startTransaction();
 
-            $Qvprod = $lC_Database->query('insert into :table_products_simple_options_values (products_id, customers_group_id, values_id, options_id, sort_order, price_modifier) values (:products_id, :customers_group_id, :values_id, :options_id, :sort_order, :price_modifier)');
+            $Qvprod = $lC_Database->query('insert into :table_products_simple_options_values (id, products_id, customers_group_id, values_id, options_id, sort_order, price_modifier) values (:id, :products_id, :customers_group_id, :values_id, :options_id, :sort_order, :price_modifier)');
             
             $Qvprod->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
+            $Qvprod->bindInt(':id', $vproduct['id']);
             $Qvprod->bindInt(':products_id', $vproduct['products_id']);
             $Qvprod->bindInt(':customers_group_id', $vproduct['customers_group_id']);
             $Qvprod->bindInt(':values_id', $vproduct['values_id']);
