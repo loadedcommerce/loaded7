@@ -319,6 +319,7 @@ class lC_Products_import_export_Admin {
 
     $content = '';
     foreach ($categories as $category) {
+      $category['date_added'] = lC_Datetime::getShort($category['date_added']);
       foreach ($category as $column_output) {
         $content .= "\"" . trim(preg_replace('/\s+/', ' ', $column_output)) . "\"" . $delim;
       }
@@ -1098,7 +1099,7 @@ class lC_Products_import_export_Admin {
       $msg .= 'CWIZARD AGAIN!~!!!!!!!!!!';
     } else {
       // do the import as usual
-      // utilize import array to go through each column and run on each to check for product id and if not matched import and remove from arrray
+      // utilize import array to go through each column and run on each to check for category id and if not matched import and remove from arrray
       foreach ($import_array as $category) {
         // Get the products ID for control
         $categories_id = $category['categories_id'];
@@ -1110,10 +1111,13 @@ class lC_Products_import_export_Admin {
         $category_check = $Qcheck->numberOfRows();
 
         if ($category_check > 0) {
-          // the product exists in the database so were just going to update the product with the new data
+          // the category exists in the database so were just going to update the category with the new data
           $match_count++;
+          
+          $cdaParts = explode("/", $category['date_added']);
+          $category_date_added = date("Y-m-d H:i:s", mktime(0, 0, 0, $cdaParts[0], $cdaParts[1], $cdaParts[2]));
 
-          // build data array of product information
+          // build data array of category information
           $data['categories_id'] = $category['categories_id'];
           $data['image'] = $category['image'];
           $data['parent_id'] = $category['parent_id'];
@@ -1124,7 +1128,7 @@ class lC_Products_import_export_Admin {
           $data['status'] = $category['status'];
           $data['nav'] = $category['nav'];
           $data['box'] = $category['box'];
-          $data['date_added'] = $category['date_added'];
+          $data['date_added'] = ($category_date_added != '' ? $category_date_added : 'now()');
           $data['last_modified'] = $category['last_modified'];
 
           $data['name'][$category['language_id']] = $category['name'];
@@ -1133,24 +1137,28 @@ class lC_Products_import_export_Admin {
           $data['description'][$category['language_id']] = $category['description'];
           $data['keyword'][$category['language_id']] = $category['keyword'];
           $data['tags'][$category['language_id']] = $category['tags'];
-
+          
           $lC_Categories->save($categories_id, $data);
 
         } else {
-          // the product doesnt exist so lets write it into the database
-          $insert_count++;
+          // the category doesnt exist so lets write it into the database
+          $insert_count++; 
+          
+          $cdaParts = explode("/", $category['date_added']);
+          $category_date_added = date("Y-m-d H:i:s", mktime(0, 0, 0, $cdaParts[0], $cdaParts[1], $cdaParts[2]));
 
           // Insert using code from the catgories class
           $error = false;
 
           $lC_Database->startTransaction();
 
-          $Qcat = $lC_Database->query('insert into :table_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added) values (:categories_id, :categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_status, :categories_visibility_nav, :categories_visibility_box, now())');
+          $Qcat = $lC_Database->query('insert into :table_categories (categories_id, categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added) values (:categories_id, :categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_status, :categories_visibility_nav, :categories_visibility_box, :date_added)');
           $Qcat->bindInt(':categories_id', $category['categories_id']);
           $Qcat->bindInt(':parent_id', $category['parent_id']);
 
           $Qcat->bindTable(':table_categories', TABLE_CATEGORIES);
           $Qcat->bindValue(':categories_image', $category['image']);
+          $Qcat->bindValue(':date_added', ($category_date_added != '' ? $category_date_added : 'now()'));
           $Qcat->bindInt(':parent_id', $category['parent_id']);
           $Qcat->bindInt(':sort_order', $category['sort_order']);
           $Qcat->bindValue(':categories_mode', $category['mode']);
