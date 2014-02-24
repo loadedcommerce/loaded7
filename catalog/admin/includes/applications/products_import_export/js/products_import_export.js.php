@@ -33,10 +33,7 @@ $(document).ready(function(){
   }
 });
   
-/**
- * CONTENT TAB
- * 
-/* create the uploader instance for product import */
+/* create the uploader instance for options to products import */
 function createOptionsProductsUploader() {
   var uploader = new qq.FileUploader({
     element: document.getElementById('fileUploaderOptionsProductsContainer'),
@@ -48,10 +45,7 @@ function createOptionsProductsUploader() {
   });
 }
 
-/**
- * CONTENT TAB
- * 
-/* create the uploader instance for product import */
+/* create the uploader instance for options variants import */
 function createOptionsVarientsUploader() {
   var uploader = new qq.FileUploader({
     element: document.getElementById('fileUploaderOptionsVarientsContainer'),
@@ -63,10 +57,7 @@ function createOptionsVarientsUploader() {
   });
 }
 
-/**
- * CONTENT TAB
- * 
-/* create the uploader instance for product import */
+/* create the uploader instance for options groups import */
 function createOptionsGroupsUploader() {
   var uploader = new qq.FileUploader({
     element: document.getElementById('fileUploaderOptionsGroupsContainer'),
@@ -78,10 +69,7 @@ function createOptionsGroupsUploader() {
   });
 } 
 
-/**
- * CONTENT TAB
- * 
-/* create the uploader instance for product import */
+/* create the uploader instance for categories import */
 function createCatUploader() {
   var uploader = new qq.FileUploader({
     element: document.getElementById('fileUploaderCategoriesContainer'),
@@ -93,10 +81,7 @@ function createCatUploader() {
   });
 } 
 
-/**
- * CONTENT TAB
- * 
-/* create the uploader instance for product import */
+/* create the uploader instance for products import */
 function createProductUploader() {
   var uploader = new qq.FileUploader({
     element: document.getElementById('fileUploaderProductsContainer'),

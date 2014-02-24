@@ -228,7 +228,7 @@ class lC_Products_import_export_Admin_rpc {
 
     $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
     
-    $import_file = $uploader->handleUpload('../includes/work/products_import_export/imports/'); 
+    $import_file = $uploader->handleUpload('../includes/work/products_import_export/imports/', TRUE); 
 
     if ( $import_file['exists'] == true ) {
       if ( isset($import_file['filename']) && $import_file['filename'] != null ) {
