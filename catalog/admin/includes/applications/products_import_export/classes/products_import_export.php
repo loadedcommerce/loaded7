@@ -96,7 +96,6 @@ class lC_Products_import_export_Admin {
                          'p.products_model',
                          'p.products_sku',
                          'p.products_date_added',
-                         'p.products_last_modified',
                          'p.products_weight',
                          'wc.weight_class_key',
                          'p.products_status',
@@ -125,7 +124,6 @@ class lC_Products_import_export_Admin {
                      'model',
                      'sku',
                      'date_added',
-                     'last_modified',
                      'weight',
                      'weight_class',
                      'status',
@@ -175,6 +173,8 @@ class lC_Products_import_export_Admin {
 
     $content = '';
     foreach ($products as $product) {
+      $product['products_date_added'] = lC_Datetime::getShort($product['products_date_added']);
+      
       foreach ($product as $column_output) {
         $content .= "\"" . trim(preg_replace('/\s+/', ' ', $column_output)) . "\"" . $delim;
       }
@@ -264,7 +264,6 @@ class lC_Products_import_export_Admin {
                          'c.categories_visibility_nav',
                          'c.categories_visibility_box',
                          'c.date_added',
-                         'c.last_modified',
 
                          'cd.language_id',
                          'cd.categories_name',
@@ -285,7 +284,6 @@ class lC_Products_import_export_Admin {
                      'visibility_nav',
                      'visibility_box',
                      'date_added',
-                     'last_modified',
 
                      'language_id',
                      'name',
@@ -526,16 +524,16 @@ class lC_Products_import_export_Admin {
     $sql_columns = array('psov.id',
                          'psov.products_id',
                          'psov.customers_group_id',
-                         'psov.values_id',
                          'psov.options_id',
+                         'psov.values_id',
                          'psov.sort_order',
                          'psov.price_modifier',
                          );
     $columns = array('id',
                      'products_id',
                      'customers_group_id',
-                     'values_id',
                      'options_id',
+                     'values_id',
                      'sort_order',
                      'price_modifier',
                      );
@@ -621,7 +619,6 @@ class lC_Products_import_export_Admin {
                        'model',
                        'sku',
                        'date_added',
-                       'last_modified',
                        'weight',
                        'weight_class',
                        'status',
@@ -788,12 +785,15 @@ class lC_Products_import_export_Admin {
           $match_count++;
 
           $error = false;
-
+          
+          $pdaParts = explode("/", $product['date_added']);
+          $products_date_added = date("Y-m-d H:i:s", mktime(0, 0, 0, $pdaParts[0], $pdaParts[1], $pdaParts[2]));
+          
           $lC_Database->startTransaction();
 
           $Qproduct = $lC_Database->query('update :table_products set products_quantity = :products_quantity, products_cost = :products_cost, products_price = :products_price, products_msrp = :products_msrp, products_model = :products_model, products_sku = :products_sku, products_weight = :products_weight, products_weight_class = :products_weight_class, products_status = :products_status, products_tax_class_id = :products_tax_class_id, manufacturers_id = :manufacturers_id, products_date_added = :products_date_added WHERE products_id = :products_id');
           $Qproduct->bindInt(':products_id', $products_id);
-          $Qproduct->bindValue(':products_date_added', $product['date_added']);
+          $Qproduct->bindValue(':products_date_added', $products_date_added);
           $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
           $Qproduct->bindValue(':products_quantity', $product['quantity']);
           $Qproduct->bindValue(':products_cost', $product['cost']);
@@ -875,12 +875,15 @@ class lC_Products_import_export_Admin {
           $insert_count++;
 
           $error = false;
+          
+          $pdaParts = explode("/", $product['date_added']);
+          $products_date_added = date("Y-m-d H:i:s", mktime(0, 0, 0, $pdaParts[0], $pdaParts[1], $pdaParts[2]));
 
           $lC_Database->startTransaction();
 
           $Qproduct = $lC_Database->query('insert into :table_products (products_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id, products_date_added, products_last_modified) values (:products_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :manufacturers_id, :products_date_added, :products_last_modified)');
           $Qproduct->bindInt(':products_id', $products_id);
-          $Qproduct->bindRaw(':products_date_added', 'now()');
+          $Qproduct->bindRaw(':products_date_added', ($products_date_added != '' ? $products_date_added : 'now()'));
           $Qproduct->bindRaw(':products_last_modified', 'now()');
           $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
           $Qproduct->bindInt(':products_quantity', $product['quantity']);
@@ -1533,8 +1536,8 @@ class lC_Products_import_export_Admin {
       $columns = array('id',
                        'products_id',
                        'customers_group_id',
-                       'values_id',
                        'options_id',
+                       'values_id',
                        'sort_order',
                        'price_modifier',
                        );
@@ -1598,8 +1601,8 @@ class lC_Products_import_export_Admin {
           $Qvprod->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
           $Qvprod->bindInt(':products_id', $vproduct['products_id']);
           $Qvprod->bindInt(':customers_group_id', $vproduct['customers_group_id']);
-          $Qvprod->bindInt(':values_id', $vproduct['values_id']);
           $Qvprod->bindInt(':options_id', $vproduct['options_id']);
+          $Qvprod->bindInt(':values_id', $vproduct['values_id']);
           $Qvprod->bindInt(':sort_order', $vproduct['sort_order']);
           $Qvprod->bindInt(':price_modifier', $vproduct['price_modifier']);
           $Qvprod->setLogging($_SESSION['module'], $vproduct_id);
@@ -1641,14 +1644,14 @@ class lC_Products_import_export_Admin {
 
             $lC_Database->startTransaction();
 
-            $Qvprod = $lC_Database->query('insert into :table_products_simple_options_values (id, products_id, customers_group_id, values_id, options_id, sort_order, price_modifier) values (:id, :products_id, :customers_group_id, :values_id, :options_id, :sort_order, :price_modifier)');
+            $Qvprod = $lC_Database->query('insert into :table_products_simple_options_values (id, products_id, customers_group_id, options_id, values_id, sort_order, price_modifier) values (:id, :products_id, :customers_group_id, :options_id, :values_id, :sort_order, :price_modifier)');
             
             $Qvprod->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
             $Qvprod->bindInt(':id', $vproduct['id']);
             $Qvprod->bindInt(':products_id', $vproduct['products_id']);
             $Qvprod->bindInt(':customers_group_id', $vproduct['customers_group_id']);
-            $Qvprod->bindInt(':values_id', $vproduct['values_id']);
             $Qvprod->bindInt(':options_id', $vproduct['options_id']);
+            $Qvprod->bindInt(':values_id', $vproduct['values_id']);
             $Qvprod->bindInt(':sort_order', $vproduct['sort_order']);
             $Qvprod->bindInt(':price_modifier', $vproduct['price_modifier']);
             $Qvprod->setLogging($_SESSION['module'], $vproduct_id);
