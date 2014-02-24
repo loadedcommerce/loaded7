@@ -6,8 +6,8 @@
   <author>loadedcommerce.com</author>
   <file name="includes/applications/customers/classes/customers.php">
     <operation info="Add Login as Customer Button">
-      <search position="before"><![CDATA[<span class="button-group" style="white-space:nowrap;"><a href="' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, 'orders&cID=' . $Qcustomers->valueInt('customers_id'))) . '" class="button icon-price-tag with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 2) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_view_orders') . '"></a></span>]]></search>         
-      <add><![CDATA[<span class="button-group" style="white-space:nowrap;"><a target="_blank" href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : lc_href_link('account.php', 'login&email_address=' . $Qcustomers->value('customers_email_address'))) . '" class="button icon-monitor with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_login_as_customer') . '"></a></span>&nbsp;]]></add>
+      <search position="after"><![CDATA[<a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="createOrder(\'' . $Qcustomers->valueInt('customers_id') . '\',\''.$Qcustomers->valueInt('customers_default_address_id').'\')') . '" class="button icon-plus-round with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_create_order') . '"></a>]]></search>         
+      <add><![CDATA[<a target="_blank" href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : lc_href_link('account.php', 'login&email_address=' . $Qcustomers->value('customers_email_address'))) . '" class="button icon-monitor with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_login_as_customer') . '"></a>]]></add>
     </operation>        
   </file> 
 </modification>
