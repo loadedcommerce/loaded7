@@ -26,11 +26,11 @@ $cSearch = (isset($_GET['cID']) && $_GET['cID'] != null ? '&cSearch=' . $_GET['c
       "aoColumns": [{ "sWidth": "10px", "bSortable": false, "sClass": "hide-on-mobile dataColCheck" },
                     { "sWidth": "10px", "bSortable": false, "sClass": "hide-on-mobile dataColIcon" },
                     { "sWidth": "22%", "bSortable": true, "sClass": "dataColLast" },
-                    { "sWidth": "30%", "bSortable": true, "sClass": "hide-on-mobile hide-on-tablet dataColEmail" },
+                    { "sWidth": "25%", "bSortable": true, "sClass": "hide-on-mobile hide-on-tablet dataColEmail" },
                     { "sWidth": "8%", "bSortable": true, "sClass": "hide-on-mobile-portrait dataColFirst" },
                     { "sWidth": "10%", "bSortable": true, "sClass": "hide-on-mobile-portrait dataColGroup" },
                     { "sWidth": "10%", "bSortable": true, "sClass": "hide-on-tablet hide-on-mobile dataColDate" },
-                    { "sWidth": "20%", "bSortable": false, "sClass": "dataColAction" }]
+                    { "sWidth": "25%", "bSortable": false, "sClass": "dataColAction" }]
     });
         
     setTimeout('hideElements()', 800); // because of server-side processing we need to delay for race condition
