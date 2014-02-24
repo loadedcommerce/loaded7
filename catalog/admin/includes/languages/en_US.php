@@ -103,6 +103,7 @@ icon_install = Install
 icon_limited = Limited
 icon_locked = Locked
 icon_log = Log
+icon_login_as_customer = Login as Customer
 icon_move = Move
 icon_nav_back = Previous
 icon_nav_back_grey =

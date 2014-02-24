@@ -221,6 +221,65 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
   * @return array
   */  
   public static function getMultiSKUOptionsContent($options = array()) {
-  	return true;
-  }   
+    $content = '';
+    
+    $content .= self::_getMultiSKUOptionsTbody($options);
+    
+    return $content;
+  }     
+ /*
+  * Return the product simple options tbody content
+  *
+  * @param array $options The product simple options array
+  * @access public
+  * @return string
+  */  
+  private static function _getMultiSKUOptionsTbody($options) {
+  	global $lC_Currencies;
+		
+ini_set('display_errors', 1);		
+    $tbody = '';  	
+		  
+    if (isset($options) && !empty($options)) {
+      foreach ($options as $product_id => $mso) {     	
+        
+        $combo = '';
+        $comboInput = '';
+        if (is_array($mso['values'])) {
+          foreach ($mso['values'] as $group_id => $value_id) {
+          	foreach ($value_id as $data) {						    
+              $combo .= $data['value_title'] . ', ';
+							$module = $data['module'];	
+							$default = $data['default'];						
+							$comboInput .= '<input type="hidden" id="variants_' . $product_id .'_values_' . $group_id . '_' . $value_id . '"  name="variants[' . $product_id .'][\'values\'][' . $group_id . '][' . $value_id . ']">';          							
+					  }
+          }
+					if (strstr($combo, ',')) $combo = substr($combo, 0, -2);
+          
+          $statusIcon = (isset($mso['data']['status']) && $mso['data']['status'] == '1') ? '<span class="icon-tick icon-size2 icon-green"></span>' : '<span class="icon-cross icon-size2 icon-red"></span>';          
+          
+          $tbody .= '<tr id="trmso-' . $product_id .'">' .
+                    '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
+                    '  <td width="25%">' . $combo . '</td>' .
+                    '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' . $product_id . '2" name="variants[' . $product_id . '][weight]" value="' . $mso['data']['weight'] . '"></td>' .
+                    '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' . $product_id . '3" name="variants[' . $product_id . '][sku]" value="' . $mso['data']['sku'] . '"></td>' .
+                    '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' . $product_id . '4" name="variants[' . $product_id . '][qoh]" value="' . $mso['data']['quantity'] . '"></td>' .
+                    '  <td style="white-space:nowrap;">
+                         <div class="inputs" style="display:inline; padding:8px 0;">
+                           <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>
+                           <input type="text" class="input-unstyled" style="width:87%;" onfocus="this.select();" value="' . $mso['data']['price'] . '" tabindex="' . $product_id . '5" name="variants[' . $product_id . '][price]">
+                         </div>
+                       </td>' .
+                    '  <td width="16px" align="center" style="cursor:pointer;" onclick="toggleMultiSKUOptionsStatus(this, \'' . $product_id . '\');">' . $statusIcon . '</td>' .
+                    '  <td width="40px" align="right">
+                         <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addMultiSKUOption(\'' . $product_id. '\')"></span>
+                         <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeMultiSKUOptionsRow(\'' . $product_id . '\');"></span>
+                       </td>' .
+                    '</tr>';
+        }
+      }
+    }
+    
+    return $tbody;    
+  }  
 }
