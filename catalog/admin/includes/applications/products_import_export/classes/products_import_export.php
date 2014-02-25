@@ -688,7 +688,7 @@ class lC_Products_import_export_Admin {
           if ($lC_Database->isError()) {
             $errormsg .= 'weight class err ' . $lC_Database->getError();
           } else {
-            $product['weight_class_id'] = $QweightClass->value('weight_class_id');
+            $product_weight_class_id = $QweightClass->value('weight_class_id');
           }
         }
 
@@ -780,7 +780,6 @@ class lC_Products_import_export_Admin {
         $Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
         $Qcheck->bindInt(':products_id', $products_id);
         $Qcheck->execute();
-        
         if ($Qcheck->numberOfRows()) {
           // the product exists in the database so were just going to update the product with the new data
           $match_count++;
@@ -803,7 +802,7 @@ class lC_Products_import_export_Admin {
           $Qproduct->bindValue(':products_model', $product['model']);
           $Qproduct->bindValue(':products_sku', $product['sku']);
           $Qproduct->bindValue(':products_weight', $product['weight']);
-          $Qproduct->bindInt(':products_weight_class', $product['weight_class_id']);
+          $Qproduct->bindInt(':products_weight_class', $product_weight_class_id);
           $Qproduct->bindInt(':products_status', $product['status']);
           $Qproduct->bindInt(':products_tax_class_id', $product['tax_class_id']);
           $Qproduct->bindInt(':manufacturers_id', $product['manufacturers_id']);
@@ -882,7 +881,7 @@ class lC_Products_import_export_Admin {
 
           $lC_Database->startTransaction();
 
-          $Qproduct = $lC_Database->query('insert into :table_products (products_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id, products_date_added, products_last_modified) values (:products_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :manufacturers_id, :products_date_added, :products_last_modified)');
+          $Qproduct = $lC_Database->query('insert into :table_products (products_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_date_added, products_last_modified, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id, has_children) values (:products_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_date_added, :products_last_modified, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :manufacturers_id, 0)');
           $Qproduct->bindInt(':products_id', $products_id);
           $Qproduct->bindRaw(':products_date_added', ($products_date_added != '' ? $products_date_added : 'now()'));
           $Qproduct->bindRaw(':products_last_modified', 'now()');
@@ -894,7 +893,7 @@ class lC_Products_import_export_Admin {
           $Qproduct->bindValue(':products_model', $product['model']);
           $Qproduct->bindValue(':products_sku', $product['sku']);
           $Qproduct->bindFloat(':products_weight', $product['weight']);
-          $Qproduct->bindInt(':products_weight_class', $product['weight_class']);
+          $Qproduct->bindInt(':products_weight_class', $product_weight_class_id);
           $Qproduct->bindInt(':products_status', $product['status']);
           $Qproduct->bindInt(':products_tax_class_id', $product['tax_class_id']);
           $Qproduct->bindInt(':manufacturers_id', $product['manufacturers_id']);
