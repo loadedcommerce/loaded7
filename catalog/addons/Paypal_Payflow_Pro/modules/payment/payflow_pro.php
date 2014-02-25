@@ -632,7 +632,7 @@ class lC_Payment_payflow_pro extends lC_Payment {
   private function _doExpressCheckoutPayment($token, $payerID) {
     global $lC_ShoppingCart, $lC_Currencies, $lC_Language, $lC_MessageStack;
      
-    if (defined('ADDONS_PAYMENT_PAYFLOW_EXPRESS_CHECKOUT_TEST_MODE') && ADDONS_PAYMENT_PAYFLOW_EXPRESS_CHECKOUT_TEST_MODE == '1') {
+    if (defined('ADDONS_PAYMENT_PAYPAL_PAYFLOW_PRO_TEST_MODE') && ADDONS_PAYMENT_PAYPAL_PAYFLOW_PRO_TEST_MODE == '1') {
       $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
     } else {
       $action_url = 'https://payflowpro.paypal.com';  // production url
@@ -657,8 +657,22 @@ class lC_Payment_payflow_pro extends lC_Payment {
       return false;
     }
 
+
     @parse_str($response, $dataArr);
-    
+  
+    print("action_url  :<xmp>");
+    print_r($action_url);
+    print("</xmp>");
+
+    print("postData  :<xmp>");
+    print_r($postData);
+    print("</xmp>");
+
+    print("response  :<xmp>");
+    print_r($response);
+    print("</xmp>");
+die('674444444');
+
     if ($dataArr['RESULT'] != 0) { // other error
       $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('payment_payflow_EC_error_occurred'), '(' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']), 'error');
       return false;
@@ -675,7 +689,7 @@ class lC_Payment_payflow_pro extends lC_Payment {
   private function _getExpressCheckoutDetails($token) {
     global $lC_ShoppingCart, $lC_Currencies, $lC_Language, $lC_MessageStack;
      
-    if (defined('ADDONS_PAYMENT_PAYFLOW_EXPRESS_CHECKOUT_TEST_MODE') && ADDONS_PAYMENT_PAYFLOW_EXPRESS_CHECKOUT_TEST_MODE == '1') {
+    if (defined('ADDONS_PAYMENT_PAYPAL_PAYFLOW_PRO_TEST_MODE') && ADDONS_PAYMENT_PAYPAL_PAYFLOW_PRO_TEST_MODE == '1') {
       $action_url = 'https://pilot-payflowpro.paypal.com';  // sandbox url
     } else {
       $action_url = 'https://payflowpro.paypal.com';  // production url
@@ -699,6 +713,22 @@ class lC_Payment_payflow_pro extends lC_Payment {
 
     @parse_str($response, $dataArr);
     
+
+     
+    print("action_url  :<xmp>");
+    print_r($action_url);
+    print("</xmp>");
+
+    print("postData  :<xmp>");
+    print_r($postData);
+    print("</xmp>");
+
+    print("response  :<xmp>");
+    print_r($response);
+    print("</xmp>");
+die('674444444');
+
+
     if ($dataArr['RESULT'] != 0) { // other error
       $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('payment_payflow_EC_error_occurred'), '(' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']), 'error');
       return false;
