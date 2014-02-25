@@ -878,7 +878,7 @@ class lC_Products_import_export_Admin {
           $error = false;
           
           $pdaParts = explode("/", $product['date_added']);
-          $products_date_added = date("Y-m-d H:i:s", mktime(0, 0, 0, $pdaParts[0], $pdaParts[1], $pdaParts[2]));
+          $products_date_added = '"' . date("Y-m-d H:i:s", mktime(0, 0, 0, $pdaParts[0], $pdaParts[1], $pdaParts[2])) . '"';
 
           $lC_Database->startTransaction();
 
