@@ -51,6 +51,8 @@
               </td>
               <td class="text-right"><?php echo lc_draw_radio_field('payment_method', 'payflow_pro_ec', ($lC_ShoppingCart->hasBillingMethod() ? $lC_ShoppingCart->getBillingMethod('id') : null), 'id="pm_' . $counter . '"',''); ?></td>
               <?php
+              $counter++;
+              $radio_buttons++;
             } else {
               ?>
               <td class="content-checkout-listing-blank no-padding-left"></td>
