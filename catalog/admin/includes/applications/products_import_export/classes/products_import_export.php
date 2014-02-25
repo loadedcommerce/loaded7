@@ -751,6 +751,9 @@ class lC_Products_import_export_Admin {
           $category_ids = null;
         }
         
+        // build a cPath for later use
+        $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($product['categories'][0]))))) . "_" . $product['categories'][0];
+        
         // need to get the id for the manufacturer
         if ($product['manufacturer'] != '') {
           $Qman = $lC_Database->query("SELECT * FROM :table_manufacturers WHERE manufacturers_name = :manufacturers_name");
@@ -861,6 +864,25 @@ class lC_Products_import_export_Admin {
           }
           
           if ( $error === false ) {
+            $Qquery = $lC_Database->query("select query from :table_permalinks where item_id = :item_id and type = :type");
+            $Qquery->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qquery->bindInt(':item_id', $products_id);
+            $Qquery->bindInt(':type', 2);
+            $Qquery->execute();
+            if ($Qquery->numberOfRows()) {
+              if ($query != $Qquery->value('query')) {
+                $Qupdate = $lC_Database->query("update :table_permalinks set query = :query where item_id = :item_id and type = :type");
+                $Qupdate->bindTable(':table_permalinks', TABLE_PERMALINKS);
+                $Qupdate->bindInt(':item_id', $products_id);
+                $Qupdate->bindInt(':type', 2);
+                $Qupdate->bindValue(':query', $query);
+                $Qupdate->execute();
+              }
+            }
+            $Qquery->freeResult();
+          }
+          
+          if ( $error === false ) {
             $lC_Database->commitTransaction();
 
             lC_Cache::clear('categories');
@@ -964,6 +986,17 @@ class lC_Products_import_export_Admin {
               $error = true;
               break;
             }
+          }
+          
+          if ( $error === false ) {
+            $Qupdate = $lC_Database->query("insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)");
+            $Qupdate->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qupdate->bindInt(':item_id', $products_id);
+            $Qupdate->bindInt(':language_id', $product['language_id']);
+            $Qupdate->bindInt(':type', 2);
+            $Qupdate->bindValue(':query', $query);
+            $Qupdate->bindValue(':permalink', $product['permalink']);
+            $Qupdate->execute();
           }
 
           if ( $error === false ) {
