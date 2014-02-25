@@ -659,19 +659,7 @@ class lC_Payment_payflow_pro extends lC_Payment {
 
 
     @parse_str($response, $dataArr);
-  
-    print("action_url  :<xmp>");
-    print_r($action_url);
-    print("</xmp>");
-
-    print("postData  :<xmp>");
-    print_r($postData);
-    print("</xmp>");
-
-    print("response  :<xmp>");
-    print_r($response);
-    print("</xmp>");
-die('674444444');
+ 
 
     if ($dataArr['RESULT'] != 0) { // other error
       $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('payment_payflow_EC_error_occurred'), '(' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']), 'error');
@@ -712,22 +700,6 @@ die('674444444');
     }
 
     @parse_str($response, $dataArr);
-    
-
-     
-    print("action_url  :<xmp>");
-    print_r($action_url);
-    print("</xmp>");
-
-    print("postData  :<xmp>");
-    print_r($postData);
-    print("</xmp>");
-
-    print("response  :<xmp>");
-    print_r($response);
-    print("</xmp>");
-die('674444444');
-
 
     if ($dataArr['RESULT'] != 0) { // other error
       $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('payment_payflow_EC_error_occurred'), '(' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']), 'error');
@@ -805,7 +777,6 @@ die('674444444');
     }
 
     @parse_str($response, $dataArr); 
-
 
     if ($dataArr['RESULT'] != 0) { // other error  
       $lC_MessageStack->add('shopping_cart', sprintf($lC_Language->get('payment_payflow_pro_error_occurred'), '(' . $dataArr['RESULT'] . ') ' . $dataArr['RESPMSG']), 'error');
