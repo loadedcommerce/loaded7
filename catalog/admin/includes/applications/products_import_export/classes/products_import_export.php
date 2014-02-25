@@ -1765,19 +1765,19 @@ class lC_Products_import_export_Admin {
   }
 
  /*
-  * Return the products cPath from permalinks table
+  * Return the existing products cPath from permalinks table
   *
   * @param string $cPath A cpath for the product
   * @access public
   * @return array
   */
-  public static function getPermalinkCpath($id = null, $lang = 1) {
+  public static function getPermalinkCpath($id = null, $type = 1, $lang = 1) {
     global $lC_Database, $lC_Language;
     
     $Qpcpath = $lC_Database->query("SELECT query FROM :table_permalinks WHERE item_id = :item_id AND type = :type AND language_id = :language_id");
     $Qpcpath->bindTable(':table_permalinks', TABLE_PERMALINKS);
     $Qpcpath->bindInt(':item_id', $id);
-    $Qpcpath->bindInt(':type', 2);
+    $Qpcpath->bindInt(':type', $type);
     $Qpcpath->bindInt(':language_id', $lang);
     $Qpcpath->execute();
                     
