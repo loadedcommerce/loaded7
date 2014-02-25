@@ -1,0 +1,80 @@
+/* CSS Document */
+.bodyContent {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:18px;
+	color:#003449;
+	vertical-align:top;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+}
+
+.bodyContent a, .bodyContent a:active, .bodyContent a:link, .bodyContent a:visited {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#000000;
+}
+
+.bodyContent a:hover {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#94c5d9;
+	text-decoration:none;
+}
+
+.close_link {
+  text-align: right;
+  font-size:11px;
+  color:#003449;
+  font-weight:bold;
+}
+
+.close_link a {
+  font-family:Arial, Helvetica, sans-serif;	font-size:11px;	color:#003449;	font-weight:bold;	text-decoration:none;
+}
+.close_link a:hover {
+  font-family:Arial, Helvetica, sans-serif;	font-size:11px;	color:#94c5d9;	font-weight:bold;	text-decoration:none;
+}
+
+#page_content {
+  width: 520px;
+  margin: 30px auto;
+}
+
+.bodyContentCVV {
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:12px;
+  line-height:18px;
+  color:#003449;
+  text-decoration:none;
+  padding:0px;
+}
+
+.headline-noline {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size:12px;
+  color:#003449;
+  font-weight:bold;
+  text-decoration:none;
+  line-height: 16px;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: uppercase;
+}
+
+
+@media all and (max-width: 530px) {
+  #page_content {
+    width: 100%;
+  }
+  table {
+    width: 100%;
+  }
+  td {
+    width: 50%;
+  }
+  img {
+    max-width: 100%;
+  }
+}
