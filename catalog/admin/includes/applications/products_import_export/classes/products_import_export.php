@@ -767,7 +767,12 @@ class lC_Products_import_export_Admin {
                     }
                     
                     // lets get the query
-                    $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($currentCatId))))) . "_" . $currentCatId;
+                    $parents = self::getParentsPath($currentCatId);
+                    if (empty($parents)) {
+                      $query = "cPath=" . $currentCatId;
+                    } else {
+                      $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($currentCatId))))) . "_" . $currentCatId;
+                    }
                     $query = str_replace("cPath=0_", "cPath=", $query);
         
                     // insert the new permalink
@@ -797,7 +802,12 @@ class lC_Products_import_export_Admin {
         }
         
         // build a cPath for later use
-        $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($product['categories'][0]))))) . "_" . $product['categories'][0];
+        $parents = self::getParentsPath($product['categories'][0]);
+        if (empty($parents)) {
+          $query = "cPath=" . $product['categories'][0];
+        } else {  
+          $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($product['categories'][0]))))) . "_" . $product['categories'][0];
+        }
         $query = str_replace("cPath=0_", "cPath=", $query);
         
         // need to get the id for the manufacturer
@@ -1197,9 +1207,14 @@ class lC_Products_import_export_Admin {
         $Qcheck->bindTable(':table_categories', TABLE_CATEGORIES);
         $Qcheck->bindInt(':categories_id', $categories_id);
         $category_check = $Qcheck->numberOfRows();
-
+        
         // build a cPath for later use
-        $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($category['categories_id']))))) . "_" . $category['categories_id'];
+        $parents = self::getParentsPath($category['categories_id']);
+        if (empty($parents)) {
+          $query = "cPath=" . $category['categories_id'];
+        } else {  
+          $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($category['categories_id']))))) . "_" . $category['categories_id'];
+        }
         $query = str_replace("cPath=0_", "cPath=", $query);
         
         if ($category_check > 0) {
@@ -1232,7 +1247,7 @@ class lC_Products_import_export_Admin {
           $data['tags'][$category['language_id']] = $category['tags'];
           
           $lC_Categories->save($categories_id, $data);
-        } else {
+        } else {        
           // the category doesnt exist so lets write it into the database
           $insert_count++; 
           
