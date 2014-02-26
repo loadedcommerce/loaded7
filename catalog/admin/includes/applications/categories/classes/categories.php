@@ -297,32 +297,33 @@ class lC_Categories_Admin {
         }
         
         // added for permalink
-        if ($data['permalink'][$l['id']] != 'no-permalink') {
-          
-          if (is_numeric($id) && lC_Categories_Admin::validatePermalink(array($data['permalink'][$l['id']]), $category_id, 1) == 1) {
-            $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink where item_id = :item_id and type = :type and language_id = :language_id');
-          } else {
-            $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
-          }
-          $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
-          $Qpl->bindInt(':item_id', $category_id);
-          $Qpl->bindInt(':language_id', $l['id']);
-          $Qpl->bindInt(':type', 1);
-          $Qpl->bindValue(':query', 'cPath=' . $cPath);
-          $Qpl->bindValue(':permalink', $data['permalink'][$l['id']]);
-          $Qpl->execute();
+        if (!empty($data['permalink'][$l['id']])) {
+          if ($data['permalink'][$l['id']] != 'no-permalink') {
+            if (is_numeric($id) && lC_Categories_Admin::validatePermalink(array($data['permalink'][$l['id']]), $category_id, 1) == 1) {
+              $Qpl = $lC_Database->query('update :table_permalinks set permalink = :permalink where item_id = :item_id and type = :type and language_id = :language_id');
+            } else {
+              $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
+            }
+            $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qpl->bindInt(':item_id', $category_id);
+            $Qpl->bindInt(':language_id', $l['id']);
+            $Qpl->bindInt(':type', 1);
+            $Qpl->bindValue(':query', 'cPath=' . $cPath);
+            $Qpl->bindValue(':permalink', $data['permalink'][$l['id']]);
+            $Qpl->execute();
 
-          if ( $lC_Database->isError() ) {
-            $error = true;
-            break;
+            if ( $lC_Database->isError() ) {
+              $error = true;
+              break;
+            }
+          } else {
+            $Qpl = $lC_Database->query('delete from :table_permalinks where item_id = :item_id and type = :type and language_id = :language_id');
+            $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qpl->bindInt(':item_id', $category_id);
+            $Qpl->bindInt(':language_id', $l['id']);
+            $Qpl->bindInt(':type', 1);
+            $Qpl->execute();
           }
-        } else {
-          $Qpl = $lC_Database->query('delete from :table_permalinks where item_id = :item_id and type = :type and language_id = :language_id');
-          $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
-          $Qpl->bindInt(':item_id', $category_id);
-          $Qpl->bindInt(':language_id', $l['id']);
-          $Qpl->bindInt(':type', 1);
-          $Qpl->execute();
         }
       }
     }

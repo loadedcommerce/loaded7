@@ -864,19 +864,26 @@ class lC_Products_import_export_Admin {
           }
           
           if ( $error === false ) {
-            $Qquery = $lC_Database->query("select query from :table_permalinks where item_id = :item_id and type = :type");
+            $Qquery = $lC_Database->query("select query from :table_permalinks where item_id = :item_id and type = :type and language_id = :language_id");
             $Qquery->bindTable(':table_permalinks', TABLE_PERMALINKS);
             $Qquery->bindInt(':item_id', $products_id);
+            $Qquery->bindInt(':language_id', $product['language_id']);
             $Qquery->bindInt(':type', 2);
             $Qquery->execute();
             if ($Qquery->numberOfRows()) {
               if ($query != $Qquery->value('query')) {
-                $Qupdate = $lC_Database->query("update :table_permalinks set query = :query where item_id = :item_id and type = :type");
+                $Qupdate = $lC_Database->query("update :table_permalinks set query = :query where item_id = :item_id and type = :type and language_id = :language_id");
                 $Qupdate->bindTable(':table_permalinks', TABLE_PERMALINKS);
                 $Qupdate->bindInt(':item_id', $products_id);
+                $Qupdate->bindInt(':language_id', $product['language_id']);
                 $Qupdate->bindInt(':type', 2);
                 $Qupdate->bindValue(':query', $query);
                 $Qupdate->execute();
+
+                if ( $lC_Database->isError() ) {
+                  $error = true;
+                  break;
+                }
               }
             }
             $Qquery->freeResult();
@@ -997,6 +1004,11 @@ class lC_Products_import_export_Admin {
             $Qupdate->bindValue(':query', $query);
             $Qupdate->bindValue(':permalink', $product['permalink']);
             $Qupdate->execute();
+
+            if ( $lC_Database->isError() ) {
+              $error = true;
+              break;
+            }
           }
 
           if ( $error === false ) {
@@ -1123,7 +1135,7 @@ class lC_Products_import_export_Admin {
 
     $match_count = 0;
     $insert_count = 0;
-
+    
     if ($cwizard) {
       // p wizard stuff like return columns and etc.
       $msg .= 'CWIZARD AGAIN!~!!!!!!!!!!';
@@ -1140,6 +1152,9 @@ class lC_Products_import_export_Admin {
         $Qcheck->bindInt(':categories_id', $categories_id);
         $category_check = $Qcheck->numberOfRows();
 
+        // build a cPath for later use
+        $query = "cPath=" . str_replace("0_", "", implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($category['categories_id']))))) . "_" . $category['categories_id']);
+        
         if ($category_check > 0) {
           // the category exists in the database so were just going to update the category with the new data
           $match_count++;
@@ -1163,20 +1178,20 @@ class lC_Products_import_export_Admin {
 
           $data['name'][$category['language_id']] = $category['name'];
           $data['menu_name'][$category['language_id']] = $category['menu_name'];
+          $data['permalink'][$category['language_id']] = '';
           $data['blurb'][$category['language_id']] = $category['blurb'];
           $data['description'][$category['language_id']] = $category['description'];
           $data['keyword'][$category['language_id']] = $category['keyword'];
           $data['tags'][$category['language_id']] = $category['tags'];
           
           $lC_Categories->save($categories_id, $data);
-
         } else {
           // the category doesnt exist so lets write it into the database
           $insert_count++; 
           
           $cdaParts = explode("/", $category['date_added']);
           $category_date_added = date("Y-m-d H:i:s", mktime(0, 0, 0, $cdaParts[0], $cdaParts[1], $cdaParts[2]));
-
+          
           // Insert using code from the catgories class
           $error = false;
 
@@ -1223,6 +1238,46 @@ class lC_Products_import_export_Admin {
           if ( $lC_Database->isError() ) {
             $error = true;
             break;
+          }
+          
+          // added for permalinks
+          if ( $error === false ) {
+            // get existing cat permalinks
+            $Qquery = $lC_Database->query("select permalink from :table_permalinks where type = :type and language_id = :language_id");
+            $Qquery->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qquery->bindInt(':type', 1); 
+            $Qquery->bindInt(':language_id', $category['language_id']);
+            $Qquery->execute();
+            
+            // make the array of existing permalinks
+            while ($Qquery->next()) {
+              $cat_pl_arr[] = $Qquery->value('permalink');
+            }
+            
+            // what the new permalink is to be
+            $cat_permalink = lC_Products_import_export_Admin::generate_clean_permalink($category['name']);
+            
+            // compare to existing cat permalinks and add random string to avoid duplicates if needed
+            if (in_array($cat_permalink, $cat_pl_arr)) {
+              $cat_permalink = $cat_permalink . '-' . self::randomString();
+            }
+            
+            // insert the new permalink
+            $Qupdate = $lC_Database->query("insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)");
+            $Qupdate->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qupdate->bindInt(':item_id', $categories_id);
+            $Qupdate->bindInt(':language_id', $category['language_id']);
+            $Qupdate->bindInt(':type', 1);
+            $Qupdate->bindValue(':query', $query);
+            $Qupdate->bindValue(':permalink', $cat_permalink);
+            $Qupdate->execute();
+
+            $Qquery->freeResult();
+            
+            if ( $lC_Database->isError() ) {
+              $error = true;
+              break;
+            }
           }
 
           if ( $error === false ) {
@@ -1815,6 +1870,22 @@ class lC_Products_import_export_Admin {
     $Qpcpath->execute();
                     
     return str_replace("cPath=", "", $Qpcpath->value('query'));
+  }
+  
+ /*
+  * Return a random string to keep from duplicate permalinks
+  *
+  * @param string random generated alpha chars
+  * @access public
+  * @return array
+  */
+  public static function randomString($length = 6) {
+    $characters = 'abcdefghkmnpqrstuxyz';
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $randomString;
   }
 }
 ?>
