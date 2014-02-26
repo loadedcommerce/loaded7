@@ -680,7 +680,7 @@ class lC_Products_import_export_Admin {
         
         // need to get the weight class since Im outputting lb and kg instead of the ids
         if ($product['weight_class'] != '') {
-          $QweightClass = $lC_Database->query("SELECT * FROM :table_weight_classes wc WHERE wc.weight_class_key = :weight_class_key");
+          $QweightClass = $lC_Database->query("select * from :table_weight_classes wc where wc.weight_class_key = :weight_class_key");
           $QweightClass->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
           $QweightClass->bindValue(':weight_class_key', $product['weight_class']);
           $QweightClass->execute();
@@ -701,16 +701,16 @@ class lC_Products_import_export_Admin {
           foreach ($product['categories'] as $catName) {
             if ($catName != '') {
               if ($product['parent_categories'] != '') {
-                $parentCheck = $lC_Database->query("SELECT categories_id FROM :table_categories_description WHERE categories_name = :categories_name AND language_id = :language_id");
+                $parentCheck = $lC_Database->query("select categories_id from :table_categories_description where categories_name = :categories_name and language_id = :language_id");
                 $parentCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
                 $parentCheck->bindValue(':categories_name', end(explode(",", $product['parent_categories'])));
                 $parentCheck->bindInt(':language_id', $product['language_id']);
                 $parentCheck->execute();
               
-                $ifParent =  ' AND c.parent_id = :parent_id';
+                $ifParent =  ' and c.parent_id = :parent_id';
               }
               
-              $catCheck = $lC_Database->query("SELECT cd.* FROM :table_categories_description cd LEFT JOIN :table_categories c on (cd.categories_id = c.categories_id) WHERE cd.categories_name = :categories_name" . $ifParent);
+              $catCheck = $lC_Database->query("select cd.* from :table_categories_description cd left join :table_categories c on (cd.categories_id = c.categories_id) where cd.categories_name = :categories_name" . $ifParent);
               $catCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
               $catCheck->bindTable(':table_categories', TABLE_CATEGORIES);
               $catCheck->bindValue(':categories_name', $catName);
@@ -721,7 +721,7 @@ class lC_Products_import_export_Admin {
                 $category_ids[] = $catCheck->value('categories_id');
               } else {
                 // insert a category that doesnt exist
-                $QcatInsert = $lC_Database->query("INSERT INTO :table_categories (parent_id, categories_status, categories_mode) values (:parent_id, :categories_status, :categories_mode)");
+                $QcatInsert = $lC_Database->query("insert into :table_categories (parent_id, categories_status, categories_mode) values (:parent_id, :categories_status, :categories_mode)");
                 $QcatInsert->bindTable(':table_categories', TABLE_CATEGORIES);
                 $QcatInsert->bindInt(':parent_id', '0');
                 $QcatInsert->bindInt(':categories_status', '1');
@@ -733,7 +733,7 @@ class lC_Products_import_export_Admin {
                 } else {
                   // if we did ok inserting to the main cat table lets do the description
                   $currentCatId = $lC_Database->nextID();
-                  $QcatDescInsert = $lC_Database->query("INSERT INTO :table_categories_description (categories_id, language_id, categories_name) VALUES (:categories_id, :language_id, :categories_name)");
+                  $QcatDescInsert = $lC_Database->query("insert into :table_categories_description (categories_id, language_id, categories_name) VALUES (:categories_id, :language_id, :categories_name)");
                   $QcatDescInsert->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
                   $QcatDescInsert->bindInt(':categories_id', $currentCatId);
                   $QcatDescInsert->bindInt(':language_id', $product['language_id']);
@@ -745,6 +745,47 @@ class lC_Products_import_export_Admin {
                   } else {
                     // if were successful add the inserted id to the category ids
                     $category_ids[] = $currentCatId;
+                    
+                    // get existing cat permalinks
+                    $Qquery = $lC_Database->query("select permalink from :table_permalinks where type = :type and language_id = :language_id");
+                    $Qquery->bindTable(':table_permalinks', TABLE_PERMALINKS);
+                    $Qquery->bindInt(':type', 1); 
+                    $Qquery->bindInt(':language_id', $product['language_id']);
+                    $Qquery->execute();
+                    
+                    // make the array of existing permalinks
+                    while ($Qquery->next()) {
+                      $cat_pl_arr[] = $Qquery->value('permalink');
+                    }
+                    
+                    // what the new permalink is to be
+                    $cat_permalink = lC_Products_import_export_Admin::generate_clean_permalink($catName);
+                    
+                    // compare to existing cat permalinks and add random string to avoid duplicates if needed
+                    if (in_array($cat_permalink, $cat_pl_arr)) {
+                      $cat_permalink = $cat_permalink . '-' . self::randomString();
+                    }
+                    
+                    // lets get the query
+                    $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($currentCatId))))) . "_" . $currentCatId;
+                    $query = str_replace("cPath=0_", "cPath=", $query);
+        
+                    // insert the new permalink
+                    $Qupdate = $lC_Database->query("insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)");
+                    $Qupdate->bindTable(':table_permalinks', TABLE_PERMALINKS);
+                    $Qupdate->bindInt(':item_id', $currentCatId);
+                    $Qupdate->bindInt(':language_id', $product['language_id']);
+                    $Qupdate->bindInt(':type', 1);
+                    $Qupdate->bindValue(':query', $query);
+                    $Qupdate->bindValue(':permalink', $cat_permalink);
+                    $Qupdate->execute();
+
+                    $Qquery->freeResult();
+
+                    if ( $lC_Database->isError() ) {
+                      $error = true;
+                      break;
+                    }
                   }
                 }
               }
@@ -757,6 +798,7 @@ class lC_Products_import_export_Admin {
         
         // build a cPath for later use
         $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($product['categories'][0]))))) . "_" . $product['categories'][0];
+        $query = str_replace("cPath=0_", "cPath=", $query);
         
         // need to get the id for the manufacturer
         if ($product['manufacturer'] != '') {
@@ -1157,7 +1199,8 @@ class lC_Products_import_export_Admin {
         $category_check = $Qcheck->numberOfRows();
 
         // build a cPath for later use
-        $query = "cPath=" . str_replace("0_", "", implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($category['categories_id']))))) . "_" . $category['categories_id']);
+        $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($category['categories_id']))))) . "_" . $category['categories_id'];
+        $query = str_replace("cPath=0_", "cPath=", $query);
         
         if ($category_check > 0) {
           // the category exists in the database so were just going to update the category with the new data
