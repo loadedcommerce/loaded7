@@ -700,13 +700,17 @@ class lC_Products_import_export_Admin {
           $product['categories'] = explode(",", $product['categories']);
           foreach ($product['categories'] as $catName) {
             if ($catName != '') {
-              $parentCheck = $lC_Database->query("SELECT categories_id FROM :table_categories_description WHERE categories_name = :categories_name AND language_id = :language_id");
-              $parentCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
-              $parentCheck->bindValue(':categories_name', end(explode(",", $product['parent_categories'])));
-              $parentCheck->bindInt(':language_id', $product['language_id']);
-              $parentCheck->execute();
+              if ($product['parent_categories'] != '') {
+                $parentCheck = $lC_Database->query("SELECT categories_id FROM :table_categories_description WHERE categories_name = :categories_name AND language_id = :language_id");
+                $parentCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+                $parentCheck->bindValue(':categories_name', end(explode(",", $product['parent_categories'])));
+                $parentCheck->bindInt(':language_id', $product['language_id']);
+                $parentCheck->execute();
               
-              $catCheck = $lC_Database->query("SELECT cd.* FROM :table_categories_description cd LEFT JOIN :table_categories c on (cd.categories_id = c.categories_id) WHERE cd.categories_name = :categories_name AND c.parent_id = :parent_id");
+                $ifParent =  ' AND c.parent_id = :parent_id';
+              }
+              
+              $catCheck = $lC_Database->query("SELECT cd.* FROM :table_categories_description cd LEFT JOIN :table_categories c on (cd.categories_id = c.categories_id) WHERE cd.categories_name = :categories_name" . $ifParent);
               $catCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
               $catCheck->bindTable(':table_categories', TABLE_CATEGORIES);
               $catCheck->bindValue(':categories_name', $catName);
@@ -745,7 +749,7 @@ class lC_Products_import_export_Admin {
                 }
               }
             }
-          }
+          } 
           $product['categories'] = $category_ids;
           $currentCatId = null;
           $category_ids = null;
