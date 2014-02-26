@@ -86,16 +86,17 @@ global $lC_Language, $pInfo, $tax_class_array;
           <div class="inputs blue-gradient" style="display:inline; padding:8px 0;">
             <span class="mid-margin-left no-margin-right strong"><?php echo $lC_Currencies->getSymbolLeft(); ?></span>
             <?php 
-            if (isset($pInfo)) {
-              if(DISPLAY_PRICE_WITH_TAX == 1) { 
-                $products_price_gross = lc_round($pInfo->get('products_price_with_tax'), DECIMAL_PLACES);
+              if (isset($pInfo)) {
+                if(DISPLAY_PRICE_WITH_TAX == 1) { 
+                  $products_price_gross = lc_round($pInfo->get('products_price_with_tax'), DECIMAL_PLACES);
+                } else {
+                  $products_price_gross = lc_round($pInfo->get('products_price'), DECIMAL_PLACES);
+                }
               } else {
-                $products_price_gross = lc_round($pInfo->get('products_price'), DECIMAL_PLACES);
+                $products_price_gross = null;
               }
-            } else {
-              $products_price_gross = null;
-            }
-            echo lc_draw_input_field('products_price_gross', $products_price_gross, 'style="width:94%;" class="input-unstyled strong products-price-gross" id="products_price0_gross" READONLY'); ?>
+              echo lc_draw_input_field('products_price_gross', $products_price_gross, 'style="width:94%;" class="input-unstyled strong products-price-gross" id="products_price0_gross" READONLY');
+            ?>
           </div>         
         </div>
       </div>
