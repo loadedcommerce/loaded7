@@ -680,7 +680,7 @@ class lC_Products_import_export_Admin {
         
         // need to get the weight class since Im outputting lb and kg instead of the ids
         if ($product['weight_class'] != '') {
-          $QweightClass = $lC_Database->query("SELECT * FROM :table_weight_classes wc WHERE wc.weight_class_key = :weight_class_key");
+          $QweightClass = $lC_Database->query("select * from :table_weight_classes wc where wc.weight_class_key = :weight_class_key");
           $QweightClass->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
           $QweightClass->bindValue(':weight_class_key', $product['weight_class']);
           $QweightClass->execute();
@@ -688,7 +688,7 @@ class lC_Products_import_export_Admin {
           if ($lC_Database->isError()) {
             $errormsg .= 'weight class err ' . $lC_Database->getError();
           } else {
-            $product['weight_class_id'] = $QweightClass->value('weight_class_id');
+            $product_weight_class_id = $QweightClass->value('weight_class_id');
           }
         }
 
@@ -700,13 +700,17 @@ class lC_Products_import_export_Admin {
           $product['categories'] = explode(",", $product['categories']);
           foreach ($product['categories'] as $catName) {
             if ($catName != '') {
-              $parentCheck = $lC_Database->query("SELECT categories_id FROM :table_categories_description WHERE categories_name = :categories_name AND language_id = :language_id");
-              $parentCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
-              $parentCheck->bindValue(':categories_name', end(explode(",", $product['parent_categories'])));
-              $parentCheck->bindInt(':language_id', $product['language_id']);
-              $parentCheck->execute();
+              if ($product['parent_categories'] != '') {
+                $parentCheck = $lC_Database->query("select categories_id from :table_categories_description where categories_name = :categories_name and language_id = :language_id");
+                $parentCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
+                $parentCheck->bindValue(':categories_name', end(explode(",", $product['parent_categories'])));
+                $parentCheck->bindInt(':language_id', $product['language_id']);
+                $parentCheck->execute();
               
-              $catCheck = $lC_Database->query("SELECT cd.* FROM :table_categories_description cd LEFT JOIN :table_categories c on (cd.categories_id = c.categories_id) WHERE cd.categories_name = :categories_name AND c.parent_id = :parent_id");
+                $ifParent =  ' and c.parent_id = :parent_id';
+              }
+              
+              $catCheck = $lC_Database->query("select cd.* from :table_categories_description cd left join :table_categories c on (cd.categories_id = c.categories_id) where cd.categories_name = :categories_name" . $ifParent);
               $catCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
               $catCheck->bindTable(':table_categories', TABLE_CATEGORIES);
               $catCheck->bindValue(':categories_name', $catName);
@@ -717,7 +721,7 @@ class lC_Products_import_export_Admin {
                 $category_ids[] = $catCheck->value('categories_id');
               } else {
                 // insert a category that doesnt exist
-                $QcatInsert = $lC_Database->query("INSERT INTO :table_categories (parent_id, categories_status, categories_mode) values (:parent_id, :categories_status, :categories_mode)");
+                $QcatInsert = $lC_Database->query("insert into :table_categories (parent_id, categories_status, categories_mode) values (:parent_id, :categories_status, :categories_mode)");
                 $QcatInsert->bindTable(':table_categories', TABLE_CATEGORIES);
                 $QcatInsert->bindInt(':parent_id', '0');
                 $QcatInsert->bindInt(':categories_status', '1');
@@ -729,7 +733,7 @@ class lC_Products_import_export_Admin {
                 } else {
                   // if we did ok inserting to the main cat table lets do the description
                   $currentCatId = $lC_Database->nextID();
-                  $QcatDescInsert = $lC_Database->query("INSERT INTO :table_categories_description (categories_id, language_id, categories_name) VALUES (:categories_id, :language_id, :categories_name)");
+                  $QcatDescInsert = $lC_Database->query("insert into :table_categories_description (categories_id, language_id, categories_name) VALUES (:categories_id, :language_id, :categories_name)");
                   $QcatDescInsert->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
                   $QcatDescInsert->bindInt(':categories_id', $currentCatId);
                   $QcatDescInsert->bindInt(':language_id', $product['language_id']);
@@ -741,15 +745,70 @@ class lC_Products_import_export_Admin {
                   } else {
                     // if were successful add the inserted id to the category ids
                     $category_ids[] = $currentCatId;
+                    
+                    // get existing cat permalinks
+                    $Qquery = $lC_Database->query("select permalink from :table_permalinks where type = :type and language_id = :language_id");
+                    $Qquery->bindTable(':table_permalinks', TABLE_PERMALINKS);
+                    $Qquery->bindInt(':type', 1); 
+                    $Qquery->bindInt(':language_id', $product['language_id']);
+                    $Qquery->execute();
+                    
+                    // make the array of existing permalinks
+                    while ($Qquery->next()) {
+                      $cat_pl_arr[] = $Qquery->value('permalink');
+                    }
+                    
+                    // what the new permalink is to be
+                    $cat_permalink = lC_Products_import_export_Admin::generate_clean_permalink($catName);
+                    
+                    // compare to existing cat permalinks and add random string to avoid duplicates if needed
+                    if (in_array($cat_permalink, $cat_pl_arr)) {
+                      $cat_permalink = $cat_permalink . '-' . self::randomString();
+                    }
+                    
+                    // lets get the query
+                    $parents = self::getParentsPath($currentCatId);
+                    if (empty($parents)) {
+                      $query = "cPath=" . $currentCatId;
+                    } else {
+                      $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($currentCatId))))) . "_" . $currentCatId;
+                    }
+                    $query = str_replace("cPath=0_", "cPath=", $query);
+        
+                    // insert the new permalink
+                    $Qupdate = $lC_Database->query("insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)");
+                    $Qupdate->bindTable(':table_permalinks', TABLE_PERMALINKS);
+                    $Qupdate->bindInt(':item_id', $currentCatId);
+                    $Qupdate->bindInt(':language_id', $product['language_id']);
+                    $Qupdate->bindInt(':type', 1);
+                    $Qupdate->bindValue(':query', $query);
+                    $Qupdate->bindValue(':permalink', $cat_permalink);
+                    $Qupdate->execute();
+
+                    $Qquery->freeResult();
+
+                    if ( $lC_Database->isError() ) {
+                      $error = true;
+                      break;
+                    }
                   }
                 }
               }
             }
-          }
+          } 
           $product['categories'] = $category_ids;
           $currentCatId = null;
           $category_ids = null;
         }
+        
+        // build a cPath for later use
+        $parents = self::getParentsPath($product['categories'][0]);
+        if (empty($parents)) {
+          $query = "cPath=" . $product['categories'][0];
+        } else {  
+          $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($product['categories'][0]))))) . "_" . $product['categories'][0];
+        }
+        $query = str_replace("cPath=0_", "cPath=", $query);
         
         // need to get the id for the manufacturer
         if ($product['manufacturer'] != '') {
@@ -780,7 +839,6 @@ class lC_Products_import_export_Admin {
         $Qcheck->bindTable(':table_products', TABLE_PRODUCTS);
         $Qcheck->bindInt(':products_id', $products_id);
         $Qcheck->execute();
-        
         if ($Qcheck->numberOfRows()) {
           // the product exists in the database so were just going to update the product with the new data
           $match_count++;
@@ -803,7 +861,7 @@ class lC_Products_import_export_Admin {
           $Qproduct->bindValue(':products_model', $product['model']);
           $Qproduct->bindValue(':products_sku', $product['sku']);
           $Qproduct->bindValue(':products_weight', $product['weight']);
-          $Qproduct->bindInt(':products_weight_class', $product['weight_class_id']);
+          $Qproduct->bindInt(':products_weight_class', $product_weight_class_id);
           $Qproduct->bindInt(':products_status', $product['status']);
           $Qproduct->bindInt(':products_tax_class_id', $product['tax_class_id']);
           $Qproduct->bindInt(':manufacturers_id', $product['manufacturers_id']);
@@ -862,6 +920,32 @@ class lC_Products_import_export_Admin {
           }
           
           if ( $error === false ) {
+            $Qquery = $lC_Database->query("select query from :table_permalinks where item_id = :item_id and type = :type and language_id = :language_id");
+            $Qquery->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qquery->bindInt(':item_id', $products_id);
+            $Qquery->bindInt(':language_id', $product['language_id']);
+            $Qquery->bindInt(':type', 2);
+            $Qquery->execute();
+            if ($Qquery->numberOfRows()) {
+              if ($query != $Qquery->value('query')) {
+                $Qupdate = $lC_Database->query("update :table_permalinks set query = :query where item_id = :item_id and type = :type and language_id = :language_id");
+                $Qupdate->bindTable(':table_permalinks', TABLE_PERMALINKS);
+                $Qupdate->bindInt(':item_id', $products_id);
+                $Qupdate->bindInt(':language_id', $product['language_id']);
+                $Qupdate->bindInt(':type', 2);
+                $Qupdate->bindValue(':query', $query);
+                $Qupdate->execute();
+
+                if ( $lC_Database->isError() ) {
+                  $error = true;
+                  break;
+                }
+              }
+            }
+            $Qquery->freeResult();
+          }
+          
+          if ( $error === false ) {
             $lC_Database->commitTransaction();
 
             lC_Cache::clear('categories');
@@ -882,7 +966,7 @@ class lC_Products_import_export_Admin {
 
           $lC_Database->startTransaction();
 
-          $Qproduct = $lC_Database->query('insert into :table_products (products_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id, products_date_added, products_last_modified) values (:products_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :manufacturers_id, :products_date_added, :products_last_modified)');
+          $Qproduct = $lC_Database->query('insert into :table_products (products_id, products_quantity, products_cost, products_price, products_msrp, products_model, products_sku, products_date_added, products_last_modified, products_weight, products_weight_class, products_status, products_tax_class_id, manufacturers_id, has_children) values (:products_id, :products_quantity, :products_cost, :products_price, :products_msrp, :products_model, :products_sku, :products_date_added, :products_last_modified, :products_weight, :products_weight_class, :products_status, :products_tax_class_id, :manufacturers_id, 0)');
           $Qproduct->bindInt(':products_id', $products_id);
           $Qproduct->bindRaw(':products_date_added', ($products_date_added != '' ? $products_date_added : 'now()'));
           $Qproduct->bindRaw(':products_last_modified', 'now()');
@@ -894,7 +978,7 @@ class lC_Products_import_export_Admin {
           $Qproduct->bindValue(':products_model', $product['model']);
           $Qproduct->bindValue(':products_sku', $product['sku']);
           $Qproduct->bindFloat(':products_weight', $product['weight']);
-          $Qproduct->bindInt(':products_weight_class', $product['weight_class']);
+          $Qproduct->bindInt(':products_weight_class', $product_weight_class_id);
           $Qproduct->bindInt(':products_status', $product['status']);
           $Qproduct->bindInt(':products_tax_class_id', $product['tax_class_id']);
           $Qproduct->bindInt(':manufacturers_id', $product['manufacturers_id']);
@@ -960,6 +1044,22 @@ class lC_Products_import_export_Admin {
             $Qpd->bindValue(':products_url', $product['url']);
             $Qpd->setLogging($_SESSION['module'], $products_id);
             $Qpd->execute();
+
+            if ( $lC_Database->isError() ) {
+              $error = true;
+              break;
+            }
+          }
+          
+          if ( $error === false ) {
+            $Qupdate = $lC_Database->query("insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)");
+            $Qupdate->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qupdate->bindInt(':item_id', $products_id);
+            $Qupdate->bindInt(':language_id', $product['language_id']);
+            $Qupdate->bindInt(':type', 2);
+            $Qupdate->bindValue(':query', $query);
+            $Qupdate->bindValue(':permalink', $product['permalink']);
+            $Qupdate->execute();
 
             if ( $lC_Database->isError() ) {
               $error = true;
@@ -1091,7 +1191,7 @@ class lC_Products_import_export_Admin {
 
     $match_count = 0;
     $insert_count = 0;
-
+    
     if ($cwizard) {
       // p wizard stuff like return columns and etc.
       $msg .= 'CWIZARD AGAIN!~!!!!!!!!!!';
@@ -1107,7 +1207,16 @@ class lC_Products_import_export_Admin {
         $Qcheck->bindTable(':table_categories', TABLE_CATEGORIES);
         $Qcheck->bindInt(':categories_id', $categories_id);
         $category_check = $Qcheck->numberOfRows();
-
+        
+        // build a cPath for later use
+        $parents = self::getParentsPath($category['categories_id']);
+        if (empty($parents)) {
+          $query = "cPath=" . $category['categories_id'];
+        } else {  
+          $query = "cPath=" . implode("_", array_reverse(explode("_", str_replace("_0", "", self::getParentsPath($category['categories_id']))))) . "_" . $category['categories_id'];
+        }
+        $query = str_replace("cPath=0_", "cPath=", $query);
+        
         if ($category_check > 0) {
           // the category exists in the database so were just going to update the category with the new data
           $match_count++;
@@ -1131,20 +1240,20 @@ class lC_Products_import_export_Admin {
 
           $data['name'][$category['language_id']] = $category['name'];
           $data['menu_name'][$category['language_id']] = $category['menu_name'];
+          $data['permalink'][$category['language_id']] = '';
           $data['blurb'][$category['language_id']] = $category['blurb'];
           $data['description'][$category['language_id']] = $category['description'];
           $data['keyword'][$category['language_id']] = $category['keyword'];
           $data['tags'][$category['language_id']] = $category['tags'];
           
           $lC_Categories->save($categories_id, $data);
-
-        } else {
+        } else {        
           // the category doesnt exist so lets write it into the database
           $insert_count++; 
           
           $cdaParts = explode("/", $category['date_added']);
           $category_date_added = date("Y-m-d H:i:s", mktime(0, 0, 0, $cdaParts[0], $cdaParts[1], $cdaParts[2]));
-
+          
           // Insert using code from the catgories class
           $error = false;
 
@@ -1191,6 +1300,46 @@ class lC_Products_import_export_Admin {
           if ( $lC_Database->isError() ) {
             $error = true;
             break;
+          }
+          
+          // added for permalinks
+          if ( $error === false ) {
+            // get existing cat permalinks
+            $Qquery = $lC_Database->query("select permalink from :table_permalinks where type = :type and language_id = :language_id");
+            $Qquery->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qquery->bindInt(':type', 1); 
+            $Qquery->bindInt(':language_id', $category['language_id']);
+            $Qquery->execute();
+            
+            // make the array of existing permalinks
+            while ($Qquery->next()) {
+              $cat_pl_arr[] = $Qquery->value('permalink');
+            }
+            
+            // what the new permalink is to be
+            $cat_permalink = lC_Products_import_export_Admin::generate_clean_permalink($category['name']);
+            
+            // compare to existing cat permalinks and add random string to avoid duplicates if needed
+            if (in_array($cat_permalink, $cat_pl_arr)) {
+              $cat_permalink = $cat_permalink . '-' . self::randomString();
+            }
+            
+            // insert the new permalink
+            $Qupdate = $lC_Database->query("insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)");
+            $Qupdate->bindTable(':table_permalinks', TABLE_PERMALINKS);
+            $Qupdate->bindInt(':item_id', $categories_id);
+            $Qupdate->bindInt(':language_id', $category['language_id']);
+            $Qupdate->bindInt(':type', 1);
+            $Qupdate->bindValue(':query', $query);
+            $Qupdate->bindValue(':permalink', $cat_permalink);
+            $Qupdate->execute();
+
+            $Qquery->freeResult();
+            
+            if ( $lC_Database->isError() ) {
+              $error = true;
+              break;
+            }
           }
 
           if ( $error === false ) {
@@ -1766,23 +1915,39 @@ class lC_Products_import_export_Admin {
   }
 
  /*
-  * Return the products cPath from permalinks table
+  * Return the existing products cPath from permalinks table
   *
   * @param string $cPath A cpath for the product
   * @access public
   * @return array
   */
-  public static function getPermalinkCpath($id = null, $lang = 1) {
+  public static function getPermalinkCpath($id = null, $type = 1, $lang = 1) {
     global $lC_Database, $lC_Language;
     
     $Qpcpath = $lC_Database->query("SELECT query FROM :table_permalinks WHERE item_id = :item_id AND type = :type AND language_id = :language_id");
     $Qpcpath->bindTable(':table_permalinks', TABLE_PERMALINKS);
     $Qpcpath->bindInt(':item_id', $id);
-    $Qpcpath->bindInt(':type', 2);
+    $Qpcpath->bindInt(':type', $type);
     $Qpcpath->bindInt(':language_id', $lang);
     $Qpcpath->execute();
                     
     return str_replace("cPath=", "", $Qpcpath->value('query'));
+  }
+  
+ /*
+  * Return a random string to keep from duplicate permalinks
+  *
+  * @param string random generated alpha chars
+  * @access public
+  * @return array
+  */
+  public static function randomString($length = 6) {
+    $characters = 'abcdefghkmnpqrstuxyz';
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $randomString;
   }
 }
 ?>
