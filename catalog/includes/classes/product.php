@@ -279,11 +279,11 @@ class lC_Product {
     return $this->_data['tags'];
   }
   
-  //######## PRICING #########//
+  //######## PRICING - ALL PRICING TO COME FROM HERE #########//
   public function getPriceInfo($product_id, $customers_group_id = 1, $data) {
     global $lC_Specials, $lC_Database, $lC_Language, $lC_Customer, $lC_Services, $lC_Currencies;
 
-    $quantity = (isset($_GET['quantity']) && $_GET['quantity'] != null) ? (int)$_GET['quantity'] : 1;
+    $quantity = (isset($data['quantity']) && $data['quantity'] != null) ? (int)$data['quantity'] : 1;
 
     // #### SET BASE PRICE #### //
     
@@ -295,17 +295,21 @@ class lC_Product {
     if (is_array($data['simple_options']) && count($data['simple_options']) > 0) {
       $modTotal = 0;
       foreach ($data['simple_options'] as $options_id => $values_id) {
-        $QsimpleOptions = $lC_Database->query("select price_modifier from :table_products_simple_options_values where customers_group_id = :customers_group_id and options_id = :options_id and values_id = :values_id limit 1");
+        $QsimpleOptions = $lC_Database->query("select * from :table_products_simple_options_values where customers_group_id = :customers_group_id and options_id = :options_id and values_id = :values_id and products_id = :products_id limit 1");
         $QsimpleOptions->bindTable(':table_products_simple_options_values', TABLE_PRODUCTS_SIMPLE_OPTIONS_VALUES);
         $QsimpleOptions->bindInt(':customers_group_id', $customers_group_id);        
+        $QsimpleOptions->bindInt(':products_id', $product_id);        
         $QsimpleOptions->bindInt(':options_id', $options_id);        
         $QsimpleOptions->bindInt(':values_id', $values_id);        
+        $QsimpleOptions->setDebug(true);
         $QsimpleOptions->execute();
-        
+
         $modTotal = (float)$modTotal + $QsimpleOptions->valueDecimal('price_modifier');
+        
+        $QsimpleOptions->freeResult();
       }  
     }  
-    
+
     // if has special price, base price becomes special price
     $special_price = 0.00;
     if ($lC_Services->isStarted('specials') && $lC_Specials->isActive($product_id)) {
@@ -395,6 +399,7 @@ class lC_Product {
                     'modTotal' => $modTotal,
                     'qpbData' => $qpbData
                     );
+                    
 //echo "<pre>return ";
 //print_r($return);
 //echo "</pre>";
@@ -403,8 +408,12 @@ class lC_Product {
     return $return;                    
   }
   
-  public function getPrice() {
-    $data = $this->getPriceInfo($this->getID(), 1, array());
+  public function getPrice($id = null, $group = 1, $data = array()) {
+    
+    if ($id == null) $id = $this->getID();
+    if ($group == null) $group = 1;
+    
+    $data = $this->getPriceInfo($id, $group, $data);
     
     return $data['price'];
   }
@@ -913,11 +922,13 @@ class lC_Product {
      // $extra = (isset($value['products_model']) && empty($value['products_model']) === false) ? '<em>' . $lC_Language->get('listing_model_heading') . ': ' . $value['products_model'] . '</em>' : null;
      // if ($extra == null && isset($value['products_sku']) && empty($value['products_sku']) === false) $extra = '<em>' . $lC_Language->get('listing_sku_heading') . ': ' . $value['products_sku'] . '</em>';
       
-      $img = (isset($value['image']) && empty($value['image']) === false) ? $lC_Image->getAddress($value['image'], 'small') : 'images/no_image.png';
+      $img = (isset($value['image']) && empty($value['image']) === false) ? $lC_Image->getAddress($value['image'], 'small') : 'images/pixel_trans.gif';
+      $height = (isset($value['image']) && empty($value['image']) === false) ? $lC_Image->getHeight('small') : 1;
+      $hcss = (isset($value['image']) && empty($value['image']) === false) ? null : ' style="height:1px;" ';
       $output .= '<div class="row clear-both margin-bottom margin-top">' .
                  '  <div class="col-sm-8 col-lg-8">' .
                  '    <span class="subproduct-image pull-left margin-right">' . 
-                 '      <img class="img-responsive" src="' . $img . '" title="' . $value['products_name'] . '" height="' . $lC_Image->getHeight('small') . '" width="' . $lC_Image->getWidth('small') . '" alt="' . $value['products_name'] . '" />' .
+                 '      <img class="img-responsive" ' . $hcss . 'src="' . $img . '" title="' . $value['products_name'] . '" height="' . $height . '" width="' . $lC_Image->getWidth('small') . '" alt="' . $value['products_name'] . '" />' .
                  '    </span>' .
                  '    <span class="subproduct-name lead lt-blue no-margin-bottom">' . $value['products_name'] . '</span><br />' . 
                  ((isset($extra) && $extra != null) ? '<span class="subproduct-model small-margin-left no-margin-top"><small>' . $extra . '</small></span>' : null) .

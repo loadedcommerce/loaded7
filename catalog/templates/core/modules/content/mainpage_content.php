@@ -11,7 +11,7 @@
 ?>
 <!--modules/content/mainpage_content.php start-->
 <div class="col-sm-12 col-lg-12">
-  <div class="row content-mainpage-content-container margin-bottom">
+  <div class="row content-mainpage-content-div margin-bottom">
     <?php echo $lC_Box->getContent(); ?>
   </div>
 </div>

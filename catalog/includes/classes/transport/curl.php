@@ -56,7 +56,11 @@ if (!class_exists('curl')) {
 
       curl_close($curl);
       
-      list($headers, $body) = explode("\r\n\r\n", $result, 2);
+      if ($parameters['rawResponse'] === true) {
+        $body = $result;
+      } else {
+        list($headers, $body) = explode("\r\n\r\n", $result, 2);
+      }
 
       return $body;
     }

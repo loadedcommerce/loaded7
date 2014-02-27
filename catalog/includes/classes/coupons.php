@@ -156,7 +156,7 @@ class lC_Coupons {
     
     // check purchase over
     $total = (float)$lC_ShoppingCart->getTotal();
-    if (isset($cInfo['purchase_over']) && (float)$cInfo['purchase_over'] > $total) $valid = array('status' => false, 'rpcStatus' => -4, 'msg' => $lC_Currencies->format(number_format($cInfo['purchase_over'], DECIMAL_PLACES)));
+    if (isset($cInfo['purchase_over']) && (float)$cInfo['purchase_over'] > $total) $valid = array('status' => false, 'rpcStatus' => -4, 'msg' => $lC_Currencies->format($cInfo['purchase_over']));
     
     // check start/end dates
     $today = lC_DateTime::getShort(lC_DateTime::getNow());

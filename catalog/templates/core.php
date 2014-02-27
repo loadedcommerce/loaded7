@@ -27,8 +27,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="templates/core/css/bootstrap.css">
-    <link rel="stylesheet" href="templates/core/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="ext/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="ext/bootstrap/css/bootstrap-datepicker.css">
     
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700italic,700,500&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -59,7 +59,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         
     <!-- jQuery is always at top -->
     <script src="ext/jquery/jquery-1.9.1.min.js"></script>
-    <script src="ext/bootstrap/bootstrap.min.js"></script>
+    <script src="ext/bootstrap/js/bootstrap.min.js"></script>
   </head>
 
   <body>
@@ -252,11 +252,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       <script src="ext/jquery/respond.min.js"></script>    
       
       <!-- Core JS -->
-      <script src="ext/bootstrap/bootstrap-datepicker.js"></script>
+      <script src="ext/bootstrap/js/bootstrap-datepicker.js"></script>
       <script src="ext/jquery/jquery.loadmask.js"></script>
-      
-      <!-- Added Template Specific JS -->
-      <script src="templates/core/javascript/general.js.php"></script>
       
       <?php 
       // core js
@@ -265,7 +262,7 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
       }
       // template specific js
       if (file_exists('templates/' . $lC_Template->getCode() . '/javascript/general.js.php')) {
-        $lC_Template->addJavascriptPhpFilename('includes/javascript/general.js.php'); 
+        $lC_Template->addJavascriptPhpFilename('templates/' . $lC_Template->getCode() . '/javascript/general.js.php'); 
       }
       ?>      
       <!-- js loc: <?php echo 'templates/' . $lC_Template->getCode() . '/javascript/' . $lC_Template->getGroup() . '.js'; ?> -->

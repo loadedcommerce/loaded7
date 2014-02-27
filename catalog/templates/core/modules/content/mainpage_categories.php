@@ -10,7 +10,7 @@
 */
 ?>
 <!--modules/content/mainpage_categories.php start-->
-  <div class="col-sm-12 col-lg-12">
+  <div class="content-categories-div col-sm-12 col-lg-12">
     <div class="row">
       <h3 class="no-margin-top"><?php echo $lC_Box->getTitle(); ?></h3>
       <?php echo $lC_Box->getContent(); ?>

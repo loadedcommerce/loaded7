@@ -9,6 +9,7 @@
   @version    $Id: general.js.php v1.0 2013-08-08 datazen $
 */
 ?>
+<script><!--
 $(document).ready(function() {
   var isVisible = false;
   var clickedAway = false;
@@ -90,9 +91,22 @@ equalheight = function(container) {
 }
   
 $(window).load(function() {
-  equalheight('.thumbnail');
+  equalheight('.content-new-products-container.thumbnail');
+  equalheight('.product-listing-module-container.thumbnail');
+  equalheight('.content-categories-container.thumbnail');
+  equalheight('.content-also-purchased-products-container.thumbnail');
+  equalheight('.content-featured-products-container.thumbnail');
+  equalheight('.content-recently-visited-container.thumbnail');
+  equalheight('.content-upcoming-products-container.thumbnail');
 });
 
 $(window).resize(function(){
-  equalheight('.thumbnail');
+  equalheight('.content-new-products-container.thumbnail');
+  equalheight('.product-listing-module-container.thumbnail');
+  equalheight('.content-categories-container.thumbnail');
+  equalheight('.content-also-purchased-products-container.thumbnail');
+  equalheight('.content-featured-products-container.thumbnail');
+  equalheight('.content-recently-visited-container.thumbnail');
+  equalheight('.content-upcoming-products-container.thumbnail');
 });
+//--></script>

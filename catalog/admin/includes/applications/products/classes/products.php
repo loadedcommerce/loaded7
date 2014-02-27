@@ -14,6 +14,8 @@ include_once($lC_Vqmod->modCheck('includes/applications/customer_groups/classes/
 include_once($lC_Vqmod->modCheck('includes/applications/product_variants/classes/product_variants.php'));
 include_once($lC_Vqmod->modCheck('includes/applications/specials/classes/specials.php'));
 include_once($lC_Vqmod->modCheck('includes/applications/categories/classes/categories.php'));
+include_once($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
+include_once($lC_Vqmod->modCheck('includes/applications/zone_groups/classes/zone_groups.php'));
 include_once($lC_Vqmod->modCheck('includes/classes/addons.php'));
 
 class lC_Products_Admin {
@@ -537,8 +539,14 @@ class lC_Products_Admin {
       }
       $Qvalues->freeResult();    
     }
-    $Qoptions->freeResult();    
+    $Qoptions->freeResult();
     
+    if(DISPLAY_PRICE_WITH_TAX == 1) {
+      $tax_data = lC_Tax_classes_Admin::getEntry($data['products_tax_class_id']);
+      $data['products_price_with_tax'] = ($data['products_price'] + ($tax_data['tax_rate']/100)*$data['products_price']);
+      //$data['products_cost_with_tax'] = $data['products_cost'] + ($tax_data['tax_rate']/100)*$data['products_cost'];
+      $data['products_msrp_with_tax'] = ($data['products_msrp'] + ($tax_data['tax_rate']/100)*$data['products_msrp']);
+    }
     return $data;
   }
  /*
@@ -721,11 +729,16 @@ class lC_Products_Admin {
         $cPath = ($category_id != '') ? $lC_CategoryTree->getcPath($category_id) : 0;
       }
       foreach ($lC_Language->getAll() as $l) {
+        if (self::validatePermalink($data['products_keyword'][$l['id']], $id, 2) != 1) {
+          $data['products_keyword'][$l['id']] = $data['products_keyword'][$l['id']] . '-link';
+        }
+        
         if (is_numeric($id)) {
           $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url where products_id = :products_id and language_id = :language_id');
         } else {
           $Qpd = $lC_Database->query('insert into :table_products_description (products_id, language_id, products_name, products_description, products_keyword, products_tags, products_url) values (:products_id, :language_id, :products_name, :products_description, :products_keyword, :products_tags, :products_url)');
         }
+        
         $Qpd->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
         $Qpd->bindInt(':products_id', $products_id);
         $Qpd->bindInt(':language_id', $l['id']);
@@ -748,6 +761,7 @@ class lC_Products_Admin {
         } else {
           $Qpl = $lC_Database->query('insert into :table_permalinks (item_id, language_id, type, query, permalink) values (:item_id, :language_id, :type, :query, :permalink)');
         }
+        
         $Qpl->bindTable(':table_permalinks', TABLE_PERMALINKS);
         $Qpl->bindInt(':item_id', $products_id);
         $Qpl->bindInt(':language_id', $l['id']);
@@ -1769,12 +1783,12 @@ class lC_Products_Admin {
   * @access public
   * @return integer
   */
-  public static function getPermalinkCount($permalink, $iid = null, $type = null) {
+  public static function getPermalinkCount($permalink, $pid = null, $type = null) {
     global $lC_Database;
     
     $Qpermalinks = $lC_Database->query('select count(*) as total, item_id, permalink from :table_permalinks where permalink = :permalink');
 
-    if (is_numeric($iid)) {
+    if (is_numeric($pid)) {
       $Qpermalinks->appendQuery('and item_id != :item_id');
       $Qpermalinks->bindInt(':item_id', $iid);
     }
@@ -1798,13 +1812,17 @@ class lC_Products_Admin {
   * @access public
   * @return array
   */
-  public static function validatePermalink($permalink_array, $iid = null, $type = null) {
-    
+  public static function validatePermalink($permalink_array, $pid = null, $type = null) {
     $validated = true;
-    foreach($permalink_array as $permalink) {
-      echo '[' . $permalink . ']';
-      if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
-      if ( lC_Products_Admin::getPermalinkCount($permalink, $iid, $type) > 0) $validated = false;
+    
+    if (is_array($permalink_array)) {
+      foreach($permalink_array as $permalink) {
+        if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
+        if ( lC_Products_Admin::getPermalinkCount($permalink, $pid, $type) > 0) $validated = false;
+      }
+    } else {
+      if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink_array) !== 1 ) $validated = false;
+      if ( lC_Products_Admin::getPermalinkCount($permalink_array, $pid, $type) > 0) $validated = false;
     }
     
     return $validated;

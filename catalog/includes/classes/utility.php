@@ -5,7 +5,7 @@
   @copyright  Copyright 2003-2014 Loaded Commerce, LLC
   @copyright  Portions Copyright 2003 osCommerce
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: utility.php v1.0 2013-08-08 datazen $
+  @version    $Id: utility.php v1.1 2014-02-12 datazen $
 */
 class utility {
  /**
@@ -466,7 +466,12 @@ class utility {
     
     return false;
   }
-  
+ /**
+  * Detect browser type
+  *  
+  * @access public      
+  * @return boolean
+  */ 
   public static function detectBrowser() { 
     $userAgent = strtolower($_SERVER['HTTP_USER_AGENT']); 
     if ((substr($_SERVER['HTTP_USER_AGENT'],0,6)=="Opera/") || (strpos($userAgent,'opera')) != false ){ 
@@ -494,7 +499,13 @@ class utility {
 
     return array('name' => $name, 'version' => $version); 
   } 
-  
+ /**
+  * Recursively remove files and folders
+  *  
+  * @param string  $path  The path to remove
+  * @access public      
+  * @return boolean
+  */ 
   public static function rmdir_r($path) {
     $i = new DirectoryIterator($path);
     foreach($i as $f) {
@@ -508,6 +519,163 @@ class utility {
     @rmdir($path);
     
     return true;
+  }  
+ /**
+  * Recursively set permissions on files and folders
+  *  
+  * @param string  $path     The path to start
+  * @param integer $filePerm Permiaaion for files   
+  * @param integer $dirPerm  Permission for directories
+  * @access public      
+  * @return boolean
+  */
+  public static function chmod_r($path, $filePerm = 0644, $dirPerm = 0755) {
+    // Check if the path exists
+    if (!file_exists($path)) {
+      return(false);
+    }
+
+    if (is_file($path)) {
+      @chmod($path, $filePerm);
+    } elseif (is_dir($path)) {
+      $foldersAndFiles = @scandir($path);
+      $entries = @array_slice($foldersAndFiles, 2);
+      foreach ($entries as $entry) {
+        self::chmod_r($path."/".$entry, $filePerm, $dirPerm);
+      }
+      @chmod($path, $dirPerm);
+    }
+
+    return true;
+  } 
+ /**
+  * Recursively create directory
+  *  
+  * @param string  $path  The path to remove
+  * @access public      
+  * @return boolean
+  */
+  public static function mkdir_r($path) {
+    
+    if (!self::execEnabled()) return false;
+    
+    $parts = explode('/', $path);
+    $check = '';
+    foreach ($parts as $val) {
+      $check .= $val . '/';
+      if (!is_dir($check)) exec('mkdir ' . $check);
+    }
+    
+    return true;
+  }  
+ /**
+  * Create a ZIP archive using PHP ZipArchive method -or- exec() method
+  *  
+  * @param string $source       The source destination
+  * @param string $destination  The target destination   
+  * @param string $include_dir  Recursively include directories 
+  * @access public      
+  * @return boolean
+  */
+  public static function makeZip($source, $destination, $include_dir = true) {
+
+    if (extension_loaded('zip') || !file_exists($source)) {
+
+      if (file_exists($destination)) {
+        unlink ($destination);
+      }
+
+      $zip = new ZipArchive();
+      if (!$zip->open($destination, ZIPARCHIVE::CREATE)) {
+        return false;
+      }
+      $source = str_replace('\\', '/', realpath($source));
+
+      if (is_dir($source) === true) {
+
+        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($source), RecursiveIteratorIterator::SELF_FIRST);
+
+        if ($include_dir) {
+
+          $arr = explode("/",$source);
+          $maindir = $arr[count($arr)- 1];
+
+          $source = "";
+          for ($i=0; $i < count($arr) - 1; $i++) { 
+            $source .= '/' . $arr[$i];
+          }
+
+          $source = substr($source, 1);
+
+          $zip->addEmptyDir($maindir);
+        }
+
+        foreach ($files as $file) {
+          $file = str_replace('\\', '/', $file);
+
+          // Ignore "." and ".." folders
+          if( in_array(substr($file, strrpos($file, '/')+1), array('.', '..')) ) continue;
+
+          $file = realpath($file);
+
+          if (is_dir($file) === true) {
+            $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+          } else if (is_file($file) === true) {
+            $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
+          }
+        }
+      } else if (is_file($source) === true) {
+        $zip->addFromString(basename($source), file_get_contents($source));
+      }
+
+      return $zip->close();
+    } else if (self::execEnabled()) {
+      // use exec
+      try {
+        @exec('\cd ' . $source . '; '  . CFG_APP_ZIP . ' -r ' . $destination . ' ' . $source . ' -x \*.zip\*;');
+      } catch ( Exception $e ) {  
+        return false;
+      }      
+      return true;
+    } else {
+      return false;
+    }
   }
+ /**
+  * Extract a ZIP archive using PHP ZipArchive method -or- exec() method
+  *  
+  * @param string $source       The source destination
+  * @param string $destination  The target destination
+  * @access public      
+  * @return boolean
+  */
+  public static function extractZip($source, $destination) {
+    
+    if (extension_loaded('zip') || !file_exists($source)) {
+    
+      $zip = new ZipArchive;
+      
+      $status = false;
+      if ($zip->open($source)) {
+        if ($zip->extractTo($destination)) {
+          $status = true;
+        }
+        $zip->close();
+      }    
+
+    } else if (self::execEnabled()) {
+      // use exec
+      try {
+        @exec(CFG_APP_UNZIP . ' ' . $source . ' ' . $destination . ';');
+      } catch ( Exception $e ) {  
+        return false;
+      }      
+      return true;      
+    } else {
+      $status = false;
+    }
+    
+    return $status;
+  } 
 } 
 ?>

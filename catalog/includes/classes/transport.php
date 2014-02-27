@@ -23,7 +23,7 @@ class transport {
   * @access public      
   * @return mixed
   */  
-  public static function getResponse($parameters, $driver = 'curl') {
+  public static function getResponse($parameters, $driver = 'curl', $rawResponse = false) {
     if ( !isset($driver) ) {
       foreach ( static::$_drivers as $d ) {
         if ( call_user_func(array($d, 'canUse')) ) {
@@ -33,6 +33,8 @@ class transport {
         }
       }
     }
+    
+    $parameters['rawResponse'] = $rawResponse; 
 
     if ( !isset($parameters['header']) || !is_array($parameters['header'])) {
       $parameters['header'] = array();
