@@ -10,13 +10,16 @@
 */
 global $lC_Vqmod;
 
-include_once($lC_Vqmod->modCheck('includes/applications/customer_groups/classes/customer_groups.php'));
-include_once($lC_Vqmod->modCheck('includes/applications/product_variants/classes/product_variants.php'));
-include_once($lC_Vqmod->modCheck('includes/applications/specials/classes/specials.php'));
-include_once($lC_Vqmod->modCheck('includes/applications/categories/classes/categories.php'));
-include_once($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
-include_once($lC_Vqmod->modCheck('includes/applications/zone_groups/classes/zone_groups.php'));
-include_once($lC_Vqmod->modCheck('includes/classes/addons.php'));
+if (!defined('DIR_FS_ADMIN')) return false;
+if (!defined('DIR_FS_CATALOG')) return false;
+
+include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/customer_groups/classes/customer_groups.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/product_variants/classes/product_variants.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/specials/classes/specials.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/categories/classes/categories.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/tax_classes/classes/tax_classes.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_ADMIN . 'includes/applications/zone_groups/classes/zone_groups.php'));
+include_once($lC_Vqmod->modCheck(DIR_FS_CATALOG . 'includes/classes/addons.php'));
 
 class lC_Products_Admin {
  /*
