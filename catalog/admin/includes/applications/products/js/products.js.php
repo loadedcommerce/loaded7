@@ -725,8 +725,8 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
                           { "sWidth": "10%", "bSortable": false, "sClass": "dataColCats hide-on-tablet" },
                           { "sWidth": "10%", "bSortable": false, "sClass": "dataColClass hide-on-tablet" },
                           { "sWidth": "10%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },
-                          { "sWidth": "5%", "bSortable": false, "sClass": "dataColQty hide-on-mobile" },
-                          { "sWidth": "5%", "bSortable": false, "sClass": "dataColStatus hide-on-mobile" },
+                          { "sWidth": "5%", "bSortable": true, "sClass": "dataColQty hide-on-mobile" },
+                          { "sWidth": "5%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile" },
                           { "sWidth": "30%", "bSortable": false, "sClass": "dataColAction no-wrap" }]
           }); 
           $('#dataTable').responsiveTable();

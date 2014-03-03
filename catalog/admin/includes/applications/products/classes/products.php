@@ -43,12 +43,12 @@ class lC_Products_Admin {
     $result = array('aaData' => array());
 
     /* Total Records */
-    $QresultTotal = $lC_Database->query('SELECT count(products_id) as total from :table_products');
-    $QresultTotal->bindTable(':table_customers', TABLE_PRODUCTS);
+    $QresultTotal = $lC_Database->query('SELECT count(products_id) as total from :table_products WHERE parent_id = 0'); 
+    $QresultTotal->bindTable(':table_products', TABLE_PRODUCTS);
     $QresultTotal->execute();
     $result['iTotalRecords'] = $QresultTotal->valueInt('total');
     $QresultTotal->freeResult();
-
+    
     /* Paging */
     $sLimit = "";
     if (isset($_GET['iDisplayStart'])) {
@@ -67,27 +67,24 @@ class lC_Products_Admin {
     }
 
     /* Filtering */
-    $sWhere = " WHERE p.parent_id = 0 and pd.language_id = :language_id ";
+    $sWhere = " WHERE p.parent_id = 0 ";
     if ($_GET['sSearch'] != "") {
-      $sWhere = " and pd.products_name LIKE '%" . $_GET['sSearch'] . "%' OR " .
-                     "CAST(p.products_price AS price) LIKE '%" . $_GET['sSearch'] . "%' OR " .
-                     "CAST(p.products_quantity AS qty) LIKE '%" . $_GET['sSearch'] . "%' OR " .
-                     "CAST(p.products_status AS status) LIKE '%" . $_GET['sSearch'] . "%' ";
+      $sWhere .= " and pd.products_name LIKE '%" . $_GET['sSearch'] . "%'";
     } 
 
     /* Total Filtered Records */
-    $QresultFilterTotal = $lC_Database->query("SELECT count(p.products_id) as total, pd.products_description 
+    $QresultFilterTotal = $lC_Database->query("SELECT count(p.products_id) as total, pd.products_name 
                                                  from :table_products p
                                                LEFT JOIN :table_products_description pd
-                                                 on (p.products_id = pd.products_id) " . $sWhere . $sOrder);
+                                                 on (p.products_id = pd.products_id and pd.language_id = :language_id) " . $sWhere . $sOrder);
 
     $QresultFilterTotal->bindTable(':table_products', TABLE_PRODUCTS);
-    $QresultFilterTotal->bindTable(':table_products_desccription', TABLE_PRODUCTS_DESCRIPTION);
+    $QresultFilterTotal->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $QresultFilterTotal->bindInt(':language_id', $lC_Language->getID());
     $QresultFilterTotal->execute();
     $result['iTotalDisplayRecords'] = $QresultFilterTotal->valueInt('total');
-    $QresultFilterTotal->freeResult();    
-
+    $QresultFilterTotal->freeResult();  
+    
     /* Main Listing Query */
     if ( $category_id > 0 ) {
       $lC_CategoryTree = new lC_CategoryTree_Admin();
@@ -99,20 +96,28 @@ class lC_Products_Admin {
         $in_categories[] = $category['id'];
       }
 
-      $Qproducts = $lC_Database->query('select SQL_CALC_FOUND_ROWS distinct p.*, pd.products_name, pd.products_keyword from :table_products p, :table_products_description pd, :table_products_to_categories p2c where p.parent_id = 0 and p.products_id = pd.products_id and pd.language_id = :language_id and p.products_id = p2c.products_id and p2c.categories_id in (:categories_id)');
+      $Qproducts = $lC_Database->query('SELECT p.*, pd.products_name, pd.products_keyword 
+                                          from :table_products p 
+                                        LEFT JOIN :table_products_description pd
+                                          on (p.products_id = pd.products_id and pd.language_id = :language_id)                                               
+                                        LEFT JOIN :table_products_to_categories p2c 
+                                          on (p.products_id = p2c.products_id)' . $sWhere . ' and p2c.categories_id in (:categories_id) ' . $sOrder . $sLimit);
+                                               
+                                               
       $Qproducts->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
       $Qproducts->bindRaw(':categories_id', implode(',', $in_categories));
     } else {
-      $Qproducts = $lC_Database->query('select SQL_CALC_FOUND_ROWS p.*, pd.products_name, pd.products_keyword from :table_products p, :table_products_description pd where p.parent_id = 0 and p.products_id = pd.products_id and pd.language_id = :language_id');
+      $Qproducts = $lC_Database->query('SELECT p.*, pd.products_name, pd.products_keyword  
+                                                 from :table_products p
+                                               LEFT JOIN :table_products_description pd
+                                                 on (p.products_id = pd.products_id and pd.language_id = :language_id) ' . $sWhere . $sOrder . $sLimit);
     }
-
-    $Qproducts->appendQuery('order by pd.products_name');
+    
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qproducts->bindInt(':language_id', $lC_Language->getID());
-
     $Qproducts->execute();
-
+    
     while ( $Qproducts->next() ) {
       $Qproductscategories = $lC_Database->query('select p2c.categories_id, cd.categories_name, c.categories_status from :table_products_to_categories p2c left join :table_categories c on (p2c.categories_id = c.categories_id) left join lc_categories_description cd on (p2c.categories_id = cd.categories_id) where p2c.products_id = :products_id');
       $Qproductscategories->bindTable(':table_categories', TABLE_CATEGORIES);
@@ -2419,19 +2424,15 @@ class lC_Products_Admin {
   */
   private static function fnColumnToField($i) {
    if ( $i == 0 )
-    return "p.products_id";
+    return "pd.products_name";
    else if ( $i == 1 )
     return "pd.products_name";
-   else if ( $i == 2 )
-    return "";
-   else if ( $i == 3 )
-    return "";
    else if ( $i == 4 )
-    return "price";
+    return "p.products_price";    
    else if ( $i == 5 )
-    return "qty"; 
+    return "p.products_quantity";  
    else if ( $i == 6 )
-    return "status";       
+    return "p.products_status";      
   }  
 }
 ?>
