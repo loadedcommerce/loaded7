@@ -43,7 +43,7 @@ class lC_Products_Admin {
     $result = array('aaData' => array());
 
     /* Total Records */
-    $QresultTotal = $lC_Database->query('SELECT count(products_id) as total from :table_products WHERE parent_id = 0'); 
+    $QresultTotal = $lC_Database->query('SELECT count(p.products_id) as total from :table_products p where p.parent_id = 0');
     $QresultTotal->bindTable(':table_products', TABLE_PRODUCTS);
     $QresultTotal->execute();
     $result['iTotalRecords'] = $QresultTotal->valueInt('total');
@@ -72,19 +72,6 @@ class lC_Products_Admin {
       $sWhere .= " and pd.products_name LIKE '%" . $_GET['sSearch'] . "%'";
     } 
 
-    /* Total Filtered Records */
-    $QresultFilterTotal = $lC_Database->query("SELECT count(p.products_id) as total, pd.products_name 
-                                                 from :table_products p
-                                               LEFT JOIN :table_products_description pd
-                                                 on (p.products_id = pd.products_id and pd.language_id = :language_id) " . $sWhere . $sOrder);
-
-    $QresultFilterTotal->bindTable(':table_products', TABLE_PRODUCTS);
-    $QresultFilterTotal->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-    $QresultFilterTotal->bindInt(':language_id', $lC_Language->getID());
-    $QresultFilterTotal->execute();
-    $result['iTotalDisplayRecords'] = $QresultFilterTotal->valueInt('total');
-    $QresultFilterTotal->freeResult();  
-    
     /* Main Listing Query */
     if ( $category_id > 0 ) {
       $lC_CategoryTree = new lC_CategoryTree_Admin();
@@ -95,22 +82,33 @@ class lC_Products_Admin {
       foreach ( $lC_CategoryTree->getArray($category_id) as $category ) {
         $in_categories[] = $category['id'];
       }
+      
+      /* Total Filtered Records */
+      $QresultFilterTotal = $lC_Database->query('SELECT count(p.products_id) as total, pd.products_name from :table_products p LEFT JOIN :table_products_description pd on (pd.products_id = p.products_id and pd.language_id = :language_id) LEFT JOIN :table_products_to_categories p2c on (p.products_id = p2c.products_id)' . $sWhere . ' and p2c.categories_id in (:categories_id) ' . $sOrder);
+//      $QresultFilterTotal = $lC_Database->query("SELECT count(p.products_id) as total, pd.products_name from :table_products p LEFT JOIN :table_products_description pd on (pd.products_id = p.products_id and pd.language_id = :language_id) " . $sWhere . ' and p2c.categories_id in (:categories_id) ' . $sOrder);
+      $QresultFilterTotal->bindTable(':table_products', TABLE_PRODUCTS);
+      $QresultFilterTotal->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+      $QresultFilterTotal->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+      $QresultFilterTotal->bindInt(':language_id', $lC_Language->getID());
+      $QresultFilterTotal->bindRaw(':categories_id', implode(',', $in_categories));
+      $QresultFilterTotal->execute();
+      $result['iTotalDisplayRecords'] = $QresultFilterTotal->valueInt('total');
+      $QresultFilterTotal->freeResult();      
 
-      $Qproducts = $lC_Database->query('SELECT p.*, pd.products_name, pd.products_keyword 
-                                          from :table_products p 
-                                        LEFT JOIN :table_products_description pd
-                                          on (p.products_id = pd.products_id and pd.language_id = :language_id)                                               
-                                        LEFT JOIN :table_products_to_categories p2c 
-                                          on (p.products_id = p2c.products_id)' . $sWhere . ' and p2c.categories_id in (:categories_id) ' . $sOrder . $sLimit);
-                                               
-                                               
+      $Qproducts = $lC_Database->query('SELECT p.*, pd.products_name, pd.products_keyword from :table_products p LEFT JOIN :table_products_description pd on (p.products_id = pd.products_id and pd.language_id = :language_id) LEFT JOIN :table_products_to_categories p2c on (p.products_id = p2c.products_id)' . $sWhere . ' and p2c.categories_id in (:categories_id) ' . $sOrder . $sLimit);
       $Qproducts->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
       $Qproducts->bindRaw(':categories_id', implode(',', $in_categories));
     } else {
-      $Qproducts = $lC_Database->query('SELECT p.*, pd.products_name, pd.products_keyword  
-                                                 from :table_products p
-                                               LEFT JOIN :table_products_description pd
-                                                 on (p.products_id = pd.products_id and pd.language_id = :language_id) ' . $sWhere . $sOrder . $sLimit);
+      /* Total Filtered Records */
+      $QresultFilterTotal = $lC_Database->query("SELECT count(p.products_id) as total, pd.products_name from :table_products p LEFT JOIN :table_products_description pd on (pd.products_id = p.products_id and pd.language_id = :language_id) " . $sWhere . $sOrder);
+      $QresultFilterTotal->bindTable(':table_products', TABLE_PRODUCTS);
+      $QresultFilterTotal->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
+      $QresultFilterTotal->bindInt(':language_id', $lC_Language->getID());
+      $QresultFilterTotal->execute();
+      $result['iTotalDisplayRecords'] = $QresultFilterTotal->valueInt('total');
+      $QresultFilterTotal->freeResult();
+
+      $Qproducts = $lC_Database->query('SELECT p.*, pd.products_name, pd.products_keyword from :table_products p LEFT JOIN :table_products_description pd on (p.products_id = pd.products_id and pd.language_id = :language_id) ' . $sWhere . $sOrder . $sLimit);
     }
     
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
@@ -119,13 +117,14 @@ class lC_Products_Admin {
     $Qproducts->execute();
     
     while ( $Qproducts->next() ) {
-      $Qproductscategories = $lC_Database->query('select p2c.categories_id, cd.categories_name, c.categories_status from :table_products_to_categories p2c left join :table_categories c on (p2c.categories_id = c.categories_id) left join lc_categories_description cd on (p2c.categories_id = cd.categories_id) where p2c.products_id = :products_id');
+      $Qproductscategories = $lC_Database->query('select p2c.categories_id, cd.categories_name, c.categories_status from :table_products_to_categories p2c left join :table_categories c on (p2c.categories_id = c.categories_id) left join lc_categories_description cd on (p2c.categories_id = cd.categories_id) where p2c.products_id = :products_id and cd.language_id = :language_id');
       $Qproductscategories->bindTable(':table_categories', TABLE_CATEGORIES);
       $Qproductscategories->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
       $Qproductscategories->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
       $Qproductscategories->bindRaw(':products_id', $Qproducts->valueInt('products_id'));
-
+      $Qproductscategories->bindInt(':language_id', $lC_Language->getID());
       $Qproductscategories->execute();
+      
       $catCount = ($Qproductscategories->numberOfRows()-1);
       while ( $Qproductscategories->next() ) {
         $Qcategories[] = array('name' => $Qproductscategories->value('categories_name'),
@@ -133,13 +132,12 @@ class lC_Products_Admin {
       }
       $cnt = 0;
       $catArr = (is_array($Qcategories)) ? $Qcategories : array();
+
       foreach ($catArr as $cat) {
-        if ($cnt == 0) {
-          $categories = '<small class="tag mid-margin-right glossy ' . (($cat['status'] == 1) ? ' green-gradient' : ' red-gradient') . '">' . $cat['name'] . '</small>';
-        } 
-        if ($cnt == 1) {
-          $more_title = $cat['name'];
-          $categories .= '<small class="tag mid-margin-right glossy green-gradient with-tooltip" title="' . $catCount . ' ' . (($catCount > 1) ? $lC_Language->get('text_more_categories') : $lC_Language->get('text_more_category')) . '">...</small>';
+        $categories .= '<small title="' . $cat['name'] . '" class="with-tooltip cursor-pointer no-wrap tag mid-margin-right glossy ' . (($cat['status'] == 1) ? ' green-gradient' : ' red-gradient') . '">' . ((strlen($cat['name']) < 15) ? $cat['name'] : trim(substr($cat['name'], 0, 12)) . '...') . '</small>';
+        if ($cnt > 2) {
+          $categories .= '<br />';
+          $cnt = 0;
         } 
         $cnt++;
       }
@@ -187,11 +185,11 @@ class lC_Products_Admin {
         $products_status = ($Qvariants->valueInt('products_status') === 1);
         $products_quantity = '(' . $Qvariants->valueInt('total_quantity') . ')';
 
-        $price = $lC_Currencies->format($Qvariants->value('min_price'));
-
+        $price = $lC_Currencies->format($Qvariants->value('min_price'), DECIMAL_PLACES);
         if ( $Qvariants->value('min_price') != $Qvariants->value('max_price') ) {
           $price .= ' - ' . $lC_Currencies->format($Qvariants->value('max_price'));
         }
+
         $icons .= '<span class="icon-flow-tree icon-blue mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_variants') . '"></span>';
       } else if ( self::hasSubProducts($Qproducts->valueInt('products_id')) === true ) {
         $icons .= '<span class="icon-flow-cascade icon-red mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_subproducts') . '"></span>';
@@ -203,7 +201,7 @@ class lC_Products_Admin {
       $Qspecials->execute();
       
       if ($Qspecials->numberOfRows() > 0) {
-        $price = $price . ' <span class="tag glossy with-tooltip' . (($Qspecials->valueInt('status') == 1) ? ' red-gradient' : ' grey-gradient') . '" title="' . (($Qspecials->valueInt('status') == 1) ? $lC_Language->get('text_special_enabled') : $lC_Language->get('text_special_disabled')) . '">' . $Qspecials->value('specials_new_products_price') . '</span>';
+        $price = $price . ' <span class="tag glossy with-tooltip cursor-pointer' . (($Qspecials->valueInt('status') == 1) ? ' red-gradient' : ' grey-gradient') . '" title="' . (($Qspecials->valueInt('status') == 1) ? $lC_Language->get('text_special_enabled') : $lC_Language->get('text_special_disabled')) . '">' . $lC_Currencies->format($Qspecials->value('specials_new_products_price'), DECIMAL_PLACES) . '</span>';
       }
 
       $extra_data = array('products_cost_formatted' => $cost,
@@ -219,7 +217,7 @@ class lC_Products_Admin {
       $cats = '<td>' . $categories . '</td>';
       $categories = null;
       $class = '<td>' . $lC_Language->get('text_common') . '</td>';
-      $price = '<td>' . $price . '</td>';
+      $price = '<td><div class="no-wrap">' . $price . '</div></td>';
       $qty = '<td>' . $products_quantity . '</td>';
       $status = '<td><span class="align-center" id="status_' . $Qproducts->valueInt('products_id') . '" onclick="updateStatus(\'' . $Qproducts->valueInt('products_id') . '\', \'' . (($Qproducts->valueInt('products_status') == 1) ? 0 : 1) . '\');">' . (($Qproducts->valueInt('products_status') == 1) ? '<span class="icon-tick icon-size2 icon-green cursor-pointer with-tooltip" title="' . $lC_Language->get('text_disable_product') . '"></span>' : '<span class="icon-cross icon-size2 icon-red cursor-pointer with-tooltip" title="' . $lC_Language->get('text_enable_product') . '"></span>') . '</span></td>'; 
 
