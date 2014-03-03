@@ -61,7 +61,7 @@ class lC_Products_Admin {
     if (isset($_GET['iSortCol_0'])) {
       $sOrder = " ORDER BY ";
       for ($i=0 ; $i < (int)$_GET['iSortingCols'] ; $i++ ) {
-        $sOrder .= lC_Customers_Admin::fnColumnToField($_GET['iSortCol_'.$i] ) . " " . $_GET['sSortDir_'.$i] .", ";
+        $sOrder .= lC_Products_Admin::fnColumnToField($_GET['iSortCol_'.$i] ) . " " . $_GET['sSortDir_'.$i] .", ";
       }
       $sOrder = substr_replace( $sOrder, "", -2 );
     }
@@ -69,9 +69,10 @@ class lC_Products_Admin {
     /* Filtering */
     $sWhere = " WHERE p.parent_id = 0 and pd.language_id = :language_id ";
     if ($_GET['sSearch'] != "") {
-      $sWhere = " and c.customers_lastname LIKE '%" . $_GET['sSearch'] . "%' OR " .
-                     "c.customers_firstname LIKE '%" . $_GET['sSearch'] . "%' OR " .
-                     "c.customers_email_address LIKE '%" . $_GET['sSearch'] . "%' ";
+      $sWhere = " and pd.products_name LIKE '%" . $_GET['sSearch'] . "%' OR " .
+                     "CAST(p.products_price AS price) LIKE '%" . $_GET['sSearch'] . "%' OR " .
+                     "CAST(p.products_quantity AS qty) LIKE '%" . $_GET['sSearch'] . "%' OR " .
+                     "CAST(p.products_status AS status) LIKE '%" . $_GET['sSearch'] . "%' ";
     } 
 
     /* Total Filtered Records */
@@ -2409,5 +2410,28 @@ class lC_Products_Admin {
     }
     return $result;
   }
+ /*
+  * Return the field name for the selected column (used for datatable ordering)
+  *
+  * @param integer $i The datatable column id
+  * @access private
+  * @return string
+  */
+  private static function fnColumnToField($i) {
+   if ( $i == 0 )
+    return "p.products_id";
+   else if ( $i == 1 )
+    return "pd.products_name";
+   else if ( $i == 2 )
+    return "";
+   else if ( $i == 3 )
+    return "";
+   else if ( $i == 4 )
+    return "price";
+   else if ( $i == 5 )
+    return "qty"; 
+   else if ( $i == 6 )
+    return "status";       
+  }  
 }
 ?>
