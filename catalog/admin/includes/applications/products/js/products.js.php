@@ -712,6 +712,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           }
           oTable = $('#dataTable').dataTable({
             "bProcessing": true,
+            "bServerSide": true,
             "sAjaxSource": dataTableDataURL.replace('CID', cid).replace('MEDIA', $.template.mediaQuery.name),
             "sPaginationType": paginationType,
             "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],

@@ -37,11 +37,57 @@ class lC_Products_Admin {
     }
 
     $lC_Language->loadIniFile('products.php');
-
+    
     $media = $_GET['media'];
     
     $result = array('aaData' => array());
 
+    /* Total Records */
+    $QresultTotal = $lC_Database->query('SELECT count(products_id) as total from :table_products');
+    $QresultTotal->bindTable(':table_customers', TABLE_PRODUCTS);
+    $QresultTotal->execute();
+    $result['iTotalRecords'] = $QresultTotal->valueInt('total');
+    $QresultTotal->freeResult();
+
+    /* Paging */
+    $sLimit = "";
+    if (isset($_GET['iDisplayStart'])) {
+      if ($_GET['iDisplayLength'] != -1) {
+        $sLimit = " LIMIT " . $_GET['iDisplayStart'] . ", " . $_GET['iDisplayLength'];
+      }
+    }
+
+    /* Ordering */
+    if (isset($_GET['iSortCol_0'])) {
+      $sOrder = " ORDER BY ";
+      for ($i=0 ; $i < (int)$_GET['iSortingCols'] ; $i++ ) {
+        $sOrder .= lC_Customers_Admin::fnColumnToField($_GET['iSortCol_'.$i] ) . " " . $_GET['sSortDir_'.$i] .", ";
+      }
+      $sOrder = substr_replace( $sOrder, "", -2 );
+    }
+
+    /* Filtering */
+    $sWhere = " WHERE p.parent_id = 0 and pd.language_id = :language_id ";
+    if ($_GET['sSearch'] != "") {
+      $sWhere = " and c.customers_lastname LIKE '%" . $_GET['sSearch'] . "%' OR " .
+                     "c.customers_firstname LIKE '%" . $_GET['sSearch'] . "%' OR " .
+                     "c.customers_email_address LIKE '%" . $_GET['sSearch'] . "%' ";
+    } 
+
+    /* Total Filtered Records */
+    $QresultFilterTotal = $lC_Database->query("SELECT count(p.products_id) as total, pd.products_description 
+                                                 from :table_products p
+                                               LEFT JOIN :table_products_description pd
+                                                 on (p.products_id = pd.products_id) " . $sWhere . $sOrder);
+
+    $QresultFilterTotal->bindTable(':table_products', TABLE_PRODUCTS);
+    $QresultFilterTotal->bindTable(':table_products_desccription', TABLE_PRODUCTS_DESCRIPTION);
+    $QresultFilterTotal->bindInt(':language_id', $lC_Language->getID());
+    $QresultFilterTotal->execute();
+    $result['iTotalDisplayRecords'] = $QresultFilterTotal->valueInt('total');
+    $QresultFilterTotal->freeResult();    
+
+    /* Main Listing Query */
     if ( $category_id > 0 ) {
       $lC_CategoryTree = new lC_CategoryTree_Admin();
       $lC_CategoryTree->setBreadcrumbUsage(false);
@@ -188,6 +234,7 @@ class lC_Products_Admin {
       $Qimage->freeResult();
       $Qspecials->freeResult();
     }
+    $result['sEcho'] = intval($_GET['sEcho']);
 
     $Qproducts->freeResult();
 
