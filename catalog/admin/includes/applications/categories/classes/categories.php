@@ -731,6 +731,12 @@ class lC_Categories_Admin {
     
     if ($type == 'category') {
       $icon = 'folder icon-orange';
+    } else if ($type == 'info_category') {
+      $icon = 'info-round icon-blue';
+    } else if ($type == 'faq_category') {
+      $icon = 'numbered-list icon-anthracite';
+    } else if ($type == 'article_category') {
+      $icon = 'newspaper icon-anthracite';
     } else if ($type == 'page') {
       $icon = 'page-list icon-black';
     } else if ($type == 'specials') {
