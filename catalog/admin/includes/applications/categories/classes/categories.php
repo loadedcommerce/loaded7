@@ -252,9 +252,8 @@ class lC_Categories_Admin {
     //die('after $data');
         
     if ( is_numeric($id) ) {
-      $Qcat = $lC_Database->query('update :table_categories set categories_image = :categories_image, parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_status = :categories_status, categories_visibility_nav = :categories_visibility_nav, categories_visibility_box = :categories_visibility_box, date_added = :date_added, last_modified = now() where categories_id = :categories_id');
+      $Qcat = $lC_Database->query('update :table_categories set categories_image = :categories_image, parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_status = :categories_status, categories_visibility_nav = :categories_visibility_nav, categories_visibility_box = :categories_visibility_box, last_modified = now() where categories_id = :categories_id');
       $Qcat->bindInt(':categories_id', $id);
-      $Qcat->bindValue(':date_added', $data['date_added']);
     } else {
       $Qcat = $lC_Database->query('insert into :table_categories (categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added) values (:categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_status, :categories_visibility_nav, :categories_visibility_box, now())');
       $Qcat->bindInt(':parent_id', $data['parent_id']);
@@ -273,7 +272,12 @@ class lC_Categories_Admin {
     $Qcat->setLogging($_SESSION['module'], $id);
     $Qcat->execute();
     
-    if ( !$lC_Database->isError() ) {
+    //echo '<pre>';
+    //print_r($Qcat);
+    //echo '<pre>';
+    //die('after categories table execute');
+    
+    if ( !$lC_Database->isError()) {
       $category_id = (is_numeric($id)) ? $id : $lC_Database->nextID();
       $lC_CategoryTree = new lC_CategoryTree_Admin();
       $cPath = ($data['parent_id'] != 0) ? $lC_CategoryTree->getcPath($data['parent_id']) . '_' . $category_id : $category_id;
@@ -859,7 +863,7 @@ class lC_Categories_Admin {
   * @access public
   * @return array
   */
-  public static function modeSelect($mode = null) {
+  public static function modeSelect($cmode = null) {
     global $lC_Language;
     
     $modes_array = array(
@@ -879,7 +883,7 @@ class lC_Categories_Admin {
                          );
                          
     foreach ($modes_array as $mode) {
-      $modes .= '<option value="' . $mode['value'] . '"' . (($mode == $mode['value']) ? ' selected' : '') . '>' . $mode['text'] . '</option>'; 
+      $modes .= '<option value="' . $mode['value'] . '"' . (($cmode == $mode['value']) ? ' selected' : '') . '>' . $mode['text'] . '</option>'; 
     }
     
     return $modes;
