@@ -95,7 +95,10 @@ table_heading_sort_order = Sort Order
 table_heading_action = Action
  
 text_b2b = B2B
-text_category = Category
+text_product_category = Product Category (Default)
+text_info_category = Information Category
+text_faq_category = FAQ Category
+text_article_category = Article Category
 text_categories = Categories
 text_categories_image  = Image Preview
 text_common = Common

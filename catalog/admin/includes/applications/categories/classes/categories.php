@@ -9,6 +9,7 @@
   @version    $Id: categories.php v1.0 2013-08-08 datazen $
 */
 class lC_Categories_Admin {
+  
  /*
   * Returns the categories datatable data for listings
   *
@@ -70,6 +71,7 @@ class lC_Categories_Admin {
 
     return $result;
   }
+  
  /*
   * Returns all child categories
   *
@@ -97,6 +99,7 @@ class lC_Categories_Admin {
     }
     return $children;
   }
+  
  /*
   * Returns result of multidimensional array search
   *
@@ -114,6 +117,7 @@ class lC_Categories_Admin {
     }
     return false;
   }
+  
  /*
   * Returns the data used on the dialog forms
   *
@@ -164,6 +168,7 @@ class lC_Categories_Admin {
 
     return $result;
   }
+  
  /*
   * Returns the category information
   *
@@ -224,6 +229,7 @@ class lC_Categories_Admin {
     
     return $data;
   }
+  
  /*
   * Save the category record
   *
@@ -342,6 +348,7 @@ class lC_Categories_Admin {
 
     return false;
   }
+  
  /*
   * Delete the category record and associated children
   *
@@ -467,6 +474,7 @@ class lC_Categories_Admin {
 
     return false;
   }
+  
  /*
   * Batch delete product categories
   *
@@ -480,6 +488,7 @@ class lC_Categories_Admin {
     }
     return true;
   }
+  
  /*
   * Move a product category
   *
@@ -510,6 +519,7 @@ class lC_Categories_Admin {
 
     return true;
   }
+  
  /*
   * Batch move product categories
   *
@@ -524,6 +534,7 @@ class lC_Categories_Admin {
     }
     return true;
   }
+  
  /*
   * Get category parent ID
   *
@@ -545,6 +556,7 @@ class lC_Categories_Admin {
 
     return $parentID;
   }
+  
  /*
   * Get final category parent ID
   *
@@ -608,6 +620,7 @@ class lC_Categories_Admin {
     
     return $cat_ids;
   }
+  
  /*
   * Update category sorting
   * 
@@ -632,6 +645,7 @@ class lC_Categories_Admin {
     }
     return true;
   }
+  
  /*
   * get next category sort for new entry
   * 
@@ -652,6 +666,7 @@ class lC_Categories_Admin {
 
     return $nextsort;
   }
+  
  /*
   * update category status db entry
   * 
@@ -669,6 +684,7 @@ class lC_Categories_Admin {
       
     return true;
   }
+  
  /*
   * update category show in top nav db entry
   * 
@@ -686,6 +702,7 @@ class lC_Categories_Admin {
       
     return true;
   }
+  
  /*
   * update category show in infobox db entry
   * 
@@ -703,6 +720,7 @@ class lC_Categories_Admin {
       
     return true;
   }
+  
  /*
   * get category icon
   * 
@@ -734,7 +752,8 @@ class lC_Categories_Admin {
     }
 
     return $icon;
-  } 
+  }
+   
  /*
   * Return the number of permalinks for a category
   *
@@ -764,6 +783,7 @@ class lC_Categories_Admin {
     
     return $permalink_count;
   }
+  
  /*
   * Validate the category permalink
   *
@@ -826,6 +846,37 @@ class lC_Categories_Admin {
       
     return true;
   }
-                          
+  
+ /*
+  * Return the category mode(s) array
+  *
+  * @access public
+  * @return array
+  */
+  public static function modeSelect($mode = null) {
+    global $lC_Language;
+    
+    $modes_array = array(
+                         array('text' => $lC_Language->get('text_product_category'), 'value' => 'category'),
+                         array('text' => $lC_Language->get('text_info_category'), 'value' => 'info_category'),
+                         //array('text' => $lC_Language->get('text_faq_category'), 'value' => 'faq_category'),
+                         //array('text' => $lC_Language->get('text_article_category'), 'value' => 'article_category'),
+                         array('text' => $lC_Language->get('text_page'), 'value' => 'page'),
+                         array('text' => $lC_Language->get('link_to_specials'), 'value' => 'specials'),
+                         array('text' => $lC_Language->get('link_to_featured'), 'value' => 'featured'),
+                         array('text' => $lC_Language->get('link_to_new'), 'value' => 'new'),
+                         array('text' => $lC_Language->get('link_to_search'), 'value' => 'search'),
+                         array('text' => $lC_Language->get('link_to_cart'), 'value' => 'cart'),
+                         array('text' => $lC_Language->get('link_to_account'), 'value' => 'account'),
+                         array('text' => $lC_Language->get('link_to_info'), 'value' => 'info'),
+                         array('text' => $lC_Language->get('text_custom_link'), 'value' => 'override')
+                         );
+                         
+    foreach ($modes_array as $mode) {
+      $modes .= '<option value="' . $mode['value'] . '"' . (($mode == $mode['value']) ? ' selected' : '') . '>' . $mode['text'] . '</option>'; 
+    }
+    
+    return $modes;
+  }                      
 }
 ?>
