@@ -98,3 +98,4 @@ email_text = We welcome you to %s.<br><br>You can now take part in the various s
 text_new_address_saved = New Address Saved
 text_changes_saved = Changes Saved
 button_continue_title_tag = Add address
+icon_login_as_customer_pro = Login as Customer <small class="tag red-gradient">PRO</small>
