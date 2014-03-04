@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: main.php v1.0 2013-12-01 resultsonlyweb $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: main.php v1.0 2013-12-01 resultsonlyweb $
 */
 ?>
 <!-- Main content -->
@@ -18,7 +15,7 @@
   <hgroup id="main-title" class="thin">
 	<h1><?php echo $lC_Template->getPageTitle(); ?></h1>
   </hgroup>
-  <div class="with-padding margin-top">
+  <div id="section_import_export" class="with-padding margin-top">
     <div class="columns">
       <div class="twelve-columns">
         <div class="block margin-bottom">
@@ -26,7 +23,7 @@
           <div class="columns">
             <div class="six-columns twelve-columns-mobile">
               <form id="products-export-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-left">
+                <fieldset class="fieldset margin-top margin-bottom margin-left margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_products_export'); ?></legend>
                   <p>
                     <span id="products-filter-total">0</span> <?php echo $lC_Language->get('text_records_to_be_exported'); ?>
@@ -35,10 +32,10 @@
                     <input type="radio" class="radio" checked value="tabbed" name="products-export-format" id="products-export-format-tabbed" /> <label class="label" for="export-format-tabbed">Tabbed</label>
                   </p>
                   <!--<p class="button-height">
-                    <?php echo $lC_Language->get('text_choose_a_data_set'); ?>
+                    <?php //echo $lC_Language->get('text_choose_a_data_set'); ?>
                   </p>-->
                   <p class="button-height">
-                    <button type="button" class="button green-gradient icon-download" onClick="Javascript:getProducts('full');"><?php echo $lC_Language->get('button_full_data_set'); ?></button> 
+                    <button type="button" class="button green-gradient icon-download" onclick="getProducts('full');"><?php echo $lC_Language->get('button_full_data_set'); ?></button> 
                   </p>
                   <p class="button-height">
                     <a href="includes/applications/products_import_export/samples/products_import_sample.txt" download>
@@ -50,7 +47,7 @@
             </div>
             <div class="six-columns twelve-columns-mobile">
               <form id="products-import-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-right">
+                <fieldset class="fieldset margin-top margin-bottom margin-left margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_products_import'); ?></legend>
                   <div id="fileUploaderProductsContainer" class="small-margin-top">
                     <noscript>
@@ -61,7 +58,7 @@
                     <input type="radio" class="radio" checked value="addmatch" name="products-import-type" id="import-type-addmatch" /> <label class="label" for="products-import-type-addmatch"><?php echo $lC_Language->get('label_add_match'); ?></label>
                   </p>
                   <p class="button-height">
-                    <button type="button" class="float-right button green-gradient icon-cloud" onClick="Javascript:importProducts();"><?php echo $lC_Language->get('button_import'); ?></button>
+                    <button type="button" class="float-right button green-gradient icon-cloud" onclick="importProducts();"><?php echo $lC_Language->get('button_import'); ?></button>
                   </p>
                 </fieldset>
               </form>
@@ -99,7 +96,7 @@
           <div class="columns">
             <div class="six-columns twelve-columns-mobile">
               <form id="categories-export-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-left">
+                <fieldset class="fieldset margin-top margin-bottom margin-right margin-left">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_categories_export'); ?></legend>
                   <p>
                     <span id="categories-filter-total">0</span> <?php echo $lC_Language->get('text_records_to_be_exported'); ?>
@@ -108,7 +105,7 @@
                     <input type="radio" class="radio" checked value="tabbed" name="categories-export-format" id="categories-export-format-tabbed" /> <label class="label" for="export-format-tabbed">Tabbed</label>
                   </p>
                   <p class="button-height">
-                    <button type="button" class="button green-gradient icon-download" onClick="Javascript:getCategories();"><?php echo $lC_Language->get('button_full_data_set'); ?></button>
+                    <button type="button" class="button green-gradient icon-download" onclick="getCategories();"><?php echo $lC_Language->get('button_full_data_set'); ?></button>
                   </p>
                   <p class="button-height">
                     <a href="includes/applications/products_import_export/samples/categories_import_sample.txt" download>
@@ -120,7 +117,7 @@
             </div>
             <div class="six-columns twelve-columns-mobile">
               <form id="categories-import-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-right">
+                <fieldset class="fieldset margin-top margin-bottom margin-left margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_categories_import'); ?></legend>
                   <div id="fileUploaderCategoriesContainer" class="small-margin-top">
                     <noscript>
@@ -131,7 +128,7 @@
                     <input type="radio" class="radio" checked value="tabbed" name="categories-import-type" id="categories-import-type-addmatch" /> <label class="label" for="categories-import-type-addmatch"><?php echo $lC_Language->get('label_add_match'); ?></label>
                   </p>
                   <p class="button-height">
-                    <button type="button" class="float-right button green-gradient icon-cloud" onClick="Javascript:importCategories();"><?php echo $lC_Language->get('button_import'); ?></button>
+                    <button type="button" class="float-right button green-gradient icon-cloud" onclick="importCategories();"><?php echo $lC_Language->get('button_import'); ?></button>
                   </p>
                 </fieldset>
               </form>
@@ -143,7 +140,7 @@
           <div class="columns">
             <div class="six-columns twelve-columns-mobile">
               <form id="options-export-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-left">
+                <fieldset class="fieldset margin-top margin-bottom margin-left margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_options_export'); ?></legend>
                   <p>
                     <span id="options-filter-total">0</span> <?php echo $lC_Language->get('text_records_to_be_exported'); ?>
@@ -152,7 +149,7 @@
                     <input type="radio" class="radio" checked value="tabbed" name="options-export-format" id="options-export-format-tabbed" /> <label class="label" for="export-format-tabbed">Tabbed</label>
                   </p>
                   <p class="button-height">
-                    <button type="button" class="button green-gradient icon-download" onClick="Javascript:getOptionGroups();"><?php echo $lC_Language->get('button_export_options_groups'); ?></button>
+                    <button type="button" class="button green-gradient icon-download" onclick="getOptionGroups();"><?php echo $lC_Language->get('button_export_options_groups'); ?></button>
                   </p>
                   <p class="button-height">
                     <a href="includes/applications/products_import_export/samples/options_groups_import_sample.txt" download>
@@ -160,7 +157,7 @@
                     </a>
                   </p>
                   <p class="button-height">
-                    <button type="button" class="button green-gradient icon-download" onClick="Javascript:getOptionVariants();"><?php echo $lC_Language->get('button_export_option_variants'); ?></button>
+                    <button type="button" class="button green-gradient icon-download" onclick="getOptionVariants();"><?php echo $lC_Language->get('button_export_option_variants'); ?></button>
                   </p>
                   <p class="button-height">
                     <a href="includes/applications/products_import_export/samples/options_variants_import_sample.txt" download>
@@ -168,7 +165,7 @@
                     </a>
                   </p>
                   <p class="button-height">
-                    <button type="button" class="button green-gradient icon-download" onClick="Javascript:getOptionProducts();"><?php echo $lC_Language->get('button_export_options_to_products'); ?></button>
+                    <button type="button" class="button green-gradient icon-download" onclick="getOptionProducts();"><?php echo $lC_Language->get('button_export_options_to_products'); ?></button>
                   </p>
                   <p class="button-height">
                     <a href="includes/applications/products_import_export/samples/options_to_products_import_sample.txt" download>
@@ -180,7 +177,7 @@
             </div>
             <div class="six-columns twelve-columns-mobile">
               <form id="options-import-form">
-                <fieldset class="fieldset margin-top margin-bottom margin-right">
+                <fieldset class="fieldset margin-top margin-bottom margin-left margin-right">
                   <legend class="legend"><?php echo $lC_Language->get('fieldset_title_options_import'); ?></legend>
                   <p class="button-height block-label">
                     <label for="groups-file" class="label">Groups</label>
@@ -210,7 +207,7 @@
                     <input type="radio" class="radio" checked value="tabbed" name="options-import-type" id="import-type-addmatch" /> <label class="label" for="options-import-type-addmatch"><?php echo $lC_Language->get('label_add_match'); ?></label>
                   </p>
                   <p class="button-height">
-                    <button type="button" class="float-right button green-gradient icon-cloud" onClick="Javascript:importOptions();"><?php echo $lC_Language->get('button_import'); ?></button>
+                    <button type="button" class="float-right button green-gradient icon-cloud" onclick="importOptions();"><?php echo $lC_Language->get('button_import'); ?></button>
                   </p>
                 </fieldset>
               </form>

@@ -1,15 +1,12 @@
 <?php
-/*
-  $Id: products_import_export.js.php v1.0 2013-12-01 reusltsonlyweb $
-
-  LoadedCommerce, Innovative eCommerce Solutions
-  http://www.loadedcommerce.com
-
-  Copyright (c) 2013 Loaded Commerce, LLC
-
-  @author     LoadedCommerce Team
-  @copyright  (c) 2013 LoadedCommerce Team
-  @license    http://loadedcommerce.com/license.html
+/**
+  @package    catalog::admin::applications
+  @author     Loaded Commerce
+  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
+  @copyright  Portions Copyright 2003 osCommerce
+  @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
+  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
+  @version    $Id: products_import_export.js.php v1.0 2013-12-01 resultsonlyweb $
 */
 global $lC_Template, $lC_Language, $modulesArr, $accessArr;
 ?>
@@ -21,107 +18,93 @@ var ovfilename = '';
 var opfilename = '';
 $(document).ready(function(){
 	createProductUploader();
-	
-	/**
-	 * CONTENT TAB
-	 * 
-	/* create the uploader instance for product import */
-	function createProductUploader() {
-	  var uploader = new qq.FileUploader({
-		element: document.getElementById('fileUploaderProductsContainer'),
-		action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
-		onComplete: function(id, fileName, responseJSON){
-		  console.log(responseJSON);
-		  pfilename = fileName;
-		},
-	  });
-	}
 	createCatUploader();
-	
-	/**
-	 * CONTENT TAB
-	 * 
-	/* create the uploader instance for product import */
-	function createCatUploader() {
-	  var uploader = new qq.FileUploader({
-		element: document.getElementById('fileUploaderCategoriesContainer'),
-		action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
-		onComplete: function(id, fileName, responseJSON){
-		  console.log(responseJSON);
-		  cfilename = fileName;
-		},
-	  });
-	}
 	createOptionsGroupsUploader();
-	
-	/**
-	 * CONTENT TAB
-	 * 
-	/* create the uploader instance for product import */
-	function createOptionsGroupsUploader() {
-	  var uploader = new qq.FileUploader({
-		element: document.getElementById('fileUploaderOptionsGroupsContainer'),
-		action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
-		onComplete: function(id, fileName, responseJSON){
-		  console.log(responseJSON);
-		  ogfilename = fileName;
-		},
-	  });
-	}
 	createOptionsVarientsUploader();
-	
-	/**
-	 * CONTENT TAB
-	 * 
-	/* create the uploader instance for product import */
-	function createOptionsVarientsUploader() {
-	  var uploader = new qq.FileUploader({
-		element: document.getElementById('fileUploaderOptionsVarientsContainer'),
-		action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
-		onComplete: function(id, fileName, responseJSON){
-		  console.log(responseJSON);
-		  ovfilename = fileName;
-		},
-	  });
-	}
 	createOptionsProductsUploader();
-	
-	/**
-	 * CONTENT TAB
-	 * 
-	/* create the uploader instance for product import */
-	function createOptionsProductsUploader() {
-	  var uploader = new qq.FileUploader({
-		element: document.getElementById('fileUploaderOptionsProductsContainer'),
-		action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
-		onComplete: function(id, fileName, responseJSON){
-		  console.log(responseJSON);
-		  opfilename = fileName;
-		},
-	  });
-	}
-  });
-  function get_filter_total(filter,type) { 
-    filter = typeof filter !== 'undefined' ? filter : 'none';
-	type = typeof type !== 'undefined' ? type : 'products';
-	
-    $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule()); ?>&action=getFilterTotal&filter='+filter+'&type='+type,
-  	  function (data) {
-		$('#'+type+'-filter-total').html(data.total);
-		$('#'+type+'-filter-applied').html(filter);
-	  }
-    );
+  
+  get_filter_total('none', 'products');
+  get_filter_total('none', 'categories');
+  get_filter_total('none', 'options');
+  var error = '<?php echo $_SESSION['error']; ?>';
+  if (error) {
+    var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
+    $.modal.alert(errmsg);
   }
-  $(document).ready(function() {
-	get_filter_total('none', 'products');
-	get_filter_total('none', 'categories');
-	get_filter_total('none', 'options');
-    var error = '<?php echo $_SESSION['error']; ?>';
-    if (error) {
-      var errmsg = '<?php echo $_SESSION['errmsg']; ?>';
-      $.modal.alert(errmsg);
-    }     
+});
+  
+/* create the uploader instance for options to products import */
+function createOptionsProductsUploader() {
+  var uploader = new qq.FileUploader({
+    element: document.getElementById('fileUploaderOptionsProductsContainer'),
+    action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
+    onComplete: function(id, fileName, responseJSON){
+      console.log(responseJSON);
+      opfilename = fileName;
+    },
   });
+}
+
+/* create the uploader instance for options variants import */
+function createOptionsVarientsUploader() {
+  var uploader = new qq.FileUploader({
+    element: document.getElementById('fileUploaderOptionsVarientsContainer'),
+    action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
+    onComplete: function(id, fileName, responseJSON){
+      console.log(responseJSON);
+      ovfilename = fileName;
+    },
+  });
+}
+
+/* create the uploader instance for options groups import */
+function createOptionsGroupsUploader() {
+  var uploader = new qq.FileUploader({
+    element: document.getElementById('fileUploaderOptionsGroupsContainer'),
+    action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
+    onComplete: function(id, fileName, responseJSON){
+      console.log(responseJSON);
+      ogfilename = fileName;
+    },
+  });
+} 
+
+/* create the uploader instance for categories import */
+function createCatUploader() {
+  var uploader = new qq.FileUploader({
+    element: document.getElementById('fileUploaderCategoriesContainer'),
+    action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
+    onComplete: function(id, fileName, responseJSON){
+      console.log(responseJSON);
+      cfilename = fileName;
+    },
+  });
+} 
+
+/* create the uploader instance for products import */
+function createProductUploader() {
+  var uploader = new qq.FileUploader({
+    element: document.getElementById('fileUploaderProductsContainer'),
+    action: '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '&action=fileUpload'); ?>',
+    onComplete: function(id, fileName, responseJSON){
+      console.log(responseJSON);
+      pfilename = fileName;
+    },
+  });
+}
+
+function get_filter_total(filter,type) { 
+  filter = typeof filter !== 'undefined' ? filter : 'none';
+	type = typeof type !== 'undefined' ? type : 'products';
+
+  $.getJSON('<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule()); ?>&action=getFilterTotal&filter='+filter+'&type='+type,
+  	function (data) {
+		  $('#'+type+'-filter-total').html(data.total);
+		  $('#'+type+'-filter-applied').html(filter);
+	  }
+  );
+}
+
 function getOptionProducts() {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 1) {
@@ -138,13 +121,13 @@ function getOptionProducts() {
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
         $(location).attr('href',url);
       }
-	  console.log(data);
+	    console.log(data);
       var downloadurl = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=download&filename=FILENAME'); ?>";
-	  console.log(downloadurl);
+	    console.log(downloadurl);
       $(location).attr('href',downloadurl.replace('FILENAME', data.filename));
-	}
-  );
+	});
 }
+
 function getProducts(pgtype) {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 1) {
@@ -162,13 +145,13 @@ function getProducts(pgtype) {
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
         $(location).attr('href',url);
       }
-	  console.log(data);
+	    console.log(data);
       var downloadurl = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=download&filename=FILENAME'); ?>";
-	  console.log(downloadurl);
+	    console.log(downloadurl);
       $(location).attr('href',downloadurl.replace('FILENAME', data.filename));
-	}
-  );
+	});
 }
+
 function getOptionVariants() {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 1) {
@@ -185,13 +168,13 @@ function getOptionVariants() {
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
         $(location).attr('href',url);
       }
-	  console.log(data);
+	    console.log(data);
       var downloadurl = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=download&filename=FILENAME'); ?>";
-	  console.log(downloadurl);
+	    console.log(downloadurl);
       $(location).attr('href',downloadurl.replace('FILENAME', data.filename));
-	}
-  );
+	});
 }
+
 function getOptionGroups() {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 1) {
@@ -208,13 +191,13 @@ function getOptionGroups() {
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
         $(location).attr('href',url);
       }
-	  console.log(data);
+	    console.log(data);
       var downloadurl = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=download&filename=FILENAME'); ?>";
-	  console.log(downloadurl);
+	    console.log(downloadurl);
       $(location).attr('href',downloadurl.replace('FILENAME', data.filename));
-	}
-  );
+	});
 }
+
 function getCategories() {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 1) {
@@ -231,11 +214,10 @@ function getCategories() {
         var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
         $(location).attr('href',url);
       }
-	  console.log(data);
+	    console.log(data);
       var downloadurl = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=download&filename=FILENAME'); ?>";
-	  console.log(downloadurl);
+	    console.log(downloadurl);
       $(location).attr('href',downloadurl.replace('FILENAME', data.filename));
-	}
-  );
+	});
 }
 </script>

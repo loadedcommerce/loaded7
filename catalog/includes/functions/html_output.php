@@ -108,7 +108,7 @@ if (!function_exists('lc_href_link')) {
     if (!stristr($link, 'rpc.php')) {
       if ( ($search_engine_safe === true) && isset($lC_Services) && $lC_Services->isStarted('seo')) {
         $cat_path = '';
-        if ( ($cPathPos = strpos($link, 'cPath')) || (strpos($link, 'products.php')) ) {
+        if ( ($cPathPos = strpos($link, 'cPath')) || ((strpos($link, 'products.php') && !strpos($link, 'cart_add'))) ) {
           if (defined('SERVICE_SEO_URL_ADD_CATEGORY_PARENT') && SERVICE_SEO_URL_ADD_CATEGORY_PARENT == 1) {
             $cat_ids = array();
             // categories
@@ -122,7 +122,7 @@ if (!function_exists('lc_href_link')) {
               }
             }
             // products
-            if ( (strpos($link, 'products.php') && !strpos($link, 'cart_add') && !strpos($link, 'reviews') && !strpos($link, '?specials') && !strpos($link, '?new')) ) {
+            if ( (strpos($link, 'products.php') && !strpos($link, 'featured_products') && !strpos($link, 'reviews') && !strpos($link, '?specials') && !strpos($link, '?new')) ) {
               if (strpos($link, 'cPath')) {
                 $cat_id = explode("_", substr($link, $cPathPos+6));
                 if (count($cat_id) < 2) {
