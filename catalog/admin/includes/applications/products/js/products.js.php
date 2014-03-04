@@ -86,9 +86,10 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       ?>
       $("#products_name_<?php echo $l['id']; ?>").blur(function(){ 
         var prodPermLink = $("#products_name_<?php echo $l['id']; ?>").val().toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '').replace(/---/g, '-').replace(/--/g, '-');
-        //if (prodPermLink.match(/product$/i)) {
-        //  prodPermLink = prodPermLink + '-link';
-        //}
+        // this code will be revisited
+        // if (prodPermLink.match(/product$/i)) {
+        //   prodPermLink = prodPermLink + '-link';
+        // }
         $("#products_keyword_<?php echo $l['id']; ?>").val(prodPermLink).focus();
         validatePermalink($("#products_keyword_<?php echo $l['id']; ?>").val());
       });

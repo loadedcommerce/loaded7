@@ -783,9 +783,10 @@ class lC_Products_Admin {
         $cPath = ($category_id != '') ? $lC_CategoryTree->getcPath($category_id) : 0;
       }
       foreach ($lC_Language->getAll() as $l) {
-        if (self::validatePermalink($data['products_keyword'][$l['id']], $id, 2) != 1) {
-          $data['products_keyword'][$l['id']] = $data['products_keyword'][$l['id']] . '-link';
-        }
+        // this code will be revisited
+        // if (self::validatePermalink($data['products_keyword'][$l['id']], $id, 2) != 1) {
+        //   $data['products_keyword'][$l['id']] = $data['products_keyword'][$l['id']] . '-link';
+        // }
         
         if (is_numeric($id)) {
           $Qpd = $lC_Database->query('update :table_products_description set products_name = :products_name, products_description = :products_description, products_keyword = :products_keyword, products_tags = :products_tags, products_url = :products_url where products_id = :products_id and language_id = :language_id');
