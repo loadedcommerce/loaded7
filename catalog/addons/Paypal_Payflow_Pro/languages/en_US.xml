@@ -74,7 +74,7 @@
     </definition> 
     <definition>
       <key>payment_payflow_pro_cc_cvv_text</key>
-      <value><![CDATA[<a href="javascript:;" onclick = "javascript:window.open('addons/PayPal_Payflow_Pro/cvv_info.htm','CVV info','width=550,height=450');"><u><i>(What is it?)</i></u></a>']]></value>
+      <value><![CDATA[<a href="javascript:;" onclick = "javascript:window.open('addons/Paypal_Payflow_Pro/cvv_info.htm','CVV info','width=550,height=450');"><u><i>(What is it?)</i></u></a>']]></value>
       <group>checkout</group>
     </definition> 
 
