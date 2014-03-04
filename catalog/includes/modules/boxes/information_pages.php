@@ -35,8 +35,8 @@ class lC_Boxes_information_pages extends lC_Modules {
     $lC_CategoryTree->setParentGroupString('<ul class="box-information_pages-ul">', '</ul>');
     $lC_CategoryTree->setChildStringWithChildren('<li>', '</li>');
     $lC_CategoryTree->setUseAria(true);
-    $lC_CategoryTree->setShowCategoryProductCount((BOX_INFORMATION_PAGES_SHOW_PAGE_COUNT == '1') ? true : false);
-    $lC_CategoryTree->setRootCategoryID(BOX_INFORMATION_PAGES_CPATH);
+    $lC_CategoryTree->setShowCategoryProductCount(false);
+    $lC_CategoryTree->setRootCategoryID(BOX_INFORMATION_PAGES_ROOT_CATEGORY);
 
     $this->_content = $lC_CategoryTree->getTree();
     
@@ -47,15 +47,12 @@ class lC_Boxes_information_pages extends lC_Modules {
 
     parent::install();
 
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Top Information Category ID (cPath)', 'BOX_INFORMATION_PAGES_CPATH', '0', 'Set the Category ID of the Information Pages \"Top\" Category', '6', '0', 'lc_cfg_set_info_pages_top_category(BOX_INFORMATION_PAGES_CPATH)', 'lc_cfg_set_info_pages_top_category', now())");
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Show Pages Count', 'BOX_INFORMATION_PAGES_SHOW_PAGE_COUNT', '-1', 'Show the amount of pages each category has', '6', '0', 'lc_cfg_use_get_boolean_value', 'lc_cfg_set_boolean_value(array(1, -1))', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Top Information Category', 'BOX_INFORMATION_PAGES_ROOT_CATEGORY', '0', 'Select the Top Category of the Information Pages Infobox', '6', '0', 'lc_cfg_set_info_pages_top_category(BOX_INFORMATION_PAGES_ROOT_CATEGORY)', 'lc_cfg_set_info_pages_top_category', now())");
   }
 
   function getKeys() {
     if (!isset($this->_keys)) {
-      $this->_keys = array('BOX_INFORMATION_PAGES_CPATH', 
-                           'BOX_INFORMATION_PAGES_SHOW_PAGE_COUNT'
-                           );
+      $this->_keys = array('BOX_INFORMATION_PAGES_ROOT_CATEGORY');
     }
 
     return $this->_keys;
