@@ -86,9 +86,10 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       ?>
       $("#products_name_<?php echo $l['id']; ?>").blur(function(){ 
         var prodPermLink = $("#products_name_<?php echo $l['id']; ?>").val().toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '').replace(/---/g, '-').replace(/--/g, '-');
-        //if (prodPermLink.match(/product$/i)) {
-        //  prodPermLink = prodPermLink + '-link';
-        //}
+        // this code will be revisited
+        // if (prodPermLink.match(/product$/i)) {
+        //   prodPermLink = prodPermLink + '-link';
+        // }
         $("#products_keyword_<?php echo $l['id']; ?>").val(prodPermLink).focus();
         validatePermalink($("#products_keyword_<?php echo $l['id']; ?>").val());
       });
@@ -712,6 +713,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           }
           oTable = $('#dataTable').dataTable({
             "bProcessing": true,
+            "bServerSide": true,
             "sAjaxSource": dataTableDataURL.replace('CID', cid).replace('MEDIA', $.template.mediaQuery.name),
             "sPaginationType": paginationType,
             "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
@@ -724,8 +726,8 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
                           { "sWidth": "10%", "bSortable": false, "sClass": "dataColCats hide-on-tablet" },
                           { "sWidth": "10%", "bSortable": false, "sClass": "dataColClass hide-on-tablet" },
                           { "sWidth": "10%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },
-                          { "sWidth": "5%", "bSortable": false, "sClass": "dataColQty hide-on-mobile" },
-                          { "sWidth": "5%", "bSortable": false, "sClass": "dataColStatus hide-on-mobile" },
+                          { "sWidth": "5%", "bSortable": true, "sClass": "dataColQty hide-on-mobile" },
+                          { "sWidth": "5%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile" },
                           { "sWidth": "30%", "bSortable": false, "sClass": "dataColAction no-wrap" }]
           }); 
           $('#dataTable').responsiveTable();
