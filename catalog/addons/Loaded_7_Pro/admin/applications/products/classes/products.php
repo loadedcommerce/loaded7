@@ -27,6 +27,14 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
   public static function save($id = null, $data) {
     global $lC_Database, $lC_Language;
     
+echo '[' . $id . ']<br>';
+echo "<pre>";
+print_r($_FILES);
+
+print_r($data);
+echo "</pre>";
+die('44');		
+		
     $error = false;
     
     $products_id = parent::save($id, $data);
@@ -171,13 +179,13 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
           
           $cnt = 0;
           foreach ($qpbData as $key => $val) {
-            $content .= self::_getNewRow($val['group_id'], $key+1, $val);
+            $content .= self::_getNewSubProductsRow($val['group_id'], $key+1, $val);
             $cnt = $key+1;
           }
           // add a new row
-          $content .= self::_getNewRow($value['customers_group_id'], $cnt+1);
+          $content .= self::_getNewSubProductsRow($value['customers_group_id'], $cnt+1);
         } else { // no qpb recorded, setup new
-          $content .= self::_getNewRow($value['customers_group_id'], 1);
+          $content .= self::_getNewSubProductsRow($value['customers_group_id'], 1);
         }      
         
         $content .= '</div>';                
@@ -195,7 +203,7 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
   * @access private
   * @return string
   */
-  private static function _getNewRow($group, $cnt, $data = array()) {
+  private static function _getNewSubProductsRow($group, $cnt, $data = array()) {
     global $lC_Currencies;
 
     $content = '  <div class="new-row-mobile twelve-columns small-margin-top">' .
@@ -237,13 +245,14 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
   private static function _getMultiSKUOptionsTbody($options) {
   	global $lC_Currencies;
 		
-ini_set('display_errors', 1);		
     $tbody = '';  	
 		  
     if (isset($options) && !empty($options)) {
       foreach ($options as $product_id => $mso) {     	
         
         $combo = '';
+				$default = '';
+				$module = '';
         $comboInput = '';
         if (is_array($mso['values'])) {
           foreach ($mso['values'] as $group_id => $value_id) {
@@ -256,11 +265,13 @@ ini_set('display_errors', 1);
           }
 					if (strstr($combo, ',')) $combo = substr($combo, 0, -2);
           
-          $statusIcon = (isset($mso['data']['status']) && $mso['data']['status'] == '1') ? '<span class="icon-tick icon-size2 icon-green"></span>' : '<span class="icon-cross icon-size2 icon-red"></span>';          
-          
+          $statusIcon = (isset($mso['data']['status']) && $mso['data']['status'] == '1') ? '<span id="variants_status_span_' . $product_id .'" class="icon-tick icon-size2 icon-green with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' . $product_id .'" name="variants[' . $product_id . '][status]" value="1">' : '<span id="variants_status_span_' . $product_id .'" class="icon-cross icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' . $product_id .'" name="variants[' . $product_id . '][status]" value="0">';
+          $defaultIcon = (isset($default) && $default == '1') ? '<span id="variants_default_combo_span_' . $product_id .'" class="default-combo-span icon-star icon-size2 icon-orange with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Default Combo"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $product_id .'" name="variants[' . $product_id . '][default_combo]" value="1">' : '<span id="variants_default_combo_span_' . $product_id .'" class="default-combo-span icon-star icon-size2 icon-grey with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Default Combo"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $product_id .'" name="variants[' . $product_id . '][default_combo]" value="0">';          
+					          
           $tbody .= '<tr id="trmso-' . $product_id .'">' .
                     '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
                     '  <td width="25%">' . $combo . '</td>' .
+                    '  <td width="16px" style="cursor:pointer;" onclick="toggleMultiSKUOptionsFeatured(\'' . $product_id . '\');">' . $defaultIcon . '</td>' .                    
                     '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' . $product_id . '2" name="variants[' . $product_id . '][weight]" value="' . $mso['data']['weight'] . '"></td>' .
                     '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' . $product_id . '3" name="variants[' . $product_id . '][sku]" value="' . $mso['data']['sku'] . '"></td>' .
                     '  <td><input type="text" class="input half-width" onfocus="this.select();" tabindex="' . $product_id . '4" name="variants[' . $product_id . '][qoh]" value="' . $mso['data']['quantity'] . '"></td>' .
@@ -270,7 +281,11 @@ ini_set('display_errors', 1);
                            <input type="text" class="input-unstyled" style="width:87%;" onfocus="this.select();" value="' . $mso['data']['price'] . '" tabindex="' . $product_id . '5" name="variants[' . $product_id . '][price]">
                          </div>
                        </td>' .
-                    '  <td width="16px" align="center" style="cursor:pointer;" onclick="toggleMultiSKUOptionsStatus(this, \'' . $product_id . '\');">' . $statusIcon . '</td>' .
+			              '  <td class="align-center align-middle">' .
+			              '    <input style="display:none;" type="file" id="multi_sku_image_' . $product_id . '" name="variants[' . $product_id . '][image]" onchange="setMultiSKUImage(\'' . $product_id . '\');" multiple />' .
+			              '    <span class="icon-camera icon-size2 cursor-pointer with-tooltip ' . ((isset($mso['data']['image']) && $mso['data']['image'] != null) ? 'icon-green' : 'icon-grey') . '" title="' . ((isset($mso['data']['image']) && $mso['data']['image'] != null) ? $mso['data']['image'] : null) . '" id="fileSelectButtonMultiSKU-' . $product_id . '" onclick="document.getElementById(\'multi_sku_image_' . $product_id . '\').click();"></span>' .
+			              '  </td>' .                       
+                    '  <td width="16px" align="center" style="cursor:pointer;" onclick="toggleMultiSKUOptionsStatus(\'' . $product_id . '\');">' . $statusIcon . '</td>' .
                     '  <td width="40px" align="right">
                          <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addMultiSKUOption(\'' . $product_id. '\')"></span>
                          <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeMultiSKUOptionsRow(\'' . $product_id . '\');"></span>

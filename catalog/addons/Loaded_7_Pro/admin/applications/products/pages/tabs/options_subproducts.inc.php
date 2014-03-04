@@ -14,11 +14,11 @@
 global $lC_Language, $pInfo; 
 ?>
 <div id="multiTypeControlButtons" class="button-group small-margin-top">
-  <label id="lbl-radio-1" for="type_radio_1" class="button green-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_children') == 1 && $pInfo->getInt('is_subproduct') != 1) ? ' active' : ''); ?>">
+  <label id="lbl-radio-1" for="type_radio_1" class="button green-active">
     <input type="radio" onclick="toggleMultiSkuTypeRadioGroup(this.value);" name="multi_sku_type_radio_group" id="type_radio_1" value="1" />
     <?php echo $lC_Language->get('text_combo_options'); ?>
   </label>
-  <label id="lbl-radio-2" for="type_radio_2" class="button green-active<?php echo (isset($pInfo) && ($pInfo->getInt('has_subproducts') == 1) ? ' active' : ''); ?>">
+  <label id="lbl-radio-2" for="type_radio_2" class="button green-active">
     <input type="radio" onclick="toggleMultiSkuTypeRadioGroup(this.value);" name="multi_sku_type_radio_group" id="type_radio_2" value="2" />
     <?php echo $lC_Language->get('text_sub_products'); ?>
   </label>
@@ -31,15 +31,17 @@ global $lC_Language, $pInfo;
 	    <tr>
 	      <th scope="col" class="align-center">&nbsp;</th>
 	      <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_option_set_name'); ?></th>
+	      <th scope="col" class="align-center">&nbsp;</th>
         <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_weight'); ?></th>
         <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_sku'); ?></th>
         <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_qoh'); ?></th>
-        <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_base_price'); ?></th>	      
+        <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_price'); ?></th>
+        <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_img'); ?></th>        	      
         <th scope="col" class="align-center hide-below-480"><?php echo $lC_Language->get('table_heading_status'); ?></th>
 	      <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
 	    </tr>
 	  </thead>
-	  <tbody class="sorted_table"><?php echo ((isset($pInfo)) ? lC_Products_Admin_Pro::getMultiSKUOptionsContent($pInfo->get('variants')) : null); ?></tbody>
+	  <tbody id="multiSKUOptionsTbody" class="sorted_table"><?php echo ((isset($pInfo)) ? lC_Products_Admin_Pro::getMultiSKUOptionsContent($pInfo->get('variants')) : null); ?></tbody>
 	</table>       	
 </div>
 
@@ -47,7 +49,7 @@ global $lC_Language, $pInfo;
   <table width="100%" id="subProductsTable" class="simple-table">
     <thead>
       <tr>
-        <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_sub_products_name'); ?></th>
+        <th scope="col" class="align-left"><?php echo $lC_Language->get('table_heading_name'); ?></th>
         <th scope="col" class="align-center hide-below-480"><?php echo $lC_Language->get('table_heading_status'); ?></th>
         <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_weight'); ?></th>
         <th scope="col" class="align-left hide-below-480"><?php echo $lC_Language->get('table_heading_sku'); ?></th>
@@ -57,7 +59,7 @@ global $lC_Language, $pInfo;
         <th scope="col" class="align-right" width="50px"><?php echo $lC_Language->get('table_heading_action'); ?></th>
       </tr>
     </thead>      
-    <tbody class=""></tbody>
+    <tbody id="subProductsTbody" class=""></tbody>
   </table>          
 </div>       
 <script>
@@ -73,17 +75,14 @@ $(document).ready(function() {
       getSubProductsRows();
       _updateInvControlType('2');
       $('#type_radio_2').click();
-      $('label[for=\'ic_radio_1\']').addClass('disabled');
-      $('label[for=\'ioc_radio_1\']').addClass('disabled');
       $('label[for=\'type_radio_1\']').addClass('disabled');
       $('#type_radio_1').removeAttr('onclick');
     } else if (has_variants == '1') {
     	_updateInvControlType('2');
     	$('#lbl-radio-1').removeClass('disabled');
       $('#type_radio_1').click();
-     
-      
-   //   $('label[for=\'type_radio_1\']').addClass('active');    	
+      $('label[for=\'type_radio_2\']').addClass('disabled');
+      $('#type_radio_2').removeAttr('onclick');      
     }
   } else {	
     $('#type_radio_1').click();
@@ -125,14 +124,8 @@ function getSubProductsRows() {
 function addSubProductsRow(include_price_row, e, key) {
   if($("#subProductsTable tbody").children().length > 0) {
     var id = $('#subProductsTable tr:last').attr('id').replace('tr-', '');
-    $('label[for=\'ic_radio_1\']').addClass('disabled');
-    $('label[for=\'ioc_radio_1\']').addClass('disabled');
-//    $('label[for=\'type_radio_1\']').addClass('disabled');
   } else {
     var id = 0;
-    $('label[for=\'ic_radio_1\']').removeClass('disabled');
-    $('label[for=\'ioc_radio_1\']').removeClass('disabled');
-//    $('label[for=\'type_radio_1\']').removeClass('disabled'); 
   }
   if (e.value != undefined) $('#name-td-' + key).text(e.value);                
   if($('#sub_products_name_' + id).val() == '') return false;
@@ -214,6 +207,58 @@ function setSubProductImage(id) {
     } else {                                                              
       var title = '<?php echo $lC_Language->get('text_sub_products_select_image'); ?>';
       $('#fileSelectButton-' + id).removeClass('icon-green').addClass('icon-grey').prop('title', title);
+    }
+  }, 500);
+} 
+
+/* 
+ * Multi SKU functions 
+ */
+function removeMultiSKUOptionsRow(id) {
+  $.modal.confirm('<?php echo $lC_Language->get('text_remove_row'); ?>', function() {
+    $('#trmso-' + id).remove();
+  //  $('.trpmso-' + id).remove();
+  
+	  // check if no rows and activate/deactivate sub products button
+	  var hasInfo = $('#multiSKUOptionsTbody').children().length;
+	  if (hasInfo == 0) {
+	  	$('label[for=\'type_radio_2\']').removeClass('disabled');
+	    $('#type_radio_2').attr('onclick', 'toggleMultiSkuTypeRadioGroup(this.value)'); 	  
+	  } else {
+	  	$('label[for=\'type_radio_2\']').addClass('disabled');
+	  	$('#type_radio_2').removeAttr('onclick'); 	  
+	  }
+  }, function() {
+    return false;
+  }); 	
+}
+
+function toggleMultiSKUOptionsStatus(id) {
+	var current = $('#variants_status_' + id).val();
+  if (current == '1') {
+    $('#variants_status_' + id).val('0');
+    $('#variants_status_span_' + id).removeClass('icon-green icon-tick').addClass('icon-red icon-cross');
+  } else {
+    $('#variants_status_' + id).val('1');
+    $('#variants_status_span_' + id).removeClass('icon-red icon-cross').addClass('icon-green icon-tick');
+  } 
+}  
+
+function toggleMultiSKUOptionsFeatured(id) {
+	$('.default-combo').val('0');
+	$('.default-combo-span').removeClass('icon-orange').addClass('icon-grey');	
+	$('#variants_default_combo_span_' + id).removeClass('icon-grey').addClass('icon-orange');
+	$('#variants_default_combo_' + id).val('1');
+}
+
+function setMultiSKUImage(id) {
+  setTimeout(function(){
+    var v = ($('#multi_sku_image_' + id).val());
+    if (v != '') {
+      $('#fileSelectButtonMultiSKU-' + id).removeClass('icon-grey').addClass('icon-green').prop('title', v);
+    } else {                                                              
+      var title = '<?php echo $lC_Language->get('text_sub_products_select_image'); ?>';
+      $('#fileSelectButtonMultiSKU-' + id).removeClass('icon-green').addClass('icon-grey').prop('title', title);
     }
   }, 500);
 } 
