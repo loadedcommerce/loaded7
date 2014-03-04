@@ -6,7 +6,7 @@
   <author>loadedcommerce.com</author>
   <file name="includes/applications/customers/classes/customers.php">
     <operation info="Add Login as Customer Button">
-      <search position="replace"><![CDATA[<a href="javascript:void(0);" class="button icon-monitor with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_login_as_customer_pro') . '"></a>]]></search>         
+      <search position="replace"><![CDATA[<a href="javascript:void(0);" class="button icon-monitor with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_login_as_customer') . ' (PRO)"></a>]]></search>         
       <add><![CDATA[<a target="_blank" href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : lc_href_link('account.php', 'login&email_address=' . $Qcustomers->value('customers_email_address'))) . '" class="button icon-monitor with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_login_as_customer') . '"></a>]]></add>
     </operation>        
   </file> 
