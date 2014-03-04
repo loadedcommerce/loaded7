@@ -116,6 +116,7 @@ text_path_to_file = path to file from site root
 text_photo_album = Photo Album
 text_visibility_nav = Top Nav
 text_visibility_box = Infobox
+text_select_category = Select Category
 text_standard_html_page = Standard HTML Page
 text_status = Status
 text_thumbnail_image = Thumbnail Image
