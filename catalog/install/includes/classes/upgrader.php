@@ -2820,6 +2820,7 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                    customers_default_address_id, 
                                                                    customers_telephone, 
                                                                    customers_fax, 
+								   customers_password,
                                                                    customers_newsletter, 
                                                                    customers_status, 
                                                                    customers_ip_address, 
@@ -2837,7 +2838,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
                                                                    :customers_email_address, 
                                                                    :customers_default_address_id, 
                                                                    :customers_telephone, 
-                                                                   :customers_fax, 
+                                                                   :customers_fax,
+								   :customers_password,
                                                                    :customers_newsletter, 
                                                                    :customers_status, 
                                                                    :customers_ip_address, 
@@ -2859,7 +2861,8 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $tQry->bindInt  (':customers_default_address_id', $customer['customers_default_address_id']);
           $tQry->bindValue(':customers_telephone'         , $customer['customers_telephone']);
           $tQry->bindValue(':customers_fax'               , $customer['customers_fax']);
-          $tQry->bindValue(':customers_newsletter'        , $customer['customers_newsletter']);
+          $tQry->bindValue(':customers_password'          , $customer['customers_password']);
+		  $tQry->bindValue(':customers_newsletter'        , $customer['customers_newsletter']);
           $tQry->bindInt  (':customers_status'            , $customer['customers_status']);
           $tQry->bindValue(':customers_ip_address'        , $customer['customers_ip_address']);
           $tQry->bindDate (':date_last_logon'             , $customer['date_last_logon']);
