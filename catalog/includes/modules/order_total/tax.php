@@ -29,7 +29,7 @@ class lC_OrderTotal_tax extends lC_OrderTotal {
   function process() {
     global $lC_ShoppingCart, $lC_Currencies;
 
-    foreach ($lC_ShoppingCart->getTaxGroups() as $key => $value) {
+    foreach ($lC_ShoppingCart->getTaxGroups() as $key => $value) { 
       if ($value > 0) {
         if (DISPLAY_PRICE_WITH_TAX == '1') {
           $lC_ShoppingCart->addToTotal($value);

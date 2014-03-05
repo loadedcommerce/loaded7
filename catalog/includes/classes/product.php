@@ -407,7 +407,7 @@ class lC_Product {
    */   
    
     $return = array('base' => number_format($this->getBasePrice(), DECIMAL_PLACES),
-                    'price' => number_format($priceWithTax, DECIMAL_PLACES),
+                    'price' => number_format($price, DECIMAL_PLACES),
                     'tax' => number_format($tax, DECIMAL_PLACES),
                     'formatted' => $formatted,
                     'modTotal' => $modTotal,
