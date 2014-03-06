@@ -153,7 +153,7 @@ class lC_Search extends lC_Products {
   public function &execute() {
     global $lC_Database, $lC_Customer, $lC_Currencies, $lC_Language, $lC_Image, $lC_CategoryTree;
 
-    $Qlisting = $lC_Database->query('select SQL_CALC_FOUND_ROWS distinct p.*, pd.*, m.*, i.image, if(s.status, s.specials_new_products_price, null) as specials_new_products_price, if(s.status, s.specials_new_products_price, p.products_price) as final_price');
+    $Qlisting = $lC_Database->query('select p.*, pd.*, m.*, i.image, if(s.status, s.specials_new_products_price, null) as specials_new_products_price, if(s.status, s.specials_new_products_price, p.products_price) as final_price');
 
     if (($this->hasPriceSet('from') || $this->hasPriceSet('to')) && (DISPLAY_PRICE_WITH_TAX == '1')) {
       $Qlisting->appendQuery(', sum(tr.tax_rate) as tax_rate');
@@ -182,7 +182,8 @@ class lC_Search extends lC_Products {
       $Qlisting->bindInt(':zone_id', $customer_zone_id);
     }
 
-    $Qlisting->appendQuery(', :table_products_description pd, :table_categories c, :table_products_to_categories p2c');
+    $Qlisting->appendQuery(', :table_products_description pd');
+    if ($this->hasCategory()) $Qlisting->appendQuery(', :table_categories c, :table_products_to_categories p2c');
     $Qlisting->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qlisting->bindTable(':table_categories', TABLE_CATEGORIES);
     $Qlisting->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
