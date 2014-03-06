@@ -216,7 +216,7 @@ function _update(row, qty) {
       }
       
       if (data.priceData.price != undefined && data.priceData.price > 0) {
-        newPrice = parseFloat(data.priceData.price).toFixed(decimals);
+        newPrice = (parseFloat(data.priceData.price) + parseFloat(data.priceData.tax)).toFixed(decimals);
       } else {        
         newPrice = dPrice.toFixed(decimals);
       }

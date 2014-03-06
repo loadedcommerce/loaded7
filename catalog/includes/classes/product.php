@@ -390,9 +390,9 @@ class lC_Product {
     }     
     
     if ($lC_Services->isStarted('specials') && $lC_Specials->isActive($product_id)) {
-      $formatted = '<s>' . $lC_Currencies->displayPrice($this->getBasePrice() + $modTotal, $this->_data['tax_class_id']) . '</s> <span class="product-special-price">' . $lC_Currencies->displayPrice($priceWithTax, $this->_data['tax_class_id']) . '</span>';
+      $formatted = '<s>' . $lC_Currencies->displayPrice($this->getBasePrice() + $modTotal, $this->_data['tax_class_id']) . '</s> <span class="product-special-price">' . $lC_Currencies->displayPrice($price, $this->_data['tax_class_id']) . '</span>';
     } else {
-      $formatted = $lC_Currencies->displayPrice($priceWithTax, $this->getTaxClassID());
+      $formatted = $lC_Currencies->displayPrice($price, $this->getTaxClassID());
     }
     
     // #### DISCOUNTS #### //
