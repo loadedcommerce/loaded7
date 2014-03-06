@@ -33,10 +33,6 @@ class lC_OrderTotal_tax extends lC_OrderTotal {
     
     foreach ($lC_ShoppingCart->getTaxGroups() as $key => $value) { 
       if ($value > 0) {
-        if (DISPLAY_PRICE_WITH_TAX == '1') {
-          $lC_ShoppingCart->addToTotal($value);
-        }
-
         $this->output[] = array('title' => $key . ':',
                                 'text' => $lC_Currencies->format($value),
                                 'value' => $value);
