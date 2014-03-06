@@ -16,7 +16,7 @@ class lC_Boxes_best_sellers extends lC_Modules {
 
   public function lC_Boxes_best_sellers() {
     global $lC_Language;
-
+      
     if (function_exists($lC_Language->injectDefinitions)) $lC_Language->injectDefinitions('modules/' . $_GET['set'] . '/' . $this->_code . '.xml');
 
     $this->_title = $lC_Language->get('box_best_sellers_heading');
@@ -24,9 +24,8 @@ class lC_Boxes_best_sellers extends lC_Modules {
 
   public function initialize() {
     global $lC_Database, $lC_Language, $current_category_id;
-return;    
 
-    if (isset($current_category_id) && ($current_category_id > 0)) {
+    if (isset($current_category_id) && ($current_category_id > 0)) {   
       $Qbestsellers = $lC_Database->query('select distinct p.products_id, pd.products_name, pd.products_keyword from :table_products p, :table_products_description pd, :table_products_to_categories p2c, :table_categories c where p.products_status = 1 and p.products_ordered > 0 and p.products_id = pd.products_id and pd.language_id = :language_id and p.products_id = p2c.products_id and p2c.categories_id = c.categories_id and :current_category_id in (c.categories_id, c.parent_id) order by p.products_ordered desc, pd.products_name limit :max_display_bestsellers');
       $Qbestsellers->bindTable(':table_products', TABLE_PRODUCTS);
       $Qbestsellers->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
@@ -41,7 +40,7 @@ return;
       }
 
       $Qbestsellers->execute();
-    } else {
+    } else {              
       $Qbestsellers = $lC_Database->query('select p.products_id, pd.products_name, pd.products_keyword from :table_products p, :table_products_description pd where p.products_status = 1 and p.products_ordered > 0 and p.products_id = pd.products_id and pd.language_id = :language_id order by p.products_ordered desc, pd.products_name limit :max_display_bestsellers');
       $Qbestsellers->bindTable(':table_products', TABLE_PRODUCTS);
       $Qbestsellers->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
@@ -52,9 +51,9 @@ return;
         $Qbestsellers->setCache('box_best_sellers-0-' . $lC_Language->getCode(), BOX_BEST_SELLERS_CACHE);
       }
 
-      $Qbestsellers->execute();
+      $Qbestsellers->execute(); 
     }
-
+                                                           
     if ($Qbestsellers->numberOfRows() >= BOX_BEST_SELLERS_MIN_LIST) {
 
       $this->_content = '';
