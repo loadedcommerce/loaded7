@@ -412,7 +412,7 @@ class lC_ShoppingCart {
                                            'price' => $price,
                                            'quantity' => $quantity,
                                            'weight' => $Qproduct->value('products_weight'),
-                                           'tax_class_id' => $tax_class_id,
+                                           'tax_class_id' => $Qproduct->valueInt('products_tax_class_id'),
                                            'date_added' => lC_DateTime::getShort(lC_DateTime::getNow()),
                                            'weight_class_id' => $Qproduct->valueInt('products_weight_class'));                                           
 
@@ -567,7 +567,6 @@ class lC_ShoppingCart {
       $Qupdate->execute();
     }
     
-    if ($quantity == 1) {
       // get default tax_class_id
       $Qproduct = $lC_Database->query('select products_tax_class_id as tax_class_id from :table_products where products_id = :products_id and products_status = :products_status');
       $Qproduct->bindTable(':table_products', TABLE_PRODUCTS);
@@ -578,7 +577,6 @@ class lC_ShoppingCart {
       if ( $Qproduct->numberOfRows() === 1 ) {
         $this->_contents[$item_id]['tax_class_id'] = $Qproduct->valueInt('tax_class_id');
       }
-    }
     
     $simple_options = array();
     if (isset($this->_contents[$item_id]['simple_options'])) {
@@ -1095,10 +1093,11 @@ class lC_ShoppingCart {
 
       if ( !class_exists('lC_OrderTotal') ) {
         include($lC_Vqmod->modCheck('includes/classes/order_total.php'));
-      }
+      }    
 
       $lC_OrderTotal = new lC_OrderTotal();
       $this->_order_totals = $lC_OrderTotal->getResult();
+      
        // coupons
       if (defined('MODULE_SERVICES_INSTALLED') && in_array('coupons', explode(';', MODULE_SERVICES_INSTALLED)) && isset($lC_Coupons)) {
         $lC_Coupons->displayCouponInOrderTotal();

@@ -281,7 +281,7 @@ class lC_Product {
   
   //######## PRICING - ALL PRICING TO COME FROM HERE #########//
   public function getPriceInfo($product_id, $customers_group_id = 1, $data) {
-    global $lC_Specials, $lC_Database, $lC_Language, $lC_Customer, $lC_Services, $lC_Currencies;
+    global $lC_Specials, $lC_Database, $lC_Language, $lC_Customer, $lC_Services, $lC_Currencies, $lC_ShoppingCart, $lC_Tax;
 
     $quantity = (isset($data['quantity']) && $data['quantity'] != null) ? (int)$data['quantity'] : 1;
 
@@ -377,6 +377,18 @@ class lC_Product {
     
     $price = $price + $modTotal;
     
+    $tax = 0;
+    $taxRate = 0;
+    $priceWithTax = $price;
+    if(DISPLAY_PRICE_WITH_TAX == 1) {
+      $taxClassID = ($lC_ShoppingCart->getShippingMethod('tax_class_id') != NULL) ? $lC_ShoppingCart->getShippingMethod('tax_class_id') : $this->_data['tax_class_id']; 
+      $countryID = ($lC_ShoppingCart->getShippingAddress('country_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('country_id') : STORE_COUNTRY;
+      $zoneID = ($lC_ShoppingCart->getShippingAddress('zone_id') != NULL) ? $lC_ShoppingCart->getShippingAddress('zone_id') : STORE_ZONE;
+      $taxRate = $lC_Tax->getTaxRate($taxClassID, $countryID, $zoneID);
+      $tax = $lC_Tax->calculate($price, $taxRate);
+      $priceWithTax = lc_round($price + $tax, DECIMAL_PLACES);
+    }     
+    
     if ($lC_Services->isStarted('specials') && $lC_Specials->isActive($product_id)) {
       $formatted = '<s>' . $lC_Currencies->displayPrice($this->getBasePrice() + $modTotal, $this->_data['tax_class_id']) . '</s> <span class="product-special-price">' . $lC_Currencies->displayPrice($price, $this->_data['tax_class_id']) . '</span>';
     } else {
@@ -392,9 +404,11 @@ class lC_Product {
       $baseline_discount = $lC_Customer->getBaselineDiscount($customers_group_id);
       $price = round((float)$base_price * ((float)$baseline_discount * .01), DECIMAL_PLACES); 
     }
-   */ 
+   */   
+   
     $return = array('base' => number_format($this->getBasePrice(), DECIMAL_PLACES),
                     'price' => number_format($price, DECIMAL_PLACES),
+                    'tax' => number_format($tax, DECIMAL_PLACES),
                     'formatted' => $formatted,
                     'modTotal' => $modTotal,
                     'qpbData' => $qpbData

@@ -188,7 +188,7 @@ $(document).ready(function() {
   } else {
     $('#content-shopping-cart-order-totals-left').attr('class', 'col-sm-8 col-lg-8');  
     $('#content-shopping-cart-order-totals-right').attr('class', 'col-sm-4 col-lg-4');  
-  }
+  }   
 });
 
 function setQty(row, mode) {
@@ -210,18 +210,18 @@ function _update(row, qty) {
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'checkout&action=update&item=ITEM&quantity=QTY', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('ITEM', row).replace('QTY', qty).split('amp;').join(''),
     function (data) {
-
+        
       if (data.redirect == '1') {
         window.location = location.href;
       }
       
       if (data.priceData.price != undefined && data.priceData.price > 0) {
-        newPrice = parseFloat(data.priceData.price).toFixed(decimals);
+        newPrice = (parseFloat(data.priceData.price) + parseFloat(data.priceData.tax)).toFixed(decimals);
       } else {        
         newPrice = dPrice.toFixed(decimals);
       }
       newTotal = (newPrice * qty).toFixed(decimals);
-        
+                    
       $('#products_' + row).val(qty);
       $('#display-price-' + row).text(currencySymbolLeft + newPrice.toString());      
       $('#total-price-' + row).html(currencySymbolLeft + newTotal.toString());      
