@@ -64,7 +64,7 @@
                   echo '</div>' . "\n";
                 ?>
               </td>
-              <td class="text-right hide-on-mobile-portrait content-shopping-cart-price-td"><span id="display-price-<?php echo $products['item_id']; ?>"><?php echo $lC_Currencies->displayPrice($products['price'], 0); ?></span></td>             
+              <td class="text-right hide-on-mobile-portrait content-shopping-cart-price-td"><span id="display-price-<?php echo $products['item_id']; ?>"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id']); ?></span></td>             
               <td class="text-right content-shopping-cart-qty-input-td">
                 <div class="form-group relative no-margin-bottom">
                   <i class="fa fa-plus-square-o fa-lg" style="position:absolute; right:9px; top:3px; opacity:.3; cursor:pointer;" onclick="setQty('<?php echo $products['item_id']; ?>', 'up');"></i>
@@ -72,7 +72,7 @@
                   <i class="fa fa-minus-square-o fa-lg" style="position:absolute; right:9px; top:20px; opacity:.3; cursor:pointer;" onclick="setQty('<?php echo $products['item_id']; ?>', 'dn');"></i>
                 </div>              
               </td>
-              <td class="text-right"><span class="price" id="total-price-<?php echo $products['item_id']; ?>"><?php echo $lC_Currencies->displayPrice($products['price'], 0, $products['quantity']); ?></span></td>
+              <td class="text-right"><span class="price" id="total-price-<?php echo $products['item_id']; ?>"><?php echo $lC_Currencies->displayPrice($products['price'], $products['tax_class_id'], $products['quantity']); ?></span></td>
               <td class="text-center content-shopping-cart-remove-td"><a href="javascript:void(0);" onclick="deleteItem('<?php echo $products['item_id']; ?>');"><?php echo lc_icon('cart_remove.png'); ?></a></td>
             </tr>
             <?php 
