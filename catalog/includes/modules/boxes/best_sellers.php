@@ -24,6 +24,7 @@ class lC_Boxes_best_sellers extends lC_Modules {
 
   public function initialize() {
     global $lC_Database, $lC_Language, $current_category_id;
+return;    
 
     if (isset($current_category_id) && ($current_category_id > 0)) {
       $Qbestsellers = $lC_Database->query('select distinct p.products_id, pd.products_name, pd.products_keyword from :table_products p, :table_products_description pd, :table_products_to_categories p2c, :table_categories c where p.products_status = 1 and p.products_ordered > 0 and p.products_id = pd.products_id and pd.language_id = :language_id and p.products_id = p2c.products_id and p2c.categories_id = c.categories_id and :current_category_id in (c.categories_id, c.parent_id) order by p.products_ordered desc, pd.products_name limit :max_display_bestsellers');

@@ -12,8 +12,9 @@
 <!--modules/boxes/best_sellers.php start-->
 <div class="well" >
   <ul class="box-best-sellers list-unstyled list-indent-large">
-    <li class="box-header small-margin-bottom"><?php echo $lC_Box->getTitle(); ?></li>
-    <?php echo $lC_Box->getContent(); ?>
+  
+    <li class="box-header small-margin-bottom">TEST<?php //echo $lC_Box->getTitle(); ?></li>
+    <?php //echo $lC_Box->getContent(); ?>
   </ul>
 </div>
 <!--modules/boxes/best_sellers.php end-->
