@@ -63,11 +63,11 @@ if ($Qlisting->numberOfRows() > 0) {
           break;
 
         case 'PRODUCT_LIST_QUANTITY':
-          $output .= '<div class="product-listing-module-quantity"' . $lC_Product->getQuantity() . '</div>' . "\n";
+          $output .= '<div class="product-listing-module-quantity">' . $lC_Product->getQuantity() . '</div>' . "\n";
           break;
 
         case 'PRODUCT_LIST_WEIGHT':
-          $output .= '<div class="product-listing-module-weight"' . $lC_Product->getWeight() . '</div>' . "\n";
+          $output .= '<div class="product-listing-module-weight">' . $lC_Product->getWeight() . '</div>' . "\n";
           break; 
 
         case 'PRODUCT_LIST_IMAGE':
