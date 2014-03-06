@@ -604,40 +604,29 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             'products_name_<?php echo $l['id']; ?>': {
               required: true,
             },
-            'products_description[<?php echo $l['id']; ?>]': {
-              required: true,
-            },
             'products_keyword[<?php echo $l['id']; ?>]': {
               required: true,
             },
             <?php
           }
           ?>
-          /*"categories[]": { 
-            required: true, 
-            minlength: 1
-          }*/
         },
         
         messages: {
           <?php
           foreach ( $lC_Language->getAll() as $l ) {
             ?>
-            //"products_name[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_name_required'); ?>",
-            "products_description[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_products_description_required'); ?>",
-            //"products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_required'); ?>",
+            "products_name[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_name_required'); ?>",
+            "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_required'); ?>",
             <?php
           }
           ?>
-          //"categories[]": "<span class='bold'><?php echo $lC_Language->get('ms_error_products_categories_required'); ?></span>",
         }, 
       }).form();
       $("#languageTabs").refreshTabs();
       if (bValid) {
         $(e).submit();
-      } //else {
-        //$("#tabHeaderSectionContent a").css("background-color", "#FFE3E2").css("border-left", "1px solid #D84646").css("border-top", "1px solid #D84646").css("border-bottom", "1px solid #D84646");
-      //}
+      }
 
       return false;
     }    
