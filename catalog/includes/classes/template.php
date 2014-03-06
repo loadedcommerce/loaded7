@@ -668,7 +668,7 @@ class lC_Template {
   */  
   public function getQRCode() {
     global $lC_Customer, $lC_Session, $lC_Language;
-    
+    $result['html'] = '';
     $BarcodeQR = new BarcodeQR();
     $qrcode_url = (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . $_SERVER['REQUEST_URI'];
 
@@ -677,26 +677,20 @@ class lC_Template {
     } else {
       $qrcode_url_add = (stristr($qrcode_url, "?") ? '&' : '?') . $lC_Session->getName() . '=' . $lC_Session->getID();
     } 
-    
-    $output = '<a id="qrcode-tooltip">' .
-              '  <span style="cursor:pointer;">' .
-              '    <img src="images/icons/qr-icon.png" alt="' . $lC_Language->get('text_click_and_scan')  . '" style="vertical-align:middle; padding-right:6px;" /><span class="small-margin-left">' . $lC_Language->get('text_click_and_scan') . '</span>' .
-              '  </span>' .
-              '</a>' . 
-              '<div id="qr-message">' . 
+    $result['html'] .= '<div id="qr-message">' . 
               '<a class="close-qr" title="Hide message" onclick="$(\'#qr-message\').hide(\'500\');"><span style="color:#fff;">X</span></a>';
     
     $BarcodeQR->url($qrcode_url . $qrcode_url_add);
     if ($lC_Customer->isLoggedOn() === true) {
       $BarcodeQR->draw(230, DIR_FS_WORK . 'qrcode/c' .  $lC_Customer->id . '.png');
-      $output .= '<img alt="' . $lC_Language->get('text_click_and_scan') . '" src="includes/work/qrcode/c' . $lC_Customer->id . '.png" />';      
+      $result['html'] .= '<img alt="' . $lC_Language->get('text_click_and_scan') . '" src="includes/work/qrcode/c' . $lC_Customer->id . '.png" />';      
     } else {
       $BarcodeQR->draw(230, DIR_FS_WORK . 'qrcode/g' .  $lC_Session->getID() . '.png');
-      $output .= '<img alt="' . $lC_Language->get('text_click_and_scan') . '" src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" />';
+      $result['html'] .= '<img alt="' . $lC_Language->get('text_click_and_scan') . '" src="includes/work/qrcode/g' . $lC_Session->getID() . '.png" />';
     }   
-    $output .= '</div><script>$("#qrcode-tooltip").click(function() { $("#qr-message").show("500"); });</script>';
+    $result['html'] .= '</div><script>$("#qrcode-tooltip").click(function() { $("#qr-message").show("500"); });</script>';
     
-    return $output;
+    return $result['html'];
   }
  /*
   * Return the language selection 

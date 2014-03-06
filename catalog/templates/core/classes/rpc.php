@@ -25,5 +25,13 @@ class lC_Core_rpc {
     
     echo json_encode($result);
   }
+  public static function getqrcode() {
+    $result = array();
+    if ($result['html'] = lC_Template::getQRCode()) {
+      $result['rpcStatus'] = RPC_STATUS_SUCCESS;
+    }
+
+    echo json_encode($result);
+  }
 }
 ?>

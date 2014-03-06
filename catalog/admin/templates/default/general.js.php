@@ -921,4 +921,17 @@ $("#li-settings").click(function() {
     include('templates/' . $_SESSION['template']['code'] . '/modal/' . $file['name']);
   }
 ?>
+//QR Code JSON
+$("#qrcode-tooltip").click(function(){
+var jsonLink = '<?php echo lc_href_link_admin('rpc.php','qrcode&action=getqrcode'); ?>'
+  $.getJSON(jsonLink,
+    function (data) {
+      if (data.rpcStatus != 1) {
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      } 
+      $('#ShowQRCode').html(data.html);
+    }
+  );
+})
 </script>

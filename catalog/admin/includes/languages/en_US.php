@@ -195,6 +195,9 @@ profile_password_confirm = Confirm Password
 profile_image = Profile Image:
 profile_new_image = New Image
 
+qrcode = QR Code
+qrcode_current_url = Current URL
+
 quick_add_order = Order
 quick_add_customer = Customer
 quick_add_category = Category
