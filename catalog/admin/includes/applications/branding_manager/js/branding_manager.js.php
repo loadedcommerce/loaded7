@@ -68,8 +68,8 @@ $(document).ready(function() {
 
 function validateForm() {
    var url = '<?php echo lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=save'); ?>'; 
-   $("#branding_manager").attr("action", url);
-   $("#branding_manager").submit();
+   jQuery("#branding_manager").attr("action", url);
+   jQuery("#branding_manager").submit();
 } 
 
 
