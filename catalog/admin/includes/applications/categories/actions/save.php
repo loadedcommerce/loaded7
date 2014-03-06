@@ -18,7 +18,11 @@ class lC_Application_Categories_Actions_save extends lC_Application_Categories {
 
     if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
       switch ( $_GET['action'] ) {
-        case 'save':  
+        case 'save':
+          /*echo '<pre>';
+          print_r($_POST);
+          echo '</pre>';
+          die('POST');*/  
           $data = array('image' => (isset($_POST['categories_image']) ? $_POST['categories_image'] : null),
                         'parent_id' => $_POST['parent_id'],
                         'sort_order' => $_POST['sort_order'],
@@ -34,6 +38,10 @@ class lC_Application_Categories_Actions_save extends lC_Application_Categories {
                         'description' =>  $_POST['categories_description'],
                         'permalink' =>  $_POST['categories_permalink'],
                         'tags' =>  $_POST['categories_tags']);
+          /*echo '<pre>';
+          print_r($data);
+          echo '</pre>';
+          die('DATA');*/
          /*
           * Save the category information
           *
