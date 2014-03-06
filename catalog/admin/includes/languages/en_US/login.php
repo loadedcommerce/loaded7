@@ -76,7 +76,8 @@ text_lost_password_no_user = We could not find any admin user with that email. P
 text_password_no_match = Passwords do not match. Please try again.
 text_password_requirements = Your password does not meet the minimum requirements. Please try again.
 text_manual_password_instructions = If you have a verification key already and wish to proceed manually with the verification process to change your password click the button below.
-
+text_get_support = Get Support
+text_get_more_loaded = Get More Loaded
 text_lost_password_verification_subject = Forgotten Password Request for %s.
 text_lost_password_verification_body_line_1 = Dear %s,
 text_lost_password_verification_body_line_2 = Someone has requested a password reset for your email address, %s. If you requested this, than follow the link below to complete the password reset action. 

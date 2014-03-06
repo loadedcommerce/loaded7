@@ -30,5 +30,8 @@
       </div>
     </div>
   </div>
-  <p class="anthracite" align="center" style="line-height:1.5;">Copyright &copy; <?php echo @date("Y"); ?> <a class="anthracite" href="http://www.loaded7.com">Loaded Commerce</a><br /><?php echo $lC_Language->get('text_version') . ' ' . utility::getVersion(); ?></p>
+  <div id="copyright-msg">
+    <p class="anthracite" align="center" style="line-height:1.5;">Copyright &copy; <?php echo @date("Y"); ?> <a class="anthracite" href="http://www.loaded7.com">Loaded Commerce</a><br /><?php echo $lC_Language->get('text_core') . ' ' . $lC_Language->get('text_version') . ' ' . utility::getVersion(); if (utility::isPro() === true) { echo '<small class="tag red-gradient mid-margin-left mid-margin-right">PRO</small>' . $lC_Language->get('text_version') . ' ' . utility::getProVersion(); } ?></p>
+    <p class="anthracite" align="center"><a class="anthracite" href="http://loadedcommerce.com/support" target="_blank"><?php echo $lC_Language->get('text_get_support'); ?></a> - <a class="anthracite" href="http://loadedcommerce.com" target="_blank"><?php echo $lC_Language->get('text_get_more_loaded'); ?></a></p>
+  </div>
 </div>

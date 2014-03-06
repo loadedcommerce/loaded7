@@ -272,6 +272,7 @@ text_move = Move
 text_version_info = Version Info
 text_error = Error
 text_all = All
+text_core = Core
 text_version = Version
 text_confirm_delete = Confirm Delete?
 text_sort = Sort
