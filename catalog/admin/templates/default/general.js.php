@@ -395,10 +395,6 @@ $(document).ready(function() {
   $("#profileLoader").hide();
   $("#profileInner").fadeTo(1000, 1);
   
-  $("#qrcode-tooltip").click(function() {
-    $("#qr-message").show("500");
-  });
-  
   if ($(window).width() < 1380) {
     $("#category_tabs").removeClass("side-tabs");
     $("#category_tabs").addClass("standard-tabs");
@@ -931,6 +927,7 @@ var jsonLink = '<?php echo lc_href_link_admin('rpc.php','qrcode&action=getqrcode
         return false;
       } 
       $('#ShowQRCode').html(data.html);
+      $("#qr-message").show("500");
     }
   );
 })
