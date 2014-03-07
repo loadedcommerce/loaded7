@@ -14,5 +14,7 @@ table_heading_action = Action
 
 cache_location = Cache Directory:
 
+text_cache_cleared_successfully = Cache Cleared Successfully!
+
 ms_error_cache_directory_non_existant = Error: The cache directory does not exist: %s
 ms_error_cache_directory_not_writable = Error: The cache directory is not writable: %s

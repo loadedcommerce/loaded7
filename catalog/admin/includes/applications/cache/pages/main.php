@@ -24,6 +24,11 @@
   .dataTables_info { position:absolute; bottom: 42px; color:#4c4c4c; }
   .selectContainer { position:absolute; bottom:29px; left:30px }
   </style>
+  <?php
+    if (isset($_GET['action']) && $_GET['action'] == 'clear') {
+      echo '<p id="clear-message" class="message icon-tick green-gradient large-margin-left large-margin-right">' . $lC_Language->get('text_cache_cleared_successfully') . '</p>';
+    }
+  ?>
   <div class="with-padding-no-top">
     <form name="batch" id="batch" action="#" method="post">
     <table border="0" width="100%" cellspacing="0" cellpadding="0" class="table responsive-table" id="dataTable">
@@ -52,11 +57,22 @@
     </div>
     </form>
     <div class="clear-both"></div>
+    <div class="six-columns twelve-columns-tablet">
+      <div id="buttons-menu-div-listing">
+        <div id="buttons-container" style="position: relative;" class="clear-both">
+          <div style="float:right;">
+            <p class="button-height upsellwrapper" align="right">
+              <a class="button<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? ' disabled' : NULL); ?>" href="<?php echo (((int)$_SESSION['admin']['access'][$lC_Template->getModule()] < 2) ? '#' : lc_href_link_admin(FILENAME_DEFAULT, $lC_Template->getModule() . '&action=clear')); ?>">
+                <span class="button-icon red-gradient">
+                  <span class="icon-cup"></span>
+                </span><?php echo $lC_Language->get('button_clear_all'); ?>
+              </a>&nbsp;
+            </p>
+          </div>
+        </div>
+      </div>    
+    </div>
   </div>
 </section>
-<?php 
-  if (isset($_SESSION['error'])) unset($_SESSION['error']);
-  if (isset($_SESSION['errmsg'])) unset($_SESSION['errmsg']); 
-  $lC_Template->loadModal($lC_Template->getModule()); 
-?>
+<?php $lC_Template->loadModal($lC_Template->getModule()); ?>
 <!-- End main content -->

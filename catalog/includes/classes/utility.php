@@ -467,6 +467,22 @@ class utility {
     return false;
   }
  /**
+  * Get the Pro version
+  *
+  * @access public
+  * @return boolean
+  */
+  public static function getProVersion() {
+    global $lC_Addons;
+
+    if (!isset($lC_Addons)) $lC_Addons = new lC_Addons;
+    
+    $aoArr = $lC_Addons->getAddons('enabled');
+
+    return $aoArr['Loaded_7_Pro']['version'];
+  }  
+  
+ /**
   * Detect browser type
   *  
   * @access public      
