@@ -25,7 +25,7 @@ class Paypal_Express_Checkout extends lC_Addon { // your addon must extend lC_Ad
    /**
     * The addon class name
     */    
-    $this->_code = 'Paypal_Express_Checkout';        
+    $this->_code = 'PayPal_Express_Checkout';        
    /**
     * The addon title used in the addons store listing
     */     
