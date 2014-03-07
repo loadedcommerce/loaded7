@@ -17,6 +17,7 @@ button_back = Back
 button_back_to_list = Back to List
 button_backup = Backup
 button_cancel = Cancel
+button_clear_all = Clear All
 button_close = Close
 button_continue = Continue
 button_copy = Copy

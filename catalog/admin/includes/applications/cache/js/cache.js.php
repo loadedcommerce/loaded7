@@ -35,7 +35,9 @@ global $lC_Template, $lC_Language;
       $('#actionText').hide();
       $('.on-mobile').show();
       $('.selectContainer').hide();
-    }    
+    }   
+    
+    $('#clear-message').delay(2000).fadeOut('slow'); 
   });
   
   function deleteEntry(id) {
