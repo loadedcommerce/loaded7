@@ -57,7 +57,7 @@ class Payflow_Express_Checkout extends lC_Addon { // your addon must extend lC_A
    /**
     * The base64 encoded addon image used in the addons store listing
     */     
-    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/payflow_EC.png', $this->_title);
+    $this->_thumbnail = lc_image(DIR_WS_CATALOG . 'addons/' . $this->_code . '/images/payflow_EC.jpg', $this->_title);
    /**
     * The mobile capability of the addon
     */ 
