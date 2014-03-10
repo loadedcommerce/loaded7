@@ -10,9 +10,9 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/manufacturers/classes/manufacturers.php'));
-require($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
-require($lC_Vqmod->modCheck('includes/classes/image.php'));
+include_once($lC_Vqmod->modCheck('includes/applications/manufacturers/classes/manufacturers.php'));
+include_once($lC_Vqmod->modCheck('includes/applications/products/classes/products.php'));
+include_once($lC_Vqmod->modCheck('includes/classes/image.php'));
 
 class lC_Application_Manufacturers extends lC_Template_Admin {
 
