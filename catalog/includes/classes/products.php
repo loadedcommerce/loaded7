@@ -79,7 +79,7 @@ class lC_Products {
   function &execute($max_entries = MAX_DISPLAY_SEARCH_RESULTS) {
     global $lC_Database, $lC_Language, $lC_CategoryTree, $lC_Image;
     
-    $sqlQuery = 'select p.products_id from :table_products p left join :table_product_attributes pa on (p.products_id = pa.products_id) left join :table_templates_boxes tb on (pa.id = tb.id and tb.code = "manufacturers"), :table_products_description pd';
+    $sqlQuery = 'select SQL_CALC_FOUND_ROWS distinct p.products_id from :table_products p left join :table_product_attributes pa on (p.products_id = pa.products_id) left join :table_templates_boxes tb on (pa.id = tb.id and tb.code = "manufacturers"), :table_products_description pd';
 
     if ($this->hasCategory()) {
       $sqlQuery .= ' , :table_categories c, :table_products_to_categories p2c';
