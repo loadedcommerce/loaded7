@@ -47,7 +47,7 @@ class lC_Boxes_information_pages extends lC_Modules {
 
     parent::install();
 
-    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Top Information Category', 'BOX_INFORMATION_PAGES_ROOT_CATEGORY', '0', 'Select the Top Category of the Information Pages Infobox', '6', '0', 'lc_cfg_set_info_pages_top_category(BOX_INFORMATION_PAGES_ROOT_CATEGORY)', 'lc_cfg_set_info_pages_top_category', now())");
+    $lC_Database->simpleQuery("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, last_modified, date_added, use_function, set_function) values ('Top Information Category', 'BOX_INFORMATION_PAGES_ROOT_CATEGORY', 2, 'Select the Top Category of the Information Pages Infobox', 6, 0, now(), now(), 'lc_cfg_set_info_pages_top_category(BOX_INFORMATION_PAGES_ROOT_CATEGORY)', 'lc_cfg_set_info_pages_top_category')");
   }
 
   function getKeys() {
