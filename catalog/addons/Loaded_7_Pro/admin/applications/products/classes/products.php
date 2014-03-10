@@ -275,8 +275,6 @@ die('44');
     
     return $content;
   }
-  
-  
  /*
   * Determine if the product has subproducts
   *
@@ -303,10 +301,10 @@ die('44');
   * Return the combo options pricing content
   *
   * @param array $data The product data object
-  * @access private
+  * @access public
   * @return string
   */  
-  private static function _getComboOptionsPricingTbody($pInfo, $customers_group_id) {
+  public static function getComboOptionsPricingTbody($pInfo, $customers_group_id) {
     global $lC_Currencies;
     
     if ($customers_group_id == '') return false;  
@@ -316,11 +314,13 @@ die('44');
     $cnt = 0; 
     if (isset($pInfo) && $pInfo->get('has_children') == '1') {
       
-      foreach ($pInfo->get('variants') as $product_id => $val) {
+      foreach ($pInfo->get('variants') as $product_id => $val) {       
         $title = '';
         if (is_array($val['values'])) {
           foreach ($val['values'] as $group_id => $value_id) {
-            $title .= $value_id['value_title'] . ', ';
+            foreach ($value_id as $value) {
+              $title .= $value['value_title'] . ', ';
+            }
           }
         }
         if (strstr($title, ',')) $title = substr($title, 0, -2);
@@ -331,7 +331,7 @@ die('44');
                     '  <td>' .
                     '    <div class="inputs' . (($customers_group_id == '1' || $ok) ? '' : ' disabled') . '" style="display:inline; padding:8px 0;">' .
                     '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $val['data']['price'] . '" id="combo_options_price_' . $customers_group_id . '_' . $cnt . '" name="combo_options_price[' . $customers_group_id . '][' . $cnt . ']" ' . (($customers_group_id == '1' || $ok) ? '' : ' DISABLED') . '>' .
+                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $val['data']['price'] . '" id="variants_' . $product_id . '_price_' . $customers_group_id . '" name="variants[' . $product_id . '][price][' . $customers_group_id . ']" ' . (($customers_group_id == '1' || $ok) ? '' : ' DISABLED') . '>' .
                     '    </div>' .
                     '  </td>' .
                     '</tr>';
@@ -409,10 +409,10 @@ die('44');
   * Return the sub products pricing content
   *
   * @param array $data The product data object
-  * @access private
+  * @access public
   * @return string
   */  
-  private static function _getSubProductsPricingTbody($pInfo, $customers_group_id) {
+  public static function getSubProductsPricingTbody($pInfo, $customers_group_id) {
     global $lC_Currencies;
     
     if ($customers_group_id == '') return false;  

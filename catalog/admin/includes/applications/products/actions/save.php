@@ -25,23 +25,25 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
     if ( isset($_POST['subaction']) && ($_POST['subaction'] == 'confirm') ) {
       
       $error = false;
+      $has_variants = ((isset($_POST['variants']))) ? true : false;
 
-      $data = array('id' => (isset($_POST['products_id']) && $has_variants === false) ? $_POST['products_id'] : 0,
+      $data = array('id' => (isset($_POST['products_id'])) ? $_POST['products_id'] : 0,
                     'quantity' => (isset($_POST['products_quantity']) && $has_variants === false) ? $_POST['products_quantity'] : 0,
                     'cost' => (is_numeric($_POST['products_cost']) && $has_variants === false) ? $_POST['products_cost'] : 0,
                     'price' => (is_numeric($_POST['products_price']) && $has_variants === false) ? $_POST['products_price'] : 0,
                     'msrp' => (is_numeric($_POST['products_msrp']) && $has_variants === false) ? $_POST['products_msrp'] : 0,
                     'weight' => (isset($_POST['products_weight']) && $has_variants === false) ? $_POST['products_weight'] : 0,
-                    'weight_class' => (isset($_POST['products_weight_class']) && $has_variants === false) ? $_POST['products_weight_class'] : '',
+                    'weight_class' => (isset($_POST['products_weight_class'])) ? $_POST['products_weight_class'] : '',
                     'status' => (isset($_POST['products_status']) && $_POST['products_status'] == 'on' && $has_variants === false) ? true : false,
                     'model' => (isset($_POST['products_model']) && $has_variants === false) ? $_POST['products_model'] : '',
                     'sku' => (isset($_POST['products_sku']) && $has_variants === false) ? $_POST['products_sku'] : '',
-                    'tax_class_id' => (isset($_POST['products_tax_class_id']) && $has_variants === false) ? $_POST['products_tax_class_id'] : 0,
+                    'tax_class_id' => (isset($_POST['products_tax_class_id'])) ? $_POST['products_tax_class_id'] : 0,
                     'products_name' => $_POST['products_name'],
                     'products_description' => $_POST['products_description'],
                     'products_keyword' => $_POST['products_keyword'],
                     'products_tags' => $_POST['products_tags'],
-                    'products_url' => $_POST['products_url']);
+                    'products_url' => $_POST['products_url'],
+                    'has_children' => $has_variants);
 
       if ( isset($_POST['attributes']) ) $data['attributes'] = $_POST['attributes'];
       if ( isset($_POST['categories']) ) $data['categories'] = $_POST['categories'];
@@ -65,7 +67,7 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       }
 
       // multi SKU sub-products
-      if (isset($_POST['sub_products_name']) && $_POST['sub_products_name'] != NULL) {
+      if (is_array($_POST['sub_products_name']) && $_POST['sub_products_name'][0] != NULL) {
         $data['has_subproducts'] = '1';
         $data['sub_products_name'] = $_POST['sub_products_name'];
         if (isset($_POST['sub_products_default']) && $_POST['sub_products_default'] != NULL) $data['sub_products_default'] = $_POST['sub_products_default'];
@@ -79,25 +81,11 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
       }      
       
       // qpb
-      if (isset($_POST['products_qty_break_point']) && $_POST['products_qty_break_point'] != NULL) $data['products_qty_break_point'] = $_POST['products_qty_break_point'];
-      if (isset($_POST['products_qty_break_price']) && $_POST['products_qty_break_price'] != NULL) $data['products_qty_break_price'] = $_POST['products_qty_break_price'];
+      if (is_array($_POST['products_qty_break_point'][1]) && $_POST['products_qty_break_point'][1][1] != NULL) $data['products_qty_break_point'] = $_POST['products_qty_break_point'];
+      if (is_array($_POST['products_qty_break_price'][1]) && $_POST['products_qty_break_price'][1][1] != NULL) $data['products_qty_break_price'] = $_POST['products_qty_break_price'];
       
       // multi SKU options
-      if (isset($_POST['variants_quantity']) && $_POST['variants_quantity'] > 0) {      
-        if ( isset($_POST['variants_status']) && $_POST['variants_status'] != NULL ) $data['variants']['status'] = $_POST['variants_status'];
-        if ( isset($_POST['variants_cost']) && $_POST['variants_cost'] != NULL ) $data['variants']['cost'] = $_POST['variants_cost'];
-        if ( isset($_POST['variants_price']) && $_POST['variants_price'] != NULL ) $data['variants']['price'] = $_POST['variants_price'];
-        if ( isset($_POST['variants_msrp']) && $_POST['variants_msrp'] != NULL ) $data['variants']['msrp'] = $_POST['variants_msrp'];
-        if ( isset($_POST['variants_model']) && $_POST['variants_model'] != NULL ) $data['variants']['model'] = $_POST['variants_model'];
-        if ( isset($_POST['variants_sku']) && $_POST['variants_sku'] != NULL ) $data['variants']['sku'] = $_POST['variants_sku'];
-        if ( isset($_POST['variants_tax_class_id']) && $_POST['variants_tax_class_id'] != NULL ) $data['variants']['tax_class_id'] = $_POST['variants_tax_class_id'];
-        if ( isset($_POST['variants_quantity']) && $_POST['variants_quantity'] != NULL ) $data['variants']['quantity'] = $_POST['variants_quantity'];
-        if ( isset($_POST['variants_combo']) && $_POST['variants_combo'] != NULL ) $data['variants']['combo'] = $_POST['variants_combo'];
-        if ( isset($_POST['variants_combo_db']) && $_POST['variants_combo_db'] != NULL ) $data['variants']['combo_db'] = $_POST['variants_combo_db'];
-        if ( isset($_POST['variants_weight']) && $_POST['variants_weight'] != NULL ) $data['variants']['weight'] = $_POST['variants_weight'];
-        if ( isset($_POST['variants_weight_class']) && $_POST['variants_weight_class'] != NULL ) $data['variants']['weight_class'] = $_POST['variants_weight_class'];
-        if ( isset($_POST['variants_default_combo']) && $_POST['variants_default_combo'] != NULL ) $data['variants']['default_combo'] = $_POST['variants_default_combo'];      
-      }
+      if (isset($_POST['variants'])) $data['variants'] = $_POST['variants'];
 
       if ( $error === false ) {
         // the line below is used as a hook match point - do not not modify or remove
