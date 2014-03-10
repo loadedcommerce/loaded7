@@ -2,6 +2,7 @@
 #  @author     Loaded Commerce
 #  @copyright  Copyright 2003-2014 Loaded Commerce, LLC
 #  @copyright  Portions Copyright 2003 osCommerce
+#  @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
 #  @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
 #  @version    $Id: loadedcommerce_innodb.sql v1.0 2013-08-08 datazen $
 
@@ -6233,6 +6234,7 @@ INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, module
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(28, 'Upcoming Products', 'upcoming_products', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(29, 'Featured Products', 'featured_products', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
 INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(30, 'Top Categories on Mainpage', 'mainpage_categories', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'content');
+INSERT INTO lc_templates_boxes (id, title, code, author_name, author_www, modules_group) VALUES(31, 'Information Pages', 'information_pages', 'Loaded Commerce', 'http://www.loadedcommerce.com', 'boxes');
 
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(23, 1, 'index/index', 'header', 10, 1);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(27, 1, 'index/index', 'after', 20, 1);
@@ -6242,6 +6244,7 @@ INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, conte
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(25, 1, 'products/info', 'after', 40, 1);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(26, 1, 'products/info', 'after', 30, 1);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(6, 1, '*', 'left', 10, 0);
+INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(31, 1, '*', 'left', 5, 0);
 INSERT INTO lc_templates_boxes_to_pages (templates_boxes_id, templates_id, content_page, boxes_group, sort_order, page_specific) VALUES(12, 1, '*', 'left', 20, 0);
 
 INSERT INTO lc_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) VALUES(1, 'g', 1, 'Gram(s)');
