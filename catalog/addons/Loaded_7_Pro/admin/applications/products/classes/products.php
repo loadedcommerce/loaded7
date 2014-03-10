@@ -228,13 +228,120 @@ die('44');
   * @access public
   * @return array
   */  
-  public static function getMultiSKUOptionsContent($options = array()) {
+  public static function getComboOptionsContent($options = array()) {
     $content = '';
     
-    $content .= self::_getMultiSKUOptionsTbody($options);
+    $content .= self::_getComboOptionsTbody($options);
     
     return $content;
-  }     
+  }
+ /*
+  *  Return the product simple options accordian price listing content
+  *
+  * @access public
+  * @return array
+  */
+  public static function getComboOptionsPricingContent() {
+    global $lC_Language, $pInfo;
+    
+    $content = '';
+    $groups = lC_Customer_groups_Admin::getAll();
+    foreach($groups['entries'] as $key => $value) {
+      $content .= '<dt><span class="strong">' . $value['customers_group_name'] . '</span></dt>' .
+                  '<dd>' .
+                  '  <div class="with-padding">';
+                  
+      if (isset($pInfo) && is_array($pInfo->get('simple_options'))) {                  
+        $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
+                    '    <table style="" id="simpleOptionsPricingTable" class="simple-table">' .
+                    '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . self::_getComboOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
+                    '    </table>';
+                    
+      } else if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {
+        $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_sub_products') . '</div>' .
+                    '    <table id="subProductsPricingTable" class="simple-table">' .
+                    '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . self::_getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
+                    '    </table>';        
+        
+      } else if (isset($pInfo) && $pInfo->get('has_variants') == '1') {
+      
+      } else {      
+        $content .= '<table class="simple-table"><tbody id="tbody-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
+      }
+                
+      $content .= '  </div>' .
+                  '</dd>';  
+    }
+    
+    return $content;
+  }
+  
+  
+ /*
+  * Determine if the product has subproducts
+  *
+  * @param integer $id The product id
+  * @access public
+  * @return boolean
+  */   
+  public static function hasSubProducts($id) {
+    global $lC_Database;
+
+    $Qchk = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id and is_subproduct > :is_subproduct limit 1');
+    $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qchk->bindInt(':parent_id', $id);
+    $Qchk->bindInt(':is_subproduct', 0);
+    $Qchk->execute();
+
+    if ( $Qchk->numberOfRows() === 1 ) {
+      return true;
+    }
+
+    return false;
+  }  
+ /*
+  * Return the combo options pricing content
+  *
+  * @param array $data The product data object
+  * @access private
+  * @return string
+  */  
+  private static function _getComboOptionsPricingTbody($pInfo, $customers_group_id) {
+    global $lC_Currencies;
+    
+    if ($customers_group_id == '') return false;  
+    $ok = (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? true : false;
+    
+    $tbody = ''; 
+    $cnt = 0; 
+    if (isset($pInfo) && $pInfo->get('has_children') == '1') {
+      
+      foreach ($pInfo->get('variants') as $product_id => $val) {
+        $title = '';
+        if (is_array($val['values'])) {
+          foreach ($val['values'] as $group_id => $value_id) {
+            $title .= $value_id['value_title'] . ', ';
+          }
+        }
+        if (strstr($title, ',')) $title = substr($title, 0, -2);
+        
+        if ((isset($title) && $title != NULL)) {
+          $tbody .= '<tr class="trp-' . $cnt . '">' .
+                    '  <td id="name-td-' . $cnt . '" class="element">' . $title . '</td>' . 
+                    '  <td>' .
+                    '    <div class="inputs' . (($customers_group_id == '1' || $ok) ? '' : ' disabled') . '" style="display:inline; padding:8px 0;">' .
+                    '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
+                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $val['data']['price'] . '" id="combo_options_price_' . $customers_group_id . '_' . $cnt . '" name="combo_options_price[' . $customers_group_id . '][' . $cnt . ']" ' . (($customers_group_id == '1' || $ok) ? '' : ' DISABLED') . '>' .
+                    '    </div>' .
+                    '  </td>' .
+                    '</tr>';
+          $cnt++;                    
+        } 
+      }
+    }    
+    
+    return $tbody;
+  }          
  /*
   * Return the product simple options tbody content
   *
@@ -242,7 +349,7 @@ die('44');
   * @access public
   * @return string
   */  
-  private static function _getMultiSKUOptionsTbody($options) {
+  private static function _getComboOptionsTbody($options) {
   	global $lC_Currencies;
 		
     $tbody = '';  	
@@ -296,5 +403,41 @@ die('44');
     }
     
     return $tbody;    
+  }  
+  
+ /*
+  * Return the sub products pricing content
+  *
+  * @param array $data The product data object
+  * @access private
+  * @return string
+  */  
+  private static function _getSubProductsPricingTbody($pInfo, $customers_group_id) {
+    global $lC_Currencies;
+    
+    if ($customers_group_id == '') return false;  
+    $ok = (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? true : false;
+    
+    $tbody = ''; 
+    $cnt = 0; 
+    if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {
+      foreach ($pInfo->get('subproducts') as $key => $sub) {
+        if ((isset($sub['products_name']) && $sub['products_name'] != NULL)) {
+
+          $tbody .= '<tr class="trp-' . $cnt . '">' .
+                    '  <td id="name-td-' . $cnt . '" class="element">' . $sub['products_name'] . '</td>' . 
+                    '  <td>' .
+                    '    <div class="inputs' . (($customers_group_id == '1' || $ok) ? '' : ' disabled') . '" style="display:inline; padding:8px 0;">' .
+                    '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
+                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $sub['products_price'] . '" id="sub_products_price_' . $customers_group_id . '_' . $cnt . '" name="sub_products_price[' . $customers_group_id . '][' . $cnt . ']" ' . (($customers_group_id == '1' || $ok) ? '' : ' DISABLED') . '>' .
+                    '    </div>' .
+                    '  </td>' .
+                    '</tr>';
+          $cnt++;                    
+        } 
+      }
+    }    
+    
+    return $tbody;
   }  
 }

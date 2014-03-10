@@ -61,7 +61,7 @@ class lC_Products_Admin {
     if (isset($_GET['iSortCol_0'])) {
       $sOrder = " ORDER BY ";
       for ($i=0 ; $i < (int)$_GET['iSortingCols'] ; $i++ ) {
-        $sOrder .= lC_Products_Admin::fnColumnToField($_GET['iSortCol_'.$i] ) . " " . $_GET['sSortDir_'.$i] .", ";
+        $sOrder .= lC_Products_Admin::_fnColumnToField($_GET['iSortCol_'.$i] ) . " " . $_GET['sSortDir_'.$i] .", ";
       }
       $sOrder = substr_replace( $sOrder, "", -2 );
     }
@@ -2065,8 +2065,11 @@ class lC_Products_Admin {
                     '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . self::_getSubProductsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
                     '    </table>';        
         
-      } else if (isset($pInfo) && $pInfo->get('has_variants') == '1') {
-      
+      } else if (isset($pInfo) && $pInfo->get('has_children') == '1') {
+        $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_combo_options') . '</div>' .
+                    '    <table id="comboOptionsPricingTable" class="simple-table">' .
+                    '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . self::_getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
+                    '    </table>';         
       } else {      
         $content .= '<table class="simple-table"><tbody id="tbody-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
       }
@@ -2076,29 +2079,7 @@ class lC_Products_Admin {
     }
     
     return $content;
-  } 
- /*
-  * Determine if the product has subproducts
-  *
-  * @param integer $id The product id
-  * @access public
-  * @return boolean
-  */   
-  public static function hasSubProducts($id) {
-    global $lC_Database;
-
-    $Qchk = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id and is_subproduct > :is_subproduct limit 1');
-    $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
-    $Qchk->bindInt(':parent_id', $id);
-    $Qchk->bindInt(':is_subproduct', 0);
-    $Qchk->execute();
-
-    if ( $Qchk->numberOfRows() === 1 ) {
-      return true;
-    }
-
-    return false;
-  }  
+  }   
  /*
   * Determine the min/max product values based on key
   *
@@ -2122,41 +2103,6 @@ class lC_Products_Admin {
     
     return $result;
   }  
- /*
-  * Return the sub products pricing content
-  *
-  * @param array $data The product data object
-  * @access private
-  * @return string
-  */  
-  private static function _getSubProductsPricingTbody($pInfo, $customers_group_id) {
-    global $lC_Currencies;
-    
-    if ($customers_group_id == '') return false;  
-    $ok = (defined('ADDONS_SYSTEM_LOADED_7_PRO_STATUS') && ADDONS_SYSTEM_LOADED_7_PRO_STATUS == '1') ? true : false;
-    
-    $tbody = ''; 
-    $cnt = 0; 
-    if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {
-      foreach ($pInfo->get('subproducts') as $key => $sub) {
-        if ((isset($sub['products_name']) && $sub['products_name'] != NULL)) {
-
-          $tbody .= '<tr class="trp-' . $cnt . '">' .
-                    '  <td id="name-td-' . $cnt . '" class="element">' . $sub['products_name'] . '</td>' . 
-                    '  <td>' .
-                    '    <div class="inputs' . (($customers_group_id == '1' || $ok) ? '' : ' disabled') . '" style="display:inline; padding:8px 0;">' .
-                    '      <span class="mid-margin-left no-margin-right">' . $lC_Currencies->getSymbolLeft() . '</span>' .
-                    '      <input type="text" class="input-unstyled" onfocus="$(this).select()" value="' . $sub['products_price'] . '" id="sub_products_price_' . $customers_group_id . '_' . $cnt . '" name="sub_products_price[' . $customers_group_id . '][' . $cnt . ']" ' . (($customers_group_id == '1' || $ok) ? '' : ' DISABLED') . '>' .
-                    '    </div>' .
-                    '  </td>' .
-                    '</tr>';
-          $cnt++;                    
-        } 
-      }
-    }    
-    
-    return $tbody;
-  }
  /*
   * Return the product simple options pricing content
   *
@@ -2305,17 +2251,6 @@ class lC_Products_Admin {
 
     return false;
   }  
-  
-  private static function _getLastID() {
-    global $lC_Database;
-    
-    $Qchk = $lC_Database->query('select products_id from :table_products order by products_id desc');
-    $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
-    $Qchk->bindInt(':parent_id', $products_id);
-    $Qchk->execute();    
-    
-    return $Qchk->valueInt('products_id');
-  }
  /*
   * update product status db entry
   * 
@@ -2422,7 +2357,7 @@ class lC_Products_Admin {
   * @access private
   * @return string
   */
-  private static function fnColumnToField($i) {
+  private static function _fnColumnToField($i) {
    if ( $i == 0 )
     return "pd.products_name";
    else if ( $i == 1 )
@@ -2433,6 +2368,21 @@ class lC_Products_Admin {
     return "p.products_quantity";  
    else if ( $i == 6 )
     return "p.products_status";      
+  }  
+ /*
+  * get the last product id
+  * 
+  * @access private
+  * @return integer
+  */  
+  private static function _getLastID() {
+    global $lC_Database;
+    
+    $Qchk = $lC_Database->query('select products_id from :table_products order by products_id desc limit 1');
+    $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qchk->execute();    
+    
+    return $Qchk->valueInt('products_id');
   }  
 }
 ?>
