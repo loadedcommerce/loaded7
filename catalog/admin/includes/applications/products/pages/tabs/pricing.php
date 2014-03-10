@@ -50,10 +50,7 @@ global $lC_Language, $lC_Currencies, $pInfo;
     } 
     ?>                
   </fieldset>
-  <fieldset class="fieldset large-margin-top">
-    <legend class="legend"><?php echo $lC_Language->get('text_options_pricing'); ?></legend>  
-    <dl id="simple-options-pricing-tab" class="accordion">
-      <?php echo lC_Products_Admin::getOptionsPricingContent(); ?>
-    </dl>     
-  </fieldset>
+  
+  <!--VQMOD PRICING-2 HOOK POINT - Do Not Change or Remove-->
+
 </div> 
