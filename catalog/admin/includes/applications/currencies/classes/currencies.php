@@ -89,6 +89,8 @@ class lC_Currencies_Admin {
 
     if ( $Qcurrency->numberOfRows() === 1 ) {
       $result = $Qcurrency->toArray();
+      $result['symbol_left'] = utf8_decode($Qcurrency->value('symbol_left'));
+      $result['symbol_right'] = utf8_decode($Qcurrency->value('symbol_right'));
 
       if ( !empty($key) && isset($result[$key]) ) {
         $result = $result[$key];

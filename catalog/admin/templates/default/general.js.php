@@ -385,7 +385,7 @@ $(document).ready(function() {
   // defeat Google Chrome form autofill and its yellow background
   if(navigator.userAgent.toLowerCase().indexOf("chrome") >= 0 || navigator.userAgent.toLowerCase().indexOf("safari") >= 0){
     window.setInterval(function(){
-      $('input:-webkit-autofill').each(function(){
+      jQuery('input:-webkit-autofill').each(function(){
           var clone = $(this).clone(true, true);
           $(this).after(clone).remove();
       });
@@ -394,10 +394,6 @@ $(document).ready(function() {
   
   $("#profileLoader").hide();
   $("#profileInner").fadeTo(1000, 1);
-  
-  $("#qrcode-tooltip").click(function() {
-    $("#qr-message").show("500");
-  });
   
   if ($(window).width() < 1380) {
     $("#category_tabs").removeClass("side-tabs");
@@ -921,4 +917,18 @@ $("#li-settings").click(function() {
     include('templates/' . $_SESSION['template']['code'] . '/modal/' . $file['name']);
   }
 ?>
+//QR Code JSON
+$("#qrcode-tooltip").click(function(){
+var jsonLink = '<?php echo lc_href_link_admin('rpc.php','qrcode&action=getqrcode'); ?>'
+  $.getJSON(jsonLink,
+    function (data) {
+      if (data.rpcStatus != 1) {
+        $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+        return false;
+      } 
+      $('#ShowQRCode').html(data.html);
+      $("#qr-message").show("500");
+    }
+  );
+})
 </script>

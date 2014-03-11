@@ -189,5 +189,6 @@ class lC_Template_Admin extends lC_Template {
     //$this->_template_id = $_SESSION['template']['id'];
     //$this->_template = $_SESSION['template']['code'];
   }
+  
 }
 ?>

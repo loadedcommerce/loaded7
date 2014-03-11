@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/customer_groups/classes/customer_groups.php'));
+include_once($lC_Vqmod->modCheck('includes/applications/customer_groups/classes/customer_groups.php'));
 
 class lC_Application_Customer_groups extends lC_Template_Admin {
  /*

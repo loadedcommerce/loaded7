@@ -85,7 +85,7 @@ class lC_Products_Admin {
       
       /* Total Filtered Records */
       $QresultFilterTotal = $lC_Database->query('SELECT count(p.products_id) as total, pd.products_name from :table_products p LEFT JOIN :table_products_description pd on (pd.products_id = p.products_id and pd.language_id = :language_id) LEFT JOIN :table_products_to_categories p2c on (p.products_id = p2c.products_id)' . $sWhere . ' and p2c.categories_id in (:categories_id) ' . $sOrder);
-//      $QresultFilterTotal = $lC_Database->query("SELECT count(p.products_id) as total, pd.products_name from :table_products p LEFT JOIN :table_products_description pd on (pd.products_id = p.products_id and pd.language_id = :language_id) " . $sWhere . ' and p2c.categories_id in (:categories_id) ' . $sOrder);
+      // $QresultFilterTotal = $lC_Database->query("SELECT count(p.products_id) as total, pd.products_name from :table_products p LEFT JOIN :table_products_description pd on (pd.products_id = p.products_id and pd.language_id = :language_id) " . $sWhere . ' and p2c.categories_id in (:categories_id) ' . $sOrder);
       $QresultFilterTotal->bindTable(':table_products', TABLE_PRODUCTS);
       $QresultFilterTotal->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
       $QresultFilterTotal->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
