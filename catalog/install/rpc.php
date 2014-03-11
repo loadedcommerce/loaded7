@@ -616,18 +616,36 @@ if (isset($_GET['action']) && !empty($_GET['action'])) {
       
       case 'import_taxclasses':
       {
-				require_once("includes/classes/upgrader.php");
-				$upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
-				$upgrader->setConnectDetails($_POST);
-				$rslt = $upgrader->importTaxClassesRates();
-				
-				if($rslt == false){
-					echo '[[0|'.$upgrader->displayMessage().']]';
-					return false;
-				}
-				
-				echo '[[1]]';
-				return true;
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importTaxClassesRates();
+        
+        if($rslt == false){
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+        
+        echo '[[1]]';
+        return true;
+      }
+      exit;
+      break;
+      
+      case 'import_languages':
+      {
+        require_once("includes/classes/upgrader.php");
+        $upgrader = UpgraderFactory::create($_POST['UPGRADE_METHOD']);
+        $upgrader->setConnectDetails($_POST);
+        $rslt = $upgrader->importLanguages();
+        
+        if($rslt == false){
+          echo '[[0|'.$upgrader->displayMessage().']]';
+          return false;
+        }
+        
+        echo '[[1]]';
+        return true;
       }
       exit;
       break;
