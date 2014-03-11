@@ -64,33 +64,7 @@
   foreach($customer_groups_array as $key => $value) {
     $groups_options_string .= '<option value=\'' . $value['id'] . '\'>' . $value['text'] . '</option>';
   }
-  // get price breaks
-  $rowCnt = 0;
-  if ( isset($lC_ObjectInfo) ) {
-    $Qpb = $lC_Database->query('select group_id, tax_class_id, qty_break, price_break from :table_products_pricing where products_id = :products_id order by group_id, qty_break');
-    $Qpb->bindTable(':table_products_pricing', TABLE_PRODUCTS_PRICING);
-    $Qpb->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
-    $Qpb->execute();
 
-    $editPBEntry = '';
-    $rowCnt = 1;
-    while ($Qpb->next()) {
-      if (isset($Qpb->result)) {
-        $editPBEntry .= "<tr id='row"  . $rowCnt . "'><td width='100px'><select style='width:98%' name='price_breaks[group_id][]'>" . getCustomerGroupOptionsString($Qpb->valueInt('group_id'), true) . "</select></td>" .
-        "<td width='100px'><select style='width:98%' name='price_breaks[tax_class_id][]'>" . getTaxClassOptionsString($Qpb->valueInt('tax_class_id'), true) . "</select></td>" .
-        "<td width='110px'><table width='110px' border='0' cellpadding='0' cellspacing='0'><tr><td><input type='text' value='" . $Qpb->valueInt('qty_break') . "' name='price_breaks[qty][]' size='5' id='qty" . $rowCnt . "' /></td><td width='70%'>" . $lC_Language->get('text_price_breaks_above') . "</td></tr></table></td>" .
-        "<td width='80px'><input value='" . ((isset($lC_ObjectInfo)) ? number_format($Qpb->valueDecimal('price_break'), DECIMAL_PLACES) : null) . "' style='width:70px;' type='text' name='price_breaks[price][]' id='price" . $rowCnt . "' /></td>" .
-        "<td width='30px' align='center'><a id='row" . $rowCnt . "e' href='javascript://' onclick='removePriceBreakEntry(this);'><img border='0' src='images/icons/cross.png'></a></td></tr>";
-        $rowCnt++;
-      }
-    }
-  }
-
-  // get product image
-  //$Qpi = $lC_Database->query("select image from :table_products_images where products_id = :products_id and default_flag = '1'");
-  //$Qpi->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
-  //$Qpi->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
-  //$Qpi->execute();
 
   // get categories array
   $product_categories_array = array();
@@ -107,11 +81,6 @@
   $assignedCategoryTree->setBreadcrumbUsage(false);
   $assignedCategoryTree->setSpacerString('&nbsp;', 5); 
 
-  // get specials
-  //$Qspecials = $lC_Database->query('select * from :table_specials where products_id = :products_id');
-  //$Qspecials->bindTable(':table_specials', TABLE_SPECIALS);
-  //$Qspecials->bindInt(':products_id', $lC_ObjectInfo->getInt('products_id'));
-  //$Qspecials->execute();
 
   function getCustomerGroupOptionsString($id = null, $esc = false) {
     global $customer_groups_array;
@@ -202,7 +171,7 @@
     document.getElementById(field).value = doRound(netValue, <?php echo DECIMAL_PLACES; ?>);
   }
 //--></script>
-<!-- Main content -->
+<!-- Edit content -->
 <style scoped="scoped">
   .legend { font-weight:bold; font-size: 1.1em; }
   #qq-upload-button2 {
@@ -285,3 +254,5 @@
     </form>
   </div>
 </section>
+<?php $lC_Template->loadModal($lC_Template->getModule()); ?>
+<!-- End edit content -->
