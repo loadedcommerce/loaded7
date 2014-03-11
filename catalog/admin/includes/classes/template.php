@@ -57,7 +57,9 @@ class lC_Template_Admin extends lC_Template {
           }
         }
       }
-    } else if (lC_Addons_Admin::hasAdminModuleModals($_module)) {
+    } 
+    
+    if (lC_Addons_Admin::hasAdminModuleModals($_module)) {
       lC_Addons_Admin::loadAdminModuleModals($_module);
     }
     

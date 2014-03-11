@@ -8,7 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: addComboOption.php v1.0 2013-08-08 datazen $
 */
-global $lC_Currencies;
+global $lC_Language, $lC_Template, $lC_Currencies;
 ?>
 <style>
 #addComboOption { padding-bottom:20px; }
