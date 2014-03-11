@@ -27,6 +27,11 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
   public static function save($id = null, $data) {
     global $lC_Database, $lC_Language;	
 		
+echo "<pre>";
+print_r($data);
+echo "</pre>";
+die('77');
+    
     $error = false;
     
     $products_id = parent::save($id, $data);
@@ -432,8 +437,6 @@ class lC_Products_Admin_Pro extends lC_Products_Admin {
     
     return $tbody;
   }    
-  
-  
  /*
   *  Return the product simple options accordian price listing content
   *

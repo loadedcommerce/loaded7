@@ -6,15 +6,15 @@
   @copyright  Portions Copyright 2003 osCommerce
   @copyright  Template built on Developr theme by DisplayInline http://themeforest.net/user/displayinline under Extended license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
-  @version    $Id: addMultiSKUOption.php v1.0 2013-08-08 datazen $
+  @version    $Id: addComboOption.php v1.0 2013-08-08 datazen $
 */
 global $lC_Currencies;
 ?>
 <style>
-#addMultiSKUOption { padding-bottom:20px; }
+#addComboOption { padding-bottom:20px; }
 </style>
 <script>
-function addMultiSKUOption(editRow) {
+function addComboOption(editRow) {
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -72,7 +72,7 @@ function addMultiSKUOption(editRow) {
               '  <td width="10%" class="sort hide-below-480"></td>'+
               '  <td width="15%" align="center" style="cursor:pointer;" onclick="toggleSimpleOptionsStatus(this, \'' + id + '\');"><span class="icon-tick icon-size2 icon-green"></span></td>'+
               '  <td width="15%" align="right">'+
-              '     <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addMultiSKUOption(\'' + id + '\')"></span>'+
+              '     <span class="icon-pencil icon-orange icon-size2 margin-right with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Edit Entry" style="cursor:pointer;" onclick="addComboOption(\'' + id + '\')"></span>'+
               '     <span class="icon-trash icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"right"}\' title="Remove Entry" style="cursor:pointer;" onclick="removeSimpleOptionsRow(\'' + id + '\');"></span>'+
               '   </td>'+
               '  <input type="hidden" name="simple_options_group_name[' + id + ']" value="' + groupTitle + '">'+
@@ -115,8 +115,8 @@ function addMultiSKUOption(editRow) {
         return false;
       }
       $.modal({
-          content: '<div id="addMultiSKUOption">'+
-                   '  <div id="addMultiSKUOptionForm">'+
+          content: '<div id="addComboOption">'+
+                   '  <div id="addComboOptionForm">'+
                    '    <form name="sAdd" id="sAdd" action="" method="post">'+
                    '      <input type="hidden" name="dummy" value="0">'+
                    '      <p class="button-height block-label">'+
@@ -164,8 +164,8 @@ function addMultiSKUOption(editRow) {
                       return false;
                     }   
                     $.modal({
-                        content: '<div id="addMultiSKUOptionEntry">'+
-                                 '  <div id="addMultiSKUOptionEntryForm">'+
+                        content: '<div id="addComboOptionEntry">'+
+                                 '  <div id="addComboOptionEntryForm">'+
                                  '    <form name="seAdd" id="seAdd" action="" method="post">'+
                                  '      <input type="hidden" name="dummy" value="0">'+
                                  '      <p class="button-height block-label">'+
