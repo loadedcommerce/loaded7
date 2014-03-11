@@ -8,6 +8,10 @@
     <operation info="Enable QPB Pricing">
       <search position="after"><![CDATA[<!--VQMOD PRICING-1 HOOK POINT - Do Not Change or Remove-->]]></search>         
       <add><![CDATA[<?php if (file_exists(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/pricing_qpb.inc.php')) include_once(DIR_FS_CATALOG . 'addons/Loaded_7_Pro/admin/applications/products/pages/tabs/pricing_qpb.inc.php'); ?>]]></add>
-    </operation>     
+    </operation> 
+    <operation info="Enable SubProducts & Combo Options">
+      <search position="replace"><![CDATA[<?php echo lC_Products_Admin::getOptionsPricingContent(); ?>]]></search>         
+      <add><![CDATA[<?php echo lC_Products_Admin_Pro::getOptionsPricingContent(); ?>]]></add>
+    </operation>        
   </file>   
 </modification>

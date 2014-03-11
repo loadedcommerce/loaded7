@@ -36,6 +36,7 @@ class lC_Products_Admin {
       $category_id = 0;
     }
 
+    
     $lC_Language->loadIniFile('products.php');
     
     $media = $_GET['media'];
@@ -114,7 +115,7 @@ class lC_Products_Admin {
     $Qproducts->bindTable(':table_products', TABLE_PRODUCTS);
     $Qproducts->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
     $Qproducts->bindInt(':language_id', $lC_Language->getID());
-    $Qproducts->execute();
+    $Qproducts->execute();   
     
     while ( $Qproducts->next() ) {
       $Qproductscategories = $lC_Database->query('select p2c.categories_id, cd.categories_name, c.categories_status from :table_products_to_categories p2c left join :table_categories c on (p2c.categories_id = c.categories_id) left join lc_categories_description cd on (p2c.categories_id = cd.categories_id) where p2c.products_id = :products_id and cd.language_id = :language_id');
@@ -154,44 +155,13 @@ class lC_Products_Admin {
       $products_status = ($Qproducts->valueInt('products_status') === 1);
       $products_keyword  = $Qproducts->value('products_keyword');
 
-      /*if ( $Qproducts->valueInt('has_children') === 1 ) {
-        $product_icon = 'icon-path icon-orange icon-size2';
-        $product_icon_title = $lC_Language->get('text_inventory_control_has_children');
-        $qtyArr = self::getMinMax($Qproducts->valueInt('products_id'));
-        $products_quantity =  $qtyArr['low'] . '-' . $qtyArr['high'];    
-        $priceArr = self::getMinMax($Qproducts->valueInt('products_id'), 'products_price');
-        $price =  $lC_Currencies->format($priceArr['low']) . ' - ' . $lC_Currencies->format($priceArr['high']);            
-      } else if ( self::hasSubProducts($Qproducts->valueInt('products_id')) === true ) {
-        $product_icon = 'icon-flow-tree icon-red icon-size2';
-        $product_icon_title = $lC_Language->get('text_inventory_control_has_subproducts');
-        $qtyArr = self::getMinMax($Qproducts->valueInt('products_id'));
-        $products_quantity =  $qtyArr['low'] . ' - ' . $qtyArr['high'];
-        $priceArr = self::getMinMax($Qproducts->valueInt('products_id'), 'products_price');
-        $price =  $lC_Currencies->format($priceArr['low']) . ' - ' . $lC_Currencies->format($priceArr['high']);        
-      } else {
-        $product_icon = 'icon-stop icon-anthracite icon-size2';
-        $product_icon_title = $lC_Language->get('text_inventory_control_simple');*/
-        $products_quantity = $Qproducts->valueInt('products_quantity');
-        $price = $lC_Currencies->format($Qproducts->value('products_price'));
-      //}
+      $products_quantity = $Qproducts->valueInt('products_quantity');
+      $price = $lC_Currencies->format($Qproducts->value('products_price'));
       
       $icons = '';
       if ( $Qproducts->valueInt('has_children') === 1 ) {
-        $Qvariants = $lC_Database->query('select min(products_price) as min_price, max(products_price) as max_price, sum(products_quantity) as total_quantity, min(products_status) as products_status from :table_products where parent_id = :parent_id');
-        $Qvariants->bindTable(':table_products', TABLE_PRODUCTS);
-        $Qvariants->bindInt(':parent_id', $Qproducts->valueInt('products_id'));
-        $Qvariants->execute();
-
-        $products_status = ($Qvariants->valueInt('products_status') === 1);
-        $products_quantity = '(' . $Qvariants->valueInt('total_quantity') . ')';
-
-        $price = $lC_Currencies->format($Qvariants->value('min_price'), DECIMAL_PLACES);
-        if ( $Qvariants->value('min_price') != $Qvariants->value('max_price') ) {
-          $price .= ' - ' . $lC_Currencies->format($Qvariants->value('max_price'));
-        }
-
         $icons .= '<span class="icon-flow-tree icon-blue mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_variants') . '"></span>';
-      } else if ( self::hasSubProducts($Qproducts->valueInt('products_id')) === true ) {
+      } else if ( self::_hasSubProducts($Qproducts->valueInt('products_id')) === true ) {
         $icons .= '<span class="icon-flow-cascade icon-red mid-margin-right with-tooltip" style="cursor:pointer;" title="' . $lC_Language->get('text_has_subproducts') . '"></span>';
       }
       
@@ -213,7 +183,6 @@ class lC_Products_Admin {
 
       $check = '<td><input class="batch" type="checkbox" name="batch[]" value="' . $Qproducts->valueInt('products_id') . '" id="' . $Qproducts->valueInt('products_id') . '"></td>';
       $products = '<td><div class="products-listing-thumb">' . $lC_Image->show($Qimage->value('image'), '', 'class="mid-margin-right float-left" width="28" height="28"', 'mini') . '</div><div class="products-listing-name-model"><a href="javascript:void(0);" onclick="showPreview(\'' . $Qproducts->valueInt('products_id') . '\')" class="bold">' . $Qproducts->value('products_name') . '</a><br /><span class="small grey mid-margin-right">' . $Qproducts->value('products_model') . '</span><span class="mid-margin-right">' . $icons. '</span></div></td>';
-      //$inv = '<td><span class="' . $product_icon . ' with-tooltip" title="' . $product_icon_title . '"></span></td>';
       $cats = '<td>' . $categories . '</td>';
       $categories = null;
       $class = '<td>' . $lC_Language->get('text_common') . '</td>';
@@ -231,7 +200,7 @@ class lC_Products_Admin {
                      <a href="' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? '#' : 'javascript://" onclick="deleteProduct(\'' . $Qproducts->valueInt('products_id') . '\', \'' . urlencode($Qproducts->value('products_name')) . '\')') . '" class="button icon-trash with-tooltip' . ((int)($_SESSION['admin']['access'][$_module] < 4) ? ' disabled' : NULL) . '" title="' . $lC_Language->get('icon_delete') . '"></a>
                    </span>
                  </td>';
-      $result['aaData'][] = array("$check", "$products"/*, "$inv"*/, "$cats", "$class", "$price", "$qty", "$status", "$action");
+      $result['aaData'][] = array("$check", "$products", "$cats", "$class", "$price", "$qty", "$status", "$action");
       $result['entries'][] = array_merge($Qproducts->toArray(), $extra_data);      
       
       $Qproductscategories->freeResult();
@@ -2052,30 +2021,14 @@ class lC_Products_Admin {
       $content .= '<dt><span class="strong">' . $value['customers_group_name'] . '</span></dt>' .
                   '<dd>' .
                   '  <div class="with-padding">';
-                  
       if (isset($pInfo) && is_array($pInfo->get('simple_options'))) {                  
         $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_simple_options') . '</div>' .
                     '    <table style="" id="simpleOptionsPricingTable" class="simple-table">' .
                     '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . self::_getSimpleOptionsPricingTbody($pInfo->get('simple_options'), $value['customers_group_id']) . '</tbody>' .
-                    '    </table>';
-                    
-      /*VQMOD getOptionsPricingContent-1 HOOK POINT - Do Not Change or Remove*/                    
-                    
-      } else if (isset($pInfo) && $pInfo->get('has_subproducts') == '1') {               
-        $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_sub_products') . '</div>' .
-                    '    <table id="subProductsPricingTable" class="simple-table">' .
-                    '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getSubProductsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
                     '    </table>';        
-        
-      } else if (isset($pInfo) && $pInfo->get('has_children') == '1') {
-        $content .= '    <div class="big-text underline" style="padding-bottom:8px;">' . $lC_Language->get('text_combo_options') . '</div>' .
-                    '    <table id="comboOptionsPricingTable" class="simple-table">' .
-                    '      <tbody id="tbody-' . $value['customers_group_id'] . '">' . lC_Products_Admin_Pro::getComboOptionsPricingTbody($pInfo, $value['customers_group_id']) . '</tbody>' .
-                    '    </table>';         
       } else {      
         $content .= '<table class="simple-table"><tbody id="tbody-' . $value['customers_group_id'] . '"><tr id="no-options-' . $value['customers_group_id'] . '"><td>' . $lC_Language->get('text_no_options_defined') . '</td></tr></tbody></table>'; 
       }
-                
       $content .= '  </div>' .
                   '</dd>';  
     }
@@ -2386,5 +2339,28 @@ class lC_Products_Admin {
     
     return $Qchk->valueInt('products_id');
   }  
+ /*
+  * Determine if the product has subproducts
+  *
+  * @param integer $id The product id
+  * @access private
+  * @return boolean
+  */
+  private static function _hasSubProducts($id) {
+    global $lC_Database;
+
+    $Qchk = $lC_Database->query('select products_id from :table_products where parent_id = :parent_id and is_subproduct > :is_subproduct limit 1');
+    $Qchk->bindTable(':table_products', TABLE_PRODUCTS);
+    $Qchk->bindInt(':parent_id', $id);
+    $Qchk->bindInt(':is_subproduct', 0);
+    $Qchk->execute();
+
+    if ( $Qchk->numberOfRows() === 1 ) {
+      return true;
+    }
+
+    return false;
+  }   
 }
+
 ?>

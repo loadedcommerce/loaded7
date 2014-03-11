@@ -66,8 +66,8 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
         if ( isset($_POST['products_special_expires_date'][1]) ) $data['products_special_expires_date1'] = $_POST['products_special_expires_date'][1];
       }
 
-      // multi SKU sub-products
-      if (is_array($_POST['sub_products_name']) && $_POST['sub_products_name'][0] != NULL) {
+      // sub-products
+      if (is_array($_POST['sub_products_name']) && count($_POST['sub_products_name']) > 1) {
         $data['has_subproducts'] = '1';
         $data['sub_products_name'] = $_POST['sub_products_name'];
         if (isset($_POST['sub_products_default']) && $_POST['sub_products_default'] != NULL) $data['sub_products_default'] = $_POST['sub_products_default'];
@@ -78,11 +78,11 @@ class lC_Application_Products_Actions_save extends lC_Application_Products {
         if (isset($_POST['sub_products_id']) && $_POST['sub_products_id'] != NULL) $data['sub_products_id'] = $_POST['sub_products_id'];
         if (isset($_POST['sub_products_cost']) && $_POST['sub_products_cost'] != NULL) $data['sub_products_cost'] = $_POST['sub_products_cost'];
         if (isset($_POST['sub_products_price']) && $_POST['sub_products_price'] != NULL) $data['sub_products_price'] = $_POST['sub_products_price'];
-      }      
+      }  
       
       // qpb
-      if (is_array($_POST['products_qty_break_point'][1]) && $_POST['products_qty_break_point'][1][1] != NULL) $data['products_qty_break_point'] = $_POST['products_qty_break_point'];
-      if (is_array($_POST['products_qty_break_price'][1]) && $_POST['products_qty_break_price'][1][1] != NULL) $data['products_qty_break_price'] = $_POST['products_qty_break_price'];
+      if (is_array($_POST['products_qty_break_point']) && $_POST['products_qty_break_point'][1] != NULL) $data['products_qty_break_point'] = $_POST['products_qty_break_point'];
+      if (is_array($_POST['products_qty_break_price']) && $_POST['products_qty_break_price'][1] != NULL) $data['products_qty_break_price'] = $_POST['products_qty_break_price'];
       
       // multi SKU options
       if (isset($_POST['variants'])) $data['variants'] = $_POST['variants'];
