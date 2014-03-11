@@ -22,7 +22,7 @@ global $lC_Language, $pInfo;
 </div>  
          
 <div id="multiSKUOptionsContainer" class="margin-top">  
-	<span class="float-right" style="margin:-46px 0px 4px 0;"><a class="button icon-plus-round green-gradient glossy compact" href="javascript:void(0)" onclick="addMultiSKUOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
+	<span class="float-right" style="margin:-46px 0px 4px 0;"><a class="button icon-plus-round green-gradient glossy compact" href="javascript:void(0)" onclick="addComboOption();"><?php echo $lC_Language->get('button_add'); ?></a></span>
 	<table width="100%" style="margin-top:-8px;" id="multiSKUOptionsTable" class="simple-table">
 	  <thead>
 	    <tr>
