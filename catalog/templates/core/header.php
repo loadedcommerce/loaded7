@@ -202,7 +202,7 @@
                     echo lc_link_object($lC_Template->getBranding('social_linkedin'), lc_image(DIR_WS_IMAGES . 'icons/in-ico.png', 'title', null, null, 'class="small-margin-right social-nav-in"'), 'target="_blank"');
                   }                  
                 ?>
-                <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
+                <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'"><?php echo $lC_Language->get('text_checkout'); ?></button>  
                 <i class="fa fa-search navbar-search-icon"></i>
                 <input type="text" class="navbar-search" name="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>
               </span>
