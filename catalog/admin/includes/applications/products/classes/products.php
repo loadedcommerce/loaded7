@@ -784,7 +784,7 @@ class lC_Products_Admin {
       }
       foreach ($lC_Language->getAll() as $l) {
         // this code will be revisited
-        // if (self::validatePermalink($data['products_keyword'][$l['id']], $id, 2) != 1) {
+        // if (self::validatePermalink($data['products_keyword'][$l['id']], $id, 2, $l['id']) != 1) {
         //   $data['products_keyword'][$l['id']] = $data['products_keyword'][$l['id']] . '-link';
         // }
         
@@ -1838,7 +1838,7 @@ class lC_Products_Admin {
   * @access public
   * @return integer
   */
-  public static function getPermalinkCount($permalink, $pid = null, $type = null) {
+  public static function getPermalinkCount($permalink, $pid = null, $type = null, $lid = null) {
     global $lC_Database;
     
     $Qpermalinks = $lC_Database->query('select count(*) as total, item_id, permalink from :table_permalinks where permalink = :permalink');
@@ -1846,6 +1846,11 @@ class lC_Products_Admin {
     if (is_numeric($pid)) {
       $Qpermalinks->appendQuery('and item_id != :item_id');
       $Qpermalinks->bindInt(':item_id', $iid);
+    }
+    
+    if (is_numeric($lid)) {
+      $Qpermalinks->appendQuery('and language_id == :language_id');
+      $Qpermalinks->bindInt(':language_id', $lid);
     }
 
     $Qpermalinks->bindTable(':table_permalinks', TABLE_PERMALINKS);
@@ -1867,17 +1872,17 @@ class lC_Products_Admin {
   * @access public
   * @return array
   */
-  public static function validatePermalink($permalink_array, $pid = null, $type = null) {
+  public static function validatePermalink($permalink_array, $pid = null, $type = null, $lid = null) {
     $validated = true;
     
     if (is_array($permalink_array)) {
       foreach($permalink_array as $permalink) {
         if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink) !== 1 ) $validated = false;
-        if ( lC_Products_Admin::getPermalinkCount($permalink, $pid, $type) > 0) $validated = false;
+        if ( lC_Products_Admin::getPermalinkCount($permalink, $pid, $type, $lid) > 0) $validated = false;
       }
     } else {
       if ( preg_match('/^[a-z0-9_-]+$/iD', $permalink_array) !== 1 ) $validated = false;
-      if ( lC_Products_Admin::getPermalinkCount($permalink_array, $pid, $type) > 0) $validated = false;
+      if ( lC_Products_Admin::getPermalinkCount($permalink_array, $pid, $type, $lid) > 0) $validated = false;
     }
     
     return $validated;
