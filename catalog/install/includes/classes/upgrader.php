@@ -3381,14 +3381,14 @@ class lC_LocalUpgrader extends lC_Upgrader {
       
       // LOAD CUSTOMERS GROUPS FROM SOURCE DB
 
-      $tQry = $target_db->query('SELECT COUNT(*) AS exist 
+      /*$tQry = $target_db->query('SELECT COUNT(*) AS exist 
                                    FROM information_schema.tables 
                                   WHERE table_schema =  "' . $t_db['DB_DATABASE'] . '" 
                                     AND table_name = "' . TABLE_CUSTOMERS_GROUPS . '"');
       $tQry->execute();
       $tQry->next();
       if ($tQry->value('exist') != '1') return true;
-      $tQry->freeResult();
+      $tQry->freeResult();*/
 
       // DISABLE AUTO INCREMENT WHEN PRIMARY KEY = 0
       $tQry = $target_db->query('SET sql_mode = "NO_AUTO_VALUE_ON_ZERO"');
@@ -6151,7 +6151,54 @@ class lC_LocalUpgrader extends lC_Upgrader {
           $igiQry->execute();
         }
         
+        $otsQry = $target_db->query('select id, status_name from :table_orders_transactions_status where language_id = :language_id');
+        $otsQry->bindTable(':table_orders_transactions_status', TABLE_ORDERS_TRANSACTIONS_STATUS);
+        $otsQry->bindInt(':language_id', $this->_languages_id_default);
+        $otsQry->execute();
+
+        while ( $otsQry->next() ) {
+          $otsiQry = $target_db->query('insert into :table_orders_transactions_status (id, language_id, status_name) values (:id, :language_id, :status_name)');
+          $otsiQry->bindTable(':table_orders_transactions_status', TABLE_ORDERS_TRANSACTIONS_STATUS);
+          $otsiQry->bindInt(':id', $otsQry->valueInt('id'));
+          $otsiQry->bindInt(':language_id', $language['languages_id']);
+          $otsiQry->bindValue(':status_name', $otsQry->value('status_name'));
+          $otsiQry->execute();
+        }
+        
+        $saQry = $target_db->query('select id, title, css_key from :table_shipping_availability where languages_id = :languages_id');
+        $saQry->bindTable(':table_shipping_availability', TABLE_SHIPPING_AVAILABILITY);
+        $saQry->bindInt(':languages_id', $this->_languages_id_default);
+        $saQry->execute();
+
+        while ( $saQry->next() ) {
+          $saiQry = $target_db->query('insert into :table_shipping_availability (id, languages_id, title, css_key) values (:id, :languages_id, :title, :css_key)');
+          $saiQry->bindTable(':table_shipping_availability', TABLE_SHIPPING_AVAILABILITY);
+          $saiQry->bindInt(':id', $saQry->valueInt('id'));
+          $saiQry->bindInt(':languages_id', $language['languages_id']);
+          $saiQry->bindValue(':title', $saQry->value('title'));
+          $saiQry->bindValue(':css_key', $saQry->value('css_key'));
+          $saiQry->execute();
+        }
+        
+        $wcQry = $target_db->query('select weight_class_id, weight_class_key, weight_class_title from :table_weight_classes where language_id = :language_id');
+        $wcQry->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
+        $wcQry->bindInt(':language_id', $this->_languages_id_default);
+        $wcQry->execute();
+
+        while ( $wcQry->next() ) {
+          $wciQry = $target_db->query('insert into :table_weight_classes (weight_class_id, weight_class_key, language_id, weight_class_title) values (:weight_class_id, :weight_class_key, :language_id, :weight_class_title)');
+          $wciQry->bindTable(':table_weight_classes', TABLE_WEIGHT_CLASS);
+          $wciQry->bindInt(':weight_class_id', $wcQry->valueInt('weight_class_id'));
+          $wciQry->bindValue(':weight_class_key', $wcQry->value('weight_class_key'));
+          $wciQry->bindInt(':language_id', $language['languages_id']);
+          $wciQry->bindValue(':weight_class_title', $wcQry->value('weight_class_title'));
+          $wciQry->execute();
+        }
+        
         $igQry->freeResult();
+        $otsQry->freeResult();
+        $saQry->freeResult();
+        $wcQry->freeResult();
       }
       
       // END LOAD LANGUAGES TO TARGET DB 
