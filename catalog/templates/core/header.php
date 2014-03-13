@@ -8,6 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: header.php v1.0 2013-08-08 datazen $
 */ 
+if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '<div class="alert alert-danger no-margin-bottom no-padding-top no-padding-bottom text-center">' . $lC_Language->get('text_admin_session_active') . '</div>';
 ?>
 <!--header.php start-->     
 <div class="topnav mid-margin-bottom">
@@ -202,7 +203,7 @@
                     echo lc_link_object($lC_Template->getBranding('social_linkedin'), lc_image(DIR_WS_IMAGES . 'icons/in-ico.png', 'title', null, null, 'class="small-margin-right social-nav-in"'), 'target="_blank"');
                   }                  
                 ?>
-                <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'"><?php echo $lC_Language->get('text_checkout'); ?></button>  
+                <button type="button" class="btn btn-sm cursor-pointer small-margin-right<?php echo (($lC_ShoppingCart->numberOfItems() > 0) ? ' btn-success' : ' btn-default disabled'); ?>" onclick="window.location.href='<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping', 'SSL'); ?>'">Checkout</button>  
                 <i class="fa fa-search navbar-search-icon"></i>
                 <input type="text" class="navbar-search" name="keywords" placeholder="<?php echo $lC_Language->get('button_search'); ?>"><?php echo lc_draw_hidden_session_id_field(); ?>
               </span>
