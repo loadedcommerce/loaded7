@@ -17,6 +17,7 @@ button_back = Back
 button_back_to_list = Back to List
 button_backup = Backup
 button_cancel = Cancel
+button_clear_all = Clear All
 button_close = Close
 button_continue = Continue
 button_copy = Copy
@@ -195,6 +196,9 @@ profile_password_confirm = Confirm Password
 profile_image = Profile Image:
 profile_new_image = New Image
 
+qrcode = QR Code
+qrcode_current_url = Current URL
+
 quick_add_order = Order
 quick_add_customer = Customer
 quick_add_category = Category
@@ -271,6 +275,7 @@ text_move = Move
 text_version_info = Version Info
 text_error = Error
 text_all = All
+text_core = Core
 text_version = Version
 text_confirm_delete = Confirm Delete?
 text_sort = Sort

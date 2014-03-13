@@ -10,7 +10,7 @@
 */
 global $lC_Vqmod;
 
-require($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
+require_once($lC_Vqmod->modCheck('includes/applications/tax_classes/classes/tax_classes.php'));
 
 class lC_Application_Tax_classes extends lC_Template_Admin {
   /*

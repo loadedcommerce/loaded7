@@ -22,8 +22,8 @@ class lC_Currencies {
     while ($Qcurrencies->next()) {
       $this->currencies[$Qcurrencies->value('code')] = array('id' => $Qcurrencies->valueInt('currencies_id'),
                                                              'title' => $Qcurrencies->value('title'),
-                                                             'symbol_left' => $Qcurrencies->value('symbol_left'),
-                                                             'symbol_right' => $Qcurrencies->value('symbol_right'),
+                                                             'symbol_left' => utf8_decode($Qcurrencies->value('symbol_left')),
+                                                             'symbol_right' => utf8_decode($Qcurrencies->value('symbol_right')),
                                                              'decimal_places' => $Qcurrencies->valueInt('decimal_places'),
                                                              'value' => $Qcurrencies->valueDecimal('value'));
     }

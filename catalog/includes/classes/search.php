@@ -182,10 +182,11 @@ class lC_Search extends lC_Products {
       $Qlisting->bindInt(':zone_id', $customer_zone_id);
     }
 
-    $Qlisting->appendQuery(', :table_products_description pd, :table_categories c, :table_products_to_categories p2c');
+    $Qlisting->appendQuery(', :table_products_description pd');
+    if ($this->hasCategory()) $Qlisting->appendQuery(', :table_categories c, :table_products_to_categories p2c');
     $Qlisting->bindTable(':table_products_description', TABLE_PRODUCTS_DESCRIPTION);
-    $Qlisting->bindTable(':table_categories', TABLE_CATEGORIES);
-    $Qlisting->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
+    if ($this->hasCategory()) $Qlisting->bindTable(':table_categories', TABLE_CATEGORIES);
+    if ($this->hasCategory()) $Qlisting->bindTable(':table_products_to_categories', TABLE_PRODUCTS_TO_CATEGORIES);
     
     if ($this->hasManufacturer()) {
       $Qlisting->appendQuery(', :table_product_attributes pa');

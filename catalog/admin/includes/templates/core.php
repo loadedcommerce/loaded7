@@ -10,7 +10,7 @@
 */
 class lC_Template_core {
   var $_id,
-      $_title = 'Bootstrap 3.0 Core Template',
+      $_title = 'Bootstrap 3.1.1 Core Template',
       $_code = 'core',
       $_author_name = 'Loaded Commerce, LLC',
       $_author_www = 'http://www.loadedcommerce.com',
@@ -18,8 +18,8 @@ class lC_Template_core {
       $_css_based = '1', /* 0=No; 1=Yes */
       $_medium = 'Mobile Responsive UI',
       $_screenshot = 'core.png',
-      $_version = '1.5.0',
-      $_compatibility = '7.002.1.0',      
+      $_version = '1.0.6',
+      $_compatibility = '7.002.2.0',      
       $_groups = array('boxes' => array('left', 'right'),
                        'content' => array('header', 'before', 'after', 'footer')),
       $_keys;

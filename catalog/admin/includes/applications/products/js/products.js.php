@@ -86,9 +86,10 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
       ?>
       $("#products_name_<?php echo $l['id']; ?>").blur(function(){ 
         var prodPermLink = $("#products_name_<?php echo $l['id']; ?>").val().toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '').replace(/---/g, '-').replace(/--/g, '-');
-        //if (prodPermLink.match(/product$/i)) {
-        //  prodPermLink = prodPermLink + '-link';
-        //}
+        // this code will be revisited
+        // if (prodPermLink.match(/product$/i)) {
+        //   prodPermLink = prodPermLink + '-link';
+        // }
         $("#products_keyword_<?php echo $l['id']; ?>").val(prodPermLink).focus();
         validatePermalink($("#products_keyword_<?php echo $l['id']; ?>").val());
       });
@@ -603,40 +604,29 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
             'products_name_<?php echo $l['id']; ?>': {
               required: true,
             },
-            'products_description[<?php echo $l['id']; ?>]': {
-              required: true,
-            },
             'products_keyword[<?php echo $l['id']; ?>]': {
               required: true,
             },
             <?php
           }
           ?>
-          /*"categories[]": { 
-            required: true, 
-            minlength: 1
-          }*/
         },
         
         messages: {
           <?php
           foreach ( $lC_Language->getAll() as $l ) {
             ?>
-            //"products_name[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_name_required'); ?>",
-            "products_description[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_products_description_required'); ?>",
-            //"products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_required'); ?>",
+            "products_name[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_name_required'); ?>",
+            "products_keyword[<?php echo $l['id']; ?>]": "<?php echo $lC_Language->get('ms_error_product_keyword_required'); ?>",
             <?php
           }
           ?>
-          //"categories[]": "<span class='bold'><?php echo $lC_Language->get('ms_error_products_categories_required'); ?></span>",
         }, 
       }).form();
       $("#languageTabs").refreshTabs();
       if (bValid) {
         $(e).submit();
-      } //else {
-        //$("#tabHeaderSectionContent a").css("background-color", "#FFE3E2").css("border-left", "1px solid #D84646").css("border-top", "1px solid #D84646").css("border-bottom", "1px solid #D84646");
-      //}
+      }
 
       return false;
     }    
@@ -712,6 +702,7 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           }
           oTable = $('#dataTable').dataTable({
             "bProcessing": true,
+            "bServerSide": true,
             "sAjaxSource": dataTableDataURL.replace('CID', cid).replace('MEDIA', $.template.mediaQuery.name),
             "sPaginationType": paginationType,
             "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
@@ -724,8 +715,8 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
                           { "sWidth": "10%", "bSortable": false, "sClass": "dataColCats hide-on-tablet" },
                           { "sWidth": "10%", "bSortable": false, "sClass": "dataColClass hide-on-tablet" },
                           { "sWidth": "10%", "bSortable": true, "sClass": "dataColPrice hide-on-mobile-portrait" },
-                          { "sWidth": "5%", "bSortable": false, "sClass": "dataColQty hide-on-mobile" },
-                          { "sWidth": "5%", "bSortable": false, "sClass": "dataColStatus hide-on-mobile" },
+                          { "sWidth": "5%", "bSortable": true, "sClass": "dataColQty hide-on-mobile" },
+                          { "sWidth": "5%", "bSortable": true, "sClass": "dataColStatus hide-on-mobile" },
                           { "sWidth": "30%", "bSortable": false, "sClass": "dataColAction no-wrap" }]
           }); 
           $('#dataTable').responsiveTable();

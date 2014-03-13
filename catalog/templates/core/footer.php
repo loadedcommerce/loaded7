@@ -1,5 +1,5 @@
 <?php
-/**
+  /**
   @package    catalog::templates
   @author     Loaded Commerce
   @copyright  Copyright 2003-2014 Loaded Commerce, LLC
@@ -7,7 +7,7 @@
   @copyright  Template built on DevKit http://www.bootstraptor.com under GPL license 
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: footer.php v1.0 2013-08-08 datazen $
-*/
+  */
 ?>
 <!--footer.php start-->
 
@@ -51,7 +51,12 @@
       </address>
 
       <!-- QR Code -->
-      <?php echo $lC_Template->getQRCode(); ?>
+      <a id="qrcode-tooltip">
+        <span style="cursor:pointer;">
+          <img src="images/icons/qr-icon.png" alt="<?php echo $lC_Language->get('text_click_and_scan');?>" style="vertical-align:middle; padding-right:6px;" /><span class="small-margin-left"><?php echo $lC_Language->get('text_click_and_scan');?></span>
+        </span>
+      </a>
+      <div id="ShowQRCode"></div>
     </div>               
     <div class="margin-left small-padding-left margin-right small-padding-right"><?php echo $lC_Template->getBranding('footer_text');?></div>
   </div>

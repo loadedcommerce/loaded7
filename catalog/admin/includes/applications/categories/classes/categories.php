@@ -240,18 +240,18 @@ class lC_Categories_Admin {
 
     $lC_Database->startTransaction();
 
-    //echo '<pre>';
-    //print_r($data);
-    //echo '<pre>';
-    //die('after $data');
+    /*echo '<pre>';
+    print_r($data);
+    echo '<pre>';
+    die('after action');*/
         
     if ( is_numeric($id) ) {
-      $Qcat = $lC_Database->query('update :table_categories set categories_image = :categories_image, parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_status = :categories_status, categories_visibility_nav = :categories_visibility_nav, categories_visibility_box = :categories_visibility_box, date_added = :date_added, last_modified = now() where categories_id = :categories_id');
+      $Qcat = $lC_Database->query('update :table_categories set categories_image = :categories_image, parent_id = :parent_id, sort_order = :sort_order, categories_mode = :categories_mode, categories_link_target = :categories_link_target, categories_custom_url = :categories_custom_url, categories_status = :categories_status, categories_visibility_nav = :categories_visibility_nav, categories_visibility_box = :categories_visibility_box, last_modified = now() where categories_id = :categories_id');
       $Qcat->bindInt(':categories_id', $id);
-      $Qcat->bindValue(':date_added', $data['date_added']);
     } else {
       $Qcat = $lC_Database->query('insert into :table_categories (categories_image, parent_id, sort_order, categories_mode, categories_link_target, categories_custom_url, categories_status, categories_visibility_nav, categories_visibility_box, date_added) values (:categories_image, :parent_id, :sort_order, :categories_mode, :categories_link_target, :categories_custom_url, :categories_status, :categories_visibility_nav, :categories_visibility_box, now())');
       $Qcat->bindInt(':parent_id', $data['parent_id']);
+      $Qcat->bindValue(':date_added', $data['date_added']);
     }
 
     $Qcat->bindTable(':table_categories', TABLE_CATEGORIES);
