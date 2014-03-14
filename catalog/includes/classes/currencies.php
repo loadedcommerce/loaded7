@@ -12,7 +12,7 @@ class lC_Currencies {
 
   // class constructor
   public function lC_Currencies() {
-    global $lC_Database;
+    global $lC_Database, $lC_Language;
 
     $Qcurrencies = $lC_Database->query('select * from :table_currencies');
     $Qcurrencies->bindTable(':table_currencies', TABLE_CURRENCIES);
@@ -20,10 +20,13 @@ class lC_Currencies {
     $Qcurrencies->execute();
 
     while ($Qcurrencies->next()) {
+      $symbol_left =  ($lC_Language->get('charset') == 'utf-8') ? lc_output_utf8_decoded($Qcurrencies->value('symbol_left')) : $Qcurrencies->value('symbol_left');
+      $symbol_right =  ($lC_Language->get('charset') == 'utf-8') ? lc_output_utf8_decoded($Qcurrencies->value('symbol_right')) : $Qcurrencies->value('symbol_right');
+
       $this->currencies[$Qcurrencies->value('code')] = array('id' => $Qcurrencies->valueInt('currencies_id'),
                                                              'title' => $Qcurrencies->value('title'),
-                                                             'symbol_left' => utf8_decode($Qcurrencies->value('symbol_left')),
-                                                             'symbol_right' => utf8_decode($Qcurrencies->value('symbol_right')),
+                                                             'symbol_left' => $symbol_left,
+                                                             'symbol_right' => $symbol_right,
                                                              'decimal_places' => $Qcurrencies->valueInt('decimal_places'),
                                                              'value' => $Qcurrencies->valueDecimal('value'));
     }
