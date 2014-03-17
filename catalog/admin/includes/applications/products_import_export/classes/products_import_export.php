@@ -176,7 +176,7 @@ class lC_Products_import_export_Admin {
       $product['products_date_added'] = lC_Datetime::getShort($product['products_date_added']);
       
       foreach ($product as $column_output) {
-        $content .= "\"" . trim(preg_replace('/\s+/', ' ', $column_output)) . "\"" . $delim;
+        $content .= trim(preg_replace('/\s+/', ' ', $column_output)) . $delim;
       }
       
       // categories
@@ -192,7 +192,7 @@ class lC_Products_import_export_Admin {
         $categories[] = $Qcategories->value('categories_name');
         $catids[] = $Qcategories->value('categories_id');
       }
-      $content .= "\"" . implode($seperator, $categories) . "\"" . $delim;
+      $content .= implode($seperator, $categories) . $delim;
       
       foreach ($catids as $cat) {
         $path = '';
@@ -202,14 +202,14 @@ class lC_Products_import_export_Admin {
       $pArr = array_reverse(array_filter($pathParts));
       unset($catids);
       
-      $content .= "\"" . implode($seperator, $pArr) . "\"" . $delim; 
+      $content .= implode($seperator, $pArr) . $delim; 
       
       $Qimage = $lC_Database->query("SELECT * FROM :table_products_images WHERE products_id = :products_id");
       $Qimage->bindTable(':table_products_images', TABLE_PRODUCTS_IMAGES);
       $Qimage->bindInt(':products_id', $product['products_id']);
       $Qimage->execute();
 
-      $content .= "\"" . $Qimage->value('image') . "\"" . $delim;
+      $content .= $Qimage->value('image') . $delim;
 
       $content .= "\n";  
       
@@ -321,7 +321,7 @@ class lC_Products_import_export_Admin {
     foreach ($categories as $category) {
       $category['date_added'] = lC_Datetime::getShort($category['date_added']);
       foreach ($category as $column_output) {
-        $content .= "\"" . trim(preg_replace('/\s+/', ' ', $column_output)) . "\"" . $delim;
+        $content .= trim(preg_replace('/\s+/', ' ', $column_output)) . $delim;
       }
       $content .= "\n";
     }
@@ -401,7 +401,7 @@ class lC_Products_import_export_Admin {
     $content = '';
     foreach ($optiongroups as $optiongroup) {
       foreach ($optiongroup as $column_output) {
-        $content .= "\"" . trim(preg_replace('/\s+/', ' ', $column_output)) . "\"" . $delim;
+        $content .= trim(preg_replace('/\s+/', ' ', $column_output)) . $delim;
       }
       $content .= "\n";
     }
@@ -480,7 +480,7 @@ class lC_Products_import_export_Admin {
     $content = '';
     foreach ($optionvariants as $optionvariant) {
       foreach ($optionvariant as $column_output) {
-        $content .= "\"" . trim(preg_replace('/\s+/', ' ', $column_output)) . "\"" . $delim;
+        $content .= trim(preg_replace('/\s+/', ' ', $column_output)) . $delim;
       }
       $content .= "\n";
     }
@@ -564,7 +564,7 @@ class lC_Products_import_export_Admin {
     $content = '';
     foreach ($optionproducts as $optionproduct) {
       foreach ($optionproduct as $column_output) {
-        $content .= "\"" . trim(preg_replace('/\s+/', ' ', $column_output)) . "\"" . $delim;
+        $content .= trim(preg_replace('/\s+/', ' ', $column_output)) . $delim;
       }
       $content .= "\n";
     }
@@ -700,6 +700,7 @@ class lC_Products_import_export_Admin {
           $product['categories'] = explode(",", $product['categories']);
           foreach ($product['categories'] as $catName) {
             if ($catName != '') {
+              $catCheck = $lC_Database->query("select cd.* from :table_categories_description cd left join :table_categories c on (cd.categories_id = c.categories_id) where cd.categories_name = :categories_name" . $ifParent);
               if ($product['parent_categories'] != '') {
                 $parentCheck = $lC_Database->query("select categories_id from :table_categories_description where categories_name = :categories_name and language_id = :language_id");
                 $parentCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
@@ -707,14 +708,13 @@ class lC_Products_import_export_Admin {
                 $parentCheck->bindInt(':language_id', $product['language_id']);
                 $parentCheck->execute();
               
-                $ifParent =  ' and c.parent_id = :parent_id';
+                $ifParent = ' and c.parent_id = :parent_id';
+                $catCheck->bindInt(':parent_id', $parentCheck->value('categories_id'));
               }
               
-              $catCheck = $lC_Database->query("select cd.* from :table_categories_description cd left join :table_categories c on (cd.categories_id = c.categories_id) where cd.categories_name = :categories_name" . $ifParent);
               $catCheck->bindTable(':table_categories_description', TABLE_CATEGORIES_DESCRIPTION);
               $catCheck->bindTable(':table_categories', TABLE_CATEGORIES);
               $catCheck->bindValue(':categories_name', $catName);
-              $catCheck->bindInt(':parent_id', $parentCheck->value('categories_id'));
               $catCheck->execute();
               
               if ($catCheck->numberOfRows()) {              
