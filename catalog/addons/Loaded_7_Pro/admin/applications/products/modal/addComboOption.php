@@ -12,9 +12,13 @@ global $lC_Language, $lC_Template, $lC_Currencies;
 ?>
 <style>
 #addComboOption { padding-bottom:20px; }
+#addComboOptionEntry { padding-bottom:20px; }
+#addComboOptionEntry2 { padding-bottom:20px; }
+.visual > div { max-width:30px; max-height:30px; }
+.visual > p { max-width:30px; max-height:30px; }
 </style>
 <script>
-function addComboOption(editRow) {
+function addComboOption(editRow) {   
   var accessLevel = '<?php echo $_SESSION['admin']['access'][$lC_Template->getModule()]; ?>';
   if (parseInt(accessLevel) < 3) {
     $.modal.alert('<?php echo $lC_Language->get('ms_error_no_access');?>');
@@ -102,6 +106,71 @@ function addComboOption(editRow) {
     });
   }   
   
+  function getOptionsData(id, callback) {
+    mask()
+    var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=getSimpleOptionEntryData&dummy=0&group=GROUP'); ?>'
+    $.getJSON(jsonLink.replace('GROUP', id),
+      function (data) {
+        unmask();
+        if (data.rpcStatus == -10) { // no session
+          var url = "<?php echo lc_href_link_admin(FILENAME_DEFAULT, 'login'); ?>";
+          $(location).attr('href',url);
+        }
+        if (data.rpcStatus != 1) {
+          if (data.rpcStatus == -2) {
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_no_variant_entries'); ?>');
+          } else {
+            $.modal.alert('<?php echo $lC_Language->get('ms_error_action_not_performed'); ?>');
+          }
+          return false;
+        }
+        
+        var visual = '';
+        $.each(data, function(key, val) {
+          if (val.id != undefined) {
+            visual = visual + val.visual;
+          }
+        }); 
+        data.visual = visual;       
+
+        callback(data); 
+      }
+    );     
+  }
+  
+  function getGroupsSelectOptions(d, s) {
+    var options = '';
+    var groupText = $('#group').find(":selected").text();
+    var cnt = 1;
+
+    if (s == undefined) {
+      $.each(d, function(key, val) {
+        if (val.id != undefined && val.title != groupText) {
+          if (cnt == 1) {
+            options += '<option selected="selected" value="' + val.id + '">' + val.title + '</option>';
+          } else {
+            options += '<option value="' + val.id + '">' + val.title + '</option>';
+          }                    
+          cnt++;
+        }
+      });    
+    } else {
+
+      var v = s.toString();
+      $.each(d, function(key, val) {
+        if (val.id != undefined) { 
+          if (v.indexOf(val.id) != 1) {
+            options += '<option selected="selected" value="' + val.id + '">' + val.title + '</option>';
+          } else {
+            options += '<option value="' + val.id + '">' + val.title + '</option>';
+          }                   
+        }   
+      });   
+    }
+    
+    return options;
+  }
+  
   var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=getSimpleOptionData'); ?>'
   $.getJSON(jsonLink,
     function (data) {
@@ -120,13 +189,13 @@ function addComboOption(editRow) {
                    '    <form name="sAdd" id="sAdd" action="" method="post">'+
                    '      <input type="hidden" name="dummy" value="0">'+
                    '      <p class="button-height block-label">'+
-                   '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_group'); ?></label>'+
+                   '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_primary_group'); ?></label>'+
                    '        <span id="groupSelectContainer"></span>'+
                    '      </p>'+
                    '    </form>'+
                    '  </div>'+
                    '</div>',
-          title: '<?php echo $lC_Language->get('modal_heading_new_simple_option'); ?>',
+          title: '<?php echo $lC_Language->get('modal_heading_new_combo_option'); ?>',
           width: 320,
                 actions: {
             'Close' : {
@@ -137,7 +206,7 @@ function addComboOption(editRow) {
           buttons: {
             '<?php echo $lC_Language->get('button_cancel'); ?>': {
               classes:  'glossy',
-              click:    function(win) { win.closeModal(); }
+              click:    function(win) { $.modal.all.closeModal(); }
             },
             '<?php echo $lC_Language->get('button_next'); ?>': {
               classes:  'blue-gradient glossy',
@@ -146,6 +215,7 @@ function addComboOption(editRow) {
                 nvp = $('#sAdd').serialize();
                 var groupText = $('#group').find(":selected").text();
                 var groupID = $('#group').find(":selected").val();
+                var counter = 2;
                 // get the entry data
                 var jsonLink = '<?php echo lc_href_link_admin('rpc.php', $lC_Template->getModule() . '=' . $_GET[$lC_Template->getModule()] . '&action=getSimpleOptionEntryData&NVP'); ?>'
                 $.getJSON(jsonLink.replace('NVP', nvp),
@@ -163,6 +233,7 @@ function addComboOption(editRow) {
                       }
                       return false;
                     }   
+                    
                     $.modal({
                         content: '<div id="addComboOptionEntry">'+
                                  '  <div id="addComboOptionEntryForm">'+
@@ -170,13 +241,20 @@ function addComboOption(editRow) {
                                  '      <input type="hidden" name="dummy" value="0">'+
                                  '      <p class="button-height block-label">'+
                                  '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_option_items'); ?></label>'+
-                                 '        <p class="silver-bg with-small-padding big-text ">&nbsp;' + groupText + '</p>'+
-                                 '        <span id="entrySelectContainer"></span>'+
+                                 '        <p class="silver-bg with-small-padding big-text">&nbsp;' + groupText + '</p>'+
+                                 '        <div class="relative">'+
+                                 '          <div id="entrySelectContainer" class="visual" style="width:85%;"></div>'+
+                                 '          <div id="entryVisualContainer" class="visual" style="width:10%; position:absolute; top:4px; right:0;"></div>'+
+                                 '        </div>'+
+                                 '      </p>'+
+                                 '      <p class="button-height block-label">'+
+                                 '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_another_group'); ?></label>'+
+                                 '        <span id="groupSelectComboContainer' + counter.toString() + '"></span>'+
                                  '      </p>'+
                                  '    </form>'+
                                  '  </div>'+
                                  '</div>',
-                        title: '<?php echo $lC_Language->get('modal_heading_new_simple_option'); ?>',
+                        title: '<?php echo $lC_Language->get('modal_heading_new_combo_option'); ?>',
                         width: 320,
                         actions: {
                           'Close' : {
@@ -191,9 +269,9 @@ function addComboOption(editRow) {
                           },                      
                           '<?php echo $lC_Language->get('button_cancel'); ?>': {
                             classes:  'glossy',
-                            click:    function(ewin) { win.closeModal(); ewin.closeModal(); }
+                            click:    function(ewin) {  $.modal.all.closeModal() }
                           },
-                          '<?php echo $lC_Language->get('button_done'); ?>': {
+                          '<?php echo $lC_Language->get('button_next'); ?>': {
                             classes:  'blue-gradient glossy',
                             click:    function(ewin) {
                               var bValid = $("#seAdd").validate({
@@ -204,12 +282,128 @@ function addComboOption(editRow) {
                                 }
                               }).form();
                               if (bValid) {
+                                var nvp = $('#seAdd').serialize();
+                                var groupText2 = $('#group_2').find(":selected").text();
+                                var groupID2 = $('#group_2').find(":selected").val();
+                                counter++;
+                                
+                                $.modal({
+                                    content: '<div id="addComboOptionEntry2">'+
+                                             '  <div id="addComboOptionEntryForm2">'+
+                                             '    <form name="seAdd2" id="seAdd2" action="" method="post">'+
+                                             '      <input type="hidden" name="dummy" value="0">'+
+                                             '      <p class="button-height block-label">'+
+                                             '        <label for="group" class="label small-margin-bottom"><?php echo $lC_Language->get('field_select_combo_group_variants'); ?></label>'+
+                                             '        <p class="silver-bg with-small-padding big-text">&nbsp;' + groupText + '</p>'+
+                                             '        <div class="relative">'+
+                                             '          <div id="entrySelectContainer2" class="visual" style="width:85%;"></div>'+
+                                             '          <div id="entryVisualContainer2" class="visual" style="width:10%; position:absolute; top:4px; right:0;"></div>'+
+                                             '        </div>'+
+                                             '      </p>'+
+                                             
+                                             '      <p class="button-height block-label">'+
+                                             '        <label for="group" class="label small-margin-bottom"></label>'+
+                                             '        <p class="silver-bg with-small-padding big-text">&nbsp;' + groupText2 + '</p>'+
+                                             '        <div class="relative">'+
+                                             '          <div id="entrySelectContainer3" class="visual" style="width:85%;"></div>'+
+                                             '          <div id="entryVisualContainer3" class="visual" style="width:10%; position:absolute; top:4px; right:0;"></div>'+
+                                             '        </div>'+
+                                             '      </p>'+                                             
+                                             '      <p class="block-label"><?php echo strtoupper($lC_Language->get('text_or')); ?></p>'+
+                                             '      <p class="button-height block-label">'+
+                                             '        <a href="javascript:void(0);" onclick="addOptionGroup(counter);" class="button"><?php echo $lC_Language->get('button_add_another_group'); ?></a>'+
+                                             '      </p><hr>'+
+                                             
+                                             '      <p class="button-height block-label">'+
+                                             '        <label for="use_product_price" class="label small-margin-bottom">'+
+                                             '        <?php echo lc_draw_checkbox_field('use_product_price', null, true, 'class="switch tiny" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>'+
+                                             '        <?php echo $lC_Language->get('field_use_product_price'); ?></label>'+
+                                             '      </p>'+                                             
+                                             
+                                             '      <p class="button-height block-label">'+
+                                             '        <label for="use_product_weight" class="label small-margin-bottom">'+
+                                             '        <?php echo lc_draw_checkbox_field('use_product_weight', null, true, 'class="switch tiny" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>'+
+                                             '        <?php echo $lC_Language->get('field_use_product_weight'); ?></label>'+
+                                             '      </p>'+                                              
+                                             
+                                             '      <p class="button-height block-label">'+
+                                             '        <label for="use_product_status" class="label small-margin-bottom">'+
+                                             '        <?php echo lc_draw_checkbox_field('use_product_status', null, true, 'class="switch tiny" data-text-on="' . strtoupper($lC_Language->get('button_yes')) . '" data-text-off="' . strtoupper($lC_Language->get('button_no')) . '"');?>'+
+                                             '        <?php echo $lC_Language->get('field_use_product_status'); ?></label>'+
+                                             '      </p>'+                                              
+                                             
+                                             '      <p class="button-height inline-label">'+
+                                             '        <label for="set_product_qty" class="label no-wrap"><?php echo $lC_Language->get('field_set_qoh_for_each'); ?></label>'+
+                                             '        <?php echo lc_draw_input_field('set_product_qty', '100', 'id="edit-first_name" class="input" style="width:25%; float:right; margin-right:119px;"'); ?>'+
+                                             '      </p>'+                                             
+                                                                                          
+                                             '    </form>'+
+                                             '  </div>'+
+                                             '</div>',
+                                    title: '<?php echo $lC_Language->get('modal_heading_new_combo_option'); ?>',
+                                    width: 320,
+                                    actions: {
+                                      'Close' : {
+                                        color: 'red',
+                                        click: function(ewin) { ewin.closeModal(); }
+                                      }
+                                    },
+                                    buttons: {
+                                      '<?php echo $lC_Language->get('button_back'); ?>': {
+                                        classes:  'glossy',
+                                        click:    function(ewin) { ewin.closeModal(); }
+                                      },                      
+                                      '<?php echo $lC_Language->get('button_cancel'); ?>': {
+                                        classes:  'glossy',
+                                        click:    function(ewin) { $.modal.all.closeModal(); }
+                                      },
+                                      '<?php echo $lC_Language->get('button_next'); ?>': {
+                                        classes:  'blue-gradient glossy',
+                                        click:    function(ewin) {
+                                          var bValid = $("#seAdd").validate({
+                                            rules: {
+                                              entry: { required: true }
+                                            },
+                                            invalidHandler: function() {
+                                            }
+                                          }).form();
+                                          if (bValid) {
+                                            counter++;
+                                            alert(counter);
+                                            
 
-                                var sel = $('#seAdd').serialize();
-                                getNewOptionsRow(groupID, data, edata, sel);
-                                win.closeModal();
-                                ewin.closeModal();
-                                _setSimpleOptionsSortOrder();
+                                            
+                                            
+                                            
+                                          }                              
+                                        }
+                                      }
+                                    },
+                                    buttonsLowPadding: true
+                                }); 
+                                
+                                var visual = '';
+                                $.each(edata, function(key, val) {
+                                  if (val.id != undefined) {
+                                    visual = visual + val.visual;
+                                  }
+                                });
+
+                                // get the selected values in csv string
+                                var values = $("#entry").val() || [];
+
+                                $("#entrySelectContainer2").html('<select id="entry" name="entry[]" class="select check-list full-width easy-multiple-selection" multiple>' + getGroupsSelectOptions(edata, values) + '</select>').change();                    
+                                $("#entryVisualContainer2").html(visual);  
+
+                                getOptionsData(groupID2, function(fdata) {
+                                  $("#entrySelectContainer3").html('<select id="entry2" name="entry2[]" class="select check-list full-width easy-multiple-selection" multiple>' + getGroupsSelectOptions(fdata) + '</select>').change();                    
+                                  $("#entryVisualContainer3").html(fdata.visual);  
+                                  
+                                  
+                                  $.modal.all.centerModal();                              
+                                });  
+                                                             
+                                
                                 
                               }                              
                             }
@@ -218,18 +412,15 @@ function addComboOption(editRow) {
                         buttonsLowPadding: true
                     }); 
                     
-                    var entries = '';
-                    var row = (editRow != undefined) ? editRow : '';
+                    var visual = '';
                     $.each(edata, function(key, val) {
                       if (val.id != undefined) {
-                        if ($("#simple_options_entry_" + row.toString() + "_" + val.id.toString()).length > 0) {
-                          entries += '<option selected="selected" value="' + val.id + '">' + val.title + '</option>';
-                        } else {
-                          entries += '<option value="' + val.id + '">' + val.title + '</option>';
-                        }
+                        visual = visual + val.visual;
                       }
                     });
-                    $("#entrySelectContainer").html('<select id="entry" name="entry" class="select check-list easy-multiple-selection full-width" multiple>' +  entries + '</select>').change();                    
+                    $("#entrySelectContainer").html('<select id="entry" name="entry[]" class="select check-list full-width easy-multiple-selection" multiple>' + getGroupsSelectOptions(edata) + '</select>').change();                    
+                    $("#entryVisualContainer").html(visual);  
+                    $("#groupSelectComboContainer" + counter.toString()).html('<select id="group_' + counter.toString() + '" name="group[' + counter.toString() + ']" class="select multiple full-width">' +  getGroupsSelectOptions(data) + '</select>').change();                    
                   }
                 );                               
                 
@@ -239,18 +430,7 @@ function addComboOption(editRow) {
           buttonsLowPadding: true
       });
       
-      var options = '';
-      var row = (editRow != undefined) ? editRow : '';
-      $.each(data, function(key, val) {
-        if (val.id != undefined) {
-          if (val.id == row) {
-            options += '<option selected="selected" value="' + val.id + '">' + val.title + '</option>';
-          } else {
-            options += '<option value="' + val.id + '">' + val.title + '</option>';
-          }
-        }
-      });
-      $("#groupSelectContainer").html('<select id="group" name="group" class="select multiple check-list full-width">' +  options + '</select>').change();
+      $("#groupSelectContainer").html('<select id="group" name="group" class="select multiple full-width">' +  getGroupsSelectOptions(data) + '</select>').change();                    
       
     }
   );

@@ -108,7 +108,7 @@
     } else {
       return $options_string;
     }
-  }
+  }   
 ?>
 <!-- End main content -->
 <script><!--

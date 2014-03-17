@@ -11,6 +11,7 @@ button_add_variant = Add Variant
 button_add_variant_option = Add Variant Option
 button_add_new_group = Add New Group
 button_add_new_item = Add New Item
+button_add_another_group = Add Another Group to this set
 button_new_row = New Row
 
 field_name = Name:
@@ -28,7 +29,10 @@ field_base_price = Base Price:
 field_price_gross = Price w/Tax:
 field_quantity = Qty on Hand:
 field_weight = Weight:
+field_select_combo_group_variants = Select Combo Group Variants
 field_select_group = Select Group:
+field_select_primary_group = Select Primary Group:
+field_select_another_group = Select Another Group:
 field_select_option_items = Select Option Items:
 field_status = Status:
 field_status_active = Active
@@ -42,6 +46,10 @@ field_active = Active:
 field_date_available = Date Available
 field_availability_ends = Ends 
 field_non_shippable = Non Shippable
+field_use_product_price = Use Product Price
+field_use_product_weight = Use Product Weight
+field_use_product_status = Use Product Status
+field_set_qoh_for_each = Set QOH for each to
 
 heading_title = Products
 heading_title_new_product = New Product
@@ -107,6 +115,7 @@ modal_heading_delete_image = Delete Image
 modal_heading_batch_copy_products = Batch Copy Products
 modal_heading_product_type = Product Type
 modal_heading_new_simple_option = New Simple Option
+modal_heading_new_combo_option = New Multi SKU Option Set
 
 ms_error_image_directory_not_writable = Error: The product images directory is not writable: %s
 ms_error_image_directory_non_existant = Error: The product images directory does not exist: %s

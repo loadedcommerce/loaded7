@@ -1936,6 +1936,7 @@ class lC_Products_Admin {
                                 'languages_id' => $value['languages_id'],
                                 'products_variants_groups_id' => $value['products_variants_groups_id'],
                                 'title' => $value['title'],
+                                'visual' => $value['visual'],
                                 'price_modifier' => $Qoption->valueDecimal('price_modifier'));
       $Qoption->freeResult();
     }
