@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <id>After VQMOD-001, add PPEC Logic</id>
+  <version>1.0.0</version>
+  <vqmver>2.3.2</vqmver>
+  <author>loadedcommerce.com</author>
+  <file name="templates/core/content/checkout/shopping_cart.php">
+    <operation info="After VQMOD-001, add PPEC Logic">
+      <search position="after"><![CDATA[
+    <!--VQMOD-001-->
+      ]]></search>         
+      <add><![CDATA[
+    <?php 
+      if (isset($_SESSION['PPEC_PROCESS']) && !empty($_SESSION['PPEC_PROCESS'])) { 
+      } else { 
+        if ((defined('ADDONS_PAYMENT_PAYPAL_RECURRING_PAYMENTS_PRO_STATUS') && ADDONS_PAYMENT_PAYPAL_RECURRING_PAYMENTS_PRO_STATUS == '1') && (defined('ADDONS_PAYMENT_PAYPAL_RECURRING_PAYMENTS_PRO_EC_STATUS') && ADDONS_PAYMENT_PAYPAL_RECURRING_PAYMENTS_PRO_EC_STATUS == 'On')) { 
+          ?>
+          <div id="paypal-ec-button-container" style="float: right; margin:20px 4px 0px 0;">
+            <div id="paypal-ec-button">
+              <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping&ppec=process', 'SSL'); ?>"><img style="vertical-align: middle;" src="https://www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif"></a><br />
+              <span style="margin:0 58px;">-OR-</span>
+            </div>
+          </div>
+          <?php 
+        }
+      } 
+      ?>
+      ]]></add>
+    </operation>
+  </file>   
+</modification>

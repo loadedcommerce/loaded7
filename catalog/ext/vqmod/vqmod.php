@@ -204,7 +204,7 @@ final class VQMod {
   * @return string
   * @description Obfuscates the modified code
   */   
-  private function _phpLiteObfuscator( $SourceString, $_varsPrivate=array(), $_funcPrivate=array(), $classPrivate=array(), &$dicc) {
+  private function _phpLiteObfuscator( $SourceString) {
     ##remove comments
     $SourceString = preg_replace( "/(\s+)#(.*)\n/","$1\n",$SourceString );
     $SourceString = preg_replace( "/(\s+)\/\/(.*)\n/","$1\n",$SourceString );

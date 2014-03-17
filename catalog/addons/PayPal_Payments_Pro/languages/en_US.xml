@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<language>
+  <definitions>
+    <definition>
+      <key>addon_paypal_payments_pro_title</key>
+      <value><![CDATA[PayPal Payments Pro]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>addon_paypal_payments_pro_description</key>
+      <value><![CDATA[Accept credit cards and PayPal with Paypal Express Checkout. <a target="_blank" href="https://www.paypal.com/webapps/mpp/paypal-payments-pro"><small><i><u>Learn More</u></i></small></a>]]></value>
+      <group>checkout</group>
+    </definition>     
+    <definition>
+      <key>payment_paypal_pro_title</key>
+      <value><![CDATA[PayPal Payments Pro <a target="_blank" href="https://www.paypal.com/webapps/mpp/paypal-payments-pro"><small><i><u>Learn More</u></i></small></a>]]></value>
+      <group>checkout</group>
+    </definition>       
+    <definition>
+      <key>payment_paypal_pro_method_title</key>
+      <value><![CDATA[PayPal Pro - Credit Card Payment]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>payment_paypal_pro_method_blurb</key>
+      <value><![CDATA[powered by <img src="addons/PayPal_Payments_Pro/images/paypal_pro_small.png" alt="PayPal Pro - Credit Card Payment" style="vertical-align:middle;">]]></value>
+      <group>checkout</group>
+    </definition>   
+    
+    
+    <definition>
+      <key>payment_paypal_pro_cc_firstname</key>
+      <value><![CDATA[First Name on Credit Card]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>payment_paypal_pro_cc_lastname</key>
+      <value><![CDATA[Last Name on Credit Card]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>payment_paypal_pro_cc_type</key>
+      <value><![CDATA[Credit Card Type]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>payment_paypal_pro_cc_number</key>
+      <value><![CDATA[Credit Card Number]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>payment_paypal_pro_cc_expiry</key>
+      <value><![CDATA[Credit Card Expiry Date]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>payment_paypal_pro_cc_cvv</key>
+      <value><![CDATA[CVV Number]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>payment_paypal_pro_cc_cvv_text</key>
+      <value><![CDATA[<a href="javascript:;" onclick = "javascript:window.open('addons/PayPal_Payments_Pro/cvv_info.htm','CVV info','width=550,height=450');"><u><i>(What is it?)</i></u></a>']]></value>
+      <group>checkout</group>
+    </definition> 
+
+
+    <definition>
+      <key>payment_paypal_pro_express_method_title</key>
+      <value><![CDATA[PayPal Pro - Express Payment]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>payment_paypal_pro_express_method_blurb</key>
+      <value><![CDATA[powered by <img src="addons/PayPal_Payments_Pro/images/paypal_express_small.png" alt="PayPal Pro Express Checkout" style="vertical-align:middle;">]]></value>
+      <group>checkout</group>
+    </definition>     
+    <definition>   
+      <key>payment_paypal_pro_error_server</key>
+      <value><![CDATA[ERROR: There was no response from the PayPal server. Please try again.]]></value>
+      <group>checkout</group>
+    </definition> 
+    <definition>
+      <key>payment_paypal_pro_error_occurred</key>
+      <value><![CDATA[ERROR: %s. Please try again.]]></value>
+      <group>checkout</group>
+    </definition>
+    <definition>
+      <key>payment_paypal_pro_error_invalid_details</key>
+      <value><![CDATA[ERROR: Please filled the correct details for Credit Card and try again.]]></value>
+      <group>checkout</group>
+    </definition>
+  </definitions>
+</language>
