@@ -103,7 +103,8 @@ function newCurrency() {
                   }
                 }
               );
-              win.closeModal();
+              //win.closeModal();
+              win.location.href = win.location.href;
             }
           }
         }
