@@ -107,7 +107,8 @@ function editCurrency(id) {
                         oTable.fnReloadAjax();
                       }                    }
                   );
-                  win.closeModal();
+                  //win.closeModal();
+                  win.location.href = win.location.href;
                 }
               }
             }
