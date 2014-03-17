@@ -349,18 +349,33 @@ function prepareWork() {
       </div> 
       <div class="field-block button-height large-margin-left large-margin-right">
         <label for="IMPORT_TAX" class="label"><b><?php echo $lC_Language->get('param_import_tax'); ?></b></label>
-    	  <div style="display:block; padding:0px 20px 0px 0px"> 
-    	    <p id="pBoxContainer_taxclasses" style="height:25px; padding-top:5px;">   
-    			  <img style="display:none;" id="img_copy_tick_taxclasses" class="tick" src="images/tick.png" align="right" />
-    			  <img style="display:none;" id="img_copy_progress_taxclasses" class="progress" src="images/ajax-loader-1.gif" align="right" />
-    			  <img style="display:none;" id="img_copy_cross_taxclasses" class="cross" src="images/cross.png" align="right" />
-    	    </p> 
-    	  </div>      
-    	  <div id="eBox_taxclasses" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
-    	    <p class="message icon-warning red-gradient">   
-    	      <span id="eBoxContents_taxclasses"></span>
-    	    </p> 
-    	  </div>      
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_taxclasses" style="height:25px; padding-top:5px;">   
+            <img style="display:none;" id="img_copy_tick_taxclasses" class="tick" src="images/tick.png" align="right" />
+            <img style="display:none;" id="img_copy_progress_taxclasses" class="progress" src="images/ajax-loader-1.gif" align="right" />
+            <img style="display:none;" id="img_copy_cross_taxclasses" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_taxclasses" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_taxclasses"></span>
+          </p> 
+        </div>      
+      </div> 
+      <div class="field-block button-height large-margin-left large-margin-right">
+        <label for="IMPORT_LANGUAGES" class="label"><b><?php echo $lC_Language->get('param_import_languages'); ?></b></label>
+        <div style="display:block; padding:0px 20px 0px 0px"> 
+          <p id="pBoxContainer_languages" style="height:25px; padding-top:5px;">   
+            <img style="display:none;" id="img_copy_tick_languages" class="tick" src="images/tick.png" align="right" />
+            <img style="display:none;" id="img_copy_progress_languages" class="progress" src="images/ajax-loader-1.gif" align="right" />
+            <img style="display:none;" id="img_copy_cross_languages" class="cross" src="images/cross.png" align="right" />
+          </p> 
+        </div>      
+        <div id="eBox_languages" style="display:none; margin: 0px 0px 0px -190px; padding: 0px 10px 10px 0px;"> 
+          <p class="message icon-warning red-gradient">   
+            <span id="eBoxContents_languages"></span>
+          </p> 
+        </div>      
       </div> 
     </div>
     <div id="buttonContainer" class="large-margin-top margin-right" style="float:right; display:none;">
@@ -511,29 +526,38 @@ $(document).ready(function() {
                                   $('#eBoxContents_taxclasses').html(_rslt);
                                   $('#eBox_customer_taxclasses').show();
                                 }
-                                
-                                //DONE
-                                $('#pBox').hide();
-                                
-                                if(_err === false){
-                                  $('#mBoxSuccessContents').html('UPGRADE COMPLETE');
-                                  $('#mBoxSuccess').show();
+                                $('#img_copy_progress_languages').show();
+                                setTimeout(function() {
+                                  _rslt = doImport('_languages'); 
+                                  if(_rslt === ""){  }
+                                  else { _err = true ; _errmsg = _errmsg + '<p>' + _rslt; 
+                                    $('#eBoxContents_languages').html(_rslt);
+                                    $('#eBox_languages').show();
+                                  }
+                                  
+                                  //DONE
+                                  $('#pBox').hide();
+                                  
+                                  if(_err === false){
+                                    $('#mBoxSuccessContents').html('UPGRADE COMPLETE');
+                                    $('#mBoxSuccess').show();
 
-                                  $("#upgradeForm").attr("action", "upgrade.php?step=4");
-                                  $('#btn_continue').show();
-                                  $('#btn_retry').hide();
-                                }
-                                else{
-                                  $('#mBoxContents').html('<?php echo $lC_Language->get('upgrade_step3_page_errfound'); ?>');
-                                  $('#mBox').show();
+                                    $("#upgradeForm").attr("action", "upgrade.php?step=4");
+                                    $('#btn_continue').show();
+                                    $('#btn_retry').hide();
+                                  }
+                                  else{
+                                    $('#mBoxContents').html('<?php echo $lC_Language->get('upgrade_step3_page_errfound'); ?>');
+                                    $('#mBox').show();
 
-                                  $("#upgradeForm").attr("action", "upgrade.php?step=3");
-                                  $('#btn_continue').hide();
-                                  $('#btn_retry').show();
-                                }
+                                    $("#upgradeForm").attr("action", "upgrade.php?step=3");
+                                    $('#btn_continue').hide();
+                                    $('#btn_retry').show();
+                                  }
+                                  
+                                  $('#buttonContainer').show();                                  
                                 
-                                $('#buttonContainer').show();                                  
-                                
+                                }, 3000);  
                               }, 3000);                                 
                             }, 3000);                              
                           }, 3000); 
