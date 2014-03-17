@@ -20,13 +20,10 @@ class lC_Currencies {
     $Qcurrencies->execute();
 
     while ($Qcurrencies->next()) {
-      $symbol_left =  ($lC_Language->get('charset') == 'utf-8') ? lc_output_utf8_decoded($Qcurrencies->value('symbol_left')) : $Qcurrencies->value('symbol_left');
-      $symbol_right =  ($lC_Language->get('charset') == 'utf-8') ? lc_output_utf8_decoded($Qcurrencies->value('symbol_right')) : $Qcurrencies->value('symbol_right');
-
       $this->currencies[$Qcurrencies->value('code')] = array('id' => $Qcurrencies->valueInt('currencies_id'),
                                                              'title' => $Qcurrencies->value('title'),
-                                                             'symbol_left' => $symbol_left,
-                                                             'symbol_right' => $symbol_right,
+                                                             'symbol_left' => $Qcurrencies->value('symbol_left'),
+                                                             'symbol_right' => $Qcurrencies->value('symbol_right'),
                                                              'decimal_places' => $Qcurrencies->valueInt('decimal_places'),
                                                              'value' => $Qcurrencies->valueDecimal('value'));
     }
