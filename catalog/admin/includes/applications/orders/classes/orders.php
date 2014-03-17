@@ -923,6 +923,7 @@ class lC_Orders_Admin {
         $cnt++;
       }
     }
+    return $tData;
   }
   
   public static function getOrderStatusArray() {
