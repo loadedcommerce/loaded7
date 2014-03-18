@@ -107,13 +107,14 @@ function editCurrency(id) {
                         oTable.fnReloadAjax();
                       }                    }
                   );
-                  win.closeModal();
+                  //win.closeModal();
+                  win.location.href = win.location.href;
                 }
               }
             }
           },
           buttonsLowPadding: true
-      });
+      });      
       $("#editTitle").val(data.currencyData.title);
       $("#editCode").val(data.currencyData.code);
       $("#editSymbolLeft").val(data.currencyData.symbol_left);

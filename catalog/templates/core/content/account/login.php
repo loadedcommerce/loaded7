@@ -46,5 +46,16 @@
       </div>
     </div>
   </div>
-</div>                          
+</div>    
+<script>
+$(document).ready(function() {
+	var email = $('#email_address').val();
+	if (email != '') {
+		$('#password').focus();
+	} else {
+		$('#email_address').focus();
+	}
+});	
+	
+</script>                      
 <!--content/info/login.php end-->
