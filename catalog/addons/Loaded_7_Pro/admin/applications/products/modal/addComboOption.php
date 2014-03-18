@@ -16,6 +16,7 @@ global $lC_Language, $lC_Template, $lC_Currencies;
 #addComboOptionEntry2 { padding-bottom:20px; }
 .visual > div { max-width:30px; max-height:30px; }
 .visual > p { max-width:30px; max-height:30px; }
+.visual > img { max-width:30px; max-height:30px; }
 </style>
 <script>
 function addComboOption(editRow) {   
@@ -159,7 +160,7 @@ function addComboOption(editRow) {
       var v = s.toString();
       $.each(d, function(key, val) {
         if (val.id != undefined) { 
-          if (v.indexOf(val.id) != 1) {
+          if (v.indexOf(val.id) != -1) {
             options += '<option selected="selected" value="' + val.id + '">' + val.title + '</option>';
           } else {
             options += '<option value="' + val.id + '">' + val.title + '</option>';
