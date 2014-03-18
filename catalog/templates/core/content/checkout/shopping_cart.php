@@ -206,6 +206,9 @@ function _update(row, qty) {
   $('#btn-checkout').attr('onclick', '');
   var decimals = '<?php echo DECIMAL_PLACES; ?>';
   var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
+  var currencySymbolRight = '<?php echo $lC_Currencies->getSymbolRight(); ?>';
+  var decimalSep = '<?php echo $lC_Language->getData('numeric_separator_decimal'); ?>';
+  var thousandsSep = '<?php echo $lC_Language->getData('numeric_separator_thousands'); ?>';
   var dPrice = parseFloat($('#display-price-' + row).text().replace(currencySymbolLeft, ''));
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'checkout&action=update&item=ITEM&quantity=QTY', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('ITEM', row).replace('QTY', qty).split('amp;').join(''),
@@ -215,16 +218,23 @@ function _update(row, qty) {
         window.location = location.href;
       }
       
-      if (data.priceData.price != undefined && data.priceData.price > 0) {
-        newPrice = (parseFloat(data.priceData.price) + parseFloat(data.priceData.tax)).toFixed(decimals);
-      } else {        
+      if (data.priceData.price != undefined) {
+        price = parseFloat(data.priceData.price.replace(',', ''));
+        if (price > 0) {        
+          newPrice = (price + parseFloat(data.priceData.tax)).toFixed(decimals);
+        } else {        
+          newPrice = dPrice.toFixed(decimals);
+        }
+      } else {
         newPrice = dPrice.toFixed(decimals);
       }
-      newTotal = (newPrice * qty).toFixed(decimals);
-                    
+      
+      newTotal = (newPrice * qty).toFixed(decimals).replace(/(\d)(?=(\d{3})+\b)/g, '$1,').replace('.', decimalSep).replace(',', thousandsSep);
+      newPrice = newPrice.replace(/(\d)(?=(\d{3})+\b)/g, '$1,').replace('.', decimalSep).replace(',', thousandsSep);
+      
       $('#products_' + row).val(qty);
-      $('#display-price-' + row).text(currencySymbolLeft + newPrice.toString());      
-      $('#total-price-' + row).html(currencySymbolLeft + newTotal.toString());      
+      $('#display-price-' + row).text(currencySymbolLeft + newPrice.toString() + currencySymbolRight);      
+      $('#total-price-' + row).html(currencySymbolLeft + newTotal.toString() + currencySymbolRight);      
       
       $('#content-shopping-cart-order-totals-right').html(data.otText);
       // enable checkout button
