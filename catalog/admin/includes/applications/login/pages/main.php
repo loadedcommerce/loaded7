@@ -53,7 +53,7 @@
               <li><span class="icon-unlock mid-margin-right"></span><input type="text" name="activation_serial" id="activation_serial" value="" style="width:85% !important;" class="input-unstyled" placeholder="<?php echo $lC_Language->get('placeholder_pro_serial'); ?>" autocomplete="off"></li>
             </ul>
             <p class="full-width"><button type="submit" class="button glossy red-gradient full-width disabled" id="activate-pro"><?php echo $lC_Language->get('button_activate_pro'); ?></button></p>
-            <button onclick="window.open('http://www.loadedcommerce.com/loaded-pre-order-p-395.html');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
+            <button onclick="window.open('http://loadedcommerce.com/pricing/pro');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
           </form>
           <?php
             } else {
@@ -68,7 +68,7 @@
             <p class="full-width">
               <button type="submit" class="button glossy red-gradient full-width disabled" id="activate-pro"><?php echo $lC_Language->get('heading_product_registration'); ?></button>
             </p>
-            <button onclick="window.open('http://www.loadedcommerce.com/loaded-pre-order-p-395.html');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
+            <button onclick="window.open('http://loadedcommerce.com/pricing/pro');" type="button" class="button glossy red-gradient full-width" id="buy-pro"><?php echo $lC_Language->get('button_buy_pro'); ?></button>
           </form>
           <?php 
             }

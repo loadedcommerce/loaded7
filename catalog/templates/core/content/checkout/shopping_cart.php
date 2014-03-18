@@ -114,21 +114,7 @@
           ?>     
         </div>
       </div>
-      <?php 
-      if (isset($_SESSION['PPEC_PROCESS']) && !empty($_SESSION['PPEC_PROCESS'])) { 
-      } else { 
-        if ((defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_STATUS') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_STATUS == '1') && (defined('ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_EC_STATUS') && ADDONS_PAYMENT_PAYPAL_PAYMENTS_ADVANCED_EC_STATUS == 'On')) { 
-          ?>
-          <div id="paypal-ec-button-container" style="float: right; margin:20px 4px 0px 0;">
-            <div id="paypal-ec-button">
-              <a href="<?php echo lc_href_link(FILENAME_CHECKOUT, 'shipping&ppec=process', 'SSL'); ?>"><img style="vertical-align: middle;" src="https://www.paypalobjects.com/en_US/i/btn/btn_xpressCheckout.gif"></a><br />
-              <span style="margin:0 58px;">-OR-</span>
-            </div>
-          </div>
-          <?php 
-        }
-      } 
-      ?>
+      <!--VQMOD-001-->
       <div class="clear-both btn-set">
         <div class="margin-top large-margin-bottom pull-left">
           <button onclick="window.location.href='<?php echo lc_href_link(FILENAME_PRODUCTS, 'new', 'SSL'); ?>'" class="btn btn-primary" type="button"><?php echo $lC_Language->get('cart_continue_shopping'); ?></button>
@@ -206,6 +192,9 @@ function _update(row, qty) {
   $('#btn-checkout').attr('onclick', '');
   var decimals = '<?php echo DECIMAL_PLACES; ?>';
   var currencySymbolLeft = '<?php echo $lC_Currencies->getSymbolLeft(); ?>';
+  var currencySymbolRight = '<?php echo $lC_Currencies->getSymbolRight(); ?>';
+  var decimalSep = '<?php echo $lC_Language->getData('numeric_separator_decimal'); ?>';
+  var thousandsSep = '<?php echo $lC_Language->getData('numeric_separator_thousands'); ?>';
   var dPrice = parseFloat($('#display-price-' + row).text().replace(currencySymbolLeft, ''));
   var jsonLink = '<?php echo lc_href_link('rpc.php', 'checkout&action=update&item=ITEM&quantity=QTY', 'AUTO'); ?>';   
   $.getJSON(jsonLink.replace('ITEM', row).replace('QTY', qty).split('amp;').join(''),
@@ -215,16 +204,23 @@ function _update(row, qty) {
         window.location = location.href;
       }
       
-      if (data.priceData.price != undefined && data.priceData.price > 0) {
-        newPrice = (parseFloat(data.priceData.price) + parseFloat(data.priceData.tax)).toFixed(decimals);
-      } else {        
+      if (data.priceData.price != undefined) {
+        price = parseFloat(data.priceData.price.replace(',', ''));
+        if (price > 0) {        
+          newPrice = (price + parseFloat(data.priceData.tax)).toFixed(decimals);
+        } else {        
+          newPrice = dPrice.toFixed(decimals);
+        }
+      } else {
         newPrice = dPrice.toFixed(decimals);
       }
-      newTotal = (newPrice * qty).toFixed(decimals);
-                    
+      
+      newTotal = (newPrice * qty).toFixed(decimals).replace(/(\d)(?=(\d{3})+\b)/g, '$1,').replace('.', decimalSep).replace(',', thousandsSep);
+      newPrice = newPrice.replace(/(\d)(?=(\d{3})+\b)/g, '$1,').replace('.', decimalSep).replace(',', thousandsSep);
+      
       $('#products_' + row).val(qty);
-      $('#display-price-' + row).text(currencySymbolLeft + newPrice.toString());      
-      $('#total-price-' + row).html(currencySymbolLeft + newTotal.toString());      
+      $('#display-price-' + row).text(currencySymbolLeft + newPrice.toString() + currencySymbolRight);      
+      $('#total-price-' + row).html(currencySymbolLeft + newTotal.toString() + currencySymbolRight);      
       
       $('#content-shopping-cart-order-totals-right').html(data.otText);
       // enable checkout button
