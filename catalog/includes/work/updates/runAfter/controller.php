@@ -206,10 +206,10 @@ class lC_Updates_Admin_run_after extends lC_Updates_Admin {
     $lC_Database->simpleQuery("ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` VARCHAR(20000) NOT NULL DEFAULT '' AFTER `language_id`;");
     parent::log("Database Update: ALTER IGNORE TABLE `" . $pf . "branding` ADD `homepage_text` VARCHAR(20000) NOT NULL DEFAULT '' AFTER `language_id`;");    
   
-    $lC_Database->simpleQuery("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
+    $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
     parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&euro;' where `code` = 'EUR'");
     
-    $lC_Database->simpleQuery("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");
+    $lC_Database->simpleQuery("UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");
     parent::log("Database Update: UPDATE `" . $pf . "currencies` SET `symbol_left` = '&pound;' where `code` = 'GBP'");    
   }
 }  
