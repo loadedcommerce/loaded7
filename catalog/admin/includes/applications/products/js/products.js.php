@@ -623,6 +623,16 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           ?>
         }, 
       }).form();
+      var start = $("#products_special_start_date1").val();  
+      var end = $("#products_special_expires_date1").val();     
+      if(Date.parse(start) > Date.parse(end)){
+        var message = '<?php echo $lC_Language->get('error_date'); ?>';          
+        $.modal.alert('<?php echo $lC_Language->get('error_date'); ?>');
+        $("#err-div span").html(message);
+        $("#err-div").show();        
+        bValid = false;
+        return false;
+      }
       $("#languageTabs").refreshTabs();
       if (bValid) {
         $(e).submit();
