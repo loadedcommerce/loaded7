@@ -8,6 +8,7 @@
   @license    https://github.com/loadedcommerce/loaded7/blob/master/LICENSE.txt
   @version    $Id: header.php v1.0 2013-08-08 datazen $
   */ 
+  global $content_class;
   if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '<div class="alert alert-danger no-margin-bottom no-padding-top no-padding-bottom text-center">' . $lC_Language->get('text_admin_session_active') . '</div>';
 ?>
 <!--header.php start-->
@@ -151,7 +152,7 @@ if ( count($lC_Breadcrumb->getArray()) > 1) {
   ?>
   <div class="page-breadcrumbs">
     <div class="container">
-      <div class="row col-sm-6 col-lg-6 col-sm-push-3 col-lg-push-3">
+      <div class="row margin-top-neg <?php echo $content_class; ?>">
         <?php
           if ($lC_Services->isStarted('breadcrumb')) {
             echo '<ol class="breadcrumb ">' . $lC_Breadcrumb->getPathList() . '</ol>' . "\n";

@@ -12,7 +12,7 @@
 <!--footer.php start-->
 
 <div id="sub-footer">
-<div class="container">
+<div class="container" style="width:100%;">
   <div class="row">
     <div class="col-sm-3 col-lg-3">
       <h4 class="line3 center standart-h4title"><span>New Arrivals</span></h4>
@@ -113,7 +113,7 @@
 </div>
 
 <div id="footer">
-<div class="container">
+<div class="container" style="width:100%;">
   <div class="row">
 
     <div class="col-sm-12 col-lg-12">

@@ -14,7 +14,7 @@
 
 
 <div id="sub-footer">
-<div class="container">
+<div class="container" style="width:100%;">
  <div class="container_controller">
   <div class="row">
     <div class="col-sm-3 col-lg-3 firstchild">
@@ -86,7 +86,7 @@ since the 1500s, when an unknown.
 </div>
 
 <div id="footer">
-<div class="container">
+<div class="container" style="width:100%;">
 <div class="container_controller">
   <div class="row">
 

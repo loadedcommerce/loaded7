@@ -225,6 +225,9 @@ ffffff; border-left: 6px solid transparent; content: ''; }
 	margin:0 auto;   
 	width: 100%;
 }     
+
+#banner_slides .bg { display:none; }
+
 #banner_slides .item{
 	position: absolute;
 	width: 1150px;
@@ -547,3 +550,5 @@ a:hover, a:focus {
 	font-size: 12px;
 	padding: 15px 10px 0 10px;
 }
+
+#quantity { height:33px; }

@@ -49,21 +49,21 @@ if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '
         </div>  
       <?php } ?>    
       
-    	 <div class="col-sm-3 col-lg-2 find_us">
-	    <?php
-	      if ($lC_Template->getBranding('social_facebook_page') != '') {
+    	<div class="col-sm-3 col-lg-2 find_us">
+	      <?php
+  	    if ($lC_Template->getBranding('social_facebook_page') != '') {
 	        echo '<a href="' . $lC_Template->getBranding('social_facebook_page') . '" target="_blank"><img alt="Facebook" src="' . DIR_WS_IMAGES . 'icons/facebook.png" /></a>';
 	      } else {
-	    ?>
-			<a onclick="window.open('http://www.facebook.com/algozone');"><span class="az_social_icon icon_facebook"></span></a>   
-	    <?php
+	        ?>
+			    <a onclick="window.open('http://www.facebook.com/algozone');"><span class="az_social_icon icon_facebook"></span></a>   
+  	      <?php
 	      }
-	      if ($lC_Template->getBranding('social_tweeter') != '') {
-	        echo '<a href="' . $lC_Template->getBranding('social_twitter') . '" target="_blank"><img alt="Twitter" src="' . DIR_WS_IMAGES . 'icons/twitter_bird.png" /></a>';
+	      if ($lC_Template->getBranding('social_twitter') != '') {
+	        echo '<a style="margin-left:-7px; margin-right:10px;" href="' . $lC_Template->getBranding('social_twitter') . '" target="_blank"><img alt="Twitter" src="' . DIR_WS_IMAGES . 'icons/twitter_bird.png" /></a>';
 	      } else {
-	    ?>
-			<a onclick="window.open('http://www.twitter.com/Algozone');"><span class="az_social_icon icon_twitter"></span></a>   
-	    <?php
+	        ?>
+			    <a onclick="window.open('http://www.twitter.com/Algozone');"><span class="az_social_icon icon_twitter"></span></a>   
+	        <?php
 	      }
 	      if ($lC_Template->getBranding('social_pinterest') != '') {
 	        echo '<a href="' . $lC_Template->getBranding('social_pinterest') . '" target="_blank"><img alt="Pinterest" src="' . DIR_WS_IMAGES . 'icons/pinterest.png" /></a>';
@@ -74,19 +74,19 @@ if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '
 	      if ($lC_Template->getBranding('social_youtube') != '') {
 	        echo '<a href="' . $lC_Template->getBranding('social_youtube') . '" target="_blank"><img alt="Youtube" src="' . DIR_WS_IMAGES . 'icons/youtube.png" /></a>';
 	      } else {
-	    ?>
-			<a onclick="window.open('http://www.youtube.com/user/AlgoZoneCom');"><span class="az_social_icon icon_youtube"></span></a>  
-	    <?php
+	        ?>
+			    <a onclick="window.open('http://www.youtube.com/user/AlgoZoneCom');"><span class="az_social_icon icon_youtube"></span></a>  
+	        <?php
 	      }
 	      if ($lC_Template->getBranding('social_linkedin') != '') {
 	        echo '<a href="' . $lC_Template->getBranding('social_linkedin') . '" target="_blank"><img alt="LinkedIn" src="' . DIR_WS_IMAGES . 'icons/linkedin.png" /></a>';
 	      } else {
-	    ?>
-			<a onclick="window.open('http://www.twitter.com/Algozone');"><span class="az_social_icon icon_linkdn"></span></a>
-	    <?php
+	        ?>
+			    <a onclick="window.open('http://www.linkedin.com/Algozone');"><span class="az_social_icon icon_linkdn"></span></a>
+	        <?php
 	      }
-	    ?>
-        </div>
+	      ?>
+      </div>
         <div class="col-sm-2 col-lg-2">
         	<ul class="language-menu">
           	<?php echo $lC_Template->getLanguageSelection(true, false, ''); ?>
@@ -153,7 +153,7 @@ if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '
             <form role="form" class="form-inline" name="search" id="search" action="<?php echo lc_href_link(FILENAME_SEARCH, null, 'NONSSL', false); ?>" method="get">
               <div class="input-group">
                 <input type="text" class="form-control search-query" name="keywords" id="keywords" value="" placeholder="<?php echo "search"; ?>" onClick="this.value = '';" onKeyDown="this.style.color = '#000000';"><?php echo lc_draw_hidden_session_id_field(); ?>
-              	<span class="input-group-btn">
+              	<span class="input-group-btn padding-left">
                 	<button type="submit" class="btn"><?php //echo $lC_Language->get('button_search'); ?></button>
         	    </span>
               </div>

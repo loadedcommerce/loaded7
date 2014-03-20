@@ -72,13 +72,6 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
       <![endif]-->  
       <?php
-      // page header
-      if ($lC_Template->hasPageHeader()) {
-        if (file_exists(DIR_TEMPLATE . 'header.php')) {
-          include($lC_Vqmod->modCheck(DIR_TEMPLATE . 'header.php'));
-        }
-      }
-      
       // set the format; 1, 2, or 3 columns
       $left = $lC_Template->getBoxModules('left');
       $right = $lC_Template->getBoxModules('right');
@@ -100,6 +93,13 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         $content_class = 'col-sm-12 col-lg-12'; // 1 col
         $_SESSION['content_span'] = '12';
       }
+      
+      // page header
+      if ($lC_Template->hasPageHeader()) {
+        if (file_exists(DIR_TEMPLATE . 'header.php')) {
+          include($lC_Vqmod->modCheck(DIR_TEMPLATE . 'header.php'));
+        }
+      }      
       ?>
       <div id="content-container" class="container">
         <div class="row"> 

@@ -708,6 +708,9 @@ ffffff; border-left: 6px solid transparent; content: ''; }
 #banner_slides{   
 	position: relative;margin:10px auto 0;   
 }     
+
+#banner_slides .bg { display:none; }
+
 #banner_slides .item{
 	position: absolute;
 	width: 950px;

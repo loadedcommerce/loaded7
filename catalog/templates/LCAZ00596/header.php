@@ -11,10 +11,7 @@
 if (isset($_SESSION['admin_login']) && $_SESSION['admin_login'] === TRUE) echo '<div class="alert alert-danger no-margin-bottom no-padding-top no-padding-bottom text-center">' . $lC_Language->get('text_admin_session_active') . '</div>';
 ?>
 <!--header.php start-->
-
-
-
-<nav class="navbar navbar-inverse" role="navigation">
+<nav class="navbar navbar-inverse" role="navigation" style="height:50px;">
   <div class="container">
     <div class="row">
     <div class="col-sm-3 col-lg-2">

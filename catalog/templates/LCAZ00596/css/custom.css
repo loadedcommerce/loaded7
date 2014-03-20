@@ -45,10 +45,10 @@
     position: relative;
 }
 #sub-footer .container_controller  {  
-                margin: 0 18px;   background: #FDFDFD; 
-                 min-height: 215px; 
-                 
-                 }
+  margin: 0 18px;   background: #FDFDFD; 
+  min-height: 215px; 
+}
+
 #sub-footer,#sub-footer .container {    
     background-color: #FDFDFD;
     opacity: .9;
@@ -248,11 +248,7 @@ overflow: visible;
  }
   
  #loaded7 #quantity {
-    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
-    border: 0 none;
-    height: 100%;
-    position: relative;
-    width: 100%;
+    width: 10%;
 }
 .content-left-container {
     padding-left: 0;
@@ -829,6 +825,9 @@ ffffff; border-left: 6px solid transparent; content: ''; }
 #banner_slides{   
 	position: relative;margin:20px auto 0;   
 }     
+
+#banner_slides .bg { display:none; }
+
 #banner_slides .item{
 	position: absolute;
 	width: 950px;
@@ -1015,6 +1014,8 @@ a:hover, a:focus {
 .info-wishlist-bg div{ padding-top: 10px;}
 .info-wishlist-bg .wishlist a{ text-decoration: underline;}
 .info-wishlist-bg .info a{ color: #595959;}
+
+
 
 #loaded7 .thumbButtons .language-switch ul{
     list-style: none !important;
@@ -1386,10 +1387,6 @@ a{ cursor: pointer;}
 
 .in { float: left; width: 100%; }
 
-
-
-
-
 #content-center-container > div { padding: 0; padding-bottom: 10px;}
 #cart_quantity h1 {  font-family: 'fjalla_oneregular', arial; font-size: 30px; color: #595959;  }
 #cart_quantity .content-products-info-model { color: #595959; font-size: 14px; font-family: arial; }
@@ -1397,6 +1394,8 @@ a{ cursor: pointer;}
 #cart_quantity .content-products-info-price s { color: #595959; font-size: 14px; text-decoration: none;}
 #cart_quantity .content-products-info-price s:before { content:'List price: ';}
 #cart_quantity .content-products-info-price s:after {     content:"\a New Price: ";    white-space: pre;  color: #FF5D0E; font-size: 18px;  }
+
+#loaded7 .content-products-info-price { font-size:2em !important; }
 
 #cart_quantity .content-products-info-price { color: #FF5D0E; font-size: 18px; font-family: arial;}
 #loaded7 .product-special-price { color: #FF5D0E; }
@@ -1427,3 +1426,5 @@ input, select, textarea {
 .currency_switch {    border-left: 1px solid #CECDCB; height: 45px; }
 #loaded7 { position: relative;}
 select#currency { position: relative; top:4px;}
+
+#btn-buy-now { width:100% !important; }

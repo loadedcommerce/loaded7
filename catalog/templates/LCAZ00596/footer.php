@@ -14,7 +14,7 @@
 
 
 <div id="sub-footer" class="mid-margin-top">
-<div class="container">
+<div class="container" style="width:100%;">
  <div class="container_controller">
   <div class="row">
   
@@ -85,7 +85,7 @@
 </div>
 
 <div id="footer">
-<div class="container">
+<div class="container" style="width:100%;">
 <div class="container_controller">
   <div class="row">
 

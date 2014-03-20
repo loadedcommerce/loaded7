@@ -12,10 +12,10 @@
 <!--content/index/category_listing.php start-->
 <div class="row cat-listing-container">
   <div class="col-sm-12 col-lg-12">
-    <h1 class="no-margin-top"><?php // echo $lC_Template->getPageTitle(); ?></h1>
+    <h3 class="no-margin-top"><?php echo $lC_Template->getPageTitle(); ?></h3>
     <?php 
     if (lC_Template_output::getCategoryDescription() != '') {
-      //echo lC_Template_output::getCategoryDescription(); 
+      echo lC_Template_output::getCategoryDescription(); 
     }
     ?>
     <div class="col-sm-12 col-lg-12 container text-center">

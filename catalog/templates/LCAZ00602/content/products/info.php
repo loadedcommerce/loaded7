@@ -139,7 +139,7 @@
     <div id="qpb-message"></div>
     <div class="relative clear-both">
       <div class="display-inline">
-        <div class="col-sm-8 col-lg-8 align-right mid-margin-top">
+        <div class="col-sm-8 col-lg-8 align-right margin-top">
           <div class="form-group">
             <label class="content-products-info-qty-label"><?php echo $lC_Language->get('text_add_to_cart_quantity'); ?></label>
             <i class="fa fa-plus-square-o fa-lg" style="position:absolute; right:-1px; top:3px; opacity:.3; cursor:pointer;" onclick="setQty('up');"></i>

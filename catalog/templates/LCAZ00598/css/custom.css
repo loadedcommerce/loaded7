@@ -629,6 +629,9 @@ ffffff; border-left: 6px solid transparent; content: ''; }
 #banner_slides{   
 	position: relative;margin:10px auto 0;   
 }     
+
+#banner_slides .bg { display:none; }
+
 #banner_slides .item{
 	position: absolute;
 	width: 950px;
@@ -985,3 +988,4 @@ ol.carousel-indicators { display: none; }
 /* END @media (max-width: 480px) */
 
 #content-center-container > div { padding: 0;}
+#before-footer-container { width:100%; }
