@@ -20,7 +20,8 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
 <html lang="<?php echo substr(strtolower($lC_Language->getCode()), 0, 2); ?>">
   <head>
     <meta charset="utf-8">
-    <title><?php echo STORE_NAME . ($lC_Template->hasPageTitle() ? ': ' . $lC_Template->getPageTitle() : ''); ?></title>
+    <!-- meta tags -->
+    <?php if ($lC_Template->hasPageTags()) { echo $lC_Template->getPageTags(); } ?>
     <base href="<?php echo lc_href_link(null, null, 'AUTO', false); ?>" />
     <meta name="description" content="Template LCAZ00602 for Loaded Commerce Shopping Cart">
     <meta name="author" content="AlgoZone.com">
@@ -45,9 +46,6 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <!-- Load Page/Group Specific Tags -->
     <?php
       echo $lC_Template->loadCSS($lC_Template->getCode(), $lC_Template->getGroup());
-      if ($lC_Template->hasPageTags()) {
-        echo $lC_Template->getPageTags();
-      }
     ?>
 
     <!-- fav and touch icons -->
@@ -57,15 +55,21 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo DIR_TEMPLATE; ?>icons/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="<?php echo DIR_TEMPLATE; ?>icons/apple-touch-icon-57-precomposed.png">
     
+    <!-- font-awesome -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    
+    <!-- font-awesome -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        
     <!-- jQuery is always at top -->
     <script src="ext/jquery/jquery-1.9.1.min.js"></script>
-    <script src="ext/bootstrap/bootstrap.min.js"></script>
+    <script src="ext/bootstrap/js/bootstrap.min.js"></script>
   </head>
 
   <body>
     <div id="loaded7" class="loadedcommerce-main-wrapper">
       <!--[if lt IE 7]>
-          <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
       <![endif]-->  
       <?php
       // page header
@@ -73,33 +77,67 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
         if (file_exists(DIR_TEMPLATE . 'header.php')) {
           include($lC_Vqmod->modCheck(DIR_TEMPLATE . 'header.php'));
         }
-      }      
-
+      }
+      
       // set the format; 1, 2, or 3 columns
       $left = $lC_Template->getBoxModules('left');
       $right = $lC_Template->getBoxModules('right');
       
       if (!empty($left) && !empty($right)) { // 3 cols
         $box_class = 'col-sm-3 col-lg-3';
-        $content_class = 'col-sm-6 col-lg-6';        
+        $content_class = 'col-sm-6 col-lg-6';
+        $_SESSION['content_span'] = '6';        
       } else if (!empty($left) && empty($right)) { // 2 cols left
         $box_class = 'col-sm-3 col-lg-3';
-        $content_class = 'col-sm-9 col-lg-9';        
+        $content_class = 'col-sm-9 col-lg-9'; 
+        $_SESSION['content_span'] = '9';       
       } else if (empty($left) && !empty($right)) { // 2 cols right
         $box_class = 'col-sm-3 col-lg-3';
         $content_class = 'col-sm-9 col-lg-9';
+        $_SESSION['content_span'] = '9';
       } else {
         $box_class = '';
         $content_class = 'col-sm-12 col-lg-12'; // 1 col
+        $_SESSION['content_span'] = '12';
       }
       ?>
       <div id="content-container" class="container">
         <div class="row"> 
+          <!--header content modules--> 
+          <div id="after-header-container" class="container">
+            <div class="row">
+              <div class="col-sm-12 col-lg-12 mobile-expand">
+                <?php
+                  if ($lC_Template->hasPageContentModules()) {
+                    foreach ($lC_Template->getContentModules('header') as $box) {
+                      $lC_Box = new $box();
+                      $lC_Box->initialize();
+                      if ($lC_Box->hasContent()) {
+                        if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+                          include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                        } else {
+                          if (file_exists('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php')) {
+                            include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                          } else {
+                            include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                          }
+                        }
+                      }
+                      unset($lC_Box);
+                    }
+                  }
+                ?>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+           
           <!--left column -->
-          <?php if (!empty($left)) echo '<div id="content-left-container" class="' . $box_class . '">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
+          <?php if (!empty($left)) echo '<div id="content-left-container" class="' . $box_class . ' hide-on-mobile">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
              
           <!--content start-->  
-          <div id="content-center-container" class="<?php echo $content_class; ?>">
+          <div id="content-center-container" class="<?php echo $content_class; ?> mobile-expand">
             <?php
             if ($lC_MessageStack->size('header') > 0) {
               echo '<div class="alert alert-danger">' . $lC_MessageStack->get('header') . '</div>';
@@ -166,13 +204,39 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
           </div>
             
           <!--right column-->
-          <?php if (!empty($right)) echo '<div id="content-right-container" class="' . $box_class . '">' . $lC_Template->getInfoBoxHtml('right') . '</div>' . "\n"; ?>
-                    
-        </div> <!-- end row --> 
-
-      </div> <!-- end content-container -->   
-        
-	<?php
+          <?php if (!empty($left)) echo '<div id="content-left-mobile-container" class="' . $box_class . ' show-on-mobile mobile-expand">' . $lC_Template->getInfoBoxHtml('left') . '</div>' . "\n"; ?>
+          <?php if (!empty($right)) echo '<div id="content-right-container" class="' . $box_class . ' mobile-expand">' . $lC_Template->getInfoBoxHtml('right') . '</div>' . "\n"; ?>
+        </div>
+        <div class="row">  
+          <!--footer content modules--> 
+          <div id="before-footer-container" class="container">
+            <div class="row">
+              <div class="col-sm-12 col-lg-12 mobile-expand">
+                <?php
+                  if ($lC_Template->hasPageContentModules()) {
+                    foreach ($lC_Template->getContentModules('footer') as $box) {
+                      $lC_Box = new $box();
+                      $lC_Box->initialize();
+                      if ($lC_Box->hasContent()) {
+                        if ($lC_Template->getCode() == DEFAULT_TEMPLATE) {
+                          include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                        } else {
+                          if (file_exists('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php')) {
+                            include($lC_Vqmod->modCheck('templates/' . $lC_Template->getCode() . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                          } else {
+                            include($lC_Vqmod->modCheck('templates/' . DEFAULT_TEMPLATE . '/modules/content/' . $lC_Box->getCode() . '.php'));
+                          }
+                        }
+                      }
+                      unset($lC_Box);
+                    }
+                  }
+                ?>
+              </div>
+            </div>
+          </div>
+        </div> <!-- end row -->
+        <?php
         // page footer
         if ($lC_Template->hasPageFooter()) {
           if (file_exists(DIR_TEMPLATE . 'footer.php')) {
@@ -183,14 +247,16 @@ if (!defined('DIR_WS_TEMPLATE_IMAGES')) define('DIR_WS_TEMPLATE_IMAGES', DIR_WS_
             echo $lC_Banner->display();
           }     
         }
-
-        if ( $lC_Template->showDebugMessages() && ($lC_MessageStack->size('debug') > 0) ) {
-          echo '<div id="debug-info-container" style="display:none;" class="alert alert-warning"><span></span></div>';
-        }         
-	?>       
-
+        
+        if (isset($lC_Services) && $lC_Services->isStarted('debug')) {
+          if ( $lC_Template->showDebugMessages() && ($lC_MessageStack->size('debug') > 0) ) {
+            echo '<div id="debug-info-container" style="display:none;" class="alert alert-warning"><span></span></div>';
+          }         
+        }
+        ?>    
+      </div>  
       <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
-      <!-- <script src="ext/jquery/respond.js"></script> -->    
+      <script src="ext/jquery/respond.min.js"></script>    
       
       <!-- Core JS -->
       <script src="ext/bootstrap/js/bootstrap-datepicker.js"></script>
