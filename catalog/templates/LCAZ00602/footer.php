@@ -66,7 +66,7 @@
           <a href="https://www.facebook.com/Algozone"><img alt="Facebook" src="<?php echo DIR_WS_TEMPLATE_IMAGES; ?>fb_icon.png" /></a>   
           <?php
           }
-          if ($lC_Template->getBranding('social_tweeter') != '') {
+          if ($lC_Template->getBranding('social_twitter') != '') {
             echo '<a href="' . $lC_Template->getBranding('social_twitter') . '" target="_blank"><img alt="Twitter" src="' . DIR_WS_IMAGES . 'icons/twitter_bird.png" /></a>';
           } else {
           ?>

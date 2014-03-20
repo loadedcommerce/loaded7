@@ -89,7 +89,7 @@
               </div> 
               <div class="az_social_icon icon_twitter  col-xs-4 col-sm-4 col-lg-4">
                 <?php
-                  if ($lC_Template->getBranding('social_tweeter') != '') {
+                  if ($lC_Template->getBranding('social_twitter') != '') {
                     echo '<a href="' . $lC_Template->getBranding('social_twitter') . '" target="_blank"><img alt="Twitter" src="' . DIR_WS_IMAGES . 'icons/twitter_bird.png" /></a>';
                   } else {
                   ?>
