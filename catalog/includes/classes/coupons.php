@@ -164,16 +164,16 @@ class lC_Coupons {
     $expires = (isset($cInfo['expires_date']) && $cInfo['expires_date'] != NULL) ? lC_DateTime::getShort($cInfo['expires_date']) : NULL;
 
     if ($start != NULL) {
-      if($start <= $today) {
+      if ($start <= $today) {
       } else {
         $valid = array('status' => false, 'rpcStatus' => -5, 'msg' => $start);
       }
     }
     
     if ($expires != NULL) {
-      if($today <= $expires) {
+      if ($today <= $expires) {
       } else {
-        $valid = array('status' => false, 'rpcStatus' => -6);
+        $valid = array('status' => false, 'rpcStatus' => -6, 'msg' => $expires);
       }   
     }
     
