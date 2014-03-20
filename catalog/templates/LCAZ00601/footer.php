@@ -105,7 +105,7 @@
     <div class="container_controller">
       <div class="row">
         <div class="col-sm-12 col-lg-12">      
-          <div class="pull-left"> <a class="payment_by" href="#"> </a> </div>
+          <!-- div class="pull-left"> <a class="payment_by" href="#"> </a> </div -->
           <div class="pull-right">&copy; Copyright <?php echo date("Y"); ?>. Designed by <a href="http://www.algozone.com">Algozone.com.</a> <br />
             All Rights Reserved. <a href=""><?php echo STORE_NAME; ?></a>
           </div>

@@ -102,7 +102,7 @@
           <div class="pull-left">&copy; Copyright <?php echo date("Y"); ?>.  Designed by <a  onclick="window.open('http://www.algozone.com');" >Algozone.com.</a><br />
             All Rights Reserved. <a href=""><?php echo STORE_NAME; ?></a>
           </div>
-          <div class="pull-right"> <a class="payment_by" href="#"> </a> </div>
+          <!-- div class="pull-right"> <a class="payment_by" href="#"> </a> </div -->
         </div>    
       </div>
     </div>
