@@ -623,16 +623,14 @@ if (!empty($_GET['action']) && ($_GET['action'] == 'save')) { // edit a product
           ?>
         }, 
       }).form();
+      // START - added to validate specials end date against start date
       var start = $("#products_special_start_date1").val();  
       var end = $("#products_special_expires_date1").val();     
-      if(Date.parse(start) > Date.parse(end)){
-        var message = '<?php echo $lC_Language->get('error_date'); ?>';          
-        $.modal.alert('<?php echo $lC_Language->get('error_date'); ?>');
-        $("#err-div span").html(message);
-        $("#err-div").show();        
+      if (Date.parse(start) > Date.parse(end)) {
+        $.modal.alert('<?php echo $lC_Language->get('error_specials_date'); ?>');
         bValid = false;
-        return false;
       }
+      // END - added to validate specials end date against start date
       $("#languageTabs").refreshTabs();
       if (bValid) {
         $(e).submit();
