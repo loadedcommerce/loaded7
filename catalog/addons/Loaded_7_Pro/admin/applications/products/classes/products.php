@@ -350,21 +350,22 @@ die('77');
   	global $lC_Currencies;
 		
     $tbody = '';  	
-		  
+    $sort = 10;
     if (isset($options) && !empty($options)) {
       foreach ($options as $product_id => $mso) {     	
-        
         $combo = '';
 				$default = '';
 				$module = '';
         $comboInput = '';
         if (is_array($mso['values'])) {
           foreach ($mso['values'] as $group_id => $value_id) {
-          	foreach ($value_id as $data) {						    
+          	foreach ($value_id as $key => $data) {	
               $combo .= $data['value_title'] . ', ';
 							$module = $data['module'];	
-							$default = $data['default'];						
-							$comboInput .= '<input type="hidden" id="variants_' . $product_id .'_values_' . $group_id . '_' . $value_id . '"  name="variants[' . $product_id .'][\'values\'][' . $group_id . '][' . $value_id . ']">';          							
+              $default = $data['default'];            
+							$default_visual = $data['default_visual'];						
+              $comboInput .= '<input type="hidden" id="variants_' . $product_id .'_values_' . $key . '"  name="variants[' . $product_id .'][values][' . $key . ']" value="' . $data['value_title'] . '">';                        
+							$comboInput .= '<input type="hidden" id="variants_' . $product_id .'_default_visual_' . $default_visual . '"  name="variants[' . $product_id .'][default_visual]" value="' . $default_visual . '">';          							
 					  }
           }
 					if (strstr($combo, ',')) $combo = substr($combo, 0, -2);
@@ -372,7 +373,7 @@ die('77');
           $statusIcon = (isset($mso['data']['status']) && $mso['data']['status'] == '1') ? '<span id="variants_status_span_' . $product_id .'" class="icon-tick icon-size2 icon-green with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' . $product_id .'" name="variants[' . $product_id . '][status]" value="1">' : '<span id="variants_status_span_' . $product_id .'" class="icon-cross icon-size2 icon-red with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Status"></span><input type="hidden" id="variants_status_' . $product_id .'" name="variants[' . $product_id . '][status]" value="0">';
           $defaultIcon = (isset($default) && $default == '1') ? '<span id="variants_default_combo_span_' . $product_id .'" class="default-combo-span icon-star icon-size2 icon-orange with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Default Combo"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $product_id .'" name="variants[' . $product_id . '][default_combo]" value="1">' : '<span id="variants_default_combo_span_' . $product_id .'" class="default-combo-span icon-star icon-size2 icon-grey with-tooltip" data-tooltip-options=\'{"classes":["grey-gradient"],"position":"left"}\' title="Set Default Combo"></span><input class="default-combo" type="hidden" id="variants_default_combo_' . $product_id .'" name="variants[' . $product_id . '][default_combo]" value="0">';          
 					          
-          $tbody .= '<tr id="trmso-' . $product_id .'">' .
+          $tbody .= '<tr id="trmso-' . $product_id .'"><input type="hidden" name="variants[' . $product_id .'][sort]" value="' . $sort . '">' . $comboInput .
                     '  <td width="16px" style="cursor:move;"><span class="icon-list icon-grey icon-size2"></span></td>' .
                     '  <td width="25%">' . $combo . '</td>' .
                     '  <td width="16px" style="cursor:pointer;" onclick="toggleMultiSKUOptionsFeatured(\'' . $product_id . '\');">' . $defaultIcon . '</td>' .                    
@@ -396,6 +397,7 @@ die('77');
                        </td>' .
                     '</tr>';
         }
+        $sort = ($sort + 10);
       }
     }
     
@@ -479,5 +481,24 @@ die('77');
     }
     
     return $content;
-  }  
+  } 
+  
+  public static function getComboRowData($data) {
+    global $lC_Currencies;
+    
+echo "<pre>";
+print_r($data);
+echo "</pre>";
+die();    
+    
+    $tbody = '';    
+    $sort = 10;
+    if (isset($options) && !empty($options)) {
+      foreach ($options as $product_id => $mso) {       
+        
+        $combo = '';
+      }
+    }
+    
+  }
 }

@@ -10,6 +10,7 @@ header_title_help = Help
 
 batch_results_number_of_entries = Displaying <b>%d</b> to <b>%d</b> (of <b>%d</b> entries)
 
+button_active = Active
 button_add = Add
 button_add_new = Add New
 button_approve = Approve
@@ -28,6 +29,7 @@ button_export = Export
 button_go = Global
 button_global = Go
 button_import = Import
+button_inactive = Inactive
 button_insert = Insert
 button_install = Install
 button_login = Login

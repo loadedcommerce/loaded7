@@ -461,7 +461,7 @@ class lC_Products_Admin {
 		                                                                                 'availability_shipping' => 1,
 																																										 'status' => $QmultiSKUProducts->valueInt('products_status'));
 
-        $Qvariants = $lC_Database->query('select pv.default_combo, pvg.id as group_id, pvg.title as group_title, pvg.module, pvv.id as value_id, pvv.title as value_title, pvv.sort_order as value_sort_order from :table_products_variants pv, :table_products_variants_groups pvg, :table_products_variants_values pvv where pv.products_id = :products_id and pv.products_variants_values_id = pvv.id and pvv.languages_id = :languages_id and pvv.products_variants_groups_id = pvg.id and pvg.languages_id = :languages_id order by pvg.sort_order, pvg.title');
+        $Qvariants = $lC_Database->query('select pv.default_combo, pv.default_visual, pvg.id as group_id, pvg.title as group_title, pvg.module, pvv.id as value_id, pvv.title as value_title, pvv.visual as visual, pvv.sort_order as value_sort_order from :table_products_variants pv, :table_products_variants_groups pvg, :table_products_variants_values pvv where pv.products_id = :products_id and pv.products_variants_values_id = pvv.id and pvv.languages_id = :languages_id and pvv.products_variants_groups_id = pvg.id and pvg.languages_id = :languages_id order by pvg.sort_order, pvg.title');
         $Qvariants->bindTable(':table_products_variants', TABLE_PRODUCTS_VARIANTS);
         $Qvariants->bindTable(':table_products_variants_groups', TABLE_PRODUCTS_VARIANTS_GROUPS);
         $Qvariants->bindTable(':table_products_variants_values', TABLE_PRODUCTS_VARIANTS_VALUES);
@@ -472,11 +472,13 @@ class lC_Products_Admin {
 
         while ( $Qvariants->next() ) {
           $variants_array[$QmultiSKUProducts->valueInt('products_id')]['values'][$Qvariants->valueInt('group_id')][$Qvariants->valueInt('value_id')] = array('value_id' => $Qvariants->valueInt('value_id'),
-                                                                                                                                                        'group_title' => $Qvariants->value('group_title'),
-                                                                                                                                                        'value_title' => $Qvariants->value('value_title'),
-                                                                                                                                                        'sort_order' => $Qvariants->value('value_sort_order'),
-                                                                                                                                                        'default' => (bool)$Qvariants->valueInt('default_combo'),
-                                                                                                                                                        'module' => $Qvariants->value('module'));
+                                                                                                                                                             'group_title' => $Qvariants->value('group_title'),
+                                                                                                                                                             'value_title' => $Qvariants->value('value_title'),
+                                                                                                                                                             'sort_order' => $Qvariants->value('value_sort_order'),
+                                                                                                                                                             'default' => (bool)$Qvariants->valueInt('default_combo'),
+                                                                                                                                                             'default_visual' => $Qvariants->valueInt('default_visual'),
+                                                                                                                                                             'module' => $Qvariants->value('module'),
+                                                                                                                                                             'visual' => $Qvariants->value('visual'));
         }
       }
       $QmultiSKUProducts->freeResult();
